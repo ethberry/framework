@@ -1,0 +1,210 @@
+{
+  "components": {
+    "header": {
+      "language": {
+        "switch": "Switch Language"
+      },
+      "menu": {
+        "about": "About us",
+        "dashboard": "Dashboard",
+        "login": "Login",
+        "logout": "Logout",
+        "profile": "Profile"
+      }
+    }
+  },
+  "dialogs": {
+    "add": "Add",
+    "confirmation": "Please confirm",
+    "delete": "Delete `{title}`?",
+    "edit": "Edit"
+  },
+  "enums": {
+    "language": {
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "merchantStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "sort": {
+      "price": "Price",
+      "createdAt": "Date"
+    },
+    "userRoles": {
+      "ADMIN": "Admin",
+      "MERCHANT": "Merchant",
+      "USER": "User"
+    },
+    "userStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending email verification"
+    }
+  },
+  "errors": {
+    "access-denied": "Access Denied",
+    "internal-server-error": "Server Error",
+    "page-not-found": "Page Not Found",
+    "service-unavailable": "Service Unavailable",
+    "unknown": "Unknown Error"
+  },
+  "form": {
+    "buttons": {
+      "accept": "Accept",
+      "add": "Add",
+      "back": "Back",
+      "cancel": "Cancel",
+      "create": "Create",
+      "delete": "Delete",
+      "empty": "\uFEFF",
+      "facebook": "Facebook",
+      "forgot": "Forgot password?",
+      "google": "Google",
+      "hideFilter": "Hide Filters",
+      "hideFilters": "Hide filters",
+      "login": "Login",
+      "logout": "Logout",
+      "next": "Next",
+      "ok": "Ok",
+      "reject": "Reject",
+      "save": "Save",
+      "search": "Search",
+      "showFilters": "Show filters",
+      "signup": "Sign up",
+      "submit": "Submit",
+      "upload": "Upload"
+    },
+    "hints": {
+      "markdown": "This field supports <a href:\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
+      "prompt": "You have unsaved information, are you sure you want to leave this page?"
+    },
+    "labels": {
+      "amount": "Amount",
+      "confirm": "Confirm",
+      "cvc": "CVC",
+      "dateRangeEnd": "To",
+      "dateRangeStart": "From",
+      "email": "Email",
+      "firstName": "First name",
+      "imageUrl": "Avatar",
+      "isDefault": "Make default",
+      "language": "Language",
+      "lastName": "Last Name",
+      "password": "Password",
+      "phoneNumber": "Phone number",
+      "ratePlan": "Rate plan",
+      "roles": "Roles",
+      "save": "Save for later",
+      "sort": "Sort by",
+      "status": "Status",
+      "createdAt": "Created",
+      "updatedAt": "Updated",
+      "title": "Title",
+      "type": "Type"
+    },
+    "placeholders": {
+      "amount": "100",
+      "confirm": "******",
+      "email": "me@google.com",
+      "firstName": "Gordon",
+      "lastName": "Freeman",
+      "password": "******",
+      "phoneNumber": "+1 (067) 999 99-99",
+      "query": "Search...",
+      "search": "Search...",
+      "createdAt": "Зарегистрирован"
+    },
+    "tips": {
+      "add": "Add",
+      "delete": "Delete",
+      "edit": "Edit"
+    },
+    "validations": {
+      "badInput": "{label} is invalid",
+      "customError": "???",
+      "duplicate": "{label} already in use",
+      "patternMismatch": "{label} does not match expected pattern",
+      "rangeOverflow": "{label} is too high",
+      "rangeUnderflow": "{label} is too low",
+      "recaptchaBadRequest": "The request is invalid or malformed.",
+      "recaptchaInvalidInputResponse": "The response parameter is invalid or malformed.",
+      "recaptchaInvalidInputSecret": "The secret parameter is invalid or malformed.",
+      "recaptchaMissingInputResponse": "The response parameter is missing.",
+      "recaptchaMissingInputSecret": "The secret parameter is missing.",
+      "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
+      "stepMismatch": "{label} is invalid",
+      "tooLong": "{label} is too long",
+      "tooShort": "{label} is too short",
+      "typeMismatch": "{label} is invalid",
+      "valid": "??",
+      "valueMissing": "{label} is required",
+      "weak": "{label} is too weak"
+    }
+  },
+  "messages": {
+    "email-successful": "Email was successfully changed. Verification link was sent to your new email address.",
+    "forgot-successful": "Message with password change instructions was sent to your email.",
+    "registration-successful": "Your account was successfully registered. Please verify your email to activate account. Verification link was sent to your email address.",
+    "resend-successful": "Email with verification link was re-sent to your new email address."
+  },
+  "pages": {
+    "about-us": {
+      "title": "About us"
+    },
+    "dashboard": {
+      "merchants": "Merchants",
+      "payments": "Payments",
+      "products": "Products",
+      "statistics": "Statistics",
+      "title": "Dashboard"
+    },
+    "guest": {
+      "authorize": "Authorize",
+      "forgotPassword": "Forgot password",
+      "greetings": "Hi, {fullName}!",
+      "login": "Login",
+      "registration": "Sign up",
+      "request": "{clientName} is requesting access to your account",
+      "resendVerificationEmail": "Resend verification email",
+      "restorePassword": "Restore password"
+    },
+    "landing": {
+      "new": "New items",
+      "popular": "Popular items"
+    },
+    "merchant": {
+      "title": "Merchant: {title}"
+    },
+    "merchants": {
+      "title": "Merchants"
+    },
+    "product": {
+      "price": "Price: {amount}",
+      "title": "{title}"
+    },
+    "products": {
+      "sort": {
+        "price": "Price",
+        "createdAt": "Date"
+      },
+      "title": "Products"
+    },
+    "profile": {
+      "title": "Profile"
+    }
+  },
+  "snackbar": {
+    "change": "Password was successfully changed. Now you can log in using your new password.",
+    "created": "Successfully saved",
+    "deleted": "Successfully deleted",
+    "error": "Unknown Error",
+    "token": "Token has expired. You can request new one",
+    "unauthorized": "Incorrect login or password",
+    "updated": "Successfully updated",
+    "userHasWrongRole": "Insufficient permissions",
+    "verification": "Email was successfully verified."
+  }
+}

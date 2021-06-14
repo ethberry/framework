@@ -1,0 +1,78 @@
+import React, {FC, useContext} from "react";
+import {Grid} from "@material-ui/core";
+import {useSnackbar} from "notistack";
+import {useIntl} from "react-intl";
+
+import {SelectInput, TextInput} from "@trejgun/material-ui-inputs-core";
+import {PageHeader} from "@trejgun/material-ui-page-header";
+import {UserContext, IUserContext} from "@trejgun/provider-user";
+import {ApiContext, localizeErrors} from "@trejgun/provider-api";
+import {FormikForm} from "@trejgun/material-ui-form";
+import {PhoneInput} from "@trejgun/material-ui-inputs-mask";
+import {AvatarInput} from "@trejgun/material-ui-inputs-image-s3";
+import {EnabledLanguages} from "@trejgun/solo-constants-misc";
+import {IUser} from "@trejgun/solo-types";
+
+import {validationSchema} from "./validation";
+import {Breadcrumbs} from "../../components/common/breadcrumbs";
+
+export const Profile: FC = () => {
+  const user = useContext<IUserContext<IUser>>(UserContext);
+  const {enqueueSnackbar} = useSnackbar();
+  const {formatMessage} = useIntl();
+
+  const api = useContext(ApiContext);
+
+  const onClick = (): void => {
+    enqueueSnackbar("Warning! You won't be able to use this site until you confirm your new email address.", {
+      variant: "info",
+    });
+  };
+
+  const handleSubmit = (values: Partial<IUser>, formikBag: any): Promise<void> => {
+    return api
+      .fetch({
+        url: "/profile",
+        method: "PUT",
+        data: values,
+      })
+      .then(({json, status}) => {
+        if (status === 200) {
+          user.logIn(json);
+          enqueueSnackbar(formatMessage({id: "snackbar.updated"}), {variant: "success"});
+        } else if (status === 204) {
+          user.logOut();
+          enqueueSnackbar(formatMessage({id: "snackbar.updated"}), {variant: "warning"});
+        } else if (status === 400) {
+          formikBag.setErrors(localizeErrors(json.message));
+        } else {
+          console.error(json);
+          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+      });
+  };
+
+  const {id, email, firstName, lastName, phoneNumber, language, imageUrl} = user.profile;
+  const fixedValues = {id, email, firstName, lastName, phoneNumber, language, imageUrl};
+
+  return (
+    <Grid>
+      <Breadcrumbs path={["profile"]} />
+
+      <PageHeader message="pages.profile.title" />
+
+      <FormikForm initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+        <TextInput name="email" autoComplete="username" onClick={onClick} />
+        <TextInput name="firstName" />
+        <TextInput name="lastName" />
+        <PhoneInput name="phoneNumber" />
+        <SelectInput name="language" options={EnabledLanguages} />
+        <AvatarInput name="imageUrl" />
+      </FormikForm>
+    </Grid>
+  );
+};

@@ -1,0 +1,43 @@
+{
+  "author": {
+    "email": "TrejGun+solo@gmail.com",
+    "name": "TrejGun"
+  },
+  "bugs": {
+    "url": "https://github.com/TrejGun/solo/issues"
+  },
+  "dependencies": {
+    "@trejgun/solo-constants-misc": "0.0.1"
+  },
+  "description": "localization for ui",
+  "devDependencies": {},
+  "engines": {
+    "node": ">=10"
+  },
+  "files": [
+    "dist/*",
+    "i18n/*"
+  ],
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@trejgun/solo-localization-public-ui",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TrejGun/solo"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rm -rf dist/",
+    "prepublish": "npm run build",
+    "test": "exit 0"
+  },
+  "sideEffects": false,
+  "title": "-=solo=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}

@@ -1,0 +1,176 @@
+version: "3.3"
+
+volumes:
+  static-admin-ui:
+  static-public-ui:
+
+services:
+
+  solo-packages:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+      args:
+        - BASE_PATH=${BASE_PATH}
+        - NODE_ENV=${NODE_ENV}
+        - HOST=${HOST}
+        - POSTGRES_HOST=${POSTGRES_HOST}
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DB}
+        - ADMIN_FE_URL=${ADMIN_FE_URL}
+        - PUBLIC_FE_URL=${PUBLIC_FE_URL}
+        - ADMIN_BE_URL=${ADMIN_BE_URL}
+        - PUBLIC_BE_URL=${PUBLIC_BE_URL}
+        - REDIS_SESSION_URL=${REDIS_SESSION_URL}
+        - REDIS_THROTTLE_URL=${REDIS_THROTTLE_URL}
+        - THROTTLE_TTL=${THROTTLE_TTL}
+        - THROTTLE_LIMIT=${THROTTLE_LIMIT}
+        - RMQ_URL=${RMQ_URL}
+        - RMQ_QUEUE_WAREHOUSE=${RMQ_QUEUE_WAREHOUSE}
+        - RMQ_QUEUE_WEBHOOK=${RMQ_QUEUE_WEBHOOK}
+        - RMQ_QUEUE_EMAIL=${RMQ_QUEUE_EMAIL}
+        - GOOGLE_RECAPTCHA_PRIVATE=${GOOGLE_RECAPTCHA_PRIVATE}
+        - GOOGLE_RECAPTCHA_PUBLIC=${GOOGLE_RECAPTCHA_PUBLIC}
+        - PASSWORD_SECRET=${PASSWORD_SECRET}
+        - PAPERTRAIL_HOST=${PAPERTRAIL_HOST}
+        - PAPERTRAIL_PORT=${PAPERTRAIL_PORT}
+        - PORT_ADMIN_API=${PORT_ADMIN_API}
+        - PORT_ADMIN_UI=${PORT_ADMIN_UI}
+        - PORT_PUBLIC_API=${PORT_PUBLIC_API}
+        - PORT_PUBLIC_UI=${PORT_PUBLIC_UI}
+        - PORT_EMAILER=${PORT_EMAILER}
+    image: solo-packages
+
+  postgres:
+    container_name: postgres
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_HOST: "${POSTGRES_HOST}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    volumes:
+      - ${BASE_PATH}/postgres:/var/lib/postgresql/data
+
+#  dbbackups:
+#    container_name: dbbackups
+#    image: trejgun/pggcbackups:latest
+#    depends_on:
+#      - postgres
+#    volumes:
+#      - ${GCLOUD_KEYFILE_BASE64_PATH}:/gcs64.key
+#    environment:
+#      SCHEDULE: "@every 24h"
+#      POSTGRES_HOST: "postgres"
+#      POSTGRES_DATABASE: "solo-development"
+#      POSTGRES_USER: "postgres_admin_solo"
+#      POSTGRES_PASSWORD: "{nSq9UQAxzN]dk?;"
+#      GCLOUD_KEYFILE_BASE64: "./gcs64.key"
+#      GCLOUD_PROJECT_ID: "silicon-park-279312"
+#      GCS_BACKUP_BUCKET: "gs://solo-bd-bckp"
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    sysctls:
+      net.core.somaxconn: "65535"
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./nginx/ssl:/etc/nginx/ssl/
+      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/log:/var/log/nginx/
+      - type: volume
+        source: static-admin-ui
+        target: /var/www/admin-ui/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-public-ui
+        target: /var/www/public-ui/static
+        volume:
+          nocopy: true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "1337:1337"
+    depends_on:
+      - slim
+
+  slim:
+    container_name: solo
+    image: solo-packages:latest
+    command: "npm run start:prod"
+    user: root
+    volumes:
+      - static-admin-ui:/home/node/solo/services/admin-ui/dist/bundle
+      - static-public-ui:/home/node/solo/services/public-ui/dist/bundle
+    environment:
+      # common
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_SESSION_URL: "${REDIS_SESSION_URL}"
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # rmq
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+#      RMQ_QUEUE_WEBHOOK: "${RMQ_QUEUE_WEBHOOK}"
+      # GOOGLE
+      GOOGLE_RECAPTCHA_PRIVATE: "${GOOGLE_RECAPTCHA_PRIVATE}"
+      GOOGLE_CLIENT_ID: "${GOOGLE_CLIENT_ID}"
+      GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
+      GOOGLE_CALLBACK_URL: "${GOOGLE_CALLBACK_URL}"
+      # FACEBOOK
+      FACEBOOK_CLIENT_ID: "${FACEBOOK_CLIENT_ID}"
+      FACEBOOK_CLIENT_SECRET: "${FACEBOOK_CLIENT_SECRET}"
+      FACEBOOK_CALLBACK_URL: "${FACEBOOK_CALLBACK_URL}"
+      COOKIE_SESSION_SECRET: "${COOKIE_SESSION_SECRET}"
+      PASSWORD_SECRET: "${PASSWORD_SECRET}"
+      # admin ui
+      GOOGLE_RECAPTCHA_PUBLIC: "${FIREBASE_API_KEY}"
+      # aws
+      AWS_REGION: "${AWS_REGION}"
+      AWS_ACCESS_KEY_ID: "${AWS_ACCESS_KEY_ID}"
+      AWS_SECRET_ACCESS_KEY: "${AWS_SECRET_ACCESS_KEY}"
+      AWS_FROM: "${AWS_FROM}"
+      # FE
+      ADMIN_FE_URL: "${ADMIN_FE_URL}"
+      ADMIN_BE_URL: "${ADMIN_BE_URL}"
+      PUBLIC_FE_URL: "${PUBLIC_FE_URL}"
+      PUBLIC_BE_URL: "${PUBLIC_BE_URL}"
+    depends_on:
+      - rabbitmq
+      - redis
+      - postgres
+    ports:
+      # admin-api
+      - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
+      # admin-ui
+      - "${PORT_ADMIN_UI}:${PORT_ADMIN_UI}"
+      # public-api
+      - "${PORT_PUBLIC_API}:${PORT_PUBLIC_API}"
+      # public-api
+      - "${PORT_PUBLIC_UI}:${PORT_PUBLIC_UI}"
+      # emailer
+      - "${PORT_EMAILER}:${PORT_EMAILER}"
+

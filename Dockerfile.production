@@ -1,0 +1,29 @@
+FROM node:14-alpine AS base
+LABEL stage=base
+
+RUN apk add \
+  python \
+  build-base \
+  git \
+  bash \
+  curl \
+  gettext \
+  nano \
+  && npm i -g node-gyp
+
+FROM base AS deps
+LABEL stage=deps
+
+USER node
+RUN mkdir -p /home/node/solo
+WORKDIR /home/node/solo
+
+COPY --chown=node:node . .
+
+RUN npx lerna bootstrap --hoist
+RUN npm cache clean --force
+
+FROM base as prod
+USER node
+WORKDIR /home/node/solo
+COPY --from=deps --chown=node:node /home/node/solo/. .

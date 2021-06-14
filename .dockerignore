@@ -1,0 +1,18 @@
+*/
+
+# project directories to include here
+!/packages/
+!/services/
+!package*.json
+!lerna.json
+node_modules
+node_modules/
+/node_modules/
+!/scripts/
+!.npmrc
+!tsc*.json
+!.esl*
+
+# exclude these even in the included project directories
+.git
+.dockerignore

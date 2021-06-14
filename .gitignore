@@ -1,0 +1,34 @@
+# Project
+dist/
+/logs/
+/data/
+/code/
+
+
+# IDE
+.idea
+.vscode
+
+# OS
+.DS_Store
+
+# NODE
+node_modules/
+npm-debug.log
+package.json.lerna_backup
+package-lock.json
+yarn.lock
+/lerna-debug.log
+/report.*.json
+
+# env
+.env.*
+!.env.sample
+
+# docker
+/docker-compose.production.yml
+/docker-compose.slim.yml
+
+# tokens
+token.json
+gcc_key.uu

@@ -1,0 +1,269 @@
+{
+  "components": {
+    "dropzone": {
+      "format": "You can't upload {type} only {accept} are allowed",
+      "size": "File is {size} allowed file size is {maxSize}"
+    },
+    "header": {
+      "language": {
+        "switch": "Switch Language"
+      },
+      "menu": {
+        "catalog": "Catalog",
+        "dashboard": "Dashboard",
+        "login": "Login",
+        "logout": "Logout",
+        "merchant": "Merchant",
+        "profile": "Profile"
+      }
+    }
+  },
+  "dialogs": {
+    "add": "Add",
+    "confirmation": "Please confirm",
+    "delete": "Delete `{title}`?",
+    "edit": "Edit"
+  },
+  "enums": {
+    "emailType": {
+      "EMAIL_VERIFICATION": "Email Verification",
+      "FORGOT_PASSWORD": "Forgot password",
+      "RESTORE_PASSWORD": "Restore password",
+      "WELCOME": "Welcome"
+    },
+    "language": {
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "merchantStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending"
+    },
+    "productStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "userRoles": {
+      "ADMIN": "Admin",
+      "CUSTOMER": "Customer",
+      "MERCHANT": "Merchant"
+    },
+    "userStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending email verification"
+    }
+  },
+  "form": {
+    "buttons": {
+      "accept": "Accept",
+      "add": "Add",
+      "cancel": "Cancel",
+      "create": "Create",
+      "delete": "Delete",
+      "empty": "\uFEFF",
+      "facebook": "Facebook",
+      "forgot": "Forgot password?",
+      "google": "Google",
+      "hideFilters": "Hide filters",
+      "login": "Login",
+      "logout": "Logout",
+      "ok": "Ok",
+      "reject": "Reject",
+      "save": "Save",
+      "showFilters": "Show filters",
+      "signup": "Sign up",
+      "submit": "Submit",
+      "upload": "Upload"
+    },
+    "hints": {
+      "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
+      "prompt": "You have unsaved information, are you sure you want to leave this page?"
+    },
+    "labels": {
+      "amount": "Amount",
+      "building": "Building",
+      "comment": "Comment",
+      "confirm": "Confirm",
+      "dateRangeEnd": "To",
+      "dateRangeStart": "From",
+      "dateTime": "Date time",
+      "description": "Description",
+      "email": "Email",
+      "firstName": "First name",
+      "imageUrl": "Avatar",
+      "item": "Item",
+      "items": "Items",
+      "language": "Language",
+      "lastName": "Last Name",
+      "merchantId": "Merchant",
+      "merchantStatus": "Status",
+      "name": "Name",
+      "parentId": "Parent",
+      "password": "Password",
+      "phoneNumber": "Phone number",
+      "photos": "Photos",
+      "price": "Price",
+      "priceCorrection": "Price correction",
+      "productId": "Product",
+      "productStatus": "Status",
+      "time": "Time",
+      "createdAt": "Created",
+      "updatedAt": "Updated",
+      "title": "Title",
+      "type": "Type",
+      "url": "Url",
+      "userId": "User",
+      "userIds": "Users",
+      "userRoles": "Roles",
+      "userStatus": "Status",
+      "year": "Year"
+    },
+    "placeholders": {
+      "amount": "10",
+      "comment": "Fraud",
+      "confirm": "******",
+      "definition": "10",
+      "description": "Description",
+      "email": "me@google.com",
+      "entrance": "2",
+      "firstName": "Gordon",
+      "item": "Bottle of water",
+      "lastName": "Freeman",
+      "merchantId": "Gordon Freeman",
+      "name": "Pink dust",
+      "number": "100500",
+      "parentId": "Root",
+      "password": "******",
+      "phoneNumber": "+62 (812) 9999 99-99",
+      "price": "1000",
+      "priceCorrection": "0",
+      "productId": "Bottle of water",
+      "productStatus": "Status",
+      "query": "Search...",
+      "search": "Search...",
+      "text": "qwerty",
+      "createdAt": "now",
+      "title": "Title",
+      "url": "https://youtube.com",
+      "userId": "Gordon Freeman",
+      "userIds": "Gordon Freeman",
+      "year": "2010"
+    },
+    "tips": {
+      "add": "Add",
+      "delete": "Delete",
+      "edit": "Edit"
+    },
+    "validations": {
+      "badInput": "{label} is invalid",
+      "customError": "???",
+      "duplicate": "{label} already in use",
+      "patternMismatch": "{label} does not match expected pattern",
+      "rangeOverflow": "{label} is too high",
+      "rangeUnderflow": "{label} is too low",
+      "recaptchaBadRequest": "The request is invalid or malformed.",
+      "recaptchaInvalidInputResponse": "The response parameter is invalid or malformed.",
+      "recaptchaInvalidInputSecret": "The secret parameter is invalid or malformed.",
+      "recaptchaMissingInputResponse": "The response parameter is missing.",
+      "recaptchaMissingInputSecret": "The secret parameter is missing.",
+      "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
+      "stepMismatch": "{label} is invalid",
+      "tooLong": "{label} is too long",
+      "tooShort": "{label} is too short",
+      "typeMismatch": "{label} is invalid",
+      "valid": "??",
+      "valueMissing": "{label} is required",
+      "weak": "{label} is too weak"
+    }
+  },
+  "messages": {
+    "email-successful": "Email was successfully changed. Verification link was sent to your new email address.",
+    "forgot-successful": "Message with password change instructions was sent to your email.",
+    "page-not-found": "Page Not Found",
+    "registration-successful": "Your account was successfully registered. Please verify your email to activate account. Verification link was sent to your email address.",
+    "resend-successful": "Email with verification link was re-sent to your new email address."
+  },
+  "pages": {
+    "dashboard": {
+      "categories": "Categories",
+      "emails": "Emails",
+      "merchants": "Merchants",
+      "payments": "Payments",
+      "photos": "Photos",
+      "products": "Products",
+      "promos": "Promos",
+      "statistics": "Statistics",
+      "title": "Dashboard",
+      "users": "Users"
+    },
+    "emails": {
+      "title": "Emails"
+    },
+    "guest": {
+      "authorize": "Authorize",
+      "forgotPassword": "Forgot password",
+      "greetings": "Hi, {fullName}!",
+      "login": "Login",
+      "registration": "Sign up",
+      "request": "{clientName} is requesting access to your account",
+      "resendVerificationEmail": "Resend verification email",
+      "restorePassword": "Restore password"
+    },
+    "merchants": {
+      "title": "Merchants"
+    },
+    "payments": {
+      "amount": "amount",
+      "currency": "currency",
+      "id": "ID",
+      "receipt": "receipt",
+      "source": "source",
+      "title": "Payments",
+      "userId": "user"
+    },
+    "photos": {
+      "title": "Photos"
+    },
+    "products": {
+      "title": "Products"
+    },
+    "profile": {
+      "title": "Profile"
+    },
+    "promos": {
+      "title": "Promos"
+    },
+    "statistics": {
+      "title": "Statistics"
+    },
+    "test": {
+      "title": "Test page"
+    },
+    "users": {
+      "title": "Users"
+    }
+  },
+  "snackbar": {
+    "change": "Password was successfully changed. Now you can log in using your new password.",
+    "created": "Successfully saved",
+    "deleted": "Successfully deleted",
+    "duplicateEmail": "User with this email already registered",
+    "email": "Email was successfully sent.",
+    "error": "Unknown Error",
+    "merchantNotFound": "Merchant not found",
+    "productNotFound": "Product not found",
+    "token": "Token has expired. You can request new one",
+    "tokenNotFound": "Token not found",
+    "unauthorized": "Incorrect login or password",
+    "updated": "Successfully updated",
+    "userHasWrongRole": "Insufficient permissions",
+    "userIsNotActive": "User is not active",
+    "userNotFound": "User not found",
+    "pageNotFound": "API error",
+    "internalServerError": "Internal Server Error",
+    "verification": "Email was successfully verified."
+  }
+}

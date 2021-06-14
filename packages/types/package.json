@@ -1,0 +1,30 @@
+{
+  "author": {
+    "email": "TrejGun+solo@gmail.com",
+    "name": "TrejGun"
+  },
+  "dependencies": {
+    "@trejgun/solo-constants-misc": "0.0.1"
+  },
+  "devDependencies": {},
+  "files": [
+    "dist/*"
+  ],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@trejgun/solo-types",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rm -rf dist/",
+    "prepublish": "npm run build",
+    "test": "exit 0"
+  },
+  "sideEffects": false,
+  "title": "-=solo=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}
