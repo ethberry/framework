@@ -40,7 +40,7 @@
     "amqplib": "0.8.0",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
-    "dotenv": "9.0.2",
+    "dotenv": "10.0.0",
     "express": "4.17.1",
     "ioredis": "4.27.6",
     "nest-winston": "1.5.0",
