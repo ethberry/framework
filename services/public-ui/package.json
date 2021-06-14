@@ -45,7 +45,7 @@
     "@trejgun/solo-mocks": "0.0.1",
     "@trejgun/solo-types": "0.0.1",
     "clsx": "1.1.1",
-    "copy-webpack-plugin": "8.1.1",
+    "copy-webpack-plugin": "9.0.0",
     "date-fns": "2.22.1",
     "dotenv": "9.0.2",
     "dotenv-webpack": "7.0.3",
