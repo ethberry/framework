@@ -41,7 +41,7 @@
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
     "date-fns": "2.22.1",
-    "dotenv": "9.0.2",
+    "dotenv": "10.0.0",
     "draft-js": "0.11.7",
     "express": "4.17.1",
     "ioredis": "4.27.6",
