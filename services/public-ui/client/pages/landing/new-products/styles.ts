@@ -5,7 +5,6 @@ export default makeStyles(
     createStyles({
       title: {
         marginTop: theme.spacing(7),
-        color: "#cfab88",
       },
     }),
   {name: "NewProducts"},

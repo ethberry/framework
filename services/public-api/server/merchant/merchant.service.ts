@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
+import {Brackets, FindConditions, Repository} from "typeorm";
 
 import {MerchantStatus} from "@trejgun/solo-types";
 
@@ -14,11 +14,13 @@ export class MerchantService {
     private readonly merchantEntityRepository: Repository<MerchantEntity>,
   ) {}
 
-  public findAndCount(
-    where: FindConditions<MerchantEntity>,
-    options?: FindManyOptions<MerchantEntity>,
-  ): Promise<[Array<MerchantEntity>, number]> {
-    return this.merchantEntityRepository.findAndCount({where, ...options});
+  public async autocomplete(): Promise<Array<MerchantEntity>> {
+    return this.merchantEntityRepository.find({
+      where: {
+        merchantStatus: MerchantStatus.ACTIVE,
+      },
+      select: ["id", "title"],
+    });
   }
 
   public findOne(where: FindConditions<MerchantEntity>): Promise<MerchantEntity | undefined> {

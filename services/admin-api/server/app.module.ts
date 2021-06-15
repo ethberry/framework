@@ -7,7 +7,7 @@ import {RedisModule, RedisModuleOptions, RedisService} from "nestjs-redis";
 import {ThrottlerStorageRedisService} from "nestjs-throttler-storage-redis";
 
 import {HttpValidationPipe, HttpExceptionFilter} from "@trejgun/nest-js-providers";
-import {LocalGuard} from "@trejgun/nest-js-guards";
+import {JwtHttpGuard} from "@trejgun/nest-js-guards";
 import {RequestLoggerModule} from "@trejgun/nest-js-module-request-logger";
 import {PassportInitialize, PassportSession} from "@trejgun/nest-js-module-passport";
 import {HelmetModule} from "@trejgun/nest-js-module-helmet";
@@ -40,7 +40,7 @@ import {AppController} from "./app.controller";
     },
     {
       provide: APP_GUARD,
-      useClass: LocalGuard,
+      useClass: JwtHttpGuard,
     },
     {
       provide: APP_GUARD,

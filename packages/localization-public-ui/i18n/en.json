@@ -82,22 +82,19 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "merchantId": "Merchant",
       "amount": "Amount",
       "confirm": "Confirm",
-      "cvc": "CVC",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "email": "Email",
       "firstName": "First name",
       "imageUrl": "Avatar",
-      "isDefault": "Make default",
       "language": "Language",
       "lastName": "Last Name",
       "password": "Password",
       "phoneNumber": "Phone number",
-      "ratePlan": "Rate plan",
       "roles": "Roles",
-      "save": "Save for later",
       "sort": "Sort by",
       "status": "Status",
       "createdAt": "Created",
@@ -106,6 +103,7 @@
       "type": "Type"
     },
     "placeholders": {
+      "merchantId": "...",
       "amount": "100",
       "confirm": "******",
       "email": "me@google.com",
@@ -156,9 +154,7 @@
     },
     "dashboard": {
       "merchants": "Merchants",
-      "payments": "Payments",
       "products": "Products",
-      "statistics": "Statistics",
       "title": "Dashboard"
     },
     "guest": {

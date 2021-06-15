@@ -9,7 +9,6 @@ export default makeStyles(
         display: "flex",
         minHeight: "100vh",
         position: "relative",
-        backgroundColor: "#313131",
       },
       container: theme.mixins.gutters({
         paddingTop: theme.spacing(11),

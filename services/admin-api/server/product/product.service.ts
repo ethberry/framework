@@ -86,6 +86,8 @@ export class ProductService {
     data: IProductUpdateDto,
     userEntity: UserEntity,
   ): Promise<ProductEntity> {
+    const {photos, ...rest} = data;
+
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
       where.merchant = userEntity.merchant;
     }
@@ -99,16 +101,16 @@ export class ProductService {
     // remove old
     await Promise.allSettled(
       productEntity.photos
-        .filter(oldPhoto => !data.photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
+        .filter(oldPhoto => !photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
         .map(oldPhoto => oldPhoto.remove()),
     );
 
     // change existing
     const changedPhotos = await Promise.allSettled(
       productEntity.photos
-        .filter(oldPhoto => data.photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
+        .filter(oldPhoto => photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
         .map(oldPhoto => {
-          const newPhoto = data.photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl);
+          const newPhoto = photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl);
           Object.assign(oldPhoto, {
             ...newPhoto,
             photoStatus: PhotoStatus.NEW,
@@ -124,7 +126,7 @@ export class ProductService {
 
     // add new
     const newPhotos = await Promise.allSettled(
-      data.photos
+      photos
         .filter(newPhoto => !productEntity.photos.find(oldPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
         .map(newPhoto => this.photoService.create(newPhoto, productEntity)),
     ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
@@ -134,7 +136,7 @@ export class ProductService {
         .map(c => c.value),
     );
 
-    Object.assign(productEntity, {photos: [...changedPhotos, ...newPhotos]});
+    Object.assign(productEntity, {...rest, photos: [...changedPhotos, ...newPhotos]});
     return productEntity.save();
   }
 

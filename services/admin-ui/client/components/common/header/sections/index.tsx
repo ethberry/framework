@@ -1,12 +1,11 @@
 import React, {FC, Fragment, MouseEvent, useContext, useState} from "react";
-import {FormattedMessage, useIntl} from "react-intl";
-import {useSnackbar} from "notistack";
+import {FormattedMessage} from "react-intl";
 import {matchPath, useHistory, useLocation} from "react-router";
 import {Avatar, Button, IconButton, Menu, MenuItem} from "@material-ui/core";
 import {Link as RouterLink, NavLink as RouterNavLink} from "react-router-dom";
 
 import {IUserContext, UserContext} from "@trejgun/provider-user";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
+import {ApiContext} from "@trejgun/provider-api";
 import {IUser} from "@trejgun/solo-types";
 
 import useStyles from "./styles";
@@ -14,9 +13,6 @@ import useStyles from "./styles";
 export const Sections: FC = () => {
   const history = useHistory();
   const location = useLocation();
-
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
 
   const classes = useStyles();
   const [anchor, setAnchor] = useState<Element | null>(null);
@@ -35,21 +31,19 @@ export const Sections: FC = () => {
   const logout = (e: MouseEvent): Promise<void> => {
     e.preventDefault();
     handleMenuClose();
+
     return api
-      .fetchJson({
+      .fetch({
         url: "/auth/logout",
+        method: "POST",
+        data: {
+          refreshToken: api.getToken()?.refreshToken,
+        },
       })
       .then(() => {
         user.logOut();
+        api.setToken(null);
         history.push("/login");
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
-        }
       });
   };
 

@@ -32,7 +32,6 @@ import {Photo} from "./photo";
 import {Product} from "./product";
 import {Profile} from "./profile";
 import {Promo} from "./promo";
-import {Statistics} from "./statistics";
 import {User} from "./user";
 
 import {Layout} from "../components/common/layout";
@@ -74,8 +73,6 @@ const App: FC = () => {
                     <MyRoute path="/promos/:id" component={Promo} restricted />
 
                     <MyRoute path="/photos" component={Photo} exact restricted />
-
-                    <MyRoute path="/statistics" component={Statistics} restricted />
 
                     <MyRoute path="/emails" component={Email} restricted />
 

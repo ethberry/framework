@@ -17,6 +17,11 @@ export class MerchantController {
     return this.merchantService.search(query);
   }
 
+  @Get("/autocomplete")
+  public autocomplete(): Promise<Array<MerchantEntity>> {
+    return this.merchantService.autocomplete();
+  }
+
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id") id: number): Promise<MerchantEntity | undefined> {

@@ -191,11 +191,9 @@
       "categories": "Categories",
       "emails": "Emails",
       "merchants": "Merchants",
-      "payments": "Payments",
       "photos": "Photos",
       "products": "Products",
       "promos": "Promos",
-      "statistics": "Statistics",
       "title": "Dashboard",
       "users": "Users"
     },
@@ -215,15 +213,6 @@
     "merchants": {
       "title": "Merchants"
     },
-    "payments": {
-      "amount": "amount",
-      "currency": "currency",
-      "id": "ID",
-      "receipt": "receipt",
-      "source": "source",
-      "title": "Payments",
-      "userId": "user"
-    },
     "photos": {
       "title": "Photos"
     },
@@ -235,9 +224,6 @@
     },
     "promos": {
       "title": "Promos"
-    },
-    "statistics": {
-      "title": "Statistics"
     },
     "test": {
       "title": "Test page"

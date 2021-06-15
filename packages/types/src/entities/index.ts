@@ -1,7 +1,6 @@
 export * from "./auth";
 export * from "./base";
 export * from "./merchant";
-export * from "./payment";
 export * from "./photo";
 export * from "./product";
 export * from "./promo";

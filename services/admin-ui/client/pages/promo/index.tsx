@@ -196,7 +196,7 @@ export const Promo: FC = () => {
         <List disablePadding={true}>
           {promos.map((promo, i) => (
             <ListItem key={i}>
-              <ListItemText>{promo.product!.title}</ListItemText>
+              <ListItemText>{promo.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(promo)}>
                   <Create />
