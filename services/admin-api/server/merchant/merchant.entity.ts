@@ -6,6 +6,7 @@ import {ns} from "@trejgun/solo-constants-misc";
 import {UserEntity} from "../user/user.entity";
 import {ProductEntity} from "../product/product.entity";
 import {BaseEntity} from "../common/base.entity";
+import {OrderEntity} from "../order/order.entity";
 
 @Entity({schema: ns, name: "merchant"})
 export class MerchantEntity extends BaseEntity implements IMerchant {
@@ -40,4 +41,9 @@ export class MerchantEntity extends BaseEntity implements IMerchant {
     cascade: ["remove"],
   })
   public products: Array<ProductEntity>;
+
+  @OneToMany(_type => OrderEntity, order => order.merchant, {
+    cascade: ["remove"],
+  })
+  public orders: Array<OrderEntity>;
 }

@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 import {List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import {AccountCircle, Inbox} from "@material-ui/icons";
+import {AccountCircle, Bookmark, Inbox} from "@material-ui/icons";
 import {Link as RouterLink} from "react-router-dom";
 import {FormattedMessage} from "react-intl";
 
@@ -30,6 +30,14 @@ export const Dashboard: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.merchants" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/orders">
+          <ListItemIcon>
+            <Bookmark />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.orders" />
           </ListItemText>
         </ListItem>
       </List>

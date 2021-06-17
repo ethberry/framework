@@ -6,10 +6,11 @@ import {ProductStatus} from "@trejgun/solo-types";
 import {SelectInput, SearchInput} from "@trejgun/material-ui-inputs-core";
 
 import useStyles from "./styles";
+import {IProductSearchDto} from "../index";
 
 interface IProductSearchFormProps {
-  onSubmit: (values: any) => void;
-  initialValues: any;
+  onSubmit: (values: IProductSearchDto) => void;
+  initialValues: IProductSearchDto;
   open: boolean;
 }
 

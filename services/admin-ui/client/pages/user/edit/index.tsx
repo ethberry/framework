@@ -16,7 +16,7 @@ export interface IEditUserDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IUser>, formikBag: any) => Promise<void>;
-  initialValues: any;
+  initialValues: IUser;
 }
 
 export const EditUserDialog: FC<IEditUserDialogProps> = props => {

@@ -7,7 +7,7 @@ import {Public} from "@trejgun/nest-js-providers";
 import {User} from "../common/decorators";
 import {ProfileService} from "./profile.service";
 import {UserEntity} from "../user/user.entity";
-import {ProfileUpdateSchema} from "./schemas";
+import {ProfileUpdateDto} from "./dto";
 
 @ApiCookieAuth()
 @Controller("/profile")
@@ -25,7 +25,7 @@ export class ProfileController {
     @Req() req: Request,
     @Res() res: Response,
     @User() user: UserEntity,
-    @Body() body: ProfileUpdateSchema,
+    @Body() body: ProfileUpdateDto,
   ): Promise<void> {
     return this.profileService.update(user, body, req, res);
   }

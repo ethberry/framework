@@ -19,7 +19,7 @@ import {EditProductDialog} from "./edit";
 import {ProductSearchForm} from "./form";
 import {Breadcrumbs} from "../../components/common/breadcrumbs";
 
-export interface IProductSearchFields extends ISearchDto {
+export interface IProductSearchDto extends ISearchDto {
   productStatus: Array<ProductStatus>;
 }
 
@@ -40,7 +40,7 @@ export const Product: FC = () => {
 
   const api = useContext(ApiContext);
 
-  const [data, setData] = useState<IProductSearchFields>({
+  const [data, setData] = useState<IProductSearchDto>({
     skip: 0,
     take: 10,
     query: "",
@@ -177,7 +177,7 @@ export const Product: FC = () => {
     });
   };
 
-  const handleSubmit = (values: IProductSearchFields): void => {
+  const handleSubmit = (values: IProductSearchDto): void => {
     setData({
       ...values,
       skip: 0,

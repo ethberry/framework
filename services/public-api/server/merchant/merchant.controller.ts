@@ -4,7 +4,7 @@ import {NotFoundInterceptor, PaginationInterceptor, Public} from "@trejgun/nest-
 
 import {MerchantService} from "./merchant.service";
 import {MerchantEntity} from "./merchant.entity";
-import {MerchantSearchSchema} from "./schemas";
+import {MerchantSearchDto} from "./dto";
 
 @Public()
 @Controller("/merchants")
@@ -13,7 +13,7 @@ export class MerchantController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: MerchantSearchSchema): Promise<[Array<MerchantEntity>, number]> {
+  public search(@Query() query: MerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
     return this.merchantService.search(query);
   }
 

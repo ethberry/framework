@@ -1,7 +1,33 @@
-import {IMerchant, IProduct, IPromo, IToken, IUser, ProductStatus, TokenType, UserStatus} from "@trejgun/solo-types";
+import {
+  ICategory,
+  IMerchant,
+  IOrder,
+  IProduct,
+  IPromo,
+  IToken,
+  IUser,
+  OrderStatus,
+  ProductStatus,
+  TokenType,
+  UserStatus,
+} from "@trejgun/solo-types";
 import {DefaultLanguage} from "@trejgun/solo-constants-misc";
 
 const date = new Date();
+
+export const emptyOrder = {
+  userId: 3,
+  merchantId: 1,
+  orderStatus: OrderStatus.NEW,
+  price: 0,
+  createdAt: date.toISOString(),
+} as unknown as IOrder;
+
+export const emptyCategory = {
+  title: "",
+  description: "",
+  parentId: 1,
+} as unknown as ICategory;
 
 export const emptyUser = {
   password: "",
@@ -21,6 +47,7 @@ export const emptyProduct = {
   title: "",
   description: "",
   price: 0,
+
   productStatus: ProductStatus.ACTIVE,
   photos: [],
 } as unknown as IProduct;

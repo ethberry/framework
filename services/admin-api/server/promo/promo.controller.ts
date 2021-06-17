@@ -6,8 +6,7 @@ import {UserRole} from "@trejgun/solo-types";
 
 import {PromoService} from "./promo.service";
 import {PromoEntity} from "./promo.entity";
-import {PromoCreateSchema, PromoUpdateSchema} from "./schemas";
-import {PromoSearchSchema} from "./schemas/search";
+import {PromoCreateDto, PromoSearchDto, PromoUpdateDto} from "./dto";
 
 @Public()
 @Roles(UserRole.ADMIN)
@@ -18,17 +17,17 @@ export class PromoController {
   @Public()
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: PromoSearchSchema): Promise<[Array<PromoEntity>, number]> {
+  public search(@Query() query: PromoSearchDto): Promise<[Array<PromoEntity>, number]> {
     return this.promoService.search(query);
   }
 
   @Post("/")
-  public create(@Body() body: PromoCreateSchema): Promise<PromoEntity> {
+  public create(@Body() body: PromoCreateDto): Promise<PromoEntity> {
     return this.promoService.create(body);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() body: PromoUpdateSchema): Promise<PromoEntity | undefined> {
+  public update(@Param("id") id: number, @Body() body: PromoUpdateDto): Promise<PromoEntity | undefined> {
     return this.promoService.update({id}, body);
   }
 

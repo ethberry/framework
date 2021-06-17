@@ -18,8 +18,8 @@ export class ProductService {
     private readonly photoService: PhotoService,
   ) {}
 
-  public async search(fields: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
-    const {query, productStatus} = fields;
+  public async search(dto: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
+    const {query, productStatus} = dto;
 
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
@@ -140,8 +140,8 @@ export class ProductService {
     return productEntity.save();
   }
 
-  public async updateAll(where: FindConditions<ProductEntity>, data: IProductUpdateDto): Promise<UpdateResult> {
-    return this.productEntityRepository.update(where, data);
+  public async updateAll(where: FindConditions<ProductEntity>, dto: IProductUpdateDto): Promise<UpdateResult> {
+    return this.productEntityRepository.update(where, dto);
   }
 
   public async autocomplete(userEntity: UserEntity): Promise<Array<ProductEntity>> {

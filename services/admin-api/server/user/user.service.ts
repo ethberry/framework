@@ -1,5 +1,5 @@
 import {createHash, randomBytes} from "crypto";
-import {DeleteResult, FindConditions, Repository, FindManyOptions, Brackets} from "typeorm";
+import {Brackets, DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
 import {ConflictException, Inject, Injectable, Logger, LoggerService, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {ConfigService} from "@nestjs/config";
@@ -7,7 +7,7 @@ import {ConfigService} from "@nestjs/config";
 import {UserRole, UserStatus} from "@trejgun/solo-types";
 
 import {UserEntity} from "./user.entity";
-import {IUserAutocompleteDto, IUserCreateDto, IUserQuickDto, IUserSearchDto, IUserUpdateDto} from "./interfaces";
+import {IUserAutocompleteDto, IUserCreateDto, IUserSearchDto, IUserUpdateDto} from "./interfaces";
 import {IPasswordDto} from "../auth/interfaces";
 import {IUserImportDto} from "./interfaces/import";
 
@@ -21,8 +21,8 @@ export class UserService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async search(fields: IUserSearchDto): Promise<[Array<UserEntity>, number]> {
-    const {query, userRoles, userStatus} = fields;
+  public async search(dto: IUserSearchDto): Promise<[Array<UserEntity>, number]> {
+    const {query, userRoles, userStatus} = dto;
     const queryBuilder = this.userEntityRepository.createQueryBuilder("user");
 
     queryBuilder.select();
@@ -107,18 +107,6 @@ export class UserService {
       .save();
 
     return userEntity;
-  }
-
-  public async quick(data: IUserQuickDto): Promise<UserEntity> {
-    const password = Math.random().toString();
-
-    return this.create({
-      ...data,
-      password,
-      confirm: password,
-      // dirty hack
-      captcha: "",
-    });
   }
 
   public async getByCredentials(email: string, password: string): Promise<UserEntity | undefined> {

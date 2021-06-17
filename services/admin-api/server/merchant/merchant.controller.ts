@@ -5,7 +5,7 @@ import {NotFoundInterceptor, PaginationInterceptor} from "@trejgun/nest-js-provi
 
 import {MerchantService} from "./merchant.service";
 import {MerchantEntity} from "./merchant.entity";
-import {MerchantCreateSchema, MerchantSearchSchema, MerchantUpdateSchema} from "./schemas";
+import {MerchantCreateDto, MerchantSearchDto, MerchantUpdateDto} from "./dto";
 import {Roles, User} from "../common/decorators";
 import {UserEntity} from "../user/user.entity";
 import {UserRole} from "@trejgun/solo-types";
@@ -17,7 +17,7 @@ export class MerchantController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: MerchantSearchSchema): Promise<[Array<MerchantEntity>, number]> {
+  public search(@Query() query: MerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
     return this.merchantService.search(query);
   }
 
@@ -27,14 +27,14 @@ export class MerchantController {
   }
 
   @Post("/")
-  public create(@Body() body: MerchantCreateSchema, @User() userEntity: UserEntity): Promise<MerchantEntity> {
+  public create(@Body() body: MerchantCreateDto, @User() userEntity: UserEntity): Promise<MerchantEntity> {
     return this.merchantService.create(body, userEntity);
   }
 
   @Put("/:id")
   public update(
     @Param("id") id: number,
-    @Body() body: MerchantUpdateSchema,
+    @Body() body: MerchantUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<MerchantEntity | undefined> {
     return this.merchantService.update({id}, body, userEntity);

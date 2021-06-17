@@ -5,7 +5,7 @@ import {NotFoundInterceptor, PaginationInterceptor} from "@trejgun/nest-js-provi
 
 import {ProductService} from "./product.service";
 import {ProductEntity} from "./product.entity";
-import {ProductCreateSchema, ProductSearchSchema, ProductUpdateSchema} from "./schemas";
+import {ProductCreateDto, ProductSearchDto, ProductUpdateDto} from "./dto";
 import {UserEntity} from "../user/user.entity";
 import {User} from "../common/decorators";
 
@@ -22,21 +22,21 @@ export class ProductController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() query: ProductSearchSchema,
+    @Query() query: ProductSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<ProductEntity>, number]> {
     return this.productService.search(query, userEntity);
   }
 
   @Post("/")
-  public create(@Body() body: ProductCreateSchema, @User() userEntity: UserEntity): Promise<ProductEntity> {
+  public create(@Body() body: ProductCreateDto, @User() userEntity: UserEntity): Promise<ProductEntity> {
     return this.productService.create(body, userEntity);
   }
 
   @Put("/:id")
   public update(
     @Param("id") id: number,
-    @Body() body: ProductUpdateSchema,
+    @Body() body: ProductUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<ProductEntity> {
     return this.productService.update({id}, body, userEntity);

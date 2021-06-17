@@ -6,7 +6,7 @@ import {UserRole} from "@trejgun/solo-types";
 
 import {PhotoService} from "./photo.service";
 import {PhotoEntity} from "./photo.entity";
-import {PhotoUpdateSchema} from "./schemas";
+import {PhotoUpdateDto} from "./dto";
 import {Roles} from "../common/decorators";
 
 @ApiCookieAuth()
@@ -22,7 +22,7 @@ export class PhotosController {
 
   @Put("/:id")
   @Roles(UserRole.ADMIN)
-  public update(@Param("id") id: number, @Body() body: PhotoUpdateSchema): Promise<PhotoEntity> {
+  public update(@Param("id") id: number, @Body() body: PhotoUpdateDto): Promise<PhotoEntity> {
     return this.photosService.update({id}, body);
   }
 }

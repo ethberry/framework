@@ -7,21 +7,21 @@ export abstract class BaseEntity extends OrmBaseEntity implements IBase {
   public id: number;
 
   @Column({type: "timestamptz"})
-  public createdAt: Date;
+  public createdAt: string;
 
   @Column({type: "timestamptz"})
-  public updatedAt: Date;
+  public updatedAt: string;
 
   @BeforeInsert()
   public beforeInsert(): void {
     const date = new Date();
-    this.createdAt = date;
-    this.updatedAt = date;
+    this.createdAt = date.toISOString();
+    this.updatedAt = date.toISOString();
   }
 
   @BeforeUpdate()
   public beforeUpdate(): void {
     const date = new Date();
-    this.updatedAt = date;
+    this.updatedAt = date.toISOString();
   }
 }

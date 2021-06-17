@@ -3,20 +3,32 @@ import {PostgresConnectionOptions} from "typeorm/driver/postgres/PostgresConnect
 import {ns} from "@trejgun/solo-constants-misc";
 import path from "path";
 
+import {AuthEntity} from "./auth/auth.entity";
+import {CategoryEntity} from "./category/category.entity";
 import {MerchantEntity} from "./merchant/merchant.entity";
+import {OrderEntity} from "./order/order.entity";
 import {PhotoEntity} from "./photo/photo.entity";
 import {ProductEntity} from "./product/product.entity";
 import {PromoEntity} from "./promo/promo.entity";
 import {TokenEntity} from "./token/token.entity";
 import {UserEntity} from "./user/user.entity";
-import {AuthEntity} from "./auth/auth.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   url: process.env.POSTGRES_URL,
-  entities: [AuthEntity, MerchantEntity, PhotoEntity, ProductEntity, PromoEntity, TokenEntity, UserEntity],
+  entities: [
+    AuthEntity,
+    CategoryEntity,
+    MerchantEntity,
+    OrderEntity,
+    PhotoEntity,
+    ProductEntity,
+    PromoEntity,
+    TokenEntity,
+    UserEntity,
+  ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
   // Run migrations automatically,

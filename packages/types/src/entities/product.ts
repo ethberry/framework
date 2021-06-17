@@ -1,6 +1,8 @@
 import {IMerchant} from "./merchant";
 import {IPhoto} from "./photo";
 import {IBase} from "./base";
+import {ICategory} from "./category";
+import {IOrder} from "./order";
 
 export enum ProductStatus {
   ACTIVE = "ACTIVE",
@@ -14,6 +16,9 @@ export interface IProduct extends IBase {
   amount: number;
   merchantId: number;
   merchant?: IMerchant;
+  categoryId: number;
+  category?: ICategory;
   productStatus: ProductStatus;
   photos: Array<IPhoto>;
+  orders: Array<IOrder>;
 }

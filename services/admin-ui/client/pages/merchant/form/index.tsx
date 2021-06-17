@@ -6,10 +6,11 @@ import {MerchantStatus} from "@trejgun/solo-types";
 import {SelectInput, SearchInput} from "@trejgun/material-ui-inputs-core";
 
 import useStyles from "./styles";
+import {IMerchantSearchDto} from "../index";
 
 interface IMerchantSearchFormProps {
-  onSubmit: (values: any) => void;
-  initialValues: any;
+  onSubmit: (values: IMerchantSearchDto) => void;
+  initialValues: IMerchantSearchDto;
   open: boolean;
 }
 

@@ -1,6 +1,6 @@
 import React, {FC, useContext} from "react";
 import {Divider, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import {Email, PeopleAlt, Photo, Storage, Storefront} from "@material-ui/icons";
+import {Bookmark, Category, Email, PeopleAlt, Photo, Storage, Storefront} from "@material-ui/icons";
 import {Link as RouterLink} from "react-router-dom";
 import {FormattedMessage} from "react-intl";
 
@@ -36,12 +36,28 @@ export const Dashboard: FC = () => {
             <FormattedMessage id="pages.dashboard.merchants" />
           </ListItemText>
         </ListItem>
+        <ListItem button component={RouterLink} to="/categories">
+          <ListItemIcon>
+            <Category />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.categories" />
+          </ListItemText>
+        </ListItem>
         <ListItem button component={RouterLink} to="/products">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.products" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/orders">
+          <ListItemIcon>
+            <Bookmark />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.orders" />
           </ListItemText>
         </ListItem>
         {isAdmin ? (

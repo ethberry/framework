@@ -19,7 +19,7 @@ import {Breadcrumbs} from "../../components/common/breadcrumbs";
 import {EditMerchantDialog} from "./edit";
 import {MerchantSearchForm} from "./form";
 
-export interface IMerchantSearchFields extends ISearchDto {
+export interface IMerchantSearchDto extends ISearchDto {
   merchantStatus: Array<MerchantStatus>;
 }
 
@@ -40,7 +40,7 @@ export const Merchant: FC = () => {
 
   const api = useContext(ApiContext);
 
-  const [data, setData] = useState<IMerchantSearchFields>({
+  const [data, setData] = useState<IMerchantSearchDto>({
     skip: 0,
     take: 10,
     query: "",
@@ -178,7 +178,7 @@ export const Merchant: FC = () => {
     });
   };
 
-  const handleSubmit = (values: IMerchantSearchFields): void => {
+  const handleSubmit = (values: IMerchantSearchDto): void => {
     setData({
       ...values,
       skip: 0,

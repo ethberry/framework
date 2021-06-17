@@ -18,10 +18,12 @@ import {StorageType} from "@trejgun/solo-types";
 
 import {RolesGuard} from "./common/guards";
 import {AuthModule} from "./auth/auth.module";
+import {CategoryModule} from "./category/category.module";
 import {DatabaseModule} from "./database/database.module";
 import {EmailModule} from "./email/email.module";
 import {HealthModule} from "./health/health.module";
 import {MerchantModule} from "./merchant/merchant.module";
+import {OrderModule} from "./order/order.module";
 import {PhotoModule} from "./photo/photo.module";
 import {ProductModule} from "./product/product.module";
 import {ProfileModule} from "./profile/profile.module";
@@ -110,9 +112,11 @@ import {AppController} from "./app.controller";
     PassportSession.forRoot(),
     RequestLoggerModule,
     AuthModule,
+    CategoryModule,
     EmailModule,
     HealthModule,
     MerchantModule,
+    OrderModule,
     PhotoModule,
     ProductModule,
     ProfileModule,

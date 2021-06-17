@@ -19,8 +19,8 @@ export interface IEditProductDialogProps {
 export const EditProductDialog: FC<IEditProductDialogProps> = props => {
   const {initialValues, ...rest} = props;
 
-  const {id, title, description, price, amount, productStatus, merchantId, photos} = initialValues;
-  const fixedValues = {id, title, description, price, amount, merchantId, photos};
+  const {id, title, description, categoryId, price, amount, productStatus, merchantId, photos} = initialValues;
+  const fixedValues = {id, title, description, categoryId, price, amount, merchantId, photos};
 
   if (id) {
     Object.assign(fixedValues, {productStatus});
@@ -32,6 +32,7 @@ export const EditProductDialog: FC<IEditProductDialogProps> = props => {
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <EntityInput name="categoryId" controller="categories" />
       <NumberInput name="price" />
       <NumberInput name="amount" />
       {id ? <SelectInput name="productStatus" options={ProductStatus} /> : null}

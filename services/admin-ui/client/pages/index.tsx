@@ -25,9 +25,11 @@ import {MyRoute} from "../components/common/my-route";
 
 import {Landing} from "./landing";
 
+import {Category} from "./category";
 import {Dashboard} from "./dashboard";
 import {Email} from "./email";
 import {Merchant} from "./merchant";
+import {Order} from "./order";
 import {Photo} from "./photo";
 import {Product} from "./product";
 import {Profile} from "./profile";
@@ -69,8 +71,14 @@ const App: FC = () => {
                     <MyRoute path="/merchants" component={Merchant} exact restricted />
                     <MyRoute path="/merchants/:id" component={Merchant} restricted />
 
+                    <MyRoute path="/categories" component={Category} exact restricted />
+                    <MyRoute path="/categories/:id" component={Category} restricted />
+
                     <MyRoute path="/promos" component={Promo} restricted />
                     <MyRoute path="/promos/:id" component={Promo} restricted />
+
+                    <MyRoute path="/orders" component={Order} exact restricted />
+                    <MyRoute path="/orders/:id" component={Order} restricted />
 
                     <MyRoute path="/photos" component={Photo} exact restricted />
 

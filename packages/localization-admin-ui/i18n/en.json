@@ -41,6 +41,11 @@
       "INACTIVE": "Inactive",
       "PENDING": "Pending"
     },
+    "orderStatus": {
+      "CANCELED": "CANCELED",
+      "CLOSED": "Closed",
+      "NEW": "New"
+    },
     "productStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
@@ -87,6 +92,7 @@
       "building": "Building",
       "comment": "Comment",
       "confirm": "Confirm",
+      "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "dateTime": "Date time",
@@ -101,6 +107,7 @@
       "merchantId": "Merchant",
       "merchantStatus": "Status",
       "name": "Name",
+      "orderStatus": "Status",
       "parentId": "Parent",
       "password": "Password",
       "phoneNumber": "Phone number",
@@ -110,10 +117,9 @@
       "productId": "Product",
       "productStatus": "Status",
       "time": "Time",
-      "createdAt": "Created",
-      "updatedAt": "Updated",
       "title": "Title",
       "type": "Type",
+      "updatedAt": "Updated",
       "url": "Url",
       "userId": "User",
       "userIds": "Users",
@@ -125,6 +131,7 @@
       "amount": "10",
       "comment": "Fraud",
       "confirm": "******",
+      "createdAt": "now",
       "definition": "10",
       "description": "Description",
       "email": "me@google.com",
@@ -145,7 +152,6 @@
       "query": "Search...",
       "search": "Search...",
       "text": "qwerty",
-      "createdAt": "now",
       "title": "Title",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
@@ -187,10 +193,14 @@
     "resend-successful": "Email with verification link was re-sent to your new email address."
   },
   "pages": {
+    "category": {
+      "title": "Categories"
+    },
     "dashboard": {
       "categories": "Categories",
       "emails": "Emails",
       "merchants": "Merchants",
+      "orders": "Orders",
       "photos": "Photos",
       "products": "Products",
       "promos": "Promos",
@@ -212,6 +222,9 @@
     },
     "merchants": {
       "title": "Merchants"
+    },
+    "orders": {
+      "title": "Orders"
     },
     "photos": {
       "title": "Photos"
@@ -239,7 +252,9 @@
     "duplicateEmail": "User with this email already registered",
     "email": "Email was successfully sent.",
     "error": "Unknown Error",
+    "internalServerError": "Internal Server Error",
     "merchantNotFound": "Merchant not found",
+    "pageNotFound": "API error",
     "productNotFound": "Product not found",
     "token": "Token has expired. You can request new one",
     "tokenNotFound": "Token not found",
@@ -248,8 +263,6 @@
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
     "userNotFound": "User not found",
-    "pageNotFound": "API error",
-    "internalServerError": "Internal Server Error",
     "verification": "Email was successfully verified."
   }
 }

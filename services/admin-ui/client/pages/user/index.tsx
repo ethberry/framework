@@ -19,7 +19,7 @@ import {EditUserDialog} from "./edit";
 import {UserSearchForm} from "./form";
 import {Breadcrumbs} from "../../components/common/breadcrumbs";
 
-export interface IUserSearchFields extends ISearchDto {
+export interface IUserSearchDto extends ISearchDto {
   userStatus: Array<UserStatus>;
   userRoles: Array<UserRole>;
 }
@@ -40,7 +40,7 @@ export const User: FC = () => {
 
   const api = useContext(ApiContext);
 
-  const [data, setData] = useState<IUserSearchFields>({
+  const [data, setData] = useState<IUserSearchDto>({
     skip: 0,
     take: 10,
     query: "",
@@ -174,7 +174,7 @@ export const User: FC = () => {
     });
   };
 
-  const handleSubmit = (values: IUserSearchFields): void => {
+  const handleSubmit = (values: IUserSearchDto): void => {
     setData({
       ...values,
       skip: 0,

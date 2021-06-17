@@ -29,9 +29,14 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
+    "orderStatus": {
+      "CANCELED": "CANCELED",
+      "CLOSED": "Closed",
+      "NEW": "New"
+    },
     "sort": {
-      "price": "Price",
-      "createdAt": "Date"
+      "createdAt": "Date",
+      "price": "Price"
     },
     "userRoles": {
       "ADMIN": "Admin",
@@ -82,9 +87,9 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "merchantId": "Merchant",
       "amount": "Amount",
       "confirm": "Confirm",
+      "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "email": "Email",
@@ -92,28 +97,29 @@
       "imageUrl": "Avatar",
       "language": "Language",
       "lastName": "Last Name",
+      "merchantId": "Merchant",
+      "orderStatus": "Status",
       "password": "Password",
       "phoneNumber": "Phone number",
       "roles": "Roles",
       "sort": "Sort by",
       "status": "Status",
-      "createdAt": "Created",
-      "updatedAt": "Updated",
       "title": "Title",
-      "type": "Type"
+      "type": "Type",
+      "updatedAt": "Updated"
     },
     "placeholders": {
-      "merchantId": "...",
       "amount": "100",
       "confirm": "******",
+      "createdAt": "Зарегистрирован",
       "email": "me@google.com",
       "firstName": "Gordon",
       "lastName": "Freeman",
+      "merchantId": "...",
       "password": "******",
       "phoneNumber": "+1 (067) 999 99-99",
       "query": "Search...",
-      "search": "Search...",
-      "createdAt": "Зарегистрирован"
+      "search": "Search..."
     },
     "tips": {
       "add": "Add",
@@ -154,6 +160,7 @@
     },
     "dashboard": {
       "merchants": "Merchants",
+      "orders": "Orders",
       "products": "Products",
       "title": "Dashboard"
     },
@@ -177,14 +184,22 @@
     "merchants": {
       "title": "Merchants"
     },
+    "orders": {
+      "date": "Date",
+      "price": "Price",
+      "product": "Product",
+      "products": "Products",
+      "status": "Status",
+      "title": "Orders"
+    },
     "product": {
       "price": "Price: {amount}",
       "title": "{title}"
     },
     "products": {
       "sort": {
-        "price": "Price",
-        "createdAt": "Date"
+        "createdAt": "Date",
+        "price": "Price"
       },
       "title": "Products"
     },
@@ -197,6 +212,7 @@
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "error": "Unknown Error",
+    "internalServerError": "Internal server error.",
     "token": "Token has expired. You can request new one",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",

@@ -3,7 +3,7 @@ import {NotFoundInterceptor, PaginationInterceptor, Public} from "@trejgun/nest-
 
 import {ProductService} from "./product.service";
 import {ProductEntity} from "./product.entity";
-import {ProductSortSchema} from "./schemas";
+import {ProductSortDto} from "./dto";
 
 @Public()
 @Controller("/products")
@@ -12,7 +12,7 @@ export class ProductController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: ProductSortSchema): Promise<[Array<ProductEntity>, number]> {
+  public search(@Query() query: ProductSortDto): Promise<[Array<ProductEntity>, number]> {
     return this.productsService.search(query);
   }
 

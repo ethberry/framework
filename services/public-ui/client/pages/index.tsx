@@ -35,6 +35,7 @@ import {Dashboard} from "./dashboard";
 import {Product} from "./product";
 import {Merchant} from "./merchant";
 import {AboutUs} from "./static/about-us";
+import {Orders} from "./orders";
 
 const App: FC = () => {
   return (
@@ -65,6 +66,8 @@ const App: FC = () => {
 
                     <MyRoute path="/products" component={ProductList} exact />
                     <MyRoute path="/products/:productId" component={Product} exact />
+
+                    <MyRoute path="/orders" component={Orders} exact />
 
                     <MyRoute path="/error/:error" component={Error} />
                     <MyRoute path="/message/:message" component={Message} />

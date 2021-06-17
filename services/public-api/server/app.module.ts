@@ -17,9 +17,11 @@ import {ns} from "@trejgun/solo-constants-misc";
 import {StorageType} from "@trejgun/solo-types";
 
 import {AuthModule} from "./auth/auth.module";
+import {CategoryModule} from "./category/category.module";
 import {DatabaseModule} from "./database/database.module";
 import {HealthModule} from "./health/health.module";
 import {MerchantModule} from "./merchant/merchant.module";
+import {OrderModule} from "./order/order.module";
 import {ProductModule} from "./product/product.module";
 import {ProfileModule} from "./profile/profile.module";
 import {PromoModule} from "./promo/promo.module";
@@ -103,9 +105,11 @@ import {AppController} from "./app.controller";
     PassportSession.forRoot(),
     RequestLoggerModule,
     AuthModule,
+    CategoryModule,
     HealthModule,
     ProfileModule,
     MerchantModule,
+    OrderModule,
     ProductModule,
     PromoModule,
     UserModule,

@@ -6,10 +6,11 @@ import {UserRole, UserStatus} from "@trejgun/solo-types";
 import {SelectInput, SearchInput} from "@trejgun/material-ui-inputs-core";
 
 import useStyles from "./styles";
+import {IUserSearchDto} from "../index";
 
 interface IUserSearchFormProps {
-  onSubmit: (values: any) => void;
-  initialValues: any;
+  onSubmit: (values: IUserSearchDto) => void;
+  initialValues: IUserSearchDto;
   open: boolean;
 }
 
