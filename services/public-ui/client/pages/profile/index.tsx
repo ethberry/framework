@@ -6,7 +6,7 @@ import {useIntl} from "react-intl";
 import {SelectInput, TextInput} from "@trejgun/material-ui-inputs-core";
 import {PageHeader} from "@trejgun/material-ui-page-header";
 import {UserContext, IUserContext} from "@trejgun/provider-user";
-import {ApiContext, localizeErrors} from "@trejgun/provider-api";
+import {ApiContext, ApiError} from "@trejgun/provider-api";
 import {FormikForm} from "@trejgun/material-ui-form";
 import {PhoneInput} from "@trejgun/material-ui-inputs-mask";
 import {AvatarInput} from "@trejgun/material-ui-inputs-image-s3";
@@ -31,28 +31,28 @@ export const Profile: FC = () => {
 
   const handleSubmit = (values: Partial<IUser>, formikBag: any): Promise<void> => {
     return api
-      .fetch({
+      .fetchJson({
         url: "/profile",
         method: "PUT",
         data: values,
       })
-      .then(({json, status}) => {
-        if (status === 200) {
+      .then((json): void => {
+        enqueueSnackbar(formatMessage({id: "snackbar.updated"}), {variant: "success"});
+        if (json) {
           user.logIn(json);
-          enqueueSnackbar(formatMessage({id: "snackbar.updated"}), {variant: "success"});
-        } else if (status === 204) {
-          user.logOut();
-          enqueueSnackbar(formatMessage({id: "snackbar.updated"}), {variant: "warning"});
-        } else if (status === 400) {
-          formikBag.setErrors(localizeErrors(json.message));
         } else {
-          console.error(json);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          user.logOut();
         }
       })
-      .catch(e => {
-        console.error(e);
-        enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+      .catch((e: ApiError) => {
+        if (e.status === 400) {
+          formikBag.setErrors(e.getLocalizedValidationErrors());
+        } else if (e.status) {
+          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+        } else {
+          console.error(e);
+          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+        }
       });
   };
 

@@ -1,6 +1,6 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, FindManyOptions, FindOneOptions, Repository, UpdateResult} from "typeorm";
+import {Brackets, FindConditions, FindManyOptions, FindOneOptions, Repository} from "typeorm";
 
 import {PhotoStatus, ProductStatus, UserRole} from "@trejgun/solo-types";
 
@@ -19,7 +19,7 @@ export class ProductService {
   ) {}
 
   public async search(dto: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
-    const {query, productStatus, categoryIds} = dto;
+    const {query, productStatus, categoryIds, skip, take} = dto;
 
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
@@ -58,7 +58,12 @@ export class ProductService {
     queryBuilder.leftJoinAndSelect("product.categories", "categories");
     queryBuilder.leftJoinAndSelect("product.photos", "photos");
 
-    return queryBuilder.orderBy("product.createdAt", "DESC").getManyAndCount();
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy("product.createdAt", "DESC");
+
+    return queryBuilder.getManyAndCount();
   }
 
   public findAndCount(
@@ -76,11 +81,11 @@ export class ProductService {
   }
 
   public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
-    const {categoryIds, ...rest} = dto;
+    const {categoryIds, photos, ...rest} = dto;
 
     const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? dto.merchantId : userEntity.merchant.id;
 
-    return this.productEntityRepository
+    const productEntity = await this.productEntityRepository
       .create({
         ...rest,
         merchantId,
@@ -88,6 +93,17 @@ export class ProductService {
         categories: categoryIds.map(id => ({id})),
       })
       .save();
+
+    // add new
+    await Promise.allSettled(photos.map(newPhoto => this.photoService.create(newPhoto, productEntity))).then(
+      (values: Array<PromiseSettledResult<PhotoEntity>>) =>
+        values
+          .filter(c => c.status === "fulfilled")
+          .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+          .map(c => c.value),
+    );
+
+    return productEntity;
   }
 
   public async update(
@@ -153,10 +169,6 @@ export class ProductService {
     return productEntity.save();
   }
 
-  public async updateAll(where: FindConditions<ProductEntity>, dto: IProductUpdateDto): Promise<UpdateResult> {
-    return this.productEntityRepository.update(where, dto);
-  }
-
   public async autocomplete(userEntity: UserEntity): Promise<Array<ProductEntity>> {
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
@@ -183,8 +195,6 @@ export class ProductService {
         merchantId: userEntity.merchantId,
       });
     }
-
-    queryBuilder.loadRelationCountAndMap("product.itemsCount", "product.items");
 
     const productEntity = await queryBuilder.getOne();
 

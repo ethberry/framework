@@ -1,21 +1,41 @@
 import {BadRequestException, Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
+import {Brackets, DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
+
+import {ISearchDto} from "@trejgun/types-collection";
 
 import {CategoryEntity} from "./category.entity";
 import {ICategoryCreateDto, ICategoryUpdateDto} from "./interfaces";
-import {ProductService} from "../product/product.service";
 
 @Injectable()
 export class CategoryService {
   constructor(
     @InjectRepository(CategoryEntity)
     private readonly categoryEntityRepository: Repository<CategoryEntity>,
-    private readonly productService: ProductService,
   ) {}
 
-  public search(): Promise<[Array<CategoryEntity>, number]> {
-    return this.findAndCount({});
+  public search(dto: ISearchDto): Promise<[Array<CategoryEntity>, number]> {
+    const {query, skip, take} = dto;
+
+    const queryBuilder = this.categoryEntityRepository.createQueryBuilder("category");
+
+    queryBuilder.select();
+
+    if (query) {
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("category.title ILIKE '%' || :title || '%'", {title: query});
+          qb.orWhere("category.description ILIKE '%' || :description || '%'", {description: query});
+        }),
+      );
+    }
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy("category.createdAt", "DESC");
+
+    return queryBuilder.getManyAndCount();
   }
 
   public findAndCount(

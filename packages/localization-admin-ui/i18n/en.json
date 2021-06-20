@@ -254,6 +254,7 @@
     "duplicateEmail": "User with this email already registered",
     "email": "Email was successfully sent.",
     "error": "Unknown Error",
+    "insufficientPermissions": "Insufficient permissions",
     "internalServerError": "Internal Server Error",
     "merchantNotFound": "Merchant not found",
     "pageNotFound": "API error",

@@ -6,7 +6,7 @@ import {OrderEntity} from "./order.entity";
 import {IOrderCreateDto, IOrderSearchDto, IOrderUpdateDto} from "./interfaces";
 import {ProductService} from "../product/product.service";
 import {UserEntity} from "../user/user.entity";
-import {UserRole} from "@trejgun/solo-types";
+import {OrderStatus, UserRole} from "@trejgun/solo-types";
 
 @Injectable()
 export class OrderService {
@@ -17,7 +17,7 @@ export class OrderService {
   ) {}
 
   public async search(dto: IOrderSearchDto, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
-    const {orderStatus, dateRange, merchantId} = dto;
+    const {orderStatus, dateRange, merchantId, skip, take} = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
     queryBuilder.select();
@@ -44,6 +44,9 @@ export class OrderService {
     queryBuilder.leftJoinAndSelect("order.merchant", "merchant");
     queryBuilder.leftJoinAndSelect("order.product", "product");
     queryBuilder.orderBy("order.createdAt", "DESC");
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
 
     return queryBuilder.getManyAndCount();
   }
@@ -73,6 +76,7 @@ export class OrderService {
         productId,
         userId,
         merchantId,
+        orderStatus: OrderStatus.NEW,
         price: productEntity.price,
       })
       .save();

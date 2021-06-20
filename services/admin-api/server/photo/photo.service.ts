@@ -34,6 +34,7 @@ export class PhotoService {
     return this.photoEntityRepository
       .create({
         ...data,
+        photoStatus: PhotoStatus.NEW,
         product: productEntity,
       })
       .save();

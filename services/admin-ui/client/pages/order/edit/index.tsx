@@ -32,7 +32,7 @@ export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
       />
       <EntityInput name="productId" controller="products" />
       <EntityInput name="merchantId" controller="merchants" />
-      <SelectInput name="orderStatus" options={OrderStatus} />
+      {id ? <SelectInput name="orderStatus" options={OrderStatus} /> : null}
       <StaticInput name="createdAt" value={format(parseISO(createdAt), dateTimeFormat)} />
     </FormDialog>
   );

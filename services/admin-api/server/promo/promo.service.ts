@@ -1,6 +1,6 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {FindConditions, FindManyOptions, Repository} from "typeorm";
+import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
 
 import {PromoEntity} from "./promo.entity";
 import {IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto} from "./interfaces";
@@ -23,17 +23,30 @@ export class PromoService {
     });
   }
 
-  public async search({query}: IPromoSearchDto): Promise<[Array<PromoEntity>, number]> {
+  public async search(dto: IPromoSearchDto): Promise<[Array<PromoEntity>, number]> {
+    const {query, skip, take} = dto;
+
+    const queryBuilder = this.promoEntityRepository.createQueryBuilder("promo");
+
+    queryBuilder.select();
+
     if (query) {
-      return this.promoEntityRepository
-        .createQueryBuilder("promo")
-        .select()
-        .where("promo.title ILIKE '%' || :title || '%'", {title: query})
-        .leftJoinAndSelect("promo.product", "product")
-        .getManyAndCount();
-    } else {
-      return this.findAndCount({});
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("promo.title ILIKE '%' || :title || '%'", {title: query});
+          qb.orWhere("promo.description ILIKE '%' || :description || '%'", {description: query});
+        }),
+      );
     }
+
+    queryBuilder.leftJoinAndSelect("promo.product", "product");
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy("promo.createdAt", "DESC");
+
+    return queryBuilder.getManyAndCount();
   }
 
   public async update(where: FindConditions<PromoEntity>, data: IPromoUpdateDto): Promise<PromoEntity | undefined> {

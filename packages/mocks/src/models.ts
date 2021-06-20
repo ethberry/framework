@@ -1,3 +1,5 @@
+import {v4} from "uuid";
+
 import {
   ICategory,
   IMerchant,
@@ -6,7 +8,6 @@ import {
   IPromo,
   IToken,
   IUser,
-  OrderStatus,
   TokenType,
   UserStatus,
 } from "@trejgun/solo-types";
@@ -17,7 +18,7 @@ const date = new Date();
 export const emptyOrder = {
   userId: 3,
   merchantId: 1,
-  orderStatus: OrderStatus.NEW,
+  productId: 1,
   price: 0,
   createdAt: date.toISOString(),
 } as unknown as IOrder;
@@ -59,7 +60,7 @@ export const emptyPromo = {
 
 export const emptyToken = {
   id: 1,
-  token: "12345qwertasdfgzxcvb",
+  token: v4(),
   tokenType: TokenType.EMAIL,
 } as unknown as IToken;
 

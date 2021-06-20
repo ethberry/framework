@@ -1,7 +1,8 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseInterceptors} from "@nestjs/common";
+import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors} from "@nestjs/common";
 import {ApiCookieAuth} from "@nestjs/swagger";
 
 import {NotFoundInterceptor, PaginationInterceptor} from "@trejgun/nest-js-providers";
+import {SearchDto} from "@trejgun/collection";
 
 import {CategoryService} from "./category.service";
 import {CategoryEntity} from "./category.entity";
@@ -14,8 +15,8 @@ export class CategoryController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(): Promise<[Array<CategoryEntity>, number]> {
-    return this.categoryService.search();
+  public search(@Query() query: SearchDto): Promise<[Array<CategoryEntity>, number]> {
+    return this.categoryService.search(query);
   }
 
   @Get("/autocomplete")

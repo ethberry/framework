@@ -16,7 +16,7 @@ export class MerchantService {
   ) {}
 
   public search(dto: IMerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
-    const {merchantStatus, query} = dto;
+    const {merchantStatus, query, skip, take} = dto;
 
     const queryBuilder = this.merchantEntityRepository.createQueryBuilder("merchant");
 
@@ -42,6 +42,9 @@ export class MerchantService {
     queryBuilder.leftJoinAndSelect("merchant.users", "user");
 
     queryBuilder.orderBy("merchant.createdAt", "DESC");
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
 
     return queryBuilder.getManyAndCount();
   }
@@ -109,7 +112,10 @@ export class MerchantService {
       throw new NotFoundException("merchantNotFound");
     }
 
-    if (userEntity.userRoles.includes(UserRole.MERCHANT) && userEntity.merchantId !== merchantEntity.id) {
+    const isAdmin = userEntity.userRoles.includes(UserRole.ADMIN);
+    const isSelf = userEntity.userRoles.includes(UserRole.MERCHANT) && userEntity.merchantId === merchantEntity.id;
+
+    if (!(isAdmin || isSelf)) {
       throw new ForbiddenException("insufficientPermissions");
     }
 
