@@ -1,7 +1,7 @@
 import React, {FC, Fragment, Ref, useCallback, useEffect, useImperativeHandle, useRef, useState} from "react";
 import {InputBaseComponentProps} from "@material-ui/core/InputBase";
 import {EditorState} from "draft-js";
-import {IRichTextEditorRef, RichTextEditor, TToolbarControl} from "@paktolus/mui-rte";
+import {IRichTextEditorRef, RichTextEditor, TToolbarControl} from "@trejgun/mui-rte";
 
 import {Image} from "@material-ui/icons";
 

@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react";
 import {TextField, TextFieldProps} from "@material-ui/core";
 import {getIn, useFormikContext} from "formik";
-import {TToolbarControl} from "@paktolus/mui-rte";
+import {TToolbarControl} from "@trejgun/mui-rte";
 import {useIntl} from "react-intl";
 import {convertToRaw, EditorState} from "draft-js";
 import {useDebouncedCallback} from "use-debounce";
