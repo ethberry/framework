@@ -16,8 +16,7 @@ export interface IProduct extends IBase {
   amount: number;
   merchantId: number;
   merchant?: IMerchant;
-  categoryId: number;
-  category?: ICategory;
+  categories: Array<ICategory>;
   productStatus: ProductStatus;
   photos: Array<IPhoto>;
   orders: Array<IOrder>;

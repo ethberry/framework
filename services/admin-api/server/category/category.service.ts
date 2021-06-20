@@ -5,7 +5,6 @@ import {DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm
 import {CategoryEntity} from "./category.entity";
 import {ICategoryCreateDto, ICategoryUpdateDto} from "./interfaces";
 import {ProductService} from "../product/product.service";
-import {IProductUpdateDto} from "../product/interfaces";
 
 @Injectable()
 export class CategoryService {
@@ -80,10 +79,6 @@ export class CategoryService {
     if (categoryEntity.children.length) {
       throw new BadRequestException("cantDeleteNotEmptyCategory");
     }
-
-    await this.productService.updateAll({categoryId: where.id}, {
-      categoryId: categoryEntity.parentId,
-    } as IProductUpdateDto);
 
     return this.categoryEntityRepository.delete(where);
   }

@@ -18,12 +18,14 @@ export class ProductCreateDto implements IProductCreateDto {
   public description: string;
 
   @ApiProperty({
+    isArray: true,
     minimum: 1,
   })
   @IsNumber({
+    isArray: true,
     minimum: 1,
   })
-  public categoryId: number;
+  public categoryIds: Array<number>;
 
   @ApiProperty({
     minimum: 0,

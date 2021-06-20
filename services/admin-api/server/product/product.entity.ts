@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, ManyToMany, OneToMany, JoinTable, PrimaryGeneratedColumn} from "typeorm";
 
 import {IProduct, ProductStatus} from "@trejgun/solo-types";
 import {ns} from "@trejgun/solo-constants-misc";
@@ -20,12 +20,9 @@ export class ProductEntity extends BaseEntity implements IProduct {
   @Column({type: "int"})
   public description: string;
 
-  @JoinColumn()
-  @ManyToOne(_type => CategoryEntity, category => category.products)
-  public category: CategoryEntity;
-
-  @Column({type: "int"})
-  public categoryId: number;
+  @ManyToMany(_type => CategoryEntity, category => category.products)
+  @JoinTable({name: "product_to_category"})
+  public categories: Array<CategoryEntity>;
 
   @OneToMany(_type => OrderEntity, order => order.product)
   public orders: Array<OrderEntity>;

@@ -10,6 +10,18 @@ import {IProduct} from "@trejgun/solo-types";
 export class ProductSortDto extends SortDto<IProduct> implements IProductSortDto {
   @ApiPropertyOptional({
     minimum: 1,
+    isArray: true,
+  })
+  @IsNumber({
+    minimum: 1,
+    required: false,
+    isArray: true,
+  })
+  @Type(() => Number)
+  public categoryIds: Array<number>;
+
+  @ApiPropertyOptional({
+    minimum: 1,
   })
   @IsNumber({
     minimum: 1,

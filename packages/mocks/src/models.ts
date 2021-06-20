@@ -7,7 +7,6 @@ import {
   IToken,
   IUser,
   OrderStatus,
-  ProductStatus,
   TokenType,
   UserStatus,
 } from "@trejgun/solo-types";
@@ -47,8 +46,8 @@ export const emptyProduct = {
   title: "",
   description: "",
   price: 0,
-
-  productStatus: ProductStatus.ACTIVE,
+  amount: 0,
+  categories: [],
   photos: [],
 } as unknown as IProduct;
 

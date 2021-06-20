@@ -52,7 +52,6 @@ export class SetupProducts1593408358910 implements MigrationInterface {
       INSERT INTO ${ns}.product (
         title,
         description,
-        category_id,
         price,
         amount,
         product_status,
@@ -62,7 +61,6 @@ export class SetupProducts1593408358910 implements MigrationInterface {
       ) VALUES (
         'Bottle of water',
         '${simpleFormatting}',
-        1,
         100,
         10,
         'ACTIVE',
@@ -72,7 +70,6 @@ export class SetupProducts1593408358910 implements MigrationInterface {
       ), (
         'Jar of water',
         '${simpleFormatting}',
-        1,
         1000,
         10,
         'ACTIVE',
@@ -82,7 +79,6 @@ export class SetupProducts1593408358910 implements MigrationInterface {
       ), (
         'Barrel of water',
         '${simpleFormatting}',
-        1,
         10000,
         10,
         'INACTIVE',
@@ -92,7 +88,6 @@ export class SetupProducts1593408358910 implements MigrationInterface {
       ), (
         'Milk',
         '${simpleFormatting}',
-        1,
         10000,
         10,
         'ACTIVE',
@@ -102,7 +97,6 @@ export class SetupProducts1593408358910 implements MigrationInterface {
       ), (
         'Beer',
         '${simpleFormatting}',
-        1,
         10000,
         10,
         'INACTIVE',
@@ -112,7 +106,6 @@ export class SetupProducts1593408358910 implements MigrationInterface {
       ), (
         'Juice',
         '${simpleFormatting}',
-        1,
         10000,
         10,
         'ACTIVE',

@@ -90,6 +90,7 @@
     "labels": {
       "amount": "Amount",
       "building": "Building",
+      "categoryIds": "Categories",
       "comment": "Comment",
       "confirm": "Confirm",
       "createdAt": "Created",
@@ -129,6 +130,7 @@
     },
     "placeholders": {
       "amount": "10",
+      "categoryIds": "Root",
       "comment": "Fraud",
       "confirm": "******",
       "createdAt": "now",

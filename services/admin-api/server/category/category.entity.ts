@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
 import {ICategory} from "@trejgun/solo-types";
 import {ns} from "@trejgun/solo-constants-misc";
@@ -28,6 +28,7 @@ export class CategoryEntity extends BaseEntity implements ICategory {
   })
   public children: Array<CategoryEntity>;
 
-  @OneToMany(_type => ProductEntity, product => product.category)
+  @ManyToMany(_type => ProductEntity, product => product.categories)
+  @JoinTable({name: "product_to_category"})
   public products: Array<ProductEntity>;
 }

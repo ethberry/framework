@@ -27,10 +27,6 @@ export class AddProductTable1593408358900 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "category_id",
-          type: "int",
-        },
-        {
           name: "price",
           type: "int",
         },
@@ -60,12 +56,6 @@ export class AddProductTable1593408358900 implements MigrationInterface {
           columnNames: ["merchant_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.merchant`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["category_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.category`,
           onDelete: "CASCADE",
         },
       ],

@@ -16,7 +16,7 @@ export class ProductService {
   ) {}
 
   public async search(search: IProductSortDto): Promise<[Array<ProductEntity>, number]> {
-    const {query, sortBy = "id", sort = SortDirection.asc, merchantId} = search;
+    const {query, sortBy = "id", sort = SortDirection.asc, merchantId, categoryIds} = search;
 
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
@@ -26,6 +26,11 @@ export class ProductService {
 
     if (merchantId) {
       queryBuilder.andWhere("product.merchantId = :merchantId", {merchantId});
+    }
+
+    if (categoryIds) {
+      queryBuilder.leftJoinAndSelect("product.categories", "category");
+      queryBuilder.andWhere("category.id IN(:...categoryIds)", {categoryIds});
     }
 
     if (query) {

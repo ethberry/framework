@@ -18,6 +18,7 @@ import {ProductSearchForm} from "./form";
 
 export interface IProductSearchDto extends ISearchDto {
   merchantId: string;
+  categoryIds: Array<number>;
 }
 
 export const ProductList: FC = () => {
@@ -41,6 +42,7 @@ export const ProductList: FC = () => {
     take: 10,
     merchantId: id,
     query: "",
+    categoryIds: [],
     ...parsedData,
   });
 

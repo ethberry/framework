@@ -19,8 +19,8 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const {query, merchantId} = initialValues;
-  const fixedValues = {query, merchantId};
+  const {query, categoryIds, merchantId} = initialValues;
+  const fixedValues = {query, categoryIds, merchantId};
 
   return (
     <div className={classes.root}>
@@ -32,7 +32,10 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
         </Grid>
         <Collapse in={open}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
+              <EntityInput multiple name="categoryIds" controller="categories" />
+            </Grid>
+            <Grid item xs={6}>
               <EntityInput name="merchantId" controller="merchants" />
             </Grid>
           </Grid>

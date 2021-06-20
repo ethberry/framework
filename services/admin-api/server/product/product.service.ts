@@ -19,7 +19,7 @@ export class ProductService {
   ) {}
 
   public async search(dto: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
-    const {query, productStatus} = dto;
+    const {query, productStatus, categoryIds} = dto;
 
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
@@ -31,6 +31,11 @@ export class ProductService {
       queryBuilder.andWhere("product.merchantId = :merchantId", {
         merchantId: userEntity.merchantId,
       });
+    }
+
+    if (categoryIds) {
+      queryBuilder.leftJoinAndSelect("product.categories", "category");
+      queryBuilder.andWhere("category.id IN(:...categoryIds)", {categoryIds});
     }
 
     if (productStatus) {
@@ -50,6 +55,7 @@ export class ProductService {
       );
     }
 
+    queryBuilder.leftJoinAndSelect("product.categories", "categories");
     queryBuilder.leftJoinAndSelect("product.photos", "photos");
 
     return queryBuilder.orderBy("product.createdAt", "DESC").getManyAndCount();
@@ -69,24 +75,27 @@ export class ProductService {
     return this.productEntityRepository.findOne({where, ...options});
   }
 
-  public async create(data: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
-    const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? data.merchantId : userEntity.merchant.id;
+  public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
+    const {categoryIds, ...rest} = dto;
+
+    const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? dto.merchantId : userEntity.merchant.id;
 
     return this.productEntityRepository
       .create({
-        ...data,
+        ...rest,
         merchantId,
         productStatus: ProductStatus.ACTIVE,
+        categories: categoryIds.map(id => ({id})),
       })
       .save();
   }
 
   public async update(
     where: FindConditions<ProductEntity>,
-    data: IProductUpdateDto,
+    dto: IProductUpdateDto,
     userEntity: UserEntity,
   ): Promise<ProductEntity> {
-    const {photos, ...rest} = data;
+    const {photos, categoryIds, ...rest} = dto;
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
       where.merchant = userEntity.merchant;
@@ -136,7 +145,11 @@ export class ProductService {
         .map(c => c.value),
     );
 
-    Object.assign(productEntity, {...rest, photos: [...changedPhotos, ...newPhotos]});
+    Object.assign(productEntity, {
+      ...rest,
+      photos: [...changedPhotos, ...newPhotos],
+      categories: categoryIds.map(id => ({id})),
+    });
     return productEntity.save();
   }
 

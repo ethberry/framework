@@ -26,6 +26,7 @@
     "@trejgun/nest-js-module-helmet": "0.1.3",
     "@trejgun/nest-js-module-passport": "0.1.3",
     "@trejgun/nest-js-module-request-logger": "0.1.3",
+    "@trejgun/nest-js-module-s3": "0.2.0",
     "@trejgun/nest-js-module-session": "0.1.4",
     "@trejgun/nest-js-module-typeorm": "0.1.3",
     "@trejgun/nest-js-module-winston": "0.1.3",

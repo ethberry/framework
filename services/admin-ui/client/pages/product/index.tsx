@@ -20,6 +20,7 @@ import {ProductSearchForm} from "./form";
 import {Breadcrumbs} from "../../components/common/breadcrumbs";
 
 export interface IProductSearchDto extends ISearchDto {
+  categoryIds: Array<number>;
   productStatus: Array<ProductStatus>;
 }
 
@@ -40,12 +41,15 @@ export const Product: FC = () => {
 
   const api = useContext(ApiContext);
 
+  const parsedData = parse(location.search.substring(1));
+
   const [data, setData] = useState<IProductSearchDto>({
     skip: 0,
     take: 10,
     query: "",
     productStatus: [ProductStatus.ACTIVE],
-    ...parse(location.search.substring(1)),
+    categoryIds: [],
+    ...parsedData,
   });
 
   const updateQS = (id?: number) => {

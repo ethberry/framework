@@ -88,6 +88,7 @@
     },
     "labels": {
       "amount": "Amount",
+      "categoryIds": "Category",
       "confirm": "Confirm",
       "createdAt": "Created",
       "dateRangeEnd": "To",
@@ -110,6 +111,7 @@
     },
     "placeholders": {
       "amount": "100",
+      "categoryIds": "Root",
       "confirm": "******",
       "createdAt": "Зарегистрирован",
       "email": "me@google.com",

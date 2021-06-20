@@ -18,6 +18,18 @@ export class SetupProducts1593408358860 implements MigrationInterface {
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        'First',
+        'sub category',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Second',
+        'sub category',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }
