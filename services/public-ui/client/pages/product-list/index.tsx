@@ -21,7 +21,12 @@ export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
 }
 
-export const ProductList: FC = () => {
+export interface IProductListProps {
+  hideMerchantsInSearch: boolean;
+}
+
+export const ProductList: FC<IProductListProps> = props => {
+  const {hideMerchantsInSearch} = props;
   const {id} = useParams<{id: string}>();
   const location = useLocation();
   const history = useHistory();
@@ -107,7 +112,12 @@ export const ProductList: FC = () => {
         </Button>
       </PageHeader>
 
-      <ProductSearchForm onSubmit={handleSubmit} initialValues={data} open={isFiltersOpen} />
+      <ProductSearchForm
+        onSubmit={handleSubmit}
+        initialValues={data}
+        open={isFiltersOpen}
+        hideMerchantsInSearch={hideMerchantsInSearch}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

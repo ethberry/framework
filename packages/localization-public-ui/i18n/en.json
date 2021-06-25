@@ -30,7 +30,7 @@
       "INACTIVE": "Inactive"
     },
     "orderStatus": {
-      "CANCELED": "CANCELED",
+      "CANCELED": "Canceled",
       "CLOSED": "Closed",
       "NEW": "New"
     },

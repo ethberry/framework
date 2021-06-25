@@ -16,7 +16,7 @@ export class SetupOrders1593490663240 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        3,
+        4,
         'NEW',
         1,
         1,
@@ -24,7 +24,7 @@ export class SetupOrders1593490663240 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
+        4,
         'NEW',
         1,
         2,
@@ -32,7 +32,7 @@ export class SetupOrders1593490663240 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        5,
+        4,
         'NEW',
         1,
         3,
@@ -40,7 +40,7 @@ export class SetupOrders1593490663240 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
+        4,
         'NEW',
         1,
         1,
@@ -48,7 +48,7 @@ export class SetupOrders1593490663240 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
+        4,
         'CLOSED',
         1,
         1,

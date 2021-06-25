@@ -12,10 +12,11 @@ interface IProductSearchFormProps {
   onSubmit: (values: any) => void;
   initialValues: IProductSearchDto;
   open: boolean;
+  hideMerchantsInSearch: boolean;
 }
 
 export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
-  const {onSubmit, initialValues, open} = props;
+  const {onSubmit, initialValues, open, hideMerchantsInSearch} = props;
 
   const classes = useStyles();
 
@@ -32,12 +33,14 @@ export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
         </Grid>
         <Collapse in={open}>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={hideMerchantsInSearch ? 12 : 6}>
               <EntityInput multiple name="categoryIds" controller="categories" />
             </Grid>
-            <Grid item xs={6}>
-              <EntityInput name="merchantId" controller="merchants" />
-            </Grid>
+            {hideMerchantsInSearch ? null : (
+              <Grid item xs={6}>
+                <EntityInput name="merchantId" controller="merchants" />
+              </Grid>
+            )}
           </Grid>
         </Collapse>
         <AutoSave />

@@ -1,5 +1,5 @@
 import {APP_FILTER, APP_GUARD, APP_PIPE} from "@nestjs/core";
-import {Module, Logger} from "@nestjs/common";
+import {Logger, Module} from "@nestjs/common";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {ThrottlerGuard, ThrottlerModule} from "@nestjs/throttler";
 import {WinstonModule} from "nest-winston";
@@ -13,6 +13,7 @@ import {PassportInitialize, PassportSession} from "@trejgun/nest-js-module-passp
 import {HelmetModule} from "@trejgun/nest-js-module-helmet";
 import {ISessionOptions, SessionModule} from "@trejgun/nest-js-module-session";
 import {WinstonConfigService} from "@trejgun/nest-js-module-winston";
+import {IS3Options, ISdkOptions, S3Module} from "@trejgun/nest-js-module-s3";
 import {ns} from "@trejgun/solo-constants-misc";
 import {StorageType} from "@trejgun/solo-types";
 
@@ -100,6 +101,18 @@ import {AppController} from "./app.controller";
     }),
     HelmetModule.forRoot({
       contentSecurityPolicy: false,
+    }),
+    S3Module.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): ISdkOptions & IS3Options => {
+        return {
+          region: configService.get<string>("AWS_REGION", ""),
+          accessKeyId: configService.get<string>("AWS_ACCESS_KEY_ID", ""),
+          secretAccessKey: configService.get<string>("AWS_SECRET_ACCESS_KEY", ""),
+          bucket: configService.get<string>("AWS_S3_BUCKET", ""),
+        };
+      },
     }),
     PassportInitialize.forRoot(),
     PassportSession.forRoot(),

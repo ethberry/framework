@@ -78,7 +78,7 @@ export const Merchant: FC = () => {
         </Box>
       </Box>
 
-      <ProductList />
+      <ProductList hideMerchantsInSearch={true} />
     </Fragment>
   );
 };

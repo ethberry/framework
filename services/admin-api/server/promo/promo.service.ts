@@ -2,6 +2,8 @@ import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
 
+import {S3Service} from "@trejgun/nest-js-module-s3";
+
 import {PromoEntity} from "./promo.entity";
 import {IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto} from "./interfaces";
 
@@ -10,6 +12,7 @@ export class PromoService {
   constructor(
     @InjectRepository(PromoEntity)
     private readonly promoEntityRepository: Repository<PromoEntity>,
+    private readonly s3Service: S3Service,
   ) {}
 
   public findAndCount(
@@ -65,7 +68,14 @@ export class PromoService {
   }
 
   public async delete(where: FindConditions<PromoEntity>): Promise<void> {
-    // TODO delete images
+    const promoEntity = await this.promoEntityRepository.findOne(where);
+
+    if (!promoEntity) {
+      throw new NotFoundException("promoNotFound");
+    }
+
+    await this.s3Service.deleteObject({objectName: promoEntity.imageUrl.split("/").pop()!});
+
     await this.promoEntityRepository.delete(where);
   }
 }

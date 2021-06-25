@@ -24,6 +24,7 @@ export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
   @IsString({
     enum: OrderStatus,
     isArray: true,
+    required: false,
   })
   public orderStatus: Array<OrderStatus>;
 }
