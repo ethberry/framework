@@ -47,7 +47,9 @@ export const Sections: FC = () => {
         api.setToken(null);
       })
       .catch((e: ApiError) => {
-        if (e.status) {
+        if (e.status === 400) {
+          // token was not provided, it is ok
+        } else if (e.status) {
           enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
         } else {
           console.error(e);
