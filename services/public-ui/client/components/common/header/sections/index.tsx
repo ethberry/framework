@@ -111,7 +111,7 @@ export const Sections: FC = () => {
         >
           <FormattedMessage id="components.header.menu.profile" />
         </MenuItem>
-        <MenuItem to="/about-us" component={RouterNavLink}>
+        <MenuItem to="/pages/about-us" component={RouterNavLink}>
           <FormattedMessage id="components.header.menu.about" />
         </MenuItem>
         <MenuItem to="/logout" onClick={logout} component={RouterNavLink}>

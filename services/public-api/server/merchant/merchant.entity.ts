@@ -16,7 +16,17 @@ export class MerchantEntity extends BaseEntity implements IMerchant {
   @Column({type: "varchar"})
   public title: string;
 
-  @Column({type: "varchar"})
+  @Column({
+    type: "json",
+    transformer: {
+      from(val: Record<string, any>) {
+        return JSON.stringify(val);
+      },
+      to(val: string) {
+        return JSON.parse(val) as Record<string, any>;
+      },
+    },
+  })
   public description: string;
 
   @Column({type: "varchar"})

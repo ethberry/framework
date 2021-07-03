@@ -34,8 +34,8 @@ import {MerchantList} from "./merchant-list";
 import {Dashboard} from "./dashboard";
 import {Product} from "./product";
 import {Merchant} from "./merchant";
-import {AboutUs} from "./static/about-us";
 import {Orders} from "./orders";
+import {Page} from "./page";
 
 const App: FC = () => {
   return (
@@ -72,7 +72,7 @@ const App: FC = () => {
                     <MyRoute path="/error/:error" component={Error} />
                     <MyRoute path="/message/:message" component={Message} />
 
-                    <MyRoute path="/about-us" component={AboutUs} />
+                    <MyRoute path="/pages/:slug" component={Page} />
 
                     <Redirect to="/message/page-not-found" />
                   </Switch>

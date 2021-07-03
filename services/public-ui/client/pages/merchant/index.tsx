@@ -9,6 +9,7 @@ import {Spinner} from "@trejgun/material-ui-progress";
 import {PageHeader} from "@trejgun/material-ui-page-header";
 import {ApiContext, ApiError} from "@trejgun/provider-api";
 import {IMerchant} from "@trejgun/solo-types";
+import {RichTextDisplay} from "@trejgun/solo-material-ui-rte";
 
 import {ProductList} from "../product-list";
 import useStyles from "./styles";
@@ -73,7 +74,7 @@ export const Merchant: FC = () => {
               <Typography>.</Typography>
             </Skeleton>
           ) : (
-            <Typography>{merchant.description}</Typography>
+            <RichTextDisplay data={merchant.description} />
           )}
         </Box>
       </Box>

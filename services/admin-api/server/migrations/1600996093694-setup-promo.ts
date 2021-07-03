@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
 import {ns} from "@trejgun/solo-constants-misc";
-import {imageUrl} from "@trejgun/solo-mocks";
+import {imageUrl, simpleFormatting} from "@trejgun/solo-mocks";
 
 export class SetupPromo1600996093694 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -10,24 +10,28 @@ export class SetupPromo1600996093694 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.promo (
         title,
+        description,
         product_id,
         image_url,
         created_at,
         updated_at
       ) VALUES (
         'Promo 1',
+        '${simpleFormatting}',
         1,
         '${imageUrl}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Promo 2',
+        '${simpleFormatting}',
         2,
         '${imageUrl}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Promo 3',
+        '${simpleFormatting}',
         3,
         '${imageUrl}',
         '${currentDateTime}',

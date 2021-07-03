@@ -183,6 +183,9 @@
     "merchant": {
       "title": "Merchant: {title}"
     },
+    "page": {
+      "title": "{title}"
+    },
     "merchants": {
       "title": "Merchants"
     },
@@ -214,6 +217,7 @@
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "error": "Unknown Error",
+    "pageNotFound": "Page not found",
     "internalServerError": "Internal server error.",
     "token": "Token has expired. You can request new one",
     "unauthorized": "Incorrect login or password",

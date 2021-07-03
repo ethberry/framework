@@ -1,5 +1,5 @@
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
-import {IsArray, ValidateNested} from "class-validator";
+import {IsArray, IsJSON, ValidateNested} from "class-validator";
 import {Type} from "class-transformer";
 
 import {IsNumber, IsString} from "@trejgun/nest-js-validators";
@@ -14,7 +14,7 @@ export class ProductCreateDto implements IProductCreateDto {
   public title: string;
 
   @ApiProperty()
-  @IsString()
+  @IsJSON({message: "patternMismatch"})
   public description: string;
 
   @ApiProperty({

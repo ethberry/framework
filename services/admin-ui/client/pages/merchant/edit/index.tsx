@@ -3,7 +3,7 @@ import React, {FC} from "react";
 import {EntityInput} from "@trejgun/material-ui-inputs-entity";
 import {FormDialog} from "@trejgun/material-ui-dialog-form";
 import {SelectInput, TextInput} from "@trejgun/material-ui-inputs-core";
-import {MarkdownInput} from "@trejgun/material-ui-inputs-markdown";
+import {RichTextEditor} from "@trejgun/solo-material-ui-rte";
 import {AvatarInput} from "@trejgun/material-ui-inputs-image-s3";
 import {PhoneInput} from "@trejgun/material-ui-inputs-mask";
 import {IMerchant, IUser, MerchantStatus} from "@trejgun/solo-types";
@@ -37,7 +37,7 @@ export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
-      <MarkdownInput name="description" />
+      <RichTextEditor name="description" />
       <TextInput name="email" autoComplete="username" />
       <PhoneInput name="phoneNumber" />
       <EntityInput

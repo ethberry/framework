@@ -4,6 +4,7 @@ import {
   ICategory,
   IMerchant,
   IOrder,
+  IPage,
   IProduct,
   IPromo,
   IToken,
@@ -54,6 +55,7 @@ export const emptyProduct = {
 
 export const emptyPromo = {
   title: "",
+  description: "",
   productId: "",
   photos: [],
 } as unknown as IPromo;
@@ -71,3 +73,9 @@ export const emptyMerchant = {
   phoneNumber: "",
   users: [],
 } as unknown as IMerchant;
+
+export const emptyPage = {
+  title: "",
+  description: "",
+  slug: "",
+} as unknown as IPage;

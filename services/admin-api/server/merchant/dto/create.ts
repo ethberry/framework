@@ -1,4 +1,5 @@
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
+import {IsJSON} from "class-validator";
 
 import {IsNumber, IsString} from "@trejgun/nest-js-validators";
 import {reEmail} from "@trejgun/constants-regexp";
@@ -13,7 +14,7 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   public title: string;
 
   @ApiProperty()
-  @IsString()
+  @IsJSON({message: "patternMismatch"})
   public description: string;
 
   @ApiProperty()

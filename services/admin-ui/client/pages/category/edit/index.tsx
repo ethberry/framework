@@ -3,6 +3,7 @@ import React, {FC} from "react";
 import {EntityInput} from "@trejgun/material-ui-inputs-entity";
 import {FormDialog} from "@trejgun/material-ui-dialog-form";
 import {TextInput} from "@trejgun/material-ui-inputs-core";
+import {RichTextEditor} from "@trejgun/solo-material-ui-rte";
 import {ICategory} from "@trejgun/solo-types";
 
 import {validationSchema} from "./validation";
@@ -25,7 +26,7 @@ export const EditCategoryDialog: FC<IEditCategoryDialogProps> = props => {
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
       <TextInput name="title" />
-      <TextInput name="description" multiline />
+      <RichTextEditor name="description" />
       <EntityInput name="parentId" controller="categories" />
     </FormDialog>
   );

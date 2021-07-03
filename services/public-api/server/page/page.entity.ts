@@ -1,0 +1,36 @@
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+
+import {IPage, PageStatus} from "@trejgun/solo-types";
+import {ns} from "@trejgun/solo-constants-misc";
+import {BaseEntity} from "../common/base.entity";
+
+@Entity({schema: ns, name: "page"})
+export class PageEntity extends BaseEntity implements IPage {
+  @PrimaryGeneratedColumn()
+  public id: number;
+
+  @Column({type: "varchar", unique: true})
+  public slug: string;
+
+  @Column({type: "varchar"})
+  public title: string;
+
+  @Column({
+    type: "json",
+    transformer: {
+      from(val: Record<string, any>) {
+        return JSON.stringify(val);
+      },
+      to(val: string) {
+        return JSON.parse(val) as Record<string, any>;
+      },
+    },
+  })
+  public description: string;
+
+  @Column({
+    type: "enum",
+    enum: PageStatus,
+  })
+  public pageStatus: PageStatus;
+}

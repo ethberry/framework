@@ -4,6 +4,7 @@ import {ConnectionOptions} from "typeorm";
 import {CategoryEntity} from "./category/category.entity";
 import {MerchantEntity} from "./merchant/merchant.entity";
 import {OrderEntity} from "./order/order.entity";
+import {PageEntity} from "./page/page.entity";
 import {PhotoEntity} from "./photo/photo.entity";
 import {ProductEntity} from "./product/product.entity";
 import {PromoEntity} from "./promo/promo.entity";
@@ -20,6 +21,7 @@ const config: ConnectionOptions = {
     CategoryEntity,
     MerchantEntity,
     OrderEntity,
+    PageEntity,
     PhotoEntity,
     ProductEntity,
     PromoEntity,

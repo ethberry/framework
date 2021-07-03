@@ -1,4 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
+import {IsJSON} from "class-validator";
 
 import {IsNumber, IsString} from "@trejgun/nest-js-validators";
 
@@ -10,7 +11,7 @@ export class CategoryCreateDto implements ICategoryCreateDto {
   public title: string;
 
   @ApiProperty()
-  @IsString()
+  @IsJSON({message: "patternMismatch"})
   public description: string;
 
   @ApiProperty()

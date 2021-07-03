@@ -30,6 +30,7 @@ import {Dashboard} from "./dashboard";
 import {Email} from "./email";
 import {Merchant} from "./merchant";
 import {Order} from "./order";
+import {Page} from "./page";
 import {Photo} from "./photo";
 import {Product} from "./product";
 import {Profile} from "./profile";
@@ -79,6 +80,9 @@ const App: FC = () => {
 
                     <MyRoute path="/orders" component={Order} exact restricted />
                     <MyRoute path="/orders/:id" component={Order} restricted />
+
+                    <MyRoute path="/pages" component={Page} exact restricted />
+                    <MyRoute path="/pages/:id" component={Page} restricted />
 
                     <MyRoute path="/photos" component={Photo} exact restricted />
 

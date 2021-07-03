@@ -1,5 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 import {ns} from "@trejgun/solo-constants-misc";
+import {simpleFormatting} from "@trejgun/solo-mocks";
 
 export class SetupProducts1593408358860 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -14,19 +15,19 @@ export class SetupProducts1593408358860 implements MigrationInterface {
         updated_at
       ) VALUES (
         'Root',
-        'main category',
+        '${simpleFormatting}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'First',
-        'sub category',
+        '${simpleFormatting}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Second',
-        'sub category',
+        '${simpleFormatting}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

@@ -34,10 +34,15 @@ export class PromoService {
     queryBuilder.select();
 
     if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(promo.description->'blocks') blocks ON TRUE",
+      );
       queryBuilder.andWhere(
         new Brackets(qb => {
           qb.where("promo.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("promo.description ILIKE '%' || :description || '%'", {description: query});
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
         }),
       );
     }

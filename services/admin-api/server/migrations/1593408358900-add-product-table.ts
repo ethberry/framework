@@ -24,7 +24,7 @@ export class AddProductTable1593408358900 implements MigrationInterface {
         },
         {
           name: "description",
-          type: "varchar",
+          type: "json",
         },
         {
           name: "price",

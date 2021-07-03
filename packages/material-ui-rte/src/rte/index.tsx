@@ -3,8 +3,6 @@ import {TextField, TextFieldProps} from "@material-ui/core";
 import {getIn, useFormikContext} from "formik";
 import {TToolbarControl} from "@trejgun/mui-rte";
 import {useIntl} from "react-intl";
-import {convertToRaw, EditorState} from "draft-js";
-import {useDebouncedCallback} from "use-debounce";
 
 import {IRichTextInputProps, RichTextInput} from "../input";
 
@@ -17,22 +15,19 @@ const defaultControls = [
   "highlight",
   "undo",
   "redo",
-  "link",
   "numberList",
   "bulletList",
-  "quote",
-  "code",
   "clear",
-  "media",
+  "save",
 ];
 
 export interface IRichTextFieldProps {
   name: string;
-  controls?: Array<TToolbarControl>;
+  customControls?: Array<TToolbarControl>;
 }
 
 export const RichTextEditor: FC<IRichTextFieldProps & TextFieldProps> = props => {
-  const {id, name, defaultValue, InputLabelProps, controls = defaultControls, ...rest} = props;
+  const {id, name, InputLabelProps, customControls = [], ...rest} = props;
 
   const suffix = name.split(".").pop() as string;
 
@@ -48,28 +43,23 @@ export const RichTextEditor: FC<IRichTextFieldProps & TextFieldProps> = props =>
   const localizedPlaceholder = formatMessage({id: `form.placeholders.${suffix}`});
   const localizedLabel = formatMessage({id: `form.labels.${suffix}`});
 
-  const debounced = useDebouncedCallback((state: EditorState) => {
-    const content = state.getCurrentContent();
-    const rawObject = convertToRaw(content);
-    formik.setFieldValue(name, JSON.stringify(rawObject));
-  }, 1000);
-
   const inputProps: IRichTextInputProps = {
     id,
-    defaultValue,
+    defaultValue: value,
     label: localizedPlaceholder,
-    onStateChange: debounced,
     doFocus: isFocused,
     onFocus: () => setIsFocused(true),
     onBlur: () => setIsFocused(false),
-    controls,
+    onSave: (data: string) => {
+      formik.setFieldValue(name, data);
+    },
+    controls: defaultControls.concat(customControls),
   };
 
   return (
     <TextField
       id={id}
       name={name}
-      value={value}
       error={error && touched}
       label={localizedLabel}
       placeholder={localizedPlaceholder}

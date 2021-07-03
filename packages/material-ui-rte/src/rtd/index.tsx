@@ -2,31 +2,16 @@ import React, {FC} from "react";
 import {Editor, EditorState, convertFromRaw, ContentBlock} from "draft-js";
 import {TCustomControl, atomicBlockExists} from "@trejgun/mui-rte";
 
-import {Media} from "../image";
-import {ImageUpload} from "../image-upload";
-
 export interface IRichTextDisplayProps {
   data: any;
 }
 
-const customControls: Array<TCustomControl> = [
-  {
-    name: "my-image",
-    type: "atomic",
-    atomicComponent: ImageUpload,
-  },
-  {
-    name: "image",
-    type: "atomic",
-    atomicComponent: Media,
-  },
-];
+const customControls: Array<TCustomControl> = [];
 
 export const RichTextDisplay: FC<IRichTextDisplayProps> = props => {
   const {data} = props;
 
-  const contentState = convertFromRaw(JSON.parse(data));
-  const editorState = EditorState.createWithContent(contentState);
+  const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(data)));
 
   const handleChange = () => {};
 

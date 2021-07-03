@@ -26,7 +26,7 @@ export class AddMerchantTable1563804021000 implements MigrationInterface {
         },
         {
           name: "description",
-          type: "varchar",
+          type: "json",
         },
         {
           name: "email",

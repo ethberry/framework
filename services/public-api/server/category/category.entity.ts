@@ -10,10 +10,20 @@ export class CategoryEntity extends BaseEntity implements ICategory {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column()
+  @Column({type: "varchar"})
   public title: string;
 
-  @Column()
+  @Column({
+    type: "json",
+    transformer: {
+      from(val: Record<string, any>) {
+        return JSON.stringify(val);
+      },
+      to(val: string) {
+        return JSON.parse(val) as Record<string, any>;
+      },
+    },
+  })
   public description: string;
 
   @ManyToOne(_type => CategoryEntity, category => category.children)

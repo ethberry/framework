@@ -1,4 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
+import {IsJSON} from "class-validator";
 
 import {IsNumber, IsString} from "@trejgun/nest-js-validators";
 
@@ -8,6 +9,10 @@ export class PromoCreateDto implements IPromoCreateDto {
   @ApiProperty()
   @IsString()
   public title: string;
+
+  @ApiProperty()
+  @IsJSON({message: "patternMismatch"})
+  public description: string;
 
   @ApiProperty({
     minimum: 1,

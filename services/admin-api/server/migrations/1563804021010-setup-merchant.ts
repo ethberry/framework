@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
 import {ns} from "@trejgun/solo-constants-misc";
-import {imageUrl} from "@trejgun/solo-mocks";
+import {imageUrl, simpleFormatting} from "@trejgun/solo-mocks";
 
 export class SetupMerchant1563804021010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -20,7 +20,7 @@ export class SetupMerchant1563804021010 implements MigrationInterface {
       ) VALUES (
         'trejgun+merchant1@gmail.com',
         'MEOW DOA',
-        'Cat''s shop',
+        '${simpleFormatting}',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'ACTIVE',
@@ -29,7 +29,7 @@ export class SetupMerchant1563804021010 implements MigrationInterface {
       ), (
         'trejgun+merchant2@gmail.com',
         'CTAPbIu SHOP',
-        'Vintage shit',
+        '${simpleFormatting}',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'INACTIVE',

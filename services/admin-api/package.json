@@ -33,6 +33,7 @@
     "@trejgun/nest-js-providers": "0.1.5",
     "@trejgun/nest-js-validators": "0.1.4",
     "@trejgun/solo-constants-misc": "0.0.1",
+    "@trejgun/solo-material-ui-rte": "0.0.1",
     "@trejgun/solo-mocks": "0.0.1",
     "@trejgun/solo-types": "0.0.1",
     "@trejgun/types-collection": "0.1.4",

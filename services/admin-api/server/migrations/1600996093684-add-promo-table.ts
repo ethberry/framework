@@ -16,6 +16,10 @@ export class AddPromoTable1600996093684 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "description",
+          type: "json",
+        },
+        {
           name: "product_id",
           type: "int",
         },

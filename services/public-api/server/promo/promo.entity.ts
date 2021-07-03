@@ -14,6 +14,19 @@ export class PromoEntity extends BaseEntity implements IPromo {
   @Column({type: "varchar"})
   public title: string;
 
+  @Column({
+    type: "json",
+    transformer: {
+      from(val: Record<string, any>) {
+        return JSON.stringify(val);
+      },
+      to(val: string) {
+        return JSON.parse(val) as Record<string, any>;
+      },
+    },
+  })
+  public description: string;
+
   @JoinColumn()
   @OneToOne(_type => ProductEntity)
   public product: ProductEntity;

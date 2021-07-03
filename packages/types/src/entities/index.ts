@@ -3,6 +3,7 @@ export * from "./base";
 export * from "./category";
 export * from "./merchant";
 export * from "./order";
+export * from "./page";
 export * from "./photo";
 export * from "./product";
 export * from "./promo";

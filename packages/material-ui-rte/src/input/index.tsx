@@ -1,12 +1,7 @@
-import React, {FC, Fragment, Ref, useCallback, useEffect, useImperativeHandle, useRef, useState} from "react";
+import React, {FC, Fragment, Ref, useCallback, useEffect, useImperativeHandle, useRef} from "react";
 import {InputBaseComponentProps} from "@material-ui/core/InputBase";
 import {EditorState} from "draft-js";
 import {IRichTextEditorRef, RichTextEditor, TToolbarControl} from "@trejgun/mui-rte";
-
-import {Image} from "@material-ui/icons";
-
-import {ImageUploadPopover} from "../image-upload/popover";
-import {ImageUpload} from "../image-upload";
 
 export interface IRichTextInputProps extends Omit<InputBaseComponentProps, "value"> {
   inputRef?: Ref<unknown>;
@@ -16,9 +11,7 @@ export interface IRichTextInputProps extends Omit<InputBaseComponentProps, "valu
 }
 
 export const RichTextInput: FC<IRichTextInputProps> = props => {
-  const {inputRef, doFocus, onStateChange, controls = [], ...rest} = props;
-
-  const [anchor2, setAnchor2] = useState<HTMLElement | null>(null);
+  const {inputRef, doFocus, onStateChange, ...rest} = props;
 
   const acquireFocus = doFocus ?? false;
 
@@ -42,36 +35,7 @@ export const RichTextInput: FC<IRichTextInputProps> = props => {
 
   return (
     <Fragment>
-      <ImageUploadPopover
-        anchor={anchor2}
-        onSubmit={(data, insert) => {
-          if (insert) {
-            ref.current?.insertAtomicBlockSync("my-image", data);
-          }
-          setAnchor2(null);
-        }}
-      />
-      <RichTextEditor
-        {...rest}
-        onChange={onStateChange}
-        ref={ref}
-        controls={controls.concat(["add-card", "image-upload", "protected-resource"])}
-        customControls={[
-          {
-            name: "my-image",
-            type: "atomic",
-            atomicComponent: ImageUpload,
-          },
-          {
-            name: "image-upload",
-            icon: <Image />,
-            type: "callback",
-            onClick: (_editorState, _name, anchor) => {
-              setAnchor2(anchor);
-            },
-          },
-        ]}
-      />
+      <RichTextEditor {...rest} onChange={onStateChange} ref={ref} />
     </Fragment>
   );
 };
