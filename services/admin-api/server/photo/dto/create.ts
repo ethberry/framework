@@ -14,4 +14,6 @@ export class PhotoCreateDto implements IPhotoCreateDto {
   @ApiProperty()
   @IsString()
   public imageUrl: string;
+
+  priority: number;
 }

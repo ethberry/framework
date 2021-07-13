@@ -1,8 +1,8 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, FindManyOptions, FindOneOptions, Repository} from "typeorm";
+import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
 
-import {ProductStatus} from "@trejgun/solo-types";
+import {PhotoStatus, ProductStatus} from "@trejgun/solo-types";
 import {SortDirection} from "@trejgun/types-collection";
 
 import {ProductEntity} from "./product.entity";
@@ -34,10 +34,15 @@ export class ProductService {
     }
 
     if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(product.description->'blocks') blocks ON TRUE",
+      );
       queryBuilder.andWhere(
         new Brackets(qb => {
           qb.where("product.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("product.description ILIKE '%' || :description || '%'", {description: query});
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
         }),
       );
     }
@@ -56,9 +61,25 @@ export class ProductService {
 
     queryBuilder.select();
     queryBuilder.where({productStatus: ProductStatus.ACTIVE});
-    queryBuilder.leftJoinAndSelect("product.photos", "photo");
-    queryBuilder.orderBy("product.createdAt", "DESC");
-    queryBuilder.limit(3);
+    queryBuilder.andWhere("photos.priority = 0");
+    queryBuilder.leftJoinAndSelect(
+      "product.photos",
+      "photos",
+      "photos.photoStatus = :photoStatus AND photos.priority = :priority",
+      {
+        photoStatus: PhotoStatus.APPROVED,
+        priority: 0,
+      },
+    );
+    queryBuilder.orderBy({
+      "product.createdAt": "DESC",
+    });
+
+    queryBuilder.skip(0);
+    queryBuilder.take(10);
+
+    queryBuilder.groupBy("product.id, photos.id");
+    queryBuilder.having("COUNT(photos.id) > 0");
 
     return queryBuilder.getManyAndCount();
   }
@@ -70,10 +91,19 @@ export class ProductService {
     return this.productEntityRepository.findAndCount({where, ...options});
   }
 
-  public findOne(
-    where: FindConditions<ProductEntity>,
-    options?: FindOneOptions<ProductEntity>,
-  ): Promise<ProductEntity | undefined> {
-    return this.productEntityRepository.findOne({where, ...options});
+  public findOne(where: FindConditions<ProductEntity>): Promise<ProductEntity | undefined> {
+    const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
+
+    queryBuilder.where(where);
+
+    queryBuilder.leftJoinAndSelect("product.categories", "categories");
+    queryBuilder.leftJoinAndSelect("product.photos", "photos");
+
+    // working around https://github.com/typeorm/typeorm/issues/2620
+    queryBuilder.orderBy({
+      "photos.priority": "ASC",
+    });
+
+    return queryBuilder.getOne();
   }
 }

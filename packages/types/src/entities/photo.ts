@@ -11,6 +11,7 @@ export interface IPhoto extends IBase {
   title: string;
   imageUrl: string;
   photoStatus: PhotoStatus;
+  priority: number;
   productId: number;
   product: IProduct;
 }

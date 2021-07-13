@@ -37,7 +37,7 @@ export const PromoCarousel: FC = () => {
         url: "/promo",
       })
       .then((json: IPaginationResult<IPromo>) => {
-        setPromos(json.list);
+        setPromos(json.rows);
       })
       .catch((e: ApiError) => {
         if (e.status) {

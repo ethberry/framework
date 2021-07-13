@@ -28,7 +28,6 @@ touch ./services/admin-api/.env.production
   echo PORT=$PORT_ADMIN_API >>./services/admin-api/.env.production
   echo ADMIN_FE_URL=$ADMIN_FE_URL >>./services/admin-api/.env.production
   echo POSTGRES_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB >>./services/admin-api/.env.production
-  echo REDIS_SESSION_URL=$REDIS_SESSION_URL >>./services/admin-api/.env.production
   echo REDIS_THROTTLE_URL=$REDIS_THROTTLE_URL >>./services/admin-api/.env.production
   echo THROTTLE_TTL=$THROTTLE_TTL >>./services/admin-api/.env.production
   echo THROTTLE_LIMIT=$THROTTLE_LIMIT >>./services/admin-api/.env.production
@@ -44,7 +43,6 @@ touch ./services/admin-api/.env.production
   echo FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRETL >>./services/admin-api/.env.production
   echo FACEBOOK_CALLBACK_URL=$FACEBOOK_CALLBACK_URL >>./services/admin-api/.env.production
   echo PASSWORD_SECRET=$PASSWORD_SECRET >>./services/admin-api/.env.production
-  echo COOKIE_SESSION_SECRET=$COOKIE_SESSION_SECRET >>./services/admin-api/.env.production
   echo PAPERTRAIL_HOST=$PAPERTRAIL_HOST >>./services/admin-api/.env.production
   echo PAPERTRAIL_PORT=$PAPERTRAIL_PORT >>./services/admin-api/.env.production
 
@@ -70,7 +68,6 @@ touch ./services/public-api/.env.production
   echo PORT=$PORT_PUBLIC_API >>./services/public-api/.env.production
   echo PUBLIC_FE_URL=$PUBLIC_FE_URL >>./services/public-api/.env.production
   echo POSTGRES_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST/$POSTGRES_DB >>./services/public-api/.env.production
-  echo REDIS_SESSION_URL=$REDIS_SESSION_URL >>./services/public-api/.env.production
   echo REDIS_THROTTLE_URL=$REDIS_THROTTLE_URL >>./services/public-api/.env.production
   echo THROTTLE_TTL=$THROTTLE_TTL >>./services/public-api/.env.production
   echo THROTTLE_LIMIT=$THROTTLE_LIMIT >>./services/public-api/.env.production
@@ -86,7 +83,6 @@ touch ./services/public-api/.env.production
   echo FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRETL >>./services/public-api/.env.production
   echo FACEBOOK_CALLBACK_URL=$FACEBOOK_CALLBACK_URL >>./services/public-api/.env.production
   echo PASSWORD_SECRET=$PASSWORD_SECRET >>./services/public-api/.env.production
-  echo COOKIE_SESSION_SECRET=$COOKIE_SESSION_SECRET >>./services/public-api/.env.production
   echo PAPERTRAIL_HOST=$PAPERTRAIL_HOST >>./services/public-api/.env.production
   echo PAPERTRAIL_PORT=$PAPERTRAIL_PORT >>./services/public-api/.env.production
 

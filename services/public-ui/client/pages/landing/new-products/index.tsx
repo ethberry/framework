@@ -28,7 +28,7 @@ export const NewProducts: FC = () => {
         url: "/products/new",
       })
       .then((json: IPaginationResult<IProduct>) => {
-        setProducts(json.list);
+        setProducts(json.rows);
       })
       .catch((e: ApiError) => {
         if (e.status) {

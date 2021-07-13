@@ -3,18 +3,16 @@ import {Logger, Module} from "@nestjs/common";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {ThrottlerGuard, ThrottlerModule} from "@nestjs/throttler";
 import {WinstonModule} from "nest-winston";
-import {RedisModule, RedisModuleOptions, RedisService} from "nestjs-redis";
+import {RedisModule, RedisModuleOptions, RedisService} from "@liaoliaots/nestjs-redis";
 import {ThrottlerStorageRedisService} from "nestjs-throttler-storage-redis";
 
 import {HttpExceptionFilter, HttpValidationPipe} from "@trejgun/nest-js-providers";
 import {JwtHttpGuard} from "@trejgun/nest-js-guards";
 import {RequestLoggerModule} from "@trejgun/nest-js-module-request-logger";
-import {PassportInitialize, PassportSession} from "@trejgun/nest-js-module-passport";
+import {PassportInitialize} from "@trejgun/nest-js-module-passport";
 import {HelmetModule} from "@trejgun/nest-js-module-helmet";
-import {ISessionOptions, SessionModule} from "@trejgun/nest-js-module-session";
 import {WinstonConfigService} from "@trejgun/nest-js-module-winston";
 import {IS3Options, ISdkOptions, S3Module} from "@trejgun/nest-js-module-s3";
-import {ns} from "@trejgun/solo-constants-misc";
 import {StorageType} from "@trejgun/solo-types";
 
 import {RolesGuard} from "./common/guards";
@@ -71,30 +69,15 @@ import {AppController} from "./app.controller";
     RedisModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService): Array<RedisModuleOptions> => {
-        const redisSessionUrl = configService.get<string>("REDIS_SESSION_URL", "redis://127.0.0.1:6379/1");
+      useFactory: (configService: ConfigService): RedisModuleOptions => {
         const redisThrottleUrl = configService.get<string>("REDIS_THROTTLE_URL", "redis://127.0.0.1:6379/2");
-        return [
-          {
-            name: StorageType.SESSION,
-            url: redisSessionUrl,
-          },
-          {
-            name: StorageType.THROTTLE,
-            url: redisThrottleUrl,
-          },
-        ];
-      },
-    }),
-    SessionModule.forRootAsync({
-      imports: [ConfigModule, RedisModule],
-      inject: [ConfigService, RedisService],
-      useFactory: (configService: ConfigService, redisService: RedisService): ISessionOptions => {
         return {
-          client: redisService.getClient(StorageType.SESSION),
-          secret: configService.get<string>("COOKIE_SESSION_SECRET", "keyboard_cat"),
-          secure: configService.get<string>("NODE_ENV", "development") === "production",
-          name: ns,
+          config: [
+            {
+              namespace: StorageType.THROTTLE,
+              url: redisThrottleUrl,
+            },
+          ],
         };
       },
     }),
@@ -123,7 +106,6 @@ import {AppController} from "./app.controller";
       },
     }),
     PassportInitialize.forRoot(),
-    PassportSession.forRoot(),
     RequestLoggerModule,
     AuthModule,
     CategoryModule,

@@ -7,12 +7,16 @@ import {
   MicroserviceHealthIndicator,
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
+import {SkipThrottle} from "@nestjs/throttler";
+import {RedisHealthIndicator} from "@liaoliaots/nestjs-redis";
 import {ConfigService} from "@nestjs/config";
 import {Transport} from "@nestjs/microservices";
 
 import {Public} from "@trejgun/nest-js-providers";
+import {StorageType} from "@trejgun/solo-types";
 
 @Public()
+@SkipThrottle(true)
 @Controller("/health")
 export class HealthController {
   constructor(
@@ -20,36 +24,28 @@ export class HealthController {
     private readonly db: TypeOrmHealthIndicator,
     private readonly ms: MicroserviceHealthIndicator,
     private readonly configService: ConfigService,
+    private readonly redisIndicator: RedisHealthIndicator,
   ) {}
 
   @Get()
   @HealthCheck()
   readiness(): Promise<HealthCheckResult> {
     const rmqUrl = this.configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
-    const rmqQueueEmail = this.configService.get<string>("RMQ_QUEUE_EMAIL", "email");
-    const rmqQueueWebhook = this.configService.get<string>("RMQ_QUEUE_WEBHOOK", "webhook");
 
     return this.health.check([
       async (): Promise<HealthIndicatorResult> =>
-        this.db.pingCheck("database", {
-          timeout: 300,
+        this.db.pingCheck("DataSase", {
+          timeout: 600,
         }),
       async (): Promise<HealthIndicatorResult> =>
-        this.ms.pingCheck("email", {
+        this.ms.pingCheck("RabbitMQ", {
           transport: Transport.RMQ,
           options: {
             urls: [rmqUrl],
-            queue: rmqQueueEmail,
           },
         }),
       async (): Promise<HealthIndicatorResult> =>
-        this.ms.pingCheck("webhook", {
-          transport: Transport.RMQ,
-          options: {
-            urls: [rmqUrl],
-            queue: rmqQueueWebhook,
-          },
-        }),
+        this.redisIndicator.isHealthy("Redis", {namespace: StorageType.THROTTLE}),
     ]);
   }
 }

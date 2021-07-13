@@ -88,7 +88,7 @@ export const Product: FC = () => {
         data,
       })
       .then((json: IPaginationResult<IProduct>) => {
-        setProducts(json.list);
+        setProducts(json.rows);
         setCount(json.count);
         updateQS();
       });

@@ -45,7 +45,7 @@ export class ProductController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id") id: number): Promise<ProductEntity | undefined> {
-    return this.productService.findOne({id}, {relations: ["photos", "categories"]});
+    return this.productService.findOne({id});
   }
 
   @Delete("/:id")

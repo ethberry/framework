@@ -69,7 +69,7 @@ export const User: FC = () => {
         data,
       })
       .then((json: IPaginationResult<IUser>) => {
-        setUsers(json.list);
+        setUsers(json.rows);
         setCount(json.count);
         updateQS();
       });

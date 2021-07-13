@@ -35,7 +35,7 @@ export const Photo: FC = () => {
         url: "/photos",
       })
       .then((json: IPaginationResult<IPhoto>) => {
-        setPhotos(json.list);
+        setPhotos(json.rows);
       });
   };
 

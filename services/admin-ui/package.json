@@ -33,7 +33,6 @@
     "@trejgun/material-ui-inputs-entity": "0.1.11",
     "@trejgun/material-ui-inputs-image-s3": "0.1.13",
     "@trejgun/material-ui-inputs-lab": "0.1.8",
-    "@trejgun/material-ui-inputs-markdown": "0.1.9",
     "@trejgun/material-ui-inputs-mask": "0.1.10",
     "@trejgun/material-ui-inputs-picker": "0.1.8",
     "@trejgun/material-ui-page-header": "0.1.9",

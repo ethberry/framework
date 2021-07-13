@@ -1,17 +1,17 @@
 import {Module} from "@nestjs/common";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 
-import {SesModule, ISesOptions, ISdkOptions} from "@trejgun/nest-js-module-ses";
+import {SesModule, ISesOptions} from "@trejgun/nest-js-module-ses";
 
 import {EmailController} from "./email.controller";
 import {EmailService} from "./email.service";
 
 @Module({
   imports: [
-    SesModule.forRootAsync({
+    SesModule.forRootAsync(SesModule, {
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService): ISdkOptions & ISesOptions => {
+      useFactory: (configService: ConfigService): ISesOptions => {
         return {
           region: configService.get<string>("AWS_REGION", ""),
           accessKeyId: configService.get<string>("AWS_ACCESS_KEY_ID", ""),

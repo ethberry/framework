@@ -24,6 +24,9 @@ export class PhotoEntity extends BaseEntity implements IPhoto {
   @Column({type: "int"})
   public productId: number;
 
+  @Column({type: "int"})
+  public priority: number;
+
   @Column({
     type: "enum",
     enum: PhotoStatus,

@@ -78,7 +78,7 @@ export const Promo: FC = () => {
         data,
       })
       .then((json: IPaginationResult<IPromo>) => {
-        setPromos(json.list);
+        setPromos(json.rows);
         setCount(json.count);
         updateQS();
       });

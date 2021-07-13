@@ -66,7 +66,7 @@ export const Orders: FC = () => {
         },
       })
       .then((json: IPaginationResult<IOrder>) => {
-        setOrders(json.list);
+        setOrders(json.rows);
         setCount(json.count);
         updateQS();
       })

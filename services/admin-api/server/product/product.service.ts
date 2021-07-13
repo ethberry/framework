@@ -1,6 +1,6 @@
 import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, FindManyOptions, FindOneOptions, Repository} from "typeorm";
+import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
 
 import {PhotoStatus, ProductStatus, UserRole} from "@trejgun/solo-types";
 
@@ -66,7 +66,10 @@ export class ProductService {
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
-    queryBuilder.orderBy("product.createdAt", "DESC");
+    queryBuilder.orderBy({
+      "product.createdAt": "DESC",
+      "photos.priority": "ASC",
+    });
 
     return queryBuilder.getManyAndCount();
   }
@@ -78,11 +81,20 @@ export class ProductService {
     return this.productEntityRepository.findAndCount({where, ...options});
   }
 
-  public findOne(
-    where: FindConditions<ProductEntity>,
-    options?: FindOneOptions<ProductEntity>,
-  ): Promise<ProductEntity | undefined> {
-    return this.productEntityRepository.findOne({where, ...options});
+  public findOne(where: FindConditions<ProductEntity>): Promise<ProductEntity | undefined> {
+    const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
+
+    queryBuilder.where(where);
+
+    queryBuilder.leftJoinAndSelect("product.categories", "categories");
+    queryBuilder.leftJoinAndSelect("product.photos", "photos");
+
+    // working around https://github.com/typeorm/typeorm/issues/2620
+    queryBuilder.orderBy({
+      "photos.priority": "ASC",
+    });
+
+    return queryBuilder.getOne();
   }
 
   public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
@@ -100,12 +112,13 @@ export class ProductService {
       .save();
 
     // add new
-    await Promise.allSettled(photos.map(newPhoto => this.photoService.create(newPhoto, productEntity))).then(
-      (values: Array<PromiseSettledResult<PhotoEntity>>) =>
-        values
-          .filter(c => c.status === "fulfilled")
-          .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
-          .map(c => c.value),
+    await Promise.allSettled(
+      photos.map((newPhoto, i) => this.photoService.create({...newPhoto, priority: i}, productEntity)),
+    ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
+      values
+        .filter(c => c.status === "fulfilled")
+        .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+        .map(c => c.value),
     );
 
     return productEntity;
@@ -128,49 +141,60 @@ export class ProductService {
       throw new NotFoundException("productNotFound");
     }
 
-    // remove old
-    await Promise.allSettled(
-      productEntity.photos
-        .filter(oldPhoto => !photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
-        .map(oldPhoto => oldPhoto.remove()),
-    );
+    if (photos.length) {
+      // remove old
+      await Promise.allSettled(
+        productEntity.photos
+          .filter(oldPhoto => !photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
+          .map(oldPhoto => oldPhoto.remove()),
+      );
 
-    // change existing
-    const changedPhotos = await Promise.allSettled(
-      productEntity.photos
-        .filter(oldPhoto => photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
-        .map(oldPhoto => {
-          const newPhoto = photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl);
-          Object.assign(oldPhoto, {
-            ...newPhoto,
-            photoStatus: PhotoStatus.NEW,
-          });
-          return oldPhoto.save();
-        }),
-    ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
-      values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
-        .map(c => c.value),
-    );
+      // change existing
+      const changedPhotos = await Promise.allSettled(
+        productEntity.photos
+          .filter(oldPhoto => photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
+          .map(oldPhoto => {
+            const newPhoto = photos.find(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl);
+            const index = photos.findIndex(newPhoto => newPhoto.imageUrl === oldPhoto.imageUrl);
+            Object.assign(oldPhoto, {
+              ...newPhoto,
+              priority: index,
+              photoStatus: PhotoStatus.NEW,
+            });
+            return oldPhoto.save();
+          }),
+      ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
+        values
+          .filter(c => c.status === "fulfilled")
+          .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+          .map(c => c.value),
+      );
 
-    // add new
-    const newPhotos = await Promise.allSettled(
-      photos
-        .filter(newPhoto => !productEntity.photos.find(oldPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
-        .map(newPhoto => this.photoService.create(newPhoto, productEntity)),
-    ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
-      values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
-        .map(c => c.value),
-    );
+      // add new
+      const newPhotos = await Promise.allSettled(
+        photos
+          .filter(newPhoto => !productEntity.photos.find(oldPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
+          .map(newPhoto => {
+            const index = photos.indexOf(newPhoto);
+            return this.photoService.create({...newPhoto, priority: index}, productEntity);
+          }),
+      ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
+        values
+          .filter(c => c.status === "fulfilled")
+          .map(c => <PromiseFulfilledResult<PhotoEntity>>c)
+          .map(c => c.value),
+      );
+
+      Object.assign(productEntity, {
+        photos: [...changedPhotos, ...newPhotos],
+      });
+    }
 
     Object.assign(productEntity, {
       ...rest,
-      photos: [...changedPhotos, ...newPhotos],
       categories: categoryIds.map(id => ({id})),
     });
+
     return productEntity.save();
   }
 

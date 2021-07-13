@@ -78,7 +78,7 @@ export const Category: FC = () => {
         data,
       })
       .then((json: IPaginationResult<ICategory>) => {
-        setCategories(json.list);
+        setCategories(json.rows);
         setCount(json.count);
         updateQS();
       });

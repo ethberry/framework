@@ -1,5 +1,5 @@
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
-import {IsArray, IsJSON, ValidateNested} from "class-validator";
+import {IsArray, IsJSON, ValidateNested, IsOptional} from "class-validator";
 import {Type} from "class-transformer";
 
 import {IsNumber, IsString} from "@trejgun/nest-js-validators";
@@ -52,9 +52,10 @@ export class ProductCreateDto implements IProductCreateDto {
   })
   public merchantId: number;
 
-  @ApiProperty({type: () => [PhotoCreateDto]})
+  @ApiPropertyOptional({type: () => [PhotoCreateDto]})
+  @IsOptional()
   @IsArray()
   @ValidateNested()
   @Type(() => PhotoCreateDto)
-  public photos: Array<IPhoto>;
+  public photos: Array<IPhoto> = [];
 }

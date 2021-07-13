@@ -84,7 +84,7 @@ export const Merchant: FC = () => {
         data,
       })
       .then((json: IPaginationResult<IMerchant>) => {
-        setMerchants(json.list);
+        setMerchants(json.rows);
         setCount(json.count);
         updateQS();
       });

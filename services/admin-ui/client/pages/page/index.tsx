@@ -86,7 +86,7 @@ export const Page: FC = () => {
         data,
       })
       .then((json: IPaginationResult<IPage>) => {
-        setPages(json.list);
+        setPages(json.rows);
         setCount(json.count);
         updateQS();
       });
