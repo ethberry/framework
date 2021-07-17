@@ -1,4 +1,5 @@
-import {HttpService, Injectable} from "@nestjs/common";
+import {Injectable} from "@nestjs/common";
+import {HttpService} from "@nestjs/axios";
 import {ConfigService} from "@nestjs/config";
 import {
   registerDecorator,
@@ -7,6 +8,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from "class-validator";
+import {firstValueFrom} from "rxjs";
 import {map} from "rxjs/operators";
 
 interface IReCaptchaResponse {
@@ -45,7 +47,7 @@ export class ValidateReCaptcha implements ValidatorConstraintInterface {
       return "";
     }
 
-    return this.httpService
+    const response = this.httpService
       .request({
         url: "https://www.google.com/recaptcha/api/siteverify",
         method: "POST",
@@ -54,14 +56,14 @@ export class ValidateReCaptcha implements ValidatorConstraintInterface {
           response: value,
         },
       })
-      .pipe(map((response: {data: IReCaptchaResponse}) => response.data))
-      .toPromise()
-      .then(data => {
-        if (!data.success) {
-          return `recaptcha-${data["error-codes"][0]}`.replace(/-./g, (x: string) => x.toUpperCase()[1]);
-        }
-        return "";
-      });
+      .pipe(map((response: {data: IReCaptchaResponse}) => response.data));
+
+    return firstValueFrom(response).then(data => {
+      if (!data.success) {
+        return `recaptcha-${data["error-codes"][0]}`.replace(/-./g, (x: string) => x.toUpperCase()[1]);
+      }
+      return "";
+    });
   }
 }
 
