@@ -33,7 +33,7 @@
     "@trejgun/material-ui-provider-picker": "0.1.6",
     "@trejgun/material-ui-provider-theme": "0.1.6",
     "@trejgun/material-ui-toolbar": "0.1.9",
-    "@trejgun/provider-api": "0.2.6",
+    "@trejgun/provider-api": "2.0.0",
     "@trejgun/provider-localization": "0.1.12",
     "@trejgun/provider-settings": "0.1.12",
     "@trejgun/provider-user": "0.1.12",
