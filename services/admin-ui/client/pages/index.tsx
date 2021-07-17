@@ -41,7 +41,7 @@ import {Layout} from "../components/common/layout";
 
 const App: FC = () => {
   return (
-    <ApiProvider>
+    <ApiProvider baseUrl={process.env.BE_URL}>
       <UserProvider>
         <SettingsProvider defaultLanguage={DefaultLanguage}>
           <LocalizationProvider i18n={i18n} defaultLanguage={DefaultLanguage}>
