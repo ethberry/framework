@@ -12,7 +12,7 @@ import useStyles from "./styles";
 export const Header: FC = () => {
   const classes = useStyles();
   return (
-    <AppBar className={classes.appbar} position="fixed">
+    <AppBar position="fixed">
       <Toolbar className={classes.toolbar}>
         <Link className={classes.title} component={RouterLink} to="/">
           <Hidden smDown>{companyName}</Hidden>

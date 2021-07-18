@@ -3,9 +3,6 @@ import {createStyles, makeStyles} from "@material-ui/core";
 export default makeStyles(
   theme =>
     createStyles({
-      appbar: {
-        backgroundColor: "#3C75E6",
-      },
       toolbar: {
         minHeight: 64,
       },
