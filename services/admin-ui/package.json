@@ -18,7 +18,7 @@
     "@material-ui/lab": "4.0.0-alpha.60",
     "@material-ui/pickers": "4.0.0-alpha.12",
     "@material-ui/styles": "4.11.4",
-    "@trejgun/collection": "0.1.8",
+    "@trejgun/collection": "1.0.3",
     "@trejgun/common-pages": "0.2.11",
     "@trejgun/constants-regexp": "0.1.6",
     "@trejgun/constants-validation": "0.1.6",

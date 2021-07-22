@@ -21,7 +21,7 @@
     "@nestjs/throttler": "2.0.0",
     "@nestjs/typeorm": "8.0.1",
     "@nestjs/websockets": "8.0.4",
-    "@trejgun/collection": "0.1.8",
+    "@trejgun/collection": "1.0.3",
     "@trejgun/constants-regexp": "0.1.6",
     "@trejgun/constants-validation": "0.1.6",
     "@trejgun/nest-js-guards": "0.1.8",
