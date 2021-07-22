@@ -2,7 +2,7 @@ import {Module} from "@nestjs/common";
 import {ConfigModule} from "@nestjs/config";
 import {WinstonModule} from "nest-winston";
 
-import {WinstonConfigService} from "@trejgun/nest-js-module-winston";
+import {WinstonConfigService} from "@trejgun/nest-js-module-winston-logdna";
 import {RequestLoggerModule} from "@trejgun/nest-js-module-request-logger";
 
 import {EmailModule} from "./email/email.module";

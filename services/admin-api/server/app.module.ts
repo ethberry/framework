@@ -11,7 +11,7 @@ import {JwtHttpGuard} from "@trejgun/nest-js-guards";
 import {RequestLoggerModule} from "@trejgun/nest-js-module-request-logger";
 import {PassportInitialize} from "@trejgun/nest-js-module-passport";
 import {HelmetModule} from "@trejgun/nest-js-module-helmet";
-import {WinstonConfigService} from "@trejgun/nest-js-module-winston";
+import {WinstonConfigService} from "@trejgun/nest-js-module-winston-logdna";
 import {IS3Options, ISdkOptions, S3Module} from "@trejgun/nest-js-module-s3";
 import {StorageType} from "@trejgun/solo-types";
 

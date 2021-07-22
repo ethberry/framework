@@ -1,7 +1,7 @@
 import {Module} from "@nestjs/common";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {TypeOrmLoggerModule, TypeOrmLoggerService} from "@trejgun/nest-js-module-typeorm";
+import {TypeOrmLoggerModule, TypeOrmLoggerService} from "@trejgun/nest-js-module-typeorm-logger";
 
 import ormconfig from "../ormconfig";
 
