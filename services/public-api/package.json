@@ -31,7 +31,7 @@
     "@trejgun/nest-js-module-s3": "1.0.2",
     "@trejgun/nest-js-module-typeorm": "0.1.7",
     "@trejgun/nest-js-module-winston": "0.1.7",
-    "@trejgun/nest-js-providers": "0.4.2",
+    "@trejgun/nest-js-providers": "1.0.1",
     "@trejgun/nest-js-validators": "1.0.2",
     "@trejgun/solo-constants-misc": "0.0.1",
     "@trejgun/solo-mocks": "0.0.1",
