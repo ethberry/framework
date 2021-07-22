@@ -17,7 +17,7 @@
     "@nestjs/terminus": "7.2.0",
     "@trejgun/material-ui-provider-theme": "0.2.1",
     "@trejgun/nest-js-module-request-logger": "0.1.7",
-    "@trejgun/nest-js-module-ses": "0.3.2",
+    "@trejgun/nest-js-module-ses": "1.0.1",
     "@trejgun/nest-js-module-winston": "0.1.7",
     "@trejgun/provider-localization": "0.1.14",
     "@trejgun/provider-settings": "0.1.14",
