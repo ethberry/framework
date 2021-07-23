@@ -59,11 +59,11 @@
     "react-beautiful-dnd": "13.1.0",
     "react-dom": "17.0.2",
     "react-hot-loader": "4.13.0",
-    "react-intl": "5.20.4",
+    "react-intl": "5.20.5",
     "react-multi-carousel": "2.6.3",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "webpack": "5.45.1",
+    "webpack": "5.46.0",
     "webpack-dev-middleware": "5.0.0",
     "webpack-hot-middleware": "git+https://github.com/lukeapage/webpack-hot-middleware#2cdfe0d0111dab6432b8683112fd2d17a5e80572",
     "yup": "0.32.9"
