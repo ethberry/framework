@@ -9,7 +9,7 @@
   "dependencies": {
     "@trejgun/solo-constants-misc": "0.0.1",
     "@trejgun/solo-types": "0.0.1",
-    "date-fns": "2.22.1",
+    "date-fns": "2.23.0",
     "uuid": "8.3.2"
   },
   "description": "Mocks",
