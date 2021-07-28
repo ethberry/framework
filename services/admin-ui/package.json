@@ -64,7 +64,7 @@
     "react-intl": "5.20.6",
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
-    "webpack": "5.46.0",
+    "webpack": "5.47.0",
     "webpack-dev-middleware": "5.0.0",
     "webpack-hot-middleware": "git+https://github.com/lukeapage/webpack-hot-middleware#2cdfe0d0111dab6432b8683112fd2d17a5e80572",
     "yup": "0.32.9"
