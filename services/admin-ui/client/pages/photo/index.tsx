@@ -13,11 +13,11 @@ import {
 } from "@material-ui/core";
 import {Clear, Done} from "@material-ui/icons";
 
-import {ProgressOverlay} from "@trejgun/material-ui-progress";
-import {PageHeader} from "@trejgun/material-ui-page-header";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {IPhoto, PhotoStatus} from "@trejgun/solo-types";
-import {IPaginationResult} from "@trejgun/types-collection";
+import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
+import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {IPhoto, PhotoStatus} from "@gemunionstudio/solo-types";
+import {IPaginationResult} from "@gemunionstudio/types-collection";
 
 import {Breadcrumbs} from "../../components/common/breadcrumbs";
 

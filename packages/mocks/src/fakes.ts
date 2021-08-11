@@ -1,7 +1,7 @@
 import {v4} from "uuid";
 
-import {IMerchant, IToken, IUser, TokenType} from "@trejgun/solo-types";
-import {DefaultLanguage} from "@trejgun/solo-constants-misc";
+import {IMerchant, IToken, IUser, TokenType} from "@gemunionstudio/solo-types";
+import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
 
 export const fakeUser = {
   password: "",

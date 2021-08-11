@@ -1,4 +1,4 @@
-import {IMerchant} from "@trejgun/solo-types";
+import {IMerchant} from "@gemunionstudio/solo-types";
 
 export const emptyMerchant = {
   title: "",

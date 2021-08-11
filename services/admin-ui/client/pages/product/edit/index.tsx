@@ -1,12 +1,12 @@
 import React, {FC} from "react";
 
-import {FormDialog} from "@trejgun/material-ui-dialog-form";
-import {NumberInput, SelectInput, TextInput} from "@trejgun/material-ui-inputs-core";
-import {CurrencyInput} from "@trejgun/material-ui-inputs-mask";
-import {RichTextEditor} from "@trejgun/solo-material-ui-rte";
-import {EntityInput} from "@trejgun/material-ui-inputs-entity";
-import {PhotoInput} from "@trejgun/material-ui-inputs-image-s3";
-import {ICategory, IProduct, ProductStatus} from "@trejgun/solo-types";
+import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
+import {NumberInput, SelectInput, TextInput} from "@gemunionstudio/material-ui-inputs-core";
+import {CurrencyInput} from "@gemunionstudio/material-ui-inputs-mask";
+import {RichTextEditor} from "@gemunionstudio/solo-material-ui-rte";
+import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
+import {PhotoInput} from "@gemunionstudio/material-ui-inputs-image-s3";
+import {ICategory, IProduct, ProductStatus} from "@gemunionstudio/solo-types";
 
 import {validationSchema} from "./validation";
 

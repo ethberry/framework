@@ -7,13 +7,13 @@ import {Pagination} from "@material-ui/lab";
 import {useHistory, useLocation, useParams} from "react-router";
 import {parse, stringify} from "qs";
 
-import {ProgressOverlay} from "@trejgun/material-ui-progress";
-import {PageHeader} from "@trejgun/material-ui-page-header";
-import {DeleteDialog} from "@trejgun/material-ui-dialog-delete";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {IPaginationResult, ISearchDto} from "@trejgun/types-collection";
-import {IProduct, ProductStatus} from "@trejgun/solo-types";
-import {emptyProduct} from "@trejgun/solo-mocks";
+import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
+import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
+import {IProduct, ProductStatus} from "@gemunionstudio/solo-types";
+import {emptyProduct} from "@gemunionstudio/solo-mocks";
 
 import {EditProductDialog} from "./edit";
 import {ProductSearchForm} from "./form";

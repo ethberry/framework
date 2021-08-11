@@ -1,7 +1,7 @@
 import {ApiProperty} from "@nestjs/swagger";
 import {IsJSON} from "class-validator";
 
-import {IsString} from "@trejgun/nest-js-validators";
+import {IsString} from "@gemunionstudio/nest-js-validators";
 
 import {IPageCreateDto} from "../interfaces";
 

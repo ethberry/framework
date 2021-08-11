@@ -2,8 +2,8 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
 
-import {PhotoStatus, ProductStatus} from "@trejgun/solo-types";
-import {SortDirection} from "@trejgun/types-collection";
+import {PhotoStatus, ProductStatus} from "@gemunionstudio/solo-types";
+import {SortDirection} from "@gemunionstudio/types-collection";
 
 import {ProductEntity} from "./product.entity";
 import {IProductSortDto} from "./interfaces";

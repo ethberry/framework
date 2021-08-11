@@ -3,13 +3,13 @@ import {hot} from "react-hot-loader/root";
 import {Redirect, Switch} from "react-router";
 import {SnackbarProvider} from "notistack";
 
-import {UserProvider} from "@trejgun/provider-user";
-import {SettingsProvider} from "@trejgun/provider-settings";
-import {LocalizationProvider} from "@trejgun/provider-localization";
-import {ApiProvider} from "@trejgun/provider-api";
-import {i18n} from "@trejgun/solo-localization-admin-ui";
-import {PickerProvider} from "@trejgun/material-ui-provider-picker";
-import {DefaultLanguage} from "@trejgun/solo-constants-misc";
+import {UserProvider} from "@gemunionstudio/provider-user";
+import {SettingsProvider} from "@gemunionstudio/provider-settings";
+import {LocalizationProvider} from "@gemunionstudio/provider-localization";
+import {ApiProvider} from "@gemunionstudio/provider-api";
+import {i18n} from "@gemunionstudio/solo-localization-admin-ui";
+import {PickerProvider} from "@gemunionstudio/material-ui-provider-picker";
+import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
 import {
   Error,
   ForgotPassword,
@@ -19,7 +19,7 @@ import {
   RestorePassword,
   SocialLogin,
   VerifyEmail,
-} from "@trejgun/common-pages";
+} from "@gemunionstudio/common-pages";
 
 import {MyRoute} from "../components/common/my-route";
 

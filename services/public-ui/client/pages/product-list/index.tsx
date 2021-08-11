@@ -7,11 +7,11 @@ import {parse, stringify} from "qs";
 import {useHistory, useLocation, useParams} from "react-router";
 import {FilterList} from "@material-ui/icons";
 
-import {ProgressOverlay} from "@trejgun/material-ui-progress";
-import {PageHeader} from "@trejgun/material-ui-page-header";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {IProduct} from "@trejgun/solo-types";
-import {IPaginationResult, ISearchDto} from "@trejgun/types-collection";
+import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
+import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {IProduct} from "@gemunionstudio/solo-types";
+import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
 
 import {ProductItem} from "./item";
 import {ProductSearchForm} from "./form";

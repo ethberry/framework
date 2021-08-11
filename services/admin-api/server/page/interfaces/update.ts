@@ -1,4 +1,4 @@
-import {PageStatus} from "@trejgun/solo-types";
+import {PageStatus} from "@gemunionstudio/solo-types";
 
 import {IPageCreateDto} from "./create";
 

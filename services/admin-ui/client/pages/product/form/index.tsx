@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 import {Collapse, Grid} from "@material-ui/core";
 
-import {AutoSave, FormikForm} from "@trejgun/material-ui-form";
-import {ProductStatus} from "@trejgun/solo-types";
-import {SelectInput, SearchInput} from "@trejgun/material-ui-inputs-core";
-import {EntityInput} from "@trejgun/material-ui-inputs-entity";
+import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
+import {ProductStatus} from "@gemunionstudio/solo-types";
+import {SelectInput, SearchInput} from "@gemunionstudio/material-ui-inputs-core";
+import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
 
 import useStyles from "./styles";
 import {IProductSearchDto} from "../index";

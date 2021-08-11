@@ -1,4 +1,4 @@
-import {ProductStatus} from "@trejgun/solo-types";
+import {ProductStatus} from "@gemunionstudio/solo-types";
 import {IProductCreateDto} from "./create";
 
 export interface IProductUpdateDto extends IProductCreateDto {

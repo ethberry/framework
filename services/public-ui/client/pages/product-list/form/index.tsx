@@ -1,9 +1,9 @@
 import React, {FC} from "react";
 import {Collapse, Grid} from "@material-ui/core";
 
-import {AutoSave, FormikForm} from "@trejgun/material-ui-form";
-import {EntityInput} from "@trejgun/material-ui-inputs-entity";
-import {SearchInput} from "@trejgun/material-ui-inputs-core";
+import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
+import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
+import {SearchInput} from "@gemunionstudio/material-ui-inputs-core";
 
 import useStyles from "./styles";
 import {IProductSearchDto} from "../index";

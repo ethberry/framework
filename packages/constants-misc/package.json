@@ -18,7 +18,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@trejgun/solo-constants-misc",
+  "name": "@gemunionstudio/solo-constants-misc",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

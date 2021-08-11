@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 
-import {IOrder, OrderStatus} from "@trejgun/solo-types";
-import {ns} from "@trejgun/solo-constants-misc";
+import {IOrder, OrderStatus} from "@gemunionstudio/solo-types";
+import {ns} from "@gemunionstudio/solo-constants-misc";
 
 import {UserEntity} from "../user/user.entity";
 import {MerchantEntity} from "../merchant/merchant.entity";

@@ -7,7 +7,7 @@
     "lerna": "4.0.0"
   },
   "devDependencies": {
-    "@trejgun/eslint-config": "0.1.7",
+    "@gemunionstudio/eslint-config": "0.1.7",
     "@types/node": "14.17.6",
     "@types/react": "17.0.15",
     "@typescript-eslint/eslint-plugin": "4.28.5",
@@ -33,7 +33,7 @@
     "node": ">=10"
   },
   "license": "UNLICENSED",
-  "name": "@trejgun/solo-root",
+  "name": "@gemunionstudio/solo-root",
   "private": true,
   "repository": {
     "type": "git",
@@ -49,14 +49,14 @@
     "installdep": "sh scripts/install.sh",
     "kill": "sudo pkill -9 node",
     "lint": "lerna run lint --stream --parallel",
-    "migration": "lerna exec --scope @trejgun/solo-admin-api -- npm run migration:run",
+    "migration": "lerna exec --scope @gemunionstudio/solo-admin-api -- npm run migration:run",
     "precommit": "lint-staged",
     "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" --write",
     "registry": "lerna publish",
     "release": "lerna publish --exact --conventional-commits --registry=https://npm.pkg.github.com/",
     "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
-    "start": "lerna exec --parallel --scope @trejgun/solo-admin-api --scope @trejgun/solo-public-api --scope @trejgun/solo-admin-ui --scope @trejgun/solo-public-ui --scope @trejgun/solo-emailer --scope @trejgun/solo-warehouse -- npm start",
-    "start:prod": "lerna exec --parallel --scope @trejgun/solo-admin-api --scope @trejgun/solo-public-api --scope @trejgun/solo-emailer -- npm run start:prod",
+    "start": "lerna exec --parallel --scope @gemunionstudio/solo-admin-api --scope @gemunionstudio/solo-public-api --scope @gemunionstudio/solo-admin-ui --scope @gemunionstudio/solo-public-ui --scope @gemunionstudio/solo-emailer --scope @gemunionstudio/solo-warehouse -- npm start",
+    "start:prod": "lerna exec --parallel --scope @gemunionstudio/solo-admin-api --scope @gemunionstudio/solo-public-api --scope @gemunionstudio/solo-emailer -- npm run start:prod",
     "test": "sh scripts/test.sh"
   },
   "version": "0.0.1"

@@ -1,5 +1,5 @@
-import {ISearchDto} from "@trejgun/types-collection";
-import {OrderStatus} from "@trejgun/solo-types";
+import {ISearchDto} from "@gemunionstudio/types-collection";
+import {OrderStatus} from "@gemunionstudio/solo-types";
 
 export interface IOrderSearchDto extends ISearchDto {
   dateRange: string;

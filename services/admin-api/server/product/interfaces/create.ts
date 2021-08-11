@@ -1,4 +1,4 @@
-import {IPhoto} from "@trejgun/solo-types";
+import {IPhoto} from "@gemunionstudio/solo-types";
 
 export interface IProductCreateDto {
   title: string;

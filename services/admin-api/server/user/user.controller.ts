@@ -1,7 +1,7 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Put, Query, UseInterceptors} from "@nestjs/common";
 import {ApiCookieAuth} from "@nestjs/swagger";
 
-import {NotFoundInterceptor, PaginationInterceptor} from "@trejgun/nest-js-providers";
+import {NotFoundInterceptor, PaginationInterceptor} from "@gemunionstudio/nest-js-providers";
 
 import {UserService} from "./user.service";
 import {UserEntity} from "./user.entity";

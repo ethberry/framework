@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger";
 
-import {IsNumber} from "@trejgun/nest-js-validators";
+import {IsNumber} from "@gemunionstudio/nest-js-validators";
 
 import {IProfileUpdateDto} from "../interfaces";
 import {UserCommonDto} from "../../common/dto";

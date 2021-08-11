@@ -1,5 +1,5 @@
-import {ISearchDto} from "@trejgun/types-collection";
-import {ProductStatus} from "@trejgun/solo-types";
+import {ISearchDto} from "@gemunionstudio/types-collection";
+import {ProductStatus} from "@gemunionstudio/solo-types";
 
 export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;

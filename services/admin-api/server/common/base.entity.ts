@@ -1,6 +1,6 @@
 import {BaseEntity as OrmBaseEntity, BeforeInsert, BeforeUpdate, Column, PrimaryGeneratedColumn} from "typeorm";
 
-import {IBase} from "@trejgun/solo-types";
+import {IBase} from "@gemunionstudio/solo-types";
 
 export abstract class BaseEntity extends OrmBaseEntity implements IBase {
   @PrimaryGeneratedColumn()

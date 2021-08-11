@@ -1,4 +1,4 @@
-import {IUser} from "@trejgun/solo-types";
+import {IUser} from "@gemunionstudio/solo-types";
 
 export interface IPayload {
   user: IUser;

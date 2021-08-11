@@ -1,8 +1,8 @@
 import React, {ComponentClass, FunctionComponent} from "react";
 import * as ReactDOM from "react-dom";
 import {Router} from "react-router-dom";
-import {ThemeProvider} from "@trejgun/material-ui-provider-theme";
-import {history} from "@trejgun/history";
+import {ThemeProvider} from "@gemunionstudio/material-ui-provider-theme";
+import {history} from "@gemunionstudio/history";
 
 export default (App: ComponentClass<any> | FunctionComponent<any>): void => {
   ReactDOM.render(

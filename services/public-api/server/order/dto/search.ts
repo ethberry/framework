@@ -1,9 +1,9 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
 
-import {OrderStatus} from "@trejgun/solo-types";
-import {reDateRange} from "@trejgun/constants-regexp";
-import {IsString} from "@trejgun/nest-js-validators";
-import {SearchDto} from "@trejgun/collection";
+import {OrderStatus} from "@gemunionstudio/solo-types";
+import {reDateRange} from "@gemunionstudio/constants-regexp";
+import {IsString} from "@gemunionstudio/nest-js-validators";
+import {SearchDto} from "@gemunionstudio/collection";
 
 import {IOrderSearchDto} from "../interfaces";
 

@@ -1,5 +1,5 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsNumber} from "@trejgun/nest-js-validators";
+import {IsNumber} from "@gemunionstudio/nest-js-validators";
 
 import {IOrderCreateDto} from "../interfaces";
 

@@ -1,8 +1,8 @@
 import {Controller, Get, Ip, UseGuards} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 
-import {Public} from "@trejgun/nest-js-providers";
-import {JwtFacebookGuard, JwtGoogleGuard} from "@trejgun/nest-js-guards";
+import {Public} from "@gemunionstudio/nest-js-providers";
+import {JwtFacebookGuard, JwtGoogleGuard} from "@gemunionstudio/nest-js-guards";
 
 import {User} from "../common/decorators";
 import {UserEntity} from "../user/user.entity";

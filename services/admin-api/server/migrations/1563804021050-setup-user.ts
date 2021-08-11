@@ -1,7 +1,7 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-import {ns} from "@trejgun/solo-constants-misc";
-import {imageUrl} from "@trejgun/solo-mocks";
+import {ns} from "@gemunionstudio/solo-constants-misc";
+import {imageUrl} from "@gemunionstudio/solo-mocks";
 
 export class SetupUser1563804021050 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

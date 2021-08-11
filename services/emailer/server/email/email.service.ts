@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 
-import {SesService, ISesSendDto} from "@trejgun/nest-js-module-ses";
+import {SesService, ISesSendDto} from "@gemunionstudio/nest-js-module-ses";
 
 @Injectable()
 export class EmailService {

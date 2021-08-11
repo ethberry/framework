@@ -2,7 +2,7 @@ import {FindConditions, Repository} from "typeorm";
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 
-import {TokenType} from "@trejgun/solo-types";
+import {TokenType} from "@gemunionstudio/solo-types";
 
 import {TokenEntity} from "./token.entity";
 import {UserEntity} from "../user/user.entity";

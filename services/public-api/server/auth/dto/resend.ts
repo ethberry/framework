@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger";
 
-import {reEmail} from "@trejgun/constants-regexp";
+import {reEmail} from "@gemunionstudio/constants-regexp";
 
 import {ReCaptcha, IsEmail} from "../../common/validators";
 import {IResendEmailVerificationDto} from "../interfaces";

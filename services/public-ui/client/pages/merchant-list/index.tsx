@@ -6,11 +6,11 @@ import {Pagination} from "@material-ui/lab";
 import {parse, stringify} from "qs";
 import {useHistory, useLocation} from "react-router";
 
-import {ProgressOverlay} from "@trejgun/material-ui-progress";
-import {PageHeader} from "@trejgun/material-ui-page-header";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {IMerchant} from "@trejgun/solo-types";
-import {IPaginationResult, ISearchDto} from "@trejgun/types-collection";
+import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
+import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {IMerchant} from "@gemunionstudio/solo-types";
+import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
 import {MerchantItem} from "./item";
 
 export const MerchantList: FC = () => {

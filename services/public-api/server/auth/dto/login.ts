@@ -1,7 +1,7 @@
 import {ApiProperty} from "@nestjs/swagger";
 
-import {reEmail} from "@trejgun/constants-regexp";
-import {IsString} from "@trejgun/nest-js-validators";
+import {reEmail} from "@gemunionstudio/constants-regexp";
+import {IsString} from "@gemunionstudio/nest-js-validators";
 
 import {IsEmail} from "../../common/validators";
 import {ILoginDto} from "../interfaces";

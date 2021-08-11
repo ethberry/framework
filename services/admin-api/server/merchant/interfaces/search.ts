@@ -1,5 +1,5 @@
-import {ISearchDto} from "@trejgun/types-collection";
-import {MerchantStatus} from "@trejgun/solo-types";
+import {ISearchDto} from "@gemunionstudio/types-collection";
+import {MerchantStatus} from "@gemunionstudio/solo-types";
 
 export interface IMerchantSearchDto extends ISearchDto {
   merchantStatus: Array<MerchantStatus>;

@@ -1,12 +1,12 @@
 import React, {FC} from "react";
 import {Route, Switch} from "react-router";
 
-import {UserProvider} from "@trejgun/provider-user";
-import {SettingsProvider} from "@trejgun/provider-settings";
-import {LocalizationProvider} from "@trejgun/provider-localization";
-import {i18n} from "@trejgun/solo-localization-emailer";
-import {EmailType} from "@trejgun/solo-types";
-import {DefaultLanguage} from "@trejgun/solo-constants-misc";
+import {UserProvider} from "@gemunionstudio/provider-user";
+import {SettingsProvider} from "@gemunionstudio/provider-settings";
+import {LocalizationProvider} from "@gemunionstudio/provider-localization";
+import {i18n} from "@gemunionstudio/solo-localization-emailer";
+import {EmailType} from "@gemunionstudio/solo-types";
+import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
 
 import {DataProvider} from "../components/context/data/provider";
 import {Layout} from "../components/common/layout";

@@ -1,5 +1,5 @@
-import {ISortDto} from "@trejgun/types-collection";
-import {IProduct} from "@trejgun/solo-types";
+import {ISortDto} from "@gemunionstudio/types-collection";
+import {IProduct} from "@gemunionstudio/solo-types";
 
 export interface IProductSortDto extends ISortDto<IProduct> {
   categoryIds: Array<number>;

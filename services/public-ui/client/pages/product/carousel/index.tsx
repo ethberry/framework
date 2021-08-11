@@ -3,8 +3,8 @@ import {FormattedMessage} from "react-intl";
 import {Button, MobileStepper, Paper, Typography} from "@material-ui/core";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
 
-import {Spinner} from "@trejgun/material-ui-progress";
-import {IProduct} from "@trejgun/solo-types";
+import {Spinner} from "@gemunionstudio/material-ui-progress";
+import {IProduct} from "@gemunionstudio/solo-types";
 
 import useStyles from "./styles";
 

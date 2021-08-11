@@ -4,7 +4,7 @@
     "name": "TrejGun"
   },
   "dependencies": {
-    "@trejgun/solo-constants-misc": "0.0.1"
+    "@gemunionstudio/solo-constants-misc": "0.0.1"
   },
   "devDependencies": {},
   "files": [
@@ -12,7 +12,7 @@
   ],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@trejgun/solo-types",
+  "name": "@gemunionstudio/solo-types",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

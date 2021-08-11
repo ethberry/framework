@@ -1,8 +1,8 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors} from "@nestjs/common";
 
-import {PaginationInterceptor, Public, Roles} from "@trejgun/nest-js-providers";
+import {PaginationInterceptor, Public, Roles} from "@gemunionstudio/nest-js-providers";
 
-import {UserRole} from "@trejgun/solo-types";
+import {UserRole} from "@gemunionstudio/solo-types";
 
 import {PromoService} from "./promo.service";
 import {PromoEntity} from "./promo.entity";

@@ -4,11 +4,11 @@ import {useIntl, FormattedMessage} from "react-intl";
 import {Typography, Grid, Paper} from "@material-ui/core";
 import {useParams} from "react-router";
 
-import {Spinner} from "@trejgun/material-ui-progress";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {PageHeader} from "@trejgun/material-ui-page-header";
-import {IProduct} from "@trejgun/solo-types";
-import {RichTextDisplay} from "@trejgun/solo-material-ui-rte";
+import {Spinner} from "@gemunionstudio/material-ui-progress";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import {IProduct} from "@gemunionstudio/solo-types";
+import {RichTextDisplay} from "@gemunionstudio/solo-material-ui-rte";
 
 import {formatMoney} from "../../utils/money";
 import useStyles from "./styles";

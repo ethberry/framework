@@ -1,4 +1,4 @@
-import {UserStatus} from "@trejgun/solo-types";
+import {UserStatus} from "@gemunionstudio/solo-types";
 
 import {IUserCommonDto} from "../../common/dto";
 

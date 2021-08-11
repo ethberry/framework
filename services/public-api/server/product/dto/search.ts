@@ -1,11 +1,11 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
 import {Type} from "class-transformer";
 
-import {SortDto} from "@trejgun/collection";
-import {IsNumber} from "@trejgun/nest-js-validators";
+import {SortDto} from "@gemunionstudio/collection";
+import {IsNumber} from "@gemunionstudio/nest-js-validators";
 
 import {IProductSortDto} from "../interfaces";
-import {IProduct} from "@trejgun/solo-types";
+import {IProduct} from "@gemunionstudio/solo-types";
 
 export class ProductSortDto extends SortDto<IProduct> implements IProductSortDto {
   @ApiPropertyOptional({

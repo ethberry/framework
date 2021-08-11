@@ -1,4 +1,4 @@
-import {OrderStatus} from "@trejgun/solo-types";
+import {OrderStatus} from "@gemunionstudio/solo-types";
 
 import {IOrderCreateDto} from "./create";
 

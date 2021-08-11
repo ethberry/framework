@@ -2,9 +2,9 @@ import {Request, Response} from "express";
 import {ServerStyleSheets} from "@material-ui/styles";
 import {StaticRouterContext} from "react-router";
 
-import {DefaultLanguage} from "@trejgun/solo-constants-misc";
-import {i18n} from "@trejgun/solo-localization-emailer";
-import {fakeToken, fakeUser} from "@trejgun/solo-mocks";
+import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
+import {i18n} from "@gemunionstudio/solo-localization-emailer";
+import {fakeToken, fakeUser} from "@gemunionstudio/solo-mocks";
 
 import {HTML} from "../../client/components/HTML";
 import {renderHTML, renderInitialMarkup} from "./render";

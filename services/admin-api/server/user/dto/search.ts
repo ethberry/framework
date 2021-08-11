@@ -1,8 +1,8 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
 
-import {IsString} from "@trejgun/nest-js-validators";
-import {SearchDto} from "@trejgun/collection";
-import {UserRole, UserStatus} from "@trejgun/solo-types";
+import {IsString} from "@gemunionstudio/nest-js-validators";
+import {SearchDto} from "@gemunionstudio/collection";
+import {UserRole, UserStatus} from "@gemunionstudio/solo-types";
 
 import {IUserSearchDto} from "../interfaces";
 

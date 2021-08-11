@@ -5,11 +5,11 @@ import {Grid} from "@material-ui/core";
 import {Pagination} from "@material-ui/lab";
 import {parse, stringify} from "qs";
 import {useHistory, useLocation} from "react-router";
-import {PageHeader} from "@trejgun/material-ui-page-header";
-import {ProgressOverlay} from "@trejgun/material-ui-progress";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {IOrder, OrderStatus} from "@trejgun/solo-types";
-import {IPaginationResult, IPaginationDto} from "@trejgun/types-collection";
+import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {IOrder, OrderStatus} from "@gemunionstudio/solo-types";
+import {IPaginationResult, IPaginationDto} from "@gemunionstudio/types-collection";
 
 import {OrderItem} from "./item";
 import {OrderSearchForm} from "./form";

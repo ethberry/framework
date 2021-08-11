@@ -1,6 +1,6 @@
 import {Controller, Get, UseInterceptors} from "@nestjs/common";
 
-import {PaginationInterceptor, Public} from "@trejgun/nest-js-providers";
+import {PaginationInterceptor, Public} from "@gemunionstudio/nest-js-providers";
 
 import {CategoryService} from "./category.service";
 import {CategoryEntity} from "./category.entity";

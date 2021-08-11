@@ -1,6 +1,6 @@
 import {Column, Entity, Generated, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import {IToken, TokenType} from "@trejgun/solo-types";
-import {ns} from "@trejgun/solo-constants-misc";
+import {IToken, TokenType} from "@gemunionstudio/solo-types";
+import {ns} from "@gemunionstudio/solo-constants-misc";
 
 import {UserEntity} from "../user/user.entity";
 import {BaseEntity} from "../common/base.entity";

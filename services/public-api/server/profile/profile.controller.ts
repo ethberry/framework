@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import {Body, Controller, Get, Put, Req, Res} from "@nestjs/common";
 import {ApiCookieAuth} from "@nestjs/swagger";
 
-import {Public} from "@trejgun/nest-js-providers";
+import {Public} from "@gemunionstudio/nest-js-providers";
 
 import {User} from "../common/decorators";
 import {ProfileService} from "./profile.service";

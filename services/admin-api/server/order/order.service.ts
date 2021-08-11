@@ -6,7 +6,7 @@ import {OrderEntity} from "./order.entity";
 import {IOrderCreateDto, IOrderSearchDto, IOrderUpdateDto} from "./interfaces";
 import {ProductService} from "../product/product.service";
 import {UserEntity} from "../user/user.entity";
-import {OrderStatus, UserRole} from "@trejgun/solo-types";
+import {OrderStatus, UserRole} from "@gemunionstudio/solo-types";
 
 @Injectable()
 export class OrderService {

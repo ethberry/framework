@@ -5,11 +5,11 @@ import {Avatar, Box, Typography} from "@material-ui/core";
 import {useParams} from "react-router";
 import {Skeleton} from "@material-ui/lab";
 
-import {Spinner} from "@trejgun/material-ui-progress";
-import {PageHeader} from "@trejgun/material-ui-page-header";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {IMerchant} from "@trejgun/solo-types";
-import {RichTextDisplay} from "@trejgun/solo-material-ui-rte";
+import {Spinner} from "@gemunionstudio/material-ui-progress";
+import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {IMerchant} from "@gemunionstudio/solo-types";
+import {RichTextDisplay} from "@gemunionstudio/solo-material-ui-rte";
 
 import {ProductList} from "../product-list";
 import useStyles from "./styles";

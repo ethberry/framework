@@ -2,7 +2,7 @@ import {Inject, Injectable} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {ClientProxy} from "@nestjs/microservices";
 
-import {EmailType, ProviderType, TokenType} from "@trejgun/solo-types";
+import {EmailType, ProviderType, TokenType} from "@gemunionstudio/solo-types";
 
 import {UserEntity} from "../user/user.entity";
 import {TokenService} from "../token/token.service";

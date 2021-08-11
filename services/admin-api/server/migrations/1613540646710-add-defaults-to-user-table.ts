@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner} from "typeorm";
 
-import {ns} from "@trejgun/solo-constants-misc";
+import {ns} from "@gemunionstudio/solo-constants-misc";
 
 export class AddDefaultsToUserTable1613540646714 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

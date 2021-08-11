@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger";
 
-import {IsConfirm, IsPassword} from "@trejgun/nest-js-validators";
+import {IsConfirm, IsPassword} from "@gemunionstudio/nest-js-validators";
 
 import {IPasswordDto} from "../interfaces";
 

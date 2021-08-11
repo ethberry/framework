@@ -3,7 +3,7 @@ import {FormattedMessage} from "react-intl";
 import {List, ListItem, ListItemText, Paper} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 
-import {EmailType} from "@trejgun/solo-types";
+import {EmailType} from "@gemunionstudio/solo-types";
 
 export const Main: FC = () => {
   return (

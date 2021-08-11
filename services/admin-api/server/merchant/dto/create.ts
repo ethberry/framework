@@ -1,9 +1,9 @@
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 import {IsJSON} from "class-validator";
 
-import {IsNumber, IsString} from "@trejgun/nest-js-validators";
-import {reEmail} from "@trejgun/constants-regexp";
-import {rePhoneNumber} from "@trejgun/solo-constants-misc";
+import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
+import {reEmail} from "@gemunionstudio/constants-regexp";
+import {rePhoneNumber} from "@gemunionstudio/solo-constants-misc";
 
 import {IMerchantCreateDto} from "../interfaces";
 import {IsEmail} from "../../common/validators";

@@ -4,8 +4,8 @@ import {FormattedMessage} from "react-intl";
 import {format, parseISO} from "date-fns";
 import {Link as RouterLink} from "react-router-dom";
 
-import {IOrder} from "@trejgun/solo-types";
-import {dateTimeFormat} from "@trejgun/solo-constants-misc";
+import {IOrder} from "@gemunionstudio/solo-types";
+import {dateTimeFormat} from "@gemunionstudio/solo-constants-misc";
 
 import {formatMoney} from "../../../utils/money";
 

@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 
-import {EntityInput} from "@trejgun/material-ui-inputs-entity";
-import {FormDialog} from "@trejgun/material-ui-dialog-form";
-import {TextInput} from "@trejgun/material-ui-inputs-core";
-import {RichTextEditor} from "@trejgun/solo-material-ui-rte";
-import {ICategory} from "@trejgun/solo-types";
+import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
+import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
+import {TextInput} from "@gemunionstudio/material-ui-inputs-core";
+import {RichTextEditor} from "@gemunionstudio/solo-material-ui-rte";
+import {ICategory} from "@gemunionstudio/solo-types";
 
 import {validationSchema} from "./validation";
 

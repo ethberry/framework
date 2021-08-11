@@ -1,5 +1,5 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
-import {ns} from "@trejgun/solo-constants-misc";
+import {ns} from "@gemunionstudio/solo-constants-misc";
 
 export class AddTokenTable1570556116332 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

@@ -1,9 +1,9 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
 import {Type} from "class-transformer";
 
-import {IsNumber, IsString} from "@trejgun/nest-js-validators";
-import {SearchDto} from "@trejgun/collection";
-import {ProductStatus} from "@trejgun/solo-types";
+import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
+import {SearchDto} from "@gemunionstudio/collection";
+import {ProductStatus} from "@gemunionstudio/solo-types";
 
 import {IProductSearchDto} from "../interfaces";
 

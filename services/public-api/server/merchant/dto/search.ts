@@ -1,4 +1,4 @@
-import {SearchDto} from "@trejgun/collection";
+import {SearchDto} from "@gemunionstudio/collection";
 
 import {IMerchantSearchDto} from "../interfaces";
 

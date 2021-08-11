@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger";
 
-import {IsString} from "@trejgun/nest-js-validators";
+import {IsString} from "@gemunionstudio/nest-js-validators";
 
 import {IRefreshDto} from "../interfaces";
 

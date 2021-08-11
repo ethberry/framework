@@ -4,8 +4,8 @@ import {Injectable, UnauthorizedException} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {Profile} from "passport";
 
-import {DefaultLanguage} from "@trejgun/solo-constants-misc";
-import {UserStatus} from "@trejgun/solo-types";
+import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
+import {UserStatus} from "@gemunionstudio/solo-types";
 
 import {UserEntity} from "../../user/user.entity";
 import {UserService} from "../../user/user.service";

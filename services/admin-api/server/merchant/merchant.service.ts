@@ -2,7 +2,7 @@ import {Injectable, NotFoundException, ForbiddenException} from "@nestjs/common"
 import {InjectRepository} from "@nestjs/typeorm";
 import {Brackets, FindConditions, Repository} from "typeorm";
 
-import {MerchantStatus, UserRole} from "@trejgun/solo-types";
+import {MerchantStatus, UserRole} from "@gemunionstudio/solo-types";
 
 import {MerchantEntity} from "./merchant.entity";
 import {IMerchantCreateDto, IMerchantSearchDto, IMerchantUpdateDto} from "./interfaces";

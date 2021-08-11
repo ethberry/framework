@@ -1,7 +1,7 @@
 import {Injectable} from "@nestjs/common";
 import {Request, Response} from "express";
 
-import {IUser, UserStatus} from "@trejgun/solo-types";
+import {IUser, UserStatus} from "@gemunionstudio/solo-types";
 
 import {UserEntity} from "../user/user.entity";
 import {IProfileUpdateDto} from "./interfaces";

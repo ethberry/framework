@@ -1,4 +1,4 @@
-import {EnabledLanguages} from "@trejgun/solo-constants-misc";
+import {EnabledLanguages} from "@gemunionstudio/solo-constants-misc";
 
 // @ts-ignore
 import en from "../i18n/en.json";

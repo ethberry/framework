@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
 
-import {PhotoStatus} from "@trejgun/solo-types";
+import {PhotoStatus} from "@gemunionstudio/solo-types";
 
 import {IPhotoCreateDto, IPhotoUpdateDto} from "./interfaces";
 import {PhotoEntity} from "./photo.entity";

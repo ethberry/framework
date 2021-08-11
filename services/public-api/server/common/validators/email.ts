@@ -8,8 +8,8 @@ import {
 import {Injectable} from "@nestjs/common";
 import {Not} from "typeorm";
 
-import {IUser} from "@trejgun/solo-types";
-import {CustomValidation, NativeValidation} from "@trejgun/types-validation";
+import {IUser} from "@gemunionstudio/solo-types";
+import {CustomValidation, NativeValidation} from "@gemunionstudio/types-validation";
 
 import {UserService} from "../../user/user.service";
 

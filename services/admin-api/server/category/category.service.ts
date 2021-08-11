@@ -2,7 +2,7 @@ import {BadRequestException, Injectable, NotFoundException} from "@nestjs/common
 import {InjectRepository} from "@nestjs/typeorm";
 import {Brackets, DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
 
-import {ISearchDto} from "@trejgun/types-collection";
+import {ISearchDto} from "@gemunionstudio/types-collection";
 
 import {CategoryEntity} from "./category.entity";
 import {ICategoryCreateDto, ICategoryUpdateDto} from "./interfaces";

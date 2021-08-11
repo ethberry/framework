@@ -1,5 +1,5 @@
-import {UserRole, UserStatus} from "@trejgun/solo-types";
-import {ISearchDto} from "@trejgun/types-collection";
+import {UserRole, UserStatus} from "@gemunionstudio/solo-types";
+import {ISearchDto} from "@gemunionstudio/types-collection";
 
 export interface IUserSearchDto extends ISearchDto {
   userRoles: Array<UserRole>;

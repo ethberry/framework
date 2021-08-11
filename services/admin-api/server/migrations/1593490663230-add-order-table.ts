@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-import {ns} from "@trejgun/solo-constants-misc";
+import {ns} from "@gemunionstudio/solo-constants-misc";
 
 export class AddOrderTable1593490663230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

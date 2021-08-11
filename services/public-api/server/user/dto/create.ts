@@ -1,15 +1,15 @@
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 
-import {IsString} from "@trejgun/nest-js-validators";
+import {IsString} from "@gemunionstudio/nest-js-validators";
 import {
   emailMaxLength,
   firstNameMaxLength,
   firstNameMinLength,
   lastNameMaxLength,
   lastNameMinLength,
-} from "@trejgun/constants-validation";
-import {reEmail} from "@trejgun/constants-regexp";
-import {DefaultLanguage, EnabledLanguages, rePhoneNumber} from "@trejgun/solo-constants-misc";
+} from "@gemunionstudio/constants-validation";
+import {reEmail} from "@gemunionstudio/constants-regexp";
+import {DefaultLanguage, EnabledLanguages, rePhoneNumber} from "@gemunionstudio/solo-constants-misc";
 
 import {ReCaptcha, IsEmail} from "../../common/validators";
 import {ValidatePasswordDto} from "../../auth/dto";

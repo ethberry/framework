@@ -6,7 +6,7 @@ import {useContainer} from "class-validator";
 import {MicroserviceOptions, Transport} from "@nestjs/microservices";
 import {WINSTON_MODULE_NEST_PROVIDER} from "nest-winston";
 
-import {companyName, ns} from "@trejgun/solo-constants-misc";
+import {companyName, ns} from "@gemunionstudio/solo-constants-misc";
 
 import {AppModule} from "./app.module";
 

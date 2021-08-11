@@ -1,4 +1,4 @@
-import {EnabledLanguages} from "@trejgun/solo-constants-misc";
+import {EnabledLanguages} from "@gemunionstudio/solo-constants-misc";
 
 import {IMerchant} from "./merchant";
 import {IBase} from "./base";

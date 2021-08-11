@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
 
-import {IMerchant} from "@trejgun/solo-types";
+import {IMerchant} from "@gemunionstudio/solo-types";
 
 import useStyles from "./styles";
 

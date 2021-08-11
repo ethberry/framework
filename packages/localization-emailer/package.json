@@ -7,7 +7,7 @@
     "url": "https://github.com/TrejGun/solo/issues"
   },
   "dependencies": {
-    "@trejgun/solo-constants-misc": "0.0.1"
+    "@gemunionstudio/solo-constants-misc": "0.0.1"
   },
   "description": "localization for emailer",
   "devDependencies": {},
@@ -21,7 +21,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@trejgun/solo-localization-emailer",
+  "name": "@gemunionstudio/solo-localization-emailer",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

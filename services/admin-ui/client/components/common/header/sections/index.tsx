@@ -5,9 +5,9 @@ import {matchPath, useHistory, useLocation} from "react-router";
 import {Avatar, Button, IconButton, Menu, MenuItem} from "@material-ui/core";
 import {Link as RouterLink, NavLink as RouterNavLink} from "react-router-dom";
 
-import {IUserContext, UserContext} from "@trejgun/provider-user";
-import {ApiContext, ApiError} from "@trejgun/provider-api";
-import {IUser} from "@trejgun/solo-types";
+import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
+import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
+import {IUser} from "@gemunionstudio/solo-types";
 
 import useStyles from "./styles";
 

@@ -6,14 +6,14 @@ import {WinstonModule} from "nest-winston";
 import {RedisModule, RedisModuleOptions, RedisService} from "@liaoliaots/nestjs-redis";
 import {ThrottlerStorageRedisService} from "nestjs-throttler-storage-redis";
 
-import {HttpExceptionFilter, HttpValidationPipe} from "@trejgun/nest-js-providers";
-import {JwtHttpGuard} from "@trejgun/nest-js-guards";
-import {RequestLoggerModule} from "@trejgun/nest-js-module-request-logger";
-import {PassportInitialize} from "@trejgun/nest-js-module-passport";
-import {HelmetModule} from "@trejgun/nest-js-module-helmet";
-import {WinstonConfigService} from "@trejgun/nest-js-module-winston-logdna";
-import {IS3Options, ISdkOptions, S3Module} from "@trejgun/nest-js-module-s3";
-import {StorageType} from "@trejgun/solo-types";
+import {HttpExceptionFilter, HttpValidationPipe} from "@gemunionstudio/nest-js-providers";
+import {JwtHttpGuard} from "@gemunionstudio/nest-js-guards";
+import {RequestLoggerModule} from "@gemunionstudio/nest-js-module-request-logger";
+import {PassportInitialize} from "@gemunionstudio/nest-js-module-passport";
+import {HelmetModule} from "@gemunionstudio/nest-js-module-helmet";
+import {WinstonConfigService} from "@gemunionstudio/nest-js-module-winston-logdna";
+import {IS3Options, ISdkOptions, S3Module} from "@gemunionstudio/nest-js-module-s3";
+import {StorageType} from "@gemunionstudio/solo-types";
 
 import {AuthModule} from "./auth/auth.module";
 import {CategoryModule} from "./category/category.module";

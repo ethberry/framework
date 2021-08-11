@@ -1,4 +1,4 @@
-import {PhotoStatus} from "@trejgun/solo-types";
+import {PhotoStatus} from "@gemunionstudio/solo-types";
 
 export interface IPhotoUpdateDto {
   photoStatus: PhotoStatus;

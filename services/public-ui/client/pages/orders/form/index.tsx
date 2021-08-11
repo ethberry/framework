@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 import {Grid} from "@material-ui/core";
 
-import {AutoSave, FormikForm} from "@trejgun/material-ui-form";
-import {SelectInput} from "@trejgun/material-ui-inputs-core";
-import {DateRangeInput} from "@trejgun/material-ui-inputs-picker";
-import {OrderStatus} from "@trejgun/solo-types";
+import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
+import {SelectInput} from "@gemunionstudio/material-ui-inputs-core";
+import {DateRangeInput} from "@gemunionstudio/material-ui-inputs-picker";
+import {OrderStatus} from "@gemunionstudio/solo-types";
 
 import {IOrderSearchDto} from "../index";
 

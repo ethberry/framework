@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react";
 import {TextField, TextFieldProps} from "@material-ui/core";
 import {getIn, useFormikContext} from "formik";
-import {TToolbarControl} from "@trejgun/mui-rte";
+import {TToolbarControl} from "@gemunionstudio/mui-rte";
 import {useIntl} from "react-intl";
 
 import {IRichTextInputProps, RichTextInput} from "../input";

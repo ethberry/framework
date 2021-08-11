@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {IToken, IUser} from "@trejgun/solo-types";
+import {IToken, IUser} from "@gemunionstudio/solo-types";
 
 export interface IDataContext {
   user?: IUser;

@@ -1,7 +1,7 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
 
-import {PageStatus} from "@trejgun/solo-types";
-import {IsString} from "@trejgun/nest-js-validators";
+import {PageStatus} from "@gemunionstudio/solo-types";
+import {IsString} from "@gemunionstudio/nest-js-validators";
 
 import {IPageUpdateDto} from "../interfaces";
 import {PageCreateDto} from "./create";
