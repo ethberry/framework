@@ -19,7 +19,8 @@ export class JwtLocalStrategy extends PassportStrategy(Strategy, "jwt-http") {
   }
 
   public async validate(payload: {email: string}): Promise<UserEntity> {
-    const userEntity = await this.userService.findOne({email: payload.email});
+    const email = payload.email.toLowerCase();
+    const userEntity = await this.userService.findOne({email});
 
     if (!userEntity) {
       throw new UnauthorizedException("userNotFound");

@@ -1,17 +1,18 @@
-import {ApiProperty} from "@nestjs/swagger";
+import {ApiPropertyOptional} from "@nestjs/swagger";
 
-import {IsNumber} from "@gemunionstudio/nest-js-validators";
+import {IsConfirm, IsPassword} from "@gemunionstudio/nest-js-validators";
 
-import {IProfileUpdateDto} from "../interfaces";
 import {UserCommonDto} from "../../common/dto";
+import {IProfileUpdateDto} from "../interfaces";
 
 export class ProfileUpdateDto extends UserCommonDto implements IProfileUpdateDto {
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsNumber({
+  @ApiPropertyOptional()
+  @IsPassword({
     required: false,
-    minimum: 1,
   })
-  public id: number;
+  public password: string;
+
+  @ApiPropertyOptional()
+  @IsConfirm()
+  public confirm: string;
 }

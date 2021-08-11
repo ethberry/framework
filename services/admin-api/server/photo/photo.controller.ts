@@ -1,7 +1,7 @@
 import {Controller, Get, Put, Param, Body, UseInterceptors} from "@nestjs/common";
 import {ApiCookieAuth} from "@nestjs/swagger";
 
-import {PaginationInterceptor} from "@gemunionstudio/nest-js-providers";
+import {PaginationInterceptor} from "@gemunionstudio/nest-js-utils";
 import {UserRole} from "@gemunionstudio/framework-types";
 
 import {PhotoService} from "./photo.service";

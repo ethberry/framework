@@ -12,7 +12,7 @@ import {RedisHealthIndicator} from "@liaoliaots/nestjs-redis";
 import {ConfigService} from "@nestjs/config";
 import {Transport} from "@nestjs/microservices";
 
-import {Public} from "@gemunionstudio/nest-js-providers";
+import {Public} from "@gemunionstudio/nest-js-utils";
 import {StorageType} from "@gemunionstudio/framework-types";
 
 @Public()

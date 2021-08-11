@@ -1,7 +1,7 @@
 import {Controller, Post, HttpCode} from "@nestjs/common";
 import {ApiCookieAuth} from "@nestjs/swagger";
 
-import {Roles} from "@gemunionstudio/nest-js-providers";
+import {Roles} from "@gemunionstudio/nest-js-utils";
 import {EmailType, UserRole} from "@gemunionstudio/framework-types";
 
 import {EmailService} from "./email.service";

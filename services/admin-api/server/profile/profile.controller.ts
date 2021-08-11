@@ -1,32 +1,25 @@
-import {Request, Response} from "express";
-import {Body, Controller, Get, Put, Req, Res} from "@nestjs/common";
-import {ApiCookieAuth} from "@nestjs/swagger";
+import {Body, Controller, Get, Put} from "@nestjs/common";
+import {ApiBearerAuth} from "@nestjs/swagger";
 
-import {Public} from "@gemunionstudio/nest-js-providers";
+import {Public, User} from "@gemunionstudio/nest-js-utils";
 
-import {User} from "../common/decorators";
 import {ProfileService} from "./profile.service";
 import {UserEntity} from "../user/user.entity";
 import {ProfileUpdateDto} from "./dto";
 
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller("/profile")
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
   @Public()
   @Get("/")
-  public getProfile(@User() userEntity: UserEntity, @Res() res: Response): void {
-    res.json(userEntity);
+  public getProfile(@User() userEntity: UserEntity): UserEntity {
+    return userEntity;
   }
 
   @Put("/")
-  public setProfile(
-    @Req() req: Request,
-    @Res() res: Response,
-    @User() user: UserEntity,
-    @Body() body: ProfileUpdateDto,
-  ): Promise<void> {
-    return this.profileService.update(user, body, req, res);
+  public setProfile(@User() userEntity: UserEntity, @Body() dto: ProfileUpdateDto): Promise<UserEntity | undefined> {
+    return this.profileService.update(userEntity, dto);
   }
 }

@@ -1,6 +1,6 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
+import {Transform} from "class-transformer";
 
-import {reEmail} from "@gemunionstudio/constants-regexp";
 import {
   emailMaxLength,
   firstNameMaxLength,
@@ -76,9 +76,7 @@ export class UserCommonDto implements IUserCommonDto {
   })
   @IsEmail({
     required: false,
-    regexp: reEmail,
-    unique: true,
-    maxLength: emailMaxLength,
   })
+  @Transform(({value}: {value: string}) => value.toLowerCase())
   public email: string;
 }

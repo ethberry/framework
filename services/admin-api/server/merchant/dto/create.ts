@@ -1,8 +1,8 @@
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 import {IsJSON} from "class-validator";
+import {Transform} from "class-transformer";
 
 import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
-import {reEmail} from "@gemunionstudio/constants-regexp";
 import {rePhoneNumber} from "@gemunionstudio/framework-constants-misc";
 
 import {IMerchantCreateDto} from "../interfaces";
@@ -18,9 +18,8 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   public description: string;
 
   @ApiProperty()
-  @IsEmail({
-    regexp: reEmail,
-  })
+  @IsEmail()
+  @Transform(({value}: {value: string}) => value.toLowerCase())
   public email: string;
 
   @ApiPropertyOptional()

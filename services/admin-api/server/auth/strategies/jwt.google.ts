@@ -27,7 +27,8 @@ export class JwtGoogleStrategy extends PassportStrategy(OAuth2Strategy, "jwt-goo
   }
 
   public async validate(_accessToken: string, _refreshToken: string, profile: Profile): Promise<UserEntity> {
-    const userEntity = await this.userService.findOne({email: profile.emails![0].value});
+    const email = profile.emails![0].value.toLowerCase();
+    const userEntity = await this.userService.findOne({email});
 
     if (userEntity) {
       if (userEntity.userStatus !== UserStatus.ACTIVE) {

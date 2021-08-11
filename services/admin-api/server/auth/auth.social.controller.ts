@@ -1,7 +1,7 @@
 import {Controller, Get, Ip, UseGuards} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 
-import {Public} from "@gemunionstudio/nest-js-providers";
+import {Public} from "@gemunionstudio/nest-js-utils";
 import {JwtFacebookGuard, JwtGoogleGuard} from "@gemunionstudio/nest-js-guards";
 
 import {User} from "../common/decorators";

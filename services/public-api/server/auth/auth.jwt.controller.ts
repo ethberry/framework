@@ -1,6 +1,6 @@
 import {Body, ClassSerializerInterceptor, Controller, HttpCode, Ip, Post, UseInterceptors} from "@nestjs/common";
 
-import {Public} from "@gemunionstudio/nest-js-providers";
+import {Public} from "@gemunionstudio/nest-js-utils";
 import {IJwt} from "@gemunionstudio/framework-types/dist/jwt";
 
 import {UserCreateDto} from "../user/dto";

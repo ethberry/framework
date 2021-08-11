@@ -6,7 +6,7 @@ import {WinstonModule} from "nest-winston";
 import {RedisModule, RedisModuleOptions, RedisService} from "@liaoliaots/nestjs-redis";
 import {ThrottlerStorageRedisService} from "nestjs-throttler-storage-redis";
 
-import {HttpExceptionFilter, HttpValidationPipe} from "@gemunionstudio/nest-js-providers";
+import {HttpExceptionFilter, HttpValidationPipe} from "@gemunionstudio/nest-js-utils";
 import {JwtHttpGuard} from "@gemunionstudio/nest-js-guards";
 import {RequestLoggerModule} from "@gemunionstudio/nest-js-module-request-logger";
 import {PassportInitialize} from "@gemunionstudio/nest-js-module-passport";

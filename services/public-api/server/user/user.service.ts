@@ -1,5 +1,5 @@
 import {createHash, randomBytes} from "crypto";
-import {FindConditions, FindManyOptions, FindOneOptions, Repository} from "typeorm";
+import {FindConditions, FindManyOptions, FindOneOptions, Not, Repository} from "typeorm";
 import {ConflictException, Inject, Injectable, Logger, LoggerService} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {ConfigService} from "@nestjs/config";
@@ -85,5 +85,16 @@ export class UserService {
   public createPasswordHash(password: string): string {
     const passwordSecret = this.configService.get<string>("PASSWORD_SECRET", "keyboard_cat");
     return createHash("sha256").update(password).update(passwordSecret).digest("hex");
+  }
+
+  public async checkEmail(email: string, id: number): Promise<void> {
+    const userEntity = await this.findOne({
+      email,
+      id: Not(id),
+    });
+
+    if (userEntity) {
+      throw new ConflictException("duplicateEmail");
+    }
   }
 }
