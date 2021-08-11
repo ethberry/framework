@@ -1,12 +1,12 @@
-import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
-import {IsJSON} from "class-validator";
-import {Transform} from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsJSON } from "class-validator";
+import { Transform } from "class-transformer";
 
-import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
-import {rePhoneNumber} from "@gemunionstudio/framework-constants-misc";
+import { IsNumber, IsString } from "@gemunionstudio/nest-js-validators";
+import { rePhoneNumber } from "@gemunionstudio/framework-constants-misc";
 
-import {IMerchantCreateDto} from "../interfaces";
-import {IsEmail} from "../../common/validators";
+import { IMerchantCreateDto } from "../interfaces";
+import { IsEmail } from "../../common/validators";
 
 export class MerchantCreateDto implements IMerchantCreateDto {
   @ApiProperty()
@@ -14,12 +14,12 @@ export class MerchantCreateDto implements IMerchantCreateDto {
   public title: string;
 
   @ApiProperty()
-  @IsJSON({message: "patternMismatch"})
+  @IsJSON({ message: "patternMismatch" })
   public description: string;
 
   @ApiProperty()
   @IsEmail()
-  @Transform(({value}: {value: string}) => value.toLowerCase())
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
   @ApiPropertyOptional()

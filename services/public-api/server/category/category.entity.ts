@@ -1,16 +1,16 @@
-import {Column, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable, PrimaryGeneratedColumn } from "typeorm";
 
-import {ICategory} from "@gemunionstudio/framework-types";
-import {ProductEntity} from "../product/product.entity";
-import {ns} from "@gemunionstudio/framework-constants-misc";
-import {BaseEntity} from "../common/base.entity";
+import { ICategory } from "@gemunionstudio/framework-types";
+import { ProductEntity } from "../product/product.entity";
+import { ns } from "@gemunionstudio/framework-constants-misc";
+import { BaseEntity } from "../common/base.entity";
 
-@Entity({schema: ns, name: "category"})
+@Entity({ schema: ns, name: "category" })
 export class CategoryEntity extends BaseEntity implements ICategory {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public title: string;
 
   @Column({
@@ -29,7 +29,7 @@ export class CategoryEntity extends BaseEntity implements ICategory {
   @ManyToOne(_type => CategoryEntity, category => category.children)
   public parent: CategoryEntity;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public parentId: number;
 
   @OneToMany(_type => CategoryEntity, category => category.parent, {
@@ -38,6 +38,6 @@ export class CategoryEntity extends BaseEntity implements ICategory {
   public children: Array<CategoryEntity>;
 
   @ManyToMany(_type => ProductEntity, product => product.categories)
-  @JoinTable({name: "product_to_category"})
+  @JoinTable({ name: "product_to_category" })
   public products: Array<ProductEntity>;
 }

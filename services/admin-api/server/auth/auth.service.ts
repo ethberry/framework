@@ -1,17 +1,17 @@
-import {Inject, Injectable, NotFoundException, UnauthorizedException} from "@nestjs/common";
-import {ClientProxy} from "@nestjs/microservices";
-import {ConfigService} from "@nestjs/config";
-import {JwtService} from "@nestjs/jwt";
-import {InjectRepository} from "@nestjs/typeorm";
-import {DeleteResult, FindConditions, Repository} from "typeorm";
-import {v4} from "uuid";
+import { Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import { ClientProxy } from "@nestjs/microservices";
+import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DeleteResult, FindConditions, Repository } from "typeorm";
+import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
-import {EmailType, ProviderType, TokenType, UserRole, UserStatus} from "@gemunionstudio/framework-types";
-import {IJwt} from "@gemunionstudio/framework-types/dist/jwt";
+import { EmailType, ProviderType, TokenType, UserRole, UserStatus } from "@gemunionstudio/framework-types";
+import { IJwt } from "@gemunionstudio/framework-types/dist/jwt";
 
-import {UserService} from "../user/user.service";
-import {UserEntity} from "../user/user.entity";
+import { UserService } from "../user/user.service";
+import { UserEntity } from "../user/user.entity";
 import {
   IEmailVerificationDto,
   IForgotPasswordDto,
@@ -21,10 +21,10 @@ import {
   IResendEmailVerificationDto,
   IRestorePasswordDto,
 } from "./interfaces";
-import {AuthEntity} from "./auth.entity";
-import {IUserCreateDto} from "../user/interfaces";
-import {TokenService} from "../token/token.service";
-import {IUserImportDto} from "../user/interfaces/import";
+import { AuthEntity } from "./auth.entity";
+import { IUserCreateDto } from "../user/interfaces";
+import { TokenService } from "../token/token.service";
+import { IUserImportDto } from "../user/interfaces/import";
 
 @Injectable()
 export class AuthService {
@@ -63,7 +63,7 @@ export class AuthService {
   }
 
   public async refresh(where: FindConditions<AuthEntity>, ip: string): Promise<IJwt> {
-    const authEntity = await this.authEntityRepository.findOne({where, relations: ["user"]});
+    const authEntity = await this.authEntityRepository.findOne({ where, relations: ["user"] });
 
     if (!authEntity || authEntity.refreshTokenExpiresAt < new Date().getTime()) {
       throw new UnauthorizedException("refreshTokenHasExpired");
@@ -90,7 +90,7 @@ export class AuthService {
       .save();
 
     return {
-      accessToken: this.jwtService.sign({email: userEntity.email}, {expiresIn: accessTokenExpiresIn}),
+      accessToken: this.jwtService.sign({ email: userEntity.email }, { expiresIn: accessTokenExpiresIn }),
       refreshToken: refreshToken,
       accessTokenExpiresAt: date.getTime() + accessTokenExpiresIn * 1000,
       refreshTokenExpiresAt: date.getTime() + refreshTokenExpiresIn * 1000,
@@ -142,7 +142,7 @@ export class AuthService {
   }
 
   public async forgotPassword(data: IForgotPasswordDto): Promise<void> {
-    const userEntity = await this.userService.findOne({email: data.email});
+    const userEntity = await this.userService.findOne({ email: data.email });
 
     if (!userEntity) {
       // if user is not found - return positive status
@@ -165,7 +165,7 @@ export class AuthService {
   }
 
   public async restorePassword(data: IRestorePasswordDto): Promise<void> {
-    const tokenEntity = await this.tokenService.findOne({uuid: data.token, tokenType: TokenType.PASSWORD});
+    const tokenEntity = await this.tokenService.findOne({ uuid: data.token, tokenType: TokenType.PASSWORD });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -185,7 +185,7 @@ export class AuthService {
   }
 
   public async emailVerification(data: IEmailVerificationDto): Promise<void> {
-    const tokenEntity = await this.tokenService.findOne({uuid: data.token, tokenType: TokenType.EMAIL});
+    const tokenEntity = await this.tokenService.findOne({ uuid: data.token, tokenType: TokenType.EMAIL });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -197,7 +197,7 @@ export class AuthService {
   }
 
   public async resendEmailVerification(data: IResendEmailVerificationDto): Promise<void> {
-    const userEntity = await this.userService.findOne({email: data.email});
+    const userEntity = await this.userService.findOne({ email: data.email });
 
     if (!userEntity) {
       // if user is not found - return positive status
@@ -216,7 +216,7 @@ export class AuthService {
   }
 
   public getPasswordScore(data: IPasswordScoreDto): IPasswordScoreResult {
-    const {score} = zxcvbn(data.password);
-    return {score};
+    const { score } = zxcvbn(data.password);
+    return { score };
   }
 }

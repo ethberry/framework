@@ -1,12 +1,12 @@
-import {Injectable, NotFoundException, ForbiddenException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, Repository} from "typeorm";
+import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Brackets, FindConditions, Repository } from "typeorm";
 
-import {MerchantStatus, UserRole} from "@gemunionstudio/framework-types";
+import { MerchantStatus, UserRole } from "@gemunionstudio/framework-types";
 
-import {MerchantEntity} from "./merchant.entity";
-import {IMerchantCreateDto, IMerchantSearchDto, IMerchantUpdateDto} from "./interfaces";
-import {UserEntity} from "../user/user.entity";
+import { MerchantEntity } from "./merchant.entity";
+import { IMerchantCreateDto, IMerchantSearchDto, IMerchantUpdateDto } from "./interfaces";
+import { UserEntity } from "../user/user.entity";
 
 @Injectable()
 export class MerchantService {
@@ -16,7 +16,7 @@ export class MerchantService {
   ) {}
 
   public search(dto: IMerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
-    const {merchantStatus, query, skip, take} = dto;
+    const { merchantStatus, query, skip, take } = dto;
 
     const queryBuilder = this.merchantEntityRepository.createQueryBuilder("merchant");
 
@@ -30,17 +30,17 @@ export class MerchantService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("merchant.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
+          qb.where("merchant.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }
 
     if (merchantStatus && merchantStatus.length) {
       if (merchantStatus.length === 1) {
-        queryBuilder.andWhere("merchant.merchantStatus = :merchantStatus", {merchantStatus: merchantStatus[0]});
+        queryBuilder.andWhere("merchant.merchantStatus = :merchantStatus", { merchantStatus: merchantStatus[0] });
       } else {
-        queryBuilder.andWhere("merchant.merchantStatus IN(:...merchantStatus)", {merchantStatus});
+        queryBuilder.andWhere("merchant.merchantStatus IN(:...merchantStatus)", { merchantStatus });
       }
     }
 
@@ -68,7 +68,7 @@ export class MerchantService {
   }
 
   public findOne(where: FindConditions<MerchantEntity>): Promise<MerchantEntity | undefined> {
-    return this.merchantEntityRepository.findOne({where, relations: ["users"]});
+    return this.merchantEntityRepository.findOne({ where, relations: ["users"] });
   }
 
   public async update(
@@ -76,7 +76,7 @@ export class MerchantService {
     data: IMerchantUpdateDto,
     userEntity: UserEntity,
   ): Promise<MerchantEntity | undefined> {
-    const {userIds, ...rest} = data;
+    const { userIds, ...rest } = data;
 
     const merchantEntity = await this.merchantEntityRepository.findOne(where);
 
@@ -88,7 +88,7 @@ export class MerchantService {
 
     if (userEntity.userRoles.includes(UserRole.ADMIN)) {
       Object.assign(merchantEntity, {
-        users: userIds.map(id => ({id})),
+        users: userIds.map(id => ({ id })),
       });
     }
 
@@ -96,13 +96,13 @@ export class MerchantService {
   }
 
   public async create(data: IMerchantCreateDto, userEntity: UserEntity): Promise<MerchantEntity> {
-    const {userIds, ...rest} = data;
+    const { userIds, ...rest } = data;
 
     return this.merchantEntityRepository
       .create({
         ...rest,
         merchantStatus: userEntity.userRoles.includes(UserRole.ADMIN) ? MerchantStatus.ACTIVE : MerchantStatus.PENDING,
-        users: userEntity.userRoles.includes(UserRole.ADMIN) ? userIds.map(id => ({id})) : [userEntity],
+        users: userEntity.userRoles.includes(UserRole.ADMIN) ? userIds.map(id => ({ id })) : [userEntity],
       })
       .save();
   }
@@ -124,7 +124,7 @@ export class MerchantService {
       throw new ForbiddenException("insufficientPermissions");
     }
 
-    Object.assign(merchantEntity, {merchantStatus: MerchantStatus.INACTIVE});
+    Object.assign(merchantEntity, { merchantStatus: MerchantStatus.INACTIVE });
 
     return merchantEntity.save();
   }

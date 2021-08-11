@@ -1,11 +1,11 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {Header} from "../header";
-import {Footer} from "../footer";
+import { Header } from "../header";
+import { Footer } from "../footer";
 
 import useStyles from "./styles";
 
-export const Layout: FC = ({children}) => {
+export const Layout: FC = ({ children }) => {
   const classes = useStyles();
   return (
     <table cellPadding={0} cellSpacing={0} className={classes.main}>

@@ -1,10 +1,10 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
-import {SearchDto} from "@gemunionstudio/collection";
-import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
+import { IsString } from "@gemunionstudio/nest-js-validators";
+import { SearchDto } from "@gemunionstudio/collection";
+import { UserRole, UserStatus } from "@gemunionstudio/framework-types";
 
-import {IUserSearchDto} from "../interfaces";
+import { IUserSearchDto } from "../interfaces";
 
 export class UserSearchDto extends SearchDto implements IUserSearchDto {
   @ApiPropertyOptional({

@@ -1,14 +1,14 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-import {IOrder, OrderStatus} from "@gemunionstudio/framework-types";
-import {ns} from "@gemunionstudio/framework-constants-misc";
+import { IOrder, OrderStatus } from "@gemunionstudio/framework-types";
+import { ns } from "@gemunionstudio/framework-constants-misc";
 
-import {UserEntity} from "../user/user.entity";
-import {MerchantEntity} from "../merchant/merchant.entity";
-import {BaseEntity} from "../common/base.entity";
-import {ProductEntity} from "../product/product.entity";
+import { UserEntity } from "../user/user.entity";
+import { MerchantEntity } from "../merchant/merchant.entity";
+import { BaseEntity } from "../common/base.entity";
+import { ProductEntity } from "../product/product.entity";
 
-@Entity({schema: ns, name: "order"})
+@Entity({ schema: ns, name: "order" })
 export class OrderEntity extends BaseEntity implements IOrder {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -17,17 +17,17 @@ export class OrderEntity extends BaseEntity implements IOrder {
   @OneToOne(_type => UserEntity)
   public user: UserEntity;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public userId: number;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public merchantId: number;
 
   @JoinColumn()
   @ManyToOne(_type => MerchantEntity, merchant => merchant.orders)
   public merchant: MerchantEntity;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public productId: number;
 
   @JoinColumn()
@@ -40,6 +40,6 @@ export class OrderEntity extends BaseEntity implements IOrder {
   })
   public orderStatus: OrderStatus;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public price: number;
 }

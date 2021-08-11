@@ -90,7 +90,7 @@ module.exports = {
       filename: "[name].css",
     }),
     new CopyPlugin({
-      patterns: [{from: "./static", to: "./"}],
+      patterns: [{ from: "./static", to: "./" }],
     }),
     new ProgressBarPlugin(),
   ],

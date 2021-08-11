@@ -1,10 +1,10 @@
-import {ConflictException, Injectable, NotFoundException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
+import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {PageEntity} from "./page.entity";
-import {IPageCreateDto, IPageUpdateDto} from "./interfaces";
-import {PageStatus} from "@gemunionstudio/framework-types";
+import { PageEntity } from "./page.entity";
+import { IPageCreateDto, IPageUpdateDto } from "./interfaces";
+import { PageStatus } from "@gemunionstudio/framework-types";
 
 @Injectable()
 export class PageService {
@@ -21,17 +21,17 @@ export class PageService {
     where: FindConditions<PageEntity>,
     options?: FindManyOptions<PageEntity>,
   ): Promise<[Array<PageEntity>, number]> {
-    return this.pageEntityRepository.findAndCount({where, ...options});
+    return this.pageEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindConditions<PageEntity>): Promise<PageEntity | undefined> {
-    return this.pageEntityRepository.findOne({where});
+    return this.pageEntityRepository.findOne({ where });
   }
 
   public async create(dto: IPageCreateDto): Promise<PageEntity> {
-    const {slug} = dto;
+    const { slug } = dto;
 
-    const productEntity = await this.pageEntityRepository.findOne({slug});
+    const productEntity = await this.pageEntityRepository.findOne({ slug });
 
     if (productEntity) {
       throw new ConflictException("duplicateSlug");

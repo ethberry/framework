@@ -1,5 +1,5 @@
 import path from "path";
-import {Router, static as serveStatic} from "express";
+import { Router, static as serveStatic } from "express";
 import webpack from "../../configs/webpack";
 
 const router = Router();

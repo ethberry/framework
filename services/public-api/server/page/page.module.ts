@@ -1,9 +1,9 @@
-import {Module} from "@nestjs/common";
-import {TypeOrmModule} from "@nestjs/typeorm";
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import {PageService} from "./page.service";
-import {PageEntity} from "./page.entity";
-import {PageController} from "./page.controller";
+import { PageService } from "./page.service";
+import { PageEntity } from "./page.entity";
+import { PageController } from "./page.controller";
 
 @Module({
   imports: [TypeOrmModule.forFeature([PageEntity])],

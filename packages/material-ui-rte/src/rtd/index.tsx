@@ -1,6 +1,6 @@
-import React, {FC} from "react";
-import {Editor, EditorState, convertFromRaw, ContentBlock} from "draft-js";
-import {TCustomControl, atomicBlockExists} from "@gemunionstudio/mui-rte";
+import React, { FC } from "react";
+import { Editor, EditorState, convertFromRaw, ContentBlock } from "draft-js";
+import { TCustomControl, atomicBlockExists } from "@gemunionstudio/mui-rte";
 
 export interface IRichTextDisplayProps {
   data: any;
@@ -9,7 +9,7 @@ export interface IRichTextDisplayProps {
 const customControls: Array<TCustomControl> = [];
 
 export const RichTextDisplay: FC<IRichTextDisplayProps> = props => {
-  const {data} = props;
+  const { data } = props;
 
   const editorState = EditorState.createWithContent(convertFromRaw(JSON.parse(data)));
 

@@ -1,9 +1,9 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import {UserRole} from "@gemunionstudio/framework-types";
-import {IsString} from "@gemunionstudio/nest-js-validators";
+import { UserRole } from "@gemunionstudio/framework-types";
+import { IsString } from "@gemunionstudio/nest-js-validators";
 
-import {IUserAutocompleteDto} from "../interfaces";
+import { IUserAutocompleteDto } from "../interfaces";
 
 export class UserAutocompleteDto implements IUserAutocompleteDto {
   @ApiPropertyOptional({

@@ -1,15 +1,15 @@
-import React, {FC} from "react";
-import {hot} from "react-hot-loader/root";
-import {Redirect, Switch} from "react-router";
-import {SnackbarProvider} from "notistack";
+import React, { FC } from "react";
+import { hot } from "react-hot-loader/root";
+import { Redirect, Switch } from "react-router";
+import { SnackbarProvider } from "notistack";
 
-import {UserProvider} from "@gemunionstudio/provider-user";
-import {SettingsProvider} from "@gemunionstudio/provider-settings";
-import {LocalizationProvider} from "@gemunionstudio/provider-localization";
-import {ApiProvider} from "@gemunionstudio/provider-api";
-import {i18n} from "@gemunionstudio/framework-localization-public-ui";
-import {PickerProvider} from "@gemunionstudio/material-ui-provider-picker";
-import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
+import { UserProvider } from "@gemunionstudio/provider-user";
+import { SettingsProvider } from "@gemunionstudio/provider-settings";
+import { LocalizationProvider } from "@gemunionstudio/provider-localization";
+import { ApiProvider } from "@gemunionstudio/provider-api";
+import { i18n } from "@gemunionstudio/framework-localization-public-ui";
+import { PickerProvider } from "@gemunionstudio/material-ui-provider-picker";
+import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
 import {
   Error,
   ForgotPassword,
@@ -21,21 +21,21 @@ import {
   VerifyEmail,
 } from "@gemunionstudio/common-pages";
 
-import {MyRoute} from "../components/common/my-route";
+import { MyRoute } from "../components/common/my-route";
 
-import {Landing} from "./landing";
+import { Landing } from "./landing";
 
-import {Profile} from "./profile";
+import { Profile } from "./profile";
 
-import {Layout} from "../components/common/layout";
+import { Layout } from "../components/common/layout";
 
-import {ProductList} from "./product-list";
-import {MerchantList} from "./merchant-list";
-import {Dashboard} from "./dashboard";
-import {Product} from "./product";
-import {Merchant} from "./merchant";
-import {Orders} from "./orders";
-import {Page} from "./page";
+import { ProductList } from "./product-list";
+import { MerchantList } from "./merchant-list";
+import { Dashboard } from "./dashboard";
+import { Product } from "./product";
+import { Merchant } from "./merchant";
+import { Orders } from "./orders";
+import { Page } from "./page";
 
 const App: FC = () => {
   return (

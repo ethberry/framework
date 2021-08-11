@@ -1,4 +1,4 @@
-import {Controller, Get} from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 import {
   HealthCheck,
   HealthCheckResult,
@@ -7,13 +7,13 @@ import {
   MicroserviceHealthIndicator,
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
-import {SkipThrottle} from "@nestjs/throttler";
-import {RedisHealthIndicator} from "@liaoliaots/nestjs-redis";
-import {ConfigService} from "@nestjs/config";
-import {Transport} from "@nestjs/microservices";
+import { SkipThrottle } from "@nestjs/throttler";
+import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis";
+import { ConfigService } from "@nestjs/config";
+import { Transport } from "@nestjs/microservices";
 
-import {Public} from "@gemunionstudio/nest-js-utils";
-import {StorageType} from "@gemunionstudio/framework-types";
+import { Public } from "@gemunionstudio/nest-js-utils";
+import { StorageType } from "@gemunionstudio/framework-types";
 
 @Public()
 @SkipThrottle(true)
@@ -45,7 +45,7 @@ export class HealthController {
           },
         }),
       async (): Promise<HealthIndicatorResult> =>
-        this.redisIndicator.isHealthy("Redis", {namespace: StorageType.THROTTLE}),
+        this.redisIndicator.isHealthy("Redis", { namespace: StorageType.THROTTLE }),
     ]);
   }
 }

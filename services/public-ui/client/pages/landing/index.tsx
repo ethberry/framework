@@ -1,7 +1,7 @@
-import React, {FC, Fragment} from "react";
+import React, { FC, Fragment } from "react";
 
-import {NewProducts} from "./new-products";
-import {PromoCarousel} from "./promo-carousel";
+import { NewProducts } from "./new-products";
+import { PromoCarousel } from "./promo-carousel";
 
 export const Landing: FC = () => {
   return (

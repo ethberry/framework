@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   theme =>
@@ -10,5 +10,5 @@ export default makeStyles(
         padding: theme.spacing(2, 1, 2, 1),
       },
     }),
-  {name: "MultiCarousel"},
+  { name: "MultiCarousel" },
 );

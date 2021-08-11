@@ -1,8 +1,8 @@
-import {Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {FindConditions, Repository} from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindConditions, Repository } from "typeorm";
 
-import {PageEntity} from "./page.entity";
+import { PageEntity } from "./page.entity";
 
 @Injectable()
 export class PageService {
@@ -12,6 +12,6 @@ export class PageService {
   ) {}
 
   public findOne(where: FindConditions<PageEntity>): Promise<PageEntity | undefined> {
-    return this.pageEntityRepository.findOne({where});
+    return this.pageEntityRepository.findOne({ where });
   }
 }

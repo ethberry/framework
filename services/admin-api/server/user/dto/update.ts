@@ -1,10 +1,10 @@
-import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
-import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
+import { IsString } from "@gemunionstudio/nest-js-validators";
+import { UserRole, UserStatus } from "@gemunionstudio/framework-types";
 
-import {IUserUpdateDto} from "../interfaces";
-import {ProfileUpdateDto} from "../../profile/dto";
+import { IUserUpdateDto } from "../interfaces";
+import { ProfileUpdateDto } from "../../profile/dto";
 
 export class UserUpdateDto extends ProfileUpdateDto implements IUserUpdateDto {
   @ApiProperty({

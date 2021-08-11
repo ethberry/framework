@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   theme =>
@@ -8,5 +8,5 @@ export default makeStyles(
         backgroundColor: theme.palette.background.paper,
       },
     }),
-  {name: "Dashboard"},
+  { name: "Dashboard" },
 );

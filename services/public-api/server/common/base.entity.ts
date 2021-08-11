@@ -1,15 +1,15 @@
-import {BaseEntity as OrmBaseEntity, BeforeInsert, BeforeUpdate, Column, PrimaryGeneratedColumn} from "typeorm";
+import { BaseEntity as OrmBaseEntity, BeforeInsert, BeforeUpdate, Column, PrimaryGeneratedColumn } from "typeorm";
 
-import {IBase} from "@gemunionstudio/framework-types";
+import { IBase } from "@gemunionstudio/framework-types";
 
 export abstract class BaseEntity extends OrmBaseEntity implements IBase {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({type: "timestamptz"})
+  @Column({ type: "timestamptz" })
   public createdAt: string;
 
-  @Column({type: "timestamptz"})
+  @Column({ type: "timestamptz" })
   public updatedAt: string;
 
   @BeforeInsert()

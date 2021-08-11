@@ -1,6 +1,6 @@
-import React, {FC, useContext} from "react";
+import React, { FC, useContext } from "react";
 
-import {DataContext, IDataContext} from "../../../components/context/data/context";
+import { DataContext, IDataContext } from "../../../components/context/data/context";
 import useStyles from "./styles";
 
 export const Verification: FC = () => {

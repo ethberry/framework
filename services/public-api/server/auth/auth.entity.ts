@@ -1,17 +1,17 @@
-import {Column, Entity, JoinColumn, OneToOne} from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
-import {ns} from "@gemunionstudio/framework-constants-misc";
-import {IAuth} from "@gemunionstudio/framework-types";
+import { ns } from "@gemunionstudio/framework-constants-misc";
+import { IAuth } from "@gemunionstudio/framework-types";
 
-import {UserEntity} from "../user/user.entity";
-import {BaseEntity} from "../common/base.entity";
+import { UserEntity } from "../user/user.entity";
+import { BaseEntity } from "../common/base.entity";
 
-@Entity({schema: ns, name: "auth"})
+@Entity({ schema: ns, name: "auth" })
 export class AuthEntity extends BaseEntity implements IAuth {
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public refreshToken: string;
 
-  @Column({type: "bigint"})
+  @Column({ type: "bigint" })
   public refreshTokenExpiresAt: number;
 
   public accessToken: string;

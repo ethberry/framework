@@ -1,20 +1,20 @@
-import React, {ChangeEvent, FC, Fragment, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Button, Grid} from "@material-ui/core";
-import {Pagination} from "@material-ui/lab";
-import {parse, stringify} from "qs";
-import {useHistory, useLocation, useParams} from "react-router";
-import {FilterList} from "@material-ui/icons";
+import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
+import { parse, stringify } from "qs";
+import { useHistory, useLocation, useParams } from "react-router";
+import { FilterList } from "@material-ui/icons";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IProduct} from "@gemunionstudio/framework-types";
-import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IProduct } from "@gemunionstudio/framework-types";
+import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
 
-import {ProductItem} from "./item";
-import {ProductSearchForm} from "./form";
+import { ProductItem } from "./item";
+import { ProductSearchForm } from "./form";
 
 export interface IProductSearchDto extends ISearchDto {
   merchantId: string;
@@ -26,12 +26,12 @@ export interface IProductListProps {
 }
 
 export const ProductList: FC<IProductListProps> = props => {
-  const {hideMerchantsInSearch} = props;
-  const {id} = useParams<{id: string}>();
+  const { hideMerchantsInSearch } = props;
+  const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const history = useHistory();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const [isFiltersOpen, setIsFilterOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ export const ProductList: FC<IProductListProps> = props => {
   });
 
   const updateQS = () => {
-    const {skip: _skip, take: _take, merchantId: _merchantId, ...rest} = data;
+    const { skip: _skip, take: _take, merchantId: _merchantId, ...rest } = data;
     history.push(`${location.pathname}?${stringify(rest)}`);
   };
 
@@ -70,10 +70,10 @@ export const ProductList: FC<IProductListProps> = props => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {

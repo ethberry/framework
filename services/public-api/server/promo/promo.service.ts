@@ -1,8 +1,8 @@
-import {Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {FindConditions, FindManyOptions, Repository} from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {PromoEntity} from "./promo.entity";
+import { PromoEntity } from "./promo.entity";
 
 @Injectable()
 export class PromoService {
@@ -15,6 +15,6 @@ export class PromoService {
     where: FindConditions<PromoEntity>,
     options?: FindManyOptions<PromoEntity>,
   ): Promise<[Array<PromoEntity>, number]> {
-    return this.productEntityRepository.findAndCount({where, ...options});
+    return this.productEntityRepository.findAndCount({ where, ...options });
   }
 }

@@ -1,18 +1,18 @@
-import {SnakeNamingStrategy} from "typeorm-naming-strategies";
-import {PostgresConnectionOptions} from "typeorm/driver/postgres/PostgresConnectionOptions";
-import {ns} from "@gemunionstudio/framework-constants-misc";
+import { SnakeNamingStrategy } from "typeorm-naming-strategies";
+import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+import { ns } from "@gemunionstudio/framework-constants-misc";
 import path from "path";
 
-import {AuthEntity} from "./auth/auth.entity";
-import {CategoryEntity} from "./category/category.entity";
-import {MerchantEntity} from "./merchant/merchant.entity";
-import {OrderEntity} from "./order/order.entity";
-import {PageEntity} from "./page/page.entity";
-import {PhotoEntity} from "./photo/photo.entity";
-import {ProductEntity} from "./product/product.entity";
-import {PromoEntity} from "./promo/promo.entity";
-import {TokenEntity} from "./token/token.entity";
-import {UserEntity} from "./user/user.entity";
+import { AuthEntity } from "./auth/auth.entity";
+import { CategoryEntity } from "./category/category.entity";
+import { MerchantEntity } from "./merchant/merchant.entity";
+import { OrderEntity } from "./order/order.entity";
+import { PageEntity } from "./page/page.entity";
+import { PhotoEntity } from "./photo/photo.entity";
+import { ProductEntity } from "./product/product.entity";
+import { PromoEntity } from "./promo/promo.entity";
+import { TokenEntity } from "./token/token.entity";
+import { UserEntity } from "./user/user.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

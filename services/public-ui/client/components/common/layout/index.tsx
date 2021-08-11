@@ -1,10 +1,10 @@
-import React, {FC} from "react";
-import {Container} from "@material-ui/core";
+import React, { FC } from "react";
+import { Container } from "@material-ui/core";
 
-import {Header} from "../header";
+import { Header } from "../header";
 import useStyles from "./styles";
 
-export const Layout: FC = ({children}) => {
+export const Layout: FC = ({ children }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>

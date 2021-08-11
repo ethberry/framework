@@ -1,4 +1,4 @@
-import {Options} from "webpack-dev-middleware";
+import { Options } from "webpack-dev-middleware";
 
 const options: Options = {
   stats: {

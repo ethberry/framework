@@ -1,37 +1,37 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Exclude} from "class-transformer";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from "class-transformer";
 
-import {IUser, UserRole, UserStatus} from "@gemunionstudio/framework-types";
-import {EnabledLanguages, ns} from "@gemunionstudio/framework-constants-misc";
+import { IUser, UserRole, UserStatus } from "@gemunionstudio/framework-types";
+import { EnabledLanguages, ns } from "@gemunionstudio/framework-constants-misc";
 
-import {MerchantEntity} from "../merchant/merchant.entity";
-import {BaseEntity} from "../common/base.entity";
+import { MerchantEntity } from "../merchant/merchant.entity";
+import { BaseEntity } from "../common/base.entity";
 
-@Entity({schema: ns, name: "user"})
+@Entity({ schema: ns, name: "user" })
 export class UserEntity extends BaseEntity implements IUser {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public email: string;
 
   @Exclude()
-  @Column({type: "varchar", select: false})
+  @Column({ type: "varchar", select: false })
   public password: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public firstName: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public lastName: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public phoneNumber: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public comment: string;
 
   @Column({
@@ -53,7 +53,7 @@ export class UserEntity extends BaseEntity implements IUser {
   })
   public userRoles: Array<UserRole>;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public merchantId: number;
 
   @ManyToOne(_type => MerchantEntity, merchant => merchant.users)

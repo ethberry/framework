@@ -1,18 +1,18 @@
-import React, {FC, Fragment, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {useIntl} from "react-intl";
-import {useParams} from "react-router";
+import React, { FC, Fragment, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { useIntl } from "react-intl";
+import { useParams } from "react-router";
 
-import {Spinner} from "@gemunionstudio/material-ui-progress";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {IPage} from "@gemunionstudio/framework-types";
-import {RichTextDisplay} from "@gemunionstudio/framework-material-ui-rte";
+import { Spinner } from "@gemunionstudio/material-ui-progress";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { IPage } from "@gemunionstudio/framework-types";
+import { RichTextDisplay } from "@gemunionstudio/framework-material-ui-rte";
 
 export const Page: FC = () => {
-  const {slug} = useParams<{slug: string}>();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { slug } = useParams<{ slug: string }>();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState<IPage>({} as IPage);
@@ -29,10 +29,10 @@ export const Page: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {

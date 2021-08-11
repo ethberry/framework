@@ -1,19 +1,19 @@
-import React, {FC} from "react";
-import {Card, Button, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
-import {Link as RouterLink} from "react-router-dom";
-import {RichTextDisplay} from "@gemunionstudio/framework-material-ui-rte";
+import React, { FC } from "react";
+import { Card, Button, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
+import { RichTextDisplay } from "@gemunionstudio/framework-material-ui-rte";
 
-import {IProduct} from "@gemunionstudio/framework-types";
+import { IProduct } from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
-import {formatMoney} from "../../../utils/money";
+import { formatMoney } from "../../../utils/money";
 
 interface IProductItemProps {
   product: IProduct;
 }
 
 export const ProductItem: FC<IProductItemProps> = props => {
-  const {product} = props;
+  const { product } = props;
 
   const classes = useStyles();
 

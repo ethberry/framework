@@ -1,7 +1,7 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsNumber} from "@gemunionstudio/nest-js-validators";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNumber } from "@gemunionstudio/nest-js-validators";
 
-import {IOrderCreateDto} from "../interfaces";
+import { IOrderCreateDto } from "../interfaces";
 
 export class OrderCreateDto implements IOrderCreateDto {
   @ApiProperty({

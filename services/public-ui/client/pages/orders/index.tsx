@@ -1,19 +1,19 @@
-import React, {ChangeEvent, FC, Fragment, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {useIntl} from "react-intl";
-import {Grid} from "@material-ui/core";
-import {Pagination} from "@material-ui/lab";
-import {parse, stringify} from "qs";
-import {useHistory, useLocation} from "react-router";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IOrder, OrderStatus} from "@gemunionstudio/framework-types";
-import {IPaginationResult, IPaginationDto} from "@gemunionstudio/types-collection";
+import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { useIntl } from "react-intl";
+import { Grid } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
+import { parse, stringify } from "qs";
+import { useHistory, useLocation } from "react-router";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IOrder, OrderStatus } from "@gemunionstudio/framework-types";
+import { IPaginationResult, IPaginationDto } from "@gemunionstudio/types-collection";
 
-import {OrderItem} from "./item";
-import {OrderSearchForm} from "./form";
-import {parseDateRange, stringifyDateRange} from "./utils";
+import { OrderItem } from "./item";
+import { OrderSearchForm } from "./form";
+import { parseDateRange, stringifyDateRange } from "./utils";
 
 export interface IOrderSearchDto extends IPaginationDto {
   orderStatus: Array<OrderStatus>;
@@ -23,8 +23,8 @@ export interface IOrderSearchDto extends IPaginationDto {
 export const Orders: FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const [isLoading, setIsLoading] = useState(false);
   const [orders, setOrders] = useState<Array<IOrder>>([]);
@@ -43,7 +43,7 @@ export const Orders: FC = () => {
   });
 
   const updateQS = (id?: number) => {
-    const {skip: _skip, take: _take, dateRange, ...rest} = data;
+    const { skip: _skip, take: _take, dateRange, ...rest } = data;
     history.push(
       id
         ? `/orders/${id}`
@@ -56,7 +56,7 @@ export const Orders: FC = () => {
 
   const fetchOrders = async (): Promise<void> => {
     setIsLoading(true);
-    const {dateRange, ...rest} = data;
+    const { dateRange, ...rest } = data;
     return api
       .fetchJson({
         url: "/orders",
@@ -72,10 +72,10 @@ export const Orders: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {

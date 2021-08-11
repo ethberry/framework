@@ -1,5 +1,5 @@
 import * as path from "path";
-import {Router} from "express";
+import { Router } from "express";
 
 const router = Router();
 

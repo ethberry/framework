@@ -1,4 +1,4 @@
-import {MouseEvent} from "react";
+import { MouseEvent } from "react";
 
 function _open(url: string): void {
   if (typeof window !== "undefined") {

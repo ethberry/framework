@@ -1,10 +1,10 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
-import {SearchDto} from "@gemunionstudio/collection";
-import {MerchantStatus} from "@gemunionstudio/framework-types";
+import { IsString } from "@gemunionstudio/nest-js-validators";
+import { SearchDto } from "@gemunionstudio/collection";
+import { MerchantStatus } from "@gemunionstudio/framework-types";
 
-import {IMerchantSearchDto} from "../interfaces";
+import { IMerchantSearchDto } from "../interfaces";
 
 export class MerchantSearchDto extends SearchDto implements IMerchantSearchDto {
   @ApiPropertyOptional({

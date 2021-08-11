@@ -1,3 +1,3 @@
-import {ICategoryCreateDto} from "./create";
+import { ICategoryCreateDto } from "./create";
 
 export interface ICategoryUpdateDto extends ICategoryCreateDto {}

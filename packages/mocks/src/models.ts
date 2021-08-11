@@ -1,4 +1,4 @@
-import {v4} from "uuid";
+import { v4 } from "uuid";
 
 import {
   ICategory,
@@ -12,7 +12,7 @@ import {
   TokenType,
   UserStatus,
 } from "@gemunionstudio/framework-types";
-import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
+import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
 
 const date = new Date();
 

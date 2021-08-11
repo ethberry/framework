@@ -1,11 +1,11 @@
-import {Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, Repository} from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Brackets, FindConditions, Repository } from "typeorm";
 
-import {MerchantStatus} from "@gemunionstudio/framework-types";
+import { MerchantStatus } from "@gemunionstudio/framework-types";
 
-import {MerchantEntity} from "./merchant.entity";
-import {IMerchantSearchDto} from "./interfaces";
+import { MerchantEntity } from "./merchant.entity";
+import { IMerchantSearchDto } from "./interfaces";
 
 @Injectable()
 export class MerchantService {
@@ -24,17 +24,17 @@ export class MerchantService {
   }
 
   public findOne(where: FindConditions<MerchantEntity>): Promise<MerchantEntity | undefined> {
-    return this.merchantEntityRepository.findOne({where});
+    return this.merchantEntityRepository.findOne({ where });
   }
 
   public async search(search: IMerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
-    const {query} = search;
+    const { query } = search;
 
     const queryBuilder = this.merchantEntityRepository.createQueryBuilder("merchant");
 
     queryBuilder.select();
 
-    queryBuilder.where({merchantStatus: MerchantStatus.ACTIVE});
+    queryBuilder.where({ merchantStatus: MerchantStatus.ACTIVE });
 
     // TODO where count(products) > 0
 
@@ -46,8 +46,8 @@ export class MerchantService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("merchant.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
+          qb.where("merchant.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }

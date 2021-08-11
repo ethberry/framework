@@ -1,15 +1,15 @@
-import {Controller, Get, Req, Res} from "@nestjs/common";
-import {Request, Response} from "express";
-import {EventPattern, Payload} from "@nestjs/microservices";
+import { Controller, Get, Req, Res } from "@nestjs/common";
+import { Request, Response } from "express";
+import { EventPattern, Payload } from "@nestjs/microservices";
 import juice from "juice";
 
-import {EmailType} from "@gemunionstudio/framework-types";
-import {i18n} from "@gemunionstudio/framework-localization-emailer";
+import { EmailType } from "@gemunionstudio/framework-types";
+import { i18n } from "@gemunionstudio/framework-localization-emailer";
 
-import {renderEmailToString} from "../utils/render.email";
-import {renderAppToString} from "../utils/render.app";
-import {EmailService} from "./email.service";
-import {IPayload} from "./interfaces";
+import { renderEmailToString } from "../utils/render.email";
+import { renderAppToString } from "../utils/render.app";
+import { EmailService } from "./email.service";
+import { IPayload } from "./interfaces";
 
 @Controller("/")
 export class EmailController {

@@ -1,12 +1,12 @@
-import {Module} from "@nestjs/common";
-import {ConfigModule, ConfigService} from "@nestjs/config";
-import {TypeOrmModule} from "@nestjs/typeorm";
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import {ISdkOptions, IS3Options, S3Module} from "@gemunionstudio/nest-js-module-s3";
+import { ISdkOptions, IS3Options, S3Module } from "@gemunionstudio/nest-js-module-s3";
 
-import {PromoService} from "./promo.service";
-import {PromoEntity} from "./promo.entity";
-import {PromoController} from "./promo.controller";
+import { PromoService } from "./promo.service";
+import { PromoEntity } from "./promo.entity";
+import { PromoController } from "./promo.controller";
 
 @Module({
   imports: [

@@ -1,6 +1,6 @@
-import {Controller, Get, Redirect} from "@nestjs/common";
+import { Controller, Get, Redirect } from "@nestjs/common";
 
-import {Public} from "@gemunionstudio/nest-js-utils";
+import { Public } from "@gemunionstudio/nest-js-utils";
 
 @Public()
 @Controller("/")

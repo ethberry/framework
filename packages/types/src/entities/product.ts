@@ -1,8 +1,8 @@
-import {IMerchant} from "./merchant";
-import {IPhoto} from "./photo";
-import {IBase} from "./base";
-import {ICategory} from "./category";
-import {IOrder} from "./order";
+import { IMerchant } from "./merchant";
+import { IPhoto } from "./photo";
+import { IBase } from "./base";
+import { ICategory } from "./category";
+import { IOrder } from "./order";
 
 export enum ProductStatus {
   ACTIVE = "ACTIVE",

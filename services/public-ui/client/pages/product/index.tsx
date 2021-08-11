@@ -1,23 +1,23 @@
-import React, {FC, Fragment, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {useIntl, FormattedMessage} from "react-intl";
-import {Typography, Grid, Paper} from "@material-ui/core";
-import {useParams} from "react-router";
+import React, { FC, Fragment, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { useIntl, FormattedMessage } from "react-intl";
+import { Typography, Grid, Paper } from "@material-ui/core";
+import { useParams } from "react-router";
 
-import {Spinner} from "@gemunionstudio/material-ui-progress";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {IProduct} from "@gemunionstudio/framework-types";
-import {RichTextDisplay} from "@gemunionstudio/framework-material-ui-rte";
+import { Spinner } from "@gemunionstudio/material-ui-progress";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { IProduct } from "@gemunionstudio/framework-types";
+import { RichTextDisplay } from "@gemunionstudio/framework-material-ui-rte";
 
-import {formatMoney} from "../../utils/money";
+import { formatMoney } from "../../utils/money";
 import useStyles from "./styles";
-import {Carousel} from "./carousel";
+import { Carousel } from "./carousel";
 
 export const Product: FC = () => {
-  const {productId} = useParams<{productId: string}>();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { productId } = useParams<{ productId: string }>();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
   const classes = useStyles();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -35,10 +35,10 @@ export const Product: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -68,7 +68,7 @@ export const Product: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.product.price" values={{amount: formatMoney(product.price)}} />
+              <FormattedMessage id="pages.product.price" values={{ amount: formatMoney(product.price) }} />
             </Typography>
           </Paper>
         </Grid>

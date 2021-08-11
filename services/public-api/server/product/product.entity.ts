@@ -1,20 +1,29 @@
-import {Column, Entity, JoinColumn, ManyToOne, ManyToMany, OneToMany, JoinTable, PrimaryGeneratedColumn} from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  ManyToMany,
+  OneToMany,
+  JoinTable,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
-import {IProduct, ProductStatus} from "@gemunionstudio/framework-types";
-import {ns} from "@gemunionstudio/framework-constants-misc";
+import { IProduct, ProductStatus } from "@gemunionstudio/framework-types";
+import { ns } from "@gemunionstudio/framework-constants-misc";
 
-import {PhotoEntity} from "../photo/photo.entity";
-import {BaseEntity} from "../common/base.entity";
-import {MerchantEntity} from "../merchant/merchant.entity";
-import {CategoryEntity} from "../category/category.entity";
-import {OrderEntity} from "../order/order.entity";
+import { PhotoEntity } from "../photo/photo.entity";
+import { BaseEntity } from "../common/base.entity";
+import { MerchantEntity } from "../merchant/merchant.entity";
+import { CategoryEntity } from "../category/category.entity";
+import { OrderEntity } from "../order/order.entity";
 
-@Entity({schema: ns, name: "product"})
+@Entity({ schema: ns, name: "product" })
 export class ProductEntity extends BaseEntity implements IProduct {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public title: string;
 
   @Column({
@@ -31,16 +40,16 @@ export class ProductEntity extends BaseEntity implements IProduct {
   public description: string;
 
   @ManyToMany(_type => CategoryEntity, category => category.products)
-  @JoinTable({name: "product_to_category"})
+  @JoinTable({ name: "product_to_category" })
   public categories: Array<CategoryEntity>;
 
   @OneToMany(_type => OrderEntity, order => order.product)
   public orders: Array<OrderEntity>;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public price: number;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public amount: number;
 
   @Column({
@@ -49,7 +58,7 @@ export class ProductEntity extends BaseEntity implements IProduct {
   })
   public productStatus: ProductStatus;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public merchantId: number;
 
   @JoinColumn()

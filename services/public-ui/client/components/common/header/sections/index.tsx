@@ -1,21 +1,21 @@
-import React, {FC, Fragment, MouseEvent, useContext, useState} from "react";
-import {FormattedMessage, useIntl} from "react-intl";
-import {useSnackbar} from "notistack";
-import {matchPath, useHistory, useLocation} from "react-router";
-import {Avatar, Button, IconButton, Menu, MenuItem} from "@material-ui/core";
-import {Link as RouterLink, NavLink as RouterNavLink} from "react-router-dom";
+import React, { FC, Fragment, MouseEvent, useContext, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useSnackbar } from "notistack";
+import { matchPath, useHistory, useLocation } from "react-router";
+import { Avatar, Button, IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 
-import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IUser} from "@gemunionstudio/framework-types";
+import { IUserContext, UserContext } from "@gemunionstudio/provider-user";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IUser } from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
 
 export const Sections: FC = () => {
   const history = useHistory();
   const location = useLocation();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const classes = useStyles();
   const [anchor, setAnchor] = useState<Element | null>(null);
@@ -50,10 +50,10 @@ export const Sections: FC = () => {
         if (e.status === 400) {
           // token was not provided, it is ok
         } else if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -62,7 +62,7 @@ export const Sections: FC = () => {
   };
 
   if (!user.isAuthenticated()) {
-    if (matchPath(location.pathname, {path: "/login"})) {
+    if (matchPath(location.pathname, { path: "/login" })) {
       return null;
     }
 

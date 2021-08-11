@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   () => ({
@@ -7,5 +7,5 @@ export default makeStyles(
       fontWeight: "bold",
     },
   }),
-  {name: "Verification"},
+  { name: "Verification" },
 );

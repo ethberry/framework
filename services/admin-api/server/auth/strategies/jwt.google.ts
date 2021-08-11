@@ -1,15 +1,15 @@
-import {OAuth2Strategy} from "passport-google-oauth";
-import {PassportStrategy} from "@nestjs/passport";
-import {Injectable, UnauthorizedException} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
-import {Profile} from "passport";
+import { OAuth2Strategy } from "passport-google-oauth";
+import { PassportStrategy } from "@nestjs/passport";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Profile } from "passport";
 
-import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
-import {UserStatus} from "@gemunionstudio/framework-types";
+import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
+import { UserStatus } from "@gemunionstudio/framework-types";
 
-import {UserEntity} from "../../user/user.entity";
-import {UserService} from "../../user/user.service";
-import {AuthService} from "../auth.service";
+import { UserEntity } from "../../user/user.entity";
+import { UserService } from "../../user/user.service";
+import { AuthService } from "../auth.service";
 
 @Injectable()
 export class JwtGoogleStrategy extends PassportStrategy(OAuth2Strategy, "jwt-google") {
@@ -28,7 +28,7 @@ export class JwtGoogleStrategy extends PassportStrategy(OAuth2Strategy, "jwt-goo
 
   public async validate(_accessToken: string, _refreshToken: string, profile: Profile): Promise<UserEntity> {
     const email = profile.emails![0].value.toLowerCase();
-    const userEntity = await this.userService.findOne({email});
+    const userEntity = await this.userService.findOne({ email });
 
     if (userEntity) {
       if (userEntity.userStatus !== UserStatus.ACTIVE) {

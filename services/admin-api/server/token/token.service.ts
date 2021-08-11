@@ -1,11 +1,11 @@
-import {FindConditions, Repository} from "typeorm";
-import {Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
+import { FindConditions, Repository } from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 
-import {TokenType} from "@gemunionstudio/framework-types";
+import { TokenType } from "@gemunionstudio/framework-types";
 
-import {TokenEntity} from "./token.entity";
-import {UserEntity} from "../user/user.entity";
+import { TokenEntity } from "./token.entity";
+import { UserEntity } from "../user/user.entity";
 
 @Injectable()
 export class TokenService {
@@ -15,7 +15,7 @@ export class TokenService {
   ) {}
 
   public findOne(where: FindConditions<TokenEntity>): Promise<TokenEntity | undefined> {
-    return this.tokenEntityRepository.findOne({where, relations: ["user"]});
+    return this.tokenEntityRepository.findOne({ where, relations: ["user"] });
   }
 
   public async getToken(tokenType: TokenType, userEntity: UserEntity): Promise<TokenEntity> {

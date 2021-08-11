@@ -1,12 +1,12 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors} from "@nestjs/common";
-import {ApiCookieAuth} from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import { ApiCookieAuth } from "@nestjs/swagger";
 
-import {NotFoundInterceptor, PaginationInterceptor} from "@gemunionstudio/nest-js-utils";
-import {SearchDto} from "@gemunionstudio/collection";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunionstudio/nest-js-utils";
+import { SearchDto } from "@gemunionstudio/collection";
 
-import {CategoryService} from "./category.service";
-import {CategoryEntity} from "./category.entity";
-import {CategoryCreateDto, CategoryUpdateDto} from "./dto";
+import { CategoryService } from "./category.service";
+import { CategoryEntity } from "./category.entity";
+import { CategoryCreateDto, CategoryUpdateDto } from "./dto";
 
 @ApiCookieAuth()
 @Controller("/categories")
@@ -31,18 +31,18 @@ export class CategoryController {
 
   @Put("/:id")
   public update(@Param("id") id: number, @Body() body: CategoryUpdateDto): Promise<CategoryEntity | undefined> {
-    return this.categoryService.update({id}, body);
+    return this.categoryService.update({ id }, body);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id") id: number): Promise<CategoryEntity | undefined> {
-    return this.categoryService.findOne({id});
+    return this.categoryService.findOne({ id });
   }
 
   @Delete("/:id")
   @HttpCode(204)
   public async delete(@Param("id") id: number): Promise<void> {
-    await this.categoryService.delete({id});
+    await this.categoryService.delete({ id });
   }
 }

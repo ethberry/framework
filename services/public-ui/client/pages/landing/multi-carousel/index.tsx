@@ -1,13 +1,13 @@
-import React, {FC} from "react";
-import {Theme, useMediaQuery, useTheme} from "@material-ui/core";
+import React, { FC } from "react";
+import { Theme, useMediaQuery, useTheme } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import {IProduct} from "@gemunionstudio/framework-types";
+import { IProduct } from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
-import {ProductItem} from "../../product-list/item";
-import {MultiCarouselButtonGroup} from "./button-group";
+import { ProductItem } from "../../product-list/item";
+import { MultiCarouselButtonGroup } from "./button-group";
 
 declare interface IMultiCarouselProps {
   products: Array<IProduct>;
@@ -20,7 +20,7 @@ export enum IResolutions {
 }
 
 export const MultiCarousel: FC<IMultiCarouselProps> = props => {
-  const {products} = props;
+  const { products } = props;
 
   const classes = useStyles();
   const there = useTheme();

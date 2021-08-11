@@ -6,7 +6,7 @@ import {
   ValidatorConstraintInterface,
 } from "class-validator";
 
-import {reEmail} from "@gemunionstudio/constants-regexp";
+import { reEmail } from "@gemunionstudio/constants-regexp";
 
 interface IEmailConstraints {
   required: boolean;
@@ -15,7 +15,7 @@ interface IEmailConstraints {
   maxLength: number;
 }
 
-@ValidatorConstraint({async: true})
+@ValidatorConstraint({ async: true })
 export class ValidateEmail implements ValidatorConstraintInterface {
   private reason: string;
 
@@ -29,7 +29,7 @@ export class ValidateEmail implements ValidatorConstraintInterface {
   }
 
   private isValid(value: unknown, args: ValidationArguments): string {
-    const {required = true, regexp = reEmail, minLength, maxLength}: IEmailConstraints = args.constraints[0];
+    const { required = true, regexp = reEmail, minLength, maxLength }: IEmailConstraints = args.constraints[0];
 
     if (typeof value === "undefined" || value === "") {
       if (required) {

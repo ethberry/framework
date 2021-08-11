@@ -1,8 +1,8 @@
-import React, {FC} from "react";
-import {Card, CardActionArea, CardContent, CardMedia, Typography} from "@material-ui/core";
-import {Link as RouterLink} from "react-router-dom";
+import React, { FC } from "react";
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
 
-import {IMerchant} from "@gemunionstudio/framework-types";
+import { IMerchant } from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
 
@@ -11,7 +11,7 @@ interface IProductItemProps {
 }
 
 export const MerchantItem: FC<IProductItemProps> = props => {
-  const {merchant} = props;
+  const { merchant } = props;
 
   const classes = useStyles();
 

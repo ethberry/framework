@@ -1,5 +1,5 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
-import {Transform} from "class-transformer";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 
 import {
   emailMaxLength,
@@ -8,10 +8,10 @@ import {
   lastNameMaxLength,
   lastNameMinLength,
 } from "@gemunionstudio/constants-validation";
-import {IsString} from "@gemunionstudio/nest-js-validators";
-import {DefaultLanguage, EnabledLanguages, rePhoneNumber} from "@gemunionstudio/framework-constants-misc";
+import { IsString } from "@gemunionstudio/nest-js-validators";
+import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunionstudio/framework-constants-misc";
 
-import {IsEmail} from "../validators";
+import { IsEmail } from "../validators";
 
 export interface IUserCommonDto {
   firstName: string;
@@ -77,6 +77,6 @@ export class UserCommonDto implements IUserCommonDto {
   @IsEmail({
     required: false,
   })
-  @Transform(({value}: {value: string}) => value.toLowerCase())
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 }

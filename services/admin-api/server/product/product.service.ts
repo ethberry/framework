@@ -1,14 +1,14 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {PhotoStatus, ProductStatus, UserRole} from "@gemunionstudio/framework-types";
+import { PhotoStatus, ProductStatus, UserRole } from "@gemunionstudio/framework-types";
 
-import {ProductEntity} from "./product.entity";
-import {IProductCreateDto, IProductSearchDto, IProductUpdateDto} from "./interfaces";
-import {UserEntity} from "../user/user.entity";
-import {PhotoService} from "../photo/photo.service";
-import {PhotoEntity} from "../photo/photo.entity";
+import { ProductEntity } from "./product.entity";
+import { IProductCreateDto, IProductSearchDto, IProductUpdateDto } from "./interfaces";
+import { UserEntity } from "../user/user.entity";
+import { PhotoService } from "../photo/photo.service";
+import { PhotoEntity } from "../photo/photo.entity";
 
 @Injectable()
 export class ProductService {
@@ -19,7 +19,7 @@ export class ProductService {
   ) {}
 
   public async search(dto: IProductSearchDto, userEntity: UserEntity): Promise<[Array<ProductEntity>, number]> {
-    const {query, productStatus, categoryIds, skip, take} = dto;
+    const { query, productStatus, categoryIds, skip, take } = dto;
 
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
@@ -35,14 +35,14 @@ export class ProductService {
 
     if (categoryIds) {
       queryBuilder.leftJoinAndSelect("product.categories", "category");
-      queryBuilder.andWhere("category.id IN(:...categoryIds)", {categoryIds});
+      queryBuilder.andWhere("category.id IN(:...categoryIds)", { categoryIds });
     }
 
     if (productStatus) {
       if (productStatus.length === 1) {
-        queryBuilder.andWhere("product.productStatus = :productStatus", {productStatus: productStatus[0]});
+        queryBuilder.andWhere("product.productStatus = :productStatus", { productStatus: productStatus[0] });
       } else {
-        queryBuilder.andWhere("product.productStatus IN(:...productStatus)", {productStatus});
+        queryBuilder.andWhere("product.productStatus IN(:...productStatus)", { productStatus });
       }
     }
 
@@ -54,8 +54,8 @@ export class ProductService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("product.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
+          qb.where("product.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }
@@ -78,7 +78,7 @@ export class ProductService {
     where: FindConditions<ProductEntity>,
     options?: FindManyOptions<ProductEntity>,
   ): Promise<[Array<ProductEntity>, number]> {
-    return this.productEntityRepository.findAndCount({where, ...options});
+    return this.productEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindConditions<ProductEntity>): Promise<ProductEntity | undefined> {
@@ -98,7 +98,7 @@ export class ProductService {
   }
 
   public async create(dto: IProductCreateDto, userEntity: UserEntity): Promise<ProductEntity> {
-    const {categoryIds, photos, ...rest} = dto;
+    const { categoryIds, photos, ...rest } = dto;
 
     const merchantId = userEntity.userRoles.includes(UserRole.ADMIN) ? dto.merchantId : userEntity.merchant.id;
 
@@ -107,13 +107,13 @@ export class ProductService {
         ...rest,
         merchantId,
         productStatus: ProductStatus.ACTIVE,
-        categories: categoryIds.map(id => ({id})),
+        categories: categoryIds.map(id => ({ id })),
       })
       .save();
 
     // add new
     await Promise.allSettled(
-      photos.map((newPhoto, i) => this.photoService.create({...newPhoto, priority: i}, productEntity)),
+      photos.map((newPhoto, i) => this.photoService.create({ ...newPhoto, priority: i }, productEntity)),
     ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
       values
         .filter(c => c.status === "fulfilled")
@@ -129,13 +129,13 @@ export class ProductService {
     dto: IProductUpdateDto,
     userEntity: UserEntity,
   ): Promise<ProductEntity> {
-    const {photos, categoryIds, ...rest} = dto;
+    const { photos, categoryIds, ...rest } = dto;
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
       where.merchant = userEntity.merchant;
     }
 
-    const productEntity = await this.productEntityRepository.findOne(where, {relations: ["photos"]});
+    const productEntity = await this.productEntityRepository.findOne(where, { relations: ["photos"] });
 
     if (!productEntity) {
       throw new NotFoundException("productNotFound");
@@ -176,7 +176,7 @@ export class ProductService {
           .filter(newPhoto => !productEntity.photos.find(oldPhoto => newPhoto.imageUrl === oldPhoto.imageUrl))
           .map(newPhoto => {
             const index = photos.indexOf(newPhoto);
-            return this.photoService.create({...newPhoto, priority: index}, productEntity);
+            return this.photoService.create({ ...newPhoto, priority: index }, productEntity);
           }),
       ).then((values: Array<PromiseSettledResult<PhotoEntity>>) =>
         values
@@ -192,7 +192,7 @@ export class ProductService {
 
     Object.assign(productEntity, {
       ...rest,
-      categories: categoryIds.map(id => ({id})),
+      categories: categoryIds.map(id => ({ id })),
     });
 
     return productEntity.save();
@@ -203,7 +203,7 @@ export class ProductService {
 
     queryBuilder.select(["product.id", "product.title"]);
 
-    queryBuilder.where("product.productStatus = :productStatus", {productStatus: ProductStatus.ACTIVE});
+    queryBuilder.where("product.productStatus = :productStatus", { productStatus: ProductStatus.ACTIVE });
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
       queryBuilder.andWhere("product.merchantId = :merchantId", {

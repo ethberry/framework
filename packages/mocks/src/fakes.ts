@@ -1,7 +1,7 @@
-import {v4} from "uuid";
+import { v4 } from "uuid";
 
-import {IMerchant, IToken, IUser, TokenType} from "@gemunionstudio/framework-types";
-import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
+import { IMerchant, IToken, IUser, TokenType } from "@gemunionstudio/framework-types";
+import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
 
 export const fakeUser = {
   password: "",

@@ -1,30 +1,30 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-import {IPhoto, PhotoStatus} from "@gemunionstudio/framework-types";
-import {ns} from "@gemunionstudio/framework-constants-misc";
+import { IPhoto, PhotoStatus } from "@gemunionstudio/framework-types";
+import { ns } from "@gemunionstudio/framework-constants-misc";
 
-import {ProductEntity} from "../product/product.entity";
-import {BaseEntity} from "../common/base.entity";
+import { ProductEntity } from "../product/product.entity";
+import { BaseEntity } from "../common/base.entity";
 
-@Entity({schema: ns, name: "photo"})
+@Entity({ schema: ns, name: "photo" })
 export class PhotoEntity extends BaseEntity implements IPhoto {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public title: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public imageUrl: string;
 
   @JoinColumn()
   @ManyToOne(_type => ProductEntity, product => product.photos)
   public product: ProductEntity;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public productId: number;
 
-  @Column({type: "int"})
+  @Column({ type: "int" })
   public priority: number;
 
   @Column({

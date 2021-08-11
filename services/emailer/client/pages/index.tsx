@@ -1,24 +1,24 @@
-import React, {FC} from "react";
-import {Route, Switch} from "react-router";
+import React, { FC } from "react";
+import { Route, Switch } from "react-router";
 
-import {UserProvider} from "@gemunionstudio/provider-user";
-import {SettingsProvider} from "@gemunionstudio/provider-settings";
-import {LocalizationProvider} from "@gemunionstudio/provider-localization";
-import {i18n} from "@gemunionstudio/framework-localization-emailer";
-import {EmailType} from "@gemunionstudio/framework-types";
-import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
+import { UserProvider } from "@gemunionstudio/provider-user";
+import { SettingsProvider } from "@gemunionstudio/provider-settings";
+import { LocalizationProvider } from "@gemunionstudio/provider-localization";
+import { i18n } from "@gemunionstudio/framework-localization-emailer";
+import { EmailType } from "@gemunionstudio/framework-types";
+import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
 
-import {DataProvider} from "../components/context/data/provider";
-import {Layout} from "../components/common/layout";
+import { DataProvider } from "../components/context/data/provider";
+import { Layout } from "../components/common/layout";
 
-import {Welcome} from "./guest/welcome";
-import {Verification} from "./guest/verification";
-import {Forgot} from "./guest/forgot";
-import {Restore} from "./guest/restore";
+import { Welcome } from "./guest/welcome";
+import { Verification } from "./guest/verification";
+import { Forgot } from "./guest/forgot";
+import { Restore } from "./guest/restore";
 
-import {Main} from "./main";
+import { Main } from "./main";
 
-export const App: FC<any> = ({state}) => {
+export const App: FC<any> = ({ state }) => {
   return (
     <DataProvider data={state.data}>
       <UserProvider profile={state.user}>

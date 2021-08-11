@@ -1,12 +1,12 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {PhotoStatus} from "@gemunionstudio/framework-types";
+import { PhotoStatus } from "@gemunionstudio/framework-types";
 
-import {IPhotoCreateDto, IPhotoUpdateDto} from "./interfaces";
-import {PhotoEntity} from "./photo.entity";
-import {ProductEntity} from "../product/product.entity";
+import { IPhotoCreateDto, IPhotoUpdateDto } from "./interfaces";
+import { PhotoEntity } from "./photo.entity";
+import { ProductEntity } from "../product/product.entity";
 
 @Injectable()
 export class PhotoService {
@@ -16,18 +16,18 @@ export class PhotoService {
   ) {}
 
   public search(): Promise<[Array<PhotoEntity>, number]> {
-    return this.findAndCount({photoStatus: PhotoStatus.NEW});
+    return this.findAndCount({ photoStatus: PhotoStatus.NEW });
   }
 
   public findAndCount(
     where: FindConditions<PhotoEntity>,
     options?: FindManyOptions<PhotoEntity>,
   ): Promise<[Array<PhotoEntity>, number]> {
-    return this.photoEntityRepository.findAndCount({where, ...options});
+    return this.photoEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindConditions<PhotoEntity>): Promise<PhotoEntity | undefined> {
-    return this.photoEntityRepository.findOne({where});
+    return this.photoEntityRepository.findOne({ where });
   }
 
   public async create(data: IPhotoCreateDto, productEntity: ProductEntity): Promise<PhotoEntity> {
@@ -47,7 +47,7 @@ export class PhotoService {
       throw new NotFoundException("photoNotFound");
     }
 
-    Object.assign(photoEntity, {...data});
+    Object.assign(photoEntity, { ...data });
     return photoEntity.save();
   }
 

@@ -1,9 +1,9 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsJSON} from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsJSON } from "class-validator";
 
-import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
+import { IsNumber, IsString } from "@gemunionstudio/nest-js-validators";
 
-import {ICategoryCreateDto} from "../interfaces";
+import { ICategoryCreateDto } from "../interfaces";
 
 export class CategoryCreateDto implements ICategoryCreateDto {
   @ApiProperty()
@@ -11,7 +11,7 @@ export class CategoryCreateDto implements ICategoryCreateDto {
   public title: string;
 
   @ApiProperty()
-  @IsJSON({message: "patternMismatch"})
+  @IsJSON({ message: "patternMismatch" })
   public description: string;
 
   @ApiProperty()

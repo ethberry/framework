@@ -1,9 +1,9 @@
-import React, {FC} from "react";
-import {FormattedMessage} from "react-intl";
-import {List, ListItem, ListItemText, Paper} from "@material-ui/core";
-import {Link as RouterLink} from "react-router-dom";
+import React, { FC } from "react";
+import { FormattedMessage } from "react-intl";
+import { List, ListItem, ListItemText, Paper } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
 
-import {EmailType} from "@gemunionstudio/framework-types";
+import { EmailType } from "@gemunionstudio/framework-types";
 
 export const Main: FC = () => {
   return (

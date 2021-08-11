@@ -1,6 +1,6 @@
-import React, {FC} from "react";
-import {IconButton} from "@material-ui/core";
-import {ArrowBack, ArrowForward} from "@material-ui/icons";
+import React, { FC } from "react";
+import { IconButton } from "@material-ui/core";
+import { ArrowBack, ArrowForward } from "@material-ui/icons";
 
 import useStyles from "./styles";
 
@@ -10,7 +10,7 @@ declare interface IMultiCarouselButtonGroupProps {
 }
 
 export const MultiCarouselButtonGroup: FC<IMultiCarouselButtonGroupProps> = props => {
-  const {next, previous} = props;
+  const { next, previous } = props;
 
   const classes = useStyles();
 

@@ -1,12 +1,12 @@
-import {Controller, Get, Ip, UseGuards} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
+import { Controller, Get, Ip, UseGuards } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
-import {Public} from "@gemunionstudio/nest-js-utils";
-import {JwtFacebookGuard, JwtGoogleGuard} from "@gemunionstudio/nest-js-guards";
+import { Public } from "@gemunionstudio/nest-js-utils";
+import { JwtFacebookGuard, JwtGoogleGuard } from "@gemunionstudio/nest-js-guards";
 
-import {User} from "../common/decorators";
-import {UserEntity} from "../user/user.entity";
-import {AuthService} from "./auth.service";
+import { User } from "../common/decorators";
+import { UserEntity } from "../user/user.entity";
+import { AuthService } from "./auth.service";
 
 @Public()
 @Controller("/auth")

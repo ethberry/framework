@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   theme => ({
@@ -13,5 +13,5 @@ export default makeStyles(
       paddingTop: theme.spacing(2),
     },
   }),
-  {name: "Header"},
+  { name: "Header" },
 );

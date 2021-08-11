@@ -1,10 +1,10 @@
-import React, {FC, useState} from "react";
-import {FormattedMessage} from "react-intl";
-import {Button, MobileStepper, Paper, Typography} from "@material-ui/core";
-import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
+import React, { FC, useState } from "react";
+import { FormattedMessage } from "react-intl";
+import { Button, MobileStepper, Paper, Typography } from "@material-ui/core";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 
-import {Spinner} from "@gemunionstudio/material-ui-progress";
-import {IProduct} from "@gemunionstudio/framework-types";
+import { Spinner } from "@gemunionstudio/material-ui-progress";
+import { IProduct } from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
 
@@ -13,7 +13,7 @@ interface ICarouselProps {
 }
 
 export const Carousel: FC<ICarouselProps> = props => {
-  const {product} = props;
+  const { product } = props;
 
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);

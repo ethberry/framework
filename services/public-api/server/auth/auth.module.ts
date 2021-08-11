@@ -1,17 +1,17 @@
-import {Module} from "@nestjs/common";
-import {PassportModule} from "@nestjs/passport";
-import {JwtModule} from "@nestjs/jwt";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {ConfigModule, ConfigService} from "@nestjs/config";
+import { Module } from "@nestjs/common";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import {emailServiceProvider} from "../common/providers";
-import {UserModule} from "../user/user.module";
-import {TokenModule} from "../token/token.module";
-import {AuthJwtController} from "./auth.jwt.controller";
-import {AuthSocialController} from "./auth.social.controller";
-import {AuthService} from "./auth.service";
-import {AuthEntity} from "./auth.entity";
-import {JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy} from "./strategies";
+import { emailServiceProvider } from "../common/providers";
+import { UserModule } from "../user/user.module";
+import { TokenModule } from "../token/token.module";
+import { AuthJwtController } from "./auth.jwt.controller";
+import { AuthSocialController } from "./auth.social.controller";
+import { AuthService } from "./auth.service";
+import { AuthEntity } from "./auth.entity";
+import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy } from "./strategies";
 
 @Module({
   imports: [

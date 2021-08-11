@@ -1,12 +1,12 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
-import {Type} from "class-transformer";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 
-import {OrderStatus} from "@gemunionstudio/framework-types";
-import {reDateRange} from "@gemunionstudio/constants-regexp";
-import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
-import {SearchDto} from "@gemunionstudio/collection";
+import { OrderStatus } from "@gemunionstudio/framework-types";
+import { reDateRange } from "@gemunionstudio/constants-regexp";
+import { IsNumber, IsString } from "@gemunionstudio/nest-js-validators";
+import { SearchDto } from "@gemunionstudio/collection";
 
-import {IOrderSearchDto} from "../interfaces";
+import { IOrderSearchDto } from "../interfaces";
 
 export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
   @ApiPropertyOptional()

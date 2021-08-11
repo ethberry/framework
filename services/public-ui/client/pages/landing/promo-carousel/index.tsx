@@ -1,21 +1,21 @@
-import React, {FC, useContext, useEffect, useState} from "react";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Button, MobileStepper} from "@material-ui/core";
-import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
-import {useSnackbar} from "notistack";
+import React, { FC, useContext, useEffect, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, MobileStepper } from "@material-ui/core";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
+import { useSnackbar } from "notistack";
 
-import {ProgressOverlay, Spinner} from "@gemunionstudio/material-ui-progress";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPromo} from "@gemunionstudio/framework-types";
-import {IPaginationResult} from "@gemunionstudio/types-collection";
+import { ProgressOverlay, Spinner } from "@gemunionstudio/material-ui-progress";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IPromo } from "@gemunionstudio/framework-types";
+import { IPaginationResult } from "@gemunionstudio/types-collection";
 
 import useStyles from "./styles";
 
 export const PromoCarousel: FC = () => {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const [isLoading, setIsLoading] = useState(false);
   const [promos, setPromos] = useState<Array<IPromo>>([]);
@@ -41,10 +41,10 @@ export const PromoCarousel: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -63,7 +63,7 @@ export const PromoCarousel: FC = () => {
   return (
     <div className={classes.root}>
       <ProgressOverlay isLoading={isLoading}>
-        <div className={classes.img} style={{backgroundImage: `url(${promos[activeStep].imageUrl})`}} />
+        <div className={classes.img} style={{ backgroundImage: `url(${promos[activeStep].imageUrl})` }} />
         <MobileStepper
           className={classes.stepper}
           steps={promos.length}

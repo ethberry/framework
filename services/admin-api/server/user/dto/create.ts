@@ -1,7 +1,7 @@
-import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
-import {Transform} from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
+import { IsString } from "@gemunionstudio/nest-js-validators";
 import {
   emailMaxLength,
   firstNameMaxLength,
@@ -9,12 +9,12 @@ import {
   lastNameMaxLength,
   lastNameMinLength,
 } from "@gemunionstudio/constants-validation";
-import {DefaultLanguage, EnabledLanguages, rePhoneNumber} from "@gemunionstudio/framework-constants-misc";
-import {ReCaptcha} from "@gemunionstudio/nest-js-utils";
+import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunionstudio/framework-constants-misc";
+import { ReCaptcha } from "@gemunionstudio/nest-js-utils";
 
-import {IsEmail} from "../../common/validators";
-import {ValidatePasswordDto} from "../../auth/dto";
-import {IUserCreateDto} from "../interfaces";
+import { IsEmail } from "../../common/validators";
+import { ValidatePasswordDto } from "../../auth/dto";
+import { IUserCreateDto } from "../interfaces";
 
 export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto {
   @ApiProperty({
@@ -69,7 +69,7 @@ export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto
     maxLength: emailMaxLength,
   })
   @IsEmail()
-  @Transform(({value}: {value: string}) => value.toLowerCase())
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
   @ApiProperty()

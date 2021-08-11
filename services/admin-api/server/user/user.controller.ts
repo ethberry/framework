@@ -1,11 +1,11 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Put, Query, UseInterceptors} from "@nestjs/common";
-import {ApiCookieAuth} from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, HttpCode, Param, Put, Query, UseInterceptors } from "@nestjs/common";
+import { ApiCookieAuth } from "@nestjs/swagger";
 
-import {NotFoundInterceptor, PaginationInterceptor} from "@gemunionstudio/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunionstudio/nest-js-utils";
 
-import {UserService} from "./user.service";
-import {UserEntity} from "./user.entity";
-import {UserAutocompleteDto, UserSearchDto, UserUpdateDto} from "./dto";
+import { UserService } from "./user.service";
+import { UserEntity } from "./user.entity";
+import { UserAutocompleteDto, UserSearchDto, UserUpdateDto } from "./dto";
 
 @ApiCookieAuth()
 @Controller("/users")
@@ -25,18 +25,18 @@ export class UserController {
 
   @Put("/:id")
   public update(@Param("id") id: number, @Body() body: UserUpdateDto): Promise<UserEntity> {
-    return this.userService.update({id}, body);
+    return this.userService.update({ id }, body);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id") id: number): Promise<UserEntity | undefined> {
-    return this.userService.findOne({id});
+    return this.userService.findOne({ id });
   }
 
   @Delete("/:id")
   @HttpCode(204)
   public async delete(@Param("id") id: number): Promise<void> {
-    await this.userService.delete({id});
+    await this.userService.delete({ id });
   }
 }

@@ -1,9 +1,9 @@
-import React, {FC, useContext} from "react";
+import React, { FC, useContext } from "react";
 
-import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
+import { IUserContext, UserContext } from "@gemunionstudio/provider-user";
 
-import {DataContext, IDataContext} from "../../../components/context/data/context";
-import {IUser} from "@gemunionstudio/framework-types";
+import { DataContext, IDataContext } from "../../../components/context/data/context";
+import { IUser } from "@gemunionstudio/framework-types";
 
 export const Feedback: FC = () => {
   const data = useContext<IDataContext>(DataContext);

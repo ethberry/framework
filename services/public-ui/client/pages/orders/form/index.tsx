@@ -1,12 +1,12 @@
-import React, {FC} from "react";
-import {Grid} from "@material-ui/core";
+import React, { FC } from "react";
+import { Grid } from "@material-ui/core";
 
-import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
-import {SelectInput} from "@gemunionstudio/material-ui-inputs-core";
-import {DateRangeInput} from "@gemunionstudio/material-ui-inputs-picker";
-import {OrderStatus} from "@gemunionstudio/framework-types";
+import { AutoSave, FormikForm } from "@gemunionstudio/material-ui-form";
+import { SelectInput } from "@gemunionstudio/material-ui-inputs-core";
+import { DateRangeInput } from "@gemunionstudio/material-ui-inputs-picker";
+import { OrderStatus } from "@gemunionstudio/framework-types";
 
-import {IOrderSearchDto} from "../index";
+import { IOrderSearchDto } from "../index";
 
 interface IOrderSearchFormProps {
   onSubmit: (values: IOrderSearchDto) => void;
@@ -14,10 +14,10 @@ interface IOrderSearchFormProps {
 }
 
 export const OrderSearchForm: FC<IOrderSearchFormProps> = props => {
-  const {onSubmit, initialValues} = props;
+  const { onSubmit, initialValues } = props;
 
-  const {dateRange, orderStatus} = initialValues;
-  const fixedValues = {dateRange, orderStatus};
+  const { dateRange, orderStatus } = initialValues;
+  const fixedValues = { dateRange, orderStatus };
 
   return (
     <FormikForm initialValues={fixedValues} onSubmit={onSubmit} showButtons={false} showPrompt={false}>

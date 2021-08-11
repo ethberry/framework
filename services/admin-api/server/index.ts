@@ -1,14 +1,14 @@
-import {NestFactory} from "@nestjs/core";
-import {NestExpressApplication} from "@nestjs/platform-express";
-import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
-import {ConfigService} from "@nestjs/config";
-import {useContainer} from "class-validator";
-import {MicroserviceOptions, Transport} from "@nestjs/microservices";
-import {WINSTON_MODULE_NEST_PROVIDER} from "nest-winston";
+import { NestFactory } from "@nestjs/core";
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { ConfigService } from "@nestjs/config";
+import { useContainer } from "class-validator";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
-import {companyName, ns} from "@gemunionstudio/framework-constants-misc";
+import { companyName, ns } from "@gemunionstudio/framework-constants-misc";
 
-import {AppModule} from "./app.module";
+import { AppModule } from "./app.module";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -28,7 +28,7 @@ async function bootstrap(): Promise<void> {
     exposedHeaders: ["Content-Disposition"],
   });
 
-  useContainer(app.select(AppModule), {fallbackOnErrors: true});
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   app.set("trust proxy", true);
 

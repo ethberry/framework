@@ -1,7 +1,7 @@
-import {IUser} from "./user";
-import {IMerchant} from "./merchant";
-import {IBase} from "./base";
-import {IProduct} from "./product";
+import { IUser } from "./user";
+import { IMerchant } from "./merchant";
+import { IBase } from "./base";
+import { IProduct } from "./product";
 
 export enum OrderStatus {
   NEW = "NEW",

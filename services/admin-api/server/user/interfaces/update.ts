@@ -1,6 +1,6 @@
-import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
+import { UserRole, UserStatus } from "@gemunionstudio/framework-types";
 
-import {IProfileUpdateDto} from "../../profile/interfaces";
+import { IProfileUpdateDto } from "../../profile/interfaces";
 
 export interface IUserUpdateDto extends IProfileUpdateDto {
   userStatus: UserStatus;

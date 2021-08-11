@@ -1,14 +1,14 @@
-import {Request, Response} from "express";
-import {ServerStyleSheets} from "@material-ui/styles";
-import {StaticRouterContext} from "react-router";
+import { Request, Response } from "express";
+import { ServerStyleSheets } from "@material-ui/styles";
+import { StaticRouterContext } from "react-router";
 
-import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
-import {i18n} from "@gemunionstudio/framework-localization-emailer";
-import {fakeToken, fakeUser} from "@gemunionstudio/framework-mocks";
+import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
+import { i18n } from "@gemunionstudio/framework-localization-emailer";
+import { fakeToken, fakeUser } from "@gemunionstudio/framework-mocks";
 
-import {HTML} from "../../client/components/HTML";
-import {renderHTML, renderInitialMarkup} from "./render";
-import {App} from "../../client/pages";
+import { HTML } from "../../client/components/HTML";
+import { renderHTML, renderInitialMarkup } from "./render";
+import { App } from "../../client/pages";
 
 export function renderAppToString(request: Request, response: Response): void {
   // const initialLanguage = request.isAuthenticated() ? request.user.language : DefaultLanguage;

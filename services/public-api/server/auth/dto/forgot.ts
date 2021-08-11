@@ -1,15 +1,15 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {Transform} from "class-transformer";
+import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 
-import {ReCaptcha} from "@gemunionstudio/nest-js-utils";
+import { ReCaptcha } from "@gemunionstudio/nest-js-utils";
 
-import {IsEmail} from "../../common/validators";
-import {IForgotPasswordDto} from "../interfaces";
+import { IsEmail } from "../../common/validators";
+import { IForgotPasswordDto } from "../interfaces";
 
 export class ForgotPasswordDto implements IForgotPasswordDto {
   @ApiProperty()
   @IsEmail()
-  @Transform(({value}: {value: string}) => value.toLowerCase())
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
   // TODO FIX ME

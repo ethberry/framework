@@ -1,12 +1,12 @@
-import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
-import {IsArray, IsJSON, ValidateNested, IsOptional} from "class-validator";
-import {Type} from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsArray, IsJSON, ValidateNested, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
 
-import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
-import {IPhoto} from "@gemunionstudio/framework-types";
+import { IsNumber, IsString } from "@gemunionstudio/nest-js-validators";
+import { IPhoto } from "@gemunionstudio/framework-types";
 
-import {IProductCreateDto} from "../interfaces";
-import {PhotoCreateDto} from "../../photo/dto";
+import { IProductCreateDto } from "../interfaces";
+import { PhotoCreateDto } from "../../photo/dto";
 
 export class ProductCreateDto implements IProductCreateDto {
   @ApiProperty()
@@ -14,7 +14,7 @@ export class ProductCreateDto implements IProductCreateDto {
   public title: string;
 
   @ApiProperty()
-  @IsJSON({message: "patternMismatch"})
+  @IsJSON({ message: "patternMismatch" })
   public description: string;
 
   @ApiProperty({
@@ -52,7 +52,7 @@ export class ProductCreateDto implements IProductCreateDto {
   })
   public merchantId: number;
 
-  @ApiPropertyOptional({type: () => [PhotoCreateDto]})
+  @ApiPropertyOptional({ type: () => [PhotoCreateDto] })
   @IsOptional()
   @IsArray()
   @ValidateNested()

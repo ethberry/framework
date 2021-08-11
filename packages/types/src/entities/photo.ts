@@ -1,5 +1,5 @@
-import {IProduct} from "./product";
-import {IBase} from "./base";
+import { IProduct } from "./product";
+import { IBase } from "./base";
 
 export enum PhotoStatus {
   NEW = "NEW",

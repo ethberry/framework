@@ -1,7 +1,7 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from "typeorm";
 
-import {ns} from "@gemunionstudio/framework-constants-misc";
-import {imageUrl} from "@gemunionstudio/framework-mocks";
+import { ns } from "@gemunionstudio/framework-constants-misc";
+import { imageUrl } from "@gemunionstudio/framework-mocks";
 
 export class SetupUser1563804021050 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

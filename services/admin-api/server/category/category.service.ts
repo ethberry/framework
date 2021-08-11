@@ -1,11 +1,11 @@
-import {BadRequestException, Injectable, NotFoundException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Brackets, DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {ISearchDto} from "@gemunionstudio/types-collection";
+import { ISearchDto } from "@gemunionstudio/types-collection";
 
-import {CategoryEntity} from "./category.entity";
-import {ICategoryCreateDto, ICategoryUpdateDto} from "./interfaces";
+import { CategoryEntity } from "./category.entity";
+import { ICategoryCreateDto, ICategoryUpdateDto } from "./interfaces";
 
 @Injectable()
 export class CategoryService {
@@ -15,7 +15,7 @@ export class CategoryService {
   ) {}
 
   public search(dto: ISearchDto): Promise<[Array<CategoryEntity>, number]> {
-    const {query, skip, take} = dto;
+    const { query, skip, take } = dto;
 
     const queryBuilder = this.categoryEntityRepository.createQueryBuilder("category");
 
@@ -29,8 +29,8 @@ export class CategoryService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("category.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
+          qb.where("category.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }
@@ -47,11 +47,11 @@ export class CategoryService {
     where: FindConditions<CategoryEntity>,
     options?: FindManyOptions<CategoryEntity>,
   ): Promise<[Array<CategoryEntity>, number]> {
-    return this.categoryEntityRepository.findAndCount({where, ...options});
+    return this.categoryEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindConditions<CategoryEntity>): Promise<CategoryEntity | undefined> {
-    return this.categoryEntityRepository.findOne({where});
+    return this.categoryEntityRepository.findOne({ where });
   }
 
   public async autocomplete(): Promise<Array<CategoryEntity>> {

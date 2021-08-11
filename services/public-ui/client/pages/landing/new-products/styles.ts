@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   theme =>
@@ -7,5 +7,5 @@ export default makeStyles(
         marginTop: theme.spacing(7),
       },
     }),
-  {name: "NewProducts"},
+  { name: "NewProducts" },
 );

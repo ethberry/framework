@@ -1,18 +1,18 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-import {IPage, PageStatus} from "@gemunionstudio/framework-types";
-import {ns} from "@gemunionstudio/framework-constants-misc";
-import {BaseEntity} from "../common/base.entity";
+import { IPage, PageStatus } from "@gemunionstudio/framework-types";
+import { ns } from "@gemunionstudio/framework-constants-misc";
+import { BaseEntity } from "../common/base.entity";
 
-@Entity({schema: ns, name: "page"})
+@Entity({ schema: ns, name: "page" })
 export class PageEntity extends BaseEntity implements IPage {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({type: "varchar", unique: true})
+  @Column({ type: "varchar", unique: true })
   public slug: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public title: string;
 
   @Column({

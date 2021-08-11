@@ -1,14 +1,14 @@
-import {createHash, randomBytes} from "crypto";
-import {FindConditions, FindManyOptions, FindOneOptions, Not, Repository} from "typeorm";
-import {ConflictException, Inject, Injectable, Logger, LoggerService} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {ConfigService} from "@nestjs/config";
+import { createHash, randomBytes } from "crypto";
+import { FindConditions, FindManyOptions, FindOneOptions, Not, Repository } from "typeorm";
+import { ConflictException, Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 
-import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
+import { UserRole, UserStatus } from "@gemunionstudio/framework-types";
 
-import {UserEntity} from "./user.entity";
-import {IUserCreateDto, IUserImportDto} from "./interfaces";
-import {IPasswordDto} from "../auth/interfaces";
+import { UserEntity } from "./user.entity";
+import { IUserCreateDto, IUserImportDto } from "./interfaces";
+import { IPasswordDto } from "../auth/interfaces";
 
 @Injectable()
 export class UserService {
@@ -24,18 +24,18 @@ export class UserService {
     where: FindConditions<UserEntity>,
     options?: FindManyOptions<UserEntity>,
   ): Promise<[Array<UserEntity>, number]> {
-    return this.userEntityRepository.findAndCount({where, ...options});
+    return this.userEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(
     where: FindConditions<UserEntity>,
     options?: FindOneOptions<UserEntity>,
   ): Promise<UserEntity | undefined> {
-    return this.userEntityRepository.findOne({where, ...options});
+    return this.userEntityRepository.findOne({ where, ...options });
   }
 
   public async create(data: IUserCreateDto): Promise<UserEntity> {
-    let userEntity = await this.findOne({email: data.email});
+    let userEntity = await this.findOne({ email: data.email });
 
     if (userEntity) {
       throw new ConflictException("duplicateEmail");

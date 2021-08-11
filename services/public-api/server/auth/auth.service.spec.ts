@@ -1,16 +1,16 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {PassportModule} from "@nestjs/passport";
-import {JwtModule} from "@nestjs/jwt";
-import {ConfigModule, ConfigService} from "@nestjs/config";
+import { Test, TestingModule } from "@nestjs/testing";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import {DatabaseModule} from "../database/database.module";
-import {TokenModule} from "../token/token.module";
-import {UserModule} from "../user/user.module";
-import {emailServiceProvider} from "../common/providers";
-import {AuthService} from "./auth.service";
-import {AuthEntity} from "./auth.entity";
-import {JwtLocalStrategy} from "./strategies";
+import { DatabaseModule } from "../database/database.module";
+import { TokenModule } from "../token/token.module";
+import { UserModule } from "../user/user.module";
+import { emailServiceProvider } from "../common/providers";
+import { AuthService } from "./auth.service";
+import { AuthEntity } from "./auth.entity";
+import { JwtLocalStrategy } from "./strategies";
 
 describe("AuthService", () => {
   let authService: AuthService;

@@ -1,10 +1,10 @@
-import React, {FC, useState} from "react";
-import {TextField, TextFieldProps} from "@material-ui/core";
-import {getIn, useFormikContext} from "formik";
-import {TToolbarControl} from "@gemunionstudio/mui-rte";
-import {useIntl} from "react-intl";
+import React, { FC, useState } from "react";
+import { TextField, TextFieldProps } from "@material-ui/core";
+import { getIn, useFormikContext } from "formik";
+import { TToolbarControl } from "@gemunionstudio/mui-rte";
+import { useIntl } from "react-intl";
 
-import {IRichTextInputProps, RichTextInput} from "../input";
+import { IRichTextInputProps, RichTextInput } from "../input";
 
 const defaultControls = [
   "title",
@@ -27,7 +27,7 @@ export interface IRichTextFieldProps {
 }
 
 export const RichTextEditor: FC<IRichTextFieldProps & TextFieldProps> = props => {
-  const {id, name, InputLabelProps, customControls = [], ...rest} = props;
+  const { id, name, InputLabelProps, customControls = [], ...rest } = props;
 
   const suffix = name.split(".").pop() as string;
 
@@ -39,9 +39,9 @@ export const RichTextEditor: FC<IRichTextFieldProps & TextFieldProps> = props =>
   // Manually handle the TextField's focused state based on the editor's focused state
   const [isFocused, setIsFocused] = useState(false);
 
-  const {formatMessage} = useIntl();
-  const localizedPlaceholder = formatMessage({id: `form.placeholders.${suffix}`});
-  const localizedLabel = formatMessage({id: `form.labels.${suffix}`});
+  const { formatMessage } = useIntl();
+  const localizedPlaceholder = formatMessage({ id: `form.placeholders.${suffix}` });
+  const localizedLabel = formatMessage({ id: `form.labels.${suffix}` });
 
   const inputProps: IRichTextInputProps = {
     id,

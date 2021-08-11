@@ -1,11 +1,11 @@
-import {Body, Controller, Get, Put} from "@nestjs/common";
-import {ApiBearerAuth} from "@nestjs/swagger";
+import { Body, Controller, Get, Put } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
-import {Public, User} from "@gemunionstudio/nest-js-utils";
+import { Public, User } from "@gemunionstudio/nest-js-utils";
 
-import {ProfileService} from "./profile.service";
-import {UserEntity} from "../user/user.entity";
-import {ProfileUpdateDto} from "./dto";
+import { ProfileService } from "./profile.service";
+import { UserEntity } from "../user/user.entity";
+import { ProfileUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/profile")

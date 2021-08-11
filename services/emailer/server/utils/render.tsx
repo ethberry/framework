@@ -1,9 +1,9 @@
-import React, {ComponentClass, FunctionComponent} from "react";
-import {renderToStaticMarkup, renderToString} from "react-dom/server";
-import {StaticRouter, StaticRouterContext} from "react-router";
-import {ServerStyleSheets} from "@material-ui/styles";
+import React, { ComponentClass, FunctionComponent } from "react";
+import { renderToStaticMarkup, renderToString } from "react-dom/server";
+import { StaticRouter, StaticRouterContext } from "react-router";
+import { ServerStyleSheets } from "@material-ui/styles";
 
-import {ThemeProvider} from "@gemunionstudio/material-ui-provider-theme";
+import { ThemeProvider } from "@gemunionstudio/material-ui-provider-theme";
 
 export function renderInitialMarkup(
   url: string,

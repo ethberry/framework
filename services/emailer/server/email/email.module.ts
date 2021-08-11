@@ -1,10 +1,10 @@
-import {Module} from "@nestjs/common";
-import {ConfigModule, ConfigService} from "@nestjs/config";
+import { Module } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import {SesModule, ISesOptions} from "@gemunionstudio/nest-js-module-ses";
+import { SesModule, ISesOptions } from "@gemunionstudio/nest-js-module-ses";
 
-import {EmailController} from "./email.controller";
-import {EmailService} from "./email.service";
+import { EmailController } from "./email.controller";
+import { EmailService } from "./email.service";
 
 @Module({
   imports: [

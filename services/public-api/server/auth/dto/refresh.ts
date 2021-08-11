@@ -1,8 +1,8 @@
-import {ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from "@nestjs/swagger";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
+import { IsString } from "@gemunionstudio/nest-js-validators";
 
-import {IRefreshDto} from "../interfaces";
+import { IRefreshDto } from "../interfaces";
 
 export class RefreshDto implements IRefreshDto {
   @ApiProperty()

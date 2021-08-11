@@ -1,12 +1,12 @@
-import {Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {PhotoStatus, ProductStatus} from "@gemunionstudio/framework-types";
-import {SortDirection} from "@gemunionstudio/types-collection";
+import { PhotoStatus, ProductStatus } from "@gemunionstudio/framework-types";
+import { SortDirection } from "@gemunionstudio/types-collection";
 
-import {ProductEntity} from "./product.entity";
-import {IProductSortDto} from "./interfaces";
+import { ProductEntity } from "./product.entity";
+import { IProductSortDto } from "./interfaces";
 
 @Injectable()
 export class ProductService {
@@ -16,21 +16,21 @@ export class ProductService {
   ) {}
 
   public async search(search: IProductSortDto): Promise<[Array<ProductEntity>, number]> {
-    const {query, sortBy = "id", sort = SortDirection.asc, merchantId, categoryIds} = search;
+    const { query, sortBy = "id", sort = SortDirection.asc, merchantId, categoryIds } = search;
 
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
     queryBuilder.select();
 
-    queryBuilder.where({productStatus: ProductStatus.ACTIVE});
+    queryBuilder.where({ productStatus: ProductStatus.ACTIVE });
 
     if (merchantId) {
-      queryBuilder.andWhere("product.merchantId = :merchantId", {merchantId});
+      queryBuilder.andWhere("product.merchantId = :merchantId", { merchantId });
     }
 
     if (categoryIds) {
       queryBuilder.leftJoinAndSelect("product.categories", "category");
-      queryBuilder.andWhere("category.id IN(:...categoryIds)", {categoryIds});
+      queryBuilder.andWhere("category.id IN(:...categoryIds)", { categoryIds });
     }
 
     if (query) {
@@ -41,8 +41,8 @@ export class ProductService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("product.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
+          qb.where("product.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }
@@ -51,7 +51,7 @@ export class ProductService {
 
     // https://github.com/typeorm/typeorm/issues/2919
     // @ts-ignore
-    queryBuilder.orderBy({[`product.${sortBy}`]: sort.toUpperCase()});
+    queryBuilder.orderBy({ [`product.${sortBy}`]: sort.toUpperCase() });
 
     return queryBuilder.getManyAndCount();
   }
@@ -60,7 +60,7 @@ export class ProductService {
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
     queryBuilder.select();
-    queryBuilder.where({productStatus: ProductStatus.ACTIVE});
+    queryBuilder.where({ productStatus: ProductStatus.ACTIVE });
     queryBuilder.andWhere("photos.priority = 0");
     queryBuilder.leftJoinAndSelect(
       "product.photos",
@@ -88,7 +88,7 @@ export class ProductService {
     where: FindConditions<ProductEntity>,
     options?: FindManyOptions<ProductEntity>,
   ): Promise<[Array<ProductEntity>, number]> {
-    return this.productEntityRepository.findAndCount({where, ...options});
+    return this.productEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindConditions<ProductEntity>): Promise<ProductEntity | undefined> {

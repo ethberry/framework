@@ -1,13 +1,13 @@
-import React, {FC, Fragment, MouseEvent, useContext, useState} from "react";
-import {FormattedMessage, useIntl} from "react-intl";
-import {IconButton, Menu, MenuItem, Tooltip} from "@material-ui/core";
-import {Translate} from "@material-ui/icons";
+import React, { FC, Fragment, MouseEvent, useContext, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { IconButton, Menu, MenuItem, Tooltip } from "@material-ui/core";
+import { Translate } from "@material-ui/icons";
 
-import {ISettingsContext, SettingsContext} from "@gemunionstudio/provider-settings";
-import {EnabledLanguages} from "@gemunionstudio/framework-constants-misc";
+import { ISettingsContext, SettingsContext } from "@gemunionstudio/provider-settings";
+import { EnabledLanguages } from "@gemunionstudio/framework-constants-misc";
 
 export const Translation: FC = () => {
-  const {formatMessage} = useIntl();
+  const { formatMessage } = useIntl();
   const settings = useContext<ISettingsContext<EnabledLanguages>>(SettingsContext);
   const [anchor, setAnchor] = useState<Element | null>(null);
 
@@ -27,7 +27,7 @@ export const Translation: FC = () => {
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({id: "components.header.language.switch"})} enterDelay={300}>
+      <Tooltip title={formatMessage({ id: "components.header.language.switch" })} enterDelay={300}>
         <IconButton
           color="inherit"
           aria-owns={anchor ? "language-menu" : undefined}

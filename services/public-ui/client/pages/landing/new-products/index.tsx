@@ -1,19 +1,19 @@
-import React, {FC, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Typography} from "@material-ui/core";
+import React, { FC, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Typography } from "@material-ui/core";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IProduct} from "@gemunionstudio/framework-types";
-import {IPaginationResult} from "@gemunionstudio/types-collection";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IProduct } from "@gemunionstudio/framework-types";
+import { IPaginationResult } from "@gemunionstudio/types-collection";
 
-import {MultiCarousel} from "../multi-carousel";
+import { MultiCarousel } from "../multi-carousel";
 import useStyles from "./styles";
 
 export const NewProducts: FC = () => {
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
   const classes = useStyles();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -32,10 +32,10 @@ export const NewProducts: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {

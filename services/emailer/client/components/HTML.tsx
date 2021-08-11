@@ -1,6 +1,6 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {companyName} from "@gemunionstudio/framework-constants-misc";
+import { companyName } from "@gemunionstudio/framework-constants-misc";
 
 interface IHTMLProps {
   initialState: string;
@@ -9,7 +9,7 @@ interface IHTMLProps {
   initialLanguage: string;
 }
 
-export const HTML: FC<IHTMLProps> = ({initialMarkup, initialStyles, initialLanguage}) => {
+export const HTML: FC<IHTMLProps> = ({ initialMarkup, initialStyles, initialLanguage }) => {
   return (
     <html lang={initialLanguage}>
       <head>
@@ -22,10 +22,10 @@ export const HTML: FC<IHTMLProps> = ({initialMarkup, initialStyles, initialLangu
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link href="/favicon.ico" rel="icon" type="image/x-icon" />
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" />
-        <style id="jss-server-side" dangerouslySetInnerHTML={{__html: initialStyles}} />
+        <style id="jss-server-side" dangerouslySetInnerHTML={{ __html: initialStyles }} />
       </head>
       <body>
-        <div id="app" dangerouslySetInnerHTML={{__html: initialMarkup}} />
+        <div id="app" dangerouslySetInnerHTML={{ __html: initialMarkup }} />
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
-import {createContext} from "react";
-import {IToken, IUser} from "@gemunionstudio/framework-types";
+import { createContext } from "react";
+import { IToken, IUser } from "@gemunionstudio/framework-types";
 
 export interface IDataContext {
   user?: IUser;

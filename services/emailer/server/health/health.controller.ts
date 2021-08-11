@@ -1,4 +1,4 @@
-import {Controller, Get} from "@nestjs/common";
+import { Controller, Get } from "@nestjs/common";
 import {
   HealthCheck,
   HealthCheckResult,
@@ -6,10 +6,10 @@ import {
   HealthIndicatorResult,
   MicroserviceHealthIndicator,
 } from "@nestjs/terminus";
-import {ConfigService} from "@nestjs/config";
-import {Transport} from "@nestjs/microservices";
+import { ConfigService } from "@nestjs/config";
+import { Transport } from "@nestjs/microservices";
 
-import {EmailHealthIndicator} from "./health.indicator";
+import { EmailHealthIndicator } from "./health.indicator";
 
 @Controller("/health")
 export class HealthController {

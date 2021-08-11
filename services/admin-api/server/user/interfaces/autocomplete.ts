@@ -1,4 +1,4 @@
-import {UserRole} from "@gemunionstudio/framework-types";
+import { UserRole } from "@gemunionstudio/framework-types";
 
 export interface IUserAutocompleteDto {
   userRoles: Array<UserRole>;

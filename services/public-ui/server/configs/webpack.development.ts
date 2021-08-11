@@ -1,5 +1,5 @@
 import path from "path";
-import {Configuration, HotModuleReplacementPlugin} from "webpack";
+import { Configuration, HotModuleReplacementPlugin } from "webpack";
 import DotEnvPlugin from "dotenv-webpack";
 import CopyPlugin from "copy-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -89,7 +89,7 @@ const config: Configuration = {
       filename: "[name].css",
     }),
     new CopyPlugin({
-      patterns: [{from: "./static", to: "./"}],
+      patterns: [{ from: "./static", to: "./" }],
     }),
     new HotModuleReplacementPlugin(),
   ],

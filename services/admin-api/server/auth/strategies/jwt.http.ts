@@ -1,12 +1,12 @@
-import {ExtractJwt, Strategy} from "passport-jwt";
-import {PassportStrategy} from "@nestjs/passport";
-import {Injectable, UnauthorizedException} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
+import { ExtractJwt, Strategy } from "passport-jwt";
+import { PassportStrategy } from "@nestjs/passport";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
-import {UserStatus} from "@gemunionstudio/framework-types";
+import { UserStatus } from "@gemunionstudio/framework-types";
 
-import {UserService} from "../../user/user.service";
-import {UserEntity} from "../../user/user.entity";
+import { UserService } from "../../user/user.service";
+import { UserEntity } from "../../user/user.entity";
 
 @Injectable()
 export class JwtLocalStrategy extends PassportStrategy(Strategy, "jwt-http") {
@@ -18,9 +18,9 @@ export class JwtLocalStrategy extends PassportStrategy(Strategy, "jwt-http") {
     });
   }
 
-  public async validate(payload: {email: string}): Promise<UserEntity> {
+  public async validate(payload: { email: string }): Promise<UserEntity> {
     const email = payload.email.toLowerCase();
-    const userEntity = await this.userService.findOne({email});
+    const userEntity = await this.userService.findOne({ email });
 
     if (!userEntity) {
       throw new UnauthorizedException("userNotFound");

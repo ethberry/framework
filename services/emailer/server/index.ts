@@ -1,10 +1,10 @@
-import {NestFactory} from "@nestjs/core";
-import {ConfigService} from "@nestjs/config";
-import {MicroserviceOptions, Transport} from "@nestjs/microservices";
-import {NestExpressApplication} from "@nestjs/platform-express";
-import {WINSTON_MODULE_NEST_PROVIDER} from "nest-winston";
+import { NestFactory } from "@nestjs/core";
+import { ConfigService } from "@nestjs/config";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
-import {AppModule} from "./app.module";
+import { AppModule } from "./app.module";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

@@ -1,10 +1,10 @@
-import {Controller, Get, Param, Query, UseInterceptors} from "@nestjs/common";
+import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
 
-import {NotFoundInterceptor, PaginationInterceptor, Public} from "@gemunionstudio/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunionstudio/nest-js-utils";
 
-import {MerchantService} from "./merchant.service";
-import {MerchantEntity} from "./merchant.entity";
-import {MerchantSearchDto} from "./dto";
+import { MerchantService } from "./merchant.service";
+import { MerchantEntity } from "./merchant.entity";
+import { MerchantSearchDto } from "./dto";
 
 @Public()
 @Controller("/merchants")
@@ -25,6 +25,6 @@ export class MerchantController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id") id: number): Promise<MerchantEntity | undefined> {
-    return this.merchantService.findOne({id});
+    return this.merchantService.findOne({ id });
   }
 }

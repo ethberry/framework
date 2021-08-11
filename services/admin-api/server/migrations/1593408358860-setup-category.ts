@@ -1,6 +1,6 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
-import {ns} from "@gemunionstudio/framework-constants-misc";
-import {simpleFormatting} from "@gemunionstudio/framework-mocks";
+import { MigrationInterface, QueryRunner } from "typeorm";
+import { ns } from "@gemunionstudio/framework-constants-misc";
+import { simpleFormatting } from "@gemunionstudio/framework-mocks";
 
 export class SetupProducts1593408358860 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

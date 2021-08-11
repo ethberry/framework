@@ -1,8 +1,8 @@
-import {Injectable} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {FindConditions, FindManyOptions, Repository} from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {CategoryEntity} from "./category.entity";
+import { CategoryEntity } from "./category.entity";
 
 @Injectable()
 export class CategoryService {
@@ -15,7 +15,7 @@ export class CategoryService {
     where: FindConditions<CategoryEntity>,
     options?: FindManyOptions<CategoryEntity>,
   ): Promise<[Array<CategoryEntity>, number]> {
-    return this.categoryEntityRepository.findAndCount({where, ...options});
+    return this.categoryEntityRepository.findAndCount({ where, ...options });
   }
 
   public async autocomplete(): Promise<Array<CategoryEntity>> {

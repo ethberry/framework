@@ -1,9 +1,9 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import {IsConfirm, IsPassword} from "@gemunionstudio/nest-js-validators";
+import { IsConfirm, IsPassword } from "@gemunionstudio/nest-js-validators";
 
-import {UserCommonDto} from "../../common/dto";
-import {IProfileUpdateDto} from "../interfaces";
+import { UserCommonDto } from "../../common/dto";
+import { IProfileUpdateDto } from "../interfaces";
 
 export class ProfileUpdateDto extends UserCommonDto implements IProfileUpdateDto {
   @ApiPropertyOptional()

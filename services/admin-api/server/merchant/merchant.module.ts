@@ -1,9 +1,9 @@
-import {Module} from "@nestjs/common";
-import {TypeOrmModule} from "@nestjs/typeorm";
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import {MerchantService} from "./merchant.service";
-import {MerchantEntity} from "./merchant.entity";
-import {MerchantController} from "./merchant.controller";
+import { MerchantService } from "./merchant.service";
+import { MerchantEntity } from "./merchant.entity";
+import { MerchantController } from "./merchant.controller";
 
 @Module({
   imports: [TypeOrmModule.forFeature([MerchantEntity])],

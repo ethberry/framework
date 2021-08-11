@@ -1,8 +1,8 @@
-import {ApiProperty} from "@nestjs/swagger";
+import { ApiProperty } from "@nestjs/swagger";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
+import { IsString } from "@gemunionstudio/nest-js-validators";
 
-import {ILogoutDto} from "../interfaces";
+import { ILogoutDto } from "../interfaces";
 
 export class LogoutDto implements ILogoutDto {
   @ApiProperty()

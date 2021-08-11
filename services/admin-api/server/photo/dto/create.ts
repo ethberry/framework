@@ -1,8 +1,8 @@
-import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
+import { IsString } from "@gemunionstudio/nest-js-validators";
 
-import {IPhotoCreateDto} from "../interfaces";
+import { IPhotoCreateDto } from "../interfaces";
 
 export class PhotoCreateDto implements IPhotoCreateDto {
   @ApiPropertyOptional()

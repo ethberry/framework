@@ -1,6 +1,6 @@
-import {IUser} from "./user";
-import {IProduct} from "./product";
-import {IBase} from "./base";
+import { IUser } from "./user";
+import { IProduct } from "./product";
+import { IBase } from "./base";
 
 export enum MerchantStatus {
   ACTIVE = "ACTIVE",

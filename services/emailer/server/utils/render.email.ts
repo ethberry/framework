@@ -1,15 +1,15 @@
-import {ServerStyleSheets} from "@material-ui/styles";
-import {StaticRouterContext} from "react-router";
+import { ServerStyleSheets } from "@material-ui/styles";
+import { StaticRouterContext } from "react-router";
 
-import {EmailType, IUser} from "@gemunionstudio/framework-types";
-import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
-import {i18n} from "@gemunionstudio/framework-localization-emailer";
+import { EmailType, IUser } from "@gemunionstudio/framework-types";
+import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
+import { i18n } from "@gemunionstudio/framework-localization-emailer";
 
-import {EML} from "../../client/components/EML";
-import {renderHTML, renderInitialMarkup} from "./render";
-import {App} from "../../client/pages";
+import { EML } from "../../client/components/EML";
+import { renderHTML, renderInitialMarkup } from "./render";
+import { App } from "../../client/pages";
 
-export function renderEmailToString(type: EmailType, {user, ...data}: {user: IUser}): Promise<string> {
+export function renderEmailToString(type: EmailType, { user, ...data }: { user: IUser }): Promise<string> {
   const initialLanguage = user.language || DefaultLanguage;
 
   const initialState = {

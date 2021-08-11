@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   theme =>
@@ -11,5 +11,5 @@ export default makeStyles(
         backgroundColor: "#f0f0f0",
       },
     }),
-  {name: "HeaderSections"},
+  { name: "HeaderSections" },
 );

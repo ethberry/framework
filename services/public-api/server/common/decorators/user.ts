@@ -1,6 +1,6 @@
-import {createParamDecorator, ExecutionContext} from "@nestjs/common";
+import { createParamDecorator, ExecutionContext } from "@nestjs/common";
 
-import {IUser} from "@gemunionstudio/framework-types";
+import { IUser } from "@gemunionstudio/framework-types";
 
 export const User = createParamDecorator((_data: unknown, ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();

@@ -1,23 +1,23 @@
-import React, {ChangeEvent, FC, Fragment, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {useIntl} from "react-intl";
-import {Grid} from "@material-ui/core";
-import {Pagination} from "@material-ui/lab";
-import {parse, stringify} from "qs";
-import {useHistory, useLocation} from "react-router";
+import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { useIntl } from "react-intl";
+import { Grid } from "@material-ui/core";
+import { Pagination } from "@material-ui/lab";
+import { parse, stringify } from "qs";
+import { useHistory, useLocation } from "react-router";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IMerchant} from "@gemunionstudio/framework-types";
-import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {MerchantItem} from "./item";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IMerchant } from "@gemunionstudio/framework-types";
+import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
+import { MerchantItem } from "./item";
 
 export const MerchantList: FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const [isLoading, setIsLoading] = useState(false);
   const [count, setCount] = useState<number>(0);
@@ -33,7 +33,7 @@ export const MerchantList: FC = () => {
   });
 
   const updateQS = () => {
-    const {skip: _skip, take: _take, ...rest} = data;
+    const { skip: _skip, take: _take, ...rest } = data;
     history.push(`/merchants?${stringify(rest)}`);
   };
 
@@ -51,10 +51,10 @@ export const MerchantList: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {

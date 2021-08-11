@@ -1,5 +1,5 @@
-import React, {FC, useContext} from "react";
-import {DataContext, IDataContext} from "../../../components/context/data/context";
+import React, { FC, useContext } from "react";
+import { DataContext, IDataContext } from "../../../components/context/data/context";
 
 export const Restore: FC = () => {
   const data = useContext<IDataContext>(DataContext);

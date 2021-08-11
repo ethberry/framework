@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   () =>
@@ -10,5 +10,5 @@ export default makeStyles(
         height: 140,
       },
     }),
-  {name: "Product"},
+  { name: "Product" },
 );

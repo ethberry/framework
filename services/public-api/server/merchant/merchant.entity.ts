@@ -1,19 +1,19 @@
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-import {IMerchant, MerchantStatus} from "@gemunionstudio/framework-types";
-import {ns} from "@gemunionstudio/framework-constants-misc";
+import { IMerchant, MerchantStatus } from "@gemunionstudio/framework-types";
+import { ns } from "@gemunionstudio/framework-constants-misc";
 
-import {UserEntity} from "../user/user.entity";
-import {ProductEntity} from "../product/product.entity";
-import {BaseEntity} from "../common/base.entity";
-import {OrderEntity} from "../order/order.entity";
+import { UserEntity } from "../user/user.entity";
+import { ProductEntity } from "../product/product.entity";
+import { BaseEntity } from "../common/base.entity";
+import { OrderEntity } from "../order/order.entity";
 
-@Entity({schema: ns, name: "merchant"})
+@Entity({ schema: ns, name: "merchant" })
 export class MerchantEntity extends BaseEntity implements IMerchant {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public title: string;
 
   @Column({
@@ -29,13 +29,13 @@ export class MerchantEntity extends BaseEntity implements IMerchant {
   })
   public description: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public email: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public phoneNumber: string;
 
-  @Column({type: "varchar"})
+  @Column({ type: "varchar" })
   public imageUrl: string;
 
   @Column({

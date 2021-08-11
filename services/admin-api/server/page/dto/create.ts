@@ -1,9 +1,9 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {IsJSON} from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsJSON } from "class-validator";
 
-import {IsString} from "@gemunionstudio/nest-js-validators";
+import { IsString } from "@gemunionstudio/nest-js-validators";
 
-import {IPageCreateDto} from "../interfaces";
+import { IPageCreateDto } from "../interfaces";
 
 export class PageCreateDto implements IPageCreateDto {
   @ApiProperty()
@@ -15,6 +15,6 @@ export class PageCreateDto implements IPageCreateDto {
   public title: string;
 
   @ApiProperty()
-  @IsJSON({message: "patternMismatch"})
+  @IsJSON({ message: "patternMismatch" })
   public description: string;
 }

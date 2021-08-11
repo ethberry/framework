@@ -1,11 +1,11 @@
-import {Inject, Injectable} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
-import {ClientProxy} from "@nestjs/microservices";
+import { Inject, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { ClientProxy } from "@nestjs/microservices";
 
-import {EmailType, ProviderType, TokenType} from "@gemunionstudio/framework-types";
+import { EmailType, ProviderType, TokenType } from "@gemunionstudio/framework-types";
 
-import {UserEntity} from "../user/user.entity";
-import {TokenService} from "../token/token.service";
+import { UserEntity } from "../user/user.entity";
+import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class EmailService {

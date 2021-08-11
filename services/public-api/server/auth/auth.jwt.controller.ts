@@ -1,10 +1,10 @@
-import {Body, ClassSerializerInterceptor, Controller, HttpCode, Ip, Post, UseInterceptors} from "@nestjs/common";
+import { Body, ClassSerializerInterceptor, Controller, HttpCode, Ip, Post, UseInterceptors } from "@nestjs/common";
 
-import {Public} from "@gemunionstudio/nest-js-utils";
-import {IJwt} from "@gemunionstudio/framework-types/dist/jwt";
+import { Public } from "@gemunionstudio/nest-js-utils";
+import { IJwt } from "@gemunionstudio/framework-types/dist/jwt";
 
-import {UserCreateDto} from "../user/dto";
-import {AuthService} from "./auth.service";
+import { UserCreateDto } from "../user/dto";
+import { AuthService } from "./auth.service";
 import {
   ForgotPasswordDto,
   LoginDto,
@@ -15,7 +15,7 @@ import {
   ValidatePasswordScoreDto,
   VerifyEmailDto,
 } from "./dto";
-import {IPasswordScoreResult} from "./interfaces";
+import { IPasswordScoreResult } from "./interfaces";
 
 @Public()
 @Controller("/auth")

@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   theme =>
@@ -14,5 +14,5 @@ export default makeStyles(
         paddingTop: theme.spacing(11),
       }),
     }),
-  {name: "Layout"},
+  { name: "Layout" },
 );

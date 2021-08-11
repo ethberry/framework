@@ -1,23 +1,23 @@
-import React, {FC, Fragment, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {useIntl} from "react-intl";
-import {Avatar, Box, Typography} from "@material-ui/core";
-import {useParams} from "react-router";
-import {Skeleton} from "@material-ui/lab";
+import React, { FC, Fragment, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { useIntl } from "react-intl";
+import { Avatar, Box, Typography } from "@material-ui/core";
+import { useParams } from "react-router";
+import { Skeleton } from "@material-ui/lab";
 
-import {Spinner} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IMerchant} from "@gemunionstudio/framework-types";
-import {RichTextDisplay} from "@gemunionstudio/framework-material-ui-rte";
+import { Spinner } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IMerchant } from "@gemunionstudio/framework-types";
+import { RichTextDisplay } from "@gemunionstudio/framework-material-ui-rte";
 
-import {ProductList} from "../product-list";
+import { ProductList } from "../product-list";
 import useStyles from "./styles";
 
 export const Merchant: FC = () => {
-  const {merchantId} = useParams<{merchantId: string}>();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { merchantId } = useParams<{ merchantId: string }>();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
   const classes = useStyles();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -35,10 +35,10 @@ export const Merchant: FC = () => {
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {

@@ -1,13 +1,13 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Query, UseInterceptors} from "@nestjs/common";
-import {ApiCookieAuth} from "@nestjs/swagger";
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query, UseInterceptors } from "@nestjs/common";
+import { ApiCookieAuth } from "@nestjs/swagger";
 
-import {NotFoundInterceptor, PaginationInterceptor} from "@gemunionstudio/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunionstudio/nest-js-utils";
 
-import {OrderService} from "./order.service";
-import {OrderEntity} from "./order.entity";
-import {OrderCreateDto, OrderSearchDto} from "./dto";
-import {UserEntity} from "../user/user.entity";
-import {User} from "../common/decorators";
+import { OrderService } from "./order.service";
+import { OrderEntity } from "./order.entity";
+import { OrderCreateDto, OrderSearchDto } from "./dto";
+import { UserEntity } from "../user/user.entity";
+import { User } from "../common/decorators";
 
 @ApiCookieAuth()
 @Controller("/orders")
@@ -28,12 +28,12 @@ export class OrderController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id") id: number): Promise<OrderEntity | undefined> {
-    return this.orderService.findOne({id});
+    return this.orderService.findOne({ id });
   }
 
   @Delete("/:id")
   @HttpCode(204)
   public async delete(@Param("id") id: number): Promise<void> {
-    await this.orderService.delete({id});
+    await this.orderService.delete({ id });
   }
 }

@@ -1,10 +1,10 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import {OrderStatus} from "@gemunionstudio/framework-types";
-import {IsString} from "@gemunionstudio/nest-js-validators";
+import { OrderStatus } from "@gemunionstudio/framework-types";
+import { IsString } from "@gemunionstudio/nest-js-validators";
 
-import {IOrderUpdateDto} from "../interfaces";
-import {OrderCreateDto} from "./create";
+import { IOrderUpdateDto } from "../interfaces";
+import { OrderCreateDto } from "./create";
 
 export class OrderUpdateDto extends OrderCreateDto implements IOrderUpdateDto {
   @ApiPropertyOptional()

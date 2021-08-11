@@ -1,12 +1,12 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {DeleteResult, FindConditions, FindManyOptions, Repository} from "typeorm";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {OrderEntity} from "./order.entity";
-import {IOrderCreateDto, IOrderSearchDto, IOrderUpdateDto} from "./interfaces";
-import {ProductService} from "../product/product.service";
-import {UserEntity} from "../user/user.entity";
-import {OrderStatus, UserRole} from "@gemunionstudio/framework-types";
+import { OrderEntity } from "./order.entity";
+import { IOrderCreateDto, IOrderSearchDto, IOrderUpdateDto } from "./interfaces";
+import { ProductService } from "../product/product.service";
+import { UserEntity } from "../user/user.entity";
+import { OrderStatus, UserRole } from "@gemunionstudio/framework-types";
 
 @Injectable()
 export class OrderService {
@@ -17,28 +17,28 @@ export class OrderService {
   ) {}
 
   public async search(dto: IOrderSearchDto, userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
-    const {orderStatus, dateRange, merchantId, skip, take} = dto;
+    const { orderStatus, dateRange, merchantId, skip, take } = dto;
     const queryBuilder = this.orderEntityRepository.createQueryBuilder("order").select();
 
     queryBuilder.select();
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      queryBuilder.andWhere("order.merchantId = :merchantId", {merchantId: userEntity.merchantId});
+      queryBuilder.andWhere("order.merchantId = :merchantId", { merchantId: userEntity.merchantId });
     } else if (merchantId) {
-      queryBuilder.andWhere("order.merchantId = :merchantId", {merchantId});
+      queryBuilder.andWhere("order.merchantId = :merchantId", { merchantId });
     }
 
     if (orderStatus && orderStatus.length) {
       if (orderStatus.length === 1) {
-        queryBuilder.andWhere("order.orderStatus = :orderStatus", {orderStatus: orderStatus[0]});
+        queryBuilder.andWhere("order.orderStatus = :orderStatus", { orderStatus: orderStatus[0] });
       } else {
-        queryBuilder.andWhere("order.orderStatus IN(:...orderStatus)", {orderStatus});
+        queryBuilder.andWhere("order.orderStatus IN(:...orderStatus)", { orderStatus });
       }
     }
 
     if (dateRange) {
       const [begin, end] = dateRange.split("/");
-      queryBuilder.andWhere("order.createdAt BETWEEN :begin AND :end", {begin, end});
+      queryBuilder.andWhere("order.createdAt BETWEEN :begin AND :end", { begin, end });
     }
 
     queryBuilder.leftJoinAndSelect("order.merchant", "merchant");
@@ -55,17 +55,17 @@ export class OrderService {
     where: FindConditions<OrderEntity>,
     options?: FindManyOptions<OrderEntity>,
   ): Promise<[Array<OrderEntity>, number]> {
-    return this.orderEntityRepository.findAndCount({where, ...options});
+    return this.orderEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindConditions<OrderEntity>): Promise<OrderEntity | undefined> {
-    return this.orderEntityRepository.findOne({where});
+    return this.orderEntityRepository.findOne({ where });
   }
 
   public async create(dto: IOrderCreateDto): Promise<OrderEntity> {
-    const {productId, userId, merchantId} = dto; // workaround for not working transformations
+    const { productId, userId, merchantId } = dto; // workaround for not working transformations
 
-    const productEntity = await this.productService.findOne({id: productId});
+    const productEntity = await this.productService.findOne({ id: productId });
 
     if (!productEntity) {
       throw new NotFoundException("productNotFound");

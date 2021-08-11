@@ -1,15 +1,15 @@
-import {createHash, randomBytes} from "crypto";
-import {Brackets, DeleteResult, FindConditions, FindManyOptions, Not, Repository} from "typeorm";
-import {ConflictException, Inject, Injectable, Logger, LoggerService, NotFoundException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {ConfigService} from "@nestjs/config";
+import { createHash, randomBytes } from "crypto";
+import { Brackets, DeleteResult, FindConditions, FindManyOptions, Not, Repository } from "typeorm";
+import { ConflictException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { ConfigService } from "@nestjs/config";
 
-import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
+import { UserRole, UserStatus } from "@gemunionstudio/framework-types";
 
-import {UserEntity} from "./user.entity";
-import {IUserAutocompleteDto, IUserCreateDto, IUserSearchDto, IUserUpdateDto} from "./interfaces";
-import {IPasswordDto} from "../auth/interfaces";
-import {IUserImportDto} from "./interfaces/import";
+import { UserEntity } from "./user.entity";
+import { IUserAutocompleteDto, IUserCreateDto, IUserSearchDto, IUserUpdateDto } from "./interfaces";
+import { IPasswordDto } from "../auth/interfaces";
+import { IUserImportDto } from "./interfaces/import";
 
 @Injectable()
 export class UserService {
@@ -22,32 +22,32 @@ export class UserService {
   ) {}
 
   public async search(dto: IUserSearchDto): Promise<[Array<UserEntity>, number]> {
-    const {query, userRoles, userStatus} = dto;
+    const { query, userRoles, userStatus } = dto;
     const queryBuilder = this.userEntityRepository.createQueryBuilder("user");
 
     queryBuilder.select();
 
     if (userRoles) {
       if (userRoles.length === 1) {
-        queryBuilder.andWhere(":userRoles = ANY(user.userRoles)", {userRoles: userRoles[0]});
+        queryBuilder.andWhere(":userRoles = ANY(user.userRoles)", { userRoles: userRoles[0] });
       } else {
-        queryBuilder.andWhere("user.userRoles && :userRoles", {userRoles});
+        queryBuilder.andWhere("user.userRoles && :userRoles", { userRoles });
       }
     }
 
     if (userStatus) {
       if (userStatus.length === 1) {
-        queryBuilder.andWhere("user.userStatus = :userStatus", {userStatus: userStatus[0]});
+        queryBuilder.andWhere("user.userStatus = :userStatus", { userStatus: userStatus[0] });
       } else {
-        queryBuilder.andWhere("user.userStatus IN(:...userStatus)", {userStatus});
+        queryBuilder.andWhere("user.userStatus IN(:...userStatus)", { userStatus });
       }
     }
 
     if (query) {
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("user.firstName ILIKE '%' || :firstName || '%'", {firstName: query});
-          qb.orWhere("user.lastName ILIKE '%' || :lastName || '%'", {lastName: query});
+          qb.where("user.firstName ILIKE '%' || :firstName || '%'", { firstName: query });
+          qb.orWhere("user.lastName ILIKE '%' || :lastName || '%'", { lastName: query });
         }),
       );
     }
@@ -66,11 +66,11 @@ export class UserService {
     where: FindConditions<UserEntity>,
     options?: FindManyOptions<UserEntity>,
   ): Promise<[Array<UserEntity>, number]> {
-    return this.userEntityRepository.findAndCount({where, ...options});
+    return this.userEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindConditions<UserEntity>): Promise<UserEntity | undefined> {
-    return this.userEntityRepository.findOne({where});
+    return this.userEntityRepository.findOne({ where });
   }
 
   public async update(where: FindConditions<UserEntity>, data: IUserUpdateDto): Promise<UserEntity> {
@@ -91,7 +91,7 @@ export class UserService {
   }
 
   public async create(data: IUserCreateDto): Promise<UserEntity> {
-    let userEntity = await this.findOne({email: data.email});
+    let userEntity = await this.findOne({ email: data.email });
 
     if (userEntity) {
       throw new ConflictException("duplicateEmail");

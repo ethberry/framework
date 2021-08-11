@@ -1,11 +1,11 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Brackets, FindConditions, FindManyOptions, Repository} from "typeorm";
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import {S3Service} from "@gemunionstudio/nest-js-module-s3";
+import { S3Service } from "@gemunionstudio/nest-js-module-s3";
 
-import {PromoEntity} from "./promo.entity";
-import {IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto} from "./interfaces";
+import { PromoEntity } from "./promo.entity";
+import { IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto } from "./interfaces";
 
 @Injectable()
 export class PromoService {
@@ -27,7 +27,7 @@ export class PromoService {
   }
 
   public async search(dto: IPromoSearchDto): Promise<[Array<PromoEntity>, number]> {
-    const {query, skip, take} = dto;
+    const { query, skip, take } = dto;
 
     const queryBuilder = this.promoEntityRepository.createQueryBuilder("promo");
 
@@ -41,8 +41,8 @@ export class PromoService {
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("promo.title ILIKE '%' || :title || '%'", {title: query});
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", {description: query});
+          qb.where("promo.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }
@@ -69,7 +69,7 @@ export class PromoService {
   }
 
   public create(data: IPromoCreateDto): Promise<PromoEntity> {
-    return this.promoEntityRepository.create({...data}).save();
+    return this.promoEntityRepository.create({ ...data }).save();
   }
 
   public async delete(where: FindConditions<PromoEntity>): Promise<void> {
@@ -79,7 +79,7 @@ export class PromoService {
       throw new NotFoundException("promoNotFound");
     }
 
-    await this.s3Service.deleteObject({objectName: promoEntity.imageUrl.split("/").pop()!});
+    await this.s3Service.deleteObject({ objectName: promoEntity.imageUrl.split("/").pop()! });
 
     await this.promoEntityRepository.delete(where);
   }

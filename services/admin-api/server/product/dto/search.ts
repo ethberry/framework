@@ -1,11 +1,11 @@
-import {ApiPropertyOptional} from "@nestjs/swagger";
-import {Type} from "class-transformer";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { Type } from "class-transformer";
 
-import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
-import {SearchDto} from "@gemunionstudio/collection";
-import {ProductStatus} from "@gemunionstudio/framework-types";
+import { IsNumber, IsString } from "@gemunionstudio/nest-js-validators";
+import { SearchDto } from "@gemunionstudio/collection";
+import { ProductStatus } from "@gemunionstudio/framework-types";
 
-import {IProductSearchDto} from "../interfaces";
+import { IProductSearchDto } from "../interfaces";
 
 export class ProductSearchDto extends SearchDto implements IProductSearchDto {
   @ApiPropertyOptional({
