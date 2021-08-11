@@ -9,7 +9,7 @@
   "dependencies": {
     "@material-ui/core": "4.12.3",
     "@material-ui/icons": "4.11.2",
-    "@gemunionstudio/material-ui-inputs-file-firebase": "0.1.12",
+    "@gemunionstudio/material-ui-inputs-file-firebase": "0.1.14",
     "@gemunionstudio/mui-rte": "0.0.14",
     "clsx": "1.1.1",
     "draft-js": "0.11.7",
@@ -18,7 +18,7 @@
     "react-intl": "5.20.7"
   },
   "devDependencies": {
-    "@gemunionstudio/eslint-config": "0.1.7",
+    "@gemunionstudio/eslint-config": "0.1.8",
     "@types/draft-js": "0.11.4",
     "@types/react": "17.0.17",
     "@typescript-eslint/eslint-plugin": "4.29.1",
