@@ -3,9 +3,9 @@ import {format, parseISO} from "date-fns";
 
 import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
 import {SelectInput, StaticInput} from "@gemunionstudio/material-ui-inputs-core";
-import {dateTimeFormat} from "@gemunionstudio/solo-constants-misc";
+import {dateTimeFormat} from "@gemunionstudio/framework-constants-misc";
 import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
-import {IOrder, IUser, OrderStatus} from "@gemunionstudio/solo-types";
+import {IOrder, IUser, OrderStatus} from "@gemunionstudio/framework-types";
 import {validationSchema} from "./validation";
 
 export interface IEditOrderDialogProps {

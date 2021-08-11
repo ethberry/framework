@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {FindConditions, FindManyOptions, Repository, UpdateResult} from "typeorm";
 
-import {OrderStatus} from "@gemunionstudio/solo-types";
+import {OrderStatus} from "@gemunionstudio/framework-types";
 
 import {OrderEntity} from "./order.entity";
 import {IOrderCreateDto, IOrderSearchDto} from "./interfaces";

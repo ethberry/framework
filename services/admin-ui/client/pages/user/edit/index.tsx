@@ -5,8 +5,8 @@ import {useSnackbar} from "notistack";
 
 import {SelectInput, StaticInput, TextInput} from "@gemunionstudio/material-ui-inputs-core";
 import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
-import {EnabledLanguages} from "@gemunionstudio/solo-constants-misc";
-import {IUser, UserRole, UserStatus} from "@gemunionstudio/solo-types";
+import {EnabledLanguages} from "@gemunionstudio/framework-constants-misc";
+import {IUser, UserRole, UserStatus} from "@gemunionstudio/framework-types";
 import {PhoneInput} from "@gemunionstudio/material-ui-inputs-mask";
 import {AvatarInput} from "@gemunionstudio/material-ui-inputs-image-s3";
 

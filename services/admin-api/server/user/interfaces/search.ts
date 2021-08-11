@@ -1,4 +1,4 @@
-import {UserRole, UserStatus} from "@gemunionstudio/solo-types";
+import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
 import {ISearchDto} from "@gemunionstudio/types-collection";
 
 export interface IUserSearchDto extends ISearchDto {

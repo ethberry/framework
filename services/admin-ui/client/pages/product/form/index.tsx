@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {Collapse, Grid} from "@material-ui/core";
 
 import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
-import {ProductStatus} from "@gemunionstudio/solo-types";
+import {ProductStatus} from "@gemunionstudio/framework-types";
 import {SelectInput, SearchInput} from "@gemunionstudio/material-ui-inputs-core";
 import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
 

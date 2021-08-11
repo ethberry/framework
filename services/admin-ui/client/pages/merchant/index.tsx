@@ -12,8 +12,8 @@ import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
 import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {IMerchant, MerchantStatus} from "@gemunionstudio/solo-types";
-import {emptyMerchant} from "@gemunionstudio/solo-mocks";
+import {IMerchant, MerchantStatus} from "@gemunionstudio/framework-types";
+import {emptyMerchant} from "@gemunionstudio/framework-mocks";
 
 import {Breadcrumbs} from "../../components/common/breadcrumbs";
 import {EditMerchantDialog} from "./edit";

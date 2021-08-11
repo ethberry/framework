@@ -12,8 +12,8 @@ import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
 import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {IPage, PageStatus} from "@gemunionstudio/solo-types";
-import {emptyPage} from "@gemunionstudio/solo-mocks";
+import {IPage, PageStatus} from "@gemunionstudio/framework-types";
+import {emptyPage} from "@gemunionstudio/framework-mocks";
 
 import {EditPageDialog} from "./edit";
 import {Breadcrumbs} from "../../components/common/breadcrumbs";

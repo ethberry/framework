@@ -1,7 +1,7 @@
 import {CanActivate, ExecutionContext, Injectable} from "@nestjs/common";
 import {Reflector} from "@nestjs/core";
 
-import {UserRole} from "@gemunionstudio/solo-types";
+import {UserRole} from "@gemunionstudio/framework-types";
 
 @Injectable()
 export class RolesGuard implements CanActivate {

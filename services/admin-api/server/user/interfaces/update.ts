@@ -1,4 +1,4 @@
-import {UserRole, UserStatus} from "@gemunionstudio/solo-types";
+import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
 
 import {IProfileUpdateDto} from "../../profile/interfaces";
 

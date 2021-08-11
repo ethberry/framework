@@ -1,10 +1,10 @@
 {
   "author": {
-    "email": "TrejGun+solo@gmail.com",
+    "email": "TrejGun+GemunIonStudio@gmail.com",
     "name": "TrejGun"
   },
   "bugs": {
-    "url": "https://github.com/TrejGun/solo/issues"
+    "url": "https://github.com/GemunIonStudio/framework/issues"
   },
   "dependencies": {
     "@material-ui/core": "4.12.3",
@@ -45,13 +45,13 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunionstudio/solo-material-ui-rte",
+  "name": "@gemunionstudio/framework-material-ui-rte",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TrejGun/solo"
+    "url": "https://github.com/GemunIonStudio/framework"
   },
   "scripts": {
     "build": "tsc",
@@ -61,7 +61,7 @@
     "test": "exit 0"
   },
   "sideEffects": false,
-  "title": "-=solo=-",
+  "title": "-=Gemun Ion Studio=-",
   "types": "./dist/index.d.ts",
   "version": "0.0.1"
 }

@@ -10,7 +10,7 @@ import {FilterList} from "@material-ui/icons";
 import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IProduct} from "@gemunionstudio/solo-types";
+import {IProduct} from "@gemunionstudio/framework-types";
 import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
 
 import {ProductItem} from "./item";

@@ -10,8 +10,8 @@ import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
 import {FormikForm} from "@gemunionstudio/material-ui-form";
 import {PhoneInput} from "@gemunionstudio/material-ui-inputs-mask";
 import {AvatarInput} from "@gemunionstudio/material-ui-inputs-image-s3";
-import {EnabledLanguages} from "@gemunionstudio/solo-constants-misc";
-import {IUser} from "@gemunionstudio/solo-types";
+import {EnabledLanguages} from "@gemunionstudio/framework-constants-misc";
+import {IUser} from "@gemunionstudio/framework-types";
 
 import {validationSchema} from "./validation";
 import {Breadcrumbs} from "../../components/common/breadcrumbs";

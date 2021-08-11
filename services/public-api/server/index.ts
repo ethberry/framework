@@ -5,7 +5,7 @@ import {ConfigService} from "@nestjs/config";
 import {useContainer} from "class-validator";
 import {WINSTON_MODULE_NEST_PROVIDER} from "nest-winston";
 
-import {companyName, ns} from "@gemunionstudio/solo-constants-misc";
+import {companyName, ns} from "@gemunionstudio/framework-constants-misc";
 
 import {AppModule} from "./app.module";
 

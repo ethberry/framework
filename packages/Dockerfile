@@ -10,8 +10,8 @@ RUN apk add \
 
 USER node
 
-RUN mkdir -p /home/node/solo
-WORKDIR /home/node/solo
+RUN mkdir -p /home/node/framework
+WORKDIR /home/node/framework
 
 COPY --chown=node:node package.json .
 COPY --chown=node:node package-lock.json .

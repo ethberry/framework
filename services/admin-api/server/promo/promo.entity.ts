@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 
-import {IPromo} from "@gemunionstudio/solo-types";
-import {ns} from "@gemunionstudio/solo-constants-misc";
+import {IPromo} from "@gemunionstudio/framework-types";
+import {ns} from "@gemunionstudio/framework-constants-misc";
 
 import {ProductEntity} from "../product/product.entity";
 import {BaseEntity} from "../common/base.entity";

@@ -1,10 +1,10 @@
 {
   "author": {
-    "email": "TrejGun+solo@gmail.com",
+    "email": "TrejGun+GemunIonStudio@gmail.com",
     "name": "TrejGun"
   },
   "bugs": {
-    "url": "https://github.com/TrejGun/solo"
+    "url": "https://github.com/GemunIonStudio/framework"
   },
   "dependencies": {
     "@material-ui/core": "4.12.3",
@@ -22,10 +22,10 @@
     "@gemunionstudio/provider-localization": "0.1.16",
     "@gemunionstudio/provider-settings": "0.1.15",
     "@gemunionstudio/provider-user": "0.1.15",
-    "@gemunionstudio/solo-constants-misc": "0.0.1",
-    "@gemunionstudio/solo-localization-emailer": "0.0.1",
-    "@gemunionstudio/solo-mocks": "0.0.1",
-    "@gemunionstudio/solo-types": "0.0.1",
+    "@gemunionstudio/framework-constants-misc": "0.0.1",
+    "@gemunionstudio/framework-localization-emailer": "0.0.1",
+    "@gemunionstudio/framework-mocks": "0.0.1",
+    "@gemunionstudio/framework-types": "0.0.1",
     "amqp-connection-manager": "3.2.2",
     "amqplib": "0.8.0",
     "class-transformer": "0.4.0",
@@ -75,11 +75,11 @@
   },
   "license": "UNLICENSED",
   "main": "./dist/server/index.js",
-  "name": "@gemunionstudio/solo-emailer",
+  "name": "@gemunionstudio/framework-emailer",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/TrejGun/solo"
+    "url": "https://github.com/GemunIonStudio/framework"
   },
   "scripts": {
     "build": "tsc",

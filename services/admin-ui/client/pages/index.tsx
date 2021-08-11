@@ -7,9 +7,9 @@ import {UserProvider} from "@gemunionstudio/provider-user";
 import {SettingsProvider} from "@gemunionstudio/provider-settings";
 import {LocalizationProvider} from "@gemunionstudio/provider-localization";
 import {ApiProvider} from "@gemunionstudio/provider-api";
-import {i18n} from "@gemunionstudio/solo-localization-admin-ui";
+import {i18n} from "@gemunionstudio/framework-localization-admin-ui";
 import {PickerProvider} from "@gemunionstudio/material-ui-provider-picker";
-import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
+import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
 import {
   Error,
   ForgotPassword,

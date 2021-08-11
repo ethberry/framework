@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, OneToOne} from "typeorm";
 
-import {ns} from "@gemunionstudio/solo-constants-misc";
-import {IAuth} from "@gemunionstudio/solo-types";
+import {ns} from "@gemunionstudio/framework-constants-misc";
+import {IAuth} from "@gemunionstudio/framework-types";
 
 import {UserEntity} from "../user/user.entity";
 import {BaseEntity} from "../common/base.entity";

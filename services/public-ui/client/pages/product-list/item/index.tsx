@@ -1,9 +1,9 @@
 import React, {FC} from "react";
 import {Card, Button, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography} from "@material-ui/core";
 import {Link as RouterLink} from "react-router-dom";
-import {RichTextDisplay} from "@gemunionstudio/solo-material-ui-rte";
+import {RichTextDisplay} from "@gemunionstudio/framework-material-ui-rte";
 
-import {IProduct} from "@gemunionstudio/solo-types";
+import {IProduct} from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
 import {formatMoney} from "../../../utils/money";

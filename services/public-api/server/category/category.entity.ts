@@ -1,8 +1,8 @@
 import {Column, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable, PrimaryGeneratedColumn} from "typeorm";
 
-import {ICategory} from "@gemunionstudio/solo-types";
+import {ICategory} from "@gemunionstudio/framework-types";
 import {ProductEntity} from "../product/product.entity";
-import {ns} from "@gemunionstudio/solo-constants-misc";
+import {ns} from "@gemunionstudio/framework-constants-misc";
 import {BaseEntity} from "../common/base.entity";
 
 @Entity({schema: ns, name: "category"})

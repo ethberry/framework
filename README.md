@@ -1,6 +1,6 @@
-# solo
+# Gem Framework
 
-Welcome to Gem starter monorepo.
+Welcome to Gem Framework monorepo.
 
 
 ## Pre Install

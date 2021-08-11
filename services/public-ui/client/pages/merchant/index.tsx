@@ -8,8 +8,8 @@ import {Skeleton} from "@material-ui/lab";
 import {Spinner} from "@gemunionstudio/material-ui-progress";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IMerchant} from "@gemunionstudio/solo-types";
-import {RichTextDisplay} from "@gemunionstudio/solo-material-ui-rte";
+import {IMerchant} from "@gemunionstudio/framework-types";
+import {RichTextDisplay} from "@gemunionstudio/framework-material-ui-rte";
 
 import {ProductList} from "../product-list";
 import useStyles from "./styles";

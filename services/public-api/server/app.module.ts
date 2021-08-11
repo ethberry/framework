@@ -13,7 +13,7 @@ import {PassportInitialize} from "@gemunionstudio/nest-js-module-passport";
 import {HelmetModule} from "@gemunionstudio/nest-js-module-helmet";
 import {WinstonConfigService} from "@gemunionstudio/nest-js-module-winston-logdna";
 import {IS3Options, ISdkOptions, S3Module} from "@gemunionstudio/nest-js-module-s3";
-import {StorageType} from "@gemunionstudio/solo-types";
+import {StorageType} from "@gemunionstudio/framework-types";
 
 import {AuthModule} from "./auth/auth.module";
 import {CategoryModule} from "./category/category.module";

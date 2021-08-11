@@ -13,8 +13,8 @@ import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
 import {CommonSearchForm} from "@gemunionstudio/material-ui-form-search";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
 import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {ICategory} from "@gemunionstudio/solo-types";
-import {emptyCategory} from "@gemunionstudio/solo-mocks";
+import {ICategory} from "@gemunionstudio/framework-types";
+import {emptyCategory} from "@gemunionstudio/framework-mocks";
 
 import {EditCategoryDialog} from "./edit";
 import {Breadcrumbs} from "../../components/common/breadcrumbs";

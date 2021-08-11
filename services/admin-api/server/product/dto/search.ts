@@ -3,7 +3,7 @@ import {Type} from "class-transformer";
 
 import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
 import {SearchDto} from "@gemunionstudio/collection";
-import {ProductStatus} from "@gemunionstudio/solo-types";
+import {ProductStatus} from "@gemunionstudio/framework-types";
 
 import {IProductSearchDto} from "../interfaces";
 

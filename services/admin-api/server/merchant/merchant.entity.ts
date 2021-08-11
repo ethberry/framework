@@ -1,7 +1,7 @@
 import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
-import {IMerchant, MerchantStatus} from "@gemunionstudio/solo-types";
-import {ns} from "@gemunionstudio/solo-constants-misc";
+import {IMerchant, MerchantStatus} from "@gemunionstudio/framework-types";
+import {ns} from "@gemunionstudio/framework-constants-misc";
 
 import {UserEntity} from "../user/user.entity";
 import {ProductEntity} from "../product/product.entity";

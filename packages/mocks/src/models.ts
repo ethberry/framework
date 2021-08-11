@@ -11,8 +11,8 @@ import {
   IUser,
   TokenType,
   UserStatus,
-} from "@gemunionstudio/solo-types";
-import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
+} from "@gemunionstudio/framework-types";
+import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
 
 const date = new Date();
 

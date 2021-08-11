@@ -8,7 +8,7 @@ import {useHistory, useLocation} from "react-router";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IOrder, OrderStatus} from "@gemunionstudio/solo-types";
+import {IOrder, OrderStatus} from "@gemunionstudio/framework-types";
 import {IPaginationResult, IPaginationDto} from "@gemunionstudio/types-collection";
 
 import {OrderItem} from "./item";

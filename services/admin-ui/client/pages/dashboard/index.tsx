@@ -8,7 +8,7 @@ import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 
 import useStyles from "./styles";
 import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
-import {IUser, UserRole} from "@gemunionstudio/solo-types";
+import {IUser, UserRole} from "@gemunionstudio/framework-types";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();

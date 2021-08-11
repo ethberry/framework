@@ -1,6 +1,6 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
 
-import {UserRole} from "@gemunionstudio/solo-types";
+import {UserRole} from "@gemunionstudio/framework-types";
 import {IsString} from "@gemunionstudio/nest-js-validators";
 
 import {IUserAutocompleteDto} from "../interfaces";

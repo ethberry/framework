@@ -11,9 +11,9 @@ import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IUser, UserRole, UserStatus} from "@gemunionstudio/solo-types";
+import {IUser, UserRole, UserStatus} from "@gemunionstudio/framework-types";
 import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {emptyUser} from "@gemunionstudio/solo-mocks";
+import {emptyUser} from "@gemunionstudio/framework-mocks";
 
 import {EditUserDialog} from "./edit";
 import {UserSearchForm} from "./form";

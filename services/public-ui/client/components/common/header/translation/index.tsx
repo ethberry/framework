@@ -4,7 +4,7 @@ import {IconButton, Menu, MenuItem, Tooltip} from "@material-ui/core";
 import {Translate} from "@material-ui/icons";
 
 import {ISettingsContext, SettingsContext} from "@gemunionstudio/provider-settings";
-import {EnabledLanguages} from "@gemunionstudio/solo-constants-misc";
+import {EnabledLanguages} from "@gemunionstudio/framework-constants-misc";
 
 export const Translation: FC = () => {
   const {formatMessage} = useIntl();

@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "TrejGun+solo@gmail.com",
+    "email": "TrejGun+GemunIonStudio@gmail.com",
     "name": "TrejGun"
   },
   "dependencies": {
@@ -33,11 +33,11 @@
     "node": ">=10"
   },
   "license": "UNLICENSED",
-  "name": "@gemunionstudio/solo-root",
+  "name": "@gemunionstudio/framework-root",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/TrejGun/solo"
+    "url": "https://github.com/GemunIonStudio/framework"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
@@ -49,14 +49,14 @@
     "installdep": "sh scripts/install.sh",
     "kill": "sudo pkill -9 node",
     "lint": "lerna run lint --stream --parallel",
-    "migration": "lerna exec --scope @gemunionstudio/solo-admin-api -- npm run migration:run",
+    "migration": "lerna exec --scope @gemunionstudio/framework-admin-api -- npm run migration:run",
     "precommit": "lint-staged",
     "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" --write",
     "registry": "lerna publish",
     "release": "lerna publish --exact --conventional-commits --registry=https://npm.pkg.github.com/",
     "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
-    "start": "lerna exec --parallel --scope @gemunionstudio/solo-admin-api --scope @gemunionstudio/solo-public-api --scope @gemunionstudio/solo-admin-ui --scope @gemunionstudio/solo-public-ui --scope @gemunionstudio/solo-emailer --scope @gemunionstudio/solo-warehouse -- npm start",
-    "start:prod": "lerna exec --parallel --scope @gemunionstudio/solo-admin-api --scope @gemunionstudio/solo-public-api --scope @gemunionstudio/solo-emailer -- npm run start:prod",
+    "start": "lerna exec --parallel --scope @gemunionstudio/framework-admin-api --scope @gemunionstudio/framework-public-api --scope @gemunionstudio/framework-admin-ui --scope @gemunionstudio/framework-public-ui --scope @gemunionstudio/framework-emailer --scope @gemunionstudio/framework-warehouse -- npm start",
+    "start:prod": "lerna exec --parallel --scope @gemunionstudio/framework-admin-api --scope @gemunionstudio/framework-public-api --scope @gemunionstudio/framework-emailer -- npm run start:prod",
     "test": "sh scripts/test.sh"
   },
   "version": "0.0.1"

@@ -16,7 +16,7 @@ import {Clear, Done} from "@material-ui/icons";
 import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPhoto, PhotoStatus} from "@gemunionstudio/solo-types";
+import {IPhoto, PhotoStatus} from "@gemunionstudio/framework-types";
 import {IPaginationResult} from "@gemunionstudio/types-collection";
 
 import {Breadcrumbs} from "../../components/common/breadcrumbs";

@@ -3,7 +3,7 @@ import {IsJSON} from "class-validator";
 
 import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
 import {reEmail} from "@gemunionstudio/constants-regexp";
-import {rePhoneNumber} from "@gemunionstudio/solo-constants-misc";
+import {rePhoneNumber} from "@gemunionstudio/framework-constants-misc";
 
 import {IMerchantCreateDto} from "../interfaces";
 import {IsEmail} from "../../common/validators";

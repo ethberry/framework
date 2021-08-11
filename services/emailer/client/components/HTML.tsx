@@ -1,6 +1,6 @@
 import React, {FC} from "react";
 
-import {companyName} from "@gemunionstudio/solo-constants-misc";
+import {companyName} from "@gemunionstudio/framework-constants-misc";
 
 interface IHTMLProps {
   initialState: string;

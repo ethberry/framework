@@ -1,9 +1,9 @@
 import {ServerStyleSheets} from "@material-ui/styles";
 import {StaticRouterContext} from "react-router";
 
-import {EmailType, IUser} from "@gemunionstudio/solo-types";
-import {DefaultLanguage} from "@gemunionstudio/solo-constants-misc";
-import {i18n} from "@gemunionstudio/solo-localization-emailer";
+import {EmailType, IUser} from "@gemunionstudio/framework-types";
+import {DefaultLanguage} from "@gemunionstudio/framework-constants-misc";
+import {i18n} from "@gemunionstudio/framework-localization-emailer";
 
 import {EML} from "../../client/components/EML";
 import {renderHTML, renderInitialMarkup} from "./render";

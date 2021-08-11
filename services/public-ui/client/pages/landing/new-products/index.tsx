@@ -5,7 +5,7 @@ import {Typography} from "@material-ui/core";
 
 import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IProduct} from "@gemunionstudio/solo-types";
+import {IProduct} from "@gemunionstudio/framework-types";
 import {IPaginationResult} from "@gemunionstudio/types-collection";
 
 import {MultiCarousel} from "../multi-carousel";

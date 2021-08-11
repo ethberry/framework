@@ -1,8 +1,8 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Exclude} from "class-transformer";
 
-import {IUser, UserRole, UserStatus} from "@gemunionstudio/solo-types";
-import {EnabledLanguages, ns} from "@gemunionstudio/solo-constants-misc";
+import {IUser, UserRole, UserStatus} from "@gemunionstudio/framework-types";
+import {EnabledLanguages, ns} from "@gemunionstudio/framework-constants-misc";
 
 import {MerchantEntity} from "../merchant/merchant.entity";
 import {BaseEntity} from "../common/base.entity";

@@ -6,8 +6,8 @@ import {useParams} from "react-router";
 import {Spinner} from "@gemunionstudio/material-ui-progress";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {IPage} from "@gemunionstudio/solo-types";
-import {RichTextDisplay} from "@gemunionstudio/solo-material-ui-rte";
+import {IPage} from "@gemunionstudio/framework-types";
+import {RichTextDisplay} from "@gemunionstudio/framework-material-ui-rte";
 
 export const Page: FC = () => {
   const {slug} = useParams<{slug: string}>();

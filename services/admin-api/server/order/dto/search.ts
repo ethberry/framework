@@ -1,7 +1,7 @@
 import {ApiPropertyOptional} from "@nestjs/swagger";
 import {Type} from "class-transformer";
 
-import {OrderStatus} from "@gemunionstudio/solo-types";
+import {OrderStatus} from "@gemunionstudio/framework-types";
 import {reDateRange} from "@gemunionstudio/constants-regexp";
 import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
 import {SearchDto} from "@gemunionstudio/collection";

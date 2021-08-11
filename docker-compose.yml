@@ -6,7 +6,7 @@ volumes:
 
 services:
 
-  solo-packages:
+  framework-packages:
     build:
       context: .
       dockerfile: Dockerfile.production
@@ -39,7 +39,7 @@ services:
         - PORT_PUBLIC_API=${PORT_PUBLIC_API}
         - PORT_PUBLIC_UI=${PORT_PUBLIC_UI}
         - PORT_EMAILER=${PORT_EMAILER}
-    image: solo-packages
+    image: framework-packages
 
   postgres:
     container_name: postgres
@@ -64,12 +64,12 @@ services:
 #    environment:
 #      SCHEDULE: "@every 24h"
 #      POSTGRES_HOST: "postgres"
-#      POSTGRES_DATABASE: "solo-development"
-#      POSTGRES_USER: "postgres_admin_solo"
+#      POSTGRES_DATABASE: "framework-development"
+#      POSTGRES_USER: "postgres_admin_framework"
 #      POSTGRES_PASSWORD: "{nSq9UQAxzN]dk?;"
 #      GCLOUD_KEYFILE_BASE64: "./gcs64.key"
 #      GCLOUD_PROJECT_ID: "silicon-park-279312"
-#      GCS_BACKUP_BUCKET: "gs://solo-bd-bckp"
+#      GCS_BACKUP_BUCKET: "gs://framework-bd-bckp"
 
   redis:
     container_name: redis
@@ -111,13 +111,13 @@ services:
       - slim
 
   slim:
-    container_name: solo
-    image: solo-packages:latest
+    container_name: framework
+    image: framework-packages:latest
     command: "npm run start:prod"
     user: root
     volumes:
-      - static-admin-ui:/home/node/solo/services/admin-ui/dist/bundle
-      - static-public-ui:/home/node/solo/services/public-ui/dist/bundle
+      - static-admin-ui:/home/node/framework/services/admin-ui/dist/bundle
+      - static-public-ui:/home/node/framework/services/public-ui/dist/bundle
     environment:
       # common
       NODE_ENV: "${NODE_ENV}"

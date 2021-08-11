@@ -2,7 +2,7 @@ import {ApiPropertyOptional} from "@nestjs/swagger";
 
 import {IsString} from "@gemunionstudio/nest-js-validators";
 import {SearchDto} from "@gemunionstudio/collection";
-import {MerchantStatus} from "@gemunionstudio/solo-types";
+import {MerchantStatus} from "@gemunionstudio/framework-types";
 
 import {IMerchantSearchDto} from "../interfaces";
 

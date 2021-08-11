@@ -13,7 +13,7 @@ import {ConfigService} from "@nestjs/config";
 import {Transport} from "@nestjs/microservices";
 
 import {Public} from "@gemunionstudio/nest-js-providers";
-import {StorageType} from "@gemunionstudio/solo-types";
+import {StorageType} from "@gemunionstudio/framework-types";
 
 @Public()
 @SkipThrottle(true)

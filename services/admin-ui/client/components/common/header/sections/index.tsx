@@ -7,7 +7,7 @@ import {Link as RouterLink, NavLink as RouterNavLink} from "react-router-dom";
 
 import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IUser} from "@gemunionstudio/solo-types";
+import {IUser} from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
 

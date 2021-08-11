@@ -1,4 +1,4 @@
-import {IOrder, OrderStatus} from "@gemunionstudio/solo-types";
+import {IOrder, OrderStatus} from "@gemunionstudio/framework-types";
 import {endOfDay, startOfDay} from "date-fns";
 
 type OrdersObject = Record<OrderStatus, Array<IOrder>>;

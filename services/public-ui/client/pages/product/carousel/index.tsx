@@ -4,7 +4,7 @@ import {Button, MobileStepper, Paper, Typography} from "@material-ui/core";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
 
 import {Spinner} from "@gemunionstudio/material-ui-progress";
-import {IProduct} from "@gemunionstudio/solo-types";
+import {IProduct} from "@gemunionstudio/framework-types";
 
 import useStyles from "./styles";
 

@@ -4,7 +4,7 @@ import {Grid} from "@material-ui/core";
 import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
 import {SelectInput} from "@gemunionstudio/material-ui-inputs-core";
 import {DateRangeInput} from "@gemunionstudio/material-ui-inputs-picker";
-import {OrderStatus} from "@gemunionstudio/solo-types";
+import {OrderStatus} from "@gemunionstudio/framework-types";
 
 import {IOrderSearchDto} from "../index";
 

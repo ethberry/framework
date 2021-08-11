@@ -4,7 +4,7 @@ import {Redirect, Route, RouteProps} from "react-router";
 import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
 
 import {SocialLogin} from "@gemunionstudio/common-pages";
-import {IUser, UserStatus} from "@gemunionstudio/solo-types";
+import {IUser, UserStatus} from "@gemunionstudio/framework-types";
 
 interface IMyRouteProps extends RouteProps {
   restricted?: boolean;

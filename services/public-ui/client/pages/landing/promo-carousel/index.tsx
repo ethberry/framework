@@ -6,7 +6,7 @@ import {useSnackbar} from "notistack";
 
 import {ProgressOverlay, Spinner} from "@gemunionstudio/material-ui-progress";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPromo} from "@gemunionstudio/solo-types";
+import {IPromo} from "@gemunionstudio/framework-types";
 import {IPaginationResult} from "@gemunionstudio/types-collection";
 
 import useStyles from "./styles";

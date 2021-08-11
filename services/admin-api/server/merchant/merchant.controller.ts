@@ -8,7 +8,7 @@ import {MerchantEntity} from "./merchant.entity";
 import {MerchantCreateDto, MerchantSearchDto, MerchantUpdateDto} from "./dto";
 import {Roles, User} from "../common/decorators";
 import {UserEntity} from "../user/user.entity";
-import {UserRole} from "@gemunionstudio/solo-types";
+import {UserRole} from "@gemunionstudio/framework-types";
 
 @ApiCookieAuth()
 @Controller("/merchants")

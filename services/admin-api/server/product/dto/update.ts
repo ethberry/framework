@@ -1,6 +1,6 @@
 import {ApiProperty} from "@nestjs/swagger";
 
-import {ProductStatus} from "@gemunionstudio/solo-types";
+import {ProductStatus} from "@gemunionstudio/framework-types";
 import {IsString} from "@gemunionstudio/nest-js-validators";
 
 import {IProductUpdateDto} from "../interfaces";

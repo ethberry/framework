@@ -12,8 +12,8 @@ import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
 import {IPaginationResult, IPaginationDto} from "@gemunionstudio/types-collection";
-import {IOrder, OrderStatus} from "@gemunionstudio/solo-types";
-import {emptyOrder} from "@gemunionstudio/solo-mocks";
+import {IOrder, OrderStatus} from "@gemunionstudio/framework-types";
+import {emptyOrder} from "@gemunionstudio/framework-mocks";
 
 import {Breadcrumbs} from "../../components/common/breadcrumbs";
 import {EditOrderDialog} from "./edit";

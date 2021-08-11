@@ -1,7 +1,7 @@
 import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 
 import {IsString} from "@gemunionstudio/nest-js-validators";
-import {UserRole, UserStatus} from "@gemunionstudio/solo-types";
+import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
 
 import {IUserUpdateDto} from "../interfaces";
 import {ProfileUpdateDto} from "../../profile/dto";

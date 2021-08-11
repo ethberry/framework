@@ -6,7 +6,7 @@ import {Grid, List, ListItem, ListItemText} from "@material-ui/core";
 import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
 import {PageHeader} from "@gemunionstudio/material-ui-page-header";
 import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {EmailType} from "@gemunionstudio/solo-types";
+import {EmailType} from "@gemunionstudio/framework-types";
 
 import {Breadcrumbs} from "../../components/common/breadcrumbs";
 

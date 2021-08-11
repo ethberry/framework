@@ -5,7 +5,7 @@ import {SortDto} from "@gemunionstudio/collection";
 import {IsNumber} from "@gemunionstudio/nest-js-validators";
 
 import {IProductSortDto} from "../interfaces";
-import {IProduct} from "@gemunionstudio/solo-types";
+import {IProduct} from "@gemunionstudio/framework-types";
 
 export class ProductSortDto extends SortDto<IProduct> implements IProductSortDto {
   @ApiPropertyOptional({

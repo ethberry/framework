@@ -4,7 +4,7 @@ import {ConflictException, Inject, Injectable, Logger, LoggerService, NotFoundEx
 import {InjectRepository} from "@nestjs/typeorm";
 import {ConfigService} from "@nestjs/config";
 
-import {UserRole, UserStatus} from "@gemunionstudio/solo-types";
+import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
 
 import {UserEntity} from "./user.entity";
 import {IUserAutocompleteDto, IUserCreateDto, IUserSearchDto, IUserUpdateDto} from "./interfaces";

@@ -2,7 +2,7 @@
 
 echo -e "\033[34mEnvironment...\n\033[0m";
 
-lerna exec --parallel --scope @gemunionstudio/solo-public-api --scope @gemunionstudio/solo-public-ui --scope @gemunionstudio/solo-admin-api --scope @gemunionstudio/solo-admin-ui --scope @gemunionstudio/solo-emailer --scope @gemunionstudio/solo-webhooks -- cp -rf .env.sample .env.development
-lerna exec --parallel --scope @gemunionstudio/solo-public-api --scope @gemunionstudio/solo-public-ui --scope @gemunionstudio/solo-admin-api --scope @gemunionstudio/solo-admin-ui --scope @gemunionstudio/solo-emailer --scope @gemunionstudio/solo-webhooks -- cp -rf .env.sample .env.test
-lerna exec --parallel --scope @gemunionstudio/solo-public-api --scope @gemunionstudio/solo-public-ui --scope @gemunionstudio/solo-admin-api --scope @gemunionstudio/solo-admin-ui --scope @gemunionstudio/solo-emailer --scope @gemunionstudio/solo-webhooks -- cp -rf .env.sample .env.production
+lerna exec --parallel --scope @gemunionstudio/framework-public-api --scope @gemunionstudio/framework-public-ui --scope @gemunionstudio/framework-admin-api --scope @gemunionstudio/framework-admin-ui --scope @gemunionstudio/framework-emailer --scope @gemunionstudio/framework-webhooks -- cp -rf .env.sample .env.development
+lerna exec --parallel --scope @gemunionstudio/framework-public-api --scope @gemunionstudio/framework-public-ui --scope @gemunionstudio/framework-admin-api --scope @gemunionstudio/framework-admin-ui --scope @gemunionstudio/framework-emailer --scope @gemunionstudio/framework-webhooks -- cp -rf .env.sample .env.test
+lerna exec --parallel --scope @gemunionstudio/framework-public-api --scope @gemunionstudio/framework-public-ui --scope @gemunionstudio/framework-admin-api --scope @gemunionstudio/framework-admin-ui --scope @gemunionstudio/framework-emailer --scope @gemunionstudio/framework-webhooks -- cp -rf .env.sample .env.production
 

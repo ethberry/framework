@@ -15,8 +15,8 @@ FROM base AS deps
 LABEL stage=deps
 
 USER node
-RUN mkdir -p /home/node/solo
-WORKDIR /home/node/solo
+RUN mkdir -p /home/node/framework
+WORKDIR /home/node/framework
 
 COPY --chown=node:node . .
 
@@ -25,5 +25,5 @@ RUN npm cache clean --force
 
 FROM base as prod
 USER node
-WORKDIR /home/node/solo
-COPY --from=deps --chown=node:node /home/node/solo/. .
+WORKDIR /home/node/framework
+COPY --from=deps --chown=node:node /home/node/framework/. .

@@ -9,7 +9,7 @@ import {
   lastNameMinLength,
 } from "@gemunionstudio/constants-validation";
 import {reEmail} from "@gemunionstudio/constants-regexp";
-import {DefaultLanguage, EnabledLanguages, rePhoneNumber} from "@gemunionstudio/solo-constants-misc";
+import {DefaultLanguage, EnabledLanguages, rePhoneNumber} from "@gemunionstudio/framework-constants-misc";
 
 import {ReCaptcha, IsEmail} from "../../common/validators";
 import {ValidatePasswordDto} from "../../auth/dto";

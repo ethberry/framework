@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInt
 
 import {PaginationInterceptor, Public, Roles} from "@gemunionstudio/nest-js-providers";
 
-import {UserRole} from "@gemunionstudio/solo-types";
+import {UserRole} from "@gemunionstudio/framework-types";
 
 import {PromoService} from "./promo.service";
 import {PromoEntity} from "./promo.entity";

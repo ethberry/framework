@@ -1,10 +1,10 @@
 {
   "author": {
-    "email": "TrejGun+solo@gmail.com",
+    "email": "TrejGun+GemunIonStudio@gmail.com",
     "name": "TrejGun"
   },
   "bugs": {
-    "url": "https://github.com/TrejGun/solo"
+    "url": "https://github.com/GemunIonStudio/framework"
   },
   "dependencies": {
     "@liaoliaots/nestjs-redis": "3.0.0-next.3",
@@ -33,10 +33,10 @@
     "@gemunionstudio/nest-js-module-winston-logdna": "1.0.2",
     "@gemunionstudio/nest-js-providers": "1.0.2",
     "@gemunionstudio/nest-js-validators": "1.0.2",
-    "@gemunionstudio/solo-constants-misc": "0.0.1",
-    "@gemunionstudio/solo-material-ui-rte": "0.0.1",
-    "@gemunionstudio/solo-mocks": "0.0.1",
-    "@gemunionstudio/solo-types": "0.0.1",
+    "@gemunionstudio/framework-constants-misc": "0.0.1",
+    "@gemunionstudio/framework-material-ui-rte": "0.0.1",
+    "@gemunionstudio/framework-mocks": "0.0.1",
+    "@gemunionstudio/framework-types": "0.0.1",
     "@gemunionstudio/types-collection": "0.1.8",
     "@gemunionstudio/types-validation": "0.1.7",
     "amqp-connection-manager": "3.2.2",
@@ -104,11 +104,11 @@
   },
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunionstudio/solo-admin-api",
+  "name": "@gemunionstudio/framework-admin-api",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/TrejGun/solo"
+    "url": "https://github.com/GemunIonStudio/framework"
   },
   "scripts": {
     "build": "tsc",
@@ -127,6 +127,6 @@
     "test": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles",
     "typeorm": "cross-env NODE_ENV=${NODE_ENV:=development} ts-node ./node_modules/.bin/typeorm --config server/ormconfig.ts"
   },
-  "title": "solo Admin API",
+  "title": "Gem Framework Admin API",
   "version": "0.0.1"
 }

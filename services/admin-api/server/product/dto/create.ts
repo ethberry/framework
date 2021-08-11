@@ -3,7 +3,7 @@ import {IsArray, IsJSON, ValidateNested, IsOptional} from "class-validator";
 import {Type} from "class-transformer";
 
 import {IsNumber, IsString} from "@gemunionstudio/nest-js-validators";
-import {IPhoto} from "@gemunionstudio/solo-types";
+import {IPhoto} from "@gemunionstudio/framework-types";
 
 import {IProductCreateDto} from "../interfaces";
 import {PhotoCreateDto} from "../../photo/dto";
