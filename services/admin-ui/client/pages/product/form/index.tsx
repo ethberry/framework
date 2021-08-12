@@ -1,13 +1,13 @@
-import React, {FC} from "react";
-import {Collapse, Grid} from "@material-ui/core";
+import React, { FC } from "react";
+import { Collapse, Grid } from "@material-ui/core";
 
-import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
-import {ProductStatus} from "@gemunionstudio/framework-types";
-import {SelectInput, SearchInput} from "@gemunionstudio/material-ui-inputs-core";
-import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
+import { AutoSave, FormikForm } from "@gemunionstudio/material-ui-form";
+import { ProductStatus } from "@gemunionstudio/framework-types";
+import { SelectInput, SearchInput } from "@gemunionstudio/material-ui-inputs-core";
+import { EntityInput } from "@gemunionstudio/material-ui-inputs-entity";
 
 import useStyles from "./styles";
-import {IProductSearchDto} from "../index";
+import { IProductSearchDto } from "../index";
 
 interface IProductSearchFormProps {
   onSubmit: (values: IProductSearchDto) => void;
@@ -16,12 +16,12 @@ interface IProductSearchFormProps {
 }
 
 export const ProductSearchForm: FC<IProductSearchFormProps> = props => {
-  const {onSubmit, initialValues, open} = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
-  const {query, productStatus, categoryIds} = initialValues;
-  const fixedValues = {query, productStatus, categoryIds};
+  const { query, productStatus, categoryIds } = initialValues;
+  const fixedValues = { query, productStatus, categoryIds };
 
   return (
     <div className={classes.root}>

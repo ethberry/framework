@@ -60,17 +60,17 @@ export class CategoryService {
     });
   }
 
-  public async create(data: ICategoryCreateDto): Promise<CategoryEntity> {
+  public async create(dto: ICategoryCreateDto): Promise<CategoryEntity> {
     return this.categoryEntityRepository
       .create({
-        ...data,
+        ...dto,
       })
       .save();
   }
 
   public async update(
     where: FindConditions<CategoryEntity>,
-    data: ICategoryUpdateDto,
+    dto: ICategoryUpdateDto,
   ): Promise<CategoryEntity | undefined> {
     const categoryEntity = await this.categoryEntityRepository.findOne(where);
 
@@ -78,7 +78,7 @@ export class CategoryService {
       throw new NotFoundException("categoryNotFound");
     }
 
-    Object.assign(categoryEntity, data);
+    Object.assign(categoryEntity, dto);
     return categoryEntity.save();
   }
 

@@ -1,13 +1,13 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
-import {TextInput} from "@gemunionstudio/material-ui-inputs-core";
-import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
-import {AvatarInput} from "@gemunionstudio/material-ui-inputs-image-s3";
-import {RichTextEditor} from "@gemunionstudio/framework-material-ui-rte";
-import {IPromo} from "@gemunionstudio/framework-types";
+import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
+import { TextInput } from "@gemunionstudio/material-ui-inputs-core";
+import { EntityInput } from "@gemunionstudio/material-ui-inputs-entity";
+import { AvatarInput } from "@gemunionstudio/material-ui-inputs-image-s3";
+import { RichTextEditor } from "@gemunionstudio/framework-material-ui-rte";
+import { IPromo } from "@gemunionstudio/framework-types";
 
-import {validationSchema} from "./validation";
+import { validationSchema } from "./validation";
 
 export interface IEditPromoDialogProps {
   open: boolean;
@@ -17,10 +17,10 @@ export interface IEditPromoDialogProps {
 }
 
 export const EditPromoDialog: FC<IEditPromoDialogProps> = props => {
-  const {initialValues, ...rest} = props;
+  const { initialValues, ...rest } = props;
 
-  const {id, title, description, productId, imageUrl} = initialValues;
-  const fixedValues = {id, title, description, productId, imageUrl};
+  const { id, title, description, productId, imageUrl } = initialValues;
+  const fixedValues = { id, title, description, productId, imageUrl };
 
   const message = id ? "dialogs.add" : "dialogs.edit";
 

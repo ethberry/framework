@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from "crypto";
+import { createHash } from "crypto";
 import { Brackets, DeleteResult, FindConditions, FindManyOptions, Not, Repository } from "typeorm";
 import { ConflictException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -73,25 +73,27 @@ export class UserService {
     return this.userEntityRepository.findOne({ where });
   }
 
-  public async update(where: FindConditions<UserEntity>, data: IUserUpdateDto): Promise<UserEntity> {
+  public async update(where: FindConditions<UserEntity>, dto: IUserUpdateDto): Promise<UserEntity> {
+    const { email, ...rest } = dto;
+
     const userEntity = await this.userEntityRepository.findOne(where);
 
     if (!userEntity) {
       throw new NotFoundException("userNotFound");
     }
 
-    const isEmailChanged = data.email && data.email !== userEntity.email;
-
-    if (isEmailChanged) {
-      data.userStatus = UserStatus.PENDING;
+    if (email && email !== userEntity.email) {
+      await this.checkEmail(email, userEntity.id);
+      userEntity.userStatus = UserStatus.PENDING;
+      userEntity.email = email;
     }
 
-    Object.assign(userEntity, data);
+    Object.assign(userEntity, rest);
     return userEntity.save();
   }
 
-  public async create(data: IUserCreateDto): Promise<UserEntity> {
-    let userEntity = await this.findOne({ email: data.email });
+  public async create(dto: IUserCreateDto): Promise<UserEntity> {
+    let userEntity = await this.findOne({ email: dto.email });
 
     if (userEntity) {
       throw new ConflictException("duplicateEmail");
@@ -99,8 +101,8 @@ export class UserService {
 
     userEntity = await this.userEntityRepository
       .create({
-        ...data,
-        password: this.createPasswordHash(data.password),
+        ...dto,
+        password: this.createPasswordHash(dto.password),
         userStatus: UserStatus.PENDING,
         userRoles: [UserRole.CUSTOMER],
       })
@@ -118,8 +120,8 @@ export class UserService {
     });
   }
 
-  public updatePassword(userEntity: UserEntity, data: IPasswordDto): Promise<UserEntity> {
-    userEntity.password = this.createPasswordHash(data.password);
+  public updatePassword(userEntity: UserEntity, dto: IPasswordDto): Promise<UserEntity> {
+    userEntity.password = this.createPasswordHash(dto.password);
     return userEntity.save();
   }
 
@@ -128,11 +130,11 @@ export class UserService {
     return userEntity.save();
   }
 
-  public async import(data: IUserImportDto): Promise<UserEntity> {
+  public async import(dto: IUserImportDto): Promise<UserEntity> {
     return this.userEntityRepository
       .create({
-        ...data,
-        password: this.createPasswordHash(randomBytes(8).toString("hex")),
+        ...dto,
+        password: "",
         userRoles: [UserRole.CUSTOMER],
       })
       .save();

@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 
 import { UserStatus } from "@gemunionstudio/framework-types";
 
 import { UserEntity } from "../user/user.entity";
-import { IProfileUpdateDto } from "./interfaces";
+import { IPasswordUpdateDto, IProfileUpdateDto } from "./interfaces";
 import { AuthService } from "../auth/auth.service";
 import { UserService } from "../user/user.service";
 
@@ -12,7 +12,7 @@ export class ProfileService {
   constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
 
   public async update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity | undefined> {
-    const { email, password, ...rest } = dto;
+    const { email, ...rest } = dto;
 
     if (email) {
       await this.userService.checkEmail(email, userEntity.id);
@@ -20,10 +20,6 @@ export class ProfileService {
         userEntity.userStatus = UserStatus.PENDING;
         userEntity.email = email;
       }
-    }
-
-    if (password) {
-      userEntity.password = this.userService.createPasswordHash(password);
     }
 
     Object.assign(userEntity, rest);
@@ -35,5 +31,24 @@ export class ProfileService {
     }
 
     return userEntity;
+  }
+
+  public async password(userEntity: UserEntity, dto: IPasswordUpdateDto): Promise<void> {
+    const { password, current } = dto;
+
+    const user = await this.userService.findOne({
+      email: userEntity.email,
+      password: current ? this.userService.createPasswordHash(current) : "",
+    });
+
+    if (!user) {
+      throw new UnauthorizedException("User not found");
+    }
+
+    userEntity.password = this.userService.createPasswordHash(password);
+
+    await userEntity.save();
+
+    await this.authService.logout({ user: userEntity });
   }
 }

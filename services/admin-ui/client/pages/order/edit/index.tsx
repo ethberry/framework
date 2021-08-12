@@ -1,12 +1,12 @@
-import React, {FC} from "react";
-import {format, parseISO} from "date-fns";
+import React, { FC } from "react";
+import { format, parseISO } from "date-fns";
 
-import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
-import {SelectInput, StaticInput} from "@gemunionstudio/material-ui-inputs-core";
-import {dateTimeFormat} from "@gemunionstudio/framework-constants-misc";
-import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
-import {IOrder, IUser, OrderStatus} from "@gemunionstudio/framework-types";
-import {validationSchema} from "./validation";
+import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
+import { SelectInput, StaticInput } from "@gemunionstudio/material-ui-inputs-core";
+import { dateTimeFormat } from "@gemunionstudio/framework-constants-misc";
+import { EntityInput } from "@gemunionstudio/material-ui-inputs-entity";
+import { IOrder, IUser, OrderStatus } from "@gemunionstudio/framework-types";
+import { validationSchema } from "./validation";
 
 export interface IEditOrderDialogProps {
   open: boolean;
@@ -16,10 +16,10 @@ export interface IEditOrderDialogProps {
 }
 
 export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
-  const {initialValues, ...rest} = props;
+  const { initialValues, ...rest } = props;
 
-  const {id, userId, merchantId, orderStatus, productId, createdAt} = initialValues;
-  const fixedValues = {id, userId, merchantId, orderStatus, productId};
+  const { id, userId, merchantId, orderStatus, productId, createdAt } = initialValues;
+  const fixedValues = { id, userId, merchantId, orderStatus, productId };
 
   const message = id ? "dialogs.add" : "dialogs.edit";
 

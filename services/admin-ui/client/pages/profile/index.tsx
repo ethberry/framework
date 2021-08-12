@@ -1,25 +1,25 @@
-import React, {FC, useContext} from "react";
-import {Grid} from "@material-ui/core";
-import {useSnackbar} from "notistack";
-import {useIntl} from "react-intl";
+import React, { FC, useContext } from "react";
+import { Grid } from "@material-ui/core";
+import { useSnackbar } from "notistack";
+import { useIntl } from "react-intl";
 
-import {SelectInput, TextInput} from "@gemunionstudio/material-ui-inputs-core";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {UserContext, IUserContext} from "@gemunionstudio/provider-user";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {FormikForm} from "@gemunionstudio/material-ui-form";
-import {PhoneInput} from "@gemunionstudio/material-ui-inputs-mask";
-import {AvatarInput} from "@gemunionstudio/material-ui-inputs-image-s3";
-import {EnabledLanguages} from "@gemunionstudio/framework-constants-misc";
-import {IUser} from "@gemunionstudio/framework-types";
+import { SelectInput, TextInput } from "@gemunionstudio/material-ui-inputs-core";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { UserContext, IUserContext } from "@gemunionstudio/provider-user";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { FormikForm } from "@gemunionstudio/material-ui-form";
+import { PhoneInput } from "@gemunionstudio/material-ui-inputs-mask";
+import { AvatarInput } from "@gemunionstudio/material-ui-inputs-image-s3";
+import { EnabledLanguages } from "@gemunionstudio/framework-constants-misc";
+import { IUser } from "@gemunionstudio/framework-types";
 
-import {validationSchema} from "./validation";
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
+import { validationSchema } from "./validation";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export const Profile: FC = () => {
   const user = useContext<IUserContext<IUser>>(UserContext);
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const api = useContext(ApiContext);
 
@@ -37,7 +37,7 @@ export const Profile: FC = () => {
         data: values,
       })
       .then((json): void => {
-        enqueueSnackbar(formatMessage({id: "snackbar.updated"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.updated" }), { variant: "success" });
         if (json) {
           user.logIn(json);
         } else {
@@ -48,16 +48,16 @@ export const Profile: FC = () => {
         if (e.status === 400) {
           formikBag.setErrors(e.getLocalizedValidationErrors());
         } else if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
   };
 
-  const {id, email, firstName, lastName, phoneNumber, language, imageUrl} = user.profile;
-  const fixedValues = {id, email, firstName, lastName, phoneNumber, language, imageUrl};
+  const { id, email, firstName, lastName, phoneNumber, language, imageUrl } = user.profile;
+  const fixedValues = { id, email, firstName, lastName, phoneNumber, language, imageUrl };
 
   return (
     <Grid>

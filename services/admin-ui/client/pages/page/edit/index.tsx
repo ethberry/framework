@@ -1,11 +1,11 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
-import {SelectInput, TextInput} from "@gemunionstudio/material-ui-inputs-core";
-import {RichTextEditor} from "@gemunionstudio/framework-material-ui-rte";
-import {IPage, PageStatus} from "@gemunionstudio/framework-types";
+import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
+import { SelectInput, TextInput } from "@gemunionstudio/material-ui-inputs-core";
+import { RichTextEditor } from "@gemunionstudio/framework-material-ui-rte";
+import { IPage, PageStatus } from "@gemunionstudio/framework-types";
 
-import {validationSchema} from "./validation";
+import { validationSchema } from "./validation";
 
 export interface IEditPageDialogProps {
   open: boolean;
@@ -15,9 +15,9 @@ export interface IEditPageDialogProps {
 }
 
 export const EditPageDialog: FC<IEditPageDialogProps> = props => {
-  const {initialValues, ...rest} = props;
+  const { initialValues, ...rest } = props;
 
-  const {id, title, description, slug, pageStatus} = initialValues;
+  const { id, title, description, slug, pageStatus } = initialValues;
   const fixedValues = {
     id,
     title,

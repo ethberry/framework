@@ -1,31 +1,31 @@
-import React, {ChangeEvent, FC, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import {Add, Create, Delete} from "@material-ui/icons";
-import {Pagination} from "@material-ui/lab";
-import {useHistory, useLocation, useParams} from "react-router";
-import {parse, stringify} from "qs";
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Add, Create, Delete } from "@material-ui/icons";
+import { Pagination } from "@material-ui/lab";
+import { useHistory, useLocation, useParams } from "react-router";
+import { parse, stringify } from "qs";
 
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
-import {IPromo} from "@gemunionstudio/framework-types";
-import {emptyPromo} from "@gemunionstudio/framework-mocks";
-import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {CommonSearchForm} from "@gemunionstudio/material-ui-form-search";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
+import { IPromo } from "@gemunionstudio/framework-types";
+import { emptyPromo } from "@gemunionstudio/framework-mocks";
+import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
+import { CommonSearchForm } from "@gemunionstudio/material-ui-form-search";
 
-import {EditPromoDialog} from "./edit";
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
+import { EditPromoDialog } from "./edit";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export const Promo: FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
-  const {id} = useParams<{id?: string}>();
+  const { id } = useParams<{ id?: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -43,7 +43,7 @@ export const Promo: FC = () => {
   });
 
   const updateQS = (id?: number) => {
-    const {skip: _skip, take: _take, ...rest} = data;
+    const { skip: _skip, take: _take, ...rest } = data;
     history.push(id ? `/promos/${id}` : `/promos?${stringify(rest)}`);
   };
 
@@ -101,7 +101,7 @@ export const Promo: FC = () => {
     return (id ? fetchPromosById(id) : fetchPromosByQuery())
       .catch(e => {
         console.error(e);
-        enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
       })
       .finally(() => {
         setIsLoading(false);
@@ -120,15 +120,15 @@ export const Promo: FC = () => {
         method: "DELETE",
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: "snackbar.deleted"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.deleted" }), { variant: "success" });
         return fetchPromos();
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -137,7 +137,7 @@ export const Promo: FC = () => {
   };
 
   const handleEditConfirmed = (values: Partial<IPromo>, formikBag: any): Promise<void> => {
-    const {id, ...data} = values;
+    const { id, ...data } = values;
     return api
       .fetchJson({
         url: id ? `/promos/${id}` : "/promos/",
@@ -145,7 +145,7 @@ export const Promo: FC = () => {
         data,
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: id ? "snackbar.updated" : "snackbar.created"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
         setIsEditDialogOpen(false);
         return fetchPromos();
       })
@@ -153,10 +153,10 @@ export const Promo: FC = () => {
         if (e.status === 400) {
           formikBag.setErrors(e.getLocalizedValidationErrors());
         } else if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
   };

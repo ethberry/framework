@@ -1,14 +1,14 @@
-import React, {FC, useContext} from "react";
-import {Divider, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
-import {Bookmark, Category, Email, MenuBook, PeopleAlt, Photo, Storage, Storefront} from "@material-ui/icons";
-import {Link as RouterLink} from "react-router-dom";
-import {FormattedMessage} from "react-intl";
+import React, { FC, useContext } from "react";
+import { Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { Bookmark, Category, Email, MenuBook, PeopleAlt, Photo, Storage, Storefront } from "@material-ui/icons";
+import { Link as RouterLink } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
 
 import useStyles from "./styles";
-import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
-import {IUser, UserRole} from "@gemunionstudio/framework-types";
+import { IUserContext, UserContext } from "@gemunionstudio/provider-user";
+import { IUser, UserRole } from "@gemunionstudio/framework-types";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();

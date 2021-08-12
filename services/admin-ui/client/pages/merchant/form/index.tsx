@@ -1,12 +1,12 @@
-import React, {FC} from "react";
-import {Collapse, Grid} from "@material-ui/core";
+import React, { FC } from "react";
+import { Collapse, Grid } from "@material-ui/core";
 
-import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
-import {MerchantStatus} from "@gemunionstudio/framework-types";
-import {SelectInput, SearchInput} from "@gemunionstudio/material-ui-inputs-core";
+import { AutoSave, FormikForm } from "@gemunionstudio/material-ui-form";
+import { MerchantStatus } from "@gemunionstudio/framework-types";
+import { SelectInput, SearchInput } from "@gemunionstudio/material-ui-inputs-core";
 
 import useStyles from "./styles";
-import {IMerchantSearchDto} from "../index";
+import { IMerchantSearchDto } from "../index";
 
 interface IMerchantSearchFormProps {
   onSubmit: (values: IMerchantSearchDto) => void;
@@ -15,12 +15,12 @@ interface IMerchantSearchFormProps {
 }
 
 export const MerchantSearchForm: FC<IMerchantSearchFormProps> = props => {
-  const {onSubmit, initialValues, open} = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
-  const {query, merchantStatus} = initialValues;
-  const fixedValues = {query, merchantStatus};
+  const { query, merchantStatus } = initialValues;
+  const fixedValues = { query, merchantStatus };
 
   return (
     <div className={classes.root}>

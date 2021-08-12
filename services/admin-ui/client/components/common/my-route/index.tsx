@@ -1,16 +1,16 @@
-import React, {createElement, FC, ReactElement, useContext, useEffect, useState} from "react";
-import {Redirect, Route, RouteProps} from "react-router";
+import React, { createElement, FC, ReactElement, useContext, useEffect, useState } from "react";
+import { Redirect, Route, RouteProps } from "react-router";
 
-import {IUserContext, UserContext} from "@gemunionstudio/provider-user";
+import { IUserContext, UserContext } from "@gemunionstudio/provider-user";
 
-import {SocialLogin} from "@gemunionstudio/common-pages";
-import {IUser, UserStatus} from "@gemunionstudio/framework-types";
+import { SocialLogin } from "@gemunionstudio/common-pages";
+import { IUser, UserStatus } from "@gemunionstudio/framework-types";
 
 interface IMyRouteProps extends RouteProps {
   restricted?: boolean;
 }
 
-export const MyRoute: FC<IMyRouteProps> = ({component, restricted, ...rest}) => {
+export const MyRoute: FC<IMyRouteProps> = ({ component, restricted, ...rest }) => {
   const user = useContext<IUserContext<IUser>>(UserContext);
   const [isReady, setIsReady] = useState(false);
 

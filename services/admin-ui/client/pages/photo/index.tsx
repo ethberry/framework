@@ -1,6 +1,6 @@
-import React, {FC, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {useIntl} from "react-intl";
+import React, { FC, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { useIntl } from "react-intl";
 import {
   Avatar,
   Grid,
@@ -11,21 +11,21 @@ import {
   ListItemSecondaryAction,
   ListItemText,
 } from "@material-ui/core";
-import {Clear, Done} from "@material-ui/icons";
+import { Clear, Done } from "@material-ui/icons";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPhoto, PhotoStatus} from "@gemunionstudio/framework-types";
-import {IPaginationResult} from "@gemunionstudio/types-collection";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IPhoto, PhotoStatus } from "@gemunionstudio/framework-types";
+import { IPaginationResult } from "@gemunionstudio/types-collection";
 
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export const Photo: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [photos, setPhotos] = useState<Array<IPhoto>>([]);
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const api = useContext(ApiContext);
 
@@ -44,10 +44,10 @@ export const Photo: FC = () => {
     return fetchPhotosByQuery()
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -70,10 +70,10 @@ export const Photo: FC = () => {
         })
         .catch((e: ApiError) => {
           if (e.status) {
-            enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+            enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
           } else {
             console.error(e);
-            enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+            enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
           }
         });
     };

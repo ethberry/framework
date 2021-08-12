@@ -1,23 +1,23 @@
-import React, {ChangeEvent, FC, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import {Add, Create, Delete, FilterList} from "@material-ui/icons";
-import {Pagination} from "@material-ui/lab";
-import {useHistory, useLocation, useParams} from "react-router";
-import {parse, stringify} from "qs";
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Add, Create, Delete, FilterList } from "@material-ui/icons";
+import { Pagination } from "@material-ui/lab";
+import { useHistory, useLocation, useParams } from "react-router";
+import { parse, stringify } from "qs";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {IMerchant, MerchantStatus} from "@gemunionstudio/framework-types";
-import {emptyMerchant} from "@gemunionstudio/framework-mocks";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
+import { IMerchant, MerchantStatus } from "@gemunionstudio/framework-types";
+import { emptyMerchant } from "@gemunionstudio/framework-mocks";
 
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
-import {EditMerchantDialog} from "./edit";
-import {MerchantSearchForm} from "./form";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
+import { EditMerchantDialog } from "./edit";
+import { MerchantSearchForm } from "./form";
 
 export interface IMerchantSearchDto extends ISearchDto {
   merchantStatus: Array<MerchantStatus>;
@@ -26,10 +26,10 @@ export interface IMerchantSearchDto extends ISearchDto {
 export const Merchant: FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
-  const {id} = useParams<{id?: string}>();
+  const { id } = useParams<{ id?: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -49,7 +49,7 @@ export const Merchant: FC = () => {
   });
 
   const updateQS = (id?: number) => {
-    const {skip: _skip, take: _take, ...rest} = data;
+    const { skip: _skip, take: _take, ...rest } = data;
     history.push(id ? `/merchants/${id}` : `/merchants?${stringify(rest)}`);
   };
 
@@ -107,10 +107,10 @@ export const Merchant: FC = () => {
     return (id ? fetchMerchantsById(id) : fetchMerchantsByQuery())
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -130,15 +130,15 @@ export const Merchant: FC = () => {
         method: "DELETE",
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: "snackbar.deleted"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.deleted" }), { variant: "success" });
         return fetchMerchants();
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -147,7 +147,7 @@ export const Merchant: FC = () => {
   };
 
   const handleEditConfirmed = (values: Partial<IMerchant>, formikBag: any): Promise<void> => {
-    const {id, ...data} = values;
+    const { id, ...data } = values;
     return api
       .fetchJson({
         url: id ? `/merchants/${id}` : "/merchants/",
@@ -155,7 +155,7 @@ export const Merchant: FC = () => {
         data,
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: id ? "snackbar.updated" : "snackbar.created"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
         setIsEditDialogOpen(false);
         return fetchMerchants();
       })
@@ -163,10 +163,10 @@ export const Merchant: FC = () => {
         if (e.status === 400) {
           formikBag.setErrors(e.getLocalizedValidationErrors());
         } else if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
   };

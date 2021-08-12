@@ -74,7 +74,7 @@ module.exports = {
       systemvars: true,
     }),
     new CopyPlugin({
-      patterns: [{from: "./static", to: "./"}],
+      patterns: [{ from: "./static", to: "./" }],
     }),
     new ProgressBarPlugin(),
   ],

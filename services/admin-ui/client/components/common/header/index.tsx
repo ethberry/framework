@@ -1,11 +1,11 @@
-import React, {FC} from "react";
-import {AppBar, Hidden, Link, Toolbar} from "@material-ui/core";
-import {Link as RouterLink} from "react-router-dom";
+import React, { FC } from "react";
+import { AppBar, Hidden, Link, Toolbar } from "@material-ui/core";
+import { Link as RouterLink } from "react-router-dom";
 
-import {companyName} from "@gemunionstudio/framework-constants-misc";
+import { companyName } from "@gemunionstudio/framework-constants-misc";
 
-import {Sections} from "./sections";
-import {Translation} from "./translation";
+import { Sections } from "./sections";
+import { Translation } from "./translation";
 
 import useStyles from "./styles";
 

@@ -1,4 +1,4 @@
-import {endOfDay, startOfDay} from "date-fns";
+import { endOfDay, startOfDay } from "date-fns";
 
 export const parseDateRange = (dateRange = ""): [Date, Date] => {
   const [start, end] = dateRange ? dateRange.split("/").map(date => new Date(date)) : [new Date(), new Date()];

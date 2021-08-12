@@ -1,4 +1,4 @@
-import {createStyles, makeStyles} from "@material-ui/core";
+import { createStyles, makeStyles } from "@material-ui/core";
 
 export default makeStyles(
   theme =>
@@ -26,5 +26,5 @@ export default makeStyles(
         marginRight: theme.spacing(1),
       },
     }),
-  {name: "Header"},
+  { name: "Header" },
 );

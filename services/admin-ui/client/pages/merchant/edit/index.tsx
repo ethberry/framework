@@ -1,14 +1,14 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 
-import {EntityInput} from "@gemunionstudio/material-ui-inputs-entity";
-import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
-import {SelectInput, TextInput} from "@gemunionstudio/material-ui-inputs-core";
-import {RichTextEditor} from "@gemunionstudio/framework-material-ui-rte";
-import {AvatarInput} from "@gemunionstudio/material-ui-inputs-image-s3";
-import {PhoneInput} from "@gemunionstudio/material-ui-inputs-mask";
-import {IMerchant, IUser, MerchantStatus} from "@gemunionstudio/framework-types";
+import { EntityInput } from "@gemunionstudio/material-ui-inputs-entity";
+import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
+import { SelectInput, TextInput } from "@gemunionstudio/material-ui-inputs-core";
+import { RichTextEditor } from "@gemunionstudio/framework-material-ui-rte";
+import { AvatarInput } from "@gemunionstudio/material-ui-inputs-image-s3";
+import { PhoneInput } from "@gemunionstudio/material-ui-inputs-mask";
+import { IMerchant, IUser, MerchantStatus } from "@gemunionstudio/framework-types";
 
-import {validationSchema} from "./validation";
+import { validationSchema } from "./validation";
 
 export interface IEditMerchantDialogProps {
   open: boolean;
@@ -18,9 +18,9 @@ export interface IEditMerchantDialogProps {
 }
 
 export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
-  const {initialValues, ...rest} = props;
+  const { initialValues, ...rest } = props;
 
-  const {id, title, description, email, phoneNumber, imageUrl, merchantStatus, users = []} = initialValues;
+  const { id, title, description, email, phoneNumber, imageUrl, merchantStatus, users = [] } = initialValues;
   const fixedValues = {
     id,
     title,

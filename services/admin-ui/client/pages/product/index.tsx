@@ -1,23 +1,23 @@
-import React, {ChangeEvent, FC, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import {Add, Create, Delete, FilterList} from "@material-ui/icons";
-import {Pagination} from "@material-ui/lab";
-import {useHistory, useLocation, useParams} from "react-router";
-import {parse, stringify} from "qs";
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Add, Create, Delete, FilterList } from "@material-ui/icons";
+import { Pagination } from "@material-ui/lab";
+import { useHistory, useLocation, useParams } from "react-router";
+import { parse, stringify } from "qs";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {IProduct, ProductStatus} from "@gemunionstudio/framework-types";
-import {emptyProduct} from "@gemunionstudio/framework-mocks";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
+import { IProduct, ProductStatus } from "@gemunionstudio/framework-types";
+import { emptyProduct } from "@gemunionstudio/framework-mocks";
 
-import {EditProductDialog} from "./edit";
-import {ProductSearchForm} from "./form";
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
+import { EditProductDialog } from "./edit";
+import { ProductSearchForm } from "./form";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
@@ -27,10 +27,10 @@ export interface IProductSearchDto extends ISearchDto {
 export const Product: FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
-  const {id} = useParams<{id?: string}>();
+  const { id } = useParams<{ id?: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -53,7 +53,7 @@ export const Product: FC = () => {
   });
 
   const updateQS = (id?: number) => {
-    const {skip: _skip, take: _take, ...rest} = data;
+    const { skip: _skip, take: _take, ...rest } = data;
     history.push(id ? `/products/${id}` : `/products?${stringify(rest)}`);
   };
 
@@ -111,7 +111,7 @@ export const Product: FC = () => {
     return (id ? fetchProductsById(id) : fetchProductsByQuery())
       .catch(e => {
         console.error(e);
-        enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
       })
       .finally(() => {
         setIsLoading(false);
@@ -130,15 +130,15 @@ export const Product: FC = () => {
         method: "DELETE",
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: "snackbar.deleted"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.deleted" }), { variant: "success" });
         return fetchProducts();
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -147,18 +147,18 @@ export const Product: FC = () => {
   };
 
   const handleEditConfirmed = (values: Partial<IProduct>, formikBag: any): Promise<void> => {
-    const {id, photos = [], ...data} = values;
+    const { id, photos = [], ...data } = values;
     return api
       .fetchJson({
         url: id ? `/products/${id}` : "/products/",
         method: id ? "PUT" : "POST",
         data: {
           ...data,
-          photos: photos.map(({title, imageUrl}) => ({title, imageUrl})),
+          photos: photos.map(({ title, imageUrl }) => ({ title, imageUrl })),
         },
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: id ? "snackbar.updated" : "snackbar.created"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
         setIsEditDialogOpen(false);
         return fetchProducts();
       })
@@ -166,10 +166,10 @@ export const Product: FC = () => {
         if (e.status === 400) {
           formikBag.setErrors(e.getLocalizedValidationErrors());
         } else if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
   };

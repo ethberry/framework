@@ -39,8 +39,8 @@ export class AuthService {
     private readonly emailClientProxy: ClientProxy,
   ) {}
 
-  public async login(data: ILoginDto, ip: string): Promise<IJwt> {
-    const userEntity = await this.userService.getByCredentials(data.email, data.password);
+  public async login(dto: ILoginDto, ip: string): Promise<IJwt> {
+    const userEntity = await this.userService.getByCredentials(dto.email, dto.password);
 
     if (!userEntity) {
       throw new UnauthorizedException("userNotFound");
@@ -97,15 +97,15 @@ export class AuthService {
     };
   }
 
-  public async signup(data: IUserCreateDto): Promise<UserEntity> {
-    const userEntity = await this.userService.create(data);
+  public async signup(dto: IUserCreateDto): Promise<UserEntity> {
+    const userEntity = await this.userService.create(dto);
 
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
 
-    // this.emailClientProxy.emit(EmailType.WELCOME, {
-    //   user: userEntity,
-    //   baseUrl,
-    // });
+    this.emailClientProxy.emit(EmailType.WELCOME, {
+      user: userEntity,
+      baseUrl,
+    });
 
     const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity);
 
@@ -118,17 +118,17 @@ export class AuthService {
     return userEntity;
   }
 
-  public async import(data: IUserImportDto): Promise<UserEntity> {
-    const userEntity = await this.userService.import(data);
+  public async import(dto: IUserImportDto): Promise<UserEntity> {
+    const userEntity = await this.userService.import(dto);
 
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
 
-    // this.emailClientProxy.emit(EmailType.WELCOME, {
-    //   user: userEntity,
-    //   baseUrl,
-    // });
+    this.emailClientProxy.emit(EmailType.WELCOME, {
+      user: userEntity,
+      baseUrl,
+    });
 
-    if (data.userStatus === UserStatus.PENDING) {
+    if (dto.userStatus === UserStatus.PENDING) {
       const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity);
 
       this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
@@ -141,8 +141,8 @@ export class AuthService {
     return userEntity;
   }
 
-  public async forgotPassword(data: IForgotPasswordDto): Promise<void> {
-    const userEntity = await this.userService.findOne({ email: data.email });
+  public async forgotPassword(dto: IForgotPasswordDto): Promise<void> {
+    const userEntity = await this.userService.findOne({ email: dto.email });
 
     if (!userEntity) {
       // if user is not found - return positive status
@@ -164,28 +164,28 @@ export class AuthService {
     });
   }
 
-  public async restorePassword(data: IRestorePasswordDto): Promise<void> {
-    const tokenEntity = await this.tokenService.findOne({ uuid: data.token, tokenType: TokenType.PASSWORD });
+  public async restorePassword(dto: IRestorePasswordDto): Promise<void> {
+    const tokenEntity = await this.tokenService.findOne({ uuid: dto.token, tokenType: TokenType.PASSWORD });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.userService.updatePassword(tokenEntity.user, data);
+    await this.userService.updatePassword(tokenEntity.user, dto);
 
-    // const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
+    const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
 
-    // this.emailClientProxy.emit(EmailType.RESTORE_PASSWORD, {
-    //   user: tokenEntity.user,
-    //   baseUrl,
-    // });
+    this.emailClientProxy.emit(EmailType.RESTORE_PASSWORD, {
+      user: tokenEntity.user,
+      baseUrl,
+    });
 
     // delete token from db
     await tokenEntity.remove();
   }
 
-  public async emailVerification(data: IEmailVerificationDto): Promise<void> {
-    const tokenEntity = await this.tokenService.findOne({ uuid: data.token, tokenType: TokenType.EMAIL });
+  public async emailVerification(dto: IEmailVerificationDto): Promise<void> {
+    const tokenEntity = await this.tokenService.findOne({ uuid: dto.token, tokenType: TokenType.EMAIL });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -196,8 +196,8 @@ export class AuthService {
     await tokenEntity.remove();
   }
 
-  public async resendEmailVerification(data: IResendEmailVerificationDto): Promise<void> {
-    const userEntity = await this.userService.findOne({ email: data.email });
+  public async resendEmailVerification(dto: IResendEmailVerificationDto): Promise<void> {
+    const userEntity = await this.userService.findOne({ email: dto.email });
 
     if (!userEntity) {
       // if user is not found - return positive status
@@ -215,8 +215,8 @@ export class AuthService {
     });
   }
 
-  public getPasswordScore(data: IPasswordScoreDto): IPasswordScoreResult {
-    const { score } = zxcvbn(data.password);
+  public getPasswordScore(dto: IPasswordScoreDto): IPasswordScoreResult {
+    const { score } = zxcvbn(dto.password);
     return { score };
   }
 }

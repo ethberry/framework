@@ -1,5 +1,5 @@
 import path from "path";
-import {Configuration, HotModuleReplacementPlugin} from "webpack";
+import { Configuration, HotModuleReplacementPlugin } from "webpack";
 import DotEnvPlugin from "dotenv-webpack";
 import CopyPlugin from "copy-webpack-plugin";
 
@@ -73,7 +73,7 @@ const config: Configuration = {
       systemvars: true,
     }),
     new CopyPlugin({
-      patterns: [{from: "./static", to: "./"}],
+      patterns: [{ from: "./static", to: "./" }],
     }),
     new HotModuleReplacementPlugin(),
   ],

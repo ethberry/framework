@@ -1,16 +1,16 @@
-import React, {FC} from "react";
-import {format, parseISO} from "date-fns";
-import {Divider} from "@material-ui/core";
-import {useSnackbar} from "notistack";
+import React, { FC } from "react";
+import { format, parseISO } from "date-fns";
+import { Divider } from "@material-ui/core";
+import { useSnackbar } from "notistack";
 
-import {SelectInput, StaticInput, TextInput} from "@gemunionstudio/material-ui-inputs-core";
-import {FormDialog} from "@gemunionstudio/material-ui-dialog-form";
-import {EnabledLanguages} from "@gemunionstudio/framework-constants-misc";
-import {IUser, UserRole, UserStatus} from "@gemunionstudio/framework-types";
-import {PhoneInput} from "@gemunionstudio/material-ui-inputs-mask";
-import {AvatarInput} from "@gemunionstudio/material-ui-inputs-image-s3";
+import { SelectInput, StaticInput, TextInput } from "@gemunionstudio/material-ui-inputs-core";
+import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
+import { EnabledLanguages } from "@gemunionstudio/framework-constants-misc";
+import { IUser, UserRole, UserStatus } from "@gemunionstudio/framework-types";
+import { PhoneInput } from "@gemunionstudio/material-ui-inputs-mask";
+import { AvatarInput } from "@gemunionstudio/material-ui-inputs-image-s3";
 
-import {validationSchema} from "./validation";
+import { validationSchema } from "./validation";
 
 export interface IEditUserDialogProps {
   open: boolean;
@@ -20,9 +20,9 @@ export interface IEditUserDialogProps {
 }
 
 export const EditUserDialog: FC<IEditUserDialogProps> = props => {
-  const {initialValues, ...rest} = props;
+  const { initialValues, ...rest } = props;
 
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onClick = (): void => {
     enqueueSnackbar("Warning! This user won't be able to use this site until he confirms his new email address.", {
@@ -30,7 +30,7 @@ export const EditUserDialog: FC<IEditUserDialogProps> = props => {
     });
   };
 
-  const {id, email, firstName, lastName, phoneNumber, language, imageUrl, userRoles, userStatus, comment, createdAt} =
+  const { id, email, firstName, lastName, phoneNumber, language, imageUrl, userRoles, userStatus, comment, createdAt } =
     initialValues;
 
   const fixedValues = {

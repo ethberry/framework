@@ -1,24 +1,24 @@
-import React, {ChangeEvent, FC, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import {Add, Create, Delete} from "@material-ui/icons";
-import {Pagination} from "@material-ui/lab";
-import {useHistory, useLocation, useParams} from "react-router";
-import {parse, stringify} from "qs";
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Add, Create, Delete } from "@material-ui/icons";
+import { Pagination } from "@material-ui/lab";
+import { useHistory, useLocation, useParams } from "react-router";
+import { parse, stringify } from "qs";
 
-import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPaginationResult, IPaginationDto} from "@gemunionstudio/types-collection";
-import {IOrder, OrderStatus} from "@gemunionstudio/framework-types";
-import {emptyOrder} from "@gemunionstudio/framework-mocks";
+import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IPaginationResult, IPaginationDto } from "@gemunionstudio/types-collection";
+import { IOrder, OrderStatus } from "@gemunionstudio/framework-types";
+import { emptyOrder } from "@gemunionstudio/framework-mocks";
 
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
-import {EditOrderDialog} from "./edit";
-import {parseDateRange, stringifyDateRange} from "./utils";
-import {OrderSearchForm} from "./form";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
+import { EditOrderDialog } from "./edit";
+import { parseDateRange, stringifyDateRange } from "./utils";
+import { OrderSearchForm } from "./form";
 
 export interface IOrderSearchDto extends IPaginationDto {
   orderStatus: Array<OrderStatus>;
@@ -29,15 +29,15 @@ export interface IOrderSearchDto extends IPaginationDto {
 export const Order: FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const {id} = useParams<{id?: string}>();
+  const { id } = useParams<{ id?: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [orders, setOrders] = useState<Array<IOrder>>([]);
   const [count, setCount] = useState<number>(0);
   const [selectedOrder, setSelectedOrder] = useState<IOrder>(emptyOrder);
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const api = useContext(ApiContext);
 
@@ -52,7 +52,7 @@ export const Order: FC = () => {
   });
 
   const updateQS = (id?: number) => {
-    const {skip: _skip, take: _take, dateRange, ...rest} = data;
+    const { skip: _skip, take: _take, dateRange, ...rest } = data;
     history.push(
       id
         ? `/orders/${id}`
@@ -88,7 +88,7 @@ export const Order: FC = () => {
   };
 
   const fetchOrdersByQuery = async (): Promise<void> => {
-    const {dateRange, ...rest} = data;
+    const { dateRange, ...rest } = data;
     return api
       .fetchJson({
         url: "/orders",
@@ -121,10 +121,10 @@ export const Order: FC = () => {
     return (id ? fetchOrdersById(id) : fetchOrdersByQuery())
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -144,15 +144,15 @@ export const Order: FC = () => {
         method: "DELETE",
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: "snackbar.deleted"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.deleted" }), { variant: "success" });
         return fetchOrders();
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -161,7 +161,7 @@ export const Order: FC = () => {
   };
 
   const handleEditConfirmed = (values: Partial<IOrder>, formikBag: any): Promise<void> => {
-    const {id, ...data} = values;
+    const { id, ...data } = values;
     return api
       .fetchJson({
         url: id ? `/orders/${id}` : "/orders/",
@@ -169,7 +169,7 @@ export const Order: FC = () => {
         data,
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: id ? "snackbar.updated" : "snackbar.created"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
         setIsEditDialogOpen(false);
         return fetchOrders();
       })
@@ -177,10 +177,10 @@ export const Order: FC = () => {
         if (e.status === 400) {
           formikBag.setErrors(e.getLocalizedValidationErrors());
         } else if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
   };

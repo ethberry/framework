@@ -57,19 +57,19 @@ export class PromoService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async update(where: FindConditions<PromoEntity>, data: IPromoUpdateDto): Promise<PromoEntity | undefined> {
+  public async update(where: FindConditions<PromoEntity>, dto: IPromoUpdateDto): Promise<PromoEntity | undefined> {
     const promoEntity = await this.promoEntityRepository.findOne(where);
 
     if (!promoEntity) {
       throw new NotFoundException("promoNotFound");
     }
 
-    Object.assign(promoEntity, data);
+    Object.assign(promoEntity, dto);
     return promoEntity.save();
   }
 
-  public create(data: IPromoCreateDto): Promise<PromoEntity> {
-    return this.promoEntityRepository.create({ ...data }).save();
+  public create(dto: IPromoCreateDto): Promise<PromoEntity> {
+    return this.promoEntityRepository.create({ ...dto }).save();
   }
 
   public async delete(where: FindConditions<PromoEntity>): Promise<void> {

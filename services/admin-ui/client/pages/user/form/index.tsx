@@ -1,12 +1,12 @@
-import React, {FC} from "react";
-import {Collapse, Grid} from "@material-ui/core";
+import React, { FC } from "react";
+import { Collapse, Grid } from "@material-ui/core";
 
-import {AutoSave, FormikForm} from "@gemunionstudio/material-ui-form";
-import {UserRole, UserStatus} from "@gemunionstudio/framework-types";
-import {SelectInput, SearchInput} from "@gemunionstudio/material-ui-inputs-core";
+import { AutoSave, FormikForm } from "@gemunionstudio/material-ui-form";
+import { UserRole, UserStatus } from "@gemunionstudio/framework-types";
+import { SelectInput, SearchInput } from "@gemunionstudio/material-ui-inputs-core";
 
 import useStyles from "./styles";
-import {IUserSearchDto} from "../index";
+import { IUserSearchDto } from "../index";
 
 interface IUserSearchFormProps {
   onSubmit: (values: IUserSearchDto) => void;
@@ -15,12 +15,12 @@ interface IUserSearchFormProps {
 }
 
 export const UserSearchForm: FC<IUserSearchFormProps> = props => {
-  const {onSubmit, initialValues, open} = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
-  const {query, userStatus, userRoles} = initialValues;
-  const fixedValues = {query, userStatus, userRoles};
+  const { query, userStatus, userRoles } = initialValues;
+  const fixedValues = { query, userStatus, userRoles };
 
   return (
     <div className={classes.root}>

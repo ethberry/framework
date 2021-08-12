@@ -24,55 +24,55 @@ export class AuthJwtController {
 
   @Post("/login")
   @HttpCode(200)
-  public login(@Body() data: LoginDto, @Ip() ip: string): Promise<IJwt> {
-    return this.authService.login(data, ip);
+  public login(@Body() dto: LoginDto, @Ip() ip: string): Promise<IJwt> {
+    return this.authService.login(dto, ip);
   }
 
   @Post("/refresh")
   @HttpCode(200)
-  async refreshToken(@Body() data: RefreshDto, @Ip() ip: string): Promise<IJwt> {
-    return this.authService.refresh(data, ip);
+  async refreshToken(@Body() dto: RefreshDto, @Ip() ip: string): Promise<IJwt> {
+    return this.authService.refresh(dto, ip);
   }
 
   @Post("/logout")
   @HttpCode(204)
-  public async logout(@Body() data: LogoutDto): Promise<void> {
-    await this.authService.logout(data);
+  public async logout(@Body() dto: LogoutDto): Promise<void> {
+    await this.authService.logout(dto);
   }
 
   @Post("/signup")
   @UseInterceptors(ClassSerializerInterceptor)
-  public async signup(@Body() data: UserCreateDto, @Ip() ip: string): Promise<IJwt> {
-    const userEntity = await this.authService.signup(data);
+  public async signup(@Body() dto: UserCreateDto, @Ip() ip: string): Promise<IJwt> {
+    const userEntity = await this.authService.signup(dto);
     return this.authService.loginUser(userEntity, ip);
   }
 
   @Post("/forgot-password")
   @HttpCode(204)
-  public forgotPassword(@Body() data: ForgotPasswordDto): Promise<void> {
-    return this.authService.forgotPassword(data);
+  public forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
+    return this.authService.forgotPassword(dto);
   }
 
   @Post("/restore-password")
   @HttpCode(204)
-  public restorePassword(@Body() data: RestorePasswordDto): Promise<void> {
-    return this.authService.restorePassword(data);
+  public restorePassword(@Body() dto: RestorePasswordDto): Promise<void> {
+    return this.authService.restorePassword(dto);
   }
 
   @Post("/email-verification")
   @HttpCode(204)
-  public emailVerification(@Body() data: VerifyEmailDto): Promise<void> {
-    return this.authService.emailVerification(data);
+  public emailVerification(@Body() dto: VerifyEmailDto): Promise<void> {
+    return this.authService.emailVerification(dto);
   }
 
   @Post("/resend-email-verification")
   @HttpCode(204)
-  public resendEmailVerification(@Body() data: ResendEmailVerificationDto): Promise<void> {
-    return this.authService.resendEmailVerification(data);
+  public resendEmailVerification(@Body() dto: ResendEmailVerificationDto): Promise<void> {
+    return this.authService.resendEmailVerification(dto);
   }
 
   @Post("/get-password-score")
-  public getPasswordScore(@Body() data: ValidatePasswordScoreDto): IPasswordScoreResult {
-    return this.authService.getPasswordScore(data);
+  public getPasswordScore(@Body() dto: ValidatePasswordScoreDto): IPasswordScoreResult {
+    return this.authService.getPasswordScore(dto);
   }
 }

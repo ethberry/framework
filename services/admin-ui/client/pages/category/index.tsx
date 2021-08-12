@@ -1,31 +1,31 @@
-import React, {ChangeEvent, FC, useContext, useEffect, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import {Add, Create, Delete} from "@material-ui/icons";
-import {Pagination} from "@material-ui/lab";
-import {useHistory, useLocation, useParams} from "react-router";
-import {parse, stringify} from "qs";
+import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
+import { Add, Create, Delete } from "@material-ui/icons";
+import { Pagination } from "@material-ui/lab";
+import { useHistory, useLocation, useParams } from "react-router";
+import { parse, stringify } from "qs";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {DeleteDialog} from "@gemunionstudio/material-ui-dialog-delete";
-import {CommonSearchForm} from "@gemunionstudio/material-ui-form-search";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {IPaginationResult, ISearchDto} from "@gemunionstudio/types-collection";
-import {ICategory} from "@gemunionstudio/framework-types";
-import {emptyCategory} from "@gemunionstudio/framework-mocks";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
+import { CommonSearchForm } from "@gemunionstudio/material-ui-form-search";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
+import { ICategory } from "@gemunionstudio/framework-types";
+import { emptyCategory } from "@gemunionstudio/framework-mocks";
 
-import {EditCategoryDialog} from "./edit";
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
+import { EditCategoryDialog } from "./edit";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export const Category: FC = () => {
   const location = useLocation();
   const history = useHistory();
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
-  const {id} = useParams<{id?: string}>();
+  const { id } = useParams<{ id?: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -43,7 +43,7 @@ export const Category: FC = () => {
   });
 
   const updateQS = (id?: number) => {
-    const {skip: _skip, take: _take, ...rest} = data;
+    const { skip: _skip, take: _take, ...rest } = data;
     history.push(id ? `/categories/${id}` : `/categories?${stringify(rest)}`);
   };
 
@@ -101,7 +101,7 @@ export const Category: FC = () => {
     return (id ? fetchCategoriesById(id) : fetchCategoriesByQuery())
       .catch(e => {
         console.error(e);
-        enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
       })
       .finally(() => {
         setIsLoading(false);
@@ -120,15 +120,15 @@ export const Category: FC = () => {
         method: "DELETE",
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: "snackbar.deleted"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: "snackbar.deleted" }), { variant: "success" });
         return fetchCategories();
       })
       .catch((e: ApiError) => {
         if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       })
       .finally(() => {
@@ -137,7 +137,7 @@ export const Category: FC = () => {
   };
 
   const handleEditConfirmed = (values: Partial<ICategory>, formikBag: any): Promise<void> => {
-    const {id, ...data} = values;
+    const { id, ...data } = values;
     return api
       .fetchJson({
         url: id ? `/categories/${id}` : "/categories/",
@@ -145,7 +145,7 @@ export const Category: FC = () => {
         data,
       })
       .then(() => {
-        enqueueSnackbar(formatMessage({id: id ? "snackbar.updated" : "snackbar.created"}), {variant: "success"});
+        enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
         setIsEditDialogOpen(false);
         return fetchCategories();
       })
@@ -153,10 +153,10 @@ export const Category: FC = () => {
         if (e.status === 400) {
           formikBag.setErrors(e.getLocalizedValidationErrors());
         } else if (e.status) {
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: "snackbar.error"}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
   };

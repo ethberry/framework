@@ -1,19 +1,19 @@
-import React, {FC, MouseEvent, useContext, useState} from "react";
-import {useSnackbar} from "notistack";
-import {FormattedMessage, useIntl} from "react-intl";
-import {Grid, List, ListItem, ListItemText} from "@material-ui/core";
+import React, { FC, MouseEvent, useContext, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Grid, List, ListItem, ListItemText } from "@material-ui/core";
 
-import {ProgressOverlay} from "@gemunionstudio/material-ui-progress";
-import {PageHeader} from "@gemunionstudio/material-ui-page-header";
-import {ApiContext, ApiError} from "@gemunionstudio/provider-api";
-import {EmailType} from "@gemunionstudio/framework-types";
+import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
+import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
+import { EmailType } from "@gemunionstudio/framework-types";
 
-import {Breadcrumbs} from "../../components/common/breadcrumbs";
+import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export const Email: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const {enqueueSnackbar} = useSnackbar();
-  const {formatMessage} = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
 
   const api = useContext(ApiContext);
 
@@ -28,11 +28,11 @@ export const Email: FC = () => {
           method: "POST",
         })
         .then(() => {
-          enqueueSnackbar(formatMessage({id: "snackbar.email"}), {variant: "success"});
+          enqueueSnackbar(formatMessage({ id: "snackbar.email" }), { variant: "success" });
         })
         .catch((e: ApiError) => {
           console.error(e);
-          enqueueSnackbar(formatMessage({id: `snackbar.${e.message}`}), {variant: "error"});
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         })
         .finally(() => {
           setIsLoading(false);

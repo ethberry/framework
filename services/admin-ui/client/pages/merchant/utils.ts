@@ -1,4 +1,4 @@
-import {IMerchant} from "@gemunionstudio/framework-types";
+import { IMerchant } from "@gemunionstudio/framework-types";
 
 export const emptyMerchant = {
   title: "",

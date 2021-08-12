@@ -73,10 +73,10 @@ export class MerchantService {
 
   public async update(
     where: FindConditions<MerchantEntity>,
-    data: IMerchantUpdateDto,
+    dto: IMerchantUpdateDto,
     userEntity: UserEntity,
   ): Promise<MerchantEntity | undefined> {
-    const { userIds, ...rest } = data;
+    const { userIds, ...rest } = dto;
 
     const merchantEntity = await this.merchantEntityRepository.findOne(where);
 
@@ -95,8 +95,8 @@ export class MerchantService {
     return merchantEntity.save();
   }
 
-  public async create(data: IMerchantCreateDto, userEntity: UserEntity): Promise<MerchantEntity> {
-    const { userIds, ...rest } = data;
+  public async create(dto: IMerchantCreateDto, userEntity: UserEntity): Promise<MerchantEntity> {
+    const { userIds, ...rest } = dto;
 
     return this.merchantEntityRepository
       .create({
