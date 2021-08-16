@@ -1,4 +1,4 @@
-import { OrderStatus } from "@gemunionstudio/framework-types";
+import { OrderStatus } from "@gemunion/framework-types";
 
 import { IOrderCreateDto } from "./create";
 

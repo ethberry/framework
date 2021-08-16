@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { companyName } from "@gemunionstudio/framework-constants-misc";
+import { companyName } from "@gemunion/framework-constants-misc";
 
 interface IEMLProps {
   initialMarkup: string;

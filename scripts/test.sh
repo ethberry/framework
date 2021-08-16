@@ -11,5 +11,5 @@ lerna bootstrap --hoist
 
 lerna run lint --stream --parallel
 
-lerna exec --parallel --scope @gemunionstudio/framework-admin-api -- npm run migration:run
+lerna exec --parallel --scope @gemunion/framework-admin-api -- npm run migration:run
 lerna exec --parallel -- npm run test

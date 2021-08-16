@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-import { IsString } from "@gemunionstudio/nest-js-validators";
+import { IsString } from "@gemunion/nest-js-validators";
 
 import { IRestorePasswordDto } from "../interfaces";
 import { ValidatePasswordDto } from "./password";

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindConditions, Repository } from "typeorm";
 
-import { MerchantStatus } from "@gemunionstudio/framework-types";
+import { MerchantStatus } from "@gemunion/framework-types";
 
 import { MerchantEntity } from "./merchant.entity";
 import { IMerchantSearchDto } from "./interfaces";

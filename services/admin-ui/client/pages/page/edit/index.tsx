@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 
-import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
-import { SelectInput, TextInput } from "@gemunionstudio/material-ui-inputs-core";
-import { RichTextEditor } from "@gemunionstudio/framework-material-ui-rte";
-import { IPage, PageStatus } from "@gemunionstudio/framework-types";
+import { FormDialog } from "@gemunion/material-ui-dialog-form";
+import { SelectInput, TextInput } from "@gemunion/material-ui-inputs-core";
+import { RichTextEditor } from "@gemunion/framework-material-ui-rte";
+import { IPage, PageStatus } from "@gemunion/framework-types";
 
 import { validationSchema } from "./validation";
 

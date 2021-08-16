@@ -5,9 +5,9 @@ import { matchPath, useHistory, useLocation } from "react-router";
 import { Avatar, Button, IconButton, Menu, MenuItem } from "@material-ui/core";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 
-import { IUserContext, UserContext } from "@gemunionstudio/provider-user";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { IUser } from "@gemunionstudio/framework-types";
+import { IUserContext, UserContext } from "@gemunion/provider-user";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { IUser } from "@gemunion/framework-types";
 
 import useStyles from "./styles";
 

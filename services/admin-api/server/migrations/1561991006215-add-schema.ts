@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { ns } from "@gemunionstudio/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants-misc";
 
 export class AddSchema1561991006215 implements MigrationInterface {
   public schemaName = ns;

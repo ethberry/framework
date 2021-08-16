@@ -1,4 +1,4 @@
-import { EnabledLanguages } from "@gemunionstudio/framework-constants-misc";
+import { EnabledLanguages } from "@gemunion/framework-constants-misc";
 
 // @ts-ignore
 import en from "../i18n/en.json";

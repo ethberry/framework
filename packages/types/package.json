@@ -1,10 +1,10 @@
 {
   "author": {
-    "email": "TrejGun+GemunIonStudio@gmail.com",
+    "email": "TrejGun+gemunion@gmail.com",
     "name": "TrejGun"
   },
   "dependencies": {
-    "@gemunionstudio/framework-constants-misc": "0.0.1"
+    "@gemunion/framework-constants-misc": "0.0.1"
   },
   "devDependencies": {},
   "files": [
@@ -12,7 +12,7 @@
   ],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunionstudio/framework-types",
+  "name": "@gemunion/framework-types",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

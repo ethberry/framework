@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Put, Patch } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { Public, User } from "@gemunionstudio/nest-js-utils";
+import { Public, User } from "@gemunion/nest-js-utils";
 
 import { ProfileService } from "./profile.service";
 import { UserEntity } from "../user/user.entity";

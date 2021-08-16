@@ -6,7 +6,7 @@ import { OrderEntity } from "./order.entity";
 import { IOrderCreateDto, IOrderSearchDto, IOrderUpdateDto } from "./interfaces";
 import { ProductService } from "../product/product.service";
 import { UserEntity } from "../user/user.entity";
-import { OrderStatus, UserRole } from "@gemunionstudio/framework-types";
+import { OrderStatus, UserRole } from "@gemunion/framework-types";
 
 @Injectable()
 export class OrderService {

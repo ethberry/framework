@@ -9,8 +9,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-import { IProduct, ProductStatus } from "@gemunionstudio/framework-types";
-import { ns } from "@gemunionstudio/framework-constants-misc";
+import { IProduct, ProductStatus } from "@gemunion/framework-types";
+import { ns } from "@gemunion/framework-constants-misc";
 
 import { PhotoEntity } from "../photo/photo.entity";
 import { BaseEntity } from "../common/base.entity";

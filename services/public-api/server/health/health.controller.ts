@@ -12,8 +12,8 @@ import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis";
 import { ConfigService } from "@nestjs/config";
 import { Transport } from "@nestjs/microservices";
 
-import { Public } from "@gemunionstudio/nest-js-utils";
-import { StorageType } from "@gemunionstudio/framework-types";
+import { Public } from "@gemunion/nest-js-utils";
+import { StorageType } from "@gemunion/framework-types";
 
 @Public()
 @SkipThrottle(true)

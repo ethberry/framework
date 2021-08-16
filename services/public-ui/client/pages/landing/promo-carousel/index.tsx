@@ -4,10 +4,10 @@ import { Button, MobileStepper } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 import { useSnackbar } from "notistack";
 
-import { ProgressOverlay, Spinner } from "@gemunionstudio/material-ui-progress";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { IPromo } from "@gemunionstudio/framework-types";
-import { IPaginationResult } from "@gemunionstudio/types-collection";
+import { ProgressOverlay, Spinner } from "@gemunion/material-ui-progress";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { IPromo } from "@gemunion/framework-types";
+import { IPaginationResult } from "@gemunion/types-collection";
 
 import useStyles from "./styles";
 

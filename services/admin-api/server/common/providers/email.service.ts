@@ -1,7 +1,7 @@
 import { ClientProxy, ClientProxyFactory, Transport } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 
-import { ProviderType } from "@gemunionstudio/framework-types";
+import { ProviderType } from "@gemunion/framework-types";
 
 export const emailServiceProvider = {
   provide: ProviderType.EMAIL_SERVICE,

@@ -1,4 +1,4 @@
-import { IPhoto } from "@gemunionstudio/framework-types";
+import { IPhoto } from "@gemunion/framework-types";
 
 export interface IProductCreateDto {
   title: string;

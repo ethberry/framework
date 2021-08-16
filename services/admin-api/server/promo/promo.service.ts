@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import { S3Service } from "@gemunionstudio/nest-js-module-s3";
+import { S3Service } from "@gemunion/nest-js-module-s3";
 
 import { PromoEntity } from "./promo.entity";
 import { IPromoCreateDto, IPromoSearchDto, IPromoUpdateDto } from "./interfaces";

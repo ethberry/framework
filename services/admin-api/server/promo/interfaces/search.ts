@@ -1,3 +1,3 @@
-import { ISearchDto } from "@gemunionstudio/types-collection";
+import { ISearchDto } from "@gemunion/types-collection";
 
 export interface IPromoSearchDto extends ISearchDto {}

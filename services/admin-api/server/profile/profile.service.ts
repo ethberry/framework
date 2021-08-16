@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 
-import { UserStatus } from "@gemunionstudio/framework-types";
+import { UserStatus } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";
 import { IPasswordUpdateDto, IProfileUpdateDto } from "./interfaces";

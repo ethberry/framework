@@ -1,16 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 
-import { IsString } from "@gemunionstudio/nest-js-validators";
+import { IsString } from "@gemunion/nest-js-validators";
 import {
   emailMaxLength,
   firstNameMaxLength,
   firstNameMinLength,
   lastNameMaxLength,
   lastNameMinLength,
-} from "@gemunionstudio/constants-validation";
-import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunionstudio/framework-constants-misc";
-import { ReCaptcha } from "@gemunionstudio/nest-js-utils";
+} from "@gemunion/constants-validation";
+import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants-misc";
+import { ReCaptcha } from "@gemunion/nest-js-utils";
 
 import { IsEmail } from "../../common/validators";
 import { ValidatePasswordDto } from "../../auth/dto";

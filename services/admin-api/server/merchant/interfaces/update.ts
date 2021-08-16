@@ -1,4 +1,4 @@
-import { MerchantStatus } from "@gemunionstudio/framework-types";
+import { MerchantStatus } from "@gemunion/framework-types";
 import { IMerchantCreateDto } from "./create";
 
 export interface IMerchantUpdateDto extends IMerchantCreateDto {

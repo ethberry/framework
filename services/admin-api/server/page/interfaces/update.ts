@@ -1,4 +1,4 @@
-import { PageStatus } from "@gemunionstudio/framework-types";
+import { PageStatus } from "@gemunion/framework-types";
 
 import { IPageCreateDto } from "./create";
 

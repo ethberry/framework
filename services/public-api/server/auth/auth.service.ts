@@ -7,8 +7,8 @@ import { DeleteResult, FindConditions, Repository } from "typeorm";
 import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
-import { EmailType, ProviderType, TokenType, UserRole, UserStatus } from "@gemunionstudio/framework-types";
-import { IJwt } from "@gemunionstudio/framework-types/dist/jwt";
+import { EmailType, ProviderType, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
+import { IJwt } from "@gemunion/framework-types/dist/jwt";
 
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";

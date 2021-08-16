@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-import { IPage, PageStatus } from "@gemunionstudio/framework-types";
-import { ns } from "@gemunionstudio/framework-constants-misc";
+import { IPage, PageStatus } from "@gemunion/framework-types";
+import { ns } from "@gemunion/framework-constants-misc";
 import { BaseEntity } from "../common/base.entity";
 
 @Entity({ schema: ns, name: "page" })

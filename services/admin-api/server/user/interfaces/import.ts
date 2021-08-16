@@ -1,4 +1,4 @@
-import { UserStatus } from "@gemunionstudio/framework-types";
+import { UserStatus } from "@gemunion/framework-types";
 
 import { IUserCommonDto } from "../../common/dto";
 

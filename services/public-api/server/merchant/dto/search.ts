@@ -1,4 +1,4 @@
-import { SearchDto } from "@gemunionstudio/collection";
+import { SearchDto } from "@gemunion/collection";
 
 import { IMerchantSearchDto } from "../interfaces";
 

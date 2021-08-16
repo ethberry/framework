@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import { Route, Switch } from "react-router";
 
-import { UserProvider } from "@gemunionstudio/provider-user";
-import { SettingsProvider } from "@gemunionstudio/provider-settings";
-import { LocalizationProvider } from "@gemunionstudio/provider-localization";
-import { i18n } from "@gemunionstudio/framework-localization-emailer";
-import { EmailType } from "@gemunionstudio/framework-types";
-import { DefaultLanguage } from "@gemunionstudio/framework-constants-misc";
+import { UserProvider } from "@gemunion/provider-user";
+import { SettingsProvider } from "@gemunion/provider-settings";
+import { LocalizationProvider } from "@gemunion/provider-localization";
+import { i18n } from "@gemunion/framework-localization-emailer";
+import { EmailType } from "@gemunion/framework-types";
+import { DefaultLanguage } from "@gemunion/framework-constants-misc";
 
 import { DataProvider } from "../components/context/data/provider";
 import { Layout } from "../components/common/layout";

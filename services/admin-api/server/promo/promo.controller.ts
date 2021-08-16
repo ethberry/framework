@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 
-import { PaginationInterceptor, Public, Roles } from "@gemunionstudio/nest-js-utils";
+import { PaginationInterceptor, Public, Roles } from "@gemunion/nest-js-utils";
 
-import { UserRole } from "@gemunionstudio/framework-types";
+import { UserRole } from "@gemunion/framework-types";
 
 import { PromoService } from "./promo.service";
 import { PromoEntity } from "./promo.entity";

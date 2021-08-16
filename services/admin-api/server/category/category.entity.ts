@@ -1,7 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-import { ICategory } from "@gemunionstudio/framework-types";
-import { ns } from "@gemunionstudio/framework-constants-misc";
+import { ICategory } from "@gemunion/framework-types";
+import { ns } from "@gemunion/framework-constants-misc";
 
 import { ProductEntity } from "../product/product.entity";
 import { BaseEntity } from "../common/base.entity";

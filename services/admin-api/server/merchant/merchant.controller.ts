@@ -1,14 +1,14 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiCookieAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunionstudio/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";
 import { MerchantCreateDto, MerchantSearchDto, MerchantUpdateDto } from "./dto";
 import { Roles, User } from "../common/decorators";
 import { UserEntity } from "../user/user.entity";
-import { UserRole } from "@gemunionstudio/framework-types";
+import { UserRole } from "@gemunion/framework-types";
 
 @ApiCookieAuth()
 @Controller("/merchants")

@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-import { IsString } from "@gemunionstudio/nest-js-validators";
-import { PhotoStatus } from "@gemunionstudio/framework-types";
+import { IsString } from "@gemunion/nest-js-validators";
+import { PhotoStatus } from "@gemunion/framework-types";
 
 import { IPhotoUpdateDto } from "../interfaces";
 

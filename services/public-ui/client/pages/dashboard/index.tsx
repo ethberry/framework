@@ -4,7 +4,7 @@ import { AccountCircle, Bookmark, Inbox } from "@material-ui/icons";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
+import { PageHeader } from "@gemunion/material-ui-page-header";
 
 import useStyles from "./styles";
 

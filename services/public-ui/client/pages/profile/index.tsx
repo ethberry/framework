@@ -3,15 +3,15 @@ import { Grid } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { SelectInput, TextInput } from "@gemunionstudio/material-ui-inputs-core";
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
-import { UserContext, IUserContext } from "@gemunionstudio/provider-user";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { FormikForm } from "@gemunionstudio/material-ui-form";
-import { PhoneInput } from "@gemunionstudio/material-ui-inputs-mask";
-import { AvatarInput } from "@gemunionstudio/material-ui-inputs-image-s3";
-import { EnabledLanguages } from "@gemunionstudio/framework-constants-misc";
-import { IUser } from "@gemunionstudio/framework-types";
+import { SelectInput, TextInput } from "@gemunion/material-ui-inputs-core";
+import { PageHeader } from "@gemunion/material-ui-page-header";
+import { UserContext, IUserContext } from "@gemunion/provider-user";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { FormikForm } from "@gemunion/material-ui-form";
+import { PhoneInput } from "@gemunion/material-ui-inputs-mask";
+import { AvatarInput } from "@gemunion/material-ui-inputs-image-s3";
+import { EnabledLanguages } from "@gemunion/framework-constants-misc";
+import { IUser } from "@gemunion/framework-types";
 
 import { validationSchema } from "./validation";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";

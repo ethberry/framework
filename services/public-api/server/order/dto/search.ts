@@ -1,9 +1,9 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import { OrderStatus } from "@gemunionstudio/framework-types";
-import { reDateRange } from "@gemunionstudio/constants-regexp";
-import { IsString } from "@gemunionstudio/nest-js-validators";
-import { SearchDto } from "@gemunionstudio/collection";
+import { OrderStatus } from "@gemunion/framework-types";
+import { reDateRange } from "@gemunion/constants-regexp";
+import { IsString } from "@gemunion/nest-js-validators";
+import { SearchDto } from "@gemunion/collection";
 
 import { IOrderSearchDto } from "../interfaces";
 

@@ -1,10 +1,10 @@
 import React, { createElement, FC, ReactElement, useContext, useEffect, useState } from "react";
 import { Redirect, Route, RouteProps } from "react-router";
 
-import { IUserContext, UserContext } from "@gemunionstudio/provider-user";
+import { IUserContext, UserContext } from "@gemunion/provider-user";
 
-import { SocialLogin } from "@gemunionstudio/common-pages";
-import { IUser, UserStatus } from "@gemunionstudio/framework-types";
+import { SocialLogin } from "@gemunion/common-pages";
+import { IUser, UserStatus } from "@gemunion/framework-types";
 
 interface IMyRouteProps extends RouteProps {
   restricted?: boolean;

@@ -1,14 +1,14 @@
 {
   "author": {
-    "email": "TrejGun+GemunIonStudio@gmail.com",
+    "email": "TrejGun+gemunion@gmail.com",
     "name": "TrejGun"
   },
   "bugs": {
-    "url": "https://github.com/GemunIonStudio/framework/issues"
+    "url": "https://github.com/gemunion/framework/issues"
   },
   "dependencies": {
-    "@gemunionstudio/framework-constants-misc": "0.0.1",
-    "@gemunionstudio/framework-types": "0.0.1",
+    "@gemunion/framework-constants-misc": "0.0.1",
+    "@gemunion/framework-types": "0.0.1",
     "date-fns": "2.23.0",
     "uuid": "8.3.2"
   },
@@ -23,13 +23,13 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunionstudio/framework-mocks",
+  "name": "@gemunion/framework-mocks",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GemunIonStudio/framework"
+    "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
     "build": "tsc",

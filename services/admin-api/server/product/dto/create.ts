@@ -2,8 +2,8 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsJSON, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsNumber, IsString } from "@gemunionstudio/nest-js-validators";
-import { IPhoto } from "@gemunionstudio/framework-types";
+import { IsNumber, IsString } from "@gemunion/nest-js-validators";
+import { IPhoto } from "@gemunion/framework-types";
 
 import { IProductCreateDto } from "../interfaces";
 import { PhotoCreateDto } from "../../photo/dto";

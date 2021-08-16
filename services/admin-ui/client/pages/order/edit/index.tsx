@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { format, parseISO } from "date-fns";
 
-import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
-import { SelectInput, StaticInput } from "@gemunionstudio/material-ui-inputs-core";
-import { dateTimeFormat } from "@gemunionstudio/framework-constants-misc";
-import { EntityInput } from "@gemunionstudio/material-ui-inputs-entity";
-import { IOrder, IUser, OrderStatus } from "@gemunionstudio/framework-types";
+import { FormDialog } from "@gemunion/material-ui-dialog-form";
+import { SelectInput, StaticInput } from "@gemunion/material-ui-inputs-core";
+import { dateTimeFormat } from "@gemunion/framework-constants-misc";
+import { EntityInput } from "@gemunion/material-ui-inputs-entity";
+import { IOrder, IUser, OrderStatus } from "@gemunion/framework-types";
 import { validationSchema } from "./validation";
 
 export interface IEditOrderDialogProps {

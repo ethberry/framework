@@ -6,14 +6,14 @@ import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions, RedisService } from "@liaoliaots/nestjs-redis";
 import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
 
-import { HttpExceptionFilter, HttpValidationPipe } from "@gemunionstudio/nest-js-utils";
-import { JwtHttpGuard } from "@gemunionstudio/nest-js-guards";
-import { RequestLoggerModule } from "@gemunionstudio/nest-js-module-request-logger";
-import { PassportInitialize } from "@gemunionstudio/nest-js-module-passport";
-import { HelmetModule } from "@gemunionstudio/nest-js-module-helmet";
-import { WinstonConfigService } from "@gemunionstudio/nest-js-module-winston-logdna";
-import { IS3Options, ISdkOptions, S3Module } from "@gemunionstudio/nest-js-module-s3";
-import { StorageType } from "@gemunionstudio/framework-types";
+import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
+import { JwtHttpGuard } from "@gemunion/nest-js-guards";
+import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
+import { PassportInitialize } from "@gemunion/nest-js-module-passport";
+import { HelmetModule } from "@gemunion/nest-js-module-helmet";
+import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
+import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
+import { StorageType } from "@gemunion/framework-types";
 
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";

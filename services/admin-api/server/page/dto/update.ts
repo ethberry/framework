@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import { PageStatus } from "@gemunionstudio/framework-types";
-import { IsString } from "@gemunionstudio/nest-js-validators";
+import { PageStatus } from "@gemunion/framework-types";
+import { IsString } from "@gemunion/nest-js-validators";
 
 import { IPageUpdateDto } from "../interfaces";
 import { PageCreateDto } from "./create";

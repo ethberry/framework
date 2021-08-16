@@ -7,14 +7,14 @@ import { Pagination } from "@material-ui/lab";
 import { useHistory, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
 
-import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
-import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
-import { CommonSearchForm } from "@gemunionstudio/material-ui-form-search";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
-import { ICategory } from "@gemunionstudio/framework-types";
-import { emptyCategory } from "@gemunionstudio/framework-mocks";
+import { ProgressOverlay } from "@gemunion/material-ui-progress";
+import { PageHeader } from "@gemunion/material-ui-page-header";
+import { DeleteDialog } from "@gemunion/material-ui-dialog-delete";
+import { CommonSearchForm } from "@gemunion/material-ui-form-search";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
+import { ICategory } from "@gemunion/framework-types";
+import { emptyCategory } from "@gemunion/framework-mocks";
 
 import { EditCategoryDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";

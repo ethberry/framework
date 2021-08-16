@@ -1,4 +1,4 @@
-import { IUser } from "@gemunionstudio/framework-types";
+import { IUser } from "@gemunion/framework-types";
 
 export interface IPayload {
   user: IUser;

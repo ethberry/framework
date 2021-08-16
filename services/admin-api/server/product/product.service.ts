@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
 
-import { PhotoStatus, ProductStatus, UserRole } from "@gemunionstudio/framework-types";
+import { PhotoStatus, ProductStatus, UserRole } from "@gemunion/framework-types";
 
 import { ProductEntity } from "./product.entity";
 import { IProductCreateDto, IProductSearchDto, IProductUpdateDto } from "./interfaces";

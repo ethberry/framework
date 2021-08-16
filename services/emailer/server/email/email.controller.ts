@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import { EventPattern, Payload } from "@nestjs/microservices";
 import juice from "juice";
 
-import { EmailType } from "@gemunionstudio/framework-types";
-import { i18n } from "@gemunionstudio/framework-localization-emailer";
+import { EmailType } from "@gemunion/framework-types";
+import { i18n } from "@gemunion/framework-localization-emailer";
 
 import { renderEmailToString } from "../utils/render.email";
 import { renderAppToString } from "../utils/render.app";

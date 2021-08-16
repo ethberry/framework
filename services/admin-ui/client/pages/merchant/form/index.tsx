@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { Collapse, Grid } from "@material-ui/core";
 
-import { AutoSave, FormikForm } from "@gemunionstudio/material-ui-form";
-import { MerchantStatus } from "@gemunionstudio/framework-types";
-import { SelectInput, SearchInput } from "@gemunionstudio/material-ui-inputs-core";
+import { AutoSave, FormikForm } from "@gemunion/material-ui-form";
+import { MerchantStatus } from "@gemunion/framework-types";
+import { SelectInput, SearchInput } from "@gemunion/material-ui-inputs-core";
 
 import useStyles from "./styles";
 import { IMerchantSearchDto } from "../index";

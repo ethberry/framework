@@ -5,11 +5,11 @@ import { Avatar, Box, Typography } from "@material-ui/core";
 import { useParams } from "react-router";
 import { Skeleton } from "@material-ui/lab";
 
-import { Spinner } from "@gemunionstudio/material-ui-progress";
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { IMerchant } from "@gemunionstudio/framework-types";
-import { RichTextDisplay } from "@gemunionstudio/framework-material-ui-rte";
+import { Spinner } from "@gemunion/material-ui-progress";
+import { PageHeader } from "@gemunion/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { IMerchant } from "@gemunion/framework-types";
+import { RichTextDisplay } from "@gemunion/framework-material-ui-rte";
 
 import { ProductList } from "../product-list";
 import useStyles from "./styles";

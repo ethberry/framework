@@ -7,14 +7,14 @@ import { Pagination } from "@material-ui/lab";
 import { useHistory, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
 
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
-import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
-import { IPromo } from "@gemunionstudio/framework-types";
-import { emptyPromo } from "@gemunionstudio/framework-mocks";
-import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
-import { CommonSearchForm } from "@gemunionstudio/material-ui-form-search";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ProgressOverlay } from "@gemunion/material-ui-progress";
+import { PageHeader } from "@gemunion/material-ui-page-header";
+import { DeleteDialog } from "@gemunion/material-ui-dialog-delete";
+import { IPromo } from "@gemunion/framework-types";
+import { emptyPromo } from "@gemunion/framework-mocks";
+import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
+import { CommonSearchForm } from "@gemunion/material-ui-form-search";
 
 import { EditPromoDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";

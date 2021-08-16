@@ -1,8 +1,8 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import { IsString } from "@gemunionstudio/nest-js-validators";
-import { SearchDto } from "@gemunionstudio/collection";
-import { UserRole, UserStatus } from "@gemunionstudio/framework-types";
+import { IsString } from "@gemunion/nest-js-validators";
+import { SearchDto } from "@gemunion/collection";
+import { UserRole, UserStatus } from "@gemunion/framework-types";
 
 import { IUserSearchDto } from "../interfaces";
 

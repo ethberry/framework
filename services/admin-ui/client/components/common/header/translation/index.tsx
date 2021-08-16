@@ -3,8 +3,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { IconButton, Menu, MenuItem, Tooltip } from "@material-ui/core";
 import { Translate } from "@material-ui/icons";
 
-import { ISettingsContext, SettingsContext } from "@gemunionstudio/provider-settings";
-import { EnabledLanguages } from "@gemunionstudio/framework-constants-misc";
+import { ISettingsContext, SettingsContext } from "@gemunion/provider-settings";
+import { EnabledLanguages } from "@gemunion/framework-constants-misc";
 
 export const Translation: FC = () => {
   const { formatMessage } = useIntl();

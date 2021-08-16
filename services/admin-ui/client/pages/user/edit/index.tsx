@@ -3,12 +3,12 @@ import { format, parseISO } from "date-fns";
 import { Divider } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 
-import { SelectInput, StaticInput, TextInput } from "@gemunionstudio/material-ui-inputs-core";
-import { FormDialog } from "@gemunionstudio/material-ui-dialog-form";
-import { EnabledLanguages } from "@gemunionstudio/framework-constants-misc";
-import { IUser, UserRole, UserStatus } from "@gemunionstudio/framework-types";
-import { PhoneInput } from "@gemunionstudio/material-ui-inputs-mask";
-import { AvatarInput } from "@gemunionstudio/material-ui-inputs-image-s3";
+import { SelectInput, StaticInput, TextInput } from "@gemunion/material-ui-inputs-core";
+import { FormDialog } from "@gemunion/material-ui-dialog-form";
+import { EnabledLanguages } from "@gemunion/framework-constants-misc";
+import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
+import { PhoneInput } from "@gemunion/material-ui-inputs-mask";
+import { AvatarInput } from "@gemunion/material-ui-inputs-image-s3";
 
 import { validationSchema } from "./validation";
 

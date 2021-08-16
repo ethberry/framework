@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsJSON } from "class-validator";
 
-import { IsNumber, IsString } from "@gemunionstudio/nest-js-validators";
+import { IsNumber, IsString } from "@gemunion/nest-js-validators";
 
 import { IPromoCreateDto } from "../interfaces";
 

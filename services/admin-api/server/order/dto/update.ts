@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 
-import { OrderStatus } from "@gemunionstudio/framework-types";
-import { IsString } from "@gemunionstudio/nest-js-validators";
+import { OrderStatus } from "@gemunion/framework-types";
+import { IsString } from "@gemunion/nest-js-validators";
 
 import { IOrderUpdateDto } from "../interfaces";
 import { OrderCreateDto } from "./create";

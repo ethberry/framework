@@ -1,6 +1,6 @@
 import React, { FC, useContext } from "react";
 
-import { companyName } from "@gemunionstudio/framework-constants-misc";
+import { companyName } from "@gemunion/framework-constants-misc";
 
 import useStyles from "./styles";
 import { DataContext, IDataContext } from "../../context/data/context";

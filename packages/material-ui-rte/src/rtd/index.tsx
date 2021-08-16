@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Editor, EditorState, convertFromRaw, ContentBlock } from "draft-js";
-import { TCustomControl, atomicBlockExists } from "@gemunionstudio/mui-rte";
+import { TCustomControl, atomicBlockExists } from "@gemunion/mui-rte";
 
 export interface IRichTextDisplayProps {
   data: any;

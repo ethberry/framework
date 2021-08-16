@@ -1,4 +1,4 @@
-import { ProductStatus } from "@gemunionstudio/framework-types";
+import { ProductStatus } from "@gemunion/framework-types";
 import { IProductCreateDto } from "./create";
 
 export interface IProductUpdateDto extends IProductCreateDto {

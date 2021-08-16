@@ -3,7 +3,7 @@ import { Theme, useMediaQuery, useTheme } from "@material-ui/core";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import { IProduct } from "@gemunionstudio/framework-types";
+import { IProduct } from "@gemunion/framework-types";
 
 import useStyles from "./styles";
 import { ProductItem } from "../../product-list/item";

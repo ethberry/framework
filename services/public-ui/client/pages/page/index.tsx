@@ -3,11 +3,11 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
 
-import { Spinner } from "@gemunionstudio/material-ui-progress";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
-import { IPage } from "@gemunionstudio/framework-types";
-import { RichTextDisplay } from "@gemunionstudio/framework-material-ui-rte";
+import { Spinner } from "@gemunion/material-ui-progress";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { PageHeader } from "@gemunion/material-ui-page-header";
+import { IPage } from "@gemunion/framework-types";
+import { RichTextDisplay } from "@gemunion/framework-material-ui-rte";
 
 export const Page: FC = () => {
   const { slug } = useParams<{ slug: string }>();

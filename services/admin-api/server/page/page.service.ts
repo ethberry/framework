@@ -4,7 +4,7 @@ import { DeleteResult, FindConditions, FindManyOptions, Repository } from "typeo
 
 import { PageEntity } from "./page.entity";
 import { IPageCreateDto, IPageUpdateDto } from "./interfaces";
-import { PageStatus } from "@gemunionstudio/framework-types";
+import { PageStatus } from "@gemunion/framework-types";
 
 @Injectable()
 export class PageService {

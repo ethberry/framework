@@ -3,10 +3,10 @@ import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Grid, List, ListItem, ListItemText } from "@material-ui/core";
 
-import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { EmailType } from "@gemunionstudio/framework-types";
+import { ProgressOverlay } from "@gemunion/material-ui-progress";
+import { PageHeader } from "@gemunion/material-ui-page-header";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { EmailType } from "@gemunion/framework-types";
 
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
 

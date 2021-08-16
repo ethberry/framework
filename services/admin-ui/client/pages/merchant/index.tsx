@@ -7,13 +7,13 @@ import { Pagination } from "@material-ui/lab";
 import { useHistory, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
 
-import { ProgressOverlay } from "@gemunionstudio/material-ui-progress";
-import { PageHeader } from "@gemunionstudio/material-ui-page-header";
-import { DeleteDialog } from "@gemunionstudio/material-ui-dialog-delete";
-import { ApiContext, ApiError } from "@gemunionstudio/provider-api";
-import { IPaginationResult, ISearchDto } from "@gemunionstudio/types-collection";
-import { IMerchant, MerchantStatus } from "@gemunionstudio/framework-types";
-import { emptyMerchant } from "@gemunionstudio/framework-mocks";
+import { ProgressOverlay } from "@gemunion/material-ui-progress";
+import { PageHeader } from "@gemunion/material-ui-page-header";
+import { DeleteDialog } from "@gemunion/material-ui-dialog-delete";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
+import { IMerchant, MerchantStatus } from "@gemunion/framework-types";
+import { emptyMerchant } from "@gemunion/framework-mocks";
 
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
 import { EditMerchantDialog } from "./edit";

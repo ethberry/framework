@@ -1,13 +1,13 @@
 {
   "author": {
-    "email": "TrejGun+GemunIonStudio@gmail.com",
+    "email": "TrejGun+gemunion@gmail.com",
     "name": "TrejGun"
   },
   "bugs": {
-    "url": "https://github.com/GemunIonStudio/framework/issues"
+    "url": "https://github.com/gemunion/framework/issues"
   },
   "dependencies": {
-    "@gemunionstudio/framework-constants-misc": "0.0.1"
+    "@gemunion/framework-constants-misc": "0.0.1"
   },
   "description": "localization for emailer",
   "devDependencies": {},
@@ -21,13 +21,13 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunionstudio/framework-localization-emailer",
+  "name": "@gemunion/framework-localization-emailer",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GemunIonStudio/framework"
+    "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
     "build": "tsc",
