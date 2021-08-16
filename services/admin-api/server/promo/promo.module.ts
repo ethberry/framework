@@ -10,7 +10,7 @@ import { PromoController } from "./promo.controller";
 
 @Module({
   imports: [
-    S3Module.forRootAsync({
+    S3Module.forRootAsync(S3Module, {
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): ISdkOptions & IS3Options => {
