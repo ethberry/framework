@@ -40,7 +40,7 @@
     "@gemunion/material-ui-provider-picker": "0.1.13",
     "@gemunion/material-ui-provider-theme": "0.4.2",
     "@gemunion/material-ui-toolbar": "0.1.16",
-    "@gemunion/provider-api": "3.0.1",
+    "@gemunion/provider-api": "4.0.1",
     "@gemunion/provider-localization": "0.1.21",
     "@gemunion/provider-settings": "0.1.20",
     "@gemunion/provider-user": "0.1.20",
