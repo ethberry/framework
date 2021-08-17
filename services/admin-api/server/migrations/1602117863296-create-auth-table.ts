@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddAuthTable1602117863296 implements MigrationInterface {
+export class CreateAuthTable1602117863296 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
       name: `${ns}.auth`,
@@ -18,6 +18,11 @@ export class AddAuthTable1602117863296 implements MigrationInterface {
         {
           name: "refresh_token_expires_at",
           type: "bigint",
+        },
+        {
+          name: "ip",
+          type: "varchar",
+          default: "'0.0.0.0'",
         },
         {
           name: "user_id",

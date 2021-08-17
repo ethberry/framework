@@ -1,19 +1,17 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddMerchantTable1563804021000 implements MigrationInterface {
+export class CreatePageTable1625271343228 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.merchant_status_enum AS ENUM (
+      CREATE TYPE ${ns}.page_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE',
-        'PENDING'
+        'INACTIVE'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.merchant`,
+      name: `${ns}.page`,
       columns: [
         {
           name: "id",
@@ -29,21 +27,13 @@ export class AddMerchantTable1563804021000 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "email",
+          name: "page_status",
+          type: `${ns}.page_status_enum`,
+        },
+        {
+          name: "slug",
           type: "varchar",
           isUnique: true,
-        },
-        {
-          name: "phone_number",
-          type: "varchar",
-        },
-        {
-          name: "image_url",
-          type: "varchar",
-        },
-        {
-          name: "merchant_status",
-          type: `${ns}.merchant_status_enum`,
         },
         {
           name: "created_at",
@@ -60,7 +50,7 @@ export class AddMerchantTable1563804021000 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.merchant`);
-    await queryRunner.query(`DROP TYPE ${ns}.merchant_status_enum;`);
+    await queryRunner.dropTable(`${ns}.page`);
+    await queryRunner.query(`DROP TYPE ${ns}.page_status_enum;`);
   }
 }

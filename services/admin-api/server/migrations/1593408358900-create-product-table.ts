@@ -1,17 +1,17 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddPageTable1625271343228 implements MigrationInterface {
+export class CreateProductTable1593408358900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.page_status_enum AS ENUM (
+      CREATE TYPE ${ns}.product_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.page`,
+      name: `${ns}.product`,
       columns: [
         {
           name: "id",
@@ -27,13 +27,20 @@ export class AddPageTable1625271343228 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "page_status",
-          type: `${ns}.page_status_enum`,
+          name: "price",
+          type: "int",
         },
         {
-          name: "slug",
-          type: "varchar",
-          isUnique: true,
+          name: "amount",
+          type: "int",
+        },
+        {
+          name: "merchant_id",
+          type: "int",
+        },
+        {
+          name: "product_status",
+          type: `${ns}.product_status_enum`,
         },
         {
           name: "created_at",
@@ -44,13 +51,21 @@ export class AddPageTable1625271343228 implements MigrationInterface {
           type: "timestamptz",
         },
       ],
+      foreignKeys: [
+        {
+          columnNames: ["merchant_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.merchant`,
+          onDelete: "CASCADE",
+        },
+      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.page`);
-    await queryRunner.query(`DROP TYPE ${ns}.page_status_enum;`);
+    await queryRunner.dropTable(`${ns}.product`);
+    await queryRunner.query(`DROP TYPE ${ns}.product_status_enum;`);
   }
 }

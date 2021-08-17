@@ -5,7 +5,7 @@ import { ns } from "@gemunion/framework-constants-misc";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantEntity } from "../merchant/merchant.entity";
-import { BaseEntity } from "../common/base.entity";
+import { BaseEntity } from "../database/base.entity";
 import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "order" })

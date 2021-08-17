@@ -5,7 +5,7 @@ import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
 import { EnabledLanguages, ns } from "@gemunion/framework-constants-misc";
 
 import { MerchantEntity } from "../merchant/merchant.entity";
-import { BaseEntity } from "../common/base.entity";
+import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "user" })
 export class UserEntity extends BaseEntity implements IUser {

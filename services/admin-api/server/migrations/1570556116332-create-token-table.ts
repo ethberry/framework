@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddTokenTable1570556116332 implements MigrationInterface {
+export class CreateTokenTable1570556116332 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.token_type_enum AS ENUM (
@@ -14,16 +14,13 @@ export class AddTokenTable1570556116332 implements MigrationInterface {
       name: `${ns}.token`,
       columns: [
         {
-          name: "id",
-          type: "serial",
+          name: "uuid",
+          type: "uuid",
+          default: "uuid_generate_v4()",
           isPrimary: true,
         },
         {
-          name: "token",
-          type: "varchar",
-        },
-        {
-          name: "type",
+          name: "token_type",
           type: `${ns}.token_type_enum`,
         },
         {

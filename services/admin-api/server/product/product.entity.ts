@@ -13,7 +13,7 @@ import { IProduct, ProductStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants-misc";
 
 import { PhotoEntity } from "../photo/photo.entity";
-import { BaseEntity } from "../common/base.entity";
+import { BaseEntity } from "../database/base.entity";
 import { MerchantEntity } from "../merchant/merchant.entity";
 import { CategoryEntity } from "../category/category.entity";
 import { OrderEntity } from "../order/order.entity";

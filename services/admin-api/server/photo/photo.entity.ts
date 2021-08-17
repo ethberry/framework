@@ -4,7 +4,7 @@ import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants-misc";
 
 import { ProductEntity } from "../product/product.entity";
-import { BaseEntity } from "../common/base.entity";
+import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "photo" })
 export class PhotoEntity extends BaseEntity implements IPhoto {

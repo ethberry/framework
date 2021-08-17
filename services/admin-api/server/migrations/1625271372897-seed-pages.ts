@@ -1,34 +1,32 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+
 import { ns } from "@gemunion/framework-constants-misc";
 import { simpleFormatting } from "@gemunion/framework-mocks";
 
-export class SetupProducts1593408358860 implements MigrationInterface {
+export class SeedPages1625271372897 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.category (
+      INSERT INTO ${ns}.page (
         title,
         description,
-        parent_id,
+        slug,
+        page_status,
         created_at,
         updated_at
       ) VALUES (
-        'Root',
+        'About Us',
         '${simpleFormatting}',
-        1,
+        'about-us',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'First',
+        'Frequently Asked Questions',
         '${simpleFormatting}',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'Second',
-        '${simpleFormatting}',
-        1,
+        'faq',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -36,6 +34,6 @@ export class SetupProducts1593408358860 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.category RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.page RESTART IDENTITY CASCADE;`);
   }
 }

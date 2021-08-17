@@ -4,7 +4,7 @@ import { ns } from "@gemunion/framework-constants-misc";
 import { IAuth } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";
-import { BaseEntity } from "../common/base.entity";
+import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "auth" })
 export class AuthEntity extends BaseEntity implements IAuth {

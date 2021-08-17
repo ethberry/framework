@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddUserTable1563804021040 implements MigrationInterface {
+export class CreateUserTable1563804021040 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.user_status_enum AS ENUM (
@@ -48,10 +48,12 @@ export class AddUserTable1563804021040 implements MigrationInterface {
         {
           name: "phone_number",
           type: "varchar",
+          default: "''",
         },
         {
           name: "image_url",
           type: "varchar",
+          default: "''",
         },
         {
           name: "merchant_id",
@@ -61,6 +63,7 @@ export class AddUserTable1563804021040 implements MigrationInterface {
         {
           name: "comment",
           type: "varchar",
+          default: "''",
         },
         {
           name: "language",

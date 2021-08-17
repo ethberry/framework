@@ -2,18 +2,18 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddOrderTable1593490663230 implements MigrationInterface {
+export class CreatePhotoTable1593408358920 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.order_status_enum AS ENUM (
+      CREATE TYPE ${ns}.photo_status_enum AS ENUM (
         'NEW',
-        'CLOSED',
-        'CANCELED'
+        'APPROVED',
+        'DECLINED'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.order`,
+      name: `${ns}.photo`,
       columns: [
         {
           name: "id",
@@ -21,24 +21,26 @@ export class AddOrderTable1593490663230 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "order_status",
-          type: `${ns}.order_status_enum`,
+          name: "title",
+          type: "varchar",
         },
         {
-          name: "merchant_id",
-          type: "int",
+          name: "image_url",
+          type: "varchar",
         },
         {
           name: "product_id",
           type: "int",
         },
         {
-          name: "user_id",
+          name: "priority",
           type: "int",
+          default: 0,
         },
         {
-          name: "price",
-          type: "int",
+          name: "photo_status",
+          type: `${ns}.photo_status_enum`,
+          default: "'NEW'",
         },
         {
           name: "created_at",
@@ -50,18 +52,6 @@ export class AddOrderTable1593490663230 implements MigrationInterface {
         },
       ],
       foreignKeys: [
-        {
-          columnNames: ["user_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.user`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["merchant_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.merchant`,
-          onDelete: "CASCADE",
-        },
         {
           columnNames: ["product_id"],
           referencedColumnNames: ["id"],
@@ -75,7 +65,7 @@ export class AddOrderTable1593490663230 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.order`);
-    await queryRunner.query(`DROP TYPE ${ns}.order_status_enum;`);
+    await queryRunner.dropTable(`${ns}.photo`);
+    await queryRunner.query(`DROP TYPE ${ns}.photo_status_enum;`);
   }
 }

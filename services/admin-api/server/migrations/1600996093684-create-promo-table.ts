@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddPromoTable1600996093684 implements MigrationInterface {
+export class CreatePromoTable1600996093684 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
       name: `${ns}.promo`,

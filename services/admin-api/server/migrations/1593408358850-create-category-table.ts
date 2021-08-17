@@ -1,19 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddPhotoTable1593408358920 implements MigrationInterface {
+export class CreateCategoryTable1591673187606 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.photo_status_enum AS ENUM (
-        'NEW',
-        'APPROVED',
-        'DECLINED'
-      );
-    `);
-
     const table = new Table({
-      name: `${ns}.photo`,
+      name: `${ns}.category`,
       columns: [
         {
           name: "id",
@@ -25,17 +16,12 @@ export class AddPhotoTable1593408358920 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "image_url",
-          type: "varchar",
+          name: "description",
+          type: "json",
         },
         {
-          name: "product_id",
+          name: "parent_id",
           type: "int",
-        },
-        {
-          name: "photo_status",
-          type: `${ns}.photo_status_enum`,
-          default: "'NEW'",
         },
         {
           name: "created_at",
@@ -48,9 +34,9 @@ export class AddPhotoTable1593408358920 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["product_id"],
+          columnNames: ["parent_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.product`,
+          referencedTableName: `${ns}.category`,
           onDelete: "CASCADE",
         },
       ],
@@ -60,7 +46,6 @@ export class AddPhotoTable1593408358920 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.photo`);
-    await queryRunner.query(`DROP TYPE ${ns}.photo_status_enum;`);
+    await queryRunner.dropTable(`${ns}.category`);
   }
 }

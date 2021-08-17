@@ -1,11 +1,11 @@
-import { IBase } from "./base";
-
 export enum TokenType {
   EMAIL = "EMAIL",
   PASSWORD = "PASSWORD",
 }
 
-export interface IToken extends IBase {
+export interface IToken {
   uuid: string;
   tokenType: TokenType;
+  createdAt: string;
+  updatedAt: string;
 }

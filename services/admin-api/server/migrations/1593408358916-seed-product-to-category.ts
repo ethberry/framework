@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class SetupProductToCategory1593408358916 implements MigrationInterface {
+export class SeedProductToCategory1593408358916 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.product_to_category (

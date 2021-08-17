@@ -1,17 +1,19 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
 import { ns } from "@gemunion/framework-constants-misc";
 
-export class AddProductTable1593408358900 implements MigrationInterface {
+export class CreateMerchantTable1563804021000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.product_status_enum AS ENUM (
+      CREATE TYPE ${ns}.merchant_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE'
+        'INACTIVE',
+        'PENDING'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.product`,
+      name: `${ns}.merchant`,
       columns: [
         {
           name: "id",
@@ -27,20 +29,21 @@ export class AddProductTable1593408358900 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "price",
-          type: "int",
+          name: "email",
+          type: "varchar",
+          isUnique: true,
         },
         {
-          name: "amount",
-          type: "int",
+          name: "phone_number",
+          type: "varchar",
         },
         {
-          name: "merchant_id",
-          type: "int",
+          name: "image_url",
+          type: "varchar",
         },
         {
-          name: "product_status",
-          type: `${ns}.product_status_enum`,
+          name: "merchant_status",
+          type: `${ns}.merchant_status_enum`,
         },
         {
           name: "created_at",
@@ -51,21 +54,13 @@ export class AddProductTable1593408358900 implements MigrationInterface {
           type: "timestamptz",
         },
       ],
-      foreignKeys: [
-        {
-          columnNames: ["merchant_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.merchant`,
-          onDelete: "CASCADE",
-        },
-      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.product`);
-    await queryRunner.query(`DROP TYPE ${ns}.product_status_enum;`);
+    await queryRunner.dropTable(`${ns}.merchant`);
+    await queryRunner.query(`DROP TYPE ${ns}.merchant_status_enum;`);
   }
 }
