@@ -37,6 +37,7 @@
     "@gemunion/framework-mocks": "0.0.1",
     "@gemunion/framework-types": "0.0.1",
     "@gemunion/types-collection": "0.1.14",
+    "@gemunion/types-jwt": "0.2.3",
     "amqp-connection-manager": "3.2.2",
     "amqplib": "0.8.0",
     "class-transformer": "0.4.0",

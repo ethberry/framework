@@ -8,7 +8,7 @@ import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
 import { EmailType, ProviderType, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
-import { IJwt } from "@gemunion/framework-types/dist/jwt";
+import { IJwt } from "@gemunion/types-jwt";
 
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";
