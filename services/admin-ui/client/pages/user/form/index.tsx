@@ -2,11 +2,10 @@ import React, { FC } from "react";
 import { Collapse, Grid } from "@material-ui/core";
 
 import { AutoSave, FormikForm } from "@gemunion/material-ui-form";
-import { UserRole, UserStatus } from "@gemunion/framework-types";
+import { UserRole, UserStatus, IUserSearchDto } from "@gemunion/framework-types";
 import { SelectInput, SearchInput } from "@gemunion/material-ui-inputs-core";
 
 import useStyles from "./styles";
-import { IUserSearchDto } from "../index";
 
 interface IUserSearchFormProps {
   onSubmit: (values: IUserSearchDto) => void;

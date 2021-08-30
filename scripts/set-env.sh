@@ -34,7 +34,6 @@ touch ./services/admin-api/.env.production
   echo RMQ_URL=$RMQ_URL >>./services/admin-api/.env.production
   echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/admin-api/.env.production
   echo RMQ_QUEUE_WAREHOUSE=$RMQ_QUEUE_WAREHOUSE >>./services/admin-api/.env.production
-  echo RMQ_QUEUE_WEBHOOK=$RMQ_QUEUE_WEBHOOK >>./services/admin-api/.env.production
   echo GOOGLE_RECAPTCHA_PRIVATE=$GOOGLE_RECAPTCHA_PRIVATE >>./services/admin-api/.env.production
   echo GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID >>./services/admin-api/.env.production
   echo GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET >>./services/admin-api/.env.production
@@ -74,7 +73,6 @@ touch ./services/public-api/.env.production
   echo RMQ_URL=$RMQ_URL >>./services/public-api/.env.production
   echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/public-api/.env.production
   echo RMQ_QUEUE_WAREHOUSE=$RMQ_QUEUE_WAREHOUSE >>./services/public-api/.env.production
-  echo RMQ_QUEUE_WEBHOOK=$RMQ_QUEUE_WEBHOOK >>./services/public-api/.env.production
   echo GOOGLE_RECAPTCHA_PRIVATE=$GOOGLE_RECAPTCHA_PRIVATE >>./services/public-api/.env.production
   echo GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID >>./services/public-api/.env.production
   echo GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET >>./services/public-api/.env.production

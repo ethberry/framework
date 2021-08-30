@@ -1,6 +1,4 @@
-import { UserStatus } from "@gemunion/framework-types";
-
-import { IUserCommonDto } from "../../common/dto";
+import { UserStatus, IUserCommonDto } from "@gemunion/framework-types";
 
 export interface IUserImportDto extends IUserCommonDto {
   userStatus: UserStatus;

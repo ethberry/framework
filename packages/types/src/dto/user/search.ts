@@ -1,5 +1,6 @@
-import { UserRole, UserStatus } from "@gemunion/framework-types";
 import { ISearchDto } from "@gemunion/types-collection";
+
+import { UserRole, UserStatus } from "../../entities";
 
 export interface IUserSearchDto extends ISearchDto {
   userRoles: Array<UserRole>;

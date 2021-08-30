@@ -1,3 +1,3 @@
-import { IUserCommonDto } from "../../common/dto";
+import { IUserCommonDto } from "@gemunion/framework-types";
 
 export interface IProfileUpdateDto extends IUserCommonDto {}

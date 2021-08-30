@@ -11,13 +11,13 @@ import {
 } from "@gemunion/constants-validation";
 import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants-misc";
 import { ReCaptcha } from "@gemunion/nest-js-utils";
+import { IUserCreateDto } from "@gemunion/framework-types";
 
 import { IsEmail } from "../../common/validators";
 import { ValidatePasswordDto } from "../../auth/dto";
-import { IUserCreateDto } from "../interfaces";
 
 export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto {
-  @ApiProperty({
+  @ApiPropertyOptional({
     minLength: firstNameMinLength,
     maxLength: firstNameMaxLength,
   })

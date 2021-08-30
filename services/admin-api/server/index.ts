@@ -3,7 +3,6 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
-import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { companyName, ns } from "@gemunion/framework-constants-misc";
@@ -40,17 +39,6 @@ async function bootstrap(): Promise<void> {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
-
-  const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
-  const rmqQueueWebhook = configService.get<string>("RMQ_QUEUE_WEBHOOK", "webhook");
-
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
-    options: {
-      urls: [rmqUrl],
-      queue: rmqQueueWebhook,
-    },
-  });
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<number>("PORT", 3001);

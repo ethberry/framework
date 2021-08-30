@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
 import { ns } from "@gemunion/framework-constants-misc";
 
 export class CreateTokenTable1570556116332 implements MigrationInterface {

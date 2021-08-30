@@ -11,18 +11,13 @@ import { ProgressOverlay } from "@gemunion/material-ui-progress";
 import { PageHeader } from "@gemunion/material-ui-page-header";
 import { DeleteDialog } from "@gemunion/material-ui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
-import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
+import { IUser, IUserSearchDto, UserStatus } from "@gemunion/framework-types";
+import { IPaginationResult } from "@gemunion/types-collection";
 import { emptyUser } from "@gemunion/framework-mocks";
 
 import { EditUserDialog } from "./edit";
 import { UserSearchForm } from "./form";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
-
-export interface IUserSearchDto extends ISearchDto {
-  userStatus: Array<UserStatus>;
-  userRoles: Array<UserRole>;
-}
 
 export const User: FC = () => {
   const location = useLocation();

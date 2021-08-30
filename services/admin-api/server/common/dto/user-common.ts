@@ -10,17 +10,9 @@ import {
 } from "@gemunion/constants-validation";
 import { IsString } from "@gemunion/nest-js-validators";
 import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants-misc";
+import { IUserCommonDto } from "@gemunion/framework-types";
 
 import { IsEmail } from "../validators";
-
-export interface IUserCommonDto {
-  firstName: string;
-  lastName: string;
-  language: EnabledLanguages;
-  phoneNumber: string;
-  imageUrl: string;
-  email: string;
-}
 
 export class UserCommonDto implements IUserCommonDto {
   @ApiPropertyOptional({

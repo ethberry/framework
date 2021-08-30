@@ -4,7 +4,8 @@
     "name": "TrejGun"
   },
   "dependencies": {
-    "@gemunion/framework-constants-misc": "0.0.1"
+    "@gemunion/framework-constants-misc": "0.0.1",
+    "@gemunion/types-collection": "0.1.14"
   },
   "devDependencies": {},
   "files": [

@@ -7,7 +7,7 @@ import { DeleteResult, FindConditions, Repository } from "typeorm";
 import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
-import { EmailType, ProviderType, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
+import { EmailType, IUserCreateDto, ProviderType, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
 import { IJwt } from "@gemunion/types-jwt";
 
 import { UserService } from "../user/user.service";
@@ -22,7 +22,7 @@ import {
   IRestorePasswordDto,
 } from "./interfaces";
 import { AuthEntity } from "./auth.entity";
-import { IUserCreateDto, IUserImportDto } from "../user/interfaces";
+import { IUserImportDto } from "../user/interfaces";
 import { TokenService } from "../token/token.service";
 
 @Injectable()
