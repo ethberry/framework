@@ -2,10 +2,10 @@ import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindConditions, Repository } from "typeorm";
 
-import { MerchantStatus, UserRole } from "@gemunion/framework-types";
+import { IMerchantSearchDto, MerchantStatus, UserRole } from "@gemunion/framework-types";
 
 import { MerchantEntity } from "./merchant.entity";
-import { IMerchantCreateDto, IMerchantSearchDto, IMerchantUpdateDto } from "./interfaces";
+import { IMerchantCreateDto, IMerchantUpdateDto } from "./interfaces";
 import { UserEntity } from "../user/user.entity";
 
 @Injectable()

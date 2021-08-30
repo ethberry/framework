@@ -1,10 +1,10 @@
 import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { SearchDto } from "@gemunion/collection";
 
 import { MerchantService } from "./merchant.service";
 import { MerchantEntity } from "./merchant.entity";
-import { MerchantSearchDto } from "./dto";
 
 @Public()
 @Controller("/merchants")
@@ -13,7 +13,7 @@ export class MerchantController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: MerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
+  public search(@Query() query: SearchDto): Promise<[Array<MerchantEntity>, number]> {
     return this.merchantService.search(query);
   }
 

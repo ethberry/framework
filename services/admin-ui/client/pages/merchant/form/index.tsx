@@ -2,11 +2,10 @@ import React, { FC } from "react";
 import { Collapse, Grid } from "@material-ui/core";
 
 import { AutoSave, FormikForm } from "@gemunion/material-ui-form";
-import { MerchantStatus } from "@gemunion/framework-types";
+import { IMerchantSearchDto, MerchantStatus } from "@gemunion/framework-types";
 import { SelectInput, SearchInput } from "@gemunion/material-ui-inputs-core";
 
 import useStyles from "./styles";
-import { IMerchantSearchDto } from "../index";
 
 interface IMerchantSearchFormProps {
   onSubmit: (values: IMerchantSearchDto) => void;

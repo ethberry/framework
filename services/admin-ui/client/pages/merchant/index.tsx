@@ -11,17 +11,13 @@ import { ProgressOverlay } from "@gemunion/material-ui-progress";
 import { PageHeader } from "@gemunion/material-ui-page-header";
 import { DeleteDialog } from "@gemunion/material-ui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
-import { IMerchant, MerchantStatus } from "@gemunion/framework-types";
+import { IPaginationResult } from "@gemunion/types-collection";
+import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@gemunion/framework-types";
 import { emptyMerchant } from "@gemunion/framework-mocks";
 
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
 import { EditMerchantDialog } from "./edit";
 import { MerchantSearchForm } from "./form";
-
-export interface IMerchantSearchDto extends ISearchDto {
-  merchantStatus: Array<MerchantStatus>;
-}
 
 export const Merchant: FC = () => {
   const location = useLocation();
