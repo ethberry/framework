@@ -4,11 +4,10 @@ import { ConflictException, Inject, Injectable, Logger, LoggerService, NotFoundE
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 
-import { UserRole, UserStatus, IUserSearchDto, IUserCreateDto } from "@gemunion/framework-types";
+import { UserRole, UserStatus, IUserSearchDto, IUserCreateDto, IPasswordDto } from "@gemunion/framework-types";
 
 import { UserEntity } from "./user.entity";
 import { IUserAutocompleteDto, IUserUpdateDto } from "./interfaces";
-import { IPasswordDto } from "../auth/interfaces";
 import { IUserImportDto } from "./interfaces/import";
 
 @Injectable()

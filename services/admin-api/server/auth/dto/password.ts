@@ -1,8 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 import { IsConfirm, IsPassword } from "@gemunion/nest-js-validators";
-
-import { IPasswordDto } from "../interfaces";
+import { IPasswordDto } from "@gemunion/framework-types";
 
 export class ValidatePasswordDto implements IPasswordDto {
   @ApiProperty()
