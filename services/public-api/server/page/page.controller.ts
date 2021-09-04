@@ -1,12 +1,12 @@
 import { Controller, Get, Param, UseInterceptors } from "@nestjs/common";
-import { ApiCookieAuth } from "@nestjs/swagger";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor } from "@gemunion/nest-js-utils";
 
 import { PageService } from "./page.service";
 import { PageEntity } from "./page.entity";
 
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller("/pages")
 export class PageController {
   constructor(private readonly pageService: PageService) {}

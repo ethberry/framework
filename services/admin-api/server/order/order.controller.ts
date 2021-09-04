@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Put, Query, Body, UseInterceptors, Param, Delete, HttpCode } from "@nestjs/common";
-import { ApiCookieAuth } from "@nestjs/swagger";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
@@ -9,7 +9,7 @@ import { OrderSearchDto, OrderCreateDto, OrderUpdateDto } from "./dto";
 import { User } from "../common/decorators";
 import { UserEntity } from "../user/user.entity";
 
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller("/orders")
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}

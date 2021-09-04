@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
-import { ApiCookieAuth } from "@nestjs/swagger";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
@@ -10,7 +10,7 @@ import { Roles, User } from "../common/decorators";
 import { UserEntity } from "../user/user.entity";
 import { UserRole } from "@gemunion/framework-types";
 
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller("/merchants")
 export class MerchantController {
   constructor(private readonly merchantService: MerchantService) {}

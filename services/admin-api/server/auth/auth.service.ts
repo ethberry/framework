@@ -1,5 +1,4 @@
-import { Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
-import { ClientProxy } from "@nestjs/microservices";
+import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -7,8 +6,8 @@ import { DeleteResult, FindConditions, Repository } from "typeorm";
 import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
-import { EmailType, IUserCreateDto, ProviderType, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
 import { IJwt } from "@gemunion/types-jwt";
+import { IUserCreateDto, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
 
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";
@@ -22,8 +21,9 @@ import {
   IRestorePasswordDto,
 } from "./interfaces";
 import { AuthEntity } from "./auth.entity";
+import { IUserImportDto } from "../user/interfaces";
 import { TokenService } from "../token/token.service";
-import { IUserImportDto } from "../user/interfaces/import";
+import { EmailService } from "../email/email.service";
 
 @Injectable()
 export class AuthService {
@@ -34,8 +34,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly tokenService: TokenService,
     private readonly configService: ConfigService,
-    @Inject(ProviderType.EMAIL_SERVICE)
-    private readonly emailClientProxy: ClientProxy,
+    private readonly emailService: EmailService,
   ) {}
 
   public async login(dto: ILoginDto, ip: string): Promise<IJwt> {
@@ -66,6 +65,10 @@ export class AuthService {
 
     if (!authEntity || authEntity.refreshTokenExpiresAt < new Date().getTime()) {
       throw new UnauthorizedException("refreshTokenHasExpired");
+    }
+
+    if (authEntity.user.userStatus !== UserStatus.ACTIVE) {
+      throw new UnauthorizedException("userIsNotActive");
     }
 
     return this.loginUser(authEntity.user, ip);
@@ -99,20 +102,9 @@ export class AuthService {
   public async signup(dto: IUserCreateDto): Promise<UserEntity> {
     const userEntity = await this.userService.create(dto);
 
-    const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
+    // await this.emailService.welcome(userEntity);
 
-    this.emailClientProxy.emit(EmailType.WELCOME, {
-      user: userEntity,
-      baseUrl,
-    });
-
-    const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity);
-
-    this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
-      token: tokenEntity,
-      user: userEntity,
-      baseUrl,
-    });
+    await this.emailService.emailVerification(userEntity);
 
     return userEntity;
   }
@@ -120,21 +112,10 @@ export class AuthService {
   public async import(dto: IUserImportDto): Promise<UserEntity> {
     const userEntity = await this.userService.import(dto);
 
-    const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
-
-    this.emailClientProxy.emit(EmailType.WELCOME, {
-      user: userEntity,
-      baseUrl,
-    });
+    // await this.emailService.welcome(userEntity);
 
     if (dto.userStatus === UserStatus.PENDING) {
-      const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity);
-
-      this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
-        token: tokenEntity,
-        user: userEntity,
-        baseUrl,
-      });
+      await this.emailService.emailVerification(userEntity);
     }
 
     return userEntity;
@@ -152,15 +133,7 @@ export class AuthService {
       throw new UnauthorizedException("userIsNotActive");
     }
 
-    const tokenEntity = await this.tokenService.getToken(TokenType.PASSWORD, userEntity);
-
-    const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
-
-    this.emailClientProxy.emit(EmailType.FORGOT_PASSWORD, {
-      token: tokenEntity,
-      user: userEntity,
-      baseUrl,
-    });
+    await this.emailService.forgotPassword(userEntity);
   }
 
   public async restorePassword(dto: IRestorePasswordDto): Promise<void> {
@@ -172,12 +145,7 @@ export class AuthService {
 
     await this.userService.updatePassword(tokenEntity.user, dto);
 
-    const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
-
-    this.emailClientProxy.emit(EmailType.RESTORE_PASSWORD, {
-      user: tokenEntity.user,
-      baseUrl,
-    });
+    await this.emailService.restorePassword(tokenEntity.user);
 
     // delete token from db
     await tokenEntity.remove();
@@ -203,15 +171,7 @@ export class AuthService {
       return;
     }
 
-    const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity);
-
-    const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3005");
-
-    this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
-      token: tokenEntity,
-      user: userEntity,
-      baseUrl,
-    });
+    await this.emailService.emailVerification(userEntity);
   }
 
   public getPasswordScore(dto: IPasswordScoreDto): IPasswordScoreResult {

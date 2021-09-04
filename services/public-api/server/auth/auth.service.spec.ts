@@ -7,10 +7,10 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { DatabaseModule } from "../database/database.module";
 import { TokenModule } from "../token/token.module";
 import { UserModule } from "../user/user.module";
-import { emailServiceProvider } from "../common/providers";
 import { AuthService } from "./auth.service";
 import { AuthEntity } from "./auth.entity";
 import { JwtLocalStrategy } from "./strategies";
+import { EmailModule } from "../email/email.module";
 
 describe("AuthService", () => {
   let authService: AuthService;
@@ -26,6 +26,7 @@ describe("AuthService", () => {
         UserModule,
         TokenModule,
         PassportModule,
+        EmailModule,
         JwtModule.registerAsync({
           imports: [ConfigModule],
           inject: [ConfigService],
@@ -34,7 +35,7 @@ describe("AuthService", () => {
           }),
         }),
       ],
-      providers: [emailServiceProvider, AuthService, JwtLocalStrategy],
+      providers: [AuthService, JwtLocalStrategy],
     }).compile();
 
     authService = module.get<AuthService>(AuthService);

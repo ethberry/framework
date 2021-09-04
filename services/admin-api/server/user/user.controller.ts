@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Put, Query, UseInterceptors } from "@nestjs/common";
-import { ApiCookieAuth } from "@nestjs/swagger";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
@@ -7,7 +7,7 @@ import { UserService } from "./user.service";
 import { UserEntity } from "./user.entity";
 import { UserAutocompleteDto, UserSearchDto, UserUpdateDto } from "./dto";
 
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller("/users")
 export class UserController {
   constructor(private readonly userService: UserService) {}

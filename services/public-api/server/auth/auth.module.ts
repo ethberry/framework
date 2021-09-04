@@ -4,9 +4,9 @@ import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { emailServiceProvider } from "../common/providers";
 import { UserModule } from "../user/user.module";
 import { TokenModule } from "../token/token.module";
+import { EmailModule } from "../email/email.module";
 import { AuthJwtController } from "./auth.jwt.controller";
 import { AuthSocialController } from "./auth.social.controller";
 import { AuthService } from "./auth.service";
@@ -27,9 +27,10 @@ import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy } from "./stra
       }),
     }),
     ConfigModule,
+    EmailModule,
   ],
   controllers: [AuthJwtController, AuthSocialController],
-  providers: [emailServiceProvider, AuthService, JwtGoogleStrategy, JwtFacebookStrategy, JwtLocalStrategy],
+  providers: [AuthService, JwtGoogleStrategy, JwtFacebookStrategy, JwtLocalStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

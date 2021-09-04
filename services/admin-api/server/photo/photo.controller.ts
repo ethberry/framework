@@ -1,5 +1,5 @@
 import { Controller, Get, Put, Param, Body, UseInterceptors } from "@nestjs/common";
-import { ApiCookieAuth } from "@nestjs/swagger";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 import { UserRole } from "@gemunion/framework-types";
@@ -9,7 +9,7 @@ import { PhotoEntity } from "./photo.entity";
 import { PhotoUpdateDto } from "./dto";
 import { Roles } from "../common/decorators";
 
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller("/photos")
 export class PhotosController {
   constructor(private readonly photosService: PhotoService) {}

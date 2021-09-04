@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
-import { ApiCookieAuth } from "@nestjs/swagger";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 import { SearchDto } from "@gemunion/collection";
@@ -8,7 +8,7 @@ import { CategoryService } from "./category.service";
 import { CategoryEntity } from "./category.entity";
 import { CategoryCreateDto, CategoryUpdateDto } from "./dto";
 
-@ApiCookieAuth()
+@ApiBearerAuth()
 @Controller("/categories")
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
