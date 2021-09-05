@@ -7,14 +7,13 @@ import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
 import { IJwt } from "@gemunion/types-jwt";
-import { IUserCreateDto, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
+import { ILoginDto, IUserCreateDto, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
 
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";
 import {
   IEmailVerificationDto,
   IForgotPasswordDto,
-  ILoginDto,
   IPasswordScoreDto,
   IPasswordScoreResult,
   IResendEmailVerificationDto,

@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 
 import { IsString } from "@gemunion/nest-js-validators";
+import { ILoginDto } from "@gemunion/framework-types";
 
 import { IsEmail } from "../../common/validators";
-import { ILoginDto } from "../interfaces";
 
 export class LoginDto implements ILoginDto {
   @ApiProperty()

@@ -1,3 +1,4 @@
+export * from "./auth/login";
 export * from "./auth/password";
 
 export * from "./merchant/search";

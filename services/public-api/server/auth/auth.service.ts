@@ -7,23 +7,22 @@ import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
 import { IJwt } from "@gemunion/types-jwt";
-import { IUserCreateDto, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
+import { ILoginDto, IUserCreateDto, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
 
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";
+import { AuthEntity } from "./auth.entity";
+import { IUserImportDto } from "../user/interfaces";
+import { TokenService } from "../token/token.service";
+import { EmailService } from "../email/email.service";
 import {
   IEmailVerificationDto,
   IForgotPasswordDto,
-  ILoginDto,
   IPasswordScoreDto,
   IPasswordScoreResult,
   IResendEmailVerificationDto,
   IRestorePasswordDto,
 } from "./interfaces";
-import { AuthEntity } from "./auth.entity";
-import { IUserImportDto } from "../user/interfaces";
-import { TokenService } from "../token/token.service";
-import { EmailService } from "../email/email.service";
 
 @Injectable()
 export class AuthService {
