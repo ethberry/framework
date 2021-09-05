@@ -81,14 +81,7 @@ export const Sections: FC = () => {
         onClick={handleMenuOpen}
         color="inherit"
       >
-        {user.profile.imageUrl ? (
-          <Avatar alt={`${user.profile.firstName} ${user.profile.lastName}`} src={user.profile.imageUrl} />
-        ) : (
-          <Avatar>
-            {user.profile.firstName.substr(0, 1)}
-            {user.profile.lastName.substr(0, 1)}
-          </Avatar>
-        )}
+        <Avatar alt={`${user.profile.firstName} ${user.profile.lastName}`} src={user.profile.imageUrl} />
       </IconButton>
       <Menu id="material-appbar" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
         <MenuItem
