@@ -1,10 +1,7 @@
-name: CI Test
+name: CI Test on Push
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
     branches:
       - master
 
