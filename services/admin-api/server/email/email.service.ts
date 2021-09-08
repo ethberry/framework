@@ -12,7 +12,7 @@ export class EmailService {
   constructor(
     private readonly tokenService: TokenService,
     private readonly configService: ConfigService,
-    @Inject(ProviderType.EMAIL_SERVICE)
+    @Inject(ProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
   ) {}
 

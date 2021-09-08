@@ -3,17 +3,17 @@ import { ConfigService } from "@nestjs/config";
 
 import { ProviderType } from "@gemunion/framework-types";
 
-export const emlServiceProvider = {
-  provide: ProviderType.EML_SERVICE,
+export const pdfServiceProvider = {
+  provide: ProviderType.PDF_SERVICE,
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ClientProxy => {
     const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
-    const rmqQueueEmail = configService.get<string>("RMQ_QUEUE_EMAIL", "email");
+    const rmqQueuePdf = configService.get<string>("RMQ_QUEUE_PDF", "pdf");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
         urls: [rmqUrl],
-        queue: rmqQueueEmail,
+        queue: rmqQueuePdf,
       },
     });
   },

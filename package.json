@@ -7,11 +7,11 @@
     "lerna": "4.0.0"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "0.1.9",
-    "@types/node": "14.17.12",
+    "@gemunion/eslint-config": "0.1.10",
+    "@types/node": "14.17.14",
     "@types/react": "17.0.19",
-    "@typescript-eslint/eslint-plugin": "4.29.3",
-    "@typescript-eslint/parser": "4.29.3",
+    "@typescript-eslint/eslint-plugin": "4.31.0",
+    "@typescript-eslint/parser": "4.31.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard": "16.0.3",
@@ -51,12 +51,12 @@
     "lint": "lerna run lint --stream --parallel",
     "migration": "lerna exec --scope @gemunion/framework-admin-api -- npm run migration:run",
     "precommit": "lint-staged",
-    "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" --write",
+    "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" \"microservices/**/*.{ts,tsx}\" --write",
     "registry": "lerna publish",
     "release": "lerna publish --exact --conventional-commits --registry=https://npm.pkg.github.com/",
     "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
-    "start": "lerna exec --parallel --scope @gemunion/framework-admin-api --scope @gemunion/framework-public-api --scope @gemunion/framework-admin-ui --scope @gemunion/framework-public-ui --scope @gemunion/framework-emailer --scope @gemunion/framework-warehouse -- npm start",
-    "start:prod": "lerna exec --parallel --scope @gemunion/framework-admin-api --scope @gemunion/framework-public-api --scope @gemunion/framework-emailer -- npm run start:prod",
+    "start": "lerna exec --parallel --scope @gemunion/framework-admin-api --scope @gemunion/framework-public-api --scope @gemunion/framework-admin-ui --scope @gemunion/framework-public-ui --scope @gemunion/framework-tpl --scope @gemunion/framework-pdf --scope @gemunion/framework-eml -- npm start",
+    "start:prod": "lerna exec --parallel --scope @gemunion/framework-admin-api --scope @gemunion/framework-public-api --scope @gemunion/framework-tpl --scope @gemunion/framework-pdf --scope @gemunion/framework-eml -- npm run start:prod",
     "test": "sh scripts/test.sh"
   },
   "version": "0.0.1"

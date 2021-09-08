@@ -3,8 +3,8 @@ import { ConfigService } from "@nestjs/config";
 
 import { ProviderType } from "@gemunion/framework-types";
 
-export const emailServiceProvider = {
-  provide: ProviderType.EMAIL_SERVICE,
+export const emlServiceProvider = {
+  provide: ProviderType.EML_SERVICE,
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ClientProxy => {
     const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
