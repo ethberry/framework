@@ -8,7 +8,8 @@ import {
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
 import { SkipThrottle } from "@nestjs/throttler";
-import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis";
+import { RedisService } from "@liaoliaots/nestjs-redis";
+import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis/health";
 import { ConfigService } from "@nestjs/config";
 import { Transport } from "@nestjs/microservices";
 
@@ -16,7 +17,6 @@ import { Public } from "@gemunion/nest-js-utils";
 import { StorageType } from "@gemunion/framework-types";
 
 @Public()
-@SkipThrottle(true)
 @Controller("/health")
 export class HealthController {
   constructor(
@@ -25,8 +25,10 @@ export class HealthController {
     private readonly ms: MicroserviceHealthIndicator,
     private readonly configService: ConfigService,
     private readonly redisIndicator: RedisHealthIndicator,
+    private readonly redisService: RedisService,
   ) {}
 
+  @SkipThrottle(true)
   @Get()
   @HealthCheck()
   readiness(): Promise<HealthCheckResult> {
@@ -45,7 +47,7 @@ export class HealthController {
           },
         }),
       async (): Promise<HealthIndicatorResult> =>
-        this.redisIndicator.isHealthy("Redis", { namespace: StorageType.THROTTLE }),
+        this.redisIndicator.checkHealth("Redis", { client: this.redisService.getClient(StorageType.THROTTLE) }),
     ]);
   }
 }
