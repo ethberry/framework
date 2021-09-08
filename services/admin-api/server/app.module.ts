@@ -9,7 +9,6 @@ import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
 import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
 import { JwtHttpGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
-import { PassportInitialize } from "@gemunion/nest-js-module-passport";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
@@ -105,7 +104,6 @@ import { AppController } from "./app.controller";
         };
       },
     }),
-    PassportInitialize.forRoot(),
     RequestLoggerModule,
     AuthModule,
     CategoryModule,

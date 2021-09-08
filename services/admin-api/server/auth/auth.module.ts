@@ -4,6 +4,8 @@ import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
+import { PassportInitialize } from "@gemunion/nest-js-module-passport";
+
 import { UserModule } from "../user/user.module";
 import { TokenModule } from "../token/token.module";
 import { EmailModule } from "../email/email.module";
@@ -18,7 +20,10 @@ import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy } from "./stra
     TypeOrmModule.forFeature([AuthEntity]),
     UserModule,
     TokenModule,
+    ConfigModule,
+    EmailModule,
     PassportModule,
+    PassportInitialize.forRoot(),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -26,8 +31,6 @@ import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy } from "./stra
         secret: configService.get<string>("JWT_SECRET_KEY", "keyboard_cat"),
       }),
     }),
-    ConfigModule,
-    EmailModule,
   ],
   controllers: [AuthJwtController, AuthSocialController],
   providers: [AuthService, JwtGoogleStrategy, JwtFacebookStrategy, JwtLocalStrategy],
