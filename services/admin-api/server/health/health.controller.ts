@@ -7,7 +7,6 @@ import {
   MicroserviceHealthIndicator,
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
-import { SkipThrottle } from "@nestjs/throttler";
 import { RedisService } from "@liaoliaots/nestjs-redis";
 import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis/health";
 import { ConfigService } from "@nestjs/config";
@@ -28,7 +27,6 @@ export class HealthController {
     private readonly redisService: RedisService,
   ) {}
 
-  @SkipThrottle(true)
   @Get()
   @HealthCheck()
   readiness(): Promise<HealthCheckResult> {
