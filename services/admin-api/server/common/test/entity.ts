@@ -13,7 +13,7 @@ export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
       email: `trejgun+${v4()}@gmail.com`,
       firstName: "Trej",
       lastName: "Gun",
-      password: "92f357f4a898825de204b25fffec4a0a1ca486ad1e25643502e33b5ebeefc3ff", // My5up3r5tr0ngP@55w0rd
+      password: "97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe", // My5up3r5tr0ngP@55w0rd
       phoneNumber,
       imageUrl,
       comment: "Fraud!",

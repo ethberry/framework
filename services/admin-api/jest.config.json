@@ -2,7 +2,7 @@
   "coverageDirectory": "../coverage",
   "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "json"],
   "preset": "ts-jest",
-  "rootDir": "src",
+  "rootDir": "server",
   "testMatch": ["**/*.spec.ts"],
   "verbose": true
 }

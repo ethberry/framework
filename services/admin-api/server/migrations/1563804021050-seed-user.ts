@@ -24,7 +24,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
         updated_at
       ) VALUES (
         'trejgun@gmail.com',
-        '92f357f4a898825de204b25fffec4a0a1ca486ad1e25643502e33b5ebeefc3ff',
+        '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
         'Trej',
         'Admin',
         '+62 (812) 3919-8760',
@@ -38,7 +38,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'trejgun+merchant1@gmail.com',
-        '92f357f4a898825de204b25fffec4a0a1ca486ad1e25643502e33b5ebeefc3ff',
+        '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
         'Trej',
         'Merchant 1',
         '+62 (812) 3919-8760',
@@ -52,7 +52,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'trejgun+merchant2@gmail.com',
-        '92f357f4a898825de204b25fffec4a0a1ca486ad1e25643502e33b5ebeefc3ff',
+        '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
         'Trej',
         'Merchant 2',
         '+62 (812) 3919-8760',
@@ -66,7 +66,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'trejgun+customer1@gmail.com',
-        '92f357f4a898825de204b25fffec4a0a1ca486ad1e25643502e33b5ebeefc3ff',
+        '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
         'Trej',
         'Customer 1',
         '+62 (812) 3919-8760',
@@ -80,7 +80,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'trejgun+customer2@gmail.com',
-        '92f357f4a898825de204b25fffec4a0a1ca486ad1e25643502e33b5ebeefc3ff',
+        '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
         'Trej',
         'Customer 2',
         '+62 (812) 3919-8760',

@@ -83,7 +83,7 @@ export class UserService {
 
   public createPasswordHash(password: string): string {
     const passwordSecret = this.configService.get<string>("PASSWORD_SECRET", "keyboard_cat");
-    return createHash("sha256").update(password).update(passwordSecret).digest("hex");
+    return createHash("sha256").update(passwordSecret).update(password).digest("hex");
   }
 
   public async checkEmail(email: string, id: number): Promise<void> {
