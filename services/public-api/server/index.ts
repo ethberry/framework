@@ -40,6 +40,12 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+
+  if (nodeEnv === "production" || nodeEnv === "staging") {
+    app.enableShutdownHooks();
+  }
+
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<number>("PORT", 3003);
 
