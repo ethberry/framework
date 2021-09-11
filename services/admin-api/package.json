@@ -34,7 +34,6 @@
     "@gemunion/nest-js-utils": "1.0.9",
     "@gemunion/nest-js-validators": "1.2.4",
     "@gemunion/framework-constants-misc": "0.0.1",
-    "@gemunion/framework-material-ui-rte": "0.0.1",
     "@gemunion/framework-mocks": "0.0.1",
     "@gemunion/framework-types": "0.0.1",
     "@gemunion/types-collection": "0.1.15",

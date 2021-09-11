@@ -42,8 +42,7 @@ touch ./services/admin-api/.env.production
   echo FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRETL >>./services/admin-api/.env.production
   echo FACEBOOK_CALLBACK_URL=$FACEBOOK_CALLBACK_URL >>./services/admin-api/.env.production
   echo PASSWORD_SECRET=$PASSWORD_SECRET >>./services/admin-api/.env.production
-  echo PAPERTRAIL_HOST=$PAPERTRAIL_HOST >>./services/admin-api/.env.production
-  echo PAPERTRAIL_PORT=$PAPERTRAIL_PORT >>./services/admin-api/.env.production
+  echo LOGDNA_INGESTION_KEY=LOGDNA_INGESTION_KEY >>./services/admin-api/.env.production
 
 touch ./services/admin-ui/.env.production
   echo HOST=$HOST >>./services/admin-ui/.env.production
@@ -81,8 +80,7 @@ touch ./services/public-api/.env.production
   echo FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRETL >>./services/public-api/.env.production
   echo FACEBOOK_CALLBACK_URL=$FACEBOOK_CALLBACK_URL >>./services/public-api/.env.production
   echo PASSWORD_SECRET=$PASSWORD_SECRET >>./services/public-api/.env.production
-  echo PAPERTRAIL_HOST=$PAPERTRAIL_HOST >>./services/public-api/.env.production
-  echo PAPERTRAIL_PORT=$PAPERTRAIL_PORT >>./services/public-api/.env.production
+  echo LOGDNA_INGESTION_KEY=LOGDNA_INGESTION_KEY >>./services/public-api/.env.production
 
 touch ./services/public-ui/.env.production
   echo HOST=$HOST >>./services/public-ui/.env.production
@@ -105,8 +103,7 @@ touch ./services/emailer/.env.production
   echo PORT=$PORT_EMAILER >>./services/emailer/.env.production
   echo RMQ_URL=$RMQ_URL >>./services/emailer/.env.production
   echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/emailer/.env.production
-  echo PAPERTRAIL_HOST=$PAPERTRAIL_HOST >>./services/emailer/.env.production
-  echo PAPERTRAIL_PORT=$PAPERTRAIL_PORT >>./services/emailer/.env.production
+  echo LOGDNA_INGESTION_KEY=LOGDNA_INGESTION_KEY >>./services/emailer/.env.production
 
 
 echo "\033[34mAll done!\n\033[0m"

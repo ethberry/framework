@@ -1,5 +1,6 @@
-import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
 import { v4 } from "uuid";
+
+import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
 import { imageUrl, phoneNumber } from "@gemunion/framework-mocks";
 import { DefaultLanguage } from "@gemunion/framework-constants-misc";
 
