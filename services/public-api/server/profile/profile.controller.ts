@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Put, Patch } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Patch, Put, Res } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
+import { Response } from "express";
 
 import { Public, User } from "@gemunion/nest-js-utils";
 
@@ -14,7 +15,10 @@ export class ProfileController {
 
   @Public()
   @Get("/")
-  public getProfile(@User() userEntity: UserEntity): UserEntity {
+  public getProfile(@User() userEntity: UserEntity, @Res({ passthrough: true }) res: Response): UserEntity {
+    if (!userEntity) {
+      res.status(HttpStatus.NO_CONTENT);
+    }
     return userEntity;
   }
 
