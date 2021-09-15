@@ -10,7 +10,5 @@ export POSTGRES_URL=$POSTGRES_URL
 
 lerna bootstrap --hoist
 
-lerna run lint --stream --parallel
-
 lerna exec --parallel --scope @gemunion/framework-admin-api -- npm run migration:run
 lerna exec -- npm run test
