@@ -4,6 +4,7 @@ const path = require("path");
 const ProgressBarPlugin = require("progress-bar-webpack-plugin");
 const DotEnvPlugin = require("dotenv-webpack");
 const CopyPlugin = require("copy-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -33,35 +34,9 @@ module.exports = {
         exclude: [/node_modules/],
         use: [
           {
-            loader: "babel-loader",
+            loader: "ts-loader",
             options: {
-              babelrc: false,
-              sourceType: "unambiguous",
-              presets: [
-                [
-                  "@babel/env",
-                  {
-                    modules: false,
-                    targets: {
-                      browsers: ["> 1%"],
-                    },
-                  },
-                ],
-                [
-                  "@babel/typescript",
-                  {
-                    isTSX: true,
-                    allExtensions: true,
-                  },
-                ],
-                "@babel/react",
-              ],
-              plugins: [
-                "optimize-clsx",
-                "@babel/plugin-proposal-nullish-coalescing-operator",
-                "@babel/plugin-proposal-optional-chaining",
-                "@babel/transform-runtime",
-              ],
+              transpileOnly: true,
             },
           },
         ],
@@ -77,6 +52,7 @@ module.exports = {
       patterns: [{ from: "./static", to: "./" }],
     }),
     new ProgressBarPlugin(),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   performance: {
     hints: false,
@@ -90,6 +66,7 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           name: "vendors",
           chunks: "all",
+          enforce: true,
         },
       },
     },

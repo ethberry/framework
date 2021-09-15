@@ -3,6 +3,9 @@ import { Configuration, HotModuleReplacementPlugin } from "webpack";
 import DotEnvPlugin from "dotenv-webpack";
 import CopyPlugin from "copy-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import ReactRefreshTypeScript from "react-refresh-typescript";
 
 const config: Configuration = {
   mode: "development",
@@ -20,9 +23,6 @@ const config: Configuration = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: ["node_modules"],
-    alias: {
-      "react-dom": "@hot-loader/react-dom",
-    },
     fallback: {
       path: require.resolve("path-browserify"),
     },
@@ -46,34 +46,12 @@ const config: Configuration = {
         exclude: [/node_modules/],
         use: [
           {
-            loader: "babel-loader",
+            loader: "ts-loader",
             options: {
-              babelrc: false,
-              presets: [
-                [
-                  "@babel/env",
-                  {
-                    modules: false,
-                    targets: {
-                      browsers: ["> 1%"],
-                    },
-                  },
-                ],
-                [
-                  "@babel/typescript",
-                  {
-                    isTSX: true,
-                    allExtensions: true,
-                  },
-                ],
-                "@babel/react",
-              ],
-              plugins: [
-                "optimize-clsx",
-                "@babel/plugin-proposal-nullish-coalescing-operator",
-                "@babel/plugin-proposal-optional-chaining",
-                "react-hot-loader/babel",
-              ],
+              getCustomTransformers: () => ({
+                before: [ReactRefreshTypeScript()],
+              }),
+              transpileOnly: true,
             },
           },
         ],
@@ -92,6 +70,8 @@ const config: Configuration = {
       patterns: [{ from: "./static", to: "./" }],
     }),
     new HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   performance: {
     hints: false,
@@ -103,6 +83,7 @@ const config: Configuration = {
           test: /[\\/]node_modules[\\/]/,
           name: "vendors",
           chunks: "all",
+          enforce: true,
         },
       },
     },
