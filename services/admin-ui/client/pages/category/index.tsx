@@ -37,7 +37,7 @@ export const Category: FC = () => {
 
   const [data, setData] = useState<ISearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     query: "",
     ...parse(location.search.substring(1)),
   });
@@ -172,7 +172,7 @@ export const Category: FC = () => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 

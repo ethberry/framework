@@ -11,6 +11,8 @@ import { PageHeader } from "@gemunion/material-ui-page-header";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IMerchant } from "@gemunion/framework-types";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
+import { defaultItemsPerPage } from "@gemunion/constants";
+
 import { MerchantItem } from "./item";
 
 export const MerchantList: FC = () => {
@@ -27,7 +29,7 @@ export const MerchantList: FC = () => {
 
   const [data, setData] = useState<ISearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     query: "",
     ...parse(location.search.substring(1)),
   });

@@ -14,6 +14,7 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { IPage, PageStatus } from "@gemunion/framework-types";
 import { emptyPage } from "@gemunion/framework-mocks";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditPageDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
@@ -43,7 +44,7 @@ export const Page: FC = () => {
 
   const [data, setData] = useState<IPageSearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     query: "",
     pageStatus: [PageStatus.ACTIVE],
     categoryIds: [],

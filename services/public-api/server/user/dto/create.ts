@@ -8,7 +8,7 @@ import {
   firstNameMinLength,
   lastNameMaxLength,
   lastNameMinLength,
-} from "@gemunion/constants-validation";
+} from "@gemunion/constants";
 import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants-misc";
 import { ReCaptcha } from "@gemunion/nest-js-utils";
 import { IUserCreateDto } from "@gemunion/framework-types";

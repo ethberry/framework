@@ -5,11 +5,13 @@ import { Grid } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router";
+
 import { PageHeader } from "@gemunion/material-ui-page-header";
 import { ProgressOverlay } from "@gemunion/material-ui-progress";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { IPaginationResult, IPaginationDto } from "@gemunion/types-collection";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { OrderItem } from "./item";
 import { OrderSearchForm } from "./form";
@@ -36,7 +38,7 @@ export const Orders: FC = () => {
 
   const [data, setData] = useState<IOrderSearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     orderStatus: [OrderStatus.NEW],
     ...parsedData,
     dateRange: parseDateRange(parsedData.dateRange as string),
@@ -94,7 +96,7 @@ export const Orders: FC = () => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 

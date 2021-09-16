@@ -7,7 +7,7 @@ import {
   firstNameMinLength,
   lastNameMaxLength,
   lastNameMinLength,
-} from "@gemunion/constants-validation";
+} from "@gemunion/constants";
 import { IsString } from "@gemunion/nest-js-validators";
 import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants-misc";
 import { IUserCommonDto } from "@gemunion/framework-types";

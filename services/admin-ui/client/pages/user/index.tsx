@@ -14,6 +14,7 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IUser, IUserSearchDto, UserStatus } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { emptyUser } from "@gemunion/framework-mocks";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditUserDialog } from "./edit";
 import { UserSearchForm } from "./form";
@@ -37,7 +38,7 @@ export const User: FC = () => {
 
   const [data, setData] = useState<IUserSearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     query: "",
     userStatus: [UserStatus.ACTIVE],
     userRoles: [],
@@ -173,7 +174,7 @@ export const User: FC = () => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 

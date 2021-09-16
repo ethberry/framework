@@ -15,6 +15,7 @@ import { IPromo } from "@gemunion/framework-types";
 import { emptyPromo } from "@gemunion/framework-mocks";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { CommonSearchForm } from "@gemunion/material-ui-form-search";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditPromoDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
@@ -37,7 +38,7 @@ export const Promo: FC = () => {
 
   const [data, setData] = useState<ISearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     query: "",
     ...parse(location.search.substring(1)),
   });
@@ -172,7 +173,7 @@ export const Promo: FC = () => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 

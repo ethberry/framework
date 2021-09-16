@@ -14,6 +14,7 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, IPaginationDto } from "@gemunion/types-collection";
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { emptyOrder } from "@gemunion/framework-mocks";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
 import { EditOrderDialog } from "./edit";
@@ -45,7 +46,7 @@ export const Order: FC = () => {
 
   const [data, setData] = useState<IOrderSearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     orderStatus: [OrderStatus.NEW],
     ...parsedData,
     dateRange: parseDateRange(parsedData.dateRange as string),
@@ -196,7 +197,7 @@ export const Order: FC = () => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 

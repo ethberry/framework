@@ -6,7 +6,7 @@ import {
   ValidatorConstraintInterface,
 } from "class-validator";
 
-import { reEmail } from "@gemunion/constants-regexp";
+import { reEmail } from "@gemunion/constants";
 
 interface IEmailConstraints {
   required: boolean;

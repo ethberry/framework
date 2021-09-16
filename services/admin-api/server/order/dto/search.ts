@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 
 import { OrderStatus } from "@gemunion/framework-types";
-import { reDateRange } from "@gemunion/constants-regexp";
+import { reDateRange } from "@gemunion/constants";
 import { IsNumber, IsString } from "@gemunion/nest-js-validators";
 import { SearchDto } from "@gemunion/collection";
 

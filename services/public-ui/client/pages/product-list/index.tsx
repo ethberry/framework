@@ -12,6 +12,7 @@ import { PageHeader } from "@gemunion/material-ui-page-header";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IProduct } from "@gemunion/framework-types";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { ProductItem } from "./item";
 import { ProductSearchForm } from "./form";
@@ -44,7 +45,7 @@ export const ProductList: FC<IProductListProps> = props => {
 
   const [data, setData] = useState<IProductSearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     merchantId: id,
     query: "",
     categoryIds: [],
@@ -92,7 +93,7 @@ export const ProductList: FC<IProductListProps> = props => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 

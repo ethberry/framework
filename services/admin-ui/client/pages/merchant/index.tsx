@@ -14,6 +14,7 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@gemunion/framework-types";
 import { emptyMerchant } from "@gemunion/framework-mocks";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
 import { EditMerchantDialog } from "./edit";
@@ -38,7 +39,7 @@ export const Merchant: FC = () => {
 
   const [data, setData] = useState<IMerchantSearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     query: "",
     merchantStatus: [MerchantStatus.ACTIVE],
     ...parse(location.search.substring(1)),
@@ -178,7 +179,7 @@ export const Merchant: FC = () => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 

@@ -14,6 +14,7 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { IProduct, ProductStatus } from "@gemunion/framework-types";
 import { emptyProduct } from "@gemunion/framework-mocks";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditProductDialog } from "./edit";
 import { ProductSearchForm } from "./form";
@@ -45,7 +46,7 @@ export const Product: FC = () => {
 
   const [data, setData] = useState<IProductSearchDto>({
     skip: 0,
-    take: 10,
+    take: defaultItemsPerPage,
     query: "",
     productStatus: [ProductStatus.ACTIVE],
     categoryIds: [],
@@ -185,7 +186,7 @@ export const Product: FC = () => {
     setData({
       ...values,
       skip: 0,
-      take: 10,
+      take: defaultItemsPerPage,
     });
   };
 
