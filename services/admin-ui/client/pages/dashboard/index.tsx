@@ -1,12 +1,12 @@
 import React, { FC, useContext } from "react";
-import { Divider, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { Bookmark, Category, Email, MenuBook, PeopleAlt, Photo, Storage, Storefront } from "@material-ui/icons";
+import { Divider, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Bookmark, Category, Email, MenuBook, PeopleAlt, Photo, Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { PageHeader } from "@gemunion/mui-page-header";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 import { IUserContext, UserContext } from "@gemunion/provider-user";
 import { IUser, UserRole } from "@gemunion/framework-types";
 

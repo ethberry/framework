@@ -1,16 +1,16 @@
 import React, { ComponentClass, FunctionComponent } from "react";
 import * as ReactDOM from "react-dom";
 import { Router } from "react-router-dom";
-import { ThemeProvider } from "@gemunion/material-ui-provider-theme";
+import { GemunionThemeProvider } from "@gemunion/mui-provider-theme";
 import { history } from "@gemunion/history";
 
 export default (App: ComponentClass<any> | FunctionComponent<any>): void => {
   ReactDOM.render(
-    <ThemeProvider>
+    <GemunionThemeProvider>
       <Router history={history}>
         <App />
       </Router>
-    </ThemeProvider>,
+    </GemunionThemeProvider>,
     document.getElementById("app"),
   );
 };

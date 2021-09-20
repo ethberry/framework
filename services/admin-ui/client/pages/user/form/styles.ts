@@ -1,9 +1,8 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { Theme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
-export default makeStyles(theme =>
-  createStyles({
-    root: {
-      margin: theme.spacing(3, 0),
-    },
-  }),
-);
+export const useStyles = makeStyles<Theme>(theme => ({
+  root: {
+    margin: theme.spacing(3, 0),
+  },
+}));

@@ -1,15 +1,15 @@
 import React, { FC, useContext, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, MobileStepper } from "@material-ui/core";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
+import { Button, MobileStepper } from "@mui/material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
 
-import { ProgressOverlay, Spinner } from "@gemunion/material-ui-progress";
+import { ProgressOverlay, Spinner } from "@gemunion/mui-progress";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPromo } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 export const PromoCarousel: FC = () => {
   const classes = useStyles();

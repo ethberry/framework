@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { IconButton } from "@material-ui/core";
-import { ArrowBack, ArrowForward } from "@material-ui/icons";
+import { IconButton } from "@mui/material";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 declare interface IMultiCarouselButtonGroupProps {
   next?: () => void;

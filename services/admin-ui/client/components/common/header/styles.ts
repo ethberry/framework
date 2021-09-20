@@ -1,6 +1,7 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { Theme } from "@mui/material/styles";
+import { makeStyles, createStyles } from "@mui/styles";
 
-export default makeStyles(
+export const useStyles = makeStyles<Theme>(
   theme =>
     createStyles({
       toolbar: {

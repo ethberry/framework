@@ -1,17 +1,17 @@
 import React, { FC, Fragment, useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl, FormattedMessage } from "react-intl";
-import { Typography, Grid, Paper } from "@material-ui/core";
+import { Typography, Grid, Paper } from "@mui/material";
 import { useParams } from "react-router";
 
-import { Spinner } from "@gemunion/material-ui-progress";
+import { Spinner } from "@gemunion/mui-progress";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { PageHeader } from "@gemunion/mui-page-header";
 import { IProduct } from "@gemunion/framework-types";
 import { RichTextDisplay } from "@gemunion/framework-material-ui-rte";
 
 import { formatMoney } from "../../utils/money";
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 import { Carousel } from "./carousel";
 
 export const Product: FC = () => {

@@ -1,14 +1,14 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { Theme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
-export default makeStyles(
-  () =>
-    createStyles({
-      toolbar: {
-        height: 36,
-      },
-      media: {
-        height: 140,
-      },
-    }),
+export const useStyles = makeStyles<Theme>(
+  () => ({
+    toolbar: {
+      height: 36,
+    },
+    media: {
+      height: 140,
+    },
+  }),
   { name: "Product" },
 );

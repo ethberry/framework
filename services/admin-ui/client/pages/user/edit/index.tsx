@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import { format, parseISO } from "date-fns";
-import { Divider } from "@material-ui/core";
+import { Divider } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-import { SelectInput, StaticInput, TextInput } from "@gemunion/material-ui-inputs-core";
-import { FormDialog } from "@gemunion/material-ui-dialog-form";
+import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
+import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EnabledLanguages } from "@gemunion/framework-constants-misc";
 import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
-import { PhoneInput } from "@gemunion/material-ui-inputs-mask";
-import { AvatarInput } from "@gemunion/material-ui-inputs-image-s3";
+import { PhoneInput } from "@gemunion/mui-inputs-mask";
+import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 
 import { validationSchema } from "./validation";
 

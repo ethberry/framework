@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 
-import { EntityInput } from "@gemunion/material-ui-inputs-entity";
-import { FormDialog } from "@gemunion/material-ui-dialog-form";
-import { TextInput } from "@gemunion/material-ui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { FormDialog } from "@gemunion/mui-dialog-form";
+import { TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/framework-material-ui-rte";
 import { ICategory } from "@gemunion/framework-types";
 

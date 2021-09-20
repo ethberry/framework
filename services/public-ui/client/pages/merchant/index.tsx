@@ -1,18 +1,18 @@
-import React, { FC, Fragment, useContext, useEffect, useState } from "react";
+import { FC, Fragment, useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { Avatar, Box, Typography } from "@material-ui/core";
+import { Avatar, Box, Typography } from "@mui/material";
 import { useParams } from "react-router";
-import { Skeleton } from "@material-ui/lab";
+import { Skeleton } from "@mui/lab";
 
-import { Spinner } from "@gemunion/material-ui-progress";
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { Spinner } from "@gemunion/mui-progress";
+import { PageHeader } from "@gemunion/mui-page-header";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IMerchant } from "@gemunion/framework-types";
-import { RichTextDisplay } from "@gemunion/framework-material-ui-rte";
 
 import { ProductList } from "../product-list";
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 export const Merchant: FC = () => {
   const { merchantId } = useParams<{ merchantId: string }>();
@@ -61,7 +61,7 @@ export const Merchant: FC = () => {
       <Box display="flex">
         <Box margin={1}>
           {isLoading ? (
-            <Skeleton variant="circle">
+            <Skeleton variant="circular">
               <Avatar />
             </Skeleton>
           ) : (
@@ -79,7 +79,7 @@ export const Merchant: FC = () => {
         </Box>
       </Box>
 
-      <ProductList hideMerchantsInSearch={true} />
+      <ProductList hideMerchantsInSearch />
     </Fragment>
   );
 };

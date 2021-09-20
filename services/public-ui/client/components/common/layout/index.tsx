@@ -1,8 +1,8 @@
 import React, { FC } from "react";
-import { Container } from "@material-ui/core";
+import { Container } from "@mui/material";
 
 import { Header } from "../header";
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 export const Layout: FC = ({ children }) => {
   const classes = useStyles();

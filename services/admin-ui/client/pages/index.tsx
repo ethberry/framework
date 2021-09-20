@@ -8,7 +8,7 @@ import { SettingsProvider } from "@gemunion/provider-settings";
 import { LocalizationProvider } from "@gemunion/provider-localization";
 import { ApiProvider } from "@gemunion/provider-api";
 import { i18n } from "@gemunion/framework-localization-admin-ui";
-import { PickerProvider } from "@gemunion/material-ui-provider-picker";
+import { PickerProvider } from "@gemunion/mui-provider-picker";
 import { DefaultLanguage } from "@gemunion/framework-constants-misc";
 import {
   Error,

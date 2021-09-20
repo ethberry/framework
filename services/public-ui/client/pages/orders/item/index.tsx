@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Grid, List, Link, ListItem, ListItemText, Paper } from "@material-ui/core";
+import { Grid, List, Link, ListItem, ListItemText, Paper } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { format, parseISO } from "date-fns";
 import { Link as RouterLink } from "react-router-dom";

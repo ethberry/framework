@@ -1,9 +1,9 @@
 import React, { FC } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/material-ui-form";
-import { SelectInput } from "@gemunion/material-ui-inputs-core";
-import { DateRangeInput } from "@gemunion/material-ui-inputs-picker";
+import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+import { DateRangeInput } from "@gemunion/mui-inputs-picker";
 import { OrderStatus } from "@gemunion/framework-types";
 
 import { IOrderSearchDto } from "../index";

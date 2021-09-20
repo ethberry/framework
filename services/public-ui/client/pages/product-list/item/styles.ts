@@ -1,18 +1,18 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { Theme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
-export default makeStyles(
-  theme =>
-    createStyles({
-      toolbar: {
-        height: 36,
-      },
-      media: {
-        height: 140,
-      },
-      preview: {
-        height: theme.spacing(10),
-        overflow: "hidden",
-      },
-    }),
+export const useStyles = makeStyles<Theme>(
+  theme => ({
+    toolbar: {
+      height: 36,
+    },
+    media: {
+      height: 200,
+    },
+    preview: {
+      height: theme.spacing(10),
+      overflow: "hidden",
+    },
+  }),
   { name: "Product" },
 );

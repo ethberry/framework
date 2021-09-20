@@ -3,9 +3,9 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
 
-import { Spinner } from "@gemunion/material-ui-progress";
+import { Spinner } from "@gemunion/mui-progress";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { PageHeader } from "@gemunion/mui-page-header";
 import { IPage } from "@gemunion/framework-types";
 import { RichTextDisplay } from "@gemunion/framework-material-ui-rte";
 

@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
-import { AccountCircle, Bookmark, Inbox } from "@material-ui/icons";
+import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { AccountCircle, Bookmark, Inbox } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { PageHeader } from "@gemunion/mui-page-header";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();

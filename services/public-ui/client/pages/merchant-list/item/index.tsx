@@ -1,10 +1,10 @@
 import React, { FC } from "react";
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@material-ui/core";
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { IMerchant } from "@gemunion/framework-types";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 interface IProductItemProps {
   merchant: IMerchant;

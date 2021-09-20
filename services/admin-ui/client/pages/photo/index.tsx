@@ -10,11 +10,11 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
-} from "@material-ui/core";
-import { Clear, Done } from "@material-ui/icons";
+} from "@mui/material";
+import { Clear, Done } from "@mui/icons-material";
 
-import { ProgressOverlay } from "@gemunion/material-ui-progress";
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { ProgressOverlay } from "@gemunion/mui-progress";
+import { PageHeader } from "@gemunion/mui-page-header";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";

@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 
-import { FormDialog } from "@gemunion/material-ui-dialog-form";
-import { TextInput } from "@gemunion/material-ui-inputs-core";
-import { EntityInput } from "@gemunion/material-ui-inputs-entity";
-import { AvatarInput } from "@gemunion/material-ui-inputs-image-s3";
+import { FormDialog } from "@gemunion/mui-dialog-form";
+import { TextInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 import { RichTextEditor } from "@gemunion/framework-material-ui-rte";
 import { IPromo } from "@gemunion/framework-types";
 

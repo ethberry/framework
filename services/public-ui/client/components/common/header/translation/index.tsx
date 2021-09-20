@@ -1,7 +1,7 @@
 import React, { FC, Fragment, MouseEvent, useContext, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IconButton, Menu, MenuItem, Tooltip } from "@material-ui/core";
-import { Translate } from "@material-ui/icons";
+import { IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Translate } from "@mui/icons-material";
 
 import { ISettingsContext, SettingsContext } from "@gemunion/provider-settings";
 import { EnabledLanguages } from "@gemunion/framework-constants-misc";

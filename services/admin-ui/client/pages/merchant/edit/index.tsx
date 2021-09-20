@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 
-import { EntityInput } from "@gemunion/material-ui-inputs-entity";
-import { FormDialog } from "@gemunion/material-ui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/material-ui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { FormDialog } from "@gemunion/mui-dialog-form";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/framework-material-ui-rte";
-import { AvatarInput } from "@gemunion/material-ui-inputs-image-s3";
-import { PhoneInput } from "@gemunion/material-ui-inputs-mask";
+import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
+import { PhoneInput } from "@gemunion/mui-inputs-mask";
 import { IMerchant, IUser, MerchantStatus } from "@gemunion/framework-types";
 
 import { validationSchema } from "./validation";

@@ -1,15 +1,15 @@
 import React, { FC, useContext } from "react";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { SelectInput, TextInput } from "@gemunion/material-ui-inputs-core";
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { PageHeader } from "@gemunion/mui-page-header";
 import { UserContext, IUserContext } from "@gemunion/provider-user";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { FormikForm } from "@gemunion/material-ui-form";
-import { PhoneInput } from "@gemunion/material-ui-inputs-mask";
-import { AvatarInput } from "@gemunion/material-ui-inputs-image-s3";
+import { FormikForm } from "@gemunion/mui-form";
+import { PhoneInput } from "@gemunion/mui-inputs-mask";
+import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 import { EnabledLanguages } from "@gemunion/framework-constants-misc";
 import { IUser } from "@gemunion/framework-types";
 

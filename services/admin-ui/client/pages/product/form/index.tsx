@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import { Collapse, Grid } from "@material-ui/core";
+import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/material-ui-form";
+import { AutoSave, FormikForm } from "@gemunion/mui-form";
 import { ProductStatus } from "@gemunion/framework-types";
-import { SelectInput, SearchInput } from "@gemunion/material-ui-inputs-core";
-import { EntityInput } from "@gemunion/material-ui-inputs-entity";
+import { SelectInput, SearchInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 import { IProductSearchDto } from "../index";
 
 interface IProductSearchFormProps {

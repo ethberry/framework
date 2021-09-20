@@ -2,14 +2,14 @@ import React, { FC, Fragment, MouseEvent, useContext, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { matchPath, useHistory, useLocation } from "react-router";
-import { Avatar, Button, IconButton, Menu, MenuItem } from "@material-ui/core";
+import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 
 import { IUserContext, UserContext } from "@gemunion/provider-user";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IUser } from "@gemunion/framework-types";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 export const Sections: FC = () => {
   const history = useHistory();

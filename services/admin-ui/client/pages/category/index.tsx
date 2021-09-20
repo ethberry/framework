@@ -1,20 +1,21 @@
 import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
-import { Add, Create, Delete } from "@material-ui/icons";
-import { Pagination } from "@material-ui/lab";
+import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
+import { Add, Create, Delete } from "@mui/icons-material";
+import { Pagination } from "@mui/lab";
 import { useHistory, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
 
-import { ProgressOverlay } from "@gemunion/material-ui-progress";
-import { PageHeader } from "@gemunion/material-ui-page-header";
-import { DeleteDialog } from "@gemunion/material-ui-dialog-delete";
-import { CommonSearchForm } from "@gemunion/material-ui-form-search";
+import { ProgressOverlay } from "@gemunion/mui-progress";
+import { PageHeader } from "@gemunion/mui-page-header";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { ICategory } from "@gemunion/framework-types";
 import { emptyCategory } from "@gemunion/framework-mocks";
+import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditCategoryDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";

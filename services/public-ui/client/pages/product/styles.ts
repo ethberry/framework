@@ -1,11 +1,11 @@
-import { createStyles, makeStyles } from "@material-ui/core";
+import { Theme } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
 
-export default makeStyles(
-  theme =>
-    createStyles({
-      paper: {
-        padding: theme.spacing(2),
-      },
-    }),
+export const useStyles = makeStyles<Theme>(
+  theme => ({
+    paper: {
+      padding: theme.spacing(2),
+    },
+  }),
   { name: "Product" },
 );

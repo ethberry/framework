@@ -1,15 +1,15 @@
 import React, { FC, useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Typography } from "@material-ui/core";
+import { Typography } from "@mui/material";
 
-import { ProgressOverlay } from "@gemunion/material-ui-progress";
+import { ProgressOverlay } from "@gemunion/mui-progress";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IProduct } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
 
 import { MultiCarousel } from "../multi-carousel";
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 export const NewProducts: FC = () => {
   const { enqueueSnackbar } = useSnackbar();

@@ -1,15 +1,15 @@
 import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@material-ui/core";
-import { Add, Create, Delete, FilterList } from "@material-ui/icons";
-import { Pagination } from "@material-ui/lab";
+import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Pagination } from "@mui/lab";
 import { useHistory, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
 
-import { ProgressOverlay } from "@gemunion/material-ui-progress";
-import { PageHeader } from "@gemunion/material-ui-page-header";
-import { DeleteDialog } from "@gemunion/material-ui-dialog-delete";
+import { ProgressOverlay } from "@gemunion/mui-progress";
+import { PageHeader } from "@gemunion/mui-page-header";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@gemunion/framework-types";

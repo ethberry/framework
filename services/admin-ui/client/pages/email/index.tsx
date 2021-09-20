@@ -1,10 +1,10 @@
 import React, { FC, MouseEvent, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Grid, List, ListItem, ListItemText } from "@material-ui/core";
+import { Grid, List, ListItem, ListItemText } from "@mui/material";
 
-import { ProgressOverlay } from "@gemunion/material-ui-progress";
-import { PageHeader } from "@gemunion/material-ui-page-header";
+import { ProgressOverlay } from "@gemunion/mui-progress";
+import { PageHeader } from "@gemunion/mui-page-header";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { EmailType } from "@gemunion/framework-types";
 

@@ -1,12 +1,12 @@
 import React, { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { Button, MobileStepper, Paper, Typography } from "@material-ui/core";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
+import { Button, MobileStepper, Paper, Typography } from "@mui/material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
-import { Spinner } from "@gemunion/material-ui-progress";
+import { Spinner } from "@gemunion/mui-progress";
 import { IProduct } from "@gemunion/framework-types";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 interface ICarouselProps {
   product: IProduct;

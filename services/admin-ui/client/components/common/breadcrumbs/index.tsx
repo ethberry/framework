@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { FormattedMessage } from "react-intl";
-import { Breadcrumbs as MuiBreadcrumbs, Link, Typography } from "@material-ui/core";
+import { Breadcrumbs as MuiBreadcrumbs, Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 export interface IBreadcrumbsProps {

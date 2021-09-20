@@ -1,5 +1,5 @@
 import React, { FC, Fragment, Ref, useCallback, useEffect, useImperativeHandle, useRef } from "react";
-import { InputBaseComponentProps } from "@material-ui/core/InputBase";
+import { InputBaseComponentProps } from "@mui/material/InputBase";
 import { EditorState } from "draft-js";
 import { IRichTextEditorRef, RichTextEditor, TToolbarControl } from "@gemunion/mui-rte";
 

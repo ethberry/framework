@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { Collapse, Grid } from "@material-ui/core";
+import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/material-ui-form";
+import { AutoSave, FormikForm } from "@gemunion/mui-form";
 import { IMerchantSearchDto, MerchantStatus } from "@gemunion/framework-types";
-import { SelectInput, SearchInput } from "@gemunion/material-ui-inputs-core";
+import { SelectInput, SearchInput } from "@gemunion/mui-inputs-core";
 
-import useStyles from "./styles";
+import { useStyles } from "./styles";
 
 interface IMerchantSearchFormProps {
   onSubmit: (values: IMerchantSearchDto) => void;

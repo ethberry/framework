@@ -1,13 +1,13 @@
 import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { Grid } from "@material-ui/core";
-import { Pagination } from "@material-ui/lab";
+import { Grid } from "@mui/material";
+import { Pagination } from "@mui/lab";
 import { parse, stringify } from "qs";
 import { useHistory, useLocation } from "react-router";
 
-import { PageHeader } from "@gemunion/material-ui-page-header";
-import { ProgressOverlay } from "@gemunion/material-ui-progress";
+import { PageHeader } from "@gemunion/mui-page-header";
+import { ProgressOverlay } from "@gemunion/mui-progress";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { IPaginationResult, IPaginationDto } from "@gemunion/types-collection";
