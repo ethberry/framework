@@ -6,7 +6,7 @@
   "dependencies": {
     "@gemunion/framework-constants-misc": "0.0.1",
     "@gemunion/types-collection": "0.1.15",
-    "@gemunion/types-jwt": "0.2.4"
+    "@gemunion/types-jwt": "0.2.5"
   },
   "devDependencies": {},
   "files": [
