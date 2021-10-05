@@ -13,7 +13,7 @@
   "description": "localization for emailer",
   "devDependencies": {},
   "engines": {
-    "node": ">=10"
+    "node": ">=12.13"
   },
   "files": [
     "dist/*",

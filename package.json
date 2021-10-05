@@ -31,7 +31,7 @@
     "typescript": "4.4.3"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=12.13"
   },
   "license": "UNLICENSED",
   "name": "@gemunion/framework-root",

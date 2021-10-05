@@ -11,7 +11,7 @@
   "description": "constants for validation on FE and BE",
   "devDependencies": {},
   "engines": {
-    "node": ">=10"
+    "node": ">=12.13"
   },
   "files": [
     "dist/*"
