@@ -5,7 +5,6 @@ import { EmailType } from "@gemunion/framework-types";
 import { MailjetService, IEmailResult } from "@gemunion/nest-js-module-mailjet";
 
 import { IPayload } from "./interfaces";
-import * as console from "console";
 
 @Controller("/")
 export class EmailController {
@@ -13,7 +12,6 @@ export class EmailController {
 
   @EventPattern(EmailType.WELCOME)
   async welcome(@Payload() payload: IPayload): Promise<IEmailResult> {
-    console.log("welcome", payload);
     return this.mailjetService.sendTemplate({
       template: 3131445,
       to: [payload.user.email],

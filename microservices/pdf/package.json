@@ -1,7 +1,8 @@
 {
   "author": {
     "email": "TrejGun+gemunion@gmail.com",
-    "name": "TrejGun"
+    "name": "TrejGun",
+    "url": "https://trejgun.github.io/"
   },
   "dependencies": {
     "@gemunion/framework-types": "0.0.1",
