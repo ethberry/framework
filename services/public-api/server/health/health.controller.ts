@@ -13,7 +13,7 @@ import { ConfigService } from "@nestjs/config";
 import { Transport } from "@nestjs/microservices";
 
 import { Public } from "@gemunion/nest-js-utils";
-import { THROTTLE_STORE } from "@gemunion/nest-js-module-throttle";
+import { THROTTLE_STORE } from "@gemunion/nest-js-module-throttler";
 
 @Public()
 @Controller("/health")

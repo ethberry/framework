@@ -18,7 +18,7 @@
     "@gemunion/nest-js-module-passport": "1.2.9",
     "@gemunion/nest-js-module-request-logger": "1.2.7",
     "@gemunion/nest-js-module-s3": "1.2.11",
-    "@gemunion/nest-js-module-throttle": "0.2.0",
+    "@gemunion/nest-js-module-throttler": "0.1.0",
     "@gemunion/nest-js-module-typeorm-logger": "1.2.8",
     "@gemunion/nest-js-module-winston-logdna": "1.2.9",
     "@gemunion/nest-js-utils": "1.0.12",
