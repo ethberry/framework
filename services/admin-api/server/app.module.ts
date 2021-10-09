@@ -10,7 +10,7 @@ import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
-import { THROTTLE_STORE, ThrottleModule } from "@gemunion/nest-js-module-throttle";
+import { THROTTLE_STORE, GemunionThrottlerModule } from "@gemunion/nest-js-module-throttle";
 
 import { RolesGuard } from "./common/guards";
 import { AuthModule } from "./auth/auth.module";
@@ -93,6 +93,7 @@ import { AppController } from "./app.controller";
     AuthModule,
     CategoryModule,
     EmailModule,
+    GemunionThrottlerModule,
     HealthModule,
     MerchantModule,
     OrderModule,
@@ -101,7 +102,6 @@ import { AppController } from "./app.controller";
     ProductModule,
     ProfileModule,
     PromoModule,
-    ThrottleModule,
     UserModule,
     ValidationModule,
   ],
