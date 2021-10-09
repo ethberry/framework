@@ -1,5 +1,5 @@
 import { APP_FILTER, APP_GUARD, APP_PIPE } from "@nestjs/core";
-import { Logger, Module } from "@nestjs/common";
+import { Injectable, Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ThrottlerException, ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { WinstonModule } from "nest-winston";
@@ -32,6 +32,7 @@ import { ValidationModule } from "./validation/validation.module";
 
 import { AppController } from "./app.controller";
 
+@Injectable()
 class MyThrottlerGuard extends ThrottlerGuard {
   protected throwThrottlingException(): void {
     throw new ThrottlerException("tooManyRequests");
