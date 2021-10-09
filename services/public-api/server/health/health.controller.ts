@@ -13,7 +13,7 @@ import { ConfigService } from "@nestjs/config";
 import { Transport } from "@nestjs/microservices";
 
 import { Public } from "@gemunion/nest-js-utils";
-import { StorageType } from "@gemunion/framework-types";
+import { THROTTLE_STORE } from "@gemunion/nest-js-module-throttle";
 
 @Public()
 @Controller("/health")
@@ -45,7 +45,7 @@ export class HealthController {
           },
         }),
       async (): Promise<HealthIndicatorResult> =>
-        this.redisIndicator.checkHealth("Redis", { client: this.redisManager.getClient(StorageType.THROTTLE) }),
+        this.redisIndicator.checkHealth("Redis", { client: this.redisManager.getClient(THROTTLE_STORE) }),
     ]);
   }
 }
