@@ -183,9 +183,6 @@
     "merchant": {
       "title": "Merchant: {title}"
     },
-    "page": {
-      "title": "{title}"
-    },
     "merchants": {
       "title": "Merchants"
     },
@@ -196,6 +193,9 @@
       "products": "Products",
       "status": "Status",
       "title": "Orders"
+    },
+    "page": {
+      "title": "{title}"
     },
     "product": {
       "price": "Price: {amount}",
@@ -217,9 +217,10 @@
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "error": "Unknown Error",
-    "pageNotFound": "Page not found",
     "internalServerError": "Internal server error.",
+    "pageNotFound": "Page not found",
     "token": "Token has expired. You can request new one",
+    "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",

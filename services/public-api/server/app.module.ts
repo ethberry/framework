@@ -1,7 +1,7 @@
 import { APP_FILTER, APP_GUARD, APP_PIPE } from "@nestjs/core";
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
+import { ThrottlerException, ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions, RedisService } from "@liaoliaots/nestjs-redis";
 import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
@@ -29,6 +29,12 @@ import { ValidationModule } from "./validation/validation.module";
 
 import { AppController } from "./app.controller";
 
+class MyThrottlerGuard extends ThrottlerGuard {
+  protected throwThrottlingException(): void {
+    throw new ThrottlerException("tooManyRequests");
+  }
+}
+
 @Module({
   providers: [
     Logger,
@@ -42,7 +48,7 @@ import { AppController } from "./app.controller";
     },
     {
       provide: APP_GUARD,
-      useClass: ThrottlerGuard,
+      useClass: MyThrottlerGuard,
     },
     {
       provide: APP_FILTER,

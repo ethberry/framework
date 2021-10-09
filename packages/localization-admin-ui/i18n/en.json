@@ -273,6 +273,7 @@
     "productNotFound": "Product not found",
     "token": "Token has expired. You can request new one",
     "tokenNotFound": "Token not found",
+    "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
