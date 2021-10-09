@@ -1,10 +1,8 @@
 import { APP_FILTER, APP_GUARD, APP_PIPE } from "@nestjs/core";
-import { Injectable, Logger, Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { ThrottlerException, ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { WinstonModule } from "nest-winston";
-import { RedisModule, RedisModuleOptions, RedisService } from "@liaoliaots/nestjs-redis";
-import { ThrottlerStorageRedisService } from "nestjs-throttler-storage-redis";
+import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
 import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
 import { JwtHttpGuard } from "@gemunion/nest-js-guards";
@@ -12,7 +10,7 @@ import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
-import { StorageType } from "@gemunion/framework-types";
+import { THROTTLE_STORE, ThrottleModule } from "@gemunion/nest-js-module-throttle";
 
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";
@@ -29,13 +27,6 @@ import { ValidationModule } from "./validation/validation.module";
 
 import { AppController } from "./app.controller";
 
-@Injectable()
-class MyThrottlerGuard extends ThrottlerGuard {
-  protected throwThrottlingException(): void {
-    throw new ThrottlerException("tooManyRequests");
-  }
-}
-
 @Module({
   providers: [
     Logger,
@@ -46,10 +37,6 @@ class MyThrottlerGuard extends ThrottlerGuard {
     {
       provide: APP_GUARD,
       useClass: JwtHttpGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: MyThrottlerGuard,
     },
     {
       provide: APP_FILTER,
@@ -73,21 +60,12 @@ class MyThrottlerGuard extends ThrottlerGuard {
         return {
           config: [
             {
-              namespace: StorageType.THROTTLE,
+              namespace: THROTTLE_STORE,
               url: redisThrottleUrl,
             },
           ],
         };
       },
-    }),
-    ThrottlerModule.forRootAsync({
-      imports: [ConfigModule, RedisModule],
-      inject: [ConfigService, RedisService],
-      useFactory: (config: ConfigService, redisService: RedisService) => ({
-        ttl: config.get<number>("THROTTLE_TTL", 3600),
-        limit: config.get<number>("THROTTLE_LIMIT", 200),
-        storage: new ThrottlerStorageRedisService(redisService.getClient(StorageType.THROTTLE)),
-      }),
     }),
     HelmetModule.forRoot({
       contentSecurityPolicy: false,
@@ -114,6 +92,7 @@ class MyThrottlerGuard extends ThrottlerGuard {
     ProductModule,
     ProfileModule,
     PromoModule,
+    ThrottleModule,
     UserModule,
     ValidationModule,
   ],

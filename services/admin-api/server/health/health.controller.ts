@@ -7,7 +7,7 @@ import {
   MicroserviceHealthIndicator,
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
-import { RedisService } from "@liaoliaots/nestjs-redis";
+import { RedisManager } from "@liaoliaots/nestjs-redis";
 import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis/health";
 import { ConfigService } from "@nestjs/config";
 import { Transport } from "@nestjs/microservices";
@@ -24,7 +24,7 @@ export class HealthController {
     private readonly ms: MicroserviceHealthIndicator,
     private readonly configService: ConfigService,
     private readonly redisIndicator: RedisHealthIndicator,
-    private readonly redisService: RedisService,
+    private readonly redisManager: RedisManager,
   ) {}
 
   @Get()
@@ -45,7 +45,7 @@ export class HealthController {
           },
         }),
       async (): Promise<HealthIndicatorResult> =>
-        this.redisIndicator.checkHealth("Redis", { client: this.redisService.getClient(StorageType.THROTTLE) }),
+        this.redisIndicator.checkHealth("Redis", { client: this.redisManager.getClient(StorageType.THROTTLE) }),
     ]);
   }
 }
