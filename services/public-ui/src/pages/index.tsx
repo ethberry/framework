@@ -38,7 +38,7 @@ import { Page } from "./page";
 
 const App: FC = () => {
   return (
-    <ApiProvider baseUrl={process.env.BE_URL}>
+    <ApiProvider baseUrl={process.env.BE_URL as string}>
       <UserProvider>
         <SettingsProvider defaultLanguage={DefaultLanguage}>
           <LocalizationProvider i18n={i18n} defaultLanguage={DefaultLanguage}>
