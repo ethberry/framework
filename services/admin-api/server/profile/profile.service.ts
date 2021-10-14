@@ -45,7 +45,9 @@ export class ProfileService {
       throw new UnauthorizedException("User not found");
     }
 
-    userEntity.password = this.userService.createPasswordHash(password);
+    const passwordHash = this.userService.createPasswordHash(password);
+    await this.userService.checkPasswordIsDifferent(userEntity.id, passwordHash);
+    userEntity.password = passwordHash;
 
     await userEntity.save();
 

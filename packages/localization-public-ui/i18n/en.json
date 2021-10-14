@@ -219,6 +219,7 @@
     "error": "Unknown Error",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
+    "passwordsAreIdentical": "Passwords are identical",
     "token": "Token has expired. You can request new one",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",

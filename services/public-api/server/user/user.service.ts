@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
 import { FindConditions, FindManyOptions, FindOneOptions, Not, Repository } from "typeorm";
-import { ConflictException, Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { ConflictException, Inject, Injectable, Logger, LoggerService, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 
@@ -61,8 +61,10 @@ export class UserService {
     });
   }
 
-  public updatePassword(userEntity: UserEntity, dto: IPasswordDto): Promise<UserEntity> {
-    userEntity.password = this.createPasswordHash(dto.password);
+  public async updatePassword(userEntity: UserEntity, dto: IPasswordDto): Promise<UserEntity> {
+    const passwordHash = this.createPasswordHash(dto.password);
+    await this.checkPasswordIsDifferent(userEntity.id, passwordHash);
+    userEntity.password = passwordHash;
     return userEntity.save();
   }
 
@@ -94,6 +96,13 @@ export class UserService {
 
     if (userEntity) {
       throw new ConflictException("duplicateEmail");
+    }
+  }
+
+  public async checkPasswordIsDifferent(id: number, password: string): Promise<void> {
+    const userEntity = await this.userEntityRepository.findOne({ id, password });
+    if (userEntity) {
+      throw new BadRequestException("passwordsAreIdentical");
     }
   }
 }
