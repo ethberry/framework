@@ -1,15 +1,25 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { ClientProxy } from "@nestjs/microservices";
 
-import { UserStatus } from "@gemunion/framework-types";
+import { UserStatus, TokenType, ProviderType, EmailType } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";
 import { IPasswordUpdateDto, IProfileUpdateDto } from "./interfaces";
 import { AuthService } from "../auth/auth.service";
 import { UserService } from "../user/user.service";
+import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class ProfileService {
-  constructor(private readonly authService: AuthService, private readonly userService: UserService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+    private readonly tokenService: TokenService,
+    private readonly configService: ConfigService,
+    @Inject(ProviderType.EML_SERVICE)
+    private readonly emailClientProxy: ClientProxy,
+  ) {}
 
   public async update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity | undefined> {
     const { email, ...rest } = dto;
@@ -17,8 +27,13 @@ export class ProfileService {
     if (email) {
       await this.userService.checkEmail(email, userEntity.id);
       if (email !== userEntity.email) {
-        userEntity.userStatus = UserStatus.PENDING;
-        userEntity.email = email;
+        const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity, { email: email });
+        const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3002");
+        this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
+          token: tokenEntity,
+          user: Object.assign({}, userEntity, { email }),
+          baseUrl,
+        });
       }
     }
 

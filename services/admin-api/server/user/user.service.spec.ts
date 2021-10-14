@@ -2,7 +2,6 @@ import { Test } from "@nestjs/testing";
 import { Logger } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { v4 } from "uuid";
 
 import { generateUserCreateDto } from "../common/test";
 import { DatabaseModule } from "../database/database.module";
@@ -10,7 +9,8 @@ import { UserService } from "./user.service";
 import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
 import { UserEntity } from "./user.entity";
-import { UserStatus } from "@gemunion/framework-types";
+import { emlServiceProvider } from "../common/providers";
+import { TokenModule } from "../token/token.module";
 
 describe("UserService", () => {
   let userService: UserService;
@@ -25,8 +25,9 @@ describe("UserService", () => {
         DatabaseModule,
         TypeOrmModule.forFeature([UserEntity]),
         UserSeedModule,
+        TokenModule,
       ],
-      providers: [Logger, UserService, UserSeedService],
+      providers: [Logger, UserService, UserSeedService, emlServiceProvider],
     }).compile();
 
     userService = moduleRef.get<UserService>(UserService);
@@ -60,13 +61,14 @@ describe("UserService", () => {
     });
   });
 
-  describe("update", () => {
-    it("should update email", async () => {
-      const entities = await userSeedService.setup();
-      const email = `trejgun+${v4()}@gmail.com`;
-      const userEntity = await userService.update({ id: entities.users[0].id }, { email });
-      expect(userEntity.email).toEqual(email);
-      expect(userEntity.userStatus).toEqual(UserStatus.PENDING);
-    });
-  });
+  // Changed the process of updating the mail address
+  // describe("update", () => {
+  //   it("should update email", async () => {
+  //     const entities = await userSeedService.setup();
+  //     const email = `trejgun+${v4()}@gmail.com`;
+  //     const userEntity = await userService.update({ id: entities.users[0].id }, { email });
+  //     expect(userEntity.email).toEqual(email);
+  //     expect(userEntity.userStatus).toEqual(UserStatus.PENDING);
+  //   });
+  // });
 });

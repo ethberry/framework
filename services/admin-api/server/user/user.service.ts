@@ -11,12 +11,23 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
+import { ClientProxy } from "@nestjs/microservices";
 
-import { UserRole, UserStatus, IUserSearchDto, IUserCreateDto, IPasswordDto } from "@gemunion/framework-types";
+import {
+  UserRole,
+  UserStatus,
+  IUserSearchDto,
+  IUserCreateDto,
+  IPasswordDto,
+  ProviderType,
+  TokenType,
+  EmailType,
+} from "@gemunion/framework-types";
 
 import { UserEntity } from "./user.entity";
 import { IUserAutocompleteDto, IUserUpdateDto } from "./interfaces";
 import { IUserImportDto } from "./interfaces/import";
+import { TokenService } from "../token/token.service";
 
 @Injectable()
 export class UserService {
@@ -26,6 +37,9 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userEntityRepository: Repository<UserEntity>,
     private readonly configService: ConfigService,
+    private readonly tokenService: TokenService,
+    @Inject(ProviderType.EML_SERVICE)
+    private readonly emailClientProxy: ClientProxy,
   ) {}
 
   public async search(dto: IUserSearchDto): Promise<[Array<UserEntity>, number]> {
@@ -92,7 +106,13 @@ export class UserService {
     if (email && email !== userEntity.email) {
       await this.checkEmail(email, userEntity.id);
       userEntity.userStatus = UserStatus.PENDING;
-      userEntity.email = email;
+      const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity, { email });
+      const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3002");
+      this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
+        token: tokenEntity,
+        user: Object.assign({}, userEntity, { email }),
+        baseUrl,
+      });
     }
 
     Object.assign(userEntity, rest);
