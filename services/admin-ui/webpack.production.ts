@@ -44,7 +44,7 @@ const config: Configuration = {
   },
   plugins: [
     new DotEnvPlugin({
-      path: `.env.${process.env.NODE_ENV}`,
+      path: `.env.${process.env.NODE_ENV as string}`,
       systemvars: true,
     }),
     new CopyPlugin({

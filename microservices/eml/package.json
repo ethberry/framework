@@ -64,6 +64,6 @@
     "start:staging": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles"
   },
-  "title": "UI",
+  "title": "EML",
   "version": "0.0.1"
 }
