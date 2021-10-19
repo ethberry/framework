@@ -157,6 +157,11 @@ export class AuthService {
       throw new NotFoundException("tokenNotFound");
     }
 
+    if (tokenEntity.data.email) {
+      tokenEntity.user.email = tokenEntity.data.email;
+      void tokenEntity.user.save();
+    }
+
     await this.userService.activate(tokenEntity.user);
     // delete token from db
     await tokenEntity.remove();

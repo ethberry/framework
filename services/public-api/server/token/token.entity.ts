@@ -32,6 +32,9 @@ export class TokenEntity extends BaseEntity implements IToken {
   @Column({ type: "int" })
   public userId: number;
 
+  @Column({ type: "json" })
+  public data: any;
+
   @Column({ type: "timestamptz" })
   public createdAt: string;
 

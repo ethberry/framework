@@ -4,17 +4,22 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { v4 } from "uuid";
 
+import { TokenType } from "@gemunion/framework-types";
+import { emlServiceProvider } from "../common/providers";
 import { generateUserCreateDto } from "../common/test";
 import { DatabaseModule } from "../database/database.module";
-import { UserService } from "./user.service";
+import { TokenEntity } from "../token/token.entity";
+import { TokenModule } from "../token/token.module";
+import { TokenService } from "../token/token.service";
+import { UserEntity } from "./user.entity";
 import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
-import { UserEntity } from "./user.entity";
-import { UserStatus } from "@gemunion/framework-types";
+import { UserService } from "./user.service";
 
 describe("UserService", () => {
   let userService: UserService;
   let userSeedService: UserSeedService;
+  let tokenService: TokenService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -23,14 +28,16 @@ describe("UserService", () => {
           envFilePath: `.env.${process.env.NODE_ENV as string}`,
         }),
         DatabaseModule,
-        TypeOrmModule.forFeature([UserEntity]),
+        TypeOrmModule.forFeature([UserEntity, TokenEntity]),
         UserSeedModule,
+        TokenModule,
       ],
-      providers: [Logger, UserService, UserSeedService],
+      providers: [Logger, UserService, UserSeedService, emlServiceProvider, TokenService],
     }).compile();
 
     userService = moduleRef.get<UserService>(UserService);
     userSeedService = moduleRef.get<UserSeedService>(UserSeedService);
+    tokenService = moduleRef.get<TokenService>(TokenService);
   });
 
   afterEach(async () => {
@@ -60,13 +67,17 @@ describe("UserService", () => {
     });
   });
 
+  // Changed the process of updating the mail address
   describe("update", () => {
     it("should update email", async () => {
       const entities = await userSeedService.setup();
+      const oldUserEntity = await userService.findOne({ id: entities.users[0].id });
       const email = `trejgun+${v4()}@gmail.com`;
       const userEntity = await userService.update({ id: entities.users[0].id }, { email });
-      expect(userEntity.email).toEqual(email);
-      expect(userEntity.userStatus).toEqual(UserStatus.PENDING);
+      expect(userEntity.email).toEqual(oldUserEntity?.email);
+      const tokenEntity = await tokenService.findOne({ tokenType: TokenType.EMAIL, user: userEntity });
+      expect(tokenEntity).toBeDefined();
+      expect(tokenEntity?.data.email).toEqual(email);
     });
   });
 });

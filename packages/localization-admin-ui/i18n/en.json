@@ -270,6 +270,7 @@
     "internalServerError": "Internal Server Error",
     "merchantNotFound": "Merchant not found",
     "pageNotFound": "API error",
+    "passwordsAreIdentical": "Passwords are identical",
     "productNotFound": "Product not found",
     "token": "Token has expired. You can request new one",
     "tokenNotFound": "Token not found",

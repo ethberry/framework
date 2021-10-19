@@ -18,7 +18,7 @@ export class TokenService {
     return this.tokenEntityRepository.findOne({ where, relations: ["user"] });
   }
 
-  public async getToken(tokenType: TokenType, userEntity: UserEntity): Promise<TokenEntity> {
+  public async getToken(tokenType: TokenType, userEntity: UserEntity, data?: any): Promise<TokenEntity> {
     // working around https://github.com/typeorm/typeorm/issues/1090
     const token = await this.tokenEntityRepository.findOne({
       tokenType,
@@ -33,6 +33,7 @@ export class TokenService {
         .create({
           tokenType,
           user: userEntity,
+          data,
         })
         .save();
     }
