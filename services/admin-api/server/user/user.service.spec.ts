@@ -4,18 +4,17 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { v4 } from "uuid";
 
+import { TokenType } from "@gemunion/framework-types";
+import { emlServiceProvider } from "../common/providers";
 import { generateUserCreateDto } from "../common/test";
 import { DatabaseModule } from "../database/database.module";
-import { UserService } from "./user.service";
+import { TokenEntity } from "../token/token.entity";
+import { TokenModule } from "../token/token.module";
+import { TokenService } from "../token/token.service";
+import { UserEntity } from "./user.entity";
 import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
-import { UserEntity } from "./user.entity";
-import { emlServiceProvider } from "../common/providers";
-import { TokenModule } from "../token/token.module";
-import { TokenType } from "@gemunion/framework-types";
-import { TokenService } from "../token/token.service";
-
-import { TokenEntity } from "../token/token.entity";
+import { UserService } from "./user.service";
 
 describe("UserService", () => {
   let userService: UserService;
@@ -78,9 +77,7 @@ describe("UserService", () => {
       expect(userEntity.email).toEqual(oldUserEntity?.email);
       const tokenEntity = await tokenService.findOne({ tokenType: TokenType.EMAIL, user: userEntity });
       expect(tokenEntity).toBeDefined();
-      if (tokenEntity !== undefined) {
-        expect(tokenEntity.data.email).toEqual(email);
-      }
+      expect(tokenEntity?.data.email).toEqual(email);
     });
   });
 });

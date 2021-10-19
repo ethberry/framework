@@ -33,7 +33,7 @@ export class TokenService {
         .create({
           tokenType,
           user: userEntity,
-          data: data,
+          data,
         })
         .save();
     }

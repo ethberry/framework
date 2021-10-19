@@ -1,12 +1,12 @@
-import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { Module } from "@nestjs/common";
 
+import { emlServiceProvider } from "../common/providers";
+import { AuthModule } from "../auth/auth.module";
+import { TokenModule } from "../token/token.module";
 import { ProfileService } from "./profile.service";
 import { ProfileController } from "./profile.controller";
-import { AuthModule } from "../auth/auth.module";
 import { UserModule } from "../user/user.module";
-import { emlServiceProvider } from "../common/providers";
-import { TokenModule } from "../token/token.module";
 
 @Module({
   imports: [AuthModule, UserModule, TokenModule, ConfigModule],
