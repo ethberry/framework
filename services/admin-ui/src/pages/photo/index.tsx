@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import {
@@ -12,6 +12,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Clear, Done } from "@mui/icons-material";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
@@ -79,7 +80,7 @@ export const Photo: FC = () => {
     };
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchPhotos();
   }, []);
 

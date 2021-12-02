@@ -1,11 +1,12 @@
-import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Pagination } from "@mui/lab";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
@@ -22,11 +23,11 @@ import { MerchantSearchForm } from "./form";
 
 export const Merchant: FC = () => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const { id } = useParams<{ id?: string }>();
+  const { id } = useParams<"id">();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -47,7 +48,7 @@ export const Merchant: FC = () => {
 
   const updateQS = (id?: number) => {
     const { skip: _skip, take: _take, ...rest } = data;
-    history.push(id ? `/merchants/${id}` : `/merchants?${stringify(rest)}`);
+    navigate(id ? `/merchants/${id}` : `/merchants?${stringify(rest)}`);
   };
 
   const handleEdit = (merchant: IMerchant): (() => void) => {
@@ -187,7 +188,7 @@ export const Merchant: FC = () => {
     setIsFilterOpen(!isFiltersOpen);
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchMerchants(id);
   }, [data]);
 

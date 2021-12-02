@@ -1,11 +1,12 @@
-import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 import { Pagination } from "@mui/lab";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
@@ -22,10 +23,10 @@ import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export const User: FC = () => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-  const { id } = useParams<{ id?: string }>();
+  const { id } = useParams<"id">();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -47,7 +48,7 @@ export const User: FC = () => {
 
   const updateQS = (id?: number) => {
     const { skip: _skip, take: _take, ...rest } = data;
-    history.push(id ? `/users/${id}` : `/users?${stringify(rest)}`);
+    navigate(id ? `/users/${id}` : `/users?${stringify(rest)}`);
   };
 
   const handleEdit = (user: IUser): (() => void) => {
@@ -182,7 +183,7 @@ export const User: FC = () => {
     setIsFilterOpen(!isFiltersOpen);
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchUsers(id);
   }, [data]);
 

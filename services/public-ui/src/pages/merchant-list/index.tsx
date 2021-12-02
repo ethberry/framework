@@ -1,10 +1,11 @@
-import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Grid } from "@mui/material";
 import { Pagination } from "@mui/lab";
 import { parse, stringify } from "qs";
-import { useHistory, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
@@ -17,7 +18,7 @@ import { MerchantItem } from "./item";
 
 export const MerchantList: FC = () => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
@@ -36,7 +37,7 @@ export const MerchantList: FC = () => {
 
   const updateQS = () => {
     const { skip: _skip, take: _take, ...rest } = data;
-    history.push(`/merchants?${stringify(rest)}`);
+    navigate(`/merchants?${stringify(rest)}`);
   };
 
   const fetchMerchants = async (): Promise<void> => {
@@ -71,7 +72,7 @@ export const MerchantList: FC = () => {
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchMerchants();
   }, [data]);
 

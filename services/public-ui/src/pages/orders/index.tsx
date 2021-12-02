@@ -1,10 +1,11 @@
-import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Grid } from "@mui/material";
 import { Pagination } from "@mui/lab";
 import { parse, stringify } from "qs";
-import { useHistory, useLocation } from "react-router";
+import { useNavigate, useLocation } from "react-router";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { PageHeader } from "@gemunion/mui-page-header";
 import { ProgressOverlay } from "@gemunion/mui-progress";
@@ -24,7 +25,7 @@ export interface IOrderSearchDto extends IPaginationDto {
 
 export const Orders: FC = () => {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
@@ -46,7 +47,7 @@ export const Orders: FC = () => {
 
   const updateQS = (id?: number) => {
     const { skip: _skip, take: _take, dateRange, ...rest } = data;
-    history.push(
+    navigate(
       id
         ? `/orders/${id}`
         : `/orders?${stringify({
@@ -100,7 +101,7 @@ export const Orders: FC = () => {
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchOrders();
   }, [data]);
 

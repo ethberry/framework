@@ -1,11 +1,12 @@
-import React, { ChangeEvent, FC, Fragment, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid } from "@mui/material";
 import { Pagination } from "@mui/lab";
 import { parse, stringify } from "qs";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
 import { FilterList } from "@mui/icons-material";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
@@ -28,9 +29,9 @@ export interface IProductListProps {
 
 export const ProductList: FC<IProductListProps> = props => {
   const { hideMerchantsInSearch } = props;
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<"id">();
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
@@ -54,7 +55,7 @@ export const ProductList: FC<IProductListProps> = props => {
 
   const updateQS = () => {
     const { skip: _skip, take: _take, merchantId: _merchantId, ...rest } = data;
-    history.push(`${location.pathname}?${stringify(rest)}`);
+    navigate(`${location.pathname}?${stringify(rest)}`);
   };
 
   const fetchProducts = async (): Promise<void> => {
@@ -101,7 +102,7 @@ export const ProductList: FC<IProductListProps> = props => {
     setIsFilterOpen(!isFiltersOpen);
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchProducts();
   }, [data]);
 

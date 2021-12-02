@@ -1,7 +1,8 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography } from "@mui/material";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
@@ -43,7 +44,7 @@ export const NewProducts: FC = () => {
       });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchProducts();
   }, []);
 

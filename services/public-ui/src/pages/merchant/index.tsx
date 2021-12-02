@@ -15,7 +15,7 @@ import { ProductList } from "../product-list";
 import { useStyles } from "./styles";
 
 export const Merchant: FC = () => {
-  const { merchantId } = useParams<{ merchantId: string }>();
+  const { merchantId } = useParams<"merchantId">();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const classes = useStyles();
@@ -28,7 +28,7 @@ export const Merchant: FC = () => {
   const fetchMerchant = async (): Promise<void> => {
     return api
       .fetchJson({
-        url: `/merchants/${merchantId}`,
+        url: `/merchants/${merchantId as string}`,
       })
       .then((json: IMerchant) => {
         setMerchant(json);

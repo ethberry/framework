@@ -10,7 +10,7 @@ import { IPage } from "@gemunion/framework-types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 export const Page: FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams<"slug">();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
@@ -22,7 +22,7 @@ export const Page: FC = () => {
   const fetchPage = async (): Promise<void> => {
     return api
       .fetchJson({
-        url: `/pages/${slug}`,
+        url: `/pages/${slug as string}`,
       })
       .then((json: IPage) => {
         setPage(json);

@@ -1,11 +1,12 @@
-import React, { ChangeEvent, FC, useContext, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
 import { Pagination } from "@mui/lab";
-import { useHistory, useLocation, useParams } from "react-router";
+import { useNavigate, useLocation, useParams } from "react-router";
 import { parse, stringify } from "qs";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ProgressOverlay } from "@gemunion/mui-progress";
@@ -29,8 +30,8 @@ export interface IOrderSearchDto extends IPaginationDto {
 
 export const Order: FC = () => {
   const location = useLocation();
-  const history = useHistory();
-  const { id } = useParams<{ id?: string }>();
+  const navigate = useNavigate();
+  const { id } = useParams<"id">();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -54,7 +55,7 @@ export const Order: FC = () => {
 
   const updateQS = (id?: number) => {
     const { skip: _skip, take: _take, dateRange, ...rest } = data;
-    history.push(
+    navigate(
       id
         ? `/orders/${id}`
         : `/orders?${stringify({
@@ -201,7 +202,7 @@ export const Order: FC = () => {
     });
   };
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     void fetchOrders(id);
   }, [data]);
 

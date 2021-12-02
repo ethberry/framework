@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Redirect, Switch } from "react-router";
+import { Navigate, Routes, Route } from "react-router";
 import { SnackbarProvider } from "notistack";
 
 import { UserProvider } from "@gemunion/provider-user";
@@ -20,7 +20,7 @@ import {
   VerifyEmail,
 } from "@gemunion/common-pages";
 
-import { MyRoute } from "../components/common/my-route";
+import { Protected } from "../components/common/protected";
 
 import { Landing } from "./landing";
 
@@ -38,44 +38,65 @@ import { Page } from "./page";
 
 const App: FC = () => {
   return (
-    <ApiProvider baseUrl={process.env.BE_URL as string}>
+    <ApiProvider baseUrl={process.env.BE_URL}>
       <UserProvider>
         <SettingsProvider defaultLanguage={DefaultLanguage}>
           <LocalizationProvider i18n={i18n} defaultLanguage={DefaultLanguage}>
             <SnackbarProvider>
               <PickerProvider>
-                <Layout>
-                  <Switch>
-                    <MyRoute path="/" component={Landing} exact />
+                <Routes>
+                  <Route element={<Layout />}>
+                    <Route path="/" element={<Landing />} />
 
-                    <MyRoute path="/login" component={SocialLogin} exact />
-                    <MyRoute path="/registration" component={Registration} exact />
-                    <MyRoute path="/restore-password/:token" component={RestorePassword} exact />
-                    <MyRoute path="/verify-email/:token" component={VerifyEmail} exact />
-                    <MyRoute path="/forgot-password" component={ForgotPassword} exact />
-                    <MyRoute path="/resend-verification-email" component={ResendVerificationEmail} exact />
+                    <Route path="/login" element={<SocialLogin />} />
+                    <Route path="/registration" element={<Registration />} />
+                    <Route path="/restore-password/:token" element={<RestorePassword />} />
+                    <Route path="/verify-email/:token" element={<VerifyEmail />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/resend-verification-email" element={<ResendVerificationEmail />} />
 
-                    <MyRoute path="/dashboard" component={Dashboard} exact restricted />
+                    <Route
+                      path="/dashboard"
+                      element={
+                        <Protected>
+                          <Dashboard />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/profile" component={Profile} exact restricted />
-                    <MyRoute path="/profile/:tab" component={Profile} restricted />
+                    <Route
+                      path="/profile"
+                      element={
+                        <Protected>
+                          <Profile />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/profile/:tab"
+                      element={
+                        <Protected>
+                          <Profile />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/merchants" component={MerchantList} exact />
-                    <MyRoute path="/merchants/:merchantId" component={Merchant} exact />
+                    <Route path="/merchants" element={<MerchantList />} />
+                    <Route path="/merchants/:merchantId" element={<Merchant />} />
 
-                    <MyRoute path="/products" component={ProductList} exact />
-                    <MyRoute path="/products/:productId" component={Product} exact />
+                    <Route path="/products" element={<ProductList />} />
+                    <Route path="/products/:productId" element={<Product />} />
 
-                    <MyRoute path="/orders" component={Orders} exact />
+                    <Route path="/orders" element={<Orders />} />
 
-                    <MyRoute path="/error/:error" component={Error} />
-                    <MyRoute path="/message/:message" component={Message} />
+                    <Route path="/error/:error" element={<Error />} />
+                    <Route path="/message/:message" element={<Message />} />
 
-                    <MyRoute path="/pages/:slug" component={Page} />
+                    <Route path="/pages/:slug" element={<Page />} />
 
-                    <Redirect to="/message/page-not-found" />
-                  </Switch>
-                </Layout>
+                    <Route path="*" element={<Navigate to="/message/page-not-found" />} />
+                  </Route>
+                </Routes>
               </PickerProvider>
             </SnackbarProvider>
           </LocalizationProvider>

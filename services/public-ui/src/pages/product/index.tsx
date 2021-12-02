@@ -15,7 +15,7 @@ import { useStyles } from "./styles";
 import { Carousel } from "./carousel";
 
 export const Product: FC = () => {
-  const { productId } = useParams<{ productId: string }>();
+  const { productId } = useParams<"productId">();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const classes = useStyles();
@@ -28,7 +28,7 @@ export const Product: FC = () => {
   const fetchProduct = async (): Promise<void> => {
     return api
       .fetchJson({
-        url: `/products/${productId}`,
+        url: `/products/${productId as string}`,
       })
       .then((json: IProduct) => {
         setProduct(json);

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Redirect, Switch } from "react-router";
+import { Navigate, Routes, Route } from "react-router";
 import { SnackbarProvider } from "notistack";
 
 import { UserProvider } from "@gemunion/provider-user";
@@ -20,7 +20,7 @@ import {
   VerifyEmail,
 } from "@gemunion/common-pages";
 
-import { MyRoute } from "../components/common/my-route";
+import { Protected } from "../components/common/protected";
 
 import { Landing } from "./landing";
 
@@ -40,59 +40,192 @@ import { Layout } from "../components/common/layout";
 
 const App: FC = () => {
   return (
-    <ApiProvider baseUrl={process.env.BE_URL as string}>
+    <ApiProvider baseUrl={process.env.BE_URL}>
       <UserProvider>
         <SettingsProvider defaultLanguage={DefaultLanguage}>
           <LocalizationProvider i18n={i18n} defaultLanguage={DefaultLanguage}>
             <SnackbarProvider>
               <PickerProvider>
-                <Layout>
-                  <Switch>
-                    <MyRoute path="/" component={Landing} exact />
+                <Routes>
+                  <Route element={<Layout />}>
+                    <Route path="/" element={<Landing />} />
 
-                    <MyRoute path="/login" component={SocialLogin} exact />
-                    <MyRoute path="/registration" component={Registration} exact />
-                    <MyRoute path="/restore-password/:token" component={RestorePassword} exact />
-                    <MyRoute path="/verify-email/:token" component={VerifyEmail} exact />
-                    <MyRoute path="/forgot-password" component={ForgotPassword} exact />
-                    <MyRoute path="/resend-verification-email" component={ResendVerificationEmail} exact />
+                    <Route path="/login" element={<SocialLogin />} />
+                    <Route path="/registration" element={<Registration />} />
+                    <Route path="/restore-password/:token" element={<RestorePassword />} />
+                    <Route path="/verify-email/:token" element={<VerifyEmail />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/resend-verification-email" element={<ResendVerificationEmail />} />
 
-                    <MyRoute path="/dashboard" component={Dashboard} exact restricted />
+                    <Route
+                      path="/dashboard"
+                      element={
+                        <Protected>
+                          <Dashboard />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/profile" component={Profile} exact restricted />
-                    <MyRoute path="/profile/:tab" component={Profile} restricted />
+                    <Route
+                      path="/profile"
+                      element={
+                        <Protected>
+                          <Profile />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/profile/:tab"
+                      element={
+                        <Protected>
+                          <Profile />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/users" component={User} exact restricted />
-                    <MyRoute path="/users/:id" component={User} restricted />
+                    <Route
+                      path="/users"
+                      element={
+                        <Protected>
+                          <User />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/users/:id"
+                      element={
+                        <Protected>
+                          <User />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/products" component={Product} exact restricted />
-                    <MyRoute path="/products/:id" component={Product} restricted />
+                    <Route
+                      path="/products"
+                      element={
+                        <Protected>
+                          <Product />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/products/:id"
+                      element={
+                        <Protected>
+                          <Product />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/merchants" component={Merchant} exact restricted />
-                    <MyRoute path="/merchants/:id" component={Merchant} restricted />
+                    <Route
+                      path="/merchants"
+                      element={
+                        <Protected>
+                          <Merchant />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/merchants/:id"
+                      element={
+                        <Protected>
+                          <Merchant />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/categories" component={Category} exact restricted />
-                    <MyRoute path="/categories/:id" component={Category} restricted />
+                    <Route
+                      path="/categories"
+                      element={
+                        <Protected>
+                          <Category />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/categories/:id"
+                      element={
+                        <Protected>
+                          <Category />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/promos" component={Promo} restricted />
-                    <MyRoute path="/promos/:id" component={Promo} restricted />
+                    <Route
+                      path="/promos"
+                      element={
+                        <Protected>
+                          <Promo />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/promos/:id"
+                      element={
+                        <Protected>
+                          <Promo />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/orders" component={Order} exact restricted />
-                    <MyRoute path="/orders/:id" component={Order} restricted />
+                    <Route
+                      path="/orders"
+                      element={
+                        <Protected>
+                          <Order />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/orders/:id"
+                      element={
+                        <Protected>
+                          <Order />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/pages" component={Page} exact restricted />
-                    <MyRoute path="/pages/:id" component={Page} restricted />
+                    <Route
+                      path="/pages"
+                      element={
+                        <Protected>
+                          <Page />
+                        </Protected>
+                      }
+                    />
+                    <Route
+                      path="/pages/:id"
+                      element={
+                        <Protected>
+                          <Page />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/photos" component={Photo} exact restricted />
+                    <Route
+                      path="/photos"
+                      element={
+                        <Protected>
+                          <Photo />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/emails" component={Email} restricted />
+                    <Route
+                      path="/emails"
+                      element={
+                        <Protected>
+                          <Email />
+                        </Protected>
+                      }
+                    />
 
-                    <MyRoute path="/error/:error" component={Error} />
-                    <MyRoute path="/message/:message" component={Message} />
+                    <Route path="/error/:error" element={<Error />} />
+                    <Route path="/message/:message" element={<Message />} />
 
-                    <Redirect to="/message/page-not-found" />
-                  </Switch>
-                </Layout>
+                    <Route path="*" element={<Navigate to="/message/page-not-found" />} />
+                  </Route>
+                </Routes>
               </PickerProvider>
             </SnackbarProvider>
           </LocalizationProvider>

@@ -1,7 +1,7 @@
 import React, { FC, Fragment, MouseEvent, useContext, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
-import { matchPath, useHistory, useLocation } from "react-router";
+import { matchPath, useNavigate, useLocation } from "react-router";
 import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 
@@ -12,7 +12,7 @@ import { IUser } from "@gemunion/framework-types";
 import { useStyles } from "./styles";
 
 export const Sections: FC = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
@@ -57,12 +57,12 @@ export const Sections: FC = () => {
         }
       })
       .finally(() => {
-        history.push("/login");
+        navigate("/login");
       });
   };
 
   if (!user.isAuthenticated()) {
-    if (matchPath(location.pathname, { path: "/login" })) {
+    if (matchPath(location.pathname, "/login")) {
       return null;
     }
 
@@ -88,11 +88,7 @@ export const Sections: FC = () => {
           component={RouterNavLink}
           to="/dashboard"
           color="inherit"
-          selected={
-            !!matchPath(location.pathname, {
-              path: ["/dashboard"],
-            })
-          }
+          selected={!!matchPath(location.pathname, "/dashboard")}
         >
           <FormattedMessage id="components.header.menu.dashboard" />
         </MenuItem>
@@ -100,11 +96,7 @@ export const Sections: FC = () => {
           color="inherit"
           component={RouterNavLink}
           to="/profile"
-          selected={
-            !!matchPath(location.pathname, {
-              path: "/profile",
-            })
-          }
+          selected={!!matchPath(location.pathname, "/profile")}
         >
           <FormattedMessage id="components.header.menu.profile" />
         </MenuItem>

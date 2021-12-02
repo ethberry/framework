@@ -1,15 +1,15 @@
-import React, { ComponentClass, FunctionComponent } from "react";
-import * as ReactDOM from "react-dom";
-import { Router } from "react-router-dom";
+import { ComponentClass, FunctionComponent } from "react";
+import { render } from "react-dom";
+import { BrowserRouter } from "react-router-dom";
+
 import { GemunionThemeProvider } from "@gemunion/mui-provider-theme";
-import { history } from "@gemunion/history";
 
 export default (App: ComponentClass<any> | FunctionComponent<any>): void => {
-  ReactDOM.render(
+  render(
     <GemunionThemeProvider>
-      <Router history={history}>
+      <BrowserRouter>
         <App />
-      </Router>
+      </BrowserRouter>
     </GemunionThemeProvider>,
     document.getElementById("app"),
   );
