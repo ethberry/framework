@@ -28,7 +28,7 @@
     "@gemunion/mui-inputs-entity": "3.1.8",
     "@gemunion/mui-inputs-image-s3": "3.1.8",
     "@gemunion/mui-inputs-mask": "3.0.16",
-    "@gemunion/mui-inputs-picker": "3.0.11",
+    "@gemunion/mui-inputs-picker": "4.0.4",
     "@gemunion/mui-page-header": "3.0.12",
     "@gemunion/mui-progress": "3.0.9",
     "@gemunion/mui-provider-picker": "3.0.9",
