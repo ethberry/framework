@@ -79,7 +79,7 @@
     "@types/zxcvbn": "4.4.1",
     "@typescript-eslint/eslint-plugin": "4.33.0",
     "@typescript-eslint/parser": "4.33.0",
-    "copy-webpack-plugin": "9.1.0",
+    "copy-webpack-plugin": "10.0.0",
     "css-loader": "6.5.1",
     "cssnano": "5.0.12",
     "dotenv-webpack": "7.0.3",
