@@ -20,7 +20,7 @@
     "@gemunion/mui-dialog-confirmation": "3.0.13",
     "@gemunion/mui-dialog-delete": "3.0.13",
     "@gemunion/mui-dialog-form": "4.0.4",
-    "@gemunion/mui-form": "3.0.11",
+    "@gemunion/mui-form": "4.0.4",
     "@gemunion/mui-form-search": "3.0.17",
     "@gemunion/mui-inputs-captcha": "3.0.12",
     "@gemunion/mui-inputs-core": "3.1.10",
