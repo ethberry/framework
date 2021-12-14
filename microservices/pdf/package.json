@@ -6,8 +6,8 @@
   },
   "dependencies": {
     "@gemunion/framework-types": "0.0.1",
-    "@gemunion/nest-js-module-s3": "1.2.19",
-    "@gemunion/nest-js-module-winston-logdna": "1.2.16",
+    "@gemunion/nest-js-module-s3": "1.2.21",
+    "@gemunion/nest-js-module-winston-logdna": "1.2.17",
     "@nestjs/common": "8.2.3",
     "@nestjs/config": "1.1.5",
     "@nestjs/core": "8.2.3",
