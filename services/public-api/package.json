@@ -14,7 +14,7 @@
     "@gemunion/framework-mocks": "0.0.1",
     "@gemunion/framework-types": "0.0.1",
     "@gemunion/nest-js-guards": "1.0.16",
-    "@gemunion/nest-js-module-helmet": "1.2.17",
+    "@gemunion/nest-js-module-helmet": "2.1.1",
     "@gemunion/nest-js-module-passport": "1.2.19",
     "@gemunion/nest-js-module-request-logger": "1.2.12",
     "@gemunion/nest-js-module-s3": "1.2.21",
