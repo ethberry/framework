@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 
 export class CreateProductTable1593408358900 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

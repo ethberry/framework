@@ -15,7 +15,7 @@ import { useStyles } from "./styles";
 import { Carousel } from "./carousel";
 
 export const Product: FC = () => {
-  const { productId } = useParams<"productId">();
+  const { productId } = useParams<{ productId: string }>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const classes = useStyles();

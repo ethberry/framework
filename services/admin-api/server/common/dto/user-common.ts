@@ -9,7 +9,7 @@ import {
   lastNameMinLength,
 } from "@gemunion/constants";
 import { IsString } from "@gemunion/nest-js-validators";
-import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants-misc";
+import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants";
 import { IUserCommonDto } from "@gemunion/framework-types";
 
 import { IsEmail } from "../validators";

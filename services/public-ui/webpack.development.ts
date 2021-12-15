@@ -12,7 +12,7 @@ const config: Configuration = {
   mode: "development",
   devtool: "cheap-module-source-map",
   entry: {
-    main: ["webpack/hot/dev-server", "webpack-dev-server/client", "./src"],
+    main: ["./src"],
   },
   output: {
     path: path.join(__dirname, "dist"),

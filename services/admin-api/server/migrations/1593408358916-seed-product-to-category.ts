@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 
 export class SeedProductToCategory1593408358916 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

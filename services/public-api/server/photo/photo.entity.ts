@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 
 import { ProductEntity } from "../product/product.entity";
 import { BaseEntity } from "../database/base.entity";

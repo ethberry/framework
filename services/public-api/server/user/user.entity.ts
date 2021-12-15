@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Exclude } from "class-transformer";
 
 import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
-import { EnabledLanguages, ns } from "@gemunion/framework-constants-misc";
+import { EnabledLanguages, ns } from "@gemunion/framework-constants";
 
 import { MerchantEntity } from "../merchant/merchant.entity";
 import { BaseEntity } from "../database/base.entity";

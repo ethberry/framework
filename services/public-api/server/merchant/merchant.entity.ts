@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { IMerchant, MerchantStatus } from "@gemunion/framework-types";
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 
 import { UserEntity } from "../user/user.entity";
 import { ProductEntity } from "../product/product.entity";

@@ -12,7 +12,7 @@ import {
   TokenType,
   UserStatus,
 } from "@gemunion/framework-types";
-import { DefaultLanguage } from "@gemunion/framework-constants-misc";
+import { DefaultLanguage } from "@gemunion/framework-constants";
 
 const date = new Date();
 

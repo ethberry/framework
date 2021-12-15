@@ -8,7 +8,7 @@
     "url": "https://github.com/gemunion/framework/issues"
   },
   "dependencies": {
-    "@gemunion/framework-constants-misc": "0.0.1"
+    "@gemunion/framework-constants": "0.0.1"
   },
   "description": "localization for ui",
   "devDependencies": {},

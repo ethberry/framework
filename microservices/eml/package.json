@@ -7,7 +7,7 @@
   "dependencies": {
     "@gemunion/nest-js-module-request-logger": "1.2.12",
     "@gemunion/nest-js-module-winston-logdna": "1.2.17",
-    "@gemunion/framework-constants-misc": "0.0.1",
+    "@gemunion/framework-constants": "0.0.1",
     "@gemunion/framework-types": "0.0.1",
     "@nestjs/common": "8.2.3",
     "@nestjs/config": "1.1.5",

@@ -31,7 +31,7 @@ export interface IOrderSearchDto extends IPaginationDto {
 export const Order: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams<"id">();
+  const { id } = useParams<{ id: string }>();
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);

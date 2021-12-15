@@ -1,15 +1,16 @@
 import { ComponentClass, FunctionComponent } from "react";
 import { render } from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
 import { GemunionThemeProvider } from "@gemunion/mui-provider-theme";
+import { history } from "@gemunion/history";
 
 export default (App: ComponentClass<any> | FunctionComponent<any>): void => {
   render(
     <GemunionThemeProvider>
-      <BrowserRouter>
+      <HistoryRouter history={history}>
         <App />
-      </BrowserRouter>
+      </HistoryRouter>
     </GemunionThemeProvider>,
     document.getElementById("app"),
   );

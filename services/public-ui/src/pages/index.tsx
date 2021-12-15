@@ -8,7 +8,7 @@ import { LocalizationProvider } from "@gemunion/provider-localization";
 import { ApiProvider } from "@gemunion/provider-api";
 import { i18n } from "@gemunion/framework-localization-public-ui";
 import { PickerProvider } from "@gemunion/mui-provider-picker";
-import { DefaultLanguage } from "@gemunion/framework-constants-misc";
+import { DefaultLanguage } from "@gemunion/framework-constants";
 import {
   Error,
   ForgotPassword,
@@ -84,7 +84,7 @@ const App: FC = () => {
                     <Route path="/merchants" element={<MerchantList />} />
                     <Route path="/merchants/:merchantId" element={<Merchant />} />
 
-                    <Route path="/products" element={<ProductList />} />
+                    <Route path="/products" element={<ProductList hideMerchantsInSearch={true} />} />
                     <Route path="/products/:productId" element={<Product />} />
 
                     <Route path="/orders" element={<Orders />} />

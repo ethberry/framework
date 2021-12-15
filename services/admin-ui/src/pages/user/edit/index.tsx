@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 
 import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EnabledLanguages } from "@gemunion/framework-constants-misc";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
 import { PhoneInput } from "@gemunion/mui-inputs-mask";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";

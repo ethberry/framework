@@ -15,7 +15,7 @@ import { ProductList } from "../product-list";
 import { useStyles } from "./styles";
 
 export const Merchant: FC = () => {
-  const { merchantId } = useParams<"merchantId">();
+  const { merchantId } = useParams<{ merchantId: string }>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const classes = useStyles();

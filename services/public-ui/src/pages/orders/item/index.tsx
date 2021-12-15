@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns";
 import { Link as RouterLink } from "react-router-dom";
 
 import { IOrder } from "@gemunion/framework-types";
-import { dateTimeFormat } from "@gemunion/framework-constants-misc";
+import { dateTimeFormat } from "@gemunion/framework-constants";
 
 import { formatMoney } from "../../../utils/money";
 

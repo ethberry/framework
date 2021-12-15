@@ -10,7 +10,7 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { FormikForm } from "@gemunion/mui-form";
 import { PhoneInput } from "@gemunion/mui-inputs-mask";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
-import { EnabledLanguages } from "@gemunion/framework-constants-misc";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 import { IUser } from "@gemunion/framework-types";
 
 import { validationSchema } from "./validation";

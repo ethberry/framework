@@ -8,7 +8,7 @@ import { LocalizationProvider } from "@gemunion/provider-localization";
 import { ApiProvider } from "@gemunion/provider-api";
 import { i18n } from "@gemunion/framework-localization-admin-ui";
 import { PickerProvider } from "@gemunion/mui-provider-picker";
-import { DefaultLanguage } from "@gemunion/framework-constants-misc";
+import { DefaultLanguage } from "@gemunion/framework-constants";
 import {
   Error,
   ForgotPassword,

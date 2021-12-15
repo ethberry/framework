@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { AppBar, Hidden, Link, Toolbar } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { companyName } from "@gemunion/framework-constants-misc";
+import { companyName } from "@gemunion/framework-constants";
 
 import { Sections } from "./sections";
 import { Translation } from "./translation";

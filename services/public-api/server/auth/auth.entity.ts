@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 import { IAuth } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";

@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable, PrimaryGen
 
 import { ICategory } from "@gemunion/framework-types";
 import { ProductEntity } from "../product/product.entity";
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "category" })

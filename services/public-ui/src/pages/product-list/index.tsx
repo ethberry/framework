@@ -29,7 +29,7 @@ export interface IProductListProps {
 
 export const ProductList: FC<IProductListProps> = props => {
   const { hideMerchantsInSearch } = props;
-  const { id } = useParams<"id">();
+  const { id = "" } = useParams<{ id: string }>();
   const location = useLocation();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();

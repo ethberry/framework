@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 import { imageUrl } from "@gemunion/framework-mocks";
 
 export class SeedPhoto1593408358930 implements MigrationInterface {

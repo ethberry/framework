@@ -3,7 +3,7 @@ import { format, parseISO } from "date-fns";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, StaticInput } from "@gemunion/mui-inputs-core";
-import { dateTimeFormat } from "@gemunion/framework-constants-misc";
+import { dateTimeFormat } from "@gemunion/framework-constants";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IOrder, IUser, OrderStatus } from "@gemunion/framework-types";
 import { validationSchema } from "./validation";

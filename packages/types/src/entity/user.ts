@@ -1,4 +1,4 @@
-import { EnabledLanguages } from "@gemunion/framework-constants-misc";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 
 import { IMerchant } from "./merchant";
 import { IBase } from "./base";

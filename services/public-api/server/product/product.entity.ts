@@ -10,7 +10,7 @@ import {
 } from "typeorm";
 
 import { IProduct, ProductStatus } from "@gemunion/framework-types";
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 
 import { PhotoEntity } from "../photo/photo.entity";
 import { BaseEntity } from "../database/base.entity";

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 import { simpleFormatting } from "@gemunion/framework-mocks";
 
 export class SeedProducts1593408358910 implements MigrationInterface {

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants-misc";
+import { ns } from "@gemunion/framework-constants";
 
 export class CreatePhotoTable1593408358920 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

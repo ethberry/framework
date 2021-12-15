@@ -4,7 +4,7 @@ import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Profile } from "passport";
 
-import { DefaultLanguage } from "@gemunion/framework-constants-misc";
+import { DefaultLanguage } from "@gemunion/framework-constants";
 import { UserStatus } from "@gemunion/framework-types";
 
 import { UserEntity } from "../../user/user.entity";

@@ -10,7 +10,7 @@ import { IPage } from "@gemunion/framework-types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 export const Page: FC = () => {
-  const { slug } = useParams<"slug">();
+  const { slug } = useParams<{ slug: string }>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 

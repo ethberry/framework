@@ -19,7 +19,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/framework-constants-misc",
+  "name": "@gemunion/framework-constants",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

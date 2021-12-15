@@ -9,7 +9,7 @@ import {
   lastNameMaxLength,
   lastNameMinLength,
 } from "@gemunion/constants";
-import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants-misc";
+import { DefaultLanguage, EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants";
 import { ReCaptcha } from "@gemunion/nest-js-utils";
 import { IUserCreateDto } from "@gemunion/framework-types";
 
