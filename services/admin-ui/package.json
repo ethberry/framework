@@ -20,7 +20,7 @@
     "@gemunion/history": "0.1.15",
     "@gemunion/mui-dialog-confirmation": "3.0.15",
     "@gemunion/mui-dialog-delete": "3.0.15",
-    "@gemunion/mui-dialog-form": "4.0.6",
+    "@gemunion/mui-dialog-form": "5.1.0",
     "@gemunion/mui-form": "4.0.7",
     "@gemunion/mui-form-search": "3.0.19",
     "@gemunion/mui-icons-social-networks": "3.0.9",
