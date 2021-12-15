@@ -38,7 +38,7 @@
     "@gemunion/mui-toolbar": "3.0.15",
     "@gemunion/provider-api": "4.0.20",
     "@gemunion/provider-localization": "1.3.0",
-    "@gemunion/provider-settings": "0.1.40",
+    "@gemunion/provider-settings": "1.3.0",
     "@gemunion/provider-user": "2.3.0",
     "@gemunion/types-collection": "0.1.17",
     "@gemunion/yup-rules": "1.3.0",
