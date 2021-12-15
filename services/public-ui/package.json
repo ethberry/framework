@@ -23,7 +23,7 @@
     "@gemunion/mui-form": "4.0.7",
     "@gemunion/mui-form-search": "3.0.19",
     "@gemunion/mui-inputs-captcha": "3.0.13",
-    "@gemunion/mui-inputs-core": "4.0.6",
+    "@gemunion/mui-inputs-core": "5.1.0",
     "@gemunion/mui-inputs-draft": "1.0.18",
     "@gemunion/mui-inputs-entity": "4.0.6",
     "@gemunion/mui-inputs-image-s3": "4.0.5",
