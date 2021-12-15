@@ -16,7 +16,7 @@
     "@gemunion/framework-localization-public-ui": "0.0.1",
     "@gemunion/framework-mocks": "0.0.1",
     "@gemunion/framework-types": "0.0.1",
-    "@gemunion/history": "0.1.15",
+    "@gemunion/history": "1.2.3",
     "@gemunion/mui-dialog-confirmation": "3.0.15",
     "@gemunion/mui-dialog-delete": "3.0.15",
     "@gemunion/mui-dialog-form": "5.1.0",
