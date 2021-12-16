@@ -2,12 +2,12 @@ import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGen
 
 import { ICategory } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
 
 import { ProductEntity } from "../product/product.entity";
-import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "category" })
-export class CategoryEntity extends BaseEntity implements ICategory {
+export class CategoryEntity extends GemunionBaseEntity implements ICategory {
   @PrimaryGeneratedColumn()
   public id: number;
 

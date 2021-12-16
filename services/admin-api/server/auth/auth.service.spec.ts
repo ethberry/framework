@@ -3,14 +3,15 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm";
 
-import { DatabaseModule } from "../database/database.module";
 import { TokenModule } from "../token/token.module";
 import { EmailModule } from "../email/email.module";
 import { UserModule } from "../user/user.module";
 import { AuthService } from "./auth.service";
 import { AuthEntity } from "./auth.entity";
 import { JwtLocalStrategy } from "./strategies";
+import ormconfig from "../ormconfig";
 
 describe("AuthService", () => {
   let authService: AuthService;
@@ -21,7 +22,7 @@ describe("AuthService", () => {
         ConfigModule.forRoot({
           envFilePath: `.env.${process.env.NODE_ENV as string}`,
         }),
-        DatabaseModule,
+        GemunionTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([AuthEntity]),
         UserModule,
         TokenModule,

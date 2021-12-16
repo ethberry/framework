@@ -3,12 +3,12 @@ import { Exclude } from "class-transformer";
 
 import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
 import { EnabledLanguages, ns } from "@gemunion/framework-constants";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
 
 import { MerchantEntity } from "../merchant/merchant.entity";
-import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "user" })
-export class UserEntity extends BaseEntity implements IUser {
+export class UserEntity extends GemunionBaseEntity implements IUser {
   @PrimaryGeneratedColumn()
   public id: number;
 

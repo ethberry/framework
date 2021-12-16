@@ -10,12 +10,12 @@ import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
-import { GemunionThrottlerGuard, GemunionThrottlerModule, THROTTLE_STORE } from "@gemunion/nest-js-module-throttler";
+import { ThrottlerHttpGuard, GemunionThrottlerModule, THROTTLE_STORE } from "@gemunion/nest-js-module-throttler";
+import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm";
 
 import { RolesGuard } from "./common/guards";
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";
-import { DatabaseModule } from "./database/database.module";
 import { EmailModule } from "./email/email.module";
 import { HealthModule } from "./health/health.module";
 import { MerchantModule } from "./merchant/merchant.module";
@@ -29,6 +29,7 @@ import { UserModule } from "./user/user.module";
 import { ValidationModule } from "./validation/validation.module";
 
 import { AppController } from "./app.controller";
+import ormconfig from "./ormconfig";
 
 @Module({
   providers: [
@@ -51,7 +52,7 @@ import { AppController } from "./app.controller";
     },
     {
       provide: APP_GUARD,
-      useClass: GemunionThrottlerGuard,
+      useClass: ThrottlerHttpGuard,
     },
   ],
   imports: [
@@ -62,7 +63,7 @@ import { AppController } from "./app.controller";
       imports: [ConfigModule],
       useClass: WinstonConfigService,
     }),
-    DatabaseModule,
+    GemunionTypeormModule.forRoot(ormconfig),
     RedisModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

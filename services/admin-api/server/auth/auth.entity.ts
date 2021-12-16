@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@gemunion/framework-constants";
 import { IAuth } from "@gemunion/framework-types";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
 
 import { UserEntity } from "../user/user.entity";
-import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "auth" })
-export class AuthEntity extends BaseEntity implements IAuth {
+export class AuthEntity extends GemunionBaseEntity implements IAuth {
   @Column({ type: "varchar" })
   public refreshToken: string;
 

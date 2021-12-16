@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "ty
 
 import { IPromo } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
 
 import { ProductEntity } from "../product/product.entity";
-import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "promo" })
-export class PromoEntity extends BaseEntity implements IPromo {
+export class PromoEntity extends GemunionBaseEntity implements IPromo {
   @PrimaryGeneratedColumn()
   public id: number;
 

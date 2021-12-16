@@ -2,14 +2,14 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { IMerchant, MerchantStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
 
 import { UserEntity } from "../user/user.entity";
 import { ProductEntity } from "../product/product.entity";
-import { BaseEntity } from "../database/base.entity";
 import { OrderEntity } from "../order/order.entity";
 
 @Entity({ schema: ns, name: "merchant" })
-export class MerchantEntity extends BaseEntity implements IMerchant {
+export class MerchantEntity extends GemunionBaseEntity implements IMerchant {
   @PrimaryGeneratedColumn()
   public id: number;
 

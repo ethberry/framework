@@ -11,15 +11,15 @@ import {
 
 import { IProduct, ProductStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
 
 import { PhotoEntity } from "../photo/photo.entity";
-import { BaseEntity } from "../database/base.entity";
 import { MerchantEntity } from "../merchant/merchant.entity";
 import { CategoryEntity } from "../category/category.entity";
 import { OrderEntity } from "../order/order.entity";
 
 @Entity({ schema: ns, name: "product" })
-export class ProductEntity extends BaseEntity implements IProduct {
+export class ProductEntity extends GemunionBaseEntity implements IProduct {
   @PrimaryGeneratedColumn()
   public id: number;
 

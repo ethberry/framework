@@ -5,9 +5,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { v4 } from "uuid";
 
 import { TokenType } from "@gemunion/framework-types";
+import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm";
+
 import { emlServiceProvider } from "../common/providers";
 import { generateUserCreateDto } from "../common/test";
-import { DatabaseModule } from "../database/database.module";
 import { TokenEntity } from "../token/token.entity";
 import { TokenModule } from "../token/token.module";
 import { TokenService } from "../token/token.service";
@@ -15,6 +16,7 @@ import { UserEntity } from "./user.entity";
 import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
 import { UserService } from "./user.service";
+import ormconfig from "../ormconfig";
 
 describe("UserService", () => {
   let userService: UserService;
@@ -27,7 +29,7 @@ describe("UserService", () => {
         ConfigModule.forRoot({
           envFilePath: `.env.${process.env.NODE_ENV as string}`,
         }),
-        DatabaseModule,
+        GemunionTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([UserEntity, TokenEntity]),
         UserSeedModule,
         TokenModule,

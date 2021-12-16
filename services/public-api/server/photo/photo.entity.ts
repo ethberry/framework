@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 
 import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
 
 import { ProductEntity } from "../product/product.entity";
-import { BaseEntity } from "../database/base.entity";
 
 @Entity({ schema: ns, name: "photo" })
-export class PhotoEntity extends BaseEntity implements IPhoto {
+export class PhotoEntity extends GemunionBaseEntity implements IPhoto {
   @PrimaryGeneratedColumn()
   public id: number;
 
