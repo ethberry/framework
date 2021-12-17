@@ -12,7 +12,7 @@ import {
   TokenType,
   UserStatus,
 } from "@gemunion/framework-types";
-import { DefaultLanguage } from "@gemunion/framework-constants";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 
 const date = new Date();
 
@@ -37,7 +37,7 @@ export const emptyUser = {
   firstName: "",
   lastName: "",
   phoneNumber: "",
-  language: DefaultLanguage,
+  language: EnabledLanguages.EN,
   imageUrl: "",
   userStatus: UserStatus.ACTIVE,
   userRoles: [],

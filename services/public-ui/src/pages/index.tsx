@@ -8,7 +8,7 @@ import { LocalizationProvider } from "@gemunion/provider-localization";
 import { ApiProvider } from "@gemunion/provider-api";
 import { i18n } from "@gemunion/framework-localization-public-ui";
 import { PickerProvider } from "@gemunion/mui-provider-picker";
-import { DefaultLanguage } from "@gemunion/framework-constants";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 import {
   Error,
   ForgotPassword,
@@ -40,8 +40,8 @@ const App: FC = () => {
   return (
     <ApiProvider baseUrl={process.env.BE_URL}>
       <UserProvider>
-        <SettingsProvider defaultLanguage={DefaultLanguage}>
-          <LocalizationProvider i18n={i18n} defaultLanguage={DefaultLanguage}>
+        <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
+          <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
             <SnackbarProvider>
               <PickerProvider>
                 <Routes>

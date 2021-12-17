@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 
 import { IMerchant, IToken, IUser, TokenType } from "@gemunion/framework-types";
-import { DefaultLanguage } from "@gemunion/framework-constants";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 
 export const fakeUser = {
   password: "",
@@ -10,7 +10,7 @@ export const fakeUser = {
   firstName: "Trej",
   lastName: "Gun",
   phoneNumber: "+62 (812) 3919-8760",
-  language: DefaultLanguage,
+  language: EnabledLanguages.EN,
   createdAt: new Date().toISOString(),
 } as unknown as IUser;
 
