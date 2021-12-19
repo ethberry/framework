@@ -1,6 +1,7 @@
+import { IBase } from "@gemunion/types-collection";
+
 import { IMerchant } from "./merchant";
 import { IPhoto } from "./photo";
-import { IBase } from "./base";
 import { ICategory } from "./category";
 import { IOrder } from "./order";
 

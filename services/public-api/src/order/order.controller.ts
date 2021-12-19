@@ -20,8 +20,8 @@ export class OrderController {
   }
 
   @Post("/user")
-  public create(@Body() body: OrderCreateDto, @User() userEntity: UserEntity): Promise<OrderEntity> {
-    return this.orderService.create(body, userEntity);
+  public create(@Body() dto: OrderCreateDto, @User() userEntity: UserEntity): Promise<OrderEntity> {
+    return this.orderService.create(dto, userEntity);
   }
 
   @Get("/:id")

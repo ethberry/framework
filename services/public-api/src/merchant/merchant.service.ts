@@ -27,8 +27,8 @@ export class MerchantService {
     return this.merchantEntityRepository.findOne({ where });
   }
 
-  public async search(search: SearchDto): Promise<[Array<MerchantEntity>, number]> {
-    const { query } = search;
+  public async search(dto: SearchDto): Promise<[Array<MerchantEntity>, number]> {
+    const { query } = dto;
 
     const queryBuilder = this.merchantEntityRepository.createQueryBuilder("merchant");
 

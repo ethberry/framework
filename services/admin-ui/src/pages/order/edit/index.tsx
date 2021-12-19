@@ -3,7 +3,7 @@ import { format, parseISO } from "date-fns";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, StaticInput } from "@gemunion/mui-inputs-core";
-import { dateTimeFormat } from "@gemunion/framework-constants";
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IOrder, IUser, OrderStatus } from "@gemunion/framework-types";
 import { validationSchema } from "./validation";
@@ -33,7 +33,7 @@ export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
       <EntityInput name="productId" controller="products" />
       <EntityInput name="merchantId" controller="merchants" />
       {id ? <SelectInput name="orderStatus" options={OrderStatus} /> : null}
-      <StaticInput name="createdAt" value={format(parseISO(createdAt), dateTimeFormat)} />
+      <StaticInput name="createdAt" value={format(parseISO(createdAt), humanReadableDateTimeFormat)} />
     </FormDialog>
   );
 };

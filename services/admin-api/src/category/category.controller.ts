@@ -25,13 +25,13 @@ export class CategoryController {
   }
 
   @Post("/")
-  public create(@Body() body: CategoryCreateDto): Promise<CategoryEntity> {
-    return this.categoryService.create(body);
+  public create(@Body() dto: CategoryCreateDto): Promise<CategoryEntity> {
+    return this.categoryService.create(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() body: CategoryUpdateDto): Promise<CategoryEntity | undefined> {
-    return this.categoryService.update({ id }, body);
+  public update(@Param("id") id: number, @Body() dto: CategoryUpdateDto): Promise<CategoryEntity | undefined> {
+    return this.categoryService.update({ id }, dto);
   }
 
   @Get("/:id")

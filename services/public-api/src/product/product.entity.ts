@@ -1,13 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  ManyToMany,
-  OneToMany,
-  JoinTable,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, ManyToMany, OneToMany, JoinTable } from "typeorm";
 
 import { IProduct, ProductStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
@@ -20,9 +11,6 @@ import { OrderEntity } from "../order/order.entity";
 
 @Entity({ schema: ns, name: "product" })
 export class ProductEntity extends GemunionBaseEntity implements IProduct {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
   @Column({ type: "varchar" })
   public title: string;
 

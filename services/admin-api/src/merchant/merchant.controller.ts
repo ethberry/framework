@@ -27,17 +27,17 @@ export class MerchantController {
   }
 
   @Post("/")
-  public create(@Body() body: MerchantCreateDto, @User() userEntity: UserEntity): Promise<MerchantEntity> {
-    return this.merchantService.create(body, userEntity);
+  public create(@Body() dto: MerchantCreateDto, @User() userEntity: UserEntity): Promise<MerchantEntity> {
+    return this.merchantService.create(dto, userEntity);
   }
 
   @Put("/:id")
   public update(
     @Param("id") id: number,
-    @Body() body: MerchantUpdateDto,
+    @Body() dto: MerchantUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<MerchantEntity | undefined> {
-    return this.merchantService.update({ id }, body, userEntity);
+    return this.merchantService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

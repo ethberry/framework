@@ -1,7 +1,8 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
-import { ns } from "@gemunion/framework-constants";
 import path from "path";
+
+import { ns } from "@gemunion/framework-constants";
 
 import { AuthEntity } from "./auth/auth.entity";
 import { CategoryEntity } from "./category/category.entity";

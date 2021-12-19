@@ -34,7 +34,7 @@ export class HealthController {
 
     return this.health.check([
       async (): Promise<HealthIndicatorResult> =>
-        this.db.pingCheck("DataSase", {
+        this.db.pingCheck("Postgres", {
           timeout: 600,
         }),
       async (): Promise<HealthIndicatorResult> =>

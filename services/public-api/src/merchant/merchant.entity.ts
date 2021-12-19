@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 
 import { IMerchant, MerchantStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
@@ -10,9 +10,6 @@ import { OrderEntity } from "../order/order.entity";
 
 @Entity({ schema: ns, name: "merchant" })
 export class MerchantEntity extends GemunionBaseEntity implements IMerchant {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
   @Column({ type: "varchar" })
   public title: string;
 

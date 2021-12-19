@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns";
 import { Link as RouterLink } from "react-router-dom";
 
 import { IOrder } from "@gemunion/framework-types";
-import { dateTimeFormat } from "@gemunion/framework-constants";
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
 import { formatMoney } from "../../../utils/money";
 
@@ -32,7 +32,7 @@ export const OrderItem: FC<IOrderItemProps> = props => {
           <ListItemText>
             <FormattedMessage id="pages.orders.date" />
             :&nbsp;
-            {format(parseISO(order.createdAt), dateTimeFormat)}
+            {format(parseISO(order.createdAt), humanReadableDateTimeFormat)}
           </ListItemText>
         </ListItem>
         <ListItem>

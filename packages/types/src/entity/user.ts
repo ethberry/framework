@@ -1,7 +1,7 @@
 import { EnabledLanguages } from "@gemunion/framework-constants";
+import { IBase } from "@gemunion/types-collection";
 
 import { IMerchant } from "./merchant";
-import { IBase } from "./base";
 
 export enum UserStatus {
   ACTIVE = "ACTIVE",

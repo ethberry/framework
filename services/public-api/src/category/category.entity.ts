@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable } from "typeorm";
 
 import { ICategory } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
@@ -8,9 +8,6 @@ import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "category" })
 export class CategoryEntity extends GemunionBaseEntity implements ICategory {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
   @Column({ type: "varchar" })
   public title: string;
 

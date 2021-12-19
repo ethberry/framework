@@ -24,8 +24,8 @@ export class UserController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() body: UserUpdateDto): Promise<UserEntity> {
-    return this.userService.update({ id }, body);
+  public update(@Param("id") id: number, @Body() dto: UserUpdateDto): Promise<UserEntity> {
+    return this.userService.update({ id }, dto);
   }
 
   @Get("/:id")

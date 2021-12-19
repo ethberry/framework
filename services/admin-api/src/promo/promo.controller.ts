@@ -17,18 +17,18 @@ export class PromoController {
   @Public()
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: PromoSearchDto): Promise<[Array<PromoEntity>, number]> {
-    return this.promoService.search(query);
+  public search(@Query() dto: PromoSearchDto): Promise<[Array<PromoEntity>, number]> {
+    return this.promoService.search(dto);
   }
 
   @Post("/")
-  public create(@Body() body: PromoCreateDto): Promise<PromoEntity> {
-    return this.promoService.create(body);
+  public create(@Body() dto: PromoCreateDto): Promise<PromoEntity> {
+    return this.promoService.create(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() body: PromoUpdateDto): Promise<PromoEntity | undefined> {
-    return this.promoService.update({ id }, body);
+  public update(@Param("id") id: number, @Body() dto: PromoUpdateDto): Promise<PromoEntity | undefined> {
+    return this.promoService.update({ id }, dto);
   }
 
   @Delete("/:id")

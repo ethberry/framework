@@ -19,13 +19,13 @@ export class PageController {
   }
 
   @Post("/")
-  public create(@Body() body: PageCreateDto): Promise<PageEntity> {
-    return this.pageService.create(body);
+  public create(@Body() dto: PageCreateDto): Promise<PageEntity> {
+    return this.pageService.create(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() body: PageUpdateDto): Promise<PageEntity> {
-    return this.pageService.update({ id }, body);
+  public update(@Param("id") id: number, @Body() dto: PageUpdateDto): Promise<PageEntity> {
+    return this.pageService.update({ id }, dto);
   }
 
   @Get("/:id")

@@ -1,5 +1,6 @@
+import { IBase } from "@gemunion/types-collection";
+
 import { IProduct } from "./product";
-import { IBase } from "./base";
 
 export interface IPromo extends IBase {
   title: string;

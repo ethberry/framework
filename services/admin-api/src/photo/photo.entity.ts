@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
@@ -8,9 +8,6 @@ import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "photo" })
 export class PhotoEntity extends GemunionBaseEntity implements IPhoto {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
   @Column({ type: "varchar" })
   public title: string;
 

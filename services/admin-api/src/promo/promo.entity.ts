@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IPromo } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
@@ -8,9 +8,6 @@ import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "promo" })
 export class PromoEntity extends GemunionBaseEntity implements IPromo {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
   @Column({ type: "varchar" })
   public title: string;
 

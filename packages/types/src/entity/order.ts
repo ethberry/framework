@@ -1,6 +1,7 @@
+import { IBase } from "@gemunion/types-collection";
+
 import { IUser } from "./user";
 import { IMerchant } from "./merchant";
-import { IBase } from "./base";
 import { IProduct } from "./product";
 
 export enum OrderStatus {

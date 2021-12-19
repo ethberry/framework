@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
@@ -10,9 +10,6 @@ import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "order" })
 export class OrderEntity extends GemunionBaseEntity implements IOrder {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
   @JoinColumn()
   @OneToOne(_type => UserEntity)
   public user: UserEntity;

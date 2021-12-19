@@ -22,7 +22,7 @@ export class PhotosController {
 
   @Put("/:id")
   @Roles(UserRole.ADMIN)
-  public update(@Param("id") id: number, @Body() body: PhotoUpdateDto): Promise<PhotoEntity> {
-    return this.photosService.update({ id }, body);
+  public update(@Param("id") id: number, @Body() dto: PhotoUpdateDto): Promise<PhotoEntity> {
+    return this.photosService.update({ id }, dto);
   }
 }

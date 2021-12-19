@@ -1,5 +1,4 @@
 export * from "./auth";
-export * from "./base";
 export * from "./category";
 export * from "./merchant";
 export * from "./order";

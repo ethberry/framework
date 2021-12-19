@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne } from "typeorm";
 import { Exclude } from "class-transformer";
 
 import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
@@ -9,9 +9,6 @@ import { MerchantEntity } from "../merchant/merchant.entity";
 
 @Entity({ schema: ns, name: "user" })
 export class UserEntity extends GemunionBaseEntity implements IUser {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
   @Column({ type: "varchar" })
   public email: string;
 

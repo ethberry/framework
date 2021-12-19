@@ -1,4 +1,4 @@
-import { IBase } from "./base";
+import { IBase } from "@gemunion/types-collection";
 
 export enum PageStatus {
   ACTIVE = "ACTIVE",

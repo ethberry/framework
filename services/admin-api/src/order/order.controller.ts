@@ -20,13 +20,13 @@ export class OrderController {
   }
 
   @Post("/")
-  public create(@Body() body: OrderCreateDto): Promise<OrderEntity> {
-    return this.orderService.create(body);
+  public create(@Body() dto: OrderCreateDto): Promise<OrderEntity> {
+    return this.orderService.create(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() body: OrderUpdateDto): Promise<OrderEntity> {
-    return this.orderService.update({ id }, body);
+  public update(@Param("id") id: number, @Body() dto: OrderUpdateDto): Promise<OrderEntity> {
+    return this.orderService.update({ id }, dto);
   }
 
   @Get("/:id")

@@ -28,17 +28,17 @@ export class ProductController {
   }
 
   @Post("/")
-  public create(@Body() body: ProductCreateDto, @User() userEntity: UserEntity): Promise<ProductEntity> {
-    return this.productService.create(body, userEntity);
+  public create(@Body() dto: ProductCreateDto, @User() userEntity: UserEntity): Promise<ProductEntity> {
+    return this.productService.create(dto, userEntity);
   }
 
   @Put("/:id")
   public update(
     @Param("id") id: number,
-    @Body() body: ProductUpdateDto,
+    @Body() dto: ProductUpdateDto,
     @User() userEntity: UserEntity,
   ): Promise<ProductEntity> {
-    return this.productService.update({ id }, body, userEntity);
+    return this.productService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")

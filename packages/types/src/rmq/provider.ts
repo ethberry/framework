@@ -4,6 +4,4 @@ export enum ProviderType {
   TPL_SERVICE = "TPL_SERVICE",
   PDF_SERVICE = "PDF_SERVICE",
   WEBHOOK_SERVICE = "WEBHOOK_SERVICE",
-  SES = "SES",
-  S3 = "S3",
 }
