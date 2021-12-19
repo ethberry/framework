@@ -5,7 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { v4 } from "uuid";
 
 import { TokenType } from "@gemunion/framework-types";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm";
+import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { emlServiceProvider } from "../common/providers";
 import { generateUserCreateDto } from "../common/test";

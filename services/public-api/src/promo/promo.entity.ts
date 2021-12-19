@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "ty
 
 import { IPromo } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { ProductEntity } from "../product/product.entity";
 

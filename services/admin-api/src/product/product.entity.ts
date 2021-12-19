@@ -11,7 +11,7 @@ import {
 
 import { IProduct, ProductStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { PhotoEntity } from "../photo/photo.entity";
 import { MerchantEntity } from "../merchant/merchant.entity";

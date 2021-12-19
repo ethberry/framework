@@ -11,7 +11,7 @@ import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
 import { ThrottlerHttpGuard, GemunionThrottlerModule, THROTTLE_STORE } from "@gemunion/nest-js-module-throttler";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm";
+import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";

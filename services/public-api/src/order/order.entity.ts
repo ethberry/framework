@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn
 
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm";
+import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantEntity } from "../merchant/merchant.entity";

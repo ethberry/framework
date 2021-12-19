@@ -4,7 +4,7 @@ import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm";
+import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { TokenModule } from "../token/token.module";
 import { UserModule } from "../user/user.module";
