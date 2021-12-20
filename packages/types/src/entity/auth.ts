@@ -1,6 +1,6 @@
 import { IJwt } from "@gemunion/types-jwt";
-import { IBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
-export interface IAuth extends IJwt, IBase {
+export interface IAuth extends IJwt, IIdBase {
   ip: string;
 }

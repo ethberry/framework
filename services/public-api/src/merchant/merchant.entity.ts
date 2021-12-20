@@ -2,14 +2,14 @@ import { Column, Entity, OneToMany } from "typeorm";
 
 import { IMerchant, MerchantStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { UserEntity } from "../user/user.entity";
 import { ProductEntity } from "../product/product.entity";
 import { OrderEntity } from "../order/order.entity";
 
 @Entity({ schema: ns, name: "merchant" })
-export class MerchantEntity extends GemunionBaseEntity implements IMerchant {
+export class MerchantEntity extends IdBaseEntity implements IMerchant {
   @Column({ type: "varchar" })
   public title: string;
 

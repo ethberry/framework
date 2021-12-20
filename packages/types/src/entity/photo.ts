@@ -1,4 +1,4 @@
-import { IBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
 import { IProduct } from "./product";
 
@@ -8,7 +8,7 @@ export enum PhotoStatus {
   DECLINED = "DECLINED",
 }
 
-export interface IPhoto extends IBase {
+export interface IPhoto extends IIdBase {
   title: string;
   imageUrl: string;
   photoStatus: PhotoStatus;

@@ -2,12 +2,12 @@ import { Column, Entity, ManyToOne, OneToMany, ManyToMany, JoinTable } from "typ
 
 import { ICategory } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "category" })
-export class CategoryEntity extends GemunionBaseEntity implements ICategory {
+export class CategoryEntity extends IdBaseEntity implements ICategory {
   @Column({ type: "varchar" })
   public title: string;
 

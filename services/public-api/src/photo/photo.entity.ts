@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "photo" })
-export class PhotoEntity extends GemunionBaseEntity implements IPhoto {
+export class PhotoEntity extends IdBaseEntity implements IPhoto {
   @Column({ type: "varchar" })
   public title: string;
 

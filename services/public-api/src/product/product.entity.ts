@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, ManyToMany, OneToMany, JoinTable
 
 import { IProduct, ProductStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { PhotoEntity } from "../photo/photo.entity";
 import { MerchantEntity } from "../merchant/merchant.entity";
@@ -10,7 +10,7 @@ import { CategoryEntity } from "../category/category.entity";
 import { OrderEntity } from "../order/order.entity";
 
 @Entity({ schema: ns, name: "product" })
-export class ProductEntity extends GemunionBaseEntity implements IProduct {
+export class ProductEntity extends IdBaseEntity implements IProduct {
   @Column({ type: "varchar" })
   public title: string;
 

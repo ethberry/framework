@@ -1,8 +1,8 @@
-import { IBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
 import { IProduct } from "./product";
 
-export interface IPromo extends IBase {
+export interface IPromo extends IIdBase {
   title: string;
   description: string;
   product?: IProduct;

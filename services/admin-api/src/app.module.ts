@@ -12,6 +12,7 @@ import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
+import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import { RolesGuard } from "./common/guards";
 import { AuthModule } from "./auth/auth.module";
@@ -94,6 +95,7 @@ import ormconfig from "./ormconfig";
         };
       },
     }),
+    LicenseModule.forRoot(LicenseModule, "741f15dd-74af-4708-bdb4-05a8682f971a"),
     RequestLoggerModule,
     AuthModule,
     CategoryModule,

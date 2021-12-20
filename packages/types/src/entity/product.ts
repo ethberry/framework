@@ -1,4 +1,4 @@
-import { IBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
 import { IMerchant } from "./merchant";
 import { IPhoto } from "./photo";
@@ -10,7 +10,7 @@ export enum ProductStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IProduct extends IBase {
+export interface IProduct extends IIdBase {
   title: string;
   description: string;
   price: number;

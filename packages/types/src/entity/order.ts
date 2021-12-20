@@ -1,4 +1,4 @@
-import { IBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
 import { IUser } from "./user";
 import { IMerchant } from "./merchant";
@@ -10,7 +10,7 @@ export enum OrderStatus {
   CANCELED = "CANCELED",
 }
 
-export interface IOrder extends IBase {
+export interface IOrder extends IIdBase {
   orderStatus: OrderStatus;
   userId: number;
   user?: IUser;

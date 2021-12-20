@@ -2,14 +2,14 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { GemunionBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { UserEntity } from "../user/user.entity";
 import { MerchantEntity } from "../merchant/merchant.entity";
 import { ProductEntity } from "../product/product.entity";
 
 @Entity({ schema: ns, name: "order" })
-export class OrderEntity extends GemunionBaseEntity implements IOrder {
+export class OrderEntity extends IdBaseEntity implements IOrder {
   @JoinColumn()
   @OneToOne(_type => UserEntity)
   public user: UserEntity;

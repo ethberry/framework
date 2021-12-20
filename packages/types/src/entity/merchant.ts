@@ -1,4 +1,4 @@
-import { IBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
 import { IUser } from "./user";
 import { IProduct } from "./product";
@@ -9,7 +9,7 @@ export enum MerchantStatus {
   PENDING = "PENDING",
 }
 
-export interface IMerchant extends IBase {
+export interface IMerchant extends IIdBase {
   title: string;
   description: string;
   email: string;

@@ -1,5 +1,5 @@
 import { EnabledLanguages } from "@gemunion/framework-constants";
-import { IBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
 import { IMerchant } from "./merchant";
 
@@ -15,7 +15,7 @@ export enum UserRole {
   MERCHANT = "MERCHANT",
 }
 
-export interface IUser extends IBase {
+export interface IUser extends IIdBase {
   email: string;
   firstName: string;
   lastName: string;
