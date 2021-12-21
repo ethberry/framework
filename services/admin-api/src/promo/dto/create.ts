@@ -1,13 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsJSON } from "class-validator";
-
-import { IsNumber, IsString } from "@gemunion/nest-js-validators";
+import { IsJSON, IsNumber, IsString, Min } from "class-validator";
 
 import { IPromoCreateDto } from "../interfaces";
 
 export class PromoCreateDto implements IPromoCreateDto {
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public title: string;
 
   @ApiProperty()
@@ -17,12 +15,11 @@ export class PromoCreateDto implements IPromoCreateDto {
   @ApiProperty({
     minimum: 1,
   })
-  @IsNumber({
-    minimum: 1,
-  })
+  @IsNumber({}, { message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public productId: number;
 
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 }

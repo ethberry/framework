@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
+import { IsEmail } from "class-validator";
 
 import { ReCaptcha } from "@gemunion/nest-js-utils";
 
-import { IsEmail } from "../../common/validators";
 import { IResendEmailVerificationDto } from "../interfaces";
 
 export class ResendEmailVerificationDto implements IResendEmailVerificationDto {
@@ -12,10 +12,7 @@ export class ResendEmailVerificationDto implements IResendEmailVerificationDto {
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 
-  // TODO FIX ME
   @ApiProperty()
-  @ReCaptcha({
-    required: false,
-  })
+  @ReCaptcha()
   public captcha: string;
 }

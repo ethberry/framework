@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsEnum } from "class-validator";
 
 import { MerchantStatus } from "@gemunion/framework-types";
-import { IsString } from "@gemunion/nest-js-validators";
 
 import { IMerchantUpdateDto } from "../interfaces";
 import { MerchantCreateDto } from "./create";
@@ -10,8 +10,6 @@ export class MerchantUpdateDto extends MerchantCreateDto implements IMerchantUpd
   @ApiProperty({
     enum: MerchantStatus,
   })
-  @IsString({
-    enum: MerchantStatus,
-  })
+  @IsEnum({ enum: MerchantStatus }, { message: "badInput" })
   public merchantStatus: MerchantStatus;
 }

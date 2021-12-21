@@ -1,18 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-
-import { IsString } from "@gemunion/nest-js-validators";
+import { IsOptional, IsString } from "class-validator";
 
 import { IPhotoCreateDto } from "../interfaces";
 
 export class PhotoCreateDto implements IPhotoCreateDto {
   @ApiPropertyOptional()
-  @IsString({
-    required: false,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
   public title: string;
 
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 
   priority: number;

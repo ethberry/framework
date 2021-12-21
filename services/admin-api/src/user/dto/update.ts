@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsOptional, IsString } from "class-validator";
 
-import { IsString } from "@gemunion/nest-js-validators";
 import { UserRole, UserStatus } from "@gemunion/framework-types";
 
 import { IUserUpdateDto } from "../interfaces";
@@ -10,26 +10,20 @@ export class UserUpdateDto extends ProfileUpdateDto implements IUserUpdateDto {
   @ApiPropertyOptional({
     enum: UserStatus,
   })
-  @IsString({
-    enum: UserStatus,
-    required: false,
-  })
+  @IsOptional()
+  @IsEnum({ enum: UserStatus }, { message: "badInput" })
   public userStatus: UserStatus;
 
   @ApiPropertyOptional({
     enum: UserRole,
     isArray: true,
   })
-  @IsString({
-    enum: UserRole,
-    isArray: true,
-    required: false,
-  })
+  @IsOptional()
+  @IsEnum({ enum: UserStatus }, { each: true, message: "badInput" })
   public userRoles: Array<UserRole>;
 
   @ApiPropertyOptional()
-  @IsString({
-    required: false,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
   public comment: string;
 }

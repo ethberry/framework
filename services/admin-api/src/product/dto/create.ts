@@ -1,8 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsJSON, ValidateNested, IsOptional } from "class-validator";
+import { IsArray, IsJSON, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IsNumber, IsString } from "@gemunion/nest-js-validators";
 import { IPhoto } from "@gemunion/framework-types";
 
 import { IProductCreateDto } from "../interfaces";
@@ -10,7 +9,7 @@ import { PhotoCreateDto } from "../../photo/dto";
 
 export class ProductCreateDto implements IProductCreateDto {
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public title: string;
 
   @ApiProperty()
@@ -21,35 +20,30 @@ export class ProductCreateDto implements IProductCreateDto {
     isArray: true,
     minimum: 1,
   })
-  @IsNumber({
-    isArray: true,
-    minimum: 1,
-  })
+  @IsNumber({}, { each: true, message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public categoryIds: Array<number>;
 
   @ApiProperty({
     minimum: 0,
   })
-  @IsNumber({
-    minimum: 0,
-  })
+  @IsNumber({}, { message: "typeMismatch" })
+  @Min(0, { message: "rangeUnderflow" })
   public price: number;
 
   @ApiProperty({
     minimum: 0,
   })
-  @IsNumber({
-    minimum: 0,
-  })
+  @IsNumber({}, { message: "typeMismatch" })
+  @Min(0, { message: "rangeUnderflow" })
   public amount: number;
 
   @ApiPropertyOptional({
     minimum: 1,
   })
-  @IsNumber({
-    required: false,
-    minimum: 1,
-  })
+  @IsOptional()
+  @IsNumber({}, { message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public merchantId: number;
 
   @ApiPropertyOptional({ type: () => [PhotoCreateDto] })

@@ -1,74 +1,41 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
+import { IsEmail, IsEnum, IsOptional, IsString, Max, Min } from "class-validator";
 
-import {
-  emailMaxLength,
-  firstNameMaxLength,
-  firstNameMinLength,
-  lastNameMaxLength,
-  lastNameMinLength,
-} from "@gemunion/constants";
-import { IsString } from "@gemunion/nest-js-validators";
-import { EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants";
+import { emailMaxLength, firstNameMaxLength, firstNameMinLength } from "@gemunion/constants";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 import { IUserCommonDto } from "@gemunion/framework-types";
-
-import { IsEmail } from "../validators";
 
 export class UserCommonDto implements IUserCommonDto {
   @ApiPropertyOptional({
     minLength: firstNameMinLength,
     maxLength: firstNameMaxLength,
   })
-  @IsString({
-    required: false,
-    minLength: firstNameMinLength,
-    maxLength: firstNameMaxLength,
-  })
-  public firstName: string;
-
-  @ApiPropertyOptional({
-    minLength: lastNameMinLength,
-    maxLength: lastNameMaxLength,
-  })
-  @IsString({
-    required: false,
-    minLength: lastNameMinLength,
-    maxLength: lastNameMaxLength,
-  })
-  public lastName: string;
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @Min(firstNameMinLength, { message: "rangeUnderflow" })
+  @Max(firstNameMaxLength, { message: "overUnderflow" })
+  public displayName: string;
 
   @ApiPropertyOptional({
     type: String,
   })
-  @IsString({
-    required: false,
-    regexp: rePhoneNumber,
-  })
-  public phoneNumber: string;
-
-  @ApiPropertyOptional({
-    type: String,
-  })
-  @IsString({
-    required: false,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 
   @ApiPropertyOptional({
     enum: EnabledLanguages,
   })
-  @IsString({
-    required: false,
-    enum: EnabledLanguages,
-  })
+  @IsOptional()
+  @IsEnum({ enum: EnabledLanguages }, { message: "badInput" })
   public language: EnabledLanguages = EnabledLanguages.EN;
 
   @ApiPropertyOptional({
     maxLength: emailMaxLength,
   })
-  @IsEmail({
-    required: false,
-  })
+  @IsOptional()
+  @IsEmail()
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 }

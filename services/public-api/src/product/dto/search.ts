@@ -1,8 +1,8 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Type } from "class-transformer";
+import { IsNumber, IsOptional, Min } from "class-validator";
 
 import { SortDto } from "@gemunion/collection";
-import { IsNumber } from "@gemunion/nest-js-validators";
 
 import { IProductSortDto } from "../interfaces";
 import { IProduct } from "@gemunion/framework-types";
@@ -12,21 +12,18 @@ export class ProductSortDto extends SortDto<IProduct> implements IProductSortDto
     minimum: 1,
     isArray: true,
   })
-  @IsNumber({
-    minimum: 1,
-    required: false,
-    isArray: true,
-  })
+  @IsOptional()
+  @IsNumber({}, { each: true, message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public categoryIds: Array<number>;
 
   @ApiPropertyOptional({
     minimum: 1,
   })
-  @IsNumber({
-    minimum: 1,
-    required: false,
-  })
+  @IsOptional()
+  @IsNumber({}, { message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   merchantId: number;
 }

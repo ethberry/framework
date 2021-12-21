@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
+import { IsEmail, IsEnum, IsOptional, IsString, Matches, Max, Min } from "class-validator";
 
-import { IsString } from "@gemunion/nest-js-validators";
 import {
   emailMaxLength,
   firstNameMaxLength,
@@ -13,7 +13,6 @@ import { EnabledLanguages, rePhoneNumber } from "@gemunion/framework-constants";
 import { ReCaptcha } from "@gemunion/nest-js-utils";
 import { IUserCreateDto } from "@gemunion/framework-types";
 
-import { IsEmail } from "../../common/validators";
 import { ValidatePasswordDto } from "../../auth/dto";
 
 export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto {
@@ -21,48 +20,42 @@ export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto
     minLength: firstNameMinLength,
     maxLength: firstNameMaxLength,
   })
-  @IsString({
-    required: false,
-    minLength: firstNameMinLength,
-    maxLength: firstNameMaxLength,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @Min(firstNameMinLength, { message: "rangeUnderflow" })
+  @Max(firstNameMaxLength, { message: "overUnderflow" })
   public firstName: string;
 
   @ApiPropertyOptional({
-    minLength: lastNameMinLength,
-    maxLength: lastNameMaxLength,
+    minLength: lastNameMaxLength,
+    maxLength: lastNameMinLength,
   })
-  @IsString({
-    required: false,
-    minLength: lastNameMinLength,
-    maxLength: lastNameMaxLength,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @Min(lastNameMaxLength, { message: "rangeUnderflow" })
+  @Max(lastNameMinLength, { message: "overUnderflow" })
   public lastName: string;
 
   @ApiPropertyOptional({
     type: String,
   })
-  @IsString({
-    required: false,
-    regexp: rePhoneNumber,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @Matches(rePhoneNumber, { message: "patternMismatch" })
   public phoneNumber: string;
 
   @ApiPropertyOptional({
     type: String,
   })
-  @IsString({
-    required: false,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 
   @ApiPropertyOptional({
     enum: EnabledLanguages,
   })
-  @IsString({
-    required: false,
-    enum: EnabledLanguages,
-  })
+  @IsOptional()
+  @IsEnum({ enum: EnabledLanguages }, { message: "badInput" })
   public language: EnabledLanguages = EnabledLanguages.EN;
 
   @ApiProperty({

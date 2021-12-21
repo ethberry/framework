@@ -1,8 +1,8 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsOptional } from "class-validator";
 
-import { IsString } from "@gemunion/nest-js-validators";
 import { SearchDto } from "@gemunion/collection";
-import { UserRole, UserStatus, IUserSearchDto } from "@gemunion/framework-types";
+import { IUserSearchDto, UserRole, UserStatus } from "@gemunion/framework-types";
 
 export class UserSearchDto extends SearchDto implements IUserSearchDto {
   @ApiPropertyOptional({
@@ -11,11 +11,8 @@ export class UserSearchDto extends SearchDto implements IUserSearchDto {
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
-  @IsString({
-    enum: UserRole,
-    isArray: true,
-    required: false,
-  })
+  @IsOptional()
+  @IsEnum({ enum: UserRole }, { each: true, message: "badInput" })
   public userRoles: Array<UserRole>;
 
   @ApiPropertyOptional({
@@ -24,10 +21,7 @@ export class UserSearchDto extends SearchDto implements IUserSearchDto {
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
-  @IsString({
-    enum: UserStatus,
-    isArray: true,
-    required: false,
-  })
+  @IsOptional()
+  @IsEnum({ enum: UserStatus }, { each: true, message: "badInput" })
   public userStatus: Array<UserStatus>;
 }

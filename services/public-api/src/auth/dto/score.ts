@@ -1,11 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-
-import { IsString } from "@gemunion/nest-js-validators";
+import { IsString } from "class-validator";
 
 import { IPasswordScoreDto } from "../interfaces";
 
 export class ValidatePasswordScoreDto implements IPasswordScoreDto {
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public password: string;
 }

@@ -27,7 +27,6 @@ import { ProductModule } from "./product/product.module";
 import { ProfileModule } from "./profile/profile.module";
 import { PromoModule } from "./promo/promo.module";
 import { UserModule } from "./user/user.module";
-import { ValidationModule } from "./validation/validation.module";
 
 import { AppController } from "./app.controller";
 import ormconfig from "./ormconfig";
@@ -110,7 +109,6 @@ import ormconfig from "./ormconfig";
     ProfileModule,
     PromoModule,
     UserModule,
-    ValidationModule,
   ],
   controllers: [AppController],
 })

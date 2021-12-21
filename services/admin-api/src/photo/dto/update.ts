@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { IsEnum } from "class-validator";
 
-import { IsString } from "@gemunion/nest-js-validators";
 import { PhotoStatus } from "@gemunion/framework-types";
 
 import { IPhotoUpdateDto } from "../interfaces";
@@ -9,8 +9,11 @@ export class PhotoUpdateDto implements IPhotoUpdateDto {
   @ApiProperty({
     enum: PhotoStatus,
   })
-  @IsString({
-    enum: PhotoStatus,
-  })
+  @IsEnum(
+    {
+      enum: PhotoStatus,
+    },
+    { message: "badInput" },
+  )
   photoStatus: PhotoStatus;
 }

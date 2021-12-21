@@ -1,11 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-
-import { IsString } from "@gemunion/nest-js-validators";
+import { IsString } from "class-validator";
 
 import { ILogoutDto } from "../interfaces";
 
 export class LogoutDto implements ILogoutDto {
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public refreshToken: string;
 }

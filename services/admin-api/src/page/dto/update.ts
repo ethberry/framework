@@ -1,16 +1,14 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsOptional } from "class-validator";
 
 import { PageStatus } from "@gemunion/framework-types";
-import { IsString } from "@gemunion/nest-js-validators";
 
 import { IPageUpdateDto } from "../interfaces";
 import { PageCreateDto } from "./create";
 
 export class PageUpdateDto extends PageCreateDto implements IPageUpdateDto {
   @ApiPropertyOptional()
-  @IsString({
-    required: false,
-    enum: PageStatus,
-  })
+  @IsOptional()
+  @IsEnum({ enum: PageStatus }, { message: "badInput" })
   public pageStatus: PageStatus;
 }

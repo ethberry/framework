@@ -1,28 +1,26 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Type } from "class-transformer";
+import { IsEnum, IsNumber, IsOptional, IsString, Matches, Min } from "class-validator";
 
 import { OrderStatus } from "@gemunion/framework-types";
 import { reDateRange } from "@gemunion/constants";
-import { IsNumber, IsString } from "@gemunion/nest-js-validators";
 import { SearchDto } from "@gemunion/collection";
 
 import { IOrderSearchDto } from "../interfaces";
 
 export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
   @ApiPropertyOptional()
-  @IsString({
-    required: false,
-    regexp: reDateRange,
-  })
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @Matches(reDateRange, { message: "patternMismatch" })
   public dateRange: string;
 
   @ApiPropertyOptional({
     minimum: 1,
   })
-  @IsNumber({
-    required: false,
-    minimum: 1,
-  })
+  @IsOptional()
+  @IsNumber({}, { message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
   public merchantId: number;
 
@@ -32,10 +30,12 @@ export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
-  @IsString({
-    required: false,
-    enum: OrderStatus,
-    isArray: true,
-  })
+  @IsOptional()
+  @IsEnum(
+    {
+      enum: OrderStatus,
+    },
+    { each: true, message: "badInput" },
+  )
   public orderStatus: Array<OrderStatus>;
 }

@@ -1,16 +1,19 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsOptional } from "class-validator";
 
 import { OrderStatus } from "@gemunion/framework-types";
-import { IsString } from "@gemunion/nest-js-validators";
 
 import { IOrderUpdateDto } from "../interfaces";
 import { OrderCreateDto } from "./create";
 
 export class OrderUpdateDto extends OrderCreateDto implements IOrderUpdateDto {
   @ApiPropertyOptional()
-  @IsString({
-    required: false,
-    enum: OrderStatus,
-  })
+  @IsOptional()
+  @IsEnum(
+    {
+      enum: OrderStatus,
+    },
+    { message: "badInput" },
+  )
   public orderStatus: OrderStatus;
 }

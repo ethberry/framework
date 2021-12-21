@@ -1,11 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-
-import { IsString } from "@gemunion/nest-js-validators";
+import { IsString } from "class-validator";
 
 import { IRefreshDto } from "../interfaces";
 
 export class RefreshDto implements IRefreshDto {
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public refreshToken: string;
 }

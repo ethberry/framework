@@ -1,17 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsJSON } from "class-validator";
-
-import { IsString } from "@gemunion/nest-js-validators";
+import { IsJSON, IsString } from "class-validator";
 
 import { IPageCreateDto } from "../interfaces";
 
 export class PageCreateDto implements IPageCreateDto {
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public slug: string;
 
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public title: string;
 
   @ApiProperty()

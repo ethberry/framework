@@ -1,10 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
+import { IsEmail, IsString } from "class-validator";
 
-import { IsString } from "@gemunion/nest-js-validators";
 import { ILoginDto } from "@gemunion/framework-types";
-
-import { IsEmail } from "../../common/validators";
 
 export class LoginDto implements ILoginDto {
   @ApiProperty()
@@ -13,6 +11,6 @@ export class LoginDto implements ILoginDto {
   public email: string;
 
   @ApiProperty()
-  @IsString()
+  @IsString({ message: "typeMismatch" })
   public password: string;
 }

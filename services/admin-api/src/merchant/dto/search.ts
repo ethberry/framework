@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsOptional } from "class-validator";
 
-import { IsString } from "@gemunion/nest-js-validators";
 import { SearchDto } from "@gemunion/collection";
 import { IMerchantSearchDto, MerchantStatus } from "@gemunion/framework-types";
 
@@ -11,10 +11,7 @@ export class MerchantSearchDto extends SearchDto implements IMerchantSearchDto {
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
-  @IsString({
-    required: false,
-    enum: MerchantStatus,
-    isArray: true,
-  })
+  @IsOptional()
+  @IsEnum({ enum: MerchantStatus }, { each: true, message: "badInput" })
   public merchantStatus: Array<MerchantStatus>;
 }
