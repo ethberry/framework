@@ -88,7 +88,13 @@ import ormconfig from "./ormconfig";
         };
       },
     }),
-    LicenseModule.forRoot(LicenseModule, "741f15dd-74af-4708-bdb4-05a8682f971a"),
+    LicenseModule.forRootAsync(LicenseModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): string => {
+        return configService.get<string>("LICENSE_KEY", "");
+      },
+    }),
     RequestLoggerModule,
     AuthModule,
     CategoryModule,

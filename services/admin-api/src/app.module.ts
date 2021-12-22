@@ -99,7 +99,7 @@ import ormconfig from "./ormconfig";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
-        return configService.get<string>("LICENSE_KEY", "c3c581f1-2434-441d-bb19-b909d0df10f0");
+        return configService.get<string>("LICENSE_KEY", "");
       },
     }),
     RequestLoggerModule,
