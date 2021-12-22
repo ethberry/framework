@@ -27,6 +27,7 @@ import { ProductModule } from "./product/product.module";
 import { ProfileModule } from "./profile/profile.module";
 import { PromoModule } from "./promo/promo.module";
 import { UserModule } from "./user/user.module";
+import { ValidationModule } from "./validation/validation.module";
 
 import { AppController } from "./app.controller";
 import ormconfig from "./ormconfig";
@@ -94,7 +95,13 @@ import ormconfig from "./ormconfig";
         };
       },
     }),
-    LicenseModule.forRoot(LicenseModule, "741f15dd-74af-4708-bdb4-05a8682f971a"),
+    LicenseModule.forRootAsync(LicenseModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): string => {
+        return configService.get<string>("LICENSE_KEY", "c3c581f1-2434-441d-bb19-b909d0df10f0");
+      },
+    }),
     RequestLoggerModule,
     AuthModule,
     CategoryModule,
@@ -109,6 +116,7 @@ import ormconfig from "./ormconfig";
     ProfileModule,
     PromoModule,
     UserModule,
+    ValidationModule,
   ],
   controllers: [AppController],
 })
