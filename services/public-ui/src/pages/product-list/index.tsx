@@ -1,8 +1,7 @@
 import React, { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Grid } from "@mui/material";
-import { Pagination } from "@mui/lab";
+import { Button, Grid, Pagination } from "@mui/material";
 import { parse, stringify } from "qs";
 import { useNavigate, useLocation, useParams } from "react-router";
 import { FilterList } from "@mui/icons-material";

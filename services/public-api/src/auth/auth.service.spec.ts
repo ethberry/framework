@@ -10,7 +10,7 @@ import { TokenModule } from "../token/token.module";
 import { UserModule } from "../user/user.module";
 import { AuthService } from "./auth.service";
 import { AuthEntity } from "./auth.entity";
-import { JwtLocalStrategy } from "./strategies";
+import { JwtLocalHttpStrategy } from "./strategies";
 import { EmailModule } from "../email/email.module";
 import ormconfig from "../ormconfig";
 
@@ -37,7 +37,7 @@ describe("AuthService", () => {
           }),
         }),
       ],
-      providers: [AuthService, JwtLocalStrategy],
+      providers: [AuthService, JwtLocalHttpStrategy],
     }).compile();
 
     authService = module.get<AuthService>(AuthService);

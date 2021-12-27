@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
-import { IsEmail, IsEnum, IsOptional, IsString, Max, Min } from "class-validator";
+import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
 import { emailMaxLength, firstNameMaxLength, firstNameMinLength } from "@gemunion/constants";
 import { EnabledLanguages } from "@gemunion/framework-constants";
@@ -13,8 +13,8 @@ export class UserCommonDto implements IUserCommonDto {
   })
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @Min(firstNameMinLength, { message: "rangeUnderflow" })
-  @Max(firstNameMaxLength, { message: "overUnderflow" })
+  @MinLength(firstNameMinLength, { message: "rangeUnderflow" })
+  @MaxLength(firstNameMaxLength, { message: "rangeOverflow" })
   public displayName: string;
 
   @ApiPropertyOptional({
@@ -28,6 +28,7 @@ export class UserCommonDto implements IUserCommonDto {
     enum: EnabledLanguages,
   })
   @IsOptional()
+  @Transform(lang => EnabledLanguages[lang as unknown as keyof typeof EnabledLanguages])
   @IsEnum({ enum: EnabledLanguages }, { message: "badInput" })
   public language: EnabledLanguages = EnabledLanguages.EN;
 

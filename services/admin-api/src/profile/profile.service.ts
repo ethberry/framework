@@ -2,7 +2,7 @@ import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
-import { UserStatus, TokenType, ProviderType, EmailType } from "@gemunion/framework-types";
+import { UserStatus, TokenType, RmqProviderType, EmailType } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";
 import { IPasswordUpdateDto, IProfileUpdateDto } from "./interfaces";
@@ -17,7 +17,7 @@ export class ProfileService {
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
     private readonly configService: ConfigService,
-    @Inject(ProviderType.EML_SERVICE)
+    @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
   ) {}
 

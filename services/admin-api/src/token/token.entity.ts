@@ -22,5 +22,5 @@ export class TokenEntity extends UuidBaseEntity implements IToken {
   public userId: number;
 
   @Column({ type: "json" })
-  public data: any;
+  public data: Record<string, string>;
 }

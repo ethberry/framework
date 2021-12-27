@@ -30,11 +30,10 @@ export const EditUserDialog: FC<IEditUserDialogProps> = props => {
     });
   };
 
-  const { id, email, firstName, lastName, phoneNumber, language, imageUrl, userRoles, userStatus, comment, createdAt } =
+  const { email, firstName, lastName, phoneNumber, language, imageUrl, userRoles, userStatus, comment, createdAt } =
     initialValues;
 
   const fixedValues = {
-    id,
     email,
     firstName,
     lastName,

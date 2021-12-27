@@ -4,8 +4,6 @@ import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { PassportInitialize } from "@gemunion/nest-js-module-passport";
-
 import { UserModule } from "../user/user.module";
 import { TokenModule } from "../token/token.module";
 import { EmailModule } from "../email/email.module";
@@ -13,7 +11,7 @@ import { AuthJwtController } from "./auth.jwt.controller";
 import { AuthSocialController } from "./auth.social.controller";
 import { AuthService } from "./auth.service";
 import { AuthEntity } from "./auth.entity";
-import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy } from "./strategies";
+import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalHttpStrategy } from "./strategies";
 
 @Module({
   imports: [
@@ -23,7 +21,6 @@ import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy } from "./stra
     ConfigModule,
     EmailModule,
     PassportModule,
-    PassportInitialize.forRoot(),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -33,7 +30,7 @@ import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalStrategy } from "./stra
     }),
   ],
   controllers: [AuthJwtController, AuthSocialController],
-  providers: [AuthService, JwtGoogleStrategy, JwtFacebookStrategy, JwtLocalStrategy],
+  providers: [AuthService, JwtGoogleStrategy, JwtFacebookStrategy, JwtLocalHttpStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

@@ -1,8 +1,7 @@
 import React, { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { Grid } from "@mui/material";
-import { Pagination } from "@mui/lab";
+import { Grid, Pagination } from "@mui/material";
 import { parse, stringify } from "qs";
 import { useNavigate, useLocation } from "react-router";
 import useDeepCompareEffect from "use-deep-compare-effect";

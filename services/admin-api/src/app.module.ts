@@ -5,7 +5,7 @@ import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
 import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
-import { JwtHttpGuard } from "@gemunion/nest-js-guards";
+import { JwtLocalHttpGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
@@ -41,7 +41,7 @@ import ormconfig from "./ormconfig";
     },
     {
       provide: APP_GUARD,
-      useClass: JwtHttpGuard,
+      useClass: JwtLocalHttpGuard,
     },
     {
       provide: APP_GUARD,

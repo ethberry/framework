@@ -1,4 +1,4 @@
-export enum ProviderType {
+export enum RmqProviderType {
   WAREHOUSE_SERVICE = "WAREHOUSE_SERVICE",
   EML_SERVICE = "EML_SERVICE",
   TPL_SERVICE = "TPL_SERVICE",

@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
-import { IsEmail, IsEnum, IsOptional, IsString, Matches, Max, Min } from "class-validator";
+import { IsEmail, IsEnum, IsOptional, IsString, Matches, MaxLength, MinLength } from "class-validator";
 
 import {
   emailMaxLength,
@@ -22,8 +22,8 @@ export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto
   })
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @Min(firstNameMinLength, { message: "rangeUnderflow" })
-  @Max(firstNameMaxLength, { message: "overUnderflow" })
+  @MinLength(firstNameMinLength, { message: "rangeUnderflow" })
+  @MaxLength(firstNameMaxLength, { message: "rangeOverflow" })
   public firstName: string;
 
   @ApiPropertyOptional({
@@ -32,8 +32,8 @@ export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto
   })
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @Min(lastNameMaxLength, { message: "rangeUnderflow" })
-  @Max(lastNameMinLength, { message: "overUnderflow" })
+  @MinLength(lastNameMaxLength, { message: "rangeUnderflow" })
+  @MaxLength(lastNameMinLength, { message: "rangeOverflow" })
   public lastName: string;
 
   @ApiPropertyOptional({
@@ -55,6 +55,7 @@ export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto
     enum: EnabledLanguages,
   })
   @IsOptional()
+  @Transform(lang => EnabledLanguages[lang as unknown as keyof typeof EnabledLanguages])
   @IsEnum({ enum: EnabledLanguages }, { message: "badInput" })
   public language: EnabledLanguages = EnabledLanguages.EN;
 

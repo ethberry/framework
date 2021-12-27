@@ -2,27 +2,28 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@gemunion/framework-constants";
 
-export class CreateTokenTable1570556116332 implements MigrationInterface {
+export class CreateAuthTable1563804021070 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.token_type_enum AS ENUM (
-        'EMAIL',
-        'PASSWORD'
-      );
-    `);
-
     const table = new Table({
-      name: `${ns}.token`,
+      name: `${ns}.auth`,
       columns: [
         {
-          name: "uuid",
-          type: "uuid",
-          default: "uuid_generate_v4()",
+          name: "id",
+          type: "serial",
           isPrimary: true,
         },
         {
-          name: "token_type",
-          type: `${ns}.token_type_enum`,
+          name: "refresh_token",
+          type: "varchar",
+        },
+        {
+          name: "refresh_token_expires_at",
+          type: "bigint",
+        },
+        {
+          name: "ip",
+          type: "varchar",
+          default: "'0.0.0.0'",
         },
         {
           name: "user_id",
@@ -50,26 +51,26 @@ export class CreateTokenTable1570556116332 implements MigrationInterface {
     await queryRunner.createTable(table, true);
 
     await queryRunner.query(`
-      CREATE OR REPLACE FUNCTION delete_expired_tokens() RETURNS trigger
+      CREATE OR REPLACE FUNCTION delete_expired_auth() RETURNS trigger
       LANGUAGE plpgsql
       AS $$
         BEGIN
-          DELETE FROM ${ns}.token WHERE created_at < NOW() - INTERVAL '1 hour';
+          DELETE FROM ${ns}.auth WHERE created_at < NOW() - INTERVAL '30 days';
           RETURN NEW;
         END;
       $$;
     `);
 
     await queryRunner.query(`
-      CREATE TRIGGER delete_expired_tokens_trigger
-      AFTER INSERT ON ${ns}.token
-      EXECUTE PROCEDURE delete_expired_tokens()
+      DROP TRIGGER IF EXISTS delete_expired_auth_trigger ON ${ns}.auth;
+      CREATE TRIGGER delete_expired_auth_trigger
+      AFTER INSERT ON ${ns}.auth
+      EXECUTE PROCEDURE delete_expired_auth()
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.token`);
-    await queryRunner.query(`DROP TYPE ${ns}.token_type_enum;`);
-    await queryRunner.query("DROP FUNCTION delete_expired_tokens();");
+    await queryRunner.dropTable(`${ns}.auth`);
+    await queryRunner.query("DROP FUNCTION delete_expired_auth();");
   }
 }

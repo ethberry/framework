@@ -4,7 +4,7 @@ import handlebars from "handlebars";
 import fs from "fs";
 import path from "path";
 
-import { PdfType, ProviderType, TemplateType } from "@gemunion/framework-types";
+import { PdfType, RmqProviderType, TemplateType } from "@gemunion/framework-types";
 import { firstValueFrom } from "rxjs";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class HandlebarsService {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    @Inject(ProviderType.PDF_SERVICE)
+    @Inject(RmqProviderType.PDF_SERVICE)
     private readonly pdfClientProxy: ClientProxy,
   ) {}
 

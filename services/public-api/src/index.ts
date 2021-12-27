@@ -5,7 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
-import { companyName, ns } from "@gemunion/framework-constants";
+import { companyName } from "@gemunion/framework-constants";
 
 import { AppModule } from "./app.module";
 
@@ -32,7 +32,6 @@ async function bootstrap(): Promise<void> {
   app.set("trust proxy", true);
 
   const options = new DocumentBuilder()
-    .addCookieAuth(ns)
     .setTitle(companyName)
     .setDescription("API description")
     .setVersion("1.0")

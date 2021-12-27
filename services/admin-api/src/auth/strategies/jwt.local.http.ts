@@ -9,7 +9,7 @@ import { UserService } from "../../user/user.service";
 import { UserEntity } from "../../user/user.entity";
 
 @Injectable()
-export class JwtLocalStrategy extends PassportStrategy(Strategy, "jwt-http") {
+export class JwtLocalHttpStrategy extends PassportStrategy(Strategy, "jwt-local-http") {
   constructor(private readonly userService: UserService, private readonly configService: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([ExtractJwt.fromAuthHeaderAsBearerToken()]),

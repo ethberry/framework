@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
-import { EmailType, ProviderType, TokenType } from "@gemunion/framework-types";
+import { EmailType, RmqProviderType, TokenType } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";
 import { TokenService } from "../token/token.service";
@@ -12,7 +12,7 @@ export class EmailService {
   constructor(
     private readonly tokenService: TokenService,
     private readonly configService: ConfigService,
-    @Inject(ProviderType.EML_SERVICE)
+    @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
   ) {}
 

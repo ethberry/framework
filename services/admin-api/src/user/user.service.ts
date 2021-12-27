@@ -1,32 +1,31 @@
 import { createHash } from "crypto";
 import { Brackets, DeleteResult, FindConditions, FindManyOptions, Not, Repository } from "typeorm";
 import {
+  BadRequestException,
   ConflictException,
   Inject,
   Injectable,
   Logger,
   LoggerService,
   NotFoundException,
-  BadRequestException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
 import {
+  EmailType,
+  IPasswordDto,
+  IUserCreateDto,
+  IUserSearchDto,
+  RmqProviderType,
+  TokenType,
   UserRole,
   UserStatus,
-  IUserSearchDto,
-  IUserCreateDto,
-  IPasswordDto,
-  ProviderType,
-  TokenType,
-  EmailType,
 } from "@gemunion/framework-types";
 
 import { UserEntity } from "./user.entity";
-import { IUserAutocompleteDto, IUserUpdateDto } from "./interfaces";
-import { IUserImportDto } from "./interfaces/import";
+import { IUserAutocompleteDto, IUserImportDto, IUserUpdateDto } from "./interfaces";
 import { TokenService } from "../token/token.service";
 
 @Injectable()
@@ -38,7 +37,7 @@ export class UserService {
     private readonly userEntityRepository: Repository<UserEntity>,
     private readonly configService: ConfigService,
     private readonly tokenService: TokenService,
-    @Inject(ProviderType.EML_SERVICE)
+    @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
   ) {}
 

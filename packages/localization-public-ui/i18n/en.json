@@ -147,7 +147,8 @@
       "typeMismatch": "{label} is invalid",
       "valid": "??",
       "valueMissing": "{label} is required",
-      "weak": "{label} is too weak"
+      "weak": "{label} is too weak",
+      "whitelistValidation": "Property should not exist"
     }
   },
   "messages": {

@@ -7,5 +7,5 @@ export enum TokenType {
 
 export interface IToken extends IUuidBase {
   tokenType: TokenType;
-  data: any;
+  data: Record<string, string>;
 }
