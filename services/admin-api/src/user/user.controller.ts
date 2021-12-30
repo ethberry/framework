@@ -13,14 +13,14 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get("/autocomplete")
-  public autocomplete(@Query() query: UserAutocompleteDto): Promise<Array<UserEntity>> {
-    return this.userService.autocomplete(query);
+  public autocomplete(@Query() dto: UserAutocompleteDto): Promise<Array<UserEntity>> {
+    return this.userService.autocomplete(dto);
   }
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: UserSearchDto): Promise<[Array<UserEntity>, number]> {
-    return this.userService.search(query);
+  public search(@Query() dto: UserSearchDto): Promise<[Array<UserEntity>, number]> {
+    return this.userService.search(dto);
   }
 
   @Put("/:id")

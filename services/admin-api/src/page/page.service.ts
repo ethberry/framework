@@ -1,10 +1,11 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
+import { DeleteResult, FindConditions, FindManyOptions, Repository, Brackets } from "typeorm";
+
+import { PageStatus, IPageSearchDto } from "@gemunion/framework-types";
 
 import { PageEntity } from "./page.entity";
 import { IPageCreateDto, IPageUpdateDto } from "./interfaces";
-import { PageStatus } from "@gemunion/framework-types";
 
 @Injectable()
 export class PageService {
@@ -13,8 +14,43 @@ export class PageService {
     private readonly pageEntityRepository: Repository<PageEntity>,
   ) {}
 
-  public async search(): Promise<[Array<PageEntity>, number]> {
-    return this.pageEntityRepository.findAndCount();
+  public async search(dto: IPageSearchDto): Promise<[Array<PageEntity>, number]> {
+    const { query, pageStatus, skip, take } = dto;
+
+    const queryBuilder = this.pageEntityRepository.createQueryBuilder("page");
+
+    queryBuilder.select();
+
+    if (pageStatus) {
+      if (pageStatus.length === 1) {
+        queryBuilder.andWhere("product.pageStatus = :pageStatus", { pageStatus: pageStatus[0] });
+      } else {
+        queryBuilder.andWhere("product.pageStatus IN(:...pageStatus)", { pageStatus });
+      }
+    }
+
+    if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(product.description->'blocks') blocks ON TRUE",
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("product.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy({
+      "page.createdAt": "DESC",
+    });
+
+    return queryBuilder.getManyAndCount();
   }
 
   public findAndCount(

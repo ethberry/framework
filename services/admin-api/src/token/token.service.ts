@@ -24,14 +24,14 @@ export class TokenService {
     data?: Record<string, string>,
   ): Promise<TokenEntity> {
     // working around https://github.com/typeorm/typeorm/issues/1090
-    const token = await this.tokenEntityRepository.findOne({
+    const tokenEntity = await this.tokenEntityRepository.findOne({
       tokenType,
       user: userEntity,
     });
 
-    if (token) {
+    if (tokenEntity) {
       // update timestamps
-      return token.save();
+      return tokenEntity.save();
     } else {
       return this.tokenEntityRepository
         .create({

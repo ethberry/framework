@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional, IsString } from "class-validator";
+import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { UserRole, UserStatus } from "@gemunion/framework-types";
@@ -12,8 +12,9 @@ export class UserUpdateDto extends ProfileUpdateDto implements IUserUpdateDto {
     enum: UserStatus,
   })
   @IsOptional()
-  @Transform(status => UserStatus[status as unknown as keyof typeof UserStatus])
-  @IsEnum({ enum: UserStatus }, { message: "badInput" })
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<UserStatus>)
+  @IsEnum(UserStatus, { each: true, message: "badInput" })
   public userStatus: UserStatus;
 
   @ApiPropertyOptional({
@@ -21,8 +22,9 @@ export class UserUpdateDto extends ProfileUpdateDto implements IUserUpdateDto {
     isArray: true,
   })
   @IsOptional()
-  @Transform(status => UserRole[status as unknown as keyof typeof UserRole])
-  @IsEnum({ enum: UserRole }, { each: true, message: "badInput" })
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<UserRole>)
+  @IsEnum(UserRole, { each: true, message: "badInput" })
   public userRoles: Array<UserRole>;
 
   @ApiPropertyOptional()

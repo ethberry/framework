@@ -10,7 +10,7 @@ import { PageCreateDto } from "./create";
 export class PageUpdateDto extends PageCreateDto implements IPageUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(lang => PageStatus[lang as unknown as keyof typeof PageStatus])
-  @IsEnum({ enum: PageStatus }, { message: "badInput" })
+  @Transform(({ value }) => value as PageStatus)
+  @IsEnum(PageStatus, { message: "badInput" })
   public pageStatus: PageStatus;
 }

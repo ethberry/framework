@@ -12,8 +12,8 @@ export class ProductController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: ProductSortDto): Promise<[Array<ProductEntity>, number]> {
-    return this.productsService.search(query);
+  public search(@Query() dto: ProductSortDto): Promise<[Array<ProductEntity>, number]> {
+    return this.productsService.search(dto);
   }
 
   @Get("/new")

@@ -1,21 +1,24 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
+import { Roles } from "../common/decorators";
 import { PageService } from "./page.service";
 import { PageEntity } from "./page.entity";
-import { PageCreateDto, PageUpdateDto } from "./dto";
+import { PageCreateDto, PageSearchDto, PageUpdateDto } from "./dto";
+import { UserRole } from "@gemunion/framework-types";
 
 @ApiBearerAuth()
+@Roles(UserRole.ADMIN)
 @Controller("/pages")
 export class PageController {
   constructor(private readonly pageService: PageService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(): Promise<[Array<PageEntity>, number]> {
-    return this.pageService.search();
+  public search(@Query() dto: PageSearchDto): Promise<[Array<PageEntity>, number]> {
+    return this.pageService.search(dto);
   }
 
   @Post("/")

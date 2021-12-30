@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional } from "class-validator";
+import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { UserRole } from "@gemunion/framework-types";
@@ -14,7 +14,8 @@ export class UserAutocompleteDto implements IUserAutocompleteDto {
     // format: "deepObject"
   })
   @IsOptional()
-  @Transform(lang => UserRole[lang as unknown as keyof typeof UserRole])
-  @IsEnum({ enum: UserRole }, { each: true, message: "badInput" })
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<UserRole>)
+  @IsEnum(UserRole, { each: true, message: "badInput" })
   public userRoles: Array<UserRole>;
 }

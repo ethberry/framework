@@ -15,8 +15,8 @@ export class OrderController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: OrderSearchDto, @User() userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
-    return this.orderService.search(query, userEntity);
+  public search(@Query() dto: OrderSearchDto, @User() userEntity: UserEntity): Promise<[Array<OrderEntity>, number]> {
+    return this.orderService.search(dto, userEntity);
   }
 
   @Post("/")

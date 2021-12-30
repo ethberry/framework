@@ -21,10 +21,10 @@ export class ProductController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() query: ProductSearchDto,
+    @Query() dto: ProductSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<ProductEntity>, number]> {
-    return this.productService.search(query, userEntity);
+    return this.productService.search(dto, userEntity);
   }
 
   @Post("/")

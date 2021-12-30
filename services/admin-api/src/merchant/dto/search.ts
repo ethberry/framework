@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional } from "class-validator";
+import { IsEnum, IsOptional, IsArray } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -13,7 +13,8 @@ export class MerchantSearchDto extends SearchDto implements IMerchantSearchDto {
     // format: "deepObject"
   })
   @IsOptional()
-  @Transform(lang => MerchantStatus[lang as unknown as keyof typeof MerchantStatus])
-  @IsEnum({ enum: MerchantStatus }, { each: true, message: "badInput" })
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<MerchantStatus>)
+  @IsEnum(MerchantStatus, { each: true, message: "badInput" })
   public merchantStatus: Array<MerchantStatus>;
 }

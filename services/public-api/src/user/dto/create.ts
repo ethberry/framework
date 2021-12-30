@@ -55,8 +55,8 @@ export class UserCreateDto extends ValidatePasswordDto implements IUserCreateDto
     enum: EnabledLanguages,
   })
   @IsOptional()
-  @Transform(lang => EnabledLanguages[lang as unknown as keyof typeof EnabledLanguages])
-  @IsEnum({ enum: EnabledLanguages }, { message: "badInput" })
+  @Transform(({ value }) => value as EnabledLanguages)
+  @IsEnum(EnabledLanguages, { message: "badInput" })
   public language: EnabledLanguages = EnabledLanguages.EN;
 
   @ApiProperty({

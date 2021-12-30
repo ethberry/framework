@@ -13,8 +13,8 @@ export class MerchantController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: SearchDto): Promise<[Array<MerchantEntity>, number]> {
-    return this.merchantService.search(query);
+  public search(@Query() dto: SearchDto): Promise<[Array<MerchantEntity>, number]> {
+    return this.merchantService.search(dto);
   }
 
   @Get("/autocomplete")

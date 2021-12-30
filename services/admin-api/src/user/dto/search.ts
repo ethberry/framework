@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional } from "class-validator";
+import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -13,8 +13,9 @@ export class UserSearchDto extends SearchDto implements IUserSearchDto {
     // format: "deepObject"
   })
   @IsOptional()
-  @Transform(role => UserRole[role as unknown as keyof typeof UserRole])
-  @IsEnum({ enum: UserRole }, { each: true, message: "badInput" })
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<UserRole>)
+  @IsEnum(UserRole, { each: true, message: "badInput" })
   public userRoles: Array<UserRole>;
 
   @ApiPropertyOptional({
@@ -24,8 +25,8 @@ export class UserSearchDto extends SearchDto implements IUserSearchDto {
     // format: "deepObject"
   })
   @IsOptional()
-  // @ts-ignore
-  @Transform(status => UserStatus[status as unknown as keyof typeof UserStatus])
-  @IsEnum({ enum: UserStatus }, { each: true, message: "badInput" })
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<UserStatus>)
+  @IsEnum(UserStatus, { each: true, message: "badInput" })
   public userStatus: Array<UserStatus>;
 }

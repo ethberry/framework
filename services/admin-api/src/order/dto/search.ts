@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsEnum, IsNumber, IsOptional, IsString, Matches, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { IsArray, IsEnum, IsNumber, IsOptional, IsString, Matches, Min } from "class-validator";
 
 import { OrderStatus } from "@gemunion/framework-types";
 import { reDateRange } from "@gemunion/constants";
@@ -31,11 +31,8 @@ export class OrderSearchDto extends SearchDto implements IOrderSearchDto {
     // format: "deepObject"
   })
   @IsOptional()
-  @IsEnum(
-    {
-      enum: OrderStatus,
-    },
-    { each: true, message: "badInput" },
-  )
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<OrderStatus>)
+  @IsEnum(OrderStatus, { each: true, message: "badInput" })
   public orderStatus: Array<OrderStatus>;
 }

@@ -12,7 +12,7 @@ export class MerchantUpdateDto extends MerchantCreateDto implements IMerchantUpd
     enum: MerchantStatus,
   })
   @IsOptional()
-  @Transform(lang => MerchantStatus[lang as unknown as keyof typeof MerchantStatus])
-  @IsEnum({ enum: MerchantStatus }, { message: "badInput" })
+  @Transform(({ value }) => value as MerchantStatus)
+  @IsEnum(MerchantStatus, { message: "badInput" })
   public merchantStatus: MerchantStatus;
 }

@@ -17,8 +17,8 @@ export class MerchantController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: MerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
-    return this.merchantService.search(query);
+  public search(@Query() dto: MerchantSearchDto): Promise<[Array<MerchantEntity>, number]> {
+    return this.merchantService.search(dto);
   }
 
   @Get("/autocomplete")

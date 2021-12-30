@@ -15,8 +15,8 @@ export class CategoryController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: SearchDto): Promise<[Array<CategoryEntity>, number]> {
-    return this.categoryService.search(query);
+  public search(@Query() dto: SearchDto): Promise<[Array<CategoryEntity>, number]> {
+    return this.categoryService.search(dto);
   }
 
   @Get("/autocomplete")

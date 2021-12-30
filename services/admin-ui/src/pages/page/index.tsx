@@ -12,7 +12,7 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
-import { useNavigate, useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
@@ -20,18 +20,13 @@ import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
-import { IPage, PageStatus } from "@gemunion/framework-types";
+import { IPaginationResult } from "@gemunion/types-collection";
+import { IPage, IPageSearchDto, PageStatus } from "@gemunion/framework-types";
 import { emptyPage } from "@gemunion/framework-mocks";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditPageDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
-
-export interface IPageSearchDto extends ISearchDto {
-  categoryIds: Array<number>;
-  pageStatus: Array<PageStatus>;
-}
 
 export const Page: FC = () => {
   const location = useLocation();
