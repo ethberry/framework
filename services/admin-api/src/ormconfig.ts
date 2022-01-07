@@ -48,7 +48,7 @@ const config: PostgresConnectionOptions = {
   cli: {
     // Location of migration should be inside server folder
     // to be compiled into dist/ folder.
-    migrationsDir: "server/migrations",
+    migrationsDir: "src/migrations",
   },
 };
 

@@ -51,7 +51,6 @@ export const Page: FC = () => {
     take: defaultItemsPerPage,
     query: "",
     pageStatus: [PageStatus.ACTIVE],
-    categoryIds: [],
     ...parsedData,
   });
 

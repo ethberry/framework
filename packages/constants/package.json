@@ -9,7 +9,9 @@
   },
   "dependencies": {},
   "description": "constants for validation on FE and BE",
-  "devDependencies": {},
+  "devDependencies": {
+    "rimraf": "3.0.2"
+  },
   "engines": {
     "node": ">=12.13"
   },
@@ -30,7 +32,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --fix",
-    "prebuild": "rm -rf dist/",
+    "prebuild": "rimraf dist/",
     "prepublish": "npm run build",
     "test": "exit 0"
   },

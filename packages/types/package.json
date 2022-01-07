@@ -9,7 +9,9 @@
     "@gemunion/types-collection": "1.0.1",
     "@gemunion/types-jwt": "0.2.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "rimraf": "3.0.2"
+  },
   "files": [
     "dist/*"
   ],
@@ -22,7 +24,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --fix",
-    "prebuild": "rm -rf dist/",
+    "prebuild": "rimraf dist/",
     "prepublish": "npm run build",
     "test": "exit 0"
   },

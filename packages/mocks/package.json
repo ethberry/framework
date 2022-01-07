@@ -14,7 +14,9 @@
     "uuid": "8.3.2"
   },
   "description": "Mocks",
-  "devDependencies": {},
+  "devDependencies": {
+    "rimraf": "3.0.2"
+  },
   "engines": {
     "node": ">=12.13"
   },
@@ -35,9 +37,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --fix",
-    "prebuild": "rm -rf dist/",
+    "prebuild": "rimraf dist/",
     "prepublish": "npm run build",
-    "preversion": "npm run test",
     "test": "exit 0"
   },
   "sideEffects": false,
