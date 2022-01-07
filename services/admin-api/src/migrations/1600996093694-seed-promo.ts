@@ -1,7 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants";
-import { imageUrl, simpleFormatting } from "@gemunion/framework-mocks";
+import { imageUrl, ns, simpleFormatting } from "@gemunion/framework-constants";
 
 export class SeedPromo1600996093694 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

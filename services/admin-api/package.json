@@ -11,7 +11,6 @@
     "@gemunion/collection": "1.1.1",
     "@gemunion/constants": "0.4.0",
     "@gemunion/framework-constants": "0.0.1",
-    "@gemunion/framework-mocks": "0.0.1",
     "@gemunion/framework-types": "0.0.1",
     "@gemunion/nest-js-guards": "1.2.1",
     "@gemunion/nest-js-module-helmet": "2.1.4",

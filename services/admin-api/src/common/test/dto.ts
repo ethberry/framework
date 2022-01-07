@@ -1,8 +1,7 @@
 import { v4 } from "uuid";
 
-import { imageUrl, phoneNumber } from "@gemunion/framework-mocks";
+import { EnabledLanguages, imageUrl, phoneNumber } from "@gemunion/framework-constants";
 import { IUserCreateDto } from "@gemunion/framework-types";
-import { EnabledLanguages } from "@gemunion/framework-constants";
 
 export const generateUserCreateDto = (data: Partial<IUserCreateDto> = {}): IUserCreateDto => {
   return Object.assign(

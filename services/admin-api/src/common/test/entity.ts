@@ -1,8 +1,7 @@
 import { v4 } from "uuid";
 
 import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
-import { imageUrl, phoneNumber } from "@gemunion/framework-mocks";
-import { EnabledLanguages } from "@gemunion/framework-constants";
+import { EnabledLanguages, imageUrl, phoneNumber } from "@gemunion/framework-constants";
 
 export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
   return Object.assign(
