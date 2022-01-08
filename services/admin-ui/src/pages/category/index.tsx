@@ -23,11 +23,16 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { ICategory } from "@gemunion/framework-types";
-import { emptyCategory } from "@gemunion/framework-mocks";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditCategoryDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
+
+export const emptyCategory = {
+  title: "",
+  description: "",
+  parentId: 1,
+} as unknown as ICategory;
 
 export const Category: FC = () => {
   const location = useLocation();

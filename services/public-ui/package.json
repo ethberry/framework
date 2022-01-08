@@ -14,7 +14,6 @@
     "@gemunion/constants": "0.4.1",
     "@gemunion/framework-constants": "0.0.1",
     "@gemunion/framework-localization-public-ui": "0.0.1",
-    "@gemunion/framework-mocks": "0.0.1",
     "@gemunion/framework-types": "0.0.1",
     "@gemunion/history": "1.2.4",
     "@gemunion/mui-dialog-confirmation": "3.0.19",

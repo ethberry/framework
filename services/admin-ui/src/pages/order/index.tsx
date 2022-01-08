@@ -22,7 +22,6 @@ import { PageHeader } from "@gemunion/mui-page-header";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, IPaginationDto } from "@gemunion/types-collection";
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
-import { emptyOrder } from "@gemunion/framework-mocks";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
@@ -35,6 +34,14 @@ export interface IOrderSearchDto extends IPaginationDto {
   dateRange: [Date, Date];
   merchantId?: number;
 }
+
+export const emptyOrder = {
+  userId: 3,
+  merchantId: 1,
+  productId: 1,
+  price: 0,
+  createdAt: date.toISOString(),
+} as unknown as IOrder;
 
 export const Order: FC = () => {
   const location = useLocation();

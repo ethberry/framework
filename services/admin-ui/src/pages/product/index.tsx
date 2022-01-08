@@ -22,7 +22,6 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { IProduct, ProductStatus } from "@gemunion/framework-types";
-import { emptyProduct } from "@gemunion/framework-mocks";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditProductDialog } from "./edit";
@@ -33,6 +32,15 @@ export interface IProductSearchDto extends ISearchDto {
   categoryIds: Array<number>;
   productStatus: Array<ProductStatus>;
 }
+
+export const emptyProduct = {
+  title: "",
+  description: "",
+  price: 0,
+  amount: 0,
+  categories: [],
+  photos: [],
+} as unknown as IProduct;
 
 export const Product: FC = () => {
   const location = useLocation();

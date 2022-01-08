@@ -21,13 +21,19 @@ import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { IPromo } from "@gemunion/framework-types";
-import { emptyPromo } from "@gemunion/framework-mocks";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { EditPromoDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
+
+export const emptyPromo = {
+  title: "",
+  description: "",
+  productId: "",
+  photos: [],
+} as unknown as IPromo;
 
 export const Promo: FC = () => {
   const location = useLocation();

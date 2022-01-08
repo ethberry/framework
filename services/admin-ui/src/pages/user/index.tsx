@@ -22,12 +22,26 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IUser, IUserSearchDto, UserStatus } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
-import { emptyUser } from "@gemunion/framework-mocks";
 import { defaultItemsPerPage } from "@gemunion/constants";
+import { EnabledLanguages } from "@gemunion/framework-constants";
 
 import { EditUserDialog } from "./edit";
 import { UserSearchForm } from "./form";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
+
+export const emptyUser = {
+  password: "",
+  confirm: "",
+  email: "",
+  firstName: "",
+  lastName: "",
+  phoneNumber: "",
+  language: EnabledLanguages.EN,
+  imageUrl: "",
+  userStatus: UserStatus.ACTIVE,
+  userRoles: [],
+  createdAt: new Date().toISOString(),
+} as unknown as IUser;
 
 export const User: FC = () => {
   const location = useLocation();

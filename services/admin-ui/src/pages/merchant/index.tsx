@@ -22,12 +22,19 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { IMerchant, IMerchantSearchDto, MerchantStatus } from "@gemunion/framework-types";
-import { emptyMerchant } from "@gemunion/framework-mocks";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
 import { EditMerchantDialog } from "./edit";
 import { MerchantSearchForm } from "./form";
+
+export const emptyMerchant = {
+  title: "",
+  description: "",
+  email: "",
+  phoneNumber: "",
+  users: [],
+} as unknown as IMerchant;
 
 export const Merchant: FC = () => {
   const location = useLocation();

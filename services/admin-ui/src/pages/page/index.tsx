@@ -22,11 +22,16 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { IPage, IPageSearchDto, PageStatus } from "@gemunion/framework-types";
-import { emptyPage } from "@gemunion/framework-mocks";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
-import { EditPageDialog } from "./edit";
 import { Breadcrumbs } from "../../components/common/breadcrumbs";
+import { EditPageDialog } from "./edit";
+
+export const emptyPage = {
+  title: "",
+  description: "",
+  slug: "",
+} as unknown as IPage;
 
 export const Page: FC = () => {
   const location = useLocation();
