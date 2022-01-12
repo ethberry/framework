@@ -16,7 +16,7 @@
     "@nestjs/platform-express": "8.2.4",
     "@nestjs/terminus": "8.0.3",
     "@gemunion/nest-js-module-mailjet": "1.4.14",
-    "amqp-connection-manager": "3.9.0",
+    "amqp-connection-manager": "4.0.0",
     "amqplib": "0.8.0",
     "express": "4.17.2",
     "nest-winston": "1.6.2",
