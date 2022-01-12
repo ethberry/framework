@@ -6,8 +6,8 @@
   },
   "dependencies": {
     "@gemunion/framework-constants": "0.0.1",
-    "@gemunion/types-collection": "1.0.1",
-    "@gemunion/types-jwt": "0.2.7"
+    "@gemunion/types-collection": "1.0.2",
+    "@gemunion/types-jwt": "0.2.8"
   },
   "devDependencies": {
     "rimraf": "3.0.2"
