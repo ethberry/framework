@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import { FC, Fragment } from "react";
 
 import { NewProducts } from "./new-products";
 import { PromoCarousel } from "./promo-carousel";

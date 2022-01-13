@@ -10,6 +10,9 @@
         "login": "Login",
         "logout": "Logout",
         "profile": "Profile"
+      },
+      "theme": {
+        "switch": "Switch theme"
       }
     }
   },
@@ -113,7 +116,7 @@
       "amount": "100",
       "categoryIds": "Root",
       "confirm": "******",
-      "createdAt": "Зарегистрирован",
+      "createdAt": "Created",
       "email": "me@google.com",
       "firstName": "Gordon",
       "lastName": "Freeman",

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Grid, List, Link, ListItem, ListItemText, Paper } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { format, parseISO } from "date-fns";

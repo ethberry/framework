@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 

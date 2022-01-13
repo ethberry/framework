@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 
 import { AutoSave, FormikForm } from "@gemunion/mui-form";

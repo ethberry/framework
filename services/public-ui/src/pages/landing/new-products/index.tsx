@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography } from "@mui/material";

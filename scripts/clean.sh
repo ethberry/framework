@@ -9,6 +9,7 @@ find . -type d -name "node_modules" | xargs rm -rf
 find . -type f -name "package-lock.json" | xargs rm -rf
 find . -type f -name "yarn.lock" | xargs rm -rf
 
+find . -type d -name ".openzeppelin" | xargs rm -rf
 find . -type f -name "artifacts" | xargs rm -rf
 find . -type f -name "cache" | xargs rm -rf
 find . -type f -name "typechain" | xargs rm -rf

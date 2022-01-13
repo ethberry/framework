@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -23,8 +23,8 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, IPaginationDto } from "@gemunion/types-collection";
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { defaultItemsPerPage } from "@gemunion/constants";
+import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 
-import { Breadcrumbs } from "../../components/common/breadcrumbs";
 import { EditOrderDialog } from "./edit";
 import { parseDateRange, stringifyDateRange } from "./utils";
 import { OrderSearchForm } from "./form";
@@ -40,7 +40,7 @@ export const emptyOrder = {
   merchantId: 1,
   productId: 1,
   price: 0,
-  createdAt: date.toISOString(),
+  createdAt: new Date().toISOString(),
 } as unknown as IOrder;
 
 export const Order: FC = () => {
@@ -252,6 +252,7 @@ export const Order: FC = () => {
       </ProgressOverlay>
 
       <Pagination
+        sx={{ mt: 2 }}
         shape="rounded"
         page={data.skip / data.take + 1}
         count={Math.ceil(count / data.take)}

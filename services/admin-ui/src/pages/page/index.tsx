@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -23,8 +23,8 @@ import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { IPage, IPageSearchDto, PageStatus } from "@gemunion/framework-types";
 import { defaultItemsPerPage } from "@gemunion/constants";
+import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 
-import { Breadcrumbs } from "../../components/common/breadcrumbs";
 import { EditPageDialog } from "./edit";
 
 export const emptyPage = {
@@ -218,6 +218,7 @@ export const Page: FC = () => {
       </ProgressOverlay>
 
       <Pagination
+        sx={{ mt: 2 }}
         shape="rounded"
         page={data.skip / data.take + 1}
         count={Math.ceil(count / data.take)}

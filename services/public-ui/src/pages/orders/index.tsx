@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, Fragment, useContext, useState } from "react";
+import { ChangeEvent, FC, Fragment, useContext, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Grid, Pagination } from "@mui/material";
@@ -119,6 +119,7 @@ export const Orders: FC = () => {
       </ProgressOverlay>
 
       <Pagination
+        sx={{ mt: 2 }}
         shape="rounded"
         page={data.skip / data.take + 1}
         count={Math.ceil(count / data.take)}

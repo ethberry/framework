@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
@@ -12,9 +12,9 @@ import { PhoneInput } from "@gemunion/mui-inputs-mask";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 import { EnabledLanguages } from "@gemunion/framework-constants";
 import { IUser } from "@gemunion/framework-types";
+import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 
 import { validationSchema } from "./validation";
-import { Breadcrumbs } from "../../components/common/breadcrumbs";
 
 export const Profile: FC = () => {
   const user = useContext<IUserContext<IUser>>(UserContext);

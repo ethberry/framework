@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";

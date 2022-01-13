@@ -1,11 +1,12 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { AppBar, Hidden, Link, Toolbar } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { companyName } from "@gemunion/framework-constants";
+import { companyName, EnabledLanguages } from "@gemunion/framework-constants";
 
 import { Sections } from "./sections";
-import { Translation } from "./translation";
+import { Localization } from "@gemunion/provider-localization";
+import { Theme } from "@gemunion/provider-theme";
 
 import { useStyles } from "./styles";
 
@@ -18,7 +19,8 @@ export const Header: FC = () => {
           <Hidden smDown>{companyName}</Hidden>
         </Link>
         <div className={classes.grow} />
-        <Translation />
+        <Theme />
+        <Localization languages={Object.values(EnabledLanguages)} />
         <Sections />
       </Toolbar>
     </AppBar>

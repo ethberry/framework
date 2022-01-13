@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, MobileStepper } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";

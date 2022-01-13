@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Card, Button, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { RichTextDisplay } from "@gemunion/mui-rte";

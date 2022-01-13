@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { AccountCircle, Bookmark, Inbox } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
