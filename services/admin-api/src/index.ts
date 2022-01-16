@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { LoggerService } from "@nestjs/common";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
@@ -12,7 +13,7 @@ import { AppModule } from "./app.module";
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const loggerService = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  const loggerService = app.get<LoggerService>(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(loggerService);
 
   const configService = app.get(ConfigService);

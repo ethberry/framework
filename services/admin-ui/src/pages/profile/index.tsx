@@ -36,7 +36,7 @@ export const Profile: FC = () => {
         method: "PUT",
         data: values,
       })
-      .then((json): void => {
+      .then((json: IUser): void => {
         enqueueSnackbar(formatMessage({ id: "snackbar.updated" }), { variant: "success" });
         if (json) {
           user.logIn(json);
