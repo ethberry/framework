@@ -2,12 +2,10 @@
   "author": {
     "email": "TrejGun+gemunion@gmail.com",
     "name": "TrejGun",
-    "url": "https://trejgun.github.io/"
+    "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "lerna": "4.0.0",
-    "node-mailjet": "3.3.4",
-    "ts-node": "10.4.0"
+    "lerna": "4.0.0"
   },
   "devDependencies": {
     "@gemunion/eslint-config": "0.1.10",
