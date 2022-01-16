@@ -40,7 +40,7 @@ import { User } from "./user";
 
 import { Layout } from "../components/common/layout";
 
-const App: FC = () => {
+export const App: FC = () => {
   return (
     <HistoryRouter history={history}>
       <ApiProvider baseUrl={process.env.BE_URL}>

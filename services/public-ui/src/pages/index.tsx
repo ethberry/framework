@@ -38,7 +38,7 @@ import { Merchant } from "./merchant";
 import { Orders } from "./orders";
 import { Page } from "./page";
 
-const App: FC = () => {
+export const App: FC = () => {
   return (
     <HistoryRouter history={history}>
       <ApiProvider baseUrl={process.env.BE_URL}>
