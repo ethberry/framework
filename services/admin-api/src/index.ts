@@ -12,7 +12,8 @@ import { AppModule } from "./app.module";
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  const loggerService = app.get(WINSTON_MODULE_NEST_PROVIDER);
+  app.useLogger(loggerService);
 
   const configService = app.get(ConfigService);
 
@@ -49,7 +50,7 @@ async function bootstrap(): Promise<void> {
   const port = configService.get<number>("PORT", 3001);
 
   await app.listen(port, host, () => {
-    console.info(`API server is running on http://${host}:${port}`);
+    loggerService.log(`API server is running on http://${host}:${port}`);
   });
 }
 
