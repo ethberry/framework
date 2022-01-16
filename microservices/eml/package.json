@@ -2,7 +2,7 @@
   "author": {
     "email": "TrejGun+gemunion@gmail.com",
     "name": "TrejGun",
-    "url": "https://trejgun.github.io/"
+    "url": "https://gemunion.io/"
   },
   "dependencies": {
     "@gemunion/nest-js-module-request-logger": "1.2.13",
