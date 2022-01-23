@@ -92,7 +92,7 @@ import ormconfig from "./ormconfig";
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
-        return configService.get<string>("LICENSE_KEY", "");
+        return configService.get<string>("GEMUNION_API_KEY", "");
       },
     }),
     RequestLoggerModule,

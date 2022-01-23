@@ -51,12 +51,9 @@ export class WatcherServiceWs {
       }),
     );
 
-    const transactionEntities = await this.transactionService.findAll(
-      {
-        blockNumber: block.number - this.blocksToConfirm,
-      },
-      { relations: ["project"] },
-    );
+    const transactionEntities = await this.transactionService.findAll({
+      blockNumber: block.number - this.blocksToConfirm,
+    });
 
     await Promise.all(
       transactionEntities.map(async transactionEntity => {
@@ -65,7 +62,7 @@ export class WatcherServiceWs {
           Object.assign(transactionEntity, {
             status: TransactionStatus.CONFIRMED,
           });
-          this.watcherOutClientProxy.emit(WatcherOutType.TRANSACTION_MINED, {
+          this.watcherOutClientProxy.emit(WatcherOutType.TRANSACTION_CONFIRMED, {
             transactionHash: transactionEntity.transactionHash,
             blockNumber: block.number,
           });
@@ -74,7 +71,7 @@ export class WatcherServiceWs {
             status: TransactionStatus.ERRORED,
           });
           await transactionEntity.save();
-          this.watcherOutClientProxy.emit(WatcherOutType.TRANSACTION_MINED, {
+          this.watcherOutClientProxy.emit(WatcherOutType.TRANSACTION_ERRORED, {
             transactionHash: transactionEntity.transactionHash,
             blockNumber: block.number,
           });

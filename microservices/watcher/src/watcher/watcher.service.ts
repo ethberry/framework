@@ -103,12 +103,9 @@ export class WatcherService {
   }
 
   public async init(): Promise<Array<void>> {
-    const transactionEntities = await this.findAll(
-      {
-        status: In([TransactionStatus.NEW, TransactionStatus.MINED]),
-      },
-      { relations: ["project"] },
-    );
+    const transactionEntities = await this.findAll({
+      status: In([TransactionStatus.NEW, TransactionStatus.MINED]),
+    });
     this.loggerService.log(`Restored ${transactionEntities.length} transactions from DB`);
     return Promise.all(
       transactionEntities.map(transactionEntity =>

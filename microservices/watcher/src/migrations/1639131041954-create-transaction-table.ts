@@ -37,34 +37,12 @@ export class CreateTransactionTable1639131041954 implements MigrationInterface {
           default: "'NEW'",
         },
         {
-          name: "project_id",
-          type: "int",
-        },
-        {
-          name: "user_id",
-          type: "int",
-        },
-        {
           name: "created_at",
           type: "timestamptz",
         },
         {
           name: "updated_at",
           type: "timestamptz",
-        },
-      ],
-      foreignKeys: [
-        {
-          columnNames: ["user_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.user`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["project_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.project`,
-          onDelete: "CASCADE",
         },
       ],
     });
