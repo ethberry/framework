@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { ProductEntity } from "../product/product.entity";
 

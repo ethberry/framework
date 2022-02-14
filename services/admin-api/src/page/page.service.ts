@@ -23,9 +23,9 @@ export class PageService {
 
     if (pageStatus) {
       if (pageStatus.length === 1) {
-        queryBuilder.andWhere("product.pageStatus = :pageStatus", { pageStatus: pageStatus[0] });
+        queryBuilder.andWhere("page.pageStatus = :pageStatus", { pageStatus: pageStatus[0] });
       } else {
-        queryBuilder.andWhere("product.pageStatus IN(:...pageStatus)", { pageStatus });
+        queryBuilder.andWhere("page.pageStatus IN(:...pageStatus)", { pageStatus });
       }
     }
 
@@ -33,11 +33,11 @@ export class PageService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(product.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(page.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("product.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("page.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );

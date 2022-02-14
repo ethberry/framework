@@ -3,7 +3,7 @@ import { Exclude } from "class-transformer";
 
 import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
 import { EnabledLanguages, ns } from "@gemunion/framework-constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { MerchantEntity } from "../merchant/merchant.entity";
 

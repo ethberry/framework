@@ -2,7 +2,7 @@ import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany } from "typ
 
 import { ICategory } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { ProductEntity } from "../product/product.entity";
 

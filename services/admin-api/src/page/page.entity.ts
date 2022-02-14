@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 
 import { IPage, PageStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 @Entity({ schema: ns, name: "page" })
 export class PageEntity extends IdBaseEntity implements IPage {

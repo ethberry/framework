@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 
 import { IMerchant, MerchantStatus } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "../user/user.entity";
 import { ProductEntity } from "../product/product.entity";

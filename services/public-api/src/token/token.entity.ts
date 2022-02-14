@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IToken, TokenType } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
-import { UuidBaseEntity } from "@gemunion/nest-js-module-typeorm-debug";
+import { UuidBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "../user/user.entity";
 

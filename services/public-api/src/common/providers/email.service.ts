@@ -8,7 +8,7 @@ export const emlServiceProvider = {
   inject: [ConfigService],
   useFactory: (configService: ConfigService): ClientProxy => {
     const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672/");
-    const rmqQueueEmail = configService.get<string>("RMQ_QUEUE_EMAIL", "email");
+    const rmqQueueEmail = configService.get<string>("RMQ_QUEUE_EMAIL", "eml");
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {

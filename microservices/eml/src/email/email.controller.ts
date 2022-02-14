@@ -45,7 +45,7 @@ export class EmailController {
         firstName: payload.user.firstName,
         lastName: payload.user.lastName,
         code: payload.token.uuid,
-        link: `${payload.baseUrl}/verify-email/${payload.token.uuid}`,
+        link: `${payload.baseUrl}/restore-password/${payload.token.uuid}`,
       },
     });
   }
