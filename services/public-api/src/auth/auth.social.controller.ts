@@ -27,7 +27,7 @@ export class AuthSocialController {
       <html lang="en">
       	<script>
 					function handleAuth() {
-            window.opener.postMessage(${JSON.stringify(auth)}, "${baseUrl}");
+            window.postMessage(${JSON.stringify(auth)}, "${baseUrl}");
             window.close();
 					}
 				</script>
