@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEmail, IsJSON, IsNumber, IsOptional, IsString, Matches } from "class-validator";
+import { IsEmail, IsInt, IsJSON, IsOptional, IsString, Matches } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { rePhoneNumber } from "@gemunion/framework-constants";
@@ -31,7 +31,7 @@ export class MerchantCreateDto implements IMerchantCreateDto {
     isArray: true,
   })
   @IsOptional()
-  @IsNumber({}, { each: true, message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
   public userIds: Array<number>;
 
   @ApiPropertyOptional()

@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsJSON, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { IsArray, IsInt, IsJSON, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IPhoto } from "@gemunion/framework-types";
@@ -20,7 +20,7 @@ export class ProductCreateDto implements IProductCreateDto {
     isArray: true,
     minimum: 1,
   })
-  @IsNumber({}, { each: true, message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public categoryIds: Array<number>;
 
@@ -34,7 +34,7 @@ export class ProductCreateDto implements IProductCreateDto {
   @ApiProperty({
     minimum: 0,
   })
-  @IsNumber({}, { message: "typeMismatch" })
+  @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
   public amount: number;
 

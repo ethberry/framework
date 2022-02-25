@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsJSON, IsNumber, IsString } from "class-validator";
+import { IsInt, IsJSON, IsString } from "class-validator";
 
 import { ICategoryCreateDto } from "../interfaces";
 
@@ -13,6 +13,6 @@ export class CategoryCreateDto implements ICategoryCreateDto {
   public description: string;
 
   @ApiProperty()
-  @IsNumber({}, { message: "typeMismatch" })
+  @IsInt({ message: "typeMismatch" })
   public parentId: number;
 }

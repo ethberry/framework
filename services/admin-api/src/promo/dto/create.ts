@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsJSON, IsNumber, IsString, Min } from "class-validator";
+import { IsInt, IsJSON, IsString, Min } from "class-validator";
 
 import { IPromoCreateDto } from "../interfaces";
 
@@ -15,7 +15,7 @@ export class PromoCreateDto implements IPromoCreateDto {
   @ApiProperty({
     minimum: 1,
   })
-  @IsNumber({}, { message: "typeMismatch" })
+  @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public productId: number;
 

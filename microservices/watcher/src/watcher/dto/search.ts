@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsNumber, IsOptional, IsString, Matches, ValidateIf } from "class-validator";
+import { IsEnum, IsInt, IsOptional, IsString, Matches, ValidateIf } from "class-validator";
 
 import { PaginationDto } from "@gemunion/collection";
 import { reEthTransaction } from "@gemunion/constants";
@@ -20,11 +20,11 @@ export class TransactionSearchDto extends PaginationDto implements ITransactionS
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsNumber({}, { message: "typeMismatch" })
+  @IsInt({ message: "typeMismatch" })
   public fromBlock: number;
 
   @ApiPropertyOptional()
   @ValidateIf(o => !!o.startBlockNumber)
-  @IsNumber({}, { message: "typeMismatch" })
+  @IsInt({ message: "typeMismatch" })
   public toBlock: number;
 }

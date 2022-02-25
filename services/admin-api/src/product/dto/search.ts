@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { Type, Transform } from "class-transformer";
-import { IsArray, IsEnum, IsNumber, IsOptional, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
+import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 
 import { SearchDto } from "@gemunion/collection";
 import { ProductStatus } from "@gemunion/framework-types";
@@ -14,7 +14,7 @@ export class ProductSearchDto extends SearchDto implements IProductSearchDto {
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @IsNumber({}, { each: true, message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public categoryIds: Array<number>;
