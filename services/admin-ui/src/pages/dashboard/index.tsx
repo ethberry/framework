@@ -1,4 +1,4 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Divider, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { Bookmark, Category, Email, MenuBook, PeopleAlt, Photo, Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
@@ -7,12 +7,12 @@ import { FormattedMessage } from "react-intl";
 import { PageHeader } from "@gemunion/mui-page-header";
 
 import { useStyles } from "./styles";
-import { IUserContext, UserContext } from "@gemunion/provider-user";
+import { useUser } from "@gemunion/provider-user";
 import { IUser, UserRole } from "@gemunion/framework-types";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
-  const user = useContext<IUserContext<IUser>>(UserContext);
+  const user = useUser<IUser>();
   const isAdmin = user.profile.userRoles.includes(UserRole.ADMIN);
 
   return (

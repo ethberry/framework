@@ -1,16 +1,16 @@
-import { ChangeEvent, FC, Fragment, useContext, useState } from "react";
+import { ChangeEvent, FC, Fragment, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Grid, Pagination } from "@mui/material";
 import { parse, stringify } from "qs";
-import { useNavigate, useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { PageHeader } from "@gemunion/mui-page-header";
 import { ProgressOverlay } from "@gemunion/mui-progress";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
-import { IPaginationResult, IPaginationDto } from "@gemunion/types-collection";
+import { IPaginationDto, IPaginationResult } from "@gemunion/types-collection";
 import { defaultItemsPerPage } from "@gemunion/constants";
 
 import { OrderItem } from "./item";
@@ -32,7 +32,7 @@ export const Orders: FC = () => {
   const [orders, setOrders] = useState<Array<IOrder>>([]);
   const [count, setCount] = useState<number>(0);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const parsedData = parse(location.search.substring(1));
 

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -12,11 +12,11 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
-import { useNavigate, useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -49,7 +49,7 @@ export const Promo: FC = () => {
   const [count, setCount] = useState<number>(0);
   const [selectedPromo, setSelectedPromo] = useState<IPromo>(emptyPromo);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const [data, setData] = useState<ISearchDto>({
     skip: 0,

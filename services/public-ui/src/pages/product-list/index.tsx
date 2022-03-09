@@ -1,15 +1,15 @@
-import { ChangeEvent, FC, Fragment, useContext, useState } from "react";
+import { ChangeEvent, FC, Fragment, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
 import { parse, stringify } from "qs";
-import { useNavigate, useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { FilterList } from "@mui/icons-material";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IProduct } from "@gemunion/framework-types";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { defaultItemsPerPage } from "@gemunion/constants";
@@ -39,7 +39,7 @@ export const ProductList: FC<IProductListProps> = props => {
   const [count, setCount] = useState<number>(0);
   const [products, setProducts] = useState<Array<IProduct>>([]);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const parsedData = parse(location.search.substring(1));
 

@@ -1,12 +1,12 @@
-import { FC, useContext } from "react";
+import { FC } from "react";
 import { Grid } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { PageHeader } from "@gemunion/mui-page-header";
-import { UserContext, IUserContext } from "@gemunion/provider-user";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { useUser } from "@gemunion/provider-user";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { FormikForm } from "@gemunion/mui-form";
 import { PhoneInput } from "@gemunion/mui-inputs-mask";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
@@ -17,11 +17,11 @@ import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { validationSchema } from "./validation";
 
 export const Profile: FC = () => {
-  const user = useContext<IUserContext<IUser>>(UserContext);
+  const user = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const onClick = (): void => {
     enqueueSnackbar("Warning! You won't be able to use this site until you confirm your new email address.", {

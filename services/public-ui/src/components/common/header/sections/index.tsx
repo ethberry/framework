@@ -1,12 +1,11 @@
-import { FC, Fragment, MouseEvent, useContext, useState } from "react";
+import { FC, Fragment, MouseEvent, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
-import { matchPath, useNavigate, useLocation } from "react-router";
+import { matchPath, useLocation, useNavigate } from "react-router";
 import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
-
-import { IUserContext, UserContext } from "@gemunion/provider-user";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { useUser } from "@gemunion/provider-user";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IUser } from "@gemunion/framework-types";
 
 import { useStyles } from "./styles";
@@ -20,8 +19,8 @@ export const Sections: FC = () => {
   const classes = useStyles();
   const [anchor, setAnchor] = useState<Element | null>(null);
 
-  const user = useContext<IUserContext<IUser>>(UserContext);
-  const api = useContext(ApiContext);
+  const user = useUser<IUser>();
+  const api = useApi();
 
   const handleMenuOpen = (event: MouseEvent): void => {
     setAnchor(event.currentTarget);

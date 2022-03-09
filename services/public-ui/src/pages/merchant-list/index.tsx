@@ -1,14 +1,14 @@
-import { ChangeEvent, FC, Fragment, useContext, useState } from "react";
+import { ChangeEvent, FC, Fragment, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Grid, Pagination } from "@mui/material";
 import { parse, stringify } from "qs";
-import { useNavigate, useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IMerchant } from "@gemunion/framework-types";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { defaultItemsPerPage } from "@gemunion/constants";
@@ -25,7 +25,7 @@ export const MerchantList: FC = () => {
   const [count, setCount] = useState<number>(0);
   const [merchants, setMerchants] = useState<Array<IMerchant>>([]);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const [data, setData] = useState<ISearchDto>({
     skip: 0,

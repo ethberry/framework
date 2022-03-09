@@ -1,10 +1,10 @@
-import { FC, Fragment, useContext, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { useParams } from "react-router";
 
 import { Spinner } from "@gemunion/mui-progress";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { IPage } from "@gemunion/framework-types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -17,7 +17,7 @@ export const Page: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState<IPage>({} as IPage);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const fetchPage = async (): Promise<void> => {
     return api

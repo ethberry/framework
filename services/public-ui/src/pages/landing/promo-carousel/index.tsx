@@ -1,11 +1,11 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, MobileStepper } from "@mui/material";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useSnackbar } from "notistack";
 
 import { ProgressOverlay, Spinner } from "@gemunion/mui-progress";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IPromo } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
 
@@ -20,7 +20,7 @@ export const PromoCarousel: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [promos, setPromos] = useState<Array<IPromo>>([]);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const handleNext = () => {
     setActiveStep(step => step + 1);

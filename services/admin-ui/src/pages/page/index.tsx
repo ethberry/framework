@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -19,7 +19,7 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { IPage, IPageSearchDto, PageStatus } from "@gemunion/framework-types";
 import { defaultItemsPerPage } from "@gemunion/constants";
@@ -47,7 +47,7 @@ export const Page: FC = () => {
   const [count, setCount] = useState<number>(0);
   const [selectedPage, setSelectedPage] = useState<IPage>(emptyPage);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const parsedData = parse(location.search.substring(1));
 

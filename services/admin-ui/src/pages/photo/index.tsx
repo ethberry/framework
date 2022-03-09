@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import {
@@ -16,7 +16,7 @@ import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IPhoto, PhotoStatus } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
@@ -27,7 +27,7 @@ export const Photo: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const fetchPhotosByQuery = async (): Promise<void> => {
     return api

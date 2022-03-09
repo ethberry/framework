@@ -48,7 +48,7 @@
     "git:push:prod": "git push origin master:production",
     "installdep": "sh scripts/install.sh",
     "kill": "sudo pkill -9 node",
-    "lint": "lerna run lint --stream --parallel",
+    "lint": "lerna run lint --stream",
     "migration": "lerna exec --scope @gemunion/framework-admin-api -- npm run migration:run",
     "precommit": "lint-staged",
     "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" \"microservices/**/*.{ts,tsx}\" --write",

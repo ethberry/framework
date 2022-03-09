@@ -1,11 +1,11 @@
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography } from "@mui/material";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IProduct } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
 
@@ -20,7 +20,7 @@ export const NewProducts: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<Array<IProduct>>([]);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const fetchProducts = async (): Promise<void> => {
     setIsLoading(true);

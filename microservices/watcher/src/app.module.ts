@@ -6,13 +6,13 @@ import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
 import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm";
+import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
+import ormconfig from "./ormconfig";
 import { WATCHER_STORE } from "./common/constants";
 import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
 import { WatcherModule } from "./watcher/watcher.module";
-import ormconfig from "./ormconfig";
 
 @Module({
   providers: [

@@ -1,11 +1,11 @@
-import { FC, Fragment, useContext, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
-import { useIntl, FormattedMessage } from "react-intl";
-import { Typography, Grid, Paper } from "@mui/material";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Grid, Paper, Typography } from "@mui/material";
 import { useParams } from "react-router";
 
 import { Spinner } from "@gemunion/mui-progress";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { IProduct } from "@gemunion/framework-types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -23,7 +23,7 @@ export const Product: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState<IProduct>({} as IProduct);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const fetchProduct = async (): Promise<void> => {
     return api

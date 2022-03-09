@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -12,14 +12,14 @@ import {
   Pagination,
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
-import { useNavigate, useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IUser, IUserSearchDto, UserStatus } from "@gemunion/framework-types";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { defaultItemsPerPage } from "@gemunion/constants";
@@ -57,7 +57,7 @@ export const User: FC = () => {
   const [selectedUser, setSelectedUser] = useState<IUser>(emptyUser);
   const [isFiltersOpen, setIsFilterOpen] = useState(false);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const [data, setData] = useState<IUserSearchDto>({
     skip: 0,

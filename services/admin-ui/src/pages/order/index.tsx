@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -12,15 +12,15 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
-import { useNavigate, useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { IPaginationResult, IPaginationDto } from "@gemunion/types-collection";
+import { ApiError, useApi } from "@gemunion/provider-api";
+import { IPaginationDto, IPaginationResult } from "@gemunion/types-collection";
 import { IOrder, OrderStatus } from "@gemunion/framework-types";
 import { defaultItemsPerPage } from "@gemunion/constants";
 import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
@@ -56,7 +56,7 @@ export const Order: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const parsedData = parse(location.search.substring(1));
 

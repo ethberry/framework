@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useContext, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import {
@@ -12,7 +12,7 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete } from "@mui/icons-material";
-import { useNavigate, useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
@@ -20,7 +20,7 @@ import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { ICategory } from "@gemunion/framework-types";
 import { defaultItemsPerPage } from "@gemunion/constants";
@@ -48,7 +48,7 @@ export const Category: FC = () => {
   const [count, setCount] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<ICategory>(emptyCategory);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const [data, setData] = useState<ISearchDto>({
     skip: 0,

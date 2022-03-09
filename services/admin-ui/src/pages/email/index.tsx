@@ -1,11 +1,11 @@
-import { FC, MouseEvent, useContext, useState } from "react";
+import { FC, MouseEvent, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Grid, List, ListItem, ListItemText } from "@mui/material";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { EmailType } from "@gemunion/framework-types";
 import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 
@@ -14,7 +14,7 @@ export const Email: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const sendEmail =
     (email: EmailType) =>

@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@gemunion/framework-constants";
 
 import { ITransaction, TransactionStatus } from "./interfaces";

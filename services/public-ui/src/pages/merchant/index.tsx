@@ -1,4 +1,4 @@
-import { FC, Fragment, useContext, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Avatar, Box, Typography } from "@mui/material";
@@ -8,7 +8,7 @@ import { Skeleton } from "@mui/lab";
 import { Spinner } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IMerchant } from "@gemunion/framework-types";
 
 import { ProductList } from "../product-list";
@@ -23,7 +23,7 @@ export const Merchant: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [merchant, setMerchant] = useState<IMerchant>({} as IMerchant);
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const fetchMerchant = async (): Promise<void> => {
     return api
