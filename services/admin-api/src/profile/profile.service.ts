@@ -57,7 +57,7 @@ export class ProfileService {
     });
 
     if (!user) {
-      throw new UnauthorizedException("User not found");
+      throw new UnauthorizedException("userNotFound");
     }
 
     if (password) {

@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, simpleFormatting } from "@gemunion/framework-constants";
+import { rawStateString } from "@gemunion/draft-js-utils";
+import { ns } from "@gemunion/framework-constants";
 
 export class SeedCategory1593408358860 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -15,19 +16,19 @@ export class SeedCategory1593408358860 implements MigrationInterface {
         updated_at
       ) VALUES (
         'Root',
-        '${simpleFormatting}',
+        '${rawStateString}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'First',
-        '${simpleFormatting}',
+        '${rawStateString}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Second',
-        '${simpleFormatting}',
+        '${rawStateString}',
         1,
         '${currentDateTime}',
         '${currentDateTime}'

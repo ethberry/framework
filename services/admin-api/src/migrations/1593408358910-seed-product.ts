@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, simpleFormatting } from "@gemunion/framework-constants";
+import { rawStateString } from "@gemunion/draft-js-utils";
+import { ns } from "@gemunion/framework-constants";
 
 export class SeedProducts1593408358910 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -18,7 +19,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         updated_at
       ) VALUES (
         'Bottle of water',
-        '${simpleFormatting}',
+        '${rawStateString}',
         100,
         10,
         'ACTIVE',
@@ -27,7 +28,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'Jar of water',
-        '${simpleFormatting}',
+        '${rawStateString}',
         1000,
         10,
         'ACTIVE',
@@ -36,7 +37,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'Barrel of water',
-        '${simpleFormatting}',
+        '${rawStateString}',
         10000,
         10,
         'INACTIVE',
@@ -45,7 +46,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'Milk',
-        '${simpleFormatting}',
+        '${rawStateString}',
         10000,
         10,
         'ACTIVE',
@@ -54,7 +55,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'Beer',
-        '${simpleFormatting}',
+        '${rawStateString}',
         10000,
         10,
         'INACTIVE',
@@ -63,7 +64,7 @@ export class SeedProducts1593408358910 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         'Juice',
-        '${simpleFormatting}',
+        '${rawStateString}',
         10000,
         10,
         'ACTIVE',

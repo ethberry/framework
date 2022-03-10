@@ -6,15 +6,10 @@ https://github.com/typeorm/typeorm/issues/2620
 
 https://github.com/microsoft/TypeScript/issues/36554
 https://github.com/microsoft/TypeScript/issues/17592
-https://github.com/microsoft/TypeScript/issues/35621
 
 https://github.com/ReactiveX/rxjs/issues/4222
 
 https://github.com/jquense/yup/issues/851
-
-https://github.com/mui-org/material-ui/issues/21711 - fixed
-
-https://github.com/mrsteele/dotenv-webpack/issues/240
 
 https://github.com/typicode/husky/issues/639
 

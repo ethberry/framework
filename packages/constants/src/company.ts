@@ -1,2 +1,2 @@
-export const companyName = "Gemun Ion Studio";
+export const companyName = "Gemunion Studio";
 export const ns = "gem";

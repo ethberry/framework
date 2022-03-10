@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns, simpleFormatting } from "@gemunion/framework-constants";
+import { rawStateString } from "@gemunion/draft-js-utils";
+import { ns } from "@gemunion/framework-constants";
 
 export class SeedPages1625271372897 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -16,14 +17,14 @@ export class SeedPages1625271372897 implements MigrationInterface {
         updated_at
       ) VALUES (
         'About Us',
-        '${simpleFormatting}',
+        '${rawStateString}',
         'about-us',
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'Frequently Asked Questions',
-        '${simpleFormatting}',
+        '${rawStateString}',
         'faq',
         'ACTIVE',
         '${currentDateTime}',

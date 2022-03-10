@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns, simpleFormatting } from "@gemunion/framework-constants";
+import { rawStateString } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@gemunion/framework-constants";
 
 export class SeedMerchant1563804021010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -19,7 +20,7 @@ export class SeedMerchant1563804021010 implements MigrationInterface {
       ) VALUES (
         'trejgun+merchant1@gmail.com',
         'MEOW DOA',
-        '${simpleFormatting}',
+        '${rawStateString}',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'ACTIVE',
@@ -28,7 +29,7 @@ export class SeedMerchant1563804021010 implements MigrationInterface {
       ), (
         'trejgun+merchant2@gmail.com',
         'CTAPbIu SHOP',
-        '${simpleFormatting}',
+        '${rawStateString}',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'INACTIVE',
