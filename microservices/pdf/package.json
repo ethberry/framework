@@ -15,7 +15,7 @@
     "@nestjs/platform-express": "8.4.0",
     "express": "4.17.3",
     "nest-winston": "1.6.2",
-    "puppeteer": "13.5.0",
+    "puppeteer": "13.5.1",
     "uuid": "8.3.2"
   },
   "description": "PDF engine",

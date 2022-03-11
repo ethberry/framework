@@ -8,9 +8,9 @@
     "lerna": "4.0.0"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "1.0.3",
+    "@gemunion/eslint-config": "1.0.4",
     "@types/node": "16.11.26",
-    "@types/react": "17.0.39",
+    "@types/react": "17.0.40",
     "@typescript-eslint/eslint-plugin": "5.14.0",
     "@typescript-eslint/parser": "5.14.0",
     "eslint": "7.32.0",
