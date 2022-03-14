@@ -17,10 +17,7 @@ export class UserEntity extends IdBaseEntity implements IUser {
   public password: string;
 
   @Column({ type: "varchar" })
-  public firstName: string;
-
-  @Column({ type: "varchar" })
-  public lastName: string;
+  public displayName: string;
 
   @Column({ type: "varchar" })
   public phoneNumber: string;

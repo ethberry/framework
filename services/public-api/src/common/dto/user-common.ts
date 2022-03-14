@@ -2,19 +2,19 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
 
-import { emailMaxLength, firstNameMaxLength, firstNameMinLength } from "@gemunion/constants";
+import { displayNameMaxLength, displayNameMinLength, emailMaxLength } from "@gemunion/constants";
 import { EnabledLanguages } from "@gemunion/framework-constants";
 import { IUserCommonDto } from "@gemunion/framework-types";
 
 export class UserCommonDto implements IUserCommonDto {
   @ApiPropertyOptional({
-    minLength: firstNameMinLength,
-    maxLength: firstNameMaxLength,
+    minLength: displayNameMinLength,
+    maxLength: displayNameMaxLength,
   })
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @MinLength(firstNameMinLength, { message: "rangeUnderflow" })
-  @MaxLength(firstNameMaxLength, { message: "rangeOverflow" })
+  @MinLength(displayNameMinLength, { message: "rangeUnderflow" })
+  @MaxLength(displayNameMaxLength, { message: "rangeOverflow" })
   public displayName: string;
 
   @ApiPropertyOptional({

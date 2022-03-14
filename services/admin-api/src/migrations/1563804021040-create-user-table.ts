@@ -29,11 +29,7 @@ export class CreateUserTable1563804021040 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "first_name",
-          type: "varchar",
-        },
-        {
-          name: "last_name",
+          name: "display_name",
           type: "varchar",
         },
         {

@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigModule } from "@nestjs/config";
 
-import { ValidateReCaptcha } from "@gemunion/nest-js-utils";
+import { ValidateReCaptcha } from "@gemunion/nest-js-validators";
 
 import { UserModule } from "../user/user.module";
 

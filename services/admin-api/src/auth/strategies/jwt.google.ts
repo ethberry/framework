@@ -40,8 +40,7 @@ export class JwtGoogleStrategy extends PassportStrategy(OAuth2Strategy, "jwt-goo
 
     return this.authService.import({
       email: profile.emails![0].value,
-      firstName: profile.name!.givenName,
-      lastName: profile.name!.familyName,
+      displayName: `${profile.name!.givenName} ${profile.name!.familyName}`,
       language: EnabledLanguages.EN,
       imageUrl: profile.photos![0].value,
       phoneNumber: "",

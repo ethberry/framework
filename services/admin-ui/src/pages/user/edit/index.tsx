@@ -30,13 +30,12 @@ export const EditUserDialog: FC<IEditUserDialogProps> = props => {
     });
   };
 
-  const { email, firstName, lastName, phoneNumber, language, imageUrl, userRoles, userStatus, comment, createdAt } =
+  const { email, displayName, phoneNumber, language, imageUrl, userRoles, userStatus, comment, createdAt } =
     initialValues;
 
   const fixedValues = {
     email,
-    firstName,
-    lastName,
+    displayName,
     phoneNumber,
     language,
     imageUrl,
@@ -48,8 +47,7 @@ export const EditUserDialog: FC<IEditUserDialogProps> = props => {
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message="dialogs.edit" {...rest}>
       <TextInput name="email" autoComplete="username" onClick={onClick} />
-      <TextInput name="firstName" />
-      <TextInput name="lastName" />
+      <TextInput name="displayName" />
       <PhoneInput name="phoneNumber" />
       <SelectInput name="language" options={EnabledLanguages} />
       <AvatarInput name="imageUrl" />

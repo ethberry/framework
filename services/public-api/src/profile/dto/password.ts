@@ -11,10 +11,11 @@ export class PasswordUpdateDto implements IPasswordUpdateDto {
   public current: string;
 
   @ApiProperty()
-  @IsPassword()
+  @IsString({ message: "typeMismatch" })
+  @IsPassword({}, { message: "weak" })
   public password: string;
 
   @ApiProperty()
-  @IsConfirm()
+  @IsConfirm({}, { message: "badInput" })
   public confirm: string;
 }

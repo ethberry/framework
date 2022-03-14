@@ -10,8 +10,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
       INSERT INTO ${ns}.user (
         email,
         password,
-        first_name,
-        last_name,
+        display_name,
         phone_number,
         image_url,
         language,
@@ -24,7 +23,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
       ) VALUES (
         'trejgun@gmail.com',
         '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
-        'Trej',
+        'Trej Admin',
         'Admin',
         '+62 (812) 3919-8760',
         '${imageUrl}',
@@ -38,8 +37,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
       ), (
         'trejgun+merchant1@gmail.com',
         '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
-        'Trej',
-        'Merchant 1',
+        'Trej Merchant 1',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'EN',
@@ -52,8 +50,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
       ), (
         'trejgun+merchant2@gmail.com',
         '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
-        'Trej',
-        'Merchant 2',
+        'Trej Merchant 2',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'EN',
@@ -66,8 +63,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
       ), (
         'trejgun+customer1@gmail.com',
         '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
-        'Trej',
-        'Customer 1',
+        'Trej Customer 1',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'EN',
@@ -80,8 +76,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
       ), (
         'trejgun+customer2@gmail.com',
         '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
-        'Trej',
-        'Customer 2',
+        'Trej Customer 2',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'EN',

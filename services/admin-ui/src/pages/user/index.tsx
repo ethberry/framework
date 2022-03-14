@@ -33,8 +33,7 @@ export const emptyUser = {
   password: "",
   confirm: "",
   email: "",
-  firstName: "",
-  lastName: "",
+  displayName: "",
   phoneNumber: "",
   language: EnabledLanguages.EN,
   imageUrl: "",
@@ -225,9 +224,7 @@ export const User: FC = () => {
         <List>
           {users.map((user, i) => (
             <ListItem key={i}>
-              <ListItemText>
-                {user.firstName} {user.lastName}
-              </ListItemText>
+              <ListItemText>{user.displayName}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(user)}>
                   <Create />
@@ -254,7 +251,7 @@ export const User: FC = () => {
         onConfirm={handleDeleteConfirmed}
         open={isDeleteDialogOpen}
         initialValues={selectedUser}
-        getTitle={(user: IUser) => `${user.firstName} ${user.lastName}`}
+        getTitle={(user: IUser) => user.displayName}
       />
 
       <EditUserDialog

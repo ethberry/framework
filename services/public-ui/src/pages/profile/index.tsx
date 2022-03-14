@@ -56,8 +56,8 @@ export const Profile: FC = () => {
       });
   };
 
-  const { id, email, firstName, lastName, phoneNumber, language, imageUrl } = user.profile;
-  const fixedValues = { id, email, firstName, lastName, phoneNumber, language, imageUrl };
+  const { id, email, displayName, phoneNumber, language, imageUrl } = user.profile;
+  const fixedValues = { id, email, displayName, phoneNumber, language, imageUrl };
 
   return (
     <Grid>
@@ -67,8 +67,7 @@ export const Profile: FC = () => {
 
       <FormikForm initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         <TextInput name="email" autoComplete="username" onClick={onClick} />
-        <TextInput name="firstName" />
-        <TextInput name="lastName" />
+        <TextInput name="displayName" />
         <PhoneInput name="phoneNumber" />
         <SelectInput name="language" options={EnabledLanguages} />
         <AvatarInput name="imageUrl" />

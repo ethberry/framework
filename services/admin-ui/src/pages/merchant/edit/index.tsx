@@ -40,12 +40,7 @@ export const EditMerchantDialog: FC<IEditMerchantDialogProps> = props => {
       <RichTextEditor name="description" />
       <TextInput name="email" autoComplete="username" />
       <PhoneInput name="phoneNumber" />
-      <EntityInput
-        name="userIds"
-        controller="users"
-        multiple
-        getTitle={(option: IUser) => `${option.firstName} ${option.lastName}`}
-      />
+      <EntityInput name="userIds" controller="users" multiple getTitle={(option: IUser) => option.displayName} />
       {id ? <SelectInput name="merchantStatus" options={MerchantStatus} /> : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>

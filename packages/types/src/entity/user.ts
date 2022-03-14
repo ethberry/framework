@@ -17,8 +17,7 @@ export enum UserRole {
 
 export interface IUser extends IIdBase {
   email: string;
-  firstName: string;
-  lastName: string;
+  displayName: string;
   phoneNumber: string;
   imageUrl: string;
   merchant?: IMerchant;

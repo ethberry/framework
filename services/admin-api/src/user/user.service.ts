@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { Brackets, DeleteResult, FindConditions, FindManyOptions, Not, Repository } from "typeorm";
+import { DeleteResult, FindConditions, FindManyOptions, Not, Repository } from "typeorm";
 import {
   BadRequestException,
   ConflictException,
@@ -64,12 +64,7 @@ export class UserService {
     }
 
     if (query) {
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("user.firstName ILIKE '%' || :firstName || '%'", { firstName: query });
-          qb.orWhere("user.lastName ILIKE '%' || :lastName || '%'", { lastName: query });
-        }),
-      );
+      queryBuilder.andWhere("user.displayName ILIKE '%' || :displayName || '%'", { displayName: query });
     }
 
     return queryBuilder.getManyAndCount();
@@ -78,7 +73,7 @@ export class UserService {
   public async autocomplete(where: IUserAutocompleteDto): Promise<Array<UserEntity>> {
     return this.userEntityRepository.find({
       where,
-      select: ["id", "firstName", "lastName"],
+      select: ["id", "displayName"],
     });
   }
 

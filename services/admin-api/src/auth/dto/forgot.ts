@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsEmail } from "class-validator";
 
-import { ReCaptcha } from "@gemunion/nest-js-utils";
+import { ReCaptcha } from "@gemunion/nest-js-validators";
 
 import { IForgotPasswordDto } from "../interfaces";
 

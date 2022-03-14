@@ -16,8 +16,7 @@ export class EmailController {
       template: 3131445,
       to: [payload.user.email],
       data: {
-        firstName: payload.user.firstName,
-        lastName: payload.user.lastName,
+        displayName: payload.user.displayName,
       },
     });
   }
@@ -28,8 +27,7 @@ export class EmailController {
       template: 3131467,
       to: [payload.user.email],
       data: {
-        firstName: payload.user.firstName,
-        lastName: payload.user.lastName,
+        displayName: payload.user.displayName,
         code: payload.token.uuid,
         link: `${payload.baseUrl}/verify-email/${payload.token.uuid}`,
       },
@@ -42,8 +40,7 @@ export class EmailController {
       template: 3131473,
       to: [payload.user.email],
       data: {
-        firstName: payload.user.firstName,
-        lastName: payload.user.lastName,
+        displayName: payload.user.displayName,
         code: payload.token.uuid,
         link: `${payload.baseUrl}/restore-password/${payload.token.uuid}`,
       },
@@ -56,8 +53,7 @@ export class EmailController {
       template: 3131474,
       to: [payload.user.email],
       data: {
-        firstName: payload.user.firstName,
-        lastName: payload.user.lastName,
+        displayName: payload.user.displayName,
         link: `${payload.baseUrl}/login`,
       },
     });

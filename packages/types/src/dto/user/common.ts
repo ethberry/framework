@@ -1,8 +1,7 @@
 import { EnabledLanguages } from "@gemunion/framework-constants";
 
 export interface IUserCommonDto {
-  firstName?: string;
-  lastName?: string;
+  displayName?: string;
   language?: EnabledLanguages;
   phoneNumber?: string;
   imageUrl?: string;
