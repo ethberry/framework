@@ -3,7 +3,7 @@
     "@gemunion/eslint-config/presets/ts"
   ],
   "parserOptions": {
-    "project": "./tsconfig.test.json"
+    "project": "./tsconfig.json"
   },
   "root": true
 }
