@@ -68,7 +68,7 @@ export class MerchantService {
   }
 
   public findOne(where: FindOptionsWhere<MerchantEntity>): Promise<MerchantEntity | null> {
-    return this.merchantEntityRepository.findOne({ where, relations: ["users"] });
+    return this.merchantEntityRepository.findOne({ where, relations: { users: true } });
   }
 
   public async update(

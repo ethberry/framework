@@ -21,7 +21,7 @@ export class PromoService {
   ): Promise<[Array<PromoEntity>, number]> {
     return this.promoEntityRepository.findAndCount({
       where,
-      relations: ["product"],
+      relations: { product: true },
       ...options,
     });
   }

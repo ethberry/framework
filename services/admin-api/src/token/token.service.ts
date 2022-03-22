@@ -15,7 +15,7 @@ export class TokenService {
   ) {}
 
   public findOne(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
-    return this.tokenEntityRepository.findOne({ where, relations: ["user"] });
+    return this.tokenEntityRepository.findOne({ where, relations: { user: true } });
   }
 
   public async getToken(
