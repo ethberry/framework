@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindConditions, FindManyOptions, Repository, Brackets } from "typeorm";
+import { DeleteResult, FindOptionsWhere, FindManyOptions, Repository, Brackets } from "typeorm";
 
 import { PageStatus, IPageSearchDto } from "@gemunion/framework-types";
 
@@ -54,20 +54,20 @@ export class PageService {
   }
 
   public findAndCount(
-    where: FindConditions<PageEntity>,
+    where: FindOptionsWhere<PageEntity>,
     options?: FindManyOptions<PageEntity>,
   ): Promise<[Array<PageEntity>, number]> {
     return this.pageEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindConditions<PageEntity>): Promise<PageEntity | undefined> {
+  public findOne(where: FindOptionsWhere<PageEntity>): Promise<PageEntity | null> {
     return this.pageEntityRepository.findOne({ where });
   }
 
   public async create(dto: IPageCreateDto): Promise<PageEntity> {
     const { slug } = dto;
 
-    const productEntity = await this.pageEntityRepository.findOne({ slug });
+    const productEntity = await this.pageEntityRepository.findOne({ where: { slug } });
 
     if (productEntity) {
       throw new ConflictException("duplicateSlug");
@@ -81,8 +81,8 @@ export class PageService {
       .save();
   }
 
-  public async update(where: FindConditions<PageEntity>, dto: IPageUpdateDto): Promise<PageEntity> {
-    const pageEntity = await this.pageEntityRepository.findOne(where);
+  public async update(where: FindOptionsWhere<PageEntity>, dto: IPageUpdateDto): Promise<PageEntity> {
+    const pageEntity = await this.pageEntityRepository.findOne({ where });
 
     if (!pageEntity) {
       throw new NotFoundException("pageNotFound");
@@ -92,7 +92,7 @@ export class PageService {
     return pageEntity.save();
   }
 
-  public delete(where: FindConditions<PageEntity>): Promise<DeleteResult> {
+  public delete(where: FindOptionsWhere<PageEntity>): Promise<DeleteResult> {
     return this.pageEntityRepository.delete(where);
   }
 }

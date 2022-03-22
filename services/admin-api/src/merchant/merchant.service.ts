@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindConditions, Repository } from "typeorm";
+import { Brackets, FindOptionsWhere, Repository } from "typeorm";
 
 import { IMerchantSearchDto, MerchantStatus, UserRole } from "@gemunion/framework-types";
 
@@ -67,18 +67,18 @@ export class MerchantService {
     return this.merchantEntityRepository.findAndCount();
   }
 
-  public findOne(where: FindConditions<MerchantEntity>): Promise<MerchantEntity | undefined> {
+  public findOne(where: FindOptionsWhere<MerchantEntity>): Promise<MerchantEntity | null> {
     return this.merchantEntityRepository.findOne({ where, relations: ["users"] });
   }
 
   public async update(
-    where: FindConditions<MerchantEntity>,
+    where: FindOptionsWhere<MerchantEntity>,
     dto: IMerchantUpdateDto,
     userEntity: UserEntity,
-  ): Promise<MerchantEntity | undefined> {
+  ): Promise<MerchantEntity | null> {
     const { userIds, ...rest } = dto;
 
-    const merchantEntity = await this.merchantEntityRepository.findOne(where);
+    const merchantEntity = await this.merchantEntityRepository.findOne({ where });
 
     if (!merchantEntity) {
       throw new NotFoundException("merchantNotFound");
@@ -107,11 +107,8 @@ export class MerchantService {
       .save();
   }
 
-  public async delete(
-    where: FindConditions<MerchantEntity>,
-    userEntity: UserEntity,
-  ): Promise<MerchantEntity | undefined> {
-    const merchantEntity = await this.merchantEntityRepository.findOne(where);
+  public async delete(where: FindOptionsWhere<MerchantEntity>, userEntity: UserEntity): Promise<MerchantEntity | null> {
+    const merchantEntity = await this.merchantEntityRepository.findOne({ where });
 
     if (!merchantEntity) {
       throw new NotFoundException("merchantNotFound");

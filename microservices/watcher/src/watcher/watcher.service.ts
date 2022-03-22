@@ -1,5 +1,5 @@
 import { ConflictException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { DeepPartial, FindConditions, FindOneOptions, In, Repository } from "typeorm";
+import { DeepPartial, FindOptionsWhere, FindOneOptions, In, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { WatcherEntity } from "./watcher.entity";
@@ -56,16 +56,16 @@ export class WatcherService {
   }
 
   public findAll(
-    where: FindConditions<WatcherEntity>,
+    where: FindOptionsWhere<WatcherEntity>,
     options?: FindOneOptions<WatcherEntity>,
   ): Promise<Array<WatcherEntity>> {
     return this.transactionEntityRepository.find({ where, ...options });
   }
 
   public findOne(
-    where: FindConditions<WatcherEntity>,
+    where: FindOptionsWhere<WatcherEntity>,
     options?: FindOneOptions<WatcherEntity>,
-  ): Promise<WatcherEntity | undefined> {
+  ): Promise<WatcherEntity | null> {
     return this.transactionEntityRepository.findOne({ where, ...options });
   }
 
@@ -82,7 +82,7 @@ export class WatcherService {
     return transactionEntity;
   }
 
-  public async update(where: FindConditions<WatcherEntity>, dto: DeepPartial<WatcherEntity>): Promise<WatcherEntity> {
+  public async update(where: FindOptionsWhere<WatcherEntity>, dto: DeepPartial<WatcherEntity>): Promise<WatcherEntity> {
     const transactionEntity = await this.findOne(where);
 
     if (!transactionEntity) {
@@ -93,7 +93,7 @@ export class WatcherService {
     return transactionEntity.save();
   }
 
-  public async delete(where: FindConditions<WatcherEntity>): Promise<WatcherEntity> {
+  public async delete(where: FindOptionsWhere<WatcherEntity>): Promise<WatcherEntity> {
     const transactionEntity = await this.findOne(where);
     if (!transactionEntity) {
       throw new NotFoundException("transactionNotFound");

@@ -26,7 +26,7 @@ export class OrderController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<OrderEntity | undefined> {
+  public findOne(@Param("id") id: number): Promise<OrderEntity | null> {
     return this.orderService.findOne({ id });
   }
 

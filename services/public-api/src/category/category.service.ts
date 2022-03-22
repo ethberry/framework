@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindConditions, FindManyOptions, Repository } from "typeorm";
+import { FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
 
 import { CategoryEntity } from "./category.entity";
 
@@ -12,7 +12,7 @@ export class CategoryService {
   ) {}
 
   public findAndCount(
-    where: FindConditions<CategoryEntity>,
+    where: FindOptionsWhere<CategoryEntity>,
     options?: FindManyOptions<CategoryEntity>,
   ): Promise<[Array<CategoryEntity>, number]> {
     return this.categoryEntityRepository.findAndCount({ where, ...options });

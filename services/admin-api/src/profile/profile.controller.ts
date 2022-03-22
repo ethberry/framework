@@ -23,7 +23,7 @@ export class ProfileController {
   }
 
   @Put("/")
-  public setProfile(@User() userEntity: UserEntity, @Body() dto: ProfileUpdateDto): Promise<UserEntity | undefined> {
+  public setProfile(@User() userEntity: UserEntity, @Body() dto: ProfileUpdateDto): Promise<UserEntity | null> {
     return this.profileService.update(userEntity, dto);
   }
 

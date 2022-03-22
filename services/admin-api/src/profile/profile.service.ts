@@ -21,7 +21,7 @@ export class ProfileService {
     private readonly emailClientProxy: ClientProxy,
   ) {}
 
-  public async update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity | undefined> {
+  public async update(userEntity: UserEntity, dto: IProfileUpdateDto): Promise<UserEntity | null> {
     const { email, ...rest } = dto;
 
     if (email) {
@@ -41,8 +41,8 @@ export class ProfileService {
     await userEntity.save();
 
     if (userEntity.userStatus === UserStatus.PENDING) {
-      await this.authService.logout({ user: userEntity });
-      return;
+      await this.authService.logout({ userId: userEntity.id });
+      return null;
     }
 
     return userEntity;
@@ -67,6 +67,6 @@ export class ProfileService {
 
     await userEntity.save();
 
-    await this.authService.logout({ user: userEntity });
+    await this.authService.logout({ userId: userEntity.id });
   }
 }

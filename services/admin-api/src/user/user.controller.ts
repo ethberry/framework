@@ -30,7 +30,7 @@ export class UserController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<UserEntity | undefined> {
+  public findOne(@Param("id") id: number): Promise<UserEntity | null> {
     return this.userService.findOne({ id });
   }
 

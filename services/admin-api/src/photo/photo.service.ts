@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
+import { DeleteResult, FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
 
 import { PhotoStatus } from "@gemunion/framework-types";
 
@@ -20,13 +20,13 @@ export class PhotoService {
   }
 
   public findAndCount(
-    where: FindConditions<PhotoEntity>,
+    where: FindOptionsWhere<PhotoEntity>,
     options?: FindManyOptions<PhotoEntity>,
   ): Promise<[Array<PhotoEntity>, number]> {
     return this.photoEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindConditions<PhotoEntity>): Promise<PhotoEntity | undefined> {
+  public findOne(where: FindOptionsWhere<PhotoEntity>): Promise<PhotoEntity | null> {
     return this.photoEntityRepository.findOne({ where });
   }
 
@@ -40,8 +40,8 @@ export class PhotoService {
       .save();
   }
 
-  public async update(where: FindConditions<PhotoEntity>, dto: IPhotoUpdateDto): Promise<PhotoEntity> {
-    const photoEntity = await this.photoEntityRepository.findOne(where);
+  public async update(where: FindOptionsWhere<PhotoEntity>, dto: IPhotoUpdateDto): Promise<PhotoEntity> {
+    const photoEntity = await this.photoEntityRepository.findOne({ where });
 
     if (!photoEntity) {
       throw new NotFoundException("photoNotFound");
@@ -51,11 +51,11 @@ export class PhotoService {
     return photoEntity.save();
   }
 
-  public count(where: FindConditions<PhotoEntity>): Promise<number> {
-    return this.photoEntityRepository.count(where);
+  public count(where: FindOptionsWhere<PhotoEntity>): Promise<number> {
+    return this.photoEntityRepository.count({ where });
   }
 
-  public delete(where: FindConditions<PhotoEntity>): Promise<DeleteResult> {
+  public delete(where: FindOptionsWhere<PhotoEntity>): Promise<DeleteResult> {
     return this.photoEntityRepository.delete(where);
   }
 }

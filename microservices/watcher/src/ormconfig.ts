@@ -1,10 +1,10 @@
-import path from "path";
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 import { ns } from "@gemunion/framework-constants";
 
 import { WatcherEntity } from "./watcher/watcher.entity";
+import { CreateTransactionTable1639131041954 } from "./migrations/1639131041954-create-transaction-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -24,12 +24,7 @@ const config: PostgresConnectionOptions = {
   // Allow both start:prod and start:dev to use migrations
   // __dirname is either dist or server folder, meaning either
   // the compiled js in prod or the ts in dev.
-  migrations: [path.join(__dirname, "/migrations/**/*{.ts,.js}")],
-  cli: {
-    // Location of migration should be inside server folder
-    // to be compiled into dist/ folder.
-    migrationsDir: "src/migrations",
-  },
+  migrations: [CreateTransactionTable1639131041954],
 };
 
 export default config;

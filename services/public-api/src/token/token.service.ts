@@ -1,4 +1,4 @@
-import { FindConditions, Repository } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 
@@ -14,15 +14,17 @@ export class TokenService {
     private readonly tokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
-  public findOne(where: FindConditions<TokenEntity>): Promise<TokenEntity | undefined> {
+  public findOne(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
     return this.tokenEntityRepository.findOne({ where, relations: ["user"] });
   }
 
   public async getToken(tokenType: TokenType, userEntity: UserEntity): Promise<TokenEntity> {
     // working around https://github.com/typeorm/typeorm/issues/1090
     const tokenEntity = await this.tokenEntityRepository.findOne({
-      tokenType,
-      user: userEntity,
+      where: {
+        tokenType,
+        userId: userEntity.id,
+      },
     });
 
     if (tokenEntity) {

@@ -43,7 +43,7 @@ export class ProductController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<ProductEntity | undefined> {
+  public findOne(@Param("id") id: number): Promise<ProductEntity | null> {
     return this.productService.findOne({ id });
   }
 

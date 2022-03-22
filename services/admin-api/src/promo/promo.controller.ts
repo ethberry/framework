@@ -27,7 +27,7 @@ export class PromoController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: PromoUpdateDto): Promise<PromoEntity | undefined> {
+  public update(@Param("id") id: number, @Body() dto: PromoUpdateDto): Promise<PromoEntity | null> {
     return this.promoService.update({ id }, dto);
   }
 

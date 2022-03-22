@@ -30,13 +30,13 @@ export class CategoryController {
   }
 
   @Put("/:id")
-  public update(@Param("id") id: number, @Body() dto: CategoryUpdateDto): Promise<CategoryEntity | undefined> {
+  public update(@Param("id") id: number, @Body() dto: CategoryUpdateDto): Promise<CategoryEntity | null> {
     return this.categoryService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<CategoryEntity | undefined> {
+  public findOne(@Param("id") id: number): Promise<CategoryEntity | null> {
     return this.categoryService.findOne({ id });
   }
 

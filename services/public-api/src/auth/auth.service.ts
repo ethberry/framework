@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/co
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindConditions, Repository } from "typeorm";
+import { DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
@@ -55,11 +55,11 @@ export class AuthService {
     return this.loginUser(userEntity, ip);
   }
 
-  public async logout(where: FindConditions<AuthEntity>): Promise<DeleteResult> {
+  public async logout(where: FindOptionsWhere<AuthEntity>): Promise<DeleteResult> {
     return this.authEntityRepository.delete(where);
   }
 
-  public async refresh(where: FindConditions<AuthEntity>, ip: string): Promise<IJwt> {
+  public async refresh(where: FindOptionsWhere<AuthEntity>, ip: string): Promise<IJwt> {
     const authEntity = await this.authEntityRepository.findOne({ where, relations: ["user"] });
 
     if (!authEntity || authEntity.refreshTokenExpiresAt < new Date().getTime()) {

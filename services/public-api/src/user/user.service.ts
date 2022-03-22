@@ -1,7 +1,7 @@
 import { ConflictException, Inject, Injectable, Logger, LoggerService, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
-import { FindConditions, FindManyOptions, FindOneOptions, Not, Repository } from "typeorm";
+import { FindOptionsWhere, FindManyOptions, FindOneOptions, Not, Repository } from "typeorm";
 import { createHash } from "crypto";
 
 import { IPasswordDto, IUserCreateDto, UserRole, UserStatus } from "@gemunion/framework-types";
@@ -20,16 +20,16 @@ export class UserService {
   ) {}
 
   public findAndCount(
-    where: FindConditions<UserEntity>,
+    where: FindOptionsWhere<UserEntity>,
     options?: FindManyOptions<UserEntity>,
   ): Promise<[Array<UserEntity>, number]> {
     return this.userEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(
-    where: FindConditions<UserEntity>,
+    where: FindOptionsWhere<UserEntity>,
     options?: FindOneOptions<UserEntity>,
-  ): Promise<UserEntity | undefined> {
+  ): Promise<UserEntity | null> {
     return this.userEntityRepository.findOne({ where, ...options });
   }
 
@@ -52,7 +52,7 @@ export class UserService {
     return userEntity;
   }
 
-  public async getByCredentials(email: string, password: string): Promise<UserEntity | undefined> {
+  public async getByCredentials(email: string, password: string): Promise<UserEntity | null> {
     return this.userEntityRepository.findOne({
       where: {
         email,
@@ -100,7 +100,7 @@ export class UserService {
   }
 
   public async checkPasswordIsDifferent(id: number, password: string): Promise<void> {
-    const userEntity = await this.userEntityRepository.findOne({ id, password });
+    const userEntity = await this.userEntityRepository.findOne({ where: { id, password } });
     if (userEntity) {
       throw new BadRequestException("passwordsAreIdentical");
     }

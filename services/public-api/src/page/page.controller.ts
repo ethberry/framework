@@ -13,7 +13,7 @@ export class PageController {
 
   @Get("/:slug")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("slug") slug: string): Promise<PageEntity | undefined> {
+  public findOne(@Param("slug") slug: string): Promise<PageEntity | null> {
     return this.pageService.findOne({ slug });
   }
 }

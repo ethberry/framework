@@ -45,7 +45,10 @@ export class HealthController {
           },
         }),
       async (): Promise<HealthIndicatorResult> =>
-        this.redisIndicator.checkHealth("Redis", { client: this.redisManager.getClient(THROTTLE_STORE) }),
+        this.redisIndicator.checkHealth("Redis", {
+          type: "redis",
+          client: this.redisManager.getClient(THROTTLE_STORE),
+        }),
     ]);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindConditions, FindManyOptions, Repository, UpdateResult } from "typeorm";
+import { FindOptionsWhere, FindManyOptions, Repository, UpdateResult } from "typeorm";
 
 import { OrderStatus } from "@gemunion/framework-types";
 
@@ -22,7 +22,7 @@ export class OrderService {
   ) {}
 
   public findAndCount(
-    where: FindConditions<OrderEntity>,
+    where: FindOptionsWhere<OrderEntity>,
     options?: FindManyOptions<OrderEntity>,
   ): Promise<[Array<OrderEntity>, number]> {
     return this.orderEntityRepository.findAndCount({ where, order: { createdAt: "DESC" }, ...options });
@@ -52,7 +52,7 @@ export class OrderService {
     return queryBuilder.getManyAndCount();
   }
 
-  public findOne(where: FindConditions<OrderEntity>): Promise<OrderEntity | undefined> {
+  public findOne(where: FindOptionsWhere<OrderEntity>): Promise<OrderEntity | null> {
     return this.orderEntityRepository.findOne({ where });
   }
 
@@ -76,7 +76,7 @@ export class OrderService {
       .save();
   }
 
-  public delete(where: FindConditions<OrderEntity>): Promise<UpdateResult> {
+  public delete(where: FindOptionsWhere<OrderEntity>): Promise<UpdateResult> {
     return this.orderEntityRepository.update(where, { orderStatus: OrderStatus.CANCELED });
   }
 }

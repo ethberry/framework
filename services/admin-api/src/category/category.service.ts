@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
+import { Brackets, DeleteResult, FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
 
@@ -44,13 +44,13 @@ export class CategoryService {
   }
 
   public findAndCount(
-    where: FindConditions<CategoryEntity>,
+    where: FindOptionsWhere<CategoryEntity>,
     options?: FindManyOptions<CategoryEntity>,
   ): Promise<[Array<CategoryEntity>, number]> {
     return this.categoryEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindConditions<CategoryEntity>): Promise<CategoryEntity | undefined> {
+  public findOne(where: FindOptionsWhere<CategoryEntity>): Promise<CategoryEntity | null> {
     return this.categoryEntityRepository.findOne({ where });
   }
 
@@ -69,10 +69,10 @@ export class CategoryService {
   }
 
   public async update(
-    where: FindConditions<CategoryEntity>,
+    where: FindOptionsWhere<CategoryEntity>,
     dto: ICategoryUpdateDto,
-  ): Promise<CategoryEntity | undefined> {
-    const categoryEntity = await this.categoryEntityRepository.findOne(where);
+  ): Promise<CategoryEntity | null> {
+    const categoryEntity = await this.categoryEntityRepository.findOne({ where });
 
     if (!categoryEntity) {
       throw new NotFoundException("categoryNotFound");
@@ -82,7 +82,7 @@ export class CategoryService {
     return categoryEntity.save();
   }
 
-  public async delete(where: FindConditions<CategoryEntity>): Promise<DeleteResult> {
+  public async delete(where: FindOptionsWhere<CategoryEntity>): Promise<DeleteResult> {
     if (where.id === 1) {
       throw new BadRequestException("cantDeleteRootCategory");
     }

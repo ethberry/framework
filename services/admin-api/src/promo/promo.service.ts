@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
+import { Brackets, FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
 
 import { S3Service } from "@gemunion/nest-js-module-s3";
 
@@ -16,7 +16,7 @@ export class PromoService {
   ) {}
 
   public findAndCount(
-    where: FindConditions<PromoEntity>,
+    where: FindOptionsWhere<PromoEntity>,
     options?: FindManyOptions<PromoEntity>,
   ): Promise<[Array<PromoEntity>, number]> {
     return this.promoEntityRepository.findAndCount({
@@ -57,8 +57,8 @@ export class PromoService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async update(where: FindConditions<PromoEntity>, dto: IPromoUpdateDto): Promise<PromoEntity | undefined> {
-    const promoEntity = await this.promoEntityRepository.findOne(where);
+  public async update(where: FindOptionsWhere<PromoEntity>, dto: IPromoUpdateDto): Promise<PromoEntity | null> {
+    const promoEntity = await this.promoEntityRepository.findOne({ where });
 
     if (!promoEntity) {
       throw new NotFoundException("promoNotFound");
@@ -72,8 +72,8 @@ export class PromoService {
     return this.promoEntityRepository.create({ ...dto }).save();
   }
 
-  public async delete(where: FindConditions<PromoEntity>): Promise<void> {
-    const promoEntity = await this.promoEntityRepository.findOne(where);
+  public async delete(where: FindOptionsWhere<PromoEntity>): Promise<void> {
+    const promoEntity = await this.promoEntityRepository.findOne({ where });
 
     if (!promoEntity) {
       throw new NotFoundException("promoNotFound");

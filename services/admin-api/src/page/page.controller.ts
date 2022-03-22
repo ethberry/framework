@@ -33,7 +33,7 @@ export class PageController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<PageEntity | undefined> {
+  public findOne(@Param("id") id: number): Promise<PageEntity | null> {
     return this.pageService.findOne({ id });
   }
 

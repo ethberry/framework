@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
+import { Brackets, FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
 
 import { PhotoStatus, ProductStatus, UserRole } from "@gemunion/framework-types";
 
@@ -75,13 +75,13 @@ export class ProductService {
   }
 
   public findAndCount(
-    where: FindConditions<ProductEntity>,
+    where: FindOptionsWhere<ProductEntity>,
     options?: FindManyOptions<ProductEntity>,
   ): Promise<[Array<ProductEntity>, number]> {
     return this.productEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindConditions<ProductEntity>): Promise<ProductEntity | undefined> {
+  public findOne(where: FindOptionsWhere<ProductEntity>): Promise<ProductEntity | null> {
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
     queryBuilder.where(where);
@@ -125,17 +125,17 @@ export class ProductService {
   }
 
   public async update(
-    where: FindConditions<ProductEntity>,
+    where: FindOptionsWhere<ProductEntity>,
     dto: IProductUpdateDto,
     userEntity: UserEntity,
   ): Promise<ProductEntity> {
     const { photos, categoryIds, ...rest } = dto;
 
     if (!userEntity.userRoles.includes(UserRole.ADMIN)) {
-      where.merchant = userEntity.merchant;
+      where.merchantId = userEntity.merchant.id;
     }
 
-    const productEntity = await this.productEntityRepository.findOne(where, { relations: ["photos"] });
+    const productEntity = await this.productEntityRepository.findOne({ where, relations: { photos: true } });
 
     if (!productEntity) {
       throw new NotFoundException("productNotFound");
@@ -214,7 +214,7 @@ export class ProductService {
     return queryBuilder.getMany();
   }
 
-  public async delete(where: FindConditions<ProductEntity>, userEntity: UserEntity): Promise<ProductEntity> {
+  public async delete(where: FindOptionsWhere<ProductEntity>, userEntity: UserEntity): Promise<ProductEntity> {
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
     queryBuilder.select();
     queryBuilder.where(where);

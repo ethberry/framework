@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindConditions, FindManyOptions, Repository } from "typeorm";
+import { DeleteResult, FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
 
 import { OrderEntity } from "./order.entity";
 import { IOrderCreateDto, IOrderSearchDto, IOrderUpdateDto } from "./interfaces";
@@ -52,13 +52,13 @@ export class OrderService {
   }
 
   public findAndCount(
-    where: FindConditions<OrderEntity>,
+    where: FindOptionsWhere<OrderEntity>,
     options?: FindManyOptions<OrderEntity>,
   ): Promise<[Array<OrderEntity>, number]> {
     return this.orderEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindConditions<OrderEntity>): Promise<OrderEntity | undefined> {
+  public findOne(where: FindOptionsWhere<OrderEntity>): Promise<OrderEntity | null> {
     return this.orderEntityRepository.findOne({ where });
   }
 
@@ -82,8 +82,8 @@ export class OrderService {
       .save();
   }
 
-  public async update(where: FindConditions<OrderEntity>, dto: IOrderUpdateDto): Promise<OrderEntity> {
-    const orderEntity = await this.orderEntityRepository.findOne(where);
+  public async update(where: FindOptionsWhere<OrderEntity>, dto: IOrderUpdateDto): Promise<OrderEntity> {
+    const orderEntity = await this.orderEntityRepository.findOne({ where });
 
     if (!orderEntity) {
       throw new NotFoundException("orderNotFound");
@@ -93,7 +93,7 @@ export class OrderService {
     return orderEntity.save();
   }
 
-  public delete(where: FindConditions<OrderEntity>): Promise<DeleteResult> {
+  public delete(where: FindOptionsWhere<OrderEntity>): Promise<DeleteResult> {
     return this.orderEntityRepository.delete(where);
   }
 }

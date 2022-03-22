@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindConditions, Repository } from "typeorm";
+import { Brackets, FindOptionsWhere, Repository } from "typeorm";
 
 import { MerchantStatus } from "@gemunion/framework-types";
 import { SearchDto } from "@gemunion/collection";
@@ -23,7 +23,7 @@ export class MerchantService {
     });
   }
 
-  public findOne(where: FindConditions<MerchantEntity>): Promise<MerchantEntity | undefined> {
+  public findOne(where: FindOptionsWhere<MerchantEntity>): Promise<MerchantEntity | null> {
     return this.merchantEntityRepository.findOne({ where });
   }
 

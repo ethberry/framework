@@ -77,7 +77,7 @@ describe("UserService", () => {
       const email = `trejgun+${v4()}@gmail.com`;
       const userEntity = await userService.update({ id: entities.users[0].id }, { email });
       expect(userEntity.email).toEqual(oldUserEntity?.email);
-      const tokenEntity = await tokenService.findOne({ tokenType: TokenType.EMAIL, user: userEntity });
+      const tokenEntity = await tokenService.findOne({ tokenType: TokenType.EMAIL, userId: userEntity.id });
       expect(tokenEntity).toBeDefined();
       expect(tokenEntity?.data.email).toEqual(email);
     });

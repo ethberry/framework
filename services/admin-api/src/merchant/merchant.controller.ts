@@ -36,13 +36,13 @@ export class MerchantController {
     @Param("id") id: number,
     @Body() dto: MerchantUpdateDto,
     @User() userEntity: UserEntity,
-  ): Promise<MerchantEntity | undefined> {
+  ): Promise<MerchantEntity | null> {
     return this.merchantService.update({ id }, dto, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<MerchantEntity | undefined> {
+  public findOne(@Param("id") id: number): Promise<MerchantEntity | null> {
     return this.merchantService.findOne({ id });
   }
 

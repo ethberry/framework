@@ -24,7 +24,7 @@ export class MerchantController {
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id") id: number): Promise<MerchantEntity | undefined> {
+  public findOne(@Param("id") id: number): Promise<MerchantEntity | null> {
     return this.merchantService.findOne({ id });
   }
 }

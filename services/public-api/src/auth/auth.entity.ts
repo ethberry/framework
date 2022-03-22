@@ -22,6 +22,9 @@ export class AuthEntity extends IdBaseEntity implements IAuth {
   @OneToOne(_type => UserEntity)
   public user: UserEntity;
 
+  @Column({ type: "int" })
+  public userId: number;
+
   @Column({
     type: "varchar",
     select: false,

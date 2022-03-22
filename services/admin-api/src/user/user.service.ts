@@ -1,5 +1,6 @@
 import { createHash } from "crypto";
-import { DeleteResult, FindConditions, FindManyOptions, Not, Repository } from "typeorm";
+import { DeleteResult, FindOptionsWhere, FindManyOptions, Not, Repository } from "typeorm";
+import { ArrayOverlap } from "typeorm/find-options/operator/ArrayOverlap";
 import {
   BadRequestException,
   ConflictException,
@@ -70,7 +71,16 @@ export class UserService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(where: IUserAutocompleteDto): Promise<Array<UserEntity>> {
+  public async autocomplete(dto: IUserAutocompleteDto): Promise<Array<UserEntity>> {
+    const { userRoles = [] } = dto;
+    const where = {};
+
+    if (userRoles.length) {
+      Object.assign(where, {
+        adminRoles: ArrayOverlap(userRoles),
+      });
+    }
+
     return this.userEntityRepository.find({
       where,
       select: ["id", "displayName"],
@@ -78,20 +88,20 @@ export class UserService {
   }
 
   public findAndCount(
-    where: FindConditions<UserEntity>,
+    where: FindOptionsWhere<UserEntity>,
     options?: FindManyOptions<UserEntity>,
   ): Promise<[Array<UserEntity>, number]> {
     return this.userEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindConditions<UserEntity>): Promise<UserEntity | undefined> {
+  public findOne(where: FindOptionsWhere<UserEntity>): Promise<UserEntity | null> {
     return this.userEntityRepository.findOne({ where });
   }
 
-  public async update(where: FindConditions<UserEntity>, dto: IUserUpdateDto): Promise<UserEntity> {
+  public async update(where: FindOptionsWhere<UserEntity>, dto: IUserUpdateDto): Promise<UserEntity> {
     const { email, ...rest } = dto;
 
-    const userEntity = await this.userEntityRepository.findOne(where);
+    const userEntity = await this.userEntityRepository.findOne({ where });
 
     if (!userEntity) {
       throw new NotFoundException("userNotFound");
@@ -132,7 +142,7 @@ export class UserService {
     return userEntity;
   }
 
-  public async getByCredentials(email: string, password: string): Promise<UserEntity | undefined> {
+  public async getByCredentials(email: string, password: string): Promise<UserEntity | null> {
     return this.userEntityRepository.findOne({
       where: {
         email,
@@ -163,7 +173,7 @@ export class UserService {
       .save();
   }
 
-  public delete(where: FindConditions<UserEntity>): Promise<DeleteResult> {
+  public delete(where: FindOptionsWhere<UserEntity>): Promise<DeleteResult> {
     return this.userEntityRepository.delete(where);
   }
 
@@ -184,7 +194,7 @@ export class UserService {
   }
 
   public async checkPasswordIsDifferent(id: number, password: string): Promise<void> {
-    const userEntity = await this.userEntityRepository.findOne({ id, password });
+    const userEntity = await this.userEntityRepository.findOne({ where: { id, password } });
     if (userEntity) {
       throw new BadRequestException("passwordsAreIdentical");
     }

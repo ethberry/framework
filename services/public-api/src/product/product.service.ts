@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindConditions, FindManyOptions, Repository } from "typeorm";
+import { Brackets, FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
 
 import { PhotoStatus, ProductStatus } from "@gemunion/framework-types";
 import { SortDirection } from "@gemunion/types-collection";
@@ -85,13 +85,13 @@ export class ProductService {
   }
 
   public findAndCount(
-    where: FindConditions<ProductEntity>,
+    where: FindOptionsWhere<ProductEntity>,
     options?: FindManyOptions<ProductEntity>,
   ): Promise<[Array<ProductEntity>, number]> {
     return this.productEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindConditions<ProductEntity>): Promise<ProductEntity | undefined> {
+  public findOne(where: FindOptionsWhere<ProductEntity>): Promise<ProductEntity | null> {
     const queryBuilder = this.productEntityRepository.createQueryBuilder("product");
 
     queryBuilder.where(where);
