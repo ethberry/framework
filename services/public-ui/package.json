@@ -34,6 +34,7 @@
     "@gemunion/mui-rte": "2.0.3",
     "@gemunion/mui-toolbar": "3.1.11",
     "@gemunion/provider-api": "5.6.1",
+    "@gemunion/provider-license": "0.1.3",
     "@gemunion/provider-localization": "1.5.4",
     "@gemunion/provider-picker": "3.3.2",
     "@gemunion/provider-settings": "1.6.4",
