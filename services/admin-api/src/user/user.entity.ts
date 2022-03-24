@@ -50,6 +50,6 @@ export class UserEntity extends IdBaseEntity implements IUser {
   @Column({ type: "int" })
   public merchantId: number;
 
-  @ManyToOne(_type => MerchantEntity, merchant => merchant.users)
+  @ManyToOne(_type => MerchantEntity, merchantEntity => merchantEntity.users)
   public merchant: MerchantEntity;
 }

@@ -4,4 +4,5 @@ export interface IAuth extends IIdBase {
   ip: string;
   refreshToken: string;
   refreshTokenExpiresAt: number;
+  userId: number;
 }

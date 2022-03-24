@@ -14,10 +14,6 @@ export class AuthEntity extends IdBaseEntity implements IAuth {
   @Column({ type: "bigint" })
   public refreshTokenExpiresAt: number;
 
-  public accessToken: string;
-
-  public accessTokenExpiresAt: number;
-
   @JoinColumn()
   @OneToOne(_type => UserEntity)
   public user: UserEntity;
