@@ -177,6 +177,7 @@
       "badInput": "{label} is invalid",
       "customError": "???",
       "duplicate": "{label} already in use",
+      "invalidJSON": "Invalid JSON",
       "patternMismatch": "{label} does not match expected pattern",
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
