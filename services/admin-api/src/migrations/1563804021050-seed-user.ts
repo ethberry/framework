@@ -24,7 +24,6 @@ export class SeedUser1563804021050 implements MigrationInterface {
         'trejgun@gmail.com',
         '97a609f782839fa886c8ae797d8d66f4a5138c2b02fb0dcab39ff74b85bc35fe',
         'Trej Admin',
-        'Admin',
         '+62 (812) 3919-8760',
         '${imageUrl}',
         'EN',
