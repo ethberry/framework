@@ -25,7 +25,11 @@ export const EditOrderDialog: FC<IEditOrderDialogProps> = props => {
 
   return (
     <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
-      <EntityInput name="userId" controller="users" getTitle={(option: IUser) => option.displayName} />
+      <EntityInput
+        name="userId"
+        controller="users"
+        getTitle={(option: IUser) => option.displayName}
+      />
       <EntityInput name="productId" controller="products" />
       <EntityInput name="merchantId" controller="merchants" />
       {id ? <SelectInput name="orderStatus" options={OrderStatus} /> : null}

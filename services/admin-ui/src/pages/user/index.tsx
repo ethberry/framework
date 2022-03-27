@@ -224,7 +224,9 @@ export const User: FC = () => {
         <List>
           {users.map((user, i) => (
             <ListItem key={i}>
-              <ListItemText>{user.displayName}</ListItemText>
+              <ListItemText>
+                {user.displayName}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(user)}>
                   <Create />
