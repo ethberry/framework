@@ -34,6 +34,7 @@ async function bootstrap(): Promise<void> {
   app.set("trust proxy", true);
 
   const options = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle(companyName)
     .setDescription("API description")
     .setVersion("1.0")
