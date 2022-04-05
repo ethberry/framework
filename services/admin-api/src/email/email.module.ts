@@ -2,12 +2,12 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import { emlServiceProvider } from "../common/providers";
-import { TokenModule } from "../token/token.module";
+import { OtpModule } from "../otp/otp.module";
 import { EmailService } from "./email.service";
 import { EmailController } from "./email.controller";
 
 @Module({
-  imports: [ConfigModule, TokenModule],
+  imports: [ConfigModule, OtpModule],
   providers: [emlServiceProvider, EmailService],
   controllers: [EmailController],
   exports: [EmailService],

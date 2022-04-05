@@ -4,14 +4,14 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { v4 } from "uuid";
 
-import { TokenType } from "@gemunion/framework-types";
+import { OtpType } from "@gemunion/framework-types";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
 import { emlServiceProvider } from "../common/providers";
 import { generateUserCreateDto } from "../common/test";
-import { TokenEntity } from "../token/token.entity";
-import { TokenModule } from "../token/token.module";
-import { TokenService } from "../token/token.service";
+import { OtpEntity } from "../otp/otp.entity";
+import { OtpModule } from "../otp/otp.module";
+import { OtpService } from "../otp/otp.service";
 import { UserEntity } from "./user.entity";
 import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
@@ -21,7 +21,7 @@ import ormconfig from "../ormconfig";
 describe("UserService", () => {
   let userService: UserService;
   let userSeedService: UserSeedService;
-  let tokenService: TokenService;
+  let tokenService: OtpService;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -30,16 +30,16 @@ describe("UserService", () => {
           envFilePath: `.env.${process.env.NODE_ENV as string}`,
         }),
         GemunionTypeormModule.forRoot(ormconfig),
-        TypeOrmModule.forFeature([UserEntity, TokenEntity]),
+        TypeOrmModule.forFeature([UserEntity, OtpEntity]),
         UserSeedModule,
-        TokenModule,
+        OtpModule,
       ],
-      providers: [Logger, UserService, UserSeedService, emlServiceProvider, TokenService],
+      providers: [Logger, UserService, UserSeedService, emlServiceProvider, OtpService],
     }).compile();
 
     userService = moduleRef.get<UserService>(UserService);
     userSeedService = moduleRef.get<UserSeedService>(UserSeedService);
-    tokenService = moduleRef.get<TokenService>(TokenService);
+    tokenService = moduleRef.get<OtpService>(OtpService);
   });
 
   afterEach(async () => {
@@ -77,7 +77,7 @@ describe("UserService", () => {
       const email = `trejgun+${v4()}@gmail.com`;
       const userEntity = await userService.update({ id: entities.users[0].id }, { email });
       expect(userEntity.email).toEqual(oldUserEntity?.email);
-      const tokenEntity = await tokenService.findOne({ tokenType: TokenType.EMAIL, userId: userEntity.id });
+      const tokenEntity = await tokenService.findOne({ otpType: OtpType.EMAIL, userId: userEntity.id });
       expect(tokenEntity).toBeDefined();
       expect(tokenEntity?.data.email).toEqual(email);
     });

@@ -1,18 +1,18 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
-import { IToken, TokenType } from "@gemunion/framework-types";
+import { IOtp, OtpType } from "@gemunion/framework-types";
 import { ns } from "@gemunion/framework-constants";
 import { UuidBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "../user/user.entity";
 
-@Entity({ schema: ns, name: "token" })
-export class TokenEntity extends UuidBaseEntity implements IToken {
+@Entity({ schema: ns, name: "otp" })
+export class OtpEntity extends UuidBaseEntity implements IOtp {
   @Column({
     type: "enum",
-    enum: TokenType,
+    enum: OtpType,
   })
-  public tokenType: TokenType;
+  public otpType: OtpType;
 
   @JoinColumn()
   @OneToOne(_type => UserEntity)
@@ -22,5 +22,5 @@ export class TokenEntity extends UuidBaseEntity implements IToken {
   public userId: number;
 
   @Column({ type: "json" })
-  public data: Record<string, string>;
+  public data: any;
 }

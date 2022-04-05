@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 import zxcvbn from "zxcvbn";
 
 import { IJwt } from "@gemunion/types-jwt";
-import { ILoginDto, IUserCreateDto, TokenType, UserRole, UserStatus } from "@gemunion/framework-types";
+import { ILoginDto, IUserCreateDto, OtpType, UserRole, UserStatus } from "@gemunion/framework-types";
 
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";
@@ -21,7 +21,7 @@ import {
 } from "./interfaces";
 import { AuthEntity } from "./auth.entity";
 import { IUserImportDto } from "../user/interfaces";
-import { TokenService } from "../token/token.service";
+import { OtpService } from "../otp/otp.service";
 import { EmailService } from "../email/email.service";
 
 @Injectable()
@@ -31,7 +31,7 @@ export class AuthService {
     private readonly authEntityRepository: Repository<AuthEntity>,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-    private readonly tokenService: TokenService,
+    private readonly otpService: OtpService,
     private readonly configService: ConfigService,
     private readonly emailService: EmailService,
   ) {}
@@ -136,7 +136,7 @@ export class AuthService {
   }
 
   public async restorePassword(dto: IRestorePasswordDto): Promise<void> {
-    const tokenEntity = await this.tokenService.findOne({ uuid: dto.token, tokenType: TokenType.PASSWORD });
+    const tokenEntity = await this.otpService.findOne({ uuid: dto.token, otpType: OtpType.PASSWORD });
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -151,8 +151,8 @@ export class AuthService {
   }
 
   public async emailVerification(dto: IEmailVerificationDto): Promise<void> {
-    const tokenEntity = await this.tokenService.findOne(
-      { uuid: dto.token, tokenType: TokenType.EMAIL },
+    const tokenEntity = await this.otpService.findOne(
+      { uuid: dto.token, otpType: OtpType.EMAIL },
       { relations: { user: true } },
     );
 

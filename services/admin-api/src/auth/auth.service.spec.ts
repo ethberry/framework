@@ -5,7 +5,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
-import { TokenModule } from "../token/token.module";
+import { OtpModule } from "../otp/otp.module";
 import { EmailModule } from "../email/email.module";
 import { UserModule } from "../user/user.module";
 import { AuthService } from "./auth.service";
@@ -25,7 +25,7 @@ describe("AuthService", () => {
         GemunionTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([AuthEntity]),
         UserModule,
-        TokenModule,
+        OtpModule,
         PassportModule,
         EmailModule,
         JwtModule.registerAsync({

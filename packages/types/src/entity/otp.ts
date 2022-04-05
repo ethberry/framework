@@ -1,11 +1,11 @@
 import { IUuidBase } from "@gemunion/types-collection";
 
-export enum TokenType {
+export enum OtpType {
   EMAIL = "EMAIL",
   PASSWORD = "PASSWORD",
 }
 
-export interface IToken extends IUuidBase {
-  tokenType: TokenType;
+export interface IOtp extends IUuidBase {
+  otpType: OtpType;
   data: Record<string, string>;
 }

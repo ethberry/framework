@@ -2,15 +2,15 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
-import { EmailType, RmqProviderType, TokenType } from "@gemunion/framework-types";
+import { EmailType, RmqProviderType, OtpType } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";
-import { TokenService } from "../token/token.service";
+import { OtpService } from "../otp/otp.service";
 
 @Injectable()
 export class EmailService {
   constructor(
-    private readonly tokenService: TokenService,
+    private readonly otpService: OtpService,
     private readonly configService: ConfigService,
     @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
@@ -26,7 +26,7 @@ export class EmailService {
   }
 
   public async emailVerification(userEntity: UserEntity): Promise<any> {
-    const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity);
+    const tokenEntity = await this.otpService.getOtp(OtpType.EMAIL, userEntity);
 
     return this.emailClientProxy
       .emit(EmailType.EMAIL_VERIFICATION, {
@@ -38,7 +38,7 @@ export class EmailService {
   }
 
   public async forgotPassword(userEntity: UserEntity): Promise<any> {
-    const tokenEntity = await this.tokenService.getToken(TokenType.PASSWORD, userEntity);
+    const tokenEntity = await this.otpService.getOtp(OtpType.PASSWORD, userEntity);
 
     return this.emailClientProxy
       .emit(EmailType.FORGOT_PASSWORD, {

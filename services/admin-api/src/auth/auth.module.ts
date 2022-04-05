@@ -5,7 +5,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { UserModule } from "../user/user.module";
-import { TokenModule } from "../token/token.module";
+import { OtpModule } from "../otp/otp.module";
 import { EmailModule } from "../email/email.module";
 import { AuthJwtController } from "./auth.jwt.controller";
 import { AuthSocialController } from "./auth.social.controller";
@@ -17,7 +17,7 @@ import { JwtFacebookStrategy, JwtGoogleStrategy, JwtLocalHttpStrategy } from "./
   imports: [
     TypeOrmModule.forFeature([AuthEntity]),
     UserModule,
-    TokenModule,
+    OtpModule,
     ConfigModule,
     EmailModule,
     PassportModule,

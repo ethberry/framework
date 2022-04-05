@@ -2,17 +2,17 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@gemunion/framework-constants";
 
-export class CreateTokenTable1563804021060 implements MigrationInterface {
+export class CreateOtpTable1563804021060 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.token_type_enum AS ENUM (
+      CREATE TYPE ${ns}.otp_type_enum AS ENUM (
         'EMAIL',
         'PASSWORD'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.token`,
+      name: `${ns}.otp`,
       columns: [
         {
           name: "uuid",
@@ -21,8 +21,8 @@ export class CreateTokenTable1563804021060 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "token_type",
-          type: `${ns}.token_type_enum`,
+          name: "otp_type",
+          type: `${ns}.otp_type_enum`,
         },
         {
           name: "data",
@@ -54,26 +54,26 @@ export class CreateTokenTable1563804021060 implements MigrationInterface {
     await queryRunner.createTable(table, true);
 
     await queryRunner.query(`
-      CREATE OR REPLACE FUNCTION delete_expired_tokens() RETURNS trigger
+      CREATE OR REPLACE FUNCTION delete_expired_otps() RETURNS trigger
       LANGUAGE plpgsql
       AS $$
         BEGIN
-          DELETE FROM ${ns}.token WHERE created_at < NOW() - INTERVAL '1 hour';
+          DELETE FROM ${ns}.otp WHERE created_at < NOW() - INTERVAL '1 hour';
           RETURN NEW;
         END;
       $$;
     `);
 
     await queryRunner.query(`
-      CREATE TRIGGER delete_expired_tokens_trigger
-      AFTER INSERT ON ${ns}.token
-      EXECUTE PROCEDURE delete_expired_tokens()
+      CREATE TRIGGER delete_expired_otps_trigger
+      AFTER INSERT ON ${ns}.otp
+      EXECUTE PROCEDURE delete_expired_otps()
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.token`);
-    await queryRunner.query(`DROP TYPE ${ns}.token_type_enum;`);
-    await queryRunner.query("DROP FUNCTION delete_expired_tokens();");
+    await queryRunner.dropTable(`${ns}.otp`);
+    await queryRunner.query(`DROP TYPE ${ns}.otp_type_enum;`);
+    await queryRunner.query("DROP FUNCTION delete_expired_otps();");
   }
 }

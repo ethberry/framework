@@ -2,20 +2,20 @@ import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
-import { UserStatus, TokenType, RmqProviderType, EmailType } from "@gemunion/framework-types";
+import { UserStatus, OtpType, RmqProviderType, EmailType } from "@gemunion/framework-types";
 
 import { UserEntity } from "../user/user.entity";
 import { IPasswordUpdateDto, IProfileUpdateDto } from "./interfaces";
 import { AuthService } from "../auth/auth.service";
 import { UserService } from "../user/user.service";
-import { TokenService } from "../token/token.service";
+import { OtpService } from "../otp/otp.service";
 
 @Injectable()
 export class ProfileService {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
-    private readonly tokenService: TokenService,
+    private readonly otpService: OtpService,
     private readonly configService: ConfigService,
     @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
@@ -27,7 +27,7 @@ export class ProfileService {
     if (email) {
       await this.userService.checkEmail(email, userEntity.id);
       if (email !== userEntity.email) {
-        const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity, { email: email });
+        const tokenEntity = await this.otpService.getOtp(OtpType.EMAIL, userEntity, { email });
         const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3002");
         this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
           token: tokenEntity,

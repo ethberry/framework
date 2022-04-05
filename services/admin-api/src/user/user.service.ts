@@ -20,14 +20,14 @@ import {
   IUserCreateDto,
   IUserSearchDto,
   RmqProviderType,
-  TokenType,
+  OtpType,
   UserRole,
   UserStatus,
 } from "@gemunion/framework-types";
 
 import { UserEntity } from "./user.entity";
 import { IUserAutocompleteDto, IUserImportDto, IUserUpdateDto } from "./interfaces";
-import { TokenService } from "../token/token.service";
+import { OtpService } from "../otp/otp.service";
 
 @Injectable()
 export class UserService {
@@ -37,7 +37,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userEntityRepository: Repository<UserEntity>,
     private readonly configService: ConfigService,
-    private readonly tokenService: TokenService,
+    private readonly otpService: OtpService,
     @Inject(RmqProviderType.EML_SERVICE)
     private readonly emailClientProxy: ClientProxy,
   ) {}
@@ -113,7 +113,7 @@ export class UserService {
     if (email && email !== userEntity.email) {
       await this.checkEmail(email, userEntity.id);
       userEntity.userStatus = UserStatus.PENDING;
-      const tokenEntity = await this.tokenService.getToken(TokenType.EMAIL, userEntity, { email });
+      const tokenEntity = await this.otpService.getOtp(OtpType.EMAIL, userEntity, { email });
       const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3002");
       this.emailClientProxy.emit(EmailType.EMAIL_VERIFICATION, {
         token: tokenEntity,

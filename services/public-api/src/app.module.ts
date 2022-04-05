@@ -26,8 +26,8 @@ import { PromoModule } from "./promo/promo.module";
 import { UserModule } from "./user/user.module";
 import { ValidationModule } from "./validation/validation.module";
 
-import { AppController } from "./app.controller";
 import ormconfig from "./ormconfig";
+import { AppController } from "./app.controller";
 
 @Module({
   providers: [

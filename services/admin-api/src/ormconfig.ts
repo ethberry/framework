@@ -11,7 +11,7 @@ import { PageEntity } from "./page/page.entity";
 import { PhotoEntity } from "./photo/photo.entity";
 import { ProductEntity } from "./product/product.entity";
 import { PromoEntity } from "./promo/promo.entity";
-import { TokenEntity } from "./token/token.entity";
+import { OtpEntity } from "./otp/otp.entity";
 import { UserEntity } from "./user/user.entity";
 import { CreateSchema1561991006215 } from "./migrations/1561991006215-create-schema";
 import { CreateLanguageEnum1561991006225 } from "./migrations/1561991006225-create-language-enum";
@@ -20,7 +20,7 @@ import { CreateMerchantTable1563804021000 } from "./migrations/1563804021000-cre
 import { SeedMerchant1563804021010 } from "./migrations/1563804021010-seed-merchant";
 import { CreateUserTable1563804021040 } from "./migrations/1563804021040-create-user-table";
 import { SeedUser1563804021050 } from "./migrations/1563804021050-seed-user";
-import { CreateTokenTable1563804021060 } from "./migrations/1563804021060-create-token-table";
+import { CreateOtpTable1563804021060 } from "./migrations/1563804021060-create-otp-table";
 import { CreateAuthTable1563804021070 } from "./migrations/1563804021070-create-auth-table";
 import { CreateCategoryTable1591673187606 } from "./migrations/1593408358850-create-category-table";
 import { SeedCategory1593408358860 } from "./migrations/1593408358860-seed-category";
@@ -51,7 +51,7 @@ const config: PostgresConnectionOptions = {
     PhotoEntity,
     ProductEntity,
     PromoEntity,
-    TokenEntity,
+    OtpEntity,
     UserEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
@@ -74,7 +74,7 @@ const config: PostgresConnectionOptions = {
     SeedMerchant1563804021010,
     CreateUserTable1563804021040,
     SeedUser1563804021050,
-    CreateTokenTable1563804021060,
+    CreateOtpTable1563804021060,
     CreateAuthTable1563804021070,
     CreateCategoryTable1591673187606,
     SeedCategory1593408358860,

@@ -6,13 +6,13 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 
-import { TokenModule } from "../token/token.module";
+import ormconfig from "../ormconfig";
+import { OtpModule } from "../otp/otp.module";
 import { UserModule } from "../user/user.module";
 import { AuthService } from "./auth.service";
 import { AuthEntity } from "./auth.entity";
 import { JwtLocalHttpStrategy } from "./strategies";
 import { EmailModule } from "../email/email.module";
-import ormconfig from "../ormconfig";
 
 describe("AuthService", () => {
   let authService: AuthService;
@@ -26,7 +26,7 @@ describe("AuthService", () => {
         GemunionTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([AuthEntity]),
         UserModule,
-        TokenModule,
+        OtpModule,
         PassportModule,
         EmailModule,
         JwtModule.registerAsync({
