@@ -1,6 +1,6 @@
-import { FindOptionsWhere, Repository } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { FindOptionsWhere, Repository, FindOneOptions } from "typeorm";
 
 import { TokenType } from "@gemunion/framework-types";
 
@@ -14,8 +14,11 @@ export class TokenService {
     private readonly tokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
-  public findOne(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
-    return this.tokenEntityRepository.findOne({ where, relations: { user: true } });
+  public findOne(
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindOneOptions<TokenEntity>,
+  ): Promise<TokenEntity | null> {
+    return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
   public async getToken(
@@ -24,11 +27,9 @@ export class TokenService {
     data?: Record<string, string>,
   ): Promise<TokenEntity> {
     // working around https://github.com/typeorm/typeorm/issues/1090
-    const tokenEntity = await this.tokenEntityRepository.findOne({
-      where: {
-        tokenType,
-        userId: userEntity.id,
-      },
+    const tokenEntity = await this.findOne({
+      tokenType,
+      userId: userEntity.id,
     });
 
     if (tokenEntity) {

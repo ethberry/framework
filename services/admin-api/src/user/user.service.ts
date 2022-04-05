@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { DeleteResult, FindOptionsWhere, FindManyOptions, Not, Repository } from "typeorm";
+import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Not, Repository } from "typeorm";
 import { ArrayOverlap } from "typeorm/find-options/operator/ArrayOverlap";
 import {
   BadRequestException,
@@ -94,8 +94,11 @@ export class UserService {
     return this.userEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindOptionsWhere<UserEntity>): Promise<UserEntity | null> {
-    return this.userEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<UserEntity>,
+    options?: FindOneOptions<UserEntity>,
+  ): Promise<UserEntity | null> {
+    return this.userEntityRepository.findOne({ where, ...options });
   }
 
   public async update(where: FindOptionsWhere<UserEntity>, dto: IUserUpdateDto): Promise<UserEntity> {

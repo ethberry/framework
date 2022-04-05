@@ -151,7 +151,10 @@ export class AuthService {
   }
 
   public async emailVerification(dto: IEmailVerificationDto): Promise<void> {
-    const tokenEntity = await this.tokenService.findOne({ uuid: dto.token, tokenType: TokenType.EMAIL });
+    const tokenEntity = await this.tokenService.findOne(
+      { uuid: dto.token, tokenType: TokenType.EMAIL },
+      { relations: { user: true } },
+    );
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");

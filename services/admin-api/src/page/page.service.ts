@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOptionsWhere, FindManyOptions, Repository, Brackets } from "typeorm";
+import { Brackets, DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { PageStatus, IPageSearchDto } from "@gemunion/framework-types";
+import { IPageSearchDto, PageStatus } from "@gemunion/framework-types";
 
 import { PageEntity } from "./page.entity";
 import { IPageCreateDto, IPageUpdateDto } from "./interfaces";
@@ -60,8 +60,11 @@ export class PageService {
     return this.pageEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindOptionsWhere<PageEntity>): Promise<PageEntity | null> {
-    return this.pageEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<PageEntity>,
+    options?: FindOneOptions<PageEntity>,
+  ): Promise<PageEntity | null> {
+    return this.pageEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: IPageCreateDto): Promise<PageEntity> {

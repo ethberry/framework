@@ -1,6 +1,6 @@
-import { Injectable, NotFoundException, ForbiddenException } from "@nestjs/common";
+import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { IMerchantSearchDto, MerchantStatus, UserRole } from "@gemunion/framework-types";
 
@@ -67,8 +67,11 @@ export class MerchantService {
     return this.merchantEntityRepository.findAndCount();
   }
 
-  public findOne(where: FindOptionsWhere<MerchantEntity>): Promise<MerchantEntity | null> {
-    return this.merchantEntityRepository.findOne({ where, relations: { users: true } });
+  public findOne(
+    where: FindOptionsWhere<MerchantEntity>,
+    options?: FindOneOptions<MerchantEntity>,
+  ): Promise<MerchantEntity | null> {
+    return this.merchantEntityRepository.findOne({ where, ...options });
   }
 
   public async update(

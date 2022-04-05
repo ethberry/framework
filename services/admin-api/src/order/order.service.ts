@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOptionsWhere, FindManyOptions, Repository } from "typeorm";
+import { DeleteResult, FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { OrderEntity } from "./order.entity";
 import { IOrderCreateDto, IOrderSearchDto, IOrderUpdateDto } from "./interfaces";
@@ -58,8 +58,11 @@ export class OrderService {
     return this.orderEntityRepository.findAndCount({ where, ...options });
   }
 
-  public findOne(where: FindOptionsWhere<OrderEntity>): Promise<OrderEntity | null> {
-    return this.orderEntityRepository.findOne({ where });
+  public findOne(
+    where: FindOptionsWhere<OrderEntity>,
+    options?: FindOneOptions<OrderEntity>,
+  ): Promise<OrderEntity | null> {
+    return this.orderEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: IOrderCreateDto): Promise<OrderEntity> {
