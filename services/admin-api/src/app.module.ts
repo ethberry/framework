@@ -15,6 +15,9 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import { RolesGuard } from "./common/guards";
+
+import ormconfig from "./ormconfig";
+import { AppController } from "./app.controller";
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";
 import { EmailModule } from "./email/email.module";
@@ -28,9 +31,6 @@ import { ProfileModule } from "./profile/profile.module";
 import { PromoModule } from "./promo/promo.module";
 import { UserModule } from "./user/user.module";
 import { ValidationModule } from "./validation/validation.module";
-
-import { AppController } from "./app.controller";
-import ormconfig from "./ormconfig";
 
 @Module({
   providers: [

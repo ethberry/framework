@@ -14,6 +14,8 @@ import { ThrottlerHttpGuard, GemunionThrottlerModule, THROTTLE_STORE } from "@ge
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 
+import ormconfig from "./ormconfig";
+import { AppController } from "./app.controller";
 import { AuthModule } from "./auth/auth.module";
 import { CategoryModule } from "./category/category.module";
 import { HealthModule } from "./health/health.module";
@@ -25,9 +27,6 @@ import { ProfileModule } from "./profile/profile.module";
 import { PromoModule } from "./promo/promo.module";
 import { UserModule } from "./user/user.module";
 import { ValidationModule } from "./validation/validation.module";
-
-import ormconfig from "./ormconfig";
-import { AppController } from "./app.controller";
 
 @Module({
   providers: [
