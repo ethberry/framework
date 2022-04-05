@@ -216,7 +216,7 @@
     }
   },
   "snackbar": {
-    "change": "Password was successfully changed. Now you can log in using your new password.",
+    "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "error": "Unknown Error",
