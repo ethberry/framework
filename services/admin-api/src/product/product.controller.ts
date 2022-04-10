@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
@@ -48,7 +60,7 @@ export class ProductController {
   }
 
   @Delete("/:id")
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id") id: number, @User() userEntity: UserEntity): Promise<void> {
     await this.productService.delete({ id }, userEntity);
   }

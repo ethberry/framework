@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Post } from "@nestjs/common";
+import { Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Roles, User } from "@gemunion/nest-js-utils";
@@ -14,25 +14,25 @@ export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
   @Post(EmailType.WELCOME)
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public welcome(@User() userEntity: UserEntity): Promise<any> {
     return this.emailService.welcome(userEntity);
   }
 
   @Post(EmailType.EMAIL_VERIFICATION)
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public emailVerification(@User() userEntity: UserEntity): Promise<any> {
     return this.emailService.emailVerification(userEntity);
   }
 
   @Post(EmailType.FORGOT_PASSWORD)
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public forgotPassword(@User() userEntity: UserEntity): Promise<any> {
     return this.emailService.forgotPassword(userEntity);
   }
 
   @Post(EmailType.RESTORE_PASSWORD)
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public restorePassword(@User() userEntity: UserEntity): Promise<any> {
     return this.emailService.restorePassword(userEntity);
   }

@@ -1,4 +1,13 @@
-import { Body, ClassSerializerInterceptor, Controller, HttpCode, Ip, Post, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Ip,
+  Post,
+  UseInterceptors,
+} from "@nestjs/common";
 
 import { Public } from "@gemunion/nest-js-utils";
 import { IJwt } from "@gemunion/types-jwt";
@@ -23,19 +32,19 @@ export class AuthJwtController {
   constructor(private readonly authService: AuthService) {}
 
   @Post("/login")
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   public login(@Body() dto: LoginDto, @Ip() ip: string): Promise<IJwt> {
     return this.authService.login(dto, ip);
   }
 
   @Post("/refresh")
-  @HttpCode(200)
+  @HttpCode(HttpStatus.OK)
   async refreshToken(@Body() dto: RefreshDto, @Ip() ip: string): Promise<IJwt> {
     return this.authService.refresh(dto, ip);
   }
 
   @Post("/logout")
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public async logout(@Body() dto: LogoutDto): Promise<void> {
     await this.authService.logout(dto);
   }
@@ -48,25 +57,25 @@ export class AuthJwtController {
   }
 
   @Post("/forgot-password")
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public forgotPassword(@Body() dto: ForgotPasswordDto): Promise<void> {
     return this.authService.forgotPassword(dto);
   }
 
   @Post("/restore-password")
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public restorePassword(@Body() dto: RestorePasswordDto): Promise<void> {
     return this.authService.restorePassword(dto);
   }
 
   @Post("/email-verification")
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public emailVerification(@Body() dto: VerifyEmailDto): Promise<void> {
     return this.authService.emailVerification(dto);
   }
 
   @Post("/resend-email-verification")
-  @HttpCode(204)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public resendEmailVerification(@Body() dto: ResendEmailVerificationDto): Promise<void> {
     return this.authService.resendEmailVerification(dto);
   }
