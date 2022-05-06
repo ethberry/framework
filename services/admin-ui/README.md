@@ -1,4 +1,4 @@
-# UI
+# Admin UI
 
 ## Installation
 

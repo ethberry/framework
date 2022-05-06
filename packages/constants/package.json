@@ -1,11 +1,11 @@
 {
   "author": {
-    "email": "TrejGun+gemunion@gmail.com",
+    "email": "trejgun+undeads@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/framework/issues"
+    "url": "https://github.com/gemunion/undead/issues"
   },
   "dependencies": {},
   "description": "constants for validation on FE and BE",
@@ -21,13 +21,13 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/framework-constants",
+  "name": "@framework/constants",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/gemunion/undead"
   },
   "scripts": {
     "build": "tsc",

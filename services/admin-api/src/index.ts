@@ -1,20 +1,18 @@
 import { NestFactory } from "@nestjs/core";
-import { LoggerService } from "@nestjs/common";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
-import { companyName } from "@gemunion/framework-constants";
+import { companyName } from "@framework/constants";
 
 import { AppModule } from "./app.module";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const loggerService = app.get<LoggerService>(WINSTON_MODULE_NEST_PROVIDER);
-  app.useLogger(loggerService);
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
 
@@ -52,7 +50,7 @@ async function bootstrap(): Promise<void> {
   const port = configService.get<number>("PORT", 3001);
 
   await app.listen(port, host, () => {
-    loggerService.log(`API server is running on http://${host}:${port}`);
+    console.info(`API server is running on http://${host}:${port}`);
   });
 }
 

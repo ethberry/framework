@@ -1,0 +1,46 @@
+{
+  "author": {
+    "email": "trejgun+undeads@gmail.com",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/framework/issues"
+  },
+  "dependencies": {
+    "@framework/constants": "0.0.1"
+  },
+  "description": "localization for ui",
+  "devDependencies": {
+    "rimraf": "3.0.2"
+  },
+  "engines": {
+    "node": ">=12.13"
+  },
+  "files": [
+    "dist/*",
+    "i18n/*"
+  ],
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@framework/localization-market-ui",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/undeads"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist/",
+    "prepublish": "npm run build",
+    "test": "exit 0"
+  },
+  "sideEffects": false,
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}

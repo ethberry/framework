@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
-import { IOtp, OtpType } from "@gemunion/framework-types";
-import { ns } from "@gemunion/framework-constants";
+import { IOtp, OtpType } from "@framework/types";
+import { ns } from "@framework/constants";
 import { UuidBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "../user/user.entity";

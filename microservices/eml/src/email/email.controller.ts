@@ -1,8 +1,8 @@
 import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
 
-import { EmailType } from "@gemunion/framework-types";
-import { MailjetService, IEmailResult } from "@gemunion/nest-js-module-mailjet";
+import { EmailType } from "@framework/types";
+import { IEmailResult, MailjetService } from "@gemunion/nest-js-module-mailjet";
 
 import { IPayload } from "./interfaces";
 
@@ -13,7 +13,7 @@ export class EmailController {
   @EventPattern(EmailType.WELCOME)
   async welcome(@Payload() payload: IPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 3131445,
+      template: 3839701,
       to: [payload.user.email],
       data: {
         displayName: payload.user.displayName,
@@ -24,12 +24,12 @@ export class EmailController {
   @EventPattern(EmailType.EMAIL_VERIFICATION)
   async verification(@Payload() payload: IPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 3131467,
+      template: 3839684,
       to: [payload.user.email],
       data: {
         displayName: payload.user.displayName,
-        code: payload.token.uuid,
-        link: `${payload.baseUrl}/verify-email/${payload.token.uuid}`,
+        code: payload.otp.uuid,
+        link: `${payload.baseUrl}/verify-email/${payload.otp.uuid}`,
       },
     });
   }
@@ -37,12 +37,12 @@ export class EmailController {
   @EventPattern(EmailType.FORGOT_PASSWORD)
   async forgotPassword(@Payload() payload: IPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 3131473,
+      template: 3839687,
       to: [payload.user.email],
       data: {
         displayName: payload.user.displayName,
-        code: payload.token.uuid,
-        link: `${payload.baseUrl}/restore-password/${payload.token.uuid}`,
+        code: payload.otp.uuid,
+        link: `${payload.baseUrl}/restore-password/${payload.otp.uuid}`,
       },
     });
   }
@@ -50,7 +50,7 @@ export class EmailController {
   @EventPattern(EmailType.RESTORE_PASSWORD)
   async restorePassword(@Payload() payload: IPayload): Promise<IEmailResult> {
     return this.mailjetService.sendTemplate({
-      template: 3131474,
+      template: 3839688,
       to: [payload.user.email],
       data: {
         displayName: payload.user.displayName,

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Patch, Put, Res } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Put, Res } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Response } from "express";
 
@@ -6,7 +6,7 @@ import { Public, User } from "@gemunion/nest-js-utils";
 
 import { ProfileService } from "./profile.service";
 import { UserEntity } from "../user/user.entity";
-import { PasswordUpdateDto, ProfileUpdateDto } from "./dto";
+import { ProfileUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/profile")
@@ -23,12 +23,7 @@ export class ProfileController {
   }
 
   @Put("/")
-  public setProfile(@User() userEntity: UserEntity, @Body() dto: ProfileUpdateDto): Promise<UserEntity | null> {
+  public setProfile(@User() userEntity: UserEntity, @Body() dto: ProfileUpdateDto): Promise<UserEntity> {
     return this.profileService.update(userEntity, dto);
-  }
-
-  @Patch("/password")
-  public async password(@User() userEntity: UserEntity, @Body() dto: PasswordUpdateDto): Promise<void> {
-    return this.profileService.password(userEntity, dto);
   }
 }

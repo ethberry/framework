@@ -1,4 +1,4 @@
-# UI
+# Admin API
 
 ## Installation
 

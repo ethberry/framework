@@ -1,0 +1,36 @@
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+
+import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+
+import { Erc721TemplateService } from "./template.service";
+import { Erc721TemplateEntity } from "./template.entity";
+import { Erc721TemplateSearchDto } from "./dto";
+
+@Public()
+@Controller("/erc721-templates")
+export class Erc721TemplateController {
+  constructor(private readonly erc721TemplateService: Erc721TemplateService) {}
+
+  @Get("/")
+  @UseInterceptors(PaginationInterceptor)
+  public search(@Query() dto: Erc721TemplateSearchDto): Promise<[Array<Erc721TemplateEntity>, number]> {
+    return this.erc721TemplateService.search(dto);
+  }
+
+  @Get("/autocomplete")
+  public autocomplete(): Promise<Array<Erc721TemplateEntity>> {
+    return this.erc721TemplateService.autocomplete();
+  }
+
+  @Get("/new")
+  @UseInterceptors(PaginationInterceptor)
+  public getNewTemplates(): Promise<[Array<Erc721TemplateEntity>, number]> {
+    return this.erc721TemplateService.getNewTemplates();
+  }
+
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<Erc721TemplateEntity | null> {
+    return this.erc721TemplateService.findOne({ id }, { relations: ["erc721Collection"] });
+  }
+}

@@ -1,7 +1,7 @@
 import { ClientProxy, ClientProxyFactory, Transport } from "@nestjs/microservices";
 import { ConfigService } from "@nestjs/config";
 
-import { RmqProviderType } from "@gemunion/framework-types";
+import { RmqProviderType } from "@framework/types";
 
 export const emlServiceProvider = {
   provide: RmqProviderType.EML_SERVICE,

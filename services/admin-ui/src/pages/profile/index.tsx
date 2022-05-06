@@ -6,12 +6,11 @@ import { useIntl } from "react-intl";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { useUser } from "@gemunion/provider-user";
-import { ApiError, useApi } from "@gemunion/provider-api";
+import { ApiError } from "@gemunion/provider-api";
 import { FormikForm } from "@gemunion/mui-form";
-import { PhoneInput } from "@gemunion/mui-inputs-mask";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
-import { EnabledLanguages } from "@gemunion/framework-constants";
-import { IUser } from "@gemunion/framework-types";
+import { EnabledLanguages } from "@framework/constants";
+import { IUser } from "@framework/types";
 import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 
 import { validationSchema } from "./validation";
@@ -21,8 +20,6 @@ export const Profile: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const api = useApi();
-
   const onClick = (): void => {
     enqueueSnackbar("Warning! You won't be able to use this site until you confirm your new email address.", {
       variant: "info",
@@ -30,19 +27,10 @@ export const Profile: FC = () => {
   };
 
   const handleSubmit = (values: Partial<IUser>, formikBag: any): Promise<void> => {
-    return api
-      .fetchJson({
-        url: "/profile",
-        method: "PUT",
-        data: values,
-      })
-      .then((json: IUser): void => {
+    return user
+      .setProfile(values)
+      .then((): void => {
         enqueueSnackbar(formatMessage({ id: "snackbar.updated" }), { variant: "success" });
-        if (json) {
-          user.logIn(json);
-        } else {
-          user.logOut();
-        }
       })
       .catch((e: ApiError) => {
         if (e.status === 400) {
@@ -56,8 +44,8 @@ export const Profile: FC = () => {
       });
   };
 
-  const { id, email, displayName, phoneNumber, language, imageUrl } = user.profile;
-  const fixedValues = { id, email, displayName, phoneNumber, language, imageUrl };
+  const { id, email, displayName, language, imageUrl } = user.profile;
+  const fixedValues = { id, email, displayName, language, imageUrl };
 
   return (
     <Grid>
@@ -65,10 +53,14 @@ export const Profile: FC = () => {
 
       <PageHeader message="pages.profile.title" />
 
-      <FormikForm initialValues={fixedValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+      <FormikForm
+        initialValues={fixedValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        data-testid="Profile"
+      >
         <TextInput name="email" autoComplete="username" onClick={onClick} />
         <TextInput name="displayName" />
-        <PhoneInput name="phoneNumber" />
         <SelectInput name="language" options={EnabledLanguages} />
         <AvatarInput name="imageUrl" />
       </FormikForm>

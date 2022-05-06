@@ -1,9 +1,9 @@
 # Project
-dist/
-/logs/
-/data/
+**/typechain-types/
+**/artifacts/
+**/cache/
+**/dist/
 /code/
-
 
 # IDE
 .idea
@@ -25,10 +25,4 @@ yarn.lock
 .env.*
 !.env.sample
 
-# docker
-/docker-compose.production.yml
-/docker-compose.slim.yml
-
-# tokens
-token.json
-gcc_key.uu
+service-account-file.json

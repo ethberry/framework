@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { OtpType } from "@gemunion/framework-types";
+import { OtpType } from "@framework/types";
 
 import { OtpEntity } from "./otp.entity";
 import { UserEntity } from "../user/user.entity";
@@ -18,7 +18,7 @@ export class OtpService {
     return this.otpEntityRepository.findOne({ where, ...options });
   }
 
-  public async getOtp(otpType: OtpType, userEntity: UserEntity, data?: Record<string, string>): Promise<OtpEntity> {
+  public async getOtp(otpType: OtpType, userEntity: UserEntity): Promise<OtpEntity> {
     // working around https://github.com/typeorm/typeorm/issues/1090
     const otpEntity = await this.findOne({
       otpType,
@@ -33,7 +33,6 @@ export class OtpService {
         .create({
           otpType,
           user: userEntity,
-          data,
         })
         .save();
     }

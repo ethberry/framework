@@ -5,32 +5,26 @@ import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
 import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
-import { JwtLocalHttpGuard } from "@gemunion/nest-js-guards";
+import { FirebaseHttpGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
-import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
-
-import { RolesGuard } from "./common/guards";
+import { IS3Options, ISdkOptions, S3Module } from "@gemunion/nest-js-module-s3";
 
 import ormconfig from "./ormconfig";
-import { AppController } from "./app.controller";
 import { AuthModule } from "./auth/auth.module";
-import { CategoryModule } from "./category/category.module";
-import { EmailModule } from "./email/email.module";
+import { FileModule } from "./file/file.module";
 import { HealthModule } from "./health/health.module";
-import { MerchantModule } from "./merchant/merchant.module";
-import { OrderModule } from "./order/order.module";
-import { PageModule } from "./page/page.module";
-import { PhotoModule } from "./photo/photo.module";
-import { ProductModule } from "./product/product.module";
+import { Erc20Module } from "./erc20/erc20.module";
+import { Erc721Module } from "./erc721/erc721.module";
+import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ProfileModule } from "./profile/profile.module";
-import { PromoModule } from "./promo/promo.module";
 import { UserModule } from "./user/user.module";
-import { ValidationModule } from "./validation/validation.module";
+import { AppController } from "./app.controller";
+import { EmailModule } from "./email/email.module";
 
 @Module({
   providers: [
@@ -41,11 +35,7 @@ import { ValidationModule } from "./validation/validation.module";
     },
     {
       provide: APP_GUARD,
-      useClass: JwtLocalHttpGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
+      useClass: FirebaseHttpGuard,
     },
     {
       provide: APP_FILTER,
@@ -103,20 +93,16 @@ import { ValidationModule } from "./validation/validation.module";
       },
     }),
     RequestLoggerModule,
-    AuthModule,
-    CategoryModule,
-    EmailModule,
     GemunionThrottlerModule,
+    AuthModule,
+    EmailModule,
+    FileModule,
     HealthModule,
-    MerchantModule,
-    OrderModule,
-    PageModule,
-    PhotoModule,
-    ProductModule,
+    Erc20Module,
+    Erc721Module,
+    Erc1155Module,
     ProfileModule,
-    PromoModule,
     UserModule,
-    ValidationModule,
   ],
   controllers: [AppController],
 })

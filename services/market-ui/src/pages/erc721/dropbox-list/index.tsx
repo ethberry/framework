@@ -1,0 +1,78 @@
+import { FC, Fragment } from "react";
+import { FormattedMessage } from "react-intl";
+import { Button, Grid, Pagination } from "@mui/material";
+import { useParams } from "react-router";
+import { FilterList } from "@mui/icons-material";
+import { constants } from "ethers";
+
+import { ProgressOverlay } from "@gemunion/mui-progress";
+import { PageHeader } from "@gemunion/mui-page-header";
+import { Erc721DropboxStatus, IErc721Dropbox, IErc721DropboxSearchDto } from "@framework/types";
+import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
+import { useCollection } from "@gemunion/react-hooks";
+
+import { DropboxItem } from "./item";
+import { Erc721DropboxSearchForm } from "./form";
+
+export interface IErc721DropboxListProps {
+  embedded?: boolean;
+}
+
+export const Erc721DropboxList: FC<IErc721DropboxListProps> = props => {
+  const { embedded } = props;
+
+  const { id = "" } = useParams<{ id: string }>();
+
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSubmit, handleChangePage } =
+    useCollection<IErc721Dropbox, IErc721DropboxSearchDto>({
+      baseUrl: "/erc721-dropboxes",
+      embedded,
+      search: {
+        query: "",
+        erc721CollectionIds: id ? [~~id] : [],
+        dropboxStatus: [Erc721DropboxStatus.ACTIVE],
+        minPrice: constants.Zero.toString(),
+        maxPrice: constants.WeiPerEther.toString(),
+      },
+    });
+
+  return (
+    <Fragment>
+      <Breadcrumbs path={["dashboard", "erc721-dropboxes"]} isHidden={embedded} />
+
+      <PageHeader message="pages.erc721-dropboxes.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
+        </Button>
+      </PageHeader>
+
+      <Erc721DropboxSearchForm
+        onSubmit={handleSubmit}
+        initialValues={search}
+        open={isFiltersOpen}
+        embedded={embedded}
+      />
+
+      <ProgressOverlay isLoading={isLoading}>
+        <Grid container spacing={2}>
+          {rows.map(dropbox => (
+            <Grid item lg={4} sm={6} xs={12} key={dropbox.id}>
+              <DropboxItem dropbox={dropbox} />
+            </Grid>
+          ))}
+        </Grid>
+      </ProgressOverlay>
+
+      <Pagination
+        sx={{ mt: 2 }}
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
+    </Fragment>
+  );
+};

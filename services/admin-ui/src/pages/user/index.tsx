@@ -1,6 +1,5 @@
-import { ChangeEvent, FC, useState } from "react";
-import { useSnackbar } from "notistack";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FC } from "react";
+import { FormattedMessage } from "react-intl";
 import {
   Button,
   Grid,
@@ -12,221 +11,76 @@ import {
   Pagination,
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
-import { useLocation, useNavigate, useParams } from "react-router";
-import { parse, stringify } from "qs";
-import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { ProgressOverlay } from "@gemunion/mui-progress";
 import { PageHeader } from "@gemunion/mui-page-header";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ApiError, useApi } from "@gemunion/provider-api";
-import { IUser, IUserSearchDto, UserStatus } from "@gemunion/framework-types";
-import { IPaginationResult } from "@gemunion/types-collection";
-import { defaultItemsPerPage } from "@gemunion/constants";
-import { EnabledLanguages } from "@gemunion/framework-constants";
+import { IUser, IUserSearchDto, UserStatus } from "@framework/types";
 import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
+import { EnabledLanguages } from "@framework/constants";
+import { useCollection } from "@gemunion/react-hooks";
 
-import { EditUserDialog } from "./edit";
+import { UserEditDialog } from "./edit";
 import { UserSearchForm } from "./form";
 
-export const emptyUser = {
-  password: "",
-  confirm: "",
-  email: "",
-  displayName: "",
-  phoneNumber: "",
-  language: EnabledLanguages.EN,
-  imageUrl: "",
-  userStatus: UserStatus.ACTIVE,
-  userRoles: [],
-  createdAt: new Date().toISOString(),
-} as unknown as IUser;
-
 export const User: FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { enqueueSnackbar } = useSnackbar();
-  const { formatMessage } = useIntl();
-  const { id } = useParams<{ id: string }>();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
-  const [users, setUsers] = useState<Array<IUser>>([]);
-  const [count, setCount] = useState<number>(0);
-  const [selectedUser, setSelectedUser] = useState<IUser>(emptyUser);
-  const [isFiltersOpen, setIsFilterOpen] = useState(false);
-
-  const api = useApi();
-
-  const [data, setData] = useState<IUserSearchDto>({
-    skip: 0,
-    take: defaultItemsPerPage,
-    query: "",
-    userStatus: [UserStatus.ACTIVE],
-    userRoles: [],
-    ...parse(location.search.substring(1)),
+  const {
+    rows,
+    count,
+    search,
+    selected,
+    isLoading,
+    isFiltersOpen,
+    isEditDialogOpen,
+    isDeleteDialogOpen,
+    handleToggleFilters,
+    handleEdit,
+    handleEditCancel,
+    handleEditConfirm,
+    handleDelete,
+    handleDeleteCancel,
+    handleSubmit,
+    handleChangePage,
+    handleDeleteConfirm,
+  } = useCollection<IUser, IUserSearchDto>({
+    baseUrl: "/users",
+    empty: {
+      email: "",
+      displayName: "",
+      language: EnabledLanguages.EN,
+      imageUrl: "",
+      userStatus: UserStatus.ACTIVE,
+      userRoles: [],
+      createdAt: new Date().toISOString(),
+    },
+    search: {
+      query: "",
+      userStatus: [UserStatus.ACTIVE],
+      userRoles: [],
+    },
+    filter: ({ id: _id, ...rest }) => rest,
   });
-
-  const updateQS = (id?: number) => {
-    const { skip: _skip, take: _take, ...rest } = data;
-    navigate(id ? `/users/${id}` : `/users?${stringify(rest)}`);
-  };
-
-  const handleEdit = (user: IUser): (() => void) => {
-    return (): void => {
-      setSelectedUser(user);
-      setIsEditDialogOpen(true);
-      updateQS(user.id);
-    };
-  };
-
-  const fetchUsersByQuery = async (): Promise<void> => {
-    return api
-      .fetchJson({
-        url: "/users",
-        data,
-      })
-      .then((json: IPaginationResult<IUser>) => {
-        setUsers(json.rows);
-        setCount(json.count);
-        updateQS();
-      });
-  };
-
-  const fetchUsersById = async (id: string): Promise<void> => {
-    return api
-      .fetchJson({
-        url: `/users/${id}`,
-      })
-      .then((json: IUser) => {
-        setUsers([json]);
-        setCount(1);
-        handleEdit(json)();
-      });
-  };
-
-  const fetchUsers = async (id?: string): Promise<void> => {
-    setIsLoading(true);
-    return (id ? fetchUsersById(id) : fetchUsersByQuery())
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  const handleDelete = (user: IUser): (() => void) => {
-    return (): void => {
-      setSelectedUser(user);
-      setIsDeleteDialogOpen(true);
-    };
-  };
-
-  const handleDeleteCancel = (): void => {
-    setIsDeleteDialogOpen(false);
-  };
-
-  const handleEditCancel = (): void => {
-    setIsEditDialogOpen(false);
-    updateQS();
-  };
-
-  const handleDeleteConfirmed = (user: IUser): Promise<void> => {
-    return api
-      .fetchJson({
-        url: `/users/${user.id}`,
-        method: "DELETE",
-      })
-      .then(() => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.deleted" }), { variant: "success" });
-        return fetchUsers();
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsDeleteDialogOpen(false);
-      });
-  };
-
-  const handleEditConfirmed = (values: Partial<IUser>, formikBag: any): Promise<void> => {
-    const { id, ...data } = values;
-    return api
-      .fetchJson({
-        url: id ? `/users/${id}` : "/users",
-        method: id ? "PUT" : "POST",
-        data: { id, ...data },
-      })
-      .then(() => {
-        enqueueSnackbar(formatMessage({ id: id ? "snackbar.updated" : "snackbar.created" }), { variant: "success" });
-        setIsEditDialogOpen(false);
-        return fetchUsers();
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 400) {
-          formikBag.setErrors(e.getLocalizedValidationErrors());
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
-  };
-
-  const handleChangePage = (e: ChangeEvent<unknown>, page: number) => {
-    setData({
-      ...data,
-      skip: (page - 1) * data.take,
-    });
-  };
-
-  const handleSubmit = (values: IUserSearchDto): void => {
-    setData({
-      ...values,
-      skip: 0,
-      take: defaultItemsPerPage,
-    });
-  };
-
-  const toggleFilters = () => {
-    setIsFilterOpen(!isFiltersOpen);
-  };
-
-  useDeepCompareEffect(() => {
-    void fetchUsers(id);
-  }, [data]);
 
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "users"]} />
 
       <PageHeader message="pages.users.title">
-        <Button startIcon={<FilterList />} onClick={toggleFilters}>
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
         </Button>
       </PageHeader>
 
-      <UserSearchForm onSubmit={handleSubmit} initialValues={data} open={isFiltersOpen} />
+      <UserSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {users.map((user, i) => (
+          {rows.map((user, i) => (
             <ListItem key={i}>
-              <ListItemText>
-                {user.displayName}
-              </ListItemText>
+              <ListItemText>{user.displayName}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(user)}>
                   <Create />
@@ -243,24 +97,24 @@ export const User: FC = () => {
       <Pagination
         sx={{ mt: 2 }}
         shape="rounded"
-        page={data.skip / data.take + 1}
-        count={Math.ceil(count / data.take)}
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
 
       <DeleteDialog
         onCancel={handleDeleteCancel}
-        onConfirm={handleDeleteConfirmed}
+        onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={selectedUser}
+        initialValues={selected}
         getTitle={(user: IUser) => user.displayName}
       />
 
-      <EditUserDialog
+      <UserEditDialog
         onCancel={handleEditCancel}
-        onConfirm={handleEditConfirmed}
+        onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
-        initialValues={selectedUser}
+        initialValues={selected}
       />
     </Grid>
   );

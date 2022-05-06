@@ -1,10 +1,10 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
-import { IsEmail, IsEnum, IsOptional, IsString, MaxLength, MinLength } from "class-validator";
+import { IsEmail, IsEnum, IsOptional, IsString, IsUrl, MaxLength, MinLength } from "class-validator";
 
-import { emailMaxLength, displayNameMaxLength, displayNameMinLength } from "@gemunion/constants";
-import { EnabledLanguages } from "@gemunion/framework-constants";
-import { IUserCommonDto } from "@gemunion/framework-types";
+import { displayNameMaxLength, displayNameMinLength, emailMaxLength } from "@gemunion/constants";
+import { EnabledLanguages } from "@framework/constants";
+import { IUserCommonDto } from "@framework/types";
 
 export class UserCommonDto implements IUserCommonDto {
   @ApiPropertyOptional({
@@ -21,6 +21,7 @@ export class UserCommonDto implements IUserCommonDto {
     type: String,
   })
   @IsOptional()
+  @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 

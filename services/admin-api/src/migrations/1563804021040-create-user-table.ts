@@ -1,22 +1,20 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants";
+import { ns } from "@framework/constants";
 
 export class CreateUserTable1563804021040 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.user_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE',
-        'PENDING'
+        'INACTIVE'
       );
     `);
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.user_role_enum AS ENUM (
-        'CUSTOMER',
-        'ADMIN',
-        'MERCHANT'
+        'USER',
+        'ADMIN'
       );
     `);
 
@@ -29,32 +27,23 @@ export class CreateUserTable1563804021040 implements MigrationInterface {
           isPrimary: true,
         },
         {
+          name: "sub",
+          type: "varchar",
+        },
+        {
           name: "display_name",
           type: "varchar",
+          isNullable: true,
         },
         {
           name: "email",
           type: "varchar",
-          isUnique: true,
-        },
-        {
-          name: "password",
-          type: "varchar",
-        },
-        {
-          name: "phone_number",
-          type: "varchar",
-          default: "''",
+          isNullable: true,
         },
         {
           name: "image_url",
           type: "varchar",
           default: "''",
-        },
-        {
-          name: "merchant_id",
-          type: "int",
-          isNullable: true,
         },
         {
           name: "comment",
@@ -75,20 +64,17 @@ export class CreateUserTable1563804021040 implements MigrationInterface {
           isArray: true,
         },
         {
+          name: "wallet",
+          type: "varchar",
+          isNullable: true,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
         {
           name: "updated_at",
           type: "timestamptz",
-        },
-      ],
-      foreignKeys: [
-        {
-          columnNames: ["merchant_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.merchant`,
-          onDelete: "CASCADE",
         },
       ],
     });

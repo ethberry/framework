@@ -1,8 +1,8 @@
-import { IToken, IUser } from "@gemunion/framework-types";
+import { IOtp, IUser } from "@framework/types";
 
 export interface IPayload {
   user: IUser;
-  token: IToken;
+  otp: IOtp;
   baseUrl: string;
   [key: string]: any;
 }

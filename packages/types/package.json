@@ -1,12 +1,13 @@
 {
   "author": {
-    "email": "TrejGun+gemunion@gmail.com",
+    "email": "trejgun+undeads@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "@gemunion/framework-constants": "0.0.1",
-    "@gemunion/types-collection": "1.2.0"
+    "@gemunion/types-collection": "1.1.2",
+    "@framework/constants": "0.0.1",
+    "ethers": "5.6.5"
   },
   "devDependencies": {
     "rimraf": "3.0.2"
@@ -16,7 +17,7 @@
   ],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/framework-types",
+  "name": "@framework/types",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

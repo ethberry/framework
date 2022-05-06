@@ -3,45 +3,45 @@ import { Navigate, Route, Routes } from "react-router";
 import { SnackbarProvider } from "notistack";
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
-import { i18n } from "@gemunion/framework-localization-admin-ui";
-import { GemunionThemeProvider } from "@gemunion/provider-theme";
-import { LicenseProvider } from "@gemunion/provider-license";
-import { history } from "@gemunion/history";
+import { i18n } from "@framework/localization-admin-ui";
 import { UserProvider } from "@gemunion/provider-user";
 import { SettingsProvider } from "@gemunion/provider-settings";
+import { GemunionThemeProvider } from "@gemunion/provider-theme";
+import { LicenseProvider } from "@gemunion/provider-license";
 import { LocalizationProvider } from "@gemunion/provider-localization";
+import { WalletProvider } from "@gemunion/provider-wallet";
 import { ApiProvider } from "@gemunion/provider-api";
-import { PickerProvider } from "@gemunion/provider-picker";
-import { EnabledLanguages } from "@gemunion/framework-constants";
+import { EnabledLanguages } from "@framework/constants";
+import { history } from "@gemunion/history";
 import {
   Error,
   ForgotPassword,
   Message,
-  Protected,
   Registration,
   ResendVerificationEmail,
   RestorePassword,
-  SocialLogin,
   VerifyEmail,
 } from "@gemunion/common-pages";
+import { FirebaseLogin, Protected } from "@gemunion/firebase-login";
 
 import { Landing } from "./landing";
-
-import { Category } from "./category";
 import { Dashboard } from "./dashboard";
-import { Email } from "./email";
-import { Merchant } from "./merchant";
-import { Order } from "./order";
-import { Page } from "./page";
-import { Photo } from "./photo";
-import { Product } from "./product";
 import { Profile } from "./profile";
-import { Promo } from "./promo";
 import { User } from "./user";
+import { Erc20Token } from "./erc20/token";
+import { Erc721Collection } from "./erc721/collection";
+import { Erc721Template } from "./erc721/template";
+import { Erc721Token } from "./erc721/token";
+import { Erc721Airdrop } from "./erc721/airdrop";
+import { Erc721Dropbox } from "./erc721/dropbox";
+import { Erc1155Collection } from "./erc1155/collection";
+import { Erc1155Token } from "./erc1155/token";
+import { Erc1155Recipes } from "./erc1155/recipe";
+import { Blockchain } from "./blockchain";
 
 import { Layout } from "../components/common/layout";
 
-export const App: FC = () => {
+const App: FC = () => {
   return (
     <HistoryRouter history={history}>
       <ApiProvider baseUrl={process.env.BE_URL}>
@@ -50,13 +50,13 @@ export const App: FC = () => {
             <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
               <GemunionThemeProvider>
                 <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
-                  <SnackbarProvider>
-                    <PickerProvider>
+                  <WalletProvider>
+                    <SnackbarProvider>
                       <Routes>
                         <Route element={<Layout />}>
                           <Route path="/" element={<Landing />} />
 
-                          <Route path="/login" element={<SocialLogin />} />
+                          <Route path="/login" element={<FirebaseLogin />} />
                           <Route path="/registration" element={<Registration />} />
                           <Route path="/restore-password/:token" element={<RestorePassword />} />
                           <Route path="/verify-email/:token" element={<VerifyEmail />} />
@@ -68,6 +68,15 @@ export const App: FC = () => {
                             element={
                               <Protected>
                                 <Dashboard />
+                              </Protected>
+                            }
+                          />
+
+                          <Route
+                            path="/blockchain"
+                            element={
+                              <Protected>
+                                <Blockchain />
                               </Protected>
                             }
                           />
@@ -107,121 +116,171 @@ export const App: FC = () => {
                           />
 
                           <Route
-                            path="/products"
+                            path="/erc721-collections"
                             element={
                               <Protected>
-                                <Product />
+                                <Erc721Collection />
                               </Protected>
                             }
                           />
                           <Route
-                            path="/products/:id"
+                            path="/erc721-collections/:id"
                             element={
                               <Protected>
-                                <Product />
-                              </Protected>
-                            }
-                          />
-
-                          <Route
-                            path="/merchants"
-                            element={
-                              <Protected>
-                                <Merchant />
-                              </Protected>
-                            }
-                          />
-                          <Route
-                            path="/merchants/:id"
-                            element={
-                              <Protected>
-                                <Merchant />
+                                <Erc721Collection />
                               </Protected>
                             }
                           />
 
                           <Route
-                            path="/categories"
+                            path="/erc20-tokens"
                             element={
                               <Protected>
-                                <Category />
+                                <Erc20Token />
                               </Protected>
                             }
                           />
                           <Route
-                            path="/categories/:id"
+                            path="/erc20-tokens/:id"
                             element={
                               <Protected>
-                                <Category />
-                              </Protected>
-                            }
-                          />
-
-                          <Route
-                            path="/promos"
-                            element={
-                              <Protected>
-                                <Promo />
-                              </Protected>
-                            }
-                          />
-                          <Route
-                            path="/promos/:id"
-                            element={
-                              <Protected>
-                                <Promo />
+                                <Erc20Token />
                               </Protected>
                             }
                           />
 
                           <Route
-                            path="/orders"
+                            path="/erc721-templates"
                             element={
                               <Protected>
-                                <Order />
+                                <Erc721Template />
                               </Protected>
                             }
                           />
                           <Route
-                            path="/orders/:id"
+                            path="/erc721-templates/:id"
                             element={
                               <Protected>
-                                <Order />
-                              </Protected>
-                            }
-                          />
-
-                          <Route
-                            path="/pages"
-                            element={
-                              <Protected>
-                                <Page />
-                              </Protected>
-                            }
-                          />
-                          <Route
-                            path="/pages/:id"
-                            element={
-                              <Protected>
-                                <Page />
+                                <Erc721Template />
                               </Protected>
                             }
                           />
 
                           <Route
-                            path="/photos"
+                            path="/erc721-dropboxes"
                             element={
                               <Protected>
-                                <Photo />
+                                <Erc721Dropbox />
+                              </Protected>
+                            }
+                          />
+                          <Route
+                            path="/erc721-dropboxes/:id"
+                            element={
+                              <Protected>
+                                <Erc721Dropbox />
                               </Protected>
                             }
                           />
 
                           <Route
-                            path="/emails"
+                            path="/erc721-airdrops"
                             element={
                               <Protected>
-                                <Email />
+                                <Erc721Airdrop />
+                              </Protected>
+                            }
+                          />
+                          <Route
+                            path="/erc721-airdrops/:id"
+                            element={
+                              <Protected>
+                                <Erc721Airdrop />
+                              </Protected>
+                            }
+                          />
+
+                          <Route
+                            path="/erc721-tokens"
+                            element={
+                              <Protected>
+                                <Erc721Token />
+                              </Protected>
+                            }
+                          />
+                          <Route
+                            path="/erc721-tokens/:id"
+                            element={
+                              <Protected>
+                                <Erc721Token />
+                              </Protected>
+                            }
+                          />
+
+                          <Route
+                            path="/erc721-tokens"
+                            element={
+                              <Protected>
+                                <Erc721Token />
+                              </Protected>
+                            }
+                          />
+                          <Route
+                            path="/erc721-tokens/:id"
+                            element={
+                              <Protected>
+                                <Erc721Token />
+                              </Protected>
+                            }
+                          />
+
+                          <Route
+                            path="/erc1155-collections"
+                            element={
+                              <Protected>
+                                <Erc1155Collection />
+                              </Protected>
+                            }
+                          />
+                          <Route
+                            path="/erc1155-collections/:id"
+                            element={
+                              <Protected>
+                                <Erc1155Collection />
+                              </Protected>
+                            }
+                          />
+
+                          <Route
+                            path="/erc1155-tokens"
+                            element={
+                              <Protected>
+                                <Erc1155Token />
+                              </Protected>
+                            }
+                          />
+                          <Route
+                            path="/erc1155-tokens/:id"
+                            element={
+                              <Protected>
+                                <Erc1155Token />
+                              </Protected>
+                            }
+                          />
+
+                          <Route
+                            path="/erc1155-recipes"
+                            element={
+                              <Protected>
+                                <Erc1155Recipes />
+                              </Protected>
+                            }
+                          />
+                          <Route
+                            path="/erc1155-recipes/:id"
+                            element={
+                              <Protected>
+                                <Erc1155Recipes />
                               </Protected>
                             }
                           />
@@ -232,8 +291,8 @@ export const App: FC = () => {
                           <Route path="*" element={<Navigate to="/message/page-not-found" />} />
                         </Route>
                       </Routes>
-                    </PickerProvider>
-                  </SnackbarProvider>
+                    </SnackbarProvider>
+                  </WalletProvider>
                 </LocalizationProvider>
               </GemunionThemeProvider>
             </SettingsProvider>

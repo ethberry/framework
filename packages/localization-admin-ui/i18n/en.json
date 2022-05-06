@@ -10,14 +10,18 @@
       },
       "menu": {
         "catalog": "Catalog",
+        "collection": "Collection",
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
-        "merchant": "Merchant",
         "profile": "Profile"
       },
       "theme": {
         "switch": "Switch theme"
+      },
+      "wallet": {
+        "connect": "Connect wallet",
+        "menu": "Account"
       }
     }
   },
@@ -25,48 +29,68 @@
     "add": "Add",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
-    "edit": "Edit"
+    "edit": "Edit",
+    "view": "View"
   },
   "enums": {
-    "emailType": {
-      "EMAIL_VERIFICATION": "Email Verification",
-      "FORGOT_PASSWORD": "Forgot password",
-      "RESTORE_PASSWORD": "Restore password",
-      "WELCOME": "Welcome"
+    "airdropStatus": {
+      "NEW": "New",
+      "REDEEMED": "Redeemed",
+      "UNPACKED": "Unpacked"
+    },
+    "collectionStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "collectionType": {
+      "AIRDROP": "Airdrop",
+      "DROPBOX": "Dropbox",
+      "TOKEN": "Token"
+    },
+    "dropboxStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
-    "merchantStatus": {
+    "rarity": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon",
+      "UNKNOWN": "Unknown"
+    },
+    "recipeStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
-      "PENDING": "Pending"
-    },
-    "orderStatus": {
-      "CANCELED": "CANCELED",
-      "CLOSED": "Closed",
       "NEW": "New"
     },
-    "pageStatus": {
+    "templateStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "productStatus": {
+    "tokenStatus": {
+      "BURNED": "Burned",
+      "MINTED": "Minted",
+      "NEW": "New",
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
     "userRoles": {
       "ADMIN": "Admin",
-      "CUSTOMER": "Customer",
-      "MERCHANT": "Merchant"
+      "CUSTOMER": "Customer"
     },
     "userStatus": {
       "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "PENDING": "Pending email verification"
+      "INACTIVE": "Inactive"
     }
+  },
+  "errors": {
+    "page-not-found": "Page Not Found"
   },
   "form": {
     "buttons": {
@@ -75,16 +99,19 @@
       "cancel": "Cancel",
       "create": "Create",
       "delete": "Delete",
+      "disconnect": "Disconnect",
       "empty": "\uFEFF",
-      "facebook": "Facebook",
       "forgot": "Forgot password?",
-      "google": "Google",
       "hideFilters": "Hide filters",
+      "load": "Load",
+      "loaded": "Done",
       "login": "Login",
       "logout": "Logout",
+      "mint": "Mint",
       "ok": "Ok",
       "reject": "Reject",
       "save": "Save",
+      "search": "Search",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "submit": "Submit",
@@ -95,9 +122,14 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "address": "Address",
+      "airdropStatus": "Status",
       "amount": "Amount",
-      "building": "Building",
-      "categoryIds": "Categories",
+      "attributes": "Attributes",
+      "collectionId": "Collection",
+      "collectionIds": "Collections",
+      "collectionStatus": "Status",
+      "collectionType": "Type",
       "comment": "Comment",
       "confirm": "Confirm",
       "createdAt": "Created",
@@ -106,27 +138,37 @@
       "dateTime": "Date time",
       "description": "Description",
       "displayName": "Display name",
+      "dropboxStatus": "Status",
       "email": "Email",
+      "erc1155CollectionId": "Collections",
+      "erc1155CollectionIds": "Collections",
+      "erc1155TokenId": "Token",
+      "erc1155TokenIds": "Token",
+      "erc20TokenId": "Token",
+      "erc20TokenIds": "Token",
+      "erc721CollectionId": "Collections",
+      "erc721CollectionIds": "Collections",
+      "erc721TemplateId": "Template",
+      "erc721TemplateIds": "Template",
+      "erc721TokenId": "Token",
+      "erc721TokenIds": "Token",
       "imageUrl": "Avatar",
+      "ingredients": "Ingredients",
       "item": "Item",
       "items": "Items",
       "language": "Language",
-      "merchantId": "Merchant",
-      "merchantStatus": "Status",
       "name": "Name",
-      "orderStatus": "Status",
-      "pageStatus": "Status",
-      "parentId": "Parent",
+      "owner": "Owner",
       "password": "Password",
-      "phoneNumber": "Phone number",
-      "photos": "Photos",
       "price": "Price",
-      "priceCorrection": "Price correction",
-      "productId": "Product",
-      "productStatus": "Status",
-      "slug": "Slug",
-      "time": "Time",
+      "rarity": "Rarity",
+      "recipeStatus": "Status",
+      "royalty": "Royalty",
+      "symbol": "Symbol",
+      "templateStatus": "Status",
       "title": "Title",
+      "tokenId": "Token",
+      "tokenStatus": "Status",
       "type": "Type",
       "updatedAt": "Updated",
       "url": "Url",
@@ -137,8 +179,11 @@
       "year": "Year"
     },
     "placeholders": {
+      "address": "0x...",
       "amount": "10",
-      "categoryIds": "Root",
+      "attributes": "[]",
+      "collectionId": "Lootbox",
+      "collectionIds": "Lootbox",
       "comment": "Fraud",
       "confirm": "******",
       "createdAt": "now",
@@ -147,31 +192,44 @@
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
       "entrance": "2",
+      "erc1155CollectionId": "Collections",
+      "erc1155CollectionIds": "Collections",
+      "erc1155TokenId": "Token",
+      "erc1155TokenIds": "Token",
+      "erc20TokenId": "Token",
+      "erc20TokenIds": "Token",
+      "erc721CollectionId": "Collections",
+      "erc721CollectionIds": "Collections",
+      "erc721TemplateId": "Template",
+      "erc721TemplateIds": "Template",
+      "erc721TokenId": "Token",
+      "erc721TokenIds": "Token",
       "item": "Bottle of water",
-      "merchantId": "Gordon Freeman",
       "name": "Pink dust",
       "number": "100500",
-      "parentId": "Root",
+      "owner": "0x...",
       "password": "******",
-      "phoneNumber": "+62 (812) 9999 99-99",
       "price": "1000",
       "priceCorrection": "0",
-      "productId": "Bottle of water",
-      "productStatus": "Status",
       "query": "Search...",
+      "rarity": "Legendary",
+      "royalty": "1",
       "search": "Search...",
       "slug": "about-us",
+      "symbol": "XXX",
       "text": "qwerty",
       "title": "Title",
+      "tokenId": "Bottle of water",
+      "tokenStatus": "Status",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
-      "userIds": "Gordon Freeman",
-      "year": "2010"
+      "userIds": "Gordon Freeman"
     },
     "tips": {
       "add": "Add",
       "delete": "Delete",
-      "edit": "Edit"
+      "edit": "Edit",
+      "view": "View"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -181,12 +239,6 @@
       "patternMismatch": "{label} does not match expected pattern",
       "rangeOverflow": "{label} is too high",
       "rangeUnderflow": "{label} is too low",
-      "recaptchaBadRequest": "The request is invalid or malformed.",
-      "recaptchaInvalidInputResponse": "The response parameter is invalid or malformed.",
-      "recaptchaInvalidInputSecret": "The secret parameter is invalid or malformed.",
-      "recaptchaMissingInputResponse": "The response parameter is missing.",
-      "recaptchaMissingInputSecret": "The secret parameter is missing.",
-      "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
       "stepMismatch": "{label} is invalid",
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
@@ -198,91 +250,123 @@
     }
   },
   "messages": {
-    "email-successful": "Email was successfully changed. Verification link was sent to your new email address.",
-    "forgot-successful": "Message with password change instructions was sent to your email.",
-    "page-not-found": "Page Not Found",
-    "registration-successful": "Your account was successfully registered. Please verify your email to activate account. Verification link was sent to your email address.",
-    "resend-successful": "Email with verification link was re-sent to your new email address."
+    "page-not-found": "Page Not Found"
   },
   "pages": {
-    "category": {
-      "title": "Categories"
+    "blockchain": {
+      "title": "Blockchain Settings"
     },
     "dashboard": {
-      "categories": "Categories",
-      "emails": "Emails",
-      "merchants": "Merchants",
-      "orders": "Orders",
-      "pages": "Pages",
-      "photos": "Photos",
-      "products": "Products",
-      "promos": "Promos",
+      "admin": {
+        "title": "Admin",
+        "users": "Users"
+      },
+      "settings": {
+        "blockchain": "Blockchain settings"
+      },
       "title": "Dashboard",
-      "users": "Users"
+      "tokens": {
+        "erc1155-collections": "ERC1155 Collections",
+        "erc1155-recipes": "ERC1155 Recipes",
+        "erc20-tokens": "ERC20 Tokens",
+        "erc1155-tokens": "ERC1155 Tokens",
+        "erc721-airdrop": "ERC721 Airdrop",
+        "erc721-collections": "ERC721 Collections",
+        "erc721-dropbox": "ERC721 Dropbox",
+        "erc721-templates": "ERC721 Templates",
+        "erc721-tokens": "ERC721 Tokens",
+        "title": "Tokens"
+      }
     },
-    "emails": {
-      "title": "Emails"
+    "erc1155-collections": {
+      "title": "ERC1155 Collections"
+    },
+    "erc1155-craft": {
+      "title": "ERC1155 Recipes"
+    },
+    "erc1155-recipes": {
+      "title": "ERC1155 Recipes",
+      "upload": "Upload recipe",
+      "activate": "Activate recipe",
+      "deactivate": "Deactivate recipes"
+    },
+    "erc1155-tokens": {
+      "title": "ERC1155 Tokens"
+    },
+    "erc20-tokens": {
+      "title": "ERC20 Tokens",
+      "snapshot": "Make snapshot"
+    },
+    "erc721-airdrops": {
+      "title": "ERC721 Airdrop"
+    },
+    "erc721-collections": {
+      "title": "ERC721 Collections",
+      "royalty": "Royalty"
+    },
+    "erc721-dropboxes": {
+      "title": "ERC721 Dropbox"
+    },
+    "erc721-templates": {
+      "title": "ERC721 Templates"
+    },
+    "erc721-tokens": {
+      "title": "Tokens",
+      "view": {
+        "attributes": "Attributes",
+        "description": "Description",
+        "imageUrl": "Image",
+        "title": "Title"
+      }
     },
     "guest": {
-      "authorize": "Authorize",
       "forgotPassword": "Forgot password",
-      "greetings": "Hi, {fullName}!",
-      "login": "Login",
-      "registration": "Sign up",
-      "request": "{clientName} is requesting access to your account",
-      "resendVerificationEmail": "Resend verification email",
-      "restorePassword": "Restore password"
-    },
-    "merchants": {
-      "title": "Merchants"
-    },
-    "orders": {
-      "title": "Orders"
-    },
-    "pages": {
-      "title": "Pages"
-    },
-    "photos": {
-      "title": "Photos"
-    },
-    "products": {
-      "title": "Products"
+      "login": "Login"
     },
     "profile": {
       "title": "Profile"
     },
-    "promos": {
-      "title": "Promos"
-    },
-    "test": {
-      "title": "Test page"
+    "recipes": {
+      "title": "Craft"
     },
     "users": {
       "title": "Users"
     }
   },
   "snackbar": {
-    "change": "Password was successfully changed. Now you can log in using your new password.",
-    "created": "Successfully saved",
+    "active": "Successfully activated",
+    "approved": "Successfully approved",
+    "collectionNotFound": "Collection not found",
+    "created": "Successfully created",
+    "declined": "Declined!",
     "deleted": "Successfully deleted",
+    "denied": "Denied by user",
+    "deployed": "Successfully deployed",
     "duplicateEmail": "User with this email already registered",
-    "duplicateSlug": "Page with this slug already exists",
-    "email": "Email was successfully sent.",
+    "email": "Email successfully sent.",
     "error": "Unknown Error",
+    "inactive": "Successfully inactivated",
     "insufficientPermissions": "Insufficient permissions",
     "internalServerError": "Internal Server Error",
-    "merchantNotFound": "Merchant not found",
+    "invite": "Successfully invited",
+    "loaded": "Successfully loaded",
     "pageNotFound": "API error",
-    "passwordsAreIdentical": "Passwords are identical",
-    "productNotFound": "Product not found",
-    "token": "Token has expired. You can request new one",
-    "tokenNotFound": "Token not found",
+    "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
+    "recaptchaBadRequest": "The request is invalid or malformed.",
+    "recaptchaInvalidInputResponse": "The response parameter is invalid or malformed.",
+    "recaptchaInvalidInputSecret": "The secret parameter is invalid or malformed.",
+    "recaptchaMissingInputResponse": "The response parameter is missing.",
+    "recaptchaMissingInputSecret": "The secret parameter is missing.",
+    "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
+    "saved": "Successfully saved",
+    "success": "Success",
+    "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
     "userNotFound": "User not found",
-    "verification": "Email was successfully verified."
+    "walletIsNotConnected": "Wallet is not connected"
   }
 }

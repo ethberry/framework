@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 
-import { EmailType, RmqProviderType, OtpType } from "@gemunion/framework-types";
+import { EmailType, OtpType, RmqProviderType } from "@framework/types";
 
 import { UserEntity } from "../user/user.entity";
 import { OtpService } from "../otp/otp.service";
@@ -26,24 +26,24 @@ export class EmailService {
   }
 
   public async emailVerification(userEntity: UserEntity): Promise<any> {
-    const tokenEntity = await this.otpService.getOtp(OtpType.EMAIL, userEntity);
+    const otpEntity = await this.otpService.getOtp(OtpType.EMAIL, userEntity);
 
     return this.emailClientProxy
       .emit(EmailType.EMAIL_VERIFICATION, {
         user: userEntity,
-        token: tokenEntity,
+        otp: otpEntity,
         baseUrl: this.configService.get<string>("ADMIN_FE_URL", "http://localhost:3002"),
       })
       .toPromise();
   }
 
   public async forgotPassword(userEntity: UserEntity): Promise<any> {
-    const tokenEntity = await this.otpService.getOtp(OtpType.PASSWORD, userEntity);
+    const otpEntity = await this.otpService.getOtp(OtpType.PASSWORD, userEntity);
 
     return this.emailClientProxy
       .emit(EmailType.FORGOT_PASSWORD, {
         user: userEntity,
-        token: tokenEntity,
+        otp: otpEntity,
         baseUrl: this.configService.get<string>("ADMIN_FE_URL", "http://localhost:3002"),
       })
       .toPromise();

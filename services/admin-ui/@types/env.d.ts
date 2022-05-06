@@ -6,6 +6,8 @@ declare global {
       HOST: string;
       BE_URL: string;
       GEMUNION_API_KEY: string;
+      ERC20_COIN: string;
+      ERC1155_CRAFT_ADDR: string;
     }
   }
 }

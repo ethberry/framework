@@ -1,14 +1,14 @@
 {
   "author": {
-    "email": "TrejGun+gemunion@gmail.com",
+    "email": "trejgun+undeads@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/framework/issues"
+    "url": "https://github.com/gemunion/undead/issues"
   },
   "dependencies": {
-    "@gemunion/framework-constants": "0.0.1"
+    "@framework/constants": "0.0.1"
   },
   "description": "localization for ui",
   "devDependencies": {
@@ -24,13 +24,13 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/framework-localization-admin-ui",
+  "name": "@framework/localization-admin-ui",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/gemunion/undead"
   },
   "scripts": {
     "build": "tsc",

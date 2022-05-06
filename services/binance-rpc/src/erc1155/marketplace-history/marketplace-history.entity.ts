@@ -1,0 +1,38 @@
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+
+import { ns } from "@framework/constants";
+import {
+  Erc1155MarketplaceEventType,
+  IErc1155MarketplaceHistory,
+  IErc1155MarketplaceRedeemSingle,
+  TErc1155MarketplaceEventData,
+} from "@framework/types";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { Erc1155TokenEntity } from "../token/token.entity";
+
+@Entity({ schema: ns, name: "erc1155_marketplace_history" })
+export class Erc1155MarketplaceHistoryEntity extends IdBaseEntity implements IErc1155MarketplaceHistory {
+  @Column({ type: "varchar" })
+  public address: string;
+
+  @Column({ type: "varchar" })
+  public transactionHash: string;
+
+  @Column({
+    type: "enum",
+    enum: Erc1155MarketplaceEventType,
+  })
+  public eventType: Erc1155MarketplaceEventType;
+
+  @Column({
+    type: "json",
+  })
+  public eventData: TErc1155MarketplaceEventData | IErc1155MarketplaceRedeemSingle;
+
+  @Column({ type: "int", nullable: true })
+  public erc1155TokenId: number | null;
+
+  @JoinColumn()
+  @ManyToOne(_type => Erc1155TokenEntity)
+  public erc1155Token?: Erc1155TokenEntity;
+}

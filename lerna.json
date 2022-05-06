@@ -1,4 +1,4 @@
 {
-  "packages": ["packages/*", "services/*", "microservices/*"],
+  "packages": ["packages/*", "services/*", "microservices/*", "contracts/*"],
   "version": "independent"
 }

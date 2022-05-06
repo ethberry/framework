@@ -1,0 +1,50 @@
+import { FC } from "react";
+
+import { FormDialog } from "@gemunion/mui-dialog-form";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { RichTextEditor } from "@gemunion/mui-inputs-draft";
+import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
+import { Erc721CollectionStatus, Erc721CollectionType, IErc721Collection } from "@framework/types";
+
+import { validationSchema } from "./validation";
+
+export interface IEditErc721CollectionDialogProps {
+  open: boolean;
+  onCancel: () => void;
+  onConfirm: (values: Partial<IErc721Collection>, formikBag: any) => Promise<void>;
+  initialValues: IErc721Collection;
+}
+
+export const Erc721CollectionEditDialog: FC<IEditErc721CollectionDialogProps> = props => {
+  const { initialValues, ...rest } = props;
+
+  const { id, title, description, imageUrl, collectionStatus, collectionType, address = "" } = initialValues;
+  const fixedValues = {
+    id,
+    title,
+    description,
+    collectionStatus,
+    collectionType,
+    imageUrl,
+    address,
+  };
+
+  const message = id ? "dialogs.edit" : "dialogs.add";
+
+  return (
+    <FormDialog
+      initialValues={fixedValues}
+      validationSchema={validationSchema}
+      message={message}
+      {...rest}
+      data-testid="Erc721CollectionEditDialog"
+    >
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
+      <TextInput name="address" readOnly />
+      <SelectInput name="collectionStatus" options={Erc721CollectionStatus} readOnly />
+      <SelectInput name="collectionType" options={Erc721CollectionType} readOnly />
+      <AvatarInput name="imageUrl" />
+    </FormDialog>
+  );
+};

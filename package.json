@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "TrejGun+gemunion@gmail.com",
+    "email": "trejgun+undeads@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
@@ -8,18 +8,18 @@
     "lerna": "4.0.0"
   },
   "devDependencies": {
-    "@gemunion/eslint-config": "1.0.5",
+    "@gemunion/eslint-config": "2.0.1",
     "@types/node": "16.11.33",
     "@types/react": "17.0.44",
     "@typescript-eslint/eslint-plugin": "5.22.0",
     "@typescript-eslint/parser": "5.22.0",
-    "eslint": "7.32.0",
+    "eslint": "8.14.0",
     "eslint-config-prettier": "8.5.0",
-    "eslint-config-standard": "16.0.3",
+    "eslint-config-standard": "17.0.0",
     "eslint-import-resolver-typescript": "2.7.1",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "26.1.5",
-    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-n": "15.2.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-react": "7.29.4",
@@ -33,11 +33,11 @@
     "node": ">=12.13"
   },
   "license": "UNLICENSED",
-  "name": "@gemunion/framework-root",
+  "name": "@framework/root",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/framework"
+    "url": "https://github.com/gemunion/undead"
   },
   "scripts": {
     "bootstrap": "lerna bootstrap --hoist",
@@ -49,14 +49,14 @@
     "installdep": "sh scripts/install.sh",
     "kill": "sudo pkill -9 node",
     "lint": "lerna run lint --stream",
-    "migration": "lerna exec --scope @gemunion/framework-admin-api -- npm run migration:run",
+    "migration": "lerna exec --scope @framework/admin-api -- npm run migration:run",
     "precommit": "lint-staged",
     "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" \"microservices/**/*.{ts,tsx}\" --write",
     "registry": "lerna publish",
     "release": "lerna publish --exact --conventional-commits --registry=https://npm.pkg.github.com/",
     "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
-    "start": "lerna exec --parallel --scope @gemunion/framework-admin-api --scope @gemunion/framework-public-api --scope @gemunion/framework-admin-ui --scope @gemunion/framework-public-ui --scope @gemunion/framework-tpl --scope @gemunion/framework-pdf --scope @gemunion/framework-eml -- npm start",
-    "start:prod": "lerna exec --parallel --scope @gemunion/framework-admin-api --scope @gemunion/framework-public-api --scope @gemunion/framework-tpl --scope @gemunion/framework-pdf --scope @gemunion/framework-eml -- npm run start:prod",
+    "start": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/admin-ui --scope @framework/public-ui --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm start",
+    "start:prod": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm run start:prod",
     "test": "sh scripts/test.sh"
   },
   "version": "0.0.1"

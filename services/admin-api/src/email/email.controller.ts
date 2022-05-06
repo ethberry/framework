@@ -1,14 +1,13 @@
 import { Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { Roles, User } from "@gemunion/nest-js-utils";
-import { EmailType, UserRole } from "@gemunion/framework-types";
+import { User } from "@gemunion/nest-js-utils";
+import { EmailType } from "@framework/types";
 
 import { EmailService } from "./email.service";
 import { UserEntity } from "../user/user.entity";
 
 @ApiBearerAuth()
-@Roles(UserRole.ADMIN)
 @Controller("/emails")
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}

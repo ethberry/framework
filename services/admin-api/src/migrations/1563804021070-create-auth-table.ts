@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-import { ns } from "@gemunion/framework-constants";
+import { ns } from "@framework/constants";
 
 export class CreateAuthTable1563804021070 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {

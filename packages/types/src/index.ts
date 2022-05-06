@@ -1,5 +1,5 @@
 export * from "./dto";
-export * from "./entity";
-export * from "./eth";
+export * from "./entities";
 export * from "./redis";
+export * from "./eth";
 export * from "./rmq";

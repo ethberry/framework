@@ -5,9 +5,8 @@ import { useSnackbar } from "notistack";
 
 import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EnabledLanguages } from "@gemunion/framework-constants";
-import { IUser, UserRole, UserStatus } from "@gemunion/framework-types";
-import { PhoneInput } from "@gemunion/mui-inputs-mask";
+import { EnabledLanguages } from "@framework/constants";
+import { IUser, UserRole, UserStatus } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 
 import { validationSchema } from "./validation";
@@ -19,7 +18,7 @@ export interface IEditUserDialogProps {
   initialValues: IUser;
 }
 
-export const EditUserDialog: FC<IEditUserDialogProps> = props => {
+export const UserEditDialog: FC<IEditUserDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { enqueueSnackbar } = useSnackbar();
@@ -30,13 +29,12 @@ export const EditUserDialog: FC<IEditUserDialogProps> = props => {
     });
   };
 
-  const { email, displayName, phoneNumber, language, imageUrl, userRoles, userStatus, comment, createdAt } =
-    initialValues;
+  const { id, email, displayName, language, imageUrl, userRoles, userStatus, comment, createdAt } = initialValues;
 
   const fixedValues = {
+    id,
     email,
     displayName,
-    phoneNumber,
     language,
     imageUrl,
     userRoles,
@@ -45,10 +43,15 @@ export const EditUserDialog: FC<IEditUserDialogProps> = props => {
   };
 
   return (
-    <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message="dialogs.edit" {...rest}>
+    <FormDialog
+      initialValues={fixedValues}
+      validationSchema={validationSchema}
+      message="dialogs.edit"
+      data-testid="UserEditDialog"
+      {...rest}
+    >
       <TextInput name="email" autoComplete="username" onClick={onClick} />
       <TextInput name="displayName" />
-      <PhoneInput name="phoneNumber" />
       <SelectInput name="language" options={EnabledLanguages} />
       <AvatarInput name="imageUrl" />
       <br />
