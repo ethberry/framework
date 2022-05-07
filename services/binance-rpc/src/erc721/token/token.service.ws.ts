@@ -16,7 +16,7 @@ import {
   IErc721TokenMintRandom,
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
-  IErc721TokenUnpack,
+  IErc721DropboxUnpack,
   TErc721TokenEventData,
   TokenRarity,
 } from "@framework/types";
@@ -175,7 +175,7 @@ export class Erc721TokenServiceWs {
     await this.updateHistory(event, erc721TokenEntity.id);
   }
 
-  public async unpack(event: IEvent<IErc721TokenUnpack>): Promise<void> {
+  public async unpack(event: IEvent<IErc721DropboxUnpack>): Promise<void> {
     const {
       returnValues: { collection, tokenId },
       address,

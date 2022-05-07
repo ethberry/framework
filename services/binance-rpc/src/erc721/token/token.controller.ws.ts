@@ -12,7 +12,7 @@ import {
   IErc721TokenMintRandom,
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
-  IErc721TokenUnpack,
+  IErc721DropboxUnpack,
 } from "@framework/types";
 
 import { ContractType } from "../../common/interfaces";
@@ -52,47 +52,47 @@ export class Erc721TokenControllerWs {
     return this.erc721TokenServiceWs.mintRandom(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_DROPBOX, eventName: Erc721TokenEventType.Transfer })
+  @EventPattern({ contractName: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.Transfer })
   public transferItemDropbox(@Payload() event: IEvent<IErc721TokenTransfer>): Promise<void> {
     return this.erc721TokenServiceWs.transfer(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_DROPBOX, eventName: Erc721TokenEventType.Approval })
+  @EventPattern({ contractName: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.Approval })
   public approvalItemDropbox(@Payload() event: IEvent<IErc721TokenApprove>): Promise<void> {
     return this.erc721TokenServiceWs.approval(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_DROPBOX, eventName: Erc721TokenEventType.ApprovalForAll })
+  @EventPattern({ contractName: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.ApprovalForAll })
   public approvalForAllItemDropbox(@Payload() event: IEvent<IErc721TokenApprovedForAll>): Promise<void> {
     return this.erc721TokenServiceWs.approvalForAll(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_DROPBOX, eventName: Erc721TokenEventType.Unpack })
-  public unpackItemDropbox(@Payload() event: IEvent<IErc721TokenUnpack>): Promise<void> {
+  @EventPattern({ contractName: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.UnpackDropbox })
+  public unpackItemDropbox(@Payload() event: IEvent<IErc721DropboxUnpack>): Promise<void> {
     return this.erc721TokenServiceWs.unpack(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_AIRDROP, eventName: Erc721TokenEventType.Transfer })
+  @EventPattern({ contractName: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.Transfer })
   public transferAirdrop(@Payload() event: IEvent<IErc721TokenTransfer>): Promise<void> {
     return this.erc721TokenServiceWs.transfer(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_AIRDROP, eventName: Erc721TokenEventType.Approval })
+  @EventPattern({ contractName: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.Approval })
   public approvalAirdrop(@Payload() event: IEvent<IErc721TokenApprove>): Promise<void> {
     return this.erc721TokenServiceWs.approvalAirdrop(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_AIRDROP, eventName: Erc721TokenEventType.ApprovalForAll })
+  @EventPattern({ contractName: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.ApprovalForAll })
   public approvalForAllAirdrop(@Payload() event: IEvent<IErc721TokenApprovedForAll>): Promise<void> {
     return this.erc721TokenServiceWs.approvalForAll(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_AIRDROP, eventName: Erc721TokenEventType.Redeem })
+  @EventPattern({ contractName: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.RedeemAirdrop })
   public redeemAirdrop(@Payload() event: IEvent<IErc721AirdropRedeem>): Promise<void> {
     return this.erc721TokenServiceWs.redeem(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC721_ITEMS_AIRDROP, eventName: Erc721TokenEventType.UnpackAirdrop })
+  @EventPattern({ contractName: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.UnpackAirdrop })
   public unpackAirdrop(@Payload() event: IEvent<IErc721AirdropUnpack>): Promise<void> {
     return this.erc721TokenServiceWs.unpackAirdrop(event);
   }

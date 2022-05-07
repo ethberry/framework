@@ -1,21 +1,22 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+undeads@gmail.com
+// Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
 
-import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBPR.sol";
+import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBCR.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../Marketplace/interfaces/IEIP712ERC721.sol";
 
-contract AirdropERC721 is EIP712, ERC721ACBPR, ERC721BaseUrl {
+contract AirdropERC721 is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -28,23 +29,22 @@ contract AirdropERC721 is EIP712, ERC721ACBPR, ERC721BaseUrl {
   IEIP712ERC721 _factory;
 
   mapping(uint256 => ItemData) internal _itemData;
-  uint256 internal _cap;
-  uint256[] private _allTokens;
 
-  bytes32 private immutable PERMIT_SIGNATURE = keccak256("EIP712(address account,uint256 airdropId,uint256 templateId)");
+  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+  bytes32 private immutable PERMIT_SIGNATURE =
+    keccak256("EIP712(address account,uint256 airdropId,uint256 templateId)");
 
   event UnpackAirdrop(address collection, uint256 tokenId, uint256 templateId, uint256 airdropId);
-  event Redeem(address from, address collection, uint256 tokenId, uint256 templateId, uint256 price);
+  event RedeemAirdrop(address from, address collection, uint256 tokenId, uint256 templateId, uint256 price);
 
   constructor(
     string memory name,
     string memory symbol,
     string memory baseTokenURI,
-    uint96 royaltyNumerator,
-    uint256 cap_
-  ) ERC721ACBPR(name, symbol, baseTokenURI, royaltyNumerator) EIP712(name, "1.0.0") {
-    require(cap_ > 0, "AirdropERC721: cap is 0");
-    _cap = cap_;
+    uint256 cap,
+    uint96 royaltyNumerator
+  ) ERC721ACBCR(name, symbol, baseTokenURI, cap, royaltyNumerator) EIP712(name, "1.0.0") {
+    _setupRole(PAUSER_ROLE, _msgSender());
     _tokenIdTracker.increment();
   }
 
@@ -65,7 +65,7 @@ contract AirdropERC721 is EIP712, ERC721ACBPR, ERC721BaseUrl {
     _safeMint(account, airdropId);
     _tokenIdTracker.increment();
 
-    emit Redeem(account, address(this), airdropId, templateId, 0);
+    emit RedeemAirdrop(account, address(this), airdropId, templateId, 0);
   }
 
   function _hash(
@@ -73,17 +73,7 @@ contract AirdropERC721 is EIP712, ERC721ACBPR, ERC721BaseUrl {
     uint256 airdropId,
     uint256 templateId
   ) internal view returns (bytes32) {
-    return
-      _hashTypedDataV4(
-        keccak256(
-          abi.encode(
-            PERMIT_SIGNATURE,
-            account,
-            airdropId,
-            templateId
-          )
-        )
-      );
+    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, account, airdropId, templateId)));
   }
 
   function _verify(
@@ -109,26 +99,32 @@ contract AirdropERC721 is EIP712, ERC721ACBPR, ERC721BaseUrl {
     _burn(tokenId);
   }
 
-  function cap() public view virtual returns (uint256) {
-    return _cap;
+  function _burn(uint256 tokenId) internal virtual override(ERC721, ERC721ACBCR) {
+    super._burn(tokenId);
   }
 
-  function totalSupply() public view virtual returns (uint256) {
-    return _allTokens.length;
+  function _baseURI() internal view virtual override(ERC721, ERC721ACBCR) returns (string memory) {
+    return _baseURI(_baseTokenURI);
   }
 
   function _beforeTokenTransfer(
     address from,
     address to,
     uint256 tokenId
-  ) internal override virtual {
-    require(totalSupply() < cap(), "AirdropERC721: cap exceeded");
-    _allTokens.push(tokenId);
+  ) internal virtual override(ERC721ACBCR, ERC721Pausable) {
     super._beforeTokenTransfer(from, to, tokenId);
   }
 
-  function _baseURI() internal view virtual override(ERC721ACBPR) returns (string memory) {
-    return _baseURI(_baseTokenURI);
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721ACBCR) returns (bool) {
+    return super.supportsInterface(interfaceId);
+  }
+
+  function pause() public onlyRole(PAUSER_ROLE) {
+    _pause();
+  }
+
+  function unpause() public onlyRole(PAUSER_ROLE) {
+    _unpause();
   }
 
   receive() external payable {

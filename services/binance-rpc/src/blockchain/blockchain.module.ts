@@ -62,7 +62,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
         ],
       },
       {
-        contractName: ContractType.ERC721_ITEMS_AIRDROP,
+        contractName: ContractType.ERC721_AIRDROP,
         contractAddress: airDropboxAddr,
         contractInterface: airdropERC721.abi as Array<AbiItem>,
         // prettier-ignore
@@ -72,12 +72,12 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
           Erc721TokenEventType.ApprovalForAll,
           Erc721TokenEventType.TokenRoyaltyInfo,
           Erc721TokenEventType.DefaultRoyaltyInfo,
-          Erc721TokenEventType.Redeem,
+          Erc721TokenEventType.RedeemAirdrop,
           Erc721TokenEventType.UnpackAirdrop,
         ],
       },
       {
-        contractName: ContractType.ERC721_ITEMS_DROPBOX,
+        contractName: ContractType.ERC721_DROPBOX,
         contractAddress: itemDropboxAddr,
         contractInterface: dropboxERC721.abi as Array<AbiItem>,
         // prettier-ignore
@@ -87,7 +87,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
           Erc721TokenEventType.ApprovalForAll,
           Erc721TokenEventType.TokenRoyaltyInfo,
           Erc721TokenEventType.DefaultRoyaltyInfo,
-          Erc721TokenEventType.Unpack,
+          Erc721TokenEventType.UnpackDropbox,
         ],
       },
       {

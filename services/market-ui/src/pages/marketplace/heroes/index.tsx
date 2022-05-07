@@ -21,7 +21,7 @@ export const Heroes: FC<ITabPanelProps> = props => {
     {
       baseUrl: "/erc721-templates",
       search: {
-        erc721CollectionIds: [2], // Heroes
+        erc721CollectionIds: [4], // Heroes
       },
       redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
     },

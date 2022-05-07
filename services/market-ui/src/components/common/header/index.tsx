@@ -17,7 +17,7 @@ export const Header: FC = () => {
     <AppBar position="fixed">
       <Toolbar className={classes.toolbar}>
         <Link className={classes.title} component={RouterLink} to="/">
-          <Hidden smDown>{companyName} Market</Hidden>
+          <Hidden smDown>{companyName} - Market</Hidden>
         </Link>
         <div className={classes.grow} />
         <Wallet />

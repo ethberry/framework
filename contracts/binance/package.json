@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "trejgun+undeads@gmail.com",
+    "email": "trejgun+gemunion@gmail.com",
     "name": "TrejGun",
     "url": "https://www.gemunion.io/"
   },
@@ -59,7 +59,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/gemunion/undeads"
+    "url": "https://gitlab.com/gemunion/framework"
   },
   "scripts": {
     "build": "hardhat compile",

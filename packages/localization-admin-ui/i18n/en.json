@@ -269,6 +269,8 @@
         "erc1155-collections": "ERC1155 Collections",
         "erc1155-recipes": "ERC1155 Recipes",
         "erc20-tokens": "ERC20 Tokens",
+        "erc20-staking": "ERC20 Staking",
+        "erc20-vesting": "ERC20 Vesting",
         "erc1155-tokens": "ERC1155 Tokens",
         "erc721-airdrop": "ERC721 Airdrop",
         "erc721-collections": "ERC721 Collections",
@@ -296,6 +298,12 @@
     "erc20-tokens": {
       "title": "ERC20 Tokens",
       "snapshot": "Make snapshot"
+    },
+    "erc20-staking": {
+      "title": "ERC20 Staking"
+    },
+    "erc20-vesting": {
+      "title": "ERC20 Vesting"
     },
     "erc721-airdrops": {
       "title": "ERC721 Airdrop"

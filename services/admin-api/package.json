@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "trejgun+undeads@gmail.com",
+    "email": "trejgun+gemunion@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
@@ -104,7 +104,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/undeads"
+    "url": "https://gitlab.com/gemunion/framework"
   },
   "scripts": {
     "build": "tsc",

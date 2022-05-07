@@ -1,11 +1,11 @@
 {
   "author": {
-    "email": "trejgun+undeads@gmail.com",
+    "email": "trejgun+gemunion@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/undeads"
+    "url": "https://gitlab.com/gemunion/framework"
   },
   "dependencies": {
     "@emotion/react": "11.9.0",
@@ -130,7 +130,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/undeads"
+    "url": "https://gitlab.com/gemunion/framework"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=${NODE_ENV:=production} webpack --config webpack.production.ts",
@@ -142,6 +142,6 @@
     "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
     "test": "exit 0"
   },
-  "title": "Undeads Market UI",
+  "title": "Framework Market UI",
   "version": "0.0.1"
 }

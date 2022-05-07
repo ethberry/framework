@@ -24,7 +24,7 @@ export const Items: FC<ITabPanelProps> = props => {
     useCollection<IErc721Token, IErc721AssetSearchDto>({
       baseUrl: "/erc721-tokens",
       search: {
-        erc721CollectionIds: [3, 4, 5],
+        erc721CollectionIds: [3],
         rarity: [],
       },
       redirect: (_baseUrl, search) => `/assets/${value}?${stringify(search)}`,

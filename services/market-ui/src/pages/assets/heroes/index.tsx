@@ -25,7 +25,7 @@ export const Heroes: FC<ITabPanelProps> = props => {
     useCollection<IErc721Token, IErc721AssetSearchDto>({
       baseUrl: "/erc721-tokens",
       search: {
-        erc721CollectionIds: [1, 2],
+        erc721CollectionIds: [4],
         rarity: [],
       },
       redirect: (_baseUrl, search) => `/assets/${value}?${stringify(search)}`,

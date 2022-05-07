@@ -7,9 +7,9 @@ export enum Erc721TokenEventType {
   ApprovalForAll = "ApprovalForAll",
   DefaultRoyaltyInfo = "DefaultRoyaltyInfo",
   TokenRoyaltyInfo = "TokenRoyaltyInfo",
-  Unpack = "Unpack",
+  UnpackDropbox = "UnpackDropbox",
   UnpackAirdrop = "UnpackAirdrop",
-  Redeem = "Redeem",
+  RedeemAirdrop = "RedeemAirdrop",
   MintRandom = "MintRandom",
 }
 
@@ -50,7 +50,7 @@ export interface IErc721TokenRoyaltyInfo {
   royaltyNumerator: boolean;
 }
 
-export interface IErc721TokenUnpack {
+export interface IErc721DropboxUnpack {
   collection: string;
   tokenId: string;
   templateId: string;
@@ -61,14 +61,6 @@ export interface IErc721AirdropUnpack {
   tokenId: string;
   templateId: string;
   airdropId: string;
-}
-
-export interface IErc721TokenRedeem {
-  from: string;
-  collection: string;
-  tokenId: string;
-  templateId: string;
-  price: string;
 }
 
 export interface IErc721AirdropRedeem {
@@ -85,9 +77,8 @@ export type TErc721TokenEventData =
   | IErc721TokenApprovedForAll
   | IErc721DefaultRoyaltyInfo
   | IErc721TokenRoyaltyInfo
-  | IErc721TokenUnpack
+  | IErc721DropboxUnpack
   | IErc721AirdropUnpack
-  | IErc721TokenRedeem
   | IErc721AirdropRedeem
   | IErc721TokenMintRandom;
 

@@ -25,7 +25,7 @@ export class SeedErc721Dropbox1563804021276 implements MigrationInterface {
         '${imageUrl}',
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
-        2,
+        4,
         1,
         '${currentDateTime}',
         '${currentDateTime}'

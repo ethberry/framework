@@ -13,7 +13,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
     const erc721CollectionDropboxAddress = process.env.ERC721_DROPBOX_ADDR || wallet;
     const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
 
-    // 1 - ITEMS, 2 - HERO, 3 - SKILLS, 4 - 721.DB, 5 - 721.AIR
+    // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - HERO, 5 - SKILLS, 6 - LAND
     await queryRunner.query(`
       INSERT INTO ${ns}.erc721_collection (
         title,
@@ -25,41 +25,17 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         permission_type,
         created_at,
         updated_at
-      ) VALUES
-      (
-        'ITEMS',
+      ) VALUES  (
+        'AIRDROP_ERC721',
         '${simpleFormatting}',
         '${imageUrl}',
         100,
-        'TOKEN',
-        '${erc721CollectionItemsAddress}',
+        'AIRDROP',
+        '${erc721CollectionAirdropAddress}',
         'ACCESS_CONTROL',
         '${currentDateTime}',
         '${currentDateTime}'
-      ),
-      (
-        'HEROES',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        100,
-        'TOKEN',
-        '${erc721CollectionHeroAddress}',
-        'ACCESS_CONTROL',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ),
-      (
-        'SKILLS',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        100,
-        'TOKEN',
-        '${erc721CollectionSkillAddress}',
-        'ACCESS_CONTROL',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ),
-        (
+      ), (
         'DROPBOX_ERC721',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -69,14 +45,43 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         'ACCESS_CONTROL',
         '${currentDateTime}',
         '${currentDateTime}'
-      ),
-      (
-        'AIRDROP_ERC721',
+      ), (
+        'ITEMS',
         '${simpleFormatting}',
         '${imageUrl}',
         100,
-        'AIRDROP',
-        '${erc721CollectionAirdropAddress}',
+        'TOKEN',
+        '${erc721CollectionItemsAddress}',
+        'ACCESS_CONTROL',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'HEROES',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        100,
+        'TOKEN',
+        '${erc721CollectionHeroAddress}',
+        'ACCESS_CONTROL',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'SKILLS',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        100,
+        'TOKEN',
+        '${erc721CollectionSkillAddress}',
+        'ACCESS_CONTROL',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ),  (
+        'LAND',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        100,
+        'TOKEN',
+        '${erc721CollectionSkillAddress}',
         'ACCESS_CONTROL',
         '${currentDateTime}',
         '${currentDateTime}'

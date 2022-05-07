@@ -62,7 +62,7 @@ services:
 #    environment:
 #      SCHEDULE: "@every 24h"
 #      POSTGRES_HOST: "postgres"
-#      POSTGRES_DATABASE: "undeads-development"
+#      POSTGRES_DATABASE: "framework-development"
 #      POSTGRES_USER: "postgres_admin_framework"
 #      POSTGRES_PASSWORD: "{nSq9UQAxzN]dk?;"
 #      GCLOUD_KEYFILE_BASE64: "./gcs64.key"

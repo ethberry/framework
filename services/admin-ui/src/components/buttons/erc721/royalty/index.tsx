@@ -7,7 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { IErc721Collection } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
-import erc721contract from "@framework/binance-contracts/artifacts/contracts/ERC721/interface/IERC721.sol/IERC721.json";
+import erc721contract from "@framework/binance-contracts/artifacts/contracts/ERC721/interface/IERC721Royalty.sol/IERC721Royalty.json";
 
 import { Erc721CollectionRoyaltyEditDialog, IRoyaltyDto } from "./edit";
 

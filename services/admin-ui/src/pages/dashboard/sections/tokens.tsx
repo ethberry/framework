@@ -1,6 +1,16 @@
 import { FC } from "react";
 import { Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } from "@mui/material";
-import { Construction, Filter, SettingsApplications, Storage, Storefront } from "@mui/icons-material";
+import {
+  AirplanemodeActive,
+  AutoAwesomeMotion,
+  Collections,
+  Construction,
+  Inventory,
+  Savings,
+  SettingsApplications,
+  Storage,
+  Casino,
+} from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -25,16 +35,32 @@ export const Tokens: FC = () => {
     >
       <ListItem button component={RouterLink} to="/erc20-tokens">
         <ListItemIcon>
-          <Storefront />
+          <Storage />
         </ListItemIcon>
         <ListItemText>
           <FormattedMessage id="pages.dashboard.tokens.erc20-tokens" />
         </ListItemText>
       </ListItem>
+      <ListItem button component={RouterLink} to="/erc20-staking">
+        <ListItemIcon>
+          <Casino />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc20-staking" />
+        </ListItemText>
+      </ListItem>
+      <ListItem button component={RouterLink} to="/erc20-vesting">
+        <ListItemIcon>
+          <Savings />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc20-vesting" />
+        </ListItemText>
+      </ListItem>
       <Divider />
       <ListItem button component={RouterLink} to="/erc721-collections">
         <ListItemIcon>
-          <Storefront />
+          <Collections />
         </ListItemIcon>
         <ListItemText>
           <FormattedMessage id="pages.dashboard.tokens.erc721-collections" />
@@ -42,10 +68,26 @@ export const Tokens: FC = () => {
       </ListItem>
       <ListItem button component={RouterLink} to="/erc721-templates">
         <ListItemIcon>
-          <Filter />
+          <AutoAwesomeMotion />
         </ListItemIcon>
         <ListItemText>
           <FormattedMessage id="pages.dashboard.tokens.erc721-templates" />
+        </ListItemText>
+      </ListItem>
+      <ListItem button component={RouterLink} to="/erc721-airdrops">
+        <ListItemIcon>
+          <AirplanemodeActive />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc721-airdrop" />
+        </ListItemText>
+      </ListItem>
+      <ListItem button component={RouterLink} to="/erc721-dropboxes">
+        <ListItemIcon>
+          <Inventory />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc721-dropbox" />
         </ListItemText>
       </ListItem>
       <ListItem button component={RouterLink} to="/erc721-tokens">
@@ -56,26 +98,10 @@ export const Tokens: FC = () => {
           <FormattedMessage id="pages.dashboard.tokens.erc721-tokens" />
         </ListItemText>
       </ListItem>
-      <ListItem button component={RouterLink} to="/erc721-dropboxes">
-        <ListItemIcon>
-          <Storage />
-        </ListItemIcon>
-        <ListItemText>
-          <FormattedMessage id="pages.dashboard.tokens.erc721-dropbox" />
-        </ListItemText>
-      </ListItem>
-      <ListItem button component={RouterLink} to="/erc721-airdrops">
-        <ListItemIcon>
-          <Storage />
-        </ListItemIcon>
-        <ListItemText>
-          <FormattedMessage id="pages.dashboard.tokens.erc721-airdrop" />
-        </ListItemText>
-      </ListItem>
       <Divider />
       <ListItem button component={RouterLink} to="/erc1155-collections">
         <ListItemIcon>
-          <Storefront />
+          <Collections />
         </ListItemIcon>
         <ListItemText>
           <FormattedMessage id="pages.dashboard.tokens.erc1155-collections" />

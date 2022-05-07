@@ -20,8 +20,8 @@ export const HeroesDropbox: FC<ITabPanelProps> = props => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IErc721Dropbox, IErc721DropboxSearchDto>({
     baseUrl: "/erc721-dropboxes",
     search: {
-      erc721CollectionIds: [4], // Erc721Dropbox Collection
-      erc721TemplateCollectionIds: [2], // Erc721Hero Collection
+      erc721CollectionIds: [2], // Erc721Dropbox Collection
+      erc721TemplateCollectionIds: [4], // Erc721Hero Collection
     },
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });

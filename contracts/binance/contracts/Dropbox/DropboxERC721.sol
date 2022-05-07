@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 
 // Author: TrejGun
-// Email: trejgun+undeads@gmail.com
+// Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.4;
@@ -23,7 +23,7 @@ contract DropboxERC721 is ERC721ACBER, ERC721BaseUrl {
   IEIP712ERC721 _item;
   mapping(uint256 => ItemData) internal _itemData;
 
-  event Unpack(address collection, uint256 tokenId, uint256 templateId);
+  event UnpackDropbox(address collection, uint256 tokenId, uint256 templateId);
 
   constructor(
     string memory name,
@@ -51,7 +51,7 @@ contract DropboxERC721 is ERC721ACBER, ERC721BaseUrl {
     require(_isApprovedOrOwner(_msgSender(), tokenId), "DropboxERC721: unpack caller is not owner nor approved");
 
     ItemData memory data = _itemData[tokenId];
-    emit Unpack(collection, tokenId, data.templateId);
+    emit UnpackDropbox(collection, tokenId, data.templateId);
 
     _burn(tokenId);
     IEIP712ERC721(collection).mintRandom(_msgSender(), data.templateId, dropboxId);

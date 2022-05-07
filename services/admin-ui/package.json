@@ -1,6 +1,6 @@
 {
   "author": {
-    "email": "trejgun+undeads@gmail.com",
+    "email": "trejgun+gemunion@gmail.com",
     "name": "TrejGun",
     "url": "https://gemunion.io/"
   },
@@ -143,6 +143,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "exit 0"
   },
-  "title": "Undead Admin UI",
+  "title": "Framework Admin UI",
   "version": "0.0.1"
 }
