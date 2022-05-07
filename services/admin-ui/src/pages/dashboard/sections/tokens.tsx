@@ -3,13 +3,13 @@ import { Divider, List, ListItem, ListItemIcon, ListItemText, ListSubheader } fr
 import {
   AirplanemodeActive,
   AutoAwesomeMotion,
+  Casino,
   Collections,
   Construction,
   Inventory,
   Savings,
   SettingsApplications,
   Storage,
-  Casino,
 } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";

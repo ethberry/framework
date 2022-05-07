@@ -30,7 +30,9 @@ import { CreateOtpTable1563804021060 } from "./migrations/1563804021060-create-o
 import { CreateErc20TokenTable1563804021100 } from "./migrations/1563804021100-create-erc20-token-table";
 import { SeedErc20Token1563804021110 } from "./migrations/1563804021110-seed-erc20-tokens";
 import { CreateErc20TokenHistoryTable1563804021120 } from "./migrations/1563804021120-create-erc20-token-history-table";
-import { CreateErc20StakingHistoryTable1563804021130 } from "./migrations/1563804021130-create-erc20-staking-history-table";
+import {
+  CreateErc20StakingHistoryTable1563804021130,
+} from "./migrations/1563804021130-create-erc20-staking-history-table";
 import { CreateErc721CollectionTable1563804021240 } from "./migrations/1563804021240-create-erc721-collection-table";
 import { SeedErc721Collection1563804021250 } from "./migrations/1563804021250-seed-erc721-collection";
 import { CreateErc721TemplateTable1563804021260 } from "./migrations/1563804021260-create-erc721-template-table";
@@ -39,15 +41,23 @@ import { CreateErc721DropboxTable1563804021275 } from "./migrations/156380402127
 import { SeedErc721Dropbox1563804021276 } from "./migrations/1563804021276-seed-erc721-dropbox";
 import { CreateErc721TokenTable1563804021280 } from "./migrations/1563804021280-create-erc721-token-table";
 import { SeedErc721Token1563804021281 } from "./migrations/1563804021281-seed-erc721-tokens";
-import { CreateErc721TokenHistoryTable1563804021290 } from "./migrations/1563804021290-create-erc721-token-history-table";
-import { CreateErc721MarketplaceHistoryTable1563804021290 } from "./migrations/1563804021300-create-erc721-marketplace-history-table";
+import {
+  CreateErc721TokenHistoryTable1563804021290,
+} from "./migrations/1563804021290-create-erc721-token-history-table";
+import {
+  CreateErc721MarketplaceHistoryTable1563804021290,
+} from "./migrations/1563804021300-create-erc721-marketplace-history-table";
 import { CreateErc1155RecipeHistory1645160381140 } from "./migrations/1645160381140-create-erc1155-recipe-history";
 import { CreateErc1155CollectionTable1641526822350 } from "./migrations/1641526822350-create-erc1155-collection-table";
 import { SeedErc1155Collection1641526822360 } from "./migrations/1641526822360-seed-erc1155-collection";
 import { CreateErc1155TokenTable1641526822370 } from "./migrations/1641526822370-create-erc1155-token-table";
 import { SeedErc1155Tokens1641526822380 } from "./migrations/1641526822380-seed-erc1155-token";
-import { CreateErc1155TokenHistoryTable1641526822390 } from "./migrations/1641526822390-create-erc1155-token-history-table";
-import { CreateErc1155MarketplaceHistoryTable1641526822391 } from "./migrations/1641526822391-create-erc1155-marketplace-history-table";
+import {
+  CreateErc1155TokenHistoryTable1641526822390,
+} from "./migrations/1641526822390-create-erc1155-token-history-table";
+import {
+  CreateErc1155MarketplaceHistoryTable1641526822391,
+} from "./migrations/1641526822391-create-erc1155-marketplace-history-table";
 import { CreateErc1155BalanceTable1644208366000 } from "./migrations/1644208366000-create-erc1155-balance-table";
 import { SeedErc1155Balance1644208366010 } from "./migrations/1644208366010-seed-erc1155-balance";
 import { CreateErc1155Recipe1645160381120 } from "./migrations/1645160381120-create-erc1155-recipe-table";
@@ -55,7 +65,9 @@ import { SeedErc1155Recipe1645160381130 } from "./migrations/1645160381130-seed-
 import { CreateErc1155Ingredient1645161089530 } from "./migrations/1645161089530-create-erc1155-ingredient-table";
 import { SeedErc1155Ingredient1645161089540 } from "./migrations/1645161089540-seed-erc1155-ingredient";
 import { CreateErc721AuctionTable1646924902900 } from "./migrations/1646924902900-create-erc721-auction-table";
-import { CreateErc721AuctionHistoryTable1646924902920 } from "./migrations/1646924902920-create-erc721-auction-history-table";
+import {
+  CreateErc721AuctionHistoryTable1646924902920,
+} from "./migrations/1646924902920-create-erc721-auction-history-table";
 import { CreateErc721AirdropTable1648525967810 } from "./migrations/1648525967800-create-erc721-air-drop-table";
 import { SeedErc721Airdrop1648525967820 } from "./migrations/1648525967820-seed-erc721-air-drop";
 import { Erc20StakingHistoryEntity } from "./erc20/staking-history/staking-history.entity";

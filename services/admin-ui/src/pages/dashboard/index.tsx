@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { PageHeader } from "@gemunion/mui-page-header";
+import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { Admin } from "./sections/admin";
 import { Tokens } from "./sections/tokens";

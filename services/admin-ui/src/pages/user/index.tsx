@@ -12,11 +12,9 @@ import {
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { IUser, IUserSearchDto, UserStatus } from "@framework/types";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { EnabledLanguages } from "@framework/constants";
 import { useCollection } from "@gemunion/react-hooks";
 

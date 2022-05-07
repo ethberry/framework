@@ -1,11 +1,9 @@
 import { FC, Fragment } from "react";
 import { Grid, Pagination } from "@mui/material";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IErc721Collection } from "@framework/types";
 import { ISearchDto } from "@gemunion/types-collection";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { CollectionItem } from "./item";

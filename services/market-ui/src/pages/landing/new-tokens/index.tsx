@@ -3,7 +3,7 @@ import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Typography } from "@mui/material";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
+import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ApiError, useApi } from "@gemunion/provider-api";
 import { IErc1155Token } from "@framework/types";
 import { IPaginationResult } from "@gemunion/types-collection";

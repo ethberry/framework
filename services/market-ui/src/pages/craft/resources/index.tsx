@@ -8,10 +8,9 @@ import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { WalletContext } from "@gemunion/provider-wallet";
 
-import { PageHeader } from "@gemunion/mui-page-header";
+import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ApiContext } from "@gemunion/provider-api";
 import { IErc1155Recipe, IErc1155RecipeSearchDto } from "@framework/types";
-import { ProgressOverlay } from "@gemunion/mui-progress";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";

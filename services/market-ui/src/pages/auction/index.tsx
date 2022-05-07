@@ -1,8 +1,7 @@
 import { FC, Fragment } from "react";
 import { Typography } from "@mui/material";
 
-import { PageHeader } from "@gemunion/mui-page-header";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
 export const Auction: FC = () => {
   return (

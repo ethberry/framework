@@ -11,12 +11,12 @@ import {
   IErc721AirdropRedeem,
   IErc721AirdropUnpack,
   IErc721DefaultRoyaltyInfo,
+  IErc721DropboxUnpack,
   IErc721TokenApprove,
   IErc721TokenApprovedForAll,
   IErc721TokenMintRandom,
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
-  IErc721DropboxUnpack,
   TErc721TokenEventData,
   TokenRarity,
 } from "@framework/types";

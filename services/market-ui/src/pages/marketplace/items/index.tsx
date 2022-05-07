@@ -2,8 +2,7 @@ import { FC } from "react";
 import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 

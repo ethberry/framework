@@ -5,10 +5,8 @@ import { useParams } from "react-router";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { Erc721TemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateItem } from "./item";

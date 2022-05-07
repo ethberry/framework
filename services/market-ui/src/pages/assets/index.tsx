@@ -2,7 +2,7 @@ import { ChangeEvent, FC, Fragment, useState } from "react";
 import { Tab, Tabs } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
+import { Breadcrumbs } from "@gemunion/mui-page-layout";
 
 import { AssetsTabs } from "./tabs";
 import { Resources } from "./resources";

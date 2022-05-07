@@ -12,11 +12,9 @@ import {
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Erc721CollectionStatus, IErc721Collection, IErc721CollectionSearchDto } from "@framework/types";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721CollectionEditDialog } from "./edit";

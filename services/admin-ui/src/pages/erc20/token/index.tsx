@@ -12,10 +12,8 @@ import {
 } from "@mui/material";
 import { Add, Create, FilterList } from "@mui/icons-material";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { Erc20TokenStatus, IErc20Token, IErc20TokenSearchDto } from "@framework/types";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc20TokenEditDialog } from "./edit";

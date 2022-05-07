@@ -13,11 +13,9 @@ import {
 
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { IErc1155Recipe, IErc1155RecipeSearchDto, RecipeStatus } from "@framework/types";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155RecipeEditDialog } from "./edit";

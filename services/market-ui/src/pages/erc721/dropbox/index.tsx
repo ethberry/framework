@@ -2,11 +2,9 @@ import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Grid, Paper, Typography } from "@mui/material";
 
-import { Spinner } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { IErc721Dropbox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 

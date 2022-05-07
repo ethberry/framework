@@ -13,11 +13,9 @@ import {
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
-import { ProgressOverlay } from "@gemunion/mui-progress";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { Erc721DropboxStatus, IErc721Dropbox, IErc721DropboxSearchDto, IErc721Template } from "@framework/types";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721DropboxEditDialog } from "./edit";

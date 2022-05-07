@@ -4,8 +4,7 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
-import { PageHeader } from "@gemunion/mui-page-header";
-import { ProgressOverlay } from "@gemunion/mui-progress";
+import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IErc721AssetSearchDto, IErc721Token } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 

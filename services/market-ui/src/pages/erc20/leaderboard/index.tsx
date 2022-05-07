@@ -8,12 +8,11 @@ import { useLocation, useNavigate } from "react-router";
 import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { ApiContext, ApiError } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { defaultItemsPerPage } from "@gemunion/constants";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
 
 export const Leaderboard: FC = () => {

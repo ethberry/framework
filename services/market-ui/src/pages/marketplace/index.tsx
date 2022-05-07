@@ -3,7 +3,7 @@ import { Tab, Tabs } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useNavigate, useParams } from "react-router";
 
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
+import { Breadcrumbs } from "@gemunion/mui-page-layout";
 
 import { MarketplaceTabs } from "./tabs";
 import { Resources } from "./resources";

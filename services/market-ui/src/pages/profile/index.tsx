@@ -4,14 +4,13 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { PageHeader } from "@gemunion/mui-page-header";
+import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
 import { ApiError } from "@gemunion/provider-api";
 import { FormikForm } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 import { EnabledLanguages } from "@framework/constants";
 import { IUser } from "@framework/types";
-import { Breadcrumbs } from "@gemunion/mui-breadcrumbs";
 
 import { validationSchema } from "./validation";
 
