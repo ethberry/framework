@@ -1,10 +1,10 @@
 import type { RouteObject } from "react-router-dom";
 
+import { Protected } from "@gemunion/firebase-login";
+
 import { Erc1155Token } from "./token";
 import { Erc1155Collection } from "./collection";
 import { Erc1155Recipes } from "./recipe";
-
-import { Protected } from "../protected";
 
 export const erc1155Routes: Array<RouteObject> = [
   {

@@ -1,12 +1,12 @@
 import type { RouteObject } from "react-router-dom";
 
+import { Protected } from "@gemunion/firebase-login";
+
 import { Erc721Collection } from "./collection";
 import { Erc721Template } from "./template";
 import { Erc721Airdrop } from "./airdrop";
 import { Erc721Dropbox } from "./dropbox";
 import { Erc721Token } from "./token";
-
-import { Protected } from "../protected";
 
 export const erc721Routes: Array<RouteObject> = [
   {
