@@ -4,7 +4,7 @@ import { Leaderboard } from "./leaderboard";
 
 export const erc20Routes: Array<RouteObject> = [
   {
-    path: "/leaderboard",
+    path: "/staking",
     element: <Leaderboard />,
   },
 ];

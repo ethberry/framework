@@ -1,13 +1,14 @@
 import { Column, Entity, OneToMany } from "typeorm";
+import { Mixin } from "ts-mixer";
 
+import { OzContractBaseEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { Erc721CollectionStatus, Erc721CollectionType, IErc721Collection } from "@framework/types";
 import { ns } from "@framework/constants";
-import { OzContractBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc721TemplateEntity } from "../template/template.entity";
 
 @Entity({ schema: ns, name: "erc721_collection" })
-export class Erc721CollectionEntity extends OzContractBaseEntity implements IErc721Collection {
+export class Erc721CollectionEntity extends Mixin(OzContractBaseEntity, SearchableEntity) implements IErc721Collection {
   @Column({ type: "varchar" })
   public imageUrl: string;
 

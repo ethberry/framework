@@ -15,8 +15,9 @@ import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { Erc721DropboxStatus, IErc721Dropbox, IErc721DropboxSearchDto, IErc721Template } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Erc721DropboxStatus, IErc721Dropbox, IErc721DropboxSearchDto, IErc721Template } from "@framework/types";
 
 import { Erc721DropboxEditDialog } from "./edit";
 import { Erc721DropboxSearchForm } from "./form";
@@ -45,7 +46,7 @@ export const Erc721Dropbox: FC = () => {
     baseUrl: "/erc721-dropboxes",
     empty: {
       title: "",
-      description: "",
+      description: emptyStateString,
       price: constants.WeiPerEther.toString(),
       erc721Template: {} as IErc721Template,
     },

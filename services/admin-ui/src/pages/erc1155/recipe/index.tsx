@@ -15,18 +15,13 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IErc1155Recipe, IErc1155RecipeSearchDto, RecipeStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import { IErc1155Recipe, IErc1155RecipeSearchDto, RecipeStatus } from "@framework/types";
 
 import { Erc1155RecipeEditDialog } from "./edit";
 import { Erc1155RecipeSearchForm } from "./form";
 import { Erc1155RecipeUploadButton } from "../../../components/buttons";
-
-export const emptyRecipe = {
-  title: "",
-  description: "",
-  ingredients: [],
-} as unknown as IErc1155Recipe;
 
 export const Erc1155Recipes: FC = () => {
   const {
@@ -52,7 +47,7 @@ export const Erc1155Recipes: FC = () => {
     baseUrl: "/erc1155-recipes",
     empty: {
       title: "",
-      description: "",
+      description: emptyStateString,
       ingredients: [],
     },
     search: {

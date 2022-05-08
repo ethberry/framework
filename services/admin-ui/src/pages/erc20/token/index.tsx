@@ -13,8 +13,9 @@ import {
 import { Add, Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { Erc20TokenStatus, IErc20Token, IErc20TokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Erc20TokenStatus, IErc20Token, IErc20TokenSearchDto } from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
@@ -40,7 +41,7 @@ export const Erc20Token: FC = () => {
     baseUrl: "/erc20-tokens",
     empty: {
       title: "",
-      description: "",
+      description: emptyStateString,
       symbol: "",
     },
     search: {

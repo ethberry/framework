@@ -74,11 +74,11 @@
       "INACTIVE": "Inactive"
     },
     "tokenStatus": {
-      "BURNED": "Burned",
-      "MINTED": "Minted",
-      "NEW": "New",
       "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
+      "BURNED": "Burned",
+      "INACTIVE": "Inactive",
+      "MINTED": "Minted",
+      "NEW": "New"
     },
     "userRoles": {
       "ADMIN": "Admin",
@@ -87,6 +87,9 @@
     "userStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
+    },
+    "vestingType": {
+      "FLAT": "Flat"
     }
   },
   "errors": {
@@ -176,6 +179,7 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
+      "vestingType": "Type",
       "year": "Year"
     },
     "placeholders": {
@@ -268,10 +272,10 @@
       "tokens": {
         "erc1155-collections": "ERC1155 Collections",
         "erc1155-recipes": "ERC1155 Recipes",
-        "erc20-tokens": "ERC20 Tokens",
-        "erc20-staking": "ERC20 Staking",
-        "erc20-vesting": "ERC20 Vesting",
         "erc1155-tokens": "ERC1155 Tokens",
+        "erc20-staking": "ERC20 Staking",
+        "erc20-tokens": "ERC20 Tokens",
+        "erc20-vesting": "ERC20 Vesting",
         "erc721-airdrop": "ERC721 Airdrop",
         "erc721-collections": "ERC721 Collections",
         "erc721-dropbox": "ERC721 Dropbox",
@@ -287,30 +291,36 @@
       "title": "ERC1155 Recipes"
     },
     "erc1155-recipes": {
-      "title": "ERC1155 Recipes",
-      "upload": "Upload recipe",
       "activate": "Activate recipe",
-      "deactivate": "Deactivate recipes"
+      "deactivate": "Deactivate recipes",
+      "title": "ERC1155 Recipes",
+      "upload": "Upload recipe"
     },
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
-    "erc20-tokens": {
-      "title": "ERC20 Tokens",
-      "snapshot": "Make snapshot"
-    },
     "erc20-staking": {
       "title": "ERC20 Staking"
     },
+    "erc20-tokens": {
+      "snapshot": "Make snapshot",
+      "title": "ERC20 Tokens"
+    },
     "erc20-vesting": {
-      "title": "ERC20 Vesting"
+      "title": "ERC20 Vesting",
+      "view": {
+        "amount": "Amount",
+        "beneficiary": "Beneficiary",
+        "duration": "Duration",
+        "token": "Token"
+      }
     },
     "erc721-airdrops": {
       "title": "ERC721 Airdrop"
     },
     "erc721-collections": {
-      "title": "ERC721 Collections",
-      "royalty": "Royalty"
+      "royalty": "Royalty",
+      "title": "ERC721 Collections"
     },
     "erc721-dropboxes": {
       "title": "ERC721 Dropbox"

@@ -15,8 +15,9 @@ import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { IErc1155Token, IErc1155TokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import { IErc1155Token, IErc1155TokenSearchDto } from "@framework/types";
 
 import { Erc1155TokenEditDialog } from "./edit";
 import { Erc1155TokenSearchForm } from "./form";
@@ -45,7 +46,7 @@ export const Erc1155Token: FC = () => {
     baseUrl: "/erc1155-tokens",
     empty: {
       title: "",
-      description: "",
+      description: emptyStateString,
       price: constants.WeiPerEther.toString(),
       attributes: "{}",
     },

@@ -15,8 +15,9 @@ import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { Erc721TemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Erc721TemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
 import { Erc721TemplateSearchForm } from "./form";
@@ -45,7 +46,7 @@ export const Erc721Template: FC = () => {
     baseUrl: "/erc721-templates",
     empty: {
       title: "",
-      description: "",
+      description: emptyStateString,
       price: constants.WeiPerEther.toString(),
       attributes: "{}",
     },

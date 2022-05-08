@@ -14,8 +14,9 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { Erc1155CollectionStatus, IErc1155Collection, IErc1155CollectionSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
+import { Erc1155CollectionStatus, IErc1155Collection, IErc1155CollectionSearchDto } from "@framework/types";
 
 import { Erc1155CollectionEditDialog } from "./edit";
 import { Erc1155CollectionSearchForm } from "./form";
@@ -44,7 +45,7 @@ export const Erc1155Collection: FC = () => {
     baseUrl: "/erc1155-collections",
     empty: {
       title: "",
-      description: "",
+      description: emptyStateString,
     },
     search: {
       query: "",

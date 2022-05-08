@@ -4,8 +4,9 @@ export * from "./auth/password";
 export * from "./user/common";
 export * from "./user/search";
 
-export * from "./erc20/leaderboard/search";
 export * from "./erc20/token/search";
+export * from "./erc20/vesting/search";
+export * from "./erc20/staking/leaderboard";
 
 export * from "./erc721/airdrop/search";
 export * from "./erc721/collection/search";

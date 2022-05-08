@@ -12,7 +12,7 @@ import { ILeaderboard } from "./interfaces";
 export class Erc20StakingController {
   constructor(private readonly erc721CollectionService: Erc20StakingHistoryService) {}
 
-  @Get("/leaderboard")
+  @Get("/staking")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: Erc20LeaderboardSearchDto): Promise<[Array<ILeaderboard>, number]> {
     return this.erc721CollectionService.leaderboard(dto);

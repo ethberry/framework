@@ -17,6 +17,7 @@
     "@gemunion/collection": "1.2.13",
     "@gemunion/common-pages": "7.1.1",
     "@gemunion/constants": "0.8.0",
+    "@gemunion/draft-js-utils": "0.3.4",
     "@gemunion/firebase-login": "1.1.1",
     "@gemunion/history": "1.2.8",
     "@gemunion/mui-dialog-confirmation": "3.1.26",

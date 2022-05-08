@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IOzContract, ISearchable } from "@gemunion/types-collection";
 
 import { IErc721Template } from "./template";
 
@@ -13,9 +13,7 @@ export enum Erc721CollectionType {
   AIRDROP = "AIRDROP",
 }
 
-export interface IErc721Collection extends IIdBase {
-  title: string;
-  description: string;
+export interface IErc721Collection extends IOzContract, ISearchable {
   imageUrl: string;
   address: string;
   royalty: number;

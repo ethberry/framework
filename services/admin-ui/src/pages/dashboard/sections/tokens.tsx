@@ -41,20 +41,20 @@ export const Tokens: FC = () => {
           <FormattedMessage id="pages.dashboard.tokens.erc20-tokens" />
         </ListItemText>
       </ListItem>
-      <ListItem button component={RouterLink} to="/erc20-staking">
-        <ListItemIcon>
-          <Casino />
-        </ListItemIcon>
-        <ListItemText>
-          <FormattedMessage id="pages.dashboard.tokens.erc20-staking" />
-        </ListItemText>
-      </ListItem>
       <ListItem button component={RouterLink} to="/erc20-vesting">
         <ListItemIcon>
           <Savings />
         </ListItemIcon>
         <ListItemText>
           <FormattedMessage id="pages.dashboard.tokens.erc20-vesting" />
+        </ListItemText>
+      </ListItem>
+      <ListItem button component={RouterLink} to="/erc20-staking">
+        <ListItemIcon>
+          <Casino />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc20-staking" />
         </ListItemText>
       </ListItem>
       <Divider />

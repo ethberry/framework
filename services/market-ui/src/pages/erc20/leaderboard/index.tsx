@@ -101,7 +101,7 @@ export const Leaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.leaderboard.rank" }),
+      headerName: formatMessage({ id: "pages.staking.rank" }),
       sortable: false,
       flex: 1,
       renderCell: (cell: GridCellParams) => {
@@ -121,17 +121,17 @@ export const Leaderboard: FC = () => {
     },
     {
       field: "secureWallet",
-      headerName: formatMessage({ id: "pages.leaderboard.address" }),
+      headerName: formatMessage({ id: "pages.staking.address" }),
       sortable: false,
       flex: 1,
     },
-    { field: "score", headerName: formatMessage({ id: "pages.leaderboard.score" }), sortable: false, flex: 1 },
-    { field: "rank", headerName: formatMessage({ id: "pages.leaderboard.rank" }), sortable: false, flex: 1 },
+    { field: "score", headerName: formatMessage({ id: "pages.staking.score" }), sortable: false, flex: 1 },
+    { field: "rank", headerName: formatMessage({ id: "pages.staking.rank" }), sortable: false, flex: 1 },
   ];
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "leaderboard"]} />
+      <Breadcrumbs path={["dashboard", "staking"]} />
 
       <PageHeader message="pages.leaderboard.title" />
 

@@ -16,7 +16,7 @@ export class Erc20TokenServiceWs {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly erc20HistoryService: Erc20TokenHistoryService,
+    private readonly erc20TokenHistoryService: Erc20TokenHistoryService,
   ) {}
 
   public async transfer(event: IEvent<IErc20TokenTransfer>): Promise<void> {
@@ -36,7 +36,7 @@ export class Erc20TokenServiceWs {
 
     const { returnValues, event: eventType, transactionHash, address } = event;
 
-    await this.erc20HistoryService.create({
+    await this.erc20TokenHistoryService.create({
       address,
       transactionHash,
       eventType: eventType as Erc20TokenEventType,

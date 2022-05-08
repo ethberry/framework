@@ -11,12 +11,14 @@ import {
   Erc1155RecipeEventType,
   Erc1155TokenEventType,
   Erc20TokenEventType,
+  Erc20VestingEventType,
   Erc721AuctionEventType,
   Erc721MarketplaceEventType,
   Erc721TokenEventType,
 } from "@framework/types";
 
 import coin from "@framework/binance-contracts/artifacts/contracts/Coin/Coin.sol/Coin.json";
+import vesting from "@framework/binance-contracts/artifacts/contracts/Vesting/VestingFactory.sol/VestingFactory.json";
 import resources from "@framework/binance-contracts/artifacts/contracts/ERC1155/Resources.sol/Resources.json";
 import items from "@framework/binance-contracts/artifacts/contracts/ERC721/Item.sol/Item.json";
 import hero from "@framework/binance-contracts/artifacts/contracts/ERC721/Hero.sol/Hero.json";
@@ -39,6 +41,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
 
   public async onModuleInit(): Promise<void> {
     const coinAddr = this.configService.get<string>("ERC20_COIN", "");
+    const vestingAddr = this.configService.get<string>("ERC20_VESTING", "");
     const itemsAddr = this.configService.get<string>("ERC721_ITEM_ADDR", "");
     const heroAddr = this.configService.get<string>("ERC721_HERO_ADDR", "");
     const skillAddr = this.configService.get<string>("ERC721_SKILL_ADDR", "");
@@ -59,6 +62,15 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
         eventNames: [
           Erc20TokenEventType.Transfer,
           Erc20TokenEventType.Approval,
+        ],
+      },
+      {
+        contractName: ContractType.ERC20_VESTING,
+        contractAddress: vestingAddr,
+        contractInterface: vesting.abi as Array<AbiItem>,
+        // prettier-ignore
+        eventNames: [
+          Erc20VestingEventType.FlatVestingCreated,
         ],
       },
       {

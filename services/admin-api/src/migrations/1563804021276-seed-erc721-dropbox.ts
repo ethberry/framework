@@ -20,13 +20,23 @@ export class SeedErc721Dropbox1563804021276 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        'Warrior Dropbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${constants.WeiPerEther.toString()}',
+        'ACTIVE',
+        2,
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         'Sword Dropbox',
         '${simpleFormatting}',
         '${imageUrl}',
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
+        2,
         4,
-        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

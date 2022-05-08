@@ -2,6 +2,7 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 import { Erc20TokenHistoryEntity } from "./erc20/token-history/token-history.entity";
+import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc20StakingModule } from "./erc20/staking/staking.module";
 import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
 import { Erc721TokenEntity } from "./erc721/token/token.entity";
@@ -27,6 +28,7 @@ const config: PostgresConnectionOptions = {
   type: "postgres",
   entities: [
     Erc20TokenHistoryEntity,
+    Erc20TokenEntity,
     Erc20StakingModule,
     Erc721CollectionEntity,
     Erc721TemplateEntity,

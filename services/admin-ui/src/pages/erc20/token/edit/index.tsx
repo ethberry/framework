@@ -39,11 +39,11 @@ export const Erc20TokenEditDialog: FC<IEditErc20TokenDialogProps> = props => {
       data-testid="Erc20TokenEditDialog"
       {...rest}
     >
-      <TextInput name="title" />
+      <TextInput name="title" readOnly={!!id} />
       <RichTextEditor name="description" />
       {id ? <SelectInput name="tokenStatus" options={Erc20TokenStatus} /> : null}
-      <TextInput name="symbol" />
-      <EthInput name="amount" />
+      <TextInput name="symbol" readOnly={!!id} />
+      <EthInput name="amount" readOnly={!!id} />
     </FormDialog>
   );
 };
