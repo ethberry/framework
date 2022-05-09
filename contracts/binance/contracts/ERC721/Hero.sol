@@ -13,8 +13,9 @@ import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
 
 import "../Marketplace/interfaces/IEIP712ERC721.sol";
+import "../MetaData/MetaData.sol";
 
-contract Hero is ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, IEIP712ERC721 {
+contract Hero is IEIP712ERC721, ERC721ACBER, ERC721ChainLinkBinance, MetaData, ERC721BaseUrl {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -27,9 +28,6 @@ contract Hero is ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, IEIP712ERC7
 
   // requestId => Request
   mapping(bytes32 => Request) internal _queue;
-
-  // tokenId => Item
-  mapping(uint256 => Data) internal _items;
 
   uint256 private _maxTemplateId = 0;
 
@@ -56,21 +54,22 @@ contract Hero is ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, IEIP712ERC7
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
     uint256 rarity = _getDispersion(randomness);
-    Request memory dataR = _queue[requestId];
+    Request memory request = _queue[requestId];
 
-    _items[tokenId] = Data(dataR.templateId, rarity);
+    _metadata[tokenId] = MetaData({ templateId: request.templateId, rarity: rarity, level: 1 });
 
-    emit MintRandom(dataR.owner, tokenId, dataR.templateId, rarity, dataR.dropboxId);
+    emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.dropboxId);
 
     delete _queue[requestId];
-    safeMint(dataR.owner);
+    safeMint(request.owner);
   }
 
   function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
-    require(templateId != 0, "Item: wrong type");
-    require(templateId <= _maxTemplateId, "Item: wrong type");
+    require(templateId != 0, "Hero: wrong type");
+    require(templateId <= _maxTemplateId, "Hero: wrong type");
+
     tokenId = _tokenIdTracker.current();
-    _items[tokenId] = Data(templateId, 1);
+    _metadata[tokenId] = MetaData({ templateId: templateId, rarity: 1, level: 1 });
     safeMint(to);
   }
 
@@ -88,11 +87,6 @@ contract Hero is ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, IEIP712ERC7
 
     // common
     return 1;
-  }
-
-  function getDataByTokenId(uint256 tokenId) public view override returns (Data memory) {
-    require(_exists(tokenId), "Item: token does not exist");
-    return _items[tokenId];
   }
 
   function setMaxTemplateId(uint256 maxTemplateId) public onlyRole(DEFAULT_ADMIN_ROLE) {

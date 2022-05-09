@@ -12,13 +12,11 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 
 import "../Marketplace/interfaces/IEIP712ERC721.sol";
+import "../MetaData/MetaData.sol";
 
-contract Skill is ERC721ACBER, ERC721BaseUrl, IEIP712ERC721 {
+contract Skill is IEIP712ERC721, ERC721ACBER, MetaData, ERC721BaseUrl {
   using Counters for Counters.Counter;
   using Address for address;
-
-  // tokenId => Item
-  mapping(uint256 => Data) internal _skills;
 
   uint256 private _maxTemplateId = 0;
 
@@ -44,13 +42,8 @@ contract Skill is ERC721ACBER, ERC721BaseUrl, IEIP712ERC721 {
     require(templateId != 0, "Item: wrong type");
     require(templateId <= _maxTemplateId, "Item: wrong type");
     tokenId = _tokenIdTracker.current();
-    _skills[tokenId] = Data(templateId, 1);
+    _metadata[tokenId] = MetaData({ templateId: templateId, rarity: 0, level: 0 });
     safeMint(to);
-  }
-
-  function getDataByTokenId(uint256 tokenId) public view override onlyRole(MINTER_ROLE) returns (Data memory) {
-    require(_exists(tokenId), "Item: token does not exist");
-    return _skills[tokenId];
   }
 
   function setMaxTemplateId(uint256 maxTemplateId) public onlyRole(DEFAULT_ADMIN_ROLE) {
