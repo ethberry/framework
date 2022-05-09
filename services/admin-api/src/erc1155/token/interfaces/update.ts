@@ -6,5 +6,6 @@ export interface IErc1155TokenUpdateDto {
   attributes: string;
   imageUrl: string;
   price: string;
+  amount: number;
   tokenStatus: Erc1155TokenStatus;
 }

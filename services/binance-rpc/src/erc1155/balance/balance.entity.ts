@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { BigNumber } from "ethers";
 
+import { BigNumberColumn, IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@framework/constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IErc1155Balance } from "@framework/types";
 
 import { Erc1155TokenEntity } from "../token/token.entity";
@@ -12,17 +12,7 @@ export class Erc1155BalanceEntity extends IdBaseEntity implements IErc1155Balanc
   @Column({ type: "varchar" })
   public wallet: string;
 
-  @Column({
-    type: "numeric",
-    transformer: {
-      from(val: string) {
-        return BigNumber.from(val);
-      },
-      to(val: BigNumber) {
-        return val.toString();
-      },
-    },
-  })
+  @BigNumberColumn()
   public amount: BigNumber;
 
   @Column({ type: "int" })

@@ -49,16 +49,17 @@ export const Erc1155Token: FC = () => {
       description: emptyStateString,
       price: constants.WeiPerEther.toString(),
       attributes: "{}",
+      amount: 0,
     },
     search: {
       query: "",
       tokenId: "",
       erc1155CollectionIds: [],
     },
-    filter: ({ id, title, description, attributes, price, imageUrl, erc1155CollectionId }) =>
+    filter: ({ id, title, description, attributes, price, amount, imageUrl, erc1155CollectionId }) =>
       id
-        ? { title, description, attributes, price, imageUrl }
-        : { title, description, attributes, price, imageUrl, erc1155CollectionId },
+        ? { title, description, attributes, price, amount, imageUrl }
+        : { title, description, attributes, price, amount, imageUrl, erc1155CollectionId },
   });
 
   return (

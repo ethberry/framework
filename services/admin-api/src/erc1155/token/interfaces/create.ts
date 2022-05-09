@@ -4,5 +4,6 @@ export interface IErc1155TokenCreateDto {
   attributes: string;
   imageUrl: string;
   price: string;
+  amount: number;
   erc1155CollectionId: number;
 }

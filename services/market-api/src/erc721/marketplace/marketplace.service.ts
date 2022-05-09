@@ -30,6 +30,10 @@ export class Erc721MarketplaceService {
       throw new NotFoundException("templateNotFound");
     }
 
+    if (templateEntity.amount > 0 && templateEntity.amount <= templateEntity.instanceCount) {
+      throw new NotFoundException("limitExceeded");
+    }
+
     const totalTokenPrice = ethers.utils.parseUnits(templateEntity.price.toString(), "wei");
     const signData = {
       nonce: ethers.utils.randomBytes(32),

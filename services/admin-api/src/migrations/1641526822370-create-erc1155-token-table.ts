@@ -40,6 +40,16 @@ export class CreateErc1155TokenTable1641526822370 implements MigrationInterface 
           type: "uint256",
         },
         {
+          name: "amount",
+          type: "int",
+          default: 0,
+        },
+        {
+          name: "instance_count",
+          type: "int",
+          default: 0,
+        },
+        {
           name: "token_id",
           type: "uint256",
         },

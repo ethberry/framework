@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { JsonInput, TextInput } from "@gemunion/mui-inputs-core";
+import { JsonInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IErc1155Token } from "@framework/types";
@@ -20,13 +20,14 @@ export interface IEditErc1155TokenDialogProps {
 export const Erc1155TokenEditDialog: FC<IEditErc1155TokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, attributes, price, erc1155CollectionId, imageUrl } = initialValues;
+  const { id, title, description, attributes, price, amount, erc1155CollectionId, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
     attributes,
     price,
+    amount,
     erc1155CollectionId,
     imageUrl,
   };
@@ -43,6 +44,7 @@ export const Erc1155TokenEditDialog: FC<IEditErc1155TokenDialogProps> = props =>
       <RichTextEditor name="description" />
       <JsonInput name="attributes" />
       <EthInput name="price" />
+      <NumberInput name="amount" />
       <EntityInput name="erc1155CollectionId" controller="erc1155-collections" readOnly={!!id} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

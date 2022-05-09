@@ -49,17 +49,20 @@ export const Erc721Template: FC = () => {
       description: emptyStateString,
       price: constants.WeiPerEther.toString(),
       attributes: "{}",
+      amount: 0,
+      erc721CollectionId: 3,
     },
     search: {
       query: "",
       templateStatus: [Erc721TemplateStatus.ACTIVE],
       erc721CollectionIds: [],
     },
-    filter: ({ title, description, attributes, price, imageUrl, templateStatus, erc721CollectionId }) => ({
+    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, erc721CollectionId }) => ({
       title,
       description,
       attributes,
       price,
+      amount,
       imageUrl,
       templateStatus,
       erc721CollectionId,

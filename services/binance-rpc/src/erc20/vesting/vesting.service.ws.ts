@@ -41,7 +41,7 @@ export class Erc20VestingServiceWs {
   }
 
   private async updateHistory(event: IEvent<TErc20VestingEventData>) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20VestingServiceWs.name);
 
     const { returnValues, event: eventType, transactionHash, address } = event;
 

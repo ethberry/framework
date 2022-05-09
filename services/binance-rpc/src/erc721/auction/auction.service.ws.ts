@@ -90,7 +90,7 @@ export class Erc721AuctionServiceWs {
   }
 
   private async updateHistory(event: IEvent<TErc721AuctionEventData>) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc721AuctionServiceWs.name);
 
     const {
       returnValues,

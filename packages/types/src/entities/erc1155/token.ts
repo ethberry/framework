@@ -13,6 +13,7 @@ export interface IErc1155Token extends IIdBase {
   imageUrl: string;
   attributes: any;
   price: string;
+  amount: number;
   tokenId: string;
   tokenStatus: Erc1155TokenStatus;
   erc1155CollectionId: number;

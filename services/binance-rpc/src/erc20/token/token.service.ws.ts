@@ -32,7 +32,7 @@ export class Erc20TokenServiceWs {
   }
 
   private async updateHistory(event: IEvent<TErc20TokenEventData>) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20TokenServiceWs.name);
 
     const { returnValues, event: eventType, transactionHash, address } = event;
 

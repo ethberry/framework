@@ -33,7 +33,7 @@ export class Erc1155TokenServiceWs {
 
     await this.updateHistory(event);
 
-    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), id, value);
+    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), id, ~~value);
   }
 
   public async transferBatch(event: IEvent<IErc1155TokenTransferBatch>): Promise<void> {
@@ -46,7 +46,7 @@ export class Erc1155TokenServiceWs {
 
     await Promise.all(
       ids.map((tokenId, i) =>
-        this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenId, values[i]),
+        this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenId, ~~values[i]),
       ),
     );
   }
@@ -59,7 +59,7 @@ export class Erc1155TokenServiceWs {
     await this.updateHistory(event);
   }
 
-  private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {
+  private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: number) {
     const erc1155TokenEntity = await this.erc1155TokenService.getToken(tokenId, address);
 
     if (!erc1155TokenEntity) {
@@ -67,16 +67,18 @@ export class Erc1155TokenServiceWs {
     }
 
     if (from !== ethers.constants.AddressZero) {
+      erc1155TokenEntity.instanceCount += amount;
       await this.erc1155BalanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 
     if (to !== ethers.constants.AddressZero) {
+      // erc1155TokenEntity.instanceCount -= amount;
       await this.erc1155BalanceService.increment(erc1155TokenEntity.id, to, amount);
     }
   }
 
   private async updateHistory(event: IEvent<TErc1155TokenEventData>) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc1155TokenServiceWs.name);
 
     const { returnValues, event: eventType, transactionHash, address } = event;
 

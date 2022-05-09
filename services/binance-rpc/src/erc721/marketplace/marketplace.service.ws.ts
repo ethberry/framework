@@ -69,7 +69,7 @@ export class Erc721MarketplaceServiceWs {
   }
 
   private async updateHistory(event: IEvent<TErc721MarketplaceEventData>, erc721TokenId: number) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc721MarketplaceServiceWs.name);
 
     const { returnValues, event: eventType, transactionHash, address } = event;
 

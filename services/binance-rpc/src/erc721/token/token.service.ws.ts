@@ -54,7 +54,10 @@ export class Erc721TokenServiceWs {
     } = event;
 
     // Wait until Token will be created by Marketplace Redeem or Airdrop Redeem or MintRandom events
-    this.loggerService.log(`Erc721Transfer@${address.toLowerCase()}: awaiting tokenId ${tokenId}`);
+    this.loggerService.log(
+      `Erc721Transfer@${address.toLowerCase()}: awaiting tokenId ${tokenId}`,
+      Erc721TokenServiceWs.name,
+    );
     await delay(1618);
 
     let erc721TokenEntity;
@@ -69,19 +72,22 @@ export class Erc721TokenServiceWs {
     }
 
     if (!erc721TokenEntity) {
-      throw new NotFoundException("tokenNotFound@Transfer");
+      throw new NotFoundException("tokenNotFound");
     }
 
     await this.updateHistory(event, erc721TokenEntity.id);
 
-    Object.assign(erc721TokenEntity, {
-      tokenStatus:
-        from === ethers.constants.AddressZero
-          ? Erc721TokenStatus.MINTED
-          : to === ethers.constants.AddressZero
-          ? Erc721TokenStatus.BURNED
-          : erc721TokenEntity.tokenStatus,
-    });
+    if (from === ethers.constants.AddressZero) {
+      erc721TokenEntity.erc721Template.instanceCount += 1;
+      erc721TokenEntity.tokenStatus = Erc721TokenStatus.MINTED;
+    }
+
+    if (to === ethers.constants.AddressZero) {
+      // erc721TokenEntity.erc721Template.instanceCount -= 1;
+      erc721TokenEntity.tokenStatus = Erc721TokenStatus.BURNED;
+    }
+
+    erc721TokenEntity.owner = to;
 
     await erc721TokenEntity.save();
   }
@@ -243,7 +249,7 @@ export class Erc721TokenServiceWs {
   }
 
   private async updateHistory(event: IEvent<TErc721TokenEventData>, erc721TokenId?: number) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc721TokenServiceWs.name);
 
     const { returnValues, event: eventType, transactionHash, address } = event;
 

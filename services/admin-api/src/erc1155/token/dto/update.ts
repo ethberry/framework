@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsNumberString, IsOptional, IsString, IsUrl } from "class-validator";
+import { IsEnum, IsInt, IsJSON, IsNumberString, IsOptional, IsString, IsUrl, Min } from "class-validator";
 
 import { Erc1155TokenStatus } from "@framework/types";
 
@@ -25,6 +25,14 @@ export class Erc1155TokenUpdateDto implements IErc1155TokenUpdateDto {
   @IsOptional()
   @IsNumberString({}, { message: "typeMismatch" })
   public price: string;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public amount: number;
 
   @ApiPropertyOptional()
   @IsOptional()

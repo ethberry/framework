@@ -29,8 +29,13 @@ export class Erc1155MarketplaceService {
         );
 
         if (!tokenEntity) {
-          throw new NotFoundException("templateNotFound");
+          throw new NotFoundException("tokenNotFound");
         }
+
+        if (tokenEntity.amount > 0 && tokenEntity.amount <= tokenEntity.instanceCount) {
+          throw new NotFoundException("limitExceeded");
+        }
+
         const tokenPrice = ethers.utils.parseUnits(tokenEntity.price, "wei").mul(dto.amounts[index]);
         totalTokenPrice = totalTokenPrice.add(tokenPrice);
         collections.push(tokenEntity.erc1155Collection.address);

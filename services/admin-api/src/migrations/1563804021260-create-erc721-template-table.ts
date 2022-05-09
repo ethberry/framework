@@ -39,6 +39,16 @@ export class CreateErc721TemplateTable1563804021260 implements MigrationInterfac
           type: "uint256",
         },
         {
+          name: "amount",
+          type: "int",
+          default: 0,
+        },
+        {
+          name: "instance_count",
+          type: "int",
+          default: 0,
+        },
+        {
           name: "erc721_collection_id",
           type: "int",
         },

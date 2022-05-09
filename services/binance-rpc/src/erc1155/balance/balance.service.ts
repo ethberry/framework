@@ -22,7 +22,7 @@ export class Erc1155BalanceService {
     return this.erc1155BalanceEntityRepository.create(dto).save();
   }
 
-  public async increment(erc1155TokenId: number, wallet: string, amount: string): Promise<Erc1155BalanceEntity> {
+  public async increment(erc1155TokenId: number, wallet: string, amount: number): Promise<Erc1155BalanceEntity> {
     const balanceEntity = await this.findOne({ erc1155TokenId, wallet });
 
     if (!balanceEntity) {
@@ -37,7 +37,7 @@ export class Erc1155BalanceService {
     return balanceEntity.save();
   }
 
-  public async decrement(erc1155TokenId: number, wallet: string, amount: string): Promise<Erc1155BalanceEntity> {
+  public async decrement(erc1155TokenId: number, wallet: string, amount: number): Promise<Erc1155BalanceEntity> {
     const balanceEntity = await this.findOne({ erc1155TokenId, wallet });
 
     if (!balanceEntity) {

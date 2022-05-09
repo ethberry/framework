@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, IsNumberString, IsString, IsUrl } from "class-validator";
+import { IsInt, IsJSON, IsNumberString, IsString, IsUrl, Min } from "class-validator";
 
 import { IErc721TemplateCreateDto } from "../interfaces";
 
@@ -19,6 +19,13 @@ export class Erc721TemplateCreateDto implements IErc721TemplateCreateDto {
   @ApiProperty()
   @IsNumberString({}, { message: "typeMismatch" })
   public price: string;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public amount: number;
 
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })

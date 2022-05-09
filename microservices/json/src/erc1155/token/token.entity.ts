@@ -14,6 +14,12 @@ export class Erc1155TokenEntity extends SearchableEntity implements IErc1155Toke
   @BigNumberColumn()
   public price: string;
 
+  @Column({ type: "int" })
+  public amount: number;
+
+  @Column({ type: "int" })
+  public instanceCount: number;
+
   @Column({ type: "varchar" })
   public imageUrl: string;
 

@@ -15,6 +15,7 @@ export interface IErc721Template extends IIdBase {
   imageUrl: string;
   attributes: any;
   price: string;
+  amount: number;
   templateStatus: Erc721TemplateStatus;
   erc721CollectionId: number;
   erc721Collection?: IErc721Collection;

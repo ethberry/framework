@@ -16,7 +16,7 @@ export class Erc1155MarketplaceServiceWs {
   ) {}
 
   public async redeem(event: IEvent<IErc1155MarketplaceRedeem>): Promise<void> {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc1155MarketplaceServiceWs.name);
     await this.updateHistory(event);
   }
 

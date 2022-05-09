@@ -19,6 +19,12 @@ export class Erc721TemplateEntity extends SearchableEntity implements IErc721Tem
   @BigNumberColumn()
   public price: string;
 
+  @Column({ type: "int" })
+  public amount: number;
+
+  @Column({ type: "int" })
+  public instanceCount: number;
+
   @Column({
     type: "enum",
     enum: Erc721TemplateStatus,

@@ -67,7 +67,7 @@ export class Erc1155RecipeServiceWs {
   }
 
   private async updateHistory(event: IEvent<TErc1155RecipeEventData>) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"));
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc1155RecipeServiceWs.name);
 
     const {
       returnValues,

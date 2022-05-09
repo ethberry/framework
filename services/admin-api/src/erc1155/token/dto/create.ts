@@ -20,6 +20,13 @@ export class Erc1155TokenCreateDto implements IErc1155TokenCreateDto {
   @IsNumberString({}, { message: "typeMismatch" })
   public price: string;
 
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public amount: number;
+
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsUrl({}, { message: "patternMismatch" })

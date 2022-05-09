@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Erc721CollectionType, Erc721TemplateStatus, IErc721Template } from "@framework/types";
@@ -20,13 +20,15 @@ export interface IEditErc721TemplateDialogProps {
 export const Erc721TemplateEditDialog: FC<IEditErc721TemplateDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, attributes, price, templateStatus, erc721CollectionId, imageUrl } = initialValues;
+  const { id, title, description, attributes, price, amount, templateStatus, erc721CollectionId, imageUrl } =
+    initialValues;
   const fixedValues = {
     id,
     title,
     description,
     attributes,
     price,
+    amount,
     templateStatus,
     erc721CollectionId,
     imageUrl,
@@ -44,6 +46,7 @@ export const Erc721TemplateEditDialog: FC<IEditErc721TemplateDialogProps> = prop
       <RichTextEditor name="description" />
       <JsonInput name="attributes" />
       <EthInput name="price" />
+      <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={Erc721TemplateStatus} /> : null}
       <EntityInput
         name="erc721CollectionId"
