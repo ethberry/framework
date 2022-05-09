@@ -19,6 +19,8 @@ import { Erc721TokenEntity } from "./erc721/token/token.entity";
 import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
 import { Erc721AuctionEntity } from "./erc721/auction/auction.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
+import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
+import { Erc721IngredientEntity } from "./erc721/ingredient/ingredient.entity";
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
@@ -43,7 +45,7 @@ import { SeedErc721Dropbox1563804021276 } from "./migrations/1563804021276-seed-
 import { CreateErc721TokenTable1563804021280 } from "./migrations/1563804021280-create-erc721-token-table";
 import { SeedErc721Token1563804021281 } from "./migrations/1563804021281-seed-erc721-tokens";
 import { CreateErc721TokenHistoryTable1563804021290 } from "./migrations/1563804021290-create-erc721-token-history-table";
-import { CreateErc721MarketplaceHistoryTable1563804021290 } from "./migrations/1563804021300-create-erc721-marketplace-history-table";
+import { CreateErc721MarketplaceHistoryTable1563804021300 } from "./migrations/1563804021300-create-erc721-marketplace-history-table";
 import { CreateErc1155RecipeHistory1645160381140 } from "./migrations/1645160381140-create-erc1155-recipe-history";
 import { CreateErc1155CollectionTable1641526822350 } from "./migrations/1641526822350-create-erc1155-collection-table";
 import { SeedErc1155Collection1641526822360 } from "./migrations/1641526822360-seed-erc1155-collection";
@@ -63,6 +65,11 @@ import { CreateErc721AirdropTable1648525967810 } from "./migrations/164852596780
 import { SeedErc721Airdrop1648525967820 } from "./migrations/1648525967820-seed-erc721-air-drop";
 import { Erc20StakingHistoryEntity } from "./erc20/staking-history/staking-history.entity";
 import { Erc20VestingEntity } from "./erc20/vesting/vesting.entity";
+import { CreateErc721Recipe1648525970000 } from "./migrations/1648525970000-create-erc721-recipe-table";
+import { SeedErc721Recipe1648525970010 } from "./migrations/1648525970010-seed-erc721-recipe";
+import { CreateErc721RecipeHistory1648525970020 } from "./migrations/1648525970020-create-erc721-recipe-history";
+import { CreateErc721Ingredient1648525970030 } from "./migrations/1648525970030-create-erc721-ingredient-table";
+import { SeedErc721Ingredient1648525970040 } from "./migrations/1648525970040-seed-erc721-ingredient";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -81,6 +88,8 @@ const config: PostgresConnectionOptions = {
     Erc721DropboxEntity,
     Erc721AirdropEntity,
     Erc721AuctionEntity,
+    Erc721RecipeEntity,
+    Erc721IngredientEntity,
     Erc1155CollectionEntity,
     Erc1155TokenEntity,
     Erc1155RecipeEntity,
@@ -124,7 +133,7 @@ const config: PostgresConnectionOptions = {
     CreateErc721TokenTable1563804021280,
     SeedErc721Token1563804021281,
     CreateErc721TokenHistoryTable1563804021290,
-    CreateErc721MarketplaceHistoryTable1563804021290,
+    CreateErc721MarketplaceHistoryTable1563804021300,
     CreateErc1155CollectionTable1641526822350,
     SeedErc1155Collection1641526822360,
     CreateErc1155TokenTable1641526822370,
@@ -142,6 +151,11 @@ const config: PostgresConnectionOptions = {
     CreateErc721AuctionHistoryTable1646924902920,
     CreateErc721AirdropTable1648525967810,
     SeedErc721Airdrop1648525967820,
+    CreateErc721Recipe1648525970000,
+    SeedErc721Recipe1648525970010,
+    CreateErc721RecipeHistory1648525970020,
+    CreateErc721Ingredient1648525970030,
+    SeedErc721Ingredient1648525970040,
   ],
 };
 

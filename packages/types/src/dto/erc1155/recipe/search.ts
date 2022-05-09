@@ -1,7 +1,7 @@
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { RecipeStatus } from "../../../entities";
+import { Erc1155RecipeStatus } from "../../../entities";
 
 export interface IErc1155RecipeSearchDto extends ISearchDto {
-  recipeStatus: Array<RecipeStatus>;
+  recipeStatus: Array<Erc1155RecipeStatus>;
 }

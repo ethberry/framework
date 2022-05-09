@@ -1,8 +1,6 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
-import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { IErc1155Recipe } from "@framework/types";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -19,11 +17,9 @@ export interface IRecipeTokenDialogProps {
 export const Erc1155RecipeEditDialog: FC<IRecipeTokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, erc1155TokenId, ingredients, recipeStatus } = initialValues;
+  const { id, erc1155TokenId, ingredients, recipeStatus } = initialValues;
   const fixedValues = {
     id,
-    title,
-    description,
     erc1155TokenId,
     recipeStatus,
     ingredients: ingredients.map(({ erc1155TokenId, amount }) => ({ erc1155TokenId, amount })),
@@ -37,8 +33,6 @@ export const Erc1155RecipeEditDialog: FC<IRecipeTokenDialogProps> = props => {
       data-testid="Erc1155RecipeEditDialog"
       {...rest}
     >
-      <TextInput name="title" readOnly={!!id} />
-      <RichTextEditor name="description" />
       <EntityInput name="erc1155TokenId" controller="erc1155-tokens" readOnly={!!id} />
       <Ingredients name="ingredients" />
     </FormDialog>

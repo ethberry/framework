@@ -16,8 +16,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IErc1155Recipe, IErc1155RecipeSearchDto, RecipeStatus } from "@framework/types";
+import { Erc1155RecipeStatus, IErc1155Recipe, IErc1155RecipeSearchDto } from "@framework/types";
 
 import { Erc1155RecipeEditDialog } from "./edit";
 import { Erc1155RecipeSearchForm } from "./form";
@@ -46,17 +45,13 @@ export const Erc1155Recipes: FC = () => {
   } = useCollection<IErc1155Recipe, IErc1155RecipeSearchDto>({
     baseUrl: "/erc1155-recipes",
     empty: {
-      title: "",
-      description: emptyStateString,
       ingredients: [],
     },
     search: {
       query: "",
-      recipeStatus: [RecipeStatus.ACTIVE, RecipeStatus.NEW],
+      recipeStatus: [Erc1155RecipeStatus.ACTIVE, Erc1155RecipeStatus.NEW],
     },
-    filter: ({ title, description, erc1155TokenId, ingredients }) => ({
-      title,
-      description,
+    filter: ({ erc1155TokenId, ingredients }) => ({
       erc1155TokenId,
       ingredients,
     }),
@@ -64,9 +59,9 @@ export const Erc1155Recipes: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc1155-craft"]} />
+      <Breadcrumbs path={["dashboard", "erc1155-recipes"]} />
 
-      <PageHeader message="pages.erc1155-craft.title">
+      <PageHeader message="pages.erc1155-craft.recipes">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -84,13 +79,13 @@ export const Erc1155Recipes: FC = () => {
         <List>
           {rows.map((recipe, i) => (
             <ListItem key={i}>
-              <ListItemText>{recipe.title}</ListItemText>
+              <ListItemText>{recipe.erc1155Token!.title}</ListItemText>
               <ListItemSecondaryAction>
                 <Erc1155RecipeUploadButton recipe={recipe} />
                 <IconButton onClick={handleEdit(recipe)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(recipe)} disabled={recipe.recipeStatus !== RecipeStatus.NEW}>
+                <IconButton onClick={handleDelete(recipe)} disabled={recipe.recipeStatus !== Erc1155RecipeStatus.NEW}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

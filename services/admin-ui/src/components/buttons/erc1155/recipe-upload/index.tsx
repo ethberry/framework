@@ -5,7 +5,7 @@ import { Close, Save } from "@mui/icons-material";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { IErc1155Recipe, RecipeStatus } from "@framework/types";
+import { Erc1155RecipeStatus, IErc1155Recipe } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 
 import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
@@ -22,7 +22,7 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
   const { library } = useWeb3React();
 
   const metaLoadRecipe = useMetamask((recipe: IErc1155Recipe) => {
-    if (recipe.recipeStatus !== RecipeStatus.NEW) {
+    if (recipe.recipeStatus !== Erc1155RecipeStatus.NEW) {
       return Promise.reject(new Error(""));
     }
     const ids = recipe.ingredients.map(ingredient => ingredient.erc1155TokenId);
@@ -42,11 +42,11 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
 
   const metaToggleRecipe = useMetamask((recipe: IErc1155Recipe) => {
     let recipeStatus: boolean;
-    if (recipe.recipeStatus === RecipeStatus.NEW) {
+    if (recipe.recipeStatus === Erc1155RecipeStatus.NEW) {
       // this should never happen
       return Promise.reject(new Error(""));
     } else {
-      recipeStatus = recipe.recipeStatus !== RecipeStatus.ACTIVE;
+      recipeStatus = recipe.recipeStatus !== Erc1155RecipeStatus.ACTIVE;
     }
 
     const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, CraftERC1155.abi, library.getSigner());
@@ -61,7 +61,7 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
     };
   };
 
-  if (recipe.recipeStatus === RecipeStatus.NEW) {
+  if (recipe.recipeStatus === Erc1155RecipeStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.erc1155-recipes.upload" })}>
         <IconButton onClick={handleLoadRecipe(recipe)}>
@@ -75,7 +75,7 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
     <Tooltip
       title={formatMessage({
         id:
-          recipe.recipeStatus === RecipeStatus.ACTIVE
+          recipe.recipeStatus === Erc1155RecipeStatus.ACTIVE
             ? "pages.erc1155-recipes.deactivate"
             : "pages.erc1155-recipes.activate",
       })}

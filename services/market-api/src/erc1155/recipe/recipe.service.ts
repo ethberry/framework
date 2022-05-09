@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { ISearchDto } from "@gemunion/types-collection";
 
 import { Erc1155RecipeEntity } from "./recipe.entity";
-import { RecipeStatus } from "@framework/types";
+import { Erc1155RecipeStatus } from "@framework/types";
 
 @Injectable()
 export class RecipeService {
@@ -21,7 +21,7 @@ export class RecipeService {
 
     queryBuilder.select();
     queryBuilder.where({
-      recipeStatus: RecipeStatus.ACTIVE,
+      recipeStatus: Erc1155RecipeStatus.ACTIVE,
     });
     if (query) {
       queryBuilder.leftJoin(

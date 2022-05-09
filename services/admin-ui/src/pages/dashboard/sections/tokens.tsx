@@ -98,6 +98,14 @@ export const Tokens: FC = () => {
           <FormattedMessage id="pages.dashboard.tokens.erc721-tokens" />
         </ListItemText>
       </ListItem>
+      <ListItem button component={RouterLink} to="/erc721-recipes">
+        <ListItemIcon>
+          <Construction />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc721-recipes" />
+        </ListItemText>
+      </ListItem>
       <Divider />
       <ListItem button component={RouterLink} to="/erc1155-collections">
         <ListItemIcon>

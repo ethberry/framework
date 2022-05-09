@@ -18,19 +18,19 @@ contract CraftERC1155 is AccessControl, Pausable {
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   struct Recipe {
+    address resources;
     uint256[] ids;
     uint256[] amounts;
+    address reward;
     uint256 tokenId;
     bool active;
   }
 
-  event RecipeCreated(uint256 recipeId, uint256[] ids, uint256[] amounts, uint256 tokenId);
+  event RecipeCreated(uint256 recipeId, address resources, uint256[] ids, uint256[] amounts, address reward, uint256 tokenId);
 
   event RecipeUpdated(uint256 recipeId, bool active);
 
   event RecipeCrafted(address from, uint256 recipeId, uint256 amount);
-
-  IEIP712ERC1155 private _resources;
 
   mapping(uint256 => Recipe) private _recipes;
 
@@ -39,15 +39,12 @@ contract CraftERC1155 is AccessControl, Pausable {
     _setupRole(PAUSER_ROLE, _msgSender());
   }
 
-  function setFactory(address resources) external onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(resources.isContract(), "CraftERC1155: the factory must be a deployed contract");
-    _resources = IEIP712ERC1155(resources);
-  }
-
   function createRecipe(
     uint256 recipeId,
+    address resources,
     uint256[] memory ids,
     uint256[] memory amounts,
+    address reward,
     uint256 tokenId
   ) public onlyRole(DEFAULT_ADMIN_ROLE) {
     require(ids.length == amounts.length, "CraftERC1155: ids and amounts length mismatch");
@@ -55,8 +52,8 @@ contract CraftERC1155 is AccessControl, Pausable {
     Recipe memory recipe = _recipes[recipeId];
     require(recipe.tokenId == 0, "CraftERC1155: recipe already exist");
 
-    _recipes[recipeId] = Recipe(ids, amounts, tokenId, true);
-    emit RecipeCreated(recipeId, ids, amounts, tokenId);
+    _recipes[recipeId] = Recipe(resources, ids, amounts, reward, tokenId, true);
+    emit RecipeCreated(recipeId, resources, ids, amounts, reward, tokenId);
   }
 
   function updateRecipe(uint256 recipeId, bool active) public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -79,8 +76,8 @@ contract CraftERC1155 is AccessControl, Pausable {
 
     emit RecipeCrafted(_msgSender(), recipeId, amount);
 
-    _resources.burnBatch(_msgSender(), recipe.ids, amounts);
-    _resources.mint(_msgSender(), recipe.tokenId, amount, "0x");
+    IEIP712ERC1155(recipe.resources).burnBatch(_msgSender(), recipe.ids, amounts);
+    IEIP712ERC1155(recipe.reward).mint(_msgSender(), recipe.tokenId, amount, "0x");
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {

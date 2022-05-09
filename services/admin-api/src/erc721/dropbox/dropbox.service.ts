@@ -63,6 +63,15 @@ export class Erc721DropboxService {
     return queryBuilder.getManyAndCount();
   }
 
+  public async autocomplete(): Promise<Array<Erc721DropboxEntity>> {
+    return this.erc721DropboxEntityRepository.find({
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+  }
+
   public findOne(
     where: FindOptionsWhere<Erc721DropboxEntity>,
     options?: FindOneOptions<Erc721DropboxEntity>,

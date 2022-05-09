@@ -7,6 +7,7 @@ import { Erc721Template } from "./template";
 import { Erc721Airdrop } from "./airdrop";
 import { Erc721Dropbox } from "./dropbox";
 import { Erc721Token } from "./token";
+import { Erc721Recipes } from "./recipe";
 
 export const erc721Routes: Array<RouteObject> = [
   {
@@ -47,6 +48,14 @@ export const erc721Routes: Array<RouteObject> = [
     children: [
       { index: true, element: <Erc721Token /> },
       { path: "/erc721-tokens/:id", element: <Erc721Token /> },
+    ],
+  },
+  {
+    path: "/erc721-recipes",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Erc721Recipes /> },
+      { path: "/erc721-recipes/:id", element: <Erc721Recipes /> },
     ],
   },
 ];

@@ -18,6 +18,7 @@ export * from "./erc721/token-history/search";
 export * from "./erc721/auction/search";
 export * from "./erc721/auction-history/search";
 export * from "./erc721/dropbox/search";
+export * from "./erc721/recipe/search";
 
 export * from "./erc1155/collection/search";
 export * from "./erc1155/token/search";

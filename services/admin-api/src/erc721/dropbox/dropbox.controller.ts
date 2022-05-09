@@ -18,6 +18,11 @@ export class Erc721DropboxController {
     return this.erc721DropboxService.search(dto);
   }
 
+  @Get("/autocomplete")
+  public autocomplete(): Promise<Array<Erc721DropboxEntity>> {
+    return this.erc721DropboxService.autocomplete();
+  }
+
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,

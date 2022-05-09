@@ -3,10 +3,10 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { IEvent } from "@gemunion/nestjs-web3";
 import {
   Erc1155RecipeEventType,
+  Erc1155RecipeStatus,
   IErc1155RecipeCrafted,
   IErc1155RecipeCreated,
   IErc1155RecipeUpdated,
-  RecipeStatus,
   TErc1155RecipeEventData,
 } from "@framework/types";
 
@@ -36,7 +36,7 @@ export class Erc1155RecipeServiceWs {
     }
 
     Object.assign(recipeEntity, {
-      recipeStatus: RecipeStatus.ACTIVE,
+      recipeStatus: Erc1155RecipeStatus.ACTIVE,
     });
 
     await recipeEntity.save();
@@ -56,7 +56,7 @@ export class Erc1155RecipeServiceWs {
     }
 
     Object.assign(recipeEntity, {
-      recipeStatus: active ? RecipeStatus.ACTIVE : RecipeStatus.INACTIVE,
+      recipeStatus: active ? Erc1155RecipeStatus.ACTIVE : Erc1155RecipeStatus.INACTIVE,
     });
 
     await recipeEntity.save();

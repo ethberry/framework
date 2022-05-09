@@ -21,23 +21,13 @@ export class CreateErc1155Recipe1645160381120 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "title",
-          type: "varchar",
-        },
-        {
-          name: "description",
-          type: "json",
-        },
-        {
           name: "erc1155_token_id",
           type: "int",
-          isNullable: true,
         },
         {
           name: "recipe_status",
           type: `${ns}.erc1155_recipe_status_enum`,
           default: "'NEW'",
-          isNullable: false,
         },
         {
           name: "created_at",

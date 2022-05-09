@@ -6,6 +6,7 @@ import { Erc721DropboxModule } from "./dropbox/dropbox.module";
 import { Erc721AirdropModule } from "./airdrop/airdrop.module";
 import { Erc721TokenModule } from "./token/token.module";
 import { Erc721AuctionModule } from "./auction/auction.module";
+import { Erc721RecipeModule } from "./recipe/recipe.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { Erc721AuctionModule } from "./auction/auction.module";
     Erc721AirdropModule,
     Erc721TokenModule,
     Erc721AuctionModule,
+    Erc721RecipeModule,
   ],
 })
 export class Erc721Module {}

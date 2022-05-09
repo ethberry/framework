@@ -33,10 +33,10 @@ export const Erc1155RecipeItem: FC<IRecipeItemProps> = props => {
         <CardMedia className={classes.media} image={recipe.erc1155Token?.imageUrl} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {recipe.title}
+            {recipe.erc1155Token!.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={recipe.description} />
+            <RichTextDisplay data={recipe.erc1155Token!.description} />
           </Typography>
           <List>
             {(recipe.ingredients || []).map(ingredient => (

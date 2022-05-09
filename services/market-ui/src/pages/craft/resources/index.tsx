@@ -12,7 +12,6 @@ import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ApiContext } from "@gemunion/provider-api";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IErc1155Recipe, IErc1155RecipeSearchDto } from "@framework/types";
 import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
 
@@ -31,10 +30,6 @@ export const Resources: FC<ITabPanelProps> = props => {
     IErc1155RecipeSearchDto
   >({
     baseUrl: "/erc1155-recipes",
-    empty: {
-      title: "",
-      description: emptyStateString,
-    },
     search: {
       query: "",
     },

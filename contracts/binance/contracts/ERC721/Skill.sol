@@ -31,10 +31,10 @@ contract Skill is IEIP712ERC721, ERC721ACBER, MetaData, ERC721BaseUrl {
   }
 
   function mintRandom(
-    address to,
-    uint256 templateId,
-    uint256 dropboxId
-  ) external override onlyRole(MINTER_ROLE) {
+    address,
+    uint256,
+    uint256
+  ) external view override onlyRole(MINTER_ROLE) {
     revert("Disabled!");
   }
 

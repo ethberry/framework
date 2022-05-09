@@ -129,8 +129,6 @@
       "airdropStatus": "Status",
       "amount": "Amount",
       "attributes": "Attributes",
-      "collectionId": "Collection",
-      "collectionIds": "Collections",
       "collectionStatus": "Status",
       "collectionType": "Type",
       "comment": "Comment",
@@ -151,6 +149,7 @@
       "erc20TokenIds": "Token",
       "erc721CollectionId": "Collections",
       "erc721CollectionIds": "Collections",
+      "erc721DropboxId": "Dropbox",
       "erc721TemplateId": "Template",
       "erc721TemplateIds": "Template",
       "erc721TokenId": "Token",
@@ -164,6 +163,7 @@
       "owner": "Owner",
       "password": "Password",
       "price": "Price",
+      "random": "Random",
       "rarity": "Rarity",
       "recipeStatus": "Status",
       "royalty": "Royalty",
@@ -204,6 +204,7 @@
       "erc20TokenIds": "Token",
       "erc721CollectionId": "Collections",
       "erc721CollectionIds": "Collections",
+      "erc721DropboxId": "Dropbox",
       "erc721TemplateId": "Template",
       "erc721TemplateIds": "Template",
       "erc721TokenId": "Token",
@@ -279,6 +280,7 @@
         "erc721-airdrop": "ERC721 Airdrop",
         "erc721-collections": "ERC721 Collections",
         "erc721-dropbox": "ERC721 Dropbox",
+        "erc721-recipes": "ERC721 Recipes",
         "erc721-templates": "ERC721 Templates",
         "erc721-tokens": "ERC721 Tokens",
         "title": "Tokens"
@@ -286,9 +288,6 @@
     },
     "erc1155-collections": {
       "title": "ERC1155 Collections"
-    },
-    "erc1155-craft": {
-      "title": "ERC1155 Recipes"
     },
     "erc1155-recipes": {
       "activate": "Activate recipe",
@@ -324,6 +323,12 @@
     },
     "erc721-dropboxes": {
       "title": "ERC721 Dropbox"
+    },
+    "erc721-recipes": {
+      "activate": "Activate recipe",
+      "deactivate": "Deactivate recipes",
+      "title": "ERC721 Recipes",
+      "upload": "Upload recipe"
     },
     "erc721-templates": {
       "title": "ERC721 Templates"

@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormikForm } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IErc1155RecipeSearchDto, RecipeStatus } from "@framework/types";
+import { Erc1155RecipeStatus, IErc1155RecipeSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -38,7 +38,7 @@ export const Erc1155RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <SelectInput multiple name="recipeStatus" options={RecipeStatus} />
+            <SelectInput multiple name="recipeStatus" options={Erc1155RecipeStatus} />
           </Grid>
         </Grid>
       </Collapse>
