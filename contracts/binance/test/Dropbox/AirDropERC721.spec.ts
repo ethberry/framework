@@ -24,7 +24,6 @@ describe("AirdropERC721", function () {
   let owner: SignerWithAddress;
   let receiver: SignerWithAddress;
   let network: Network;
-  this.timeout(142000);
 
   beforeEach(async function () {
     airdrop = await ethers.getContractFactory("AirdropERC721");
@@ -37,8 +36,8 @@ describe("AirdropERC721", function () {
       tokenName,
       tokenSymbol,
       baseTokenURI,
-      royaltyNumerator,
       1,
+      royaltyNumerator,
     )) as AirdropERC721;
     await airdropInstance.setFactory(itemInstance.address);
 
@@ -84,7 +83,7 @@ describe("AirdropERC721", function () {
         .connect(receiver)
         .redeem(receiver.address, tokenId, templateId, owner.address, signature);
       await expect(tx1)
-        .to.emit(airdropInstance, "Redeem")
+        .to.emit(airdropInstance, "RedeemAirdrop")
         .withArgs(receiver.address, airdropInstance.address, tokenId, templateId, 0);
 
       const ownerOf = await airdropInstance.ownerOf(tokenId);
@@ -158,7 +157,7 @@ describe("AirdropERC721", function () {
         .connect(receiver)
         .redeem(receiver.address, tokenId, templateId, owner.address, signature);
       await expect(tx1)
-        .to.emit(airdropInstance, "Redeem")
+        .to.emit(airdropInstance, "RedeemAirdrop")
         .withArgs(receiver.address, airdropInstance.address, tokenId, templateId, 0);
 
       const tx2 = airdropInstance
@@ -196,7 +195,7 @@ describe("AirdropERC721", function () {
         .connect(receiver)
         .redeem(receiver.address, tokenId, templateId, owner.address, signature);
       await expect(tx1)
-        .to.emit(airdropInstance, "Redeem")
+        .to.emit(airdropInstance, "RedeemAirdrop")
         .withArgs(receiver.address, airdropInstance.address, tokenId, templateId, 0);
 
       const airdropId = 2;
@@ -228,7 +227,7 @@ describe("AirdropERC721", function () {
       const tx2 = airdropInstance
         .connect(receiver)
         .redeem(receiver.address, airdropId, templateId, owner.address, signature2);
-      await expect(tx2).to.be.revertedWith("AirdropERC721: cap exceeded");
+      await expect(tx2).to.be.revertedWith("ERC721Capped: cap exceeded");
     });
   });
 });

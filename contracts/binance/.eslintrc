@@ -4,7 +4,7 @@
     "@gemunion/eslint-config/tests/mocha"
   ],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.test.json"
   },
   "root": true
 }

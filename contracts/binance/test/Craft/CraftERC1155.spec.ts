@@ -23,10 +23,9 @@ describe("CraftERC1155", function () {
     refinery = await ethers.getContractFactory("CraftERC1155");
     refineryInstance = (await refinery.deploy()) as CraftERC1155;
 
-    await refineryInstance.setFactory(resourceInstance.address);
     await resourceInstance.grantRole(MINTER_ROLE, refineryInstance.address);
 
-    await refineryInstance.createRecipe(1, [tokenId], [10], 4);
+    await refineryInstance.createRecipe(1, resourceInstance.address, [tokenId], [10], resourceInstance.address, 4);
   });
 
   describe("hasRole", function () {
@@ -82,27 +81,59 @@ describe("CraftERC1155", function () {
 
   describe("createRecipe", function () {
     it("should create recipe", async function () {
-      const tx1 = refineryInstance.createRecipe(2, [1, 2, 3], [10, 10, 10], 4);
-      await expect(tx1).to.emit(refineryInstance, "RecipeCreated").withArgs(2, [1, 2, 3], [10, 10, 10], 4);
+      const tx1 = refineryInstance.createRecipe(
+        2,
+        resourceInstance.address,
+        [1, 2, 3],
+        [10, 10, 10],
+        resourceInstance.address,
+        4,
+      );
+      await expect(tx1)
+        .to.emit(refineryInstance, "RecipeCreated")
+        .withArgs(2, resourceInstance.address, [1, 2, 3], [10, 10, 10], resourceInstance.address, 4);
     });
 
     it("should fail: recipe already exist", async function () {
-      const tx1 = refineryInstance.createRecipe(1, [1, 2, 3], [10, 10, 10], 4);
+      const tx1 = refineryInstance.createRecipe(
+        1,
+        resourceInstance.address,
+        [1, 2, 3],
+        [10, 10, 10],
+        resourceInstance.address,
+        4,
+      );
       await expect(tx1).to.be.revertedWith("CraftERC1155: recipe already exist");
     });
 
     it("should fail: ids and amounts length mismatch", async function () {
-      const tx1 = refineryInstance.createRecipe(1, [1, 2, 3], [10, 10], 4);
+      const tx1 = refineryInstance.createRecipe(
+        1,
+        resourceInstance.address,
+        [1, 2, 3],
+        [10, 10],
+        resourceInstance.address,
+        4,
+      );
       await expect(tx1).to.be.revertedWith("CraftERC1155: ids and amounts length mismatch");
     });
 
     it("should fail: reserved token id", async function () {
-      const tx1 = refineryInstance.createRecipe(1, [1, 2, 3], [10, 10, 10], 0);
+      const tx1 = refineryInstance.createRecipe(
+        1,
+        resourceInstance.address,
+        [1, 2, 3],
+        [10, 10, 10],
+        resourceInstance.address,
+        0,
+      );
       await expect(tx1).to.be.revertedWith("CraftERC1155: reserved token id");
     });
 
     it("should fail: for wrong role", async function () {
-      const tx = refineryInstance.connect(receiver).createRecipe(1, [1, 2, 3], [10, 10, 10], 4);
+      const tx = refineryInstance
+        .connect(receiver)
+        .createRecipe(1, resourceInstance.address, [1, 2, 3], [10, 10, 10], resourceInstance.address, 4);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
       );

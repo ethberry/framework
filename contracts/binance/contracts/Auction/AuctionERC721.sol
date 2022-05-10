@@ -6,9 +6,9 @@
 
 pragma solidity ^0.8.4;
 
-import "@gemunion/contracts/contracts/Auction/AuctionERC721ETH.sol";
 import "@gemunion/contracts/contracts/AccessList/WhiteList.sol";
 
+import "./AuctionERC721ETH.sol";
 
 contract AuctionERC721 is AuctionERC721ETH, WhiteList {
   function startAuction(
