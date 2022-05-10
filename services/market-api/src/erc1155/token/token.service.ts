@@ -57,6 +57,13 @@ export class Erc1155TokenService {
       queryBuilder.andWhere("token.price >= :minPrice", { minPrice });
     }
 
+    queryBuilder.andWhere(
+      new Brackets(qb => {
+        qb.where("token.amount = 0");
+        qb.orWhere("token.amount < token.instanceCount");
+      }),
+    );
+
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 

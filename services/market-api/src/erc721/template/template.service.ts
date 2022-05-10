@@ -69,6 +69,13 @@ export class Erc721TemplateService {
       queryBuilder.andWhere("template.price >= :minPrice", { minPrice });
     }
 
+    queryBuilder.andWhere(
+      new Brackets(qb => {
+        qb.where("template.amount = 0");
+        qb.orWhere("template.amount < template.instanceCount");
+      }),
+    );
+
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
