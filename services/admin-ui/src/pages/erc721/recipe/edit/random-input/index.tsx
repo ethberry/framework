@@ -18,9 +18,9 @@ export const RandomInput: FC<IRandomInputProps> = props => {
     <>
       <SwitchInput name="random" />
       {value ? (
-        <EntityInput name="erc721DropboxId" controller="erc721-dropboxes" />
+        <EntityInput name="erc721DropboxId" controller="erc721-dropboxes" key={"dropbox"} />
       ) : (
-        <EntityInput name="erc721TemplateId" controller="erc721-templates" />
+        <EntityInput name="erc721TemplateId" controller="erc721-templates" key={"template"} />
       )}
     </>
   );

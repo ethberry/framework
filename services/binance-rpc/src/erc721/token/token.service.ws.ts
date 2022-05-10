@@ -43,8 +43,8 @@ export class Erc721TokenServiceWs {
     private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
     private readonly erc721CollectionService: Erc721CollectionService,
   ) {
-    this.airdropAddr = configService.get<string>("DROPBOX_AIR_ADDR", "");
-    this.itemsAddr = configService.get<string>("ITEMS_ADDR", "");
+    this.airdropAddr = configService.get<string>("ERC721_AIRDROP_ADDR", "");
+    this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
   }
 
   public async transfer(event: IEvent<IErc721TokenTransfer>): Promise<void> {
@@ -78,7 +78,9 @@ export class Erc721TokenServiceWs {
     await this.updateHistory(event, erc721TokenEntity.id);
 
     if (from === ethers.constants.AddressZero) {
-      erc721TokenEntity.erc721Template.instanceCount += 1;
+      erc721TokenEntity.erc721Template
+        ? (erc721TokenEntity.erc721Template.instanceCount += 1)
+        : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
       erc721TokenEntity.tokenStatus = Erc721TokenStatus.MINTED;
     }
 
@@ -90,6 +92,11 @@ export class Erc721TokenServiceWs {
     erc721TokenEntity.owner = to;
 
     await erc721TokenEntity.save();
+
+    // need to save updates in nested entities too
+    erc721TokenEntity.erc721Template
+      ? await erc721TokenEntity.erc721Template.save()
+      : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
   }
 
   public async approval(event: IEvent<IErc721TokenApprove>): Promise<void> {

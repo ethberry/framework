@@ -80,7 +80,9 @@ export const Erc721Recipes: FC = () => {
         <List>
           {rows.map((recipe, i) => (
             <ListItem key={i}>
-              <ListItemText>{recipe.erc721Template!.title}</ListItemText>
+              <ListItemText>
+                {recipe.erc721Template ? recipe.erc721Template.title : recipe.erc721Dropbox!.title}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <Erc721RecipeUploadButton recipe={recipe} />
                 <IconButton onClick={handleEdit(recipe)}>

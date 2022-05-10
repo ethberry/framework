@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc20VestingServiceWs } from "./vesting.service.ws";
@@ -10,7 +10,7 @@ import { Erc20TokenModule } from "../token/token.module";
 
 @Module({
   imports: [Erc20TokenModule, Erc20VestingHistoryModule, TypeOrmModule.forFeature([Erc20VestingEntity])],
-  providers: [Erc20VestingService, Erc20VestingServiceWs],
+  providers: [Logger, Erc20VestingService, Erc20VestingServiceWs],
   controllers: [Erc20VestingControllerWs],
   exports: [Erc20VestingService, Erc20VestingServiceWs],
 })

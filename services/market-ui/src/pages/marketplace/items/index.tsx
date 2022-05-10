@@ -20,7 +20,7 @@ export const Items: FC<ITabPanelProps> = props => {
     {
       baseUrl: "/erc721-templates",
       search: {
-        erc721CollectionIds: [1], // Items
+        erc721CollectionIds: [3], // Erc721 Items
       },
       redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
     },

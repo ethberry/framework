@@ -41,7 +41,7 @@ export const TokenItem: FC<IErc1155TokenItemProps> = props => {
           name={token.tokenId}
           placeholder={formatMessage({ id: "form.placeholders.amount" })}
           label={formatMessage({ id: "form.labels.amount" })}
-          InputProps={{ inputProps: { min: 0, step: 1000 } }}
+          InputProps={{ inputProps: { min: 0, step: 100 } }}
         />
       </CardActions>
     </Card>

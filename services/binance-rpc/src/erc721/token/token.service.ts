@@ -54,6 +54,7 @@ export class Erc721TokenService {
     queryBuilder.leftJoinAndSelect("template.erc721Collection", "collectionToken");
     queryBuilder.leftJoinAndSelect("token.erc721Dropbox", "dropbox");
     queryBuilder.leftJoinAndSelect("dropbox.erc721Collection", "collectionDropbox");
+    queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "templateDropbox");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {
       tokenId,

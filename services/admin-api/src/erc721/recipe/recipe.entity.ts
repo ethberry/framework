@@ -11,14 +11,14 @@ import { Erc721DropboxEntity } from "../dropbox/dropbox.entity";
 @Entity({ schema: ns, name: "erc721_recipe" })
 export class Erc721RecipeEntity extends IdBaseEntity implements IErc721Recipe {
   @Column({ type: "varchar" })
-  public erc721TemplateId: number;
+  public erc721TemplateId: number | null;
 
   @JoinColumn()
   @OneToOne(_type => Erc721TemplateEntity)
   public erc721Template: Erc721TemplateEntity;
 
   @Column({ type: "varchar" })
-  public erc721DropboxId: number;
+  public erc721DropboxId: number | null;
 
   @JoinColumn()
   @OneToOne(_type => Erc721DropboxEntity)

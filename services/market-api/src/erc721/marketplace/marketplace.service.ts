@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import { prepareEip712 } from "@gemunion/butils";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
@@ -64,12 +64,16 @@ export class Erc721MarketplaceService {
       throw new NotFoundException("templateNotFound");
     }
 
-    const totalTokenPrice = ethers.utils.parseUnits(dropboxEntity.price, "wei");
+    if (templateEntity.amount > 0 && templateEntity.amount <= templateEntity.instanceCount) {
+      throw new NotFoundException("limitExceeded");
+    }
+
+    const tokenPrice = BigNumber.from(dropboxEntity.price);
     const signData = {
       nonce: ethers.utils.randomBytes(32),
       collection: dropboxEntity.erc721Collection.address,
       templateId: templateEntity.id, // Dropbox content
-      price: totalTokenPrice,
+      price: tokenPrice,
     };
     const signature = await Promise.resolve(this.getSign(signData));
     return { nonce: ethers.utils.hexlify(signData.nonce), signature };

@@ -49,7 +49,7 @@ export const Resources: FC<ITabPanelProps> = props => {
   const getApprove = async (): Promise<void> => {
     return api
       .fetchJson({
-        url: `/erc1155-token-history/${process.env.RESOURCES_ADDR}/approve`,
+        url: `/erc1155-token-history/${process.env.ERC1155_RESOURCES_ADDR}/approve`,
       })
       .then((approve: boolean) => {
         setIsApproved(approve);
@@ -64,7 +64,7 @@ export const Resources: FC<ITabPanelProps> = props => {
 
     const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, CraftERC1155.abi, library.getSigner());
     void contract
-      .setApprovalForAll(process.env.RESOURCES_ADDR, true)
+      .setApprovalForAll(process.env.ERC1155_RESOURCES_ADDR, true)
       .then(() => {
         enqueueSnackbar(formatMessage({ id: "snackbar.approved" }), { variant: "success" });
         setIsApproved(true);

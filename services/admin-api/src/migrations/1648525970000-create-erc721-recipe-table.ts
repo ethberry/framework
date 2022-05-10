@@ -23,6 +23,7 @@ export class CreateErc721Recipe1648525970000 implements MigrationInterface {
         {
           name: "erc721_template_id",
           type: "int",
+          isNullable: true,
         },
         {
           name: "erc721_dropbox_id",

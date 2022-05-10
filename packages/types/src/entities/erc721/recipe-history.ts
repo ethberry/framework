@@ -1,6 +1,6 @@
 import { IIdBase } from "@gemunion/types-collection";
 
-import { Erc721RecipeStatus } from "./recipe";
+import { IErc721Recipe } from "./recipe";
 
 export enum Erc721RecipeEventType {
   RecipeCreated = "RecipeCreated",
@@ -34,5 +34,5 @@ export interface IErc721RecipeHistory extends IIdBase {
   eventType: Erc721RecipeEventType;
   eventData: TErc721RecipeEventData;
   erc721RecipeId: number | null;
-  erc721Recipe?: Erc721RecipeStatus;
+  erc721Recipe?: IErc721Recipe;
 }

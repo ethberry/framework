@@ -12,9 +12,9 @@ export enum Erc721RecipeStatus {
 }
 
 export interface IErc721Recipe extends IIdBase {
-  erc721TemplateId: number;
+  erc721TemplateId: number | null;
   erc721Template?: IErc721Template;
-  erc721DropboxId: number;
+  erc721DropboxId: number | null;
   erc721Dropbox?: IErc721Dropbox;
   ingredients: Array<IErc721Ingredient>;
   recipeStatus: Erc721RecipeStatus;

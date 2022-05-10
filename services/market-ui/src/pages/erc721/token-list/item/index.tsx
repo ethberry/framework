@@ -23,7 +23,7 @@ export const Erc721Token: FC<IErc721TokenProps> = props => {
         <CardMedia className={classes.media} image={token.erc721Template!.imageUrl} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {token.erc721Template!.title}
+            {token.erc721Template!.title} #{token.tokenId}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={token.erc721Template!.description} />

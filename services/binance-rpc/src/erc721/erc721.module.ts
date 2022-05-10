@@ -7,6 +7,7 @@ import { Erc721AuctionModule } from "./auction/auction.module";
 import { Erc721MarketplaceModule } from "./marketplace/marketplace.module";
 import { Erc721AirdropModule } from "./airdrop/airdrop.module";
 import { Erc721DropboxModule } from "./dropbox/dropbox.module";
+import { Erc721RecipeModule } from "./recipe/recipe.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { Erc721DropboxModule } from "./dropbox/dropbox.module";
     Erc721AuctionModule,
     Erc721MarketplaceModule,
     Erc721AirdropModule,
+    Erc721RecipeModule,
   ],
 })
 export class Erc721Module {}

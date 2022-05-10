@@ -21,7 +21,7 @@ export const Ingredients: FC<IIngredientTokenDialogProps> = props => {
   const handleOptionAdd = (): (() => void) => (): void => {
     const newValue = formik.values[name];
     newValue.push({
-      erc721TokenId: 1,
+      erc1155TokenId: 1,
       amount: 1,
     });
     formik.setFieldValue(name, newValue);

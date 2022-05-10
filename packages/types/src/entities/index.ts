@@ -5,6 +5,7 @@ export * from "./marketplace";
 export * from "./leaderboard";
 
 export * from "./erc20/token";
+export * from "./erc20/erc20-manager";
 export * from "./erc20/token-history";
 export * from "./erc20/vesting";
 export * from "./erc20/vesting-history";

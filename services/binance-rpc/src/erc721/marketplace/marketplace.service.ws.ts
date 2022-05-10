@@ -51,7 +51,7 @@ export class Erc721MarketplaceServiceWs {
       returnValues: { from, tokenId, templateId },
     } = event;
 
-    const erc721DropboxEntity = await this.erc721DropboxService.findOne({ id: ~~templateId });
+    const erc721DropboxEntity = await this.erc721DropboxService.findOne({ erc721TemplateId: ~~templateId });
 
     if (!erc721DropboxEntity) {
       throw new NotFoundException("templateNotFound");
@@ -59,7 +59,7 @@ export class Erc721MarketplaceServiceWs {
 
     const erc721TokenEntity = await this.erc721TokenService.create({
       tokenId,
-      attributes: {},
+      attributes: "{}",
       rarity: TokenRarity.UNKNOWN,
       owner: from.toLowerCase(),
       erc721Dropbox: erc721DropboxEntity,

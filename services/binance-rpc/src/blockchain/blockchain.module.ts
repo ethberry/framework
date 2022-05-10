@@ -10,19 +10,22 @@ import {
   Erc1155MarketplaceEventType,
   Erc1155RecipeEventType,
   Erc1155TokenEventType,
+  Erc20ManagerEventType,
   Erc20TokenEventType,
-  Erc20VestingEventType,
+  // Erc20VestingEventType,
   Erc721AuctionEventType,
   Erc721MarketplaceEventType,
   Erc721TokenEventType,
+  Erc721RecipeEventType,
 } from "@framework/types";
 
 import coin from "@framework/binance-contracts/artifacts/contracts/Coin/Coin.sol/Coin.json";
-import vesting from "@framework/binance-contracts/artifacts/contracts/Vesting/VestingFactory.sol/VestingFactory.json";
+import manager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import resources from "@framework/binance-contracts/artifacts/contracts/ERC1155/Resources.sol/Resources.json";
 import items from "@framework/binance-contracts/artifacts/contracts/ERC721/Item.sol/Item.json";
 import hero from "@framework/binance-contracts/artifacts/contracts/ERC721/Hero.sol/Hero.json";
 import skill from "@framework/binance-contracts/artifacts/contracts/ERC721/Skill.sol/Skill.json";
+import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC721.sol/CraftERC721.json";
 import refinery from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
 import auctionERC721 from "@framework/binance-contracts/artifacts/contracts/Auction/AuctionERC721.sol/AuctionERC721.json";
 import airdropERC721 from "@framework/binance-contracts/artifacts/contracts/Dropbox/AirdropERC721.sol/AirdropERC721.json";
@@ -41,17 +44,18 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
 
   public async onModuleInit(): Promise<void> {
     const coinAddr = this.configService.get<string>("ERC20_COIN", "");
-    const vestingAddr = this.configService.get<string>("ERC20_VESTING", "");
+    const managerAddr = this.configService.get<string>("ERC20_MANAGER_ADDR", "");
     const itemsAddr = this.configService.get<string>("ERC721_ITEM_ADDR", "");
     const heroAddr = this.configService.get<string>("ERC721_HERO_ADDR", "");
     const skillAddr = this.configService.get<string>("ERC721_SKILL_ADDR", "");
-    const resourcesAddr = this.configService.get<string>("RESOURCES_ERC1155_ADDR", "");
-    const refineryAddr = this.configService.get<string>("ERC1155_CRAFT_ADDR", "");
     const itemAuctionAddr = this.configService.get<string>("ERC721_AUCTION_ADDR", "");
     const airDropboxAddr = this.configService.get<string>("ERC721_AIRDROP_ADDR", "");
     const itemDropboxAddr = this.configService.get<string>("ERC721_DROPBOX_ADDR", "");
     const itemMarketplaceAddr = this.configService.get<string>("ERC721_MARKETPLACE_ADDR", "");
-    const resourcesMarketplaceAddr = this.configService.get<string>("MARKETPLACE_ERC1155_ADDR", "");
+    const resourcesAddr = this.configService.get<string>("ERC1155_RESOURCES_ADDR", "");
+    const craft721Addr = this.configService.get<string>("ERC721_CRAFT_ADDR", "");
+    const refineryAddr = this.configService.get<string>("ERC1155_CRAFT_ADDR", "");
+    const resourcesMarketplaceAddr = this.configService.get<string>("ERC1155_MARKETPLACE_ADDR", "");
 
     await this.web3ContractService.listen([
       {
@@ -65,12 +69,12 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
         ],
       },
       {
-        contractName: ContractType.ERC20_VESTING,
-        contractAddress: vestingAddr,
-        contractInterface: vesting.abi as Array<AbiItem>,
+        contractName: ContractType.ERC20_MANAGER,
+        contractAddress: managerAddr,
+        contractInterface: manager.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
-          Erc20VestingEventType.FlatVestingCreated,
+          Erc20ManagerEventType.VestingDeployed,
         ],
       },
       {
@@ -185,6 +189,17 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
         eventNames: [
           Erc721MarketplaceEventType.Redeem,
           Erc721MarketplaceEventType.RedeemDropbox,
+        ],
+      },
+      {
+        contractName: ContractType.ERC721_CRAFT,
+        contractAddress: craft721Addr,
+        contractInterface: craft721.abi as Array<AbiItem>,
+        // prettier-ignore
+        eventNames: [
+          Erc721RecipeEventType.RecipeCreated,
+          Erc721RecipeEventType.RecipeUpdated,
+          Erc721RecipeEventType.RecipeCrafted,
         ],
       },
       {

@@ -8,9 +8,9 @@ declare global {
       GEMUNION_API_KEY: string;
       ACCOUNT: string;
       ERC721_MARKETPLACE_ADDR: string;
-      MARKETPLACE_ERC1155_ADDR: string;
+      ERC1155_MARKETPLACE_ADDR: string;
       ERC1155_CRAFT_ADDR: string;
-      RESOURCES_ADDR: string;
+      ERC1155_RESOURCES_ADDR: string;
       ERC1155_AUCTION_ADDR: string;
     }
   }

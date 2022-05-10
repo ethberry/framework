@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import { prepareEip712 } from "@gemunion/butils";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
@@ -36,7 +36,7 @@ export class Erc1155MarketplaceService {
           throw new NotFoundException("limitExceeded");
         }
 
-        const tokenPrice = ethers.utils.parseUnits(tokenEntity.price, "wei").mul(dto.amounts[index]);
+        const tokenPrice = BigNumber.from(tokenEntity.price).mul(dto.amounts[index]);
         totalTokenPrice = totalTokenPrice.add(tokenPrice);
         collections.push(tokenEntity.erc1155Collection.address);
       }),
@@ -49,12 +49,12 @@ export class Erc1155MarketplaceService {
 
     const signData = {
       nonce: ethers.utils.randomBytes(32),
-      list: collections[0],
+      collection: collections[0].toLowerCase(),
       tokenIds: dto.erc1155TokenIds,
       amounts: dto.amounts,
       price: totalTokenPrice,
     };
-
+    console.log("signData", signData);
     const signature = await Promise.resolve(this.getSign(signData));
     return { nonce: ethers.utils.hexlify(signData.nonce), signature };
   }
@@ -65,7 +65,7 @@ export class Erc1155MarketplaceService {
         name: "MarketplaceERC1155",
         version: "1.0.0",
         chainId: ~~this.configService.get<number>("CHAIN_ID", 97),
-        verifyingContract: this.configService.get<string>("MARKETPLACE_RESOURCE_ADDR", ""),
+        verifyingContract: this.configService.get<string>("ERC1155_MARKETPLACE_ADDR", ""),
       },
       prepareEip712(data),
       data,

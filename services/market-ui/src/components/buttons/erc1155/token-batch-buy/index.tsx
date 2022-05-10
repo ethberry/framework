@@ -24,20 +24,24 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
   const { library } = useWeb3React();
 
   const handleBatchBuy = useMetamask(async () => {
-    const value = constants.Zero;
+    const tokenPricesEth = rows.map(token => ethers.utils.parseUnits(token.price, "wei"));
+    let totalTokenValue = constants.Zero;
+    let collection = "";
+    let indx = 0;
     const { erc1155TokenIds, amounts } = Object.entries(values).reduce(
       (memo, [tokenId, amount]) => {
         if (amount > 0) {
-          memo.erc1155TokenIds.push(tokenId);
-          memo.amounts.push(amount);
           const token = rows.find(token => token.tokenId === tokenId);
-          value.add(token!.price);
+          memo.erc1155TokenIds.push(token!.id);
+          memo.amounts.push(amount);
+          totalTokenValue = totalTokenValue.add(tokenPricesEth[indx].mul(amount));
+          indx++;
+          collection = token!.erc1155Collection!.address.toLowerCase();
         }
         return memo;
       },
-      { erc1155TokenIds: [], amounts: [] } as { erc1155TokenIds: Array<string>; amounts: Array<number> },
+      { erc1155TokenIds: [], amounts: [] } as { erc1155TokenIds: Array<number>; amounts: Array<number> },
     );
-
     return api
       .fetchJson({
         url: "/erc1155-marketplace/sign-token",
@@ -49,11 +53,19 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
       })
       .then((json: IMarketplaceSignature) => {
         const contract = new ethers.Contract(
-          process.env.MARKETPLACE_ERC1155_ADDR,
+          process.env.ERC1155_MARKETPLACE_ADDR,
           MarketplaceERC1155.abi,
           library.getSigner(),
         );
-        return contract.buyResources(erc1155TokenIds, amounts, json.signature) as Promise<void>;
+        const nonce = ethers.utils.arrayify(json.nonce);
+        console.log("nonce", nonce);
+        console.log("collection", collection);
+        console.log("erc1155TokenIds", erc1155TokenIds);
+        console.log("amounts", amounts);
+        console.log("totalTokenPrice", totalTokenValue);
+        return contract.buyResources(nonce, collection, erc1155TokenIds, amounts, process.env.ACCOUNT, json.signature, {
+          value: totalTokenValue,
+        }) as Promise<void>;
       });
   });
 

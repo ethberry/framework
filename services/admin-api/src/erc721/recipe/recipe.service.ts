@@ -45,10 +45,16 @@ export class RecipeService {
       }
     }
 
+    // TODO simplify
     queryBuilder.leftJoinAndSelect("recipe.erc721Template", "template");
+    queryBuilder.leftJoinAndSelect("template.erc721Collection", "templateCollection");
     queryBuilder.leftJoinAndSelect("recipe.erc721Dropbox", "dropbox");
+    queryBuilder.leftJoinAndSelect("dropbox.erc721Collection", "dropboxCollection");
     queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "dropboxTemplate");
+    queryBuilder.leftJoinAndSelect("dropboxTemplate.erc721Collection", "dropboxTemplateCollection");
     queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
+    queryBuilder.leftJoinAndSelect("ingredients.erc1155Token", "ingredientsToken");
+    queryBuilder.leftJoinAndSelect("ingredientsToken.erc1155Collection", "ingredientsTokenCollection");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

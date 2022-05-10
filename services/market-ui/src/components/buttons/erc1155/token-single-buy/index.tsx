@@ -17,7 +17,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
   const { token } = props;
 
   const api = useApi();
-  const { library, account } = useWeb3React();
+  const { library } = useWeb3React();
 
   const handleBuy = useMetamask(() => {
     return api
@@ -31,16 +31,21 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
       })
       .then((json: IMarketplaceSignature) => {
         const contract = new ethers.Contract(
-          process.env.MARKETPLACE_ERC1155_ADDR,
+          process.env.ERC1155_MARKETPLACE_ADDR,
           MarketplaceERC1155.abi,
           library.getSigner(),
         );
-        return contract.redeem(
-          account,
-          token.erc1155Collection?.address,
-          token.id,
+        const nonce = ethers.utils.arrayify(json.nonce);
+        const tokenPrice = ethers.utils.parseUnits(token.price, "wei");
+
+        return contract.buyResources(
+          nonce,
+          token.erc1155Collection?.address.toLowerCase(),
+          [token.tokenId],
+          [1],
           process.env.ACCOUNT,
           json.signature,
+          { value: tokenPrice },
         ) as Promise<void>;
       });
   });

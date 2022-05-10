@@ -10,10 +10,11 @@ import { Erc1155TokenSellButton } from "../../../../components/buttons";
 
 interface IErc1155TokenProps {
   token: IErc1155Token;
+  balance?: string;
 }
 
 export const Erc1155Token: FC<IErc1155TokenProps> = props => {
-  const { token } = props;
+  const { token, balance } = props;
 
   const classes = useStyles();
 
@@ -24,6 +25,9 @@ export const Erc1155Token: FC<IErc1155TokenProps> = props => {
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {token.title}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="h2">
+            Balance: {balance}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={token.description} />

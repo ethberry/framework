@@ -31,10 +31,14 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
     const contract = new ethers.Contract(process.env.ERC721_CRAFT_ADDR, CraftERC721.abi, library.getSigner());
     return contract.createRecipe(
       recipe.id,
+      recipe.ingredients[0]!.erc1155Token.erc1155Collection!.address,
       ids,
       amounts,
-      recipe.erc721TemplateId,
-      recipe.erc721DropboxId,
+      recipe.erc721TemplateId
+        ? recipe.erc721Template!.erc721Collection!.address
+        : recipe.erc721Dropbox!.erc721Collection!.address,
+      !recipe.erc721TemplateId ? 0 : recipe.erc721TemplateId,
+      !recipe.erc721DropboxId ? 0 : recipe.erc721DropboxId,
     ) as Promise<void>;
   });
 

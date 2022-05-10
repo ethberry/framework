@@ -18,7 +18,7 @@ export default {
       blockGasLimit: 1e10, // default: 3e7
     },
     besu: {
-      url: `http://127.0.0.1:9101`,
+      url: `http://127.0.0.1:8545`,
       timeout: 142000,
       accounts: [
         "0x8f2a55949038a9610f50fb23b5883af3b4ecb3c3bb792cbcefbd1542c692be63", // 0xfe3b557e8fb62b89f4916b721be55ceb828dbd73

@@ -22,7 +22,7 @@ export class SeedUser1563804021050 implements MigrationInterface {
         updated_at
       ) VALUES (
         'trejgun@gmail.com',
-        '7MutbkdSimUauf21ZOQAGiBis4k1',
+        'E5PnxZDsjEZcDzS9o2HlDGfmNzW2',
         'Trej Gun',
         '${imageUrl}',
         'EN',

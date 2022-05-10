@@ -13,6 +13,6 @@ contract Resources is ERC1155ACBS, ERC1155BaseUrl {
   constructor(string memory baseTokenURI) ERC1155ACBS(baseTokenURI) {}
 
   function uri(uint256 tokenId) public view virtual override returns (string memory) {
-    return url(super.uri(tokenId));
+    return uri(super.uri(tokenId));
   }
 }

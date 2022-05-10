@@ -14,5 +14,6 @@ export const SNAPSHOT_ROLE = ethers.utils.id("SNAPSHOT_ROLE");
 
 export const decimals = ethers.BigNumber.from(10).pow(18);
 export const amount = 10000;
+export const period = 60 * 60 * 24 * 365; // a year in seconds
 
 export const nonce = ethers.utils.formatBytes32String("nonce");

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
+import { BigNumber } from "ethers";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IPaginationDto } from "@gemunion/types-collection";
@@ -30,7 +31,7 @@ export const Resources: FC<ITabPanelProps> = props => {
         <Grid container spacing={2}>
           {rows.map(balance => (
             <Grid item lg={4} sm={6} xs={12} key={balance.id}>
-              <Erc1155Token token={balance.erc1155Token!} />
+              <Erc1155Token token={balance.erc1155Token!} balance={BigNumber.from(balance.amount).toString()} />
             </Grid>
           ))}
         </Grid>
