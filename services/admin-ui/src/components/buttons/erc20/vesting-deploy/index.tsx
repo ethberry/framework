@@ -27,15 +27,22 @@ export const Erc20VestingButton: FC<IErc20VestingButtonProps> = props => {
   };
 
   const metaDeploy = useMetamask((values: IErc20Vesting) => {
-    const { vestingType, token, amount, beneficiary, startTimestamp, duration } = values;
+    const { vestingTemplate, token, amount, beneficiary, startTimestamp, duration } = values;
     const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, contractManager.abi, library.getSigner());
-    return contract.deployVesting(vestingType, token, amount, beneficiary, startTimestamp, duration) as Promise<void>;
+    return contract.deployVesting(
+      vestingTemplate,
+      token,
+      amount,
+      beneficiary,
+      startTimestamp,
+      duration,
+    ) as Promise<void>;
   });
 
   const handleDeployConfirm = (values: any) => {
-    const { vestingType, token, amount, beneficiary, startTimestamp, duration } = values;
+    const { vestingTemplate, token, amount, beneficiary, startTimestamp, duration } = values;
     return metaDeploy({
-      vestingType,
+      vestingTemplate,
       token,
       amount,
       beneficiary,

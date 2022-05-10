@@ -8,10 +8,10 @@ Welcome to Undead monorepo.
 I assume you have NodeJS NPM/YARN, Postgres, RabbitMQ and Redis installed
 or you can just use docker :)
 
-In case you have installed postgress, you must create `gem-development` database manually,
+In case you have installed postgress, you must create `gemunion-development` database manually,
 script only creates schema for you.
 
-In order to run tests, you must create `gem-test` database manually too.
+In order to run tests, you must create `gemunion-test` database manually too.
 
 In any case you have to fill up sensitive keys in docker files or .env files
 

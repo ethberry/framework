@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateErc20VestingTable1563804021115 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc20_vesting_type_enum AS ENUM (
+      CREATE TYPE ${ns}.erc20_vesting_template_enum AS ENUM (
         'FLAT'
       );
     `);
@@ -47,8 +47,8 @@ export class CreateErc20VestingTable1563804021115 implements MigrationInterface 
           type: "timestamptz",
         },
         {
-          name: "vesting_type",
-          type: `${ns}.erc20_vesting_type_enum`,
+          name: "vesting_template",
+          type: `${ns}.erc20_vesting_template_enum`,
           default: "'FLAT'",
         },
         {

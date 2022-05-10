@@ -1,8 +1,8 @@
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { Erc20VestingType } from "../../../entities";
+import { Erc20VestingTemplate } from "../../../entities";
 
 export interface IErc20VestingSearchDto extends ISearchDto {
-  vestingType: Array<Erc20VestingType>;
+  vestingTemplate: Array<Erc20VestingTemplate>;
   erc20TokenIds: Array<number>;
 }

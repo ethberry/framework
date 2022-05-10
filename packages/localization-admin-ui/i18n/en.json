@@ -89,7 +89,7 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "vestingType": {
+    "vestingTemplate": {
       "FLAT": "Flat"
     }
   },
@@ -183,7 +183,7 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "vestingType": "Type",
+      "vestingTemplate": "Type",
       "year": "Year"
     },
     "placeholders": {

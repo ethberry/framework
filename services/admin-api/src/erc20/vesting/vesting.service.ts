@@ -14,7 +14,7 @@ export class Erc20VestingService {
   ) {}
 
   public async search(dto: IErc20VestingSearchDto): Promise<[Array<Erc20VestingEntity>, number]> {
-    const { query, vestingType, erc20TokenIds, skip, take } = dto;
+    const { query, vestingTemplate, erc20TokenIds, skip, take } = dto;
 
     const queryBuilder = this.erc20VestingEntityRepository.createQueryBuilder("vesting");
 
@@ -22,11 +22,11 @@ export class Erc20VestingService {
 
     queryBuilder.select();
 
-    if (vestingType) {
-      if (vestingType.length === 1) {
-        queryBuilder.andWhere("vesting.vestingType = :vestingType", { vestingType: vestingType[0] });
+    if (vestingTemplate) {
+      if (vestingTemplate.length === 1) {
+        queryBuilder.andWhere("vesting.vestingTemplate = :vestingTemplate", { vestingTemplate: vestingTemplate[0] });
       } else {
-        queryBuilder.andWhere("vesting.vestingType IN(:...vestingType)", { vestingType });
+        queryBuilder.andWhere("vesting.vestingTemplate IN(:...vestingTemplate)", { vestingTemplate });
       }
     }
 

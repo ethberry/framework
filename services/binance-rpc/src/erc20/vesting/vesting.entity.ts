@@ -1,7 +1,7 @@
 import { Column, Entity } from "typeorm";
 
 import { ContractBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { Erc20VestingType, IErc20Vesting } from "@framework/types";
+import { Erc20VestingTemplate, IErc20Vesting } from "@framework/types";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "erc20_vesting" })
@@ -23,9 +23,9 @@ export class Erc20VestingEntity extends ContractBaseEntity implements IErc20Vest
 
   @Column({
     type: "enum",
-    enum: Erc20VestingType,
+    enum: Erc20VestingTemplate,
   })
-  public vestingType: Erc20VestingType;
+  public vestingTemplate: Erc20VestingTemplate;
 
   @Column({ type: "int" })
   public erc20TokenId: number;

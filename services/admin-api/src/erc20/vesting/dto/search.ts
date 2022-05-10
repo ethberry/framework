@@ -3,20 +3,20 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { Erc20VestingType, IErc20VestingSearchDto } from "@framework/types";
+import { Erc20VestingTemplate, IErc20VestingSearchDto } from "@framework/types";
 
 export class Erc20VestingSearchDto extends SearchDto implements IErc20VestingSearchDto {
   @ApiPropertyOptional({
-    enum: Erc20VestingType,
+    enum: Erc20VestingTemplate,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<Erc20VestingType>)
-  @IsEnum(Erc20VestingType, { each: true, message: "badInput" })
-  public vestingType: Array<Erc20VestingType>;
+  @Transform(({ value }) => value as Array<Erc20VestingTemplate>)
+  @IsEnum(Erc20VestingTemplate, { each: true, message: "badInput" })
+  public vestingTemplate: Array<Erc20VestingTemplate>;
 
   @ApiPropertyOptional({
     type: Number,

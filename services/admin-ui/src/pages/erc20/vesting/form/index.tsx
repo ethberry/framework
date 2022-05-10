@@ -4,7 +4,7 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormikForm } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc20VestingType, IErc20VestingSearchDto } from "@framework/types";
+import { Erc20VestingTemplate, IErc20VestingSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -19,8 +19,8 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, vestingType, erc20TokenIds } = initialValues;
-  const fixedValues = { query, vestingType, erc20TokenIds };
+  const { query, vestingTemplate, erc20TokenIds } = initialValues;
+  const fixedValues = { query, vestingTemplate, erc20TokenIds };
 
   return (
     <FormikForm
@@ -39,7 +39,7 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput name="vestingType" options={Erc20VestingType} multiple />
+            <SelectInput name="vestingTemplate" options={Erc20VestingTemplate} multiple />
           </Grid>
           <Grid item xs={6}>
             <EntityInput name="erc20TokenIds" controller="erc20-tokens" multiple />

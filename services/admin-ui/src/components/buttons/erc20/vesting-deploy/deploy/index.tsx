@@ -17,7 +17,7 @@ export interface IErc20VestingDeployDialogProps {
 
 export const Erc20VestingDeployDialog: FC<IErc20VestingDeployDialogProps> = props => {
   const fixedValues = {
-    vestingType: "FLAT",
+    vestingTemplate: "FLAT",
     token: "",
     amount: 0,
     beneficiary: "",
