@@ -34,12 +34,12 @@ describe("ContractManager", function () {
     });
   });
 
-  describe("createVesting", function () {
+  describe("deployVesting", function () {
     it("should create vesting (FLAT + ETH)", async function () {
       const span = 300;
       const timestamp: number = (await time.latest()).toNumber();
 
-      const tx = await managerInstance.createVesting(
+      const tx = await managerInstance.deployVesting(
         "FLAT",
         ethers.constants.AddressZero,
         0,
@@ -60,7 +60,7 @@ describe("ContractManager", function () {
       const span = 300;
       const timestamp: number = (await time.latest()).toNumber();
 
-      const tx = await managerInstance.createVesting(
+      const tx = await managerInstance.deployVesting(
         "FLAT",
         erc20Instance.address,
         amount,
@@ -80,7 +80,7 @@ describe("ContractManager", function () {
       const span = 300;
       const timestamp: number = (await time.latest()).toNumber();
 
-      const tx = managerInstance.createVesting(
+      const tx = managerInstance.deployVesting(
         "FLAT",
         ethers.constants.AddressZero,
         0,
@@ -97,7 +97,7 @@ describe("ContractManager", function () {
       const span = 300;
       const timestamp: number = (await time.latest()).toNumber();
 
-      const tx = managerInstance.createVesting("FLAT", erc20Instance.address, 0, receiver.address, timestamp, span);
+      const tx = managerInstance.deployVesting("FLAT", erc20Instance.address, 0, receiver.address, timestamp, span);
 
       await expect(tx).to.be.revertedWith("ContractManager: vesting amount must be greater than zero");
     });
@@ -106,7 +106,7 @@ describe("ContractManager", function () {
       const span = 300;
       const timestamp: number = (await time.latest()).toNumber();
 
-      const tx = managerInstance.createVesting(
+      const tx = managerInstance.deployVesting(
         "UNKNOWN",
         erc20Instance.address,
         amount,

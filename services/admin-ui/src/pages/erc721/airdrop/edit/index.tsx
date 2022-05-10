@@ -7,14 +7,14 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { validationSchema, validationSchema2 } from "./validation";
 
-export interface IEditErc721AirdropDialogProps {
+export interface IErc721AirdropEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IErc721Airdrop>, formikBag: any) => Promise<void>;
   initialValues: IErc721Airdrop;
 }
 
-export const Erc721AirdropEditDialog: FC<IEditErc721AirdropDialogProps> = props => {
+export const Erc721AirdropEditDialog: FC<IErc721AirdropEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, erc721TemplateId, owner } = initialValues;

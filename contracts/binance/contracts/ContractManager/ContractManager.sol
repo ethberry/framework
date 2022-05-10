@@ -23,34 +23,34 @@ contract ContractManager is AccessControl {
     address token,
     uint256 amount,
     address beneficiary,
-    uint64 startTimestamp,
-    uint64 durationSeconds
+    uint64 startTimestamp, // in seconds
+    uint64 duration // in seconds
   );
 
   constructor() {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
   }
 
-  function createVesting(
+  function deployVesting(
     string calldata template,
     address token,
     uint256 amount,
     address beneficiary,
     uint64 startTimestamp,
-    uint64 durationSeconds
+    uint64 duration
   ) public payable onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     uint256 _amount = token == address(0) ? msg.value : amount;
     require(_amount > 0, "ContractManager: vesting amount must be greater than zero");
 
     if (keccak256(bytes(template)) == keccak256(bytes("FLAT"))) {
-      addr = address(new FlatVesting(beneficiary, startTimestamp, durationSeconds));
+      addr = address(new FlatVesting(beneficiary, startTimestamp, duration));
     } else {
       revert("ContractManager: unknown template");
     }
 
     _vesting.push(addr);
 
-    emit VestingDeployed(addr, template, token, _amount, beneficiary, startTimestamp, durationSeconds);
+    emit VestingDeployed(addr, template, token, _amount, beneficiary, startTimestamp, duration);
 
     if (token != address(0)) {
       SafeERC20.safeTransferFrom(IERC20(token), _msgSender(), addr, amount);

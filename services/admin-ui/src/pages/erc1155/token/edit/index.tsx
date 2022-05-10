@@ -10,14 +10,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
 
-export interface IEditErc1155TokenDialogProps {
+export interface IErc1155TokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IErc1155Token>, formikBag: any) => Promise<void>;
   initialValues: IErc1155Token;
 }
 
-export const Erc1155TokenEditDialog: FC<IEditErc1155TokenDialogProps> = props => {
+export const Erc1155TokenEditDialog: FC<IErc1155TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, attributes, price, amount, erc1155CollectionId, imageUrl } = initialValues;

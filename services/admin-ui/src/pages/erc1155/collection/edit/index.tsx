@@ -8,14 +8,14 @@ import { IErc1155Collection } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IEditErc1155CollectionDialogProps {
+export interface IErc1155CollectionEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IErc1155Collection>, formikBag: any) => Promise<void>;
   initialValues: IErc1155Collection;
 }
 
-export const Erc1155CollectionEditDialog: FC<IEditErc1155CollectionDialogProps> = props => {
+export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, imageUrl, address } = initialValues;

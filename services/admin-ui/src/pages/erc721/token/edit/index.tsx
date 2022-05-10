@@ -9,14 +9,14 @@ import { Erc721TokenStatus, IErc721Token, TokenRarity } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IEditErc721TokenDialogProps {
+export interface IErc721TokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IErc721Token>, formikBag: any) => Promise<void>;
   initialValues: IErc721Token;
 }
 
-export const Erc721TokenEditDialog: FC<IEditErc721TokenDialogProps> = props => {
+export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, attributes, rarity, owner, tokenStatus, tokenId, erc721Template } = initialValues;

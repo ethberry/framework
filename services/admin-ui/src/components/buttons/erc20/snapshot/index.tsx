@@ -8,7 +8,7 @@ import { ethers } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks";
 import coin from "@framework/binance-contracts/artifacts/contracts/Coin/Coin.sol/Coin.json";
 
-export const Erc20SnapshotButton: FC = () => {
+export const Erc20TokenSnapshotButton: FC = () => {
   const { library } = useWeb3React();
 
   const { formatMessage } = useIntl();

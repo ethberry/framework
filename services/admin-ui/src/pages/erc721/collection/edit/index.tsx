@@ -8,14 +8,14 @@ import { Erc721CollectionStatus, Erc721CollectionType, IErc721Collection } from 
 
 import { validationSchema } from "./validation";
 
-export interface IEditErc721CollectionDialogProps {
+export interface IErc721CollectionEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IErc721Collection>, formikBag: any) => Promise<void>;
   initialValues: IErc721Collection;
 }
 
-export const Erc721CollectionEditDialog: FC<IEditErc721CollectionDialogProps> = props => {
+export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, imageUrl, collectionStatus, collectionType, address = "" } = initialValues;

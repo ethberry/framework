@@ -11,14 +11,14 @@ import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 
 import { validationSchema } from "./validation";
 
-export interface IEditUserDialogProps {
+export interface IUserEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IUser>, formikBag: any) => Promise<void>;
   initialValues: IUser;
 }
 
-export const UserEditDialog: FC<IEditUserDialogProps> = props => {
+export const UserEditDialog: FC<IUserEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { enqueueSnackbar } = useSnackbar();

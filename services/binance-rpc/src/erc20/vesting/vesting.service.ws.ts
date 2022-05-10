@@ -19,7 +19,7 @@ export class Erc20VestingServiceWs {
 
   public async created(event: IEvent<IErc20VestingFlatVestingCreated>): Promise<void> {
     const {
-      returnValues: { token, beneficiary, amount, durationSeconds, vesting, startTimestamp },
+      returnValues: { token, beneficiary, amount, duration, vesting, startTimestamp },
     } = event;
 
     await this.updateHistory(event);
@@ -35,7 +35,7 @@ export class Erc20VestingServiceWs {
       beneficiary,
       erc20TokenId: tokenEntity.id,
       amount,
-      duration: ~~durationSeconds * 1000, // TODO FIXME
+      duration: ~~duration * 1000, // TODO FIXME
       startTimestamp, // TODO FIXME
     });
   }

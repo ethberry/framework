@@ -19,7 +19,7 @@ import { Erc20TokenStatus, IErc20Token, IErc20TokenSearchDto } from "@framework/
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
-import { Erc20SnapshotButton } from "../../../components/buttons";
+import { Erc20TokenSnapshotButton } from "../../../components/buttons";
 
 export const Erc20Token: FC = () => {
   const {
@@ -89,7 +89,7 @@ export const Erc20Token: FC = () => {
             <ListItem key={i}>
               <ListItemText>{token.title}</ListItemText>
               <ListItemSecondaryAction>
-                <Erc20SnapshotButton />
+                <Erc20TokenSnapshotButton />
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>

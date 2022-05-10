@@ -30,7 +30,8 @@
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
     "edit": "Edit",
-    "view": "View"
+    "view": "View",
+    "deploy": "Deploy"
   },
   "enums": {
     "airdropStatus": {
@@ -126,12 +127,15 @@
     },
     "labels": {
       "address": "Address",
+      "duration": "Duration",
       "airdropStatus": "Status",
+      "startTimestamp": "Start date",
       "amount": "Amount",
       "attributes": "Attributes",
       "collectionStatus": "Status",
       "collectionType": "Type",
       "comment": "Comment",
+      "beneficiary": "Beneficiary",
       "confirm": "Confirm",
       "createdAt": "Created",
       "dateRangeEnd": "To",
@@ -184,6 +188,8 @@
     },
     "placeholders": {
       "address": "0x...",
+      "beneficiary": "0x...",
+      "duration": "30",
       "amount": "10",
       "attributes": "[]",
       "collectionId": "Lootbox",

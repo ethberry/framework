@@ -8,14 +8,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
 
-export interface IEditErc20TokenDialogProps {
+export interface IErc20TokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IErc20Token>, formikBag: any) => Promise<void>;
   initialValues: IErc20Token;
 }
 
-export const Erc20TokenEditDialog: FC<IEditErc20TokenDialogProps> = props => {
+export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, tokenStatus, symbol, amount } = initialValues;

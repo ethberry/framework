@@ -12,7 +12,7 @@ export interface IErc20VestingFlatVestingCreated {
   amount: string;
   beneficiary: string;
   startTimestamp: string;
-  durationSeconds: string;
+  duration: string;
 }
 
 export interface IErc20VestingEtherReleased {
