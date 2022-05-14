@@ -10,7 +10,7 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Add, Create, FilterList } from "@mui/icons-material";
+import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -20,6 +20,7 @@ import { Erc20TokenStatus, IErc20Token, IErc20TokenSearchDto } from "@framework/
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
 import { Erc20TokenSnapshotButton } from "../../../components/buttons";
+import { Erc20TokenDeployButton } from "../../../components/buttons/erc20/token-deploy";
 
 export const Erc20Token: FC = () => {
   const {
@@ -31,7 +32,6 @@ export const Erc20Token: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     handleToggleFilters,
-    handleAdd,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -70,15 +70,7 @@ export const Erc20Token: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button
-          variant="outlined"
-          startIcon={<Add />}
-          onClick={handleAdd}
-          disabled
-          data-testid="erc721CollectionAddButton"
-        >
-          <FormattedMessage id="form.buttons.add" />
-        </Button>
+        <Erc20TokenDeployButton />
       </PageHeader>
 
       <Erc20TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />

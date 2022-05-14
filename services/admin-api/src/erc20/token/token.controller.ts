@@ -1,13 +1,12 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc20TokenService } from "./token.service";
 import { Erc20TokenEntity } from "./token.entity";
 import { Erc20TokenSearchDto, Erc20TokenUpdateDto } from "./dto";
 
-@Public()
 @ApiBearerAuth()
 @Controller("/erc20-tokens")
 export class Erc20TokenController {

@@ -6,28 +6,28 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import contractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import flatVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/FlatVesting.sol/FlatVesting.json";
+import coin from "@framework/binance-contracts/artifacts/contracts/ERC721/Skill.sol/Skill.json";
 
-import { Erc20VestingDeployDialog, IErc20VestingContractFields } from "./deploy-dialog";
+import { Erc721TokenDeployDialog, IErc721TokenContractFields } from "./deploy-dialog";
 import { useDeploy } from "../../../hooks/useCollection";
 
-export interface IErc20VestingButtonProps {
+export interface IErc721TokenDeployButtonProps {
   className?: string;
 }
 
-export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
+export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props => {
   const { className } = props;
 
   const { library } = useWeb3React();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc20VestingContractFields) => {
-      const { contractTemplate, beneficiary, startTimestamp, duration } = values;
+    (values: IErc721TokenContractFields) => {
+      const { contractTemplate, name, symbol, baseTokenURI, royalty } = values;
 
       void contractTemplate;
 
       const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, contractManager.abi, library.getSigner());
-      return contract.deployVesting(flatVesting.bytecode, beneficiary, startTimestamp, duration) as Promise<void>;
+      return contract.deployERC721Token(coin.bytecode, name, symbol, baseTokenURI, royalty) as Promise<void>;
     },
   );
 
@@ -37,12 +37,12 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="erc20VestingDeployButton"
+        data-testid="erc721TokenDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.add" />
       </Button>
-      <Erc20VestingDeployDialog
+      <Erc721TokenDeployDialog
         onConfirm={handleDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}

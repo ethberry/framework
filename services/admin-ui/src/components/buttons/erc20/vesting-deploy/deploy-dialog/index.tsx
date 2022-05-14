@@ -1,13 +1,24 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateInput } from "@gemunion/mui-inputs-picker";
 import { IErc20Vesting } from "@framework/types";
-import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
-import { Erc20TokenInput } from "./token-input";
+
+export enum Erc20VestingTemplate {
+  "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
+  "GRADED" = "GRADED", // 0 -> 10 -> 30 -> 60 -> 100
+  "CLIFF" = "CLIFF", // 0 -> 100
+}
+
+export interface IErc20VestingContractFields {
+  contractTemplate: Erc20VestingTemplate;
+  beneficiary: string;
+  startTimestamp: string;
+  duration: number;
+}
 
 export interface IErc20VestingDeployDialogProps {
   open: boolean;
@@ -16,12 +27,10 @@ export interface IErc20VestingDeployDialogProps {
 }
 
 export const Erc20VestingDeployDialog: FC<IErc20VestingDeployDialogProps> = props => {
-  const fixedValues = {
-    vestingTemplate: "FLAT",
-    token: "",
-    amount: 0,
+  const fixedValues: IErc20VestingContractFields = {
+    contractTemplate: Erc20VestingTemplate.LINEAR,
     beneficiary: "",
-    startTimestamp: new Date(),
+    startTimestamp: new Date().toISOString(),
     duration: 30,
   };
 
@@ -33,8 +42,7 @@ export const Erc20VestingDeployDialog: FC<IErc20VestingDeployDialogProps> = prop
       data-testid="Erc20VestingDeployDialog"
       {...props}
     >
-      <Erc20TokenInput />
-      <EthInput name="amount" />
+      <SelectInput name="contractTemplate" options={Erc20VestingTemplate} />
       <TextInput name="beneficiary" />
       <DateInput name="startTimestamp" />
       <NumberInput name="duration" />

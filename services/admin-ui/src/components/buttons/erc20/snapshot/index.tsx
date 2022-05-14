@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks";
-import coin from "@framework/binance-contracts/artifacts/contracts/Coin/Coin.sol/Coin.json";
+import coin from "@framework/binance-contracts/artifacts/contracts/ERC20/Coin.sol/Coin.json";
 
 export const Erc20TokenSnapshotButton: FC = () => {
   const { library } = useWeb3React();

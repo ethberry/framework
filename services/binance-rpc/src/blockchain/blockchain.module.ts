@@ -19,14 +19,14 @@ import {
   Erc721RecipeEventType,
 } from "@framework/types";
 
-import coin from "@framework/binance-contracts/artifacts/contracts/Coin/Coin.sol/Coin.json";
+import coin from "@framework/binance-contracts/artifacts/contracts/ERC20/Coin.sol/Coin.json";
 import manager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import resources from "@framework/binance-contracts/artifacts/contracts/ERC1155/Resources.sol/Resources.json";
 import items from "@framework/binance-contracts/artifacts/contracts/ERC721/Item.sol/Item.json";
 import hero from "@framework/binance-contracts/artifacts/contracts/ERC721/Hero.sol/Hero.json";
 import skill from "@framework/binance-contracts/artifacts/contracts/ERC721/Skill.sol/Skill.json";
 import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC721.sol/CraftERC721.json";
-import refinery from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
+import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
 import auctionERC721 from "@framework/binance-contracts/artifacts/contracts/Auction/AuctionERC721.sol/AuctionERC721.json";
 import airdropERC721 from "@framework/binance-contracts/artifacts/contracts/Dropbox/AirdropERC721.sol/AirdropERC721.json";
 import dropboxERC721 from "@framework/binance-contracts/artifacts/contracts/Dropbox/DropboxERC721.sol/DropboxERC721.json";
@@ -162,7 +162,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC1155_CRAFT,
         contractAddress: refineryAddr,
-        contractInterface: refinery.abi as Array<AbiItem>,
+        contractInterface: CraftERC1155.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc1155RecipeEventType.RecipeCreated,

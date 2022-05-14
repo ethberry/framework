@@ -10,7 +10,7 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
@@ -20,6 +20,7 @@ import { Erc1155CollectionStatus, IErc1155Collection, IErc1155CollectionSearchDt
 
 import { Erc1155CollectionEditDialog } from "./edit";
 import { Erc1155CollectionSearchForm } from "./form";
+import { Erc1155TokenDeployButton } from "../../../components/buttons/erc1155/token-deploy";
 
 export const Erc1155Collection: FC = () => {
   const {
@@ -31,7 +32,6 @@ export const Erc1155Collection: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleAdd,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -65,15 +65,7 @@ export const Erc1155Collection: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button
-          variant="outlined"
-          startIcon={<Add />}
-          onClick={handleAdd}
-          disabled
-          data-testid="erc721CollectionAddButton"
-        >
-          <FormattedMessage id="form.buttons.add" />
-        </Button>
+        <Erc1155TokenDeployButton />
       </PageHeader>
 
       <Erc1155CollectionSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />

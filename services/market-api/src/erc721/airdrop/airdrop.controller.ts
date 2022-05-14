@@ -1,5 +1,4 @@
 import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
-import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import { Erc721AirdropService } from "./airdrop.service";
@@ -7,7 +6,6 @@ import { Erc721AirdropEntity } from "./airdrop.entity";
 import { Erc721AirdropSearchDto } from "./dto";
 
 @Public()
-@ApiBearerAuth()
 @Controller("/erc721-airdrop")
 export class Erc721AirdropController {
   constructor(private readonly erc721AirdropService: Erc721AirdropService) {}
