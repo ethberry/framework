@@ -5,11 +5,20 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
-import contractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import resources from "@framework/binance-contracts/artifacts/contracts/ERC1155/Resources.sol/Resources.json";
+import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
-import { Erc1155TokenDeployDialog, IErc1155ContractFields } from "./deploy-dialog";
+import { Erc1155TokenDeployDialog, IErc1155ContractFields, Erc1155TokenTemplate } from "./deploy-dialog";
 import { useDeploy } from "../../../hooks/useCollection";
+
+function getBytecodeByTemplate(template: Erc1155TokenTemplate) {
+  switch (template) {
+    case Erc1155TokenTemplate.SIMPLE:
+      return ERC1155Simple.bytecode;
+    default:
+      throw new Error("Unknown template");
+  }
+}
 
 export interface IErc1155TokenDeployButtonProps {
   className?: string;
@@ -23,11 +32,8 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc1155ContractFields) => {
       const { contractTemplate, baseTokenURI } = values;
-
-      void contractTemplate;
-
-      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, contractManager.abi, library.getSigner());
-      return contract.deployERC1155Token(resources.bytecode, baseTokenURI) as Promise<void>;
+      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+      return contract.deployERC1155Token(getBytecodeByTemplate(contractTemplate), baseTokenURI) as Promise<void>;
     },
   );
 

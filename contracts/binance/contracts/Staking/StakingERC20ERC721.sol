@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../Marketplace/interfaces/IEIP712ERC721.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
 
 contract Presale is AccessControl, Pausable {
   using Address for address;
@@ -24,7 +24,7 @@ contract Presale is AccessControl, Pausable {
   uint256 private _amount; // wei
 
   IERC20 private _acceptedToken;
-  IEIP712ERC721 private _rewardToken;
+  IERC721Random private _rewardToken;
 
   Counters.Counter private _stakeIdCounter;
 
@@ -59,7 +59,7 @@ contract Presale is AccessControl, Pausable {
     require(acceptedToken.isContract(), "Staking: The accepted token address must be a deployed contract");
     _acceptedToken = IERC20(acceptedToken);
     require(rewardToken.isContract(), "Staking: The reward token address must be a deployed contract");
-    _rewardToken = IEIP712ERC721(rewardToken);
+    _rewardToken = IERC721Random(rewardToken);
 
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _setupRole(PAUSER_ROLE, _msgSender());

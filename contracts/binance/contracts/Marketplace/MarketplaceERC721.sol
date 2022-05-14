@@ -13,8 +13,9 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-import "./interfaces/IEIP712ERC721.sol";
-import "../Dropbox/interfaces/IDropboxERC721.sol";
+import "../ERC721/interfaces/IERC721Simple.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
+import "../ERC721/interfaces/IERC721Dropbox.sol";
 
 contract MarketplaceERC721 is AccessControl, Pausable, EIP712 {
   using Address for address;
@@ -50,7 +51,7 @@ contract MarketplaceERC721 is AccessControl, Pausable, EIP712 {
     bool isVerified = _verify(signer, _hash(nonce, collection, templateId, msg.value), signature);
     require(isVerified, "MarketplaceERC721: Invalid signature");
 
-    uint256 tokenId = IEIP712ERC721(collection).mintCommon(_msgSender(), templateId);
+    uint256 tokenId = IERC721Simple(collection).mintCommon(_msgSender(), templateId);
     emit Redeem(_msgSender(), collection, tokenId, templateId, msg.value);
   }
 
@@ -69,7 +70,7 @@ contract MarketplaceERC721 is AccessControl, Pausable, EIP712 {
     bool isVerified = _verify(signer, _hash(nonce, collection, templateId, msg.value), signature);
     require(isVerified, "MarketplaceERC721: Invalid signature");
 
-    uint256 tokenId = IDropboxERC721(collection).mintDropbox(_msgSender(), templateId);
+    uint256 tokenId = IERC721Dropbox(collection).mintDropbox(_msgSender(), templateId);
     emit RedeemDropbox(_msgSender(), collection, tokenId, templateId, msg.value);
   }
 

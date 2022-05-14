@@ -13,7 +13,7 @@ import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks";
 import { Erc721AirdropStatus, IErc721Airdrop } from "@framework/types";
 
-import weaponDropbox from "@framework/binance-contracts/artifacts/contracts/Dropbox/AirdropERC721.sol/AirdropERC721.json";
+import ERC721Airdrop from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
 
 export const Erc721Airdrop: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +58,7 @@ export const Erc721Airdrop: FC = () => {
   };
 
   const metaClick = useMetamask((airdrop: IErc721Airdrop) => {
-    const contract = new ethers.Contract(process.env.ERC721_AIRDROP_ADDR, weaponDropbox.abi, library.getSigner());
+    const contract = new ethers.Contract(process.env.ERC721_AIRDROP_ADDR, ERC721Airdrop.abi, library.getSigner());
 
     return contract.redeem(
       account,

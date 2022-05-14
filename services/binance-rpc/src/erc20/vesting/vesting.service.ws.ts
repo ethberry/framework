@@ -1,7 +1,7 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 
 import { IEvent } from "@gemunion/nestjs-web3";
-import { Erc20VestingEventType, IErc20VestingFlatVestingCreated, TErc20VestingEventData } from "@framework/types";
+import { Erc20VestingEventType, IErc20VestingVestingDeployed, TErc20VestingEventData } from "@framework/types";
 
 import { Erc20VestingHistoryService } from "../vesting-history/vesting-history.service";
 import { Erc20VestingService } from "./vesting.service";
@@ -17,24 +17,16 @@ export class Erc20VestingServiceWs {
     private readonly erc20TokenService: Erc20TokenService,
   ) {}
 
-  public async created(event: IEvent<IErc20VestingFlatVestingCreated>): Promise<void> {
+  public async created(event: IEvent<IErc20VestingVestingDeployed>): Promise<void> {
     const {
-      returnValues: { token, beneficiary, amount, duration, vesting, startTimestamp },
+      returnValues: { beneficiary, duration, vesting, startTimestamp },
     } = event;
 
     await this.updateHistory(event);
 
-    const tokenEntity = await this.erc20TokenService.findOne({ address: token });
-
-    if (!tokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
     await this.erc20VestingService.create({
       address: vesting,
       beneficiary,
-      erc20TokenId: tokenEntity.id,
-      amount,
       duration: ~~duration * 1000, // TODO FIXME
       startTimestamp, // TODO FIXME
     });

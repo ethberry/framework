@@ -9,7 +9,7 @@ pragma solidity ^0.8.4;
 import "@gemunion/contracts/contracts/ERC1155/preset/ERC1155ACBS.sol";
 import "@gemunion/contracts/contracts/ERC1155/ERC1155BaseUrl.sol";
 
-contract Resources is ERC1155ACBS, ERC1155BaseUrl {
+contract ERC1155Simple is ERC1155ACBS, ERC1155BaseUrl {
   constructor(string memory baseTokenURI) ERC1155ACBS(baseTokenURI) {}
 
   function uri(uint256 tokenId) public view virtual override returns (string memory) {

@@ -5,11 +5,26 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
-import contractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import flatVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/FlatVesting.sol/FlatVesting.json";
+import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
+import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
+import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
-import { Erc20VestingDeployDialog, IErc20VestingContractFields } from "./deploy-dialog";
+import { Erc20VestingDeployDialog, IErc20VestingContractFields, Erc20VestingTemplate } from "./deploy-dialog";
 import { useDeploy } from "../../../hooks/useCollection";
+
+function getBytecodeByTemplate(template: Erc20VestingTemplate) {
+  switch (template) {
+    case Erc20VestingTemplate.LINEAR:
+      return LinearVesting.bytecode;
+    case Erc20VestingTemplate.GRADED:
+      return GradedVesting.bytecode;
+    case Erc20VestingTemplate.CLIFF:
+      return CliffVesting.bytecode;
+    default:
+      throw new Error("Unknown template");
+  }
+}
 
 export interface IErc20VestingButtonProps {
   className?: string;
@@ -23,11 +38,13 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc20VestingContractFields) => {
       const { contractTemplate, beneficiary, startTimestamp, duration } = values;
-
-      void contractTemplate;
-
-      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, contractManager.abi, library.getSigner());
-      return contract.deployVesting(flatVesting.bytecode, beneficiary, startTimestamp, duration) as Promise<void>;
+      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+      return contract.deployVesting(
+        getBytecodeByTemplate(contractTemplate),
+        beneficiary,
+        startTimestamp,
+        duration,
+      ) as Promise<void>;
     },
   );
 

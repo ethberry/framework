@@ -8,7 +8,7 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
-interface IEIP712ERC1155 is IERC1155 {
+interface IERC1155Simple is IERC1155 {
   function mintBatch(
     address to,
     uint256[] memory ids,

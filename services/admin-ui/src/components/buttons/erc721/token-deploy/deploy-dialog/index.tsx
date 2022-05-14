@@ -10,6 +10,7 @@ import { validationSchema } from "./validation";
 export enum Erc721TokenTemplate {
   "SIMPLE" = "SIMPLE", // ACBER
   "RANDOM" = "RANDOM", // ACBER + CHAINLINK
+  "GRADED" = "GRADED", // ACBER + METADATA
 }
 
 export interface IErc721TokenContractFields {

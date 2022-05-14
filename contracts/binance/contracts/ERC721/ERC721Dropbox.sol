@@ -10,9 +10,9 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../Marketplace/interfaces/IEIP712ERC721.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
 
-contract DropboxERC721 is ERC721ACBER, ERC721BaseUrl {
+contract ERC721Dropbox is ERC721ACBER, ERC721BaseUrl {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -20,7 +20,6 @@ contract DropboxERC721 is ERC721ACBER, ERC721BaseUrl {
     uint256 templateId;
   }
 
-  IEIP712ERC721 _item;
   mapping(uint256 => ItemData) internal _itemData;
 
   event UnpackDropbox(address collection, uint256 tokenId, uint256 templateId);
@@ -29,8 +28,8 @@ contract DropboxERC721 is ERC721ACBER, ERC721BaseUrl {
     string memory name,
     string memory symbol,
     string memory baseTokenURI,
-    uint96 royaltyNumerator
-  ) ERC721ACBER(name, symbol, baseTokenURI, royaltyNumerator) {
+    uint96 royalty
+  ) ERC721ACBER(name, symbol, baseTokenURI, royalty) {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _setupRole(MINTER_ROLE, _msgSender());
 
@@ -54,7 +53,7 @@ contract DropboxERC721 is ERC721ACBER, ERC721BaseUrl {
     emit UnpackDropbox(collection, tokenId, data.templateId);
 
     _burn(tokenId);
-    IEIP712ERC721(collection).mintRandom(_msgSender(), data.templateId, dropboxId);
+    IERC721Random(collection).mintRandom(_msgSender(), data.templateId, dropboxId);
   }
 
   function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {

@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "../Marketplace/interfaces/IEIP712ERC1155.sol";
+import "../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract CraftERC1155 is AccessControl, Pausable {
   using Address for address;
@@ -76,8 +76,8 @@ contract CraftERC1155 is AccessControl, Pausable {
 
     emit RecipeCrafted(_msgSender(), recipeId, amount);
 
-    IEIP712ERC1155(recipe.resources).burnBatch(_msgSender(), recipe.ids, amounts);
-    IEIP712ERC1155(recipe.reward).mint(_msgSender(), recipe.tokenId, amount, "0x");
+    IERC1155Simple(recipe.resources).burnBatch(_msgSender(), recipe.ids, amounts);
+    IERC1155Simple(recipe.reward).mint(_msgSender(), recipe.tokenId, amount, "0x");
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {

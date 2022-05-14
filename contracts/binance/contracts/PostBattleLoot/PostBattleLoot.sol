@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-import "../Marketplace/interfaces/IEIP712ERC1155.sol";
+import "../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract PostBattleLoot is AccessControl, Pausable, EIP712 {
   using Address for address;
@@ -50,7 +50,7 @@ contract PostBattleLoot is AccessControl, Pausable, EIP712 {
     require(isVerified, "PostBattleLoot: Invalid signature");
 
     emit Redeem(account, collection, tokenIds, amounts);
-    IEIP712ERC1155(collection).mintBatch(account, tokenIds, amounts, "0x");
+    IERC1155Simple(collection).mintBatch(account, tokenIds, amounts, "0x");
   }
 
   function _hash(

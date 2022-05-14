@@ -6,6 +6,6 @@
 
 pragma solidity ^0.8.4;
 
-interface IDropboxERC721 {
+interface IERC721Dropbox {
   function mintDropbox(address to, uint256 templateId) external returns (uint256);
 }

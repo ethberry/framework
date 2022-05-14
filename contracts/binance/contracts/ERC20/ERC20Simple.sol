@@ -9,7 +9,7 @@ pragma solidity ^0.8.4;
 import "@gemunion/contracts/contracts/ERC20/preset/ERC20ACBCS.sol";
 import "@gemunion/contracts/contracts/AccessList/BlackList.sol";
 
-contract Coin is ERC20ACBCS {
+contract ERC20Simple is ERC20ACBCS {
   constructor(
     string memory name,
     string memory symbol,

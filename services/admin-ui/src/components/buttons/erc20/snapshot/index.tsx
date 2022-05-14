@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks";
-import coin from "@framework/binance-contracts/artifacts/contracts/ERC20/Coin.sol/Coin.json";
+import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 export const Erc20TokenSnapshotButton: FC = () => {
   const { library } = useWeb3React();
@@ -14,7 +14,7 @@ export const Erc20TokenSnapshotButton: FC = () => {
   const { formatMessage } = useIntl();
 
   const handleSnapshot = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC20_COIN, coin.abi, library.getSigner());
+    const contract = new ethers.Contract(process.env.ERC20_COIN, ERC20Simple.abi, library.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 

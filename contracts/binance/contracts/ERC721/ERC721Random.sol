@@ -10,12 +10,12 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
+import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
 
-import "../Marketplace/interfaces/IEIP712ERC721.sol";
-import "../MetaData/MetaData.sol";
+import "./interfaces/IERC721Random.sol";
 
-contract Hero is IEIP712ERC721, ERC721ACBER, ERC721ChainLinkBinance, MetaData, ERC721BaseUrl {
+contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -26,7 +26,6 @@ contract Hero is IEIP712ERC721, ERC721ACBER, ERC721ChainLinkBinance, MetaData, E
 
   event MintRandom(address to, uint256 tokenId, uint256 templateId, uint256 rarity, uint256 dropboxId);
 
-  // requestId => Request
   mapping(bytes32 => Request) internal _queue;
 
   uint256 private _maxTemplateId = 0;
@@ -35,10 +34,21 @@ contract Hero is IEIP712ERC721, ERC721ACBER, ERC721ChainLinkBinance, MetaData, E
     string memory name,
     string memory symbol,
     string memory baseTokenURI,
-    uint96 royaltyNumerator
-  ) ERC721ACBER(name, symbol, baseTokenURI, royaltyNumerator) {
-    _tokenIdTracker.increment();
+    uint96 royalty
+  ) ERC721ACBER(name, symbol, baseTokenURI, royalty) {
     // should start from 1
+    _tokenIdTracker.increment();
+  }
+
+  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
+    tokenId = _tokenIdTracker.current();
+
+    upsertRecordField(tokenId, keccak256("templateId"), templateId);
+    upsertRecordField(tokenId, keccak256("rarity"), 1);
+
+    safeMint(to);
   }
 
   function mintRandom(
@@ -46,8 +56,8 @@ contract Hero is IEIP712ERC721, ERC721ACBER, ERC721ChainLinkBinance, MetaData, E
     uint256 templateId,
     uint256 dropboxId
   ) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "Item: wrong type");
-    require(templateId <= _maxTemplateId, "Item: wrong type");
+    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
     _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
   }
 
@@ -56,21 +66,13 @@ contract Hero is IEIP712ERC721, ERC721ACBER, ERC721ChainLinkBinance, MetaData, E
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
-    _metadata[tokenId] = MetaData({ templateId: request.templateId, rarity: rarity, level: 1 });
+    upsertRecordField(tokenId, keccak256("templateId"), request.templateId);
+    upsertRecordField(tokenId, keccak256("rarity"), rarity);
 
     emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.dropboxId);
 
     delete _queue[requestId];
     safeMint(request.owner);
-  }
-
-  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
-    require(templateId != 0, "Hero: wrong type");
-    require(templateId <= _maxTemplateId, "Hero: wrong type");
-
-    tokenId = _tokenIdTracker.current();
-    _metadata[tokenId] = MetaData({ templateId: templateId, rarity: 1, level: 1 });
-    safeMint(to);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {

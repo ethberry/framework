@@ -11,8 +11,6 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-import "./interfaces/IMetaData.sol";
-
 contract MetaDataManipulator is AccessControl, Pausable, EIP712 {
   mapping(bytes32 => bool) private _expired;
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -42,9 +40,7 @@ contract MetaDataManipulator is AccessControl, Pausable, EIP712 {
     bool isVerified = _verify(signer, _hash(nonce, collection, tokenId, msg.value), signature);
     require(isVerified, "MetaDataManipulator: Invalid signature");
 
-    IMetaData.MetaData memory metadata = IMetaData(collection).getDataByTokenId(tokenId);
-    metadata.level += 1;
-    IMetaData(collection).setDataByTokenId(tokenId, metadata);
+    // TODO change metadata
   }
 
   function _hash(

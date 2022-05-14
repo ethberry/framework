@@ -10,8 +10,9 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "../Marketplace/interfaces/IEIP712ERC1155.sol";
-import "../Marketplace/interfaces/IEIP712ERC721.sol";
+import "../ERC1155/interfaces/IERC1155Simple.sol";
+import "../ERC721/interfaces/IERC721Simple.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
 
 contract CraftERC721 is AccessControl, Pausable {
   using Address for address;
@@ -41,9 +42,6 @@ contract CraftERC721 is AccessControl, Pausable {
   event RecipeUpdated(uint256 recipeId, bool active);
 
   event RecipeCrafted(address from, uint256 recipeId);
-
-  IEIP712ERC721 private _item;
-  IEIP712ERC1155 private _resources;
 
   mapping(uint256 => Recipe) private _recipes;
 
@@ -83,8 +81,8 @@ contract CraftERC721 is AccessControl, Pausable {
 
     emit RecipeCrafted(_msgSender(), recipeId);
 
-    IEIP712ERC1155(recipe.resources).burnBatch(_msgSender(), recipe.ids, recipe.amounts);
-    IEIP712ERC721(recipe.reward).mintCommon(_msgSender(), recipe.templateId);
+    IERC1155Simple(recipe.resources).burnBatch(_msgSender(), recipe.ids, recipe.amounts);
+    IERC721Simple(recipe.reward).mintCommon(_msgSender(), recipe.templateId);
   }
 
   function craftRandom(uint256 recipeId) public {
@@ -94,8 +92,8 @@ contract CraftERC721 is AccessControl, Pausable {
 
     emit RecipeCrafted(_msgSender(), recipeId);
 
-    IEIP712ERC1155(recipe.resources).burnBatch(_msgSender(), recipe.ids, recipe.amounts);
-    IEIP712ERC721(recipe.reward).mintRandom(_msgSender(), recipe.templateId, recipe.dropboxId);
+    IERC1155Simple(recipe.resources).burnBatch(_msgSender(), recipe.ids, recipe.amounts);
+    IERC721Random(recipe.reward).mintRandom(_msgSender(), recipe.templateId, recipe.dropboxId);
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {

@@ -13,7 +13,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-import "./interfaces/IEIP712ERC1155.sol";
+import "../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract MarketplaceERC1155 is AccessControl, Pausable, EIP712 {
   using Address for address;
@@ -50,7 +50,7 @@ contract MarketplaceERC1155 is AccessControl, Pausable, EIP712 {
     bool isVerified = _verify(signer, _hash(nonce, collection, tokenIds, amounts, msg.value), signature);
     require(isVerified, "MarketplaceERC1155: Invalid signature");
 
-    IEIP712ERC1155(collection).mintBatch(_msgSender(), tokenIds, amounts, "0x");
+    IERC1155Simple(collection).mintBatch(_msgSender(), tokenIds, amounts, "0x");
     emit Redeem(_msgSender(), collection, tokenIds, amounts, msg.value);
   }
 

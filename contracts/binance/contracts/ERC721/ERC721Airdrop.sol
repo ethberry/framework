@@ -14,9 +14,9 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBCR.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../Marketplace/interfaces/IEIP712ERC721.sol";
+import "../ERC721/interfaces/IERC721Random.sol";
 
-contract AirdropERC721 is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
+contract ERC721Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -26,7 +26,7 @@ contract AirdropERC721 is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
     uint256 templateId;
   }
 
-  IEIP712ERC721 _factory;
+  IERC721Random _factory;
 
   mapping(uint256 => ItemData) internal _itemData;
 
@@ -42,8 +42,8 @@ contract AirdropERC721 is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
     string memory symbol,
     string memory baseTokenURI,
     uint256 cap,
-    uint96 royaltyNumerator
-  ) ERC721ACBCR(name, symbol, baseTokenURI, cap, royaltyNumerator) EIP712(name, "1.0.0") {
+    uint96 royalty
+  ) ERC721ACBCR(name, symbol, baseTokenURI, cap, royalty) EIP712(name, "1.0.0") {
     _setupRole(PAUSER_ROLE, _msgSender());
     _tokenIdTracker.increment();
   }
@@ -86,7 +86,7 @@ contract AirdropERC721 is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
 
   function setFactory(address factory) external onlyRole(DEFAULT_ADMIN_ROLE) {
     require(factory.isContract(), "AirdropERC721: the factory must be a deployed contract");
-    _factory = IEIP712ERC721(factory);
+    _factory = IERC721Random(factory);
   }
 
   function unpack(uint256 tokenId, uint256 airdropId) public whenNotPaused {
