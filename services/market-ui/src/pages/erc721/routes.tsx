@@ -8,6 +8,8 @@ import { Erc721TemplateList } from "./template-list";
 import { Erc721Template } from "./template";
 import { Erc721TokenList } from "./token-list";
 import { Erc721Token } from "./token";
+import { Erc721AirdropWrapper } from "./airdrop/wrapper";
+import { Erc721Airdrop } from "./airdrop";
 
 export const erc721Routes: Array<RouteObject> = [
   {
@@ -37,5 +39,10 @@ export const erc721Routes: Array<RouteObject> = [
       { index: true, element: <Erc721TokenList /> },
       { path: "/erc721-tokens/:id", element: <Erc721Token /> },
     ],
+  },
+  {
+    path: "/erc721-airdrop",
+    element: <Erc721AirdropWrapper />,
+    children: [{ index: true, element: <Erc721Airdrop /> }],
   },
 ];

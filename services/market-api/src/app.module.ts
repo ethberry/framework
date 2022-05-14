@@ -18,6 +18,7 @@ import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
+import { Erc20Module } from "./erc20/erc20.module";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ProfileModule } from "./profile/profile.module";
@@ -81,6 +82,7 @@ import { UserModule } from "./user/user.module";
     AuthModule,
     GemunionThrottlerModule,
     HealthModule,
+    Erc20Module,
     Erc721Module,
     Erc1155Module,
     ProfileModule,

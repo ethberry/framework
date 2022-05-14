@@ -35,7 +35,7 @@
     "typeorm": "0.3.6",
     "typeorm-naming-strategies": "4.1.0"
   },
-  "description": "EML engine",
+  "description": "JSON API",
   "devDependencies": {
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "2.0.1",

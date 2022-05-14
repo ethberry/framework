@@ -19,30 +19,35 @@ export class SeedErc721Airdrop1648525967820 implements MigrationInterface {
       INSERT INTO ${ns}.erc721_air_drop (
         owner,
         erc721_template_id,
+        airdrop_status,
         signature,
         created_at,
         updated_at
       ) VALUES (
         '${wallet}',
         9,
+        'NEW',
         '${signDbItem1}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         10,
+        'NEW',
         '${signDbItem2}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         11,
+        'UNPACKED',
         '${signDbItem3}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         9,
+        'REDEEMED',
         '${signDbItem4}',
         '${currentDateTime}',
         '${currentDateTime}'

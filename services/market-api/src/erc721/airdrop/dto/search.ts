@@ -10,6 +10,7 @@ export class Erc721AirdropSearchDto extends SearchDto implements IErc721AirdropS
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public owner: string;
 
   @ApiPropertyOptional({

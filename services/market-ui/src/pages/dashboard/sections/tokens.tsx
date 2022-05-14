@@ -14,6 +14,15 @@ export const Tokens: FC = () => {
         </ListSubheader>
       }
     >
+      <ListItem button component={RouterLink} to="/erc20-vesting">
+        <ListItemIcon>
+          <Storefront />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc20-vesting" />
+        </ListItemText>
+      </ListItem>
+      <Divider />
       <ListItem button component={RouterLink} to="/erc721-collections">
         <ListItemIcon>
           <Storefront />
@@ -36,6 +45,14 @@ export const Tokens: FC = () => {
         </ListItemIcon>
         <ListItemText>
           <FormattedMessage id="pages.dashboard.tokens.erc721-tokens" />
+        </ListItemText>
+      </ListItem>
+      <ListItem button component={RouterLink} to="/erc721-airdrop">
+        <ListItemIcon>
+          <Storefront />
+        </ListItemIcon>
+        <ListItemText>
+          <FormattedMessage id="pages.dashboard.tokens.erc721-airdrop" />
         </ListItemText>
       </ListItem>
       <Divider />

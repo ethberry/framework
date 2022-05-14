@@ -3,8 +3,6 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { IErc721AirdropSearchDto } from "@framework/types";
-
-import { UserEntity } from "../../user/user.entity";
 import { Erc721AirdropEntity } from "./airdrop.entity";
 
 @Injectable()
@@ -14,11 +12,8 @@ export class Erc721AirdropService {
     private readonly erc721AirdropEntityRepository: Repository<Erc721AirdropEntity>,
   ) {}
 
-  public async search(
-    userEntity: UserEntity,
-    dto: Partial<IErc721AirdropSearchDto>,
-  ): Promise<[Array<Erc721AirdropEntity>, number]> {
-    const { skip, take, erc721TemplateIds } = dto;
+  public async search(dto: Partial<IErc721AirdropSearchDto>): Promise<[Array<Erc721AirdropEntity>, number]> {
+    const { skip, take, owner, erc721TemplateIds } = dto;
 
     const queryBuilder = this.erc721AirdropEntityRepository.createQueryBuilder("airdrop");
 
@@ -30,7 +25,7 @@ export class Erc721AirdropService {
     queryBuilder.leftJoin("airdrop.erc721Template", "template");
     queryBuilder.addSelect(["template.title", "template.imageUrl"]);
 
-    queryBuilder.andWhere("airdrop.owner = :owner", { owner: userEntity.wallet.toLowerCase() });
+    queryBuilder.andWhere("airdrop.owner = :owner", { owner });
 
     if (erc721TemplateIds) {
       if (erc721TemplateIds.length === 1) {

@@ -54,7 +54,7 @@ export class Erc1155MarketplaceService {
       amounts: dto.amounts,
       price: totalTokenPrice,
     };
-    console.log("signData", signData);
+
     const signature = await Promise.resolve(this.getSign(signData));
     return { nonce: ethers.utils.hexlify(signData.nonce), signature };
   }
