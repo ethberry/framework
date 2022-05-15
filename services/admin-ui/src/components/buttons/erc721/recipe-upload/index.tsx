@@ -8,7 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Erc721RecipeStatus, IErc721Recipe } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 
-import CraftERC721 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC721.sol/CraftERC721.json";
+import ERC1155ERC721Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
 
 export interface IErc721RecipeButtonProps {
   recipe: IErc721Recipe;
@@ -28,7 +28,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
     const ids = recipe.ingredients.map(ingredient => ingredient.erc1155TokenId);
     const amounts = recipe.ingredients.map(ingredient => ingredient.amount);
 
-    const contract = new ethers.Contract(process.env.ERC721_CRAFT_ADDR, CraftERC721.abi, library.getSigner());
+    const contract = new ethers.Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
     return contract.createRecipe(
       recipe.id,
       recipe.ingredients[0]!.erc1155Token.erc1155Collection!.address,
@@ -59,7 +59,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
       recipeStatus = recipe.recipeStatus !== Erc721RecipeStatus.ACTIVE;
     }
 
-    const contract = new ethers.Contract(process.env.ERC721_CRAFT_ADDR, CraftERC721.abi, library.getSigner());
+    const contract = new ethers.Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
     return contract.updateRecipe(recipe.id, recipeStatus) as Promise<void>;
   });
 

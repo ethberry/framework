@@ -25,8 +25,8 @@ import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1
 import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC721.sol/CraftERC721.json";
-import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
+import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
+import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 import auctionERC721 from "@framework/binance-contracts/artifacts/contracts/Auction/AuctionERC721.sol/AuctionERC721.json";
 import ERC721Airdrop from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
 import ERC721Dropbox from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Dropbox.sol/ERC721Dropbox.json";
@@ -162,7 +162,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC1155_CRAFT,
         contractAddress: refineryAddr,
-        contractInterface: CraftERC1155.abi as Array<AbiItem>,
+        contractInterface: ERC1155ERC1155Craft.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc1155RecipeEventType.RecipeCreated,

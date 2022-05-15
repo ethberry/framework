@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 
-contract CraftERC1155 is AccessControl, Pausable {
+contract ERC1155ERC1155Craft is AccessControl, Pausable {
   using Address for address;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -47,10 +47,10 @@ contract CraftERC1155 is AccessControl, Pausable {
     address reward,
     uint256 tokenId
   ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(ids.length == amounts.length, "CraftERC1155: ids and amounts length mismatch");
-    require(tokenId != 0, "CraftERC1155: reserved token id");
+    require(ids.length == amounts.length, "ERC1155ERC1155Craft: ids and amounts length mismatch");
+    require(tokenId != 0, "ERC1155ERC1155Craft: reserved token id");
     Recipe memory recipe = _recipes[recipeId];
-    require(recipe.tokenId == 0, "CraftERC1155: recipe already exist");
+    require(recipe.tokenId == 0, "ERC1155ERC1155Craft: recipe already exist");
 
     _recipes[recipeId] = Recipe(resources, ids, amounts, reward, tokenId, true);
     emit RecipeCreated(recipeId, resources, ids, amounts, reward, tokenId);
@@ -58,7 +58,7 @@ contract CraftERC1155 is AccessControl, Pausable {
 
   function updateRecipe(uint256 recipeId, bool active) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Recipe memory recipe = _recipes[recipeId];
-    require(recipe.tokenId != 0, "CraftERC1155: recipe does not exist");
+    require(recipe.tokenId != 0, "ERC1155ERC1155Craft: recipe does not exist");
     _recipes[recipeId].active = active;
     emit RecipeUpdated(recipeId, active);
   }
@@ -66,7 +66,7 @@ contract CraftERC1155 is AccessControl, Pausable {
   function craft(uint256 recipeId, uint256 amount) public {
     Recipe memory recipe = _recipes[recipeId];
 
-    require(recipe.active, "CraftERC1155: recipe is not active");
+    require(recipe.active, "ERC1155ERC1155Craft: recipe is not active");
 
     uint256[] memory amounts = new uint256[](recipe.amounts.length);
 

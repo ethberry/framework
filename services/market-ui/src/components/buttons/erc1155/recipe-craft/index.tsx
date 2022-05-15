@@ -8,7 +8,7 @@ import { useApi } from "@gemunion/provider-api";
 import { useMetamask } from "@gemunion/react-hooks";
 import { IErc1155Recipe } from "@framework/types";
 
-import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
+import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 interface ICraftButtonProps {
@@ -39,7 +39,7 @@ export const Erc1155RecipeCraftButton: FC<ICraftButtonProps> = props => {
   };
 
   const handleCraft = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, CraftERC1155.abi, library.getSigner());
+    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
     return (
       contract
         // TODO add item amounts - batch craft?

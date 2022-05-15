@@ -14,7 +14,7 @@ import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 
-contract CraftERC721 is AccessControl, Pausable {
+contract ERC1155ERC721Craft is AccessControl, Pausable {
   using Address for address;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -59,9 +59,9 @@ contract CraftERC721 is AccessControl, Pausable {
     uint256 templateId,
     uint256 dropboxId
   ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(ids.length == amounts.length, "CraftERC721: ids and amounts length mismatch");
+    require(ids.length == amounts.length, "ERC1155ERC721Craft: ids and amounts length mismatch");
     Recipe memory recipe = _recipes[recipeId];
-    require(recipe.templateId == 0, "CraftERC721: recipe already exist");
+    require(recipe.templateId == 0, "ERC1155ERC721Craft: recipe already exist");
 
     _recipes[recipeId] = Recipe(resources, ids, amounts, reward, templateId, dropboxId, true);
     emit RecipeCreated(recipeId, resources, ids, amounts, reward, templateId, dropboxId);
@@ -69,7 +69,7 @@ contract CraftERC721 is AccessControl, Pausable {
 
   function updateRecipe(uint256 recipeId, bool active) public onlyRole(DEFAULT_ADMIN_ROLE) {
     Recipe memory recipe = _recipes[recipeId];
-    require(recipe.templateId != 0, "CraftERC721: recipe does not exist");
+    require(recipe.templateId != 0, "ERC1155ERC721Craft: recipe does not exist");
     _recipes[recipeId].active = active;
     emit RecipeUpdated(recipeId, active);
   }
@@ -77,7 +77,7 @@ contract CraftERC721 is AccessControl, Pausable {
   function craftCommon(uint256 recipeId) public {
     Recipe memory recipe = _recipes[recipeId];
 
-    require(recipe.active, "CraftERC721: recipe is not active");
+    require(recipe.active, "ERC1155ERC721Craft: recipe is not active");
 
     emit RecipeCrafted(_msgSender(), recipeId);
 
@@ -88,7 +88,7 @@ contract CraftERC721 is AccessControl, Pausable {
   function craftRandom(uint256 recipeId) public {
     Recipe memory recipe = _recipes[recipeId];
 
-    require(recipe.active, "CraftERC721: recipe is not active");
+    require(recipe.active, "ERC1155ERC721Craft: recipe is not active");
 
     emit RecipeCrafted(_msgSender(), recipeId);
 
