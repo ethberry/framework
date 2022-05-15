@@ -17,21 +17,21 @@ import {
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC721Airdrop", function () {
-  let item: ContractFactory;
-  let itemInstance: ERC721Simple;
+  let erc721: ContractFactory;
+  let erc721Instance: ERC721Simple;
   let airdrop: ContractFactory;
   let airdropInstance: ERC721Airdrop;
   let network: Network;
 
   beforeEach(async function () {
     airdrop = await ethers.getContractFactory("ERC721Airdrop");
-    item = await ethers.getContractFactory("ERC721Simple");
+    erc721 = await ethers.getContractFactory("ERC721Simple");
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    itemInstance = (await item.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Simple;
+    erc721Instance = (await erc721.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Simple;
 
     airdropInstance = (await airdrop.deploy(tokenName, tokenSymbol, baseTokenURI, 1, royalty)) as ERC721Airdrop;
-    await airdropInstance.setFactory(itemInstance.address);
+    await airdropInstance.setFactory(erc721Instance.address);
 
     network = await ethers.provider.getNetwork();
 

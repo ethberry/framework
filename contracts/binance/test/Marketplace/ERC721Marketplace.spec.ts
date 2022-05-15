@@ -41,6 +41,7 @@ describe("ERC721Marketplace", function () {
 
     await itemInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
     await dropboxInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
+    // await itemInstance.setMaxTemplateId(tokenId);
 
     network = await ethers.provider.getNetwork();
 
@@ -51,8 +52,6 @@ describe("ERC721Marketplace", function () {
 
   describe("buyCommon", function () {
     it("should buy common item", async function () {
-      // await itemInstance.setMaxTemplateId(2);
-
       const signature = await this.owner._signTypedData(
         // Domain
         {
@@ -88,8 +87,6 @@ describe("ERC721Marketplace", function () {
     });
 
     it("should fail: duplicate mint", async function () {
-      // await itemInstance.setMaxTemplateId(2);
-
       const signature = await this.owner._signTypedData(
         // Domain
         {
@@ -177,8 +174,6 @@ describe("ERC721Marketplace", function () {
 
   describe("buyDropbox", function () {
     it("should buy common item", async function () {
-      // await itemInstance.setMaxTemplateId(2);
-
       const signature = await this.owner._signTypedData(
         // Domain
         {
@@ -214,8 +209,6 @@ describe("ERC721Marketplace", function () {
     });
 
     it("should fail: duplicate mint", async function () {
-      // await itemInstance.setMaxTemplateId(2);
-
       const signature = await this.owner._signTypedData(
         // Domain
         {
