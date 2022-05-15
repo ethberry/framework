@@ -3,9 +3,7 @@ import { ethers } from "hardhat";
 import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
 
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-
-import { MarketplaceERC1155, Resources } from "../../typechain-types";
+import { ERC1155Marketplace, ERC1155Simple } from "../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -16,43 +14,35 @@ import {
   tokenId,
   tokenName,
 } from "../constants";
+import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
-describe("MarketplaceERC1155", function () {
+describe("ERC1155Marketplace", function () {
   let marketplace: ContractFactory;
-  let marketplaceInstance: MarketplaceERC1155;
+  let marketplaceInstance: ERC1155Marketplace;
   let resources: ContractFactory;
-  let resourcesInstance: Resources;
-  let owner: SignerWithAddress;
-  let receiver: SignerWithAddress;
+  let resourcesInstance: ERC1155Simple;
   let network: Network;
 
   beforeEach(async function () {
-    [owner, receiver] = await ethers.getSigners();
+    [this.owner, this.receiver] = await ethers.getSigners();
 
-    marketplace = await ethers.getContractFactory("MarketplaceERC1155");
-    marketplaceInstance = (await marketplace.deploy(tokenName)) as MarketplaceERC1155;
+    marketplace = await ethers.getContractFactory("ERC1155Marketplace");
+    marketplaceInstance = (await marketplace.deploy(tokenName)) as ERC1155Marketplace;
 
-    resources = await ethers.getContractFactory("Resources");
-    resourcesInstance = (await resources.deploy(baseTokenURI)) as Resources;
+    resources = await ethers.getContractFactory("ERC1155Simple");
+    resourcesInstance = (await resources.deploy(baseTokenURI)) as ERC1155Simple;
     await resourcesInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
 
     network = await ethers.provider.getNetwork();
+
+    this.contractInstance = marketplaceInstance;
   });
 
-  describe("hasRole", function () {
-    it("Should set the right roles to deployer", async function () {
-      const isAdmin = await marketplaceInstance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
-      expect(isAdmin).to.equal(true);
-      const isPauser = await marketplaceInstance.hasRole(PAUSER_ROLE, owner.address);
-      expect(isPauser).to.equal(true);
-      const isMinter = await resourcesInstance.hasRole(MINTER_ROLE, owner.address);
-      expect(isMinter).to.equal(true);
-    });
-  });
+  shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("buy resources", function () {
     it("should buy resources", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -81,17 +71,23 @@ describe("MarketplaceERC1155", function () {
       );
 
       const tx = marketplaceInstance
-        .connect(receiver)
-        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], owner.address, signature, {
+        .connect(this.receiver)
+        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], this.owner.address, signature, {
           value: amount,
         });
       await expect(tx)
         .to.emit(resourcesInstance, "TransferBatch")
-        .withArgs(marketplaceInstance.address, ethers.constants.AddressZero, receiver.address, [tokenId], [amount]);
+        .withArgs(
+          marketplaceInstance.address,
+          ethers.constants.AddressZero,
+          this.receiver.address,
+          [tokenId],
+          [amount],
+        );
     });
 
     it("should fail: duplicate mint", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -120,24 +116,30 @@ describe("MarketplaceERC1155", function () {
       );
 
       const tx = marketplaceInstance
-        .connect(receiver)
-        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], owner.address, signature, {
+        .connect(this.receiver)
+        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], this.owner.address, signature, {
           value: amount,
         });
       await expect(tx)
         .to.emit(resourcesInstance, "TransferBatch")
-        .withArgs(marketplaceInstance.address, ethers.constants.AddressZero, receiver.address, [tokenId], [amount]);
+        .withArgs(
+          marketplaceInstance.address,
+          ethers.constants.AddressZero,
+          this.receiver.address,
+          [tokenId],
+          [amount],
+        );
 
       const tx2 = marketplaceInstance
-        .connect(receiver)
-        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], owner.address, signature, {
+        .connect(this.receiver)
+        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], this.owner.address, signature, {
           value: amount,
         });
-      await expect(tx2).to.be.revertedWith("MarketplaceERC1155: Expired signature");
+      await expect(tx2).to.be.revertedWith("ERC1155Marketplace: Expired signature");
     });
 
     it("should fail for wrong signer role", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -166,11 +168,11 @@ describe("MarketplaceERC1155", function () {
       );
 
       const tx = marketplaceInstance
-        .connect(receiver)
-        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], receiver.address, signature, {
+        .connect(this.receiver)
+        .buyResources(nonce, resourcesInstance.address, [tokenId], [amount], this.receiver.address, signature, {
           value: amount,
         });
-      await expect(tx).to.be.revertedWith(`MarketplaceERC1155: Wrong signer`);
+      await expect(tx).to.be.revertedWith(`ERC1155Marketplace: Wrong signer`);
     });
 
     it("should fail for wrong signature", async function () {
@@ -179,11 +181,11 @@ describe("MarketplaceERC1155", function () {
         resourcesInstance.address,
         [tokenId],
         [amount],
-        owner.address,
+        this.owner.address,
         ethers.utils.formatBytes32String("signature"),
         { value: amount },
       );
-      await expect(tx).to.be.revertedWith(`MarketplaceERC1155: Invalid signature`);
+      await expect(tx).to.be.revertedWith(`ERC1155Marketplace: Invalid signature`);
     });
   });
 });

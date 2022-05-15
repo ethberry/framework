@@ -45,8 +45,8 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
     tokenId = _tokenIdTracker.current();
 
-    upsertRecordField(tokenId, keccak256("templateId"), templateId);
-    upsertRecordField(tokenId, keccak256("rarity"), 1);
+    upsertRecordField(tokenId, keccak256(bytes("templateId")), templateId);
+    upsertRecordField(tokenId, keccak256(bytes("rarity")), 1);
 
     safeMint(to);
   }
@@ -66,8 +66,8 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
-    upsertRecordField(tokenId, keccak256("templateId"), request.templateId);
-    upsertRecordField(tokenId, keccak256("rarity"), rarity);
+    upsertRecordField(tokenId, keccak256(bytes("templateId")), request.templateId);
+    upsertRecordField(tokenId, keccak256(bytes("rarity")), rarity);
 
     emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.dropboxId);
 

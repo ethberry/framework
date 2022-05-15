@@ -5,7 +5,7 @@ export const tokenSymbol = "SYMBOL";
 export const tokenName = "Lorem ipsum...";
 export const tokenId = 1;
 export const templateId = 1;
-export const royaltyNumerator = 100;
+export const royalty = 100;
 
 export const DEFAULT_ADMIN_ROLE = "0x0000000000000000000000000000000000000000000000000000000000000000";
 export const MINTER_ROLE = ethers.utils.id("MINTER_ROLE");

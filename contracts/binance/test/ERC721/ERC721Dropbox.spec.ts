@@ -2,63 +2,56 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
-import { DropboxERC721, Item, MarketplaceERC721 } from "../../typechain-types";
+import { ERC721Dropbox, ERC721Marketplace, ERC721Simple } from "../../typechain-types";
 import {
   amount,
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
   MINTER_ROLE,
   nonce,
-  royaltyNumerator,
+  royalty,
   templateId,
   tokenId,
   tokenName,
   tokenSymbol,
 } from "../constants";
+import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
-describe("DropboxERC721", function () {
+describe("ERC721Dropbox", function () {
   let marketplace: ContractFactory;
-  let marketplaceInstance: MarketplaceERC721;
+  let marketplaceInstance: ERC721Marketplace;
   let item: ContractFactory;
-  let itemInstance: Item;
+  let itemInstance: ERC721Simple;
   let dropbox: ContractFactory;
-  let dropboxInstance: DropboxERC721;
-  let owner: SignerWithAddress;
-  let receiver: SignerWithAddress;
+  let dropboxInstance: ERC721Dropbox;
   let network: Network;
 
   beforeEach(async function () {
-    [owner, receiver] = await ethers.getSigners();
+    [this.owner, this.receiver] = await ethers.getSigners();
 
-    marketplace = await ethers.getContractFactory("MarketplaceERC721");
-    marketplaceInstance = (await marketplace.deploy(tokenName)) as MarketplaceERC721;
-    item = await ethers.getContractFactory("Item");
-    itemInstance = (await item.deploy(tokenName, tokenSymbol, baseTokenURI, royaltyNumerator)) as Item;
-    dropbox = await ethers.getContractFactory("DropboxERC721");
-    dropboxInstance = (await dropbox.deploy(tokenName, tokenSymbol, baseTokenURI, royaltyNumerator)) as DropboxERC721;
+    marketplace = await ethers.getContractFactory("ERC721Marketplace");
+    marketplaceInstance = (await marketplace.deploy(tokenName)) as ERC721Marketplace;
+    item = await ethers.getContractFactory("ERC721Simple");
+    itemInstance = (await item.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Simple;
+    dropbox = await ethers.getContractFactory("ERC721Dropbox");
+    dropboxInstance = (await dropbox.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Dropbox;
 
     await itemInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
     await dropboxInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
 
     network = await ethers.provider.getNetwork();
+
+    this.contractInstance = dropboxInstance;
   });
 
-  describe("hasRole", function () {
-    it("Should set the right roles to deployer", async function () {
-      const isAdmin = await itemInstance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
-      expect(isAdmin).to.equal(true);
-      const isMinter = await itemInstance.hasRole(MINTER_ROLE, owner.address);
-      expect(isMinter).to.equal(true);
-    });
-  });
+  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
   describe("unpack", function () {
     it("should unpack", async function () {
-      await itemInstance.setMaxTemplateId(2);
+      // await itemInstance.setMaxTemplateId(2);
 
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -85,11 +78,11 @@ describe("DropboxERC721", function () {
       );
 
       const tx1 = marketplaceInstance
-        .connect(receiver)
-        .buyDropbox(nonce, dropboxInstance.address, templateId, owner.address, signature, { value: amount });
+        .connect(this.receiver)
+        .buyDropbox(nonce, dropboxInstance.address, templateId, this.owner.address, signature, { value: amount });
       await expect(tx1)
         .to.emit(dropboxInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, receiver.address, tokenId);
+        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
 
       // const tx2 = dropboxInstance.connect(receiver).unpack(itemInstance.address, tokenId);
       // await expect(tx2).to.not.reverted;

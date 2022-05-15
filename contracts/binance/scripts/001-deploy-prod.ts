@@ -45,8 +45,8 @@ async function main() {
   console.info(`ERC721_SKILL_ADDR=${skillInstance.address.toLowerCase()}`);
 
   // ERC721 Marketplace contract
-  const market721Factory = await ethers.getContractFactory("MarketplaceERC721");
-  const market721Instance = await market721Factory.deploy("MarketplaceERC721");
+  const market721Factory = await ethers.getContractFactory("ERC721Marketplace");
+  const market721Instance = await market721Factory.deploy("ERC721Marketplace");
   console.info(`ERC721_MARKETPLACE_ADDR=${market721Instance.address.toLowerCase()}`);
 
   // Craft contract - CraftERC721
@@ -86,8 +86,8 @@ async function main() {
   console.info(`ERC1155_CRAFT_ADDR=${craftInstance.address.toLowerCase()}`);
 
   // ERC1155 Marketplace contract
-  const market1155Factory = await ethers.getContractFactory("MarketplaceERC1155");
-  const market1155Instance = await market1155Factory.deploy("MarketplaceERC1155");
+  const market1155Factory = await ethers.getContractFactory("ERC1155Marketplace");
+  const market1155Instance = await market1155Factory.deploy("ERC1155Marketplace");
   console.info(`ERC1155_MARKETPLACE_ADDR=${market1155Instance.address.toLowerCase()}`);
 
   // Setup Contracts

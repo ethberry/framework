@@ -15,7 +15,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../ERC721/interfaces/IERC721Random.sol";
 
-contract Presale is AccessControl, Pausable {
+contract ERC20ERC721Staking is AccessControl, Pausable {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;

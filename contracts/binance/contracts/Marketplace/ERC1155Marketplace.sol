@@ -15,7 +15,7 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 
-contract MarketplaceERC1155 is AccessControl, Pausable, EIP712 {
+contract ERC1155Marketplace is AccessControl, Pausable, EIP712 {
   using Address for address;
 
   mapping(bytes32 => bool) private _expired;
@@ -40,15 +40,15 @@ contract MarketplaceERC1155 is AccessControl, Pausable, EIP712 {
     address signer,
     bytes calldata signature
   ) public payable whenNotPaused {
-    require(hasRole(MINTER_ROLE, signer), "MarketplaceERC1155: Wrong signer");
+    require(hasRole(MINTER_ROLE, signer), "ERC1155Marketplace: Wrong signer");
 
-    require(!_expired[nonce], "MarketplaceERC1155: Expired signature");
+    require(!_expired[nonce], "ERC1155Marketplace: Expired signature");
     _expired[nonce] = true;
 
-    require(tokenIds.length == amounts.length, "MarketplaceERC1155: tokenIds and amounts length mismatch");
+    require(tokenIds.length == amounts.length, "ERC1155Marketplace: tokenIds and amounts length mismatch");
 
     bool isVerified = _verify(signer, _hash(nonce, collection, tokenIds, amounts, msg.value), signature);
-    require(isVerified, "MarketplaceERC1155: Invalid signature");
+    require(isVerified, "ERC1155Marketplace: Invalid signature");
 
     IERC1155Simple(collection).mintBatch(_msgSender(), tokenIds, amounts, "0x");
     emit Redeem(_msgSender(), collection, tokenIds, amounts, msg.value);

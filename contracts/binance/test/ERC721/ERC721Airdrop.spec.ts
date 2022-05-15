@@ -2,60 +2,47 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
-import { AirdropERC721, Item } from "../../typechain-types";
+import { ERC721Airdrop, ERC721Simple } from "../../typechain-types";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
   MINTER_ROLE,
-  royaltyNumerator,
+  royalty,
   templateId,
   tokenId,
   tokenName,
   tokenSymbol,
 } from "../constants";
+import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
-describe("AirdropERC721", function () {
+describe("ERC721Airdrop", function () {
   let item: ContractFactory;
-  let itemInstance: Item;
+  let itemInstance: ERC721Simple;
   let airdrop: ContractFactory;
-  let airdropInstance: AirdropERC721;
-  let owner: SignerWithAddress;
-  let receiver: SignerWithAddress;
+  let airdropInstance: ERC721Airdrop;
   let network: Network;
 
   beforeEach(async function () {
-    airdrop = await ethers.getContractFactory("AirdropERC721");
-    item = await ethers.getContractFactory("Item");
-    [owner, receiver] = await ethers.getSigners();
+    airdrop = await ethers.getContractFactory("ERC721Airdrop");
+    item = await ethers.getContractFactory("ERC721Simple");
+    [this.owner, this.receiver] = await ethers.getSigners();
 
-    itemInstance = (await item.deploy(tokenName, tokenSymbol, baseTokenURI, royaltyNumerator)) as Item;
+    itemInstance = (await item.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Simple;
 
-    airdropInstance = (await airdrop.deploy(
-      tokenName,
-      tokenSymbol,
-      baseTokenURI,
-      1,
-      royaltyNumerator,
-    )) as AirdropERC721;
+    airdropInstance = (await airdrop.deploy(tokenName, tokenSymbol, baseTokenURI, 1, royalty)) as ERC721Airdrop;
     await airdropInstance.setFactory(itemInstance.address);
 
     network = await ethers.provider.getNetwork();
+
+    this.contractInstance = airdropInstance;
   });
 
-  describe("hasRole", function () {
-    it("Should set the right roles to deployer", async function () {
-      const isAdmin = await itemInstance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
-      expect(isAdmin).to.equal(true);
-      const isMinter = await itemInstance.hasRole(MINTER_ROLE, owner.address);
-      expect(isMinter).to.equal(true);
-    });
-  });
+  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
   describe("redeem", function () {
     it("should redeem", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -73,25 +60,25 @@ describe("AirdropERC721", function () {
         },
         // Value
         {
-          account: receiver.address,
+          account: this.receiver.address,
           airdropId: tokenId,
           templateId,
         },
       );
 
       const tx1 = airdropInstance
-        .connect(receiver)
-        .redeem(receiver.address, tokenId, templateId, owner.address, signature);
+        .connect(this.receiver)
+        .redeem(this.receiver.address, tokenId, templateId, this.owner.address, signature);
       await expect(tx1)
         .to.emit(airdropInstance, "RedeemAirdrop")
-        .withArgs(receiver.address, airdropInstance.address, tokenId, templateId, 0);
+        .withArgs(this.receiver.address, airdropInstance.address, tokenId, templateId, 0);
 
       const ownerOf = await airdropInstance.ownerOf(tokenId);
-      expect(ownerOf).to.equal(receiver.address);
+      expect(ownerOf).to.equal(this.receiver.address);
     });
 
     it("should fail: wrong signer", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -109,27 +96,33 @@ describe("AirdropERC721", function () {
         },
         // Value
         {
-          account: receiver.address,
+          account: this.receiver.address,
           airdropId: tokenId,
           templateId,
         },
       );
 
       const tx1 = airdropInstance
-        .connect(receiver)
-        .redeem(receiver.address, tokenId, templateId, receiver.address, signature);
+        .connect(this.receiver)
+        .redeem(this.receiver.address, tokenId, templateId, this.receiver.address, signature);
       await expect(tx1).to.be.revertedWith("AirdropERC721: Wrong signer");
     });
 
     it("should fail: invalid signature", async function () {
       const tx1 = airdropInstance
-        .connect(receiver)
-        .redeem(receiver.address, tokenId, templateId, owner.address, ethers.utils.formatBytes32String("signature"));
+        .connect(this.receiver)
+        .redeem(
+          this.receiver.address,
+          tokenId,
+          templateId,
+          this.owner.address,
+          ethers.utils.formatBytes32String("signature"),
+        );
       await expect(tx1).to.be.revertedWith("AirdropERC721: Invalid signature");
     });
 
     it("should fail: token already minted", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -147,27 +140,27 @@ describe("AirdropERC721", function () {
         },
         // Value
         {
-          account: receiver.address,
+          account: this.receiver.address,
           airdropId: tokenId,
           templateId,
         },
       );
 
       const tx1 = airdropInstance
-        .connect(receiver)
-        .redeem(receiver.address, tokenId, templateId, owner.address, signature);
+        .connect(this.receiver)
+        .redeem(this.receiver.address, tokenId, templateId, this.owner.address, signature);
       await expect(tx1)
         .to.emit(airdropInstance, "RedeemAirdrop")
-        .withArgs(receiver.address, airdropInstance.address, tokenId, templateId, 0);
+        .withArgs(this.receiver.address, airdropInstance.address, tokenId, templateId, 0);
 
       const tx2 = airdropInstance
-        .connect(receiver)
-        .redeem(receiver.address, tokenId, templateId, owner.address, signature);
+        .connect(this.receiver)
+        .redeem(this.receiver.address, tokenId, templateId, this.owner.address, signature);
       await expect(tx2).to.be.revertedWith("ERC721: token already minted");
     });
 
     it("should fail: cap exceeded", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -185,22 +178,22 @@ describe("AirdropERC721", function () {
         },
         // Value
         {
-          account: receiver.address,
+          account: this.receiver.address,
           airdropId: tokenId,
           templateId,
         },
       );
 
       const tx1 = airdropInstance
-        .connect(receiver)
-        .redeem(receiver.address, tokenId, templateId, owner.address, signature);
+        .connect(this.receiver)
+        .redeem(this.receiver.address, tokenId, templateId, this.owner.address, signature);
       await expect(tx1)
         .to.emit(airdropInstance, "RedeemAirdrop")
-        .withArgs(receiver.address, airdropInstance.address, tokenId, templateId, 0);
+        .withArgs(this.receiver.address, airdropInstance.address, tokenId, templateId, 0);
 
       const airdropId = 2;
 
-      const signature2 = await owner._signTypedData(
+      const signature2 = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -218,15 +211,15 @@ describe("AirdropERC721", function () {
         },
         // Value
         {
-          account: receiver.address,
+          account: this.receiver.address,
           airdropId,
           templateId,
         },
       );
 
       const tx2 = airdropInstance
-        .connect(receiver)
-        .redeem(receiver.address, airdropId, templateId, owner.address, signature2);
+        .connect(this.receiver)
+        .redeem(this.receiver.address, airdropId, templateId, this.owner.address, signature2);
       await expect(tx2).to.be.revertedWith("ERC721Capped: cap exceeded");
     });
   });

@@ -17,7 +17,7 @@ import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC721/interfaces/IERC721Dropbox.sol";
 
-contract MarketplaceERC721 is AccessControl, Pausable, EIP712 {
+contract ERC721Marketplace is AccessControl, Pausable, EIP712 {
   using Address for address;
 
   mapping(bytes32 => bool) private _expired;
@@ -43,13 +43,13 @@ contract MarketplaceERC721 is AccessControl, Pausable, EIP712 {
     address signer,
     bytes calldata signature
   ) public payable whenNotPaused {
-    require(hasRole(MINTER_ROLE, signer), "MarketplaceERC721: Wrong signer");
+    require(hasRole(MINTER_ROLE, signer), "ERC721Marketplace: Wrong signer");
 
-    require(!_expired[nonce], "MarketplaceERC721: Expired signature");
+    require(!_expired[nonce], "ERC721Marketplace: Expired signature");
     _expired[nonce] = true;
 
     bool isVerified = _verify(signer, _hash(nonce, collection, templateId, msg.value), signature);
-    require(isVerified, "MarketplaceERC721: Invalid signature");
+    require(isVerified, "ERC721Marketplace: Invalid signature");
 
     uint256 tokenId = IERC721Simple(collection).mintCommon(_msgSender(), templateId);
     emit Redeem(_msgSender(), collection, tokenId, templateId, msg.value);
@@ -62,13 +62,13 @@ contract MarketplaceERC721 is AccessControl, Pausable, EIP712 {
     address signer,
     bytes calldata signature
   ) public payable whenNotPaused {
-    require(hasRole(MINTER_ROLE, signer), "MarketplaceERC721: Wrong signer");
+    require(hasRole(MINTER_ROLE, signer), "ERC721Marketplace: Wrong signer");
 
-    require(!_expired[nonce], "MarketplaceERC721: Expired signature");
+    require(!_expired[nonce], "ERC721Marketplace: Expired signature");
     _expired[nonce] = true;
 
     bool isVerified = _verify(signer, _hash(nonce, collection, templateId, msg.value), signature);
-    require(isVerified, "MarketplaceERC721: Invalid signature");
+    require(isVerified, "ERC721Marketplace: Invalid signature");
 
     uint256 tokenId = IERC721Dropbox(collection).mintDropbox(_msgSender(), templateId);
     emit RedeemDropbox(_msgSender(), collection, tokenId, templateId, msg.value);

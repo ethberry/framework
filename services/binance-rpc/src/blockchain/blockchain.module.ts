@@ -30,8 +30,8 @@ import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft
 import auctionERC721 from "@framework/binance-contracts/artifacts/contracts/Auction/AuctionERC721.sol/AuctionERC721.json";
 import ERC721Airdrop from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
 import ERC721Dropbox from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Dropbox.sol/ERC721Dropbox.json";
-import marketplaceERC721 from "@framework/binance-contracts/artifacts/contracts/Marketplace/MarketplaceERC721.sol/MarketplaceERC721.json";
-import marketplaceERC1155 from "@framework/binance-contracts/artifacts/contracts/Marketplace/MarketplaceERC1155.sol/MarketplaceERC1155.json";
+import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
+import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 @Module({
   imports: [ConfigModule, Web3ContractModule],
@@ -184,7 +184,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_MARKETPLACE,
         contractAddress: itemMarketplaceAddr,
-        contractInterface: marketplaceERC721.abi as Array<AbiItem>,
+        contractInterface: ERC721Marketplace.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721MarketplaceEventType.Redeem,
@@ -205,7 +205,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC1155_MARKETPLACE,
         contractAddress: resourcesMarketplaceAddr,
-        contractInterface: marketplaceERC1155.abi as Array<AbiItem>,
+        contractInterface: ERC1155Marketplace.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc1155MarketplaceEventType.Redeem,
