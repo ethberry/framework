@@ -14,7 +14,6 @@ export class SeedErc20Vesting1563804021116 implements MigrationInterface {
         duration,
         start_timestamp,
         vesting_template,
-        erc20_token_id,
         created_at,
         updated_at
       ) VALUES (
@@ -23,7 +22,6 @@ export class SeedErc20Vesting1563804021116 implements MigrationInterface {
         1234567890,
         '${currentDateTime}',
         'FLAT',
-        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

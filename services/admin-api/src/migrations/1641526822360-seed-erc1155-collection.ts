@@ -8,6 +8,7 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc1155CollectionResourcesAddress = process.env.ERC1155_RESOURCES_ADDR || wallet;
+    const chainId = process.env.CHAIN_ID || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.erc1155_collection (
@@ -15,7 +16,7 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
         description,
         image_url,
         address,
-        permission_type,
+        chain_id,
         created_at,
         updated_at
       ) VALUES (
@@ -23,7 +24,7 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         '${erc1155CollectionResourcesAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

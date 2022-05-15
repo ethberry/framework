@@ -45,9 +45,8 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "permission_type",
-          type: `${ns}.oz_permission_type_enum`,
-          default: "'UNKNOWN'",
+          name: "chain_id",
+          type: "int",
         },
         {
           name: "created_at",

@@ -1,4 +1,4 @@
-import { IOzContract, ISearchable } from "@gemunion/types-collection";
+import { IContract, ISearchable } from "@gemunion/types-collection";
 
 import { IErc20TokenHistory } from "./token-history";
 
@@ -7,7 +7,7 @@ export enum Erc20TokenStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IErc20Token extends IOzContract, ISearchable {
+export interface IErc20Token extends IContract, ISearchable {
   symbol: string;
   amount: string;
   tokenStatus: Erc20TokenStatus;

@@ -9,6 +9,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc20TokenAddress = process.env.ERC20_COIN || wallet;
+    const chainId = process.env.CHAIN_ID || 1;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.erc20_token (
@@ -18,7 +19,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         amount,
         symbol,
         address,
-        permission_type,
+        chain_id,
         created_at,
         updated_at
       ) VALUES (
@@ -28,7 +29,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'TREJ',
         '${erc20TokenAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

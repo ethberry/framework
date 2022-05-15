@@ -12,6 +12,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
     const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
     const erc721CollectionDropboxAddress = process.env.ERC721_DROPBOX_ADDR || wallet;
     const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
+    const chainId = process.env.CHAIN_ID || 1;
 
     // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - HERO, 5 - SKILLS, 6 - LAND
     await queryRunner.query(`
@@ -22,7 +23,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         royalty,
         collection_type,
         address,
-        permission_type,
+        chain_id,
         created_at,
         updated_at
       ) VALUES  (
@@ -32,7 +33,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'AIRDROP',
         '${erc721CollectionAirdropAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -42,7 +43,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'DROPBOX',
         '${erc721CollectionDropboxAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -52,7 +53,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionItemsAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -62,7 +63,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionHeroAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -72,7 +73,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionSkillAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       ),  (
@@ -82,7 +83,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionSkillAddress}',
-        'ACCESS_CONTROL',
+        '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

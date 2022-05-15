@@ -41,9 +41,8 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
           type: "varchar",
         },
         {
-          name: "permission_type",
-          type: `${ns}.oz_permission_type_enum`,
-          default: "'UNKNOWN'",
+          name: "chain_id",
+          type: "int",
         },
         {
           name: "created_at",

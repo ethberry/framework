@@ -5,7 +5,6 @@ import { ns } from "@framework/constants";
 import {
   createDomainUint256,
   createLanguageEnum,
-  createOpenZeppelin,
   createSchema,
   installExtensionUUID,
 } from "@gemunion/nest-js-module-typeorm-helpers";
@@ -113,7 +112,6 @@ const config: PostgresConnectionOptions = {
     createDomainUint256(),
     installExtensionUUID(),
     createLanguageEnum(ns),
-    createOpenZeppelin(ns),
     CreateUserTable1563804021040,
     SeedUser1563804021050,
     CreateOtpTable1563804021060,
