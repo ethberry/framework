@@ -96,9 +96,6 @@
     "userStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
-    },
-    "vestingTemplate": {
-      "FLAT": "Flat"
     }
   },
   "errors": {
@@ -134,6 +131,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "cap": "Cap",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -197,6 +195,7 @@
       "year": "Year"
     },
     "placeholders": {
+      "cap": "10",
       "address": "0x...",
       "amount": "10",
       "attributes": "[]",
