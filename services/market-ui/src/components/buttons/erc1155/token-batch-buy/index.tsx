@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 import { useFormikContext } from "formik";
 
 import { useApi } from "@gemunion/provider-api";
-import { IErc1155Token, IMarketplaceSignature } from "@framework/types";
+import { IErc1155Token, IServerSignature } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
@@ -51,7 +51,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
           amounts,
         },
       })
-      .then((json: IMarketplaceSignature) => {
+      .then((json: IServerSignature) => {
         const contract = new ethers.Contract(
           process.env.ERC1155_MARKETPLACE_ADDR,
           ERC1155Marketplace.abi,

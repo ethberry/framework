@@ -6,11 +6,11 @@
 
 pragma solidity ^0.8.4;
 
-import "@gemunion/contracts/contracts/ContractManager/VestingFactory.sol";
-import "@gemunion/contracts/contracts/ContractManager/ERC20Factory.sol";
-import "@gemunion/contracts/contracts/ContractManager/ERC721Factory.sol";
-import "@gemunion/contracts/contracts/ContractManager/ERC1155Factory.sol";
+import "@gemunion/contracts/contracts/ContractManager/ERC20VestingFactory.sol";
+import "@gemunion/contracts/contracts/ContractManager/ERC20TokenFactory.sol";
+import "@gemunion/contracts/contracts/ContractManager/ERC721TokenFactory.sol";
+import "@gemunion/contracts/contracts/ContractManager/ERC1155TokenFactory.sol";
 
-contract ContractManager is VestingFactory, ERC20Factory, ERC721Factory, ERC1155Factory {
+contract ContractManager is ERC20VestingFactory, ERC20TokenFactory, ERC721TokenFactory, ERC1155TokenFactory {
 
 }

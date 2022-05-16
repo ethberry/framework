@@ -13,6 +13,12 @@ export enum Erc721CollectionType {
   AIRDROP = "AIRDROP",
 }
 
+export enum Erc721TokenTemplate {
+  "SIMPLE" = "SIMPLE", // ACBER
+  "GRADED" = "GRADED", // ACBER + METADATA
+  "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
+}
+
 export interface IErc721Collection extends IContract, ISearchable {
   imageUrl: string;
   address: string;

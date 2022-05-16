@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api";
-import { IErc721Template, IMarketplaceSignature } from "@framework/types";
+import { IErc721Template, IServerSignature } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
@@ -26,7 +26,7 @@ export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = pr
         method: "POST",
         data: { templateId: template.id },
       })
-      .then((sign: IMarketplaceSignature) => {
+      .then((sign: IServerSignature) => {
         const contract = new ethers.Contract(
           process.env.ERC721_MARKETPLACE_ADDR,
           ERC721Marketplace.abi,

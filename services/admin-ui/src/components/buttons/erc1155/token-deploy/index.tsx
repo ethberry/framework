@@ -5,13 +5,15 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
+import { useApi } from "@gemunion/provider-api";
+import { Erc1155TokenTemplate, IErc1155TokenDeployDto, IServerSignature } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
-import { Erc1155TokenDeployDialog, IErc1155ContractFields, Erc1155TokenTemplate } from "./deploy-dialog";
+import { Erc1155TokenDeployDialog } from "./deploy-dialog";
 import { useDeploy } from "../../../hooks/useCollection";
 
-function getBytecodeByTemplate(template: Erc1155TokenTemplate) {
+function getBytecodeByErc1155TokenTemplate(template: Erc1155TokenTemplate) {
   switch (template) {
     case Erc1155TokenTemplate.SIMPLE:
       return ERC1155Simple.bytecode;
@@ -28,12 +30,29 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
   const { className } = props;
 
   const { library } = useWeb3React();
+  const api = useApi();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc1155ContractFields) => {
+    (values: IErc1155TokenDeployDto) => {
       const { contractTemplate, baseTokenURI } = values;
-      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
-      return contract.deployERC1155Token(getBytecodeByTemplate(contractTemplate), baseTokenURI) as Promise<void>;
+
+      return api
+        .fetchJson({
+          url: "/contract-manager/erc155-token",
+          method: "POST",
+          data: values,
+        })
+        .then((sign: IServerSignature) => {
+          const nonce = ethers.utils.arrayify(sign.nonce);
+          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+          return contract.deployERC20Token(
+            nonce,
+            getBytecodeByErc1155TokenTemplate(contractTemplate),
+            baseTokenURI,
+            process.env.ACCOUNT,
+            sign.signature,
+          ) as Promise<void>;
+        });
     },
   );
 

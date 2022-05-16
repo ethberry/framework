@@ -10,7 +10,7 @@ export class IngredientsDto implements IIngredientsDto {
   public erc1155TokenId: number;
 
   @ApiProperty()
-  @IsInt({ message: "patternMismatch" })
+  @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public amount: number;
 }

@@ -5,7 +5,7 @@ import { ethers } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api";
-import { IErc721Dropbox, IMarketplaceSignature } from "@framework/types";
+import { IErc721Dropbox, IServerSignature } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
@@ -26,7 +26,7 @@ export const Erc721DropboxTemplateBuyButton: FC<IErc721DropboxBuyButtonProps> = 
         method: "POST",
         data: { templateId: dropbox.id },
       })
-      .then((sign: IMarketplaceSignature) => {
+      .then((sign: IServerSignature) => {
         const contract = new ethers.Contract(
           process.env.ERC721_MARKETPLACE_ADDR,
           ERC721Marketplace.abi,

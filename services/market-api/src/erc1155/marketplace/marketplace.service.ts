@@ -1,10 +1,10 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { ethers, BigNumber } from "ethers";
+import { BigNumber, utils, Wallet } from "ethers";
 import { prepareEip712 } from "@gemunion/butils";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
-import { IMarketplaceSignature } from "@framework/types";
+import { IServerSignature } from "@framework/types";
 
 import { Erc1155TokenService } from "../token/token.service";
 import { ISignTokensDto } from "./interfaces";
@@ -13,13 +13,13 @@ import { ISignTokensDto } from "./interfaces";
 export class Erc1155MarketplaceService {
   constructor(
     @Inject(ETHERS_SIGNER)
-    private readonly signer: ethers.Wallet,
+    private readonly signer: Wallet,
     private readonly configService: ConfigService,
     private readonly erc1155TokenService: Erc1155TokenService,
   ) {}
 
-  public async signToken(dto: ISignTokensDto): Promise<IMarketplaceSignature> {
-    let totalTokenPrice = ethers.utils.parseEther("0");
+  public async signToken(dto: ISignTokensDto): Promise<IServerSignature> {
+    let totalTokenPrice = utils.parseEther("0");
     const collections: Array<string> = [];
     await Promise.all(
       dto.erc1155TokenIds.map(async (erc1155TokenId, index) => {
@@ -48,7 +48,7 @@ export class Erc1155MarketplaceService {
     }
 
     const signData = {
-      nonce: ethers.utils.randomBytes(32),
+      nonce: utils.randomBytes(32),
       collection: collections[0].toLowerCase(),
       tokenIds: dto.erc1155TokenIds,
       amounts: dto.amounts,
@@ -56,7 +56,7 @@ export class Erc1155MarketplaceService {
     };
 
     const signature = await Promise.resolve(this.getSign(signData));
-    return { nonce: ethers.utils.hexlify(signData.nonce), signature };
+    return { nonce: utils.hexlify(signData.nonce), signature };
   }
 
   public async getSign(data: Record<string, any>): Promise<string> {

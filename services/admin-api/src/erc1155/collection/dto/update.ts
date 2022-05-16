@@ -14,7 +14,7 @@ export class Erc1155CollectionUpdateDto implements IErc1155CollectionUpdateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsUrl({ message: "patternMismatch" })
+  @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })
   public imageUrl: string;
 }

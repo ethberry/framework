@@ -4,7 +4,9 @@ import { IErc20TokenHistory } from "./token-history";
 import { IErc20Token } from "./token";
 
 export enum Erc20VestingTemplate {
-  FLAT = "FLAT",
+  "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
+  "GRADED" = "GRADED", // 0 -> 10 -> 30 -> 60 -> 100
+  "CLIFF" = "CLIFF", // 0 -> 100
 }
 
 export interface IErc20Vesting extends IContract {

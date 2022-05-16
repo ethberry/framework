@@ -5,15 +5,17 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
+import { useApi } from "@gemunion/provider-api";
+import { Erc721TokenTemplate, IErc721TokenDeployDto, IServerSignature } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 
-import { Erc721TokenDeployDialog, IErc721TokenContractFields, Erc721TokenTemplate } from "./deploy-dialog";
+import { Erc721TokenDeployDialog } from "./deploy-dialog";
 import { useDeploy } from "../../../hooks/useCollection";
 
-function getBytecodeByTemplate(template: Erc721TokenTemplate) {
+function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
   switch (template) {
     case Erc721TokenTemplate.SIMPLE:
       return ERC721Simple.bytecode;
@@ -34,18 +36,32 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
   const { className } = props;
 
   const { library } = useWeb3React();
+  const api = useApi();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc721TokenContractFields) => {
+    (values: IErc721TokenDeployDto) => {
       const { contractTemplate, name, symbol, baseTokenURI, royalty } = values;
-      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
-      return contract.deployERC721Token(
-        getBytecodeByTemplate(contractTemplate),
-        name,
-        symbol,
-        baseTokenURI,
-        royalty,
-      ) as Promise<void>;
+
+      return api
+        .fetchJson({
+          url: "/contract-manager/erc721-token",
+          method: "POST",
+          data: values,
+        })
+        .then((sign: IServerSignature) => {
+          const nonce = ethers.utils.arrayify(sign.nonce);
+          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+          return contract.deployERC721Token(
+            nonce,
+            getBytecodeByErc721TokenTemplate(contractTemplate),
+            name,
+            symbol,
+            baseTokenURI,
+            royalty,
+            process.env.ACCOUNT,
+            sign.signature,
+          ) as Promise<void>;
+        });
     },
   );
 
