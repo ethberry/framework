@@ -7,7 +7,8 @@ set -e # this will cause the shell to exit immediately if any command exits with
 
 export NODE_ENV=$NODE_ENV
 export POSTGRES_URL=$POSTGRES_URL
+export CHAIN_ID=$CHAIN_ID
 
 lerna bootstrap --hoist
 
-lerna exec -- npm run test --passWithNoTests
+lerna exec -- npm run test

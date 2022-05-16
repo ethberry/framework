@@ -17,7 +17,7 @@ jobs:
         env:
           POSTGRES_PASSWORD: postgres
           POSTGRES_USER: postgres
-          POSTGRES_DB: encoder-test
+          POSTGRES_DB: framework-test
           POSTGRES_PORT: 5432
         ports: ["5432:5432"]
         # Set health checks to wait until postgres has started
@@ -57,5 +57,8 @@ jobs:
         run: npm run test
         env:
           NODE_ENV: test
-          POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/encoder-test'
+          POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
+          CHAIN_ID: 1
+          GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
+          GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 

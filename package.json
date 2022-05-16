@@ -57,7 +57,7 @@
     "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
     "start": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/admin-ui --scope @framework/public-ui --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm start",
     "start:prod": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm run start:prod",
-    "test": "sh scripts/test.sh"
+    "test": "sh scripts/copy-env.sh && sh scripts/test.sh"
   },
   "version": "0.0.1"
 }
