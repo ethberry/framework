@@ -39,7 +39,7 @@ export class CreateErc20VestingTable1563804021115 implements MigrationInterface 
         {
           name: "vesting_template",
           type: `${ns}.erc20_vesting_template_enum`,
-          default: "'FLAT'",
+          default: "'LINEAR'",
         },
         {
           name: "created_at",
