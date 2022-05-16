@@ -1,12 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+
+import { Erc1155RecipeStatus, IErc1155RecipeSearchDto } from "@framework/types";
 
 import { Erc1155RecipeEntity } from "./recipe.entity";
 import { IErc1155RecipeCreateDto, IErc1155RecipeUpdateDto } from "./interfaces";
 import { Erc1155IngredientEntity } from "../ingredient/ingredient.entity";
 import { IngredientService } from "../ingredient/ingredient.service";
-import { IErc1155RecipeSearchDto } from "@framework/types";
+import { IIngredientsDto } from "./interfaces/ingredients";
 
 @Injectable()
 export class RecipeService {
@@ -74,9 +76,9 @@ export class RecipeService {
 
   public async update(
     where: FindOptionsWhere<Erc1155RecipeEntity>,
-    dto: IErc1155RecipeUpdateDto,
+    dto: Partial<IErc1155RecipeUpdateDto>,
   ): Promise<Erc1155RecipeEntity> {
-    const { ingredients, ...rest } = dto;
+    const { ingredients: raw = [], ...rest } = dto;
 
     const recipeEntity = await this.findOne(where, {
       join: {
@@ -91,46 +93,63 @@ export class RecipeService {
       throw new NotFoundException("recipeNotFound");
     }
 
-    // remove old
-    await Promise.allSettled(
-      recipeEntity.ingredients
-        .filter(oldItem => !ingredients.find(newItem => newItem.erc1155TokenId === oldItem.erc1155TokenId))
-        .map(oldItem => oldItem.remove()),
-    );
+    if (raw.length) {
+      const ingredients = Object.values(
+        raw.reduce((memo, current) => {
+          if (current.erc1155TokenId.toString() in memo) {
+            current.amount += memo[current.erc1155TokenId.toString()].amount;
+          }
 
-    // change existing
-    const changedingredients = await Promise.allSettled(
-      recipeEntity.ingredients
-        .filter(oldItem => ingredients.find(newItem => newItem.erc1155TokenId === oldItem.erc1155TokenId))
-        .map(oldItem => {
-          oldItem.amount = ingredients.find(newItem => newItem.erc1155TokenId === oldItem.erc1155TokenId)!.amount;
-          return oldItem.save();
-        }),
-    ).then(values =>
-      values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<Erc1155IngredientEntity>>c)
-        .map(c => c.value),
-    );
+          memo[current.erc1155TokenId.toString()] = current;
+          return memo;
+        }, {} as Record<string, IIngredientsDto>),
+      );
 
-    // add new
-    const newingredients = await Promise.allSettled(
-      ingredients
-        .filter(newItem => !recipeEntity.ingredients.find(oldItem => newItem.erc1155TokenId === oldItem.erc1155TokenId))
-        .map(newItem => this.ingredientService.create(newItem, recipeEntity)),
-    ).then(values =>
-      values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<Erc1155IngredientEntity>>c)
-        .map(c => c.value),
-    );
+      // remove old
+      await Promise.allSettled(
+        recipeEntity.ingredients
+          .filter(oldItem => !ingredients.find(newItem => newItem.erc1155TokenId === oldItem.erc1155TokenId))
+          .map(oldItem => oldItem.remove()),
+      );
 
-    Object.assign(recipeEntity, rest, { ingredients: [...changedingredients, ...newingredients] });
+      // change existing
+      const changedingredients = await Promise.allSettled(
+        recipeEntity.ingredients
+          .filter(oldItem => ingredients.find(newItem => newItem.erc1155TokenId === oldItem.erc1155TokenId))
+          .map(oldItem => {
+            oldItem.amount = ingredients.find(newItem => newItem.erc1155TokenId === oldItem.erc1155TokenId)!.amount;
+            return oldItem.save();
+          }),
+      ).then(values =>
+        values
+          .filter(c => c.status === "fulfilled")
+          .map(c => <PromiseFulfilledResult<Erc1155IngredientEntity>>c)
+          .map(c => c.value),
+      );
+
+      // add new
+      const newingredients = await Promise.allSettled(
+        ingredients
+          .filter(
+            newItem => !recipeEntity.ingredients.find(oldItem => newItem.erc1155TokenId === oldItem.erc1155TokenId),
+          )
+          .map(newItem => this.ingredientService.create(newItem, recipeEntity)),
+      ).then(values =>
+        values
+          .filter(c => c.status === "fulfilled")
+          .map(c => <PromiseFulfilledResult<Erc1155IngredientEntity>>c)
+          .map(c => c.value),
+      );
+
+      Object.assign(recipeEntity, { ingredients: [...changedingredients, ...newingredients] });
+    }
+
+    Object.assign(recipeEntity, rest);
 
     return recipeEntity.save();
   }
 
-  public delete(where: FindOptionsWhere<Erc1155RecipeEntity>): Promise<DeleteResult> {
-    return this.recipeEntityRepository.delete(where);
+  public delete(where: FindOptionsWhere<Erc1155RecipeEntity>): Promise<Erc1155RecipeEntity> {
+    return this.update(where, { recipeStatus: Erc1155RecipeStatus.INACTIVE });
   }
 }
