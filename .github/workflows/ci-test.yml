@@ -1,6 +1,7 @@
 name: CI Test on Push
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -31,11 +32,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
+
       - name: Add token to npmrc
         run: |
           echo "//npm.pkg.github.com/:_authToken=$GITHUBTOKEN" >> .npmrc
         env:
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+
       - name: Install Packages
         run: npm i
 
