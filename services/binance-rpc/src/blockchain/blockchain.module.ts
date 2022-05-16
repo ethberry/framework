@@ -19,11 +19,12 @@ import {
 } from "@framework/types";
 
 import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import ERC20Blist from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
-import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+// import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
 import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 import auctionERC721 from "@framework/binance-contracts/artifacts/contracts/Auction/AuctionERC721.sol/AuctionERC721.json";
@@ -43,7 +44,8 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
 
   public async onModuleInit(): Promise<void> {
     const contractManagerAddr = this.configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-    const coinAddr = this.configService.get<string>("ERC20_COIN", "");
+    const coinAddr = this.configService.get<string>("ERC20_COIN_ADDR", "");
+    const coiblAddr = this.configService.get<string>("ERC20_COIN_BL_ADDR", "");
     const itemsAddr = this.configService.get<string>("ERC721_ITEM_ADDR", "");
     const heroAddr = this.configService.get<string>("ERC721_HERO_ADDR", "");
     const skillAddr = this.configService.get<string>("ERC721_SKILL_ADDR", "");
@@ -73,6 +75,16 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
         contractName: ContractType.ERC20_COIN,
         contractAddress: coinAddr,
         contractInterface: ERC20Simple.abi as Array<AbiItem>,
+        // prettier-ignore
+        eventNames: [
+          Erc20TokenEventType.Transfer,
+          Erc20TokenEventType.Approval,
+        ],
+      },
+      {
+        contractName: ContractType.ERC20_COIN,
+        contractAddress: coiblAddr,
+        contractInterface: ERC20Blist.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc20TokenEventType.Transfer,
@@ -111,7 +123,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_ITEMS,
         contractAddress: itemsAddr,
-        contractInterface: ERC721Graded.abi as Array<AbiItem>,
+        contractInterface: ERC721Random.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721TokenEventType.Transfer,
@@ -151,7 +163,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_SKILL,
         contractAddress: skillAddr,
-        contractInterface: ERC721Simple.abi as Array<AbiItem>,
+        contractInterface: ERC721Graded.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721TokenEventType.Transfer,

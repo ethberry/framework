@@ -47,7 +47,7 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
         })
         .then((sign: IServerSignature) => {
           const nonce = ethers.utils.arrayify(sign.nonce);
-          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
           return contract.deployERC20Token(
             nonce,
             getBytecodeByErc20TokenTemplate(contractTemplate),

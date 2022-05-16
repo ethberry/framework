@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength } from "class-validator";
+import { Transform } from "class-transformer";
 
 import { Erc721TokenTemplate, IErc721TokenDeployDto } from "@framework/types";
 
@@ -7,6 +8,8 @@ export class Erc721TokenDeployDto implements IErc721TokenDeployDto {
   @ApiProperty({
     enum: Erc721TokenTemplate,
   })
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  @Transform(({ value }) => value as Erc721TokenTemplate)
   @IsEnum(Erc721TokenTemplate, { message: "badInput" })
   public contractTemplate: Erc721TokenTemplate;
 

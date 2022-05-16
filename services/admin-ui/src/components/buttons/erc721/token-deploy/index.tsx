@@ -50,7 +50,11 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
         })
         .then((sign: IServerSignature) => {
           const nonce = ethers.utils.arrayify(sign.nonce);
-          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+          const contract = new ethers.Contract(
+            process.env.CONTRACT_MANAGER_ADDR,
+            ContractManager.abi,
+            library.getSigner(),
+          );
           return contract.deployERC721Token(
             nonce,
             getBytecodeByErc721TokenTemplate(contractTemplate),

@@ -9,7 +9,7 @@ declare global {
       ERC20_COIN: string;
       ERC721_CRAFT_ADDR: string;
       ERC1155_CRAFT_ADDR: string;
-      CONTRACT_MANAGER: string;
+      CONTRACT_MANAGER_ADDR: string;
     }
   }
 }
