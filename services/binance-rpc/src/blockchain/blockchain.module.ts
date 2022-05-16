@@ -7,16 +7,15 @@ import { Web3ContractModule, Web3ContractService } from "@gemunion/nestjs-web3";
 import { ContractType } from "../common/interfaces";
 
 import {
+  ContractManagerEventType,
   Erc1155MarketplaceEventType,
   Erc1155RecipeEventType,
   Erc1155TokenEventType,
-  Erc20ManagerEventType,
   Erc20TokenEventType,
-  // Erc20VestingEventType,
   Erc721AuctionEventType,
   Erc721MarketplaceEventType,
-  Erc721TokenEventType,
   Erc721RecipeEventType,
+  Erc721TokenEventType,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -43,8 +42,8 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
   ) {}
 
   public async onModuleInit(): Promise<void> {
+    const contractManagerAddr = this.configService.get<string>("CONTRACT_MANAGER_ADDR", "");
     const coinAddr = this.configService.get<string>("ERC20_COIN", "");
-    const managerAddr = this.configService.get<string>("ERC20_MANAGER_ADDR", "");
     const itemsAddr = this.configService.get<string>("ERC721_ITEM_ADDR", "");
     const heroAddr = this.configService.get<string>("ERC721_HERO_ADDR", "");
     const skillAddr = this.configService.get<string>("ERC721_SKILL_ADDR", "");
@@ -59,6 +58,18 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
 
     await this.web3ContractService.listen([
       {
+        contractName: ContractType.CONTRACT_MANAGER_ADDR,
+        contractAddress: contractManagerAddr,
+        contractInterface: ContractManager.abi as Array<AbiItem>,
+        // prettier-ignore
+        eventNames: [
+          ContractManagerEventType.ERC20VestingDeployed,
+          ContractManagerEventType.ERC20TokenDeployed,
+          ContractManagerEventType.ERC721TokenDeployed,
+          ContractManagerEventType.ERC1155TokenDeployed,
+        ],
+      },
+      {
         contractName: ContractType.ERC20_COIN,
         contractAddress: coinAddr,
         contractInterface: ERC20Simple.abi as Array<AbiItem>,
@@ -66,15 +77,6 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
         eventNames: [
           Erc20TokenEventType.Transfer,
           Erc20TokenEventType.Approval,
-        ],
-      },
-      {
-        contractName: ContractType.ERC20_MANAGER,
-        contractAddress: managerAddr,
-        contractInterface: ContractManager.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc20ManagerEventType.VestingDeployed,
         ],
       },
       {

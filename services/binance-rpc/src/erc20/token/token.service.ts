@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { Erc20TokenEntity } from "./token.entity";
 
@@ -16,5 +16,9 @@ export class Erc20TokenService {
     options?: FindOneOptions<Erc20TokenEntity>,
   ): Promise<Erc20TokenEntity | null> {
     return this.erc20TokenEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: DeepPartial<Erc20TokenEntity>): Promise<Erc20TokenEntity> {
+    return this.erc20TokenEntityRepository.create(dto).save();
   }
 }

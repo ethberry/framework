@@ -27,7 +27,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         '${simpleFormatting}',
         'ACTIVE',
         '${constants.WeiPerEther.toString()}',
-        'TREJ',
+        'GEM20',
         '${erc20TokenAddress}',
         '${chainId}',
         '${currentDateTime}',

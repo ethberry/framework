@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { Erc721CollectionEntity } from "./collection.entity";
 
@@ -16,5 +16,9 @@ export class Erc721CollectionService {
     options?: FindOneOptions<Erc721CollectionEntity>,
   ): Promise<Erc721CollectionEntity | null> {
     return this.erc721CollectionEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: DeepPartial<Erc721CollectionEntity>): Promise<Erc721CollectionEntity> {
+    return this.erc721CollectionEntityRepository.create(dto).save();
   }
 }

@@ -12,6 +12,9 @@ export class Erc721CollectionEntity extends Mixin(ContractBaseEntity, Searchable
   @Column({ type: "varchar" })
   public imageUrl: string;
 
+  @Column({ type: "varchar" })
+  public symbol: string;
+
   @Column({ type: "int" })
   public royalty: number;
 

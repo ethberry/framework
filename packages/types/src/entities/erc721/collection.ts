@@ -21,7 +21,7 @@ export enum Erc721TokenTemplate {
 
 export interface IErc721Collection extends IContract, ISearchable {
   imageUrl: string;
-  address: string;
+  symbol: string;
   royalty: number;
   collectionStatus: Erc721CollectionStatus;
   collectionType: Erc721CollectionType;

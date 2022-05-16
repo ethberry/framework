@@ -15,5 +15,4 @@ export interface IErc1155Collection extends IContract, ISearchable {
   imageUrl: string;
   collectionStatus: Erc1155CollectionStatus;
   erc1155Tokens?: Array<IErc1155Token>;
-  address: string;
 }
