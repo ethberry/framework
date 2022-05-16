@@ -45,7 +45,6 @@
     "ethereum-waffle": "3.4.4",
     "prettier": "2.6.2",
     "prettier-plugin-solidity": "1.0.0-beta.19",
-    "rimraf": "3.0.2",
     "solhint": "3.3.7",
     "solhint-plugin-prettier": "0.0.5",
     "ts-node": "10.7.0",
@@ -68,7 +67,7 @@
     "clean": "hardhat clean",
     "deploy:binance": "hardhat --network mainnet deploy",
     "lint": "eslint . --fix",
-    "prebuild": "rimraf dist/",
+    "prebuild": "hardhat clean",
     "prepublish": "npm run build",
     "solhint": "solhint -f table contracts/**/*.sol",
     "test": "hardhat test"
