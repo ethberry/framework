@@ -13,7 +13,7 @@ import { ApiContext } from "@gemunion/provider-api";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 import { IErc1155Recipe, IErc1155RecipeSearchDto } from "@framework/types";
-import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
+import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 
 import { CraftTabs, ITabPanelProps } from "../tabs";
 import { Erc1155RecipeItem } from "../../erc1155/recipe-list/item";
@@ -62,7 +62,7 @@ export const Resources: FC<ITabPanelProps> = props => {
       return;
     }
 
-    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, CraftERC1155.abi, library.getSigner());
+    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
     void contract
       .setApprovalForAll(process.env.ERC1155_RESOURCES_ADDR, true)
       .then(() => {

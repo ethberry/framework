@@ -45,12 +45,12 @@ async function main() {
   console.info(`ERC721_SKILL_ADDR=${skillInstance.address.toLowerCase()}`);
 
   // ERC721 Marketplace contract
-  const market721Factory = await ethers.getContractFactory("MarketplaceERC721");
-  const market721Instance = await market721Factory.deploy("MarketplaceERC721");
+  const market721Factory = await ethers.getContractFactory("ERC721Marketplace");
+  const market721Instance = await market721Factory.deploy("ERC721Marketplace");
   console.info(`ERC721_MARKETPLACE_ADDR=${market721Instance.address.toLowerCase()}`);
 
-  // Craft contract - CraftERC721
-  const craft721Factory = await ethers.getContractFactory("CraftERC721");
+  // Craft contract - ERC1155ERC721Craft
+  const craft721Factory = await ethers.getContractFactory("ERC1155ERC721Craft");
   const craft721Instance = await craft721Factory.deploy();
   console.info(`ERC721_CRAFT_ADDR=${craft721Instance.address.toLowerCase()}`);
 
@@ -80,14 +80,14 @@ async function main() {
   const resInstance = await resFactory.deploy("http://localhost:3011/erc1155/");
   console.info(`ERC1155_RESOURCES_ADDR=${resInstance.address.toLowerCase()}`);
 
-  // Craft contract - CraftERC1155
-  const craftFactory = await ethers.getContractFactory("CraftERC1155");
+  // Craft contract - ERC1155ERC1155Craft
+  const craftFactory = await ethers.getContractFactory("ERC1155ERC1155Craft");
   const craftInstance = await craftFactory.deploy();
   console.info(`ERC1155_CRAFT_ADDR=${craftInstance.address.toLowerCase()}`);
 
   // ERC1155 Marketplace contract
-  const market1155Factory = await ethers.getContractFactory("MarketplaceERC1155");
-  const market1155Instance = await market1155Factory.deploy("MarketplaceERC1155");
+  const market1155Factory = await ethers.getContractFactory("ERC1155Marketplace");
+  const market1155Instance = await market1155Factory.deploy("ERC1155Marketplace");
   console.info(`ERC1155_MARKETPLACE_ADDR=${market1155Instance.address.toLowerCase()}`);
 
   // Setup Contracts
@@ -106,9 +106,9 @@ async function main() {
   // Grant role to DropboxErc721 in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
   console.info("Hero - MINTER_ROLE granted to DropboxErc721: ", tx.hash);
-  // Grant role to CraftErc721 in Hero
+  // Grant role to ERC1155ERC721Craft in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, craft721Instance.address);
-  console.info("Hero - MINTER_ROLE granted to CraftErc721: ", tx.hash);
+  console.info("Hero - MINTER_ROLE granted to ERC1155ERC721Craft: ", tx.hash);
   // Set max types in Hero
   tx = await heroInstance.setMaxTemplateId(maxHeroTypes);
   console.info("Hero - Set Max types: ", tx.hash);
@@ -126,9 +126,9 @@ async function main() {
   // Grant role to DropboxErc721 in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
   console.info("Item - MINTER_ROLE granted to DropboxErc721: ", tx.hash);
-  // Grant role to CraftErc721 in Item
+  // Grant role to ERC1155ERC721Craft in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, craft721Instance.address);
-  console.info("Item - MINTER_ROLE granted to CraftErc721: ", tx.hash);
+  console.info("Item - MINTER_ROLE granted to ERC1155ERC721Craft: ", tx.hash);
   // Set max types in Item
   tx = await itemInstance.setMaxTemplateId(maxItemTypes);
   console.info("Item - Set Max types: ", tx.hash);
@@ -137,9 +137,9 @@ async function main() {
   // Grant role to Marketplace in Skill
   tx = await skillInstance.grantRole(MINTER_ROLE, market721Instance.address);
   console.info("Skill - MINTER_ROLE granted to Marketplace721: ", tx.hash);
-  // Grant role to CraftErc721 in Skill
+  // Grant role to ERC1155ERC721Craft in Skill
   tx = await skillInstance.grantRole(MINTER_ROLE, craft721Instance.address);
-  console.info("Skill - MINTER_ROLE granted to CraftErc721: ", tx.hash);
+  console.info("Skill - MINTER_ROLE granted to ERC1155ERC721Craft: ", tx.hash);
   // Grant role to VRFCoordinator in Skill
   // tx = await skillInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
   // console.info("Skill - MINTER_ROLE granted to VRFCoordinator: ", tx.hash);

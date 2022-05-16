@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 
 import { IErc721Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
-import CraftERC1155 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
+import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 
 interface IErc721TokenSellButtonProps {
   token: IErc721Token;
@@ -16,7 +16,7 @@ export const Erc721TokenSellButton: FC<IErc721TokenSellButtonProps> = () => {
   const { library } = useWeb3React();
 
   const meta = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, CraftERC1155.abi, library.getSigner());
+    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
     return contract.createRecipe(1, [], [], 1) as Promise<void>;
   });
 

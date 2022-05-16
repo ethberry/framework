@@ -5,7 +5,6 @@ import { ns } from "@framework/constants";
 import {
   createDomainUint256,
   createLanguageEnum,
-  createOpenZeppelin,
   createSchema,
   installExtensionUUID,
 } from "@gemunion/nest-js-module-typeorm-helpers";
@@ -61,8 +60,8 @@ import { CreateErc1155Ingredient1645161089530 } from "./migrations/1645161089530
 import { SeedErc1155Ingredient1645161089540 } from "./migrations/1645161089540-seed-erc1155-ingredient";
 import { CreateErc721AuctionTable1646924902900 } from "./migrations/1646924902900-create-erc721-auction-table";
 import { CreateErc721AuctionHistoryTable1646924902920 } from "./migrations/1646924902920-create-erc721-auction-history-table";
-import { CreateErc721AirdropTable1648525967810 } from "./migrations/1648525967800-create-erc721-air-drop-table";
-import { SeedErc721Airdrop1648525967820 } from "./migrations/1648525967820-seed-erc721-air-drop";
+import { CreateErc721AirdropTable1648525967810 } from "./migrations/1648525967800-create-erc721-airdrop-table";
+import { SeedErc721Airdrop1648525967820 } from "./migrations/1648525967820-seed-erc721-airdrop";
 import { Erc20StakingHistoryEntity } from "./erc20/staking-history/staking-history.entity";
 import { Erc20VestingEntity } from "./erc20/vesting/vesting.entity";
 import { CreateErc721Recipe1648525970000 } from "./migrations/1648525970000-create-erc721-recipe-table";
@@ -113,7 +112,6 @@ const config: PostgresConnectionOptions = {
     createDomainUint256(),
     installExtensionUUID(),
     createLanguageEnum(ns),
-    createOpenZeppelin(ns),
     CreateUserTable1563804021040,
     SeedUser1563804021050,
     CreateOtpTable1563804021060,

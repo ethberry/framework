@@ -82,7 +82,7 @@ export class Erc721MarketplaceService {
   public async getSign(data: Record<string, any>): Promise<string> {
     return this.signer._signTypedData(
       {
-        name: "MarketplaceERC721",
+        name: "ERC721Marketplace",
         version: "1.0.0",
         chainId: ~~this.configService.get<number>("CHAIN_ID", 97),
         verifyingContract: this.configService.get<string>("ERC721_MARKETPLACE_ADDR", ""),

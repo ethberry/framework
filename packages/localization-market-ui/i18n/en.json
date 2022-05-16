@@ -137,7 +137,9 @@
     "tips": {
       "add": "Add",
       "delete": "Delete",
-      "edit": "Edit"
+      "edit": "Edit",
+      "redeem": "Redeem",
+      "release": "Release"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -165,9 +167,9 @@
         "heroes": "Heroes",
         "heroesdb": "Heroes Dropbox",
         "items": "Items",
-        "skills": "Skills",
         "itemsdb": "Items Dropbox",
-        "resources": "Resources"
+        "resources": "Resources",
+        "skills": "Skills"
       },
       "title": "My assets"
     },
@@ -197,6 +199,8 @@
         "erc1155-recipes": "ERC1155 Recipes",
         "erc1155-tokens": "ERC1155 Tokens",
         "erc1155-tokens-test": "ERC1155 Tokens test",
+        "erc20-vesting": "ERC20 Vesting",
+        "erc721-airdrop": "ERC721 Airdrop",
         "erc721-collections": "ERC721 Collections",
         "erc721-templates": "ERC721 Templates",
         "erc721-tokens": "ERC721 Tokens",
@@ -219,25 +223,33 @@
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
+    "erc20-vesting": {
+      "sorry": "Sorry, there is no vesting associated with this wallet.",
+      "title": "ERC20 Vesting"
+    },
+    "erc721-airdrop": {
+      "sorry": "Sorry, maybe you will get lucky next time",
+      "title": "ERC721 Airdrop"
+    },
     "erc721-collection": {
       "title": "ERC721 Collection: {title}"
     },
     "erc721-collections": {
       "title": "ERC721 Collections"
     },
-    "erc721-template": {
-      "price": "Price: {amount}",
-      "title": "ERC721 Template: {title}"
-    },
     "erc721-dropbox": {
       "price": "Price: {amount}",
       "title": "ERC721 Dropbox: {title}"
     },
-    "erc721-templates": {
-      "title": "ERC721 Templates"
-    },
     "erc721-dropboxes": {
       "title": "ERC721 Dropboxes"
+    },
+    "erc721-template": {
+      "price": "Price: {amount}",
+      "title": "ERC721 Template: {title}"
+    },
+    "erc721-templates": {
+      "title": "ERC721 Templates"
     },
     "erc721-token": {
       "price": "Price: {amount}",
@@ -277,19 +289,19 @@
       "itemsdb": {
         "title": "Items Dropbox"
       },
-      "skills": {
-        "title": "Items"
-      },
       "resources": {
         "title": "Resources"
       },
+      "skills": {
+        "title": "Items"
+      },
       "tabs": {
-        "heroesdb": "Heroes Dropbox",
         "heroes": "Heroes",
+        "heroesdb": "Heroes Dropbox",
         "items": "Items",
-        "skills": "Skills",
         "itemsdb": "Items Dropbox",
-        "resources": "Resources"
+        "resources": "Resources",
+        "skills": "Skills"
       },
       "title": "Primary market"
     },

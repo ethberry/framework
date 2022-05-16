@@ -1,13 +1,12 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc20VestingService } from "./vesting.service";
 import { Erc20VestingEntity } from "./vesting.entity";
 import { Erc20VestingSearchDto } from "./dto";
 
-@Public()
 @ApiBearerAuth()
 @Controller("/erc20-vesting")
 export class Erc20VestingController {

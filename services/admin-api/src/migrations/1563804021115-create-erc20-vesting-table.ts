@@ -23,18 +23,6 @@ export class CreateErc20VestingTable1563804021115 implements MigrationInterface 
           type: "varchar",
         },
         {
-          name: "token",
-          type: "varchar",
-        },
-        {
-          name: "amount",
-          type: "uint256",
-        },
-        {
-          name: "erc20_token_id",
-          type: "int",
-        },
-        {
           name: "beneficiary",
           type: "varchar",
         },
@@ -58,13 +46,6 @@ export class CreateErc20VestingTable1563804021115 implements MigrationInterface 
         {
           name: "updated_at",
           type: "timestamptz",
-        },
-      ],
-      foreignKeys: [
-        {
-          columnNames: ["erc20_token_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc20_token`,
         },
       ],
     });

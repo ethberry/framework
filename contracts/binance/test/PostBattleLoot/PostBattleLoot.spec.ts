@@ -2,9 +2,8 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
-import { PostBattleLoot, Resources } from "../../typechain-types";
+import { ERC1155Simple, PostBattleLoot } from "../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -15,43 +14,36 @@ import {
   tokenId,
   tokenName,
 } from "../constants";
+import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("PostBattleLoot", function () {
   let pbl: ContractFactory;
   let pblInstance: PostBattleLoot;
   let resources: ContractFactory;
-  let resourcesInstance: Resources;
-  let owner: SignerWithAddress;
-  let receiver: SignerWithAddress;
-  let _stranger: SignerWithAddress;
+  let resourcesInstance: ERC1155Simple;
   let network: Network;
 
   beforeEach(async function () {
     pbl = await ethers.getContractFactory("PostBattleLoot");
-    resources = await ethers.getContractFactory("Resources");
+    resources = await ethers.getContractFactory("ERC1155Simple");
 
-    [owner, receiver, _stranger] = await ethers.getSigners();
+    [this.owner, this.receiver] = await ethers.getSigners();
 
     pblInstance = (await pbl.deploy(tokenName)) as PostBattleLoot;
 
-    resourcesInstance = (await resources.deploy(baseTokenURI)) as Resources;
+    resourcesInstance = (await resources.deploy(baseTokenURI)) as ERC1155Simple;
     await resourcesInstance.grantRole(MINTER_ROLE, pblInstance.address);
 
     network = await ethers.provider.getNetwork();
+
+    this.contractInstance = pblInstance;
   });
 
-  describe("constructor", function () {
-    it("Should set the right roles to deployer", async function () {
-      const isAdmin = await pblInstance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
-      expect(isAdmin).to.equal(true);
-      const isPauser = await pblInstance.hasRole(PAUSER_ROLE, owner.address);
-      expect(isPauser).to.equal(true);
-    });
-  });
+  shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("redeem", function () {
     it("should redeem", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -72,7 +64,7 @@ describe("PostBattleLoot", function () {
         // Value
         {
           nonce,
-          account: receiver.address,
+          account: this.receiver.address,
           collection: resourcesInstance.address,
           tokenIds: [tokenId],
           amounts: [amount],
@@ -80,15 +72,23 @@ describe("PostBattleLoot", function () {
       );
 
       const tx = pblInstance
-        .connect(receiver)
-        .redeem(nonce, receiver.address, resourcesInstance.address, [tokenId], [amount], owner.address, signature);
+        .connect(this.receiver)
+        .redeem(
+          nonce,
+          this.receiver.address,
+          resourcesInstance.address,
+          [tokenId],
+          [amount],
+          this.owner.address,
+          signature,
+        );
       await expect(tx)
         .to.emit(resourcesInstance, "TransferBatch")
-        .withArgs(pblInstance.address, ethers.constants.AddressZero, receiver.address, [tokenId], [amount]);
+        .withArgs(pblInstance.address, ethers.constants.AddressZero, this.receiver.address, [tokenId], [amount]);
     });
 
     it("should fail: duplicate mint", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -109,7 +109,7 @@ describe("PostBattleLoot", function () {
         // Value
         {
           nonce,
-          account: receiver.address,
+          account: this.receiver.address,
           collection: resourcesInstance.address,
           tokenIds: [tokenId],
           amounts: [amount],
@@ -117,20 +117,36 @@ describe("PostBattleLoot", function () {
       );
 
       const tx = pblInstance
-        .connect(receiver)
-        .redeem(nonce, receiver.address, resourcesInstance.address, [tokenId], [amount], owner.address, signature);
+        .connect(this.receiver)
+        .redeem(
+          nonce,
+          this.receiver.address,
+          resourcesInstance.address,
+          [tokenId],
+          [amount],
+          this.owner.address,
+          signature,
+        );
       await expect(tx)
         .to.emit(resourcesInstance, "TransferBatch")
-        .withArgs(pblInstance.address, ethers.constants.AddressZero, receiver.address, [tokenId], [amount]);
+        .withArgs(pblInstance.address, ethers.constants.AddressZero, this.receiver.address, [tokenId], [amount]);
 
       const tx2 = pblInstance
-        .connect(receiver)
-        .redeem(nonce, receiver.address, resourcesInstance.address, [tokenId], [amount], owner.address, signature);
+        .connect(this.receiver)
+        .redeem(
+          nonce,
+          this.receiver.address,
+          resourcesInstance.address,
+          [tokenId],
+          [amount],
+          this.owner.address,
+          signature,
+        );
       await expect(tx2).to.be.revertedWith("PostBattleLoot: Expired signature");
     });
 
     it("should fail for wrong signer role", async function () {
-      const signature = await owner._signTypedData(
+      const signature = await this.owner._signTypedData(
         // Domain
         {
           name: tokenName,
@@ -151,7 +167,7 @@ describe("PostBattleLoot", function () {
         // Value
         {
           nonce,
-          account: receiver.address,
+          account: this.receiver.address,
           collection: resourcesInstance.address,
           tokenIds: [tokenId],
           amounts: [amount],
@@ -159,19 +175,27 @@ describe("PostBattleLoot", function () {
       );
 
       const tx = pblInstance
-        .connect(receiver)
-        .redeem(nonce, receiver.address, resourcesInstance.address, [tokenId], [amount], receiver.address, signature);
+        .connect(this.receiver)
+        .redeem(
+          nonce,
+          this.receiver.address,
+          resourcesInstance.address,
+          [tokenId],
+          [amount],
+          this.receiver.address,
+          signature,
+        );
       await expect(tx).to.be.revertedWith(`PostBattleLoot: Wrong signer`);
     });
 
     it("should fail for wrong signature", async function () {
       const tx = pblInstance.redeem(
         nonce,
-        receiver.address,
+        this.receiver.address,
         resourcesInstance.address,
         [tokenId],
         [amount],
-        owner.address,
+        this.owner.address,
         ethers.utils.formatBytes32String("signature"),
       );
       await expect(tx).to.be.revertedWith(`PostBattleLoot: Invalid signature`);

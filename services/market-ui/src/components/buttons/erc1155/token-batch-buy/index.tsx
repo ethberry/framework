@@ -8,7 +8,7 @@ import { useFormikContext } from "formik";
 import { useApi } from "@gemunion/provider-api";
 import { IErc1155Token, IMarketplaceSignature } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
-import MarketplaceERC1155 from "@framework/binance-contracts/artifacts/contracts/Marketplace/MarketplaceERC1155.sol/MarketplaceERC1155.json";
+import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
   rows: Array<IErc1155Token>;
@@ -54,15 +54,10 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
       .then((json: IMarketplaceSignature) => {
         const contract = new ethers.Contract(
           process.env.ERC1155_MARKETPLACE_ADDR,
-          MarketplaceERC1155.abi,
+          ERC1155Marketplace.abi,
           library.getSigner(),
         );
         const nonce = ethers.utils.arrayify(json.nonce);
-        console.log("nonce", nonce);
-        console.log("collection", collection);
-        console.log("erc1155TokenIds", erc1155TokenIds);
-        console.log("amounts", amounts);
-        console.log("totalTokenPrice", totalTokenValue);
         return contract.buyResources(nonce, collection, erc1155TokenIds, amounts, process.env.ACCOUNT, json.signature, {
           value: totalTokenValue,
         }) as Promise<void>;

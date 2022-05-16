@@ -29,9 +29,9 @@
     "add": "Add",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
+    "deploy": "Deploy",
     "edit": "Edit",
-    "view": "View",
-    "deploy": "Deploy"
+    "view": "View"
   },
   "enums": {
     "airdropStatus": {
@@ -47,6 +47,14 @@
       "AIRDROP": "Airdrop",
       "DROPBOX": "Dropbox",
       "TOKEN": "Token"
+    },
+    "contractTemplate": {
+      "BLACKLIST": "Blacklist",
+      "CLIFF": "Cliff",
+      "GRADED": "Graded",
+      "LINEAR": "Linear",
+      "RANDOM": "Random",
+      "SIMPLE": "Simple"
     },
     "dropboxStatus": {
       "ACTIVE": "Active",
@@ -127,16 +135,16 @@
     },
     "labels": {
       "address": "Address",
-      "duration": "Duration",
       "airdropStatus": "Status",
-      "startTimestamp": "Start date",
       "amount": "Amount",
       "attributes": "Attributes",
+      "baseTokenURI": "Base token URI",
+      "beneficiary": "Beneficiary",
       "collectionStatus": "Status",
       "collectionType": "Type",
       "comment": "Comment",
-      "beneficiary": "Beneficiary",
       "confirm": "Confirm",
+      "contractTemplate": "Template",
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
@@ -144,6 +152,7 @@
       "description": "Description",
       "displayName": "Display name",
       "dropboxStatus": "Status",
+      "duration": "Duration",
       "email": "Email",
       "erc1155CollectionId": "Collections",
       "erc1155CollectionIds": "Collections",
@@ -171,6 +180,7 @@
       "rarity": "Rarity",
       "recipeStatus": "Status",
       "royalty": "Royalty",
+      "startTimestamp": "Start date",
       "symbol": "Symbol",
       "templateStatus": "Status",
       "title": "Title",
@@ -188,10 +198,10 @@
     },
     "placeholders": {
       "address": "0x...",
-      "beneficiary": "0x...",
-      "duration": "30",
       "amount": "10",
       "attributes": "[]",
+      "baseTokenURI": "https://example.com/",
+      "beneficiary": "0x...",
       "collectionId": "Lootbox",
       "collectionIds": "Lootbox",
       "comment": "Fraud",
@@ -200,6 +210,7 @@
       "definition": "10",
       "description": "Description",
       "displayName": "Gordon Freeman",
+      "duration": "30",
       "email": "me@google.com",
       "entrance": "2",
       "erc1155CollectionId": "Collections",

@@ -17,7 +17,7 @@ import { Erc20VestingTemplate, IErc20Token, IErc20Vesting, IErc20VestingSearchDt
 import { useCollection } from "@gemunion/react-hooks";
 import { Erc20VestingSearchForm } from "./form";
 import { Erc20VestingViewDialog } from "./view";
-import { Erc20VestingButton } from "../../../components/buttons/erc20/vesting-deploy";
+import { Erc20VestingDeployButton } from "../../../components/buttons/erc20/vesting-deploy";
 
 export const Erc20Vesting: FC = () => {
   const {
@@ -59,7 +59,7 @@ export const Erc20Vesting: FC = () => {
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
-        <Erc20VestingButton />
+        <Erc20VestingDeployButton />
       </PageHeader>
 
       <Erc20VestingSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />

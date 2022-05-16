@@ -19,19 +19,19 @@ import {
   Erc721RecipeEventType,
 } from "@framework/types";
 
-import coin from "@framework/binance-contracts/artifacts/contracts/Coin/Coin.sol/Coin.json";
-import manager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import resources from "@framework/binance-contracts/artifacts/contracts/ERC1155/Resources.sol/Resources.json";
-import items from "@framework/binance-contracts/artifacts/contracts/ERC721/Item.sol/Item.json";
-import hero from "@framework/binance-contracts/artifacts/contracts/ERC721/Hero.sol/Hero.json";
-import skill from "@framework/binance-contracts/artifacts/contracts/ERC721/Skill.sol/Skill.json";
-import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC721.sol/CraftERC721.json";
-import refinery from "@framework/binance-contracts/artifacts/contracts/Craft/CraftERC1155.sol/CraftERC1155.json";
+import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
+import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
+import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 import auctionERC721 from "@framework/binance-contracts/artifacts/contracts/Auction/AuctionERC721.sol/AuctionERC721.json";
-import airdropERC721 from "@framework/binance-contracts/artifacts/contracts/Dropbox/AirdropERC721.sol/AirdropERC721.json";
-import dropboxERC721 from "@framework/binance-contracts/artifacts/contracts/Dropbox/DropboxERC721.sol/DropboxERC721.json";
-import marketplaceERC721 from "@framework/binance-contracts/artifacts/contracts/Marketplace/MarketplaceERC721.sol/MarketplaceERC721.json";
-import marketplaceERC1155 from "@framework/binance-contracts/artifacts/contracts/Marketplace/MarketplaceERC1155.sol/MarketplaceERC1155.json";
+import ERC721Airdrop from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
+import ERC721Dropbox from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Dropbox.sol/ERC721Dropbox.json";
+import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
+import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 @Module({
   imports: [ConfigModule, Web3ContractModule],
@@ -61,7 +61,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC20_COIN,
         contractAddress: coinAddr,
-        contractInterface: coin.abi as Array<AbiItem>,
+        contractInterface: ERC20Simple.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc20TokenEventType.Transfer,
@@ -71,7 +71,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC20_MANAGER,
         contractAddress: managerAddr,
-        contractInterface: manager.abi as Array<AbiItem>,
+        contractInterface: ContractManager.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc20ManagerEventType.VestingDeployed,
@@ -80,7 +80,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_AIRDROP,
         contractAddress: airDropboxAddr,
-        contractInterface: airdropERC721.abi as Array<AbiItem>,
+        contractInterface: ERC721Airdrop.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721TokenEventType.Transfer,
@@ -95,7 +95,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_DROPBOX,
         contractAddress: itemDropboxAddr,
-        contractInterface: dropboxERC721.abi as Array<AbiItem>,
+        contractInterface: ERC721Dropbox.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721TokenEventType.Transfer,
@@ -109,7 +109,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_ITEMS,
         contractAddress: itemsAddr,
-        contractInterface: items.abi as Array<AbiItem>,
+        contractInterface: ERC721Graded.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721TokenEventType.Transfer,
@@ -123,7 +123,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC1155_RESOURCES,
         contractAddress: resourcesAddr,
-        contractInterface: resources.abi as Array<AbiItem>,
+        contractInterface: ERC1155Simple.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc1155TokenEventType.TransferSingle,
@@ -135,7 +135,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_HERO,
         contractAddress: heroAddr,
-        contractInterface: hero.abi as Array<AbiItem>,
+        contractInterface: ERC721Random.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721TokenEventType.Transfer,
@@ -149,7 +149,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_SKILL,
         contractAddress: skillAddr,
-        contractInterface: skill.abi as Array<AbiItem>,
+        contractInterface: ERC721Simple.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721TokenEventType.Transfer,
@@ -162,7 +162,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC1155_CRAFT,
         contractAddress: refineryAddr,
-        contractInterface: refinery.abi as Array<AbiItem>,
+        contractInterface: ERC1155ERC1155Craft.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc1155RecipeEventType.RecipeCreated,
@@ -184,7 +184,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC721_MARKETPLACE,
         contractAddress: itemMarketplaceAddr,
-        contractInterface: marketplaceERC721.abi as Array<AbiItem>,
+        contractInterface: ERC721Marketplace.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc721MarketplaceEventType.Redeem,
@@ -205,7 +205,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
       {
         contractName: ContractType.ERC1155_MARKETPLACE,
         contractAddress: resourcesMarketplaceAddr,
-        contractInterface: marketplaceERC1155.abi as Array<AbiItem>,
+        contractInterface: ERC1155Marketplace.abi as Array<AbiItem>,
         // prettier-ignore
         eventNames: [
           Erc1155MarketplaceEventType.Redeem,

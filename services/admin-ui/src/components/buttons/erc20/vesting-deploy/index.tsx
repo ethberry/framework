@@ -1,59 +1,52 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks";
-import { IErc20Vesting } from "@framework/types";
-import contractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
+import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
+import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
-import { Erc20VestingDeployDialog } from "./deploy";
+import { Erc20VestingDeployDialog, IErc20VestingContractFields, Erc20VestingTemplate } from "./deploy-dialog";
+import { useDeploy } from "../../../hooks/useCollection";
+
+function getBytecodeByTemplate(template: Erc20VestingTemplate) {
+  switch (template) {
+    case Erc20VestingTemplate.LINEAR:
+      return LinearVesting.bytecode;
+    case Erc20VestingTemplate.GRADED:
+      return GradedVesting.bytecode;
+    case Erc20VestingTemplate.CLIFF:
+      return CliffVesting.bytecode;
+    default:
+      throw new Error("Unknown template");
+  }
+}
 
 export interface IErc20VestingButtonProps {
   className?: string;
 }
 
-export const Erc20VestingButton: FC<IErc20VestingButtonProps> = props => {
+export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
   const { className } = props;
 
   const { library } = useWeb3React();
 
-  const [isDeployDialogOpen, setIsDeployDialogOpen] = useState(false);
-
-  const handleDeploy = (): void => {
-    setIsDeployDialogOpen(true);
-  };
-
-  const metaDeploy = useMetamask((values: IErc20Vesting) => {
-    const { vestingTemplate, token, amount, beneficiary, startTimestamp, duration } = values;
-    const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, contractManager.abi, library.getSigner());
-    return contract.deployVesting(
-      vestingTemplate,
-      token,
-      amount,
-      beneficiary,
-      startTimestamp,
-      duration,
-    ) as Promise<void>;
-  });
-
-  const handleDeployConfirm = (values: any) => {
-    const { vestingTemplate, token, amount, beneficiary, startTimestamp, duration } = values;
-    return metaDeploy({
-      vestingTemplate,
-      token,
-      amount,
-      beneficiary,
-      startTimestamp: Math.ceil(startTimestamp.getTime() / 1000),
-      duration: duration * 86400,
-    }) as Promise<void>;
-  };
-
-  const handleDeployCancel = () => {
-    setIsDeployDialogOpen(false);
-  };
+  const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
+    (values: IErc20VestingContractFields) => {
+      const { contractTemplate, beneficiary, startTimestamp, duration } = values;
+      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+      return contract.deployVesting(
+        getBytecodeByTemplate(contractTemplate),
+        beneficiary,
+        startTimestamp,
+        duration,
+      ) as Promise<void>;
+    },
+  );
 
   return (
     <Fragment>
