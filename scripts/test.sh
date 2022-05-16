@@ -10,4 +10,4 @@ export POSTGRES_URL=$POSTGRES_URL
 
 lerna bootstrap --hoist
 
-lerna exec -- npm run test
+lerna exec -- npm run test --passWithNoTests
