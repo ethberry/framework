@@ -21,7 +21,7 @@ export class SeedErc20Vesting1563804021116 implements MigrationInterface {
         '${wallet}',
         1234567890,
         '${currentDateTime}',
-        'FLAT',
+        'LINEAR',
         '${currentDateTime}',
         '${currentDateTime}'
       );
