@@ -7,6 +7,11 @@ export enum Erc20TokenStatus {
   INACTIVE = "INACTIVE",
 }
 
+export enum Erc20TokenTemplate {
+  "SIMPLE" = "SIMPLE", // ACBCS
+  "BLACKLIST" = "BLACKLIST", // ACBCS + BLACKLIST
+}
+
 export interface IErc20Token extends IContract, ISearchable {
   symbol: string;
   amount: string;

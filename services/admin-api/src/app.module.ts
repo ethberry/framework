@@ -25,6 +25,7 @@ import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
+import { ContractManagerModule } from "./contract-manager/contract-manager.module";
 
 @Module({
   providers: [
@@ -101,6 +102,7 @@ import { EmailModule } from "./email/email.module";
     Erc20Module,
     Erc721Module,
     Erc1155Module,
+    ContractManagerModule,
     ProfileModule,
     UserModule,
   ],

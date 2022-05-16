@@ -2,18 +2,9 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { IErc1155Token } from "@framework/types";
+import { Erc1155TokenTemplate, IErc1155Token, IErc1155TokenDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
-
-export enum Erc1155TokenTemplate {
-  "SIMPLE" = "SIMPLE", // ACBS
-}
-
-export interface IErc1155ContractFields {
-  contractTemplate: Erc1155TokenTemplate;
-  baseTokenURI: string;
-}
 
 export interface IErc1155TokenDeployDialogProps {
   open: boolean;
@@ -22,7 +13,7 @@ export interface IErc1155TokenDeployDialogProps {
 }
 
 export const Erc1155TokenDeployDialog: FC<IErc1155TokenDeployDialogProps> = props => {
-  const fixedValues: IErc1155ContractFields = {
+  const fixedValues: IErc1155TokenDeployDto = {
     contractTemplate: Erc1155TokenTemplate.SIMPLE,
     baseTokenURI: "",
   };

@@ -6,7 +6,9 @@ export class CreateErc20VestingTable1563804021115 implements MigrationInterface 
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc20_vesting_template_enum AS ENUM (
-        'FLAT'
+        'LINEAR',
+        'GRADED',
+        'CLIFF'
       );
     `);
 

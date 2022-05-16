@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
 import { Public } from "@gemunion/nest-js-utils";
-import { IMarketplaceSignature } from "@framework/types";
+import { IServerSignature } from "@framework/types";
 
 import { Erc721MarketplaceService } from "./marketplace.service";
 import { SignTemplateDto } from "./dto";
@@ -12,12 +12,12 @@ export class Erc721MarketplaceController {
   constructor(private readonly erc721MarketplaceService: Erc721MarketplaceService) {}
 
   @Post("/sign-template")
-  public signTemplate(@Body() dto: SignTemplateDto): Promise<IMarketplaceSignature> {
+  public signTemplate(@Body() dto: SignTemplateDto): Promise<IServerSignature> {
     return this.erc721MarketplaceService.signTemplate(dto);
   }
 
   @Post("/sign-dropbox")
-  public signDropbox(@Body() dto: SignTemplateDto): Promise<IMarketplaceSignature> {
+  public signDropbox(@Body() dto: SignTemplateDto): Promise<IServerSignature> {
     return this.erc721MarketplaceService.signDropbox(dto);
   }
 }

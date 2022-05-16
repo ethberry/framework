@@ -38,7 +38,7 @@ export const Erc20Vesting: FC = () => {
     baseUrl: "/erc20-vesting",
     search: {
       query: "",
-      vestingTemplate: [Erc20VestingTemplate.FLAT],
+      vestingTemplate: [Erc20VestingTemplate.LINEAR],
       erc20TokenIds: [],
     },
     empty: {

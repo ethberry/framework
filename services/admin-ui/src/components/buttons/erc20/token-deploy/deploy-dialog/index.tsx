@@ -3,21 +3,9 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { IErc20Token } from "@framework/types";
+import { Erc20TokenTemplate, IErc20Token, IErc20TokenDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
-
-export enum Erc20TokenTemplate {
-  "SIMPLE" = "SIMPLE", // ACBCS
-  "BLACKLIST" = "BLACKLIST", // ACBCS + BLACKLIST
-}
-
-export interface IErc20TokenContractFields {
-  contractTemplate: Erc20TokenTemplate;
-  name: string;
-  symbol: string;
-  amount: number;
-}
 
 export interface IErc20TokenDeployDialogProps {
   open: boolean;
@@ -26,11 +14,11 @@ export interface IErc20TokenDeployDialogProps {
 }
 
 export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props => {
-  const fixedValues: IErc20TokenContractFields = {
+  const fixedValues: IErc20TokenDeployDto = {
     contractTemplate: Erc20TokenTemplate.SIMPLE,
     name: "",
     symbol: "",
-    amount: 0,
+    cap: "0",
   };
 
   return (
@@ -44,7 +32,7 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
       <SelectInput name="contractTemplate" options={Erc20TokenTemplate} />
       <TextInput name="name" />
       <TextInput name="symbol" />
-      <EthInput name="amount" />
+      <EthInput name="cap" />
     </FormDialog>
   );
 };

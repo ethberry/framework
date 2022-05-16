@@ -1,4 +1,4 @@
-export interface IMarketplaceSignature {
+export interface IServerSignature {
   nonce: string;
   signature: string;
 }

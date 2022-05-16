@@ -7,6 +7,10 @@ export enum Erc1155CollectionStatus {
   INACTIVE = "INACTIVE",
 }
 
+export enum Erc1155TokenTemplate {
+  "SIMPLE" = "SIMPLE", // ACBS
+}
+
 export interface IErc1155Collection extends IContract, ISearchable {
   imageUrl: string;
   collectionStatus: Erc1155CollectionStatus;

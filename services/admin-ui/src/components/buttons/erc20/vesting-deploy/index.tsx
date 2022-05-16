@@ -5,15 +5,17 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
+import { useApi } from "@gemunion/provider-api";
+import { Erc20VestingTemplate, IErc20VestingDeployDto, IServerSignature } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
 import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
 import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
-import { Erc20VestingDeployDialog, IErc20VestingContractFields, Erc20VestingTemplate } from "./deploy-dialog";
+import { Erc20VestingDeployDialog } from "./deploy-dialog";
 import { useDeploy } from "../../../hooks/useCollection";
 
-function getBytecodeByTemplate(template: Erc20VestingTemplate) {
+function getBytecodeByErc20VestingTemplate(template: Erc20VestingTemplate) {
   switch (template) {
     case Erc20VestingTemplate.LINEAR:
       return LinearVesting.bytecode;
@@ -34,17 +36,31 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
   const { className } = props;
 
   const { library } = useWeb3React();
+  const api = useApi();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc20VestingContractFields) => {
+    (values: IErc20VestingDeployDto) => {
       const { contractTemplate, beneficiary, startTimestamp, duration } = values;
-      const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
-      return contract.deployVesting(
-        getBytecodeByTemplate(contractTemplate),
-        beneficiary,
-        startTimestamp,
-        duration,
-      ) as Promise<void>;
+
+      return api
+        .fetchJson({
+          url: "/contract-manager/erc20-vesting",
+          method: "POST",
+          data: values,
+        })
+        .then((sign: IServerSignature) => {
+          const nonce = ethers.utils.arrayify(sign.nonce);
+          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER, ContractManager.abi, library.getSigner());
+          return contract.deployERC20Vesting(
+            nonce,
+            getBytecodeByErc20VestingTemplate(contractTemplate),
+            beneficiary,
+            startTimestamp,
+            duration,
+            process.env.ACCOUNT,
+            sign.signature,
+          ) as Promise<void>;
+        });
     },
   );
 
