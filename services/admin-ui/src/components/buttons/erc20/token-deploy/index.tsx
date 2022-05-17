@@ -12,7 +12,7 @@ import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/
 import ERC20BlackList from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
 
 import { Erc20TokenDeployDialog } from "./deploy-dialog";
-import { useDeploy } from "../../../hooks/useCollection";
+import { useDeploy } from "../../../hooks/useDeploy";
 
 function getBytecodeByErc20TokenTemplate(template: Erc20TokenTemplate) {
   switch (template) {
@@ -47,7 +47,11 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
         })
         .then((sign: IServerSignature) => {
           const nonce = ethers.utils.arrayify(sign.nonce);
-          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
+          const contract = new ethers.Contract(
+            process.env.CONTRACT_MANAGER_ADDR,
+            ContractManager.abi,
+            library.getSigner(),
+          );
           return contract.deployERC20Token(
             nonce,
             getBytecodeByErc20TokenTemplate(contractTemplate),

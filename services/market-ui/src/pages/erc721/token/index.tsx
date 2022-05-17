@@ -8,7 +8,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { Erc721TokenSellButton } from "../../../components/buttons/erc721/token-sell";
+import { Erc721TokenSellButton } from "../../../components/buttons";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading } = useCollection<IErc721Token>({

@@ -6,7 +6,6 @@ export class CreateErc20VestingHistoryTable1563804021117 implements MigrationInt
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc20_vesting_event_enum AS ENUM (
-        'VestingDeployed',
         'EtherReleased',
         'ERC20Released'
       );

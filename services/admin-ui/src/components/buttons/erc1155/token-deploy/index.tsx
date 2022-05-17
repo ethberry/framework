@@ -11,7 +11,7 @@ import ContractManager from "@framework/binance-contracts/artifacts/contracts/Co
 import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 import { Erc1155TokenDeployDialog } from "./deploy-dialog";
-import { useDeploy } from "../../../hooks/useCollection";
+import { useDeploy } from "../../../hooks/useDeploy";
 
 function getBytecodeByErc1155TokenTemplate(template: Erc1155TokenTemplate) {
   switch (template) {
@@ -44,7 +44,11 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
         })
         .then((sign: IServerSignature) => {
           const nonce = ethers.utils.arrayify(sign.nonce);
-          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
+          const contract = new ethers.Contract(
+            process.env.CONTRACT_MANAGER_ADDR,
+            ContractManager.abi,
+            library.getSigner(),
+          );
           return contract.deployERC20Token(
             nonce,
             getBytecodeByErc1155TokenTemplate(contractTemplate),

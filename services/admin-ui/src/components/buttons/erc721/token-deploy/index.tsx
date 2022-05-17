@@ -13,7 +13,7 @@ import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC72
 import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 
 import { Erc721TokenDeployDialog } from "./deploy-dialog";
-import { useDeploy } from "../../../hooks/useCollection";
+import { useDeploy } from "../../../hooks/useDeploy";
 
 function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
   switch (template) {

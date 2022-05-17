@@ -25,7 +25,7 @@ describe("ERC20BlackList", function () {
     it("should fail to transfer to blacklisted", async function () {
       await erc20Instance.blacklist(this.receiver.address);
       const tx = erc20Instance.transfer(this.receiver.address, amount);
-      await expect(tx).to.be.revertedWith(`ERC20BlackList: receiver is BlackListed`);
+      await expect(tx).to.be.revertedWith("ERC20BlackList: receiver is BlackListed");
     });
   });
 });

@@ -13,7 +13,7 @@ import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vest
 import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { Erc20VestingDeployDialog } from "./deploy-dialog";
-import { useDeploy } from "../../../hooks/useCollection";
+import { useDeploy } from "../../../hooks/useDeploy";
 
 function getBytecodeByErc20VestingTemplate(template: Erc20VestingTemplate) {
   switch (template) {
@@ -50,7 +50,11 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         })
         .then((sign: IServerSignature) => {
           const nonce = ethers.utils.arrayify(sign.nonce);
-          const contract = new ethers.Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
+          const contract = new ethers.Contract(
+            process.env.CONTRACT_MANAGER_ADDR,
+            ContractManager.abi,
+            library.getSigner(),
+          );
           return contract.deployERC20Vesting(
             nonce,
             getBytecodeByErc20VestingTemplate(contractTemplate),
