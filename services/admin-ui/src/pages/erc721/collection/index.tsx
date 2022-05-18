@@ -52,10 +52,11 @@ export const Erc721Collection: FC = () => {
       collectionStatus: [Erc721CollectionStatus.ACTIVE],
       collectionType: [],
     },
-    filter: ({ title, description, imageUrl }) => ({
+    filter: ({ title, description, imageUrl, collectionStatus }) => ({
       title,
       description,
       imageUrl,
+      collectionStatus,
     }),
   });
 
@@ -85,7 +86,10 @@ export const Erc721Collection: FC = () => {
                 <IconButton onClick={handleEdit(collection)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(collection)} disabled>
+                <IconButton
+                  onClick={handleDelete(collection)}
+                  disabled={collection.collectionStatus === Erc721CollectionStatus.INACTIVE}
+                >
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

@@ -56,7 +56,7 @@ export const Erc20Vesting: FC = () => {
   const metaClick = useMetamask((vesting: IErc20Vesting) => {
     const contract = new ethers.Contract(vesting.address, CliffVesting.abi, library.getSigner());
 
-    return contract.release(vesting.token) as Promise<void>;
+    return contract.release(vesting.address) as Promise<void>;
   });
 
   const handleClick = (vesting: IErc20Vesting) => {

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { IErc721CollectionAutocompleteDto, IErc721CollectionSearchDto } from "@framework/types";
+import { Erc721CollectionStatus, IErc721CollectionAutocompleteDto, IErc721CollectionSearchDto } from "@framework/types";
 
 import { Erc721CollectionEntity } from "./collection.entity";
 import { IErc721CollectionCreateDto, IErc721CollectionUpdateDto } from "./interfaces";
@@ -84,7 +84,7 @@ export class Erc721CollectionService {
 
   public async update(
     where: FindOptionsWhere<Erc721CollectionEntity>,
-    dto: IErc721CollectionUpdateDto,
+    dto: Partial<IErc721CollectionUpdateDto>,
   ): Promise<Erc721CollectionEntity> {
     const collectionEntity = await this.erc721CollectionEntityRepository.findOne({ where });
 
@@ -102,6 +102,8 @@ export class Erc721CollectionService {
   }
 
   public async delete(where: FindOptionsWhere<Erc721CollectionEntity>): Promise<DeleteResult> {
-    return this.erc721CollectionEntityRepository.delete(where);
+    return this.erc721CollectionEntityRepository.update(where, {
+      collectionStatus: Erc721CollectionStatus.INACTIVE,
+    });
   }
 }

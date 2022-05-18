@@ -85,7 +85,7 @@ export class ContractManagerServiceWs {
       description: emptyStateString,
       imageUrl,
       chainId: this.chainId,
-      baseUri: baseTokenURI,
+      baseTokenURI,
     });
   }
 
@@ -102,7 +102,7 @@ export class ContractManagerServiceWs {
       description: emptyStateString,
       imageUrl,
       chainId: this.chainId,
-      baseUri: baseTokenURI,
+      baseTokenURI,
     });
   }
 

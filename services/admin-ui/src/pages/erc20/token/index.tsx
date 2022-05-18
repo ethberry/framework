@@ -10,17 +10,17 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Create, FilterList } from "@mui/icons-material";
+import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { Erc20TokenStatus, IErc20Token, IErc20TokenSearchDto } from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
-import { Erc20TokenSnapshotButton } from "../../../components/buttons";
-import { Erc20TokenDeployButton } from "../../../components/buttons/erc20/token-deploy";
+import { Erc20TokenDeployButton, Erc20TokenSnapshotButton } from "../../../components/buttons";
 
 export const Erc20Token: FC = () => {
   const {
@@ -31,10 +31,14 @@ export const Erc20Token: FC = () => {
     isLoading,
     isFiltersOpen,
     isEditDialogOpen,
+    isDeleteDialogOpen,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
+    handleDelete,
+    handleDeleteCancel,
+    handleDeleteConfirm,
     handleSubmit,
     handleChangePage,
   } = useCollection<IErc20Token, IErc20TokenSearchDto>({
@@ -48,15 +52,7 @@ export const Erc20Token: FC = () => {
       query: "",
       tokenStatus: [Erc20TokenStatus.ACTIVE],
     },
-    filter: ({ id, title, description, symbol, amount }) =>
-      id
-        ? { description }
-        : {
-            title,
-            description,
-            symbol,
-            amount,
-          },
+    filter: ({ description, tokenStatus }) => ({ description, tokenStatus }),
   });
 
   return (
@@ -85,6 +81,9 @@ export const Erc20Token: FC = () => {
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>
+                <IconButton onClick={handleDelete(token)} disabled={token.tokenStatus === Erc20TokenStatus.INACTIVE}>
+                  <Delete />
+                </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -97,6 +96,13 @@ export const Erc20Token: FC = () => {
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
+      />
+
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={isDeleteDialogOpen}
+        initialValues={selected}
       />
 
       <Erc20TokenEditDialog

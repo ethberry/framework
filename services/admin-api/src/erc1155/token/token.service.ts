@@ -16,7 +16,7 @@ export class Erc1155TokenService {
   ) {}
 
   public async search(dto: IErc1155TokenSearchDto): Promise<[Array<Erc1155TokenEntity>, number]> {
-    const { query, skip, take, tokenId, erc1155CollectionIds } = dto;
+    const { query, skip, take, tokenId, erc1155CollectionIds, tokenStatus } = dto;
 
     const queryBuilder = this.erc1155TokenEntityRepository.createQueryBuilder("token");
 
@@ -33,6 +33,16 @@ export class Erc1155TokenService {
         });
       } else {
         queryBuilder.andWhere("token.erc1155CollectionId IN(:...erc1155CollectionIds)", { erc1155CollectionIds });
+      }
+    }
+
+    if (tokenStatus) {
+      if (tokenStatus.length === 1) {
+        queryBuilder.andWhere("token.tokenStatus = :tokenStatus", {
+          tokenStatus: tokenStatus[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
       }
     }
 

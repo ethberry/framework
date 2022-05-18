@@ -122,7 +122,6 @@ export class Erc721AirderopService {
   }
 
   public async getSign(data: Record<string, any>): Promise<string> {
-    // EIP712(address account,uint256 airdropId,uint256 templateId)
     return this.signer._signTypedData(
       {
         name: "AirdropERC721",

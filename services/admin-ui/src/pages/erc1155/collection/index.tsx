@@ -20,7 +20,7 @@ import { Erc1155CollectionStatus, IErc1155Collection, IErc1155CollectionSearchDt
 
 import { Erc1155CollectionEditDialog } from "./edit";
 import { Erc1155CollectionSearchForm } from "./form";
-import { Erc1155TokenDeployButton } from "../../../components/buttons/erc1155/token-deploy";
+import { Erc1155TokenDeployButton } from "../../../components/buttons";
 
 export const Erc1155Collection: FC = () => {
   const {
@@ -51,7 +51,12 @@ export const Erc1155Collection: FC = () => {
       query: "",
       collectionStatus: [Erc1155CollectionStatus.ACTIVE],
     },
-    filter: ({ title, description, imageUrl }) => ({ title, description, imageUrl }),
+    filter: ({ title, description, imageUrl, collectionStatus }) => ({
+      title,
+      description,
+      imageUrl,
+      collectionStatus,
+    }),
   });
 
   return (
@@ -79,7 +84,10 @@ export const Erc1155Collection: FC = () => {
                 <IconButton onClick={handleEdit(collection)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(collection)} disabled>
+                <IconButton
+                  onClick={handleDelete(collection)}
+                  disabled={collection.collectionStatus === Erc1155CollectionStatus.INACTIVE}
+                >
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

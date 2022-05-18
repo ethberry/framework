@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseUri, imageUrl, ns } from "@framework/constants";
+import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
 export class SeedErc721Collection1563804021250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -24,7 +24,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         royalty,
         collection_type,
         address,
-        base_uri,
+        base_token_uri,
         chain_id,
         created_at,
         updated_at
@@ -60,7 +60,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionItemsAddress}',
-        '${baseUri}',
+        '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -72,7 +72,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionHeroAddress}',
-        '${baseUri}',
+        '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -84,7 +84,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionSkillAddress}',
-        '${baseUri}',
+        '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -96,7 +96,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'TOKEN',
         '${erc721CollectionSkillAddress}',
-        '${baseUri}',
+        '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

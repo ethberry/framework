@@ -32,7 +32,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
           type: "varchar",
         },
         {
-          name: "base_uri",
+          name: "base_token_uri",
           type: "varchar",
           isNullable: true,
         },

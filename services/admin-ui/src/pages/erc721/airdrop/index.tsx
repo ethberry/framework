@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import {
   Button,
   Grid,
@@ -54,6 +54,8 @@ export const Erc721Airdrop: FC = () => {
     filter: ({ id, owner, erc721TemplateId, list }: any) => (id ? { owner, erc721TemplateId } : { list }),
   });
 
+  const { formatMessage } = useIntl();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "erc721-airdrops"]} />
@@ -106,7 +108,7 @@ export const Erc721Airdrop: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={selected}
+        initialValues={{ ...selected, title: formatMessage({ id: "pages.erc721-airdrops.defaultItemTitle" }) }}
       />
 
       <Erc721AirdropEditDialog

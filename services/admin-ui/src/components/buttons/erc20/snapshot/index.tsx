@@ -10,7 +10,7 @@ import { IErc20Token } from "@framework/types";
 import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 export interface IErc20TokenSnapshotButtonProps {
-  token?: IErc20Token;
+  token: IErc20Token;
 }
 
 export const Erc20TokenSnapshotButton: FC<IErc20TokenSnapshotButtonProps> = props => {
@@ -21,7 +21,7 @@ export const Erc20TokenSnapshotButton: FC<IErc20TokenSnapshotButtonProps> = prop
   const { formatMessage } = useIntl();
 
   const handleSnapshot = useMetamask(() => {
-    const contract = new ethers.Contract(token!.address, ERC20Simple.abi, library.getSigner());
+    const contract = new ethers.Contract(token.address, ERC20Simple.abi, library.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 

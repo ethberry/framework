@@ -141,7 +141,6 @@
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
-      "baseUri": "Base collection URI",
       "beneficiary": "Beneficiary",
       "cap": "Cap",
       "collectionStatus": "Status",
@@ -205,7 +204,6 @@
       "amount": "10",
       "attributes": "{}",
       "baseTokenURI": "https://example.com/",
-      "baseUri": "empty",
       "beneficiary": "0x...",
       "cap": "10",
       "collectionId": "Lootbox",
@@ -334,11 +332,12 @@
         "address": "Address",
         "beneficiary": "Beneficiary",
         "duration": "Duration",
-        "template": "Template",
-        "startTimestamp": "Start time"
+        "startTimestamp": "Start time",
+        "template": "Template"
       }
     },
     "erc721-airdrops": {
+      "defaultItemTitle": "Airdrop",
       "title": "ERC721 Airdrop"
     },
     "erc721-collections": {

@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormikForm } from "@gemunion/mui-form";
-import { IErc1155TokenSearchDto } from "@framework/types";
-import { SearchInput, TextInput } from "@gemunion/mui-inputs-core";
+import { SearchInput, TextInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -19,8 +19,8 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, erc1155CollectionIds, tokenId } = initialValues;
-  const fixedValues = { query, erc1155CollectionIds, tokenId };
+  const { query, erc1155CollectionIds, tokenId, tokenStatus } = initialValues;
+  const fixedValues = { query, erc1155CollectionIds, tokenId, tokenStatus };
 
   return (
     <FormikForm
@@ -40,6 +40,9 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <EntityInput name="erc1155CollectionIds" controller="erc1155-collections" multiple />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="tokenStatus" options={Erc1155TokenStatus} />
           </Grid>
           <Grid item xs={6}>
             <TextInput name="tokenId" />

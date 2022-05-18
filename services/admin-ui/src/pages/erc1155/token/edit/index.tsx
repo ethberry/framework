@@ -1,12 +1,12 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { JsonInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { JsonInput, NumberInput, TextInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IErc1155Token } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
 import { EthInput } from "@gemunion/mui-inputs-mask";
+import { Erc1155TokenStatus, IErc1155Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -20,7 +20,8 @@ export interface IErc1155TokenEditDialogProps {
 export const Erc1155TokenEditDialog: FC<IErc1155TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, attributes, price, amount, erc1155CollectionId, imageUrl } = initialValues;
+  const { id, title, description, attributes, price, amount, erc1155CollectionId, tokenStatus, imageUrl } =
+    initialValues;
   const fixedValues = {
     id,
     title,
@@ -29,6 +30,7 @@ export const Erc1155TokenEditDialog: FC<IErc1155TokenEditDialogProps> = props =>
     price,
     amount,
     erc1155CollectionId,
+    tokenStatus,
     imageUrl,
   };
 
@@ -45,6 +47,7 @@ export const Erc1155TokenEditDialog: FC<IErc1155TokenEditDialogProps> = props =>
       <JsonInput name="attributes" />
       <EthInput name="price" />
       <NumberInput name="amount" />
+      <SelectInput name="tokenStatus" options={Erc1155TokenStatus} />
       <EntityInput name="erc1155CollectionId" controller="erc1155-collections" readOnly={!!id} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns } from "@framework/constants";
+import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
 export class SeedErc1155Collection1641526822360 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -16,6 +16,7 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
         description,
         image_url,
         address,
+        base_token_uri,
         chain_id,
         created_at,
         updated_at
@@ -24,6 +25,7 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         '${erc1155CollectionResourcesAddress}',
+        '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

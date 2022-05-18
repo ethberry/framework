@@ -69,7 +69,10 @@ export class Erc20TokenService {
     return this.erc20TokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(where: FindOptionsWhere<Erc20TokenEntity>, dto: IErc20TokenUpdateDto): Promise<Erc20TokenEntity> {
+  public async update(
+    where: FindOptionsWhere<Erc20TokenEntity>,
+    dto: Partial<IErc20TokenUpdateDto>,
+  ): Promise<Erc20TokenEntity> {
     const tokenEntity = await this.findOne(where);
 
     if (!tokenEntity) {
@@ -82,6 +85,6 @@ export class Erc20TokenService {
   }
 
   public async delete(where: FindOptionsWhere<Erc20TokenEntity>): Promise<Erc20TokenEntity> {
-    return this.update(where, { tokenStatus: Erc20TokenStatus.INACTIVE } as IErc20TokenUpdateDto);
+    return this.update(where, { tokenStatus: Erc20TokenStatus.INACTIVE });
   }
 }
