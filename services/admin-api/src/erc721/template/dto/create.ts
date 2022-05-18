@@ -21,10 +21,10 @@ export class Erc721TemplateCreateDto implements IErc721TemplateCreateDto {
   public price: string;
 
   @ApiProperty({
-    minimum: 1,
+    minimum: 0,
   })
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public amount: number;
 
   @ApiProperty()

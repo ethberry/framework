@@ -7,9 +7,6 @@ import { ns } from "@framework/constants";
 @Entity({ schema: ns, name: "erc20_vesting" })
 export class Erc20VestingEntity extends ContractBaseEntity implements IErc20Vesting {
   @Column({ type: "varchar" })
-  public address: string;
-
-  @Column({ type: "varchar" })
   public beneficiary: string;
 
   @Column({ type: "int" })

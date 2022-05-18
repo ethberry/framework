@@ -27,11 +27,11 @@ export class Erc1155TokenUpdateDto implements IErc1155TokenUpdateDto {
   public price: string;
 
   @ApiPropertyOptional({
-    minimum: 1,
+    minimum: 0,
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public amount: number;
 
   @ApiPropertyOptional()

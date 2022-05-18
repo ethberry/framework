@@ -33,11 +33,11 @@ export class Erc20TokenService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(template.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(token.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("token.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );

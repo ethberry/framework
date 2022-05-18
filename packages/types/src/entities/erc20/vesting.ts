@@ -9,7 +9,6 @@ export enum Erc20VestingTemplate {
 }
 
 export interface IErc20Vesting extends IContract {
-  address: string;
   beneficiary: string;
   duration: number;
   startTimestamp: string;

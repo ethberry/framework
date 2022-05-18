@@ -34,11 +34,6 @@
     "view": "View"
   },
   "enums": {
-    "vestingTemplate": {
-      "LINEAR": "LINEAR",
-      "GRADED": "GRADED",
-      "CLIFF": "CLIFF"
-    },
     "airdropStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
@@ -101,6 +96,11 @@
     "userStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
+    },
+    "vestingTemplate": {
+      "CLIFF": "CLIFF",
+      "GRADED": "GRADED",
+      "LINEAR": "LINEAR"
     }
   },
   "errors": {
@@ -136,7 +136,6 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "cap": "Cap",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -144,6 +143,7 @@
       "baseTokenURI": "Base token URI",
       "baseUri": "Base collection URI",
       "beneficiary": "Beneficiary",
+      "cap": "Cap",
       "collectionStatus": "Status",
       "collectionType": "Type",
       "comment": "Comment",
@@ -197,17 +197,17 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "vestingTemplate": "Type",
+      "vestingTemplate": "Template",
       "year": "Year"
     },
     "placeholders": {
-      "cap": "10",
       "address": "0x...",
       "amount": "10",
-      "attributes": "[]",
+      "attributes": "{}",
       "baseTokenURI": "https://example.com/",
       "baseUri": "empty",
       "beneficiary": "0x...",
+      "cap": "10",
       "collectionId": "Lootbox",
       "collectionIds": "Lootbox",
       "comment": "Fraud",
@@ -331,11 +331,11 @@
     "erc20-vesting": {
       "title": "ERC20 Vesting",
       "view": {
-        "amount": "Amount",
+        "address": "Address",
         "beneficiary": "Beneficiary",
         "duration": "Duration",
-        "address": "Address",
-        "template": "Template"
+        "template": "Template",
+        "startTimestamp": "Start time"
       }
     },
     "erc721-airdrops": {
@@ -405,6 +405,7 @@
     "recaptchaMissingInputResponse": "The response parameter is missing.",
     "recaptchaMissingInputSecret": "The secret parameter is missing.",
     "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
+    "registered": "Registration successful, please verify your email to proceed",
     "saved": "Successfully saved",
     "success": "Success",
     "tokenNotFound": "Product not found",
