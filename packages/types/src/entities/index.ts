@@ -1,7 +1,7 @@
 export * from "./auth";
 export * from "./otp";
 export * from "./user";
-export * from "./marketplace";
+export * from "./signature";
 export * from "./leaderboard";
 
 export * from "./erc20/token";
