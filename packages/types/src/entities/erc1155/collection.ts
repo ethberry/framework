@@ -13,6 +13,7 @@ export enum Erc1155TokenTemplate {
 
 export interface IErc1155Collection extends IContract, ISearchable {
   imageUrl: string;
+  baseUri?: string | null;
   collectionStatus: Erc1155CollectionStatus;
   erc1155Tokens?: Array<IErc1155Token>;
 }

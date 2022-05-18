@@ -69,6 +69,7 @@ import { SeedErc721Recipe1648525970010 } from "./migrations/1648525970010-seed-e
 import { CreateErc721RecipeHistory1648525970020 } from "./migrations/1648525970020-create-erc721-recipe-history";
 import { CreateErc721Ingredient1648525970030 } from "./migrations/1648525970030-create-erc721-ingredient-table";
 import { SeedErc721Ingredient1648525970040 } from "./migrations/1648525970040-seed-erc721-ingredient";
+import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -154,6 +155,7 @@ const config: PostgresConnectionOptions = {
     CreateErc721RecipeHistory1648525970020,
     CreateErc721Ingredient1648525970030,
     SeedErc721Ingredient1648525970040,
+    CreateContractManagerHistoryTable1652682493386,
   ],
 };
 

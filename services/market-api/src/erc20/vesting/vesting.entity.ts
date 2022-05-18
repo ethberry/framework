@@ -7,10 +7,7 @@ import { ns } from "@framework/constants";
 @Entity({ schema: ns, name: "erc20_vesting" })
 export class Erc20VestingEntity extends ContractBaseEntity implements IErc20Vesting {
   @Column({ type: "varchar" })
-  public token: string;
-
-  @Column({ type: "varchar" })
-  public amount: string;
+  public address: string;
 
   @Column({ type: "varchar" })
   public beneficiary: string;
@@ -26,7 +23,4 @@ export class Erc20VestingEntity extends ContractBaseEntity implements IErc20Vest
     enum: Erc20VestingTemplate,
   })
   public vestingTemplate: Erc20VestingTemplate;
-
-  @Column({ type: "int" })
-  public erc20TokenId: number;
 }

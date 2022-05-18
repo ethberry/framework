@@ -14,6 +14,7 @@ export class SeedErc20Vesting1563804021116 implements MigrationInterface {
         duration,
         start_timestamp,
         vesting_template,
+        chain_id,
         created_at,
         updated_at
       ) VALUES (
@@ -22,6 +23,7 @@ export class SeedErc20Vesting1563804021116 implements MigrationInterface {
         1234567890,
         '${currentDateTime}',
         'LINEAR',
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -15,6 +15,9 @@ export class Erc721CollectionEntity extends Mixin(ContractBaseEntity, Searchable
   @Column({ type: "varchar" })
   public symbol: string;
 
+  @Column({ type: "varchar", nullable: true })
+  public baseUri: string | null;
+
   @Column({ type: "int" })
   public royalty: number;
 

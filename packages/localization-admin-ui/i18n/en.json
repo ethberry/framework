@@ -34,6 +34,11 @@
     "view": "View"
   },
   "enums": {
+    "vestingTemplate": {
+      "LINEAR": "LINEAR",
+      "GRADED": "GRADED",
+      "CLIFF": "CLIFF"
+    },
     "airdropStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
@@ -137,6 +142,7 @@
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
+      "baseUri": "Base collection URI",
       "beneficiary": "Beneficiary",
       "collectionStatus": "Status",
       "collectionType": "Type",
@@ -200,6 +206,7 @@
       "amount": "10",
       "attributes": "[]",
       "baseTokenURI": "https://example.com/",
+      "baseUri": "empty",
       "beneficiary": "0x...",
       "collectionId": "Lootbox",
       "collectionIds": "Lootbox",
@@ -327,7 +334,8 @@
         "amount": "Amount",
         "beneficiary": "Beneficiary",
         "duration": "Duration",
-        "token": "Token"
+        "address": "Address",
+        "template": "Template"
       }
     },
     "erc721-airdrops": {

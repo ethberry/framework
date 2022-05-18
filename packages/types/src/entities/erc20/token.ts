@@ -15,6 +15,7 @@ export enum Erc20TokenTemplate {
 export interface IErc20Token extends IContract, ISearchable {
   symbol: string;
   amount: string;
+  address: string;
   tokenStatus: Erc20TokenStatus;
   history?: Array<IErc20TokenHistory>;
 }

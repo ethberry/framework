@@ -70,7 +70,6 @@ export class ContractManagerService {
 
   public async erc20Vesting(dto: IErc20VestingDeployDto): Promise<IServerSignature> {
     const { contractTemplate, beneficiary, startTimestamp, duration } = dto;
-
     const nonce = utils.randomBytes(32);
     const signature = await this.signer._signTypedData(
       // Domain
@@ -88,6 +87,7 @@ export class ContractManagerService {
           { name: "beneficiary", type: "address" },
           { name: "startTimestamp", type: "uint64" },
           { name: "duration", type: "uint64" },
+          { name: "template", type: "uint8" },
         ],
       },
       // Value
@@ -95,8 +95,9 @@ export class ContractManagerService {
         nonce,
         bytecode: this.getBytecodeByErc20VestingTemplate(contractTemplate),
         beneficiary,
-        startTimestamp: new Date(startTimestamp).getTime() / 1000, // in seconds
-        duration,
+        startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds
+        duration: duration * 60 * 60 * 24, // in seconds
+        template: Object.keys(Erc20VestingTemplate).indexOf(contractTemplate),
       },
     );
 

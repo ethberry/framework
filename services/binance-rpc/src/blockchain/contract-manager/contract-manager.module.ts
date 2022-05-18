@@ -1,4 +1,5 @@
 import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 
 import { ContractManagerServiceWs } from "./contract-manager.service.ws";
 import { ContractManagerControllerWs } from "./contract-manager.controller.ws";
@@ -10,6 +11,7 @@ import { Erc1155CollectionModule } from "../../erc1155/collection/collection.mod
 
 @Module({
   imports: [
+    ConfigModule,
     ContractManagerHistoryModule,
     Erc20VestingModule,
     Erc20TokenModule,

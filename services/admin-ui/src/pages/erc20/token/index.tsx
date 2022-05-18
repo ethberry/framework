@@ -81,7 +81,7 @@ export const Erc20Token: FC = () => {
             <ListItem key={i}>
               <ListItemText>{token.title}</ListItemText>
               <ListItemSecondaryAction>
-                <Erc20TokenSnapshotButton />
+                <Erc20TokenSnapshotButton token={token} />
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>

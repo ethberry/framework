@@ -42,6 +42,10 @@ export class CreateErc20VestingTable1563804021115 implements MigrationInterface 
           default: "'LINEAR'",
         },
         {
+          name: "chain_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

@@ -6,8 +6,6 @@ import { formatDistance } from "date-fns";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IErc20Vesting } from "@framework/types";
 
-import { formatMoney } from "../../../../utils/money";
-
 export interface IErc20VestingViewDialogProps {
   open: boolean;
   onCancel: () => void;
@@ -18,7 +16,7 @@ export interface IErc20VestingViewDialogProps {
 export const Erc20VestingViewDialog: FC<IErc20VestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { id, beneficiary, erc20Token, amount, duration } = initialValues;
+  const { id, beneficiary, address, duration, vestingTemplate } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -38,21 +36,21 @@ export const Erc20VestingViewDialog: FC<IErc20VestingViewDialogProps> = props =>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.token" />
+                <FormattedMessage id="pages.erc20-vesting.view.address" />
               </TableCell>
-              <TableCell align="right">{erc20Token?.title}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.amount" />
-              </TableCell>
-              <TableCell align="right">{formatMoney(amount, erc20Token?.symbol)}</TableCell>
+              <TableCell align="right">{address}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="pages.erc20-vesting.view.duration" />
               </TableCell>
               <TableCell align="right">{formatDistance(0, duration)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="pages.erc20-vesting.view.template" />
+              </TableCell>
+              <TableCell align="right">{vestingTemplate}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

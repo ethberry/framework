@@ -21,6 +21,6 @@ export class Erc20VestingController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<Erc20VestingEntity | null> {
-    return this.erc20VestingService.findOne({ id }, { relations: { erc20Token: true } });
+    return this.erc20VestingService.findOne({ id });
   }
 }

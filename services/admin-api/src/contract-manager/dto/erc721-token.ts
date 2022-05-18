@@ -25,8 +25,8 @@ export class Erc721TokenDeployDto implements IErc721TokenDeployDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(32, { message: "rangeOverflow" })
-  @IsUrl({}, { message: "patternMismatch" })
+  @MaxLength(128, { message: "rangeOverflow" }) // todo probably remove length check
+  @IsUrl({ require_tld: false }, { message: "patternMismatch" })
   public baseTokenURI: string;
 
   @ApiProperty()

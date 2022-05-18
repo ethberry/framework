@@ -32,6 +32,11 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
           type: "varchar",
         },
         {
+          name: "base_uri",
+          type: "varchar",
+          isNullable: true,
+        },
+        {
           name: "collection_status",
           type: `${ns}.erc1155_collection_status_enum`,
           default: "'ACTIVE'",

@@ -11,8 +11,9 @@ export const useDeploy = (deploy: (values: any) => Promise<unknown>) => {
     setIsDeployDialogOpen(true);
   };
 
-  const handleDeployConfirm = (values: any) => {
-    return metaDeploy(values) as Promise<void>;
+  const handleDeployConfirm = async (values: any) => {
+    await metaDeploy(values);
+    setIsDeployDialogOpen(false);
   };
 
   const handleDeployCancel = () => {

@@ -23,6 +23,7 @@ export interface IErc721Collection extends IContract, ISearchable {
   imageUrl: string;
   symbol: string;
   royalty: number;
+  baseUri?: string | null;
   collectionStatus: Erc721CollectionStatus;
   collectionType: Erc721CollectionType;
   erc721Templates?: Array<IErc721Template>;

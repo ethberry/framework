@@ -6,15 +6,22 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks";
+import { IErc20Token } from "@framework/types";
 import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
-export const Erc20TokenSnapshotButton: FC = () => {
+export interface IErc20TokenSnapshotButtonProps {
+  token?: IErc20Token;
+}
+
+export const Erc20TokenSnapshotButton: FC<IErc20TokenSnapshotButtonProps> = props => {
+  const { token } = props;
+
   const { library } = useWeb3React();
 
   const { formatMessage } = useIntl();
 
   const handleSnapshot = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC20_COIN, ERC20Simple.abi, library.getSigner());
+    const contract = new ethers.Contract(token!.address, ERC20Simple.abi, library.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 

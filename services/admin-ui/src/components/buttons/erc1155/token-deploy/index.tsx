@@ -38,7 +38,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
 
       return api
         .fetchJson({
-          url: "/contract-manager/erc155-token",
+          url: "/contract-manager/erc1155-token",
           method: "POST",
           data: values,
         })
@@ -49,7 +49,8 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
             ContractManager.abi,
             library.getSigner(),
           );
-          return contract.deployERC20Token(
+
+          return contract.deployERC1155Token(
             nonce,
             getBytecodeByErc1155TokenTemplate(contractTemplate),
             baseTokenURI,
