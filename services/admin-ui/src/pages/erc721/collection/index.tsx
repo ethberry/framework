@@ -20,8 +20,7 @@ import { Erc721CollectionStatus, IErc721Collection, IErc721CollectionSearchDto }
 
 import { Erc721CollectionEditDialog } from "./edit";
 import { Erc721CollectionSearchForm } from "./form";
-import { Erc721CollectionRoyaltyButton } from "../../../components/buttons";
-import { Erc721TokenDeployButton } from "../../../components/buttons/erc721/token-deploy";
+import { Erc721CollectionRoyaltyButton, Erc721TokenDeployButton } from "../../../components/buttons";
 
 export const Erc721Collection: FC = () => {
   const {
@@ -53,6 +52,11 @@ export const Erc721Collection: FC = () => {
       collectionStatus: [Erc721CollectionStatus.ACTIVE],
       collectionType: [],
     },
+    filter: ({ title, description, imageUrl }) => ({
+      title,
+      description,
+      imageUrl,
+    }),
   });
 
   return (

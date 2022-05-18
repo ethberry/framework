@@ -21,10 +21,10 @@ export class Erc1155TokenCreateDto implements IErc1155TokenCreateDto {
   public price: string;
 
   @ApiProperty({
-    minimum: 1,
+    minimum: 0,
   })
   @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
+  @Min(0, { message: "rangeUnderflow" })
   public amount: number;
 
   @ApiProperty()

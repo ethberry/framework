@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, baseUri, ns } from "@framework/constants";
+import { baseUri, imageUrl, ns } from "@framework/constants";
 
 export class SeedErc721Collection1563804021250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
