@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { IErc721AirdropSearchDto } from "@framework/types";
@@ -20,15 +20,7 @@ export class Erc721AirdropService {
 
     queryBuilder.select();
 
-    // queryBuilder.andWhere("airdrop.owner = :owner", { query });
-
-    if (query) {
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("airdrop.owner ILIKE '%' || :owner || '%'", { owner: query.toLowerCase() });
-        }),
-      );
-    }
+    queryBuilder.andWhere("airdrop.owner = :owner", { query });
 
     queryBuilder.leftJoin("airdrop.erc721Token", "token");
     queryBuilder.addSelect(["token.id", "token.tokenId"]);
