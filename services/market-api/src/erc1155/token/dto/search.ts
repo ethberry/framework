@@ -1,9 +1,9 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsInt, IsOptional, Min } from "class-validator";
-import { Type } from "class-transformer";
+import { IsArray, IsInt, IsOptional, Min, IsEnum } from "class-validator";
+import { Type, Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IErc1155TokenSearchDto } from "@framework/types";
+import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 export class Erc1155TokenSearchDto extends SearchDto implements IErc1155TokenSearchDto {
@@ -40,4 +40,16 @@ export class Erc1155TokenSearchDto extends SearchDto implements IErc1155TokenSea
   @IsOptional()
   @IsBigNumber({}, { message: "typeMismatch" })
   public maxPrice: string;
+
+  @ApiPropertyOptional({
+    enum: Erc1155TokenStatus,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<Erc1155TokenStatus>)
+  @IsEnum(Erc1155TokenStatus, { each: true, message: "badInput" })
+  public tokenStatus: Array<Erc1155TokenStatus>;
 }
