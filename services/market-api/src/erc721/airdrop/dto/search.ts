@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsEthereumAddress, IsInt, IsOptional, IsString, Min } from "class-validator";
+import { IsArray, IsString, IsEnum, IsEthereumAddress, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -11,7 +11,7 @@ export class Erc721AirdropSearchDto extends SearchDto implements IErc721AirdropS
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public owner: string;
+  public query: string;
 
   @ApiPropertyOptional({
     type: Number,

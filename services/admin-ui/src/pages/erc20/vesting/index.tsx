@@ -17,7 +17,7 @@ import { Erc20VestingTemplate, IErc20Vesting, IErc20VestingSearchDto } from "@fr
 import { useCollection } from "@gemunion/react-hooks";
 import { Erc20VestingSearchForm } from "./form";
 import { Erc20VestingViewDialog } from "./view";
-import { Erc20VestingDeployButton } from "../../../components/buttons";
+import { Erc20VestingDeployButton } from "../../../components/buttons/erc20/vesting-deploy";
 
 export const Erc20Vesting: FC = () => {
   const {

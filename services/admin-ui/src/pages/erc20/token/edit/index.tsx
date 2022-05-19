@@ -2,9 +2,9 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { Erc20TokenStatus, IErc20Token } from "@framework/types";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { Erc20TokenStatus, IErc20Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -39,11 +39,11 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
       data-testid="Erc20TokenEditDialog"
       {...rest}
     >
-      <TextInput name="title" readOnly />
+      <TextInput name="title" readOnly={!!id} />
       <RichTextEditor name="description" />
-      <SelectInput name="tokenStatus" options={Erc20TokenStatus} />
-      <TextInput name="symbol" readOnly />
-      <EthInput name="amount" readOnly />
+      {id ? <SelectInput name="tokenStatus" options={Erc20TokenStatus} /> : null}
+      <TextInput name="symbol" readOnly={!!id} />
+      <EthInput name="amount" readOnly={!!id} />
     </FormDialog>
   );
 };

@@ -36,7 +36,7 @@ export const Erc721Airdrop: FC = () => {
       .fetchJson({
         url: `/erc721-airdrop`,
         data: {
-          owner: account,
+          query: account,
         },
       })
       .then((json: IPaginationResult<IErc721Airdrop>) => {

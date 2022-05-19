@@ -10,6 +10,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
     const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
     const erc721CollectionHeroAddress = process.env.ERC721_HERO_ADDR || wallet;
     const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
+    const erc721CollectionLandAddress = process.env.ERC721_LAND_ADDR || wallet;
     const erc721CollectionDropboxAddress = process.env.ERC721_DROPBOX_ADDR || wallet;
     const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1;
@@ -95,7 +96,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         'GEM721',
         100,
         'TOKEN',
-        '${erc721CollectionSkillAddress}',
+        '${erc721CollectionLandAddress}',
         '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',

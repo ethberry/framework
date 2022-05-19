@@ -1,8 +1,9 @@
 import { Injectable } from "@nestjs/common";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 
 import { IErc721AirdropSearchDto } from "@framework/types";
+
 import { Erc721AirdropEntity } from "./airdrop.entity";
 
 @Injectable()
@@ -13,11 +14,21 @@ export class Erc721AirdropService {
   ) {}
 
   public async search(dto: Partial<IErc721AirdropSearchDto>): Promise<[Array<Erc721AirdropEntity>, number]> {
-    const { skip, take, owner, erc721TemplateIds } = dto;
+    const { skip, take, query, airdropStatus, erc721TemplateIds } = dto;
 
     const queryBuilder = this.erc721AirdropEntityRepository.createQueryBuilder("airdrop");
 
     queryBuilder.select();
+
+    // queryBuilder.andWhere("airdrop.owner = :owner", { query });
+
+    if (query) {
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("airdrop.owner ILIKE '%' || :owner || '%'", { owner: query.toLowerCase() });
+        }),
+      );
+    }
 
     queryBuilder.leftJoin("airdrop.erc721Token", "token");
     queryBuilder.addSelect(["token.id", "token.tokenId"]);
@@ -25,7 +36,13 @@ export class Erc721AirdropService {
     queryBuilder.leftJoin("airdrop.erc721Template", "template");
     queryBuilder.addSelect(["template.title", "template.imageUrl"]);
 
-    queryBuilder.andWhere("airdrop.owner = :owner", { owner });
+    if (airdropStatus) {
+      if (airdropStatus.length === 1) {
+        queryBuilder.andWhere("airdrop.airdropStatus = :airdropStatus", { airdropStatus: airdropStatus[0] });
+      } else {
+        queryBuilder.andWhere("airdrop.airdropStatus IN(:...airdropStatus)", { airdropStatus });
+      }
+    }
 
     if (erc721TemplateIds) {
       if (erc721TemplateIds.length === 1) {

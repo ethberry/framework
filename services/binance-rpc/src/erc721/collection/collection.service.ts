@@ -18,6 +18,13 @@ export class Erc721CollectionService {
     return this.erc721CollectionEntityRepository.findOne({ where, ...options });
   }
 
+  public findAll(
+    where: FindOptionsWhere<Erc721CollectionEntity>,
+    options?: FindOneOptions<Erc721CollectionEntity>,
+  ): Promise<Array<Erc721CollectionEntity>> {
+    return this.erc721CollectionEntityRepository.find({ where, ...options });
+  }
+
   public async create(dto: DeepPartial<Erc721CollectionEntity>): Promise<Erc721CollectionEntity> {
     return this.erc721CollectionEntityRepository.create(dto).save();
   }

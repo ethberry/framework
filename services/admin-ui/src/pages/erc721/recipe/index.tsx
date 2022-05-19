@@ -109,7 +109,7 @@ export const Erc721Recipes: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: selected.erc721Template?.title }}
+        initialValues={selected}
       />
 
       <Erc721RecipeEditDialog

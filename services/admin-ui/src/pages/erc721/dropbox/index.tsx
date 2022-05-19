@@ -88,10 +88,7 @@ export const Erc721Dropbox: FC = () => {
                 <IconButton onClick={handleEdit(dropbox)}>
                   <Create />
                 </IconButton>
-                <IconButton
-                  onClick={handleDelete(dropbox)}
-                  disabled={dropbox.dropboxStatus === Erc721DropboxStatus.INACTIVE}
-                >
+                <IconButton onClick={handleDelete(dropbox)}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

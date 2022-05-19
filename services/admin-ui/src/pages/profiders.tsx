@@ -8,7 +8,6 @@ import { LicenseProvider } from "@gemunion/provider-license";
 import { LocalizationProvider } from "@gemunion/provider-localization";
 import { WalletProvider } from "@gemunion/provider-wallet";
 import { ApiProvider } from "@gemunion/provider-api";
-import { PickerProvider } from "@gemunion/mui-provider-picker";
 import { i18n } from "@framework/localization-admin-ui";
 import { EnabledLanguages } from "@framework/constants";
 
@@ -22,9 +21,7 @@ export const Providers: FC = props => {
             <GemunionThemeProvider>
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <WalletProvider>
-                  <SnackbarProvider>
-                    <PickerProvider>{children}</PickerProvider>
-                  </SnackbarProvider>
+                  <SnackbarProvider>{children}</SnackbarProvider>
                 </WalletProvider>
               </LocalizationProvider>
             </GemunionThemeProvider>
