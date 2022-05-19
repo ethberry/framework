@@ -1,3 +1,7 @@
 import * as Yup from "yup";
 
-export const validationSchema = Yup.object().shape({});
+import { jsonValidationSchema } from "@gemunion/yup-rules";
+
+export const validationSchema = Yup.object().shape({
+  attributes: jsonValidationSchema,
+});
