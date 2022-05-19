@@ -24,7 +24,7 @@ export class Erc721AirderopService {
   ) {}
 
   public async search(dto: Partial<IErc721AirdropSearchDto>): Promise<[Array<Erc721AirdropEntity>, number]> {
-    const { skip, take, owner, erc721TemplateIds } = dto;
+    const { skip, take, query, erc721TemplateIds } = dto;
 
     const queryBuilder = this.erc721AirdropEntityRepository.createQueryBuilder("airdrop");
 
@@ -32,8 +32,8 @@ export class Erc721AirderopService {
 
     queryBuilder.leftJoinAndSelect("airdrop.erc721Template", "template");
 
-    if (owner) {
-      queryBuilder.andWhere("airdrop.owner = :owner", { owner });
+    if (query) {
+      queryBuilder.andWhere("airdrop.owner ILIKE '%' || :owner || '%'", { owner: query });
     }
 
     if (erc721TemplateIds) {

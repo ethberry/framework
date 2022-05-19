@@ -47,7 +47,7 @@ export const Erc721Airdrop: FC = () => {
       erc721TemplateId: 1,
     },
     search: {
-      owner: "",
+      query: "",
       airdropStatus: [],
       erc721TemplateIds: [],
     },
