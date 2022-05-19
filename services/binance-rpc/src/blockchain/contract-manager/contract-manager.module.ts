@@ -8,6 +8,7 @@ import { Erc20TokenModule } from "../../erc20/token/token.module";
 import { Erc20VestingModule } from "../../erc20/vesting/vesting.module";
 import { Erc721CollectionModule } from "../../erc721/collection/collection.module";
 import { Erc1155CollectionModule } from "../../erc1155/collection/collection.module";
+import { Erc721LogModule } from "../../erc721/logs/log.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { Erc1155CollectionModule } from "../../erc1155/collection/collection.mod
     Erc20TokenModule,
     Erc721CollectionModule,
     Erc1155CollectionModule,
+    Erc721LogModule,
   ],
   providers: [Logger, ContractManagerServiceWs],
   controllers: [ContractManagerControllerWs],

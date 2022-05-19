@@ -20,6 +20,7 @@ import { Erc20TokenService } from "../../erc20/token/token.service";
 import { Erc20VestingService } from "../../erc20/vesting/vesting.service";
 import { Erc721CollectionService } from "../../erc721/collection/collection.service";
 import { Erc1155CollectionService } from "../../erc1155/collection/collection.service";
+import { Erc721LogService } from "../../erc721/logs/log.service";
 
 @Injectable()
 export class ContractManagerServiceWs {
@@ -30,6 +31,7 @@ export class ContractManagerServiceWs {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
+    private readonly erc721LogService: Erc721LogService,
     private readonly erc20VestingService: Erc20VestingService,
     private readonly erc20TokenService: Erc20TokenService,
     private readonly erc721CollectionService: Erc721CollectionService,
@@ -40,16 +42,22 @@ export class ContractManagerServiceWs {
 
   public async erc20Vesting(event: IEvent<IContractManagerERC20VestingDeployed>): Promise<void> {
     const {
+      // todo add contractType from event
       returnValues: { addr, beneficiary, startTimestamp, duration },
     } = event;
 
     await this.updateHistory(event);
 
     await this.erc20VestingService.create({
-      address: addr,
+      address: addr.toLowerCase(),
       beneficiary,
       startTimestamp: new Date(~~`${startTimestamp}000`).toISOString(),
       duration: ~~duration,
+    });
+
+    await this.erc721LogService.update({
+      address: [addr],
+      topics: [],
     });
   }
 
