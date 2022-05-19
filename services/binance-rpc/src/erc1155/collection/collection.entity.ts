@@ -12,8 +12,8 @@ export class Erc1155CollectionEntity extends Mixin(ContractBaseEntity, Searchabl
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @Column({ type: "varchar", nullable: true })
-  public baseTokenURI: string | null;
+  @Column({ type: "varchar" })
+  public baseTokenURI: string;
 
   @Column({
     type: "enum",

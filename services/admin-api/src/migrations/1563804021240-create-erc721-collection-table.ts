@@ -46,7 +46,6 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
         {
           name: "base_token_uri",
           type: "varchar",
-          isNullable: true,
         },
         {
           name: "royalty",
