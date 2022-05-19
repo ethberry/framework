@@ -1,8 +1,10 @@
 import { Module } from "@nestjs/common";
+import { APP_GUARD } from "@nestjs/core";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
+import { ApiKeyGuard } from "@gemunion/nest-js-guards";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { HelmetModule } from "@gemunion/nest-js-module-helmet";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
@@ -12,11 +14,19 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
+import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
+import { UniTokenModule } from "./uni-token/uni-token.module";
 
 @Module({
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ApiKeyGuard,
+    },
+  ],
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.env.${process.env.NODE_ENV as string}`,
@@ -53,8 +63,10 @@ import { Erc1155Module } from "./erc1155/erc1155.module";
     }),
     RequestLoggerModule,
     HealthModule,
+    AuthModule,
     Erc721Module,
     Erc1155Module,
+    UniTokenModule,
   ],
   controllers: [AppController],
 })

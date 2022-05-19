@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsInt, IsOptional, Min, IsEnum } from "class-validator";
-import { Type, Transform } from "class-transformer";
+import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";

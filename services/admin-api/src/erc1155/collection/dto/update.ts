@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsJSON, IsOptional, IsString, IsUrl, IsEnum } from "class-validator";
+import { IsEnum, IsJSON, IsOptional, IsString, IsUrl } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { Erc1155CollectionStatus } from "@framework/types";
