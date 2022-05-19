@@ -1,10 +1,10 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
-import { IErc1155Collection } from "@framework/types";
+import { Erc1155CollectionStatus, IErc1155Collection } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -18,13 +18,14 @@ export interface IErc1155CollectionEditDialogProps {
 export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, imageUrl, address } = initialValues;
+  const { id, title, description, imageUrl, address, collectionStatus } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
     imageUrl,
     address,
+    collectionStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.add";
@@ -39,7 +40,9 @@ export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> 
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TextInput name="address" readOnly={!!id} />
+      <TextInput name="address" readOnly />
+      <TextInput name="baseTokenURI" readOnly />
+      <SelectInput name="collectionStatus" options={Erc1155CollectionStatus} />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

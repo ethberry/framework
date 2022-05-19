@@ -18,16 +18,7 @@ export interface IErc721CollectionEditDialogProps {
 export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const {
-    id,
-    title,
-    description,
-    baseTokenURI,
-    imageUrl,
-    collectionStatus,
-    collectionType,
-    address = "",
-  } = initialValues;
+  const { id, title, description, baseTokenURI, imageUrl, collectionStatus, collectionType, address } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -38,6 +29,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     baseTokenURI,
     address,
   };
+
   const message = id ? "dialogs.edit" : "dialogs.add";
 
   return (
@@ -52,7 +44,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
       <RichTextEditor name="description" />
       <TextInput name="address" readOnly />
       <TextInput name="baseTokenURI" readOnly />
-      <SelectInput name="collectionStatus" options={Erc721CollectionStatus} readOnly />
+      <SelectInput name="collectionStatus" options={Erc721CollectionStatus} />
       <SelectInput name="collectionType" options={Erc721CollectionType} readOnly />
       <AvatarInput name="imageUrl" />
     </FormDialog>

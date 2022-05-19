@@ -9,14 +9,14 @@ export interface IRoyaltyDto {
   royalty: number;
 }
 
-export interface IEditErc721CollectionRoyaltyDialogProps {
+export interface IErc721CollectionRoyaltyEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: IRoyaltyDto, formikBag: any) => Promise<void>;
   initialValues: IRoyaltyDto;
 }
 
-export const Erc721CollectionRoyaltyEditDialog: FC<IEditErc721CollectionRoyaltyDialogProps> = props => {
+export const Erc721CollectionRoyaltyEditDialog: FC<IErc721CollectionRoyaltyEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (

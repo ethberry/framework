@@ -96,7 +96,10 @@ export const Erc721Template: FC = () => {
                 <IconButton onClick={handleEdit(template)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(template)}>
+                <IconButton
+                  onClick={handleDelete(template)}
+                  disabled={template.templateStatus === Erc721TemplateStatus.INACTIVE}
+                >
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
