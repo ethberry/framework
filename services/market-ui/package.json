@@ -28,7 +28,7 @@
     "@gemunion/mui-inputs-core": "5.2.30",
     "@gemunion/mui-inputs-entity": "5.3.29",
     "@gemunion/mui-inputs-image-s3": "5.2.40",
-    "@gemunion/mui-inputs-mask": "4.2.33",
+    "@gemunion/mui-inputs-mask": "4.2.34",
     "@gemunion/mui-page-layout": "0.1.2",
     "@gemunion/mui-rte": "2.0.3",
     "@gemunion/popup": "0.0.30",
