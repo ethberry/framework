@@ -69,6 +69,8 @@
     "lint": "eslint . --fix",
     "prebuild": "hardhat clean",
     "prepublish": "npm run build",
+    "prepare:contracts:besu": "hardhat --network besu run scripts/001-deploy-dev.ts",
+    "prepare:contracts:binance": "hardhat --network binancetest run scripts/001-deploy-prod.ts",
     "solhint": "solhint -f table contracts/**/*.sol",
     "test": "hardhat test"
   },
