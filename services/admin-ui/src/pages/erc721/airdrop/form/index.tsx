@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormikForm } from "@gemunion/mui-form";
 import { Erc721AirdropStatus, IErc721AirdropSearchDto } from "@framework/types";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
 
@@ -18,8 +18,8 @@ export const Erc721AirdropSearchForm: FC<IErc721AirdropSearchFormProps> = props 
 
   const classes = useStyles();
 
-  const { airdropStatus } = initialValues;
-  const fixedValues = { airdropStatus };
+  const { airdropStatus, query } = initialValues;
+  const fixedValues = { airdropStatus, query };
 
   return (
     <FormikForm
@@ -30,6 +30,11 @@ export const Erc721AirdropSearchForm: FC<IErc721AirdropSearchFormProps> = props 
       className={classes.root}
       data-testid="Erc721AirdropSearchForm"
     >
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <SearchInput name="query" />
+        </Grid>
+      </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={12}>

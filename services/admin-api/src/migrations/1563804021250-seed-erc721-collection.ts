@@ -36,7 +36,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'AIRDROP',
         '${erc721CollectionAirdropAddress}',
-        'NULL',
+        '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -48,7 +48,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         100,
         'DROPBOX',
         '${erc721CollectionDropboxAddress}',
-        'NULL',
+        '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
