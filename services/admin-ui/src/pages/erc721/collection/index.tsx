@@ -20,7 +20,8 @@ import { Erc721CollectionStatus, IErc721Collection, IErc721CollectionSearchDto }
 
 import { Erc721CollectionEditDialog } from "./edit";
 import { Erc721CollectionSearchForm } from "./form";
-import { Erc721CollectionRoyaltyButton, Erc721TokenDeployButton } from "../../../components/buttons";
+import { Erc721TokenDeployButton } from "../../../components/buttons";
+import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 
 export const Erc721Collection: FC = () => {
   const {
@@ -82,7 +83,6 @@ export const Erc721Collection: FC = () => {
             <ListItem key={i}>
               <ListItemText>{collection.title}</ListItemText>
               <ListItemSecondaryAction>
-                <Erc721CollectionRoyaltyButton collection={collection} />
                 <IconButton onClick={handleEdit(collection)}>
                   <Create />
                 </IconButton>
@@ -92,6 +92,7 @@ export const Erc721Collection: FC = () => {
                 >
                   <Delete />
                 </IconButton>
+                <ContractActionsMenu contract={collection} actions={[ContractActions.ROYALTY]} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

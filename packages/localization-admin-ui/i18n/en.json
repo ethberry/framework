@@ -36,6 +36,12 @@
     "view": "View"
   },
   "enums": {
+    "role": {
+      "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
+      "MINTER_ROLE": "MINTER_ROLE",
+      "PAUSER_ROLE": "PAUSER_ROLE",
+      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+    },
     "airdropStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
@@ -110,6 +116,10 @@
   },
   "form": {
     "buttons": {
+      "snapshot": "Snapshot",
+      "royalty": "Royalty",
+      "grantRole": "Grant Role",
+      "revokeRole": "Revoke Role",
       "accept": "Accept",
       "add": "Add",
       "cancel": "Cancel",
@@ -138,6 +148,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "role": "Role",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",

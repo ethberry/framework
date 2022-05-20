@@ -21,6 +21,7 @@ import { Erc1155CollectionStatus, IErc1155Collection, IErc1155CollectionSearchDt
 import { Erc1155CollectionEditDialog } from "./edit";
 import { Erc1155CollectionSearchForm } from "./form";
 import { Erc1155TokenDeployButton } from "../../../components/buttons";
+import { ContractActionsMenu } from "../../../components/menu";
 
 export const Erc1155Collection: FC = () => {
   const {
@@ -90,6 +91,7 @@ export const Erc1155Collection: FC = () => {
                 >
                   <Delete />
                 </IconButton>
+                <ContractActionsMenu contract={collection} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

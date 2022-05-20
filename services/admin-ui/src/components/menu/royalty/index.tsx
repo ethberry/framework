@@ -1,26 +1,23 @@
 import { FC, useState } from "react";
-import { useIntl } from "react-intl";
-import { IconButton, Tooltip } from "@mui/material";
+import { FormattedMessage } from "react-intl";
+import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
-
-import { IErc721Collection } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 import erc721contract from "@framework/binance-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
 
 import { Erc721CollectionRoyaltyEditDialog, IRoyaltyDto } from "./edit";
 
-export interface IErc721CollectionRoyaltyButtonProps {
-  collection: IErc721Collection;
+export interface IErc721CollectionRoyaltyMenuItemProps {
+  address: string;
+  royalty: number;
 }
 
-export const Erc721CollectionRoyaltyButton: FC<IErc721CollectionRoyaltyButtonProps> = props => {
-  const { collection } = props;
+export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemProps> = props => {
+  const { address, royalty } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
-
-  const { formatMessage } = useIntl();
 
   const { library, account } = useWeb3React();
 
@@ -33,7 +30,7 @@ export const Erc721CollectionRoyaltyButton: FC<IErc721CollectionRoyaltyButtonPro
   };
 
   const meta = useMetamask((values: IRoyaltyDto) => {
-    const contract = new ethers.Contract(collection.address, erc721contract.abi, library.getSigner());
+    const contract = new ethers.Contract(address, erc721contract.abi, library.getSigner());
     return contract.setDefaultRoyalty(account, values.royalty) as Promise<void>;
   });
 
@@ -45,16 +42,19 @@ export const Erc721CollectionRoyaltyButton: FC<IErc721CollectionRoyaltyButtonPro
 
   return (
     <>
-      <Tooltip title={formatMessage({ id: "pages.erc721-collections.royalty" })}>
-        <IconButton onClick={handleRoyalty} data-testid="Erc721CollectionRoyaltyButton">
-          <PaidOutlined />
-        </IconButton>
-      </Tooltip>
+      <MenuItem onClick={handleRoyalty}>
+        <ListItemIcon>
+          <PaidOutlined fontSize="small" />
+        </ListItemIcon>
+        <Typography variant="inherit">
+          <FormattedMessage id="form.buttons.royalty" />
+        </Typography>
+      </MenuItem>
       <Erc721CollectionRoyaltyEditDialog
         onCancel={handleRoyaltyCancel}
         onConfirm={handleRoyaltyConfirmed}
         open={isRoyaltyDialogOpen}
-        initialValues={{ royalty: collection.royalty }}
+        initialValues={{ royalty }}
       />
     </>
   );

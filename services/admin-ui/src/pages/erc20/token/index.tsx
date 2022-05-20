@@ -20,7 +20,8 @@ import { Erc20TokenStatus, IErc20Token, IErc20TokenSearchDto } from "@framework/
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
-import { Erc20TokenDeployButton, Erc20TokenSnapshotButton } from "../../../components/buttons";
+import { Erc20TokenDeployButton } from "../../../components/buttons";
+import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 
 export const Erc20Token: FC = () => {
   const {
@@ -77,13 +78,13 @@ export const Erc20Token: FC = () => {
             <ListItem key={i}>
               <ListItemText>{token.title}</ListItemText>
               <ListItemSecondaryAction>
-                <Erc20TokenSnapshotButton token={token} />
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>
                 <IconButton onClick={handleDelete(token)} disabled={token.tokenStatus === Erc20TokenStatus.INACTIVE}>
                   <Delete />
                 </IconButton>
+                <ContractActionsMenu contract={token} actions={[ContractActions.SNAPSHOT]} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
