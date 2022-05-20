@@ -1,8 +1,10 @@
 {
   "components": {
     "dropzone": {
-      "format": "You can't upload {type} only {accept} are allowed",
-      "size": "File is {size} allowed file size is {maxSize}"
+      "file-invalid-type": "You can't upload {type} only {accept} are allowed",
+      "file-too-large": "File is {size}, maximum file size is {maxSize}",
+      "file-too-small": "File is {size}, minimum file size is {minSize}",
+      "too-many-files": "Too many files"
     },
     "header": {
       "language": {

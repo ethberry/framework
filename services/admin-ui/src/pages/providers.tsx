@@ -6,11 +6,25 @@ import { SettingsProvider } from "@gemunion/provider-settings";
 import { GemunionThemeProvider } from "@gemunion/provider-theme";
 import { LicenseProvider } from "@gemunion/provider-license";
 import { LocalizationProvider } from "@gemunion/provider-localization";
+import { PopupProvider } from "@gemunion/provider-popup";
 import { WalletProvider } from "@gemunion/provider-wallet";
 import { ApiProvider } from "@gemunion/provider-api";
 import { PickerProvider } from "@gemunion/mui-provider-picker";
 import { i18n } from "@framework/localization-admin-ui";
 import { EnabledLanguages } from "@framework/constants";
+
+const connectPopupType = Symbol("connectPopupType");
+const targetNetwork = {
+  chainId: 1,
+  chainName: "Name",
+  rpcUrls: [],
+  blockExplorerUrls: [],
+  nativeCurrency: {
+    name: "ETH",
+    symbol: "ETH",
+    decimals: 18,
+  },
+};
 
 export const Providers: FC = props => {
   const { children } = props;
@@ -21,11 +35,13 @@ export const Providers: FC = props => {
           <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
             <GemunionThemeProvider>
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
-                <WalletProvider>
-                  <SnackbarProvider>
-                    <PickerProvider>{children}</PickerProvider>
-                  </SnackbarProvider>
-                </WalletProvider>
+                <SnackbarProvider>
+                  <PopupProvider>
+                    <WalletProvider connectPopupType={connectPopupType} targetNetwork={targetNetwork}>
+                      <PickerProvider>{children}</PickerProvider>
+                    </WalletProvider>
+                  </PopupProvider>
+                </SnackbarProvider>
               </LocalizationProvider>
             </GemunionThemeProvider>
           </SettingsProvider>
