@@ -13,6 +13,7 @@ declare global {
       ERC1155_CRAFT_ADDR: string;
       ERC1155_RESOURCES_ADDR: string;
       ERC1155_AUCTION_ADDR: string;
+      CHAIN_ID: string;
     }
   }
 }
