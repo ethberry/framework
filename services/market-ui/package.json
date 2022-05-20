@@ -27,7 +27,7 @@
     "@gemunion/mui-form-search": "4.2.35",
     "@gemunion/mui-inputs-core": "5.2.31",
     "@gemunion/mui-inputs-entity": "5.3.30",
-    "@gemunion/mui-inputs-image-s3": "5.2.40",
+    "@gemunion/mui-inputs-image-s3": "6.0.1",
     "@gemunion/mui-inputs-mask": "4.2.35",
     "@gemunion/mui-page-layout": "0.1.3",
     "@gemunion/mui-rte": "2.0.3",
