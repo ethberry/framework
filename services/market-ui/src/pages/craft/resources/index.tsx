@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSnackbar } from "notistack";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
@@ -6,12 +6,11 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 import { stringify } from "qs";
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
-import { WalletContext } from "@gemunion/provider-wallet";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ApiContext } from "@gemunion/provider-api";
+import { useApi } from "@gemunion/provider-api";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { useCollection } from "@gemunion/react-hooks";
+import { useCollection, useMetamask } from "@gemunion/react-hooks";
 import { IErc1155Recipe, IErc1155RecipeSearchDto } from "@framework/types";
 import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 
@@ -41,10 +40,9 @@ export const Resources: FC<ITabPanelProps> = props => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const wallet = useContext(WalletContext);
   const { library, active } = useWeb3React();
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const getApprove = async (): Promise<void> => {
     return api
@@ -56,27 +54,16 @@ export const Resources: FC<ITabPanelProps> = props => {
       });
   };
 
-  const approveCraft = () => {
-    if (!active) {
-      wallet.setWalletConnectDialogOpen(true);
-      return;
-    }
-
+  const metaApprove = useMetamask(() => {
     const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
-    void contract
-      .setApprovalForAll(process.env.ERC1155_RESOURCES_ADDR, true)
-      .then(() => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.approved" }), { variant: "success" });
-        setIsApproved(true);
-      })
-      .catch((error: any) => {
-        if (error.code === 4001) {
-          enqueueSnackbar(formatMessage({ id: "snackbar.denied" }), { variant: "warning" });
-        } else {
-          console.error(error);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
+    return contract.setApprovalForAll(process.env.ERC1155_RESOURCES_ADDR, true).then(() => {
+      enqueueSnackbar(formatMessage({ id: "snackbar.approved" }), { variant: "success" });
+      setIsApproved(true);
+    }) as Promise<void>;
+  });
+
+  const handleApprove = () => {
+    void metaApprove();
   };
 
   useEffect(() => {
@@ -86,7 +73,7 @@ export const Resources: FC<ITabPanelProps> = props => {
   return (
     <Grid>
       <PageHeader message="pages.craft.title">
-        <Button startIcon={<AddTaskIcon />} onClick={approveCraft} disabled={!active || isApproved}>
+        <Button startIcon={<AddTaskIcon />} onClick={handleApprove} disabled={!active || isApproved}>
           <FormattedMessage id={`form.buttons.${isApproved ? "approved" : "approve"}`} />
         </Button>
       </PageHeader>

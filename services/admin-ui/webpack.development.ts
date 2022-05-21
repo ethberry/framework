@@ -25,15 +25,7 @@ const config: Configuration = {
     extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: ["node_modules"],
     fallback: {
-      assert: require.resolve("assert/"),
       path: require.resolve("path-browserify"),
-      stream: require.resolve("stream-browserify"),
-      os: require.resolve("os-browserify/browser"),
-      crypto: require.resolve("crypto-browserify"),
-      buffer: require.resolve("buffer/"),
-      process: require.resolve("process/browser"),
-      https: require.resolve("https-browserify"),
-      http: require.resolve("stream-http"),
     },
   },
   module: {

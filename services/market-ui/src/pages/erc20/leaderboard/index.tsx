@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Grid, Typography } from "@mui/material";
@@ -9,7 +9,7 @@ import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { ApiError, useApi } from "@gemunion/provider-api";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { defaultItemsPerPage } from "@gemunion/constants";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
@@ -25,7 +25,7 @@ export const Leaderboard: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const parsedData = parse(location.search.substring(1));
 

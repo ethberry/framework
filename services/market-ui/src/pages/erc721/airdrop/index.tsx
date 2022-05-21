@@ -1,4 +1,4 @@
-import { FC, Fragment, useContext, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
@@ -6,8 +6,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { ethers } from "ethers";
 
-import { ApiContext, ApiError } from "@gemunion/provider-api";
-import { WalletContext } from "@gemunion/provider-wallet";
+import { ApiError, useApi } from "@gemunion/provider-api";
+import { useWallet } from "@gemunion/provider-wallet";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks";
@@ -22,9 +22,9 @@ export const Erc721Airdrop: FC = () => {
   const { library, active, account } = useWeb3React();
   const { formatMessage } = useIntl();
   const { enqueueSnackbar } = useSnackbar();
+  const { openConnectWalletDialog } = useWallet();
 
-  const wallet = useContext(WalletContext);
-  const api = useContext(ApiContext);
+  const api = useApi();
 
   const fetchDropbox = async (): Promise<void> => {
     if (!active) {
@@ -76,7 +76,7 @@ export const Erc721Airdrop: FC = () => {
   };
 
   const handleOpenConnectWalletDialog = () => {
-    wallet.setWalletConnectDialogOpen(true);
+    openConnectWalletDialog();
   };
 
   useEffect(() => {
