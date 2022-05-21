@@ -13,19 +13,6 @@ import { PickerProvider } from "@gemunion/mui-provider-picker";
 import { i18n } from "@framework/localization-admin-ui";
 import { EnabledLanguages } from "@framework/constants";
 
-const connectPopupType = Symbol("connectPopupType");
-const targetNetwork = {
-  chainId: 1,
-  chainName: "Name",
-  rpcUrls: [],
-  blockExplorerUrls: [],
-  nativeCurrency: {
-    name: "ETH",
-    symbol: "ETH",
-    decimals: 18,
-  },
-};
-
 export const Providers: FC = props => {
   const { children } = props;
   return (
@@ -37,7 +24,7 @@ export const Providers: FC = props => {
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <SnackbarProvider>
                   <PopupProvider>
-                    <WalletProvider connectPopupType={connectPopupType} targetNetwork={targetNetwork}>
+                    <WalletProvider>
                       <PickerProvider>{children}</PickerProvider>
                     </WalletProvider>
                   </PopupProvider>
