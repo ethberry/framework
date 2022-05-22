@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { Erc721DropboxTemplateBuyButton } from "../../../components/buttons";
-import { formatMoney } from "../../../utils/money";
+import { formatEther } from "../../../utils/money";
 import { useStyles } from "./styles";
 
 export const Erc721Dropbox: FC = () => {
@@ -42,7 +42,7 @@ export const Erc721Dropbox: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc721-dropbox.price" values={{ amount: formatMoney(selected.price) }} />
+              <FormattedMessage id="pages.erc721-dropbox.price" values={{ amount: formatEther(selected.price) }} />
             </Typography>
             <Erc721DropboxTemplateBuyButton dropbox={selected} />
           </Paper>

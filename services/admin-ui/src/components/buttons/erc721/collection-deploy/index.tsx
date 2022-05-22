@@ -6,14 +6,15 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
-import { Erc721TokenTemplate, IErc721TokenDeployDto, IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
+import { useDeploy } from "@gemunion/react-hooks";
+import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 
-import { Erc721TokenDeployDialog } from "./deploy-dialog";
-import { useDeploy } from "../../../hooks/useDeploy";
+import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
   switch (template) {
@@ -39,7 +40,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
   const api = useApi();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc721TokenDeployDto) => {
+    (values: IErc721CollectionDeployDto) => {
       const { contractTemplate, name, symbol, baseTokenURI, royalty } = values;
 
       return api
@@ -80,7 +81,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
       >
         <FormattedMessage id="form.buttons.add" />
       </Button>
-      <Erc721TokenDeployDialog
+      <Erc721CollectionDeployDialog
         onConfirm={handleDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}

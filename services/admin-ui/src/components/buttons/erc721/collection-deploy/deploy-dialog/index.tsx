@@ -3,18 +3,18 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { Erc721TokenTemplate, IErc721Token, IErc721TokenDeployDto } from "@framework/types";
+import { Erc721TokenTemplate, IErc721Token, IErc721CollectionDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IErc721TokenDeployDialogProps {
+export interface IErc721CollectionDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IErc721Token>, formikBag: any) => Promise<void>;
 }
 
-export const Erc721TokenDeployDialog: FC<IErc721TokenDeployDialogProps> = props => {
-  const fixedValues: IErc721TokenDeployDto = {
+export const Erc721CollectionDeployDialog: FC<IErc721CollectionDeployDialogProps> = props => {
+  const fixedValues: IErc721CollectionDeployDto = {
     contractTemplate: Erc721TokenTemplate.SIMPLE,
     name: "",
     symbol: "",
@@ -27,7 +27,7 @@ export const Erc721TokenDeployDialog: FC<IErc721TokenDeployDialogProps> = props 
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid="Erc721TokenDeployDialog"
+      data-testid="Erc721CollectionDeployDialog"
       {...props}
     >
       <SelectInput name="contractTemplate" options={Erc721TokenTemplate} />

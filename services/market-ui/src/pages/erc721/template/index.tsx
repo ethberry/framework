@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { formatMoney } from "../../../utils/money";
+import { formatEther } from "../../../utils/money";
 import { useStyles } from "./styles";
 import { Erc721ItemTemplateBuyButton } from "../../../components/buttons";
 
@@ -42,7 +42,7 @@ export const Erc721Template: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc721-template.price" values={{ amount: formatMoney(selected.price) }} />
+              <FormattedMessage id="pages.erc721-template.price" values={{ amount: formatEther(selected.price) }} />
             </Typography>
             <Erc721ItemTemplateBuyButton template={selected} />
           </Paper>

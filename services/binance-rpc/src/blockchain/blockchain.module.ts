@@ -60,7 +60,7 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
 
     await this.web3ContractService.listen([
       {
-        contractName: ContractType.CONTRACT_MANAGER_ADDR,
+        contractName: ContractType.CONTRACT_MANAGER,
         contractAddress: contractManagerAddr,
         contractInterface: ContractManager.abi as Array<AbiItem>,
         // prettier-ignore

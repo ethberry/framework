@@ -6,7 +6,7 @@ import { IErc1155Token } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { formatMoney } from "../../../../utils/money";
+import { formatEther } from "../../../../utils/money";
 import { Erc1155TokenSingleBuyButton } from "../../../../components/buttons";
 
 interface IErc1155TokenItemProps {
@@ -30,7 +30,7 @@ export const Erc1155Token: FC<IErc1155TokenItemProps> = props => {
             <RichTextDisplay data={token.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatMoney(token.price)}
+            {formatEther(token.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

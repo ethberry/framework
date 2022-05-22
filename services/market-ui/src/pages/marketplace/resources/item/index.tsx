@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { NumberInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
-import { formatMoney } from "../../../../utils/money";
+import { formatEther } from "../../../../utils/money";
 
 interface IErc1155TokenItemProps {
   token: IErc1155Token;
@@ -32,7 +32,7 @@ export const TokenItem: FC<IErc1155TokenItemProps> = props => {
             <RichTextDisplay data={token.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatMoney(token.price)}
+            {formatEther(token.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

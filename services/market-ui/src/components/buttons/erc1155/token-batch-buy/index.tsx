@@ -6,7 +6,8 @@ import { FormattedMessage } from "react-intl";
 import { useFormikContext } from "formik";
 
 import { useApi } from "@gemunion/provider-api";
-import { IErc1155Token, IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
+import { IErc1155Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 

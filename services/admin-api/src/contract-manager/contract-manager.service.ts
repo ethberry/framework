@@ -3,16 +3,16 @@ import { ConfigService } from "@nestjs/config";
 import { ethers, utils } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { IServerSignature } from "@gemunion/types-collection";
 import {
   Erc1155TokenTemplate,
   Erc20TokenTemplate,
   Erc20VestingTemplate,
   Erc721TokenTemplate,
-  IErc1155TokenDeployDto,
+  IErc1155CollectionDeployDto,
   IErc20TokenDeployDto,
   IErc20VestingDeployDto,
-  IErc721TokenDeployDto,
-  IServerSignature,
+  IErc721CollectionDeployDto,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -104,7 +104,7 @@ export class ContractManagerService {
     return { nonce: ethers.utils.hexlify(nonce), signature };
   }
 
-  public async erc721Token(dto: IErc721TokenDeployDto): Promise<IServerSignature> {
+  public async erc721Token(dto: IErc721CollectionDeployDto): Promise<IServerSignature> {
     const { contractTemplate, name, symbol, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
@@ -141,7 +141,7 @@ export class ContractManagerService {
     return { nonce: ethers.utils.hexlify(nonce), signature };
   }
 
-  public async erc1155Token(dto: IErc1155TokenDeployDto): Promise<IServerSignature> {
+  public async erc1155Token(dto: IErc1155CollectionDeployDto): Promise<IServerSignature> {
     const { contractTemplate, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);

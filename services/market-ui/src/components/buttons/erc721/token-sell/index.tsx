@@ -6,22 +6,31 @@ import { ethers } from "ethers";
 
 import { IErc721Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
-import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc721TokenSellButtonProps {
   token: IErc721Token;
 }
 
-export const Erc721TokenSellButton: FC<IErc721TokenSellButtonProps> = () => {
+export const Erc721TokenSellButton: FC<IErc721TokenSellButtonProps> = props => {
+  const { token } = props;
+
+  void token;
+
   const { library } = useWeb3React();
 
-  const meta = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
-    return contract.createRecipe(1, [], [], 1) as Promise<void>;
+  const metaSell = useMetamask(() => {
+    const contract = new ethers.Contract(process.env.ERC1155_AUCTION_ADDR, ERC721Marketplace.abi, library.getSigner());
+
+    void contract;
+
+    // TODO put item on auction
+    alert("Not implemented");
+    return Promise.resolve();
   });
 
   const handleSell = () => {
-    return meta().then(() => {
+    return metaSell().then(() => {
       // TODO reload
     });
   };

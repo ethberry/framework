@@ -216,7 +216,7 @@
       "address": "0x...",
       "amount": "10",
       "attributes": "{}",
-      "baseTokenURI": "https://example.com/",
+      "baseTokenURI": "https://gemunion.io/",
       "beneficiary": "0x...",
       "cap": "10",
       "collectionId": "Lootbox",

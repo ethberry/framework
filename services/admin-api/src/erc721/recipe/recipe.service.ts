@@ -25,15 +25,25 @@ export class RecipeService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("recipe.erc721Template", "template");
+    queryBuilder.leftJoinAndSelect("template.erc721Collection", "templateCollection");
+    queryBuilder.leftJoinAndSelect("recipe.erc721Dropbox", "dropbox");
+    queryBuilder.leftJoinAndSelect("dropbox.erc721Collection", "dropboxCollection");
+    queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "dropboxTemplate");
+    queryBuilder.leftJoinAndSelect("dropboxTemplate.erc721Collection", "dropboxTemplateCollection");
+    queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
+    queryBuilder.leftJoinAndSelect("ingredients.erc1155Token", "ingredientsToken");
+    queryBuilder.leftJoinAndSelect("ingredientsToken.erc1155Collection", "ingredientsTokenCollection");
+
     if (query) {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(recipe.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(template.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("recipe.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -46,17 +56,6 @@ export class RecipeService {
         queryBuilder.andWhere("recipe.recipeStatus IN(:...recipeStatus)", { recipeStatus });
       }
     }
-
-    // TODO simplify
-    queryBuilder.leftJoinAndSelect("recipe.erc721Template", "template");
-    queryBuilder.leftJoinAndSelect("template.erc721Collection", "templateCollection");
-    queryBuilder.leftJoinAndSelect("recipe.erc721Dropbox", "dropbox");
-    queryBuilder.leftJoinAndSelect("dropbox.erc721Collection", "dropboxCollection");
-    queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "dropboxTemplate");
-    queryBuilder.leftJoinAndSelect("dropboxTemplate.erc721Collection", "dropboxTemplateCollection");
-    queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
-    queryBuilder.leftJoinAndSelect("ingredients.erc1155Token", "ingredientsToken");
-    queryBuilder.leftJoinAndSelect("ingredientsToken.erc1155Collection", "ingredientsTokenCollection");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

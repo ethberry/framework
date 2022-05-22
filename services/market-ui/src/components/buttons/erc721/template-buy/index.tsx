@@ -5,7 +5,8 @@ import { ethers } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api";
-import { IErc721Template, IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
+import { IErc721Template } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 

@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { Erc721TokenTemplate, IErc721TokenDeployDto } from "@framework/types";
+import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/types";
 
-export class Erc721TokenDeployDto implements IErc721TokenDeployDto {
+export class Erc721TokenDeployDto implements IErc721CollectionDeployDto {
   @ApiProperty({
     enum: Erc721TokenTemplate,
   })
@@ -25,7 +25,7 @@ export class Erc721TokenDeployDto implements IErc721TokenDeployDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(128, { message: "rangeOverflow" }) // todo probably remove length check
+  @MaxLength(128, { message: "rangeOverflow" })
   @IsUrl({ require_tld: false }, { message: "patternMismatch" })
   public baseTokenURI: string;
 

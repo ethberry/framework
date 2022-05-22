@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { Erc1155TokenTemplate, IErc1155Token, IErc1155TokenDeployDto } from "@framework/types";
+import { Erc1155TokenTemplate, IErc1155Token, IErc1155CollectionDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -13,7 +13,7 @@ export interface IErc1155TokenDeployDialogProps {
 }
 
 export const Erc1155TokenDeployDialog: FC<IErc1155TokenDeployDialogProps> = props => {
-  const fixedValues: IErc1155TokenDeployDto = {
+  const fixedValues: IErc1155CollectionDeployDto = {
     contractTemplate: Erc1155TokenTemplate.SIMPLE,
     baseTokenURI: "",
   };

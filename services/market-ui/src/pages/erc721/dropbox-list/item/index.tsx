@@ -5,7 +5,7 @@ import { IErc721Dropbox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { Erc721DropboxTemplateBuyButton } from "../../../../components/buttons";
-import { formatMoney } from "../../../../utils/money";
+import { formatEther } from "../../../../utils/money";
 import { useStyles } from "./styles";
 
 interface IErc721DropboxItemProps {
@@ -29,7 +29,7 @@ export const DropboxItem: FC<IErc721DropboxItemProps> = props => {
             <RichTextDisplay data={dropbox.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatMoney(dropbox.price)}
+            {formatEther(dropbox.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

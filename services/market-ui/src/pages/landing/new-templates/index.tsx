@@ -5,8 +5,8 @@ import { Typography } from "@mui/material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ApiError, useApi } from "@gemunion/provider-api";
-import { IErc721Template } from "@framework/types";
 import { IPaginationResult } from "@gemunion/types-collection";
+import { IErc721Template } from "@framework/types";
 
 import { MultiCarousel } from "./multi-carousel";
 import { useStyles } from "./styles";

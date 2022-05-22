@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { formatMoney } from "../../../utils/money";
+import { formatEther } from "../../../utils/money";
 import { useStyles } from "./styles";
 import { Erc1155TokenSingleBuyButton } from "../../../components/buttons";
 
@@ -43,7 +43,7 @@ export const Erc1155Token: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc1155-token.price" values={{ amount: formatMoney(selected.price) }} />
+              <FormattedMessage id="pages.erc1155-token.price" values={{ amount: formatEther(selected.price) }} />
             </Typography>
             <Erc1155TokenSingleBuyButton token={selected} />
           </Paper>

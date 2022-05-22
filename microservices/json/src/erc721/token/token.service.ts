@@ -3,9 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 import { BigNumber } from "ethers";
-import { getPainText } from "@gemunion/draft-js-utils";
 
-import { TokenRarity } from "@framework/types";
+import { getPainText } from "@gemunion/draft-js-utils";
 
 import { Erc721TokenEntity } from "./token.entity";
 import { IOpenSeaErc721Metadata } from "../../common/interfaces";
@@ -31,9 +30,6 @@ export class Erc721TokenService {
     });
     queryBuilder.andWhere("token.tokenId = :tokenId", {
       tokenId,
-    });
-    queryBuilder.andWhere("token.rarity != :rarity", {
-      rarity: TokenRarity.UNKNOWN,
     });
 
     return queryBuilder.getOne();

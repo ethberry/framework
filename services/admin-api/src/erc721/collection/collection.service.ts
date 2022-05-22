@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { Erc721CollectionStatus, IErc721CollectionAutocompleteDto, IErc721CollectionSearchDto } from "@framework/types";
 
@@ -101,8 +101,8 @@ export class Erc721CollectionService {
     return this.erc721CollectionEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<Erc721CollectionEntity>): Promise<DeleteResult> {
-    return this.erc721CollectionEntityRepository.update(where, {
+  public async delete(where: FindOptionsWhere<Erc721CollectionEntity>): Promise<Erc721CollectionEntity> {
+    return this.update(where, {
       collectionStatus: Erc721CollectionStatus.INACTIVE,
     });
   }

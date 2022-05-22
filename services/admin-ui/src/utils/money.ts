@@ -1,5 +1,9 @@
-import { constants, ethers } from "ethers";
+import { ethers } from "ethers";
 
-export const formatMoney = (amount = "0", currency = constants.EtherSymbol): string => {
-  return `${currency} ${ethers.utils.formatEther(amount)}`;
+export const formatEther = (amount = "0", currency = "Ξ"): string => {
+  return `${currency}${ethers.utils.formatEther(amount)}`;
+};
+
+export const formatMoney = (amount = 0, currency = "$"): string => {
+  return `${currency}${amount.toFixed(2)}`;
 };

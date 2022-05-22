@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
 
 import { ContractManagerService } from "./contract-manager.service";
 import { Erc1155TokenDeployDto, Erc20TokenDeployDto, Erc20VestingDeployDto, Erc721TokenDeployDto } from "./dto";

@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
 import { Public } from "@gemunion/nest-js-utils";
-import { IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
 
 import { Erc721MarketplaceService } from "./marketplace.service";
 import { SignTemplateDto } from "./dto";

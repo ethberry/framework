@@ -5,7 +5,7 @@ import { IErc721Template } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { formatMoney } from "../../../../utils/money";
+import { formatEther } from "../../../../utils/money";
 import { Erc721ItemTemplateBuyButton } from "../../../../components/buttons";
 
 interface IErc721TemplateItemProps {
@@ -29,7 +29,7 @@ export const TemplateItem: FC<IErc721TemplateItemProps> = props => {
             <RichTextDisplay data={template.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatMoney(template.price)}
+            {formatEther(template.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

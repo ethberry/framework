@@ -6,14 +6,15 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
-import { Erc20VestingTemplate, IErc20VestingDeployDto, IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
+import { useDeploy } from "@gemunion/react-hooks";
+import { Erc20VestingTemplate, IErc20VestingDeployDto } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
 import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
 import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { Erc20VestingDeployDialog } from "./deploy-dialog";
-import { useDeploy } from "../../../hooks/useDeploy";
 
 function getBytecodeByErc20VestingTemplate(template: Erc20VestingTemplate) {
   switch (template) {

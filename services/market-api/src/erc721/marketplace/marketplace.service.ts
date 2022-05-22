@@ -4,7 +4,7 @@ import { BigNumber, utils, Wallet } from "ethers";
 
 import { prepareEip712 } from "@gemunion/butils";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
-import { IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
 
 import { Erc721TemplateService } from "../template/template.service";
 import { Erc721DropboxService } from "../dropbox/dropbox.service";

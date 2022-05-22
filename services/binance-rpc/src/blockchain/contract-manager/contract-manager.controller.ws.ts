@@ -18,7 +18,7 @@ export class ContractManagerControllerWs {
   constructor(private readonly contractManagerServiceWs: ContractManagerServiceWs) {}
 
   @EventPattern({
-    contractName: ContractType.CONTRACT_MANAGER_ADDR,
+    contractName: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC20VestingDeployed,
   })
   public erc20Vesting(@Payload() event: IEvent<IContractManagerERC20VestingDeployed>): Promise<void> {
@@ -26,7 +26,7 @@ export class ContractManagerControllerWs {
   }
 
   @EventPattern({
-    contractName: ContractType.CONTRACT_MANAGER_ADDR,
+    contractName: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC20TokenDeployed,
   })
   public erc20Token(@Payload() event: IEvent<IContractManagerERC20TokenDeployed>): Promise<void> {
@@ -34,7 +34,7 @@ export class ContractManagerControllerWs {
   }
 
   @EventPattern({
-    contractName: ContractType.CONTRACT_MANAGER_ADDR,
+    contractName: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC721TokenDeployed,
   })
   public erc721Token(@Payload() event: IEvent<IContractManagerERC721TokenDeployed>): Promise<void> {
@@ -42,7 +42,7 @@ export class ContractManagerControllerWs {
   }
 
   @EventPattern({
-    contractName: ContractType.CONTRACT_MANAGER_ADDR,
+    contractName: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC1155TokenDeployed,
   })
   public erc1155Token(@Payload() event: IEvent<IContractManagerERC1155TokenDeployed>): Promise<void> {

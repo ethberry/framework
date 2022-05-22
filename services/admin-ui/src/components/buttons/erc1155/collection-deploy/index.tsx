@@ -6,12 +6,13 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
-import { Erc1155TokenTemplate, IErc1155TokenDeployDto, IServerSignature } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
+import { useDeploy } from "@gemunion/react-hooks";
+import { Erc1155TokenTemplate, IErc1155CollectionDeployDto } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 import { Erc1155TokenDeployDialog } from "./deploy-dialog";
-import { useDeploy } from "../../../hooks/useDeploy";
 
 function getBytecodeByErc1155TokenTemplate(template: Erc1155TokenTemplate) {
   switch (template) {
@@ -33,7 +34,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
   const api = useApi();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc1155TokenDeployDto) => {
+    (values: IErc1155CollectionDeployDto) => {
       const { contractTemplate, baseTokenURI } = values;
 
       return api

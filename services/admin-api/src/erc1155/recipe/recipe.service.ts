@@ -25,15 +25,18 @@ export class RecipeService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("recipe.erc1155Token", "token");
+    queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
+
     if (query) {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(recipe.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(token.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("recipe.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("token.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -46,9 +49,6 @@ export class RecipeService {
         queryBuilder.andWhere("recipe.recipeStatus IN(:...recipeStatus)", { recipeStatus });
       }
     }
-
-    queryBuilder.leftJoinAndSelect("recipe.erc1155Token", "erc1155Token");
-    queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

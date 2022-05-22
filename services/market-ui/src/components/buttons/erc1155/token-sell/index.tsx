@@ -19,7 +19,7 @@ export const Erc1155TokenSellButton: FC<IErc1155TokenSellButtonProps> = props =>
 
   const { library } = useWeb3React();
 
-  const handleSell = useMetamask(() => {
+  const metaSell = useMetamask(() => {
     const contract = new ethers.Contract(process.env.ERC1155_AUCTION_ADDR, ERC721Marketplace.abi, library.getSigner());
 
     void contract;
@@ -28,6 +28,12 @@ export const Erc1155TokenSellButton: FC<IErc1155TokenSellButtonProps> = props =>
     alert("Not implemented");
     return Promise.resolve();
   });
+
+  const handleSell = () => {
+    return metaSell().then(() => {
+      // TODO reload
+    });
+  };
 
   return (
     <Button onClick={handleSell} data-testid="Erc1155TokenSellButton">
