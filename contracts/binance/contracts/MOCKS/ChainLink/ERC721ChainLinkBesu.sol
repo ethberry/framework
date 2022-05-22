@@ -13,8 +13,8 @@ import "./ERC721ChainLinkTest.sol";
 abstract contract ERC721ChainLinkBesu is ERC721ChainLinkTest {
   constructor()
   ERC721ChainLinkTest(
-      address(0xa50a51c09a5c451C52BB714527E1974b686D8e77), // vrfCoordinator
-      address(0x42699A7612A82f1d9C36148af9C77354759b210b), // LINK token
+      address(0x86C86939c631D53c6D812625bD6Ccd5Bf5BEb774), // vrfCoordinator
+      address(0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a), // LINK token
       0xcaf3c3727e033261d383b315559476f48034c13b18f8cafed4d871abe5049186, // system hash
       0.1 ether // fee
     )
