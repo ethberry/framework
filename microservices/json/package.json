@@ -75,8 +75,8 @@
     "prebuild": "rimraf dist/",
     "prepublish": "npm run build",
     "start": "cross-env NODE_ENV=development tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
-    "start:production": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
-    "start:staging": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
+    "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
+    "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "exit 0"
   },
   "title": "EML",

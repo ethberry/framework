@@ -2,7 +2,7 @@ FROM node:16-alpine AS base
 LABEL stage=base
 
 RUN apk add \
-  python \
+  python3 \
   build-base \
   git \
   bash \
@@ -12,18 +12,17 @@ RUN apk add \
   && npm i -g node-gyp
 
 FROM base AS deps
+FROM base AS deps
 LABEL stage=deps
 
 USER node
-RUN mkdir -p /home/node/undead
-WORKDIR /home/node/undead
+RUN mkdir -p /home/node/framework
+WORKDIR /home/node/framework
 
 COPY --chown=node:node . .
 
-RUN npx lerna bootstrap --hoist
-RUN npm cache clean --force
+RUN npm i --only=production
 
-FROM base as prod
-USER node
-WORKDIR /home/node/undead
-COPY --from=deps --chown=node:node /home/node/undead/. .
+COPY --chown=node:node . .
+
+RUN npm run bootstrap

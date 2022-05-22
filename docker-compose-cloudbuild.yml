@@ -12,35 +12,6 @@ services:
       dockerfile: Dockerfile.production
     image: framework-packages
 
-  postgres:
-    container_name: postgres
-    image: postgres:alpine
-    user: root
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DB: "${POSTGRES_DB}"
-    volumes:
-      - ${BASE_PATH}/postgres:/var/lib/postgresql/data
-      - ${BASE_PATH}/pgbckp:/pgbckp
-
-  redis:
-    container_name: redis
-    image: redis
-    ports:
-      - "6379:6379"
-    sysctls:
-      net.core.somaxconn: "65535"
-
-  rabbitmq:
-    container_name: rabbitmq
-    image: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
   besu-test:
     container_name: besu-test
     restart: "on-failure"
@@ -72,15 +43,15 @@ services:
     restart: "on-failure"
     image: alethio/ethereum-lite-explorer
     environment:
-      APP_NODE_URL: "http://127.0.0.1:8545"
+      APP_NODE_URL: "${JSON_RPC_ADDR}"
     ports:
-      - 8080:80
+      - "${PORT_EXPL_API}:80"
     depends_on:
       - besu-test
 
   admin-ui:
     container_name: admin-ui
-    image: framework-prod:latest
+    image: gcr.io/halogen-framing-335807/framework:latest
     command: "sh /home/node/framework/scripts/logDna.sh"
     volumes:
       - static-admin-ui:/home/node/framework/services/admin-ui/dist/
@@ -91,7 +62,7 @@ services:
 
   market-ui:
     container_name: market-ui
-    image: framework-prod:latest
+    image: gcr.io/halogen-framing-335807/framework:latest
     command: "sh /home/node/framework/scripts/logDna.sh"
     volumes:
       - static-market-ui:/home/node/framework/services/market-ui/dist/
@@ -102,7 +73,7 @@ services:
 
   admin-api:
     container_name: admin-api
-    image: framework-prod:latest
+    image: gcr.io/halogen-framing-335807/framework:latest
     command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
     environment:
       # common
@@ -128,30 +99,33 @@ services:
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
       # BLOCKCHAIN
       CHAIN_ID: "${CHAIN_ID}"
-
-      COIN_ADDR: "${COIN_ADDR}"
-      ITEMS_ADDR: "${ITEMS_ADDR}"
-      HERO_ADDR: "${HERO_ADDR}"
-      REFINERY_ADDR: "${REFINERY_ADDR}"
-      RESOURCES_ADDR: "${RESOURCES_ADDR}"
-      MARKETPLACE_ITEM_ADDR: "${MARKETPLACE_ITEM_ADDR}"
-      MARKETPLACE_HERO_ADDR: "${MARKETPLACE_HERO_ADDR}"
-      MARKETPLACE_RESOURCE_ADDR: "${MARKETPLACE_RESOURCE_ADDR}"
-      AUCTION_ITEM_ADDR: "${AUCTION_ITEM_ADDR}"
-      AUCTION_HERO_ADDR: "${AUCTION_HERO_ADDR}"
-      DROPBOX_ITEM_ADDR: "${DROPBOX_ITEM_ADDR}"
-      DROPBOX_HERO_ADDR: "${DROPBOX_HERO_ADDR}"
-      DROPBOX_AIR_ADDR: "${DROPBOX_AIR_ADDR}"
-
       ACCOUNT: "${ACCOUNT}"
       PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC20_COIN_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC20_COIN_BL_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_ITEM_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_HERO_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_SKILL_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_LAND_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_MARKETPLACE_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_CRAFT_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_AUCTION_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_DROPBOX_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_AIRDROP_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_RESOURCES_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_CRAFT_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_MARKETPLACE_ADDR: "${CONTRACT_MANAGER_ADDR}"
     ports:
       # admin-api
       - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
 
   market-api:
     container_name: market-api
-    image: framework-prod:latest
+    image: gcr.io/halogen-framing-335807/framework:latest
     command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
     environment:
       # common
@@ -170,84 +144,85 @@ services:
       RMQ_URL: "${RMQ_URL}"
       RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
       # FE
-      market_FE_URL: "${market_FE_URL}"
+      MARKET_FE_URL: "${MARKET_FE_URL}"
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
       # GEMUNION
       GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
       # BLOCKCHAIN
       CHAIN_ID: "${CHAIN_ID}"
-
-      COIN_ADDR: "${COIN_ADDR}"
-      ITEMS_ADDR: "${ITEMS_ADDR}"
-      HERO_ADDR: "${HERO_ADDR}"
-      REFINERY_ADDR: "${REFINERY_ADDR}"
-      RESOURCES_ADDR: "${RESOURCES_ADDR}"
-      MARKETPLACE_ITEM_ADDR: "${MARKETPLACE_ITEM_ADDR}"
-      MARKETPLACE_HERO_ADDR: "${MARKETPLACE_HERO_ADDR}"
-      MARKETPLACE_RESOURCE_ADDR: "${MARKETPLACE_RESOURCE_ADDR}"
-      AUCTION_ITEM_ADDR: "${AUCTION_ITEM_ADDR}"
-      AUCTION_HERO_ADDR: "${AUCTION_HERO_ADDR}"
-      DROPBOX_ITEM_ADDR: "${DROPBOX_ITEM_ADDR}"
-      DROPBOX_HERO_ADDR: "${DROPBOX_HERO_ADDR}"
-      DROPBOX_AIR_ADDR: "${DROPBOX_AIR_ADDR}"
       ACCOUNT: "${ACCOUNT}"
       PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC20_COIN_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC20_COIN_BL_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_ITEM_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_HERO_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_SKILL_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_LAND_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_MARKETPLACE_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_CRAFT_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_AUCTION_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_DROPBOX_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_AIRDROP_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_RESOURCES_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_CRAFT_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_MARKETPLACE_ADDR: "${CONTRACT_MANAGER_ADDR}"
     ports:
       # market-api
       - "${PORT_MARKET_API}:${PORT_MARKET_API}"
 
   binance-rpc:
     container_name: binance-rpc
-    image: framework-prod:latest
+    image: gcr.io/halogen-framing-335807/framework:latest
     command: "npm run --prefix ./services/binance-rpc start:${BASE_MODE}"
     environment:
       # common
       BASE_MODE: "${BASE_MODE}"
       NODE_ENV: "${NODE_ENV}"
       HOST: "${HOST}"
-      PORT: "${PORT_BINANCE_RPC}"
+      PORT: "${PORT_RPC_API}"
       # admin api
       POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
       # RMQ
       RMQ_URL: "${RMQ_URL}"
-      RMQ_QUEUE_BINANCE_TO_BACKEND: "${RMQ_QUEUE_BINANCE_TO_BACKEND}"
       # FE
       FE_URL: "${ADMIN_FE_URL}"
       # LOGDNA
       LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
       # BLOCKCHAIN
-      WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
-      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
       CHAIN_ID: "${CHAIN_ID}"
-
-    # Contracts
-      CONTRACT_MANAGER_ADDR : "${CONTRACT_MANAGER_ADDR}"
-      ERC20_COIN_ADDR : "${ERC20_COIN_ADDR}"
-      ERC20_COIN_BL_ADDR : "${ERC20_COIN_BL_ADDR}"
-      ERC721_ITEM_ADDR : "${ERC721_ITEM_ADDR}"
-      ERC721_HERO_ADDR : "${ERC721_HERO_ADDR}"
-      ERC721_SKILL_ADDR : "${ERC721_SKILL_ADDR}"
-      ERC721_LAND_ADDR : "${ERC721_LAND_ADDR}"
-      ERC721_MARKETPLACE_ADDR : "${ERC721_MARKETPLACE_ADDR}"
-      ERC721_CRAFT_ADDR : "${ERC721_CRAFT_ADDR}"
-      ERC721_AUCTION_ADDR : "${ERC721_AUCTION_ADDR}"
-      ERC721_DROPBOX_ADDR : "${ERC721_DROPBOX_ADDR}"
-      ERC721_AIRDROP_ADDR : "${ERC721_AIRDROP_ADDR}"
-      ERC1155_RESOURCES_ADDR : "${ERC1155_RESOURCES_ADDR}"
-      ERC1155_CRAFT_ADDR : "${ERC1155_CRAFT_ADDR}"
-      ERC1155_MARKETPLACE_ADDR : "${ERC1155_MARKETPLACE_ADDR}"
-
       ACCOUNT: "${ACCOUNT}"
       PRIVATE_KEY: "${PRIVATE_KEY}"
-      # GEMUNION
-      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC20_COIN_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC20_COIN_BL_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_ITEM_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_HERO_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_SKILL_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_LAND_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_MARKETPLACE_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_CRAFT_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_AUCTION_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_DROPBOX_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_AIRDROP_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_RESOURCES_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_CRAFT_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC1155_MARKETPLACE_ADDR: "${CONTRACT_MANAGER_ADDR}"
     ports:
-      - "${PORT_BINANCE_RPC}:${PORT_BINANCE_RPC}"
+      - "${PORT_RPC_API}:${PORT_RPC_API}"
 
   json-api:
     container_name: json-api
-    image: framework-prod:latest
+    image: gcr.io/halogen-framing-335807/framework:latest
     command: "npm run --prefix ./microservices/json start:${BASE_MODE}"
     environment:
       # common
