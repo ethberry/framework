@@ -12,7 +12,6 @@ RUN apk add \
   && npm i -g node-gyp
 
 FROM base AS deps
-FROM base AS deps
 LABEL stage=deps
 
 USER node
