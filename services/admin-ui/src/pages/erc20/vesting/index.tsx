@@ -43,6 +43,7 @@ export const Erc20Vesting: FC = () => {
     empty: {
       beneficiary: "",
       duration: 0,
+      startTimestamp: new Date().toISOString(),
     },
   });
 
