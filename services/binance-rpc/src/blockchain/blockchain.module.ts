@@ -10,20 +10,20 @@ import {
   ContractManagerEventType,
   Erc1155MarketplaceEventType,
   Erc1155RecipeEventType,
-  Erc1155TokenEventType,
-  Erc20TokenEventType,
+  // Erc1155TokenEventType,
+  // Erc20TokenEventType,
   Erc721AuctionEventType,
   Erc721MarketplaceEventType,
   Erc721RecipeEventType,
   Erc721TokenEventType,
 } from "@framework/types";
 
-import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC20Blist from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
+// import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+// import ERC20Blist from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
-import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+// import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+// import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
+// import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 // import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721Airdrop from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
 import ERC721Dropbox from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Dropbox.sol/ERC721Dropbox.json";
@@ -44,16 +44,16 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
 
   public async onModuleInit(): Promise<void> {
     const contractManagerAddr = this.configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-    const coinAddr = this.configService.get<string>("ERC20_COIN_ADDR", "");
-    const coiblAddr = this.configService.get<string>("ERC20_COIN_BL_ADDR", "");
-    const itemsAddr = this.configService.get<string>("ERC721_ITEM_ADDR", "");
-    const heroAddr = this.configService.get<string>("ERC721_HERO_ADDR", "");
-    const skillAddr = this.configService.get<string>("ERC721_SKILL_ADDR", "");
+    // const coinAddr = this.configService.get<string>("ERC20_COIN_ADDR", "");
+    // const coiblAddr = this.configService.get<string>("ERC20_COIN_BL_ADDR", "");
+    // const itemsAddr = this.configService.get<string>("ERC721_ITEM_ADDR", "");
+    // const heroAddr = this.configService.get<string>("ERC721_HERO_ADDR", "");
+    // const skillAddr = this.configService.get<string>("ERC721_SKILL_ADDR", "");
     const itemAuctionAddr = this.configService.get<string>("ERC721_AUCTION_ADDR", "");
     const airDropboxAddr = this.configService.get<string>("ERC721_AIRDROP_ADDR", "");
     const itemDropboxAddr = this.configService.get<string>("ERC721_DROPBOX_ADDR", "");
     const itemMarketplaceAddr = this.configService.get<string>("ERC721_MARKETPLACE_ADDR", "");
-    const resourcesAddr = this.configService.get<string>("ERC1155_RESOURCES_ADDR", "");
+    // const resourcesAddr = this.configService.get<string>("ERC1155_RESOURCES_ADDR", "");
     const craft721Addr = this.configService.get<string>("ERC721_CRAFT_ADDR", "");
     const refineryAddr = this.configService.get<string>("ERC1155_CRAFT_ADDR", "");
     const resourcesMarketplaceAddr = this.configService.get<string>("ERC1155_MARKETPLACE_ADDR", "");
@@ -71,26 +71,26 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
           ContractManagerEventType.ERC1155TokenDeployed,
         ],
       },
-      {
-        contractName: ContractType.ERC20_COIN,
-        contractAddress: coinAddr,
-        contractInterface: ERC20Simple.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc20TokenEventType.Transfer,
-          Erc20TokenEventType.Approval,
-        ],
-      },
-      {
-        contractName: ContractType.ERC20_COIN,
-        contractAddress: coiblAddr,
-        contractInterface: ERC20Blist.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc20TokenEventType.Transfer,
-          Erc20TokenEventType.Approval,
-        ],
-      },
+      // {
+      //   contractName: ContractType.ERC20_COIN,
+      //   contractAddress: coinAddr,
+      //   contractInterface: ERC20Simple.abi as Array<AbiItem>,
+      //   // prettier-ignore
+      //   eventNames: [
+      //     Erc20TokenEventType.Transfer,
+      //     Erc20TokenEventType.Approval,
+      //   ],
+      // },
+      // {
+      //   contractName: ContractType.ERC20_COIN,
+      //   contractAddress: coiblAddr,
+      //   contractInterface: ERC20Blist.abi as Array<AbiItem>,
+      //   // prettier-ignore
+      //   eventNames: [
+      //     Erc20TokenEventType.Transfer,
+      //     Erc20TokenEventType.Approval,
+      //   ],
+      // },
       {
         contractName: ContractType.ERC721_AIRDROP,
         contractAddress: airDropboxAddr,
@@ -120,59 +120,59 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
           Erc721TokenEventType.UnpackDropbox,
         ],
       },
-      {
-        contractName: ContractType.ERC721_ITEMS,
-        contractAddress: itemsAddr,
-        contractInterface: ERC721Random.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc721TokenEventType.Transfer,
-          Erc721TokenEventType.Approval,
-          Erc721TokenEventType.ApprovalForAll,
-          Erc721TokenEventType.MintRandom,
-          Erc721TokenEventType.TokenRoyaltyInfo,
-          Erc721TokenEventType.DefaultRoyaltyInfo,
-        ],
-      },
-      {
-        contractName: ContractType.ERC1155_RESOURCES,
-        contractAddress: resourcesAddr,
-        contractInterface: ERC1155Simple.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc1155TokenEventType.TransferSingle,
-          Erc1155TokenEventType.TransferBatch,
-          Erc1155TokenEventType.ApprovalForAll,
-          Erc1155TokenEventType.URI,
-        ],
-      },
-      {
-        contractName: ContractType.ERC721_HERO,
-        contractAddress: heroAddr,
-        contractInterface: ERC721Random.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc721TokenEventType.Transfer,
-          Erc721TokenEventType.Approval,
-          Erc721TokenEventType.ApprovalForAll,
-          Erc721TokenEventType.MintRandom,
-          Erc721TokenEventType.TokenRoyaltyInfo,
-          Erc721TokenEventType.DefaultRoyaltyInfo,
-        ],
-      },
-      {
-        contractName: ContractType.ERC721_SKILL,
-        contractAddress: skillAddr,
-        contractInterface: ERC721Graded.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc721TokenEventType.Transfer,
-          Erc721TokenEventType.Approval,
-          Erc721TokenEventType.ApprovalForAll,
-          Erc721TokenEventType.TokenRoyaltyInfo,
-          Erc721TokenEventType.DefaultRoyaltyInfo,
-        ],
-      },
+      // {
+      //   contractName: ContractType.ERC721_ITEMS,
+      //   contractAddress: itemsAddr,
+      //   contractInterface: ERC721Random.abi as Array<AbiItem>,
+      //   // prettier-ignore
+      //   eventNames: [
+      //     Erc721TokenEventType.Transfer,
+      //     Erc721TokenEventType.Approval,
+      //     Erc721TokenEventType.ApprovalForAll,
+      //     Erc721TokenEventType.MintRandom,
+      //     Erc721TokenEventType.TokenRoyaltyInfo,
+      //     Erc721TokenEventType.DefaultRoyaltyInfo,
+      //   ],
+      // },
+      // {
+      //   contractName: ContractType.ERC1155_RESOURCES,
+      //   contractAddress: resourcesAddr,
+      //   contractInterface: ERC1155Simple.abi as Array<AbiItem>,
+      //   // prettier-ignore
+      //   eventNames: [
+      //     Erc1155TokenEventType.TransferSingle,
+      //     Erc1155TokenEventType.TransferBatch,
+      //     Erc1155TokenEventType.ApprovalForAll,
+      //     Erc1155TokenEventType.URI,
+      //   ],
+      // },
+      // {
+      //   contractName: ContractType.ERC721_HERO,
+      //   contractAddress: heroAddr,
+      //   contractInterface: ERC721Random.abi as Array<AbiItem>,
+      //   // prettier-ignore
+      //   eventNames: [
+      //     Erc721TokenEventType.Transfer,
+      //     Erc721TokenEventType.Approval,
+      //     Erc721TokenEventType.ApprovalForAll,
+      //     Erc721TokenEventType.MintRandom,
+      //     Erc721TokenEventType.TokenRoyaltyInfo,
+      //     Erc721TokenEventType.DefaultRoyaltyInfo,
+      //   ],
+      // },
+      // {
+      //   contractName: ContractType.ERC721_SKILL,
+      //   contractAddress: skillAddr,
+      //   contractInterface: ERC721Graded.abi as Array<AbiItem>,
+      //   // prettier-ignore
+      //   eventNames: [
+      //     Erc721TokenEventType.Transfer,
+      //     Erc721TokenEventType.Approval,
+      //     Erc721TokenEventType.ApprovalForAll,
+      //     Erc721TokenEventType.TokenRoyaltyInfo,
+      //     Erc721TokenEventType.DefaultRoyaltyInfo,
+      //   ],
+      // },
       {
         contractName: ContractType.ERC1155_CRAFT,
         contractAddress: refineryAddr,

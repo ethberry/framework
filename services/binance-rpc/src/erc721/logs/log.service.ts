@@ -53,7 +53,7 @@ export class Erc721LogService {
     });
 
     const listenAddrss = erc721CollectionEntities.map(erc721CollectionEntity => erc721CollectionEntity.address);
-    this.loggerService.log(`Listening Collections: ${listenAddrss.toString()}`, Erc721LogService.name);
+    this.loggerService.log(`Listening@Erc721: ${listenAddrss.toString()}`, Erc721LogService.name);
 
     await this.web3LogService.listen({
       logOptions: {

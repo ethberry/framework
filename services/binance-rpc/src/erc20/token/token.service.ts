@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { Erc20TokenEntity } from "./token.entity";
+import { Erc721CollectionEntity } from "../../erc721/collection/collection.entity";
 
 @Injectable()
 export class Erc20TokenService {
@@ -16,6 +17,13 @@ export class Erc20TokenService {
     options?: FindOneOptions<Erc20TokenEntity>,
   ): Promise<Erc20TokenEntity | null> {
     return this.erc20TokenEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<Erc20TokenEntity>,
+    options?: FindOneOptions<Erc20TokenEntity>,
+  ): Promise<Array<Erc20TokenEntity>> {
+    return this.erc20TokenEntityRepository.find({ where, ...options });
   }
 
   public async create(dto: DeepPartial<Erc20TokenEntity>): Promise<Erc20TokenEntity> {

@@ -21,6 +21,8 @@ import { Erc20VestingService } from "../../erc20/vesting/vesting.service";
 import { Erc721CollectionService } from "../../erc721/collection/collection.service";
 import { Erc1155CollectionService } from "../../erc1155/collection/collection.service";
 import { Erc721LogService } from "../../erc721/logs/log.service";
+import { Erc20LogService } from "../../erc20/logs/log.service";
+import { Erc1155LogService } from "../../erc1155/logs/log.service";
 
 @Injectable()
 export class ContractManagerServiceWs {
@@ -31,7 +33,9 @@ export class ContractManagerServiceWs {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
+    private readonly erc1155LogService: Erc1155LogService,
     private readonly erc721LogService: Erc721LogService,
+    private readonly erc20LogService: Erc20LogService,
     private readonly erc20VestingService: Erc20VestingService,
     private readonly erc20TokenService: Erc20TokenService,
     private readonly erc721CollectionService: Erc721CollectionService,
@@ -55,8 +59,8 @@ export class ContractManagerServiceWs {
       duration: ~~duration,
     });
 
-    await this.erc721LogService.update({
-      address: [addr],
+    await this.erc20LogService.add({
+      address: [addr.toLowerCase()],
       topics: [],
     });
   }
@@ -69,12 +73,17 @@ export class ContractManagerServiceWs {
     await this.updateHistory(event);
 
     await this.erc20TokenService.create({
-      address: addr,
+      address: addr.toLowerCase(),
       title: name,
       symbol,
       amount: cap,
       description: emptyStateString,
       chainId: this.chainId,
+    });
+
+    await this.erc20LogService.add({
+      address: [addr.toLowerCase()],
+      topics: [],
     });
   }
 
@@ -86,7 +95,7 @@ export class ContractManagerServiceWs {
     await this.updateHistory(event);
 
     await this.erc721CollectionService.create({
-      address: addr,
+      address: addr.toLowerCase(),
       title: name,
       symbol,
       royalty: ~~royalty,
@@ -94,6 +103,11 @@ export class ContractManagerServiceWs {
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
+    });
+
+    await this.erc721LogService.add({
+      address: [addr.toLowerCase()],
+      topics: [],
     });
   }
 
@@ -105,12 +119,17 @@ export class ContractManagerServiceWs {
     await this.updateHistory(event);
 
     await this.erc1155CollectionService.create({
-      address: addr,
+      address: addr.toLowerCase(),
       title: "new 1155 collection",
       description: emptyStateString,
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
+    });
+
+    await this.erc1155LogService.add({
+      address: [addr.toLowerCase()],
+      topics: [],
     });
   }
 
