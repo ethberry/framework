@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Close, Save } from "@mui/icons-material";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { Erc721RecipeStatus, IErc721Recipe } from "@framework/types";
@@ -28,7 +28,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
     const ids = recipe.ingredients.map(ingredient => ingredient.erc1155TokenId);
     const amounts = recipe.ingredients.map(ingredient => ingredient.amount);
 
-    const contract = new ethers.Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
     return contract.createRecipe(
       recipe.id,
       recipe.ingredients[0]!.erc1155Token.erc1155Collection!.address,
@@ -59,7 +59,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
       recipeStatus = recipe.recipeStatus !== Erc721RecipeStatus.ACTIVE;
     }
 
-    const contract = new ethers.Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
     return contract.updateRecipe(recipe.id, recipeStatus) as Promise<void>;
   });
 

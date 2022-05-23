@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import { stringify } from "qs";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -55,7 +55,7 @@ export const Resources: FC<ITabPanelProps> = props => {
   };
 
   const metaApprove = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
     return contract.setApprovalForAll(process.env.ERC1155_RESOURCES_ADDR, true).then(() => {
       enqueueSnackbar(formatMessage({ id: "snackbar.approved" }), { variant: "success" });
       setIsApproved(true);

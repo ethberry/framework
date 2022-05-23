@@ -1,7 +1,7 @@
-import { ethers } from "ethers";
+import { utils } from "ethers";
 
 export const formatEther = (amount = "0", currency = "Ξ"): string => {
-  return `${currency}${ethers.utils.formatEther(amount)}`;
+  return `${currency}${utils.formatEther(amount)}`;
 };
 
 export const formatMoney = (amount = 0, currency = "$"): string => {

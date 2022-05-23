@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api";
@@ -31,13 +31,13 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
         },
       })
       .then((json: IServerSignature) => {
-        const contract = new ethers.Contract(
+        const contract = new Contract(
           process.env.ERC1155_MARKETPLACE_ADDR,
           ERC1155Marketplace.abi,
           library.getSigner(),
         );
-        const nonce = ethers.utils.arrayify(json.nonce);
-        const tokenPrice = ethers.utils.parseUnits(token.price, "wei");
+        const nonce = utils.arrayify(json.nonce);
+        const tokenPrice = utils.parseUnits(token.price, "wei");
 
         return contract.buyResources(
           nonce,

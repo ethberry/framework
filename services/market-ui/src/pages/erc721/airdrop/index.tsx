@@ -4,7 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 
 import { ApiError, useApi } from "@gemunion/provider-api";
 import { useWallet } from "@gemunion/provider-wallet";
@@ -58,7 +58,7 @@ export const Erc721Airdrop: FC = () => {
   };
 
   const metaClick = useMetamask((airdrop: IErc721Airdrop) => {
-    const contract = new ethers.Contract(process.env.ERC721_AIRDROP_ADDR, ERC721Airdrop.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_AIRDROP_ADDR, ERC721Airdrop.abi, library.getSigner());
 
     return contract.redeem(
       account,

@@ -3,7 +3,7 @@ import { MenuItem, ListItemIcon, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks";
 import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -18,7 +18,7 @@ export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> =
   const { library } = useWeb3React();
 
   const handleSnapshot = useMetamask(() => {
-    const contract = new ethers.Contract(address, ERC20Simple.abi, library.getSigner());
+    const contract = new Contract(address, ERC20Simple.abi, library.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 

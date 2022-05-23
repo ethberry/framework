@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { ethers } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks";
@@ -30,8 +30,8 @@ export const OzContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> 
   };
 
   const meta = useMetamask((values: IGrantRoleDto) => {
-    const contract = new ethers.Contract(address, erc721contract.abi, library.getSigner());
-    const role = values.role === OzRoles.DEFAULT_ADMIN_ROLE ? ethers.constants.HashZero : ethers.utils.id(values.role);
+    const contract = new Contract(address, erc721contract.abi, library.getSigner());
+    const role = values.role === OzRoles.DEFAULT_ADMIN_ROLE ? constants.HashZero : utils.id(values.role);
     return contract.grantRole(role, values.address) as Promise<void>;
   });
 

@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+import { Contract, utils } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
@@ -47,12 +47,8 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
           data: values,
         })
         .then((sign: IServerSignature) => {
-          const nonce = ethers.utils.arrayify(sign.nonce);
-          const contract = new ethers.Contract(
-            process.env.CONTRACT_MANAGER_ADDR,
-            ContractManager.abi,
-            library.getSigner(),
-          );
+          const nonce = utils.arrayify(sign.nonce);
+          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
           return contract.deployERC20Token(
             nonce,
             getBytecodeByErc20TokenTemplate(contractTemplate),

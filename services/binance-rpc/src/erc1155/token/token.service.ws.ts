@@ -1,5 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ethers } from "ethers";
+import { constants } from "ethers";
 
 import { IEvent } from "@gemunion/nestjs-web3";
 import {
@@ -66,12 +66,12 @@ export class Erc1155TokenServiceWs {
       throw new NotFoundException("tokenNotFound");
     }
 
-    if (from !== ethers.constants.AddressZero) {
+    if (from !== constants.AddressZero) {
       erc1155TokenEntity.instanceCount += amount;
       await this.erc1155BalanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 
-    if (to !== ethers.constants.AddressZero) {
+    if (to !== constants.AddressZero) {
       // erc1155TokenEntity.instanceCount -= amount;
       await this.erc1155BalanceService.increment(erc1155TokenEntity.id, to, amount);
     }

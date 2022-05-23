@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 
 import { IErc721Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks";
@@ -20,7 +20,7 @@ export const Erc721TokenSellButton: FC<IErc721TokenSellButtonProps> = props => {
   const { library } = useWeb3React();
 
   const metaSell = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC1155_AUCTION_ADDR, ERC721Marketplace.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_AUCTION_ADDR, ERC721Marketplace.abi, library.getSigner());
 
     void contract;
 

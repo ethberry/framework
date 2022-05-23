@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, constants } from "ethers";
 
 import { IEvent } from "@gemunion/nestjs-web3";
 
@@ -77,14 +77,14 @@ export class Erc721TokenServiceWs {
 
     await this.updateHistory(event, erc721TokenEntity.id);
 
-    if (from === ethers.constants.AddressZero) {
+    if (from === constants.AddressZero) {
       erc721TokenEntity.erc721Template
         ? (erc721TokenEntity.erc721Template.instanceCount += 1)
         : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
       erc721TokenEntity.tokenStatus = Erc721TokenStatus.MINTED;
     }
 
-    if (to === ethers.constants.AddressZero) {
+    if (to === constants.AddressZero) {
       // erc721TokenEntity.erc721Template.instanceCount -= 1;
       erc721TokenEntity.tokenStatus = Erc721TokenStatus.BURNED;
     }

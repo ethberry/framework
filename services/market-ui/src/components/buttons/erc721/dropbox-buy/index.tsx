@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api";
@@ -28,13 +28,9 @@ export const Erc721DropboxTemplateBuyButton: FC<IErc721DropboxBuyButtonProps> = 
         data: { templateId: dropbox.id },
       })
       .then((sign: IServerSignature) => {
-        const contract = new ethers.Contract(
-          process.env.ERC721_MARKETPLACE_ADDR,
-          ERC721Marketplace.abi,
-          library.getSigner(),
-        );
-        const nonce = ethers.utils.arrayify(sign.nonce);
-        const commonDropboxPrice = ethers.utils.parseUnits(dropbox.price, "wei");
+        const contract = new Contract(process.env.ERC721_MARKETPLACE_ADDR, ERC721Marketplace.abi, library.getSigner());
+        const nonce = utils.arrayify(sign.nonce);
+        const commonDropboxPrice = utils.parseUnits(dropbox.price, "wei");
 
         return contract.buyDropbox(
           nonce,

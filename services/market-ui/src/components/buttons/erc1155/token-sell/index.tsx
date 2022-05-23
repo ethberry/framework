@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { IErc1155Token } from "@framework/types";
@@ -20,7 +20,7 @@ export const Erc1155TokenSellButton: FC<IErc1155TokenSellButtonProps> = props =>
   const { library } = useWeb3React();
 
   const metaSell = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC1155_AUCTION_ADDR, ERC721Marketplace.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_AUCTION_ADDR, ERC721Marketplace.abi, library.getSigner());
 
     void contract;
 

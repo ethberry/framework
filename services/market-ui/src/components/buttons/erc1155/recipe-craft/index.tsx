@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api";
@@ -24,7 +24,7 @@ export const Erc1155RecipeCraftButton: FC<ICraftButtonProps> = props => {
   const api = useApi();
 
   const meta = useMetamask(() => {
-    const contract = new ethers.Contract(
+    const contract = new Contract(
       recipe.erc1155Token!.erc1155Collection!.address,
       ERC1155Simple.abi,
       library.getSigner(),
@@ -39,7 +39,7 @@ export const Erc1155RecipeCraftButton: FC<ICraftButtonProps> = props => {
   };
 
   const handleCraft = useMetamask(() => {
-    const contract = new ethers.Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
     return (
       contract
         // TODO add item amounts - batch craft?

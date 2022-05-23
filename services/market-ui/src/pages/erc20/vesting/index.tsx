@@ -4,7 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 
 import { ApiError, useApi } from "@gemunion/provider-api";
 import { useWallet } from "@gemunion/provider-wallet";
@@ -54,7 +54,7 @@ export const Erc20Vesting: FC = () => {
   };
 
   const metaClick = useMetamask((vesting: IErc20Vesting) => {
-    const contract = new ethers.Contract(vesting.address, CliffVesting.abi, library.getSigner());
+    const contract = new Contract(vesting.address, CliffVesting.abi, library.getSigner());
 
     return contract.release(vesting.address) as Promise<void>;
   });

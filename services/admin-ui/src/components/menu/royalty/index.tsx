@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
-import { ethers } from "ethers";
+import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks";
 import erc721contract from "@framework/binance-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
@@ -30,7 +30,7 @@ export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuIte
   };
 
   const meta = useMetamask((values: IRoyaltyDto) => {
-    const contract = new ethers.Contract(address, erc721contract.abi, library.getSigner());
+    const contract = new Contract(address, erc721contract.abi, library.getSigner());
     return contract.setDefaultRoyalty(account, values.royalty) as Promise<void>;
   });
 

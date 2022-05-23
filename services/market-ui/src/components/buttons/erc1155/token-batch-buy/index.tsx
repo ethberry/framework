@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
-import { constants, ethers } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 import { useFormikContext } from "formik";
 
@@ -25,7 +25,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
   const { library } = useWeb3React();
 
   const handleBatchBuy = useMetamask(async () => {
-    const tokenPricesEth = rows.map(token => ethers.utils.parseUnits(token.price, "wei"));
+    const tokenPricesEth = rows.map(token => utils.parseUnits(token.price, "wei"));
     let totalTokenValue = constants.Zero;
     let collection = "";
     let indx = 0;
@@ -53,12 +53,12 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
         },
       })
       .then((json: IServerSignature) => {
-        const contract = new ethers.Contract(
+        const contract = new Contract(
           process.env.ERC1155_MARKETPLACE_ADDR,
           ERC1155Marketplace.abi,
           library.getSigner(),
         );
-        const nonce = ethers.utils.arrayify(json.nonce);
+        const nonce = utils.arrayify(json.nonce);
         return contract.buyResources(nonce, collection, erc1155TokenIds, amounts, process.env.ACCOUNT, json.signature, {
           value: totalTokenValue,
         }) as Promise<void>;
