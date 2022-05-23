@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { ethers, utils } from "ethers";
+import { utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
@@ -29,7 +29,7 @@ import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1
 export class ContractManagerService {
   constructor(
     @Inject(ETHERS_SIGNER)
-    private readonly signer: ethers.Wallet,
+    private readonly signer: Wallet,
     private readonly configService: ConfigService,
   ) {}
 

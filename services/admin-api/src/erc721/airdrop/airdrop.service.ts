@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { ethers } from "ethers";
+import { Wallet } from "ethers";
 
 import { Erc721AirdropStatus, IErc721AirdropSearchDto } from "@framework/types";
 import { prepareEip712 } from "@gemunion/butils";
@@ -15,7 +15,7 @@ import { Erc721AirdropEntity } from "./airdrop.entity";
 export class Erc721AirderopService {
   constructor(
     @Inject(ETHERS_SIGNER)
-    private readonly signer: ethers.Wallet,
+    private readonly signer: Wallet,
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
