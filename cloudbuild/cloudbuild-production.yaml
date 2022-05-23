@@ -2,23 +2,26 @@
 steps:
   # Download .env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "gs://jollity-env/app/.env", ".env"]
+    args: ["cp", "-r", "gs://framework-env/app/.env", ".env"]
+  # Download firebase file from bucket
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "-r", "gs://framework-env/app/gemunion-firebase-key.json", "gemunion-firebase-key.json"]
   # Download app/.env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "gs://jollity-env/app/services/*", "services/"]
-  # Download contracts/.env file from bucket
+    args: ["cp", "-r", "gs://framework-env/app/services/*", "services/"]
+  # Download app/.env file from bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["cp", "-r", "gs://jollity-env/app/contracts/*", "contracts/"]
+    args: ["cp", "-r", "gs://framework-env/app/contracts/*", "contracts/"]
 
   # Upload docker-compose script to bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["-m", "cp", "-r", "docker-compose-cloudbuild.yml", "gs://jollity-env/app/"]
+    args: ["-m", "cp", "-r", "docker-compose-cloudbuild.yml", "gs://framework-env/app/"]
   # Upload instance template startup script to bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["-m", "cp", "-r", "jollity-env/startup/instance-template-startup.sh", "gs://jollity-env/startup/"]
+    args: ["-m", "cp", "-r", "framework-env/startup/instance-template-startup.sh", "gs://framework-env/startup/"]
   # Upload nginx conf to bucket
   - name: "gcr.io/cloud-builders/gsutil"
-    args: ["-m", "cp", "-r", "nginx/admin.prod.conf", "gs://jollity-env/app/nginx/admin.prod.conf"]
+    args: ["-m", "cp", "-r", "nginx/admin.prod.conf", "gs://framework-env/app/nginx/admin.prod.conf"]
 
   # Add npmrc url
   - name: 'gcr.io/cloud-builders/gsutil'
@@ -34,7 +37,7 @@ steps:
     args: ['-f', 'docker-compose.dependencies.yml', 'build']
   # Tag push image to google registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['tag', 'jollity-packages:latest', 'gcr.io/$PROJECT_ID/$REPO_NAME-img']
+    args: ['tag', 'framework-packages:latest', 'gcr.io/$PROJECT_ID/$REPO_NAME-img']
   # Start update of autoscale group prod
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
@@ -45,7 +48,7 @@ steps:
       - "replace"
       - "framework-group"
       - "--max-unavailable=0"
-      - "--zone=us-central1-a"
+      - "--zone=asia-southeast2-a"
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME-img']
 timeout: 3600s
 options:
