@@ -1,12 +1,13 @@
 import { ethers } from "hardhat";
+import { BigNumber } from "ethers";
 
 import { blockAwait } from "../utils/blockAwait";
 import { tokenName, tokenSymbol } from "../../test/constants";
 
 async function main() {
   const [owner] = await ethers.getSigners();
-  const decimals = ethers.BigNumber.from(10).pow(18);
-  const linkAmountInWei = ethers.BigNumber.from("100000").mul(decimals);
+  const decimals = BigNumber.from(10).pow(18);
+  const linkAmountInWei = BigNumber.from("100000").mul(decimals);
 
   const link = await ethers.getContractFactory("LinkErc20");
   const linkInstance = await link.deploy(tokenName, tokenSymbol);

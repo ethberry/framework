@@ -32,7 +32,7 @@ async function bootstrap(): Promise<void> {
     .addCookieAuth(ns)
     .setTitle(companyName)
     .setDescription("API description")
-    .setVersion("1.0")
+    .setVersion("1.0.0")
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
