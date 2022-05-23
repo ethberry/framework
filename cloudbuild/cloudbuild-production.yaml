@@ -48,7 +48,7 @@ steps:
       - "replace"
       - "framework-group"
       - "--max-unavailable=0"
-      - "--zone=asia-southeast2-a"
+      - "--zone=northamerica-northeast1-a"
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME-img']
 timeout: 3600s
 options:
