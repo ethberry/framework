@@ -1,20 +1,18 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 
 import { ERC1155Simple } from "../../typechain-types";
 import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, tokenId } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC1155Simple", function () {
-  let erc1155: ContractFactory;
   let erc1155Instance: ERC1155Simple;
 
   beforeEach(async function () {
-    erc1155 = await ethers.getContractFactory("ERC1155Simple");
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    erc1155Instance = (await erc1155.deploy(baseTokenURI)) as ERC1155Simple;
+    const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
+    erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
 
     this.contractInstance = erc1155Instance;
   });

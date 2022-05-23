@@ -1,28 +1,23 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 
 import { ERC1155ERC1155Craft, ERC1155Simple } from "../../typechain-types";
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE, tokenId } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC1155ERC1155Craft", function () {
-  let resource: ContractFactory;
   let resourceInstance: ERC1155Simple;
-  let refinery: ContractFactory;
   let refineryInstance: ERC1155ERC1155Craft;
 
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    resource = await ethers.getContractFactory("ERC1155Simple");
-    resourceInstance = (await resource.deploy(baseTokenURI)) as ERC1155Simple;
-
-    refinery = await ethers.getContractFactory("ERC1155ERC1155Craft");
-    refineryInstance = (await refinery.deploy()) as ERC1155ERC1155Craft;
+    const resourceFactory = await ethers.getContractFactory("ERC1155Simple");
+    resourceInstance = await resourceFactory.deploy(baseTokenURI);
+    const refineryFactory = await ethers.getContractFactory("ERC1155ERC1155Craft");
+    refineryInstance = await refineryFactory.deploy();
 
     await resourceInstance.grantRole(MINTER_ROLE, refineryInstance.address);
-
     await refineryInstance.createRecipe(1, resourceInstance.address, [tokenId], [10], resourceInstance.address, 4);
 
     this.contractInstance = refineryInstance;

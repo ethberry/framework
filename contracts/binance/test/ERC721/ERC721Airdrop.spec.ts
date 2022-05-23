@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ERC721Airdrop, ERC721Simple } from "../../typechain-types";
@@ -17,20 +16,18 @@ import {
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC721Airdrop", function () {
-  let erc721: ContractFactory;
   let erc721Instance: ERC721Simple;
-  let airdrop: ContractFactory;
   let airdropInstance: ERC721Airdrop;
   let network: Network;
 
   beforeEach(async function () {
-    airdrop = await ethers.getContractFactory("ERC721Airdrop");
-    erc721 = await ethers.getContractFactory("ERC721Simple");
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    erc721Instance = (await erc721.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Simple;
+    const erc721Factory = await ethers.getContractFactory("ERC721Simple");
+    erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
+    const airdropFactory = await ethers.getContractFactory("ERC721Airdrop");
+    airdropInstance = await airdropFactory.deploy(tokenName, tokenSymbol, baseTokenURI, 1, royalty);
 
-    airdropInstance = (await airdrop.deploy(tokenName, tokenSymbol, baseTokenURI, 1, royalty)) as ERC721Airdrop;
     await airdropInstance.setFactory(erc721Instance.address);
 
     network = await ethers.provider.getNetwork();

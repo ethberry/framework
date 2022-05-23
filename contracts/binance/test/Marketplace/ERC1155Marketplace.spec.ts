@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ERC1155Marketplace, ERC1155Simple } from "../../typechain-types";
@@ -17,20 +16,17 @@ import {
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC1155Marketplace", function () {
-  let marketplace: ContractFactory;
   let marketplaceInstance: ERC1155Marketplace;
-  let resources: ContractFactory;
   let resourcesInstance: ERC1155Simple;
   let network: Network;
 
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    marketplace = await ethers.getContractFactory("ERC1155Marketplace");
-    marketplaceInstance = (await marketplace.deploy(tokenName)) as ERC1155Marketplace;
-
-    resources = await ethers.getContractFactory("ERC1155Simple");
-    resourcesInstance = (await resources.deploy(baseTokenURI)) as ERC1155Simple;
+    const marketplaceFactory = await ethers.getContractFactory("ERC1155Marketplace");
+    marketplaceInstance = await marketplaceFactory.deploy(tokenName);
+    const resourcesFactory = await ethers.getContractFactory("ERC1155Simple");
+    resourcesInstance = await resourcesFactory.deploy(baseTokenURI);
     await resourcesInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
 
     network = await ethers.provider.getNetwork();

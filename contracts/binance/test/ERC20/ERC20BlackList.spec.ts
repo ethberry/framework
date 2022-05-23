@@ -1,20 +1,18 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 
 import { ERC20BlackList } from "../../typechain-types";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC20BlackList", function () {
-  let erc20: ContractFactory;
   let erc20Instance: ERC20BlackList;
 
   beforeEach(async function () {
-    erc20 = await ethers.getContractFactory("ERC20BlackList");
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    erc20Instance = (await erc20.deploy(tokenName, tokenSymbol, amount)) as ERC20BlackList;
+    const erc20Factory = await ethers.getContractFactory("ERC20BlackList");
+    erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
 
     this.contractInstance = erc20Instance;
   });

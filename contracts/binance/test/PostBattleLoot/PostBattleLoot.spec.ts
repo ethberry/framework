@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ERC1155Simple, PostBattleLoot } from "../../typechain-types";
@@ -17,21 +16,18 @@ import {
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("PostBattleLoot", function () {
-  let pbl: ContractFactory;
   let pblInstance: PostBattleLoot;
-  let resources: ContractFactory;
   let resourcesInstance: ERC1155Simple;
   let network: Network;
 
   beforeEach(async function () {
-    pbl = await ethers.getContractFactory("PostBattleLoot");
-    resources = await ethers.getContractFactory("ERC1155Simple");
-
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    pblInstance = (await pbl.deploy(tokenName)) as PostBattleLoot;
+    const pblFactory = await ethers.getContractFactory("PostBattleLoot");
+    pblInstance = await pblFactory.deploy(tokenName);
+    const resourcesFactory = await ethers.getContractFactory("ERC1155Simple");
+    resourcesInstance = await resourcesFactory.deploy(baseTokenURI);
 
-    resourcesInstance = (await resources.deploy(baseTokenURI)) as ERC1155Simple;
     await resourcesInstance.grantRole(MINTER_ROLE, pblInstance.address);
 
     network = await ethers.provider.getNetwork();

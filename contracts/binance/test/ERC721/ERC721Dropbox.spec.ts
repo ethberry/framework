@@ -1,6 +1,5 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ERC721Dropbox, ERC721Marketplace, ERC721Simple } from "../../typechain-types";
@@ -19,23 +18,20 @@ import {
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC721Dropbox", function () {
-  let marketplace: ContractFactory;
   let marketplaceInstance: ERC721Marketplace;
-  let item: ContractFactory;
   let itemInstance: ERC721Simple;
-  let dropbox: ContractFactory;
   let dropboxInstance: ERC721Dropbox;
   let network: Network;
 
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    marketplace = await ethers.getContractFactory("ERC721Marketplace");
-    marketplaceInstance = (await marketplace.deploy(tokenName)) as ERC721Marketplace;
-    item = await ethers.getContractFactory("ERC721Simple");
-    itemInstance = (await item.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Simple;
-    dropbox = await ethers.getContractFactory("ERC721Dropbox");
-    dropboxInstance = (await dropbox.deploy(tokenName, tokenSymbol, baseTokenURI, royalty)) as ERC721Dropbox;
+    const marketplaceFactory = await ethers.getContractFactory("ERC721Marketplace");
+    marketplaceInstance = await marketplaceFactory.deploy(tokenName);
+    const itemFactory = await ethers.getContractFactory("ERC721Simple");
+    itemInstance = await itemFactory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
+    const dropboxFactory = await ethers.getContractFactory("ERC721Dropbox");
+    dropboxInstance = await dropboxFactory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
 
     await itemInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
     await dropboxInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
