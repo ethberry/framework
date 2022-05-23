@@ -8,7 +8,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
 import { ApiError } from "@gemunion/provider-api";
 import { FormikForm } from "@gemunion/mui-form";
-import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EnabledLanguages } from "@framework/constants";
 import { IUser } from "@framework/types";
 

@@ -7,7 +7,7 @@ import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EnabledLanguages } from "@framework/constants";
 import { IUser, UserRole, UserStatus } from "@framework/types";
-import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
 

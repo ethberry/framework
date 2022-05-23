@@ -5,7 +5,7 @@ import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-in
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Erc721CollectionType, Erc721TemplateStatus, IErc721Template } from "@framework/types";
-import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { Erc721CollectionStatus, Erc721CollectionType, IErc721Collection } from "@framework/types";
 
 import { validationSchema } from "./validation";

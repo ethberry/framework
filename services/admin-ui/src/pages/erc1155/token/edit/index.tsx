@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, NumberInput, TextInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { AvatarInput } from "@gemunion/mui-inputs-image-s3";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 import { Erc1155TokenStatus, IErc1155Token } from "@framework/types";
 
