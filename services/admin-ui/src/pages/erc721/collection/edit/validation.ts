@@ -6,6 +6,6 @@ export const validationSchema = Yup.object().shape({
   title: Yup.string().required("form.validations.valueMissing"),
   description: draftValidationSchema,
   address: Yup.string().required("form.validations.valueMissing"),
-  baseUri: Yup.string().required("form.validations.valueMissing"),
+  baseTokenURI: Yup.string().required("form.validations.valueMissing"),
   imageUrl: Yup.string().required("form.validations.valueMissing"),
 });
