@@ -47,7 +47,7 @@ contract ERC721Dropbox is ERC721ACBER, ERC721BaseUrl {
   }
 
   function unpack(address collection, uint256 tokenId, uint256 dropboxId) public {
-    require(_isApprovedOrOwner(_msgSender(), tokenId), "DropboxERC721: unpack caller is not owner nor approved");
+    require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Dropbox: unpack caller is not owner nor approved");
 
     ItemData memory data = _itemData[tokenId];
     emit UnpackDropbox(collection, tokenId, data.templateId);

@@ -71,12 +71,12 @@ async function main() {
   const auctionItemInstance = await auctionItemFactory.deploy();
   console.info(`ERC721_AUCTION_ADDR=${auctionItemInstance.address.toLowerCase()}`);
 
-  // ERC721 contract - DropboxERC721
+  // ERC721 contract - ERC721Dropbox
   const erc721DropFactory = await ethers.getContractFactory("ERC721Dropbox");
   const erc721DropInstance = await erc721DropFactory.deploy("ERC721Dropbox", "DBX", "http://localhost:3011/", 100);
   console.info(`ERC721_DROPBOX_ADDR=${erc721DropInstance.address.toLowerCase()}`);
 
-  // ERC721 contract - AirDropERC721
+  // ERC721 contract - ERC721Airdrop
   const airdropboxFactory = await ethers.getContractFactory("ERC721Airdrop");
   const airdropboxInstance = await airdropboxFactory.deploy(
     "ERC721Airdrop",
@@ -112,12 +112,12 @@ async function main() {
   // Grant role to VRFCoordinator in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
   console.info("Hero - MINTER_ROLE granted to VRFCoordinator: ", tx.hash);
-  // Grant role to AirDropERC721 in Hero
+  // Grant role to ERC721Airdrop in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, airdropboxInstance.address);
-  console.info("Hero - MINTER_ROLE granted to AirDropERC721: ", tx.hash);
-  // Grant role to DropboxErc721 in Hero
+  console.info("Hero - MINTER_ROLE granted to ERC721Airdrop: ", tx.hash);
+  // Grant role to ERC721Dropbox in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
-  console.info("Hero - MINTER_ROLE granted to DropboxErc721: ", tx.hash);
+  console.info("Hero - MINTER_ROLE granted to ERC721Dropbox: ", tx.hash);
   // Grant role to CraftErc721 in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, craft721Instance.address);
   console.info("Hero - MINTER_ROLE granted to CraftErc721: ", tx.hash);
@@ -132,12 +132,12 @@ async function main() {
   // Grant role to VRFCoordinator in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
   console.info("Item - MINTER_ROLE granted to VRFCoordinator: ", tx.hash);
-  // Grant role to AirDropERC721 in Item
+  // Grant role to ERC721Airdrop in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, airdropboxInstance.address);
-  console.info("Item - MINTER_ROLE granted to AirDropERC721: ", tx.hash);
-  // Grant role to DropboxErc721 in Item
+  console.info("Item - MINTER_ROLE granted to ERC721Airdrop: ", tx.hash);
+  // Grant role to ERC721Dropbox in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
-  console.info("Item - MINTER_ROLE granted to DropboxErc721: ", tx.hash);
+  console.info("Item - MINTER_ROLE granted to ERC721Dropbox: ", tx.hash);
   // Grant role to CraftErc721 in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, craft721Instance.address);
   console.info("Item - MINTER_ROLE granted to CraftErc721: ", tx.hash);
@@ -155,12 +155,12 @@ async function main() {
   // Grant role to VRFCoordinator in Skill
   // tx = await skillInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
   // console.info("Skill - MINTER_ROLE granted to VRFCoordinator: ", tx.hash);
-  // Grant role to AirDropERC721 in Skill
+  // Grant role to ERC721Airdrop in Skill
   // tx = await skillInstance.grantRole(MINTER_ROLE, airdropboxInstance.address);
-  // console.info("Skill - MINTER_ROLE granted to AirDropERC721: ", tx.hash);
-  // // Grant role to DropboxErc721 in Skill
+  // console.info("Skill - MINTER_ROLE granted to ERC721Airdrop: ", tx.hash);
+  // // Grant role to ERC721Dropbox in Skill
   // tx = await skillInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
-  // console.info("Skill - MINTER_ROLE granted to DropboxErc721: ", tx.hash);
+  // console.info("Skill - MINTER_ROLE granted to ERC721Dropbox: ", tx.hash);
   // Set max types in Skill
   tx = await itemInstance.setMaxTemplateId(maxSkillTypes);
   console.info("Skill - Set Max types: ", tx.hash);
@@ -168,12 +168,12 @@ async function main() {
   // ERC721 Dropbox
   // Grant role to Marketplace in Dropbox
   tx = await erc721DropInstance.grantRole(MINTER_ROLE, market721Instance.address);
-  console.info("DropboxErc721 - MINTER_ROLE granted to Marketplace721: ", tx.hash);
+  console.info("ERC721Dropbox - MINTER_ROLE granted to Marketplace721: ", tx.hash);
 
   // ERC721 Airdrop
   // Grant role to Marketplace in Airdrop
   tx = await airdropboxInstance.grantRole(MINTER_ROLE, market721Instance.address);
-  console.info("AirdropErc721 - MINTER_ROLE granted to Marketplace721: ", tx.hash);
+  console.info("ERC721Airdrop - MINTER_ROLE granted to Marketplace721: ", tx.hash);
 
   // ERC1155 Resources
   // Grant role to Marketplace in Resources

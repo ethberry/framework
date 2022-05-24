@@ -55,10 +55,10 @@ contract ERC721Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
     address signer,
     bytes calldata signature
   ) public whenNotPaused {
-    require(hasRole(MINTER_ROLE, signer), "AirdropERC721: Wrong signer");
+    require(hasRole(MINTER_ROLE, signer), "ERC721Airdrop: Wrong signer");
 
     bool isVerified = _verify(signer, _hash(account, airdropId, templateId), signature);
-    require(isVerified, "AirdropERC721: Invalid signature");
+    require(isVerified, "ERC721Airdrop: Invalid signature");
 
     _itemData[airdropId] = ItemData(templateId);
 
@@ -85,12 +85,12 @@ contract ERC721Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   }
 
   function setFactory(address factory) external onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(factory.isContract(), "AirdropERC721: the factory must be a deployed contract");
+    require(factory.isContract(), "ERC721Airdrop: the factory must be a deployed contract");
     _factory = IERC721Random(factory);
   }
 
   function unpack(uint256 tokenId, uint256 airdropId) public whenNotPaused {
-    require(_isApprovedOrOwner(_msgSender(), tokenId), "AirdropERC721: unpack caller is not owner nor approved");
+    require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Airdrop: unpack caller is not owner nor approved");
     ItemData memory data = _itemData[tokenId];
 
     emit UnpackAirdrop(address(_factory), tokenId, data.templateId, airdropId);

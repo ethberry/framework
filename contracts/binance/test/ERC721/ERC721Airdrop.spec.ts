@@ -102,7 +102,7 @@ describe("ERC721Airdrop", function () {
       const tx1 = airdropInstance
         .connect(this.receiver)
         .redeem(this.receiver.address, tokenId, templateId, this.receiver.address, signature);
-      await expect(tx1).to.be.revertedWith("AirdropERC721: Wrong signer");
+      await expect(tx1).to.be.revertedWith("ERC721Airdrop: Wrong signer");
     });
 
     it("should fail: invalid signature", async function () {
@@ -115,7 +115,7 @@ describe("ERC721Airdrop", function () {
           this.owner.address,
           ethers.utils.formatBytes32String("signature"),
         );
-      await expect(tx1).to.be.revertedWith("AirdropERC721: Invalid signature");
+      await expect(tx1).to.be.revertedWith("ERC721Airdrop: Invalid signature");
     });
 
     it("should fail: token already minted", async function () {

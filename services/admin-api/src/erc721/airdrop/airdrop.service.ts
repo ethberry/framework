@@ -124,7 +124,7 @@ export class Erc721AirderopService {
   public async getSign(data: Record<string, any>): Promise<string> {
     return this.signer._signTypedData(
       {
-        name: "AirdropERC721",
+        name: "ERC721Airdrop",
         version: "1.0.0",
         chainId: ~~this.configService.get<number>("CHAIN_ID", 97),
         verifyingContract: this.configService.get<string>("ERC721_AIRDROP_ADDR", ""),
