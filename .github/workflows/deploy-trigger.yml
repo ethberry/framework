@@ -1,6 +1,9 @@
 name: Manual deploy trigger
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
   cloudbuild-deploy:
