@@ -1,13 +1,12 @@
-name: CI Test on Push
-
+name: Test & Deploy master
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#      - master
+  push:
+    branches:
+      - master
 
 jobs:
-  test:
+  ci-test:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -19,7 +18,7 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_DB: framework-test
           POSTGRES_PORT: 5432
-        ports: ["5432:5432"]
+        ports: [ "5432:5432" ]
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -62,3 +61,26 @@ jobs:
           GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
+  cloudbuild-deploy:
+    needs: ci-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send webhook cloud-build deploy
+        run: |
+          curl --request POST --url $CLOUDBUILD_WEBHOOK_URL --header "content-type: application/json"
+        env:
+          CLOUDBUILD_WEBHOOK_URL: ${{ secrets.CLOUDBUILD_WEBHOOK_URL }}
+
+#  telegram-notify-start:
+#    needs: cloudbuild-deploy
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Send message to Telegram
+#        uses: appleboy/telegram-action@master
+#        with:
+#          to: ${{ secrets.TELEGRAM_CHAT }}
+#          token: ${{ secrets.TELEGRAM_TOKEN }}
+#          format: html
+#          message: |
+#            The manual dispatch event triggered Cloud-build Deploy action.
+#
