@@ -1,1 +1,1 @@
-# localization-email
+# localization-admin-ui
