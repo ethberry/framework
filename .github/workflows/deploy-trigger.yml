@@ -1,0 +1,26 @@
+name: Manual deploy trigger
+on:
+  workflow_dispatch:
+
+jobs:
+  cloudbuild-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send webhook cloud-build deploy
+        run: |
+          curl --request POST --url $CLOUDBUILD_WEBHOOK_URL --header "content-type: application/json"
+        env:
+          CLOUDBUILD_WEBHOOK_URL: ${{ secrets.CLOUDBUILD_WEBHOOK_URL }}
+#  telegram-notify-start:
+#    needs: cloudbuild-deploy
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Send message to Telegram
+#        uses: appleboy/telegram-action@master
+#        with:
+#          to: ${{ secrets.TELEGRAM_CHAT }}
+#          token: ${{ secrets.TELEGRAM_TOKEN }}
+#          format: html
+#          message: |
+#            The manual dispatch event triggered Cloud-build Deploy action.
+#
