@@ -1,5 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { web3Provider, web3WsProvider } from "@gemunion/nestjs-web3";
 
 import { ContractManagerServiceWs } from "./contract-manager.service.ws";
 import { ContractManagerControllerWs } from "./contract-manager.controller.ws";
@@ -24,7 +25,7 @@ import { Erc1155LogModule } from "../../erc1155/logs/log.module";
     Erc721LogModule,
     Erc20LogModule,
   ],
-  providers: [Logger, ContractManagerServiceWs],
+  providers: [Logger, web3Provider, web3WsProvider, ContractManagerServiceWs],
   controllers: [ContractManagerControllerWs],
   exports: [ContractManagerServiceWs],
 })

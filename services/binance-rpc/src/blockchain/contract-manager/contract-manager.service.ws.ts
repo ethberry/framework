@@ -1,7 +1,8 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import Web3 from "web3";
 
-import { IEvent } from "@gemunion/nestjs-web3";
+import { IEvent, WEB3_WEB3 } from "@gemunion/nestjs-web3";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { imageUrl } from "@framework/constants";
@@ -24,6 +25,9 @@ import { Erc721LogService } from "../../erc721/logs/log.service";
 import { Erc20LogService } from "../../erc20/logs/log.service";
 import { Erc1155LogService } from "../../erc1155/logs/log.service";
 
+import ERC20BlackList from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
+import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+
 @Injectable()
 export class ContractManagerServiceWs {
   private chainId: number;
@@ -31,6 +35,8 @@ export class ContractManagerServiceWs {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(WEB3_WEB3)
+    private readonly web3: Web3,
     private readonly configService: ConfigService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
     private readonly erc1155LogService: Erc1155LogService,
@@ -69,6 +75,18 @@ export class ContractManagerServiceWs {
     const {
       returnValues: { addr, name, symbol, cap },
     } = event;
+
+    const byteCodeTempl = await this.web3.eth.getCode(addr);
+    console.log("byteCodeTempl", byteCodeTempl);
+    console.log("returnValues", event.returnValues);
+    const erc20Template =
+      byteCodeTempl === ERC20Simple.deployedBytecode
+        ? "ERC20SMPL"
+        : byteCodeTempl === ERC20BlackList.deployedBytecode
+        ? "ERC20BL"
+        : "";
+
+    console.log("erc20Template", erc20Template);
 
     await this.updateHistory(event);
 
