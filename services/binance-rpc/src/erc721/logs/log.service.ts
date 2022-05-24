@@ -6,26 +6,26 @@ import { Web3LogService } from "@gemunion/nestjs-web3";
 import { Erc721CollectionStatus, Erc721CollectionType } from "@framework/types";
 
 import { Erc721CollectionService } from "../collection/collection.service";
-import { ICreateListenerPayload } from "./interfaces";
-
-import { ERC721FullEvents } from "./interfaces/abi";
+import { ERC721FullEvents, ICreateListenerPayload } from "./interfaces";
 
 @Injectable()
 export class Erc721LogService {
+  private chainId: number;
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly erc721CollectionService: Erc721CollectionService,
     private readonly web3LogService: Web3LogService,
-  ) {}
+  ) {
+    this.chainId = this.configService.get<number>("CHAIN_ID", 1337);
+  }
 
   public async init(): Promise<void> {
-    const chainId = this.configService.get<number>("CHAIN_ID", 1337);
     const erc721CollectionEntities = await this.erc721CollectionService.findAll({
       collectionStatus: Erc721CollectionStatus.ACTIVE,
       collectionType: Erc721CollectionType.TOKEN,
-      chainId,
+      chainId: this.chainId,
     });
 
     const listenAddrss = erc721CollectionEntities.map(erc721CollectionEntity => erc721CollectionEntity.address);
@@ -50,11 +50,10 @@ export class Erc721LogService {
   }
 
   public async add(dto: ICreateListenerPayload): Promise<void> {
-    const chainId = this.configService.get<number>("CHAIN_ID", 1337);
     const erc721CollectionEntities = await this.erc721CollectionService.findAll({
       collectionStatus: Erc721CollectionStatus.ACTIVE,
       collectionType: Erc721CollectionType.TOKEN,
-      chainId,
+      chainId: this.chainId,
     });
     const listenAddrss = dto.address
       ? erc721CollectionEntities.map(erc721CollectionEntity => erc721CollectionEntity.address).concat(dto.address)

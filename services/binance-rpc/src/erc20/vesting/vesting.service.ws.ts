@@ -1,6 +1,8 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 
-import { IEvent } from "@gemunion/nestjs-web3";
+import { Log } from "web3-core";
+
+import { ILogEvent } from "@gemunion/nestjs-web3";
 import {
   Erc20VestingEventType,
   IErc20VestingERC20Released,
@@ -18,24 +20,25 @@ export class Erc20VestingServiceWs {
     private readonly erc20VestingHistoryService: Erc20VestingHistoryService,
   ) {}
 
-  public async erc20Released(event: IEvent<IErc20VestingERC20Released>): Promise<void> {
-    await this.updateHistory(event);
+  public async erc20Released(event: ILogEvent<IErc20VestingERC20Released>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
-  public async ethReleased(event: IEvent<IErc20VestingEtherReleased>): Promise<void> {
-    await this.updateHistory(event);
+  public async ethReleased(event: ILogEvent<IErc20VestingEtherReleased>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
-  private async updateHistory(event: IEvent<TErc20VestingEventData>) {
+  private async updateHistory(event: ILogEvent<TErc20VestingEventData>, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20VestingServiceWs.name);
 
-    const { returnValues, event: eventType, transactionHash, address } = event;
+    const { args, name: eventType } = event;
+    const { transactionHash, address } = context;
 
     await this.erc20VestingHistoryService.create({
       address,
       transactionHash,
       eventType: eventType as Erc20VestingEventType,
-      eventData: returnValues,
+      eventData: args,
     });
   }
 }

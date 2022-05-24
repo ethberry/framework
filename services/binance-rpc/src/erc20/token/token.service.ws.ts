@@ -1,8 +1,10 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Log } from "web3-core";
 
-import { IEvent } from "@gemunion/nestjs-web3";
+import { ILogEvent } from "@gemunion/nestjs-web3";
 import {
   Erc20TokenEventType,
+  IErc20RoleGrant,
   IErc20TokenApprove,
   IErc20TokenSnapshot,
   IErc20TokenTransfer,
@@ -19,28 +21,37 @@ export class Erc20TokenServiceWs {
     private readonly erc20TokenHistoryService: Erc20TokenHistoryService,
   ) {}
 
-  public async transfer(event: IEvent<IErc20TokenTransfer>): Promise<void> {
-    await this.updateHistory(event);
+  public async transfer(event: ILogEvent<IErc20TokenTransfer>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
-  public async approval(event: IEvent<IErc20TokenApprove>): Promise<void> {
-    await this.updateHistory(event);
+  public async approval(event: ILogEvent<IErc20TokenApprove>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
-  public async snapshot(event: IEvent<IErc20TokenSnapshot>): Promise<void> {
-    await this.updateHistory(event);
+  public async snapshot(event: ILogEvent<IErc20TokenSnapshot>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
-  private async updateHistory(event: IEvent<TErc20TokenEventData>) {
+  public async roleGrant(event: ILogEvent<IErc20RoleGrant>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+  }
+
+  public async roleRevoke(event: ILogEvent<IErc20RoleGrant>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+  }
+
+  private async updateHistory(event: ILogEvent<TErc20TokenEventData>, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20TokenServiceWs.name);
 
-    const { returnValues, event: eventType, transactionHash, address } = event;
+    const { args, name: eventType } = event;
+    const { transactionHash, address } = context;
 
     await this.erc20TokenHistoryService.create({
       address,
       transactionHash,
       eventType: eventType as Erc20TokenEventType,
-      eventData: returnValues,
+      eventData: args,
     });
   }
 }

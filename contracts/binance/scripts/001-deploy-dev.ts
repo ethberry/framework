@@ -7,10 +7,11 @@ import { blockAwait } from "./utils/blockAwait";
 import LINK_TOKEN_ABI from "./abi/link.json";
 
 async function main() {
-  const linkContractAddr = "0x42699A7612A82f1d9C36148af9C77354759b210b"; // BESU @linkAddr
-  const vrfCoordinatorAddr = "0xa50a51c09a5c451C52BB714527E1974b686D8e77"; // BESU @vrfCoordinatorAddr
-  // LINK_ADDR=0x42699A7612A82f1d9C36148af9C77354759b210b
-  // VRF_ADDR=0xa50a51c09a5c451C52BB714527E1974b686D8e77
+  const linkContractAddr = "0x6aA8b700cD034Ab4B897B59447f268b33B8cF699"; // BESU @linkAddr
+  const vrfCoordinatorAddr = "0xc83003B2AD5C3EF3e93Cc3Ef0a48E84dc8DBD718"; // BESU @vrfCoordinatorAddr
+  // LINK_ADDR=0x6aA8b700cD034Ab4B897B59447f268b33B8cF699
+  // VRF_ADDR=0xc83003B2AD5C3EF3e93Cc3Ef0a48E84dc8DBD718
+
   // const maxItemTypes = 15;
   // const maxHeroTypes = 3;
   const rlNum = 100; // royaltyNumerator
@@ -31,7 +32,7 @@ async function main() {
   const coinbInstance = await coinbFactory.deploy("ERC20BlCoin", "COINB", 1000000000);
   console.info(`ERC20_COIN_BL_ADDR=${coinbInstance.address.toLowerCase()}`);
 
-  // ERC20 Vesting MANAGER
+  // MANAGER
   const vestFactory = await ethers.getContractFactory("ContractManager");
   const vestInstance = await vestFactory.deploy();
   console.info(`CONTRACT_MANAGER_ADDR=${vestInstance.address.toLowerCase()}`);

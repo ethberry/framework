@@ -12,6 +12,7 @@ export interface IContractManagerERC20VestingDeployed {
   beneficiary: string;
   startTimestamp: string; // in seconds
   duration: string; // in seconds
+  templateId: string;
 }
 
 export interface IContractManagerERC20TokenDeployed {
@@ -19,6 +20,7 @@ export interface IContractManagerERC20TokenDeployed {
   name: string;
   symbol: string;
   cap: string;
+  templateId: string;
 }
 
 export interface IContractManagerERC721TokenDeployed {
@@ -27,11 +29,13 @@ export interface IContractManagerERC721TokenDeployed {
   symbol: string;
   baseTokenURI: string;
   royalty: string;
+  templateId: string;
 }
 
 export interface IContractManagerERC1155TokenDeployed {
   addr: string;
   baseTokenURI: string;
+  templateId: string;
 }
 
 export type TContractManagerEventData =

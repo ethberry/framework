@@ -11,6 +11,12 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.erc1155_template_type_enum AS ENUM (
+        'SIMPLE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.erc1155_collection`,
       columns: [
@@ -34,6 +40,11 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
         {
           name: "base_token_uri",
           type: "varchar",
+        },
+        {
+          name: "template",
+          type: `${ns}.erc1155_template_type_enum`,
+          default: "'SIMPLE'",
         },
         {
           name: "collection_status",
@@ -64,5 +75,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.erc1155_collection`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc1155_template_type_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc1155_collection_status_enum;`);
   }
 }

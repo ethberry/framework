@@ -11,6 +11,13 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.erc20_token_template_enum AS ENUM (
+        'SIMPLE',
+        'BLACKLIST'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.erc20_token`,
       columns: [
@@ -31,6 +38,11 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
           name: "token_status",
           type: `${ns}.erc20_token_status_enum`,
           default: "'ACTIVE'",
+        },
+        {
+          name: "template",
+          type: `${ns}.erc20_token_template_enum`,
+          default: "'SIMPLE'",
         },
         {
           name: "symbol",
@@ -65,5 +77,6 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.erc20_token`);
     await queryRunner.query(`DROP TYPE ${ns}.erc20_token_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc20_token_template_enum;`);
   }
 }

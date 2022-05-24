@@ -28,8 +28,19 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
     const ids = recipe.ingredients.map(ingredient => ingredient.erc1155TokenId);
     const amounts = recipe.ingredients.map(ingredient => ingredient.amount);
 
+    // TODO check one collection for ingredients
+    const ingredientCollectionAddr = recipe.ingredients[0].erc1155Token.erc1155Collection!.address;
+    const rewardCollectionAddr = recipe.erc1155Token!.erc1155Collection!.address;
     const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
-    return contract.createRecipe(recipe.id, ids, amounts, recipe.erc1155TokenId) as Promise<void>;
+
+    return contract.createRecipe(
+      recipe.id,
+      ingredientCollectionAddr,
+      ids,
+      amounts,
+      rewardCollectionAddr,
+      recipe.erc1155TokenId,
+    ) as Promise<void>;
   });
 
   const handleLoadRecipe = (recipe: IErc1155Recipe): (() => Promise<void>) => {

@@ -30,7 +30,7 @@ export class CreateErc20VestingTable1563804021115 implements MigrationInterface 
         },
         {
           name: "duration",
-          type: "int",
+          type: "bigint",
         },
         {
           name: "start_timestamp",

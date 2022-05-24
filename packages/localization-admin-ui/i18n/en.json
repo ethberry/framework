@@ -345,6 +345,7 @@
         "address": "Address",
         "beneficiary": "Beneficiary",
         "duration": "Duration",
+        "finish": "Finish",
         "startTimestamp": "Start time",
         "template": "Template"
       }

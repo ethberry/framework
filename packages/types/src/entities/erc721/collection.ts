@@ -27,4 +27,5 @@ export interface IErc721Collection extends IContract, ISearchable {
   collectionStatus: Erc721CollectionStatus;
   collectionType: Erc721CollectionType;
   erc721Templates?: Array<IErc721Template>;
+  template: Erc721TokenTemplate;
 }

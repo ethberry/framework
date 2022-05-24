@@ -19,6 +19,14 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.erc721_template_type_enum AS ENUM (
+        'SIMPLE',
+        'GRADED',
+        'RANDOM'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.erc721_collection`,
       columns: [
@@ -62,6 +70,11 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
           default: "'TOKEN'",
         },
         {
+          name: "template",
+          type: `${ns}.erc721_template_type_enum`,
+          default: "'SIMPLE'",
+        },
+        {
           name: "address",
           type: "varchar",
         },
@@ -85,5 +98,8 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.erc721_collection`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_collection_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_collection_type_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_template_type_enum;`);
   }
 }

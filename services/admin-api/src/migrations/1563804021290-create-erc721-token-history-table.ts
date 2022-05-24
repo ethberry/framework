@@ -14,7 +14,9 @@ export class CreateErc721TokenHistoryTable1563804021290 implements MigrationInte
         'Redeem',
         'Unpack',
         'UnpackAirdrop',
-        'MintRandom'
+        'MintRandom',
+        'RoleGranted',
+        'RoleRevoked'
       );
     `);
 
