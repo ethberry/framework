@@ -37,7 +37,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
         },
         {
           name: "collection_status",
-          type: `${ns}.erc20_token_status_enum`,
+          type: `${ns}.erc20_collection_status_enum`,
           default: "'NEW'",
         },
         {
@@ -77,7 +77,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.erc20_token`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc20_token_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc20_collection_status_enum;`);
     await queryRunner.query(`DROP TYPE ${ns}.erc20_token_template_enum;`);
   }
 }
