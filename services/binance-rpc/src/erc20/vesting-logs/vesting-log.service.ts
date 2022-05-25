@@ -7,11 +7,11 @@ import { Web3LogService } from "@gemunion/nestjs-web3";
 
 import { Erc20TokenStatus } from "@framework/types";
 
-import { Erc20TokenService } from "../token/token.service";
-import { ERC20FullEvents, ICreateListenerPayload } from "./interfaces";
+import { Erc20VestingService } from "../vesting/vesting.service";
+import { ERC20VestingFullEvents, ICreateListenerPayload } from "./interfaces";
 
 @Injectable()
-export class Erc20LogService {
+export class Erc20VestingLogService {
   private chainId: number;
   private abiArr: Array<AbiItem>;
 
@@ -19,27 +19,26 @@ export class Erc20LogService {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
-    private readonly erc20TokenService: Erc20TokenService,
+    private readonly erc20VestingService: Erc20VestingService,
     private readonly web3LogService: Web3LogService,
   ) {
     this.chainId = this.configService.get<number>("CHAIN_ID", 1337);
   }
 
   public async init(): Promise<void> {
-    const erc20TokenEntities = await this.erc20TokenService.findAll({
-      tokenStatus: Erc20TokenStatus.ACTIVE,
+    const erc20VestingEntities = await this.erc20VestingService.findAll({
       chainId: this.chainId,
     });
 
-    const listenTokenAddrss = erc20TokenEntities.map(erc20TokenEntity => erc20TokenEntity.address);
-    this.loggerService.log(`Listening@Erc20: ${listenTokenAddrss.toString()}`, Erc20LogService.name);
+    const listenVestingAddrss = erc20VestingEntities.map(erc20VestingEntity => erc20VestingEntity.address);
+    this.loggerService.log(`Listening@Erc20Vesting: ${listenVestingAddrss.toString()}`, Erc20VestingLogService.name);
 
     await this.web3LogService.listen({
       logOptions: {
-        address: listenTokenAddrss,
+        address: listenVestingAddrss,
         topics: [],
       },
-      contractInterface: ERC20FullEvents,
+      contractInterface: ERC20VestingFullEvents,
     });
   }
 
@@ -48,20 +47,18 @@ export class Erc20LogService {
 
     await this.web3LogService.listen({
       logOptions: dto,
-      contractInterface: ERC20FullEvents,
+      contractInterface: ERC20VestingFullEvents,
     });
   }
 
   public async add(dto: ICreateListenerPayload): Promise<void> {
-    const erc20TokenEntities = await this.erc20TokenService.findAll({
-      tokenStatus: Erc20TokenStatus.ACTIVE,
+    const erc20VestingEntities = await this.erc20VestingService.findAll({
       chainId: this.chainId,
     });
+    const listenVestingAddrss = erc20VestingEntities.map(erc20VestingEntity => erc20VestingEntity.address);
 
-    const listenTokenAddrss = erc20TokenEntities.map(erc20TokenEntity => erc20TokenEntity.address);
-
-    const listenAddrss = dto.address ? listenTokenAddrss.concat(dto.address) : listenTokenAddrss;
-    this.loggerService.log(`Listening@Erc20: ${listenAddrss.toString()}`, Erc20LogService.name);
+    const listenAddrss = dto.address ? listenVestingAddrss.concat(dto.address) : listenVestingAddrss;
+    this.loggerService.log(`Listening@Erc20Vesting: ${listenAddrss.toString()}`, Erc20VestingLogService.name);
     await this.web3LogService.unsubscribe();
 
     await this.web3LogService.listen({
@@ -69,7 +66,7 @@ export class Erc20LogService {
         address: listenAddrss,
         topics: dto.topics,
       },
-      contractInterface: ERC20FullEvents,
+      contractInterface: ERC20VestingFullEvents,
     });
   }
 }
