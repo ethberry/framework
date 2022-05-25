@@ -11,12 +11,11 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
-import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
 
 import "../interfaces/IERC721Random.sol";
-import "../../MOCKS/ChainLink/ERC721ChainLinkBesu.sol";
+import "../../MOCKS/ChainLink/ERC721ChainLinkRinkeby.sol";
 
-contract ERC721RandomTest is IERC721Random, ERC721ChainLinkBesu, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
+contract ERC721RandomTest is IERC721Random, ERC721ChainLinkRinkeby, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
   using Counters for Counters.Counter;
 
   struct Request {

@@ -12,8 +12,8 @@ import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/type
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-// import ERC721RandomTest from "@framework/binance-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
-import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+import ERC721RandomTest from "@framework/binance-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+// import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 
 import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
@@ -24,8 +24,8 @@ function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
     case Erc721TokenTemplate.GRADED:
       return ERC721Graded.bytecode;
     case Erc721TokenTemplate.RANDOM:
-      // return ERC721RandomTest.bytecode;
-      return ERC721Random.bytecode;
+      return ERC721RandomTest.bytecode;
+    // return ERC721Random.bytecode;
     default:
       throw new Error("Unknown template");
   }
