@@ -2,8 +2,8 @@ version: "3.3"
 
 services:
 
-  besu-test:
-    container_name: besu-test
+  besu:
+    container_name: besu
     user: root
     restart: "on-failure"
     image: hyperledger/besu:latest
@@ -29,8 +29,8 @@ services:
       - "8547:8547"
       - "30303:30303"
 
-  besu-explorer:
-    container_name: besu-explorer
+  explorer:
+    container_name: explorer
     restart: "on-failure"
     image: alethio/ethereum-lite-explorer
     environment:
