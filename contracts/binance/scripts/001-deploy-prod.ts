@@ -7,8 +7,10 @@ import { blockAwait } from "./utils/blockAwait";
 import LINK_TOKEN_ABI from "./abi/link.json";
 
 async function main() {
-  const linkContractAddr = "0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06"; // BINANCE testnet @linkAddr
-  const vrfCoordinatorAddr = "0xa555fC018435bef5A13C6c6870a9d4C11DEC329C"; // BINANCE testnet @vrfCoordinatorAddr
+  const linkContractAddr = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"; // Rinkeby @linkAddr
+  const vrfCoordinatorAddr = "0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B"; // Rinkeby @vrfCoordinatorAddr
+  // const linkContractAddr = "0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06"; // BINANCE testnet @linkAddr
+  // const vrfCoordinatorAddr = "0xa555fC018435bef5A13C6c6870a9d4C11DEC329C"; // BINANCE testnet @vrfCoordinatorAddr
   // const maxItemTypes = 15;
   // const maxHeroTypes = 3;
   const rlNum = 100; // royaltyNumerator

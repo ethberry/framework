@@ -22,7 +22,7 @@ async function main() {
   const linkBalanceOwner = await linkInstance.balanceOf(owner.address);
   console.info("linkBalanceOwner", linkBalanceOwner);
 
-  // Next, you have to add manually LINK and VRF addresses to MOCK test contract:
+  // Next, add LINK and VRF addresses to MOCK test contract:
   // contracts/binance/contracts/MOCKS/ChainLink/ERC721ChainLinkBesu.sol
 }
 

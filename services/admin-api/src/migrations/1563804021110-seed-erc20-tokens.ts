@@ -15,7 +15,6 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
       INSERT INTO ${ns}.erc20_token (
         title,
         description,
-        token_status,
         amount,
         symbol,
         address,
@@ -26,7 +25,6 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
       ) VALUES (
         'Old good space credits',
         '${simpleFormatting}',
-        'ACTIVE',
         '${constants.WeiPerEther.toString()}',
         'GEM20',
         '${erc20TokenAddress}',

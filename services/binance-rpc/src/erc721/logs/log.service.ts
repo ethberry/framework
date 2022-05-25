@@ -29,24 +29,29 @@ export class Erc721LogService {
     });
 
     const listenAddrss = erc721CollectionEntities.map(erc721CollectionEntity => erc721CollectionEntity.address);
-    this.loggerService.log(`Listening@Erc721: ${listenAddrss.toString()}`, Erc721LogService.name);
 
-    await this.web3LogService.listen({
-      logOptions: {
-        address: erc721CollectionEntities.map(erc721CollectionEntity => erc721CollectionEntity.address),
-        topics: [],
-      },
-      contractInterface: ERC721FullEvents,
-    });
+    if (listenAddrss.length > 0) {
+      await this.web3LogService.listen({
+        logOptions: {
+          address: erc721CollectionEntities.map(erc721CollectionEntity => erc721CollectionEntity.address),
+          topics: [],
+        },
+        contractInterface: ERC721FullEvents,
+      });
+      this.loggerService.log(`Listening@Erc721: ${listenAddrss.toString()}`, Erc721LogService.name);
+    }
   }
 
   public async update(dto: ICreateListenerPayload): Promise<void> {
     await this.web3LogService.unsubscribe();
 
-    await this.web3LogService.listen({
-      logOptions: dto,
-      contractInterface: ERC721FullEvents,
-    });
+    if (dto.address.length > 0) {
+      await this.web3LogService.listen({
+        logOptions: dto,
+        contractInterface: ERC721FullEvents,
+      });
+      this.loggerService.log(`Listening@Erc721: ${dto.address.toString()}`, Erc721LogService.name);
+    }
   }
 
   public async add(dto: ICreateListenerPayload): Promise<void> {
