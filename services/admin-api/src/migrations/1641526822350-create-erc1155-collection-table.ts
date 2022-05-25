@@ -50,7 +50,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
         {
           name: "collection_status",
           type: `${ns}.erc1155_collection_status_enum`,
-          default: "'PENDING'",
+          default: "'NEW'",
         },
         {
           name: "address",
