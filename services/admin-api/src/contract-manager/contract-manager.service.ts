@@ -179,8 +179,8 @@ export class ContractManagerService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public getBytecodeByErc20TokenTemplate(template: Erc20TokenTemplate) {
-    switch (template) {
+  public getBytecodeByErc20TokenTemplate(contractTemplate: Erc20TokenTemplate) {
+    switch (contractTemplate) {
       case Erc20TokenTemplate.SIMPLE:
         return ERC20Simple.bytecode;
       case Erc20TokenTemplate.BLACKLIST:
@@ -190,8 +190,8 @@ export class ContractManagerService {
     }
   }
 
-  public getBytecodeByErc20VestingTemplate(template: Erc20VestingTemplate) {
-    switch (template) {
+  public getBytecodeByErc20VestingTemplate(contractTemplate: Erc20VestingTemplate) {
+    switch (contractTemplate) {
       case Erc20VestingTemplate.LINEAR:
         return LinearVesting.bytecode;
       case Erc20VestingTemplate.GRADED:
@@ -203,8 +203,8 @@ export class ContractManagerService {
     }
   }
 
-  public getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
-    switch (template) {
+  public getBytecodeByErc721TokenTemplate(contractTemplate: Erc721TokenTemplate) {
+    switch (contractTemplate) {
       case Erc721TokenTemplate.SIMPLE:
         return ERC721Simple.bytecode;
       case Erc721TokenTemplate.GRADED:
@@ -217,8 +217,8 @@ export class ContractManagerService {
     }
   }
 
-  public getBytecodeByErc1155TokenTemplate(template: Erc1155TokenTemplate) {
-    switch (template) {
+  public getBytecodeByErc1155TokenTemplate(contractTemplate: Erc1155TokenTemplate) {
+    switch (contractTemplate) {
       case Erc1155TokenTemplate.SIMPLE:
         return ERC1155Simple.bytecode;
       default:

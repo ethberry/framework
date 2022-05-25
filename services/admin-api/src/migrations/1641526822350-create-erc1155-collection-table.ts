@@ -42,7 +42,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
           type: "varchar",
         },
         {
-          name: "template",
+          name: "contract_template",
           type: `${ns}.erc1155_template_type_enum`,
           default: "'SIMPLE'",
         },

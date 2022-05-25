@@ -66,7 +66,7 @@ export const Erc20VestingViewDialog: FC<IErc20VestingViewDialogProps> = props =>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.template" />
+                <FormattedMessage id="pages.erc20-vesting.view.contractTemplate" />
               </TableCell>
               <TableCell align="right">{vestingTemplate}</TableCell>
             </TableRow>

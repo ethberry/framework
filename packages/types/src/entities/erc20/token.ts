@@ -17,6 +17,6 @@ export interface IErc20Token extends IContract, ISearchable {
   amount: string;
   address: string;
   tokenStatus: Erc20TokenStatus;
-  template: Erc20TokenTemplate;
+  contractTemplate: Erc20TokenTemplate;
   history?: Array<IErc20TokenHistory>;
 }

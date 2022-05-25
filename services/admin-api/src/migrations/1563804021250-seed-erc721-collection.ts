@@ -24,7 +24,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         symbol,
         royalty,
         collection_type,
-        template,
+        contract_template,
         address,
         base_token_uri,
         chain_id,

@@ -25,7 +25,7 @@ export class Erc1155CollectionEntity extends Mixin(ContractBaseEntity, Searchabl
     type: "enum",
     enum: Erc1155TokenTemplate,
   })
-  public template: Erc1155TokenTemplate;
+  public contractTemplate: Erc1155TokenTemplate;
 
   @OneToMany(_type => Erc1155TokenEntity, token => token.erc1155Collection)
   public erc1155Tokens: Array<Erc1155TokenEntity>;

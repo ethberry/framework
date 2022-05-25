@@ -347,7 +347,7 @@
         "duration": "Duration",
         "finish": "Finish",
         "startTimestamp": "Start time",
-        "template": "Template"
+        "contractTemplate": "Template"
       }
     },
     "erc721-airdrops": {

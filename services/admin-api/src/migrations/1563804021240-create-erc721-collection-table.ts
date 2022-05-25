@@ -70,7 +70,7 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
           default: "'TOKEN'",
         },
         {
-          name: "template",
+          name: "contract_template",
           type: `${ns}.erc721_template_type_enum`,
           default: "'SIMPLE'",
         },

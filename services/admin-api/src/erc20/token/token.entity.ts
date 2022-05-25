@@ -17,7 +17,7 @@ export class Erc20TokenEntity extends Mixin(ContractBaseEntity, SearchableEntity
     type: "enum",
     enum: Erc20TokenTemplate,
   })
-  public template: Erc20TokenTemplate;
+  public contractTemplate: Erc20TokenTemplate;
 
   @Column({ type: "varchar" })
   public symbol: string;

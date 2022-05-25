@@ -40,7 +40,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
           default: "'ACTIVE'",
         },
         {
-          name: "template",
+          name: "contract_template",
           type: `${ns}.erc20_token_template_enum`,
           default: "'SIMPLE'",
         },
