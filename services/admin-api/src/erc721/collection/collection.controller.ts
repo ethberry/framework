@@ -7,7 +7,6 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
-  Post,
   Put,
   Query,
   UseInterceptors,
@@ -18,12 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc721CollectionService } from "./collection.service";
 import { Erc721CollectionEntity } from "./collection.entity";
-import {
-  Erc721CollectionAutocompleteDto,
-  Erc721CollectionCreateDto,
-  Erc721CollectionSearchDto,
-  Erc721CollectionUpdateDto,
-} from "./dto";
+import { Erc721CollectionAutocompleteDto, Erc721CollectionSearchDto, Erc721CollectionUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/erc721-collections")
@@ -39,11 +33,6 @@ export class Erc721CollectionController {
   @Get("/autocomplete")
   public autocomplete(@Query() dto: Erc721CollectionAutocompleteDto): Promise<Array<Erc721CollectionEntity>> {
     return this.erc721CollectionService.autocomplete(dto);
-  }
-
-  @Post("/")
-  public create(@Body() dto: Erc721CollectionCreateDto): Promise<Erc721CollectionEntity> {
-    return this.erc721CollectionService.create(dto);
   }
 
   @Put("/:id")

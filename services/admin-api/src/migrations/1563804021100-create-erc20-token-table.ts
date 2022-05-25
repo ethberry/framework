@@ -8,7 +8,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
       CREATE TYPE ${ns}.erc20_collection_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE',
-        'PENDING'
+        'NEW'
       );
     `);
 
@@ -38,7 +38,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
         {
           name: "collection_status",
           type: `${ns}.erc20_token_status_enum`,
-          default: "'PENDING'",
+          default: "'NEW'",
         },
         {
           name: "contract_template",

@@ -27,6 +27,6 @@ export class Erc1155CollectionUpdateDto implements IErc1155CollectionUpdateDto {
   })
   @Transform(({ value }) => value as Erc1155CollectionStatus)
   @IsEnum(Erc1155CollectionStatus, { message: "badInput" })
-  @Validate(ForbidEnumValues, [Erc1155CollectionStatus.PENDING])
+  @Validate(ForbidEnumValues, [Erc1155CollectionStatus.NEW])
   public collectionStatus: Erc1155CollectionStatus;
 }

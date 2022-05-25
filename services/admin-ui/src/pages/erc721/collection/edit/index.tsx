@@ -47,7 +47,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
       <SelectInput
         name="collectionStatus"
         options={Erc721CollectionStatus}
-        disabledOptions={[Erc721CollectionStatus.PENDING]}
+        disabledOptions={[Erc721CollectionStatus.NEW]}
       />
       <SelectInput name="collectionType" options={Erc721CollectionType} readOnly />
       <AvatarInput name="imageUrl" />

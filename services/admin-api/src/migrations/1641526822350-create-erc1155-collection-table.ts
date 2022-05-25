@@ -8,7 +8,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
       CREATE TYPE ${ns}.erc1155_collection_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE',
-        'PENDING'
+        'NEW'
       );
     `);
 

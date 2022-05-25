@@ -5,7 +5,7 @@ import { IErc1155Token } from "./token";
 export enum Erc1155CollectionStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
-  PENDING = "PENDING",
+  NEW = "NEW",
 }
 
 export enum Erc1155TokenTemplate {

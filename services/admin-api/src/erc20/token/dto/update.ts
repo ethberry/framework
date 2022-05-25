@@ -18,6 +18,6 @@ export class Erc20TokenUpdateDto implements IErc20TokenUpdateDto {
   })
   @Transform(({ value }) => value as Erc20TokenStatus)
   @IsEnum(Erc20TokenStatus, { message: "badInput" })
-  @Validate(ForbidEnumValues, [Erc20TokenStatus.PENDING])
+  @Validate(ForbidEnumValues, [Erc20TokenStatus.NEW])
   public tokenStatus: Erc20TokenStatus;
 }

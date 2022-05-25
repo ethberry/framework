@@ -8,7 +8,7 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
       CREATE TYPE ${ns}.erc721_collection_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE',
-        'PENDING'
+        'NEW'
       );
     `);
 
@@ -63,7 +63,7 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
         {
           name: "collection_status",
           type: `${ns}.erc721_collection_status_enum`,
-          default: "'PENDING'",
+          default: "'NEW'",
         },
         {
           name: "collection_type",

@@ -45,7 +45,7 @@ export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> 
       <SelectInput
         name="collectionStatus"
         options={Erc1155CollectionStatus}
-        disabledOptions={[Erc1155CollectionStatus.PENDING]}
+        disabledOptions={[Erc1155CollectionStatus.NEW]}
       />
       <AvatarInput name="imageUrl" />
     </FormDialog>
