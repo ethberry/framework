@@ -68,7 +68,7 @@ services:
       - "30303:30303"
 
   explorer:
-    container_name: ёexplorer
+    container_name: explorer
     restart: "on-failure"
     image: alethio/ethereum-lite-explorer
     environment:
