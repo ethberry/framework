@@ -49,7 +49,8 @@
     },
     "collectionStatus": {
       "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
+      "INACTIVE": "Inactive",
+      "PENDING": "Pending"
     },
     "collectionType": {
       "AIRDROP": "Airdrop",
@@ -95,7 +96,8 @@
       "BURNED": "Burned",
       "INACTIVE": "Inactive",
       "MINTED": "Minted",
-      "NEW": "New"
+      "NEW": "New",
+      "PENDING": "Pending"
     },
     "userRoles": {
       "ADMIN": "Admin",

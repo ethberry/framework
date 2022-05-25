@@ -44,7 +44,11 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
       <RichTextEditor name="description" />
       <TextInput name="address" readOnly />
       <TextInput name="baseTokenURI" readOnly />
-      <SelectInput name="collectionStatus" options={Erc721CollectionStatus} />
+      <SelectInput
+        name="collectionStatus"
+        options={Erc721CollectionStatus}
+        disabledOptions={[Erc721CollectionStatus.PENDING]}
+      />
       <SelectInput name="collectionType" options={Erc721CollectionType} readOnly />
       <AvatarInput name="imageUrl" />
     </FormDialog>

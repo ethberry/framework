@@ -7,7 +7,8 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc1155_collection_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE'
+        'INACTIVE',
+        'PENDING'
       );
     `);
 
@@ -49,7 +50,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
         {
           name: "collection_status",
           type: `${ns}.erc1155_collection_status_enum`,
-          default: "'ACTIVE'",
+          default: "'PENDING'",
         },
         {
           name: "address",

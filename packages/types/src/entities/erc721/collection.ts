@@ -5,6 +5,7 @@ import { IErc721Template } from "./template";
 export enum Erc721CollectionStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
+  PENDING = "PENDING",
 }
 
 export enum Erc721CollectionType {

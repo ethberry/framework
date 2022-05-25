@@ -5,9 +5,10 @@ import { ns } from "@framework/constants";
 export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc20_token_status_enum AS ENUM (
+      CREATE TYPE ${ns}.erc20_collection_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE'
+        'INACTIVE',
+        'PENDING'
       );
     `);
 
@@ -35,9 +36,9 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "token_status",
+          name: "collection_status",
           type: `${ns}.erc20_token_status_enum`,
-          default: "'ACTIVE'",
+          default: "'PENDING'",
         },
         {
           name: "contract_template",

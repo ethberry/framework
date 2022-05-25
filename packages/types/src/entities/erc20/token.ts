@@ -5,6 +5,7 @@ import { IErc20TokenHistory } from "./token-history";
 export enum Erc20TokenStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
+  PENDING = "PENDING",
 }
 
 export enum Erc20TokenTemplate {
