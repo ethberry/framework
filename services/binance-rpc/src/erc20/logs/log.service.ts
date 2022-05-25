@@ -1,8 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { AbiItem } from "web3-utils";
-
 import { Web3LogService } from "@gemunion/nestjs-web3";
 
 import { Erc20TokenStatus } from "@framework/types";
@@ -13,7 +11,6 @@ import { ERC20FullEvents, ICreateListenerPayload } from "./interfaces";
 @Injectable()
 export class Erc20LogService {
   private chainId: number;
-  private abiArr: Array<AbiItem>;
 
   constructor(
     @Inject(Logger)
@@ -31,25 +28,30 @@ export class Erc20LogService {
       chainId: this.chainId,
     });
 
-    const listenTokenAddrss = erc20TokenEntities.map(erc20TokenEntity => erc20TokenEntity.address);
-    this.loggerService.log(`Listening@Erc20: ${listenTokenAddrss.toString()}`, Erc20LogService.name);
+    const listenAddrss = erc20TokenEntities.map(erc20TokenEntity => erc20TokenEntity.address);
 
-    await this.web3LogService.listen({
-      logOptions: {
-        address: listenTokenAddrss,
-        topics: [],
-      },
-      contractInterface: ERC20FullEvents,
-    });
+    if (listenAddrss.length > 0) {
+      await this.web3LogService.listen({
+        logOptions: {
+          address: listenAddrss,
+          topics: [],
+        },
+        contractInterface: ERC20FullEvents,
+      });
+      this.loggerService.log(`Listening@Erc20: ${listenAddrss.toString()}`, Erc20LogService.name);
+    }
   }
 
   public async update(dto: ICreateListenerPayload): Promise<void> {
     await this.web3LogService.unsubscribe();
 
-    await this.web3LogService.listen({
-      logOptions: dto,
-      contractInterface: ERC20FullEvents,
-    });
+    if (dto.address.length > 0) {
+      await this.web3LogService.listen({
+        logOptions: dto,
+        contractInterface: ERC20FullEvents,
+      });
+      this.loggerService.log(`Listening@Erc20: ${dto.address.toString()}`, Erc20LogService.name);
+    }
   }
 
   public async add(dto: ICreateListenerPayload): Promise<void> {

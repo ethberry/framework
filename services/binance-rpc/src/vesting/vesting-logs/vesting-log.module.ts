@@ -3,12 +3,11 @@ import { ConfigModule } from "@nestjs/config";
 
 import { Web3LogModule, Web3LogService } from "@gemunion/nestjs-web3";
 
-import { Erc20TokenModule } from "../token/token.module";
 import { Erc20VestingModule } from "../vesting/vesting.module";
 import { Erc20VestingLogService } from "./vesting-log.service";
 
 @Module({
-  imports: [Web3LogModule, ConfigModule, Erc20TokenModule, Erc20VestingModule],
+  imports: [Web3LogModule, ConfigModule, Erc20VestingModule],
   providers: [Logger, Erc20VestingLogService],
   exports: [Erc20VestingLogService],
 })

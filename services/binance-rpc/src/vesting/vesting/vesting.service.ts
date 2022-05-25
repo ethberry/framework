@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { Erc20VestingEntity } from "./vesting.entity";
-import { Erc20TokenEntity } from "../token/token.entity";
 
 @Injectable()
 export class Erc20VestingService {

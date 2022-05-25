@@ -15,6 +15,7 @@ import {
   IErc721TokenMintRandom,
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
+  IErc721RandomRequest,
 } from "@framework/types";
 
 import { Erc721TokenServiceWs } from "./token.service.ws";
@@ -226,5 +227,11 @@ export class Erc721TokenControllerWs {
   @EventPattern({ eventName: Erc721TokenEventType.RoleRevoked })
   public roleRevoke(@Payload() event: ILogEvent<IErc721RoleGrant>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceWs.roleRevoke(event, context);
+  }
+
+  // dev test - random request
+  @EventPattern({ eventName: "RandomRequest" })
+  public randomRequest(@Payload() event: ILogEvent<IErc721RandomRequest>, @Ctx() context: Log): Promise<void> {
+    return this.erc721TokenServiceWs.randomRequest(event, context);
   }
 }

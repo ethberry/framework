@@ -5,8 +5,6 @@ import { AbiItem } from "web3-utils";
 
 import { Web3LogService } from "@gemunion/nestjs-web3";
 
-import { Erc20TokenStatus } from "@framework/types";
-
 import { Erc20VestingService } from "../vesting/vesting.service";
 import { ERC20VestingFullEvents, ICreateListenerPayload } from "./interfaces";
 
@@ -30,25 +28,30 @@ export class Erc20VestingLogService {
       chainId: this.chainId,
     });
 
-    const listenVestingAddrss = erc20VestingEntities.map(erc20VestingEntity => erc20VestingEntity.address);
-    this.loggerService.log(`Listening@Erc20Vesting: ${listenVestingAddrss.toString()}`, Erc20VestingLogService.name);
+    const listenAddrss = erc20VestingEntities.map(erc20VestingEntity => erc20VestingEntity.address);
 
-    await this.web3LogService.listen({
-      logOptions: {
-        address: listenVestingAddrss,
-        topics: [],
-      },
-      contractInterface: ERC20VestingFullEvents,
-    });
+    if (listenAddrss.length > 0) {
+      await this.web3LogService.listen({
+        logOptions: {
+          address: listenAddrss,
+          topics: [],
+        },
+        contractInterface: ERC20VestingFullEvents,
+      });
+      this.loggerService.log(`Listening@Erc20Vesting: ${listenAddrss.toString()}`, Erc20VestingLogService.name);
+    }
   }
 
   public async update(dto: ICreateListenerPayload): Promise<void> {
     await this.web3LogService.unsubscribe();
 
-    await this.web3LogService.listen({
-      logOptions: dto,
-      contractInterface: ERC20VestingFullEvents,
-    });
+    if (dto.address.length > 0) {
+      await this.web3LogService.listen({
+        logOptions: dto,
+        contractInterface: ERC20VestingFullEvents,
+      });
+      this.loggerService.log(`Listening@Erc20Vesting: ${dto.address.toString()}`, Erc20VestingLogService.name);
+    }
   }
 
   public async add(dto: ICreateListenerPayload): Promise<void> {

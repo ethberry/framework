@@ -79,6 +79,11 @@ export interface IErc721RoleGrant {
   sender: string;
 }
 
+// dev random test
+export interface IErc721RandomRequest {
+  requestId: string;
+}
+
 export type TErc721TokenEventData =
   | IErc721TokenTransfer
   | IErc721TokenApprove
@@ -89,7 +94,8 @@ export type TErc721TokenEventData =
   | IErc721AirdropUnpack
   | IErc721AirdropRedeem
   | IErc721RoleGrant
-  | IErc721TokenMintRandom;
+  | IErc721TokenMintRandom
+  | IErc721RandomRequest;
 
 export interface IErc721TokenHistory extends IIdBase {
   address: string;

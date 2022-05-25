@@ -7,10 +7,8 @@ import { blockAwait } from "./utils/blockAwait";
 import LINK_TOKEN_ABI from "./abi/link.json";
 
 async function main() {
-  const linkContractAddr = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"; // Rinkeby @linkAddr
-  const vrfCoordinatorAddr = "0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B"; // Rinkeby @vrfCoordinatorAddr
-  // address(0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B), // vrfCoordinator
-  //   address(0x01BE23585060835E02B77ef475b0Cc51aA1e0709), // LINK token
+  const linkContractAddr = "0xD218078f319c4569Cb1BEfA40a728F15Cef0313E"; // besu @linkAddr
+  const vrfCoordinatorAddr = "0x5bC13f7Eeae521CDD95Cd000B92E586541cF68CE"; // besu @vrfCoordinatorAddr
 
   // const maxItemTypes = 15;
   // const maxHeroTypes = 3;

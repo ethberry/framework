@@ -12,6 +12,7 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
+import { VestingModule } from "./vesting/vesting.module";
 import { Erc20Module } from "./erc20/erc20.module";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
@@ -45,6 +46,7 @@ import { ContractManagerModule } from "./blockchain/contract-manager/contract-ma
     RequestLoggerModule,
     HealthModule,
     ContractManagerModule,
+    VestingModule,
     Erc20Module,
     Erc721Module,
     Erc1155Module,

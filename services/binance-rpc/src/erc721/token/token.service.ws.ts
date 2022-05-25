@@ -13,6 +13,7 @@ import {
   IErc721AirdropUnpack,
   IErc721DefaultRoyaltyInfo,
   IErc721DropboxUnpack,
+  IErc721RandomRequest,
   IErc721RoleGrant,
   IErc721TokenApprove,
   IErc721TokenApprovedForAll,
@@ -260,6 +261,10 @@ export class Erc721TokenServiceWs {
   }
 
   public async roleRevoke(event: ILogEvent<IErc721RoleGrant>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+  }
+
+  public async randomRequest(event: ILogEvent<IErc721RandomRequest>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

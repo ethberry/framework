@@ -19,3 +19,4 @@ sudo -H -u app docker run --rm \
     -w="/home/app" \
     docker/compose:1.24.0 -f docker-compose-cloudbuild.yml up -d
 
+#select pg_terminate_backend(pid) from pg_stat_activity where datname='framework'; drop database framework; create database framework;

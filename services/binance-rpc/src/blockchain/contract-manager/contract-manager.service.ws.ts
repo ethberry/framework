@@ -20,7 +20,7 @@ import {
 
 import { ContractManagerHistoryService } from "../contract-manager-history/contract-manager-history.service";
 import { Erc20TokenService } from "../../erc20/token/token.service";
-import { Erc20VestingService } from "../../erc20/vesting/vesting.service";
+import { Erc20VestingService } from "../../vesting/vesting/vesting.service";
 import { Erc721CollectionService } from "../../erc721/collection/collection.service";
 import { Erc1155CollectionService } from "../../erc1155/collection/collection.service";
 import { Erc721LogService } from "../../erc721/logs/log.service";
@@ -86,6 +86,7 @@ export class ContractManagerServiceWs {
       chainId: this.chainId,
     });
 
+    // TODO should we listen for NEW collections?
     await this.erc20LogService.add({
       address: [addr.toLowerCase()],
       topics: [],
