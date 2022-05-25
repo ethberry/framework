@@ -54,11 +54,6 @@ async function main() {
   const craft721Instance = await craft721Factory.deploy();
   console.info(`ERC721_CRAFT_ADDR=${craft721Instance.address.toLowerCase()}`);
 
-  // Auction Item contract
-  const auctionItemFactory = await ethers.getContractFactory("AuctionERC721");
-  const auctionItemInstance = await auctionItemFactory.deploy();
-  console.info(`ERC721_AUCTION_ADDR=${auctionItemInstance.address.toLowerCase()}`);
-
   // ERC721 contract - ERC721Dropbox
   const erc721DropFactory = await ethers.getContractFactory("ERC721Dropbox");
   const erc721DropInstance = await erc721DropFactory.deploy("ERC721Dropbox", "DBX", "http://localhost:3011/", 100);
@@ -173,17 +168,6 @@ async function main() {
   // Approve Craft in Resources for Owner
   tx = await resInstance.setApprovalForAll(craftInstance.address, true);
   console.info(`Resources - setApprovalForAll for Craft `, tx.hash);
-
-  // Auction Erc721
-  // Whitelist Items in Auction
-  tx = await auctionItemInstance.whitelist(itemInstance.address);
-  console.info("Auction - Items contract whitelisted: ", tx.hash);
-  // Whitelist Hero in Auction
-  tx = await auctionItemInstance.whitelist(heroInstance.address);
-  console.info("Auction - Hero contract whitelisted: ", tx.hash);
-  // Whitelist Skill in Auction
-  tx = await auctionItemInstance.whitelist(skillInstance.address);
-  console.info("Auction - Skill contract whitelisted: ", tx.hash);
 
   // Fund LINK to Items
   const linkTokenContract = new ethers.Contract(linkContractAddr, LINK_TOKEN_ABI, owner);

@@ -16,7 +16,6 @@ import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
 import { Erc721TemplateEntity } from "./erc721/template/template.entity";
 import { Erc721TokenEntity } from "./erc721/token/token.entity";
 import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
-import { Erc721AuctionEntity } from "./erc721/auction/auction.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
 import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
 import { Erc721IngredientEntity } from "./erc721/ingredient/ingredient.entity";
@@ -58,8 +57,6 @@ import { CreateErc1155Recipe1645160381120 } from "./migrations/1645160381120-cre
 import { SeedErc1155Recipe1645160381130 } from "./migrations/1645160381130-seed-erc1155-recipe";
 import { CreateErc1155Ingredient1645161089530 } from "./migrations/1645161089530-create-erc1155-ingredient-table";
 import { SeedErc1155Ingredient1645161089540 } from "./migrations/1645161089540-seed-erc1155-ingredient";
-import { CreateErc721AuctionTable1646924902900 } from "./migrations/1646924902900-create-erc721-auction-table";
-import { CreateErc721AuctionHistoryTable1646924902920 } from "./migrations/1646924902920-create-erc721-auction-history-table";
 import { CreateErc721AirdropTable1648525967810 } from "./migrations/1648525967800-create-erc721-airdrop-table";
 import { SeedErc721Airdrop1648525967820 } from "./migrations/1648525967820-seed-erc721-airdrop";
 import { Erc20StakingHistoryEntity } from "./erc20/staking-history/staking-history.entity";
@@ -88,7 +85,6 @@ const config: PostgresConnectionOptions = {
     Erc721TokenEntity,
     Erc721DropboxEntity,
     Erc721AirdropEntity,
-    Erc721AuctionEntity,
     Erc721RecipeEntity,
     Erc721IngredientEntity,
     Erc1155CollectionEntity,
@@ -147,8 +143,6 @@ const config: PostgresConnectionOptions = {
     SeedErc1155Recipe1645160381130,
     CreateErc1155Ingredient1645161089530,
     SeedErc1155Ingredient1645161089540,
-    CreateErc721AuctionTable1646924902900,
-    CreateErc721AuctionHistoryTable1646924902920,
     CreateErc721AirdropTable1648525967810,
     SeedErc721Airdrop1648525967820,
     CreateErc721Recipe1648525970000,

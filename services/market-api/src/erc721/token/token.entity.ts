@@ -6,7 +6,6 @@ import { BigNumberColumn, IdBaseEntity, JsonColumn } from "@gemunion/nest-js-mod
 
 import { Erc721TemplateEntity } from "../template/template.entity";
 import { Erc721TokenHistoryEntity } from "../token-history/token-history.entity";
-import { Erc721AuctionEntity } from "../auction/auction.entity";
 import { Erc721DropboxEntity } from "../dropbox/dropbox.entity";
 
 @Entity({ schema: ns, name: "erc721_token" })
@@ -52,9 +51,6 @@ export class Erc721TokenEntity extends IdBaseEntity implements IErc721Token {
   @JoinColumn()
   @OneToOne(_type => Erc721TokenEntity, dropbox => dropbox.erc721Token)
   public erc721Token: Erc721TokenEntity;
-
-  @OneToOne(_type => Erc721AuctionEntity, auction => auction.erc721Token)
-  public erc721Auction: Erc721AuctionEntity;
 
   @OneToMany(_type => Erc721TokenHistoryEntity, history => history.erc721Token)
   public history: Array<Erc721TokenHistoryEntity>;

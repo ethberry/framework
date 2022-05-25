@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { Erc721AuctionStatus, Erc721TokenStatus, IErc721AssetSearchDto } from "@framework/types";
+import { Erc721TokenStatus, IErc721AssetSearchDto } from "@framework/types";
 
 import { Erc721TokenEntity } from "./token.entity";
 import { UserEntity } from "../../user/user.entity";
@@ -102,10 +102,6 @@ export class Erc721TokenService {
     queryBuilder.where(where);
 
     queryBuilder.leftJoinAndSelect("token.history", "history");
-    queryBuilder.leftJoinAndSelect("token.erc721Auction", "auction", "auction.auctionStatus = :auctionStatus", {
-      auctionStatus: Erc721AuctionStatus.ACTIVE,
-    });
-    queryBuilder.leftJoinAndSelect("auction.history", "auction_history");
     queryBuilder.leftJoinAndSelect("token.erc721Template", "template");
     queryBuilder.leftJoinAndSelect("template.erc721Collection", "collection");
 
