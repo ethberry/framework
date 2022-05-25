@@ -73,7 +73,7 @@
       "ok": "Ok",
       "save": "Save",
       "search": "Search",
-      "sell": "Sell on auction",
+      "sell": "Sell",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "submit": "Submit",
@@ -173,9 +173,6 @@
       },
       "title": "My assets"
     },
-    "auction": {
-      "title": "Secondary market"
-    },
     "craft": {
       "tabs": {
         "heroes": "Heroes",
@@ -187,7 +184,6 @@
     "dashboard": {
       "sections": {
         "assets": "My assets",
-        "auction": "Secondary marketplace",
         "craft": "Craft",
         "leaderboard": "Leaderboard",
         "marketplace": "Primary marketplace",

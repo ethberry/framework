@@ -11,14 +11,12 @@ import { Erc721TokenEntity } from "./erc721/token/token.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token-history/token-history.entity";
 import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace-history/marketplace-history.entity";
 import { Erc721TemplateEntity } from "./erc721/template/template.entity";
-import { Erc721AuctionEntity } from "./erc721/auction/auction.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
 import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
 import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
 import { Erc721RecipeHistoryEntity } from "./erc721/recipe-history/recipe-history.entity";
 import { Erc721IngredientEntity } from "./erc721/ingredient/ingredient.entity";
 
-import { Erc721AuctionHistoryEntity } from "./erc721/auction-history/auction-history.entity";
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155TokenHistoryEntity } from "./erc1155/token-history/token-history.entity";
@@ -43,13 +41,11 @@ const config: PostgresConnectionOptions = {
     Erc721TokenEntity,
     Erc721TokenHistoryEntity,
     Erc721MarketplaceHistoryEntity,
-    Erc721AuctionEntity,
     Erc721AirdropEntity,
     Erc721DropboxEntity,
     Erc721RecipeEntity,
     Erc721RecipeHistoryEntity,
     Erc721IngredientEntity,
-    Erc721AuctionHistoryEntity,
     Erc1155CollectionEntity,
     Erc1155TokenEntity,
     Erc1155RecipeEntity,

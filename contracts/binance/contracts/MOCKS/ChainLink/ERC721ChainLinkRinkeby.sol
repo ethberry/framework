@@ -10,12 +10,12 @@ import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 import "./ERC721ChainLinkTest.sol";
 
-abstract contract ERC721ChainLinkBesu is ERC721ChainLinkTest {
+abstract contract ERC721ChainLinkRinkeby is ERC721ChainLinkTest {
   constructor()
   ERC721ChainLinkTest(
-      address(0xc83003B2AD5C3EF3e93Cc3Ef0a48E84dc8DBD718), // vrfCoordinator
-      address(0x6aA8b700cD034Ab4B897B59447f268b33B8cF699), // LINK token
-      0xcaf3c3727e033261d383b315559476f48034c13b18f8cafed4d871abe5049186, // system hash
+      address(0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B), // vrfCoordinator
+      address(0x01BE23585060835E02B77ef475b0Cc51aA1e0709), // LINK token
+      0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311, // system hash
       0.1 ether // fee
     )
   {}

@@ -9,6 +9,7 @@ export class CreateErc1155TokenHistoryTable1641526822390 implements MigrationInt
         'TransferSingle',
         'TransferBatch',
         'ApprovalForAll',
+        'RoleGranted',
         'URI'
       );
     `);

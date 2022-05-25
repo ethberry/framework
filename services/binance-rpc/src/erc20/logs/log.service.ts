@@ -9,14 +9,7 @@ import { Erc20TokenStatus } from "@framework/types";
 
 import { Erc20TokenService } from "../token/token.service";
 import { Erc20VestingService } from "../vesting/vesting.service";
-import { ICreateListenerPayload } from "./interfaces";
-
-import ERC20BlackList from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
-import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-
-import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
-import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
-import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
+import { ERC20FullEvents, ICreateListenerPayload } from "./interfaces";
 
 @Injectable()
 export class Erc20LogService {
@@ -32,23 +25,6 @@ export class Erc20LogService {
     private readonly web3LogService: Web3LogService,
   ) {
     this.chainId = this.configService.get<number>("CHAIN_ID", 1337);
-    // todo pre-compute it
-    this.abiArr = Object.values(
-      ERC20BlackList.abi
-        .concat(ERC20Simple.abi)
-        .concat(CliffVesting.abi)
-        .concat(GradedVesting.abi)
-        .concat(LinearVesting.abi)
-        .filter(el => {
-          return el.type === "event";
-        })
-        .reduce((memo, current) => {
-          if (current.name && !(current.name in memo)) {
-            memo[current.name] = current as AbiItem;
-          }
-          return memo;
-        }, {} as Record<string, AbiItem>),
-    );
   }
 
   public async init(): Promise<void> {
@@ -73,7 +49,7 @@ export class Erc20LogService {
         address: listenTokenAddrss.concat(listenVestingAddrss),
         topics: [],
       },
-      contractInterface: this.abiArr,
+      contractInterface: ERC20FullEvents,
     });
   }
 
@@ -82,7 +58,7 @@ export class Erc20LogService {
 
     await this.web3LogService.listen({
       logOptions: dto,
-      contractInterface: this.abiArr,
+      contractInterface: ERC20FullEvents,
     });
   }
 
@@ -108,7 +84,7 @@ export class Erc20LogService {
         address: listenAddrss,
         topics: dto.topics,
       },
-      contractInterface: this.abiArr,
+      contractInterface: ERC20FullEvents,
     });
   }
 }

@@ -5,6 +5,7 @@ import { IErc721Template } from "./template";
 export enum Erc721CollectionStatus {
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
+  NEW = "NEW",
 }
 
 export enum Erc721CollectionType {
@@ -27,4 +28,5 @@ export interface IErc721Collection extends IContract, ISearchable {
   collectionStatus: Erc721CollectionStatus;
   collectionType: Erc721CollectionType;
   erc721Templates?: Array<IErc721Template>;
+  contractTemplate: Erc721TokenTemplate;
 }

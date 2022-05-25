@@ -20,6 +20,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         symbol,
         address,
         chain_id,
+        contract_template,
         created_at,
         updated_at
       ) VALUES (
@@ -29,6 +30,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'GEM20',
         '${erc20TokenAddress}',
+        'SIMPLE',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -1,9 +1,11 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { constants } from "ethers";
+import { Log } from "web3-core";
 
-import { IEvent } from "@gemunion/nestjs-web3";
+import { ILogEvent } from "@gemunion/nestjs-web3";
 import {
   Erc1155TokenEventType,
+  IErc1155RoleGrant,
   IErc1155TokenApprovalForAll,
   IErc1155TokenTransferBatch,
   IErc1155TokenTransferSingle,
@@ -25,38 +27,44 @@ export class Erc1155TokenServiceWs {
     private readonly erc1155TokenService: Erc1155TokenService,
   ) {}
 
-  public async transferSingle(event: IEvent<IErc1155TokenTransferSingle>): Promise<void> {
+  public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingle>, context: Log): Promise<void> {
     const {
-      address,
-      returnValues: { from, to, id, value },
+      args: { from, to, id, value },
     } = event;
 
-    await this.updateHistory(event);
+    await this.updateHistory(event, context);
 
-    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), id, ~~value);
+    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), id, ~~value);
   }
 
-  public async transferBatch(event: IEvent<IErc1155TokenTransferBatch>): Promise<void> {
+  public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatch>, context: Log): Promise<void> {
     const {
-      address,
-      returnValues: { from, to, ids, values },
+      args: { from, to, ids, values },
     } = event;
 
-    await this.updateHistory(event);
+    await this.updateHistory(event, context);
 
     await Promise.all(
-      ids.map((tokenId, i) =>
-        this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenId, ~~values[i]),
+      ids.map((tokenId: string, i: number) =>
+        this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), tokenId, ~~values[i]),
       ),
     );
   }
 
-  public async approvalForAll(event: IEvent<IErc1155TokenApprovalForAll>): Promise<void> {
-    await this.updateHistory(event);
+  public async approvalForAll(event: ILogEvent<IErc1155TokenApprovalForAll>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
-  public async uri(event: IEvent<IErc1155TokenUri>): Promise<void> {
-    await this.updateHistory(event);
+  public async uri(event: ILogEvent<IErc1155TokenUri>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+  }
+
+  public async roleGrant(event: ILogEvent<IErc1155RoleGrant>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+  }
+
+  public async roleRevoke(event: ILogEvent<IErc1155RoleGrant>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
   private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: number) {
@@ -77,16 +85,17 @@ export class Erc1155TokenServiceWs {
     }
   }
 
-  private async updateHistory(event: IEvent<TErc1155TokenEventData>) {
+  private async updateHistory(event: ILogEvent<TErc1155TokenEventData>, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc1155TokenServiceWs.name);
 
-    const { returnValues, event: eventType, transactionHash, address } = event;
+    const { args, name: eventType } = event;
+    const { transactionHash, address } = context;
 
     await this.erc1155TokenHistoryService.create({
       address: address.toLowerCase(),
       transactionHash: transactionHash.toLowerCase(),
       eventType: eventType as Erc1155TokenEventType,
-      eventData: returnValues,
+      eventData: JSON.parse(JSON.stringify(Object.fromEntries(Object.entries(args).splice(args.length)))),
     });
   }
 }

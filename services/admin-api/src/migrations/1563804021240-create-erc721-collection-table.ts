@@ -7,7 +7,8 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc721_collection_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE'
+        'INACTIVE',
+        'NEW'
       );
     `);
 
@@ -16,6 +17,14 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
         'TOKEN',
         'DROPBOX',
         'AIRDROP'
+      );
+    `);
+
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.erc721_contract_template_enum AS ENUM (
+        'SIMPLE',
+        'GRADED',
+        'RANDOM'
       );
     `);
 
@@ -54,12 +63,17 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
         {
           name: "collection_status",
           type: `${ns}.erc721_collection_status_enum`,
-          default: "'ACTIVE'",
+          default: "'NEW'",
         },
         {
           name: "collection_type",
           type: `${ns}.erc721_collection_type_enum`,
           default: "'TOKEN'",
+        },
+        {
+          name: "contract_template",
+          type: `${ns}.erc721_contract_template_enum`,
+          default: "'SIMPLE'",
         },
         {
           name: "address",
@@ -85,5 +99,8 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.erc721_collection`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_collection_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_collection_type_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_template_type_enum;`);
   }
 }

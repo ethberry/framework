@@ -7,7 +7,14 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc1155_collection_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE'
+        'INACTIVE',
+        'NEW'
+      );
+    `);
+
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.erc1155_contract_template_enum AS ENUM (
+        'SIMPLE'
       );
     `);
 
@@ -36,9 +43,14 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
           type: "varchar",
         },
         {
+          name: "contract_template",
+          type: `${ns}.erc1155_contract_template_enum`,
+          default: "'SIMPLE'",
+        },
+        {
           name: "collection_status",
           type: `${ns}.erc1155_collection_status_enum`,
-          default: "'ACTIVE'",
+          default: "'PENDING'",
         },
         {
           name: "address",
@@ -64,5 +76,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.erc1155_collection`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc1155_template_type_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc1155_collection_status_enum;`);
   }
 }

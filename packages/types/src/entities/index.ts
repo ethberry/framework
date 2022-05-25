@@ -16,8 +16,6 @@ export * from "./erc721/token";
 export * from "./erc721/token-history";
 export * from "./erc721/template";
 export * from "./erc721/marketplace-history";
-export * from "./erc721/auction";
-export * from "./erc721/auction-history";
 export * from "./erc721/ingredient";
 export * from "./erc721/recipe";
 export * from "./erc721/recipe-history";

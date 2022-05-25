@@ -22,7 +22,8 @@ import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vest
 import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+import ERC721RandomTest from "@framework/binance-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+// import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 @Injectable()
@@ -53,6 +54,7 @@ export class ContractManagerService {
           { name: "name", type: "string" },
           { name: "symbol", type: "string" },
           { name: "cap", type: "uint256" },
+          { name: "templateId", type: "uint256" },
         ],
       },
       // Value
@@ -62,6 +64,7 @@ export class ContractManagerService {
         name,
         symbol,
         cap,
+        templateId: Object.keys(Erc20TokenTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -87,7 +90,7 @@ export class ContractManagerService {
           { name: "beneficiary", type: "address" },
           { name: "startTimestamp", type: "uint64" },
           { name: "duration", type: "uint64" },
-          { name: "template", type: "uint8" },
+          { name: "templateId", type: "uint256" },
         ],
       },
       // Value
@@ -97,7 +100,7 @@ export class ContractManagerService {
         beneficiary,
         startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds
         duration: duration * 60 * 60 * 24, // in seconds
-        template: Object.keys(Erc20VestingTemplate).indexOf(contractTemplate),
+        templateId: Object.keys(Erc20VestingTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -125,6 +128,7 @@ export class ContractManagerService {
           { name: "symbol", type: "string" },
           { name: "baseTokenURI", type: "string" },
           { name: "royalty", type: "uint96" },
+          { name: "templateId", type: "uint256" },
         ],
       },
       // Value
@@ -133,8 +137,9 @@ export class ContractManagerService {
         bytecode: this.getBytecodeByErc721TokenTemplate(contractTemplate),
         name,
         symbol,
-        royalty,
         baseTokenURI,
+        royalty,
+        templateId: Object.keys(Erc721TokenTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -159,6 +164,7 @@ export class ContractManagerService {
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
           { name: "baseTokenURI", type: "string" },
+          { name: "templateId", type: "uint256" },
         ],
       },
       // Value
@@ -166,14 +172,15 @@ export class ContractManagerService {
         nonce,
         bytecode: this.getBytecodeByErc1155TokenTemplate(contractTemplate),
         baseTokenURI,
+        templateId: Object.keys(Erc1155TokenTemplate).indexOf(contractTemplate),
       },
     );
 
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public getBytecodeByErc20TokenTemplate(template: Erc20TokenTemplate) {
-    switch (template) {
+  public getBytecodeByErc20TokenTemplate(contractTemplate: Erc20TokenTemplate) {
+    switch (contractTemplate) {
       case Erc20TokenTemplate.SIMPLE:
         return ERC20Simple.bytecode;
       case Erc20TokenTemplate.BLACKLIST:
@@ -183,8 +190,8 @@ export class ContractManagerService {
     }
   }
 
-  public getBytecodeByErc20VestingTemplate(template: Erc20VestingTemplate) {
-    switch (template) {
+  public getBytecodeByErc20VestingTemplate(contractTemplate: Erc20VestingTemplate) {
+    switch (contractTemplate) {
       case Erc20VestingTemplate.LINEAR:
         return LinearVesting.bytecode;
       case Erc20VestingTemplate.GRADED:
@@ -196,21 +203,22 @@ export class ContractManagerService {
     }
   }
 
-  public getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
-    switch (template) {
+  public getBytecodeByErc721TokenTemplate(contractTemplate: Erc721TokenTemplate) {
+    switch (contractTemplate) {
       case Erc721TokenTemplate.SIMPLE:
         return ERC721Simple.bytecode;
       case Erc721TokenTemplate.GRADED:
         return ERC721Graded.bytecode;
       case Erc721TokenTemplate.RANDOM:
-        return ERC721Random.bytecode;
+        return ERC721RandomTest.bytecode;
+      // return ERC721Random.bytecode;
       default:
         throw new Error("Unknown template");
     }
   }
 
-  public getBytecodeByErc1155TokenTemplate(template: Erc1155TokenTemplate) {
-    switch (template) {
+  public getBytecodeByErc1155TokenTemplate(contractTemplate: Erc1155TokenTemplate) {
+    switch (contractTemplate) {
       case Erc1155TokenTemplate.SIMPLE:
         return ERC1155Simple.bytecode;
       default:

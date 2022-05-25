@@ -42,7 +42,11 @@ export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> 
       <RichTextEditor name="description" />
       <TextInput name="address" readOnly />
       <TextInput name="baseTokenURI" readOnly />
-      <SelectInput name="collectionStatus" options={Erc1155CollectionStatus} />
+      <SelectInput
+        name="collectionStatus"
+        options={Erc1155CollectionStatus}
+        disabledOptions={[Erc1155CollectionStatus.NEW]}
+      />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

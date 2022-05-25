@@ -1,7 +1,8 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsOptional, IsString } from "class-validator";
+import { IsEnum, IsJSON, IsOptional, IsString, Validate } from "class-validator";
 import { Transform } from "class-transformer";
 
+import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { Erc721CollectionStatus } from "@framework/types";
 
 import { IErc721CollectionUpdateDto } from "../interfaces";
@@ -25,5 +26,6 @@ export class Erc721CollectionUpdateDto implements IErc721CollectionUpdateDto {
   })
   @Transform(({ value }) => value as Erc721CollectionStatus)
   @IsEnum(Erc721CollectionStatus, { message: "badInput" })
+  @Validate(ForbidEnumValues, [Erc721CollectionStatus.NEW])
   public collectionStatus: Erc721CollectionStatus;
 }

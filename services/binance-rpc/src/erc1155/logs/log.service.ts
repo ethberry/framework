@@ -1,21 +1,16 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
-import { AbiItem } from "web3-utils";
-
 import { Web3LogService } from "@gemunion/nestjs-web3";
 
 import { Erc1155CollectionStatus } from "@framework/types";
 
 import { Erc1155CollectionService } from "../collection/collection.service";
-import { ICreateListenerPayload } from "./interfaces";
-
-import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import { ERC1155FullEvents, ICreateListenerPayload } from "./interfaces";
 
 @Injectable()
 export class Erc1155LogService {
   private chainId: number;
-  private abiArr: Array<AbiItem>;
 
   constructor(
     @Inject(Logger)
@@ -25,18 +20,6 @@ export class Erc1155LogService {
     private readonly web3LogService: Web3LogService,
   ) {
     this.chainId = this.configService.get<number>("CHAIN_ID", 1337);
-    this.abiArr = Object.values(
-      ERC1155Simple.abi
-        .filter(el => {
-          return el.type === "event";
-        })
-        .reduce((memo, current) => {
-          if (current.name && !(current.name in memo)) {
-            memo[current.name] = current as AbiItem;
-          }
-          return memo;
-        }, {} as Record<string, AbiItem>),
-    );
   }
 
   public async init(): Promise<void> {
@@ -53,7 +36,7 @@ export class Erc1155LogService {
         address: listenAddrss,
         topics: [],
       },
-      contractInterface: this.abiArr,
+      contractInterface: ERC1155FullEvents,
     });
   }
 
@@ -62,7 +45,7 @@ export class Erc1155LogService {
 
     await this.web3LogService.listen({
       logOptions: dto,
-      contractInterface: this.abiArr,
+      contractInterface: ERC1155FullEvents,
     });
   }
 
@@ -82,7 +65,7 @@ export class Erc1155LogService {
         address: listenAddrss,
         topics: dto.topics,
       },
-      contractInterface: this.abiArr,
+      contractInterface: ERC1155FullEvents,
     });
   }
 }

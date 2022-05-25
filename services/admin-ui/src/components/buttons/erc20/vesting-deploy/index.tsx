@@ -57,7 +57,8 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
             getBytecodeByErc20VestingTemplate(contractTemplate),
             beneficiary,
             Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds,
-            duration * 60 * 60 * 24, // in seconds
+            duration * 60 * 60 * 24, // days in seconds
+            Object.keys(Erc20VestingTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,
             sign.signature,
           ) as Promise<void>;

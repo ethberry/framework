@@ -20,7 +20,7 @@ export const Erc1155TokenSellButton: FC<IErc1155TokenSellButtonProps> = props =>
   const { library } = useWeb3React();
 
   const metaSell = useMetamask(() => {
-    const contract = new Contract(process.env.ERC1155_AUCTION_ADDR, ERC721Marketplace.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_MARKETPLACE_ADDR, ERC721Marketplace.abi, library.getSigner());
 
     void contract;
 

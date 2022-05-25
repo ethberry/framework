@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { ContractBaseEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { Erc721CollectionStatus, Erc721CollectionType, IErc721Collection } from "@framework/types";
+import { Erc721CollectionStatus, Erc721CollectionType, Erc721TokenTemplate, IErc721Collection } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { Erc721TemplateEntity } from "../template/template.entity";
@@ -32,6 +32,12 @@ export class Erc721CollectionEntity extends Mixin(ContractBaseEntity, Searchable
     enum: Erc721CollectionType,
   })
   public collectionType: Erc721CollectionType;
+
+  @Column({
+    type: "enum",
+    enum: Erc721TokenTemplate,
+  })
+  public contractTemplate: Erc721TokenTemplate;
 
   @OneToMany(_type => Erc721TemplateEntity, template => template.erc721Collection)
   public erc721Templates: Array<Erc721TemplateEntity>;

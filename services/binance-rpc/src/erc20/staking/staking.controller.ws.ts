@@ -10,7 +10,7 @@ import { Erc20StakingServiceWs } from "./staking.service.ws";
 @Controller()
 export class Erc20StakingControllerWs {
   constructor(private readonly erc20StakingServiceWs: Erc20StakingServiceWs) {}
-
+  // TODO Web3Log context
   @EventPattern({ contractName: ContractType.ERC20_STAKING, eventName: Erc20StakingEventType.StakingStart })
   public transfer(@Payload() event: IEvent<IErc20StakingDeposit>): Promise<void> {
     return this.erc20StakingServiceWs.start(event);

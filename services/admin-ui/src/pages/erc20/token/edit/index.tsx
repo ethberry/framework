@@ -41,7 +41,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
     >
       <TextInput name="title" readOnly />
       <RichTextEditor name="description" />
-      <SelectInput name="tokenStatus" options={Erc20TokenStatus} />
+      <SelectInput name="tokenStatus" options={Erc20TokenStatus} disabledOptions={[Erc20TokenStatus.NEW]} />
       <TextInput name="symbol" readOnly />
       <EthInput name="amount" readOnly />
     </FormDialog>

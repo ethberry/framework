@@ -38,7 +38,7 @@ export const Erc20Vesting: FC = () => {
     baseUrl: "/erc20-vesting",
     search: {
       query: "",
-      vestingTemplate: [Erc20VestingTemplate.LINEAR],
+      vestingTemplate: [Erc20VestingTemplate.LINEAR, Erc20VestingTemplate.GRADED, Erc20VestingTemplate.CLIFF],
     },
     empty: {
       beneficiary: "",
@@ -65,6 +65,7 @@ export const Erc20Vesting: FC = () => {
           {rows.map((vesting, i) => (
             <ListItem key={i}>
               <ListItemText>{vesting.beneficiary}</ListItemText>
+              <ListItemText>{vesting.contractTemplate}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(vesting)}>
                   <Visibility />

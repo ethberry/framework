@@ -8,7 +8,9 @@ export class CreateErc20TokenHistoryTable1563804021120 implements MigrationInter
       CREATE TYPE ${ns}.erc20_token_event_enum AS ENUM (
         'Transfer',
         'Approval',
-        'Snapshot'
+        'Snapshot',
+        'RoleGranted',
+        'RoleRevoked'
       );
     `);
 

@@ -51,6 +51,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
             nonce,
             getBytecodeByErc1155TokenTemplate(contractTemplate),
             baseTokenURI,
+            Object.keys(Erc1155TokenTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,
             sign.signature,
           ) as Promise<void>;
