@@ -12,6 +12,6 @@ export interface IErc20Vesting extends IContract {
   beneficiary: string;
   duration: number;
   startTimestamp: string;
-  vestingTemplate: Erc20VestingTemplate;
+  contractTemplate: Erc20VestingTemplate;
   history?: Array<IErc20TokenHistory>;
 }

@@ -12,7 +12,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc1155_template_type_enum AS ENUM (
+      CREATE TYPE ${ns}.erc1155_contract_template_enum AS ENUM (
         'SIMPLE'
       );
     `);
@@ -43,7 +43,7 @@ export class CreateErc1155CollectionTable1641526822350 implements MigrationInter
         },
         {
           name: "contract_template",
-          type: `${ns}.erc1155_template_type_enum`,
+          type: `${ns}.erc1155_contract_template_enum`,
           default: "'SIMPLE'",
         },
         {

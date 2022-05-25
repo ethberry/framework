@@ -17,7 +17,7 @@ export interface IErc20VestingViewDialogProps {
 export const Erc20VestingViewDialog: FC<IErc20VestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { id, beneficiary, address, duration, vestingTemplate, startTimestamp } = initialValues;
+  const { id, beneficiary, address, duration, contractTemplate, startTimestamp } = initialValues;
 
   const dateStart = new Date(startTimestamp);
   const dateFinish = new Date(new Date(dateStart.getTime() + +duration));
@@ -68,7 +68,7 @@ export const Erc20VestingViewDialog: FC<IErc20VestingViewDialogProps> = props =>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="pages.erc20-vesting.view.contractTemplate" />
               </TableCell>
-              <TableCell align="right">{vestingTemplate}</TableCell>
+              <TableCell align="right">{contractTemplate}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

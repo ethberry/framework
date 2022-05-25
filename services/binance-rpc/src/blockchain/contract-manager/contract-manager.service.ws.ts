@@ -59,7 +59,7 @@ export class ContractManagerServiceWs {
       beneficiary: beneficiary.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
       duration: ~~duration * 1000, // msec
-      vestingTemplate: Object.values(Erc20VestingTemplate)[~~templateId],
+      contractTemplate: Object.values(Erc20VestingTemplate)[~~templateId],
       chainId: this.chainId,
     });
 
@@ -82,7 +82,7 @@ export class ContractManagerServiceWs {
       symbol,
       amount: cap,
       description: emptyStateString,
-      template: Object.values(Erc20TokenTemplate)[~~templateId],
+      contractTemplate: Object.values(Erc20TokenTemplate)[~~templateId],
       chainId: this.chainId,
     });
 
@@ -108,7 +108,7 @@ export class ContractManagerServiceWs {
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
-      template: Object.values(Erc721TokenTemplate)[~~templateId],
+      contractTemplate: Object.values(Erc721TokenTemplate)[~~templateId],
     });
 
     await this.erc721LogService.add({
@@ -131,7 +131,7 @@ export class ContractManagerServiceWs {
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
-      template: Object.values(Erc1155TokenTemplate)[~~templateId],
+      contractTemplate: Object.values(Erc1155TokenTemplate)[~~templateId],
     });
 
     await this.erc1155LogService.add({

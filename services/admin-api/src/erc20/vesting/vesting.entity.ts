@@ -19,5 +19,5 @@ export class Erc20VestingEntity extends ContractBaseEntity implements IErc20Vest
     type: "enum",
     enum: Erc20VestingTemplate,
   })
-  public vestingTemplate: Erc20VestingTemplate;
+  public contractTemplate: Erc20VestingTemplate;
 }

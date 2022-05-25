@@ -12,7 +12,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc20_token_template_enum AS ENUM (
+      CREATE TYPE ${ns}.erc20_contract_template_enum AS ENUM (
         'SIMPLE',
         'BLACKLIST'
       );
@@ -41,7 +41,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
         },
         {
           name: "contract_template",
-          type: `${ns}.erc20_token_template_enum`,
+          type: `${ns}.erc20_contract_template_enum`,
           default: "'SIMPLE'",
         },
         {

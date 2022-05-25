@@ -20,7 +20,7 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc721_template_type_enum AS ENUM (
+      CREATE TYPE ${ns}.erc721_contract_template_enum AS ENUM (
         'SIMPLE',
         'GRADED',
         'RANDOM'
@@ -71,7 +71,7 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
         },
         {
           name: "contract_template",
-          type: `${ns}.erc721_template_type_enum`,
+          type: `${ns}.erc721_contract_template_enum`,
           default: "'SIMPLE'",
         },
         {
