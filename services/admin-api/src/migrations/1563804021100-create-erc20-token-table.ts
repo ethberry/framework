@@ -36,7 +36,7 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "collection_status",
+          name: "token_status",
           type: `${ns}.erc20_collection_status_enum`,
           default: "'NEW'",
         },

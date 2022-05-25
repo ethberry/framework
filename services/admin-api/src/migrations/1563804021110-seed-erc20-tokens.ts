@@ -15,7 +15,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
       INSERT INTO ${ns}.erc20_token (
         title,
         description,
-        collection_status,
+        token_status,
         amount,
         symbol,
         address,
