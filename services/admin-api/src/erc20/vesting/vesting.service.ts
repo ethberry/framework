@@ -22,9 +22,9 @@ export class Erc20VestingService {
 
     if (vestingTemplate) {
       if (vestingTemplate.length === 1) {
-        queryBuilder.andWhere("vesting.vestingTemplate = :vestingTemplate", { vestingTemplate: vestingTemplate[0] });
+        queryBuilder.andWhere("vesting.contractTemplate = :contractTemplate", { contractTemplate: vestingTemplate[0] });
       } else {
-        queryBuilder.andWhere("vesting.vestingTemplate IN(:...vestingTemplate)", { vestingTemplate });
+        queryBuilder.andWhere("vesting.contractTemplate IN(:...contractTemplate)", { vestingTemplate });
       }
     }
 
