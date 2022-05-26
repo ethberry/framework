@@ -42,6 +42,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <TextInput name="symbol" readOnly />
       <TextInput name="address" readOnly />
       <TextInput name="baseTokenURI" readOnly />
       <SelectInput
