@@ -1,12 +1,13 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { Erc721CollectionStatus, Erc721CollectionType, IErc721Collection } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { BlockchainInfoPopover } from "../../../../components/popover";
 
 export interface IErc721CollectionEditDialogProps {
   open: boolean;
@@ -39,11 +40,6 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     collectionStatus,
     collectionType,
     imageUrl,
-    name,
-    symbol,
-    address,
-    baseTokenURI,
-    royalty,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.add";
@@ -56,13 +52,15 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
       {...rest}
       data-testid="Erc721CollectionEditDialog"
     >
+      <BlockchainInfoPopover
+        name={name}
+        symbol={symbol}
+        address={address}
+        baseTokenURI={baseTokenURI}
+        royalty={royalty}
+      />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TextInput name="name" readOnly />
-      <TextInput name="symbol" readOnly />
-      <TextInput name="address" readOnly />
-      <TextInput name="baseTokenURI" readOnly />
-      <NumberInput name="royalty" readOnly />
       <SelectInput
         name="collectionStatus"
         options={Erc721CollectionStatus}
