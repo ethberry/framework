@@ -41,6 +41,7 @@
     "@gemunion/provider-user": "3.3.8",
     "@gemunion/provider-wallet": "0.12.1",
     "@gemunion/react-hooks": "0.7.1",
+    "@gemunion/react-hooks-eth": "0.0.2",
     "@gemunion/types-collection": "1.4.0",
     "@gemunion/types-jwt": "0.3.1",
     "@gemunion/yup-rules": "1.8.2",

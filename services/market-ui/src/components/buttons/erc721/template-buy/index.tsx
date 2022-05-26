@@ -7,7 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
 import { IErc721Template } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc721TemplateBuyButtonProps {

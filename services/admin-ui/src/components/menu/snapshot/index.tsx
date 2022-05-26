@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 export interface IErc20TokenSnapshotMenuItemProps {

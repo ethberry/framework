@@ -10,7 +10,7 @@ import { ApiError, useApi } from "@gemunion/provider-api";
 import { useWallet } from "@gemunion/provider-wallet";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { Spinner } from "@gemunion/mui-page-layout";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import { Erc721AirdropStatus, IErc721Airdrop } from "@framework/types";
 
 import ERC721Airdrop from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";

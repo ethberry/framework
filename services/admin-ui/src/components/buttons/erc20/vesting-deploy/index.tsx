@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
-import { useDeploy } from "@gemunion/react-hooks";
+import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc20VestingTemplate, IErc20VestingDeployDto } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";

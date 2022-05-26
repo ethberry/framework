@@ -9,7 +9,7 @@ import { Contract } from "ethers";
 import { ApiError, useApi } from "@gemunion/provider-api";
 import { useWallet } from "@gemunion/provider-wallet";
 import { Spinner } from "@gemunion/mui-page-layout";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc20Vesting } from "@framework/types";
 
 import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";

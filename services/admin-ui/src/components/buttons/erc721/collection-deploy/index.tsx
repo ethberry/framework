@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
-import { useDeploy } from "@gemunion/react-hooks";
+import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";

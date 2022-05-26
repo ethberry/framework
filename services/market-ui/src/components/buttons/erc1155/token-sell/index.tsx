@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { IErc1155Token } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc1155TokenSellButtonProps {

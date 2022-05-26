@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { Erc1155RecipeStatus, IErc1155Recipe } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 

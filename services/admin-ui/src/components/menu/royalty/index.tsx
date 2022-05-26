@@ -4,7 +4,8 @@ import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
-import { useMetamask } from "@gemunion/react-hooks";
+
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import erc721contract from "@framework/binance-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
 
 import { Erc721CollectionRoyaltyEditDialog, IRoyaltyDto } from "./edit";

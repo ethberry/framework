@@ -5,7 +5,7 @@ import { AccountCircle } from "@mui/icons-material";
 import { constants, Contract, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import erc721contract from "@framework/binance-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
 import { OzContractGrantRoleDialog, IGrantRoleDto, OzRoles } from "./edit";

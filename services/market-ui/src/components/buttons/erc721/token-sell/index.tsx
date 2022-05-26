@@ -5,7 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { IErc721Token } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc721TokenSellButtonProps {
