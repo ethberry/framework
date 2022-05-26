@@ -7,6 +7,7 @@ import { IErc721Token } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { Erc721TokenSellButton } from "../../../../components/buttons";
+import { RarityBadge } from "./badge";
 
 interface IErc721TokenProps {
   token: IErc721Token;
@@ -15,11 +16,12 @@ interface IErc721TokenProps {
 export const Erc721Token: FC<IErc721TokenProps> = props => {
   const { token } = props;
 
-  const classes = useStyles();
+  const classes = useStyles(token);
 
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/erc721-tokens/${token.id}`}>
+        <RarityBadge token={token} />
         <CardMedia className={classes.media} image={token.erc721Template!.imageUrl} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

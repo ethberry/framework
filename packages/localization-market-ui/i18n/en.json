@@ -31,6 +31,14 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
+    "rarity": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon",
+      "UNKNOWN": "Unknown"
+    },
     "sort": {
       "createdAt": "Date",
       "price": "Price"
