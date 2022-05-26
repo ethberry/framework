@@ -18,14 +18,16 @@ export interface IErc20TokenEditDialogProps {
 export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, tokenStatus, symbol, amount } = initialValues;
+  const { id, title, description, tokenStatus, name, symbol, address, amount } = initialValues;
 
   const fixedValues = {
     id,
     title,
     description,
     tokenStatus,
+    name,
     symbol,
+    address,
     amount,
   };
 
@@ -43,6 +45,8 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
       <RichTextEditor name="description" />
       <SelectInput name="tokenStatus" options={Erc20TokenStatus} disabledOptions={[Erc20TokenStatus.NEW]} />
       <TextInput name="symbol" readOnly />
+      <TextInput name="name" readOnly />
+      <TextInput name="address" readOnly />
       <EthInput name="amount" readOnly />
     </FormDialog>
   );

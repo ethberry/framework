@@ -79,6 +79,7 @@ export class ContractManagerServiceWs {
     await this.erc20TokenService.create({
       address: addr.toLowerCase(),
       title: name,
+      name,
       symbol,
       amount: cap,
       description: emptyStateString,
@@ -103,6 +104,7 @@ export class ContractManagerServiceWs {
     await this.erc721CollectionService.create({
       address: addr.toLowerCase(),
       title: name,
+      name,
       symbol,
       royalty: ~~royalty,
       description: emptyStateString,

@@ -16,6 +16,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         title,
         description,
         amount,
+        name,
         symbol,
         address,
         contract_template,
@@ -23,9 +24,10 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Old good space credits',
+        'Space Credits',
         '${simpleFormatting}',
         '${constants.WeiPerEther.toString()}',
+        'Space Credits',
         'GEM20',
         '${erc20TokenAddress}',
         'SIMPLE',

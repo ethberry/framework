@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { SelectInput, TextInput, NumberInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { Erc721CollectionStatus, Erc721CollectionType, IErc721Collection } from "@framework/types";
@@ -18,7 +18,20 @@ export interface IErc721CollectionEditDialogProps {
 export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, baseTokenURI, imageUrl, collectionStatus, collectionType, address } = initialValues;
+  const {
+    id,
+    title,
+    description,
+    baseTokenURI,
+    imageUrl,
+    collectionStatus,
+    collectionType,
+    address,
+    symbol,
+    name,
+    royalty,
+  } = initialValues;
+
   const fixedValues = {
     id,
     title,
@@ -26,8 +39,11 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     collectionStatus,
     collectionType,
     imageUrl,
-    baseTokenURI,
+    name,
+    symbol,
     address,
+    baseTokenURI,
+    royalty,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.add";
@@ -42,9 +58,11 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <TextInput name="name" readOnly />
       <TextInput name="symbol" readOnly />
       <TextInput name="address" readOnly />
       <TextInput name="baseTokenURI" readOnly />
+      <NumberInput name="royalty" readOnly />
       <SelectInput
         name="collectionStatus"
         options={Erc721CollectionStatus}
