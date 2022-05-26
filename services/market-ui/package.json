@@ -40,7 +40,7 @@
     "@gemunion/provider-theme": "4.1.2",
     "@gemunion/provider-user": "3.3.8",
     "@gemunion/provider-wallet": "0.12.1",
-    "@gemunion/react-hooks": "0.6.5",
+    "@gemunion/react-hooks": "0.7.1",
     "@gemunion/types-collection": "1.4.0",
     "@gemunion/types-jwt": "0.3.1",
     "@gemunion/yup-rules": "1.8.2",
