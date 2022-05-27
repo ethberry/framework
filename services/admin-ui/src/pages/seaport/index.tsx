@@ -5,14 +5,14 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
 import { useStyles } from "./styles";
 
-export const Blockchain: FC = () => {
+export const Seaport: FC = () => {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Breadcrumbs path={["dashboard", "blockchain"]} />
+      <Breadcrumbs path={["dashboard", "seaport"]} />
 
-      <PageHeader message="pages.blockchain.title" />
+      <PageHeader message="pages.seaport.title" />
 
       <Typography>Here be dragons!</Typography>
     </div>

@@ -4,27 +4,21 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
-
-export enum OzRoles {
-  DEFAULT_ADMIN_ROLE = "DEFAULT_ADMIN_ROLE",
-  MINTER_ROLE = "MINTER_ROLE",
-  PAUSER_ROLE = "PAUSER_ROLE",
-  SNAPSHOT_ROLE = "SNAPSHOT_ROLE",
-}
+import { AccessControlRoleType } from "@framework/types";
 
 export interface IGrantRoleDto {
-  role: string;
+  role: AccessControlRoleType;
   address: string;
 }
 
-export interface IOzContractGrantRoleDialogProps {
+export interface IAccessControlGrantRoleDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: IGrantRoleDto, formikBag: any) => Promise<void>;
   initialValues: IGrantRoleDto;
 }
 
-export const OzContractGrantRoleDialog: FC<IOzContractGrantRoleDialogProps> = props => {
+export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (
@@ -35,7 +29,7 @@ export const OzContractGrantRoleDialog: FC<IOzContractGrantRoleDialogProps> = pr
       data-testid="OzContractGrantRoleDialog"
       {...rest}
     >
-      <SelectInput name="role" options={OzRoles} />
+      <SelectInput name="role" options={AccessControlRoleType} />
       <TextInput name="address" />
     </FormDialog>
   );

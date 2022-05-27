@@ -36,12 +36,6 @@
     "view": "View"
   },
   "enums": {
-    "role": {
-      "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
-      "MINTER_ROLE": "MINTER_ROLE",
-      "PAUSER_ROLE": "PAUSER_ROLE",
-      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
-    },
     "airdropStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
@@ -87,6 +81,14 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
+    "role": {
+      "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
+      "MINTER_ROLE": "MINTER_ROLE",
+      "PAUSER_ROLE": "PAUSER_ROLE",
+      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE",
+      "PREDICATE_ROLE": "PREDICATE_ROLE",
+      "DEPOSITOR_ROLE": "DEPOSITOR_ROLE"
+    },
     "templateStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
@@ -118,10 +120,6 @@
   },
   "form": {
     "buttons": {
-      "snapshot": "Snapshot",
-      "royalty": "Royalty",
-      "grantRole": "Grant Role",
-      "revokeRole": "Revoke Role",
       "accept": "Accept",
       "add": "Add",
       "cancel": "Cancel",
@@ -130,6 +128,7 @@
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
       "forgot": "Forgot password?",
+      "grantRole": "Grant Role",
       "hideFilters": "Hide filters",
       "load": "Load",
       "loaded": "Done",
@@ -138,10 +137,13 @@
       "mint": "Mint",
       "ok": "Ok",
       "reject": "Reject",
+      "revokeRole": "Revoke Role",
+      "royalty": "Royalty",
       "save": "Save",
       "search": "Search",
       "showFilters": "Show filters",
       "signup": "Sign up",
+      "snapshot": "Snapshot",
       "submit": "Submit",
       "upload": "Upload"
     },
@@ -150,7 +152,6 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "role": "Role",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -197,6 +198,7 @@
       "random": "Random",
       "rarity": "Rarity",
       "recipeStatus": "Status",
+      "role": "Role",
       "royalty": "Royalty",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
@@ -302,24 +304,27 @@
         "title": "Admin",
         "users": "Users"
       },
-      "settings": {
-        "blockchain": "Blockchain settings"
+      "blockchain": {
+        "title": "Blockchain",
+        "seaport": "Seaport settings"
       },
       "title": "Dashboard",
       "tokens": {
+        "erc1155": "ERC1155",
         "erc1155-collections": "ERC1155 Collections",
         "erc1155-recipes": "ERC1155 Recipes",
         "erc1155-tokens": "ERC1155 Tokens",
+        "erc20": "ERC20",
         "erc20-staking": "ERC20 Staking",
         "erc20-tokens": "ERC20 Tokens",
         "erc20-vesting": "ERC20 Vesting",
+        "erc721": "ERC721",
         "erc721-airdrop": "ERC721 Airdrop",
         "erc721-collections": "ERC721 Collections",
         "erc721-dropbox": "ERC721 Dropbox",
         "erc721-recipes": "ERC721 Recipes",
         "erc721-templates": "ERC721 Templates",
-        "erc721-tokens": "ERC721 Tokens",
-        "title": "Tokens"
+        "erc721-tokens": "ERC721 Tokens"
       }
     },
     "erc1155-collections": {
@@ -346,10 +351,10 @@
       "view": {
         "address": "Address",
         "beneficiary": "Beneficiary",
+        "contractTemplate": "Template",
         "duration": "Duration",
         "finish": "Finish",
-        "startTimestamp": "Start time",
-        "contractTemplate": "Template"
+        "startTimestamp": "Start time"
       }
     },
     "erc721-airdrops": {

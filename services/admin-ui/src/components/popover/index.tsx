@@ -19,7 +19,7 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "blockchain-info" : undefined;
+  const id = open ? "seaport-info" : undefined;
 
   return (
     <>
