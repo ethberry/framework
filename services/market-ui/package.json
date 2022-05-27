@@ -8,6 +8,7 @@
     "url": "https://gitlab.com/gemunion/framework"
   },
   "dependencies": {
+    "@bthn/seaport-js": "0.0.1",
     "@emotion/react": "11.9.0",
     "@emotion/styled": "11.8.1",
     "@framework/binance-contracts": "0.0.1",
@@ -29,7 +30,9 @@
     "@gemunion/mui-inputs-entity": "5.3.32",
     "@gemunion/mui-inputs-image-firebase": "6.0.6",
     "@gemunion/mui-inputs-mask": "4.2.40",
+    "@gemunion/mui-inputs-picker": "4.1.25",
     "@gemunion/mui-page-layout": "0.1.4",
+    "@gemunion/mui-provider-picker": "3.1.0",
     "@gemunion/mui-rte": "2.0.3",
     "@gemunion/popup": "0.0.31",
     "@gemunion/provider-api": "5.8.0",
@@ -82,6 +85,7 @@
     "@types/webpack-dev-server": "4.7.1",
     "@typescript-eslint/eslint-plugin": "5.26.0",
     "@typescript-eslint/parser": "5.26.0",
+    "buffer": "6.0.3",
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "6.7.1",
     "cssnano": "5.1.9",

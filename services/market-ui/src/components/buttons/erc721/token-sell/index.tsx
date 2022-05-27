@@ -1,43 +1,92 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { constants } from "ethers";
+import { ItemType } from "@bthn/seaport-js/lib/constants";
 import { useWeb3React } from "@web3-react/core";
-import { Contract } from "ethers";
+import { useSnackbar } from "notistack";
 
+import { useWallet } from "@gemunion/provider-wallet";
 import { IErc721Token } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
-interface IErc721TokenSellButtonProps {
+import { Erc721TokenAuctionDialog, IErc721SellOptions } from "./auction";
+import { useSeaport } from "../../../hooks/use-seaport";
+import { useFees } from "../../../hooks/use-fees";
+
+interface IErc721TokenAuctionButtonProps {
   token: IErc721Token;
 }
 
-export const Erc721TokenSellButton: FC<IErc721TokenSellButtonProps> = props => {
+export const Erc721TokenAuctionButton: FC<IErc721TokenAuctionButtonProps> = props => {
   const { token } = props;
+  const [isAuctionDialogOpen, setIsAuctionDialogOpen] = useState(false);
 
-  void token;
+  const { formatMessage } = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
+  const { account } = useWeb3React();
+  const { openConnectWalletDialog } = useWallet();
+  const seaport = useSeaport();
 
-  const { library } = useWeb3React();
+  const handleAuction = (): void => {
+    setIsAuctionDialogOpen(true);
+  };
 
-  const metaSell = useMetamask(() => {
-    const contract = new Contract(process.env.ERC721_MARKETPLACE_ADDR, ERC721Marketplace.abi, library.getSigner());
+  const handleHandleConfirmed = async (values: IErc721SellOptions) => {
+    if (!account) {
+      openConnectWalletDialog();
+      enqueueSnackbar(formatMessage({ id: "snackbar.walletIsNotConnected" }), { variant: "error" });
+      return;
+    }
 
-    void contract;
+    const nonce = await seaport.getNonce(account);
 
-    // TODO put item on auction
-    alert("Not implemented");
-    return Promise.resolve();
-  });
-
-  const handleSell = () => {
-    return metaSell().then(() => {
-      // TODO reload
+    const { executeAllActions } = await seaport.createOrder({
+      offer: [
+        {
+          itemType: ItemType.ERC721,
+          token: token.erc721Template!.erc721Collection!.address,
+          identifier: token.tokenId,
+        },
+      ],
+      consideration: [
+        {
+          token: values.token,
+          amount: values.minPrice,
+          endAmount: values.maxPrice,
+        },
+      ],
+      nonce,
+      startTime: values.startTime ? Math.ceil(new Date(values.startTime).getTime() / 1000).toString() : void 0,
+      endTime: values.startTime ? Math.ceil(new Date(values.startTime).getTime() / 1000).toString() : void 0,
+      fees: useFees(token),
     });
+
+    await executeAllActions();
+  };
+
+  const handleAuctionCancel = () => {
+    setIsAuctionDialogOpen(false);
+  };
+
+  const initialValues = {
+    minPrice: constants.WeiPerEther.toString(),
+    maxPrice: constants.WeiPerEther.toString(),
+    startTime: new Date().toISOString(),
+    endTime: new Date().toISOString(),
+    token: constants.AddressZero,
   };
 
   return (
-    <Button onClick={handleSell} data-testid="Erc721TokenSellButton">
-      <FormattedMessage id="form.buttons.sell" />
-    </Button>
+    <>
+      <Button onClick={handleAuction} data-testid="Erc721TokenSellButton">
+        <FormattedMessage id="form.buttons.sell" />
+      </Button>
+      <Erc721TokenAuctionDialog
+        onCancel={handleAuctionCancel}
+        onConfirm={handleHandleConfirmed}
+        open={isAuctionDialogOpen}
+        initialValues={initialValues}
+      />
+    </>
   );
 };
