@@ -39,7 +39,7 @@ export const Erc721Collection: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IErc721Collection, IErc721CollectionSearchDto>({
@@ -75,7 +75,7 @@ export const Erc721Collection: FC = () => {
         <Erc721TokenDeployButton />
       </PageHeader>
 
-      <Erc721CollectionSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc721CollectionSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

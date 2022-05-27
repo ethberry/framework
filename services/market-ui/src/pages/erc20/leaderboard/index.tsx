@@ -86,7 +86,7 @@ export const Leaderboard: FC = () => {
     });
   };
 
-  const handleSubmit = (values: ISearchDto): void => {
+  const handleSearch = (values: ISearchDto): void => {
     setData({
       ...values,
       skip: 0,
@@ -135,7 +135,7 @@ export const Leaderboard: FC = () => {
 
       <PageHeader message="pages.leaderboard.title" />
 
-      <CommonSearchForm onSubmit={handleSubmit} initialValues={data} />
+      <CommonSearchForm onSearch={handleSearch} initialValues={data} />
 
       <DataGrid
         pagination

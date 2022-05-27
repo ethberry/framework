@@ -10,7 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { Erc1155RecipeItem } from "./item";
 
 export const Erc1155RecipeList: FC = () => {
-  const { rows, count, search, isLoading, handleSubmit, handleChangePage } = useCollection<IErc1155Recipe, ISearchDto>({
+  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<IErc1155Recipe, ISearchDto>({
     baseUrl: "/erc1155-recipes",
     search: {
       query: "",
@@ -23,7 +23,7 @@ export const Erc1155RecipeList: FC = () => {
 
       <PageHeader message="pages.erc1155-recipes.title" />
 
-      <CommonSearchForm initialValues={search} onSubmit={handleSubmit} />
+      <CommonSearchForm initialValues={search} onSearch={handleSearch} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

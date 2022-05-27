@@ -37,7 +37,7 @@ export const User: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IUser, IUserSearchDto>({
@@ -72,7 +72,7 @@ export const User: FC = () => {
         </Button>
       </PageHeader>
 
-      <UserSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <UserSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

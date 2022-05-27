@@ -18,7 +18,7 @@ export interface IErc1155TokenListProps {
 export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
   const { embedded } = props;
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSubmit, handleChangePage } =
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IErc1155Token, IErc1155TokenSearchDto>({
       baseUrl: "/erc1155-tokens",
       embedded,
@@ -43,7 +43,7 @@ export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc1155TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <Erc1155TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

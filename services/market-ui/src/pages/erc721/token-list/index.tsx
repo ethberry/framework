@@ -17,7 +17,7 @@ export interface IErc721TokenListProps {
 export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
   const { embedded } = props;
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSubmit, handleChangePage } =
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IErc721Token, IErc721AssetSearchDto>({
       baseUrl: "/erc721-tokens",
       embedded,
@@ -40,7 +40,7 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <Erc721TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

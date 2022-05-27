@@ -21,7 +21,7 @@ export const Erc721DropboxList: FC<IErc721DropboxListProps> = props => {
 
   const { id = "" } = useParams<{ id: string }>();
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSubmit, handleChangePage } =
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IErc721Dropbox, IErc721DropboxSearchDto>({
       baseUrl: "/erc721-dropboxes",
       embedded,
@@ -48,7 +48,7 @@ export const Erc721DropboxList: FC<IErc721DropboxListProps> = props => {
       </PageHeader>
 
       <Erc721DropboxSearchForm
-        onSubmit={handleSubmit}
+        onSearch={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
         embedded={embedded}

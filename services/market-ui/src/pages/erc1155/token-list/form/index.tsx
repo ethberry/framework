@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { FormikForm } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { IErc1155TokenSearchDto } from "@framework/types";
@@ -10,14 +10,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
 interface IErc1155TokenSearchFormProps {
-  onSubmit: (values: any) => void;
+  onSearch: (values: any) => void;
   initialValues: IErc1155TokenSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
 export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, embedded } = props;
+  const { onSearch, initialValues, open, embedded } = props;
 
   const classes = useStyles();
 
@@ -27,7 +27,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
   return (
     <FormikForm
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -35,25 +35,24 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="query" onSearch={onSearch} />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EthInput name="minPrice" />
+            <EthInput name="minPrice" onSearch={onSearch} />
           </Grid>
           <Grid item xs={6}>
-            <EthInput name="maxPrice" />
+            <EthInput name="maxPrice" onSearch={onSearch} />
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="erc1155CollectionIds" controller="erc1155-collections" multiple />
+              <EntityInput name="erc1155CollectionIds" controller="erc1155-collections" onSearch={onSearch} multiple />
             </Grid>
           ) : null}
         </Grid>
       </Collapse>
-      <AutoSave />
     </FormikForm>
   );
 };

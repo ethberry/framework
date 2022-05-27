@@ -19,7 +19,7 @@ export const Items: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSubmit, handleChangePage } =
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IErc721Token, IErc721AssetSearchDto>({
       baseUrl: "/erc721-tokens",
       search: {
@@ -37,7 +37,7 @@ export const Items: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc721TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

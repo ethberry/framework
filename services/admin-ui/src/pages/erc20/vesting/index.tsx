@@ -32,7 +32,7 @@ export const Erc20Vesting: FC = () => {
     handleView,
     handleViewConfirm,
     handleViewCancel,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
   } = useCollection<IErc20Vesting, IErc20VestingSearchDto>({
     baseUrl: "/erc20-vesting",
@@ -58,7 +58,7 @@ export const Erc20Vesting: FC = () => {
         <Erc20VestingDeployButton />
       </PageHeader>
 
-      <Erc20VestingSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc20VestingSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

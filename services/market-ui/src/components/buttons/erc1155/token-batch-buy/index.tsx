@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
-import { useFormikContext } from "formik";
+import { useFormContext } from "react-hook-form";
 
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
@@ -18,8 +18,8 @@ interface IErc1155TokenSingleBuyButtonProps {
 export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> = props => {
   const { rows } = props;
 
-  const formik = useFormikContext<any>();
-  const values: Record<string, number> = formik.values;
+  const form = useFormContext<any>();
+  const values: Record<string, number> = form.getValues();
 
   const api = useApi();
   const { library } = useWeb3React();

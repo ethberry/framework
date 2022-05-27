@@ -39,7 +39,7 @@ export const Erc1155Recipes: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IErc1155Recipe, IErc1155RecipeSearchDto>({
@@ -73,7 +73,7 @@ export const Erc1155Recipes: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc1155RecipeSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc1155RecipeSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

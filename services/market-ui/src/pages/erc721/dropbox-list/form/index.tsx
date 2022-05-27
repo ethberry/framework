@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { FormikForm } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { IErc721DropboxSearchDto } from "@framework/types";
@@ -10,14 +10,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
 interface IErc721DropboxSearchFormProps {
-  onSubmit: (values: any) => void;
+  onSearch: (values: any) => void;
   initialValues: IErc721DropboxSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
 export const Erc721DropboxSearchForm: FC<IErc721DropboxSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, embedded } = props;
+  const { onSearch, initialValues, open, embedded } = props;
 
   const classes = useStyles();
 
@@ -27,7 +27,7 @@ export const Erc721DropboxSearchForm: FC<IErc721DropboxSearchFormProps> = props 
   return (
     <FormikForm
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -35,25 +35,24 @@ export const Erc721DropboxSearchForm: FC<IErc721DropboxSearchFormProps> = props 
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="query" onSearch={onSearch} />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EthInput name="minPrice" />
+            <EthInput name="minPrice" onSearch={onSearch} />
           </Grid>
           <Grid item xs={6}>
-            <EthInput name="maxPrice" />
+            <EthInput name="maxPrice" onSearch={onSearch} />
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="erc721CollectionIds" controller="erc721-collections" multiple />
+              <EntityInput name="erc721CollectionIds" controller="erc721-collections" onSearch={onSearch} multiple />
             </Grid>
           ) : null}
         </Grid>
       </Collapse>
-      <AutoSave />
     </FormikForm>
   );
 };

@@ -24,7 +24,7 @@ export const Resources: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleSubmit, handleChangePage } = useCollection<
+  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<
     IErc1155Recipe,
     IErc1155RecipeSearchDto
   >({
@@ -78,7 +78,7 @@ export const Resources: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSubmit} initialValues={search} />
+      <CommonSearchForm onSearch={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

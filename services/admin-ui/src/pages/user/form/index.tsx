@@ -1,20 +1,20 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { FormikForm } from "@gemunion/mui-form";
 import { IUserSearchDto, UserRole, UserStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
 
 interface IUserSearchFormProps {
-  onSubmit: (values: IUserSearchDto) => void;
+  onSearch: (values: IUserSearchDto) => void;
   initialValues: IUserSearchDto;
   open: boolean;
 }
 
 export const UserSearchForm: FC<IUserSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSearch, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
   return (
     <FormikForm
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -32,20 +32,19 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="query" onSearch={onSearch} />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput multiple name="userStatus" options={UserStatus} />
+            <SelectInput multiple name="userStatus" options={UserStatus} onSearch={onSearch} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="userRoles" options={UserRole} />
+            <SelectInput multiple name="userRoles" options={UserRole} onSearch={onSearch} />
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave />
     </FormikForm>
   );
 };

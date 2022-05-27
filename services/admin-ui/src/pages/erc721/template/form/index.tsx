@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { FormikForm } from "@gemunion/mui-form";
 import { Erc721TemplateStatus, IErc721TemplateSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -9,13 +9,13 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 
 interface ITemplateSearchFormProps {
-  onSubmit: (values: IErc721TemplateSearchDto) => void;
+  onSearch: (values: IErc721TemplateSearchDto) => void;
   initialValues: IErc721TemplateSearchDto;
   open: boolean;
 }
 
 export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSearch, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
   return (
     <FormikForm
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -33,20 +33,19 @@ export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="query" onSearch={onSearch} />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc721CollectionIds" controller="erc721-collections" multiple />
+            <EntityInput name="erc721CollectionIds" controller="erc721-collections" onSearch={onSearch} multiple />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="templateStatus" options={Erc721TemplateStatus} />
+            <SelectInput multiple name="templateStatus" options={Erc721TemplateStatus} onSearch={onSearch} />
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave />
     </FormikForm>
   );
 };

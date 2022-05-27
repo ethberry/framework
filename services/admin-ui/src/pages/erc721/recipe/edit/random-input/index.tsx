@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useFormikContext } from "formik";
+import { useFormContext } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SwitchInput } from "@gemunion/mui-inputs-core";
@@ -11,8 +11,8 @@ export interface IRandomInputProps {
 export const RandomInput: FC<IRandomInputProps> = props => {
   const { name } = props;
 
-  const formik = useFormikContext<any>();
-  const value = formik.values[name];
+  const form = useFormContext<any>();
+  const value = form.getValues(name);
 
   return (
     <>
