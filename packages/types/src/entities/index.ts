@@ -29,4 +29,6 @@ export * from "./erc1155/token-history";
 export * from "./erc1155/recipe";
 export * from "./erc1155/recipe-history";
 
-export * from "./contract-manager-history";
+export * from "./blockchain/access-control";
+export * from "./blockchain/access-control-history";
+export * from "./blockchain/contract-manager-history";

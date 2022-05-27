@@ -1,0 +1,25 @@
+import { IIdBase } from "@gemunion/types-collection";
+
+export enum AccessControlRoleType {
+  DEFAULT_ADMIN_ROLE = "DEFAULT_ADMIN_ROLE",
+  MINTER_ROLE = "MINTER_ROLE",
+  PAUSER_ROLE = "PAUSER_ROLE",
+  SNAPSHOT_ROLE = "SNAPSHOT_ROLE",
+  PREDICATE_ROLE = "PREDICATE_ROLE",
+  DEPOSITOR_ROLE = "DEPOSITOR_ROLE",
+}
+
+export enum AccessControlRoleHash {
+  DEFAULT_ADMIN_ROLE = "0x0000000000000000000000000000000000000000000000000000000000000000",
+  MINTER_ROLE = "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
+  PAUSER_ROLE = "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+  SNAPSHOT_ROLE = "0x5fdbd35e8da83ee755d5e62a539e5ed7f47126abede0b8b10f9ea43dc6eed07f",
+  PREDICATE_ROLE = "0x12ff340d0cd9c652c747ca35727e68c547d0f0bfa7758d2e77f75acef481b4f2",
+  DEPOSITOR_ROLE = "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9",
+}
+
+export interface IAccessControl extends IIdBase {
+  address: string;
+  wallet: string;
+  role: AccessControlRoleType;
+}

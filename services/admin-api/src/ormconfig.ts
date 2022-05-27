@@ -68,6 +68,9 @@ import { CreateErc721Ingredient1648525970030 } from "./migrations/1648525970030-
 import { SeedErc721Ingredient1648525970040 } from "./migrations/1648525970040-seed-erc721-ingredient";
 import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
 import { CreateUniTokenView1652962207575 } from "./migrations/1652962207575-create-uni-token-view";
+import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
+import { CreateAccessControlTable1653616447230 } from "./migrations/1653616447230-create-access-control-table";
+import { CreateAccessControlHistoryTable1653616447240 } from "./migrations/1653616447240-create-access-control-history-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -77,6 +80,7 @@ const config: PostgresConnectionOptions = {
   entities: [
     UserEntity,
     OtpEntity,
+    AccessControlEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
     Erc20StakingHistoryEntity,
@@ -152,6 +156,8 @@ const config: PostgresConnectionOptions = {
     SeedErc721Ingredient1648525970040,
     CreateContractManagerHistoryTable1652682493386,
     CreateUniTokenView1652962207575,
+    CreateAccessControlTable1653616447230,
+    CreateAccessControlHistoryTable1653616447240,
   ],
 };
 

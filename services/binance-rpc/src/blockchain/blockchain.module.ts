@@ -4,8 +4,6 @@ import { AbiItem } from "web3-utils";
 
 import { Web3ContractModule, Web3ContractService } from "@gemunion/nestjs-web3";
 
-import { ContractType } from "../common/interfaces";
-
 import {
   ContractManagerEventType,
   Erc1155MarketplaceEventType,
@@ -31,8 +29,12 @@ import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contract
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
+import { ContractType } from "../common/interfaces";
+import { ContractManagerModule } from "./contract-manager/contract-manager.module";
+import { AccessControlModule } from "./access-control/access-control.module";
+
 @Module({
-  imports: [ConfigModule, Web3ContractModule],
+  imports: [ConfigModule, Web3ContractModule, ContractManagerModule, AccessControlModule],
 })
 export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
   constructor(

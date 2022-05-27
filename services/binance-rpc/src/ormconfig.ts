@@ -25,6 +25,8 @@ import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
 import { Erc1155RecipeHistoryEntity } from "./erc1155/recipe-history/recipe-history.entity";
 import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
+import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
+import { AccessControlHistoryEntity } from "./blockchain/access-control-history/access-control-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -32,6 +34,8 @@ const config: PostgresConnectionOptions = {
   type: "postgres",
   entities: [
     ContractManagerHistoryEntity,
+    AccessControlEntity,
+    AccessControlHistoryEntity,
     Erc20TokenHistoryEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,

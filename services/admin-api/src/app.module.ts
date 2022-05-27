@@ -23,7 +23,7 @@ import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
-import { ContractManagerModule } from "./contract-manager/contract-manager.module";
+import { BlockchainModule } from "./blockchain/blockchain.module";
 
 @Module({
   providers: [
@@ -87,7 +87,7 @@ import { ContractManagerModule } from "./contract-manager/contract-manager.modul
     Erc20Module,
     Erc721Module,
     Erc1155Module,
-    ContractManagerModule,
+    BlockchainModule,
     ProfileModule,
     UserModule,
   ],
