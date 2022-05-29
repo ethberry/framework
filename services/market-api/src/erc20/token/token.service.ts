@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { Erc20TokenEntity } from "./token.entity";
+import { Erc20TokenStatus } from "@framework/types";
 
 @Injectable()
 export class Erc20TokenService {
@@ -12,8 +13,10 @@ export class Erc20TokenService {
   ) {}
 
   public async autocomplete(): Promise<Array<Erc20TokenEntity>> {
-    // TODO only active
     return this.erc20TokenEntityRepository.find({
+      where: {
+        tokenStatus: Erc20TokenStatus.ACTIVE,
+      },
       select: {
         id: true,
         title: true,

@@ -36,6 +36,30 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        'Inactive token',
+        '${simpleFormatting}',
+        '${constants.WeiPerEther.toString()}',
+        'Inactive token',
+        'INACTIVE20',
+        '${erc20TokenAddress}',
+        'INACTIVE',
+        'SIMPLE',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'New token',
+        '${simpleFormatting}',
+        '${constants.WeiPerEther.toString()}',
+        'New token',
+        'NEW20',
+        '${erc20TokenAddress}',
+        'NEW',
+        'BLACKLIST',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }
