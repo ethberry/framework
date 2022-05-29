@@ -19,7 +19,7 @@ export class Erc20LogService {
     private readonly erc20TokenService: Erc20TokenService,
     private readonly web3LogService: Web3LogService,
   ) {
-    this.chainId = this.configService.get<number>("CHAIN_ID", 1337);
+    this.chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
   }
 
   public async init(): Promise<void> {

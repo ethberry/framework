@@ -71,6 +71,8 @@ import { CreateUniTokenView1652962207575 } from "./migrations/1652962207575-crea
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { CreateAccessControlTable1653616447230 } from "./migrations/1653616447230-create-access-control-table";
 import { CreateAccessControlHistoryTable1653616447240 } from "./migrations/1653616447240-create-access-control-history-table";
+import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-create-seaport-table";
+import { CreateSeaportHistoryTable1653820928950 } from "./migrations/1653820928950-create-seaport-history-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -158,6 +160,8 @@ const config: PostgresConnectionOptions = {
     CreateUniTokenView1652962207575,
     CreateAccessControlTable1653616447230,
     CreateAccessControlHistoryTable1653616447240,
+    CreateSeaportTable1653820928940,
+    CreateSeaportHistoryTable1653820928950,
   ],
 };
 

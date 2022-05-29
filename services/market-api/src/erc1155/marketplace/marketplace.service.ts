@@ -64,7 +64,7 @@ export class Erc1155MarketplaceService {
       {
         name: "ERC1155Marketplace",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", 97),
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
         verifyingContract: this.configService.get<string>("ERC1155_MARKETPLACE_ADDR", ""),
       },
       prepareEip712(data),
