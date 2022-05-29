@@ -17,7 +17,7 @@
     "@gemunion/popup": "0.0.31",
     "@gemunion/provider-api": "5.8.0",
     "react-beautiful-dnd": "13.1.0",
-    "react-hook-form": "7.31.2"
+    "react-hook-form": "7.31.3"
   },
   "description": "react widget",
   "devDependencies": {

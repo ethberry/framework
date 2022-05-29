@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "react-google-recaptcha": "2.1.0",
-    "react-hook-form": "7.31.2"
+    "react-hook-form": "7.31.3"
   },
   "description": "react widget",
   "devDependencies": {
