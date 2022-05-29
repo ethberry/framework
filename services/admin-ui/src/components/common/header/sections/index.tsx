@@ -6,6 +6,7 @@ import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
 import { useUser } from "@gemunion/provider-user";
+import { useApi } from "@gemunion/provider-api";
 import { IUser } from "@framework/types";
 
 import { useStyles } from "./styles";
@@ -18,6 +19,7 @@ export const Sections: FC = () => {
   const [anchor, setAnchor] = useState<Element | null>(null);
 
   const user = useUser<IUser>();
+  const api = useApi();
 
   const handleMenuOpen = (event: MouseEvent): void => {
     setAnchor(event.currentTarget);
@@ -32,6 +34,7 @@ export const Sections: FC = () => {
     handleMenuClose();
     const auth = getAuth();
     await signOut(auth);
+    api.setToken(null);
     navigate("/login");
   };
 
