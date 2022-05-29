@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.4;
+pragma solidity >=0.8.13;
 
 interface IERC721Dropbox {
   function mintDropbox(address to, uint256 templateId) external returns (uint256);

@@ -4,7 +4,7 @@
 // Email: trejgun+impulse@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.4;
+pragma solidity >=0.8.13;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";

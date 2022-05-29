@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.4;
+pragma solidity >=0.8.13;
 
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
