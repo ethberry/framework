@@ -44,7 +44,7 @@ export class ContractManagerServiceWs {
     private readonly erc721CollectionService: Erc721CollectionService,
     private readonly erc1155CollectionService: Erc1155CollectionService,
   ) {
-    this.chainId = configService.get<number>("CHAIN_ID", 1);
+    this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
 
   public async erc20Vesting(event: IEvent<IContractManagerERC20VestingDeployed>): Promise<void> {

@@ -126,7 +126,7 @@ export class Erc721AirderopService {
       {
         name: "ERC721Airdrop",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", 97),
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
         verifyingContract: this.configService.get<string>("ERC721_AIRDROP_ADDR", ""),
       },
       prepareEip712(data),

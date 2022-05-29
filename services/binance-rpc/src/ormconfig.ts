@@ -27,6 +27,7 @@ import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity"
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control-history/access-control-history.entity";
+import { SeaportHistoryEntity } from "./blockchain/seaport-history/seaport-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -58,6 +59,7 @@ const config: PostgresConnectionOptions = {
     Erc1155TokenHistoryEntity,
     Erc1155MarketplaceHistoryEntity,
     Erc1155BalanceEntity,
+    SeaportHistoryEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
