@@ -4,6 +4,8 @@ export enum Erc20TokenEventType {
   Transfer = "Transfer",
   Approval = "Approval",
   Snapshot = "Snapshot",
+  RoleGranted = "RoleGranted",
+  RoleRevoked = "RoleRevoked",
 }
 
 export interface IErc20TokenTransfer {
@@ -22,7 +24,13 @@ export interface IErc20TokenSnapshot {
   id: string;
 }
 
-export type TErc20TokenEventData = IErc20TokenTransfer | IErc20TokenApprove | IErc20TokenSnapshot;
+export interface IErc20RoleGrant {
+  role: string;
+  account: string;
+  sender: string;
+}
+
+export type TErc20TokenEventData = IErc20TokenTransfer | IErc20TokenApprove | IErc20TokenSnapshot | IErc20RoleGrant;
 
 export interface IErc20TokenHistory extends IIdBase {
   address: string;

@@ -18,8 +18,6 @@ export * from "./erc721/template/search";
 export * from "./erc721/token/search";
 export * from "./erc721/token/asset";
 export * from "./erc721/token-history/search";
-export * from "./erc721/auction/search";
-export * from "./erc721/auction-history/search";
 export * from "./erc721/dropbox/search";
 export * from "./erc721/recipe/search";
 

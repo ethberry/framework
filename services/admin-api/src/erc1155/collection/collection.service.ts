@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { Erc1155CollectionStatus, IErc1155CollectionSearchDto } from "@framework/types";
 
 import { Erc1155CollectionEntity } from "./collection.entity";
-import { IErc1155CollectionCreateDto, IErc1155CollectionUpdateDto } from "./interfaces";
+import { IErc1155CollectionUpdateDto } from "./interfaces";
 
 @Injectable()
 export class Erc1155CollectionService {
@@ -82,10 +82,6 @@ export class Erc1155CollectionService {
     Object.assign(collectionEntity, dto);
 
     return collectionEntity.save();
-  }
-
-  public async create(dto: IErc1155CollectionCreateDto): Promise<Erc1155CollectionEntity> {
-    return this.erc1155CollectionEntityRepository.create(dto).save();
   }
 
   public async delete(where: FindOptionsWhere<Erc1155CollectionEntity>): Promise<Erc1155CollectionEntity> {

@@ -31,6 +31,14 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
+    "rarity": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon",
+      "UNKNOWN": "Unknown"
+    },
     "sort": {
       "createdAt": "Date",
       "price": "Price"
@@ -73,7 +81,7 @@
       "ok": "Ok",
       "save": "Save",
       "search": "Search",
-      "sell": "Sell on auction",
+      "sell": "Sell",
       "showFilters": "Show filters",
       "signup": "Sign up",
       "submit": "Submit",
@@ -92,10 +100,13 @@
       "dateRangeStart": "From",
       "displayName": "Display name",
       "email": "Email",
+      "endTime": "End date",
       "erc1155CollectionId": "Collections",
       "erc1155CollectionIds": "Collections",
       "erc1155TokenId": "Token",
       "erc1155TokenIds": "Token",
+      "erc20Token": "Token",
+      "erc20TokenId": "Token",
       "erc721CollectionId": "Collections",
       "erc721CollectionIds": "Collections",
       "erc721TokenId": "Token",
@@ -109,6 +120,7 @@
       "rarity": "Rarity",
       "roles": "Roles",
       "sort": "Sort by",
+      "startTime": "Start date",
       "status": "Status",
       "title": "Title",
       "type": "Type",
@@ -124,6 +136,8 @@
       "erc1155CollectionIds": "Collections",
       "erc1155TokenId": "Token",
       "erc1155TokenIds": "Token",
+      "erc20Token": "Token",
+      "erc20TokenId": "Token",
       "erc721CollectionId": "Collections",
       "erc721CollectionIds": "Collections",
       "erc721TokenId": "Token",
@@ -173,9 +187,6 @@
       },
       "title": "My assets"
     },
-    "auction": {
-      "title": "Secondary market"
-    },
     "craft": {
       "tabs": {
         "heroes": "Heroes",
@@ -187,7 +198,6 @@
     "dashboard": {
       "sections": {
         "assets": "My assets",
-        "auction": "Secondary marketplace",
         "craft": "Craft",
         "leaderboard": "Leaderboard",
         "marketplace": "Primary marketplace",

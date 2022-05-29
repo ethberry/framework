@@ -7,12 +7,13 @@ import { Contract, utils } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
-import { useDeploy } from "@gemunion/react-hooks";
+import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 import ERC721RandomTest from "@framework/binance-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+// import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 
 import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
@@ -24,6 +25,7 @@ function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
       return ERC721Graded.bytecode;
     case Erc721TokenTemplate.RANDOM:
       return ERC721RandomTest.bytecode;
+    // return ERC721Random.bytecode;
     default:
       throw new Error("Unknown template");
   }
@@ -59,6 +61,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
             symbol,
             baseTokenURI,
             royalty,
+            Object.keys(Erc721TokenTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,
             sign.signature,
           ) as Promise<void>;

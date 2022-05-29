@@ -17,7 +17,6 @@ import { erc1155Routes } from "./erc1155/routes";
 import { Marketplace } from "./marketplace";
 import { Assets } from "./assets";
 import { Craft } from "./craft";
-import { Auction } from "./auction";
 
 const routes: Array<RouteObject> = [
   {
@@ -63,14 +62,6 @@ const routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Craft /> },
           { path: "/craft/:tab", element: <Craft /> },
-        ],
-      },
-      {
-        path: "/auction",
-        element: <Protected />,
-        children: [
-          { index: true, element: <Auction /> },
-          { path: "/auction/:tab", element: <Auction /> },
         ],
       },
       {

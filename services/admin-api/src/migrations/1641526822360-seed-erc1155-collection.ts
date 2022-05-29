@@ -17,6 +17,8 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
         image_url,
         address,
         base_token_uri,
+        collection_status,
+        contract_template,
         chain_id,
         created_at,
         updated_at
@@ -26,6 +28,8 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
         '${imageUrl}',
         '${erc1155CollectionResourcesAddress}',
         '${baseTokenURI}',
+        'ACTIVE',
+        'SIMPLE',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

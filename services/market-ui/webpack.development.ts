@@ -1,5 +1,5 @@
 import path from "path";
-import { Configuration } from "webpack";
+import { Configuration, ProvidePlugin } from "webpack";
 import DotEnvPlugin from "dotenv-webpack";
 import CopyPlugin from "copy-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
@@ -26,6 +26,7 @@ const config: Configuration = {
     modules: ["node_modules"],
     fallback: {
       path: require.resolve("path-browserify"),
+      buffer: require.resolve("buffer/"),
     },
   },
   module: {
@@ -60,6 +61,9 @@ const config: Configuration = {
     ],
   },
   plugins: [
+    new ProvidePlugin({
+      Buffer: ["buffer", "Buffer"],
+    }),
     new DotEnvPlugin({
       path: `.env.${process.env.NODE_ENV as string}`,
       systemvars: true,

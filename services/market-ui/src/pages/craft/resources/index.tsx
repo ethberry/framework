@@ -10,7 +10,8 @@ import { useWeb3React } from "@web3-react/core";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApi } from "@gemunion/provider-api";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { useCollection, useMetamask } from "@gemunion/react-hooks";
+import { useCollection } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc1155Recipe, IErc1155RecipeSearchDto } from "@framework/types";
 import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 

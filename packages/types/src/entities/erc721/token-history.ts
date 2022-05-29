@@ -11,6 +11,8 @@ export enum Erc721TokenEventType {
   UnpackAirdrop = "UnpackAirdrop",
   RedeemAirdrop = "RedeemAirdrop",
   MintRandom = "MintRandom",
+  RoleGranted = "RoleGranted",
+  RoleRevoked = "RoleRevoked",
 }
 
 export interface IErc721TokenTransfer {
@@ -71,6 +73,17 @@ export interface IErc721AirdropRedeem {
   price: string;
 }
 
+export interface IErc721RoleGrant {
+  role: string;
+  account: string;
+  sender: string;
+}
+
+// dev random test
+export interface IErc721RandomRequest {
+  requestId: string;
+}
+
 export type TErc721TokenEventData =
   | IErc721TokenTransfer
   | IErc721TokenApprove
@@ -80,7 +93,9 @@ export type TErc721TokenEventData =
   | IErc721DropboxUnpack
   | IErc721AirdropUnpack
   | IErc721AirdropRedeem
-  | IErc721TokenMintRandom;
+  | IErc721RoleGrant
+  | IErc721TokenMintRandom
+  | IErc721RandomRequest;
 
 export interface IErc721TokenHistory extends IIdBase {
   address: string;

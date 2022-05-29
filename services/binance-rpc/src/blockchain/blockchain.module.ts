@@ -4,15 +4,12 @@ import { AbiItem } from "web3-utils";
 
 import { Web3ContractModule, Web3ContractService } from "@gemunion/nestjs-web3";
 
-import { ContractType } from "../common/interfaces";
-
 import {
   ContractManagerEventType,
   Erc1155MarketplaceEventType,
   Erc1155RecipeEventType,
   // Erc1155TokenEventType,
   // Erc20TokenEventType,
-  Erc721AuctionEventType,
   Erc721MarketplaceEventType,
   Erc721RecipeEventType,
   Erc721TokenEventType,
@@ -29,12 +26,15 @@ import ERC721Airdrop from "@framework/binance-contracts/artifacts/contracts/ERC7
 import ERC721Dropbox from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Dropbox.sol/ERC721Dropbox.json";
 import craft721 from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
 import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
-import auctionERC721 from "@framework/binance-contracts/artifacts/contracts/Auction/AuctionERC721.sol/AuctionERC721.json";
 import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
+import { ContractType } from "../common/interfaces";
+import { ContractManagerModule } from "./contract-manager/contract-manager.module";
+import { AccessControlModule } from "./access-control/access-control.module";
+
 @Module({
-  imports: [ConfigModule, Web3ContractModule],
+  imports: [ConfigModule, Web3ContractModule, ContractManagerModule, AccessControlModule],
 })
 export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
   constructor(
@@ -49,7 +49,6 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
     // const itemsAddr = this.configService.get<string>("ERC721_ITEM_ADDR", "");
     // const heroAddr = this.configService.get<string>("ERC721_HERO_ADDR", "");
     // const skillAddr = this.configService.get<string>("ERC721_SKILL_ADDR", "");
-    const itemAuctionAddr = this.configService.get<string>("ERC721_AUCTION_ADDR", "");
     const airDropboxAddr = this.configService.get<string>("ERC721_AIRDROP_ADDR", "");
     const itemDropboxAddr = this.configService.get<string>("ERC721_DROPBOX_ADDR", "");
     const itemMarketplaceAddr = this.configService.get<string>("ERC721_MARKETPLACE_ADDR", "");
@@ -182,17 +181,6 @@ export class BlockchainModule implements OnModuleInit, OnModuleDestroy {
           Erc1155RecipeEventType.RecipeCreated,
           Erc1155RecipeEventType.RecipeUpdated,
           Erc1155RecipeEventType.RecipeCrafted,
-        ],
-      },
-      {
-        contractName: ContractType.ERC721_AUCTION,
-        contractAddress: itemAuctionAddr,
-        contractInterface: auctionERC721.abi as Array<AbiItem>,
-        // prettier-ignore
-        eventNames: [
-          Erc721AuctionEventType.AuctionStart,
-          Erc721AuctionEventType.AuctionBid,
-          Erc721AuctionEventType.AuctionFinish,
         ],
       },
       {

@@ -2,13 +2,14 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { constants, Contract, utils } from "ethers";
+import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
+import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 import erc721contract from "@framework/binance-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
-import { OzContractGrantRoleDialog, IGrantRoleDto, OzRoles } from "./edit";
+import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./edit";
 
 export interface IOzContractGrantRoleMenuItemProps {
   address: string;
@@ -31,8 +32,7 @@ export const OzContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> 
 
   const meta = useMetamask((values: IGrantRoleDto) => {
     const contract = new Contract(address, erc721contract.abi, library.getSigner());
-    const role = values.role === OzRoles.DEFAULT_ADMIN_ROLE ? constants.HashZero : utils.id(values.role);
-    return contract.grantRole(role, values.address) as Promise<void>;
+    return contract.grantRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 
   const handleGrantRoleConfirmed = async (values: IGrantRoleDto): Promise<void> => {
@@ -51,12 +51,12 @@ export const OzContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> 
           <FormattedMessage id="form.buttons.grantRole" />
         </Typography>
       </MenuItem>
-      <OzContractGrantRoleDialog
+      <AccessControlGrantRoleDialog
         onCancel={handleGrantRoleCancel}
         onConfirm={handleGrantRoleConfirmed}
         open={isGrantRoleDialogOpen}
         initialValues={{
-          role: OzRoles.DEFAULT_ADMIN_ROLE,
+          role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
           address: "",
         }}
       />

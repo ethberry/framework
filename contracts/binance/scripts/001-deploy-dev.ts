@@ -7,10 +7,9 @@ import { blockAwait } from "./utils/blockAwait";
 import LINK_TOKEN_ABI from "./abi/link.json";
 
 async function main() {
-  const linkContractAddr = "0x42699A7612A82f1d9C36148af9C77354759b210b"; // BESU @linkAddr
-  const vrfCoordinatorAddr = "0xa50a51c09a5c451C52BB714527E1974b686D8e77"; // BESU @vrfCoordinatorAddr
-  // LINK_ADDR=0x42699A7612A82f1d9C36148af9C77354759b210b
-  // VRF_ADDR=0xa50a51c09a5c451C52BB714527E1974b686D8e77
+  const linkContractAddr = "0xD218078f319c4569Cb1BEfA40a728F15Cef0313E"; // besu @linkAddr
+  const vrfCoordinatorAddr = "0x5bC13f7Eeae521CDD95Cd000B92E586541cF68CE"; // besu @vrfCoordinatorAddr
+
   // const maxItemTypes = 15;
   // const maxHeroTypes = 3;
   const rlNum = 100; // royaltyNumerator
@@ -31,29 +30,29 @@ async function main() {
   const coinbInstance = await coinbFactory.deploy("ERC20BlCoin", "COINB", 1000000000);
   console.info(`ERC20_COIN_BL_ADDR=${coinbInstance.address.toLowerCase()}`);
 
-  // ERC20 Vesting MANAGER
+  // MANAGER
   const vestFactory = await ethers.getContractFactory("ContractManager");
   const vestInstance = await vestFactory.deploy();
   console.info(`CONTRACT_MANAGER_ADDR=${vestInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Item
   const itemFactory = await ethers.getContractFactory("ERC721RandomTest");
-  const itemInstance = await itemFactory.deploy("Item", "ITEM", "http://localhost:3011/erc721/1/", rlNum);
+  const itemInstance = await itemFactory.deploy("Item", "ITEM", "https://fw-json-api.gemunion.io/erc721/1/", rlNum);
   console.info(`ERC721_ITEM_ADDR=${itemInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Hero
   const heroFactory = await ethers.getContractFactory("ERC721RandomTest");
-  const heroInstance = await heroFactory.deploy("Hero", "HERO", "http://localhost:3011/erc721/2/", rlNum);
+  const heroInstance = await heroFactory.deploy("Hero", "HERO", "https://fw-json-api.gemunion.io/erc721/2/", rlNum);
   console.info(`ERC721_HERO_ADDR=${heroInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Skill
   const skillFactory = await ethers.getContractFactory("ERC721Graded");
-  const skillInstance = await skillFactory.deploy("Skill", "SKILL", "http://localhost:3011/erc721/3/", rlNum);
+  const skillInstance = await skillFactory.deploy("Skill", "SKILL", "https://fw-json-api.gemunion.io/erc721/3/", rlNum);
   console.info(`ERC721_SKILL_ADDR=${skillInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Land
   const landFactory = await ethers.getContractFactory("ERC721Simple");
-  const landInstance = await landFactory.deploy("Land", "LND", "http://localhost:3011/erc721/4/", rlNum);
+  const landInstance = await landFactory.deploy("Land", "LND", "https://fw-json-api.gemunion.io/erc721/4/", rlNum);
   console.info(`ERC721_LAND_ADDR=${landInstance.address.toLowerCase()}`);
 
   // ERC721 Marketplace contract
@@ -66,14 +65,14 @@ async function main() {
   const craft721Instance = await craft721Factory.deploy();
   console.info(`ERC721_CRAFT_ADDR=${craft721Instance.address.toLowerCase()}`);
 
-  // Auction Item contract
-  const auctionItemFactory = await ethers.getContractFactory("AuctionERC721");
-  const auctionItemInstance = await auctionItemFactory.deploy();
-  console.info(`ERC721_AUCTION_ADDR=${auctionItemInstance.address.toLowerCase()}`);
-
   // ERC721 contract - ERC721Dropbox
   const erc721DropFactory = await ethers.getContractFactory("ERC721Dropbox");
-  const erc721DropInstance = await erc721DropFactory.deploy("ERC721Dropbox", "DBX", "http://localhost:3011/", 100);
+  const erc721DropInstance = await erc721DropFactory.deploy(
+    "ERC721Dropbox",
+    "DBX",
+    "https://fw-json-api.gemunion.io/",
+    100,
+  );
   console.info(`ERC721_DROPBOX_ADDR=${erc721DropInstance.address.toLowerCase()}`);
 
   // ERC721 contract - ERC721Airdrop
@@ -81,7 +80,7 @@ async function main() {
   const airdropboxInstance = await airdropboxFactory.deploy(
     "ERC721Airdrop",
     "AIRDROP",
-    "http://localhost:3011/",
+    "https://fw-json-api.gemunion.io/",
     100,
     10000,
   );
@@ -89,7 +88,7 @@ async function main() {
 
   // ERC1155 contract - Resources
   const resFactory = await ethers.getContractFactory("ERC1155Simple");
-  const resInstance = await resFactory.deploy("http://localhost:3011/erc1155/1/");
+  const resInstance = await resFactory.deploy("https://fw-json-api.gemunion.io/erc1155/1/");
   console.info(`ERC1155_RESOURCES_ADDR=${resInstance.address.toLowerCase()}`);
 
   // Craft contract - CraftERC1155
@@ -185,17 +184,6 @@ async function main() {
   // Approve Craft in Resources for Owner
   tx = await resInstance.setApprovalForAll(craftInstance.address, true);
   console.info(`Resources - setApprovalForAll for Craft `, tx.hash);
-
-  // Auction Erc721
-  // Whitelist Items in Auction
-  tx = await auctionItemInstance.whitelist(itemInstance.address);
-  console.info("Auction - Items contract whitelisted: ", tx.hash);
-  // Whitelist Hero in Auction
-  tx = await auctionItemInstance.whitelist(heroInstance.address);
-  console.info("Auction - Hero contract whitelisted: ", tx.hash);
-  // Whitelist Skill in Auction
-  tx = await auctionItemInstance.whitelist(skillInstance.address);
-  console.info("Auction - Skill contract whitelisted: ", tx.hash);
 
   // Fund LINK to Items
   const linkTokenContract = new ethers.Contract(linkContractAddr, LINK_TOKEN_ABI, owner);

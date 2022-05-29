@@ -6,8 +6,6 @@ import { Erc721AirdropModule } from "./airdrop/airdrop.module";
 import { Erc721DropboxModule } from "./dropbox/dropbox.module";
 import { Erc721TokenModule } from "./token/token.module";
 import { Erc721TokenHistoryModule } from "./token-history/token-history.module";
-import { Erc721AuctionModule } from "./auction/auction.module";
-import { Erc721AuctionHistoryModule } from "./auction-history/auction-history.module";
 import { Erc721MarketplaceModule } from "./marketplace/marketplace.module";
 
 @Module({
@@ -18,8 +16,6 @@ import { Erc721MarketplaceModule } from "./marketplace/marketplace.module";
     Erc721AirdropModule,
     Erc721TokenModule,
     Erc721TokenHistoryModule,
-    Erc721AuctionModule,
-    Erc721AuctionHistoryModule,
     Erc721MarketplaceModule,
   ],
 })

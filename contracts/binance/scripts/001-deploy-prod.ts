@@ -7,8 +7,10 @@ import { blockAwait } from "./utils/blockAwait";
 import LINK_TOKEN_ABI from "./abi/link.json";
 
 async function main() {
-  const linkContractAddr = "0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06"; // BINANCE testnet @linkAddr
-  const vrfCoordinatorAddr = "0xa555fC018435bef5A13C6c6870a9d4C11DEC329C"; // BINANCE testnet @vrfCoordinatorAddr
+  const linkContractAddr = "0x01BE23585060835E02B77ef475b0Cc51aA1e0709"; // Rinkeby @linkAddr
+  const vrfCoordinatorAddr = "0xb3dCcb4Cf7a26f6cf6B120Cf5A73875B7BBc655B"; // Rinkeby @vrfCoordinatorAddr
+  // const linkContractAddr = "0x84b9B910527Ad5C03A9Ca831909E21e236EA7b06"; // BINANCE testnet @linkAddr
+  // const vrfCoordinatorAddr = "0xa555fC018435bef5A13C6c6870a9d4C11DEC329C"; // BINANCE testnet @vrfCoordinatorAddr
   // const maxItemTypes = 15;
   // const maxHeroTypes = 3;
   const rlNum = 100; // royaltyNumerator
@@ -53,11 +55,6 @@ async function main() {
   const craft721Factory = await ethers.getContractFactory("ERC1155ERC721Craft");
   const craft721Instance = await craft721Factory.deploy();
   console.info(`ERC721_CRAFT_ADDR=${craft721Instance.address.toLowerCase()}`);
-
-  // Auction Item contract
-  const auctionItemFactory = await ethers.getContractFactory("AuctionERC721");
-  const auctionItemInstance = await auctionItemFactory.deploy();
-  console.info(`ERC721_AUCTION_ADDR=${auctionItemInstance.address.toLowerCase()}`);
 
   // ERC721 contract - ERC721Dropbox
   const erc721DropFactory = await ethers.getContractFactory("ERC721Dropbox");
@@ -173,17 +170,6 @@ async function main() {
   // Approve Craft in Resources for Owner
   tx = await resInstance.setApprovalForAll(craftInstance.address, true);
   console.info(`Resources - setApprovalForAll for Craft `, tx.hash);
-
-  // Auction Erc721
-  // Whitelist Items in Auction
-  tx = await auctionItemInstance.whitelist(itemInstance.address);
-  console.info("Auction - Items contract whitelisted: ", tx.hash);
-  // Whitelist Hero in Auction
-  tx = await auctionItemInstance.whitelist(heroInstance.address);
-  console.info("Auction - Hero contract whitelisted: ", tx.hash);
-  // Whitelist Skill in Auction
-  tx = await auctionItemInstance.whitelist(skillInstance.address);
-  console.info("Auction - Skill contract whitelisted: ", tx.hash);
 
   // Fund LINK to Items
   const linkTokenContract = new ethers.Contract(linkContractAddr, LINK_TOKEN_ABI, owner);

@@ -7,7 +7,7 @@ import { Contract, utils } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
-import { useDeploy } from "@gemunion/react-hooks";
+import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc1155TokenTemplate, IErc1155CollectionDeployDto } from "@framework/types";
 import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
@@ -51,6 +51,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
             nonce,
             getBytecodeByErc1155TokenTemplate(contractTemplate),
             baseTokenURI,
+            Object.keys(Erc1155TokenTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,
             sign.signature,
           ) as Promise<void>;

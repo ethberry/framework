@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { Erc1155RecipeStatus, IErc1155Recipe } from "@framework/types";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 
@@ -28,8 +28,19 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
     const ids = recipe.ingredients.map(ingredient => ingredient.erc1155TokenId);
     const amounts = recipe.ingredients.map(ingredient => ingredient.amount);
 
+    // TODO check one collection for ingredients
+    const ingredientCollectionAddr = recipe.ingredients[0].erc1155Token.erc1155Collection!.address;
+    const rewardCollectionAddr = recipe.erc1155Token!.erc1155Collection!.address;
     const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
-    return contract.createRecipe(recipe.id, ids, amounts, recipe.erc1155TokenId) as Promise<void>;
+
+    return contract.createRecipe(
+      recipe.id,
+      ingredientCollectionAddr,
+      ids,
+      amounts,
+      rewardCollectionAddr,
+      recipe.erc1155TokenId,
+    ) as Promise<void>;
   });
 
   const handleLoadRecipe = (recipe: IErc1155Recipe): (() => Promise<void>) => {

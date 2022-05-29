@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 import { Erc721CollectionStatus, IErc721CollectionAutocompleteDto, IErc721CollectionSearchDto } from "@framework/types";
 
 import { Erc721CollectionEntity } from "./collection.entity";
-import { IErc721CollectionCreateDto, IErc721CollectionUpdateDto } from "./interfaces";
+import { IErc721CollectionUpdateDto } from "./interfaces";
 
 @Injectable()
 export class Erc721CollectionService {
@@ -95,10 +95,6 @@ export class Erc721CollectionService {
     Object.assign(collectionEntity, dto);
 
     return collectionEntity.save();
-  }
-
-  public async create(dto: IErc721CollectionCreateDto): Promise<Erc721CollectionEntity> {
-    return this.erc721CollectionEntityRepository.create(dto).save();
   }
 
   public async delete(where: FindOptionsWhere<Erc721CollectionEntity>): Promise<Erc721CollectionEntity> {

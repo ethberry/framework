@@ -1,6 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-
 import { IEvent } from "@gemunion/nestjs-web3";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
@@ -8,6 +7,10 @@ import { imageUrl } from "@framework/constants";
 
 import {
   ContractManagerEventType,
+  Erc20TokenTemplate,
+  Erc20VestingTemplate,
+  Erc721TokenTemplate,
+  Erc1155TokenTemplate,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
   IContractManagerERC20VestingDeployed,
@@ -17,7 +20,7 @@ import {
 
 import { ContractManagerHistoryService } from "../contract-manager-history/contract-manager-history.service";
 import { Erc20TokenService } from "../../erc20/token/token.service";
-import { Erc20VestingService } from "../../erc20/vesting/vesting.service";
+import { Erc20VestingService } from "../../vesting/vesting/vesting.service";
 import { Erc721CollectionService } from "../../erc721/collection/collection.service";
 import { Erc1155CollectionService } from "../../erc1155/collection/collection.service";
 import { Erc721LogService } from "../../erc721/logs/log.service";
@@ -46,17 +49,18 @@ export class ContractManagerServiceWs {
 
   public async erc20Vesting(event: IEvent<IContractManagerERC20VestingDeployed>): Promise<void> {
     const {
-      // todo add contractType from event
-      returnValues: { addr, beneficiary, startTimestamp, duration },
+      returnValues: { addr, beneficiary, startTimestamp, duration, templateId },
     } = event;
 
     await this.updateHistory(event);
 
     await this.erc20VestingService.create({
       address: addr.toLowerCase(),
-      beneficiary,
-      startTimestamp: new Date(~~`${startTimestamp}000`).toISOString(),
-      duration: ~~duration,
+      beneficiary: beneficiary.toLowerCase(),
+      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      duration: ~~duration * 1000, // msec
+      contractTemplate: Object.values(Erc20VestingTemplate)[~~templateId],
+      chainId: this.chainId,
     });
 
     await this.erc20LogService.add({
@@ -67,7 +71,7 @@ export class ContractManagerServiceWs {
 
   public async erc20Token(event: IEvent<IContractManagerERC20TokenDeployed>): Promise<void> {
     const {
-      returnValues: { addr, name, symbol, cap },
+      returnValues: { addr, name, symbol, cap, templateId },
     } = event;
 
     await this.updateHistory(event);
@@ -75,12 +79,15 @@ export class ContractManagerServiceWs {
     await this.erc20TokenService.create({
       address: addr.toLowerCase(),
       title: name,
+      name,
       symbol,
       amount: cap,
       description: emptyStateString,
+      contractTemplate: Object.values(Erc20TokenTemplate)[~~templateId],
       chainId: this.chainId,
     });
 
+    // TODO should we listen for NEW collections?
     await this.erc20LogService.add({
       address: [addr.toLowerCase()],
       topics: [],
@@ -89,7 +96,7 @@ export class ContractManagerServiceWs {
 
   public async erc721Token(event: IEvent<IContractManagerERC721TokenDeployed>): Promise<void> {
     const {
-      returnValues: { addr, name, symbol, royalty, baseTokenURI },
+      returnValues: { addr, name, symbol, royalty, baseTokenURI, templateId },
     } = event;
 
     await this.updateHistory(event);
@@ -97,12 +104,14 @@ export class ContractManagerServiceWs {
     await this.erc721CollectionService.create({
       address: addr.toLowerCase(),
       title: name,
+      name,
       symbol,
       royalty: ~~royalty,
       description: emptyStateString,
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
+      contractTemplate: Object.values(Erc721TokenTemplate)[~~templateId],
     });
 
     await this.erc721LogService.add({
@@ -113,7 +122,7 @@ export class ContractManagerServiceWs {
 
   public async erc1155Token(event: IEvent<IContractManagerERC1155TokenDeployed>): Promise<void> {
     const {
-      returnValues: { addr, baseTokenURI },
+      returnValues: { addr, baseTokenURI, templateId },
     } = event;
 
     await this.updateHistory(event);
@@ -125,6 +134,7 @@ export class ContractManagerServiceWs {
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
+      contractTemplate: Object.values(Erc1155TokenTemplate)[~~templateId],
     });
 
     await this.erc1155LogService.add({

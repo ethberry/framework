@@ -8,7 +8,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { Erc721TokenSellButton } from "../../../components/buttons";
+import { Erc721TokenAuctionButton } from "../../../components/buttons";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading } = useCollection<IErc721Token>({
@@ -41,7 +41,7 @@ export const Erc721Token: FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
-            <Erc721TokenSellButton token={selected} />
+            <Erc721TokenAuctionButton token={selected} />
           </Paper>
         </Grid>
       </Grid>

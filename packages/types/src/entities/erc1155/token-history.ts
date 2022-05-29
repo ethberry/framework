@@ -4,6 +4,8 @@ export enum Erc1155TokenEventType {
   TransferSingle = "TransferSingle",
   TransferBatch = "TransferBatch",
   ApprovalForAll = "ApprovalForAll",
+  RoleGranted = "RoleGranted",
+  RoleRevoked = "RoleRevoked",
   URI = "URI",
 }
 
@@ -34,11 +36,18 @@ export interface IErc1155TokenUri {
   id: string;
 }
 
+export interface IErc1155RoleGrant {
+  role: string;
+  account: string;
+  sender: string;
+}
+
 export type TErc1155TokenEventData =
   | IErc1155TokenTransferSingle
   | IErc1155TokenTransferBatch
   | IErc1155TokenApprovalForAll
-  | IErc1155TokenUri;
+  | IErc1155TokenUri
+  | IErc1155RoleGrant;
 
 export interface IErc1155TokenHistory extends IIdBase {
   address: string;

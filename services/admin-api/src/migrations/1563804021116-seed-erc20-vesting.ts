@@ -13,7 +13,7 @@ export class SeedErc20Vesting1563804021116 implements MigrationInterface {
         beneficiary,
         duration,
         start_timestamp,
-        vesting_template,
+        contract_template,
         chain_id,
         created_at,
         updated_at
