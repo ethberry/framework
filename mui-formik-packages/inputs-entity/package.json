@@ -10,7 +10,7 @@
   "dependencies": {
     "@gemunion/mui-page-layout": "0.1.4",
     "@gemunion/provider-api": "5.8.0",
-    "react-hook-form": "7.31.2",
+    "react-hook-form": "7.31.3",
     "use-debounce": "8.0.1"
   },
   "description": "react widget",
