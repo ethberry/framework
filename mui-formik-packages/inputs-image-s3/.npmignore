@@ -1,0 +1,7 @@
+/@types
+/src
+/node_modules
+/tsconfig.json
+/jest.config.json
+**/*.stories.*
+**/*.test.*

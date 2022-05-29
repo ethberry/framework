@@ -1,4 +1,4 @@
 {
-  "packages": ["packages/*", "services/*", "microservices/*", "contracts/*"],
+  "packages": ["packages/*", "services/*", "microservices/*", "contracts/*", "mui-formik-packages/*"],
   "version": "independent"
 }

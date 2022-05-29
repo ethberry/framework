@@ -1,0 +1,62 @@
+{
+  "author": {
+    "email": "trejgun+gemunion@gmail.com",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/mui-packages/issues"
+  },
+  "dependencies": {
+    "@gemunion/mui-dialog-confirmation": "3.1.30",
+    "@gemunion/mui-page-layout": "0.1.4"
+  },
+  "description": "react widget",
+  "devDependencies": {
+    "@mui/material": "5.8.1",
+    "@storybook/react": "6.5.5",
+    "@testing-library/jest-dom": "5.16.4",
+    "@testing-library/react": "12.1.5",
+    "@types/jest": "27.5.1",
+    "@types/react": "17.0.45",
+    "jest": "28.1.0",
+    "jest-environment-jsdom": "28.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-intl": "6.0.3",
+    "ts-jest": "28.0.3"
+  },
+  "engines": {
+    "node": ">=12.13"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@gemunion/mui-dialog-delete",
+  "peerDependencies": {
+    "@mui/material": "^5.0.0",
+    "react": "^17.0.0",
+    "react-intl": "^5.0.0 || ^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/mui-packages"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist/",
+    "prepare": "npm run build",
+    "preversion": "npm run build && npm run test",
+    "test": "jest --config jest.config.json --no-watch --verbose",
+    "test:coverage": "jest  --config jest.config.json --coverage",
+    "test:watch": "jest --config jest.config.json"
+  },
+  "sideEffects": false,
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "3.1.30"
+}
