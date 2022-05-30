@@ -13,7 +13,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { Erc20VestingTemplate, IErc20Vesting, IErc20VestingSearchDto } from "@framework/types";
+import { IErc20Vesting, IErc20VestingSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { Erc20VestingSearchForm } from "./form";
 import { Erc20VestingViewDialog } from "./view";
@@ -38,7 +38,7 @@ export const Erc20Vesting: FC = () => {
     baseUrl: "/erc20-vesting",
     search: {
       query: "",
-      vestingTemplate: [Erc20VestingTemplate.LINEAR, Erc20VestingTemplate.GRADED, Erc20VestingTemplate.CLIFF],
+      contractTemplate: [],
     },
     empty: {
       beneficiary: "",

@@ -1,42 +1,72 @@
-import { ChangeEvent, FC, Fragment, useState } from "react";
-import { Tab, Tabs } from "@mui/material";
+import { FC } from "react";
+import { Grid } from "@mui/material";
+import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
-import { useNavigate, useParams } from "react-router";
 
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { useUser } from "@gemunion/provider-user";
+import { ApiError } from "@gemunion/provider-api";
+import { FormikForm } from "@gemunion/mui-form";
+import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { EnabledLanguages } from "@framework/constants";
+import { IUser } from "@framework/types";
 
-import { ProfileTabs } from "./tabs";
-import { ProfileGeneral } from "./general";
-import { ProfileSeaport } from "./seaport";
+import { validationSchema } from "./validation";
 
 export const Profile: FC = () => {
-  const { tab = ProfileTabs.general } = useParams<{ tab: ProfileTabs }>();
+  const user = useUser<IUser>();
+  const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-  const navigate = useNavigate();
 
-  const [value, setValue] = useState(tab);
-
-  const handleChange = (_event: ChangeEvent<any>, newValue: ProfileTabs): void => {
-    setValue(newValue);
-    navigate(`/profile/${newValue === ProfileTabs.general ? "" : newValue}`);
+  const onClick = (): void => {
+    enqueueSnackbar("Warning! You won't be able to use this site until you confirm your new email address.", {
+      variant: "info",
+    });
   };
 
+  const handleSubmit = (values: Partial<IUser>, formikBag: any): Promise<void> => {
+    return user
+      .setProfile(values)
+      .then((): void => {
+        enqueueSnackbar(formatMessage({ id: "snackbar.updated" }), { variant: "success" });
+      })
+      .catch((e: ApiError) => {
+        if (e.status === 400) {
+          const errors = e.getLocalizedValidationErrors();
+
+          Object.keys(errors).forEach(key => {
+            formikBag.setError(key, { type: "custom", message: errors[key] });
+          });
+        } else if (e.status) {
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
+        } else {
+          console.error(e);
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
+        }
+      });
+  };
+
+  const { email, displayName, language, imageUrl } = user.profile;
+  const fixedValues = { email, displayName, language, imageUrl };
+
   return (
-    <Fragment>
-      <Breadcrumbs path={["dashboard", "profile"]} />
+    <Grid>
+      <Breadcrumbs path={["profile"]} />
 
       <PageHeader message="pages.profile.title" />
 
-      <Tabs value={value} indicatorColor="primary" textColor="primary" onChange={handleChange}>
-        {Object.values(ProfileTabs).map(tab => (
-          <Tab key={tab} label={formatMessage({ id: `pages.profile.tabs.${tab}` })} value={tab} />
-        ))}
-      </Tabs>
-
-      <br />
-
-      <ProfileGeneral value={value} />
-      <ProfileSeaport value={value} />
-    </Fragment>
+      <FormikForm
+        initialValues={fixedValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        data-testid="Profile"
+      >
+        <TextInput name="email" autoComplete="username" onClick={onClick} />
+        <TextInput name="displayName" />
+        <SelectInput name="language" options={EnabledLanguages} />
+        <AvatarInput name="imageUrl" />
+      </FormikForm>
+    </Grid>
   );
 };

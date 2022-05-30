@@ -4,39 +4,31 @@ import { Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Sections: FC = () => {
+export const Personal: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.sections.title" />
+            <FormattedMessage id="pages.dashboard.personal.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/marketplace">
+        <ListItem button component={RouterLink} to="/my-assets">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.sections.marketplace" />
+            <FormattedMessage id="pages.dashboard.personal.assets" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/auctions">
+        <ListItem button component={RouterLink} to="/my-auctions">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.sections.auctions" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/craft">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.sections.craft" />
+            <FormattedMessage id="pages.dashboard.personal.auctions" />
           </ListItemText>
         </ListItem>
       </List>

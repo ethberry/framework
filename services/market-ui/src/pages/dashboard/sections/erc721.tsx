@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { AutoAwesomeMotion, Collections, Construction, Inventory, Paragliding, Storage } from "@mui/icons-material";
+import { Filter, Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +17,7 @@ export const Erc721Section: FC = () => {
       >
         <ListItem button component={RouterLink} to="/erc721-collections">
           <ListItemIcon>
-            <Collections />
+            <Storefront />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.erc721.collections" />
@@ -25,26 +25,10 @@ export const Erc721Section: FC = () => {
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-templates">
           <ListItemIcon>
-            <AutoAwesomeMotion />
+            <Filter />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.erc721.templates" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/erc721-airdrops">
-          <ListItemIcon>
-            <Paragliding />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.airdrop" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/erc721-dropboxes">
-          <ListItemIcon>
-            <Inventory />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.dropbox" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-tokens">
@@ -55,12 +39,12 @@ export const Erc721Section: FC = () => {
             <FormattedMessage id="pages.dashboard.erc721.tokens" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc721-recipes">
+        <ListItem button component={RouterLink} to="/erc721-airdrop">
           <ListItemIcon>
-            <Construction />
+            <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.recipes" />
+            <FormattedMessage id="pages.dashboard.erc721.airdrop" />
           </ListItemText>
         </ListItem>
       </List>

@@ -5,18 +5,17 @@ import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { IErc721AssetSearchDto, IErc721Token } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { IErc721AssetSearchDto, IErc721Token } from "@framework/types";
-
-import { Erc721Token } from "../../erc721/token-list/item";
 import { AssetsTabs, ITabPanelProps } from "../tabs";
-import { Erc721TokenSearchForm } from "../../erc721/token-list/form";
+import { Erc721Token } from "../../../erc721/token-list/item";
+import { Erc721TokenSearchForm } from "../../../erc721/token-list/form";
 
-export const Heroes: FC<ITabPanelProps> = props => {
+export const Items: FC<ITabPanelProps> = props => {
   const { value } = props;
 
-  if (value !== AssetsTabs.heroes) {
+  if (value !== AssetsTabs.items) {
     return null;
   }
 
@@ -24,10 +23,10 @@ export const Heroes: FC<ITabPanelProps> = props => {
     useCollection<IErc721Token, IErc721AssetSearchDto>({
       baseUrl: "/erc721-tokens",
       search: {
-        erc721CollectionIds: [4],
+        erc721CollectionIds: [3],
         rarity: [],
       },
-      redirect: (_baseUrl, search) => `/assets/${value}?${stringify(search)}`,
+      redirect: (_baseUrl, search) => `/my-assets/${value}?${stringify(search)}`,
     });
 
   return (

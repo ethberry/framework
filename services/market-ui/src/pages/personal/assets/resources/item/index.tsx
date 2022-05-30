@@ -6,7 +6,7 @@ import { IErc1155Token } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { Erc1155TokenSellButton } from "../../../../components/buttons";
+import { Erc1155TokenSellButton } from "../../../../../components/buttons";
 
 interface IErc1155TokenProps {
   token: IErc1155Token;

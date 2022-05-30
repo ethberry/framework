@@ -15,7 +15,7 @@ import { defaultItemsPerPage } from "@gemunion/constants";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
 
-export const Leaderboard: FC = () => {
+export const Erc20Staking: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -101,7 +101,7 @@ export const Leaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.staking.rank" }),
+      headerName: formatMessage({ id: "pages.erc20-staking.rank" }),
       sortable: false,
       flex: 1,
       renderCell: (cell: GridCellParams) => {
@@ -121,19 +121,19 @@ export const Leaderboard: FC = () => {
     },
     {
       field: "secureWallet",
-      headerName: formatMessage({ id: "pages.staking.address" }),
+      headerName: formatMessage({ id: "pages.erc20-staking.address" }),
       sortable: false,
       flex: 1,
     },
-    { field: "score", headerName: formatMessage({ id: "pages.staking.score" }), sortable: false, flex: 1 },
-    { field: "rank", headerName: formatMessage({ id: "pages.staking.rank" }), sortable: false, flex: 1 },
+    { field: "score", headerName: formatMessage({ id: "pages.erc20-staking.score" }), sortable: false, flex: 1 },
+    { field: "rank", headerName: formatMessage({ id: "pages.erc20-staking.rank" }), sortable: false, flex: 1 },
   ];
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking"]} />
+      <Breadcrumbs path={["dashboard", "erc20-staking"]} />
 
-      <PageHeader message="pages.leaderboard.title" />
+      <PageHeader message="pages.erc20-staking.title" />
 
       <CommonSearchForm onSearch={handleSearch} initialValues={data} />
 

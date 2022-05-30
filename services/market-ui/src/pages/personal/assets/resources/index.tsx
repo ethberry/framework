@@ -20,7 +20,7 @@ export const Resources: FC<ITabPanelProps> = props => {
 
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IErc1155Balance, IPaginationDto>({
     baseUrl: "/erc1155-balances",
-    redirect: (_baseUrl, search) => `/assets/${value}?${stringify(search)}`,
+    redirect: (_baseUrl, search) => `/my-assets/${value}?${stringify(search)}`,
   });
 
   return (

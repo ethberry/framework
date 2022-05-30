@@ -6,12 +6,12 @@ import { FormattedMessage } from "react-intl";
 
 export const Erc1155Section: FC = () => {
   return (
-    <Paper>
+    <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.tokens.erc1155" />
+            <FormattedMessage id="pages.dashboard.erc1155.title" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Erc1155Section: FC = () => {
             <Collections />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc1155-collections" />
+            <FormattedMessage id="pages.dashboard.erc1155.collections" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc1155-tokens">
@@ -28,7 +28,7 @@ export const Erc1155Section: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc1155-tokens" />
+            <FormattedMessage id="pages.dashboard.erc1155.tokens" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc1155-recipes">
@@ -36,7 +36,7 @@ export const Erc1155Section: FC = () => {
             <Construction />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc1155-recipes" />
+            <FormattedMessage id="pages.dashboard.erc1155.recipes" />
           </ListItemText>
         </ListItem>
       </List>

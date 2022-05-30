@@ -190,6 +190,9 @@
       },
       "title": "My assets"
     },
+    "auctions": {
+      "title": "Secondary marketplace"
+    },
     "craft": {
       "tabs": {
         "heroes": "Heroes",
@@ -199,26 +202,36 @@
       "title": "Craft"
     },
     "dashboard": {
-      "sections": {
+      "erc1155": {
+        "collections": "ERC1155 Collections",
+        "recipes": "ERC1155 Recipes",
+        "title": "ERC1155",
+        "tokens": "ERC1155 Tokens"
+      },
+      "erc20": {
+        "staking": "ERC20 Staking",
+        "title": "ERC20",
+        "vesting": "ERC20 Vesting"
+      },
+      "erc721": {
+        "airdrop": "ERC721 Airdrop",
+        "collections": "ERC721 Collections",
+        "templates": "ERC721 Templates",
+        "title": "ERC721",
+        "tokens": "ERC721 Tokens"
+      },
+      "personal": {
         "assets": "My assets",
+        "auctions": "My auctions",
+        "title": "My stash"
+      },
+      "sections": {
+        "auctions": "Secondary marketplace",
         "craft": "Craft",
-        "leaderboard": "Leaderboard",
         "marketplace": "Primary marketplace",
         "title": "Sections"
       },
-      "title": "Dashboard",
-      "tokens": {
-        "erc1155-collections": "ERC1155 Collections",
-        "erc1155-recipes": "ERC1155 Recipes",
-        "erc1155-tokens": "ERC1155 Tokens",
-        "erc1155-tokens-test": "ERC1155 Tokens test",
-        "erc20-vesting": "ERC20 Vesting",
-        "erc721-airdrop": "ERC721 Airdrop",
-        "erc721-collections": "ERC721 Collections",
-        "erc721-templates": "ERC721 Templates",
-        "erc721-tokens": "ERC721 Tokens",
-        "title": "Tokens"
-      }
+      "title": "Dashboard"
     },
     "erc1155-collection": {
       "title": "ERC1155 Collection: {title}"
@@ -235,6 +248,12 @@
     },
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
+    },
+    "erc20-staking": {
+      "address": "Address",
+      "rank": "Rank",
+      "score": "Score",
+      "title": "Leaderboard"
     },
     "erc20-vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
@@ -283,12 +302,6 @@
       "erc721-new": "New 721 Templates",
       "popular": "Popular items"
     },
-    "leaderboard": {
-      "address": "Address",
-      "rank": "Rank",
-      "score": "Score",
-      "title": "Leaderboard"
-    },
     "marketplace": {
       "heroes": {
         "title": "Heroes"
@@ -318,12 +331,11 @@
       },
       "title": "Primary market"
     },
+    "my-auctions": {
+      "title": "My auctions"
+    },
     "profile": {
-      "title": "Profile",
-      "tabs": {
-        "general": "General",
-        "seaport": "Seaport"
-      }
+      "title": "Profile"
     }
   },
   "snackbar": {

@@ -9,7 +9,7 @@ import { Resources } from "./resources";
 import { Heroes } from "./heroes";
 import { Items } from "./items";
 
-export const Assets: FC = () => {
+export const MyAssets: FC = () => {
   const { tab = AssetsTabs.heroes } = useParams<{ tab: AssetsTabs }>();
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export const Assets: FC = () => {
 
   const handleChange = (_event: ChangeEvent<any>, newValue: AssetsTabs): void => {
     setValue(newValue);
-    navigate(`/assets/${newValue === AssetsTabs.items ? "" : newValue}`);
+    navigate(`/my-assets/${newValue === AssetsTabs.items ? "" : newValue}`);
   };
 
   return (

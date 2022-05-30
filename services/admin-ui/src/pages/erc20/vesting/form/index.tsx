@@ -18,8 +18,8 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, vestingTemplate } = initialValues;
-  const fixedValues = { query, vestingTemplate };
+  const { query, contractTemplate } = initialValues;
+  const fixedValues = { query, contractTemplate };
 
   return (
     <FormikForm
@@ -38,7 +38,7 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput name="vestingTemplate" options={Erc20VestingTemplate} onSearch={onSearch} multiple />
+            <SelectInput name="contractTemplate" options={Erc20VestingTemplate} onSearch={onSearch} multiple />
           </Grid>
         </Grid>
       </Collapse>
