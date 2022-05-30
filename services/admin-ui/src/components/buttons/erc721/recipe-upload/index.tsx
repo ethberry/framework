@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
-import { Close, Save } from "@mui/icons-material";
+import { Close, Check, CloudUpload } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
@@ -74,8 +74,8 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
   if (recipe.recipeStatus === Erc721RecipeStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.erc721-recipes.upload" })}>
-        <IconButton onClick={handleLoadRecipe(recipe)}>
-          <Save />
+        <IconButton onClick={handleLoadRecipe(recipe)} data-testid="Erc721RecipeUploadButton">
+          <CloudUpload />
         </IconButton>
       </Tooltip>
     );
@@ -90,8 +90,8 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
             : "pages.erc721-recipes.activate",
       })}
     >
-      <IconButton onClick={handleToggleRecipe(recipe)} data-testid="Erc721RecipeUploadButton">
-        <Close />
+      <IconButton onClick={handleToggleRecipe(recipe)} data-testid="Erc721RecipeToggleButton">
+        {recipe.recipeStatus === Erc721RecipeStatus.ACTIVE ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

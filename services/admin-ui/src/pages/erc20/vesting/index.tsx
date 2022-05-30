@@ -15,6 +15,7 @@ import { FormattedMessage } from "react-intl";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IErc20Vesting, IErc20VestingSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+
 import { Erc20VestingSearchForm } from "./form";
 import { Erc20VestingViewDialog } from "./view";
 import { Erc20VestingDeployButton } from "../../../components/buttons";
