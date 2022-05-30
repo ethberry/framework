@@ -72,7 +72,7 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="erc20VestingDeployButton"
+        data-testid="Erc20VestingDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.add" />

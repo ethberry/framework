@@ -24,7 +24,7 @@ export const DeleteDialog: FC<IDeleteDialogProps> = props => {
   };
 
   return (
-    <ConfirmationDialog maxWidth="xs" onConfirm={handleConfirm} data-testid="dialogDelete" {...rest}>
+    <ConfirmationDialog maxWidth="xs" onConfirm={handleConfirm} data-testid="DialogDelete" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         <FormattedMessage
           id="dialogs.delete"

@@ -26,7 +26,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="OzContractRevokeRoleDialog"
+      data-testid="AccessControlRevokeRoleDialog"
       {...rest}
     >
       <SelectInput name="role" options={AccessControlRoleType} />

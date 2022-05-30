@@ -20,6 +20,7 @@ export interface IErc721TokenAuctionDialogProps {
   onCancel: () => void;
   onConfirm: (values: IErc721SellOptions, formikBag: any) => Promise<void>;
   initialValues: IErc721SellOptions;
+  data: any;
 }
 
 export const Erc721TokenAuctionDialog: FC<IErc721TokenAuctionDialogProps> = props => {
@@ -29,7 +30,7 @@ export const Erc721TokenAuctionDialog: FC<IErc721TokenAuctionDialogProps> = prop
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.edit"
+      message="dialogs.auction"
       data-testid="Erc721CollectionRoyaltyEditDialog"
       {...rest}
     >

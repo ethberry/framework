@@ -76,6 +76,7 @@ export const Erc721TokenAuctionButton: FC<IErc721TokenAuctionButtonProps> = prop
         onConfirm={handleAuctionConfirmed}
         open={isAuctionDialogOpen}
         initialValues={initialValues}
+        data={token.erc721Template}
       />
     </>
   );

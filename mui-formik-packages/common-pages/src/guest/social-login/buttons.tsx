@@ -13,7 +13,7 @@ export const LoginButtons: FC = () => {
 
   return (
     <ButtonToolbar>
-      <Button variant="text" type="button" to="/forgot-password" component={RouterLink} data-testid="forgotEmailButton">
+      <Button variant="text" type="button" to="/forgot-password" component={RouterLink} data-testid="ForgotEmailButton">
         <FormattedMessage id="form.buttons.forgot" />
       </Button>
       <Button
@@ -21,7 +21,7 @@ export const LoginButtons: FC = () => {
         type="button"
         to="/registration"
         component={RouterLink}
-        data-testid="signupWithEmailButton"
+        data-testid="SignupWithEmailButton"
       >
         <FormattedMessage id="form.buttons.signup" />
       </Button>
@@ -30,7 +30,7 @@ export const LoginButtons: FC = () => {
         type="submit"
         color="primary"
         disabled={isSubmitting}
-        data-testid="loginWithEmailButton"
+        data-testid="LoginWithEmailButton"
       >
         <FormattedMessage id="form.buttons.login" />
       </Button>

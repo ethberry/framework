@@ -11,6 +11,7 @@ export interface IFormikFormProps<T> {
   onConfirm: (values: T, formikBag: any) => Promise<void> | void;
   onCancel: () => void;
   message: string;
+  data?: any;
   open: boolean;
   initialValues: T;
   validationSchema?: any | (() => any);
@@ -42,7 +43,7 @@ export const FormDialog: FC<IFormikFormProps<any>> = props => {
   };
 
   return (
-    <ConfirmationDialog onConfirm={handleSubmit} maxWidth={maxWidth} data-testid="dialogForm" {...rest}>
+    <ConfirmationDialog onConfirm={handleSubmit} maxWidth={maxWidth} data-testid="DialogForm" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         <FormikForm
           onSubmit={onConfirm}

@@ -33,7 +33,7 @@ export const FormButtons: FC<IFormButtonsProps> = forwardRef((props, ref: any) =
         variant="contained"
         color="primary"
         disabled={disabled}
-        data-testid="formSubmitButton"
+        data-testid="FormSubmitButton"
       >
         <FormattedMessage id={`form.buttons.${submit}`} />
       </Button>

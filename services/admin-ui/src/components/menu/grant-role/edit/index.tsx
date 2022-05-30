@@ -26,7 +26,7 @@ export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="OzContractGrantRoleDialog"
+      data-testid="AccessControlGrantRoleDialog"
       {...rest}
     >
       <SelectInput name="role" options={AccessControlRoleType} />

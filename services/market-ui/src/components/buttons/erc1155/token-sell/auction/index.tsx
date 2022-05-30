@@ -21,6 +21,7 @@ export interface IErc1155TokenAuctionDialogProps {
   onCancel: () => void;
   onConfirm: (values: IErc1155AuctionOptions, formikBag: any) => Promise<void>;
   initialValues: IErc1155AuctionOptions;
+  data: any;
 }
 
 export const Erc1155TokenAuctionDialog: FC<IErc1155TokenAuctionDialogProps> = props => {
@@ -30,7 +31,7 @@ export const Erc1155TokenAuctionDialog: FC<IErc1155TokenAuctionDialogProps> = pr
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.edit"
+      message="dialogs.auction"
       data-testid="Erc1155CollectionRoyaltyEditDialog"
       {...rest}
     >

@@ -80,7 +80,7 @@ export const SocialLogin: FC = () => {
             startIcon={<Google />}
             type="button"
             onClick={openUrlOnClick(`${process.env.BE_URL}/auth/google`)}
-            data-testid="loginWithGoogleButton"
+            data-testid="LoginWithGoogleButton"
           >
             <FormattedMessage id="form.buttons.google" />
           </Button>
@@ -89,7 +89,7 @@ export const SocialLogin: FC = () => {
             startIcon={<Facebook />}
             type="button"
             onClick={openUrlOnClick(`${process.env.BE_URL}/auth/facebook`)}
-            data-testid="loginWithFacebookButton"
+            data-testid="LoginWithFacebookButton"
           >
             <FormattedMessage id="form.buttons.facebook" />
           </Button>

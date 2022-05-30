@@ -6,7 +6,7 @@ exports[`<ConfirmationDialog /> renders open dialog 1`] = `
 <DocumentFragment>
   <div
     class="MuiModal-root MuiDialog-root css-zw3mfo-MuiModal-root-MuiDialog-root"
-    data-testid="dialogConfirmation"
+    data-testid="DialogConfirmation"
     role="presentation"
   >
     <div
@@ -51,7 +51,7 @@ exports[`<ConfirmationDialog /> renders open dialog 1`] = `
         >
           <button
             class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root  css-1e6y48t-MuiButtonBase-root-MuiButton-root"
-            data-testid="dialogCancelButton"
+            data-testid="DialogCancelButton"
             tabindex="0"
             type="button"
           >
@@ -62,7 +62,7 @@ exports[`<ConfirmationDialog /> renders open dialog 1`] = `
           </button>
           <button
             class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-sghohy-MuiButtonBase-root-MuiButton-root"
-            data-testid="dialogConfirmButton"
+            data-testid="DialogConfirmButton"
             tabindex="0"
             type="button"
           >

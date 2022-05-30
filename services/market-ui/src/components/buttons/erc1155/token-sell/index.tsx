@@ -78,6 +78,7 @@ export const Erc1155TokenSellButton: FC<IErc1155TokenSellButtonProps> = props =>
         onConfirm={handleAuctionConfirmed}
         open={isAuctionDialogOpen}
         initialValues={initialValues}
+        data={token}
       />
     </>
   );

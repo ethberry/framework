@@ -69,7 +69,7 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="erc20TokenDeployButton"
+        data-testid="Erc20TokenDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.add" />

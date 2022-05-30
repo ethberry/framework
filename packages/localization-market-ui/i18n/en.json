@@ -23,7 +23,8 @@
     "add": "Add",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
-    "edit": "Edit"
+    "edit": "Edit",
+    "auction": "Sell `{title}` on auction"
   },
   "enums": {
     "language": {
