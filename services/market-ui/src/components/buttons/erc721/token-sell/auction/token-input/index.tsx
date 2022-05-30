@@ -1,6 +1,6 @@
 import { ChangeEvent, FC } from "react";
 import { EntityInput, IAutocompleteOption } from "@gemunion/mui-inputs-entity";
-import { useFormikContext } from "formik";
+import { useFormContext } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 export interface IErc20TokenInputProps {
@@ -11,7 +11,7 @@ export interface IErc20TokenInputProps {
 export const Erc20TokenInput: FC<IErc20TokenInputProps> = props => {
   const { name = "token", label = "erc20TokenId" } = props;
 
-  const formik = useFormikContext<any>();
+  const form = useFormContext<any>();
   const { formatMessage } = useIntl();
 
   const handleTokenChange = (
@@ -19,7 +19,7 @@ export const Erc20TokenInput: FC<IErc20TokenInputProps> = props => {
     options: IAutocompleteOption | Array<IAutocompleteOption> | null,
   ): void => {
     const value = options as IAutocompleteOption;
-    formik.setFieldValue(name, value);
+    form.setValue(name, value);
   };
 
   return (
