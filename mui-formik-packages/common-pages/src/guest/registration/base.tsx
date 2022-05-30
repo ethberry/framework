@@ -4,45 +4,40 @@ import { useNavigate } from "react-router";
 import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
-import { Captcha } from "@gemunion/mui-inputs-captcha";
+import { useUser } from "@gemunion/provider-user";
 import { PageHeader } from "@gemunion/mui-page-layout";
 import { FormikForm } from "@gemunion/mui-form";
-import { TextInput } from "@gemunion/mui-inputs-core";
-import { useUser } from "@gemunion/provider-user";
-import { ApiError, useApi } from "@gemunion/provider-api";
+import { ApiError } from "@gemunion/provider-api";
 
-import { validationSchema } from "./validation";
 import { useStyles } from "./styles";
 
-interface IForgotPasswordDto {
-  email: string;
-  captcha: string;
+export interface IRegistrationBaseProps {
+  initialValues: any;
+  validationSchema: any;
 }
 
-export const ForgotPassword: FC = () => {
-  const classes = useStyles();
+export const RegistrationBase: FC<IRegistrationBaseProps> = props => {
+  const { children, initialValues, validationSchema } = props;
+
   const navigate = useNavigate();
+  const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
   const user = useUser();
-  const api = useApi();
 
-  const handleSubmit = (values: IForgotPasswordDto, formikBag: any): Promise<void> => {
-    return api
-      .fetchJson({
-        url: "/auth/forgot-password",
-        method: "POST",
-        data: values,
-      })
+  const handleSubmit = (values: any, formikBag: any): Promise<void> => {
+    return user
+      .signUp(values)
       .then(() => {
-        navigate("/message/forgot-successful");
+        enqueueSnackbar(formatMessage({ id: "snackbar.created" }), { variant: "success" });
+        navigate("/message/registration-successful");
       })
       .catch((e: ApiError) => {
         if (e.status === 400) {
           const errors = e.getLocalizedValidationErrors();
 
-          Object.keys(errors).forEach((key) => {
+          Object.keys(errors).forEach(key => {
             formikBag.setError(key, { type: "custom", message: errors[key] });
           });
         } else if (e.status) {
@@ -62,18 +57,10 @@ export const ForgotPassword: FC = () => {
 
   return (
     <Grid container className={classes.section}>
-      <Grid item sm={10}>
-        <PageHeader message="pages.guest.forgotPassword" />
-        <FormikForm
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-          initialValues={{
-            email: "",
-            captcha: "",
-          }}
-        >
-          <TextInput name="email" autoComplete="username" />
-          <Captcha />
+      <Grid item sm={12}>
+        <PageHeader message="pages.guest.registration" />
+        <FormikForm onSubmit={handleSubmit} validationSchema={validationSchema} initialValues={initialValues}>
+          {children}
         </FormikForm>
       </Grid>
     </Grid>

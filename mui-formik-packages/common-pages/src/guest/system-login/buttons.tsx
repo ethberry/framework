@@ -7,7 +7,9 @@ import { Link as RouterLink } from "react-router-dom";
 import { ButtonToolbar } from "@gemunion/mui-page-layout";
 
 export const LoginButtons: FC = () => {
-  const { formState: { isSubmitting } } = useFormContext();
+  const {
+    formState: { isSubmitting },
+  } = useFormContext();
   return (
     <ButtonToolbar>
       <Button variant="text" type="button" to="/forgot-password" component={RouterLink} data-testid="forgotEmailButton">
