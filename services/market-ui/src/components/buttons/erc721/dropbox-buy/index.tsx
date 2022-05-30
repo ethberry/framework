@@ -8,7 +8,8 @@ import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
 import { IErc721Dropbox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
+
+import ERC721MarketplaceSol from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc721DropboxBuyButtonProps {
   dropbox: IErc721Dropbox;
@@ -28,7 +29,11 @@ export const Erc721DropboxTemplateBuyButton: FC<IErc721DropboxBuyButtonProps> = 
         data: { templateId: dropbox.id },
       })
       .then((sign: IServerSignature) => {
-        const contract = new Contract(process.env.ERC721_MARKETPLACE_ADDR, ERC721Marketplace.abi, library.getSigner());
+        const contract = new Contract(
+          process.env.ERC721_MARKETPLACE_ADDR,
+          ERC721MarketplaceSol.abi,
+          library.getSigner(),
+        );
         const nonce = utils.arrayify(sign.nonce);
         const commonDropboxPrice = utils.parseUnits(dropbox.price, "wei");
 

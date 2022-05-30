@@ -8,7 +8,8 @@ import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
 import { IErc1155Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import ERC1155Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
+
+import ERC1155MarketplaceSol from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
   token: IErc1155Token;
@@ -33,7 +34,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
       .then((json: IServerSignature) => {
         const contract = new Contract(
           process.env.ERC1155_MARKETPLACE_ADDR,
-          ERC1155Marketplace.abi,
+          ERC1155MarketplaceSol.abi,
           library.getSigner(),
         );
         const nonce = utils.arrayify(json.nonce);

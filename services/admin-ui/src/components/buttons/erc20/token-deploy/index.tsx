@@ -9,18 +9,19 @@ import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc20TokenTemplate, IErc20TokenDeployDto } from "@framework/types";
-import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC20BlackList from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
+
+import ContractManagerSol from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import ERC20SimpleSol from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import ERC20BlackListSol from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
 
 import { Erc20TokenDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc20TokenTemplate(template: Erc20TokenTemplate) {
   switch (template) {
     case Erc20TokenTemplate.SIMPLE:
-      return ERC20Simple.bytecode;
+      return ERC20SimpleSol.bytecode;
     case Erc20TokenTemplate.BLACKLIST:
-      return ERC20BlackList.bytecode;
+      return ERC20BlackListSol.bytecode;
     default:
       throw new Error("Unknown template");
   }
@@ -48,7 +49,7 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
+          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, library.getSigner());
           return contract.deployERC20Token(
             nonce,
             getBytecodeByErc20TokenTemplate(contractTemplate),

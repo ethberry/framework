@@ -15,16 +15,16 @@ import {
   IErc721CollectionDeployDto,
 } from "@framework/types";
 
-import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC20BlackList from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
-import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
-import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
-import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
-import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC721RandomTest from "@framework/binance-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
-// import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
-import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC20SimpleSol from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import ERC20BlackListSol from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
+import LinearVestingSol from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
+import GradedVestingSol from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
+import CliffVestingSol from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
+import ERC721SimpleSol from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC721GradedSol from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
+import ERC721RandomTestSol from "@framework/binance-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+// import ERC721RandomSol from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+import ERC1155SimpleSol from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 @Injectable()
 export class ContractManagerService {
@@ -182,9 +182,9 @@ export class ContractManagerService {
   public getBytecodeByErc20TokenTemplate(contractTemplate: Erc20TokenTemplate) {
     switch (contractTemplate) {
       case Erc20TokenTemplate.SIMPLE:
-        return ERC20Simple.bytecode;
+        return ERC20SimpleSol.bytecode;
       case Erc20TokenTemplate.BLACKLIST:
-        return ERC20BlackList.bytecode;
+        return ERC20BlackListSol.bytecode;
       default:
         throw new Error("Unknown template");
     }
@@ -193,11 +193,11 @@ export class ContractManagerService {
   public getBytecodeByErc20VestingTemplate(contractTemplate: Erc20VestingTemplate) {
     switch (contractTemplate) {
       case Erc20VestingTemplate.LINEAR:
-        return LinearVesting.bytecode;
+        return LinearVestingSol.bytecode;
       case Erc20VestingTemplate.GRADED:
-        return GradedVesting.bytecode;
+        return GradedVestingSol.bytecode;
       case Erc20VestingTemplate.CLIFF:
-        return CliffVesting.bytecode;
+        return CliffVestingSol.bytecode;
       default:
         throw new Error("Unknown template");
     }
@@ -206,12 +206,12 @@ export class ContractManagerService {
   public getBytecodeByErc721TokenTemplate(contractTemplate: Erc721TokenTemplate) {
     switch (contractTemplate) {
       case Erc721TokenTemplate.SIMPLE:
-        return ERC721Simple.bytecode;
+        return ERC721SimpleSol.bytecode;
       case Erc721TokenTemplate.GRADED:
-        return ERC721Graded.bytecode;
+        return ERC721GradedSol.bytecode;
       case Erc721TokenTemplate.RANDOM:
-        return ERC721RandomTest.bytecode;
-      // return ERC721Random.bytecode;
+        return ERC721RandomTestSol.bytecode;
+      // return ERC721RandomSol.bytecode;
       default:
         throw new Error("Unknown template");
     }
@@ -220,7 +220,7 @@ export class ContractManagerService {
   public getBytecodeByErc1155TokenTemplate(contractTemplate: Erc1155TokenTemplate) {
     switch (contractTemplate) {
       case Erc1155TokenTemplate.SIMPLE:
-        return ERC1155Simple.bytecode;
+        return ERC1155SimpleSol.bytecode;
       default:
         throw new Error("Unknown template");
     }

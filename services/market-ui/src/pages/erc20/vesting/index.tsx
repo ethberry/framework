@@ -12,7 +12,7 @@ import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc20Vesting } from "@framework/types";
 
-import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
+import CliffVestingSol from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
 export const Erc20Vesting: FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -54,7 +54,7 @@ export const Erc20Vesting: FC = () => {
   };
 
   const metaClick = useMetamask((vesting: IErc20Vesting) => {
-    const contract = new Contract(vesting.address, CliffVesting.abi, library.getSigner());
+    const contract = new Contract(vesting.address, CliffVestingSol.abi, library.getSigner());
 
     return contract.release(vesting.address) as Promise<void>;
   });

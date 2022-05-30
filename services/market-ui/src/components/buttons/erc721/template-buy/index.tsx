@@ -8,7 +8,7 @@ import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
 import { IErc721Template } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import ERC721Marketplace from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
+import ERC721MarketplaceSol from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc721TemplateBuyButtonProps {
   template: IErc721Template;
@@ -28,7 +28,11 @@ export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = pr
         data: { templateId: template.id },
       })
       .then((sign: IServerSignature) => {
-        const contract = new Contract(process.env.ERC721_MARKETPLACE_ADDR, ERC721Marketplace.abi, library.getSigner());
+        const contract = new Contract(
+          process.env.ERC721_MARKETPLACE_ADDR,
+          ERC721MarketplaceSol.abi,
+          library.getSigner(),
+        );
         const nonce = utils.arrayify(sign.nonce);
         const commonItemPrice = utils.parseUnits(template.price, "wei");
         return contract.buyCommon(

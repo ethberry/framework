@@ -8,8 +8,8 @@ import { useApi } from "@gemunion/provider-api";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc1155Recipe } from "@framework/types";
 
-import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
-import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC1155ERC1155CraftSol from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ERC1155SimpleSol from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 interface ICraftButtonProps {
   recipe: IErc1155Recipe;
@@ -26,7 +26,7 @@ export const Erc1155RecipeCraftButton: FC<ICraftButtonProps> = props => {
   const meta = useMetamask(() => {
     const contract = new Contract(
       recipe.erc1155Token!.erc1155Collection!.address,
-      ERC1155Simple.abi,
+      ERC1155SimpleSol.abi,
       library.getSigner(),
     );
     return contract.setApprovalForAll(process.env.ERC1155_CRAFT_ADDR, true) as Promise<void>;
@@ -39,7 +39,7 @@ export const Erc1155RecipeCraftButton: FC<ICraftButtonProps> = props => {
   };
 
   const handleCraft = useMetamask(() => {
-    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155CraftSol.abi, library.getSigner());
     return (
       contract
         // TODO add item amounts - batch craft?
