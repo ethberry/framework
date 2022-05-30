@@ -21,10 +21,10 @@
   },
   "dialogs": {
     "add": "Add",
+    "auction": "Sell `{title}` on auction",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
-    "edit": "Edit",
-    "auction": "Sell `{title}` on auction"
+    "edit": "Edit"
   },
   "enums": {
     "language": {
@@ -79,6 +79,7 @@
       "login": "Login",
       "logout": "Logout",
       "next": "Next",
+      "nonce": "Increment nonce",
       "ok": "Ok",
       "save": "Save",
       "search": "Search",
@@ -318,7 +319,11 @@
       "title": "Primary market"
     },
     "profile": {
-      "title": "Profile"
+      "title": "Profile",
+      "tabs": {
+        "general": "General",
+        "seaport": "Seaport"
+      }
     }
   },
   "snackbar": {

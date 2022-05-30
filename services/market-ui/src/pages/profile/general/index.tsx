@@ -4,7 +4,6 @@ import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
 import { ApiError } from "@gemunion/provider-api";
 import { FormikForm } from "@gemunion/mui-form";
@@ -13,11 +12,18 @@ import { EnabledLanguages } from "@framework/constants";
 import { IUser } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { ITabPanelProps, ProfileTabs } from "../tabs";
 
-export const Profile: FC = () => {
+export const ProfileGeneral: FC<ITabPanelProps> = props => {
+  const { value } = props;
+
   const user = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
+
+  if (value !== ProfileTabs.general) {
+    return null;
+  }
 
   const onClick = (): void => {
     enqueueSnackbar("Warning! You won't be able to use this site until you confirm your new email address.", {
@@ -52,10 +58,6 @@ export const Profile: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["profile"]} />
-
-      <PageHeader message="pages.profile.title" />
-
       <FormikForm
         initialValues={fixedValues}
         validationSchema={validationSchema}

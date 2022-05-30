@@ -3,11 +3,12 @@ import { useWeb3React } from "@web3-react/core";
 import { Seaport } from "@bthn/seaport-js";
 import { ItemType } from "@bthn/seaport-js/lib/constants";
 import { Fee } from "@bthn/seaport-js/lib/types";
-import { constants, Contract } from "ethers";
+import { constants, Contract, BigNumber } from "ethers";
 
 import { useLicense } from "@gemunion/provider-license";
 import { useWallet } from "@gemunion/provider-wallet";
 import IERC2981Sol from "@framework/binance-contracts/artifacts/@openzeppelin/contracts/interfaces/IERC2981.sol/IERC2981.json";
+import SeaportSol from "@framework/binance-contracts/artifacts/contracts/Seaport/Seaport.sol/Seaport.json";
 
 import { IAuctionOptions, IErc1155, IErc20, IErc721, SeaportContext } from "./context";
 
@@ -134,6 +135,17 @@ export const SeaportProvider: FC<IWalletProviderProps> = props => {
     return seaport!.getNonce(address);
   };
 
+  const incrementNonce = () => {
+    if (!active) {
+      openConnectWalletDialog();
+      throw new Error("walletIsNotConnected");
+    }
+
+    const contract = new Contract(process.env.SEAPORT_ADDR, SeaportSol.abi, library.getSigner());
+
+    return contract.incrementNonce() as Promise<BigNumber>;
+  };
+
   useEffect(() => {
     if (active) {
       setSeaport(new Seaport(library, {}));
@@ -150,6 +162,7 @@ export const SeaportProvider: FC<IWalletProviderProps> = props => {
     <SeaportContext.Provider
       value={{
         getNonce,
+        incrementNonce,
         calculateRoyalty,
         sellErc721ForErc20,
         sellErc1155ForErc20,
