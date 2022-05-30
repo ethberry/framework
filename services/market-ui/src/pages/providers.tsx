@@ -26,7 +26,7 @@ export const Providers: FC = props => {
                 <SnackbarProvider>
                   <PopupProvider>
                     <WalletProvider>
-                      <SeaportProvider address={process.env.SEAPORT_ADDR}>
+                      <SeaportProvider contractAddress={process.env.SEAPORT_ADDR}>
                         <PickerProvider>{children}</PickerProvider>
                       </SeaportProvider>
                     </WalletProvider>

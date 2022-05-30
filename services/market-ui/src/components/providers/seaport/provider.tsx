@@ -17,11 +17,12 @@ export const GEMUNION_SHARES_ADDR = constants.AddressZero;
 
 export interface IWalletProviderProps {
   children?: ReactNode;
-  address?: string;
+  contractAddress?: string;
+  defaultConduitKey?: string;
 }
 
 export const SeaportProvider: FC<IWalletProviderProps> = props => {
-  const { children, address } = props;
+  const { children, contractAddress, defaultConduitKey } = props;
 
   const [seaport, setSeaport] = useState<Seaport>();
 
@@ -149,7 +150,7 @@ export const SeaportProvider: FC<IWalletProviderProps> = props => {
 
   useEffect(() => {
     if (active) {
-      setSeaport(new Seaport(library, { overrides: { contractAddress: address } }));
+      setSeaport(new Seaport(library, { overrides: { contractAddress, defaultConduitKey } }));
     } else {
       setSeaport(void 0);
     }
