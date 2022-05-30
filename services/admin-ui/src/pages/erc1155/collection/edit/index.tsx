@@ -18,11 +18,12 @@ export interface IErc1155CollectionEditDialogProps {
 export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, imageUrl, address, collectionStatus } = initialValues;
+  const { id, title, description, baseTokenURI, imageUrl, address, collectionStatus } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
+    baseTokenURI,
     imageUrl,
     address,
     collectionStatus,

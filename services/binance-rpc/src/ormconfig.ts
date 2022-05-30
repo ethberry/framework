@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { ContractManagerHistoryEntity } from "./blockchain/contract-manager-history/contract-manager-history.entity";
+import { ContractManagerHistoryEntity } from "./contract-manager-history/contract-manager-history.entity";
 import { Erc20TokenHistoryEntity } from "./erc20/token-history/token-history.entity";
 import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
@@ -25,6 +25,7 @@ import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
 import { Erc1155RecipeHistoryEntity } from "./erc1155/recipe-history/recipe-history.entity";
 import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
+import { ContractManagerEntity } from "./contract-manager/contract-manager.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -54,6 +55,7 @@ const config: PostgresConnectionOptions = {
     Erc1155TokenHistoryEntity,
     Erc1155MarketplaceHistoryEntity,
     Erc1155BalanceEntity,
+    ContractManagerEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

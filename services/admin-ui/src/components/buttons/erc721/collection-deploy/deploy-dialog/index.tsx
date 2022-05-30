@@ -18,7 +18,7 @@ export const Erc721CollectionDeployDialog: FC<IErc721CollectionDeployDialogProps
     contractTemplate: Erc721TokenTemplate.SIMPLE,
     name: "",
     symbol: "",
-    baseTokenURI: "",
+    baseTokenURI: process.env.BE_URL,
     royalty: 0,
   };
 

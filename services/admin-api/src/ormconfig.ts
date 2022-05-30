@@ -11,6 +11,7 @@ import {
 
 import { UserEntity } from "./user/user.entity";
 import { OtpEntity } from "./otp/otp.entity";
+import { ContractManagerEntity } from "./contract-manager/contract-manager.entity";
 import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
 import { Erc721TemplateEntity } from "./erc721/template/template.entity";
@@ -68,6 +69,8 @@ import { CreateErc721Ingredient1648525970030 } from "./migrations/1648525970030-
 import { SeedErc721Ingredient1648525970040 } from "./migrations/1648525970040-seed-erc721-ingredient";
 import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
 import { CreateUniTokenView1652962207575 } from "./migrations/1652962207575-create-uni-token-view";
+import { CreateContractManagerTable1652962207600 } from "./migrations/1652962207600-create-contract-manager-table";
+import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -77,6 +80,7 @@ const config: PostgresConnectionOptions = {
   entities: [
     UserEntity,
     OtpEntity,
+    ContractManagerEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
     Erc20StakingHistoryEntity,
@@ -152,6 +156,8 @@ const config: PostgresConnectionOptions = {
     SeedErc721Ingredient1648525970040,
     CreateContractManagerHistoryTable1652682493386,
     CreateUniTokenView1652962207575,
+    CreateContractManagerTable1652962207600,
+    SeedContractManager1652962207610,
   ],
 };
 

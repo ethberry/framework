@@ -7,26 +7,26 @@ import {
   IErc1155RecipeCrafted,
   IErc1155RecipeCreated,
   IErc1155RecipeUpdated,
+  ContractType,
 } from "@framework/types";
 
-import { ContractType } from "../../common/interfaces";
 import { Erc1155RecipeServiceWs } from "./recipe.service.ws";
 
 @Controller()
 export class Erc1155ControllerWs {
   constructor(private readonly erc1155RecipeServiceWs: Erc1155RecipeServiceWs) {}
 
-  @EventPattern({ contractName: ContractType.ERC1155_CRAFT, eventName: Erc1155RecipeEventType.RecipeCreated })
+  @EventPattern({ contractType: ContractType.ERC1155_CRAFT, eventName: Erc1155RecipeEventType.RecipeCreated })
   public createRecipe(@Payload() event: IEvent<IErc1155RecipeCreated>): Promise<void> {
     return this.erc1155RecipeServiceWs.create(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC1155_CRAFT, eventName: Erc1155RecipeEventType.RecipeUpdated })
+  @EventPattern({ contractType: ContractType.ERC1155_CRAFT, eventName: Erc1155RecipeEventType.RecipeUpdated })
   public updateRecipe(@Payload() event: IEvent<IErc1155RecipeUpdated>): Promise<void> {
     return this.erc1155RecipeServiceWs.update(event);
   }
 
-  @EventPattern({ contractName: ContractType.ERC1155_CRAFT, eventName: Erc1155RecipeEventType.RecipeCrafted })
+  @EventPattern({ contractType: ContractType.ERC1155_CRAFT, eventName: Erc1155RecipeEventType.RecipeCrafted })
   public craftRecipe(@Payload() event: IEvent<IErc1155RecipeCrafted>): Promise<void> {
     return this.erc1155RecipeServiceWs.craft(event);
   }

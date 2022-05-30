@@ -42,7 +42,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
         return contract.buyResources(
           nonce,
           token.erc1155Collection?.address.toLowerCase(),
-          [token.tokenId],
+          [~~token.tokenId],
           [1],
           process.env.ACCOUNT,
           json.signature,

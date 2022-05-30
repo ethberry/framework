@@ -30,3 +30,4 @@ export * from "./erc1155/recipe";
 export * from "./erc1155/recipe-history";
 
 export * from "./contract-manager-history";
+export * from "./contract-manager";

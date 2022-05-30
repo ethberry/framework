@@ -21,7 +21,7 @@ export const Resources: FC<ITabPanelProps> = props => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IErc1155Token, IErc1155TokenSearchDto>({
     baseUrl: "/erc1155-tokens",
     search: {
-      erc1155CollectionIds: [1],
+      erc1155CollectionIds: [],
     },
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });

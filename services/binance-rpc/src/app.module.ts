@@ -17,7 +17,7 @@ import { Erc20Module } from "./erc20/erc20.module";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
-import { ContractManagerModule } from "./blockchain/contract-manager/contract-manager.module";
+import { ContractManagerModule } from "./contract-manager/contract-manager.module";
 
 @Module({
   providers: [
@@ -45,12 +45,12 @@ import { ContractManagerModule } from "./blockchain/contract-manager/contract-ma
     }),
     RequestLoggerModule,
     HealthModule,
+    BlockchainModule,
     ContractManagerModule,
     VestingModule,
     Erc20Module,
     Erc721Module,
     Erc1155Module,
-    BlockchainModule,
   ],
   controllers: [AppController],
 })

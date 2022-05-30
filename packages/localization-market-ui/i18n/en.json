@@ -306,6 +306,7 @@
     }
   },
   "snackbar": {
+    "success": "Success",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "denied": "Denied by user",
