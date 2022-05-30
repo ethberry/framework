@@ -17,11 +17,10 @@ export interface IRecipeTokenDialogProps {
 export const Erc1155RecipeEditDialog: FC<IRecipeTokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, erc1155TokenId, ingredients, recipeStatus } = initialValues;
+  const { id, erc1155TokenId, ingredients } = initialValues;
   const fixedValues = {
     id,
     erc1155TokenId,
-    recipeStatus,
     ingredients: ingredients.map(({ erc1155TokenId, amount }) => ({ erc1155TokenId, amount })),
   };
 
