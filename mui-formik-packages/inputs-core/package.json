@@ -57,6 +57,7 @@
     "build": "tsc",
     "lint": "eslint . --fix",
     "prebuild": "rimraf dist/",
+    "prepublish": "npm run build",
     "prepare": "npm run build",
     "preversion": "npm run build && npm run test",
     "test": "jest --config jest.config.json --no-watch --verbose",

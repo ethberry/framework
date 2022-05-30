@@ -50,6 +50,7 @@
     "build": "tsc",
     "lint": "eslint . --fix",
     "prebuild": "rimraf dist/",
+    "prepublish": "npm run build",
     "prepare": "npm run build",
     "preversion": "npm run build && npm run test",
     "test": "exit 0"
