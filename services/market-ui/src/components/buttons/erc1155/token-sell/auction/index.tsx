@@ -7,22 +7,23 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { validationSchema } from "./validation";
 import { Erc20TokenInput } from "./token-input";
 
-export interface IErc721SellOptions {
+export interface IErc1155AuctionOptions {
   minAmount: string;
   maxAmount?: string;
   startDate?: string;
   endDate?: string;
   token: string;
+  amount: string;
 }
 
-export interface IErc721TokenAuctionDialogProps {
+export interface IErc1155TokenAuctionDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IErc721SellOptions, formikBag: any) => Promise<void>;
-  initialValues: IErc721SellOptions;
+  onConfirm: (values: IErc1155AuctionOptions, formikBag: any) => Promise<void>;
+  initialValues: IErc1155AuctionOptions;
 }
 
-export const Erc721TokenAuctionDialog: FC<IErc721TokenAuctionDialogProps> = props => {
+export const Erc1155TokenAuctionDialog: FC<IErc1155TokenAuctionDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (
@@ -30,9 +31,10 @@ export const Erc721TokenAuctionDialog: FC<IErc721TokenAuctionDialogProps> = prop
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="Erc721CollectionRoyaltyEditDialog"
+      data-testid="Erc1155CollectionRoyaltyEditDialog"
       {...rest}
     >
+      <EthInput name="amount" />
       <EthInput name="minAmount" />
       <EthInput name="maxAmount" />
       <DateTimeInput name="startDate" />
