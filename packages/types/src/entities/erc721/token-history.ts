@@ -2,17 +2,21 @@ import { IIdBase } from "@gemunion/types-collection";
 import { IErc721Token } from "./token";
 
 export enum Erc721TokenEventType {
-  Transfer = "Transfer",
   Approval = "Approval",
   ApprovalForAll = "ApprovalForAll",
   DefaultRoyaltyInfo = "DefaultRoyaltyInfo",
-  TokenRoyaltyInfo = "TokenRoyaltyInfo",
-  UnpackDropbox = "UnpackDropbox",
-  UnpackAirdrop = "UnpackAirdrop",
-  RedeemAirdrop = "RedeemAirdrop",
   MintRandom = "MintRandom",
+  Paused = "Paused",
+  RandomRequest = "RandomRequest",
+  RedeemAirdrop = "RedeemAirdrop",
+  RoleAdminChanged = "RoleAdminChanged",
   RoleGranted = "RoleGranted",
   RoleRevoked = "RoleRevoked",
+  TokenRoyaltyInfo = "TokenRoyaltyInfo",
+  Transfer = "Transfer",
+  UnpackAirdrop = "UnpackAirdrop",
+  UnpackDropbox = "UnpackDropbox",
+  Unpaused = "Unpaused",
 }
 
 export interface IErc721TokenTransfer {
@@ -73,7 +77,7 @@ export interface IErc721AirdropRedeem {
   price: string;
 }
 
-export interface IErc721RoleGrant {
+export interface IErc721RoleChange {
   role: string;
   account: string;
   sender: string;
@@ -93,7 +97,7 @@ export type TErc721TokenEventData =
   | IErc721DropboxUnpack
   | IErc721AirdropUnpack
   | IErc721AirdropRedeem
-  | IErc721RoleGrant
+  | IErc721RoleChange
   | IErc721TokenMintRandom
   | IErc721RandomRequest;
 

@@ -18,6 +18,7 @@ import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ContractManagerModuleEth } from "./blockchain/contract-manager/contract-manager.module.eth";
 import { SeaportModule } from "./blockchain/seaport/seaport.module";
+import { ContractManagerLogModule } from "./blockchain/contract-manager-log/contract-manager.log.module";
 
 @Module({
   providers: [
@@ -51,6 +52,7 @@ import { SeaportModule } from "./blockchain/seaport/seaport.module";
     Erc1155Module,
     SeaportModule,
     ContractManagerModuleEth,
+    // ContractManagerLogModule,
   ],
   controllers: [AppController],
 })

@@ -10,7 +10,6 @@ import { imageUrl } from "@framework/constants";
 
 import {
   ContractManagerEventType,
-  ContractType,
   Erc1155TokenTemplate,
   Erc20TokenTemplate,
   Erc20VestingTemplate,
@@ -27,9 +26,10 @@ import { Erc20TokenService } from "../../erc20/token/token.service";
 import { Erc20VestingService } from "../../vesting/vesting/vesting.service";
 import { Erc721CollectionService } from "../../erc721/collection/collection.service";
 import { Erc1155CollectionService } from "../../erc1155/collection/collection.service";
-import { Erc20LogService } from "../../eth-log/erc20/erc20.log.service";
-import { Erc721LogService } from "../../eth-log/erc721/erc721.log.service";
-import { ContractManagerService } from "./contract-manager.service";
+import { Erc20LogService } from "../../erc20/erc20-log/erc20.log.service";
+import { Erc721LogService } from "../../erc721/eth-log/erc721-log/erc721.log.service";
+import { Erc1155LogService } from "../../erc1155/eth-log/erc1155-log/erc1155.log.service";
+import { VestingLogService } from "../../vesting/vesting-log/vesting.log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -46,7 +46,8 @@ export class ContractManagerServiceEth {
     private readonly erc1155CollectionService: Erc1155CollectionService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721LogService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly erc1155LogService: Erc1155LogService,
+    private readonly vestingLogService: VestingLogService,
   ) {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
@@ -66,6 +67,8 @@ export class ContractManagerServiceEth {
       contractTemplate: Object.values(Erc20VestingTemplate)[~~templateId],
       chainId: this.chainId,
     });
+
+    await this.vestingLogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
   }
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployed>, ctx: Log): Promise<void> {
@@ -86,16 +89,7 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
     });
 
-    await this.contractManagerService.create({
-      address: addr.toLowerCase(),
-      contractType: ContractType.ERC20_CONTRACT,
-      fromBlock: ctx.blockNumber || 0,
-    });
-
-    // log found in block:
-    const fromBlock = ~~ctx.blockNumber.toString();
-    // add new erc20 listener
-    this.erc20LogService.addListener({ address: addr.toLowerCase(), fromBlock });
+    await this.erc20LogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
   }
 
   public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployed>, ctx: Log): Promise<void> {
@@ -118,11 +112,7 @@ export class ContractManagerServiceEth {
       contractTemplate: Object.values(Erc721TokenTemplate)[~~templateId],
     });
 
-    // log found in block:
-    const fromBlock = ~~ctx.blockNumber.toString();
-
-    // add new erc20 listener
-    await this.erc721LogService.addListener({ address: addr.toLowerCase(), fromBlock });
+    await this.erc721LogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
   }
 
   public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployed>, ctx: Log): Promise<void> {
@@ -142,10 +132,7 @@ export class ContractManagerServiceEth {
       contractTemplate: Object.values(Erc1155TokenTemplate)[~~templateId],
     });
 
-    // await this.erc1155LogService.add({
-    //   address: [addr.toLowerCase()],
-    //   topics: [],
-    // });
+    await this.erc1155LogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
   }
 
   private async updateHistory(event: ILogEvent<TContractManagerEventData>, ctx: Log) {

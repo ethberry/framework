@@ -20,7 +20,7 @@
     "@gemunion/nest-js-module-typeorm-helpers": "0.8.2",
     "@gemunion/nest-js-module-winston": "0.0.16",
     "@gemunion/nest-js-utils": "1.5.5",
-    "@gemunion/nestjs-ethers": "2.0.0",
+    "@gemunion/nestjs-ethers": "1.0.11",
     "@gemunion/nestjs-web3": "1.0.15",
     "@gemunion/types-collection": "1.4.0",
     "@gemunion/collection": "1.2.16",

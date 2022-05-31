@@ -1,13 +1,13 @@
 import { Logger, Module } from "@nestjs/common";
 
-import { Erc20StakingControllerWs } from "./staking.controller.ws";
-import { Erc20StakingServiceWs } from "./staking.service.ws";
+import { Erc20StakingControllerEth } from "./staking.controller.eth";
+import { Erc20StakingServiceEth } from "./staking.service.eth";
 import { Erc20StakingHistoryModule } from "../staking-history/staking-history.module";
 
 @Module({
   imports: [Erc20StakingHistoryModule],
-  providers: [Logger, Erc20StakingServiceWs],
-  controllers: [Erc20StakingControllerWs],
-  exports: [Erc20StakingServiceWs],
+  providers: [Logger, Erc20StakingServiceEth],
+  controllers: [Erc20StakingControllerEth],
+  exports: [Erc20StakingServiceEth],
 })
 export class Erc20StakingModule {}
