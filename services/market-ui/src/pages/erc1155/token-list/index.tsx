@@ -10,6 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Token } from "./item";
 import { Erc1155TokenSearchForm } from "./form";
+import {useParams} from "react-router";
 
 export interface IErc1155TokenListProps {
   embedded?: boolean;
@@ -17,6 +18,7 @@ export interface IErc1155TokenListProps {
 
 export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
   const { embedded } = props;
+  const { id } = useParams<{ id: string }>();
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IErc1155Token, IErc1155TokenSearchDto>({
@@ -24,7 +26,7 @@ export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
       embedded,
       search: {
         query: "",
-        erc1155CollectionIds: [],
+        erc1155CollectionIds: [~~id!],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
       },

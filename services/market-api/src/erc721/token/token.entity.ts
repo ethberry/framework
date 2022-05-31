@@ -25,7 +25,7 @@ export class Erc721TokenEntity extends IdBaseEntity implements IErc721Token {
   })
   public tokenStatus: Erc721TokenStatus;
 
-  @BigNumberColumn()
+  @Column({ type: "varchar" })
   public tokenId: string;
 
   @Column({ type: "varchar" })

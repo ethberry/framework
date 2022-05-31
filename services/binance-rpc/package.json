@@ -6,6 +6,8 @@
   },
   "dependencies": {
     "@ethersproject/abstract-provider": "5.6.1",
+    "@ethersproject/contracts": "5.6.2",
+    "@ethersproject/abi": "5.6.3",
     "@framework/binance-contracts": "0.0.1",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
@@ -21,6 +23,7 @@
     "@gemunion/nestjs-ethers": "1.0.11",
     "@gemunion/nestjs-web3": "1.0.15",
     "@gemunion/types-collection": "1.4.0",
+    "@gemunion/collection": "1.2.15",
     "@nestjs/axios": "0.0.8",
     "@nestjs/common": "8.4.5",
     "@nestjs/config": "2.0.1",

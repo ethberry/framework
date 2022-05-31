@@ -44,7 +44,7 @@
     "collectionStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
-      "PENDING": "Pending"
+      "NEW": "New"
     },
     "collectionType": {
       "AIRDROP": "Airdrop",

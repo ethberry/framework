@@ -9,7 +9,7 @@ pragma solidity >=0.8.13;
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
 import "./ERC721ChainLinkTest.sol";
-
+// TODO add to gemunion contracts
 abstract contract ERC721ChainLinkRinkeby is ERC721ChainLinkTest {
   constructor()
   ERC721ChainLinkTest(

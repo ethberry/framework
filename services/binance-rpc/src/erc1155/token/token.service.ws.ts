@@ -46,7 +46,13 @@ export class Erc1155TokenServiceWs {
 
     await Promise.all(
       ids.map((tokenId: string, i: number) =>
-        this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), tokenId, ~~values[i]),
+        this.updateBalances(
+          from.toLowerCase(),
+          to.toLowerCase(),
+          context.address.toLowerCase(),
+          tokenId.toString(),
+          ~~values[i],
+        ),
       ),
     );
   }
