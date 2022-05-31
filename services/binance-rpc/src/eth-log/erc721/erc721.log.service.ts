@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
-import { ICreateListenerPayload } from "./interfaces";
-import { ContractManagerService } from "../../contract-manager/contract-manager.service";
 import { ContractType } from "@framework/types";
-import { IContractManagerResult } from "../../contract-manager/interfaces";
+
+import { ICreateListenerPayload } from "./interfaces";
+import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { IContractManagerResult } from "../../blockchain/contract-manager/interfaces";
 
 @Injectable()
 export class Erc721LogService {

@@ -2,9 +2,9 @@ import { Controller } from "@nestjs/common";
 import { EventPattern, Payload } from "@nestjs/microservices";
 
 import { IEvent } from "@gemunion/nestjs-web3";
+import { ContractType } from "@framework/types";
 
 import { SeaportServiceWs } from "./seaport.service.ws";
-import { ContractType } from "../../common/interfaces";
 import {
   ISeaportNonceIncremented,
   ISeaportOrderCancelled,

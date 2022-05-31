@@ -8,7 +8,7 @@ import { ContractManagerEventType, ContractType } from "@framework/types";
 // system contract
 import ContractManagerSol from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import { ContractManagerLogService } from "./contract-manager.log.service";
-import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
+import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { ContractManagerModule } from "../../contract-manager/contract-manager.m
         // contractManagerLogService: ContractManagerLogService,
       ): IModuleOptions => {
         const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-        console.log("contractManagerAddr", contractManagerAddr);
+
         const fromBlock = ~~configService.get<string>("STARTING_BLOCK", "0");
         // const fromBlock =
         //   (await contractManagerLogService.getLastBlock(contractManagerAddr)) ||

@@ -2,14 +2,14 @@ import { Module, Logger } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-
 import { Erc20TokenEventType, ContractType } from "@framework/types";
 
 import { Erc20LogService } from "./erc20.log.service";
 
 // custom contracts
 import { Erc20abi } from "./interfaces";
-import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
+import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
+import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 
 @Module({
   imports: [
@@ -17,10 +17,13 @@ import { ContractManagerModule } from "../../contract-manager/contract-manager.m
     ContractManagerModule,
     // Erc20 user contracts
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, Erc20LogModule],
-      inject: [ConfigService, Erc20LogService],
-      useFactory: async (configService: ConfigService, erc20LogService: Erc20LogService): Promise<IModuleOptions> => {
-        const erc20Contracts = await erc20LogService.findAllByType(ContractType.ERC20_CONTRACT);
+      imports: [ConfigModule, ContractManagerModule],
+      inject: [ConfigService, ContractManagerService],
+      useFactory: async (
+        configService: ConfigService,
+        contractManagerService: ContractManagerService,
+      ): Promise<IModuleOptions> => {
+        const erc20Contracts = await contractManagerService.findAllByType(ContractType.ERC20_CONTRACT);
         return {
           contract: {
             contractType: ContractType.ERC20_CONTRACT,
@@ -32,7 +35,7 @@ import { ContractManagerModule } from "../../contract-manager/contract-manager.m
               Erc20TokenEventType.RoleGranted,
               Erc20TokenEventType.RoleRevoked,
               Erc20TokenEventType.Snapshot,
-              Erc20TokenEventType.Transfer,
+              Erc20TokenEventType.Transfer
             ],
           },
           block: {

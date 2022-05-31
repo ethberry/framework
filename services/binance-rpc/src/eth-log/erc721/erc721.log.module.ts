@@ -9,7 +9,8 @@ import { Erc721LogService } from "./erc721.log.service";
 
 // custom contracts
 import { ERC721Abi } from "./interfaces";
-import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
+import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
+import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 
 @Module({
   imports: [
@@ -17,10 +18,13 @@ import { ContractManagerModule } from "../../contract-manager/contract-manager.m
     ContractManagerModule,
     // Erc721 user contracts
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, Erc721LogModule],
-      inject: [ConfigService, Erc721LogService],
-      useFactory: async (configService: ConfigService, erc721LogService: Erc721LogService): Promise<IModuleOptions> => {
-        const erc721Contracts = await erc721LogService.findAllByType(ContractType.ERC721_COLLECTION);
+      imports: [ConfigModule, ContractManagerModule],
+      inject: [ConfigService, ContractManagerService],
+      useFactory: async (
+        configService: ConfigService,
+        contractManagerService: ContractManagerService,
+      ): Promise<IModuleOptions> => {
+        const erc721Contracts = await contractManagerService.findAllByType(ContractType.ERC721_COLLECTION);
         return {
           contract: {
             contractType: ContractType.ERC20_CONTRACT,
@@ -32,7 +36,7 @@ import { ContractManagerModule } from "../../contract-manager/contract-manager.m
               Erc20TokenEventType.RoleGranted,
               Erc20TokenEventType.RoleRevoked,
               Erc20TokenEventType.Snapshot,
-              Erc20TokenEventType.Transfer,
+              Erc20TokenEventType.Transfer
             ],
           },
           block: {

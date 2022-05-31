@@ -14,6 +14,7 @@ export enum ContractType {
   ERC20_CONTRACT = "ERC20_CONTRACT",
   ERC20_VESTING = "ERC20_VESTING",
   ERC20_STAKING = "ERC20_STAKING",
+  SEAPORT = "SEAPORT",
 }
 
 export enum ContractTemplateType {

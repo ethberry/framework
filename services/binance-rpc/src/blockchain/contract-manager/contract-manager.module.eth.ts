@@ -5,12 +5,13 @@ import { ContractManagerControllerEth } from "./contract-manager.controller.eth"
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
 import { ContractManagerHistoryModule } from "../contract-manager-history/contract-manager-history.module";
-import { Erc20VestingModule } from "../vesting/vesting/vesting.module";
-import { Erc20TokenModule } from "../erc20/token/token.module";
-import { Erc721CollectionModule } from "../erc721/collection/collection.module";
-import { Erc1155CollectionModule } from "../erc1155/collection/collection.module";
-import { Erc20LogModule } from "../eth-log/erc20/erc20.log.module";
-import { Erc721LogModule } from "../eth-log/erc721/erc721.log.module";
+import { Erc20VestingModule } from "../../vesting/vesting/vesting.module";
+import { Erc20TokenModule } from "../../erc20/token/token.module";
+import { Erc721CollectionModule } from "../../erc721/collection/collection.module";
+import { Erc1155CollectionModule } from "../../erc1155/collection/collection.module";
+import { Erc20LogModule } from "../../eth-log/erc20/erc20.log.module";
+import { Erc721LogModule } from "../../eth-log/erc721/erc721.log.module";
+import { ContractManagerModule } from "./contract-manager.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { Erc721LogModule } from "../eth-log/erc721/erc721.log.module";
     Erc20LogModule,
     Erc721LogModule,
     ContractManagerHistoryModule,
+    ContractManagerModule,
     Erc20VestingModule,
     Erc20TokenModule,
     Erc721CollectionModule,

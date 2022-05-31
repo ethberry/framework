@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { ContractManagerHistoryEntity } from "./contract-manager-history/contract-manager-history.entity";
+import { ContractManagerHistoryEntity } from "./blockchain/contract-manager-history/contract-manager-history.entity";
 import { Erc20TokenHistoryEntity } from "./erc20/token-history/token-history.entity";
 import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
@@ -28,7 +28,7 @@ import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control-history/access-control-history.entity";
 import { SeaportHistoryEntity } from "./blockchain/seaport-history/seaport-history.entity";
-import { ContractManagerEntity } from "./contract-manager/contract-manager.entity";
+import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

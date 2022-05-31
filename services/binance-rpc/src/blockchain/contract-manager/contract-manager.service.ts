@@ -1,53 +1,17 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IContractManagerSearchDto } from "@framework/types";
-
-import { IContractManagerCreateDto } from "./interfaces";
+import { ContractType } from "@framework/types";
 import { ContractManagerEntity } from "./contract-manager.entity";
+import { IContractManagerResult } from "./interfaces";
 
 @Injectable()
 export class ContractManagerService {
   constructor(
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
-    private readonly configService: ConfigService,
     @InjectRepository(ContractManagerEntity)
     private readonly contractManagerEntityRepository: Repository<ContractManagerEntity>,
   ) {}
-
-  public async search(dto: Partial<IContractManagerSearchDto>): Promise<[Array<ContractManagerEntity>, number]> {
-    const { skip, take, query, contractType } = dto;
-
-    const queryBuilder = this.contractManagerEntityRepository.createQueryBuilder("system");
-
-    queryBuilder.select();
-
-    if (query) {
-      queryBuilder.andWhere("system.address ILIKE '%' || :address || '%'", { address: query });
-    }
-
-    if (contractType) {
-      if (contractType.length === 1) {
-        queryBuilder.andWhere("system.contractType = :contractType", {
-          contractType: contractType[0],
-        });
-      } else {
-        queryBuilder.andWhere("system.contractType IN(:...contractType)", { contractType });
-      }
-    }
-
-    queryBuilder.skip(skip);
-    queryBuilder.take(take);
-
-    queryBuilder.orderBy({
-      "system.id": "ASC",
-    });
-
-    return queryBuilder.getManyAndCount();
-  }
 
   public findOne(
     where: FindOptionsWhere<ContractManagerEntity>,
@@ -63,7 +27,7 @@ export class ContractManagerService {
     return this.contractManagerEntityRepository.find({ where, ...options });
   }
 
-  public async create(dto: IContractManagerCreateDto): Promise<ContractManagerEntity | null> {
+  public async create(dto: DeepPartial<ContractManagerEntity>): Promise<ContractManagerEntity | null> {
     const { address, fromBlock, contractType } = dto;
 
     const contractManagerEntity = await this.contractManagerEntityRepository
@@ -79,7 +43,7 @@ export class ContractManagerService {
 
   public async update(
     where: FindOptionsWhere<ContractManagerEntity>,
-    dto: Partial<IContractManagerCreateDto>,
+    dto: DeepPartial<ContractManagerEntity>,
   ): Promise<ContractManagerEntity> {
     const contractManagerEntity = await this.findOne(where);
 
@@ -89,5 +53,26 @@ export class ContractManagerService {
 
     Object.assign(contractManagerEntity, dto);
     return contractManagerEntity.save();
+  }
+
+  public async getLastBlock(address: string): Promise<number | null> {
+    const contractManagerEntity = await this.findOne({ address });
+
+    if (contractManagerEntity) {
+      return contractManagerEntity.fromBlock;
+    }
+    return 0;
+  }
+
+  public async findAllByType(contractType: ContractType): Promise<IContractManagerResult> {
+    const contractManagerEntities = await this.findAll({ contractType });
+
+    if (contractManagerEntities) {
+      return {
+        address: contractManagerEntities.map(contractManagerEntity => contractManagerEntity.address),
+        fromBlock: Math.min(...contractManagerEntities.map(contractManagerEntity => contractManagerEntity.fromBlock)),
+      };
+    }
+    return { address: [] };
   }
 }
