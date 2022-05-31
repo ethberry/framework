@@ -16,8 +16,12 @@ import { VestingModule } from "./vesting/vesting.module";
 import { Erc20Module } from "./erc20/erc20.module";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
-import { BlockchainModule } from "./blockchain/blockchain.module";
+// import { BlockchainModule } from "./blockchain/blockchain.module";
 import { ContractManagerModule } from "./contract-manager/contract-manager.module";
+import { ContractManagerModuleEth } from "./contract-manager/contract-manager.module.eth";
+import { ContractManagerLogModule } from "./eth-log/contract-manager/contract-manager.log.module";
+import { Erc20LogModule } from "./eth-log/erc20/erc20.log.module";
+import { Erc721LogModule } from "./eth-log/erc721/erc721.log.module";
 
 @Module({
   providers: [
@@ -45,12 +49,15 @@ import { ContractManagerModule } from "./contract-manager/contract-manager.modul
     }),
     RequestLoggerModule,
     HealthModule,
-    BlockchainModule,
-    ContractManagerModule,
     VestingModule,
     Erc20Module,
     Erc721Module,
     Erc1155Module,
+    ContractManagerModule,
+    ContractManagerLogModule,
+    // Erc20LogModule,
+    // Erc721LogModule,
+    ContractManagerModuleEth,
   ],
   controllers: [AppController],
 })

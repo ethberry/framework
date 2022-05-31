@@ -3,9 +3,9 @@ import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IContractManagerSearchDto, ContractType } from "@framework/types";
+import { IContractManagerSearchDto } from "@framework/types";
 
-import { IContractManagerCreateDto, IContractManagerResult } from "./interfaces";
+import { IContractManagerCreateDto } from "./interfaces";
 import { ContractManagerEntity } from "./contract-manager.entity";
 
 @Injectable()
@@ -89,26 +89,5 @@ export class ContractManagerService {
 
     Object.assign(contractManagerEntity, dto);
     return contractManagerEntity.save();
-  }
-
-  public async getLastBlock(address: string): Promise<number | null> {
-    const contractManagerEntity = await this.findOne({ address });
-
-    if (contractManagerEntity) {
-      return contractManagerEntity.fromBlock;
-    }
-    return 0;
-  }
-
-  public async findAllByType(contractType: ContractType): Promise<IContractManagerResult> {
-    const contractManagerEntities = await this.findAll({ contractType });
-
-    if (contractManagerEntities) {
-      return {
-        address: contractManagerEntities.map(contractManagerEntity => contractManagerEntity.address),
-        fromBlock: Math.min(...contractManagerEntities.map(contractManagerEntity => contractManagerEntity.fromBlock)),
-      };
-    }
-    return { address: [] };
   }
 }
