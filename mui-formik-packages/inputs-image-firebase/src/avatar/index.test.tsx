@@ -1,7 +1,7 @@
 import { IntlProvider } from "react-intl";
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render } from "@testing-library/react";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { SnackbarProvider } from "notistack";
 
 import { AvatarInput } from "./index";
@@ -25,9 +25,9 @@ describe("<AvatarInput />", () => {
       <ThemeProvider theme={createTheme()}>
         <IntlProvider locale="en" messages={i18n}>
           <SnackbarProvider maxSnack={3}>
-            <FormikForm onSubmit={() => {}} initialValues={{ avatar: "" }}>
+            <FormWrapper onSubmit={() => {}} initialValues={{ avatar: "" }}>
               <AvatarInput {...props} />
-            </FormikForm>
+            </FormWrapper>
           </SnackbarProvider>
         </IntlProvider>
       </ThemeProvider>,
@@ -45,14 +45,14 @@ describe("<AvatarInput />", () => {
       <ThemeProvider theme={createTheme()}>
         <IntlProvider locale="en" messages={i18n}>
           <SnackbarProvider maxSnack={3}>
-            <FormikForm
+            <FormWrapper
               onSubmit={() => {}}
               initialValues={{
                 avatar: "https://lms2-dev.s3-us-west-2.amazonaws.com/7f0f427f-eeba-4ffb-a1c8-f730721bfd46.jpeg",
               }}
             >
               <AvatarInput {...props} />
-            </FormikForm>
+            </FormWrapper>
           </SnackbarProvider>
         </IntlProvider>
       </ThemeProvider>,
@@ -70,7 +70,7 @@ describe("<AvatarInput />", () => {
   //     <ThemeProvider theme={createTheme()}>
   //       <IntlProvider locale="en" messages={i18n}>
   //         <SnackbarProvider maxSnack={3}>
-  //           <FormikForm
+  //           <FormWrapper
   //             onSubmit={() => {}}
   //             innerRef={formRef}
   //             initialValues={{
@@ -78,7 +78,7 @@ describe("<AvatarInput />", () => {
   //             }}
   //           >
   //             <AvatarInput {...props} />
-  //           </FormikForm>
+  //           </FormWrapper>
   //         </SnackbarProvider>
   //       </IntlProvider>
   //     </ThemeProvider>,
@@ -99,9 +99,9 @@ describe("<AvatarInput />", () => {
   //     <ThemeProvider theme={createTheme()}>
   //       <IntlProvider locale="en" messages={i18n}>
   //         <SnackbarProvider maxSnack={3}>
-  //           <FormikForm {...formProps}>
+  //           <FormWrapper {...formProps}>
   //             <AvatarInput {...props} />
-  //           </FormikForm>
+  //           </FormWrapper>
   //         </SnackbarProvider>
   //       </IntlProvider>
   //     </ThemeProvider>,

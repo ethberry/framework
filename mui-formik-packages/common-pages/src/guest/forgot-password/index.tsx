@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Captcha } from "@gemunion/mui-inputs-captcha";
 import { PageHeader } from "@gemunion/mui-page-layout";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { useUser } from "@gemunion/provider-user";
 import { ApiError, useApi } from "@gemunion/provider-api";
@@ -28,7 +28,7 @@ export const ForgotPassword: FC = () => {
   const user = useUser();
   const api = useApi();
 
-  const handleSubmit = (values: IForgotPasswordDto, formikBag: any): Promise<void> => {
+  const handleSubmit = (values: IForgotPasswordDto, form: any): Promise<void> => {
     return api
       .fetchJson({
         url: "/auth/forgot-password",
@@ -43,7 +43,7 @@ export const ForgotPassword: FC = () => {
           const errors = e.getLocalizedValidationErrors();
 
           Object.keys(errors).forEach(key => {
-            formikBag.setError(key, { type: "custom", message: errors[key] });
+            form.setError(key, { type: "custom", message: errors[key] });
           });
         } else if (e.status) {
           enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
@@ -64,7 +64,7 @@ export const ForgotPassword: FC = () => {
     <Grid container className={classes.section}>
       <Grid item sm={10}>
         <PageHeader message="pages.guest.forgotPassword" />
-        <FormikForm
+        <FormWrapper
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
           initialValues={{
@@ -74,7 +74,7 @@ export const ForgotPassword: FC = () => {
         >
           <TextInput name="email" autoComplete="username" />
           <Captcha />
-        </FormikForm>
+        </FormWrapper>
       </Grid>
     </Grid>
   );

@@ -22,8 +22,6 @@ export const JsonInput: FC<ITextAreaProps> = props => {
         form.setValue(name, formattedValue);
         form.clearErrors(name);
       } catch (e) {
-        console.log('e', e);
-
         form.setError(name, { type: "custom", message: e.message });
       }
     },

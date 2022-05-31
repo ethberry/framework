@@ -40,8 +40,6 @@ export const TextInput: FC<ITextInputProps> = props => {
 
   const form = useFormContext<any>();
 
-  console.log("form", form);
-
   const error = form.formState.errors[name];
   const touched = Boolean(form.formState.touchedFields[name]);
 

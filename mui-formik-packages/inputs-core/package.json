@@ -28,6 +28,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-intl": "6.0.3",
+    "react-router-dom": "6.3.0",
     "ts-jest": "28.0.3"
   },
   "engines": {
@@ -43,8 +44,8 @@
     "@mui/styles": "^5.0.0",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
-    "react-intl": "^5.0.0 || ^6.0.0",
-    "react-hook-form": "7.31.3"
+    "react-hook-form": "7.31.3",
+    "react-intl": "^5.0.0 || ^6.0.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -57,8 +58,8 @@
     "build": "tsc",
     "lint": "eslint . --fix",
     "prebuild": "rimraf dist/",
-    "prepublish": "npm run build",
     "prepare": "npm run build",
+    "prepublish": "npm run build",
     "preversion": "npm run build && npm run test",
     "test": "jest --config jest.config.json --no-watch --verbose",
     "test:coverage": "jest  --config jest.config.json --coverage",

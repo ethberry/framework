@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { IntlProvider } from "react-intl";
 import { MemoryRouter } from "react-router-dom";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { Story } from "@storybook/react";
 
 import { JsonInput } from "./index";
@@ -14,8 +14,6 @@ const i18n = {
   "form.validations.invalidJSON": "JSON is invalid",
 };
 
-console.log("FormikForm", FormikForm);
-
 export default {
   title: "Input/Json",
   component: JsonInput,
@@ -23,7 +21,7 @@ export default {
     (Story: Story): ReactElement => (
       <MemoryRouter>
         <IntlProvider locale="en" messages={i18n}>
-          <FormikForm
+          <FormWrapper
             onSubmit={() => {}}
             initialValues={{
               json: JSON.stringify({
@@ -32,7 +30,7 @@ export default {
             }}
           >
             <Story />
-          </FormikForm>
+          </FormWrapper>
         </IntlProvider>
       </MemoryRouter>
     ),

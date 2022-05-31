@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, TextInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
@@ -23,7 +23,7 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   const fixedValues = { query, erc1155CollectionIds, tokenId, tokenStatus };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSearch}
       showButtons={false}
@@ -49,6 +49,6 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-    </FormikForm>
+    </FormWrapper>
   );
 };

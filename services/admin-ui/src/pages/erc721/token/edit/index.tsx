@@ -12,7 +12,7 @@ import { validationSchema } from "./validation";
 export interface IErc721TokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc721Token>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc721Token>, form: any) => Promise<void>;
   initialValues: IErc721Token;
 }
 

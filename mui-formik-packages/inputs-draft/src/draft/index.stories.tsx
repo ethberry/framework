@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { IntlProvider } from "react-intl";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { Story } from "@storybook/react";
 import { LicenseProvider } from "@gemunion/provider-license";
 import { rawStateString } from "@gemunion/draft-js-utils";
@@ -28,9 +28,9 @@ export default {
 
 const DraftTemplate: Story<IRichTextFieldProps> = args => {
   return (
-    <FormikForm onSubmit={() => {}} initialValues={{ switch: false }}>
+    <FormWrapper onSubmit={() => {}} initialValues={{ switch: false }}>
       <RichTextEditor {...args} />
-    </FormikForm>
+    </FormWrapper>
   );
 };
 
@@ -41,9 +41,9 @@ Simple.args = {
 
 const DraftDefaultValueTemplate: Story<IRichTextFieldProps> = args => {
   return (
-    <FormikForm onSubmit={() => {}} initialValues={{ draft: rawStateString }}>
+    <FormWrapper onSubmit={() => {}} initialValues={{ draft: rawStateString }}>
       <RichTextEditor {...args} />
-    </FormikForm>
+    </FormWrapper>
   );
 };
 

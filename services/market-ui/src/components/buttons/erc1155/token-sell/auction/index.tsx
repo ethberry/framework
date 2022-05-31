@@ -19,7 +19,7 @@ export interface IErc1155AuctionOptions {
 export interface IErc1155TokenAuctionDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IErc1155AuctionOptions, formikBag: any) => Promise<void>;
+  onConfirm: (values: IErc1155AuctionOptions, form: any) => Promise<void>;
   initialValues: IErc1155AuctionOptions;
   data: any;
 }

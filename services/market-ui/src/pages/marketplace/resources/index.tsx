@@ -4,7 +4,7 @@ import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IErc1155Token, IErc1155TokenSearchDto } from "@framework/types";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
@@ -29,7 +29,7 @@ export const Resources: FC<ITabPanelProps> = props => {
   const initialValues = rows.reduce((memo, current) => Object.assign(memo, { [current.tokenId]: 0 }), {});
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={initialValues}
       onSubmit={() => {}}
       showButtons={false}
@@ -57,6 +57,6 @@ export const Resources: FC<ITabPanelProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </FormikForm>
+    </FormWrapper>
   );
 };

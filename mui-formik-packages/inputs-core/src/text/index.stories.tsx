@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { IntlProvider } from "react-intl";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 // import { FormProvider, useForm } from "react-hook-form";
 import { Story } from "@storybook/react";
 
@@ -45,9 +45,9 @@ export default {
 
 const SimpleTemplate: Story<ITextInputProps> = args => {
   return (
-    <FormikForm onSubmit={() => {}} initialValues={{ text: "qwerty" }}>
+    <FormWrapper onSubmit={() => {}} initialValues={{ text: "qwerty" }}>
       <TextInput {...args} />
-    </FormikForm>
+    </FormWrapper>
   );
 };
 

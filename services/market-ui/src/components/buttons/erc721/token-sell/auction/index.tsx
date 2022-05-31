@@ -18,7 +18,7 @@ export interface IErc721SellOptions {
 export interface IErc721TokenAuctionDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IErc721SellOptions, formikBag: any) => Promise<void>;
+  onConfirm: (values: IErc721SellOptions, form: any) => Promise<void>;
   initialValues: IErc721SellOptions;
   data: any;
 }

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { Erc1155CollectionStatus, IErc1155CollectionSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
@@ -22,7 +22,7 @@ export const Erc1155CollectionSearchForm: FC<IErc1155CollectionSearchFormProps> 
   const fixedValues = { query, collectionStatus };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSearch}
       showButtons={false}
@@ -42,6 +42,6 @@ export const Erc1155CollectionSearchForm: FC<IErc1155CollectionSearchFormProps> 
           </Grid>
         </Grid>
       </Collapse>
-    </FormikForm>
+    </FormWrapper>
   );
 };

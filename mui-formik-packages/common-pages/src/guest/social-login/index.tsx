@@ -6,7 +6,7 @@ import { Facebook, Google } from "@mui/icons-material";
 
 import { PasswordInput, TextInput } from "@gemunion/mui-inputs-core";
 import { ButtonToolbar, PageHeader } from "@gemunion/mui-page-layout";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { ApiError, useApi } from "@gemunion/provider-api";
 import { ILoginDto, IUser, useUser } from "@gemunion/provider-user";
 import { openUrlOnClick } from "@gemunion/popup";
@@ -60,7 +60,7 @@ export const SocialLogin: FC = () => {
       <Grid item sm={12}>
         <PageHeader message="pages.guest.login" />
 
-        <FormikForm
+        <FormWrapper
           showButtons={false}
           showPrompt={false}
           onSubmit={handleSubmit}
@@ -73,7 +73,7 @@ export const SocialLogin: FC = () => {
           <TextInput name="email" autoComplete="username" />
           <PasswordInput name="password" autoComplete="current-password" />
           <LoginButtons />
-        </FormikForm>
+        </FormWrapper>
         <ButtonToolbar justifyContent="center">
           <Button
             variant="outlined"

@@ -1,7 +1,7 @@
 import { IntlProvider } from "react-intl";
 import { cleanup, render } from "@testing-library/react";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 
 import { NumberInput } from "./index";
 
@@ -22,9 +22,9 @@ describe("<NumberInput />", () => {
     const { asFragment } = render(
       <ThemeProvider theme={createTheme()}>
         <IntlProvider locale="en" messages={i18n}>
-          <FormikForm onSubmit={() => {}} initialValues={{ number: 50 }}>
+          <FormWrapper onSubmit={() => {}} initialValues={{ number: 50 }}>
             <NumberInput {...props} />
-          </FormikForm>
+          </FormWrapper>
         </IntlProvider>
       </ThemeProvider>,
     );
@@ -41,9 +41,9 @@ describe("<NumberInput />", () => {
     const { asFragment } = render(
       <ThemeProvider theme={createTheme()}>
         <IntlProvider locale="en" messages={i18n}>
-          <FormikForm onSubmit={() => {}} initialValues={{ number: -50 }}>
+          <FormWrapper onSubmit={() => {}} initialValues={{ number: -50 }}>
             <NumberInput {...props} />
-          </FormikForm>
+          </FormWrapper>
         </IntlProvider>
       </ThemeProvider>,
     );
@@ -60,9 +60,9 @@ describe("<NumberInput />", () => {
     const { asFragment } = render(
       <ThemeProvider theme={createTheme()}>
         <IntlProvider locale="en" messages={i18n}>
-          <FormikForm onSubmit={() => {}} initialValues={{ number: 9.99 }}>
+          <FormWrapper onSubmit={() => {}} initialValues={{ number: 9.99 }}>
             <NumberInput {...props} />
-          </FormikForm>
+          </FormWrapper>
         </IntlProvider>
       </ThemeProvider>,
     );

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { IErc721DropboxSearchDto } from "@framework/types";
@@ -25,7 +25,7 @@ export const Erc721DropboxSearchForm: FC<IErc721DropboxSearchFormProps> = props 
   const fixedValues = { query, erc721CollectionIds, erc721TemplateCollectionIds, minPrice, maxPrice };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSearch}
       showButtons={false}
@@ -53,6 +53,6 @@ export const Erc721DropboxSearchForm: FC<IErc721DropboxSearchFormProps> = props 
           ) : null}
         </Grid>
       </Collapse>
-    </FormikForm>
+    </FormWrapper>
   );
 };

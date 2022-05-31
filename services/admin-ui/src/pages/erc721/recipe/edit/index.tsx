@@ -10,7 +10,7 @@ import { RandomInput } from "./random-input";
 export interface IRecipeTokenDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc721Recipe>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc721Recipe>, form: any) => Promise<void>;
   initialValues: IErc721Recipe;
 }
 

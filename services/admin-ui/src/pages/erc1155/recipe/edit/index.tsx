@@ -10,7 +10,7 @@ import { Ingredients } from "./ingredients";
 export interface IRecipeTokenDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc1155Recipe>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc1155Recipe>, form: any) => Promise<void>;
   initialValues: IErc1155Recipe;
 }
 

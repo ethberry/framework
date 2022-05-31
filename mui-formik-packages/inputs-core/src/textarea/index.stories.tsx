@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { IntlProvider } from "react-intl";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { Story } from "@storybook/react";
 
 import { ITextAreaProps, TextArea } from "./index";
@@ -16,9 +16,9 @@ export default {
   decorators: [
     (Story: Story): ReactElement => (
       <IntlProvider locale="en" messages={i18n}>
-        <FormikForm onSubmit={() => {}} initialValues={{ textarea: "Lorem ipsum" }}>
+        <FormWrapper onSubmit={() => {}} initialValues={{ textarea: "Lorem ipsum" }}>
           <Story />
-        </FormikForm>
+        </FormWrapper>
       </IntlProvider>
     ),
   ],

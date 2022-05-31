@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { PasswordInput } from "@gemunion/mui-inputs-core";
 import { PageHeader } from "@gemunion/mui-page-layout";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { ApiError, useApi } from "@gemunion/provider-api";
 
 import { validationSchema } from "./validation";
@@ -27,7 +27,7 @@ export const RestorePassword: FC = () => {
 
   const api = useApi();
 
-  const handleSubmit = (values: IRestorePasswordDto, formikBag: any): Promise<void> => {
+  const handleSubmit = (values: IRestorePasswordDto, form: any): Promise<void> => {
     return api
       .fetchJson({
         url: "/auth/restore-password",
@@ -43,7 +43,7 @@ export const RestorePassword: FC = () => {
           const errors = e.getLocalizedValidationErrors();
 
           Object.keys(errors).forEach(key => {
-            formikBag.setError(key, { type: "custom", message: errors[key] });
+            form.setError(key, { type: "custom", message: errors[key] });
           });
         } else if (e.status) {
           enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
@@ -58,7 +58,7 @@ export const RestorePassword: FC = () => {
   return (
     <Grid className={classes.section}>
       <PageHeader message="pages.guest.restorePassword" />
-      <FormikForm
+      <FormWrapper
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
         initialValues={{
@@ -69,7 +69,7 @@ export const RestorePassword: FC = () => {
       >
         <PasswordInput name="password" autoComplete="new-password" />
         <PasswordInput name="confirm" autoComplete="new-password" />
-      </FormikForm>
+      </FormWrapper>
     </Grid>
   );
 };

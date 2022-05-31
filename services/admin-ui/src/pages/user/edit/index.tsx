@@ -14,7 +14,7 @@ import { validationSchema } from "./validation";
 export interface IUserEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUser>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IUser>, form: any) => Promise<void>;
   initialValues: IUser;
 }
 

@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { useUser } from "@gemunion/provider-user";
 import { PageHeader } from "@gemunion/mui-page-layout";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { ApiError } from "@gemunion/provider-api";
 
 import { useStyles } from "./styles";
@@ -26,7 +26,7 @@ export const RegistrationBase: FC<IRegistrationBaseProps> = props => {
 
   const user = useUser();
 
-  const handleSubmit = (values: any, formikBag: any): Promise<void> => {
+  const handleSubmit = (values: any, form: any): Promise<void> => {
     return user
       .signUp(values)
       .then(() => {
@@ -38,7 +38,7 @@ export const RegistrationBase: FC<IRegistrationBaseProps> = props => {
           const errors = e.getLocalizedValidationErrors();
 
           Object.keys(errors).forEach(key => {
-            formikBag.setError(key, { type: "custom", message: errors[key] });
+            form.setError(key, { type: "custom", message: errors[key] });
           });
         } else if (e.status) {
           enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
@@ -59,9 +59,9 @@ export const RegistrationBase: FC<IRegistrationBaseProps> = props => {
     <Grid container className={classes.section}>
       <Grid item sm={12}>
         <PageHeader message="pages.guest.registration" />
-        <FormikForm onSubmit={handleSubmit} validationSchema={validationSchema} initialValues={initialValues}>
+        <FormWrapper onSubmit={handleSubmit} validationSchema={validationSchema} initialValues={initialValues}>
           {children}
-        </FormikForm>
+        </FormWrapper>
       </Grid>
     </Grid>
   );

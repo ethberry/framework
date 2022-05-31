@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { IUserSearchDto, UserRole, UserStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
@@ -22,7 +22,7 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
   const fixedValues = { query, userStatus, userRoles };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSearch}
       showButtons={false}
@@ -45,6 +45,6 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-    </FormikForm>
+    </FormWrapper>
   );
 };

@@ -7,7 +7,7 @@ import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useUser } from "@gemunion/provider-user";
 import { ApiError } from "@gemunion/provider-api";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { EnabledLanguages } from "@framework/constants";
 import { IUser } from "@framework/types";
@@ -25,7 +25,7 @@ export const Profile: FC = () => {
     });
   };
 
-  const handleSubmit = (values: Partial<IUser>, formikBag: any): Promise<void> => {
+  const handleSubmit = (values: Partial<IUser>, form: any): Promise<void> => {
     return user
       .setProfile(values)
       .then((): void => {
@@ -36,7 +36,7 @@ export const Profile: FC = () => {
           const errors = e.getLocalizedValidationErrors();
 
           Object.keys(errors).forEach(key => {
-            formikBag.setError(key, { type: "custom", message: errors[key] });
+            form.setError(key, { type: "custom", message: errors[key] });
           });
         } else if (e.status) {
           enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
@@ -56,7 +56,7 @@ export const Profile: FC = () => {
 
       <PageHeader message="pages.profile.title" />
 
-      <FormikForm
+      <FormWrapper
         initialValues={fixedValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
@@ -66,7 +66,7 @@ export const Profile: FC = () => {
         <TextInput name="displayName" />
         <SelectInput name="language" options={EnabledLanguages} />
         <AvatarInput name="imageUrl" />
-      </FormikForm>
+      </FormWrapper>
     </Grid>
   );
 };

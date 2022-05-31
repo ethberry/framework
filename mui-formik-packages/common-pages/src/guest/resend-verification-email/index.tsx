@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { Captcha } from "@gemunion/mui-inputs-captcha";
 import { PageHeader } from "@gemunion/mui-page-layout";
 import { TextInput } from "@gemunion/mui-inputs-core";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { ApiError, useApi } from "@gemunion/provider-api";
 
 import { useStyles } from "./styles";
@@ -26,7 +26,7 @@ export const ResendVerificationEmail: FC = () => {
 
   const api = useApi();
 
-  const handleSubmit = (values: IResendVerificationEmailDto, formikBag: any): Promise<void> => {
+  const handleSubmit = (values: IResendVerificationEmailDto, form: any): Promise<void> => {
     return api
       .fetchJson({
         url: "/auth/resend-email-verification",
@@ -41,7 +41,7 @@ export const ResendVerificationEmail: FC = () => {
           const errors = e.getLocalizedValidationErrors();
 
           Object.keys(errors).forEach(key => {
-            formikBag.setError(key, { type: "custom", message: errors[key] });
+            form.setError(key, { type: "custom", message: errors[key] });
           });
         } else if (e.status) {
           enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
@@ -57,7 +57,7 @@ export const ResendVerificationEmail: FC = () => {
       <Grid item sm={10}>
         <PageHeader message="pages.guest.resendVerificationEmail" />
 
-        <FormikForm
+        <FormWrapper
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
           initialValues={{
@@ -67,7 +67,7 @@ export const ResendVerificationEmail: FC = () => {
         >
           <TextInput name="email" autoComplete="username" />
           <Captcha />
-        </FormikForm>
+        </FormWrapper>
       </Grid>
     </Grid>
   );

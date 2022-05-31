@@ -12,7 +12,7 @@ import { BlockchainInfoPopover } from "../../../../components/popover";
 export interface IErc721CollectionEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc721Collection>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc721Collection>, form: any) => Promise<void>;
   initialValues: IErc721Collection;
 }
 

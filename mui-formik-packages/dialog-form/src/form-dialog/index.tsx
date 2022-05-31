@@ -3,12 +3,12 @@ import { Breakpoint } from "@mui/material";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 
-export interface IFormikFormProps<T> {
+export interface IFormDialogProps<T> {
   showButtons?: boolean;
   showPrompt?: boolean;
-  onConfirm: (values: T, formikBag: any) => Promise<void> | void;
+  onConfirm: (values: T, form: any) => Promise<void> | void;
   onCancel: () => void;
   message: string;
   data?: any;
@@ -18,7 +18,7 @@ export interface IFormikFormProps<T> {
   maxWidth?: Breakpoint | false;
 }
 
-export const FormDialog: FC<IFormikFormProps<any>> = props => {
+export const FormDialog: FC<IFormDialogProps<any>> = props => {
   const { children, onConfirm, initialValues, validationSchema, maxWidth = "lg", ...rest } = props;
 
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +45,7 @@ export const FormDialog: FC<IFormikFormProps<any>> = props => {
   return (
     <ConfirmationDialog onConfirm={handleSubmit} maxWidth={maxWidth} data-testid="DialogForm" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
-        <FormikForm
+        <FormWrapper
           onSubmit={onConfirm}
           validationSchema={validationSchema}
           initialValues={initialValues}
@@ -53,7 +53,7 @@ export const FormDialog: FC<IFormikFormProps<any>> = props => {
           showButtons={false}
         >
           {children}
-        </FormikForm>
+        </FormWrapper>
       </ProgressOverlay>
     </ConfirmationDialog>
   );

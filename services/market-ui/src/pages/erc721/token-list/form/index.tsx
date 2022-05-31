@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { IErc721AssetSearchDto, TokenRarity } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -24,7 +24,7 @@ export const Erc721TokenSearchForm: FC<IErc721TokenSearchFormProps> = props => {
   const fixedValues = { erc721CollectionIds, rarity };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSearch}
       showButtons={false}
@@ -42,6 +42,6 @@ export const Erc721TokenSearchForm: FC<IErc721TokenSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-    </FormikForm>
+    </FormWrapper>
   );
 };

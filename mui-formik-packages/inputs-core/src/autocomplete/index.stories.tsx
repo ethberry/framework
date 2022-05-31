@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { IntlProvider } from "react-intl";
 import { Story } from "@storybook/react";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 
 import { AutocompleteInput, IAutocompleteInputProps } from "./index";
 
@@ -16,9 +16,9 @@ export default {
   decorators: [
     (Story: Story): ReactElement => (
       <IntlProvider locale="en" messages={i18n}>
-        <FormikForm onSubmit={() => {}} initialValues={{ autocomplete: "sw" }}>
+        <FormWrapper onSubmit={() => {}} initialValues={{ autocomplete: "sw" }}>
           <Story />
-        </FormikForm>
+        </FormWrapper>
       </IntlProvider>
     ),
   ],

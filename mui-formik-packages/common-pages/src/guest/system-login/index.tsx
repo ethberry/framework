@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 
 import { PasswordInput, TextInput } from "@gemunion/mui-inputs-core";
 import { PageHeader } from "@gemunion/mui-page-layout";
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { ApiError, useApi } from "@gemunion/provider-api";
 import { ILoginDto, IUser, useUser } from "@gemunion/provider-user";
 import { useDidMountEffect } from "@gemunion/react-hooks";
@@ -57,7 +57,7 @@ export const SystemLogin: FC = () => {
       <Grid item sm={12}>
         <PageHeader message="pages.guest.login" />
 
-        <FormikForm
+        <FormWrapper
           showButtons={false}
           showPrompt={false}
           onSubmit={handleSubmit}
@@ -70,7 +70,7 @@ export const SystemLogin: FC = () => {
           <TextInput name="email" autoComplete="username" />
           <PasswordInput name="password" autoComplete="current-password" />
           <LoginButtons />
-        </FormikForm>
+        </FormWrapper>
       </Grid>
     </Grid>
   );

@@ -148,7 +148,7 @@ export const useCollection = <T extends IIdBase = IIdBase, S extends IPagination
     updateQS();
   };
 
-  const handleEditConfirm = async (values: Partial<T>, formikBag: any): Promise<void> => {
+  const handleEditConfirm = async (values: Partial<T>, form: any): Promise<void> => {
     const { id } = values;
 
     return api
@@ -167,7 +167,7 @@ export const useCollection = <T extends IIdBase = IIdBase, S extends IPagination
           const errors = e.getLocalizedValidationErrors();
 
           Object.keys(errors).forEach(key => {
-            formikBag.setError(key, { type: "custom", message: errors[key] }, { shouldFocus: true });
+            form.setError(key, { type: "custom", message: errors[key] }, { shouldFocus: true });
           });
         } else if (e.status) {
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions

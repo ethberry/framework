@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import { TextInput } from "@gemunion/mui-inputs-core";
 
-import { FormDialog, IFormikFormProps } from "./index";
+import { FormDialog, IFormDialogProps } from "./index";
 
 const i18n = {
   "dialogs.edit": "Edit",
@@ -34,7 +34,7 @@ export default {
   },
 };
 
-const Template: Story<IFormikFormProps<any>> = args => (
+const Template: Story<IFormDialogProps<any>> = args => (
   <FormDialog {...args}>
     <TextInput name="title" />
   </FormDialog>

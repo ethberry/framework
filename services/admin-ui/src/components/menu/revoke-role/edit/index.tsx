@@ -14,7 +14,7 @@ export interface IRevokeRoleDto {
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IRevokeRoleDto, formikBag: any) => Promise<void>;
+  onConfirm: (values: IRevokeRoleDto, form: any) => Promise<void>;
   initialValues: IRevokeRoleDto;
 }
 

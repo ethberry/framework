@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormikForm } from "@gemunion/mui-form";
+import { FormWrapper } from "@gemunion/mui-form";
 import { Erc721AirdropStatus, IErc721AirdropSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
@@ -22,7 +22,7 @@ export const Erc721AirdropSearchForm: FC<IErc721AirdropSearchFormProps> = props 
   const fixedValues = { airdropStatus, query };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSearch}
       showButtons={false}
@@ -42,6 +42,6 @@ export const Erc721AirdropSearchForm: FC<IErc721AirdropSearchFormProps> = props 
           </Grid>
         </Grid>
       </Collapse>
-    </FormikForm>
+    </FormWrapper>
   );
 };
