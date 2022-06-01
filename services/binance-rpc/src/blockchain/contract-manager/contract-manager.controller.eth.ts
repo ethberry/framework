@@ -1,16 +1,16 @@
 import { Controller } from "@nestjs/common";
-import { EventPattern, Payload, Ctx } from "@nestjs/microservices";
+import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractManagerEventType,
+  ContractType,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
   IContractManagerERC20VestingDeployed,
   IContractManagerERC721TokenDeployed,
-  ContractType,
 } from "@framework/types";
 
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";

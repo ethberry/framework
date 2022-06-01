@@ -32,5 +32,5 @@ export * from "./erc1155/recipe-history";
 export * from "./blockchain/access-control";
 export * from "./blockchain/access-control-history";
 
-export * from "./contract-manager-history";
-export * from "./contract-manager";
+export * from "./blockchain/contract-manager-history";
+export * from "./blockchain/contract-manager";

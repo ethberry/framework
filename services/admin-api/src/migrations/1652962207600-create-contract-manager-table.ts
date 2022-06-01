@@ -8,15 +8,15 @@ export class CreateContractManagerTable1652962207600 implements MigrationInterfa
       CREATE TYPE ${ns}.contract_manager_type_enum AS ENUM (
         'CONTRACT_MANAGER',
         'ERC721_MARKETPLACE',
-        'ERC721_COLLECTION',
+        'ERC721_TOKEN',
         'ERC721_AUCTION',
         'ERC721_AIRDROP',
         'ERC721_DROPBOX',
         'ERC721_CRAFT',
         'ERC1155_MARKETPLACE',
-        'ERC1155_COLLECTION',
+        'ERC1155_TOKEN',
         'ERC1155_CRAFT',
-        'ERC20_CONTRACT',
+        'ERC20_TOKEN',
         'ERC20_VESTING',
         'ERC20_STAKING'
       );

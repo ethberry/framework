@@ -10,13 +10,13 @@ import { Erc721RecipeModule } from "./recipe/recipe.module";
 
 @Module({
   imports: [
-    Erc721CollectionModule,
-    Erc721TokenModule,
-    Erc721DropboxModule,
-    Erc721TemplateModule,
-    Erc721MarketplaceModule,
     Erc721AirdropModule,
+    Erc721CollectionModule,
+    Erc721DropboxModule,
+    Erc721MarketplaceModule,
     Erc721RecipeModule,
+    Erc721TemplateModule,
+    Erc721TokenModule,
   ],
 })
 export class Erc721Module {}

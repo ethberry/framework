@@ -18,7 +18,7 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
     contractTemplate: Erc20TokenTemplate.SIMPLE,
     name: "",
     symbol: "",
-    cap: "0",
+    cap: "1000000",
   };
 
   return (
@@ -32,7 +32,8 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
       <SelectInput name="contractTemplate" options={Erc20TokenTemplate} />
       <TextInput name="name" />
       <TextInput name="symbol" />
-      <EthInput name="cap" />
+      <TextInput name="cap" />
+      {/* <EthInput readOnly={true} name="cap" />*/}
     </FormDialog>
   );
 };

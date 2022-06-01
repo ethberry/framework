@@ -6,18 +6,21 @@ export class CreateErc721TokenHistoryTable1563804021290 implements MigrationInte
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc721_token_event_enum AS ENUM (
-        'Transfer',
         'Approval',
         'ApprovalForAll',
-        'TokenRoyaltyInfo',
         'DefaultRoyaltyInfo',
-        'Redeem',
-        'Unpack',
-        'UnpackAirdrop',
         'MintRandom',
+        'Paused',
+        'RandomRequest',
+        'RedeemAirdrop',
+        'RoleAdminChanged',
         'RoleGranted',
         'RoleRevoked',
-        'RandomRequest'
+        'TokenRoyaltyInfo',
+        'Transfer',
+        'UnpackAirdrop',
+        'UnpackDropbox',
+        'Unpaused'
       );
     `);
 

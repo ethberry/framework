@@ -13,8 +13,8 @@
   },
   "description": "react widget",
   "devDependencies": {
-    "@mui/lab": "5.0.0-alpha.83",
-    "@mui/material": "5.8.1",
+    "@mui/lab": "5.0.0-alpha.84",
+    "@mui/material": "5.8.2",
     "@mui/styles": "5.8.0",
     "@types/react": "17.0.45",
     "react": "17.0.2",

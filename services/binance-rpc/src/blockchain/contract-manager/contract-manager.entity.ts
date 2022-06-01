@@ -1,7 +1,7 @@
 import { Column, Entity } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IContractManager, ContractType } from "@framework/types";
+import { ContractType, IContractManager } from "@framework/types";
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 @Entity({ schema: ns, name: "contract_manager" })
