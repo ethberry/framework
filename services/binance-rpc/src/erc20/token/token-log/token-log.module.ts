@@ -23,10 +23,10 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
         configService: ConfigService,
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
-        const erc20Contracts = await contractManagerService.findAllByType(ContractType.ERC20_CONTRACT);
+        const erc20Contracts = await contractManagerService.findAllByType(ContractType.ERC20_TOKEN);
         return {
           contract: {
-            contractType: ContractType.ERC20_CONTRACT,
+            contractType: ContractType.ERC20_TOKEN,
             contractAddress: erc20Contracts.address || [],
             contractInterface: Erc20abi,
             // prettier-ignore

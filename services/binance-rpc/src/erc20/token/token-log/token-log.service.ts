@@ -18,7 +18,7 @@ export class Erc20LogService {
 
     await this.contractManagerService.create({
       address: dto.address.toLowerCase(),
-      contractType: ContractType.ERC20_CONTRACT,
+      contractType: ContractType.ERC20_TOKEN,
       fromBlock: dto.fromBlock,
     });
 

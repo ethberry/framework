@@ -26,7 +26,7 @@ export class Erc721TokenControllerEth {
   constructor(private readonly erc721TokenServiceEth: Erc721TokenServiceEth) {}
 
   // TODO add more events
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.Transfer })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.Transfer })
   public transferItem(@Payload() event: ILogEvent<IErc721TokenTransfer>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.transfer(event, context);
   }
@@ -41,7 +41,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.Approval })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.Approval })
   public approvalItem(@Payload() event: ILogEvent<IErc721TokenApprove>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.approval(event, context);
   }
@@ -56,7 +56,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.approvalAirdrop(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.ApprovalForAll })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.ApprovalForAll })
   public approvalForAllItem(
     @Payload() event: ILogEvent<IErc721TokenApprovedForAll>,
     @Ctx() context: Log,
@@ -80,7 +80,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.DefaultRoyaltyInfo })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.DefaultRoyaltyInfo })
   public defaultRoyaltyInfoItem(
     @Payload() event: ILogEvent<IErc721DefaultRoyaltyInfo>,
     @Ctx() context: Log,
@@ -104,7 +104,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.defaultRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.TokenRoyaltyInfo })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.TokenRoyaltyInfo })
   public tokenRoyaltyInfoItem(
     @Payload() event: ILogEvent<IErc721TokenRoyaltyInfo>,
     @Ctx() context: Log,
@@ -128,7 +128,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.tokenRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.MintRandom })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.MintRandom })
   public mintRandomItem(@Payload() event: ILogEvent<IErc721TokenMintRandom>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.mintRandom(event, context);
   }
@@ -148,7 +148,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.unpackAirdrop(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.RoleGranted })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.RoleGranted })
   public roleGrantItem(@Payload() event: ILogEvent<IErc721RoleChange>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.roleGrant(event, context);
   }
@@ -163,7 +163,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.roleGrant(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: Erc721TokenEventType.RoleRevoked })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.RoleRevoked })
   public roleRevokeItem(@Payload() event: ILogEvent<IErc721RoleChange>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.roleRevoke(event, context);
   }
@@ -179,7 +179,7 @@ export class Erc721TokenControllerEth {
   }
 
   // dev test - random request
-  @EventPattern({ contractType: ContractType.ERC721_COLLECTION, eventName: "RandomRequest" })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: "RandomRequest" })
   public randomRequest(@Payload() event: ILogEvent<IErc721RandomRequest>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.randomRequest(event, context);
   }

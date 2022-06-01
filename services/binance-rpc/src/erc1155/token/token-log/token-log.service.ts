@@ -19,7 +19,7 @@ export class Erc1155LogService {
 
     await this.contractManagerService.create({
       address: dto.address.toLowerCase(),
-      contractType: ContractType.ERC1155_COLLECTION,
+      contractType: ContractType.ERC1155_TOKEN,
       fromBlock: dto.fromBlock,
     });
 

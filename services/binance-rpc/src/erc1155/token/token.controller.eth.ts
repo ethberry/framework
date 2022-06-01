@@ -19,32 +19,32 @@ import { Erc1155TokenServiceEth } from "./token.service.eth";
 export class Erc1155TokenControllerEth {
   constructor(private readonly erc1155ServiceEth: Erc1155TokenServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.ERC1155_COLLECTION, eventName: Erc1155TokenEventType.TransferSingle })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.TransferSingle })
   public transferSingle(@Payload() event: ILogEvent<IErc1155TokenTransferSingle>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.transferSingle(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_COLLECTION, eventName: Erc1155TokenEventType.TransferBatch })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.TransferBatch })
   public transferBatch(@Payload() event: ILogEvent<IErc1155TokenTransferBatch>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.transferBatch(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_COLLECTION, eventName: Erc1155TokenEventType.ApprovalForAll })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.ApprovalForAll })
   public approvalForAll(@Payload() event: ILogEvent<IErc1155TokenApprovalForAll>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_COLLECTION, eventName: Erc1155TokenEventType.URI })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.URI })
   public uri(@Payload() event: ILogEvent<IErc1155TokenUri>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.uri(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_COLLECTION, eventName: Erc1155TokenEventType.RoleGranted })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.RoleGranted })
   public roleGrant(@Payload() event: ILogEvent<IErc1155RoleGrant>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.roleGrant(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_COLLECTION, eventName: Erc1155TokenEventType.RoleRevoked })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.RoleRevoked })
   public roleRevoke(@Payload() event: ILogEvent<IErc1155RoleGrant>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.roleRevoke(event, context);
   }
