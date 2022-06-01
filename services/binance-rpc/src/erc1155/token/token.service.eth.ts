@@ -5,7 +5,6 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   Erc1155TokenEventType,
-  IErc1155RoleGrant,
   IErc1155TokenApprovalForAll,
   IErc1155TokenTransferBatch,
   IErc1155TokenTransferSingle,
@@ -64,14 +63,6 @@ export class Erc1155TokenServiceEth {
   }
 
   public async uri(event: ILogEvent<IErc1155TokenUri>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  public async roleGrant(event: ILogEvent<IErc1155RoleGrant>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  public async roleRevoke(event: ILogEvent<IErc1155RoleGrant>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

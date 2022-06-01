@@ -4,8 +4,6 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   Erc20TokenEventType,
-  IAccessControlRoleAdminChanged,
-  IErc20RoleGrant,
   IErc20TokenApprove,
   IErc20TokenSnapshot,
   IErc20TokenTransfer,
@@ -32,21 +30,6 @@ export class Erc20TokenServiceEth {
 
   public async snapshot(event: ILogEvent<IErc20TokenSnapshot>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-  }
-
-  public async roleGrant(event: ILogEvent<IErc20RoleGrant>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  public async roleRevoke(event: ILogEvent<IErc20RoleGrant>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  // TODO move to AccessControl-eth?
-  public async roleAdmin(event: ILogEvent<IAccessControlRoleAdminChanged>, _context: Log): Promise<void> {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20TokenServiceEth.name);
-    await Promise.resolve();
-    // await this.updateHistory(event, context);
   }
 
   private async updateHistory(event: ILogEvent<TErc20TokenEventData>, context: Log) {

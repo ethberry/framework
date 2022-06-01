@@ -11,6 +11,7 @@ import { Erc1155CollectionModule } from "../collection/collection.module";
 import { Erc1155BalanceModule } from "../balance/balance.module";
 import { Erc1155TokenLogModule } from "./token-log/token-log.module";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
+import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ContractManagerModule } from "../../blockchain/contract-manager/contrac
     Erc1155RecipeModule,
     Erc1155CollectionModule,
     Erc1155BalanceModule,
+    AccessControlModule,
     TypeOrmModule.forFeature([Erc1155TokenEntity]),
   ],
   providers: [Logger, Erc1155TokenService, Erc1155TokenServiceEth],
