@@ -8,7 +8,8 @@ import {
   ContractType,
   Erc20TokenEventType,
   IAccessControlRoleAdminChanged,
-  IErc20RoleGrant,
+  IAccessControlRoleGranted,
+  IAccessControlRoleRevoked,
   IErc20TokenApprove,
   IErc20TokenSnapshot,
   IErc20TokenTransfer,
@@ -40,12 +41,12 @@ export class Erc20TokenControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleGranted })
-  public roleGrant(@Payload() event: ILogEvent<IErc20RoleGrant>, @Ctx() context: Log): Promise<void> {
+  public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGranted>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleGranted(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: AccessControlEventType.RoleRevoked })
-  public roleRevoke(@Payload() event: ILogEvent<IErc20RoleGrant>, @Ctx() context: Log): Promise<void> {
+  public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevoked>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleRevoked(event, context);
   }
 

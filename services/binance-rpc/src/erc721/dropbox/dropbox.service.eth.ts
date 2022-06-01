@@ -10,10 +10,9 @@ import {
   Erc721TokenStatus,
   IErc721AirdropRedeem,
   IErc721DefaultRoyaltyInfo,
-  IErc721RandomRequest,
+  IErc721DropboxUnpack,
   IErc721TokenApprove,
   IErc721TokenApprovedForAll,
-  IErc721TokenMintRandom,
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
   TErc721TokenEventData,
@@ -23,12 +22,13 @@ import {
 import { delay } from "../../common/utils";
 import { Erc721TemplateService } from "../template/template.service";
 import { Erc721CollectionService } from "../collection/collection.service";
-import { Erc721TokenHistoryService } from "./token-history/token-history.service";
-import { Erc721TokenService } from "./token.service";
+
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { Erc721TokenService } from "../token/token.service";
+import { Erc721TokenHistoryService } from "../token/token-history/token-history.service";
 
 @Injectable()
-export class Erc721TokenServiceEth {
+export class Erc721DropboxServiceEth {
   private airdropAddr: string;
   private itemsAddr: string;
 
@@ -54,7 +54,7 @@ export class Erc721TokenServiceEth {
     // Wait until Token will be created by Marketplace Redeem or Airdrop Redeem or MintRandom events
     this.loggerService.log(
       `Erc721Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
-      Erc721TokenServiceEth.name,
+      Erc721DropboxServiceEth.name,
     );
     await delay(1618);
 
@@ -152,41 +152,28 @@ export class Erc721TokenServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
   }
 
-  public async mintRandom(event: ILogEvent<IErc721TokenMintRandom>, context: Log): Promise<void> {
+  public async unpack(event: ILogEvent<IErc721DropboxUnpack>, context: Log): Promise<void> {
     const {
-      args: { to, tokenId, templateId, rarity, dropboxId },
+      args: { collection, tokenId },
     } = event;
 
-    const erc721TemplateEntity = await this.erc721TemplateService.findOne({ id: ~~templateId });
+    const erc721CollectionEntity = await this.erc721CollectionService.findOne({ address: collection.toLowerCase() });
 
-    if (!erc721TemplateEntity) {
-      throw new NotFoundException("templateNotFound");
+    if (!erc721CollectionEntity) {
+      throw new NotFoundException("collectionNotFound");
     }
 
-    const erc721DropboxEntity = await this.erc721TokenService.findOne({ id: ~~dropboxId });
+    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
 
-    if (!erc721DropboxEntity) {
-      throw new NotFoundException("dropboxNotFound");
+    if (!erc721TokenEntity) {
+      throw new NotFoundException("tokenNotFound");
     }
-
-    const erc721TokenEntity = await this.erc721TokenService.create({
-      tokenId,
-      attributes: erc721TemplateEntity.attributes,
-      owner: to.toLowerCase(),
-      erc721Template: erc721TemplateEntity,
-      erc721Token: erc721DropboxEntity,
-      rarity: Object.values(TokenRarity)[~~rarity],
-    });
 
     await this.updateHistory(event, context, erc721TokenEntity.id);
   }
 
-  public async randomRequest(event: ILogEvent<IErc721RandomRequest>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
   private async updateHistory(event: ILogEvent<TErc721TokenEventData>, context: Log, erc721TokenId?: number) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc721TokenServiceEth.name);
+    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc721DropboxServiceEth.name);
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;

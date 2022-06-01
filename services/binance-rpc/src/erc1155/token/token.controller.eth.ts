@@ -8,11 +8,12 @@ import {
   ContractType,
   Erc1155TokenEventType,
   IAccessControlRoleAdminChanged,
+  IAccessControlRoleGranted,
+  IAccessControlRoleRevoked,
   IErc1155TokenApprovalForAll,
   IErc1155TokenTransferBatch,
   IErc1155TokenTransferSingle,
   IErc1155TokenUri,
-  IErc20RoleGrant,
 } from "@framework/types";
 
 import { Erc1155TokenServiceEth } from "./token.service.eth";
@@ -46,12 +47,12 @@ export class Erc1155TokenControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleGranted })
-  public roleGrant(@Payload() event: ILogEvent<IErc20RoleGrant>, @Ctx() context: Log): Promise<void> {
+  public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGranted>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleGranted(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleRevoked })
-  public roleRevoke(@Payload() event: ILogEvent<IErc20RoleGrant>, @Ctx() context: Log): Promise<void> {
+  public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevoked>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleRevoked(event, context);
   }
 

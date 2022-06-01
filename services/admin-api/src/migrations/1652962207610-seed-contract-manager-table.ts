@@ -17,46 +17,55 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
     const lastBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
-        INSERT INTO ${ns}.contract_manager (address,
-                                          contract_type,
-                                          from_block,
-                                          created_at,
-                                          updated_at)
-        VALUES ('${contractManagerAddress}',
-                'CONTRACT_MANAGER',
-                '${lastBlock}',
-                '${currentDateTime}',
-                '${currentDateTime}'),
-               ('${erc721MarketplaceAddr}',
-                'ERC721_MARKETPLACE',
-                '${lastBlock}',
-                '${currentDateTime}',
-                '${currentDateTime}'),
-               ('${erc721AirdropAddr}',
-                'ERC721_AIRDROP',
-                '${lastBlock}',
-                '${currentDateTime}',
-                '${currentDateTime}'),
-               ('${erc721DropboxAddr}',
-                'ERC721_DROPBOX',
-                '${lastBlock}',
-                '${currentDateTime}',
-                '${currentDateTime}'),
-               ('${erc721CraftAddr}',
-                'ERC721_CRAFT',
-                '${lastBlock}',
-                '${currentDateTime}',
-                '${currentDateTime}'),
-               ('${erc1155Marketplace}',
-                'ERC1155_MARKETPLACE',
-                '${lastBlock}',
-                '${currentDateTime}',
-                '${currentDateTime}'),
-               ('${erc1155CraftAddr}',
-                'ERC1155_CRAFT',
-                '${lastBlock}',
-                '${currentDateTime}',
-                '${currentDateTime}');
+      INSERT INTO ${ns}.contract_manager (
+        address,
+        contract_type,
+        from_block,
+        created_at,
+        updated_at
+      ) VALUES (
+        '${contractManagerAddress}',
+        'CONTRACT_MANAGER',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+       '${erc721MarketplaceAddr}',
+        'ERC721_MARKETPLACE',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc721AirdropAddr}',
+        'ERC721_AIRDROP',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+       '${erc721DropboxAddr}',
+        'ERC721_DROPBOX',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc721CraftAddr}',
+        'ERC721_CRAFT',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+       '${erc1155Marketplace}',
+        'ERC1155_MARKETPLACE',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc1155CraftAddr}',
+        'ERC1155_CRAFT',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+       );
     `);
   }
 

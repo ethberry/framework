@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AccessControlService } from "./access-control.service";
@@ -8,7 +8,7 @@ import { AccessControlServiceEth } from "./access-control.service.eth";
 
 @Module({
   imports: [AccessControlHistoryModule, TypeOrmModule.forFeature([AccessControlEntity])],
-  providers: [AccessControlService, AccessControlServiceEth],
+  providers: [Logger, AccessControlService, AccessControlServiceEth],
   exports: [AccessControlService, AccessControlServiceEth],
 })
 export class AccessControlModule {}

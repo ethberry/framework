@@ -9,9 +9,6 @@ export enum Erc721TokenEventType {
   Paused = "Paused",
   RandomRequest = "RandomRequest",
   RedeemAirdrop = "RedeemAirdrop",
-  RoleAdminChanged = "RoleAdminChanged",
-  RoleGranted = "RoleGranted",
-  RoleRevoked = "RoleRevoked",
   TokenRoyaltyInfo = "TokenRoyaltyInfo",
   Transfer = "Transfer",
   UnpackAirdrop = "UnpackAirdrop",
@@ -77,12 +74,6 @@ export interface IErc721AirdropRedeem {
   price: string;
 }
 
-export interface IErc721RoleChange {
-  role: string;
-  account: string;
-  sender: string;
-}
-
 // dev random test
 export interface IErc721RandomRequest {
   requestId: string;
@@ -97,7 +88,6 @@ export type TErc721TokenEventData =
   | IErc721DropboxUnpack
   | IErc721AirdropUnpack
   | IErc721AirdropRedeem
-  | IErc721RoleChange
   | IErc721TokenMintRandom
   | IErc721RandomRequest;
 
