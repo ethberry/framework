@@ -6,5 +6,5 @@ export const validationSchema = Yup.object().shape({
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .max(1000, "form.validations.rangeOverflow")
-    .min(1, "form.validations.rangeUnderflow"),
+    .min(0, "form.validations.rangeUnderflow"),
 });
