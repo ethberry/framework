@@ -23,6 +23,6 @@ yarn.lock
 
 # env
 .env.*
-!.env.*.sample
+!.env.sample
 
 service-account-file.json
