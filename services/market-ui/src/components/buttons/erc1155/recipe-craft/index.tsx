@@ -8,8 +8,8 @@ import { useApi } from "@gemunion/provider-api";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc1155Recipe } from "@framework/types";
 
-import ERC1155ERC1155CraftSol from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
-import ERC1155SimpleSol from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 interface ICraftButtonProps {
   recipe: IErc1155Recipe;

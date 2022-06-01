@@ -7,8 +7,8 @@ import { constants, Contract, BigNumber } from "ethers";
 
 import { useLicense } from "@gemunion/provider-license";
 import { useWallet } from "@gemunion/provider-wallet";
-import IERC2981Sol from "@framework/binance-contracts/artifacts/@openzeppelin/contracts/interfaces/IERC2981.sol/IERC2981.json";
-import SeaportSol from "@framework/binance-contracts/artifacts/contracts/Seaport/Seaport.sol/Seaport.json";
+import IERC2981Sol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/interfaces/IERC2981.sol/IERC2981.json";
+import SeaportSol from "@framework/seaport-contracts/artifacts/contracts/Seaport.sol/Seaport.json";
 
 import { IAuctionOptions, IErc1155, IErc20, IErc721, SeaportContext } from "./context";
 

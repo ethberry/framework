@@ -12,7 +12,7 @@ import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc20Vesting } from "@framework/types";
 
-import CliffVestingSol from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
+import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
 export const Erc20Vesting: FC = () => {
   const [isLoading, setIsLoading] = useState(true);

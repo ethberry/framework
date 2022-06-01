@@ -8,7 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Erc1155RecipeStatus, IErc1155Recipe } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC1155ERC1155CraftSol from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 
 export interface IErc1155RecipeButtonProps {
   recipe: IErc1155Recipe;

@@ -130,10 +130,10 @@ services:
       # market-api
       - "${PORT_MARKET_API}:${PORT_MARKET_API}"
 
-  binance-rpc:
-    container_name: binance-rpc
+  core-eth:
+    container_name: core-eth
     image: gcr.io/halogen-framing-335807/framework-img:latest
-    command: "npm run --prefix ./services/binance-rpc start:${BASE_MODE}"
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
     environment:
       # common
       BASE_MODE: "${BASE_MODE}"
@@ -224,6 +224,6 @@ services:
       - market-ui
       - market-api
       - json-api
-      - binance-rpc
+      - core-eth
 
 

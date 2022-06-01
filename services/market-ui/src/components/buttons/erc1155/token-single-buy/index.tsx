@@ -9,7 +9,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { IErc1155Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC1155MarketplaceSol from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
+import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
   token: IErc1155Token;

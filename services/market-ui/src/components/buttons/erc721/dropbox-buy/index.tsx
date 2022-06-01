@@ -9,7 +9,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { IErc721Dropbox } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC721MarketplaceSol from "@framework/binance-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
+import ERC721MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc721DropboxBuyButtonProps {
   dropbox: IErc721Dropbox;

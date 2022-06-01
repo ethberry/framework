@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import IERC721RoyaltySol from "@framework/binance-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
+import IERC721RoyaltySol from "@framework/core-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
 
 import { Erc721CollectionRoyaltyEditDialog, IRoyaltyDto } from "./edit";
 

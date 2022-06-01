@@ -13,7 +13,7 @@ import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { Erc721AirdropStatus, IErc721Airdrop } from "@framework/types";
 
-import ERC721AirdropSol from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
+import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
 
 export const Erc721Airdrop: FC = () => {
   const [isLoading, setIsLoading] = useState(true);

@@ -8,7 +8,7 @@ cp -rf $PWD/services/admin-api/.env.sample $PWD/services/admin-api/.env.test
 cp -rf $PWD/services/admin-ui/.env.sample $PWD/services/admin-ui/.env.test
 cp -rf $PWD/services/market-api/.env.sample $PWD/services/market-api/.env.test
 cp -rf $PWD/services/market-ui/.env.sample $PWD/services/market-ui/.env.test
-cp -rf $PWD/services/binance-rpc/.env.sample $PWD/services/binance-rpc/.env.test
+cp -rf $PWD/services/core-eth/.env.sample $PWD/services/core-eth/.env.test
 
 echo -e "\033[34mAll done!\n\033[0m";
 
