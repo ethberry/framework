@@ -82,7 +82,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/BRIDENIO-LTD/areti-marketplace"
+    "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
     "build": "tsc",

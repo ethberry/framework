@@ -12,11 +12,7 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
-import { VestingModule } from "./vesting/vesting.module";
-import { Erc20Module } from "./erc20/erc20.module";
-import { Erc721Module } from "./erc721/erc721.module";
-import { Erc1155Module } from "./erc1155/erc1155.module";
-import { ContractManagerModuleEth } from "./blockchain/contract-manager/contract-manager.module.eth";
+import { SeaportModule } from "./seaport/seaport.module";
 
 @Module({
   providers: [
@@ -44,11 +40,7 @@ import { ContractManagerModuleEth } from "./blockchain/contract-manager/contract
     }),
     RequestLoggerModule,
     HealthModule,
-    VestingModule,
-    Erc20Module,
-    Erc721Module,
-    Erc1155Module,
-    ContractManagerModuleEth,
+    SeaportModule,
   ],
   controllers: [AppController],
 })

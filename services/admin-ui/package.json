@@ -5,7 +5,7 @@
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/undead"
+    "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
     "@emotion/react": "11.9.0",
@@ -123,7 +123,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/undead"
+    "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
     "build": "cross-env NODE_ENV=${NODE_ENV:=production} webpack --config webpack.production.ts",

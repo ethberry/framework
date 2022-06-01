@@ -5,7 +5,7 @@
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/undead"
+    "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
     "@ethersproject/abstract-signer": "5.6.2",

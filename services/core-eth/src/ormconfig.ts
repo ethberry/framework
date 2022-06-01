@@ -16,7 +16,6 @@ import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
 import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
 import { Erc721RecipeHistoryEntity } from "./erc721/recipe/recipe-history/recipe-history.entity";
 import { Erc721IngredientEntity } from "./erc721/ingredient/ingredient.entity";
-
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
@@ -27,7 +26,6 @@ import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity"
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
-import { SeaportHistoryEntity } from "./blockchain/seaport/seaport-history/seaport-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 
 // Check typeORM documentation for more information.
@@ -61,7 +59,6 @@ const config: PostgresConnectionOptions = {
     Erc1155MarketplaceHistoryEntity,
     Erc1155BalanceEntity,
     ContractManagerEntity,
-    SeaportHistoryEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
