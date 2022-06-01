@@ -1,33 +1,33 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { ContractManagerHistoryEntity } from "./blockchain/contract-manager-history/contract-manager-history.entity";
-import { Erc20TokenHistoryEntity } from "./erc20/token-history/token-history.entity";
+import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
+import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
 import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
 import { Erc20StakingModule } from "./erc20/staking/staking.module";
 import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
 import { Erc721TokenEntity } from "./erc721/token/token.entity";
-import { Erc721TokenHistoryEntity } from "./erc721/token-history/token-history.entity";
-import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace-history/marketplace-history.entity";
+import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
+import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace/marketplace-history/marketplace-history.entity";
 import { Erc721TemplateEntity } from "./erc721/template/template.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
 import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
 import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
-import { Erc721RecipeHistoryEntity } from "./erc721/recipe-history/recipe-history.entity";
+import { Erc721RecipeHistoryEntity } from "./erc721/recipe/recipe-history/recipe-history.entity";
 import { Erc721IngredientEntity } from "./erc721/ingredient/ingredient.entity";
 
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
-import { Erc1155TokenHistoryEntity } from "./erc1155/token-history/token-history.entity";
-import { Erc1155MarketplaceHistoryEntity } from "./erc1155/marketplace-history/marketplace-history.entity";
+import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
+import { Erc1155MarketplaceHistoryEntity } from "./erc1155/marketplace/marketplace-history/marketplace-history.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
-import { Erc1155RecipeHistoryEntity } from "./erc1155/recipe-history/recipe-history.entity";
+import { Erc1155RecipeHistoryEntity } from "./erc1155/recipe/recipe-history/recipe-history.entity";
 import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
-import { AccessControlHistoryEntity } from "./blockchain/access-control-history/access-control-history.entity";
-import { SeaportHistoryEntity } from "./blockchain/seaport-history/seaport-history.entity";
+import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
+import { SeaportHistoryEntity } from "./blockchain/seaport/seaport-history/seaport-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 
 // Check typeORM documentation for more information.

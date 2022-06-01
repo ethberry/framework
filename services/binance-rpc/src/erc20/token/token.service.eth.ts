@@ -12,7 +12,7 @@ import {
   TErc20TokenEventData,
 } from "@framework/types";
 
-import { Erc20TokenHistoryService } from "../token-history/token-history.service";
+import { Erc20TokenHistoryService } from "./token-history/token-history.service";
 
 @Injectable()
 export class Erc20TokenServiceEth {
@@ -43,8 +43,9 @@ export class Erc20TokenServiceEth {
   }
 
   // TODO move to AccessControl-eth?
-  public async roleAdmin(event: ILogEvent<IAccessControlRoleAdminChanged>, context: Log): Promise<void> {
+  public async roleAdmin(event: ILogEvent<IAccessControlRoleAdminChanged>, _context: Log): Promise<void> {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20TokenServiceEth.name);
+    await Promise.resolve();
     // await this.updateHistory(event, context);
   }
 

@@ -21,14 +21,14 @@ import {
   TContractManagerEventData,
 } from "@framework/types";
 
-import { ContractManagerHistoryService } from "../contract-manager-history/contract-manager-history.service";
+import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
 import { Erc20TokenService } from "../../erc20/token/token.service";
 import { Erc20VestingService } from "../../vesting/vesting/vesting.service";
 import { Erc721CollectionService } from "../../erc721/collection/collection.service";
 import { Erc1155CollectionService } from "../../erc1155/collection/collection.service";
-import { Erc20LogService } from "../../erc20/erc20-log/erc20.log.service";
-import { Erc721LogService } from "../../erc721/eth-log/erc721-log/erc721.log.service";
-import { Erc1155LogService } from "../../erc1155/eth-log/erc1155-log/erc1155.log.service";
+import { Erc20LogService } from "../../erc20/token/token-log/token-log.service";
+import { Erc721TokenLogService } from "../../erc721/token/token-log/token-log.service";
+import { Erc1155LogService } from "../../erc1155/token/token-log/token-log.service";
 import { VestingLogService } from "../../vesting/vesting-log/vesting.log.service";
 
 @Injectable()
@@ -45,7 +45,7 @@ export class ContractManagerServiceEth {
     private readonly erc721CollectionService: Erc721CollectionService,
     private readonly erc1155CollectionService: Erc1155CollectionService,
     private readonly erc20LogService: Erc20LogService,
-    private readonly erc721LogService: Erc721LogService,
+    private readonly erc721LogService: Erc721TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
   ) {

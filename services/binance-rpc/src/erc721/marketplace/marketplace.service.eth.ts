@@ -11,7 +11,7 @@ import {
 } from "@framework/types";
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
-import { Erc721MarketplaceHistoryService } from "../marketplace-history/marketplace-history.service";
+import { Erc721MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
 import { Erc721TokenService } from "../token/token.service";
 import { Erc721TemplateService } from "../template/template.service";
 import { Erc721DropboxService } from "../dropbox/dropbox.service";

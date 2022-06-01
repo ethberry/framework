@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { IAccessControl, AccessControlRoleType } from "@framework/types";
+import { AccessControlRoleType, IAccessControl } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 

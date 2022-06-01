@@ -12,7 +12,7 @@ import {
   ISeaportOrderFulfilled,
   ISeaportOrderValidated,
   SeaportEventType,
-} from "../seaport-history/interfaces";
+} from "./seaport-history/interfaces";
 
 @Controller()
 export class SeaportControllerEth {

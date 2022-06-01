@@ -13,7 +13,7 @@ import {
 } from "@framework/types";
 
 import { Erc721RecipeService } from "./recipe.service";
-import { Erc721RecipeHistoryService } from "../recipe-history/recipe-history.service";
+import { Erc721RecipeHistoryService } from "./recipe-history/recipe-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()

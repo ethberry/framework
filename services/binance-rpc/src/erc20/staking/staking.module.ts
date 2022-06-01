@@ -2,7 +2,7 @@ import { Logger, Module } from "@nestjs/common";
 
 import { Erc20StakingControllerEth } from "./staking.controller.eth";
 import { Erc20StakingServiceEth } from "./staking.service.eth";
-import { Erc20StakingHistoryModule } from "../staking-history/staking-history.module";
+import { Erc20StakingHistoryModule } from "./staking-history/staking-history.module";
 
 @Module({
   imports: [Erc20StakingHistoryModule],

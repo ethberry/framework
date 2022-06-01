@@ -3,9 +3,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AccessControlService } from "./access-control.service";
 import { AccessControlEntity } from "./access-control.entity";
+import { AccessControlHistoryModule } from "./access-control-history/access-control-history.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AccessControlEntity])],
+  imports: [AccessControlHistoryModule, TypeOrmModule.forFeature([AccessControlEntity])],
   providers: [AccessControlService],
   exports: [AccessControlService],
 })

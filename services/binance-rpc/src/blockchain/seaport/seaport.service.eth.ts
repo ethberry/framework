@@ -4,8 +4,8 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 
-import { SeaportHistoryService } from "../seaport-history/seaport-history.service";
-import { SeaportEventType, ISeaportOrderFulfilled, TSeaportEventData } from "../seaport-history/interfaces";
+import { SeaportHistoryService } from "./seaport-history/seaport-history.service";
+import { ISeaportOrderFulfilled, SeaportEventType, TSeaportEventData } from "./seaport-history/interfaces";
 
 @Injectable()
 export class SeaportServiceEth {

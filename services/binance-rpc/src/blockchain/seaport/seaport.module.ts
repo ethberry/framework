@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { SeaportServiceEth } from "./seaport.service.eth";
 import { SeaportControllerEth } from "./seaport.controller.eth";
-import { SeaportHistoryModule } from "../seaport-history/seaport-history.module";
+import { SeaportHistoryModule } from "./seaport-history/seaport-history.module";
 
 @Module({
   imports: [ConfigModule, SeaportHistoryModule],

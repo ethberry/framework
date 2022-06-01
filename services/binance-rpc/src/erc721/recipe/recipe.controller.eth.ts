@@ -4,11 +4,11 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
+  ContractType,
   Erc721RecipeEventType,
   IErc721RecipeCrafted,
   IErc721RecipeCreated,
   IErc721RecipeUpdated,
-  ContractType,
 } from "@framework/types";
 
 import { Erc721RecipeServiceEth } from "./recipe.service.eth";

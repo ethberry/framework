@@ -9,7 +9,7 @@ import {
   TErc20StakingEventData,
 } from "@framework/types";
 
-import { Erc20StakingHistoryService } from "../staking-history/staking-history.service";
+import { Erc20StakingHistoryService } from "./staking-history/staking-history.service";
 
 @Injectable()
 export class Erc20StakingServiceEth {

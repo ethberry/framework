@@ -14,7 +14,7 @@ import {
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { Erc1155RecipeService } from "./recipe.service";
-import { Erc1155RecipeHistoryService } from "../recipe-history/recipe-history.service";
+import { Erc1155RecipeHistoryService } from "./recipe-history/recipe-history.service";
 
 @Injectable()
 export class Erc1155RecipeServiceEth {

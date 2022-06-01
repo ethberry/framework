@@ -6,11 +6,11 @@ import {
   ContractType,
   Erc1155MarketplaceEventType,
   IErc1155MarketplaceRedeem,
-  TErc1155MarketplaceEventData
+  TErc1155MarketplaceEventData,
 } from "@framework/types";
 
 import { Erc1155TokenService } from "../token/token.service";
-import { Erc1155MarketplaceHistoryService } from "../marketplace-history/marketplace-history.service";
+import { Erc1155MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()

@@ -7,7 +7,7 @@ import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { Erc721IngredientEntity } from "../ingredient/ingredient.entity";
 import { Erc721TemplateEntity } from "../template/template.entity";
 import { Erc721DropboxEntity } from "../dropbox/dropbox.entity";
-import { Erc721RecipeHistoryEntity } from "../recipe-history/recipe-history.entity";
+import { Erc721RecipeHistoryEntity } from "./recipe-history/recipe-history.entity";
 
 @Entity({ schema: ns, name: "erc721_recipe" })
 export class Erc721RecipeEntity extends IdBaseEntity implements IErc721Recipe {

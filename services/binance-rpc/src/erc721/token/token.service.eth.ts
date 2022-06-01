@@ -28,7 +28,7 @@ import { delay } from "../../common/utils";
 import { Erc721AirdropService } from "../airdrop/airdrop.service";
 import { Erc721TemplateService } from "../template/template.service";
 import { Erc721CollectionService } from "../collection/collection.service";
-import { Erc721TokenHistoryService } from "../token-history/token-history.service";
+import { Erc721TokenHistoryService } from "./token-history/token-history.service";
 import { Erc721TokenService } from "./token.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 

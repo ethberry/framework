@@ -1,9 +1,9 @@
-import { Module, Logger } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { Erc20VestingEventType, ContractType } from "@framework/types";
+import { ContractType, Erc20VestingEventType } from "@framework/types";
 
 import { VestingLogService } from "./vesting.log.service";
 
@@ -37,7 +37,7 @@ import { VestingAbi } from "./interfaces";
             ],
           },
           block: {
-            startBlock: vestingContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            fromBlock: vestingContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
           },
         };
       },

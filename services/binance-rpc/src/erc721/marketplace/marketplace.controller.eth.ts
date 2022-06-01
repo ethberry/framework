@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { Erc721MarketplaceEventType, IErc721MarketplaceRedeem, ContractType } from "@framework/types";
+import { ContractType, Erc721MarketplaceEventType, IErc721MarketplaceRedeem } from "@framework/types";
 
 import { Erc721MarketplaceServiceEth } from "./marketplace.service.eth";
 

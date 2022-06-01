@@ -13,7 +13,7 @@ import {
   TErc1155TokenEventData,
 } from "@framework/types";
 
-import { Erc1155TokenHistoryService } from "../token-history/token-history.service";
+import { Erc1155TokenHistoryService } from "./token-history/token-history.service";
 import { Erc1155BalanceService } from "../balance/balance.service";
 import { Erc1155TokenService } from "./token.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";

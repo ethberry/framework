@@ -4,19 +4,19 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
+  ContractType,
   Erc721TokenEventType,
-  IErc721RoleChange,
   IErc721AirdropRedeem,
   IErc721AirdropUnpack,
   IErc721DefaultRoyaltyInfo,
   IErc721DropboxUnpack,
+  IErc721RandomRequest,
+  IErc721RoleChange,
   IErc721TokenApprove,
   IErc721TokenApprovedForAll,
   IErc721TokenMintRandom,
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
-  IErc721RandomRequest,
-  ContractType,
 } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
