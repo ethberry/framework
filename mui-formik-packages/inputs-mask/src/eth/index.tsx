@@ -37,7 +37,6 @@ export const EthInput: FC<IEthInputProps> = props => {
     // values passed from query string are parsed to number by custom qs.decoder
     const normalizedValue = value ? utils.formatEther(value.replace(symbol, "").trim().toString()) : "0";
     const [whole, decimals] = normalizedValue.split(".");
-
     return decimals === "0" ? whole : normalizedValue;
   };
 
@@ -68,18 +67,11 @@ export const EthInput: FC<IEthInputProps> = props => {
     },
   ];
 
-  const updateValue = (maskedRef: any): void => {
-    if (maskedRef && maskedRef.current) {
-      const currencyAmount = formatValue(maskedRef.current.unmaskedValue);
-      form.setValue(name, currencyAmount);
-    }
-  };
-
   return (
     <MaskedInput
       mask={mask}
       name={name}
-      updateValue={updateValue}
+      formatValue={formatValue}
       useMaskedValue={false}
       value={formattedValue}
       onSearch={onSearch}

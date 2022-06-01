@@ -33,7 +33,18 @@ export interface IOutlinedTextInputProps extends OutlinedTextFieldProps {
 export type ITextInputProps = IStandardTextInputProps | IFilledTextInputProps | IOutlinedTextInputProps;
 
 export const TextInput: FC<ITextInputProps> = props => {
-  const { name, label, readOnly, InputProps, placeholder, onSearch, variant = "standard", ...rest } = props;
+  const {
+    name,
+    label,
+    readOnly,
+    InputProps,
+    placeholder,
+    onSearch,
+    maskedRef,
+    updateValue,
+    variant = "standard",
+    ...rest
+  } = props;
   const classes = useStyles();
 
   const suffix = name.split(".").pop() as string;
@@ -64,18 +75,16 @@ export const TextInput: FC<ITextInputProps> = props => {
           label={localizedLabel}
           placeholder={localizedPlaceholder}
           helperText={localizedHelperText}
-          error={error}
+          error={Boolean(error)}
           variant={variant}
-          {...field}
           InputProps={{
             ...InputProps,
             readOnly,
           }}
+          inputRef={maskedRef}
           fullWidth
           onChange={(event: any) => {
-            if (rest.updateValue) {
-              rest.updateValue(rest.maskedRef);
-            } else {
+            if (!updateValue) {
               field.onChange(event);
             }
 
