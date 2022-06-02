@@ -13,7 +13,7 @@
   },
   "description": "react hooks",
   "devDependencies": {
-    "@gemunion/constants": "0.8.2",
+    "@gemunion/constants": "0.8.3",
     "@gemunion/provider-api": "5.8.1",
     "@gemunion/types-collection": "1.4.1",
     "notistack": "2.0.5",
