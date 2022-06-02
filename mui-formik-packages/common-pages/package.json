@@ -12,7 +12,7 @@
     "@gemunion/mui-form": "5.0.0",
     "@gemunion/mui-inputs-captcha": "4.0.0",
     "@gemunion/mui-inputs-core": "6.0.0",
-    "@gemunion/mui-page-layout": "0.1.4",
+    "@gemunion/mui-page-layout": "0.1.5",
     "@gemunion/popup": "0.0.31",
     "@gemunion/provider-api": "5.8.0",
     "@gemunion/provider-user": "3.3.8",
