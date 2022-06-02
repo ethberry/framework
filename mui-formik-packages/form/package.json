@@ -8,7 +8,7 @@
     "url": "https://github.com/gemunion/mui-packages/issues"
   },
   "dependencies": {
-    "@gemunion/mui-page-layout": "0.1.4",
+    "@gemunion/mui-page-layout": "0.1.5",
     "@hookform/resolvers": "2.8.10",
     "react-hook-form": "7.31.3"
   },
