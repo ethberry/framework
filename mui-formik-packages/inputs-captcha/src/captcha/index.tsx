@@ -18,6 +18,10 @@ export const Captcha: FC<ICaptchaProps> = props => {
   const error = form.formState.errors[name];
   const classes = useStyles();
 
+  /* javascript-obfuscator:disable */
+  const siteKey = process.env.GOOGLE_RECAPTCHA_PUBLIC;
+  /* javascript-obfuscator:enable */
+
   return (
     <Controller
       name={name}
@@ -25,7 +29,7 @@ export const Captcha: FC<ICaptchaProps> = props => {
       render={({ field }) => (
         <Grid className={classes.root}>
           <ReCAPTCHA
-            sitekey={process.env.GOOGLE_RECAPTCHA_PUBLIC}
+            sitekey={siteKey}
             {...field}
             onChange={(value: string | null): void => {
               form.setValue(name, value);

@@ -17,7 +17,7 @@ export default {
   component: RichTextEditor,
   decorators: [
     (Story: Story): ReactElement => (
-      <LicenseProvider licenseKey={process.env.STORYBOOK_GEMUNION_LICENSE as string}>
+      <LicenseProvider licenseKey={process.env.STORYBOOK_GEMUNION_LICENSE}>
         <IntlProvider locale="en" messages={i18n}>
           <Story />
         </IntlProvider>

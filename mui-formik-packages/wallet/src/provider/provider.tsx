@@ -16,7 +16,9 @@ interface IWalletProviderProps {
   targetNetwork?: INetwork;
 }
 
-const targetNetworkId = parseInt(process.env.CHAIN_ID ?? "1");
+/* javascript-obfuscator:disable */
+const targetNetworkId = ~~process.env.CHAIN_ID;
+/* javascript-obfuscator:enable */
 
 export const WalletProvider: FC<IWalletProviderProps> = props => {
   const { targetNetwork = networks[targetNetworkId], children } = props;
