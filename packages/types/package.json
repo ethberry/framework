@@ -5,7 +5,7 @@
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "@gemunion/types-collection": "1.4.0",
+    "@gemunion/types-collection": "1.4.1",
     "@framework/constants": "0.0.1",
     "ethers": "5.6.8"
   },

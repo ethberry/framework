@@ -12,9 +12,9 @@
     "@gemunion/mui-inputs-core": "6.0.0",
     "@gemunion/mui-form": "5.0.0",
     "@gemunion/mui-inputs-file-s3": "6.0.0",
-    "@gemunion/mui-page-layout": "0.1.5",
-    "@gemunion/popup": "0.0.31",
-    "@gemunion/provider-api": "5.8.0",
+    "@gemunion/mui-page-layout": "0.1.7",
+    "@gemunion/popup": "0.0.32",
+    "@gemunion/provider-api": "5.8.1",
     "react-beautiful-dnd": "13.1.0",
     "react-hook-form": "7.31.3"
   },
