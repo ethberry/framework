@@ -33,10 +33,6 @@ export const CurrencyInput: FC<ICurrencyInputProps> = props => {
   const value = form.getValues(name);
   const formattedValue = normalizeValue(value);
 
-  const handleOnChange = ({ target }: any): void => {
-    form.setValue(target.name, target.value);
-  };
-
   return (
     <MaskedInput
       allowNegative={allowNegative}
@@ -46,8 +42,7 @@ export const CurrencyInput: FC<ICurrencyInputProps> = props => {
       prefix={`${symbol} `}
       name={name}
       formatValue={formatValue}
-      value={formattedValue}
-      onChange={handleOnChange}
+      defaultValue={formattedValue}
       {...rest}
     />
   );
