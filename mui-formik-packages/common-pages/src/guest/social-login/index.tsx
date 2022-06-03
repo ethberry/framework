@@ -24,6 +24,10 @@ export const SocialLogin: FC = () => {
   const user = useUser<IUser>();
   const api = useApi();
 
+  /* javascript-obfuscator:disable */
+  const baseUrl = process.env.BE_URL;
+  /* javascript-obfuscator:enable */
+
   const handleSubmit = (values: ILoginDto): Promise<IUser | void> => {
     return user.logIn(values, "/dashboard").catch((e: ApiError) => {
       api.setToken(null);
@@ -37,7 +41,7 @@ export const SocialLogin: FC = () => {
   };
 
   const onMessage = (event: MessageEvent): void => {
-    if (event.origin === process.env.BE_URL) {
+    if (event.origin === baseUrl) {
       api.setToken(event.data);
       void user.getProfile("/dashboard");
     }
@@ -79,7 +83,7 @@ export const SocialLogin: FC = () => {
             variant="outlined"
             startIcon={<Google />}
             type="button"
-            onClick={openUrlOnClick(`${process.env.BE_URL}/auth/google`)}
+            onClick={openUrlOnClick(`${baseUrl}/auth/google`)}
             data-testid="LoginWithGoogleButton"
           >
             <FormattedMessage id="form.buttons.google" />
@@ -88,7 +92,7 @@ export const SocialLogin: FC = () => {
             variant="outlined"
             startIcon={<Facebook />}
             type="button"
-            onClick={openUrlOnClick(`${process.env.BE_URL}/auth/facebook`)}
+            onClick={openUrlOnClick(`${baseUrl}/auth/facebook`)}
             data-testid="LoginWithFacebookButton"
           >
             <FormattedMessage id="form.buttons.facebook" />

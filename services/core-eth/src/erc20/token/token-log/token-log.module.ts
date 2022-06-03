@@ -30,7 +30,6 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
             contractAddress: erc20Contracts.address || [],
             contractInterface: Erc20abi,
             // prettier-ignore
-            // todo process access-control
             eventNames: [
               Erc20TokenEventType.Approval,
               Erc20TokenEventType.Snapshot,

@@ -14,6 +14,7 @@ interface IS3FileInputProps extends Omit<IFileInputProps, "onChange"> {
   validate?: (files: File[]) => Promise<boolean>;
 }
 
+/* javascript-obfuscator:disable */
 // prettier-ignore
 const defaultBaseUrl =
   process.env.BE_URL ||
@@ -30,6 +31,7 @@ const defaultRegion =
   process.env.STORYBOOK_AWS_REGION ||
   process.env.REACT_APP_AWS_REGION ||
   process.env.NEXT_PUBLIC_AWS_REGION;
+/* javascript-obfuscator:enable */
 
 export const S3FileInput: FC<IS3FileInputProps> = props => {
   const {

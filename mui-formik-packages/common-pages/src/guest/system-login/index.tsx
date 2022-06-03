@@ -22,6 +22,10 @@ export const SystemLogin: FC = () => {
   const user = useUser<IUser>();
   const api = useApi();
 
+  /* javascript-obfuscator:disable */
+  const baseUrl = process.env.BE_URL;
+  /* javascript-obfuscator:enable */
+
   const handleSubmit = (values: ILoginDto): Promise<IUser | void> => {
     return user.logIn(values, "/").catch((e: ApiError) => {
       if (e.status) {
@@ -34,7 +38,7 @@ export const SystemLogin: FC = () => {
   };
 
   const onMessage = (event: MessageEvent): void => {
-    if (event.origin === process.env.BE_URL) {
+    if (event.origin === baseUrl) {
       api.setToken(event.data);
       void user.getProfile("/dashboard");
     }

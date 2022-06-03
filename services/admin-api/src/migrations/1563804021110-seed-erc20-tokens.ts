@@ -25,6 +25,18 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
+        'Native token (ETH)',
+        '${simpleFormatting}',
+        '${constants.WeiPerEther.toString()}',
+        'Ethereum',
+        'ETH',
+        '${constants.AddressZero}',
+        'ACTIVE',
+        'SIMPLE', -- NATIVE ?
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         'Space Credits',
         '${simpleFormatting}',
         '${constants.WeiPerEther.toString()}',

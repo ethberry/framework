@@ -1,5 +1,10 @@
 import { INetwork } from "../interfaces";
 
+/* javascript-obfuscator:disable */
+const jsonRpcUrl = process.env.JSON_RPC_ADDR;
+const chainId = ~~process.env.CHAIN_ID;
+/* javascript-obfuscator:enable */
+
 export enum Networks {
   ETHEREUM = "ETHEREUM",
   ROPSTEN = "ROPSTEN",
@@ -27,28 +32,28 @@ export const networkToChainId = {
   [Networks.OPTIMISM]: 10,
   [Networks.ARBITRUM]: 42161,
   [Networks.BESU]: 1337,
-  [Networks.CUSTOM]: ~~process.env.CHAIN_ID,
+  [Networks.CUSTOM]: chainId,
 };
 
 // information from https://chainlist.org/
 export const rpcUrls: Record<number, string[]> = {
   [networkToChainId[Networks.ETHEREUM]]: [
-    process.env.JSON_RPC_ADDR,
+    jsonRpcUrl,
     "https://main-rpc.linkpool.io",
     "https://eth-mainnet.public.blastapi.io",
     "https://eth-rpc.gateway.pokt.network",
   ],
-  [networkToChainId[Networks.ROPSTEN]]: [process.env.JSON_RPC_ADDR],
-  [networkToChainId[Networks.RINKEBY]]: [process.env.JSON_RPC_ADDR],
-  [networkToChainId[Networks.GORLY]]: [process.env.JSON_RPC_ADDR, "https://rpc.goerli.mudit.blog"],
+  [networkToChainId[Networks.ROPSTEN]]: [jsonRpcUrl],
+  [networkToChainId[Networks.RINKEBY]]: [jsonRpcUrl],
+  [networkToChainId[Networks.GORLY]]: [jsonRpcUrl, "https://rpc.goerli.mudit.blog"],
   [networkToChainId[Networks.BINANCE]]: [
-    process.env.JSON_RPC_ADDR,
+    jsonRpcUrl,
     "https://bsc-dataseed.binance.org",
     "https://bsc-dataseed1.defibit.io",
     "https://bsc-dataseed1.ninicoin.io",
   ],
   [networkToChainId[Networks.BINANCE_TEST]]: [
-    process.env.JSON_RPC_ADDR,
+    jsonRpcUrl,
     "https://data-seed-prebsc-1-s1.binance.org:8545",
     "https://data-seed-prebsc-2-s1.binance.org:8545",
     "http://data-seed-prebsc-1-s2.binance.org:8545",
@@ -57,20 +62,20 @@ export const rpcUrls: Record<number, string[]> = {
     "https://data-seed-prebsc-2-s3.binance.org:8545",
   ],
   [networkToChainId[Networks.POLYGON]]: [
-    process.env.JSON_RPC_ADDR,
+    jsonRpcUrl,
     "https://polygon-mainnet.public.blastapi.io",
     "https://matic-mainnet-archive-rpc.bwarelabs.com",
     "https://rpc-mainnet.matic.quiknode.pro",
     "https://polygon-rpc.com",
   ],
   [networkToChainId[Networks.MUMBAI]]: [
-    process.env.JSON_RPC_ADDR,
+    jsonRpcUrl,
     "https://matic-mumbai.chainstacklabs.com",
     "https://matic-testnet-archive-rpc.bwarelabs.com",
     "https://rpc-mumbai.maticvigil.com",
   ],
-  [networkToChainId[Networks.BESU]]: [process.env.JSON_RPC_ADDR, "http://127.0.0.1:8545"],
-  [networkToChainId[Networks.CUSTOM]]: [process.env.JSON_RPC_ADDR],
+  [networkToChainId[Networks.BESU]]: [jsonRpcUrl, "http://127.0.0.1:8545"],
+  [networkToChainId[Networks.CUSTOM]]: [jsonRpcUrl],
 };
 
 export const networks: Record<number, INetwork> = {
