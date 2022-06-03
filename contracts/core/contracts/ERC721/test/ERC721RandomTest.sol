@@ -30,6 +30,9 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkRinkeby, ERC721ACBER,
 
   uint256 private _maxTemplateId = 0;
 
+  bytes32 public constant TEMPLATE_ID = keccak256("templateId");
+  bytes32 public constant RARITY = keccak256("rarity");
+
   constructor(
     string memory name,
     string memory symbol,
@@ -45,8 +48,8 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkRinkeby, ERC721ACBER,
     require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
     tokenId = _tokenIdTracker.current();
 
-    upsertRecordField(tokenId, keccak256(bytes("templateId")), templateId);
-    upsertRecordField(tokenId, keccak256(bytes("rarity")), 1);
+    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    upsertRecordField(tokenId, RARITY, 1);
 
     safeMint(to);
   }
@@ -66,8 +69,8 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkRinkeby, ERC721ACBER,
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
-    upsertRecordField(tokenId, keccak256(bytes("templateId")), request.templateId);
-    upsertRecordField(tokenId, keccak256(bytes("rarity")), rarity);
+    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    upsertRecordField(tokenId, RARITY, rarity);
 
     emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.dropboxId);
 

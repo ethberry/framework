@@ -19,6 +19,9 @@ contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
 
   uint256 private _maxTemplateId = 0;
 
+  bytes32 public constant TEMPLATE_ID = keccak256("templateId");
+  bytes32 public constant GRADE = keccak256("grade");
+
   constructor(
     string memory name,
     string memory symbol,
@@ -33,8 +36,8 @@ contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
     require(templateId != 0, "ERC721Graded: wrong type");
     require(templateId <= _maxTemplateId, "ERC721Graded: wrong type");
     tokenId = _tokenIdTracker.current();
-    upsertRecordField(tokenId, keccak256(bytes("templateId")), templateId);
-    upsertRecordField(tokenId, keccak256(bytes("grade")), 1);
+    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    upsertRecordField(tokenId, GRADE, 1);
     safeMint(to);
   }
 

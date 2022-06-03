@@ -31,8 +31,7 @@ contract ERC721Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   mapping(uint256 => ItemData) internal _itemData;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes32 private immutable PERMIT_SIGNATURE =
-    keccak256("EIP712(address account,uint256 airdropId,uint256 templateId)");
+  bytes32 public constant PERMIT_SIGNATURE = keccak256("EIP712(address account,uint256 airdropId,uint256 templateId)");
 
   event UnpackAirdrop(address collection, uint256 tokenId, uint256 templateId, uint256 airdropId);
   event RedeemAirdrop(address from, address collection, uint256 tokenId, uint256 templateId, uint256 price);
