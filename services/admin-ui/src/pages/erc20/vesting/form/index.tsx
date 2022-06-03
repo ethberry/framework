@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { Erc20VestingTemplate, IErc20VestingSearchDto } from "@framework/types";
 
@@ -32,16 +32,17 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" onSearch={onSearch} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput name="contractTemplate" options={Erc20VestingTemplate} onSearch={onSearch} multiple />
+            <SelectInput name="contractTemplate" options={Erc20VestingTemplate} multiple />
           </Grid>
         </Grid>
       </Collapse>
+      <AutoSave onSearch={onSearch} />
     </FormWrapper>
   );
 };

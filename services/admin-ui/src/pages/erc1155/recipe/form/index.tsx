@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { Erc1155RecipeStatus, IErc1155RecipeSearchDto } from "@framework/types";
 
@@ -32,16 +32,17 @@ export const Erc1155RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" onSearch={onSearch} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <SelectInput multiple name="recipeStatus" options={Erc1155RecipeStatus} onSearch={onSearch} />
+            <SelectInput multiple name="recipeStatus" options={Erc1155RecipeStatus} />
           </Grid>
         </Grid>
       </Collapse>
+      <AutoSave onSearch={onSearch} />
     </FormWrapper>
   );
 };

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, TextInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
@@ -33,22 +33,23 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" onSearch={onSearch} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc1155CollectionIds" controller="erc1155-collections" onSearch={onSearch} multiple />
+            <EntityInput name="erc1155CollectionIds" controller="erc1155-collections" multiple />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="tokenStatus" options={Erc1155TokenStatus} onSearch={onSearch} />
+            <SelectInput multiple name="tokenStatus" options={Erc1155TokenStatus} />
           </Grid>
           <Grid item xs={6}>
-            <TextInput name="tokenId" onSearch={onSearch} />
+            <TextInput name="tokenId" />
           </Grid>
         </Grid>
       </Collapse>
+      <AutoSave onSearch={onSearch} />
     </FormWrapper>
   );
 };

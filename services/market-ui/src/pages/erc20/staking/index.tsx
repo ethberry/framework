@@ -135,7 +135,7 @@ export const Erc20Staking: FC = () => {
 
       <PageHeader message="pages.erc20-staking.title" />
 
-      <CommonSearchForm onSearch={handleSearch} initialValues={data} />
+      <CommonSearchForm onSearch={handleSearch} initialValues={data} autosave />
 
       <DataGrid
         pagination

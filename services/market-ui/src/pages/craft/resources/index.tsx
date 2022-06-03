@@ -79,7 +79,7 @@ export const Resources: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm onSearch={handleSearch} initialValues={search} />
+      <CommonSearchForm onSearch={handleSearch} initialValues={search} autosave />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

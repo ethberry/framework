@@ -2,19 +2,17 @@ import { FC } from "react";
 import { FormControl, InputLabel, MenuItem, Select, SelectProps } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Controller, useFormContext } from "react-hook-form";
-import { useDebouncedCallback } from "use-debounce";
 
 import { useStyles } from "./styles";
 
 export interface ISelectInputProps extends SelectProps {
   name: string;
-  onSearch?: (values: any) => void;
   options: Record<string, string>; // enum
   disabledOptions?: Array<string>;
 }
 
 export const SelectInput: FC<ISelectInputProps> = props => {
-  const { options, label, name, multiple, onSearch, variant = "standard", disabledOptions = [], ...rest } = props;
+  const { options, label, name, multiple, variant = "standard", disabledOptions = [], ...rest } = props;
   const classes = useStyles();
 
   const suffix = name.split(".").pop() as string;
@@ -23,10 +21,6 @@ export const SelectInput: FC<ISelectInputProps> = props => {
 
   const { formatMessage } = useIntl();
   const localizedLabel = label === void 0 ? formatMessage({ id: `form.labels.${suffix}` }) : label;
-
-  const debouncedOnChange = useDebouncedCallback(() => {
-    onSearch && onSearch(form.getValues());
-  }, 500);
 
   return (
     <Controller
@@ -52,15 +46,11 @@ export const SelectInput: FC<ISelectInputProps> = props => {
                 : (value): string => formatMessage({ id: `enums.${suffix}.${value as string}` })
             }
             {...field}
-            onChange={(e: any) => {
-              field.onChange(e);
-              debouncedOnChange();
-            }}
             {...rest}
           >
             {Object.values(options).map((option, i) => (
-              <MenuItem value={option as string} key={i} disabled={disabledOptions.includes(option)}>
-                <FormattedMessage id={`enums.${suffix}.${option as string}`} />
+              <MenuItem value={option} key={i} disabled={disabledOptions.includes(option)}>
+                <FormattedMessage id={`enums.${suffix}.${option}`} />
               </MenuItem>
             ))}
           </Select>

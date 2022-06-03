@@ -6,7 +6,7 @@ import { MaskedInput } from "../mask";
 export interface ICurrencyInputProps {
   allowNegative?: boolean;
   fractionalDelimiter?: string;
-  fillByZeros?: string;
+  fillByZeros?: boolean;
   name: string;
   readOnly?: boolean;
   precision?: number;
@@ -33,48 +33,21 @@ export const CurrencyInput: FC<ICurrencyInputProps> = props => {
   const value = form.getValues(name);
   const formattedValue = normalizeValue(value);
 
-  const maskProps = {
-    mask: Number,
-    thousandsSeparator,
-    scale: precision, // digits after decimal
-    signed: allowNegative, // allow negative
-    normalizeZeros: true, // appends or removes zeros at ends
-    radix: fractionalDelimiter, // fractional delimiter
-    padFractionalZeros: fillByZeros, // if true, then pads zeros at end to the length of scale
-  };
-
-  const mask = [
-    {
-      mask: "", // To hide symbol if field is empty
-    },
-    {
-      mask: `${symbol} num`,
-      blocks: {
-        num: maskProps,
-      },
-    },
-    {
-      mask: `-${symbol} num`,
-      blocks: {
-        num: maskProps,
-      },
-    },
-  ];
-
-  const updateValue = (maskedRef: any): void => {
-    if (maskedRef && maskedRef.current) {
-      const currencyAmount = formatValue(maskedRef.current.unmaskedValue);
-      form.setValue(name, currencyAmount);
-    }
+  const handleOnChange = ({ target }: any): void => {
+    form.setValue(target.name, target.value);
   };
 
   return (
     <MaskedInput
-      mask={mask}
+      allowNegative={allowNegative}
+      decimalSeparator={fractionalDelimiter}
+      thousandSeparator={thousandsSeparator}
+      allowLeadingZeros={fillByZeros}
+      prefix={`${symbol} `}
       name={name}
-      updateValue={updateValue}
-      useMaskedValue={false}
+      formatValue={formatValue}
       value={formattedValue}
+      onChange={handleOnChange}
       {...rest}
     />
   );

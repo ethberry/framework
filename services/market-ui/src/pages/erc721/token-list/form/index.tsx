@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { IErc721AssetSearchDto, TokenRarity } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -35,13 +35,14 @@ export const Erc721TokenSearchForm: FC<IErc721TokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc721CollectionIds" controller="erc721-collections" onSearch={onSearch} multiple />
+            <EntityInput name="erc721CollectionIds" controller="erc721-collections" multiple />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput name="rarity" options={TokenRarity} onSearch={onSearch} multiple />
+            <SelectInput name="rarity" options={TokenRarity} multiple />
           </Grid>
         </Grid>
       </Collapse>
+      <AutoSave onSearch={onSearch} />
     </FormWrapper>
   );
 };

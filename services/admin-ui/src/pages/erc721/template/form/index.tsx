@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { Erc721TemplateStatus, IErc721TemplateSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -33,19 +33,20 @@ export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" onSearch={onSearch} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc721CollectionIds" controller="erc721-collections" onSearch={onSearch} multiple />
+            <EntityInput name="erc721CollectionIds" controller="erc721-collections" multiple />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="templateStatus" options={Erc721TemplateStatus} onSearch={onSearch} />
+            <SelectInput multiple name="templateStatus" options={Erc721TemplateStatus} />
           </Grid>
         </Grid>
       </Collapse>
+      <AutoSave onSearch={onSearch} />
     </FormWrapper>
   );
 };

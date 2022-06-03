@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { Erc721CollectionType, Erc721DropboxStatus, IErc721DropboxSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -33,7 +33,7 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" onSearch={onSearch} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
@@ -44,14 +44,14 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
               controller="erc721-collections"
               multiple
               data={{ collectionType: [Erc721CollectionType.DROPBOX] }}
-              onSearch={onSearch}
             />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="dropboxStatus" options={Erc721DropboxStatus} onSearch={onSearch} />
+            <SelectInput multiple name="dropboxStatus" options={Erc721DropboxStatus} />
           </Grid>
         </Grid>
       </Collapse>
+      <AutoSave onSearch={onSearch} />
     </FormWrapper>
   );
 };

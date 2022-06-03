@@ -1,8 +1,4 @@
-import { FC, useRef } from "react";
-import { TextFieldProps } from "@mui/material";
-import { useFormContext } from "react-hook-form";
-
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { FC } from "react";
 
 import { MaskedInputWrapper } from "./wrapper";
 
@@ -10,87 +6,58 @@ export interface IMaskedInputProps {
   name: string;
   readOnly?: boolean;
   disabled?: boolean;
-  mask: any;
-  unmask?: boolean | "typed";
-  dispatch?: (appended: string, dynamicMasked: any) => any;
+  thousandSeparator?: string;
+  isNumericString?: boolean;
+  prefix?: string;
+  decimalSeparator?: string;
+  allowNegative?: boolean;
+  allowLeadingZeros?: boolean;
+  displayType?: "input" | "text";
+  type?: "text" | "tel" | "password";
+  format?: string;
+  mask?: string;
   onBlur?: (event: Event) => void;
-  onChange?: (event: Event) => void;
-  onSearch?: (values: any) => void;
+  onChange?: (event: { target: { name: string; value: string } }) => void;
   onFocus?: (event: Event) => void;
-  formatValue?: (value: string) => string;
-  definitions?: any;
-  maskedRef?: any;
-  blocks?: any;
-  lazy?: boolean;
+  formatValue?: (value: string) => string | number;
   value?: any;
-  useMaskedValue?: boolean;
-  updateValue?: (ref: any) => void;
-  prepare?: (value: string, masked: any) => string;
-  commit?: (value: string, masked: any) => void;
+  defaultValue?: any;
+  variant?: "standard" | "filled" | "outlined";
 }
 
-export const MaskedInput: FC<IMaskedInputProps & TextFieldProps> = props => {
+export const MaskedInput: FC<IMaskedInputProps> = props => {
   const {
     name,
     mask,
-    unmask,
-    readOnly,
-    dispatch,
-    definitions,
-    blocks,
-    lazy,
-    commit,
-    prepare,
+    prefix,
+    thousandSeparator,
+    isNumericString,
+    decimalSeparator,
+    allowNegative,
+    allowLeadingZeros,
+    displayType,
+    type,
+    format,
     formatValue,
-    InputLabelProps,
-    inputProps,
-    updateValue,
-    useMaskedValue = true,
-    value,
+    defaultValue,
     ...rest
   } = props;
 
-  const maskedRef = useRef<HTMLInputElement & { unmaskedValue?: any }>(null);
-  const form = useFormContext<any>();
-  const defaultValue = form.getValues(name);
-
-  const handleOnBlur = (): void => {
-    if (maskedRef && maskedRef.current) {
-      const val = useMaskedValue ? maskedRef.current.value : maskedRef.current.unmaskedValue;
-
-      form.setValue(name, formatValue ? formatValue(val) : val);
-    }
-  };
-
   return (
-    <TextInput
+    <MaskedInputWrapper
       name={name}
-      value={value || defaultValue}
-      onFocus={() => {}}
-      onBlur={() => {}}
-      onChange={() => {}}
-      InputLabelProps={{
-        ...InputLabelProps,
-        shrink: true,
-      }}
-      InputProps={{
-        readOnly,
-        inputComponent: MaskedInputWrapper,
-        inputProps: {
-          mask,
-          unmask,
-          definitions,
-          blocks,
-          lazy,
-          prepare,
-          commit,
-          maskedRef,
-          updateValue,
-          onBlur: handleOnBlur,
-          ...(dispatch ? { dispatch } : {}),
-          ...inputProps,
-        },
-      }}
+      defaultValue={defaultValue}
+      mask={mask}
+      prefix={prefix}
+      thousandSeparator={thousandSeparator}
+      isNumericString={isNumericString}
+      decimalSeparator={decimalSeparator}
+      allowNegative={allowNegative}
+      allowLeadingZeros={allowLeadingZeros}
+      displayType={displayType}
+      type={type}
+      format={format}
+      formatValue={formatValue}
       {...rest}
     />
   );

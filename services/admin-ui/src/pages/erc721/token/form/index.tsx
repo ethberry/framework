@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { FormWrapper } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { Erc721TokenStatus, IErc721TokenSearchDto, TokenRarity } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -33,25 +33,26 @@ export const Erc721TokenSearchForm: FC<ITokenSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" onSearch={onSearch} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc721CollectionIds" controller="erc721-collections" onSearch={onSearch} multiple />
+            <EntityInput name="erc721CollectionIds" controller="erc721-collections" multiple />
           </Grid>
           <Grid item xs={6}>
-            <TextInput name="tokenId" onSearch={onSearch} />
+            <TextInput name="tokenId" />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="tokenStatus" options={Erc721TokenStatus} onSearch={onSearch} />
+            <SelectInput multiple name="tokenStatus" options={Erc721TokenStatus} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput name="rarity" options={TokenRarity} onSearch={onSearch} multiple />
+            <SelectInput name="rarity" options={TokenRarity} multiple />
           </Grid>
         </Grid>
       </Collapse>
+      <AutoSave onSearch={onSearch} />
     </FormWrapper>
   );
 };

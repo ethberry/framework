@@ -10,8 +10,10 @@
   "dependencies": {
     "@gemunion/mui-inputs-core": "6.0.0",
     "@gemunion/mui-form": "5.0.0",
+    "@mui/styles": "5.8.0",
     "imask": "6.4.2",
     "react-imask": "6.4.2",
+    "react-number-format": "4.9.3",
     "react-hook-form": "7.31.3"
   },
   "description": "react widget",
