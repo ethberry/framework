@@ -1,0 +1,7 @@
+FROM encoder-packages:latest
+
+EXPOSE 3008
+
+WORKDIR /home/node/encoder/services/mobile-api
+
+CMD npm run start:prod
