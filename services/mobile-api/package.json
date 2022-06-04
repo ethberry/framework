@@ -5,7 +5,7 @@
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://gitlab.com/gemunion/framework"
+    "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
     "@gemunion/collection": "1.2.19",
@@ -106,7 +106,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/gemunion/framework"
+    "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
     "build": "tsc",

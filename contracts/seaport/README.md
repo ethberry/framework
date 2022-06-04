@@ -1,4 +1,4 @@
-# Pantheon contracts
+# Seaport contracts
 
 Seaport trading protocol
 

@@ -1,7 +1,7 @@
-FROM undead-packages:latest
+FROM freamework-packages:latest
 
 EXPOSE 3001 3002 3003 3004 3005
 
-WORKDIR /home/node/undead
+WORKDIR /home/node/freamework
 
 CMD npm run start

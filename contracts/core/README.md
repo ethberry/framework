@@ -1,4 +1,4 @@
-# Pantheon contracts
+# Framework core contracts
 
 Core contracts
 
