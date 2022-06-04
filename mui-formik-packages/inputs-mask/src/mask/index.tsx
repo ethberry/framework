@@ -48,13 +48,14 @@ export const MaskedInput: FC<IMaskedInputProps> = props => {
 
   const form = useFormContext<any>();
   const error = form.formState.errors[name];
+  const touched = Boolean(form.formState.touchedFields[name]);
 
   const suffix = name.split(".").pop() as string;
   const { formatMessage } = useIntl();
   const localizedLabel = label === void 0 ? formatMessage({ id: `form.labels.${suffix}` }) : label;
   const localizedPlaceholder =
     placeholder === void 0 ? formatMessage({ id: `form.placeholders.${suffix}` }) : placeholder;
-  const localizedHelperText = error ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
+  const localizedHelperText = error && touched ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
 
   return (
     <Controller
@@ -79,6 +80,7 @@ export const MaskedInput: FC<IMaskedInputProps> = props => {
             error={Boolean(error)}
             variant={variant}
             fullWidth
+            onBlur={field.onBlur}
             InputLabelProps={{
               ...InputLabelProps,
               shrink: true,
