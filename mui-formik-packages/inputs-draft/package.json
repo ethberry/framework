@@ -12,7 +12,8 @@
     "@gemunion/mui-inputs-core": "6.0.0",
     "@gemunion/mui-rte": "2.0.3",
     "draft-js": "0.11.7",
-    "markdown-draft-js": "2.4.0"
+    "markdown-draft-js": "2.4.0",
+    "react-hook-form": "7.31.3"
   },
   "description": "react widget",
   "devDependencies": {
@@ -26,8 +27,7 @@
     "@types/markdown-draft-js": "2.2.4",
     "@types/react": "17.0.45",
     "react": "17.0.2",
-    "react-intl": "6.0.3",
-    "react-hook-form": "7.31.3"
+    "react-intl": "6.0.3"
   },
   "engines": {
     "node": ">=12.13"

@@ -53,7 +53,7 @@ export const Erc20Token: FC = () => {
       query: "",
       tokenStatus: [Erc20TokenStatus.ACTIVE],
     },
-    filter: ({ description, tokenStatus }) => ({ description, tokenStatus }),
+    filter: ({ title, description, tokenStatus }) => ({ title, description, tokenStatus }),
   });
 
   return (

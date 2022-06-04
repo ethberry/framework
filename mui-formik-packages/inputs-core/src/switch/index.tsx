@@ -17,7 +17,6 @@ export const SwitchInput: FC<ISwitchInputProps & SwitchProps> = props => {
   const suffix = name.split(".").pop() as string;
 
   const form = useFormContext<any>();
-  const value = form.getValues(name);
 
   const { formatMessage } = useIntl();
   const localizedLabel = label === void 0 ? formatMessage({ id: `form.labels.${suffix}` }) : label;
@@ -32,7 +31,7 @@ export const SwitchInput: FC<ISwitchInputProps & SwitchProps> = props => {
           control={
             <Switch
               name={field.name}
-              checked={value}
+              checked={field.value}
               inputRef={field.ref}
               onChange={field.onChange}
               onBlur={field.onBlur}

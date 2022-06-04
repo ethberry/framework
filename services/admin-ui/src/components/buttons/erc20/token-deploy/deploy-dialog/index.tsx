@@ -33,7 +33,6 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
       <TextInput name="name" />
       <TextInput name="symbol" />
       <EthInput name="cap" />
-      {/* <EthInput readOnly={true} name="cap" /> */}
     </FormDialog>
   );
 };

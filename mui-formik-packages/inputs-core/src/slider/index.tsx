@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 import { useIntl } from "react-intl";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { FormControlLabel, Slider, SliderProps } from "@mui/material";
 
 import { useStyles } from "./styles";
@@ -17,7 +17,7 @@ export const SliderInput: FC<ISliderInputProps> = props => {
   const suffix = name.split(".").pop() as string;
 
   const form = useFormContext<any>();
-  const value = form.getValues(name);
+  const value = useWatch({ name });
 
   const { formatMessage } = useIntl();
   const localizedLabel = label === void 0 ? formatMessage({ id: `form.labels.${suffix}` }) : label;
@@ -37,7 +37,7 @@ export const SliderInput: FC<ISliderInputProps> = props => {
               value={value}
               classes={{ root: classes.slider }}
               onChange={(_event, value): void => {
-                form.setValue(name, value);
+                form.setValue(name, value, { shouldTouch: true });
               }}
               {...rest}
             />

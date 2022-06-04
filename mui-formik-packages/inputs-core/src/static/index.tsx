@@ -1,6 +1,6 @@
 import { FC, forwardRef } from "react";
 import { InputBaseComponentProps } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { useWatch } from "react-hook-form";
 import clsx from "clsx";
 
 import { ITextInputProps, TextInput } from "../text";
@@ -21,8 +21,7 @@ export const StaticInputComponent = forwardRef<any, InputBaseComponentProps>((pr
 export const StaticInput: FC<IStaticInputProps> = props => {
   const { InputLabelProps, InputProps, name, ...rest } = props;
 
-  const form = useFormContext<any>();
-  const value = form.getValues(name);
+  const value = useWatch({ name });
 
   return (
     <TextInput

@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { TextFieldProps } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { TToolbarControl } from "@gemunion/mui-rte";
@@ -35,7 +35,7 @@ export const RichTextEditor: FC<IRichTextFieldProps & TextFieldProps> = props =>
 
   const license = useLicense();
   const form = useFormContext<any>();
-  const value = form.getValues(name);
+  const value = useWatch({ name });
 
   // Manually handle the TextField's focused state based on the editor's focused state
   const [isFocused, setIsFocused] = useState(false);
@@ -47,7 +47,7 @@ export const RichTextEditor: FC<IRichTextFieldProps & TextFieldProps> = props =>
     defaultValue: value,
     label: localizedPlaceholder,
     onSave: (data: string) => {
-      form.setValue(name, data);
+      form.setValue(name, data, { shouldTouch: true });
     },
     controls: defaultControls.concat(customControls),
   };

@@ -14,6 +14,8 @@ export const JsonInput: FC<ITextAreaProps> = props => {
       const { value } = event.target;
 
       try {
+        // needs to set touched for this field to true
+        form.setValue(name, value, { shouldTouch: true });
         jsonValidationSchema.validateSync(value);
 
         const formattedValue = JSON.stringify(JSON.parse(value), null, "\t");
@@ -22,7 +24,7 @@ export const JsonInput: FC<ITextAreaProps> = props => {
         form.setValue(name, formattedValue);
         form.clearErrors(name);
       } catch (e) {
-        form.setError(name, { type: "custom", message: e.message });
+        form.setError(name, { type: "custom", message: e.message }, { shouldFocus: true });
       }
     },
     onFocus: () => form.setFocus(name),

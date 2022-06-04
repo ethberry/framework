@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, ReactElement, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { Autocomplete, AutocompleteRenderInputParams, TextField } from "@mui/material";
 
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -48,13 +48,12 @@ export const EntityInput: FC<IEntityInputProps> = props => {
   const form = useFormContext<any>();
   const error = form.formState.errors[name];
   const touched = Boolean(form.formState.touchedFields[name]);
-  const value = form.getValues(name);
+  const value = useWatch({ name });
 
   const { formatMessage } = useIntl();
   const localizedLabel = label === void 0 ? formatMessage({ id: `form.labels.${suffix}` }) : label;
   const localizedPlaceholder = formatMessage({ id: `form.placeholders.${suffix}` });
-  const localizedHelperText =
-    error && error.message && touched ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
+  const localizedHelperText = error && touched ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
 
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<Array<IAutocompleteOption>>([]);
@@ -117,7 +116,7 @@ export const EntityInput: FC<IEntityInputProps> = props => {
                   onChange ||
                   ((_event: ChangeEvent<unknown>, options: Array<IAutocompleteOption> | null): void => {
                     const value = options ? options.map((option: IAutocompleteOption) => option.id) : [];
-                    form.setValue(name, value);
+                    form.setValue(name, value, { shouldTouch: true });
                   })
                 }
                 getOptionLabel={(option: IAutocompleteOption) => (getTitle ? getTitle(option) : option.title)}
@@ -154,7 +153,7 @@ export const EntityInput: FC<IEntityInputProps> = props => {
                   onChange ||
                   ((_event: ChangeEvent<unknown>, option: IAutocompleteOption | null): void => {
                     const value = option ? option.id : null;
-                    form.setValue(name, value);
+                    form.setValue(name, value, { shouldTouch: true });
                   })
                 }
                 getOptionLabel={(option: IAutocompleteOption): string => (getTitle ? getTitle(option) : option.title)}

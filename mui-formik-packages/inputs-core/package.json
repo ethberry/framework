@@ -11,6 +11,7 @@
     "@gemunion/mui-form": "5.0.0",
     "@gemunion/yup-rules": "1.8.6",
     "clsx": "1.1.1",
+    "react-hook-form": "7.31.3",
     "use-debounce": "8.0.1"
   },
   "description": "react widget",

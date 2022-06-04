@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { FormControl, FormHelperText, Grid, IconButton, InputLabel, Tooltip } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,23 +21,22 @@ export const AvatarInput: FC<IAvatarInputProps> = props => {
   const form = useFormContext<any>();
   const error = form.formState.errors[name];
   const touched = Boolean(form.formState.touchedFields[name]);
-  const value = form.getValues(name);
+  const value = useWatch({ name });
 
   const classes = useStyles();
   const { formatMessage } = useIntl();
   const deleteUrl = useDeleteUrl(bucket);
   const suffix = name.split(".").pop() as string;
   const localizedLabel = label === void 0 ? formatMessage({ id: `form.labels.${suffix}` }) : label;
-  const localizedHelperText =
-    error && error.message ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
+  const localizedHelperText = error ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
 
   const onChange = (urls: Array<string>) => {
-    form.setValue(name, urls[0]);
+    form.setValue(name, urls[0], { shouldTouch: true });
   };
 
   const onDelete = async () => {
     await deleteUrl(value);
-    form.setValue(name, "");
+    form.setValue(name, "", { shouldTouch: false });
   };
 
   if (value) {

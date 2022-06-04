@@ -12,7 +12,7 @@ interface ICommonSearchFormProps {
 }
 
 export const CommonSearchForm: FC<ICommonSearchFormProps> = props => {
-  const { autosave, onSearch, initialValues, open = false, children } = props;
+  const { autosave = true, onSearch, initialValues, open = false, children } = props;
 
   const { query } = initialValues;
   const fixedValues = { query };

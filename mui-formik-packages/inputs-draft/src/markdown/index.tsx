@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { TextFieldProps } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 import { draftToMarkdown, markdownToDraft } from "markdown-draft-js";
 
@@ -34,7 +34,7 @@ export const MarkdownInput: FC<IMarkdownInputProps & TextFieldProps> = props => 
 
   const license = useLicense();
   const form = useFormContext<any>();
-  const value = form.getValues(name);
+  const value = useWatch({ name });
 
   // Manually handle the TextField's focused state based on the editor's focused state
   const [isFocused, setIsFocused] = useState(false);
@@ -47,7 +47,7 @@ export const MarkdownInput: FC<IMarkdownInputProps & TextFieldProps> = props => 
     label: localizedPlaceholder,
     onSave: (data: string) => {
       const markdownString = draftToMarkdown(JSON.parse(data));
-      form.setValue(name, markdownString);
+      form.setValue(name, markdownString, { shouldTouch: true });
     },
     controls: defaultControls.concat(customControls),
   };

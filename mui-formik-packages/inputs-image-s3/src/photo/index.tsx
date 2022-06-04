@@ -10,7 +10,7 @@ import {
   Grid,
   InputLabel,
 } from "@mui/material";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
@@ -35,7 +35,7 @@ export const PhotoInput: FC<IPhotoInputProps> = props => {
   const form = useFormContext<any>();
   const error = form.formState.errors[name];
   const touched = Boolean(form.formState.touchedFields[name]);
-  const value = form.getValues(name);
+  const value = useWatch({ name });
 
   const classes = useStyles();
   const { formatMessage } = useIntl();
@@ -46,8 +46,7 @@ export const PhotoInput: FC<IPhotoInputProps> = props => {
 
   const suffix = name.split(".").pop() as string;
   const localizedLabel = label === void 0 ? formatMessage({ id: `form.labels.${suffix}` }) : label;
-  const localizedHelperText =
-    error && error.message ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
+  const localizedHelperText = error ? formatMessage({ id: error.message }, { label: localizedLabel }) : "";
 
   const handleOptionDelete = (index: number): (() => void) => {
     return (): void => {
@@ -62,7 +61,7 @@ export const PhotoInput: FC<IPhotoInputProps> = props => {
 
     await deleteUrl(deleted.imageUrl);
 
-    form.setValue(name, newValue);
+    form.setValue(name, newValue, { shouldTouch: false });
     setIsDeleteImageDialogOpen(false);
   };
 
@@ -77,7 +76,7 @@ export const PhotoInput: FC<IPhotoInputProps> = props => {
       imageUrl: url,
       title: "",
     });
-    form.setValue(name, newValue);
+    form.setValue(name, newValue, { shouldTouch: true });
     setIsLoading(false);
   };
 
@@ -92,7 +91,7 @@ export const PhotoInput: FC<IPhotoInputProps> = props => {
     const [removed] = newValue.splice(result.source.index, 1);
     newValue.splice(result.destination.index, 0, removed);
 
-    form.setValue(name, newValue);
+    form.setValue(name, newValue, { shouldTouch: true });
     setIsLoading(false);
   };
 
