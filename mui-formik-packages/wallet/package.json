@@ -24,7 +24,7 @@
   "devDependencies": {
     "@gemunion/constants": "0.8.3",
     "@gemunion/provider-api": "5.8.1",
-    "@gemunion/provider-license": "1.0.18",
+    "@gemunion/provider-license": "1.0.20",
     "@gemunion/provider-popup": "0.3.1",
     "@gemunion/provider-user": "3.3.9",
     "@mui/icons-material": "5.8.2",
