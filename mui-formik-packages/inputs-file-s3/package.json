@@ -11,7 +11,7 @@
     "@gemunion/mui-form": "5.0.0",
     "@gemunion/mui-inputs-file": "5.0.0",
     "@gemunion/provider-api": "5.8.1",
-    "@gemunion/s3-uploader": "0.0.9"
+    "@gemunion/s3-uploader": "0.0.10"
   },
   "description": "react widget",
   "devDependencies": {
