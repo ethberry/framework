@@ -24,6 +24,7 @@ import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
+import { SettingsModule } from "./settings/settings.module";
 
 @Module({
   providers: [
@@ -90,6 +91,7 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     BlockchainModule,
     ProfileModule,
     UserModule,
+    SettingsModule,
   ],
   controllers: [AppController],
 })

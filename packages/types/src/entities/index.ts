@@ -1,6 +1,7 @@
 export * from "./auth";
 export * from "./otp";
 export * from "./user";
+export * from "./settings";
 export * from "./leaderboard";
 
 export * from "./erc20/token";

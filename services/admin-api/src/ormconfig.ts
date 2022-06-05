@@ -11,6 +11,7 @@ import {
 
 import { UserEntity } from "./user/user.entity";
 import { OtpEntity } from "./otp/otp.entity";
+import { SettingsEntity } from "./settings/settings.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
@@ -75,6 +76,8 @@ import { CreateAccessControlTable1653616447230 } from "./migrations/165361644723
 import { CreateAccessControlHistoryTable1653616447240 } from "./migrations/1653616447240-create-access-control-history-table";
 import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-create-seaport-table";
 import { CreateSeaportHistoryTable1653820928950 } from "./migrations/1653820928950-create-seaport-history-table";
+import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
+import { SeedSettingsTable1654437010010 } from "./migrations/1654437010010-seed-settings-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -84,6 +87,7 @@ const config: PostgresConnectionOptions = {
   entities: [
     UserEntity,
     OtpEntity,
+    SettingsEntity,
     ContractManagerEntity,
     AccessControlEntity,
     Erc20TokenEntity,
@@ -166,6 +170,8 @@ const config: PostgresConnectionOptions = {
     CreateSeaportHistoryTable1653820928950,
     CreateContractManagerTable1652962207600,
     SeedContractManager1652962207610,
+    CreateSettingsTable1654437010000,
+    SeedSettingsTable1654437010010,
   ],
 };
 

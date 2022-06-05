@@ -152,6 +152,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "DUMMY": "Dummy",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -217,6 +218,7 @@
       "year": "Year"
     },
     "placeholders": {
+      "DUMMY": "Dummy",
       "address": "0x...",
       "amount": "10",
       "attributes": "{}",
@@ -301,6 +303,7 @@
     },
     "dashboard": {
       "admin": {
+        "settings": "Settings",
         "title": "Admin",
         "users": "Users"
       },
@@ -402,6 +405,9 @@
     },
     "seaport": {
       "title": "Seaport"
+    },
+    "settings": {
+      "title": "Settings"
     },
     "users": {
       "title": "Users"

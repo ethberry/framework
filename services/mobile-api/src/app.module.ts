@@ -1,7 +1,6 @@
 import { APP_FILTER, APP_GUARD, APP_PIPE } from "@nestjs/core";
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { ScheduleModule } from "@nestjs/schedule";
 import { WinstonModule } from "nest-winston";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
@@ -46,7 +45,6 @@ import { OtpModule } from "./otp/otp.module";
     },
   ],
   imports: [
-    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       envFilePath: `.env.${process.env.NODE_ENV as string}`,
     }),

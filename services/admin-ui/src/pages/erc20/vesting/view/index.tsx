@@ -28,6 +28,7 @@ export const Erc20VestingViewDialog: FC<IErc20VestingViewDialogProps> = props =>
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
+      {/* TODO i18n */}
       <Typography variant="h5">Vesting #{id}</Typography>
       <TableContainer component={Paper}>
         <Table aria-label="vesting table">

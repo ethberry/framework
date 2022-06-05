@@ -6,7 +6,6 @@ import { AccessControlEventType, ContractType, Erc20TokenEventType } from "@fram
 
 import { Erc20LogService } from "./token-log.service";
 
-// custom contracts
 import { Erc20abi } from "./interfaces";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
@@ -15,7 +14,6 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
   imports: [
     ConfigModule,
     ContractManagerModule,
-    // Erc20 user contracts
     EthersContractModule.forRootAsync(EthersContractModule, {
       imports: [ConfigModule, ContractManagerModule],
       inject: [ConfigService, ContractManagerService],
