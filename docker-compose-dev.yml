@@ -1,0 +1,283 @@
+version: "3.3"
+
+volumes:
+  static-admin-ui:
+  static-market-ui:
+
+services:
+
+  framework-packages:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    image: framework-packages
+
+  admin-ui:
+    container_name: admin-ui
+    image: framework-packages:latest
+    command: "sh /home/node/framework/scripts/logDna.sh"
+    volumes:
+      - static-admin-ui:/home/node/framework/services/admin-ui/dist/
+    environment:
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      BASE_MODE: "${BASE_MODE}"
+      BASE_APP: "Admin-UI"
+
+  market-ui:
+    container_name: market-ui
+    image: framework-packages:latest
+    command: "sh /home/node/framework/scripts/logDna.sh"
+    volumes:
+      - static-market-ui:/home/node/framework/services/market-ui/dist/
+    environment:
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      BASE_MODE: "${BASE_MODE}"
+      BASE_APP: "Market-UI"
+
+  admin-api:
+    container_name: admin-api
+    image: framework-packages:latest
+    command: "npm run --prefix ./services/admin-api start:${BASE_MODE}"
+#    command: "/bin/bash"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_ADMIN_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      ADMIN_FE_URL: "${ADMIN_FE_URL}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_MARKETPLACE_ADDR: "${ERC721_MARKETPLACE_ADDR}"
+      ERC721_CRAFT_ADDR: "${ERC721_CRAFT_ADDR}"
+      ERC721_DROPBOX_ADDR: "${ERC721_DROPBOX_ADDR}"
+      ERC721_AIRDROP_ADDR: "${ERC721_AIRDROP_ADDR}"
+      ERC1155_CRAFT_ADDR: "${ERC1155_CRAFT_ADDR}"
+      ERC1155_MARKETPLACE_ADDR: "${ERC1155_MARKETPLACE_ADDR}"
+    ports:
+      # admin-api
+      - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
+
+  market-api:
+    container_name: market-api
+    image: framework-packages:latest
+    command: "npm run --prefix ./services/market-api start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_MARKET_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: "${RMQ_QUEUE_EMAIL}"
+      # FE
+      MARKET_FE_URL: "${MARKET_FE_URL}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      GOOGLE_APPLICATION_CREDENTIALS: "${GOOGLE_APPLICATION_CREDENTIALS}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_MARKETPLACE_ADDR: "${ERC721_MARKETPLACE_ADDR}"
+      ERC721_CRAFT_ADDR: "${ERC721_CRAFT_ADDR}"
+      ERC721_DROPBOX_ADDR: "${ERC721_DROPBOX_ADDR}"
+      ERC721_AIRDROP_ADDR: "${ERC721_AIRDROP_ADDR}"
+      ERC1155_CRAFT_ADDR: "${ERC1155_CRAFT_ADDR}"
+      ERC1155_MARKETPLACE_ADDR: "${ERC1155_MARKETPLACE_ADDR}"
+    ports:
+      # market-api
+      - "${PORT_MARKET_API}:${PORT_MARKET_API}"
+
+  core-eth:
+    container_name: core-eth
+    image: framework-packages:latest
+    command: "npm run --prefix ./services/core-eth start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_RPC_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      # FE
+      FE_URL: "${ADMIN_FE_URL}"
+      # LOGDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # BLOCKCHAIN
+      CHAIN_ID: "${CHAIN_ID}"
+      ACCOUNT: "${ACCOUNT}"
+      PRIVATE_KEY: "${PRIVATE_KEY}"
+      JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
+      WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
+      # Contracts
+      CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      ERC721_MARKETPLACE_ADDR: "${ERC721_MARKETPLACE_ADDR}"
+      ERC721_CRAFT_ADDR: "${ERC721_CRAFT_ADDR}"
+      ERC721_DROPBOX_ADDR: "${ERC721_DROPBOX_ADDR}"
+      ERC721_AIRDROP_ADDR: "${ERC721_AIRDROP_ADDR}"
+      ERC1155_CRAFT_ADDR: "${ERC1155_CRAFT_ADDR}"
+      ERC1155_MARKETPLACE_ADDR: "${ERC1155_MARKETPLACE_ADDR}"
+    ports:
+      - "${PORT_RPC_API}:${PORT_RPC_API}"
+    depends_on:
+      - besu
+
+  json-api:
+    container_name: json-api
+    image: framework-packages:latest
+    command: "npm run --prefix ./microservices/json start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_JSON_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+    ports:
+      # admin-api
+      - "${PORT_JSON_API}:${PORT_JSON_API}"
+
+  postgres:
+    container_name: postgres
+    image: postgres:alpine
+    user: root
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    volumes:
+      - ${BASE_PATH}/postgres:/var/lib/postgresql/data
+      - ${BASE_PATH}/pgbckp:/pgbckp
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    sysctls:
+      net.core.somaxconn: "65535"
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  besu:
+    container_name: besu
+    restart: "on-failure"
+    image: hyperledger/besu:latest
+    environment:
+      BESU_GENESIS_FILE: /var/lib/besu/gen-besu.json
+      BESU_DATA_PATH: /var/lib/besu
+      BESU_HOST_ALLOWLIST: "*"
+      BESU_RPC_WS_ENABLED: "true"
+      BESU_RPC_WS_HOST: 0.0.0.0
+      BESU_RPC_HTTP_HOST: 0.0.0.0
+      BESU_RPC_HTTP_ENABLED: "true"
+      BESU_RPC_HTTP_CORS_ORIGINS: "*"
+      BESU_RPC_HTTP_API: "ADMIN,ETH,NET,WEB3,MINER,IBFT"
+      BESU_RPC_WS_API: "ADMIN,ETH,NET,WEB3,MINER,IBFT"
+      BESU_MINER_ENABLED: "true"
+      BESU_MINER_COINBASE: fe3b557e8fb62b89f4916b721be55ceb828dbd73
+    volumes:
+      - $PWD/besu:/var/lib/besu
+      - $PWD/gen-besu.json:/var/lib/besu/gen-besu.json
+    ports:
+      - "8545:8545"
+      - "8546:8546"
+      - "8547:8547"
+      - "30303:30303"
+
+  explorer:
+    container_name: explorer
+    restart: "on-failure"
+    image: alethio/ethereum-lite-explorer
+    environment:
+      APP_NODE_URL: "http://127.0.0.1:8545"
+    ports:
+      - 8080:80
+    depends_on:
+      - besu
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./nginx/admin.dev.conf:/etc/nginx/conf.d/admin.conf
+      - ./nginx/log:/var/log/nginx/
+      - type: volume
+        source: static-admin-ui
+        target: /var/www/admin-ui/static
+        volume:
+          nocopy: true
+      - type: volume
+        source: static-market-ui
+        target: /var/www/market-ui/static
+        volume:
+          nocopy: true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "1337:1337"
+    depends_on:
+      - besu
+      - admin-ui
+      - market-ui
+      - market-api
+      - json-api
+      - core-eth
