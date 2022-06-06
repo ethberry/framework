@@ -15,7 +15,7 @@
   "devDependencies": {
     "@gemunion/constants": "0.8.3",
     "@gemunion/provider-api": "5.8.1",
-    "@gemunion/types-collection": "1.4.1",
+    "@gemunion/types-collection": "1.4.2",
     "notistack": "2.0.5",
     "react": "17.0.2",
     "react-intl": "6.0.3",
