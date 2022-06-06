@@ -1,9 +1,0 @@
-{
-  "coverageDirectory": "../coverage",
-  "moduleFileExtensions": ["js", "jsx", "ts", "tsx", "json"],
-  "rootDir": "src",
-  "testEnvironment": "jsdom",
-  "testMatch": ["**/*.test.tsx"],
-  "preset": "ts-jest",
-  "verbose": true
-}
