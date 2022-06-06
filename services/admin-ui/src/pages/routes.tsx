@@ -16,6 +16,7 @@ import { erc20Routes } from "./erc20/routes";
 import { erc721Routes } from "./erc721/routes";
 import { erc1155Routes } from "./erc1155/routes";
 import { Settings } from "./settings";
+import { Email } from "./email";
 
 const routes: Array<RouteObject> = [
   {
@@ -49,6 +50,11 @@ const routes: Array<RouteObject> = [
         path: "/settings",
         element: <Protected />,
         children: [{ index: true, element: <Settings /> }],
+      },
+      {
+        path: "/emails",
+        element: <Protected />,
+        children: [{ index: true, element: <Email /> }],
       },
       {
         path: "/seaport",

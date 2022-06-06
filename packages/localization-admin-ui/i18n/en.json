@@ -63,6 +63,9 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
+    "emailType": {
+      "DUMMY": "Test email"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
@@ -303,6 +306,7 @@
     },
     "dashboard": {
       "admin": {
+        "emails": "Emails",
         "settings": "Settings",
         "title": "Admin",
         "users": "Users"
@@ -333,6 +337,9 @@
         "tokens": "ERC721 Tokens"
       },
       "title": "Dashboard"
+    },
+    "emails": {
+      "title": "Emails"
     },
     "erc1155-collections": {
       "title": "ERC1155 Collections"

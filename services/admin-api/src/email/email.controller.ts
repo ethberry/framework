@@ -12,27 +12,9 @@ import { UserEntity } from "../user/user.entity";
 export class EmailController {
   constructor(private readonly emailService: EmailService) {}
 
-  @Post(EmailType.WELCOME)
+  @Post(EmailType.DUMMY)
   @HttpCode(HttpStatus.NO_CONTENT)
-  public welcome(@User() userEntity: UserEntity): Promise<any> {
-    return this.emailService.welcome(userEntity);
-  }
-
-  @Post(EmailType.EMAIL_VERIFICATION)
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public emailVerification(@User() userEntity: UserEntity): Promise<any> {
-    return this.emailService.emailVerification(userEntity);
-  }
-
-  @Post(EmailType.FORGOT_PASSWORD)
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public forgotPassword(@User() userEntity: UserEntity): Promise<any> {
-    return this.emailService.forgotPassword(userEntity);
-  }
-
-  @Post(EmailType.RESTORE_PASSWORD)
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public restorePassword(@User() userEntity: UserEntity): Promise<any> {
-    return this.emailService.restorePassword(userEntity);
+  public dummy(@User() userEntity: UserEntity): Promise<any> {
+    return this.emailService.dummy(userEntity);
   }
 }

@@ -1,0 +1,62 @@
+import { FC, MouseEvent, useContext, useState } from "react";
+import { useSnackbar } from "notistack";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Grid, List, ListItem, ListItemText } from "@mui/material";
+
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { EmailType } from "@framework/types";
+
+export const Email: FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const { formatMessage } = useIntl();
+
+  const api = useContext(ApiContext);
+
+  const sendEmail =
+    (email: EmailType) =>
+    (e: MouseEvent): Promise<void> => {
+      e.preventDefault();
+      setIsLoading(true);
+      return api
+        .fetchJson({
+          url: `/emails/${email}`,
+          method: "POST",
+        })
+        .then(() => {
+          enqueueSnackbar(formatMessage({ id: "snackbar.email" }), { variant: "success" });
+        })
+        .catch((e: ApiError) => {
+          if (e.status) {
+            enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
+          } else {
+            console.error(e);
+            enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
+
+  return (
+    <Grid>
+      <Breadcrumbs path={["dashboard", "emails"]} />
+
+      <PageHeader message="pages.emails.title" />
+
+      <ProgressOverlay isLoading={isLoading}>
+        <List>
+          {Object.values(EmailType).map((email, i) => (
+            <ListItem button key={i} onClick={sendEmail(email)} disableGutters>
+              <ListItemText>
+                <FormattedMessage id={`enums.emailType.${email}`} />
+              </ListItemText>
+            </ListItem>
+          ))}
+        </List>
+      </ProgressOverlay>
+    </Grid>
+  );
+};
