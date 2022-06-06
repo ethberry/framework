@@ -8,13 +8,13 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface IErc1155CollectionSearchFormProps {
-  onSearch: (values: IErc1155CollectionSearchDto) => void;
+  onSubmit: (values: IErc1155CollectionSearchDto) => void;
   initialValues: IErc1155CollectionSearchDto;
   open: boolean;
 }
 
 export const Erc1155CollectionSearchForm: FC<IErc1155CollectionSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ export const Erc1155CollectionSearchForm: FC<IErc1155CollectionSearchFormProps> 
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -42,7 +42,7 @@ export const Erc1155CollectionSearchForm: FC<IErc1155CollectionSearchFormProps> 
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

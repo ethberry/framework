@@ -10,7 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Token } from "./item";
 import { Erc1155TokenSearchForm } from "./form";
-import {useParams} from "react-router";
+import { useParams } from "react-router";
 
 export interface IErc1155TokenListProps {
   embedded?: boolean;
@@ -45,7 +45,7 @@ export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc1155TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <Erc1155TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

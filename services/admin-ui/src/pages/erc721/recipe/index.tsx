@@ -74,7 +74,7 @@ export const Erc721Recipes: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721RecipeSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc721RecipeSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

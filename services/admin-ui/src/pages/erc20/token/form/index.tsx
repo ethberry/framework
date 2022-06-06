@@ -8,13 +8,13 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSearch: (values: IErc20TokenSearchDto) => void;
+  onSubmit: (values: IErc20TokenSearchDto) => void;
   initialValues: IErc20TokenSearchDto;
   open: boolean;
 }
 
 export const Erc20TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ export const Erc20TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -42,7 +42,7 @@ export const Erc20TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

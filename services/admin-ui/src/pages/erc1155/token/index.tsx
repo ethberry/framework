@@ -79,7 +79,7 @@ export const Erc1155Token: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc1155TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc1155TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

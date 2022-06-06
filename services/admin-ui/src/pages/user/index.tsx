@@ -72,7 +72,7 @@ export const User: FC = () => {
         </Button>
       </PageHeader>
 
-      <UserSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <UserSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

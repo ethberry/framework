@@ -9,13 +9,13 @@ import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSearch: (values: IErc1155TokenSearchDto) => void;
+  onSubmit: (values: IErc1155TokenSearchDto) => void;
   initialValues: IErc1155TokenSearchDto;
   open: boolean;
 }
 
 export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -49,7 +49,7 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

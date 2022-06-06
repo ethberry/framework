@@ -75,7 +75,7 @@ export const Erc721Collection: FC = () => {
         <Erc721TokenDeployButton />
       </PageHeader>
 
-      <Erc721CollectionSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc721CollectionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

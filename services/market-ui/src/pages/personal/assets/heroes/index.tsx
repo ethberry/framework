@@ -38,7 +38,7 @@ export const Heroes: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc721TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

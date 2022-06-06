@@ -70,7 +70,7 @@ export const Erc20Token: FC = () => {
         <Erc20TokenDeployButton />
       </PageHeader>
 
-      <Erc20TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc20TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

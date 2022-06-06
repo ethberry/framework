@@ -10,14 +10,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
 interface IErc1155TokenSearchFormProps {
-  onSearch: (values: any) => void;
+  onSubmit: (values: any) => void;
   initialValues: IErc1155TokenSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
 export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props => {
-  const { onSearch, initialValues, open, embedded } = props;
+  const { onSubmit, initialValues, open, embedded } = props;
 
   const classes = useStyles();
 
@@ -27,7 +27,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -53,7 +53,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
           ) : null}
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

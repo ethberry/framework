@@ -9,13 +9,13 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSearch: (values: IErc721TokenSearchDto) => void;
+  onSubmit: (values: IErc721TokenSearchDto) => void;
   initialValues: IErc721TokenSearchDto;
   open: boolean;
 }
 
 export const Erc721TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ export const Erc721TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -52,7 +52,7 @@ export const Erc721TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

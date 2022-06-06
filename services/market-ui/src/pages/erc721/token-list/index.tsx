@@ -40,7 +40,7 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <Erc721TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

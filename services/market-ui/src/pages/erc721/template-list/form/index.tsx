@@ -10,14 +10,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
 interface IErc721TemplateSearchFormProps {
-  onSearch: (values: any) => void;
+  onSubmit: (values: any) => void;
   initialValues: IErc721TemplateSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
 export const Erc721TemplateSearchForm: FC<IErc721TemplateSearchFormProps> = props => {
-  const { onSearch, initialValues, open, embedded } = props;
+  const { onSubmit, initialValues, open, embedded } = props;
 
   const classes = useStyles();
 
@@ -27,7 +27,7 @@ export const Erc721TemplateSearchForm: FC<IErc721TemplateSearchFormProps> = prop
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -53,7 +53,7 @@ export const Erc721TemplateSearchForm: FC<IErc721TemplateSearchFormProps> = prop
           ) : null}
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

@@ -8,13 +8,13 @@ import { Erc20VestingTemplate, IErc20VestingSearchDto } from "@framework/types";
 import { useStyles } from "./styles";
 
 interface IVestingSearchFormProps {
-  onSearch: (values: IErc20VestingSearchDto) => void;
+  onSubmit: (values: IErc20VestingSearchDto) => void;
   initialValues: IErc20VestingSearchDto;
   open: boolean;
 }
 
 export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -42,7 +42,7 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

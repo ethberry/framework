@@ -8,13 +8,13 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface IErc721AirdropSearchFormProps {
-  onSearch: (values: IErc721AirdropSearchDto) => void;
+  onSubmit: (values: IErc721AirdropSearchDto) => void;
   initialValues: IErc721AirdropSearchDto;
   open: boolean;
 }
 
 export const Erc721AirdropSearchForm: FC<IErc721AirdropSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ export const Erc721AirdropSearchForm: FC<IErc721AirdropSearchFormProps> = props 
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -42,7 +42,7 @@ export const Erc721AirdropSearchForm: FC<IErc721AirdropSearchFormProps> = props 
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

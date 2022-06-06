@@ -9,13 +9,13 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 
 interface IDropboxSearchFormProps {
-  onSearch: (values: IErc721DropboxSearchDto) => void;
+  onSubmit: (values: IErc721DropboxSearchDto) => void;
   initialValues: IErc721DropboxSearchDto;
   open: boolean;
 }
 
 export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -25,7 +25,7 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -51,7 +51,7 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

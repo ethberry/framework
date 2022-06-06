@@ -73,7 +73,7 @@ export const Erc1155Recipes: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc1155RecipeSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc1155RecipeSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

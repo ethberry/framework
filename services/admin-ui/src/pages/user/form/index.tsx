@@ -8,13 +8,13 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface IUserSearchFormProps {
-  onSearch: (values: IUserSearchDto) => void;
+  onSubmit: (values: IUserSearchDto) => void;
   initialValues: IUserSearchDto;
   open: boolean;
 }
 
 export const UserSearchForm: FC<IUserSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -45,7 +45,7 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

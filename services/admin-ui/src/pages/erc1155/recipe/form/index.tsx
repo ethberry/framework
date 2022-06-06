@@ -8,13 +8,13 @@ import { Erc1155RecipeStatus, IErc1155RecipeSearchDto } from "@framework/types";
 import { useStyles } from "./styles";
 
 interface IRecipeSearchFormProps {
-  onSearch: (values: IErc1155RecipeSearchDto) => void;
+  onSubmit: (values: IErc1155RecipeSearchDto) => void;
   initialValues: IErc1155RecipeSearchDto;
   open: boolean;
 }
 
 export const Erc1155RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
-  const { onSearch, initialValues, open } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ export const Erc1155RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
   return (
     <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSearch}
+      onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -42,7 +42,7 @@ export const Erc1155RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave onSearch={onSearch} />
+      <AutoSave onSubmit={onSubmit} />
     </FormWrapper>
   );
 };

@@ -72,7 +72,7 @@ export const Erc721Airdrop: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721AirdropSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc721AirdropSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

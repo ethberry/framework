@@ -85,7 +85,7 @@ export const Erc721Template: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721TemplateSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc721TemplateSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

@@ -59,7 +59,7 @@ export const Erc20Vesting: FC = () => {
         <Erc20VestingDeployButton />
       </PageHeader>
 
-      <Erc20VestingSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc20VestingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
