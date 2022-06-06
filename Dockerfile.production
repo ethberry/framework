@@ -1,5 +1,5 @@
 FROM node:16-alpine AS base
-ENV NODE_OPTIONS=--max-old-space-size=6144
+ENV NODE_OPTIONS=--max-old-space-size=7168
 
 LABEL stage=base
 
@@ -17,6 +17,7 @@ FROM base AS deps
 LABEL stage=deps
 
 USER node
+ENV NODE_OPTIONS=--max_old_space_size=7168
 RUN mkdir -p /home/node/framework
 WORKDIR /home/node/framework
 
@@ -27,3 +28,4 @@ RUN npm i --only=production
 COPY --chown=node:node . .
 
 RUN npm run bootstrap
+#RUN npm run bootstrap -- --ignore @framework/core-contracts --ignore @framework/seaport-contracts
