@@ -21,4 +21,11 @@ export class AccessControlService {
   ): Promise<AccessControlEntity | null> {
     return this.contractManagerHistoryEntityRepository.findOne({ where, ...options });
   }
+
+  public findAll(
+    where: FindOptionsWhere<AccessControlEntity>,
+    options?: FindOneOptions<AccessControlEntity>,
+  ): Promise<Array<AccessControlEntity>> {
+    return this.contractManagerHistoryEntityRepository.find({ where, ...options });
+  }
 }
