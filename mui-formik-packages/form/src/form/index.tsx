@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { PromptIfDirty } from "../prompt";
 import { FormButtons } from "../buttons";
@@ -45,6 +46,10 @@ export const FormWrapper: FC<IFormWrapperProps<any>> = props => {
 
     return false;
   };
+
+  useDeepCompareEffect(() => {
+    form.reset(initialValues);
+  }, [initialValues]);
 
   return (
     <FormProvider {...form}>
