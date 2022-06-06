@@ -7,11 +7,11 @@ import {
   IErc1155MarketplaceRedeemSingle,
   TErc1155MarketplaceEventData,
 } from "@framework/types";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { Erc1155TokenEntity } from "../../token/token.entity";
 
 @Entity({ schema: ns, name: "erc1155_marketplace_history" })
-export class Erc1155MarketplaceHistoryEntity extends IdBaseEntity implements IErc1155MarketplaceHistory {
+export class Erc1155MarketplaceHistoryEntity extends IdDateBaseEntity implements IErc1155MarketplaceHistory {
   @Column({ type: "varchar" })
   public address: string;
 

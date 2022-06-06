@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc1155Collection } from "./collection";
 
@@ -7,7 +7,7 @@ export enum Erc1155TokenStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IErc1155Token extends IIdBase {
+export interface IErc1155Token extends IIdDateBase {
   title: string;
   description: string;
   imageUrl: string;

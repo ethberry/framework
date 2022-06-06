@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum AccessControlEventType {
   RoleGranted = "RoleGranted",
@@ -29,7 +29,7 @@ export type TAccessControlEventData =
   | IAccessControlRoleRevoked
   | IAccessControlRoleAdminChanged;
 
-export interface IAccessControlHistory extends IIdBase {
+export interface IAccessControlHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: AccessControlEventType;

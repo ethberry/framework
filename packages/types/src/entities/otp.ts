@@ -1,4 +1,4 @@
-import { IUuidBase } from "@gemunion/types-collection";
+import { IUuidDateBase } from "@gemunion/types-collection";
 
 import { IUser } from "./user";
 
@@ -7,7 +7,7 @@ export enum OtpType {
   PASSWORD = "PASSWORD",
 }
 
-export interface IOtp extends IUuidBase {
+export interface IOtp extends IUuidDateBase {
   otpType: OtpType;
   data: Record<string, string>;
   userId: number;

@@ -16,7 +16,7 @@ export class EmailService {
 
   public welcome(userEntity: UserEntity): Promise<any> {
     return this.emailClientProxy
-      .emit(EmailType.WELCOME, {
+      .emit(EmailType.DUMMY, {
         user: userEntity,
         baseUrl: this.configService.get<string>("MARKET_FE_URL", "http://localhost:3002"),
       })

@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IOtp, OtpType } from "@framework/types";
 import { ns } from "@framework/constants";
-import { UuidBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { UuidDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "../user/user.entity";
 
 @Entity({ schema: ns, name: "otp" })
-export class OtpEntity extends UuidBaseEntity implements IOtp {
+export class OtpEntity extends UuidDateBaseEntity implements IOtp {
   @Column({
     type: "enum",
     enum: OtpType,

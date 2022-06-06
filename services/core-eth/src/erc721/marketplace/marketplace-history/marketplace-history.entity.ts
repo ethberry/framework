@@ -2,11 +2,11 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { Erc721MarketplaceEventType, IErc721MarketplaceHistory, TErc721MarketplaceEventData } from "@framework/types";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { Erc721TokenEntity } from "../../token/token.entity";
 
 @Entity({ schema: ns, name: "erc721_marketplace_history" })
-export class Erc721MarketplaceHistoryEntity extends IdBaseEntity implements IErc721MarketplaceHistory {
+export class Erc721MarketplaceHistoryEntity extends IdDateBaseEntity implements IErc721MarketplaceHistory {
   @Column({ type: "varchar" })
   public address: string;
 

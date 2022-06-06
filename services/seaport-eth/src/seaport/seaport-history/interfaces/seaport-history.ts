@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum SeaportEventType {
   OrderFulfilled = "OrderFulfilled",
@@ -48,7 +48,7 @@ export type TSeaportEventData =
   | ISeaportOrderValidated
   | ISeaportNonceIncremented;
 
-export interface ISeaportHistory extends IIdBase {
+export interface ISeaportHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: SeaportEventType;

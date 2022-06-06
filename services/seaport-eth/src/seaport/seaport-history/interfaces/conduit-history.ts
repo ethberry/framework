@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ConduitEventType {
   ChannelUpdated = "ChannelUpdated",
@@ -11,7 +11,7 @@ export interface IConduitChannelUpdated {
 
 export type TConduitEventData = IConduitChannelUpdated;
 
-export interface IConduitHistory extends IIdBase {
+export interface IConduitHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: ConduitEventType;

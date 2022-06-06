@@ -2,10 +2,10 @@ import { Column, Entity } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { ContractType, IContractManager } from "@framework/types";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 @Entity({ schema: ns, name: "contract_manager" })
-export class ContractManagerEntity extends IdBaseEntity implements IContractManager {
+export class ContractManagerEntity extends IdDateBaseEntity implements IContractManager {
   @Column({ type: "varchar" })
   public address: string;
 

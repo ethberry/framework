@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc721Recipe } from "./recipe";
 
@@ -28,7 +28,7 @@ export interface IErc721RecipeCrafted {
 
 export type TErc721RecipeEventData = IErc721RecipeCreated | IErc721RecipeUpdated | IErc721RecipeCrafted;
 
-export interface IErc721RecipeHistory extends IIdBase {
+export interface IErc721RecipeHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc721RecipeEventType;

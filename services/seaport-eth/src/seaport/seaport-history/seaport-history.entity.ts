@@ -1,12 +1,12 @@
 import { Column, Entity } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { ISeaportHistory, SeaportEventType, TSeaportEventData } from "./interfaces";
 
 @Entity({ schema: ns, name: "seaport_history" })
-export class SeaportHistoryEntity extends IdBaseEntity implements ISeaportHistory {
+export class SeaportHistoryEntity extends IdDateBaseEntity implements ISeaportHistory {
   @Column({ type: "varchar" })
   public address: string;
 

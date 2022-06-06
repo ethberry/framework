@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ContractType {
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
@@ -42,7 +42,7 @@ export interface IContractManagerUpdateDto {
   lastBlock: number; // last log block
 }
 
-export interface IContractManager extends IIdBase {
+export interface IContractManager extends IIdDateBase {
   address: string;
   contractType: ContractType;
   fromBlock: number;

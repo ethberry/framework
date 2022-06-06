@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ConduitControllerEventType {
   NewConduit = "NewConduit",
@@ -27,7 +27,7 @@ export type TConduitControllerEventData =
   | IConduitControllerOwnershipTransferred
   | IConduitControllerPotentialOwnerUpdated;
 
-export interface IConduitControllerHistory extends IIdBase {
+export interface IConduitControllerHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: ConduitControllerEventType;

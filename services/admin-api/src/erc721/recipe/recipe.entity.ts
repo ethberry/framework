@@ -2,14 +2,14 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { Erc721RecipeStatus, IErc721Recipe } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc721IngredientEntity } from "../ingredient/ingredient.entity";
 import { Erc721TemplateEntity } from "../template/template.entity";
 import { Erc721DropboxEntity } from "../dropbox/dropbox.entity";
 
 @Entity({ schema: ns, name: "erc721_recipe" })
-export class Erc721RecipeEntity extends IdBaseEntity implements IErc721Recipe {
+export class Erc721RecipeEntity extends IdDateBaseEntity implements IErc721Recipe {
   @Column({ type: "varchar" })
   public erc721TemplateId: number | null;
 

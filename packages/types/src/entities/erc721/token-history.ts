@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 import { IErc721Token } from "./token";
 
 export enum Erc721TokenEventType {
@@ -91,7 +91,7 @@ export type TErc721TokenEventData =
   | IErc721TokenMintRandom
   | IErc721RandomRequest;
 
-export interface IErc721TokenHistory extends IIdBase {
+export interface IErc721TokenHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc721TokenEventType;

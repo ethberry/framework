@@ -8,12 +8,12 @@ import {
   IErc721TokenTransfer,
 } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc721TokenEntity } from "../token/token.entity";
 
 @Entity({ schema: ns, name: "erc721_token_history" })
-export class Erc721TokenHistoryEntity extends IdBaseEntity implements IErc721TokenHistory {
+export class Erc721TokenHistoryEntity extends IdDateBaseEntity implements IErc721TokenHistory {
   @Column({ type: "varchar" })
   public address: string;
 

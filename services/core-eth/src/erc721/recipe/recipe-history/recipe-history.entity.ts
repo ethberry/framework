@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { Erc721RecipeEventType, IErc721RecipeHistory, TErc721RecipeEventData } from "@framework/types";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc721RecipeEntity } from "../recipe.entity";
 
 @Entity({ schema: ns, name: "erc721_recipe_history" })
-export class Erc721RecipeHistoryEntity extends IdBaseEntity implements IErc721RecipeHistory {
+export class Erc721RecipeHistoryEntity extends IdDateBaseEntity implements IErc721RecipeHistory {
   @Column({ type: "varchar" })
   public address: string;
 

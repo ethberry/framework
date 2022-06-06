@@ -2,10 +2,10 @@ import { Column, Entity } from "typeorm";
 
 import { IAccessControl, AccessControlRoleType } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 @Entity({ schema: ns, name: "access_control" })
-export class AccessControlEntity extends IdBaseEntity implements IAccessControl {
+export class AccessControlEntity extends IdDateBaseEntity implements IAccessControl {
   @Column({ type: "varchar" })
   public address: string;
 

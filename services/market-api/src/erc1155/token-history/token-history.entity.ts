@@ -2,10 +2,10 @@ import { Column, Entity } from "typeorm";
 
 import { Erc1155TokenEventType, IErc1155TokenHistory, TErc1155TokenEventData } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 @Entity({ schema: ns, name: "erc1155_token_history" })
-export class Erc1155TokenHistoryEntity extends IdBaseEntity implements IErc1155TokenHistory {
+export class Erc1155TokenHistoryEntity extends IdDateBaseEntity implements IErc1155TokenHistory {
   @Column({ type: "varchar" })
   public address: string;
 
