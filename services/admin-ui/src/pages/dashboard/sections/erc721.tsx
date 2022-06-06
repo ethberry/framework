@@ -6,12 +6,12 @@ import { FormattedMessage } from "react-intl";
 
 export const Erc721Section: FC = () => {
   return (
-    <Paper>
+    <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.tokens.erc721" />
+            <FormattedMessage id="pages.dashboard.erc721.title" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Erc721Section: FC = () => {
             <Collections />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc721-collections" />
+            <FormattedMessage id="pages.dashboard.erc721.collections" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-templates">
@@ -28,7 +28,7 @@ export const Erc721Section: FC = () => {
             <AutoAwesomeMotion />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc721-templates" />
+            <FormattedMessage id="pages.dashboard.erc721.templates" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-airdrops">
@@ -36,7 +36,7 @@ export const Erc721Section: FC = () => {
             <Paragliding />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc721-airdrop" />
+            <FormattedMessage id="pages.dashboard.erc721.airdrop" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-dropboxes">
@@ -44,7 +44,7 @@ export const Erc721Section: FC = () => {
             <Inventory />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc721-dropbox" />
+            <FormattedMessage id="pages.dashboard.erc721.dropbox" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-tokens">
@@ -52,7 +52,7 @@ export const Erc721Section: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc721-tokens" />
+            <FormattedMessage id="pages.dashboard.erc721.tokens" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-recipes">
@@ -60,7 +60,7 @@ export const Erc721Section: FC = () => {
             <Construction />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc721-recipes" />
+            <FormattedMessage id="pages.dashboard.erc721.recipes" />
           </ListItemText>
         </ListItem>
       </List>

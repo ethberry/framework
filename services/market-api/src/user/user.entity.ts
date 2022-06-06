@@ -1,11 +1,11 @@
 import { Column, Entity } from "typeorm";
 
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IUser, UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages, ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "user" })
-export class UserEntity extends IdBaseEntity implements IUser {
+export class UserEntity extends IdDateBaseEntity implements IUser {
   @Column({ type: "varchar" })
   public sub: string;
 

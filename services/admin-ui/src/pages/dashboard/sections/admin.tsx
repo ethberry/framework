@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper, Grid } from "@mui/material";
-import { PeopleAlt } from "@mui/icons-material";
+import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { PeopleAlt, Settings, Email } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,28 +15,40 @@ export const Admin: FC = () => {
   }
 
   return (
-    <Grid container spacing={2} sx={{ pb: 1 }}>
-      <Grid item xs={12}>
-        <Paper>
-          <List
-            component="nav"
-            subheader={
-              <ListSubheader>
-                <FormattedMessage id="pages.dashboard.admin.title" />
-              </ListSubheader>
-            }
-          >
-            <ListItem button component={RouterLink} to="/users">
-              <ListItemIcon>
-                <PeopleAlt />
-              </ListItemIcon>
-              <ListItemText>
-                <FormattedMessage id="pages.dashboard.admin.users" />
-              </ListItemText>
-            </ListItem>
-          </List>
-        </Paper>
-      </Grid>
-    </Grid>
+    <Paper sx={{ mb: 2 }}>
+      <List
+        component="nav"
+        subheader={
+          <ListSubheader>
+            <FormattedMessage id="pages.dashboard.admin.title" />
+          </ListSubheader>
+        }
+      >
+        <ListItem button component={RouterLink} to="/users">
+          <ListItemIcon>
+            <PeopleAlt />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.admin.users" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/settings">
+          <ListItemIcon>
+            <Settings />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.admin.settings" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/emails">
+          <ListItemIcon>
+            <Email />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.admin.emails" />
+          </ListItemText>
+        </ListItem>
+      </List>
+    </Paper>
   );
 };

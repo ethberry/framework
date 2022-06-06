@@ -21,6 +21,9 @@ export class Erc1155TokenService {
     queryBuilder.select();
     queryBuilder.leftJoinAndSelect("token.erc1155Collection", "collection");
 
+    // search only ACTIVE collections
+    queryBuilder.andWhere("collection.collectionStatus = 'ACTIVE'");
+
     if (tokenId) {
       queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
     }
@@ -60,7 +63,7 @@ export class Erc1155TokenService {
     queryBuilder.andWhere(
       new Brackets(qb => {
         qb.where("token.amount = 0");
-        qb.orWhere("token.amount < token.instanceCount");
+        qb.orWhere("token.amount > token.instanceCount");
       }),
     );
 

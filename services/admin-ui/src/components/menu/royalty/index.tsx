@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import erc721contract from "@framework/binance-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
+import IERC721RoyaltySol from "@framework/core-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
 
 import { Erc721CollectionRoyaltyEditDialog, IRoyaltyDto } from "./edit";
 
@@ -31,7 +31,7 @@ export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuIte
   };
 
   const meta = useMetamask((values: IRoyaltyDto) => {
-    const contract = new Contract(address, erc721contract.abi, library.getSigner());
+    const contract = new Contract(address, IERC721RoyaltySol.abi, library.getSigner());
     return contract.setDefaultRoyalty(account, values.royalty) as Promise<void>;
   });
 

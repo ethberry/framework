@@ -14,7 +14,7 @@ export interface IGrantRoleDto {
 export interface IAccessControlGrantRoleDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IGrantRoleDto, formikBag: any) => Promise<void>;
+  onConfirm: (values: IGrantRoleDto, form: any) => Promise<void>;
   initialValues: IGrantRoleDto;
 }
 
@@ -26,7 +26,7 @@ export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="OzContractGrantRoleDialog"
+      data-testid="AccessControlGrantRoleDialog"
       {...rest}
     >
       <SelectInput name="role" options={AccessControlRoleType} />

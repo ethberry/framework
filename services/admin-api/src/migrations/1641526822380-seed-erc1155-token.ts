@@ -70,6 +70,16 @@ export class SeedErc1155Tokens1641526822380 implements MigrationInterface {
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        'Wall',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        '5',
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

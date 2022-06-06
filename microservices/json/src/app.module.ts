@@ -18,7 +18,6 @@ import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
-import { UniTokenModule } from "./uni-token/uni-token.module";
 
 @Module({
   providers: [
@@ -66,7 +65,6 @@ import { UniTokenModule } from "./uni-token/uni-token.module";
     AuthModule,
     Erc721Module,
     Erc1155Module,
-    UniTokenModule,
   ],
   controllers: [AppController],
 })

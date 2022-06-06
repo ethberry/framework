@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum Erc20VestingEventType {
   EtherReleased = "EtherReleased",
@@ -16,7 +16,7 @@ export interface IErc20VestingERC20Released {
 
 export type TErc20VestingEventData = IErc20VestingEtherReleased | IErc20VestingERC20Released;
 
-export interface IErc20VestingHistory extends IIdBase {
+export interface IErc20VestingHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc20VestingEventType;

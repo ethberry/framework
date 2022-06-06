@@ -21,7 +21,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
 
   const { id = "" } = useParams<{ id: string }>();
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSubmit, handleChangePage } =
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IErc721Template, IErc721TemplateSearchDto>({
       baseUrl: "/erc721-templates",
       embedded,
@@ -48,7 +48,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
       </PageHeader>
 
       <Erc721TemplateSearchForm
-        onSubmit={handleSubmit}
+        onSearch={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
         embedded={embedded}

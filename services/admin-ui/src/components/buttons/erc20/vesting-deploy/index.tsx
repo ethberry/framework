@@ -9,21 +9,22 @@ import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc20VestingTemplate, IErc20VestingDeployDto } from "@framework/types";
-import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import LinearVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
-import GradedVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
-import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
+
+import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import LinearVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
+import GradedVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
+import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { Erc20VestingDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc20VestingTemplate(template: Erc20VestingTemplate) {
   switch (template) {
     case Erc20VestingTemplate.LINEAR:
-      return LinearVesting.bytecode;
+      return LinearVestingSol.bytecode;
     case Erc20VestingTemplate.GRADED:
-      return GradedVesting.bytecode;
+      return GradedVestingSol.bytecode;
     case Erc20VestingTemplate.CLIFF:
-      return CliffVesting.bytecode;
+      return CliffVestingSol.bytecode;
     default:
       throw new Error("Unknown template");
   }
@@ -51,7 +52,7 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
+          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, library.getSigner());
           return contract.deployERC20Vesting(
             nonce,
             getBytecodeByErc20VestingTemplate(contractTemplate),
@@ -72,7 +73,7 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="erc20VestingDeployButton"
+        data-testid="Erc20VestingDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.add" />

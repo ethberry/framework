@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
-import { Close, Save } from "@mui/icons-material";
+import { Close, Check, CloudUpload } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { Erc1155RecipeStatus, IErc1155Recipe } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 
 export interface IErc1155RecipeButtonProps {
   recipe: IErc1155Recipe;
@@ -31,7 +31,7 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
     // TODO check one collection for ingredients
     const ingredientCollectionAddr = recipe.ingredients[0].erc1155Token.erc1155Collection!.address;
     const rewardCollectionAddr = recipe.erc1155Token!.erc1155Collection!.address;
-    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155CraftSol.abi, library.getSigner());
 
     return contract.createRecipe(
       recipe.id,
@@ -60,7 +60,7 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
       recipeStatus = recipe.recipeStatus !== Erc1155RecipeStatus.ACTIVE;
     }
 
-    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155CraftSol.abi, library.getSigner());
     return contract.updateRecipe(recipe.id, recipeStatus) as Promise<void>;
   });
 
@@ -75,8 +75,8 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
   if (recipe.recipeStatus === Erc1155RecipeStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.erc1155-recipes.upload" })}>
-        <IconButton onClick={handleLoadRecipe(recipe)}>
-          <Save />
+        <IconButton onClick={handleLoadRecipe(recipe)} data-testid="Erc1155RecipeUploadButton">
+          <CloudUpload />
         </IconButton>
       </Tooltip>
     );
@@ -91,8 +91,8 @@ export const Erc1155RecipeUploadButton: FC<IErc1155RecipeButtonProps> = props =>
             : "pages.erc1155-recipes.activate",
       })}
     >
-      <IconButton onClick={handleToggleRecipe(recipe)} data-testid="Erc1155RecipeUploadButton">
-        <Close />
+      <IconButton onClick={handleToggleRecipe(recipe)} data-testid="Erc1155RecipeToggleButton">
+        {recipe.recipeStatus === Erc1155RecipeStatus.ACTIVE ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

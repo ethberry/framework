@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ContractManagerEventType {
   ERC20VestingDeployed = "ERC20VestingDeployed",
@@ -44,7 +44,7 @@ export type TContractManagerEventData =
   | IContractManagerERC721TokenDeployed
   | IContractManagerERC1155TokenDeployed;
 
-export interface IContractManagerHistory extends IIdBase {
+export interface IContractManagerHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: ContractManagerEventType;

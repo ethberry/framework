@@ -12,7 +12,7 @@ export interface IRoyaltyDto {
 export interface IErc721CollectionRoyaltyEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IRoyaltyDto, formikBag: any) => Promise<void>;
+  onConfirm: (values: IRoyaltyDto, form: any) => Promise<void>;
   initialValues: IRoyaltyDto;
 }
 

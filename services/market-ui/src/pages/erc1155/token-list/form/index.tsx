@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { IErc1155TokenSearchDto } from "@framework/types";
@@ -10,14 +10,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
 interface IErc1155TokenSearchFormProps {
-  onSubmit: (values: any) => void;
+  onSearch: (values: any) => void;
   initialValues: IErc1155TokenSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
 export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, embedded } = props;
+  const { onSearch, initialValues, open, embedded } = props;
 
   const classes = useStyles();
 
@@ -25,9 +25,9 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
   const fixedValues = { query, erc1155CollectionIds, minPrice, maxPrice };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -53,7 +53,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
           ) : null}
         </Grid>
       </Collapse>
-      <AutoSave />
-    </FormikForm>
+      <AutoSave onSearch={onSearch} />
+    </FormWrapper>
   );
 };

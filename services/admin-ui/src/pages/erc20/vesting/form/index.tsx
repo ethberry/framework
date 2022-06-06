@@ -1,30 +1,30 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { Erc20VestingTemplate, IErc20VestingSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface IVestingSearchFormProps {
-  onSubmit: (values: IErc20VestingSearchDto) => void;
+  onSearch: (values: IErc20VestingSearchDto) => void;
   initialValues: IErc20VestingSearchDto;
   open: boolean;
 }
 
 export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSearch, initialValues, open } = props;
 
   const classes = useStyles();
 
-  const { query, vestingTemplate } = initialValues;
-  const fixedValues = { query, vestingTemplate };
+  const { query, contractTemplate } = initialValues;
+  const fixedValues = { query, contractTemplate };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -38,11 +38,11 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput name="vestingTemplate" options={Erc20VestingTemplate} multiple />
+            <SelectInput name="contractTemplate" options={Erc20VestingTemplate} multiple />
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave />
-    </FormikForm>
+      <AutoSave onSearch={onSearch} />
+    </FormWrapper>
   );
 };

@@ -1,13 +1,14 @@
 import * as Yup from "yup";
 
 import { draftValidationSchema, jsonValidationSchema } from "@gemunion/yup-rules";
+import { bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
 
 export const validationSchema = Yup.object().shape({
   title: Yup.string().required("form.validations.valueMissing"),
   description: draftValidationSchema,
   attributes: jsonValidationSchema,
   price: Yup.string().required("form.validations.valueMissing"),
-  amount: Yup.number().min(0).required("form.validations.valueMissing"),
-  erc1155CollectionId: Yup.mixed().defined().required("form.validations.valueMissing"),
+  amount: bigNumberValidationSchema,
+  erc1155CollectionId: Yup.mixed().defined("form.validations.valueMissing").required("form.validations.valueMissing"),
   imageUrl: Yup.string().required("form.validations.valueMissing"),
 });

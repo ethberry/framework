@@ -14,18 +14,24 @@ export class SeedErc721Recipe1648525970010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1,
-        1,
-        'ACTIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         4,
         null,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
-      );
+      ), (
+        5,
+        1,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        6,
+        1,
+        'INACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      )
     `);
   }
 

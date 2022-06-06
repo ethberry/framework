@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc721Collection } from "./collection";
 import { IErc721Airdrop } from "./airdrop";
@@ -9,7 +9,7 @@ export enum Erc721TemplateStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IErc721Template extends IIdBase {
+export interface IErc721Template extends IIdDateBase {
   title: string;
   description: string;
   imageUrl: string;

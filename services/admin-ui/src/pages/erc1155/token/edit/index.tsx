@@ -13,7 +13,7 @@ import { validationSchema } from "./validation";
 export interface IErc1155TokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc1155Token>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc1155Token>, form: any) => Promise<void>;
   initialValues: IErc1155Token;
 }
 

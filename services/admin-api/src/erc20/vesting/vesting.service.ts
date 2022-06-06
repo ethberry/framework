@@ -14,17 +14,19 @@ export class Erc20VestingService {
   ) {}
 
   public async search(dto: IErc20VestingSearchDto): Promise<[Array<Erc20VestingEntity>, number]> {
-    const { query, vestingTemplate, skip, take } = dto;
+    const { query, contractTemplate, skip, take } = dto;
 
     const queryBuilder = this.erc20VestingEntityRepository.createQueryBuilder("vesting");
 
     queryBuilder.select();
 
-    if (vestingTemplate) {
-      if (vestingTemplate.length === 1) {
-        queryBuilder.andWhere("vesting.contractTemplate = :contractTemplate", { contractTemplate: vestingTemplate[0] });
+    if (contractTemplate) {
+      if (contractTemplate.length === 1) {
+        queryBuilder.andWhere("vesting.contractTemplate = :contractTemplate", {
+          contractTemplate: contractTemplate[0],
+        });
       } else {
-        queryBuilder.andWhere("vesting.contractTemplate IN(:...contractTemplate)", { vestingTemplate });
+        queryBuilder.andWhere("vesting.contractTemplate IN(:...contractTemplate)", { contractTemplate });
       }
     }
 

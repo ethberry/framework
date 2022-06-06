@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum Erc1155MarketplaceEventType {
   Redeem = "Redeem",
@@ -22,7 +22,7 @@ export interface IErc1155MarketplaceRedeemSingle {
 
 export type TErc1155MarketplaceEventData = IErc1155MarketplaceRedeem;
 
-export interface IErc1155MarketplaceHistory extends IIdBase {
+export interface IErc1155MarketplaceHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc1155MarketplaceEventType;

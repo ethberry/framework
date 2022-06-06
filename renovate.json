@@ -2,4 +2,3 @@
   "extends": ["github>gemunion/renovate-config"],
   "baseBranches": ["dev"]
 }
-

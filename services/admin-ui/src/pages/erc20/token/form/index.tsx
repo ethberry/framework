@@ -1,20 +1,20 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { Erc20TokenStatus, IErc20TokenSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSubmit: (values: IErc20TokenSearchDto) => void;
+  onSearch: (values: IErc20TokenSearchDto) => void;
   initialValues: IErc20TokenSearchDto;
   open: boolean;
 }
 
 export const Erc20TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSearch, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -22,9 +22,9 @@ export const Erc20TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   const fixedValues = { query, tokenStatus };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -42,7 +42,7 @@ export const Erc20TokenSearchForm: FC<ITokenSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave />
-    </FormikForm>
+      <AutoSave onSearch={onSearch} />
+    </FormWrapper>
   );
 };

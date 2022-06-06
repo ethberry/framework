@@ -137,31 +137,31 @@ fi
   sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   rm $CURDIR/services/market-ui/.env.$BASE_MODE-e
 
-  echo "setting-up binance-RPC .env.$BASE_MODE"
+  echo "setting-up core-eth .env.$BASE_MODE"
 
-  cp $CURDIR/services/binance-rpc/.env.sample $CURDIR/services/binance-rpc/.env.$BASE_MODE
+  cp $CURDIR/services/core-eth/.env.sample $CURDIR/services/core-eth/.env.$BASE_MODE
 
-  sed -i -e "s/JSON_RPC_ADDR=.*/JSON_RPC_ADDR=$JSON_RPC_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/WEBSOCKET_ADDR=.*/WEBSOCKET_ADDR=$WEBSOCKET_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/CHAIN_ID=.*/CHAIN_ID=$CHAIN_ID/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
+  sed -i -e "s/JSON_RPC_ADDR=.*/JSON_RPC_ADDR=$JSON_RPC_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/WEBSOCKET_ADDR=.*/WEBSOCKET_ADDR=$WEBSOCKET_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/CHAIN_ID=.*/CHAIN_ID=$CHAIN_ID/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/core-eth/.env.$BASE_MODE
 
-  sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC20_COIN_ADDR=.*/ERC20_COIN_ADDR=$ERC20_COIN_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC20_COIN_BL_ADDR=.*/ERC20_COIN_BL_ADDR=$ERC20_COIN_BL_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_ITEM_ADDR=.*/ERC721_ITEM_ADDR=$ERC721_ITEM_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_HERO_ADDR=.*/ERC721_HERO_ADDR=$ERC721_HERO_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_SKILL_ADDR=.*/ERC721_SKILL_ADDR=$ERC721_SKILL_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_LAND_ADDR=.*/ERC721_LAND_ADDR=$ERC721_LAND_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_MARKETPLACE_ADDR=.*/ERC721_MARKETPLACE_ADDR=$ERC721_MARKETPLACE_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_CRAFT_ADDR=.*/ERC721_CRAFT_ADDR=$ERC721_CRAFT_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_DROPBOX_ADDR=.*/ERC721_DROPBOX_ADDR=$ERC721_DROPBOX_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC721_AIRDROP_ADDR=.*/ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC1155_RESOURCES_ADDR=.*/ERC1155_RESOURCES_ADDR=$ERC1155_RESOURCES_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC1155_CRAFT_ADDR=.*/ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/binance-rpc/.env.$BASE_MODE
-  rm $CURDIR/services/binance-rpc/.env.$BASE_MODE-e
+  sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC20_COIN_ADDR=.*/ERC20_COIN_ADDR=$ERC20_COIN_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC20_COIN_BL_ADDR=.*/ERC20_COIN_BL_ADDR=$ERC20_COIN_BL_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_ITEM_ADDR=.*/ERC721_ITEM_ADDR=$ERC721_ITEM_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_HERO_ADDR=.*/ERC721_HERO_ADDR=$ERC721_HERO_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_SKILL_ADDR=.*/ERC721_SKILL_ADDR=$ERC721_SKILL_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_LAND_ADDR=.*/ERC721_LAND_ADDR=$ERC721_LAND_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_MARKETPLACE_ADDR=.*/ERC721_MARKETPLACE_ADDR=$ERC721_MARKETPLACE_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_CRAFT_ADDR=.*/ERC721_CRAFT_ADDR=$ERC721_CRAFT_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_DROPBOX_ADDR=.*/ERC721_DROPBOX_ADDR=$ERC721_DROPBOX_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC721_AIRDROP_ADDR=.*/ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC1155_RESOURCES_ADDR=.*/ERC1155_RESOURCES_ADDR=$ERC1155_RESOURCES_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC1155_CRAFT_ADDR=.*/ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  rm $CURDIR/services/core-eth/.env.$BASE_MODE-e
 
   echo "setting-up admin-API .env.$BASE_MODE"
 

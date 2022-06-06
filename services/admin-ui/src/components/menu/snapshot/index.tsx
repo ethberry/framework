@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import ERC20Simple from "@framework/binance-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
 export interface IErc20TokenSnapshotMenuItemProps {
   address: string;
@@ -18,7 +18,7 @@ export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> =
   const { library } = useWeb3React();
 
   const handleSnapshot = useMetamask(() => {
-    const contract = new Contract(address, ERC20Simple.abi, library.getSigner());
+    const contract = new Contract(address, ERC20SimpleSol.abi, library.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 

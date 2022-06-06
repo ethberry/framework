@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc721Token } from "./token";
 
@@ -17,7 +17,7 @@ export interface IErc721MarketplaceRedeem {
 
 export type TErc721MarketplaceEventData = IErc721MarketplaceRedeem;
 
-export interface IErc721MarketplaceHistory extends IIdBase {
+export interface IErc721MarketplaceHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc721MarketplaceEventType;

@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 export const Seaport: FC = () => {
   return (
-    <Paper>
+    <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={

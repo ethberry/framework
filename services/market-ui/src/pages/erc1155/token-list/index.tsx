@@ -10,6 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Token } from "./item";
 import { Erc1155TokenSearchForm } from "./form";
+import {useParams} from "react-router";
 
 export interface IErc1155TokenListProps {
   embedded?: boolean;
@@ -17,14 +18,15 @@ export interface IErc1155TokenListProps {
 
 export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
   const { embedded } = props;
+  const { id } = useParams<{ id: string }>();
 
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSubmit, handleChangePage } =
+  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IErc1155Token, IErc1155TokenSearchDto>({
       baseUrl: "/erc1155-tokens",
       embedded,
       search: {
         query: "",
-        erc1155CollectionIds: [],
+        erc1155CollectionIds: [~~id!],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
       },
@@ -43,7 +45,7 @@ export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc1155TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <Erc1155TokenSearchForm onSearch={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

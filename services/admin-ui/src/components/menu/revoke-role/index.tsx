@@ -7,7 +7,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
-import erc721contract from "@framework/binance-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
+import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
 import { AccessControlRevokeRoleDialog, IRevokeRoleDto } from "./edit";
 
@@ -31,7 +31,7 @@ export const OzContractRevokeRoleMenuItem: FC<IOzContractRevokeRoleMenuItemProps
   };
 
   const meta = useMetamask((values: IRevokeRoleDto) => {
-    const contract = new Contract(address, erc721contract.abi, library.getSigner());
+    const contract = new Contract(address, IAccessControlSol.abi, library.getSigner());
     return contract.revokeRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 

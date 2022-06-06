@@ -23,7 +23,7 @@ export class Erc1155TokenEntity extends SearchableEntity implements IErc1155Toke
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @BigNumberColumn()
+  @Column({ type: "varchar" })
   public tokenId: string;
 
   @Column({

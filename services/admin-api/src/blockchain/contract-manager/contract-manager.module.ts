@@ -1,15 +1,18 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
-import { ContractManagerService } from "./contract-manager.service";
 import { ContractManagerController } from "./contract-manager.controller";
+import { ContractManagerSignService } from "./contract-manager.sign.service";
+import { ContractManagerService } from "./contract-manager.service";
+import { ContractManagerEntity } from "./contract-manager.entity";
 
 @Module({
-  imports: [ConfigModule],
-  providers: [ethersRpcProvider, ethersSignerProvider, ContractManagerService],
+  imports: [ConfigModule, TypeOrmModule.forFeature([ContractManagerEntity])],
+  providers: [Logger, ethersRpcProvider, ethersSignerProvider, ContractManagerSignService, ContractManagerService],
   controllers: [ContractManagerController],
-  exports: [ContractManagerService],
+  exports: [ContractManagerSignService, ContractManagerService],
 })
 export class ContractManagerModule {}

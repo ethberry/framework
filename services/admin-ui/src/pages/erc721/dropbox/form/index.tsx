@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { Erc721CollectionType, Erc721DropboxStatus, IErc721DropboxSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -9,13 +9,13 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 
 interface IDropboxSearchFormProps {
-  onSubmit: (values: IErc721DropboxSearchDto) => void;
+  onSearch: (values: IErc721DropboxSearchDto) => void;
   initialValues: IErc721DropboxSearchDto;
   open: boolean;
 }
 
 export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSearch, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -23,9 +23,9 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
   const fixedValues = { query, dropboxStatus, erc721CollectionIds };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -51,7 +51,7 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave />
-    </FormikForm>
+      <AutoSave onSearch={onSearch} />
+    </FormWrapper>
   );
 };

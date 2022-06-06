@@ -20,7 +20,31 @@ export class SeedErc721Ingredient1648525970040 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        1,
+        3,
+        10,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         2,
+        2,
+        10,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        2,
+        3,
+        10,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        3,
+        2,
+        10,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        3,
         3,
         10,
         '${currentDateTime}',

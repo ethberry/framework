@@ -13,7 +13,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc1155Recipe, IErc1155RecipeSearchDto } from "@framework/types";
-import ERC1155ERC1155Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 
 import { CraftTabs, ITabPanelProps } from "../tabs";
 import { Erc1155RecipeItem } from "../../erc1155/recipe-list/item";
@@ -25,7 +25,7 @@ export const Resources: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleSubmit, handleChangePage } = useCollection<
+  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<
     IErc1155Recipe,
     IErc1155RecipeSearchDto
   >({
@@ -56,7 +56,7 @@ export const Resources: FC<ITabPanelProps> = props => {
   };
 
   const metaApprove = useMetamask(() => {
-    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155CraftSol.abi, library.getSigner());
     return contract.setApprovalForAll(process.env.ERC1155_RESOURCES_ADDR, true).then(() => {
       enqueueSnackbar(formatMessage({ id: "snackbar.approved" }), { variant: "success" });
       setIsApproved(true);
@@ -79,7 +79,7 @@ export const Resources: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSubmit} initialValues={search} />
+      <CommonSearchForm onSearch={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

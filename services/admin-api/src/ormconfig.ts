@@ -11,6 +11,8 @@ import {
 
 import { UserEntity } from "./user/user.entity";
 import { OtpEntity } from "./otp/otp.entity";
+import { SettingsEntity } from "./settings/settings.entity";
+import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
 import { Erc721TemplateEntity } from "./erc721/template/template.entity";
@@ -67,12 +69,15 @@ import { CreateErc721RecipeHistory1648525970020 } from "./migrations/16485259700
 import { CreateErc721Ingredient1648525970030 } from "./migrations/1648525970030-create-erc721-ingredient-table";
 import { SeedErc721Ingredient1648525970040 } from "./migrations/1648525970040-seed-erc721-ingredient";
 import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
-import { CreateUniTokenView1652962207575 } from "./migrations/1652962207575-create-uni-token-view";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
+import { CreateContractManagerTable1652962207600 } from "./migrations/1652962207600-create-contract-manager-table";
+import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager-table";
 import { CreateAccessControlTable1653616447230 } from "./migrations/1653616447230-create-access-control-table";
 import { CreateAccessControlHistoryTable1653616447240 } from "./migrations/1653616447240-create-access-control-history-table";
 import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-create-seaport-table";
 import { CreateSeaportHistoryTable1653820928950 } from "./migrations/1653820928950-create-seaport-history-table";
+import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
+import { SeedSettingsTable1654437010010 } from "./migrations/1654437010010-seed-settings-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -82,6 +87,8 @@ const config: PostgresConnectionOptions = {
   entities: [
     UserEntity,
     OtpEntity,
+    SettingsEntity,
+    ContractManagerEntity,
     AccessControlEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
@@ -157,11 +164,14 @@ const config: PostgresConnectionOptions = {
     CreateErc721Ingredient1648525970030,
     SeedErc721Ingredient1648525970040,
     CreateContractManagerHistoryTable1652682493386,
-    CreateUniTokenView1652962207575,
     CreateAccessControlTable1653616447230,
     CreateAccessControlHistoryTable1653616447240,
     CreateSeaportTable1653820928940,
     CreateSeaportHistoryTable1653820928950,
+    CreateContractManagerTable1652962207600,
+    SeedContractManager1652962207610,
+    CreateSettingsTable1654437010000,
+    SeedSettingsTable1654437010010,
   ],
 };
 

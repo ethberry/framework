@@ -9,15 +9,16 @@ import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc1155TokenTemplate, IErc1155CollectionDeployDto } from "@framework/types";
-import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import ERC1155Simple from "@framework/binance-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+
+import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 import { Erc1155TokenDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc1155TokenTemplate(template: Erc1155TokenTemplate) {
   switch (template) {
     case Erc1155TokenTemplate.SIMPLE:
-      return ERC1155Simple.bytecode;
+      return ERC1155SimpleSol.bytecode;
     default:
       throw new Error("Unknown template");
   }
@@ -45,7 +46,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
+          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, library.getSigner());
 
           return contract.deployERC1155Token(
             nonce,
@@ -65,7 +66,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="erc1155TokenDeployButton"
+        data-testid="Erc1155TokenDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.add" />

@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc721Template } from "./template";
 import { IErc721TokenHistory } from "./token-history";
@@ -18,7 +18,7 @@ export enum TokenRarity {
   LEGENDARY = "LEGENDARY",
 }
 
-export interface IErc721Token extends IIdBase {
+export interface IErc721Token extends IIdDateBase {
   attributes: any;
   rarity: TokenRarity;
   tokenId: string;

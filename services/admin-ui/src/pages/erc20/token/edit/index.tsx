@@ -11,7 +11,7 @@ import { BlockchainInfoPopover } from "../../../../components/popover";
 export interface IErc20TokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc20Token>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc20Token>, form: any) => Promise<void>;
   initialValues: IErc20Token;
 }
 

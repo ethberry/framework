@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc1155Token } from "./token";
 import { IErc1155Ingredient } from "./ingredient";
@@ -10,7 +10,7 @@ export enum Erc1155RecipeStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IErc1155Recipe extends IIdBase {
+export interface IErc1155Recipe extends IIdDateBase {
   erc1155TokenId: number;
   erc1155Token?: IErc1155Token;
   ingredients: Array<IErc1155Ingredient>;

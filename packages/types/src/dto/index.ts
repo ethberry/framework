@@ -1,3 +1,5 @@
+export * from "./contract/search";
+
 export * from "./auth/login";
 export * from "./auth/password";
 

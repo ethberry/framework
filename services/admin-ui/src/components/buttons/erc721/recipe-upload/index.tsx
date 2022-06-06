@@ -1,14 +1,14 @@
 import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
-import { Close, Save } from "@mui/icons-material";
+import { Close, Check, CloudUpload } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { Erc721RecipeStatus, IErc721Recipe } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC1155ERC721Craft from "@framework/binance-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
+import ERC1155ERC721CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
 
 export interface IErc721RecipeButtonProps {
   recipe: IErc721Recipe;
@@ -28,7 +28,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
     const ids = recipe.ingredients.map(ingredient => ingredient.erc1155TokenId);
     const amounts = recipe.ingredients.map(ingredient => ingredient.amount);
 
-    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721CraftSol.abi, library.getSigner());
     return contract.createRecipe(
       recipe.id,
       recipe.ingredients[0]!.erc1155Token.erc1155Collection!.address,
@@ -59,7 +59,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
       recipeStatus = recipe.recipeStatus !== Erc721RecipeStatus.ACTIVE;
     }
 
-    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721Craft.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721CraftSol.abi, library.getSigner());
     return contract.updateRecipe(recipe.id, recipeStatus) as Promise<void>;
   });
 
@@ -74,8 +74,8 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
   if (recipe.recipeStatus === Erc721RecipeStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.erc721-recipes.upload" })}>
-        <IconButton onClick={handleLoadRecipe(recipe)}>
-          <Save />
+        <IconButton onClick={handleLoadRecipe(recipe)} data-testid="Erc721RecipeUploadButton">
+          <CloudUpload />
         </IconButton>
       </Tooltip>
     );
@@ -90,8 +90,8 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
             : "pages.erc721-recipes.activate",
       })}
     >
-      <IconButton onClick={handleToggleRecipe(recipe)} data-testid="Erc721RecipeUploadButton">
-        <Close />
+      <IconButton onClick={handleToggleRecipe(recipe)} data-testid="Erc721RecipeToggleButton">
+        {recipe.recipeStatus === Erc721RecipeStatus.ACTIVE ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

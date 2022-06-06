@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum AccessControlRoleType {
   DEFAULT_ADMIN_ROLE = "DEFAULT_ADMIN_ROLE",
@@ -18,7 +18,7 @@ export enum AccessControlRoleHash {
   DEPOSITOR_ROLE = "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9",
 }
 
-export interface IAccessControl extends IIdBase {
+export interface IAccessControl extends IIdDateBase {
   address: string;
   wallet: string;
   role: AccessControlRoleType;

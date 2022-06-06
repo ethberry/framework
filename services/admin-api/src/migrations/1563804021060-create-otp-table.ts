@@ -27,6 +27,7 @@ export class CreateOtpTable1563804021060 implements MigrationInterface {
         {
           name: "data",
           type: `json`,
+          isNullable: true,
         },
         {
           name: "user_id",

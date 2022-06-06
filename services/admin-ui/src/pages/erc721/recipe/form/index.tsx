@@ -1,20 +1,20 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { Erc721RecipeStatus, IErc721RecipeSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface IRecipeSearchFormProps {
-  onSubmit: (values: IErc721RecipeSearchDto) => void;
+  onSearch: (values: IErc721RecipeSearchDto) => void;
   initialValues: IErc721RecipeSearchDto;
   open: boolean;
 }
 
 export const Erc721RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+  const { onSearch, initialValues, open } = props;
 
   const classes = useStyles();
 
@@ -22,9 +22,9 @@ export const Erc721RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
   const fixedValues = { query, recipeStatus };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
-      onSubmit={onSubmit}
+      onSubmit={onSearch}
       showButtons={false}
       showPrompt={false}
       className={classes.root}
@@ -42,7 +42,7 @@ export const Erc721RecipeSearchForm: FC<IRecipeSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave />
-    </FormikForm>
+      <AutoSave onSearch={onSearch} />
+    </FormWrapper>
   );
 };

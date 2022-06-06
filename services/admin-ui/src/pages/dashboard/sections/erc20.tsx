@@ -6,12 +6,12 @@ import { FormattedMessage } from "react-intl";
 
 export const Erc20Sections: FC = () => {
   return (
-    <Paper>
+    <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.tokens.erc20" />
+            <FormattedMessage id="pages.dashboard.erc20.title" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Erc20Sections: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc20-tokens" />
+            <FormattedMessage id="pages.dashboard.erc20.tokens" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc20-vesting">
@@ -28,7 +28,7 @@ export const Erc20Sections: FC = () => {
             <Savings />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc20-vesting" />
+            <FormattedMessage id="pages.dashboard.erc20.vesting" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc20-staking">
@@ -36,7 +36,7 @@ export const Erc20Sections: FC = () => {
             <Casino />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.tokens.erc20-staking" />
+            <FormattedMessage id="pages.dashboard.erc20.staking" />
           </ListItemText>
         </ListItem>
       </List>

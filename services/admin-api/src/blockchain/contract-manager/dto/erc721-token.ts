@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength } from "class-validator";
+import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/types";
@@ -31,6 +31,7 @@ export class Erc721TokenDeployDto implements IErc721CollectionDeployDto {
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
-  @Max(10000, { message: "rangeOverflow" })
+  @Min(0, { message: "rangeUnderflow" })
+  @Max(1000, { message: "rangeOverflow" })
   public royalty: number;
 }

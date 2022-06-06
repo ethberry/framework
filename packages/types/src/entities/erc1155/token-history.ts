@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum Erc1155TokenEventType {
   TransferSingle = "TransferSingle",
@@ -49,7 +49,7 @@ export type TErc1155TokenEventData =
   | IErc1155TokenUri
   | IErc1155RoleGrant;
 
-export interface IErc1155TokenHistory extends IIdBase {
+export interface IErc1155TokenHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc1155TokenEventType;

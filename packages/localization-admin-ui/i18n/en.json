@@ -44,7 +44,7 @@
     "collectionStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
-      "PENDING": "Pending"
+      "NEW": "New"
     },
     "collectionType": {
       "AIRDROP": "Airdrop",
@@ -62,6 +62,9 @@
     "dropboxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
+    },
+    "emailType": {
+      "DUMMY": "Test email"
     },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
@@ -83,11 +86,11 @@
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
+      "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
       "MINTER_ROLE": "MINTER_ROLE",
       "PAUSER_ROLE": "PAUSER_ROLE",
-      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE",
       "PREDICATE_ROLE": "PREDICATE_ROLE",
-      "DEPOSITOR_ROLE": "DEPOSITOR_ROLE"
+      "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
     },
     "templateStatus": {
       "ACTIVE": "Active",
@@ -152,6 +155,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "DUMMY": "Dummy",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -217,6 +221,7 @@
       "year": "Year"
     },
     "placeholders": {
+      "DUMMY": "Dummy",
       "address": "0x...",
       "amount": "10",
       "attributes": "{}",
@@ -301,31 +306,40 @@
     },
     "dashboard": {
       "admin": {
+        "emails": "Emails",
+        "settings": "Settings",
         "title": "Admin",
         "users": "Users"
       },
       "blockchain": {
-        "title": "Blockchain",
-        "seaport": "Seaport settings"
+        "seaport": "Seaport settings",
+        "title": "Blockchain"
       },
-      "title": "Dashboard",
-      "tokens": {
-        "erc1155": "ERC1155",
-        "erc1155-collections": "ERC1155 Collections",
-        "erc1155-recipes": "ERC1155 Recipes",
-        "erc1155-tokens": "ERC1155 Tokens",
-        "erc20": "ERC20",
-        "erc20-staking": "ERC20 Staking",
-        "erc20-tokens": "ERC20 Tokens",
-        "erc20-vesting": "ERC20 Vesting",
-        "erc721": "ERC721",
-        "erc721-airdrop": "ERC721 Airdrop",
-        "erc721-collections": "ERC721 Collections",
-        "erc721-dropbox": "ERC721 Dropbox",
-        "erc721-recipes": "ERC721 Recipes",
-        "erc721-templates": "ERC721 Templates",
-        "erc721-tokens": "ERC721 Tokens"
-      }
+      "erc1155": {
+        "collections": "ERC1155 Collections",
+        "recipes": "ERC1155 Recipes",
+        "title": "ERC1155",
+        "tokens": "ERC1155 Tokens"
+      },
+      "erc20": {
+        "staking": "ERC20 Staking",
+        "title": "ERC20",
+        "tokens": "ERC20 Tokens",
+        "vesting": "ERC20 Vesting"
+      },
+      "erc721": {
+        "airdrop": "ERC721 Airdrop",
+        "collections": "ERC721 Collections",
+        "dropbox": "ERC721 Dropbox",
+        "recipes": "ERC721 Recipes",
+        "templates": "ERC721 Templates",
+        "title": "ERC721",
+        "tokens": "ERC721 Tokens"
+      },
+      "title": "Dashboard"
+    },
+    "emails": {
+      "title": "Emails"
     },
     "erc1155-collections": {
       "title": "ERC1155 Collections"
@@ -395,6 +409,12 @@
     },
     "recipes": {
       "title": "Craft"
+    },
+    "seaport": {
+      "title": "Seaport"
+    },
+    "settings": {
+      "title": "Settings"
     },
     "users": {
       "title": "Users"
