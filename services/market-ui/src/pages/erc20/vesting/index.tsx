@@ -6,16 +6,15 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { Contract } from "ethers";
 
-import { ApiError, useApi } from "@gemunion/provider-api";
+import { ApiError } from "@gemunion/provider-api";
+import { useApiCall } from "@gemunion/react-hooks";
 import { useWallet } from "@gemunion/provider-wallet";
 import { Spinner } from "@gemunion/mui-page-layout";
-import { useMetamask } from "@gemunion/react-hooks";
+import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc20Vesting } from "@framework/types";
-
-import CliffVesting from "@framework/binance-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
+import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
 
 export const Erc20Vesting: FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [vesting, setVesting] = useState<IErc20Vesting | null>(null);
 
   const { library, active, account } = useWeb3React();
@@ -23,18 +22,21 @@ export const Erc20Vesting: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { openConnectWalletDialog } = useWallet();
 
-  const api = useApi();
+  const { fn, isLoading } = useApiCall(
+    async api => {
+      return api.fetchJson({
+        url: `/erc20-vesting/${account as string}`,
+      });
+    },
+    { success: false, error: false },
+  );
 
-  const fetchDropbox = async (): Promise<void> => {
+  const fetchVesting = async (): Promise<void> => {
     if (!active) {
       return;
     }
 
-    setIsLoading(true);
-    return api
-      .fetchJson({
-        url: `/erc20-vesting/${account as string}`,
-      })
+    return fn()
       .then((json: IErc20Vesting) => {
         setVesting(json);
       })
@@ -47,14 +49,11 @@ export const Erc20Vesting: FC = () => {
           console.error(e);
           enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 
   const metaClick = useMetamask((vesting: IErc20Vesting) => {
-    const contract = new Contract(vesting.address, CliffVesting.abi, library.getSigner());
+    const contract = new Contract(vesting.address, CliffVestingSol.abi, library.getSigner());
 
     return contract.release(vesting.address) as Promise<void>;
   });
@@ -70,7 +69,7 @@ export const Erc20Vesting: FC = () => {
   };
 
   useEffect(() => {
-    void fetchDropbox();
+    void fetchVesting();
   }, [active, account]);
 
   if (!active) {

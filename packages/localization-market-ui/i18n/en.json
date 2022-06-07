@@ -21,15 +21,25 @@
   },
   "dialogs": {
     "add": "Add",
+    "auction": "Sell `{title}` on auction",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
-    "edit": "Edit"
+    "edit": "Edit",
+    "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?"
   },
   "enums": {
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "rarity": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon",
+      "UNKNOWN": "Unknown"
     },
     "sort": {
       "createdAt": "Date",
@@ -70,6 +80,7 @@
       "login": "Login",
       "logout": "Logout",
       "next": "Next",
+      "nonce": "Increment nonce",
       "ok": "Ok",
       "save": "Save",
       "search": "Search",
@@ -92,10 +103,13 @@
       "dateRangeStart": "From",
       "displayName": "Display name",
       "email": "Email",
+      "endDate": "End date",
       "erc1155CollectionId": "Collections",
       "erc1155CollectionIds": "Collections",
       "erc1155TokenId": "Token",
       "erc1155TokenIds": "Token",
+      "erc20Token": "Token",
+      "erc20TokenId": "Token",
       "erc721CollectionId": "Collections",
       "erc721CollectionIds": "Collections",
       "erc721TokenId": "Token",
@@ -103,12 +117,13 @@
       "externalId": "External ID",
       "imageUrl": "Avatar",
       "language": "Language",
-      "maxPrice": "Max. price",
-      "minPrice": "Min. price",
+      "maxAmount": "Max. price",
+      "minAmount": "Min. price",
       "password": "Password",
       "rarity": "Rarity",
       "roles": "Roles",
       "sort": "Sort by",
+      "startDate": "Start date",
       "status": "Status",
       "title": "Title",
       "type": "Type",
@@ -124,15 +139,18 @@
       "erc1155CollectionIds": "Collections",
       "erc1155TokenId": "Token",
       "erc1155TokenIds": "Token",
+      "erc20Token": "Token",
+      "erc20TokenId": "Token",
       "erc721CollectionId": "Collections",
       "erc721CollectionIds": "Collections",
       "erc721TokenId": "Token",
       "erc721TokenIds": "Token",
-      "maxPrice": "100",
-      "minPrice": "0.01",
+      "maxAmount": "100",
+      "minAmount": "0.01",
       "password": "******",
       "query": "Search...",
-      "search": "Search..."
+      "search": "Search...",
+      "token": "Token"
     },
     "tips": {
       "add": "Add",
@@ -173,6 +191,9 @@
       },
       "title": "My assets"
     },
+    "auctions": {
+      "title": "Secondary marketplace"
+    },
     "craft": {
       "tabs": {
         "heroes": "Heroes",
@@ -182,26 +203,36 @@
       "title": "Craft"
     },
     "dashboard": {
-      "sections": {
+      "erc1155": {
+        "collections": "ERC1155 Collections",
+        "recipes": "ERC1155 Recipes",
+        "title": "ERC1155",
+        "tokens": "ERC1155 Tokens"
+      },
+      "erc20": {
+        "staking": "ERC20 Staking",
+        "title": "ERC20",
+        "vesting": "ERC20 Vesting"
+      },
+      "erc721": {
+        "airdrop": "ERC721 Airdrop",
+        "collections": "ERC721 Collections",
+        "templates": "ERC721 Templates",
+        "title": "ERC721",
+        "tokens": "ERC721 Tokens"
+      },
+      "personal": {
         "assets": "My assets",
+        "auctions": "My auctions",
+        "title": "My stash"
+      },
+      "sections": {
+        "auctions": "Secondary marketplace",
         "craft": "Craft",
-        "leaderboard": "Leaderboard",
         "marketplace": "Primary marketplace",
         "title": "Sections"
       },
-      "title": "Dashboard",
-      "tokens": {
-        "erc1155-collections": "ERC1155 Collections",
-        "erc1155-recipes": "ERC1155 Recipes",
-        "erc1155-tokens": "ERC1155 Tokens",
-        "erc1155-tokens-test": "ERC1155 Tokens test",
-        "erc20-vesting": "ERC20 Vesting",
-        "erc721-airdrop": "ERC721 Airdrop",
-        "erc721-collections": "ERC721 Collections",
-        "erc721-templates": "ERC721 Templates",
-        "erc721-tokens": "ERC721 Tokens",
-        "title": "Tokens"
-      }
+      "title": "Dashboard"
     },
     "erc1155-collection": {
       "title": "ERC1155 Collection: {title}"
@@ -218,6 +249,12 @@
     },
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
+    },
+    "erc20-staking": {
+      "address": "Address",
+      "rank": "Rank",
+      "score": "Score",
+      "title": "Leaderboard"
     },
     "erc20-vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
@@ -266,12 +303,6 @@
       "erc721-new": "New 721 Templates",
       "popular": "Popular items"
     },
-    "leaderboard": {
-      "address": "Address",
-      "rank": "Rank",
-      "score": "Score",
-      "title": "Leaderboard"
-    },
     "marketplace": {
       "heroes": {
         "title": "Heroes"
@@ -301,11 +332,15 @@
       },
       "title": "Primary market"
     },
+    "my-auctions": {
+      "title": "My auctions"
+    },
     "profile": {
       "title": "Profile"
     }
   },
   "snackbar": {
+    "success": "Success",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "denied": "Denied by user",

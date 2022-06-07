@@ -10,7 +10,7 @@ import { validationSchema } from "./validation";
 export interface IErc20TokenDeployDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc20Token>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc20Token>, form: any) => Promise<void>;
 }
 
 export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props => {
@@ -18,7 +18,7 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
     contractTemplate: Erc20TokenTemplate.SIMPLE,
     name: "",
     symbol: "",
-    cap: "0",
+    cap: "1000000",
   };
 
   return (

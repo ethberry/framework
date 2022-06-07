@@ -39,9 +39,9 @@ Market-ui
 ```shell script
 npm run --prefix ./services/market-ui start
 ```
-Binance-Rpc
+Core-eth
 ```shell script
-npm run --prefix ./services/binance-rpc start
+npm run --prefix ./services/core-eth start
 ```
 
 ## API docs

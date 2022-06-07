@@ -10,18 +10,17 @@ import { Ingredients } from "./ingredients";
 export interface IRecipeTokenDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc1155Recipe>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc1155Recipe>, form: any) => Promise<void>;
   initialValues: IErc1155Recipe;
 }
 
 export const Erc1155RecipeEditDialog: FC<IRecipeTokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, erc1155TokenId, ingredients, recipeStatus } = initialValues;
+  const { id, erc1155TokenId, ingredients } = initialValues;
   const fixedValues = {
     id,
     erc1155TokenId,
-    recipeStatus,
     ingredients: ingredients.map(({ erc1155TokenId, amount }) => ({ erc1155TokenId, amount })),
   };
 

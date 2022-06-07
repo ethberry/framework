@@ -9,8 +9,10 @@ import { LocalizationProvider } from "@gemunion/provider-localization";
 import { PopupProvider } from "@gemunion/provider-popup";
 import { WalletProvider } from "@gemunion/provider-wallet";
 import { ApiProvider } from "@gemunion/provider-api";
+import { PickerProvider } from "@gemunion/mui-provider-picker";
 import { i18n } from "@framework/localization-market-ui";
 import { EnabledLanguages } from "@framework/constants";
+import { SeaportProvider } from "../components/providers/seaport";
 
 export const Providers: FC = props => {
   const { children } = props;
@@ -23,7 +25,11 @@ export const Providers: FC = props => {
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <SnackbarProvider>
                   <PopupProvider>
-                    <WalletProvider>{children}</WalletProvider>
+                    <WalletProvider>
+                      <SeaportProvider contractAddress={process.env.SEAPORT_ADDR}>
+                        <PickerProvider>{children}</PickerProvider>
+                      </SeaportProvider>
+                    </WalletProvider>
                   </PopupProvider>
                 </SnackbarProvider>
               </LocalizationProvider>

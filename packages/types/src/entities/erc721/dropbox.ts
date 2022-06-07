@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc721Collection } from "./collection";
 import { IErc721Template } from "./template";
@@ -8,7 +8,7 @@ export enum Erc721DropboxStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IErc721Dropbox extends IIdBase {
+export interface IErc721Dropbox extends IIdDateBase {
   title: string;
   description: string;
   imageUrl: string;

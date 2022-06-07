@@ -13,7 +13,7 @@ import { validationSchema } from "./validation";
 export interface IErc721DropboxEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc721Dropbox>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc721Dropbox>, form: any) => Promise<void>;
   initialValues: IErc721Dropbox;
 }
 

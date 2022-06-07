@@ -21,6 +21,7 @@ export class Erc1155MarketplaceService {
   public async signToken(dto: ISignTokensDto): Promise<IServerSignature> {
     let totalTokenPrice = utils.parseEther("0");
     const collections: Array<string> = [];
+    const tokenIds: Array<number> = [];
     await Promise.all(
       dto.erc1155TokenIds.map(async (erc1155TokenId, index) => {
         const tokenEntity = await this.erc1155TokenService.findOne(
@@ -39,6 +40,7 @@ export class Erc1155MarketplaceService {
         const tokenPrice = BigNumber.from(tokenEntity.price).mul(dto.amounts[index]);
         totalTokenPrice = totalTokenPrice.add(tokenPrice);
         collections.push(tokenEntity.erc1155Collection.address);
+        tokenIds.push(~~tokenEntity.tokenId);
       }),
     );
 
@@ -50,11 +52,11 @@ export class Erc1155MarketplaceService {
     const signData = {
       nonce: utils.randomBytes(32),
       collection: collections[0].toLowerCase(),
-      tokenIds: dto.erc1155TokenIds,
+      tokenIds,
       amounts: dto.amounts,
       price: totalTokenPrice,
     };
-
+    console.log("signData", signData);
     const signature = await Promise.resolve(this.getSign(signData));
     return { nonce: utils.hexlify(signData.nonce), signature };
   }
@@ -64,7 +66,7 @@ export class Erc1155MarketplaceService {
       {
         name: "ERC1155Marketplace",
         version: "1.0.0",
-        chainId: ~~this.configService.get<number>("CHAIN_ID", 97),
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
         verifyingContract: this.configService.get<string>("ERC1155_MARKETPLACE_ADDR", ""),
       },
       prepareEip712(data),

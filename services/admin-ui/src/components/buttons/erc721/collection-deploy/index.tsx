@@ -7,25 +7,26 @@ import { Contract, utils } from "ethers";
 
 import { useApi } from "@gemunion/provider-api";
 import { IServerSignature } from "@gemunion/types-collection";
-import { useDeploy } from "@gemunion/react-hooks";
+import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/types";
-import ContractManager from "@framework/binance-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import ERC721Simple from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC721Graded from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC721RandomTest from "@framework/binance-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
-// import ERC721Random from "@framework/binance-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+
+import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
+import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC721GradedSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
+import ERC721RandomTestSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+// import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 
 import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
   switch (template) {
     case Erc721TokenTemplate.SIMPLE:
-      return ERC721Simple.bytecode;
+      return ERC721SimpleSol.bytecode;
     case Erc721TokenTemplate.GRADED:
-      return ERC721Graded.bytecode;
+      return ERC721GradedSol.bytecode;
     case Erc721TokenTemplate.RANDOM:
-      return ERC721RandomTest.bytecode;
-    // return ERC721Random.bytecode;
+      return ERC721RandomTestSol.bytecode;
+    // return ERC721RandomSol.bytecode;
     default:
       throw new Error("Unknown template");
   }
@@ -53,7 +54,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManager.abi, library.getSigner());
+          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, library.getSigner());
           return contract.deployERC721Token(
             nonce,
             getBytecodeByErc721TokenTemplate(contractTemplate),
@@ -75,7 +76,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="erc721TokenDeployButton"
+        data-testid="Erc721TokenDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.add" />

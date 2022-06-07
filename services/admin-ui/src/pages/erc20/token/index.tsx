@@ -40,7 +40,7 @@ export const Erc20Token: FC = () => {
     handleDelete,
     handleDeleteCancel,
     handleDeleteConfirm,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
   } = useCollection<IErc20Token, IErc20TokenSearchDto>({
     baseUrl: "/erc20-tokens",
@@ -53,7 +53,7 @@ export const Erc20Token: FC = () => {
       query: "",
       tokenStatus: [Erc20TokenStatus.ACTIVE],
     },
-    filter: ({ description, tokenStatus }) => ({ description, tokenStatus }),
+    filter: ({ title, description, tokenStatus }) => ({ title, description, tokenStatus }),
   });
 
   return (
@@ -70,7 +70,7 @@ export const Erc20Token: FC = () => {
         <Erc20TokenDeployButton />
       </PageHeader>
 
-      <Erc20TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc20TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

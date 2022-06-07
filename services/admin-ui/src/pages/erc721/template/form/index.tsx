@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { Erc721TemplateStatus, IErc721TemplateSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -23,7 +23,7 @@ export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
   const fixedValues = { query, templateStatus, erc721CollectionIds };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSubmit}
       showButtons={false}
@@ -46,7 +46,7 @@ export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
           </Grid>
         </Grid>
       </Collapse>
-      <AutoSave />
-    </FormikForm>
+      <AutoSave onSubmit={onSubmit} />
+    </FormWrapper>
   );
 };

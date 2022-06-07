@@ -1,6 +1,7 @@
 export * from "./auth";
 export * from "./otp";
 export * from "./user";
+export * from "./settings";
 export * from "./leaderboard";
 
 export * from "./erc20/token";
@@ -29,4 +30,8 @@ export * from "./erc1155/token-history";
 export * from "./erc1155/recipe";
 export * from "./erc1155/recipe-history";
 
-export * from "./contract-manager-history";
+export * from "./blockchain/access-control";
+export * from "./blockchain/access-control-history";
+
+export * from "./blockchain/contract-manager-history";
+export * from "./blockchain/contract-manager";

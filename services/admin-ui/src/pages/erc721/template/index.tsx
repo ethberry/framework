@@ -39,7 +39,7 @@ export const Erc721Template: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IErc721Template, IErc721TemplateSearchDto>({
@@ -85,7 +85,7 @@ export const Erc721Template: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721TemplateSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc721TemplateSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

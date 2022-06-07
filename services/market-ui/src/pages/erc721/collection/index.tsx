@@ -56,7 +56,7 @@ export const Erc721Collection: FC = () => {
         </Box>
       </Box>
 
-      <Erc721TemplateList embedded={true} />
+      <Erc721TemplateList embedded />
     </Fragment>
   );
 };

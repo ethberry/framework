@@ -1,18 +1,19 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 import { IErc721Token } from "./token";
 
 export enum Erc721TokenEventType {
-  Transfer = "Transfer",
   Approval = "Approval",
   ApprovalForAll = "ApprovalForAll",
   DefaultRoyaltyInfo = "DefaultRoyaltyInfo",
-  TokenRoyaltyInfo = "TokenRoyaltyInfo",
-  UnpackDropbox = "UnpackDropbox",
-  UnpackAirdrop = "UnpackAirdrop",
-  RedeemAirdrop = "RedeemAirdrop",
   MintRandom = "MintRandom",
-  RoleGranted = "RoleGranted",
-  RoleRevoked = "RoleRevoked",
+  Paused = "Paused",
+  RandomRequest = "RandomRequest",
+  RedeemAirdrop = "RedeemAirdrop",
+  TokenRoyaltyInfo = "TokenRoyaltyInfo",
+  Transfer = "Transfer",
+  UnpackAirdrop = "UnpackAirdrop",
+  UnpackDropbox = "UnpackDropbox",
+  Unpaused = "Unpaused",
 }
 
 export interface IErc721TokenTransfer {
@@ -73,12 +74,6 @@ export interface IErc721AirdropRedeem {
   price: string;
 }
 
-export interface IErc721RoleGrant {
-  role: string;
-  account: string;
-  sender: string;
-}
-
 // dev random test
 export interface IErc721RandomRequest {
   requestId: string;
@@ -93,11 +88,10 @@ export type TErc721TokenEventData =
   | IErc721DropboxUnpack
   | IErc721AirdropUnpack
   | IErc721AirdropRedeem
-  | IErc721RoleGrant
   | IErc721TokenMintRandom
   | IErc721RandomRequest;
 
-export interface IErc721TokenHistory extends IIdBase {
+export interface IErc721TokenHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc721TokenEventType;

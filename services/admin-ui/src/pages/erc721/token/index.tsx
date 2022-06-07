@@ -32,7 +32,7 @@ export const Erc721Token: FC = () => {
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
   } = useCollection<IErc721Token, IErc721TokenSearchDto>({
     baseUrl: "/erc721-tokens",
@@ -62,7 +62,7 @@ export const Erc721Token: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc721TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc721Template } from "./template";
 import { IErc721Token } from "./token";
@@ -9,7 +9,7 @@ export enum Erc721AirdropStatus {
   UNPACKED = "UNPACKED",
 }
 
-export interface IErc721Airdrop extends IIdBase {
+export interface IErc721Airdrop extends IIdDateBase {
   owner: string;
   erc721TemplateId: number;
   erc721Template?: IErc721Template;

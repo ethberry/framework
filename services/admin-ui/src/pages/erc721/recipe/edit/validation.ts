@@ -1,7 +1,8 @@
 import * as Yup from "yup";
+import { bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
 
 export const validationSchema2 = Yup.object().shape({
-  amount: Yup.number().min(0).required("form.validations.valueMissing"),
+  amount: bigNumberValidationSchema,
   erc1155TokenId: Yup.mixed().defined().required("form.validations.valueMissing"),
 });
 

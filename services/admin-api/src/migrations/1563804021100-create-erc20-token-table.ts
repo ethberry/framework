@@ -46,6 +46,10 @@ export class CreateErc20TokenTable1563804021100 implements MigrationInterface {
           default: "'SIMPLE'",
         },
         {
+          name: "name",
+          type: "varchar",
+        },
+        {
           name: "symbol",
           type: "varchar",
         },

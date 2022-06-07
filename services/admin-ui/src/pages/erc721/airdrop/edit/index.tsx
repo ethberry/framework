@@ -10,7 +10,7 @@ import { validationSchema, validationSchema2 } from "./validation";
 export interface IErc721AirdropEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc721Airdrop>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc721Airdrop>, form: any) => Promise<void>;
   initialValues: IErc721Airdrop;
 }
 

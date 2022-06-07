@@ -39,7 +39,7 @@ export const Erc1155Token: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IErc1155Token, IErc1155TokenSearchDto>({
@@ -79,7 +79,7 @@ export const Erc1155Token: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc1155TokenSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc1155TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

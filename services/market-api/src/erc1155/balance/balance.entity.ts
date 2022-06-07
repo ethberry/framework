@@ -2,13 +2,13 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { BigNumber } from "ethers";
 
 import { ns } from "@framework/constants";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IErc1155Balance } from "@framework/types";
 
 import { Erc1155TokenEntity } from "../token/token.entity";
 
 @Entity({ schema: ns, name: "erc1155_balance" })
-export class Erc1155BalanceEntity extends IdBaseEntity implements IErc1155Balance {
+export class Erc1155BalanceEntity extends IdDateBaseEntity implements IErc1155Balance {
   @Column({ type: "varchar" })
   public wallet: string;
 

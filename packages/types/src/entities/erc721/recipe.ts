@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc721Ingredient } from "./ingredient";
 import { IErc721RecipeHistory } from "./recipe-history";
@@ -11,7 +11,7 @@ export enum Erc721RecipeStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IErc721Recipe extends IIdBase {
+export interface IErc721Recipe extends IIdDateBase {
   erc721TemplateId: number | null;
   erc721Template?: IErc721Template;
   erc721DropboxId: number | null;

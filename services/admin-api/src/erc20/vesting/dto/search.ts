@@ -16,7 +16,7 @@ export class Erc20VestingSearchDto extends SearchDto implements IErc20VestingSea
   @IsArray({ message: "typeMismatch" })
   @Transform(({ value }) => value as Array<Erc20VestingTemplate>)
   @IsEnum(Erc20VestingTemplate, { each: true, message: "badInput" })
-  public vestingTemplate: Array<Erc20VestingTemplate>;
+  public contractTemplate: Array<Erc20VestingTemplate>;
 
   @ApiPropertyOptional({
     type: Number,

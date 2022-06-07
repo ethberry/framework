@@ -10,7 +10,7 @@ import { validationSchema } from "./validation";
 export interface IErc20VestingDeployDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc20Vesting>, formikBag: any) => Promise<void>;
+  onConfirm: (values: Partial<IErc20Vesting>, form: any) => Promise<void>;
 }
 
 export const Erc20VestingDeployDialog: FC<IErc20VestingDeployDialogProps> = props => {

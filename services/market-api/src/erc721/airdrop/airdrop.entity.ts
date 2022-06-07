@@ -2,13 +2,13 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { Erc721AirdropStatus, IErc721Airdrop } from "@framework/types";
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc721TemplateEntity } from "../template/template.entity";
 import { Erc721TokenEntity } from "../token/token.entity";
 
 @Entity({ schema: ns, name: "erc721_air_drop" })
-export class Erc721AirdropEntity extends IdBaseEntity implements IErc721Airdrop {
+export class Erc721AirdropEntity extends IdDateBaseEntity implements IErc721Airdrop {
   @Column({ type: "varchar" })
   public owner: string;
 

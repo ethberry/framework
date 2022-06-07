@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
-import { AutoSave, FormikForm } from "@gemunion/mui-form";
+import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { IErc1155TokenSearchDto } from "@framework/types";
@@ -25,7 +25,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
   const fixedValues = { query, erc1155CollectionIds, minPrice, maxPrice };
 
   return (
-    <FormikForm
+    <FormWrapper
       initialValues={fixedValues}
       onSubmit={onSubmit}
       showButtons={false}
@@ -53,7 +53,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
           ) : null}
         </Grid>
       </Collapse>
-      <AutoSave />
-    </FormikForm>
+      <AutoSave onSubmit={onSubmit} />
+    </FormWrapper>
   );
 };

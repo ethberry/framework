@@ -39,7 +39,7 @@ export const Erc721Dropbox: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleSubmit,
+    handleSearch,
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IErc721Dropbox, IErc721DropboxSearchDto>({
@@ -77,7 +77,7 @@ export const Erc721Dropbox: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721DropboxSearchForm onSubmit={handleSubmit} initialValues={search} open={isFiltersOpen} />
+      <Erc721DropboxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

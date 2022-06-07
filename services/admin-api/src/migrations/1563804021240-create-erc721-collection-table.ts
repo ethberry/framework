@@ -49,6 +49,10 @@ export class CreateErc721CollectionTable1563804021240 implements MigrationInterf
           type: "varchar",
         },
         {
+          name: "name",
+          type: "varchar",
+        },
+        {
           name: "symbol",
           type: "varchar",
         },
