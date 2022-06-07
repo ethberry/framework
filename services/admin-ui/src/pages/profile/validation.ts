@@ -4,4 +4,5 @@ import { emailValidationSchema } from "@gemunion/yup-rules";
 
 export const validationSchema = Yup.object().shape({
   email: emailValidationSchema,
+  displayName: Yup.string().required("form.validations.valueMissing"),
 });

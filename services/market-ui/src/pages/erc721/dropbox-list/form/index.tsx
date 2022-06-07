@@ -11,6 +11,7 @@ import { useStyles } from "./styles";
 
 interface IErc721DropboxSearchFormProps {
   onSubmit: (values: IErc721DropboxSearchDto) => Promise<void>;
+
   initialValues: IErc721DropboxSearchDto;
   open: boolean;
   embedded?: boolean;
