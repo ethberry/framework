@@ -8,7 +8,7 @@ import { Erc20VestingTemplate, IErc20VestingSearchDto } from "@framework/types";
 import { useStyles } from "./styles";
 
 interface IVestingSearchFormProps {
-  onSubmit: (values: IErc20VestingSearchDto) => void;
+  onSubmit: (values: IErc20VestingSearchDto) => Promise<void>;
   initialValues: IErc20VestingSearchDto;
   open: boolean;
 }

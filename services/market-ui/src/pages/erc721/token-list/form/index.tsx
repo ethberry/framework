@@ -9,7 +9,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 
 interface IErc721TokenSearchFormProps {
-  onSubmit: (values: IErc721AssetSearchDto) => void;
+  onSubmit: (values: IErc721AssetSearchDto) => Promise<void>;
   initialValues: IErc721AssetSearchDto;
   open: boolean;
   embedded?: boolean;

@@ -8,7 +8,7 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface IErc721AirdropSearchFormProps {
-  onSubmit: (values: IErc721AirdropSearchDto) => void;
+  onSubmit: (values: IErc721AirdropSearchDto) => Promise<void>;
   initialValues: IErc721AirdropSearchDto;
   open: boolean;
 }

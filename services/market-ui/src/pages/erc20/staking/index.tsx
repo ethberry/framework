@@ -1,88 +1,25 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useIntl } from "react-intl";
 import { Grid, Typography } from "@mui/material";
 import { Filter1, Filter2, Filter3, Filter4 } from "@mui/icons-material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { useLocation, useNavigate } from "react-router";
-import { parse, stringify } from "qs";
-import useDeepCompareEffect from "use-deep-compare-effect";
+import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useApiCall } from "@gemunion/react-hooks";
-import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
-import { defaultItemsPerPage } from "@gemunion/constants";
+import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
 
-// TODO useCollection
 export const Erc20Staking: FC = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [leaders, setLeaders] = useState<Array<ILeaderboard>>([]);
-  const [count, setCount] = useState<number>(0);
+  const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
+    useCollection<ILeaderboard>({
+      baseUrl: "/erc721-collections",
+      redirect: (_baseUrl, search) => `/leaderboard?${stringify(search)}`,
+    });
 
   const { formatMessage } = useIntl();
 
-  const parsedData = parse(location.search.substring(1));
-
-  const [data, setData] = useState<ISearchDto>({
-    skip: 0,
-    take: defaultItemsPerPage,
-    query: "",
-    ...parsedData,
-  });
-
-  const updateQS = () => {
-    const { skip: _skip, take: _take, ...rest } = data;
-    navigate(`/leaderboard?${stringify(rest)}`);
-  };
-
-  const { fn, isLoading } = useApiCall(
-    async api => {
-      return api.fetchJson({
-        url: "/leaderboard",
-        data,
-      });
-    },
-    { success: false },
-  );
-
-  const fetchLeaders = async (): Promise<void> => {
-    return fn().then((json: IPaginationResult<ILeaderboard>) => {
-      setLeaders(json.rows);
-      setCount(json.count);
-      updateQS();
-    });
-  };
-
-  const handleChangePage = (page: number): void => {
-    setData({
-      ...data,
-      skip: page * data.take,
-      take: data.take,
-    });
-  };
-
-  const handleChangeRowsPerPage = (pageSize: number): void => {
-    setData({
-      ...data,
-      skip: 0,
-      take: pageSize,
-    });
-  };
-
-  const handleSearch = (values: ISearchDto): void => {
-    setData({
-      ...values,
-      skip: 0,
-      take: defaultItemsPerPage,
-    });
-  };
-
-  useDeepCompareEffect(() => {
-    void fetchLeaders();
-  }, [data]);
-
+  // prettier-ignore
   const columns = [
     {
       field: "id",
@@ -99,19 +36,29 @@ export const Erc20Staking: FC = () => {
             {row.rank === LeaderboardRank.SILVER ? <Filter2 /> : null}
             {row.rank === LeaderboardRank.BRONZE ? <Filter3 /> : null}
             {row.rank === LeaderboardRank.BASIC ? <Filter4 /> : null}
-            <Typography ml={1}>{index + data.skip + 1}</Typography>
+            <Typography ml={1}>{index + search.skip + 1}</Typography>
           </Grid>
         );
-      },
+      }
     },
     {
       field: "secureWallet",
       headerName: formatMessage({ id: "pages.erc20-staking.address" }),
       sortable: false,
-      flex: 1,
+      flex: 1
     },
-    { field: "score", headerName: formatMessage({ id: "pages.erc20-staking.score" }), sortable: false, flex: 1 },
-    { field: "rank", headerName: formatMessage({ id: "pages.erc20-staking.rank" }), sortable: false, flex: 1 },
+    {
+      field: "score",
+      headerName: formatMessage({ id: "pages.erc20-staking.score" }),
+      sortable: false,
+      flex: 1
+    },
+    {
+      field: "rank",
+      headerName: formatMessage({ id: "pages.erc20-staking.rank" }),
+      sortable: false,
+      flex: 1
+    }
   ];
 
   return (
@@ -120,19 +67,19 @@ export const Erc20Staking: FC = () => {
 
       <PageHeader message="pages.erc20-staking.title" />
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={data} />
+      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <DataGrid
         pagination
         paginationMode="server"
         rowCount={count}
-        pageSize={data.take}
-        onPageChange={handleChangePage}
+        pageSize={search.take}
+        onPageChange={page => handleChangePage(null as any, page)}
         onPageSizeChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
-        rows={leaders}
+        rows={rows}
         autoHeight
       />
     </Grid>

@@ -8,7 +8,7 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface IErc721CollectionSearchFormProps {
-  onSubmit: (values: IErc721CollectionSearchDto) => void;
+  onSubmit: (values: IErc721CollectionSearchDto) => Promise<void>;
   initialValues: IErc721CollectionSearchDto;
   open: boolean;
 }

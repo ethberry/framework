@@ -10,7 +10,7 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
 interface IErc1155TokenSearchFormProps {
-  onSubmit: (values: any) => void;
+  onSubmit: (values: IErc1155TokenSearchDto) => Promise<void>;
   initialValues: IErc1155TokenSearchDto;
   open: boolean;
   embedded?: boolean;

@@ -18,7 +18,7 @@ export const Email: FC = () => {
     (email: EmailType) =>
     (e: MouseEvent): Promise<void> => {
       e.preventDefault();
-      return fn(null, email);
+      return fn(null as unknown as any, email);
     };
 
   return (
