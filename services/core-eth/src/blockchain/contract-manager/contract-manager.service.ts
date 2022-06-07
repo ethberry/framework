@@ -34,7 +34,8 @@ export class ContractManagerService {
       .create({ address, fromBlock, contractType })
       .save();
 
-    return contractManagerEntity;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return contractManagerEntity || null;
   }
 
   public async delete(where: FindOptionsWhere<ContractManagerEntity>): Promise<DeleteResult> {
@@ -52,12 +53,12 @@ export class ContractManagerService {
     }
 
     Object.assign(contractManagerEntity, dto);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return contractManagerEntity.save();
   }
 
   public async getLastBlock(address: string): Promise<number | null> {
-    const contractManagerEntity = await this.findOne({ address });
-
+    const contractManagerEntity = await this.findOne({ address: address.toLowerCase() });
     if (contractManagerEntity) {
       return contractManagerEntity.fromBlock;
     }
@@ -66,13 +67,29 @@ export class ContractManagerService {
 
   public async findAllByType(contractType: ContractType): Promise<IContractManagerResult> {
     const contractManagerEntities = await this.findAll({ contractType });
-
-    if (contractManagerEntities) {
+    if (contractManagerEntities.length) {
       return {
         address: contractManagerEntities.map(contractManagerEntity => contractManagerEntity.address),
-        fromBlock: Math.min(...contractManagerEntities.map(contractManagerEntity => contractManagerEntity.fromBlock)),
+        fromBlock: Math.max(...contractManagerEntities.map(contractManagerEntity => contractManagerEntity.fromBlock)),
       };
     }
-    return { address: [] };
+    return { address: [], fromBlock: undefined };
+  }
+
+  public async updateLastBlockByType(contractType: ContractType, lastBlock: number): Promise<number> {
+    const entity = await this.findOne({
+      contractType,
+    });
+
+    if (entity) {
+      await this.update(
+        {
+          id: entity.id,
+        },
+        { fromBlock: lastBlock + 1 },
+      );
+      return entity.fromBlock;
+    }
+    return lastBlock;
   }
 }

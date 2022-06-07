@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
@@ -41,6 +41,7 @@ import ERC1155ERC721CraftSol from "@framework/core-contracts/artifacts/contracts
           },
           block: {
             fromBlock,
+            debug: true,
           },
         };
       },
@@ -49,4 +50,11 @@ import ERC1155ERC721CraftSol from "@framework/core-contracts/artifacts/contracts
   providers: [Erc721CraftLogService, Logger],
   exports: [Erc721CraftLogService],
 })
-export class Erc721RecipeLogModule {}
+export class Erc721RecipeLogModule implements OnModuleDestroy {
+  constructor(private readonly erc721CraftLogService: Erc721CraftLogService) {}
+
+  // save last block on SIGTERM
+  public async onModuleDestroy(): Promise<number> {
+    return await this.erc721CraftLogService.updateBlock();
+  }
+}

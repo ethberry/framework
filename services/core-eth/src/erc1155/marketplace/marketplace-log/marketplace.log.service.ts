@@ -22,13 +22,9 @@ export class Erc1155MarketplaceLogService {
     return 0;
   }
 
-  public async updateLastBlock(dto: ICreateListenerPayload): Promise<void> {
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.ERC1155_MARKETPLACE,
-      },
-      { fromBlock: dto.fromBlock + 1 },
-    );
+  public async updateBlock(): Promise<number> {
+    const lastBlock = this.ethersContractService.getLastBlockOption();
+    console.info("Saved ERC1155Marketplace@lastBlock:", lastBlock);
+    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC1155_MARKETPLACE, lastBlock);
   }
 }

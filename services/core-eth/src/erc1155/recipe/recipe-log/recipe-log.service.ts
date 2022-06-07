@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 import { EthersContractService } from "@gemunion/nestjs-ethers";
 import { ContractType } from "@framework/types";
 
-import { ICreateListenerPayload } from "../../../common/interfaces";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()
@@ -22,13 +21,9 @@ export class Erc1155RecipeLogService {
     return 0;
   }
 
-  public async updateLastBlock(dto: ICreateListenerPayload): Promise<void> {
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.ERC1155_CRAFT,
-      },
-      { fromBlock: dto.fromBlock + 1 },
-    );
+  public async updateBlock(): Promise<number> {
+    const lastBlock = this.ethersContractService.getLastBlockOption();
+    console.info("Saved ERC1155Craft@lastBlock:", lastBlock);
+    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC1155_CRAFT, lastBlock);
   }
 }

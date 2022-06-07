@@ -38,6 +38,7 @@ import { VestingAbi } from "./interfaces";
           },
           block: {
             fromBlock: vestingContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            debug: true,
           },
         };
       },

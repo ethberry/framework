@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
@@ -46,6 +46,7 @@ import ERC721DropboxSol from "@framework/core-contracts/artifacts/contracts/ERC7
           },
           block: {
             fromBlock,
+            debug: true,
           },
         };
       },
@@ -54,4 +55,11 @@ import ERC721DropboxSol from "@framework/core-contracts/artifacts/contracts/ERC7
   providers: [Erc721DropboxLogService, Logger],
   exports: [Erc721DropboxLogService],
 })
-export class Erc721DropboxLogModule {}
+export class Erc721DropboxLogModule implements OnModuleDestroy {
+  constructor(private readonly erc721DropboxLogService: Erc721DropboxLogService) {}
+
+  // save last block on SIGTERM
+  public async onModuleDestroy(): Promise<number> {
+    return await this.erc721DropboxLogService.updateBlock();
+  }
+}

@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 import { EthersContractService } from "@gemunion/nestjs-ethers";
 import { ContractType } from "@framework/types";
 
-import { ICreateListenerPayload } from "../../../common/interfaces";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()
@@ -22,13 +21,9 @@ export class Erc721AirdropLogService {
     return 0;
   }
 
-  public async updateLastBlock(dto: ICreateListenerPayload): Promise<void> {
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.ERC721_DROPBOX,
-      },
-      { fromBlock: dto.fromBlock + 1 },
-    );
+  public async updateBlock(): Promise<number> {
+    const lastBlock = this.ethersContractService.getLastBlockOption();
+    console.info("Saved Erc721Airdrop@lastBlock:", lastBlock);
+    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC721_AIRDROP, lastBlock);
   }
 }

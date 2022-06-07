@@ -32,24 +32,9 @@ export class Erc721TokenLogService {
     );
   }
 
-  public async getLastBlock(address: string): Promise<number | null> {
-    const contractManagerEntity = await this.contractManagerService.findOne({ address });
-
-    if (contractManagerEntity) {
-      return contractManagerEntity.fromBlock;
-    }
-    return 0;
-  }
-
-  public async findAllByType(contractType: ContractType): Promise<IContractManagerResult> {
-    const contractManagerEntities = await this.contractManagerService.findAll({ contractType });
-
-    if (contractManagerEntities) {
-      return {
-        address: contractManagerEntities.map(contractManagerEntity => contractManagerEntity.address),
-        fromBlock: Math.min(...contractManagerEntities.map(contractManagerEntity => contractManagerEntity.fromBlock)),
-      };
-    }
-    return { address: [] };
+  public async updateBlock(): Promise<number> {
+    const lastBlock = this.ethersContractService.getLastBlockOption();
+    console.info("Saved ERC721@lastBlock:", lastBlock);
+    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC721_TOKEN, lastBlock);
   }
 }

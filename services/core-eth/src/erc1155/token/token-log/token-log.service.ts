@@ -5,7 +5,6 @@ import { ContractType } from "@framework/types";
 
 import { ICreateListenerPayload } from "../../../common/interfaces";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
-import { IContractManagerResult } from "../../../blockchain/contract-manager/interfaces";
 
 @Injectable()
 export class Erc1155LogService {
@@ -32,24 +31,9 @@ export class Erc1155LogService {
     );
   }
 
-  public async getLastBlock(address: string): Promise<number | null> {
-    const contractManagerEntity = await this.contractManagerService.findOne({ address });
-
-    if (contractManagerEntity) {
-      return contractManagerEntity.fromBlock;
-    }
-    return 0;
-  }
-
-  public async findAllByType(contractType: ContractType): Promise<IContractManagerResult> {
-    const contractManagerEntities = await this.contractManagerService.findAll({ contractType });
-
-    if (contractManagerEntities) {
-      return {
-        address: contractManagerEntities.map(contractManagerEntity => contractManagerEntity.address),
-        fromBlock: Math.min(...contractManagerEntities.map(contractManagerEntity => contractManagerEntity.fromBlock)),
-      };
-    }
-    return { address: [] };
+  public async updateBlock(): Promise<number> {
+    const lastBlock = this.ethersContractService.getLastBlockOption();
+    console.info("Saved ERC1155@lastBlock:", lastBlock);
+    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC1155_TOKEN, lastBlock);
   }
 }

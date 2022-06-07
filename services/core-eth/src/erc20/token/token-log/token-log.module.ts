@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
@@ -39,6 +39,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           },
           block: {
             fromBlock: erc20Contracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            debug: true,
           },
         };
       },
@@ -47,4 +48,11 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
   providers: [Erc20LogService, Logger],
   exports: [Erc20LogService],
 })
-export class Erc20TokenLogModule {}
+export class Erc20TokenLogModule implements OnModuleDestroy {
+  constructor(private readonly erc20LogService: Erc20LogService) {}
+
+  // save last block on SIGTERM
+  public async onModuleDestroy(): Promise<number> {
+    return await this.erc20LogService.updateBlock();
+  }
+}

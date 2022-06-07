@@ -31,4 +31,16 @@ export class Erc721MarketplaceLogService {
       { fromBlock: dto.fromBlock + 1 },
     );
   }
+
+  public async updateBlock(): Promise<number> {
+    const lastBlock = this.ethersContractService.getLastBlockOption();
+    const entity = await this.contractManagerService.update(
+      {
+        contractType: ContractType.ERC721_MARKETPLACE,
+      },
+      { fromBlock: lastBlock + 1 },
+    );
+    console.info("Saved Erc721Marketplace@lastBlock:", entity.fromBlock);
+    return entity.id;
+  }
 }

@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
@@ -24,7 +24,6 @@ import { ContractManagerService } from "../contract-manager.service";
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
         const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-        // const fromBlock = ~~configService.get<string>("STARTING_BLOCK", "0");
         const fromBlock =
           (await contractManagerService.getLastBlock(contractManagerAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
@@ -43,6 +42,7 @@ import { ContractManagerService } from "../contract-manager.service";
           },
           block: {
             fromBlock,
+            debug: true,
           },
         };
       },
@@ -51,4 +51,11 @@ import { ContractManagerService } from "../contract-manager.service";
   providers: [ContractManagerLogService, Logger],
   exports: [ContractManagerLogService],
 })
-export class ContractManagerLogModule {}
+export class ContractManagerLogModule implements OnModuleDestroy {
+  constructor(private readonly contractManagerLogService: ContractManagerLogService) {}
+
+  // save last block on SIGTERM
+  public async onModuleDestroy(): Promise<number> {
+    return await this.contractManagerLogService.updateBlock();
+  }
+}

@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
@@ -27,6 +27,7 @@ import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC7
         const fromBlock =
           (await contractManagerService.getLastBlock(erc721airdropAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
+        console.log("ERC721_AIRDROP_ADDRfromBlock", fromBlock);
         return {
           contract: {
             contractType: ContractType.ERC721_AIRDROP,
@@ -50,6 +51,7 @@ import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC7
           },
           block: {
             fromBlock,
+            debug: true,
           },
         };
       },
@@ -58,4 +60,11 @@ import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC7
   providers: [Erc721AirdropLogService, Logger],
   exports: [Erc721AirdropLogService],
 })
-export class Erc721AirdropLogModule {}
+export class Erc721AirdropLogModule implements OnModuleDestroy {
+  constructor(private readonly erc721AirdropLogService: Erc721AirdropLogService) {}
+
+  // save last block on SIGTERM
+  public async onModuleDestroy(): Promise<number> {
+    return await this.erc721AirdropLogService.updateBlock();
+  }
+}
