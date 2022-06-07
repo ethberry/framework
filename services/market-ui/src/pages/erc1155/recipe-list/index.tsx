@@ -23,7 +23,7 @@ export const Erc1155RecipeList: FC = () => {
 
       <PageHeader message="pages.erc1155-recipes.title" />
 
-      <CommonSearchForm initialValues={search} onSearch={handleSearch} />
+      <CommonSearchForm initialValues={search} onSubmit={handleSearch} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

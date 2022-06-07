@@ -6,7 +6,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 
 import { useSeaport } from "../../../providers/seaport";
 
-export const SeaportIncrementNonceButton: FC = () => {
+export const BulkCancelOrdersButton: FC = () => {
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = useState(false);
 
   const seaport = useSeaport();
@@ -16,7 +16,7 @@ export const SeaportIncrementNonceButton: FC = () => {
   };
 
   const handleConfirm = () => {
-    return seaport.incrementNonce();
+    return seaport.bulkCancelOrders();
   };
 
   const handleCancel = () => {
@@ -35,7 +35,7 @@ export const SeaportIncrementNonceButton: FC = () => {
         onCancel={handleCancel}
         open={isConfirmationDialogOpen}
       >
-        <FormattedMessage id="dialogs.nonce" />
+        <FormattedMessage id="dialogs.bulk-cancel-order" />
       </ConfirmationDialog>
     </>
   );

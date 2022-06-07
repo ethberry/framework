@@ -48,7 +48,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
       </PageHeader>
 
       <Erc721TemplateSearchForm
-        onSearch={handleSearch}
+        onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
         embedded={embedded}

@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { BigNumber } from "ethers";
 import { Fee, OrderWithNonce } from "@bthn/seaport-js/lib/types";
 
 export interface IAuctionOptions {
@@ -27,7 +26,7 @@ export interface IErc1155 {
 
 export interface ISeaportContext {
   getNonce: (address: string) => Promise<number>;
-  incrementNonce: () => Promise<BigNumber>;
+  bulkCancelOrders: () => Promise<void>;
   calculateRoyalty: (erc721: IErc721) => Promise<Fee>;
   sellErc721ForErc20: (options: IAuctionOptions, erc721: IErc721, erc20: IErc20) => Promise<OrderWithNonce>;
   sellErc1155ForErc20: (options: IAuctionOptions, erc1155: IErc1155, erc20: IErc20) => Promise<OrderWithNonce>;

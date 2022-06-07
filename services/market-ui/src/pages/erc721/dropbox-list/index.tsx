@@ -48,7 +48,7 @@ export const Erc721DropboxList: FC<IErc721DropboxListProps> = props => {
       </PageHeader>
 
       <Erc721DropboxSearchForm
-        onSearch={handleSearch}
+        onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
         embedded={embedded}

@@ -25,7 +25,7 @@
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
     "edit": "Edit",
-    "nonce": "You are about to increment nonce for Seaport protocol. This action will have to two effects: you will be able to create another order with same parameters you used before AND will cancel all your current open orders. Do you want to continue?"
+    "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?"
   },
   "enums": {
     "language": {
