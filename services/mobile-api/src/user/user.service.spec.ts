@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Logger } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { EnabledLanguages } from "@framework/constants";
@@ -13,6 +13,7 @@ import { UserSeedService } from "./user.seed.service";
 import { UserSeedModule } from "./user.seed.module";
 import { UserEntity } from "./user.entity";
 import { AuthModule } from "../auth/auth.module";
+import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 describe("UserService", () => {
   let userService: UserService;
@@ -23,6 +24,13 @@ describe("UserService", () => {
       imports: [
         ConfigModule.forRoot({
           envFilePath: `.env.${process.env.NODE_ENV as string}`,
+        }),
+        LicenseModule.forRootAsync(LicenseModule, {
+          imports: [ConfigModule],
+          inject: [ConfigService],
+          useFactory: (configService: ConfigService): string => {
+            return configService.get<string>("GEMUNION_API_KEY", "");
+          },
         }),
         GemunionTypeormModule.forRoot(ormconfig),
         TypeOrmModule.forFeature([UserEntity]),
