@@ -8,7 +8,7 @@ import { Erc721RecipeStatus, IErc721RecipeSearchDto } from "@framework/types";
 import { useStyles } from "./styles";
 
 interface IRecipeSearchFormProps {
-  onSubmit: (values: IErc721RecipeSearchDto) => void;
+  onSubmit: (values: IErc721RecipeSearchDto) => Promise<void>;
   initialValues: IErc721RecipeSearchDto;
   open: boolean;
 }

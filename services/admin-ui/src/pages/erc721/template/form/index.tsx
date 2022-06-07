@@ -9,7 +9,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 
 interface ITemplateSearchFormProps {
-  onSubmit: (values: IErc721TemplateSearchDto) => void;
+  onSubmit: (values: IErc721TemplateSearchDto) => Promise<void>;
   initialValues: IErc721TemplateSearchDto;
   open: boolean;
 }

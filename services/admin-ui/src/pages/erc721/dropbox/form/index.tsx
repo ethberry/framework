@@ -9,7 +9,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 
 interface IDropboxSearchFormProps {
-  onSubmit: (values: IErc721DropboxSearchDto) => void;
+  onSubmit: (values: IErc721DropboxSearchDto) => Promise<void>;
   initialValues: IErc721DropboxSearchDto;
   open: boolean;
 }
