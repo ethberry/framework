@@ -10,7 +10,8 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
 interface IErc721DropboxSearchFormProps {
-  onSubmit: (values: any) => Promise<void>;
+  onSubmit: (values: IErc721DropboxSearchDto) => Promise<void>;
+
   initialValues: IErc721DropboxSearchDto;
   open: boolean;
   embedded?: boolean;
