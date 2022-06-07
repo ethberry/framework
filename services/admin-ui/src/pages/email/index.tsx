@@ -1,43 +1,24 @@
-import { FC, MouseEvent, useContext, useState } from "react";
-import { useSnackbar } from "notistack";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FC, MouseEvent } from "react";
+import { FormattedMessage } from "react-intl";
 import { Grid, List, ListItem, ListItemText } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ApiContext, ApiError } from "@gemunion/provider-api";
+import { useApiCall } from "@gemunion/react-hooks";
 import { EmailType } from "@framework/types";
 
 export const Email: FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { enqueueSnackbar } = useSnackbar();
-  const { formatMessage } = useIntl();
-
-  const api = useContext(ApiContext);
+  const { fn, isLoading } = useApiCall(async (api, email: string) => {
+    await api.fetchJson({
+      url: `/emails/${email}`,
+      method: "POST",
+    });
+  });
 
   const sendEmail =
     (email: EmailType) =>
     (e: MouseEvent): Promise<void> => {
       e.preventDefault();
-      setIsLoading(true);
-      return api
-        .fetchJson({
-          url: `/emails/${email}`,
-          method: "POST",
-        })
-        .then(() => {
-          enqueueSnackbar(formatMessage({ id: "snackbar.email" }), { variant: "success" });
-        })
-        .catch((e: ApiError) => {
-          if (e.status) {
-            enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-          } else {
-            console.error(e);
-            enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      return fn(null, email);
     };
 
   return (

@@ -6,7 +6,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { Contract } from "ethers";
 
-import { ApiError, useApi } from "@gemunion/provider-api";
+import { ApiError } from "@gemunion/provider-api";
+import { useApiCall } from "@gemunion/react-hooks";
 import { useWallet } from "@gemunion/provider-wallet";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { Spinner } from "@gemunion/mui-page-layout";
@@ -16,7 +17,6 @@ import { Erc721AirdropStatus, IErc721Airdrop } from "@framework/types";
 import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
 
 export const Erc721Airdrop: FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [airdrops, setAirdrops] = useState<Array<IErc721Airdrop>>([]);
 
   const { library, active, account } = useWeb3React();
@@ -24,21 +24,24 @@ export const Erc721Airdrop: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { openConnectWalletDialog } = useWallet();
 
-  const api = useApi();
+  const { fn, isLoading } = useApiCall(
+    async api => {
+      return api.fetchJson({
+        url: `/erc721-airdrop`,
+        data: {
+          query: account,
+        },
+      });
+    },
+    { success: false, error: false },
+  );
 
   const fetchDropbox = async (): Promise<void> => {
     if (!active) {
       return;
     }
 
-    setIsLoading(true);
-    return api
-      .fetchJson({
-        url: `/erc721-airdrop`,
-        data: {
-          query: account,
-        },
-      })
+    return fn()
       .then((json: IPaginationResult<IErc721Airdrop>) => {
         setAirdrops(json.rows);
       })
@@ -51,9 +54,6 @@ export const Erc721Airdrop: FC = () => {
           console.error(e);
           enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 

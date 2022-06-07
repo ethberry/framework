@@ -25,12 +25,12 @@ export const BulkCancelOrdersButton: FC = () => {
 
   return (
     <>
-      <Button onClick={handleIncrementNonce} data-testid="SeaportIncrementNonceButton">
+      <Button onClick={handleIncrementNonce} data-testid="SeaportBulkCancelOrderDialog">
         <FormattedMessage id="form.buttons.nonce" />
       </Button>
       <ConfirmationDialog
         maxWidth="xs"
-        data-testid="SeaportIncrementNonceDialog"
+        data-testid="SeaportBulkCancelOrderDialog"
         onConfirm={handleConfirm}
         onCancel={handleCancel}
         open={isConfirmationDialogOpen}

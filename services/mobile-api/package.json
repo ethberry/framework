@@ -18,7 +18,7 @@
     "@gemunion/nest-js-module-request-logger": "1.2.32",
     "@gemunion/nest-js-module-throttler": "1.0.43",
     "@gemunion/nest-js-module-typeorm-debug": "1.1.36",
-    "@gemunion/nest-js-module-typeorm-helpers": "0.8.8",
+    "@gemunion/nest-js-module-typeorm-helpers": "0.8.9",
     "@gemunion/nest-js-module-typeorm-logger": "1.2.39",
     "@gemunion/nest-js-module-winston-logdna": "1.3.24",
     "@gemunion/nest-js-utils": "1.5.7",

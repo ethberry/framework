@@ -1,12 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { useSnackbar } from "notistack";
-import { useIntl } from "react-intl";
 import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
-import { ApiError, useApi } from "@gemunion/provider-api";
+import { useApiCall } from "@gemunion/react-hooks";
 import { SettingsKeys } from "@framework/types";
 
 const emptySettings = {
@@ -14,61 +12,37 @@ const emptySettings = {
 };
 
 export const Settings: FC = () => {
-  const { enqueueSnackbar } = useSnackbar();
-  const { formatMessage } = useIntl();
-
-  const [isLoading, setIsLoading] = useState(true);
   const [settings, setSettings] = useState<Record<SettingsKeys, any>>(emptySettings);
 
-  const api = useApi();
+  const call1 = useApiCall(
+    async api => {
+      return api
+        .fetchJson({
+          url: "/settings",
+        })
+        .then((json: Record<string, string>) => {
+          setSettings(json);
+        });
+    },
+    { success: false },
+  );
 
-  const fetchSettings = async (): Promise<void> => {
-    setIsLoading(true);
-    return api
-      .fetchJson({
-        url: "/settings",
-      })
-      .then((json: Record<string, string>) => {
-        setSettings(json);
-      })
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+  const call2 = useApiCall(async (api, settings: Record<SettingsKeys, any>) => {
+    return api.fetchJson({
+      method: "PUT",
+      url: "/settings",
+      data: { settings },
+    });
+  });
+
+  const fetchSettings = (): Promise<void> => {
+    return call1.fn();
   };
 
-  const onSubmit = (settings: Record<SettingsKeys, any>, formikBag: any) => {
-    setIsLoading(true);
-    return api
-      .fetchJson({
-        method: "PUT",
-        url: "/settings",
-        data: { settings },
-      })
-      .then(() => {
-        enqueueSnackbar(formatMessage({ id: "snackbar.updated" }), { variant: "success" });
-        return fetchSettings();
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 400) {
-          formikBag.setErrors(e.getLocalizedValidationErrors());
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+  const onSubmit = (settings: Record<SettingsKeys, any>, form: any) => {
+    return call2.fn(form, settings).then(() => {
+      return fetchSettings();
+    });
   };
 
   useEffect(() => {
@@ -81,7 +55,7 @@ export const Settings: FC = () => {
 
       <PageHeader message="pages.settings.title" />
 
-      <ProgressOverlay isLoading={isLoading}>
+      <ProgressOverlay isLoading={call1.isLoading || call2.isLoading}>
         <FormWrapper initialValues={settings} onSubmit={onSubmit}>
           <TextInput name={SettingsKeys.DUMMY} />
         </FormWrapper>

@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { useSnackbar } from "notistack";
 import { useIntl } from "react-intl";
 import { Grid, Typography } from "@mui/material";
 import { Filter1, Filter2, Filter3, Filter4 } from "@mui/icons-material";
@@ -9,23 +8,20 @@ import { parse, stringify } from "qs";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { ApiError, useApi } from "@gemunion/provider-api";
+import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult, ISearchDto } from "@gemunion/types-collection";
 import { defaultItemsPerPage } from "@gemunion/constants";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
 
+// TODO useCollection
 export const Erc20Staking: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [leaders, setLeaders] = useState<Array<ILeaderboard>>([]);
   const [count, setCount] = useState<number>(0);
 
-  const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-
-  const api = useApi();
 
   const parsedData = parse(location.search.substring(1));
 
@@ -41,33 +37,22 @@ export const Erc20Staking: FC = () => {
     navigate(`/leaderboard?${stringify(rest)}`);
   };
 
-  const fetchLeadersByQuery = async (): Promise<void> => {
-    return api
-      .fetchJson({
+  const { fn, isLoading } = useApiCall(
+    async api => {
+      return api.fetchJson({
         url: "/leaderboard",
         data,
-      })
-      .then((json: IPaginationResult<ILeaderboard>) => {
-        setLeaders(json.rows);
-        setCount(json.count);
-        updateQS();
       });
-  };
+    },
+    { success: false },
+  );
 
   const fetchLeaders = async (): Promise<void> => {
-    setIsLoading(true);
-    return fetchLeadersByQuery()
-      .catch((e: ApiError) => {
-        if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    return fn().then((json: IPaginationResult<ILeaderboard>) => {
+      setLeaders(json.rows);
+      setCount(json.count);
+      updateQS();
+    });
   };
 
   const handleChangePage = (page: number): void => {
