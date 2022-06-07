@@ -8,7 +8,7 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface IUserSearchFormProps {
-  onSubmit: (values: IUserSearchDto) => void;
+  onSubmit: (values: IUserSearchDto) => Promise<void>;
   initialValues: IUserSearchDto;
   open: boolean;
 }

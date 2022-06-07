@@ -31,7 +31,7 @@ export const Resources: FC<ITabPanelProps> = props => {
   return (
     <FormWrapper
       initialValues={initialValues}
-      onSubmit={() => {}}
+      onSubmit={Promise.resolve}
       showButtons={false}
       showPrompt={false}
       data-testid="Resources"

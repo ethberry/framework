@@ -86,12 +86,13 @@ export const Erc20Staking: FC = () => {
     });
   };
 
-  const handleSearch = (values: ISearchDto): void => {
+  const handleSearch = (values: ISearchDto): Promise<void> => {
     setData({
       ...values,
       skip: 0,
-      take: defaultItemsPerPage,
     });
+
+    return Promise.resolve();
   };
 
   useDeepCompareEffect(() => {

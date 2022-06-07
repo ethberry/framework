@@ -8,7 +8,7 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSubmit: (values: IErc20TokenSearchDto) => void;
+  onSubmit: (values: IErc20TokenSearchDto) => Promise<void>;
   initialValues: IErc20TokenSearchDto;
   open: boolean;
 }

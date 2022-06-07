@@ -9,7 +9,7 @@ import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSubmit: (values: IErc1155TokenSearchDto) => void;
+  onSubmit: (values: IErc1155TokenSearchDto) => Promise<void>;
   initialValues: IErc1155TokenSearchDto;
   open: boolean;
 }
