@@ -8,7 +8,7 @@ import { EmailType } from "@framework/types";
 
 export const Email: FC = () => {
   const { fn, isLoading } = useApiCall(async (api, email: string) => {
-    await api.fetchJson({
+    return api.fetchJson({
       url: `/emails/${email}`,
       method: "POST",
     });
@@ -16,9 +16,9 @@ export const Email: FC = () => {
 
   const sendEmail =
     (email: EmailType) =>
-    (e: MouseEvent): Promise<void> => {
+    (e: MouseEvent): void => {
       e.preventDefault();
-      return fn(null as unknown as any, email);
+      void fn(null as unknown as any, email);
     };
 
   return (

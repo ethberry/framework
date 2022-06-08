@@ -27,7 +27,7 @@ import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC7
         const fromBlock =
           (await contractManagerService.getLastBlock(erc721airdropAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
-        console.log("ERC721_AIRDROP_ADDRfromBlock", fromBlock);
+
         return {
           contract: {
             contractType: ContractType.ERC721_AIRDROP,

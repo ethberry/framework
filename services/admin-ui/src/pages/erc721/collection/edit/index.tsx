@@ -37,6 +37,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     id,
     title,
     description,
+    address,
     collectionStatus,
     collectionType,
     imageUrl,
@@ -60,6 +61,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
         royalty={royalty}
       />
       <TextInput name="title" />
+      <TextInput name="address" readOnly={true} />
       <RichTextEditor name="description" />
       <SelectInput
         name="collectionStatus"

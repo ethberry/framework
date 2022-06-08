@@ -23,6 +23,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const fixedValues = {
     id,
     title,
+    address,
     description,
     tokenStatus,
   };
@@ -41,6 +42,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         <BlockchainInfoPopover name={name} symbol={symbol} address={address} amount={amount} />
         <TextInput name="title" />
         <RichTextEditor name="description" />
+        <TextInput name="address" readOnly={true} />
         <SelectInput name="tokenStatus" options={Erc20TokenStatus} disabledOptions={[Erc20TokenStatus.NEW]} />
       </FormDialog>
     </>

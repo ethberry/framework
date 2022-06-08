@@ -1,5 +1,5 @@
 import { APP_FILTER } from "@nestjs/core";
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnApplicationShutdown } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
 
@@ -52,4 +52,8 @@ import { ContractManagerModuleEth } from "./blockchain/contract-manager/contract
   ],
   controllers: [AppController],
 })
-export class AppModule {}
+export class AppModule implements OnApplicationShutdown {
+  onApplicationShutdown(signal: string) {
+    console.info(signal); // e.g. "SIGINT"
+  }
+}

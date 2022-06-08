@@ -13,7 +13,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
     const erc721CollectionLandAddress = process.env.ERC721_LAND_ADDR || wallet;
     const erc721CollectionDropboxAddress = process.env.ERC721_DROPBOX_ADDR || wallet;
     const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || 1;
+    const chainId = process.env.CHAIN_ID || 1337;
 
     // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - HERO, 5 - SKILLS, 6 - LAND
     await queryRunner.query(`

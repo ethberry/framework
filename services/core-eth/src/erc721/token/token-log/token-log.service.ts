@@ -5,7 +5,6 @@ import { ContractType } from "@framework/types";
 
 import { ICreateListenerPayload } from "../../../common/interfaces";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
-import { IContractManagerResult } from "../../../blockchain/contract-manager/interfaces";
 
 @Injectable()
 export class Erc721TokenLogService {
@@ -23,13 +22,7 @@ export class Erc721TokenLogService {
       fromBlock: dto.fromBlock,
     });
 
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.CONTRACT_MANAGER,
-      },
-      { fromBlock: dto.fromBlock + 1 },
-    );
+    await this.contractManagerService.updateLastBlockByType(ContractType.CONTRACT_MANAGER, dto.fromBlock + 1);
   }
 
   public async updateBlock(): Promise<number> {

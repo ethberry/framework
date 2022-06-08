@@ -298,7 +298,8 @@
     }
   },
   "messages": {
-    "page-not-found": "Page Not Found"
+    "page-not-found": "Page Not Found",
+    "empty-list": "Nothing to display"
   },
   "pages": {
     "blockchain": {

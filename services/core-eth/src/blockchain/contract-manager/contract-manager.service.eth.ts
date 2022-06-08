@@ -9,7 +9,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl } from "@framework/constants";
 
 import {
-  ContractManagerEventType,
+  ContractManagerEventType, ContractType,
   Erc1155TokenTemplate,
   Erc20TokenTemplate,
   Erc20VestingTemplate,
@@ -30,6 +30,7 @@ import { Erc20LogService } from "../../erc20/token/token-log/token-log.service";
 import { Erc721TokenLogService } from "../../erc721/token/token-log/token-log.service";
 import { Erc1155LogService } from "../../erc1155/token/token-log/token-log.service";
 import { VestingLogService } from "../../vesting/vesting-log/vesting.log.service";
+import { ContractManagerService } from "./contract-manager.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -39,6 +40,7 @@ export class ContractManagerServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
+    private readonly contractManagerService: ContractManagerService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
     private readonly erc20VestingService: Erc20VestingService,
     private readonly erc20TokenService: Erc20TokenService,
@@ -68,7 +70,10 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
     });
 
-    await this.vestingLogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
+    await this.vestingLogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
   }
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployed>, ctx: Log): Promise<void> {
@@ -89,7 +94,10 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
     });
 
-    await this.erc20LogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
+    await this.erc20LogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
   }
 
   public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployed>, ctx: Log): Promise<void> {
@@ -112,7 +120,10 @@ export class ContractManagerServiceEth {
       contractTemplate: Object.values(Erc721TokenTemplate)[~~templateId],
     });
 
-    await this.erc721LogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
+    await this.erc721LogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
   }
 
   public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployed>, ctx: Log): Promise<void> {
@@ -132,7 +143,10 @@ export class ContractManagerServiceEth {
       contractTemplate: Object.values(Erc1155TokenTemplate)[~~templateId],
     });
 
-    await this.erc1155LogService.addListener({ address: addr.toLowerCase(), fromBlock: ~~ctx.blockNumber.toString() });
+    await this.erc1155LogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
   }
 
   private async updateHistory(event: ILogEvent<TContractManagerEventData>, ctx: Log) {
@@ -153,7 +167,7 @@ export class ContractManagerServiceEth {
     );
 
     const { args, name } = event;
-    const { address, transactionHash } = ctx;
+    const { address, transactionHash, blockNumber } = ctx;
 
     await this.contractManagerHistoryService.create({
       address,
@@ -161,5 +175,10 @@ export class ContractManagerServiceEth {
       eventType: name as ContractManagerEventType,
       eventData: args,
     });
+
+    await this.contractManagerService.updateLastBlockByType(
+      ContractType.CONTRACT_MANAGER,
+      parseInt(blockNumber.toString(), 16),
+    );
   }
 }

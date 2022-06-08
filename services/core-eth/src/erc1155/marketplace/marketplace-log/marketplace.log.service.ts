@@ -3,7 +3,6 @@ import { Injectable } from "@nestjs/common";
 import { EthersContractService } from "@gemunion/nestjs-ethers";
 import { ContractType } from "@framework/types";
 
-import { ICreateListenerPayload } from "../../../common/interfaces";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()

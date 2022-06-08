@@ -3,7 +3,6 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  ContractType,
   Erc721RecipeEventType,
   Erc721RecipeStatus,
   IErc721RecipeCrafted,
@@ -95,12 +94,9 @@ export class Erc721RecipeServiceEth {
       erc721RecipeId: recipeEntity ? recipeEntity.id : null,
     });
 
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.ERC721_CRAFT,
-      },
-      { fromBlock: ~~blockNumber.toString() + 1 },
+    await this.contractManagerService.updateLastBlockByAddr(
+      context.address.toLowerCase(),
+      parseInt(blockNumber.toString(), 16),
     );
   }
 }

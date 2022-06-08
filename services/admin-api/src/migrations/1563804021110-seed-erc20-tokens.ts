@@ -9,7 +9,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc20TokenAddress = process.env.ERC20_COIN || wallet;
-    const chainId = process.env.CHAIN_ID || 1;
+    const chainId = process.env.CHAIN_ID || 1337;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.erc20_token (

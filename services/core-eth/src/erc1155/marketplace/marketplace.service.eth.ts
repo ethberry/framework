@@ -2,12 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
-  ContractType,
-  Erc1155MarketplaceEventType,
-  IErc1155MarketplaceRedeem,
-  TErc1155MarketplaceEventData,
-} from "@framework/types";
+import { Erc1155MarketplaceEventType, IErc1155MarketplaceRedeem, TErc1155MarketplaceEventData } from "@framework/types";
 
 import { Erc1155TokenService } from "../token/token.service";
 import { Erc1155MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
@@ -60,12 +55,9 @@ export class Erc1155MarketplaceServiceEth {
       }),
     );
 
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.ERC1155_MARKETPLACE,
-      },
-      { fromBlock: ~~blockNumber.toString() + 1 },
+    await this.contractManagerService.updateLastBlockByAddr(
+      context.address.toLowerCase(),
+      parseInt(blockNumber.toString(), 16),
     );
   }
 }

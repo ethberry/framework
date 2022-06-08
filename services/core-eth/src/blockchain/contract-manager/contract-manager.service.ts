@@ -80,6 +80,22 @@ export class ContractManagerService {
     const entity = await this.findOne({
       contractType,
     });
+    if (entity) {
+      await this.update(
+        {
+          id: entity.id,
+        },
+        { fromBlock: lastBlock + 1 },
+      );
+      return entity.fromBlock;
+    }
+    return lastBlock;
+  }
+
+  public async updateLastBlockByAddr(address: string, lastBlock: number): Promise<number> {
+    const entity = await this.findOne({
+      address,
+    });
 
     if (entity) {
       await this.update(
