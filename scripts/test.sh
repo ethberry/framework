@@ -11,4 +11,4 @@ export CHAIN_ID=$CHAIN_ID
 
 lerna bootstrap --hoist
 
-lerna exec -- npm run test
+lerna exec --concurrency 1 -- npm run test
