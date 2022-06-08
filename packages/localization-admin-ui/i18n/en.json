@@ -28,7 +28,7 @@
     }
   },
   "dialogs": {
-    "add": "Add",
+    "create": "Create",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
@@ -52,6 +52,8 @@
       "TOKEN": "Token"
     },
     "contractTemplate": {
+      "NATIVE": "Native",
+      "EXTERNAL": "External",
       "BLACKLIST": "Blacklist",
       "CLIFF": "Cliff",
       "GRADED": "Graded",
@@ -128,6 +130,7 @@
       "cancel": "Cancel",
       "create": "Create",
       "delete": "Delete",
+      "deploy": "Deploy",
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
       "forgot": "Forgot password?",
@@ -274,7 +277,7 @@
       "userIds": "Gordon Freeman"
     },
     "tips": {
-      "add": "Add",
+      "create": "Create",
       "delete": "Delete",
       "edit": "Edit",
       "view": "View"
@@ -298,8 +301,8 @@
     }
   },
   "messages": {
-    "page-not-found": "Page Not Found",
-    "empty-list": "Nothing to display"
+    "empty-list": "Nothing to display",
+    "page-not-found": "Page Not Found"
   },
   "pages": {
     "blockchain": {

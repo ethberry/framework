@@ -73,7 +73,7 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
         data-testid="Erc20TokenDeployButton"
         className={className}
       >
-        <FormattedMessage id="form.buttons.add" />
+        <FormattedMessage id="form.buttons.deploy" />
       </Button>
       <Erc20TokenDeployDialog onConfirm={handleDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>

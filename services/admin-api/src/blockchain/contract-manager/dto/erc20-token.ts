@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsString, MaxLength } from "class-validator";
+import { IsEnum, IsString, MaxLength, Validate } from "class-validator";
 
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { ForbidEnumValues, IsBigNumber } from "@gemunion/nest-js-validators";
 import { Erc20TokenTemplate, IErc20TokenDeployDto } from "@framework/types";
 
 export class Erc20TokenDeployDto implements IErc20TokenDeployDto {
@@ -9,6 +9,7 @@ export class Erc20TokenDeployDto implements IErc20TokenDeployDto {
     enum: Erc20TokenTemplate,
   })
   @IsEnum(Erc20TokenTemplate, { message: "badInput" })
+  @Validate(ForbidEnumValues, [Erc20TokenTemplate.EXTERNAL, Erc20TokenTemplate.NATIVE])
   public contractTemplate: Erc20TokenTemplate;
 
   @ApiProperty()

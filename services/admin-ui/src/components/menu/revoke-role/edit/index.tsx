@@ -9,13 +9,8 @@ import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
-import { AccessControlRoleHash, AccessControlRoleType, IAccessControl } from "@framework/types";
+import { IAccessControl } from "@framework/types";
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
-
-export interface IRevokeRoleDto {
-  role: AccessControlRoleType;
-  address: string;
-}
 
 export interface IAccessControlRevokeRoleDialogProps {
   open: boolean;

@@ -28,7 +28,7 @@ export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> 
     collectionStatus,
   };
 
-  const message = id ? "dialogs.edit" : "dialogs.add";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog

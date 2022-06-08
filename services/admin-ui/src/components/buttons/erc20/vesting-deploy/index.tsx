@@ -76,7 +76,7 @@ export const Erc20VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         data-testid="Erc20VestingDeployButton"
         className={className}
       >
-        <FormattedMessage id="form.buttons.add" />
+        <FormattedMessage id="form.buttons.deploy" />
       </Button>
       <Erc20VestingDeployDialog
         onConfirm={handleDeployConfirm}

@@ -67,8 +67,8 @@ export const Erc721Airdrop: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="erc721AirdropAddButton">
-          <FormattedMessage id="form.buttons.add" />
+        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="erc721AirdropCreateButton">
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 

@@ -22,6 +22,7 @@ import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
 import { Erc20TokenDeployButton } from "../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../components/menu";
+import { Erc20TokenCreateButton } from "../../../components/buttons/erc20/token-create";
 
 export const Erc20Token: FC = () => {
   const {
@@ -33,6 +34,7 @@ export const Erc20Token: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
+    fetch,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -67,6 +69,7 @@ export const Erc20Token: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
+        <Erc20TokenCreateButton onUpdate={fetch} />
         <Erc20TokenDeployButton />
       </PageHeader>
 

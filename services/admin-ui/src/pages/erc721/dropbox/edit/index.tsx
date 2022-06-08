@@ -34,7 +34,7 @@ export const Erc721DropboxEditDialog: FC<IErc721DropboxEditDialogProps> = props 
     erc721CollectionId,
   };
 
-  const message = id ? "dialogs.edit" : "dialogs.add";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog

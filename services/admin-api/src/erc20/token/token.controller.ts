@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Post, Controller, Delete, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -6,6 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 import { Erc20TokenService } from "./token.service";
 import { Erc20TokenEntity } from "./token.entity";
 import { Erc20TokenSearchDto, Erc20TokenUpdateDto } from "./dto";
+import { Erc20TokenCreateDto } from "./dto/create";
 
 @ApiBearerAuth()
 @Controller("/erc20-tokens")
@@ -16,6 +17,11 @@ export class Erc20TokenController {
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: Erc20TokenSearchDto): Promise<[Array<Erc20TokenEntity>, number]> {
     return this.erc20TokenService.search(dto);
+  }
+
+  @Post("/")
+  public create(@Body() dto: Erc20TokenCreateDto): Promise<Erc20TokenEntity> {
+    return this.erc20TokenService.create(dto);
   }
 
   @Get("/autocomplete")

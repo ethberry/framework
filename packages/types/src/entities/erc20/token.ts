@@ -11,6 +11,8 @@ export enum Erc20TokenStatus {
 export enum Erc20TokenTemplate {
   "SIMPLE" = "SIMPLE", // ACBCS
   "BLACKLIST" = "BLACKLIST", // ACBCS + BLACKLIST
+  "EXTERNAL" = "EXTERNAL", // any 3rd party token
+  "NATIVE" = "NATIVE", // ETH
 }
 
 export interface IErc20Token extends IContract, ISearchable {

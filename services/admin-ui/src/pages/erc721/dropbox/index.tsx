@@ -72,8 +72,8 @@ export const Erc721Dropbox: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="erc721TemplateAddButton">
-          <FormattedMessage id="form.buttons.add" />
+        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="erc721TemplateCreateButton">
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 

@@ -43,7 +43,7 @@ export const Erc721AirdropEditDialog: FC<IErc721AirdropEditDialogProps> = props 
     <FormDialog
       initialValues={{ list: [fixedValues] }}
       validationSchema={validationSchema2}
-      message="dialogs.add"
+      message="dialogs.create"
       data-testid="Erc721AirdropAddDialog"
       {...rest}
     >

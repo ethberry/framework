@@ -74,8 +74,8 @@ export const Erc1155Token: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="erc1155TokenAddButton">
-          <FormattedMessage id="form.buttons.add" />
+        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="erc1155TokenCreateButton">
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 

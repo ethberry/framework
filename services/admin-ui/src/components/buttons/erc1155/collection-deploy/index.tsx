@@ -69,7 +69,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
         data-testid="Erc1155TokenDeployButton"
         className={className}
       >
-        <FormattedMessage id="form.buttons.add" />
+        <FormattedMessage id="form.buttons.deploy" />
       </Button>
       <Erc1155TokenDeployDialog
         onConfirm={handleDeployConfirm}

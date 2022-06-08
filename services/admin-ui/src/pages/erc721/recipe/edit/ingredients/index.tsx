@@ -39,7 +39,7 @@ export const Ingredients: FC<IIngredientTokenDialogProps> = props => {
     <Fragment>
       <Typography>
         <FormattedMessage id="form.labels.ingredients" />
-        <Tooltip title={formatMessage({ id: "form.tips.add" })}>
+        <Tooltip title={formatMessage({ id: "form.tips.create" })}>
           <IconButton size="large" aria-label="add" onClick={handleOptionAdd()}>
             <Add fontSize="large" color="primary" />
           </IconButton>

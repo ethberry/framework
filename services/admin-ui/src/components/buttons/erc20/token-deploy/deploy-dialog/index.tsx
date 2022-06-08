@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { constants } from "ethers";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -18,7 +19,7 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
     contractTemplate: Erc20TokenTemplate.SIMPLE,
     name: "",
     symbol: "",
-    cap: "1000000",
+    cap: constants.WeiPerEther.mul(1e6).toString(),
   };
 
   return (
@@ -29,7 +30,11 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
       data-testid="Erc20TokenDeployDialog"
       {...props}
     >
-      <SelectInput name="contractTemplate" options={Erc20TokenTemplate} />
+      <SelectInput
+        name="contractTemplate"
+        options={Erc20TokenTemplate}
+        disabledOptions={[Erc20TokenTemplate.EXTERNAL, Erc20TokenTemplate.NATIVE]}
+      />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <EthInput name="cap" />

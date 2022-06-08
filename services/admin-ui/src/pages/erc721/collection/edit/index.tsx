@@ -42,7 +42,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
     imageUrl,
   };
 
-  const message = id ? "dialogs.edit" : "dialogs.add";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog

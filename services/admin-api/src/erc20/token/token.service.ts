@@ -1,17 +1,20 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { Erc20TokenStatus, IErc20TokenSearchDto } from "@framework/types";
 
 import { Erc20TokenEntity } from "./token.entity";
-import { IErc20TokenUpdateDto } from "./interfaces";
+import { IErc20TokenCreateDto, IErc20TokenUpdateDto } from "./interfaces";
 
 @Injectable()
 export class Erc20TokenService {
   constructor(
     @InjectRepository(Erc20TokenEntity)
     private readonly erc20TokenEntityRepository: Repository<Erc20TokenEntity>,
+    private readonly configService: ConfigService,
   ) {}
 
   public async search(dto: IErc20TokenSearchDto): Promise<[Array<Erc20TokenEntity>, number]> {
@@ -67,6 +70,19 @@ export class Erc20TokenService {
     options?: FindOneOptions<Erc20TokenEntity>,
   ): Promise<Erc20TokenEntity | null> {
     return this.erc20TokenEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: IErc20TokenCreateDto): Promise<Erc20TokenEntity> {
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    return this.erc20TokenEntityRepository
+      .create({
+        ...dto,
+        name: dto.symbol,
+        tokenStatus: Erc20TokenStatus.ACTIVE,
+        amount: "0",
+        chainId,
+      })
+      .save();
   }
 
   public async update(

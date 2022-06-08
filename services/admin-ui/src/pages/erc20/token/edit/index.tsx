@@ -27,7 +27,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
     tokenStatus,
   };
 
-  const message = id ? "dialogs.edit" : "dialogs.add";
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <>
