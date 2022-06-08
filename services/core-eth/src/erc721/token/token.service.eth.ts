@@ -200,12 +200,9 @@ export class Erc721TokenServiceEth {
       erc721TokenId: erc721TokenId || null,
     });
 
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        address: address.toLowerCase(),
-      },
-      { fromBlock: ~~blockNumber.toString() + 1 },
+    await this.contractManagerService.updateLastBlockByAddr(
+      context.address.toLowerCase(),
+      parseInt(blockNumber.toString(), 16),
     );
   }
 }

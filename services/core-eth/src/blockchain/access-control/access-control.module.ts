@@ -5,9 +5,10 @@ import { AccessControlService } from "./access-control.service";
 import { AccessControlEntity } from "./access-control.entity";
 import { AccessControlHistoryModule } from "./access-control-history/access-control-history.module";
 import { AccessControlServiceEth } from "./access-control.service.eth";
+import { ContractManagerModule } from "../contract-manager/contract-manager.module";
 
 @Module({
-  imports: [AccessControlHistoryModule, TypeOrmModule.forFeature([AccessControlEntity])],
+  imports: [AccessControlHistoryModule, TypeOrmModule.forFeature([AccessControlEntity]), ContractManagerModule],
   providers: [Logger, AccessControlService, AccessControlServiceEth],
   exports: [AccessControlService, AccessControlServiceEth],
 })

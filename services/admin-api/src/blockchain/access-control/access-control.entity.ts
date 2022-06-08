@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { IAccessControl, AccessControlRoleType } from "@framework/types";
+import { IAccessControl, AccessControlRoleHash } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
@@ -14,7 +14,7 @@ export class AccessControlEntity extends IdDateBaseEntity implements IAccessCont
 
   @Column({
     type: "enum",
-    enum: AccessControlRoleType,
+    enum: AccessControlRoleHash,
   })
-  public role: AccessControlRoleType;
+  public role: AccessControlRoleHash;
 }

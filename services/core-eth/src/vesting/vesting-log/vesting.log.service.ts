@@ -22,13 +22,7 @@ export class VestingLogService {
       fromBlock: dto.fromBlock,
     });
 
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.CONTRACT_MANAGER,
-      },
-      { fromBlock: dto.fromBlock + 1 },
-    );
+    await this.contractManagerService.updateLastBlockByType(ContractType.CONTRACT_MANAGER, dto.fromBlock + 1);
   }
 
   public async updateBlock(): Promise<number> {

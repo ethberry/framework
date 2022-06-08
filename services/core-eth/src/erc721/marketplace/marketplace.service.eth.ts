@@ -3,7 +3,6 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  ContractType,
   Erc721MarketplaceEventType,
   IErc721MarketplaceRedeem,
   TErc721MarketplaceEventData,
@@ -86,12 +85,9 @@ export class Erc721MarketplaceServiceEth {
       erc721TokenId,
     });
 
-    // update CM: lastBlock
-    await this.contractManagerService.update(
-      {
-        contractType: ContractType.ERC721_MARKETPLACE,
-      },
-      { fromBlock: ~~blockNumber.toString() + 1 },
+    await this.contractManagerService.updateLastBlockByAddr(
+      context.address.toLowerCase(),
+      parseInt(blockNumber.toString(), 16),
     );
   }
 }

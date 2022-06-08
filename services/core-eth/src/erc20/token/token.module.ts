@@ -8,9 +8,11 @@ import { Erc20TokenService } from "./token.service";
 import { Erc20TokenEntity } from "./token.entity";
 import { Erc20TokenLogModule } from "./token-log/token-log.module";
 import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
+import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 
 @Module({
   imports: [
+    ContractManagerModule,
     Erc20TokenHistoryModule,
     Erc20TokenLogModule,
     AccessControlModule,

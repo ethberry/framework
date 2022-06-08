@@ -42,7 +42,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   const meta = useMetamask((values: IAccessControl) => {
     const contract = new Contract(data.address, IAccessControlSol.abi, library.getSigner());
-    return contract.revokeRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
+    return contract.revokeRole(values.role, values.address) as Promise<void>;
   });
 
   const handleRevoke = (values: IAccessControl): (() => Promise<void>) => {

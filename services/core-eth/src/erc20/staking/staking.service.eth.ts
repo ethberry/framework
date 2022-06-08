@@ -10,6 +10,7 @@ import {
 } from "@framework/types";
 
 import { Erc20StakingHistoryService } from "./staking-history/staking-history.service";
+import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()
 export class Erc20StakingServiceEth {
@@ -17,6 +18,7 @@ export class Erc20StakingServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly erc20HistoryService: Erc20StakingHistoryService,
+    private readonly contractManagerService: ContractManagerService,
   ) {}
 
   public async start(event: ILogEvent<IErc20StakingDeposit>, context: Log): Promise<void> {
@@ -31,7 +33,7 @@ export class Erc20StakingServiceEth {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20StakingServiceEth.name);
 
     const { args, name } = event;
-    const { transactionHash, address } = context;
+    const { transactionHash, address, blockNumber } = context;
 
     await this.erc20HistoryService.create({
       address,
@@ -39,5 +41,10 @@ export class Erc20StakingServiceEth {
       eventType: name as Erc20StakingEventType,
       eventData: args,
     });
+
+    await this.contractManagerService.updateLastBlockByAddr(
+      context.address.toLowerCase(),
+      parseInt(blockNumber.toString(), 16),
+    );
   }
 }
