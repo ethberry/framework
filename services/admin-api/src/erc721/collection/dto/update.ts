@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsJSON, IsOptional, IsString, Validate } from "class-validator";
 import { Transform } from "class-transformer";
 
@@ -8,11 +8,13 @@ import { Erc721CollectionStatus } from "@framework/types";
 import { IErc721CollectionUpdateDto } from "../interfaces";
 
 export class Erc721CollectionUpdateDto implements IErc721CollectionUpdateDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
   public title: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsJSON({ message: "patternMismatch" })
   public description: string;
 
@@ -24,6 +26,7 @@ export class Erc721CollectionUpdateDto implements IErc721CollectionUpdateDto {
   @ApiPropertyOptional({
     enum: Erc721CollectionStatus,
   })
+  @IsOptional()
   @Transform(({ value }) => value as Erc721CollectionStatus)
   @IsEnum(Erc721CollectionStatus, { message: "badInput" })
   @Validate(ForbidEnumValues, [Erc721CollectionStatus.NEW])

@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, Validate } from "class-validator";
 import { Transform } from "class-transformer";
 
@@ -8,11 +8,13 @@ import { Erc1155CollectionStatus } from "@framework/types";
 import { IErc1155CollectionUpdateDto } from "../interfaces";
 
 export class Erc1155CollectionUpdateDto implements IErc1155CollectionUpdateDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
   public title: string;
 
-  @ApiProperty()
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsJSON({ message: "patternMismatch" })
   public description: string;
 
@@ -25,6 +27,7 @@ export class Erc1155CollectionUpdateDto implements IErc1155CollectionUpdateDto {
   @ApiPropertyOptional({
     enum: Erc1155CollectionStatus,
   })
+  @IsOptional()
   @Transform(({ value }) => value as Erc1155CollectionStatus)
   @IsEnum(Erc1155CollectionStatus, { message: "badInput" })
   @Validate(ForbidEnumValues, [Erc1155CollectionStatus.NEW])
