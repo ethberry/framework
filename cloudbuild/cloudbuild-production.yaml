@@ -40,13 +40,13 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     id: 'dockerTag'
     waitFor:
-      - ['dockerBuild']
+      - 'dockerBuild'
     args: ['tag', 'framework-packages:latest', 'gcr.io/$PROJECT_ID/$REPO_NAME-img']
   # Start update of autoscale group prod
   - name: 'gcr.io/cloud-builders/gcloud'
     id: 'replaceGroup'
     waitFor:
-      - ['dockerTag']
+      - 'dockerTag'
     args:
       - "compute"
       - "instance-groups"
