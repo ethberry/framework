@@ -23,7 +23,6 @@ export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> 
   const fixedValues = {
     id,
     title,
-    address,
     description,
     imageUrl,
     collectionStatus,
@@ -41,7 +40,6 @@ export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> 
     >
       <BlockchainInfoPopover address={address} baseTokenURI={baseTokenURI} />
       <TextInput name="title" />
-      <TextInput name="address" readOnly={true} />
       <RichTextEditor name="description" />
       <SelectInput
         name="collectionStatus"
