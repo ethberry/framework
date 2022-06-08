@@ -2,25 +2,17 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
-import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
-import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
-import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
+import { AccessControlRevokeRoleDialog } from "./edit";
 
-import { AccessControlRevokeRoleDialog, IRevokeRoleDto } from "./edit";
-
-export interface IOzContractRevokeRoleMenuItemProps {
+export interface IContractRevokeRoleMenuItemProps {
   address: string;
 }
 
-export const OzContractRevokeRoleMenuItem: FC<IOzContractRevokeRoleMenuItemProps> = props => {
+export const OzContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
   const { address } = props;
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
-
-  const { library } = useWeb3React();
 
   const handleRevokeRole = (): void => {
     setIsRevokeRoleDialogOpen(true);
@@ -30,15 +22,8 @@ export const OzContractRevokeRoleMenuItem: FC<IOzContractRevokeRoleMenuItemProps
     setIsRevokeRoleDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IRevokeRoleDto) => {
-    const contract = new Contract(address, IAccessControlSol.abi, library.getSigner());
-    return contract.revokeRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
-  });
-
-  const handleRevokeRoleConfirmed = async (values: IRevokeRoleDto): Promise<void> => {
-    await meta(values).finally(() => {
-      setIsRevokeRoleDialogOpen(false);
-    });
+  const handleRevokeRoleConfirm = () => {
+    setIsRevokeRoleDialogOpen(false);
   };
 
   return (
@@ -53,12 +38,9 @@ export const OzContractRevokeRoleMenuItem: FC<IOzContractRevokeRoleMenuItemProps
       </MenuItem>
       <AccessControlRevokeRoleDialog
         onCancel={handleRevokeRoleCancel}
-        onConfirm={handleRevokeRoleConfirmed}
+        onConfirm={handleRevokeRoleConfirm}
         open={isRevokeRoleDialogOpen}
-        initialValues={{
-          role: AccessControlRoleType.DEFAULT_ADMIN_ROLE,
-          address: "",
-        }}
+        data={{ address }}
       />
     </>
   );

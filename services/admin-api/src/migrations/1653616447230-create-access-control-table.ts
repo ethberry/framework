@@ -35,6 +35,14 @@ export class CreateAccessControlTable1653616447230 implements MigrationInterface
           name: "role",
           type: `${ns}.access_control_roles_enum`,
         },
+        {
+          name: "created_at",
+          type: "timestamptz",
+        },
+        {
+          name: "updated_at",
+          type: "timestamptz",
+        },
       ],
     });
 
