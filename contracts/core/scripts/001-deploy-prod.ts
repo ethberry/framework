@@ -2,8 +2,9 @@ import { ethers } from "hardhat";
 import { ContractTransaction } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 
+import { blockAwait } from "@gemunion/utils-eth";
+
 import { MINTER_ROLE } from "../test/constants";
-import { blockAwait } from "./utils/blockAwait";
 import LINK_TOKEN_ABI from "./abi/link.json";
 
 async function main() {
@@ -88,7 +89,7 @@ async function main() {
   console.info(`ERC1155_MARKETPLACE_ADDR=${market1155Instance.address.toLowerCase()}`);
 
   // Setup Contracts
-  await blockAwait();
+  await blockAwait(ethers.provider);
 
   // ERC721 Collection Hero
   // Grant role to Marketplace in Hero

@@ -5,7 +5,6 @@ import { ContractType } from "@framework/types";
 
 import { ICreateListenerPayload } from "../../../common/interfaces";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
-import { IContractManagerResult } from "../../../blockchain/contract-manager/interfaces";
 
 @Injectable()
 export class Erc721TokenLogService {

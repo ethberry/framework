@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@gemunion/contracts": "0.5.4",
+    "@gemunion/utils-eth": "0.0.2",
     "@nomiclabs/hardhat-ethers": "2.0.6",
     "@nomiclabs/hardhat-etherscan": "3.0.4",
     "@nomiclabs/hardhat-waffle": "2.0.3",
@@ -64,9 +65,9 @@
     "deploy:mainnet": "hardhat --network mainnet deploy",
     "lint": "eslint . --fix",
     "prebuild": "hardhat clean",
-    "prepublish": "npm run build",
     "prepare:contracts:besu": "hardhat --network besu run scripts/001-deploy-dev.ts",
     "prepare:contracts:mainnet": "hardhat --network binancetest run scripts/001-deploy-prod.ts",
+    "prepublish": "npm run build",
     "solhint": "solhint -f table contracts/**/*.sol",
     "test": "hardhat test"
   },

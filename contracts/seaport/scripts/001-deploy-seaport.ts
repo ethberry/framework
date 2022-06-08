@@ -1,6 +1,7 @@
 import { ethers } from "hardhat";
 import { BigNumber } from "ethers";
-import { blockAwait } from "./utils/blockAwait";
+
+import { blockAwait } from "@gemunion/utils-eth";
 
 async function main() {
   const [owner] = await ethers.getSigners();
@@ -16,7 +17,7 @@ async function main() {
   const conduitKeyOne = `${owner.address}000000000000000000000000`;
   await conduitController.createConduit(conduitKeyOne, owner.address);
 
-  await blockAwait(1);
+  await blockAwait(ethers.provider, 1);
 
   const conduit = await conduitController.getConduit(conduitKeyOne);
   await conduitController.updateChannel(conduit.conduit, seaport.address, true, {
