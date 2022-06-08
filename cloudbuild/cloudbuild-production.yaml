@@ -34,12 +34,19 @@ steps:
     secretEnv: ['GH_TOKEN']
   # Build image with docker-compose
   - name: 'docker/compose:1.29.2'
+    id: 'dockerBuild'
     args: ['-f', 'docker-compose.dependencies.yml', 'build']
   # Tag push image to google registry
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'dockerTag'
+    waitFor:
+      - ['dockerBuild']
     args: ['tag', 'framework-packages:latest', 'gcr.io/$PROJECT_ID/$REPO_NAME-img']
   # Start update of autoscale group prod
   - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'replaceGroup'
+    waitFor:
+      - ['dockerTag']
     args:
       - "compute"
       - "instance-groups"
