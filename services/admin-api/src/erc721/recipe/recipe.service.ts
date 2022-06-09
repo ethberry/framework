@@ -158,7 +158,18 @@ export class RecipeService {
     return recipeEntity.save();
   }
 
-  public delete(where: FindOptionsWhere<Erc721RecipeEntity>): Promise<Erc721RecipeEntity> {
-    return this.update(where, { recipeStatus: Erc721RecipeStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<Erc721RecipeEntity>): Promise<void> {
+    const recipeEntity = await this.findOne(where);
+
+    if (!recipeEntity) {
+      return;
+    }
+
+    if (recipeEntity.recipeStatus === Erc721RecipeStatus.NEW) {
+      await recipeEntity.remove();
+    } else {
+      Object.assign(recipeEntity, { recipeStatus: Erc721RecipeStatus.INACTIVE });
+      await recipeEntity.save();
+    }
   }
 }

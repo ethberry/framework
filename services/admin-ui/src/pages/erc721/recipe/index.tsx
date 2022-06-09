@@ -69,7 +69,7 @@ export const Erc721Recipes: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="erc721RecipeCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="Erc721RecipeCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

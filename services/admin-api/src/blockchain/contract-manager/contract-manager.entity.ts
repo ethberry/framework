@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { IContractManager, ContractType } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-@Entity({ schema: ns, name: "system_manager" })
+@Entity({ schema: ns, name: "contract_manager" })
 export class ContractManagerEntity extends IdDateBaseEntity implements IContractManager {
   @Column({ type: "varchar" })
   public address: string;
