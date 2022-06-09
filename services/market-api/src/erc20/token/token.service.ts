@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Repository, In } from "typeorm";
+
+import { Erc20TokenStatus, IErc20TokenAutocompleteDto } from "@framework/types";
 
 import { Erc20TokenEntity } from "./token.entity";
-import { Erc20TokenStatus } from "@framework/types";
 
 @Injectable()
 export class Erc20TokenService {
@@ -12,14 +13,25 @@ export class Erc20TokenService {
     private readonly erc20TokenEntityRepository: Repository<Erc20TokenEntity>,
   ) {}
 
-  public async autocomplete(): Promise<Array<Erc20TokenEntity>> {
+  public async autocomplete(dto: IErc20TokenAutocompleteDto): Promise<Array<Erc20TokenEntity>> {
+    const { contractTemplate = [] } = dto;
+
+    const where = {
+      tokenStatus: Erc20TokenStatus.ACTIVE,
+    };
+
+    if (contractTemplate.length) {
+      Object.assign(where, {
+        contractTemplate: In(contractTemplate),
+      });
+    }
+
     return this.erc20TokenEntityRepository.find({
-      where: {
-        tokenStatus: Erc20TokenStatus.ACTIVE,
-      },
+      where,
       select: {
         id: true,
         title: true,
+        contractTemplate: true,
       },
     });
   }

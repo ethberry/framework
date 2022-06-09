@@ -64,10 +64,18 @@ export class Erc721CollectionService {
   }
 
   public async autocomplete(dto: IErc721CollectionAutocompleteDto): Promise<Array<Erc721CollectionEntity>> {
-    return this.erc721CollectionEntityRepository.find({
-      where: {
+    const { collectionType = [] } = dto;
+
+    const where = {};
+
+    if (collectionType.length) {
+      Object.assign(where, {
         collectionType: In(dto.collectionType),
-      },
+      });
+    }
+
+    return this.erc721CollectionEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,

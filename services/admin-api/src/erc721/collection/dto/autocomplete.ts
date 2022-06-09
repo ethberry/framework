@@ -1,11 +1,10 @@
-import { SearchDto } from "@gemunion/collection";
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { Erc721CollectionType, IErc721CollectionAutocompleteDto } from "@framework/types";
 
-export class Erc721CollectionAutocompleteDto extends SearchDto implements IErc721CollectionAutocompleteDto {
+export class Erc721CollectionAutocompleteDto implements IErc721CollectionAutocompleteDto {
   @ApiPropertyOptional({
     enum: Erc721CollectionType,
     isArray: true,

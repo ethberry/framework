@@ -6,7 +6,7 @@ import { Erc721TokenStatus, IErc721AssetSearchDto } from "@framework/types";
 
 import { Erc721TokenEntity } from "./token.entity";
 import { UserEntity } from "../../user/user.entity";
-import { IErc721AutocompleteDto } from "./interface";
+import { IErc721TokenAutocompleteDto } from "./interface";
 
 @Injectable()
 export class Erc721TokenService {
@@ -72,7 +72,7 @@ export class Erc721TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc721AutocompleteDto): Promise<Array<Erc721TokenEntity>> {
+  public async autocomplete(dto: IErc721TokenAutocompleteDto): Promise<Array<Erc721TokenEntity>> {
     const { wallet } = dto;
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
 

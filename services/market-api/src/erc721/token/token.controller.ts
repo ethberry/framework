@@ -7,7 +7,7 @@ import { Erc721TokenService } from "./token.service";
 import { Erc721TokenEntity } from "./token.entity";
 import { Erc721AssetSearchDto } from "./dto";
 import { UserEntity } from "../../user/user.entity";
-import { Erc721AutocompleteDto } from "./dto/autocomplete";
+import { Erc721TokenAutocompleteDto } from "./dto/autocomplete";
 
 @ApiBearerAuth()
 @Controller("/erc721-tokens")
@@ -24,7 +24,7 @@ export class Erc721TokenController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc721AutocompleteDto): Promise<Array<Erc721TokenEntity>> {
+  public autocomplete(@Query() dto: Erc721TokenAutocompleteDto): Promise<Array<Erc721TokenEntity>> {
     return this.erc721TokenService.autocomplete(dto);
   }
 

@@ -8,6 +8,7 @@ export * from "./user/search";
 
 export * from "./erc20/token/deploy";
 export * from "./erc20/token/search";
+export * from "./erc20/token/autocomplete";
 export * from "./erc20/vesting/deploy";
 export * from "./erc20/vesting/search";
 export * from "./erc20/staking/leaderboard";

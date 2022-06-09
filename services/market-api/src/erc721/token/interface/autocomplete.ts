@@ -1,3 +1,3 @@
-export interface IErc721AutocompleteDto {
+export interface IErc721TokenAutocompleteDto {
   wallet: string;
 }
