@@ -31,5 +31,8 @@ interface IStaking {
     uint256 period;
     uint256 penalty;
     bool recurrent;
+    bool active;
   }
+
+  event RuleCreated(uint256 ruleId, Rule rule);
 }

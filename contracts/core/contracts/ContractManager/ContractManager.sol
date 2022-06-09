@@ -11,6 +11,8 @@ import "@gemunion/contracts/contracts/ContractManager/ERC20TokenFactory.sol";
 import "@gemunion/contracts/contracts/ContractManager/ERC721TokenFactory.sol";
 import "@gemunion/contracts/contracts/ContractManager/ERC1155TokenFactory.sol";
 
-contract ContractManager is ERC20VestingFactory, ERC20TokenFactory, ERC721TokenFactory, ERC1155TokenFactory {
+import "./StakingFactory.sol";
+
+contract ContractManager is ERC20VestingFactory, ERC20TokenFactory, ERC721TokenFactory, ERC1155TokenFactory, StakingFactory {
 
 }

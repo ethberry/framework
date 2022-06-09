@@ -6,10 +6,28 @@
 
 pragma solidity >=0.8.13;
 
+import "@openzeppelin/contracts/utils/Counters.sol";
+
 import "./interfaces/IStaking.sol";
 
 abstract contract AbstractStaking is IStaking {
+  using Counters for Counters.Counter;
+
+  mapping(uint256 => Rule) private _rules;
+
+  Counters.Counter private _ruleIdCounter;
+
   function _setRules(Rule[] memory rules) internal {
-    rules;
+    uint256 length = rules.length;
+    for (uint256 i; i < length; i++) {
+      _setRule(rules[i]);
+    }
+  }
+
+  function _setRule(Rule memory rule) internal {
+    uint256 ruleId = _ruleIdCounter.current();
+    _ruleIdCounter.increment();
+    _rules[ruleId] = rule;
+    emit RuleCreated(ruleId, rule);
   }
 }
