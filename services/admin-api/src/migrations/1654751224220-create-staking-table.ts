@@ -13,12 +13,20 @@ export class CreateStakingTable1654751224220 implements MigrationInterface {
     `);
 
     const table = new Table({
-      name: `${ns}.staking_history`,
+      name: `${ns}.staking`,
       columns: [
         {
           name: "id",
           type: "serial",
           isPrimary: true,
+        },
+        {
+          name: "title",
+          type: "varchar",
+        },
+        {
+          name: "description",
+          type: "json",
         },
         {
           name: "deposit_type",
@@ -84,6 +92,6 @@ export class CreateStakingTable1654751224220 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_history`);
+    await queryRunner.dropTable(`${ns}.staking`);
   }
 }

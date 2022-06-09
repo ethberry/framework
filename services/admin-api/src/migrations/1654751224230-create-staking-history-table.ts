@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateStakingHistoryTable1654751224230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc20_staking_event_enum AS ENUM (
+      CREATE TYPE ${ns}.staking_event_enum AS ENUM (
         'RuleCreated',
         'StakingDeposit',
         'StakingWithdraw'
@@ -30,7 +30,7 @@ export class CreateStakingHistoryTable1654751224230 implements MigrationInterfac
         },
         {
           name: "event_type",
-          type: `${ns}.erc20_staking_event_enum`,
+          type: `${ns}.staking_event_enum`,
         },
         {
           name: "event_data",
@@ -51,7 +51,7 @@ export class CreateStakingHistoryTable1654751224230 implements MigrationInterfac
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc20_staking_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc20_staking_event_enum;`);
+    await queryRunner.dropTable(`${ns}.staking_history`);
+    await queryRunner.query(`DROP TYPE ${ns}.staking_event_enum;`);
   }
 }

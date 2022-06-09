@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
 
-import { Erc20TokenStatus, IErc20TokenSearchDto } from "@framework/types";
+import { Erc20TokenStatus, IErc20TokenAutocompleteDto, IErc20TokenSearchDto } from "@framework/types";
 
 import { Erc20TokenEntity } from "./token.entity";
 import { IErc20TokenCreateDto, IErc20TokenUpdateDto } from "./interfaces";
@@ -56,11 +56,25 @@ export class Erc20TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<Erc20TokenEntity>> {
+  public async autocomplete(dto: IErc20TokenAutocompleteDto): Promise<Array<Erc20TokenEntity>> {
+    const { contractTemplate = [] } = dto;
+
+    const where = {
+      tokenStatus: Erc20TokenStatus.ACTIVE,
+    };
+
+    if (contractTemplate.length) {
+      Object.assign(where, {
+        contractTemplate: In(contractTemplate),
+      });
+    }
+
     return this.erc20TokenEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,
+        contractTemplate: true,
       },
     });
   }

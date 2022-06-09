@@ -16,6 +16,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IStaking, IStakingSearchDto, StakingStatus } from "@framework/types";
 
 import { StakingEditDialog } from "./edit";
@@ -43,7 +44,10 @@ export const Staking: FC = () => {
     handleDeleteConfirm,
   } = useCollection<IStaking, IStakingSearchDto>({
     baseUrl: "/staking",
-    empty: {},
+    empty: {
+      title: "",
+      description: emptyStateString,
+    },
     search: {
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
     },
