@@ -79,7 +79,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         'USD Teter',
         'USDT',
         '${erc20TokenAddress}',
-        'NEW',
+        'ACTIVE',
         'EXTERNAL',
         '${chainId}',
         '${currentDateTime}',

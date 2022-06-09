@@ -15,11 +15,12 @@ export enum ContractActions {
 
 export interface IContractActionsMenu {
   contract: any;
+  disabled?: boolean;
   actions?: Array<ContractActions>;
 }
 
 export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
-  const { contract, actions = [] } = props;
+  const { contract, disabled, actions = [] } = props;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -41,6 +42,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
+        disabled={disabled}
         data-testid="ContractActionsMenuButton"
       >
         <MoreVert />

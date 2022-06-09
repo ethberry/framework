@@ -18,7 +18,7 @@ export class Erc20TokenService {
   ) {}
 
   public async search(dto: IErc20TokenSearchDto): Promise<[Array<Erc20TokenEntity>, number]> {
-    const { query, tokenStatus, skip, take } = dto;
+    const { query, tokenStatus, contractTemplate, skip, take } = dto;
 
     const queryBuilder = this.erc20TokenEntityRepository.createQueryBuilder("token");
 
@@ -29,6 +29,14 @@ export class Erc20TokenService {
         queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });
       } else {
         queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
+      }
+    }
+
+    if (contractTemplate) {
+      if (contractTemplate.length === 1) {
+        queryBuilder.andWhere("token.contractTemplate = :contractTemplate", { contractTemplate: contractTemplate[0] });
+      } else {
+        queryBuilder.andWhere("token.contractTemplate IN(:...contractTemplate)", { contractTemplate });
       }
     }
 
