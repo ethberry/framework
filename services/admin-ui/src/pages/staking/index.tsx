@@ -1,16 +1,112 @@
 import { FC } from "react";
-import { Grid, Typography } from "@mui/material";
+import { FormattedMessage } from "react-intl";
+import {
+  Button,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { useCollection } from "@gemunion/react-hooks";
+import { IStaking, IStakingSearchDto, StakingStatus } from "@framework/types";
+
+import { StakingEditDialog } from "./edit";
+import { StakingSearchForm } from "./form";
 
 export const Staking: FC = () => {
+  const {
+    rows,
+    count,
+    search,
+    selected,
+    isLoading,
+    isFiltersOpen,
+    isEditDialogOpen,
+    isDeleteDialogOpen,
+    handleAdd,
+    handleToggleFilters,
+    handleEdit,
+    handleEditCancel,
+    handleEditConfirm,
+    handleDelete,
+    handleDeleteCancel,
+    handleSearch,
+    handleChangePage,
+    handleDeleteConfirm,
+  } = useCollection<IStaking, IStakingSearchDto>({
+    baseUrl: "/staking",
+    empty: {},
+    search: {
+      stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
+    },
+    filter: ({ stakingStatus }) => ({ stakingStatus }),
+  });
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking"]} />
 
-      <PageHeader message="pages.staking.title" />
+      <PageHeader message="pages.staking.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="StakingCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
-      <Typography>Here be dragons!</Typography>
+      <StakingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+
+      <ProgressOverlay isLoading={isLoading}>
+        <List>
+          {rows.map((rule, i) => (
+            <ListItem key={i}>
+              <ListItemText>{rule.title}</ListItemText>
+              <ListItemSecondaryAction>
+                <IconButton onClick={handleEdit(rule)}>
+                  <Create />
+                </IconButton>
+                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingStatus !== StakingStatus.NEW}>
+                  <Delete />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+      </ProgressOverlay>
+
+      <Pagination
+        sx={{ mt: 2 }}
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
+
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={isDeleteDialogOpen}
+        initialValues={{ ...selected, title: "FIX ME STAKING" }}
+      />
+
+      <StakingEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={isEditDialogOpen}
+        initialValues={selected}
+      />
     </Grid>
   );
 };

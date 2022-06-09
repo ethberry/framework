@@ -4,6 +4,14 @@ import { ns } from "@framework/constants";
 
 export class CreateStakingTable1654751224220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.staking_status_enum AS ENUM (
+        'NEW',
+        'ACTIVE',
+        'INACTIVE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.staking_history`,
       columns: [
@@ -57,8 +65,9 @@ export class CreateStakingTable1654751224220 implements MigrationInterface {
           type: "boolean",
         },
         {
-          name: "active",
-          type: "boolean",
+          name: "staking_status",
+          type: `${ns}.staking_status_enum`,
+          default: "'NEW'",
         },
         {
           name: "created_at",

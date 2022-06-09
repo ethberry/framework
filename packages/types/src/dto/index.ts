@@ -1,4 +1,5 @@
 export * from "./blockchain/contract-manager/search";
+export * from "./blockchain/staking/search";
 
 export * from "./auth/login";
 export * from "./auth/password";
