@@ -19,6 +19,7 @@ export const AddressInput: FC<IAddressInputProps> = props => {
   useEffect(() => {
     if (contractTemplate === Erc20TokenTemplate.NATIVE) {
       form.setValue(name, constants.AddressZero);
+      form.clearErrors(name);
     }
   }, [contractTemplate]);
 
