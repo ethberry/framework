@@ -13,14 +13,14 @@ import { useUser } from "@gemunion/provider-user";
 import { IAccessControl, IUser } from "@framework/types";
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
-export interface IAccessControlRevokeRoleDialogProps {
+export interface IAccessControlRenounceRoleDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   data: { address: string };
 }
 
-export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogProps> = props => {
+export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialogProps> = props => {
   const { data, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
@@ -37,25 +37,25 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
     { success: false },
   );
 
-  const metaRevokeRole = useMetamask((values: IAccessControl) => {
+  const metaRenounceRole = useMetamask((values: IAccessControl) => {
     const contract = new Contract(data.address, IAccessControlSol.abi, library.getSigner());
-    return contract.revokeRole(values.role, values.address) as Promise<void>;
+    return contract.renounceRole(values.role, values.address) as Promise<void>;
   });
 
-  const handleRevoke = (values: IAccessControl): (() => Promise<void>) => {
+  const handleRenounce = (values: IAccessControl): (() => Promise<void>) => {
     return async () => {
-      return metaRevokeRole(values);
+      return metaRenounceRole(values);
     };
   };
 
   useEffect(() => {
     void fn().then((rows: Array<IAccessControl>) => {
-      setRows(rows.filter(row => row.wallet !== user.profile.wallet));
+      setRows(rows.filter(row => row.wallet === user.profile.wallet));
     });
   }, []);
 
   return (
-    <ConfirmationDialog message="dialogs.revoke" data-testid="AccessControlRevokeRoleDialog" {...rest}>
+    <ConfirmationDialog message="dialogs.renounce" data-testid="AccessControlRenounceRoleDialog" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
@@ -65,7 +65,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
                   {access.wallet} ({access.role})
                 </ListItemText>
                 <ListItemSecondaryAction>
-                  <IconButton onClick={handleRevoke(access)}>
+                  <IconButton onClick={handleRenounce(access)}>
                     <Delete />
                   </IconButton>
                 </ListItemSecondaryAction>

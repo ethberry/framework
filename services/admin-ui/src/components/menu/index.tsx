@@ -4,8 +4,9 @@ import { MoreVert } from "@mui/icons-material";
 
 import { IErc20TokenSnapshotMenuItem } from "./snapshot";
 import { Erc721CollectionRoyaltyMenuItem } from "./royalty";
-import { OzContractGrantRoleMenuItem } from "./grant-role";
-import { OzContractRevokeRoleMenuItem } from "./revoke-role";
+import { ContractGrantRoleMenuItem } from "./grant-role";
+import { ContractRevokeRoleMenuItem } from "./revoke-role";
+import { ContractRenounceRoleMenuItem } from "./renounce-role";
 
 export enum ContractActions {
   SNAPSHOT = "SNAPSHOT",
@@ -49,8 +50,9 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {actions.includes(ContractActions.ROYALTY) ? (
           <Erc721CollectionRoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
         ) : null}
-        <OzContractGrantRoleMenuItem address={contract.address} />
-        <OzContractRevokeRoleMenuItem address={contract.address} />
+        <ContractGrantRoleMenuItem address={contract.address} />
+        <ContractRevokeRoleMenuItem address={contract.address} />
+        <ContractRenounceRoleMenuItem address={contract.address} />
       </Menu>
     </>
   );

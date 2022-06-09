@@ -9,7 +9,7 @@ export interface IContractRevokeRoleMenuItemProps {
   address: string;
 }
 
-export const OzContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
+export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
   const { address } = props;
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);

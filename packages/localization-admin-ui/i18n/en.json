@@ -28,11 +28,13 @@
     }
   },
   "dialogs": {
-    "create": "Create",
     "confirmation": "Please confirm",
+    "create": "Create",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
+    "renounce": "Renounce role",
+    "revoke": "Revoke role",
     "view": "View"
   },
   "enums": {
@@ -52,12 +54,12 @@
       "TOKEN": "Token"
     },
     "contractTemplate": {
-      "NATIVE": "Native",
-      "EXTERNAL": "External",
       "BLACKLIST": "Blacklist",
       "CLIFF": "Cliff",
+      "EXTERNAL": "External",
       "GRADED": "Graded",
       "LINEAR": "Linear",
+      "NATIVE": "Native",
       "RANDOM": "Random",
       "SIMPLE": "Simple"
     },
@@ -143,6 +145,7 @@
       "mint": "Mint",
       "ok": "Ok",
       "reject": "Reject",
+      "renounceRole": "Renounce Role",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
       "save": "Save",

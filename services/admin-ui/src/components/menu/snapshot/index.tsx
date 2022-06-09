@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { MenuItem, ListItemIcon, Typography } from "@mui/material";
-import { PaidOutlined } from "@mui/icons-material";
+import { PhotoCamera } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -25,7 +25,7 @@ export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> =
   return (
     <MenuItem onClick={handleSnapshot}>
       <ListItemIcon>
-        <PaidOutlined fontSize="small" />
+        <PhotoCamera fontSize="small" />
       </ListItemIcon>
       <Typography variant="inherit">
         <FormattedMessage id="form.buttons.snapshot" />

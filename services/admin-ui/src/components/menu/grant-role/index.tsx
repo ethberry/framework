@@ -15,7 +15,7 @@ export interface IOzContractGrantRoleMenuItemProps {
   address: string;
 }
 
-export const OzContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = props => {
+export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = props => {
   const { address } = props;
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
