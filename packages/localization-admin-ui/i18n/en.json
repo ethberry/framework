@@ -320,6 +320,7 @@
       },
       "blockchain": {
         "seaport": "Seaport settings",
+        "staking": "Staking",
         "title": "Blockchain"
       },
       "erc1155": {
@@ -329,7 +330,6 @@
         "tokens": "ERC1155 Tokens"
       },
       "erc20": {
-        "staking": "ERC20 Staking",
         "title": "ERC20",
         "tokens": "ERC20 Tokens",
         "vesting": "ERC20 Vesting"
@@ -360,8 +360,8 @@
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
-    "erc20-staking": {
-      "title": "ERC20 Staking"
+    "staking": {
+      "title": "Staking"
     },
     "erc20-tokens": {
       "snapshot": "Make snapshot",

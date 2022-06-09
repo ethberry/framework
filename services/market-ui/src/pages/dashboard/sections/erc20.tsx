@@ -23,14 +23,6 @@ export const Erc20Sections: FC = () => {
             <FormattedMessage id="pages.dashboard.erc20.vesting" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc20-staking">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc20.staking" />
-          </ListItemText>
-        </ListItem>
       </List>
     </Paper>
   );

@@ -1,4 +1,4 @@
-export * from "./contract/search";
+export * from "./blockchain/contract-manager/search";
 
 export * from "./auth/login";
 export * from "./auth/password";
@@ -11,7 +11,6 @@ export * from "./erc20/token/search";
 export * from "./erc20/token/autocomplete";
 export * from "./erc20/vesting/deploy";
 export * from "./erc20/vesting/search";
-export * from "./erc20/staking/leaderboard";
 
 export * from "./erc721/airdrop/search";
 export * from "./erc721/collection/autocomplete";

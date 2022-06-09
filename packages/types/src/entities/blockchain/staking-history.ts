@@ -1,11 +1,12 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-export enum Erc20StakingEventType {
+export enum StakingEventType {
+  RuleCreated = "RuleCreated",
   StakingStart = "StakingStart",
   StakingWithdraw = "StakingWithdraw",
 }
 
-export interface IErc20StakingDeposit {
+export interface IStakingDeposit {
   stakingId: string;
   owner: string;
   startTimestamp: string;
@@ -14,18 +15,18 @@ export interface IErc20StakingDeposit {
   period: string;
 }
 
-export interface IErc20StakingWithdraw {
+export interface IStakingWithdraw {
   stakingId: string;
   owner: string;
   withdrawTimestamp: string;
   tokenId: string;
 }
 
-export type TErc20StakingEventData = IErc20StakingDeposit | IErc20StakingWithdraw;
+export type TStakingEventData = IStakingDeposit | IStakingWithdraw;
 
-export interface IErc20StakingHistory extends IIdDateBase {
+export interface IStakingHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
-  eventType: Erc20StakingEventType;
-  eventData: TErc20StakingEventData;
+  eventType: StakingEventType;
+  eventData: TStakingEventData;
 }

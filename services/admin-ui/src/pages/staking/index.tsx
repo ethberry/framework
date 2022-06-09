@@ -3,12 +3,12 @@ import { Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
-export const Erc20Staking: FC = () => {
+export const Staking: FC = () => {
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc20-staking"]} />
+      <Breadcrumbs path={["dashboard", "staking"]} />
 
-      <PageHeader message="pages.erc20-staking.title" />
+      <PageHeader message="pages.staking.title" />
 
       <Typography>Here be dragons!</Typography>
     </Grid>

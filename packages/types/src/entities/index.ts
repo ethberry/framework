@@ -8,7 +8,7 @@ export * from "./erc20/token";
 export * from "./erc20/token-history";
 export * from "./erc20/vesting";
 export * from "./erc20/vesting-history";
-export * from "./erc20/staking-history";
+export * from "./blockchain/staking-history";
 
 export * from "./erc721/airdrop";
 export * from "./erc721/collection";

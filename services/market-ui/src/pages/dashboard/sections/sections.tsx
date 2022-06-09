@@ -39,6 +39,14 @@ export const Sections: FC = () => {
             <FormattedMessage id="pages.dashboard.sections.craft" />
           </ListItemText>
         </ListItem>
+        <ListItem button component={RouterLink} to="/staking">
+          <ListItemIcon>
+            <Storefront />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.sections.staking" />
+          </ListItemText>
+        </ListItem>
       </List>
     </Paper>
   );

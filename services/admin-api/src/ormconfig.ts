@@ -25,6 +25,7 @@ import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity"
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
 import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
+import { StakingHistoryEntity } from "./blockchain/staking-history/staking-history.entity";
 
 import { CreateUserTable1563804021040 } from "./migrations/1563804021040-create-user-table";
 import { SeedUser1563804021050 } from "./migrations/1563804021050-seed-user";
@@ -35,7 +36,6 @@ import { CreateErc20TokenHistoryTable1563804021120 } from "./migrations/15638040
 import { CreateErc20VestingTable1563804021115 } from "./migrations/1563804021115-create-erc20-vesting-table";
 import { SeedErc20Vesting1563804021116 } from "./migrations/1563804021116-seed-erc20-vesting";
 import { CreateErc20VestingHistoryTable1563804021117 } from "./migrations/1563804021117-create-erc20-vesting-history-table";
-import { CreateErc20StakingHistoryTable1563804021130 } from "./migrations/1563804021130-create-erc20-staking-history-table";
 import { CreateErc721CollectionTable1563804021240 } from "./migrations/1563804021240-create-erc721-collection-table";
 import { SeedErc721Collection1563804021250 } from "./migrations/1563804021250-seed-erc721-collection";
 import { CreateErc721TemplateTable1563804021260 } from "./migrations/1563804021260-create-erc721-template-table";
@@ -61,7 +61,6 @@ import { CreateErc1155Ingredient1645161089530 } from "./migrations/1645161089530
 import { SeedErc1155Ingredient1645161089540 } from "./migrations/1645161089540-seed-erc1155-ingredient";
 import { CreateErc721AirdropTable1648525967810 } from "./migrations/1648525967800-create-erc721-airdrop-table";
 import { SeedErc721Airdrop1648525967820 } from "./migrations/1648525967820-seed-erc721-airdrop";
-import { Erc20StakingHistoryEntity } from "./erc20/staking-history/staking-history.entity";
 import { Erc20VestingEntity } from "./erc20/vesting/vesting.entity";
 import { CreateErc721Recipe1648525970000 } from "./migrations/1648525970000-create-erc721-recipe-table";
 import { SeedErc721Recipe1648525970010 } from "./migrations/1648525970010-seed-erc721-recipe";
@@ -78,6 +77,8 @@ import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-crea
 import { CreateSeaportHistoryTable1653820928950 } from "./migrations/1653820928950-create-seaport-history-table";
 import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
 import { SeedSettingsTable1654437010010 } from "./migrations/1654437010010-seed-settings-table";
+import { CreateStakingTable1654751224220 } from "./migrations/1654751224220-create-staking-table";
+import { CreateStakingHistoryTable1654751224230 } from "./migrations/1654751224230-create-staking-history-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -92,7 +93,6 @@ const config: PostgresConnectionOptions = {
     AccessControlEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
-    Erc20StakingHistoryEntity,
     Erc721CollectionEntity,
     Erc721TemplateEntity,
     Erc721TokenEntity,
@@ -104,6 +104,7 @@ const config: PostgresConnectionOptions = {
     Erc1155TokenEntity,
     Erc1155RecipeEntity,
     Erc1155IngredientEntity,
+    StakingHistoryEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -132,7 +133,6 @@ const config: PostgresConnectionOptions = {
     CreateErc20VestingTable1563804021115,
     SeedErc20Vesting1563804021116,
     CreateErc20VestingHistoryTable1563804021117,
-    CreateErc20StakingHistoryTable1563804021130,
     CreateErc721CollectionTable1563804021240,
     SeedErc721Collection1563804021250,
     CreateErc721TemplateTable1563804021260,
@@ -172,6 +172,8 @@ const config: PostgresConnectionOptions = {
     SeedContractManager1652962207610,
     CreateSettingsTable1654437010000,
     SeedSettingsTable1654437010010,
+    CreateStakingTable1654751224220,
+    CreateStakingHistoryTable1654751224230,
   ],
 };
 

@@ -210,7 +210,6 @@
         "tokens": "ERC1155 Tokens"
       },
       "erc20": {
-        "staking": "ERC20 Staking",
         "title": "ERC20",
         "vesting": "ERC20 Vesting"
       },
@@ -227,6 +226,7 @@
         "title": "My stash"
       },
       "sections": {
+        "staking": "Staking",
         "auctions": "Secondary marketplace",
         "craft": "Craft",
         "marketplace": "Primary marketplace",

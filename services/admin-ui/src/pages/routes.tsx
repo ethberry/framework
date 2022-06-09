@@ -17,6 +17,7 @@ import { erc721Routes } from "./erc721/routes";
 import { erc1155Routes } from "./erc1155/routes";
 import { Settings } from "./settings";
 import { Email } from "./email";
+import { Staking } from "./staking";
 
 const routes: Array<RouteObject> = [
   {
@@ -60,6 +61,14 @@ const routes: Array<RouteObject> = [
         path: "/seaport",
         element: <Protected />,
         children: [{ index: true, element: <Seaport /> }],
+      },
+      {
+        path: "/staking",
+        element: <Protected />,
+        children: [
+          { index: true, element: <Staking /> },
+          { path: "/staking/:id", element: <Staking /> },
+        ],
       },
       ...erc20Routes,
       ...erc721Routes,

@@ -10,11 +10,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
 
-export const Erc20Staking: FC = () => {
+export const Staking: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
     useCollection<ILeaderboard>({
-      baseUrl: "/erc721-collections",
-      redirect: (_baseUrl, search) => `/leaderboard?${stringify(search)}`,
+      baseUrl: "/staking/leaderboard",
+      redirect: (_baseUrl, search) => `/staking?${stringify(search)}`,
     });
 
   const { formatMessage } = useIntl();

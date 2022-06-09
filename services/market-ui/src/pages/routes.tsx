@@ -19,6 +19,7 @@ import { Auctions } from "./auction";
 import { Craft } from "./craft";
 import { MyAssets } from "./personal/assets";
 import { MyAuctions } from "./personal/auction";
+import { Staking } from "./staking";
 
 const routes: Array<RouteObject> = [
   {
@@ -77,6 +78,10 @@ const routes: Array<RouteObject> = [
           { index: true, element: <Craft /> },
           { path: "/craft/:tab", element: <Craft /> },
         ],
+      },
+      {
+        path: "/staking",
+        element: <Staking />,
       },
       {
         path: "/error/:error",

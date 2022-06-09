@@ -2,17 +2,18 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateErc20StakingHistoryTable1563804021130 implements MigrationInterface {
+export class CreateStakingHistoryTable1654751224230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc20_staking_event_enum AS ENUM (
+        'RuleCreated',
         'StakingDeposit',
         'StakingWithdraw'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.erc20_staking_history`,
+      name: `${ns}.staking_history`,
       columns: [
         {
           name: "id",
