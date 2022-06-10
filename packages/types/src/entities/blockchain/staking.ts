@@ -21,16 +21,10 @@ export interface IStakingItem extends IIdBase {
 }
 
 export interface IStaking extends ISearchable {
-  depositType: number;
-  depositToken: string;
-  depositTokenId: string;
-  depositAmount: string;
-  rewardType: number;
-  rewardToken: string;
-  rewardTokenId: string;
-  rewardAmount: string;
+  deposit: IStakingItem;
+  reward: IStakingItem;
   period: number;
   penalty: number;
-  recurrent: number;
+  recurrent: boolean;
   stakingStatus: StakingStatus;
 }
