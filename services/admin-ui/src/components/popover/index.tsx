@@ -19,7 +19,7 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "seaport-info" : undefined;
+  const id = open ? "contract-info" : undefined;
 
   return (
     <>
@@ -40,7 +40,7 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
           horizontal: "right",
         }}
       >
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="contract parameters">
           <TableBody>
             {Object.keys(props).map(key => (
               <TableRow key={key}>

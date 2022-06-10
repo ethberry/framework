@@ -38,7 +38,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
       <IconButton
         aria-label="more"
         id="contract-menu-button"
-        aria-controls={open ? "long-menu" : undefined}
+        aria-controls={open ? "contract-actions-menu" : undefined}
         aria-expanded={open ? "true" : undefined}
         aria-haspopup="true"
         onClick={handleClick}
