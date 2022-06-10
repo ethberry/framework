@@ -19,6 +19,8 @@ export class StakingService {
     const { skip, take } = dto;
 
     const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking");
+    queryBuilder.leftJoinAndSelect("staking.deposit", "deposit");
+    queryBuilder.leftJoinAndSelect("staking.reward", "reward");
 
     queryBuilder.select();
 

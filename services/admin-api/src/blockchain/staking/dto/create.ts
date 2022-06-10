@@ -1,45 +1,37 @@
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsBoolean,
-  IsEnum,
-  IsEthereumAddress,
-  IsInt,
-  IsJSON,
-  IsNumber,
-  IsString,
-  Min,
-  ValidateNested,
-} from "class-validator";
+import { IsBoolean, IsEnum, IsInt, IsJSON, IsNumber, IsString, Min, ValidateNested, ValidateIf } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { ItemType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { IStakingCreateDto, IStakingItemCreateDto } from "../interfaces";
 
 export class StakingItemCreateDto implements IStakingItemCreateDto {
   @ApiProperty({
-    enum: ItemType,
+    enum: TokenType,
   })
-  @Transform(({ value }) => value as ItemType)
-  @IsEnum(ItemType, { message: "badInput" })
-  public itemType: ItemType;
+  @Transform(({ value }) => value as TokenType)
+  @IsEnum(TokenType, { message: "badInput" })
+  public tokenType: TokenType;
 
   @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  public token: string;
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public token: number;
 
   @ApiProperty({
     type: Number,
   })
   @IsBigNumber({}, { message: "typeMismatch" })
+  @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
   public criteria: string;
 
   @ApiProperty({
     type: Number,
   })
   @IsBigNumber({}, { message: "typeMismatch" })
+  @ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.TokenType))
   public amount: string;
 }
 
@@ -69,7 +61,7 @@ export class StakingCreateDto implements IStakingCreateDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
-  public duration: string;
+  public duration: number;
 
   @ApiProperty()
   @IsNumber({ maxDecimalPlaces: 2 }, { message: "typeMismatch" })

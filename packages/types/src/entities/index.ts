@@ -35,3 +35,4 @@ export * from "./blockchain/access-control-history";
 export * from "./blockchain/contract-manager";
 export * from "./blockchain/contract-manager-history";
 export * from "./blockchain/staking";
+export * from "./blockchain/common";

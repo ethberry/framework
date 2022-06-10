@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -14,14 +24,16 @@ export class StakingController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
+  @UseInterceptors(ClassSerializerInterceptor)
   public search(@Query() dto: StakingSearchDto): Promise<[Array<StakingEntity>, number]> {
     return this.stakingService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
+  @UseInterceptors(ClassSerializerInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingEntity | null> {
-    return this.stakingService.findOne({ id });
+    return this.stakingService.findOne({ id }, { relations: { deposit: true, reward: true } });
   }
 
   @Post("/")

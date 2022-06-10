@@ -26,9 +26,11 @@ import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
 import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
 import { StakingEntity } from "./blockchain/staking/staking.entity";
-import { StakingItemEntity } from "./blockchain/staking/staking.item.entity";
+import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
+import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 import { StakingHistoryEntity } from "./blockchain/staking-history/staking-history.entity";
 
+import { Blockchain1563804021000 } from "./migrations/1563804021000-blockchain";
 import { CreateUserTable1563804021040 } from "./migrations/1563804021040-create-user-table";
 import { SeedUser1563804021050 } from "./migrations/1563804021050-seed-user";
 import { CreateOtpTable1563804021060 } from "./migrations/1563804021060-create-otp-table";
@@ -80,8 +82,9 @@ import { CreateSeaportHistoryTable1653820928950 } from "./migrations/16538209289
 import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
 import { SeedSettingsTable1654437010010 } from "./migrations/1654437010010-seed-settings-table";
 import { CreateStakingTable1654751224220 } from "./migrations/1654751224220-create-staking-table";
-import { CreateStakingItemTable1654751224230 } from "./migrations/1654751224230-create-staking-item-table";
-import { CreateStakingHistoryTable1654751224240 } from "./migrations/1654751224240-create-staking-history-table";
+import { CreateStakingDepositTable1654751224230 } from "./migrations/1654751224230-create-staking-deposit-table";
+import { CreateStakingRewardTable1654751224240 } from "./migrations/1654751224240-create-staking-reward-table";
+import { CreateStakingHistoryTable1654751224250 } from "./migrations/1654751224250-create-staking-history-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -108,7 +111,8 @@ const config: PostgresConnectionOptions = {
     Erc1155RecipeEntity,
     Erc1155IngredientEntity,
     StakingEntity,
-    StakingItemEntity,
+    StakingDepositEntity,
+    StakingRewardEntity,
     StakingHistoryEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
@@ -129,6 +133,7 @@ const config: PostgresConnectionOptions = {
     createDomainUint256(),
     installExtensionUUID(),
     createLanguageEnum(ns),
+    Blockchain1563804021000,
     CreateUserTable1563804021040,
     SeedUser1563804021050,
     CreateOtpTable1563804021060,
@@ -178,8 +183,9 @@ const config: PostgresConnectionOptions = {
     CreateSettingsTable1654437010000,
     SeedSettingsTable1654437010010,
     CreateStakingTable1654751224220,
-    CreateStakingItemTable1654751224230,
-    CreateStakingHistoryTable1654751224240,
+    CreateStakingDepositTable1654751224230,
+    CreateStakingRewardTable1654751224240,
+    CreateStakingHistoryTable1654751224250,
   ],
 };
 

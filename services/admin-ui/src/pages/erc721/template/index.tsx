@@ -32,7 +32,7 @@ export const Erc721Template: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleAdd,
+    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -80,7 +80,7 @@ export const Erc721Template: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="Erc721TemplateCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TemplateCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

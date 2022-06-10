@@ -29,39 +29,7 @@ export class CreateStakingTable1654751224220 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "deposit_type",
-          type: "int",
-        },
-        {
-          name: "deposit_token",
-          type: "varchar",
-        },
-        {
-          name: "deposit_token_id",
-          type: "varchar",
-        },
-        {
-          name: "deposit_amount",
-          type: "varchar",
-        },
-        {
-          name: "reward_type",
-          type: "int",
-        },
-        {
-          name: "reward_token",
-          type: "varchar",
-        },
-        {
-          name: "reward_token_id",
-          type: "varchar",
-        },
-        {
-          name: "reward_amount",
-          type: "varchar",
-        },
-        {
-          name: "period",
+          name: "duration",
           type: "int",
         },
         {

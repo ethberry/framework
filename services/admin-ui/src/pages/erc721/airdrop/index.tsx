@@ -30,7 +30,7 @@ export const Erc721Airdrop: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleAdd,
+    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -67,7 +67,7 @@ export const Erc721Airdrop: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="Erc721AirdropCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721AirdropCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

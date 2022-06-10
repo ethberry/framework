@@ -3,14 +3,13 @@ import { Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput, TextInput, CheckboxInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { IStaking } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { ItemTypeInput } from "./item-type-input";
-import { ItemType } from "./interfaces";
+import { TokenTypeInput } from "./token-type-input";
 import { TokenInput } from "./token-input";
 import { AmountInput } from "./amount-input";
 import { CriteriaInput } from "./criteria-input";
@@ -25,17 +24,16 @@ export interface IStakingEditDialogProps {
 export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description } = initialValues;
+  const { id, title, description, penalty, recurrent, deposit, reward, duration } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
-    deposit: {
-      itemType: ItemType.NATIVE,
-    },
-    reward: {
-      itemType: ItemType.NATIVE,
-    },
+    deposit,
+    reward,
+    penalty,
+    recurrent,
+    duration,
   };
 
   return (
@@ -51,13 +49,13 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
 
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <ItemTypeInput prefix="deposit" />
+          <TokenTypeInput prefix="deposit" />
           <TokenInput prefix="deposit" />
           <CriteriaInput prefix="deposit" />
           <AmountInput prefix="deposit" />
         </Grid>
         <Grid item xs={6}>
-          <ItemTypeInput prefix="reward" />
+          <TokenTypeInput prefix="reward" />
           <TokenInput prefix="reward" />
           <CriteriaInput prefix="reward" />
           <AmountInput prefix="reward" />
