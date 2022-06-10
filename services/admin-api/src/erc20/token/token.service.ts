@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
 
-import { Erc20TokenStatus, IErc20TokenSearchDto } from "@framework/types";
+import { Erc20TokenStatus, IErc20TokenAutocompleteDto, IErc20TokenSearchDto } from "@framework/types";
 
 import { Erc20TokenEntity } from "./token.entity";
 import { IErc20TokenCreateDto, IErc20TokenUpdateDto } from "./interfaces";
@@ -18,7 +18,7 @@ export class Erc20TokenService {
   ) {}
 
   public async search(dto: IErc20TokenSearchDto): Promise<[Array<Erc20TokenEntity>, number]> {
-    const { query, tokenStatus, skip, take } = dto;
+    const { query, tokenStatus, contractTemplate, skip, take } = dto;
 
     const queryBuilder = this.erc20TokenEntityRepository.createQueryBuilder("token");
 
@@ -29,6 +29,14 @@ export class Erc20TokenService {
         queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });
       } else {
         queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
+      }
+    }
+
+    if (contractTemplate) {
+      if (contractTemplate.length === 1) {
+        queryBuilder.andWhere("token.contractTemplate = :contractTemplate", { contractTemplate: contractTemplate[0] });
+      } else {
+        queryBuilder.andWhere("token.contractTemplate IN(:...contractTemplate)", { contractTemplate });
       }
     }
 
@@ -56,11 +64,25 @@ export class Erc20TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<Erc20TokenEntity>> {
+  public async autocomplete(dto: IErc20TokenAutocompleteDto): Promise<Array<Erc20TokenEntity>> {
+    const { contractTemplate = [] } = dto;
+
+    const where = {
+      tokenStatus: Erc20TokenStatus.ACTIVE,
+    };
+
+    if (contractTemplate.length) {
+      Object.assign(where, {
+        contractTemplate: In(contractTemplate),
+      });
+    }
+
     return this.erc20TokenEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,
+        contractTemplate: true,
       },
     });
   }

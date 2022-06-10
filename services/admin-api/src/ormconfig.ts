@@ -25,6 +25,7 @@ import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity"
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
 import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
+import { StakingEntity } from "./blockchain/staking/staking.entity";
 import { StakingHistoryEntity } from "./blockchain/staking-history/staking-history.entity";
 
 import { CreateUserTable1563804021040 } from "./migrations/1563804021040-create-user-table";
@@ -104,6 +105,7 @@ const config: PostgresConnectionOptions = {
     Erc1155TokenEntity,
     Erc1155RecipeEntity,
     Erc1155IngredientEntity,
+    StakingEntity,
     StakingHistoryEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.

@@ -32,7 +32,7 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         'ETH',
         '${constants.AddressZero}',
         'ACTIVE',
-        'SIMPLE', -- NATIVE ?
+        'NATIVE',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -69,6 +69,18 @@ export class SeedErc20Token1563804021110 implements MigrationInterface {
         '${erc20TokenAddress}',
         'NEW',
         'BLACKLIST',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'USDT',
+        '${simpleFormatting}',
+        '${constants.WeiPerEther.toString()}',
+        'USD Teter',
+        'USDT',
+        '${erc20TokenAddress}',
+        'ACTIVE',
+        'EXTERNAL',
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'

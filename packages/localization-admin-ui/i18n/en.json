@@ -88,6 +88,17 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
+    "itemType": {
+      "NATIVE": "Native",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC1155": "ERC1155"
+    },
+    "stakingStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
@@ -161,6 +172,8 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "itemType": "Type",
+      "stakingStatus": "Status",
       "DUMMY": "Dummy",
       "address": "Address",
       "airdropStatus": "Status",
@@ -214,6 +227,7 @@
       "symbol": "Symbol",
       "templateStatus": "Status",
       "title": "Title",
+      "token": "Token",
       "tokenId": "Token",
       "tokenStatus": "Status",
       "type": "Type",
@@ -273,6 +287,7 @@
       "symbol": "XXX",
       "text": "qwerty",
       "title": "Title",
+      "token": "Bottle of water",
       "tokenId": "Bottle of water",
       "tokenStatus": "Status",
       "url": "https://youtube.com",

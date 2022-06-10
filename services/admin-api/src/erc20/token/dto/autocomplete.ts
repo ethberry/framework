@@ -15,6 +15,13 @@ export class Erc20TokenAutocompleteDto implements IErc20TokenAutocompleteDto {
   @IsEnum(Erc20TokenTemplate, { each: true, message: "badInput" })
   public contractTemplate: Array<Erc20TokenTemplate>;
 
-  // not allowed
+  @ApiPropertyOptional({
+    enum: Erc20TokenStatus,
+    isArray: true,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<Erc20TokenStatus>)
+  @IsEnum(Erc20TokenStatus, { each: true, message: "badInput" })
   public tokenStatus: Array<Erc20TokenStatus>;
 }
