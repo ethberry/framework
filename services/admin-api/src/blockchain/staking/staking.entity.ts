@@ -4,21 +4,22 @@ import { ns } from "@framework/constants";
 import { IStaking, StakingStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { StakingItemEntity } from "./staking.item.entity";
+import { StakingDepositEntity } from "./staking.deposit.entity";
+import { StakingRewardEntity } from "./staking.reward.entity";
 
 @Entity({ schema: ns, name: "staking" })
 export class StakingEntity extends SearchableEntity implements IStaking {
   @Column({ type: "varchar" })
   public title: string;
 
-  @OneToOne(_type => StakingItemEntity, deposit => deposit.staking, { cascade: true })
-  public deposit: StakingItemEntity;
+  @OneToOne(_type => StakingDepositEntity, deposit => deposit.staking, { cascade: true })
+  public deposit: StakingDepositEntity;
 
-  @OneToOne(_type => StakingItemEntity, reward => reward.staking, { cascade: true })
-  public reward: StakingItemEntity;
+  @OneToOne(_type => StakingRewardEntity, reward => reward.staking, { cascade: true })
+  public reward: StakingRewardEntity;
 
   @Column({ type: "int" })
-  public period: number;
+  public duration: number;
 
   @Column({ type: "int" })
   public penalty: number;

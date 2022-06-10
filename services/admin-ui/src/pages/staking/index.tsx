@@ -17,7 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStaking, IStakingSearchDto, StakingStatus } from "@framework/types";
+import { IStaking, IStakingItem, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
@@ -32,7 +32,7 @@ export const Staking: FC = () => {
     isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
-    handleAdd,
+    handleCreate,
     handleToggleFilters,
     handleEdit,
     handleEditCancel,
@@ -47,11 +47,23 @@ export const Staking: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      deposit: {
+        tokenType: TokenType.NATIVE,
+      } as IStakingItem,
+      reward: {
+        tokenType: TokenType.NATIVE,
+      } as IStakingItem,
+      duration: 30,
+      penalty: 1,
+      recurrent: false,
     },
     search: {
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
     },
-    // filter: ({ title, description }) => ({ title, description }),
+    filter: ({ id: _id, ...rest }) => {
+      console.info("filter", rest);
+      return rest;
+    },
   });
 
   return (
@@ -65,7 +77,7 @@ export const Staking: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleAdd} data-testid="StakingCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="StakingCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

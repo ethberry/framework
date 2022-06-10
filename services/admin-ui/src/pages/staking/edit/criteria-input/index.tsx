@@ -3,8 +3,7 @@ import { useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-
-import { ItemType } from "../interfaces";
+import { TokenType } from "@framework/types";
 
 export interface ITokenInputProps {
   prefix: string;
@@ -13,31 +12,41 @@ export interface ITokenInputProps {
 }
 
 export const CriteriaInput: FC<ITokenInputProps> = props => {
-  const { prefix, name = "criteria", related = "itemType" } = props;
+  const { prefix, name = "criteria", related = "tokenType" } = props;
 
   const { formatMessage } = useIntl();
   const value = useWatch({ name: `${prefix}.${related}` });
 
   switch (value) {
-    case ItemType.ERC721:
+    case TokenType.ERC721:
       return (
         <EntityInput
           name={`${prefix}.${name}`}
           controller="erc721-templates"
           label={formatMessage({ id: "form.labels.erc721TemplateId" })}
+          placeholder={formatMessage({ id: "form.placeholders.erc721TemplateId" })}
         />
       );
-    case ItemType.ERC1155:
+    case TokenType.ERC998:
+      return (
+        <EntityInput
+          name={`${prefix}.${name}`}
+          controller="erc721-templates"
+          label={formatMessage({ id: "form.labels.erc998TemplateId" })}
+          placeholder={formatMessage({ id: "form.placeholders.erc998TemplateId" })}
+        />
+      );
+    case TokenType.ERC1155:
       return (
         <EntityInput
           name={`${prefix}.${name}`}
           controller="erc1155-tokens"
           label={formatMessage({ id: "form.labels.erc1155TokenId" })}
-          // placeholder={formatMessage({ id: "form.labels.erc1155TokenId" })}
+          placeholder={formatMessage({ id: "form.placeholders.erc1155TokenId" })}
         />
       );
-    case ItemType.NATIVE:
-    case ItemType.ERC20:
+    case TokenType.NATIVE:
+    case TokenType.ERC20:
     default:
       return null;
   }

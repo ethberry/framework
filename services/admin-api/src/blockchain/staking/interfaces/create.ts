@@ -1,8 +1,8 @@
-import { ItemType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 export interface IStakingItemCreateDto {
-  itemType: ItemType;
-  token: string;
+  tokenType: TokenType;
+  token: number;
   criteria: string;
   amount: string;
 }
@@ -12,7 +12,7 @@ export interface IStakingCreateDto {
   description: string;
   deposit: IStakingItemCreateDto;
   reward: IStakingItemCreateDto;
-  duration: string;
+  duration: number;
   penalty: number;
   recurrent: boolean;
 }

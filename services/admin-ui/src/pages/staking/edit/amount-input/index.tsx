@@ -2,8 +2,7 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { EthInput } from "@gemunion/mui-inputs-mask";
-
-import { ItemType } from "../interfaces";
+import { TokenType } from "@framework/types";
 
 export interface ITokenInputProps {
   prefix: string;
@@ -12,16 +11,17 @@ export interface ITokenInputProps {
 }
 
 export const AmountInput: FC<ITokenInputProps> = props => {
-  const { prefix, name = "amount", related = "itemType" } = props;
+  const { prefix, name = "amount", related = "tokenType" } = props;
 
   const value = useWatch({ name: `${prefix}.${related}` });
 
   switch (value) {
-    case ItemType.NATIVE:
-    case ItemType.ERC20:
-    case ItemType.ERC1155:
+    case TokenType.NATIVE:
+    case TokenType.ERC20:
+    case TokenType.ERC1155:
       return <EthInput name={`${prefix}.${name}`} />;
-    case ItemType.ERC721:
+    case TokenType.ERC721:
+    case TokenType.ERC998:
     default:
       return null;
   }

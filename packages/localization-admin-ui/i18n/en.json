@@ -88,10 +88,11 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
-    "itemType": {
+    "tokenType": {
       "NATIVE": "Native",
       "ERC20": "ERC20",
       "ERC721": "ERC721",
+      "ERC998": "ERC998",
       "ERC1155": "ERC1155"
     },
     "stakingStatus": {
@@ -178,7 +179,6 @@
     "labels": {
       "recurrent": "Is recurrent?",
       "penalty": "Penalty",
-      "itemType": "Type",
       "stakingStatus": "Status",
       "DUMMY": "Dummy",
       "address": "Address",
@@ -236,6 +236,7 @@
       "token": "Token",
       "tokenId": "Token",
       "tokenStatus": "Status",
+      "tokenType": "Type",
       "type": "Type",
       "updatedAt": "Updated",
       "url": "Url",

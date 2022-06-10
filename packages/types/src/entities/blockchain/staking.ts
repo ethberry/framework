@@ -1,4 +1,5 @@
 import { ISearchable, IIdBase } from "@gemunion/types-collection";
+import { TokenType } from "./common";
 
 export enum StakingStatus {
   NEW = "NEW",
@@ -6,16 +7,9 @@ export enum StakingStatus {
   INACTIVE = "INACTIVE",
 }
 
-export enum ItemType {
-  NATIVE = "NATIVE",
-  ERC20 = "ERC20",
-  ERC721 = "ERC721",
-  ERC1155 = "ERC1155",
-}
-
 export interface IStakingItem extends IIdBase {
-  itemType: ItemType;
-  token: string;
+  tokenType: TokenType;
+  token: number;
   criteria: string;
   amount: string;
 }
@@ -23,7 +17,7 @@ export interface IStakingItem extends IIdBase {
 export interface IStaking extends ISearchable {
   deposit: IStakingItem;
   reward: IStakingItem;
-  period: number;
+  duration: number;
   penalty: number;
   recurrent: boolean;
   stakingStatus: StakingStatus;
