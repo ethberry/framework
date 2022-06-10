@@ -51,7 +51,7 @@ export const Staking: FC = () => {
     search: {
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
     },
-    filter: ({ stakingStatus }) => ({ stakingStatus }),
+    // filter: ({ title, description }) => ({ title, description }),
   });
 
   return (

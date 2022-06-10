@@ -137,6 +137,10 @@
     "page-not-found": "Page Not Found"
   },
   "form": {
+    "adornment": {
+      "days": "days",
+      "percent": "%"
+    },
     "buttons": {
       "accept": "Accept",
       "add": "Add",
@@ -172,6 +176,8 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "recurrent": "Is recurrent?",
+      "penalty": "Penalty",
       "itemType": "Type",
       "stakingStatus": "Status",
       "DUMMY": "Dummy",
@@ -241,6 +247,7 @@
       "year": "Year"
     },
     "placeholders": {
+      "penalty": "1",
       "DUMMY": "Dummy",
       "address": "0x...",
       "amount": "10",
@@ -258,7 +265,6 @@
       "displayName": "Gordon Freeman",
       "duration": "30",
       "email": "me@google.com",
-      "entrance": "2",
       "erc1155CollectionId": "Collections",
       "erc1155CollectionIds": "Collections",
       "erc1155TokenId": "Token",
@@ -283,7 +289,6 @@
       "rarity": "Legendary",
       "royalty": "1",
       "search": "Search...",
-      "slug": "about-us",
       "symbol": "XXX",
       "text": "qwerty",
       "title": "Title",

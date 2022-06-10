@@ -2,18 +2,19 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateStakingHistoryTable1654751224230 implements MigrationInterface {
+export class CreateStakingItemTable1654751224230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.staking_event_enum AS ENUM (
-        'RuleCreated',
-        'StakingDeposit',
-        'StakingWithdraw'
+      CREATE TYPE ${ns}.staking_item_type_enum AS ENUM (
+        'NATIVE',
+        'ERC20',
+        'ERC721',
+        'ERC1155'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.staking_history`,
+      name: `${ns}.staking_item`,
       columns: [
         {
           name: "id",
@@ -21,20 +22,21 @@ export class CreateStakingHistoryTable1654751224230 implements MigrationInterfac
           isPrimary: true,
         },
         {
-          name: "address",
+          name: "item_type",
+          type: `${ns}.staking_item_type_enum`,
+          default: "'NATIVE'",
+        },
+        {
+          name: "token",
           type: "varchar",
         },
         {
-          name: "transaction_hash",
+          name: "criteria",
           type: "varchar",
         },
         {
-          name: "event_type",
-          type: `${ns}.staking_event_enum`,
-        },
-        {
-          name: "event_data",
-          type: "json",
+          name: "amount",
+          type: "varchar",
         },
         {
           name: "created_at",
@@ -51,7 +53,7 @@ export class CreateStakingHistoryTable1654751224230 implements MigrationInterfac
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.staking_event_enum;`);
+    await queryRunner.dropTable(`${ns}.staking_item`);
+    await queryRunner.query(`DROP TYPE ${ns}.staking_item_type_enum;`);
   }
 }
