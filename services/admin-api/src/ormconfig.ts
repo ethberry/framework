@@ -81,10 +81,13 @@ import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-crea
 import { CreateSeaportHistoryTable1653820928950 } from "./migrations/1653820928950-create-seaport-history-table";
 import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
 import { SeedSettingsTable1654437010010 } from "./migrations/1654437010010-seed-settings-table";
-import { CreateStakingTable1654751224220 } from "./migrations/1654751224220-create-staking-table";
-import { CreateStakingDepositTable1654751224230 } from "./migrations/1654751224230-create-staking-deposit-table";
+import { CreateStakingTable1654751224200 } from "./migrations/1654751224200-create-staking-table";
+import { SeedStakingTable1654751224210 } from "./migrations/1654751224210-seed-staking-table";
+import { CreateStakingDepositTable1654751224220 } from "./migrations/1654751224220-create-staking-deposit-table";
+import { SeedStakingDepositTable1654751224230 } from "./migrations/1654751224230-seed-staking-deposit-table";
 import { CreateStakingRewardTable1654751224240 } from "./migrations/1654751224240-create-staking-reward-table";
-import { CreateStakingHistoryTable1654751224250 } from "./migrations/1654751224250-create-staking-history-table";
+import { SeedStakingRewardTable1654751224250 } from "./migrations/1654751224250-seed-staking-reward-table";
+import { CreateStakingHistoryTable1654751224260 } from "./migrations/1654751224260-create-staking-history-table";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -182,10 +185,13 @@ const config: PostgresConnectionOptions = {
     SeedContractManager1652962207610,
     CreateSettingsTable1654437010000,
     SeedSettingsTable1654437010010,
-    CreateStakingTable1654751224220,
-    CreateStakingDepositTable1654751224230,
+    CreateStakingTable1654751224200,
+    SeedStakingTable1654751224210,
+    CreateStakingDepositTable1654751224220,
+    SeedStakingDepositTable1654751224230,
     CreateStakingRewardTable1654751224240,
-    CreateStakingHistoryTable1654751224250,
+    SeedStakingRewardTable1654751224250,
+    CreateStakingHistoryTable1654751224260,
   ],
 };
 

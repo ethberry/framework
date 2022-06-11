@@ -2,18 +2,18 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateStakingTable1654751224220 implements MigrationInterface {
+export class CreateStakingHistoryTable1654751224260 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.staking_status_enum AS ENUM (
-        'NEW',
-        'ACTIVE',
-        'INACTIVE'
+      CREATE TYPE ${ns}.staking_event_enum AS ENUM (
+        'RuleCreated',
+        'StakingDeposit',
+        'StakingWithdraw'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.staking`,
+      name: `${ns}.staking_history`,
       columns: [
         {
           name: "id",
@@ -21,29 +21,20 @@ export class CreateStakingTable1654751224220 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "title",
+          name: "address",
           type: "varchar",
         },
         {
-          name: "description",
+          name: "transaction_hash",
+          type: "varchar",
+        },
+        {
+          name: "event_type",
+          type: `${ns}.staking_event_enum`,
+        },
+        {
+          name: "event_data",
           type: "json",
-        },
-        {
-          name: "duration",
-          type: "int",
-        },
-        {
-          name: "penalty",
-          type: "int",
-        },
-        {
-          name: "recurrent",
-          type: "boolean",
-        },
-        {
-          name: "staking_status",
-          type: `${ns}.staking_status_enum`,
-          default: "'NEW'",
         },
         {
           name: "created_at",
@@ -60,6 +51,7 @@ export class CreateStakingTable1654751224220 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking`);
+    await queryRunner.dropTable(`${ns}.staking_history`);
+    await queryRunner.query(`DROP TYPE ${ns}.staking_event_enum;`);
   }
 }

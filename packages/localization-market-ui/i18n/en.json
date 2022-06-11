@@ -28,6 +28,18 @@
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?"
   },
   "enums": {
+    "tokenType": {
+      "NATIVE": "Native",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "ERC1155": "ERC1155"
+    },
+    "stakingStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
@@ -103,7 +115,9 @@
       "dateRangeStart": "From",
       "displayName": "Display name",
       "email": "Email",
+      "stakingStatus": "Status",
       "endDate": "End date",
+      "tokenType": "Type",
       "erc1155CollectionId": "Collections",
       "erc1155CollectionIds": "Collections",
       "erc1155TokenId": "Token",
