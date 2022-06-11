@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { Erc721TokenTemplate, IErc721Token, IErc721CollectionDeployDto } from "@framework/types";
+import { Erc721TokenTemplate, IErc721CollectionDeployDto, IErc721Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

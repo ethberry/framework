@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { Erc20TokenStatus, IErc20TokenSearchDto, Erc20TokenTemplate } from "@framework/types";
+import { Erc20TokenStatus, Erc20TokenTemplate, IErc20TokenSearchDto } from "@framework/types";
 
 export class Erc20TokenSearchDto extends SearchDto implements IErc20TokenSearchDto {
   @ApiPropertyOptional({

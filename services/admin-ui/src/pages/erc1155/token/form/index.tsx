@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, TextInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
 

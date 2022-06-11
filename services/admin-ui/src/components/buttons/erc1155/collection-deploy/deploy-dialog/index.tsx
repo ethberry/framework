@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { Erc1155TokenTemplate, IErc1155Token, IErc1155CollectionDeployDto } from "@framework/types";
+import { Erc1155TokenTemplate, IErc1155CollectionDeployDto, IErc1155Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

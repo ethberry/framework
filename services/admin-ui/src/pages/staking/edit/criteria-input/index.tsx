@@ -3,7 +3,7 @@ import { useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc721TemplateStatus, TokenType, Erc1155TokenStatus, Erc998TemplateStatus } from "@framework/types";
+import { Erc1155TokenStatus, Erc721TemplateStatus, Erc998TemplateStatus, TokenType } from "@framework/types";
 
 export interface ICriteriaInputProps {
   prefix: string;

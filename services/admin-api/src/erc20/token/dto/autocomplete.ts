@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional, IsArray } from "class-validator";
+import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { Erc20TokenStatus, Erc20TokenTemplate, IErc20TokenAutocompleteDto } from "@framework/types";

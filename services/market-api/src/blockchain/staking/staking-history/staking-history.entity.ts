@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { StakingEventType, IStakingHistory, TStakingEventData } from "@framework/types";
+import { IStakingHistory, StakingEventType, TStakingEventData } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 

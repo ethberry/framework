@@ -2,13 +2,13 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IErc721Ingredient } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc1155TokenEntity } from "../../erc1155/token/token.entity";
 import { Erc721RecipeEntity } from "../recipe/recipe.entity";
 
 @Entity({ schema: ns, name: "erc721_ingredient" })
-export class Erc721IngredientEntity extends IdDateBaseEntity implements IErc721Ingredient {
+export class Erc721IngredientEntity extends IdBaseEntity implements IErc721Ingredient {
   @Column({ type: "int" })
   public erc721RecipeId: number;
 

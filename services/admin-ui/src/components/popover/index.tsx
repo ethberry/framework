@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useState } from "react";
 
-import { IconButton, Popover, Table, TableRow, TableCell, TableBody } from "@mui/material";
+import { IconButton, Popover, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { QuestionMark } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 

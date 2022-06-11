@@ -22,12 +22,12 @@ import { ContractManagerEntity } from "./contract-manager.entity";
 import { ContractManagerService } from "./contract-manager.service";
 
 import {
+  ContractManagerCreateDto,
+  ContractManagerSearchDto,
   Erc1155TokenDeployDto,
   Erc20TokenDeployDto,
   Erc20VestingDeployDto,
   Erc721TokenDeployDto,
-  ContractManagerCreateDto,
-  ContractManagerSearchDto,
 } from "./dto";
 import { IContractManagerUpdateDto } from "./interfaces";
 

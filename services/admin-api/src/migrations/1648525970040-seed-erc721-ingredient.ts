@@ -4,8 +4,6 @@ import { ns } from "@framework/constants";
 
 export class SeedErc721Ingredient1648525970040 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const currentDateTime = new Date().toISOString();
-
     await queryRunner.query(`
       INSERT INTO ${ns}.erc721_ingredient (
         erc721_recipe_id,
@@ -16,39 +14,27 @@ export class SeedErc721Ingredient1648525970040 implements MigrationInterface {
       ) VALUES (
         1,
         2,
-        10,
-        '${currentDateTime}',
-        '${currentDateTime}'
+        10
       ), (
         1,
         3,
-        10,
-        '${currentDateTime}',
-        '${currentDateTime}'
+        10
       ), (
         2,
         2,
-        10,
-        '${currentDateTime}',
-        '${currentDateTime}'
+        10
       ), (
         2,
         3,
-        10,
-        '${currentDateTime}',
-        '${currentDateTime}'
+        10
       ), (
         3,
         2,
-        10,
-        '${currentDateTime}',
-        '${currentDateTime}'
+        10
       ), (
         3,
         3,
-        10,
-        '${currentDateTime}',
-        '${currentDateTime}'
+        10
       );
     `);
   }

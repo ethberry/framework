@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { Erc20TokenStatus, IErc20TokenAutocompleteDto, IErc20TokenSearchDto } from "@framework/types";
 
