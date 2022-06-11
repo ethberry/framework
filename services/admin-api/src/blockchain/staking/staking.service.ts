@@ -45,7 +45,7 @@ export class StakingService {
       }
     }
 
-    if (deposit.tokenType) {
+    if (deposit && deposit.tokenType) {
       if (deposit.tokenType.length === 1) {
         queryBuilder.andWhere("deposit.tokenType = :tokenType", { tokenType: deposit.tokenType[0] });
       } else {
@@ -53,7 +53,7 @@ export class StakingService {
       }
     }
 
-    if (reward.tokenType) {
+    if (reward && reward.tokenType) {
       if (reward.tokenType.length === 1) {
         queryBuilder.andWhere("reward.tokenType = :tokenType", { tokenType: reward.tokenType[0] });
       } else {

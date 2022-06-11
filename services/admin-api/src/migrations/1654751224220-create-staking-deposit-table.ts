@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateStakingDepositTable1654751224230 implements MigrationInterface {
+export class CreateStakingDepositTable1654751224220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
       name: `${ns}.staking_deposit`,
