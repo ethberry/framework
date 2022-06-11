@@ -23,8 +23,14 @@ interface IStaking {
   struct Item {
     ItemType itemType;
     address token;
-    uint256 tokenId;
+    TokenData tokenData;
     uint256 amount;
+  }
+
+  struct TokenData {
+    uint256 tokenId;
+    uint256 templateId;
+    uint256 dropboxId;
   }
 
   struct Rule {

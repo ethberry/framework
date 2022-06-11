@@ -11,10 +11,15 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+import "../ERC721/interfaces/IERC721Random.sol";
+import "../ERC721/interfaces/IERC721Simple.sol";
+import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./AbstractStaking.sol";
 
 contract UniStaking is AbstractStaking, AccessControl, Pausable {
@@ -23,9 +28,9 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
   using SafeERC20 for IERC20;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes4 private constant ERC721_RANDOM = 0x1bc995e4;
+  bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
 
-  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256 tokenId);
+  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, TokenData tokenData);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp);
@@ -34,7 +39,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
     _setRules(rules);
   }
 
-  function deposit(uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
+  function deposit(uint256 ruleId, TokenData memory tokenData) public payable whenNotPaused {
     Rule storage rule = _rules[ruleId];
     require(rule.period != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
@@ -42,22 +47,22 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
     uint256 stakeId = _stakeIdCounter.current();
     _stakeIdCounter.increment();
 
-    Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenId, rule.deposit.amount);
+    Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenData, rule.deposit.amount);
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0);
 
-    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
+    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenData);
 
     if (depositItem.itemType == ItemType.NATIVE) {
       require(msg.value == depositItem.amount, "Staking: wrong amount");
     } else if (depositItem.itemType == ItemType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
     } else if (depositItem.itemType == ItemType.ERC721) {
-      IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
+      IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenData.tokenId);
     } else if (depositItem.itemType == ItemType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(
         _msgSender(),
         address(this),
-        depositItem.tokenId,
+        tokenData.tokenId,
         depositItem.amount,
         "0x"
       );
@@ -72,6 +77,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
     Stake storage stake = _stakes[stakeId];
     Rule storage rule = _rules[stake.ruleId];
     Item storage depositItem = _stakes[stakeId].deposit;
+    TokenData memory depositTokenData = depositItem.tokenData;
 
     require(stake.owner != address(0), "Staking: wrong staking id");
     require(stake.owner == _msgSender(), "Staking: not an owner");
@@ -103,12 +109,12 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
       } else if (depositItem.itemType == ItemType.ERC20) {
         IERC20(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositItem.amount);
       } else if (depositItem.itemType == ItemType.ERC721) {
-        IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositItem.tokenId);
+        IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenData.tokenId);
       } else if (depositItem.itemType == ItemType.ERC1155) {
         IERC1155(depositItem.token).safeTransferFrom(
           address(this),
           _msgSender(),
-          depositItem.tokenId,
+          depositTokenData.tokenId,
           depositItem.amount,
           "0x"
         );
@@ -121,6 +127,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
       emit StakingFinish(stakeId, receiver, block.timestamp);
 
       Item storage rewardItem = rule.reward;
+      TokenData memory rewardTokenData = rule.reward.tokenData;
       uint256 rewardAmount;
 
       if (rewardItem.itemType == ItemType.NATIVE) {
@@ -130,19 +137,18 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
         rewardAmount = rewardItem.amount * multiplier;
         IERC20(rewardItem.token).safeTransferFrom(address(this), _msgSender(), rewardAmount);
       } else if (rewardItem.itemType == ItemType.ERC721) {
-        bytes4 randomInterface = IERC721(rewardItem.token).supportsInterface(ERC721_RANDOM);
+        bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
 
         if (randomInterface) {
-          IERC721(rewardItem.token).mintRandom(address(this), _msgSender(), rewardItem.tokenId);
+          IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenData.templateId, rewardTokenData.dropboxId);
         } else {
-          IERC721(rewardItem.token).mintCommon(address(this), _msgSender(), rewardItem.tokenId);
+          IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenData.templateId);
         }
       } else if (rewardItem.itemType == ItemType.ERC1155) {
         rewardAmount = rewardItem.amount * multiplier;
-        IERC1155(rewardItem.token).safeTransferFrom(
-          address(this),
+        IERC1155Simple(rewardItem.token).mint(
           _msgSender(),
-          rewardItem.tokenId,
+          rewardTokenData.tokenId,
           rewardItem.amount,
           "0x"
         );
