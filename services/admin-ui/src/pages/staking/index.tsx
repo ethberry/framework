@@ -60,10 +60,7 @@ export const Staking: FC = () => {
     search: {
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
     },
-    filter: ({ id: _id, ...rest }) => {
-      console.info("filter", rest);
-      return rest;
-    },
+    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
 
   return (

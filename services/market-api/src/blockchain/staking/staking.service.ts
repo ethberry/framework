@@ -34,8 +34,4 @@ export class StakingService {
 
     return queryBuilder.getManyAndCount();
   }
-
-  public leaderboard(): Promise<[Array<any>, number]> {
-    return Promise.resolve([[], 0]);
-  }
 }
