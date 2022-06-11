@@ -8,7 +8,7 @@ import { LeaderboardSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/staking")
-export class StakingController {
+export class StakingHistoryController {
   constructor(private readonly erc721CollectionService: StakingHistoryService) {}
 
   @Get("/leaderboard")

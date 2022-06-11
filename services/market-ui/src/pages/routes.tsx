@@ -13,13 +13,13 @@ import { Profile } from "./profile";
 import { erc20Routes } from "./erc20/routes";
 import { erc721Routes } from "./erc721/routes";
 import { erc1155Routes } from "./erc1155/routes";
+import { stakingRoutes } from "./staking/routes";
 
 import { Marketplace } from "./marketplace";
 import { Auctions } from "./auction";
 import { Craft } from "./craft";
 import { MyAssets } from "./personal/assets";
 import { MyAuctions } from "./personal/auction";
-import { Staking } from "./staking";
 
 const routes: Array<RouteObject> = [
   {
@@ -44,6 +44,7 @@ const routes: Array<RouteObject> = [
       ...erc20Routes,
       ...erc721Routes,
       ...erc1155Routes,
+      ...stakingRoutes,
       {
         path: "/marketplace",
         children: [
@@ -78,10 +79,6 @@ const routes: Array<RouteObject> = [
           { index: true, element: <Craft /> },
           { path: "/craft/:tab", element: <Craft /> },
         ],
-      },
-      {
-        path: "/staking",
-        element: <Staking />,
       },
       {
         path: "/error/:error",

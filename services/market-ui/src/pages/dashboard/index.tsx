@@ -9,6 +9,7 @@ import { Erc1155Section } from "./sections/erc1155";
 import { Erc721Section } from "./sections/erc721";
 import { Personal } from "./sections/personal";
 import { Sections } from "./sections/sections";
+import { Staking } from "./sections/staking";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -26,6 +27,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={6}>
           <Personal />
           <Sections />
+          <Staking />
         </Grid>
       </Grid>
     </div>
