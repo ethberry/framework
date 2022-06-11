@@ -56,11 +56,18 @@ export const Staking: FC = () => {
         collection: 0,
       } as IStakingItem,
       duration: 30,
-      penalty: 1,
+      penalty: 100,
       recurrent: false,
     },
     search: {
+      query: "",
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
+      deposit: {
+        tokenType: [] as Array<TokenType>,
+      },
+      reward: {
+        tokenType: [] as Array<TokenType>,
+      },
     },
     filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
