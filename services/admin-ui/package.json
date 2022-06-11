@@ -30,7 +30,7 @@
     "@gemunion/mui-inputs-entity": "6.2.3",
     "@gemunion/mui-inputs-image-firebase": "7.2.3",
     "@gemunion/mui-inputs-mask": "5.2.3",
-    "@gemunion/mui-inputs-picker": "5.1.2",
+    "@gemunion/mui-inputs-picker": "5.2.0",
     "@gemunion/mui-page-layout": "0.1.10",
     "@gemunion/mui-provider-picker": "3.1.0",
     "@gemunion/mui-rte": "2.0.3",
