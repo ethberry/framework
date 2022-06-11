@@ -6,10 +6,10 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import { SeaportHistoryService } from "./seaport-history/seaport-history.service";
 import {
-  ISeaportOrderFulfilled,
-  ISeaportOrderValidated,
   ISeaportNonceIncremented,
   ISeaportOrderCancelled,
+  ISeaportOrderFulfilled,
+  ISeaportOrderValidated,
   SeaportEventType,
   TSeaportEventData,
 } from "./seaport-history/interfaces";

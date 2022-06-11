@@ -1,11 +1,11 @@
-import { Body, Post, Controller, Delete, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc20TokenService } from "./token.service";
 import { Erc20TokenEntity } from "./token.entity";
-import { Erc20TokenSearchDto, Erc20TokenUpdateDto, Erc20TokenCreateDto, Erc20TokenAutocompleteDto } from "./dto";
+import { Erc20TokenAutocompleteDto, Erc20TokenCreateDto, Erc20TokenSearchDto, Erc20TokenUpdateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/erc20-tokens")

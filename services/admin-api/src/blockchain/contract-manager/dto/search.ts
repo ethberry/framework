@@ -3,7 +3,7 @@ import { IsEnum, IsEthereumAddress, IsOptional, IsString } from "class-validator
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IContractManagerSearchDto, ContractType } from "@framework/types";
+import { ContractType, IContractManagerSearchDto } from "@framework/types";
 
 export class ContractManagerSearchDto extends SearchDto implements IContractManagerSearchDto {
   @ApiPropertyOptional()

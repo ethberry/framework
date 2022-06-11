@@ -88,18 +88,6 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
-    "tokenType": {
-      "NATIVE": "Native",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "ERC1155": "ERC1155"
-    },
-    "stakingStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
-    },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
@@ -107,6 +95,11 @@
       "PAUSER_ROLE": "PAUSER_ROLE",
       "PREDICATE_ROLE": "PREDICATE_ROLE",
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+    },
+    "stakingStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
     },
     "templateStatus": {
       "ACTIVE": "Active",
@@ -119,6 +112,13 @@
       "MINTED": "Minted",
       "NEW": "New",
       "PENDING": "Pending"
+    },
+    "tokenType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "NATIVE": "Native"
     },
     "userRoles": {
       "ADMIN": "Admin",
@@ -177,10 +177,6 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "recurrent": "Is recurrent?",
-      "penalty": "Penalty",
-      "collection": "Collection",
-      "stakingStatus": "Status",
       "DUMMY": "Dummy",
       "address": "Address",
       "airdropStatus": "Status",
@@ -189,6 +185,7 @@
       "baseTokenURI": "Base token URI",
       "beneficiary": "Beneficiary",
       "cap": "Cap",
+      "collection": "Collection",
       "collectionStatus": "Status",
       "collectionType": "Type",
       "comment": "Comment",
@@ -224,12 +221,15 @@
       "name": "Name",
       "owner": "Owner",
       "password": "Password",
+      "penalty": "Penalty",
       "price": "Price",
       "random": "Random",
       "rarity": "Rarity",
       "recipeStatus": "Status",
+      "recurrent": "Is recurrent?",
       "role": "Role",
       "royalty": "Royalty",
+      "stakingStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
       "templateStatus": "Status",
@@ -249,7 +249,6 @@
       "year": "Year"
     },
     "placeholders": {
-      "penalty": "1",
       "DUMMY": "Dummy",
       "address": "0x...",
       "amount": "10",
@@ -286,6 +285,7 @@
       "number": "100500",
       "owner": "0x...",
       "password": "******",
+      "penalty": "1",
       "price": "1000",
       "priceCorrection": "0",
       "query": "Search...",
@@ -383,9 +383,6 @@
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
-    "staking": {
-      "title": "Staking"
-    },
     "erc20-tokens": {
       "snapshot": "Make snapshot",
       "title": "ERC20 Tokens"
@@ -445,6 +442,9 @@
     },
     "settings": {
       "title": "Settings"
+    },
+    "staking": {
+      "title": "Staking"
     },
     "users": {
       "title": "Users"

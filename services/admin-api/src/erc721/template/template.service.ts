@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { Erc721TemplateStatus, IErc721TemplateSearchDto, IErc721TemplateAutocompleteDto } from "@framework/types";
+import { Erc721TemplateStatus, IErc721TemplateAutocompleteDto, IErc721TemplateSearchDto } from "@framework/types";
 
 import { Erc721TemplateEntity } from "./template.entity";
 import { IErc721TemplateCreateDto, IErc721TemplateUpdateDto } from "./interfaces";

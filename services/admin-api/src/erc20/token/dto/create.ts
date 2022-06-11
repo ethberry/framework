@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsString, MaxLength, Validate, IsEthereumAddress } from "class-validator";
+import { IsEnum, IsEthereumAddress, IsJSON, IsString, MaxLength, Validate } from "class-validator";
 
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { Erc20TokenTemplate } from "@framework/types";

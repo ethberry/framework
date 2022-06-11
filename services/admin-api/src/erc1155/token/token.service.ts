@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { Erc1155TokenStatus, IErc1155TokenSearchDto, IErc1155TokenAutocompleteDto } from "@framework/types";
+import { Erc1155TokenStatus, IErc1155TokenAutocompleteDto, IErc1155TokenSearchDto } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { Erc1155TokenEntity } from "./token.entity";

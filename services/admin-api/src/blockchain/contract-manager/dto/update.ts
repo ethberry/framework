@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsInt, IsOptional, IsString, IsEnum } from "class-validator";
+import { IsEnum, IsInt, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IContractManagerUpdateDto } from "../interfaces";

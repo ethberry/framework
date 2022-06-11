@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, StakingEventType, IStakingDeposit, IStakingWithdraw } from "@framework/types";
+import { ContractType, IStakingDeposit, IStakingWithdraw, StakingEventType } from "@framework/types";
 
 import { StakingServiceEth } from "./staking.service.eth";
 

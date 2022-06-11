@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { MenuItem, ListItemIcon, Typography } from "@mui/material";
+import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";

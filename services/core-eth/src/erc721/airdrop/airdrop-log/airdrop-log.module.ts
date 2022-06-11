@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractType, Erc721TokenEventType, AccessControlEventType } from "@framework/types";
+import { AccessControlEventType, ContractType, Erc721TokenEventType } from "@framework/types";
 
 import { Erc721AirdropLogService } from "./airdrop-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";

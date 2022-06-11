@@ -3,14 +3,14 @@ import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import {
-  TokenType,
+  Erc1155CollectionStatus,
   Erc20TokenStatus,
   Erc20TokenTemplate,
-  Erc721CollectionType,
   Erc721CollectionStatus,
-  Erc998CollectionType,
+  Erc721CollectionType,
   Erc998CollectionStatus,
-  Erc1155CollectionStatus,
+  Erc998CollectionType,
+  TokenType,
 } from "@framework/types";
 
 export interface ITokenInputProps {

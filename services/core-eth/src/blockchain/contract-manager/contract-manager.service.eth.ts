@@ -9,7 +9,8 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl } from "@framework/constants";
 
 import {
-  ContractManagerEventType, ContractType,
+  ContractManagerEventType,
+  ContractType,
   Erc1155TokenTemplate,
   Erc20TokenTemplate,
   Erc20VestingTemplate,

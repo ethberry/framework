@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository, Brackets } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { StakingStatus, IStakingSearchDto } from "@framework/types";
+import { IStakingSearchDto, StakingStatus } from "@framework/types";
 
 import { StakingEntity } from "./staking.entity";
 import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";

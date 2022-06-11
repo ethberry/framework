@@ -22,24 +22,12 @@
   "dialogs": {
     "add": "Add",
     "auction": "Sell `{title}` on auction",
+    "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
-    "edit": "Edit",
-    "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?"
+    "edit": "Edit"
   },
   "enums": {
-    "tokenType": {
-      "NATIVE": "Native",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "ERC1155": "ERC1155"
-    },
-    "stakingStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
-    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
@@ -56,6 +44,18 @@
     "sort": {
       "createdAt": "Date",
       "price": "Price"
+    },
+    "stakingStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
+    "tokenType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "NATIVE": "Native"
     },
     "userRoles": {
       "ADMIN": "Admin",
@@ -115,9 +115,7 @@
       "dateRangeStart": "From",
       "displayName": "Display name",
       "email": "Email",
-      "stakingStatus": "Status",
       "endDate": "End date",
-      "tokenType": "Type",
       "erc1155CollectionId": "Collections",
       "erc1155CollectionIds": "Collections",
       "erc1155TokenId": "Token",
@@ -137,9 +135,11 @@
       "rarity": "Rarity",
       "roles": "Roles",
       "sort": "Sort by",
+      "stakingStatus": "Status",
       "startDate": "Start date",
       "status": "Status",
       "title": "Title",
+      "tokenType": "Type",
       "type": "Type",
       "updatedAt": "Updated"
     },
@@ -246,8 +246,8 @@
         "title": "Sections"
       },
       "staking": {
-        "reward": "Reward",
         "leaderboard": "Leaderboard",
+        "reward": "Reward",
         "stake": "Stake",
         "title": "Staking"
       },
@@ -268,21 +268,6 @@
     },
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
-    },
-    "staking": {
-      "title": "Staking",
-      "stake": {
-        "title": "Stake"
-      },
-      "reward": {
-        "title": "Reward"
-      },
-      "leaderboard": {
-        "address": "Address",
-        "rank": "Rank",
-        "score": "Score",
-        "title": "Leaderboard"
-      }
     },
     "erc20-vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
@@ -365,10 +350,24 @@
     },
     "profile": {
       "title": "Profile"
+    },
+    "staking": {
+      "leaderboard": {
+        "address": "Address",
+        "rank": "Rank",
+        "score": "Score",
+        "title": "Leaderboard"
+      },
+      "reward": {
+        "title": "Reward"
+      },
+      "stake": {
+        "title": "Stake"
+      },
+      "title": "Staking"
     }
   },
   "snackbar": {
-    "success": "Success",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "denied": "Denied by user",
@@ -376,6 +375,7 @@
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
+    "success": "Success",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",

@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { StakingEventType, IStakingDeposit, IStakingWithdraw, TStakingEventData } from "@framework/types";
+import { IStakingDeposit, IStakingWithdraw, StakingEventType, TStakingEventData } from "@framework/types";
 
 import { StakingHistoryService } from "./staking-history/staking-history.service";
 import { ContractManagerService } from "../contract-manager/contract-manager.service";

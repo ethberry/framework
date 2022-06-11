@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, Brackets } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 
 import { IStakingSearchDto } from "@framework/types";
 

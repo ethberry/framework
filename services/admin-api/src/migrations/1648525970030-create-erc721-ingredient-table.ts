@@ -26,14 +26,6 @@ export class CreateErc721Ingredient1648525970030 implements MigrationInterface {
           name: "amount",
           type: "int",
         },
-        {
-          name: "created_at",
-          type: "timestamptz",
-        },
-        {
-          name: "updated_at",
-          type: "timestamptz",
-        },
       ],
       foreignKeys: [
         {

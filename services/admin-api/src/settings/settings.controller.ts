@@ -2,7 +2,7 @@ import { Body, Controller, Get, Put } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { Roles } from "@gemunion/nest-js-utils";
-import { UserRole, SettingsKeys } from "@framework/types";
+import { SettingsKeys, UserRole } from "@framework/types";
 
 import { SettingsService } from "./settings.service";
 import { SettingsUpdateDto } from "./dto";

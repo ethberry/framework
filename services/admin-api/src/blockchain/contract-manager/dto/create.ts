@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEthereumAddress, IsEnum, IsString, IsInt, Min } from "class-validator";
+import { IsEnum, IsEthereumAddress, IsInt, IsString, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IContractManagerCreateDto } from "../interfaces";
