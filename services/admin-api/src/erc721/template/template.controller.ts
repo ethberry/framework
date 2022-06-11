@@ -5,7 +5,12 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc721TemplateService } from "./template.service";
 import { Erc721TemplateEntity } from "./template.entity";
-import { Erc721TemplateCreateDto, Erc721TemplateSearchDto, Erc721TemplateUpdateDto } from "./dto";
+import {
+  Erc721TemplateAutocompleteDto,
+  Erc721TemplateCreateDto,
+  Erc721TemplateSearchDto,
+  Erc721TemplateUpdateDto,
+} from "./dto";
 
 @ApiBearerAuth()
 @Controller("/erc721-templates")
@@ -19,8 +24,8 @@ export class Erc721TemplateController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<Erc721TemplateEntity>> {
-    return this.erc721TemplateService.autocomplete();
+  public autocomplete(@Query() dto: Erc721TemplateAutocompleteDto): Promise<Array<Erc721TemplateEntity>> {
+    return this.erc721TemplateService.autocomplete(dto);
   }
 
   @Put("/:id")

@@ -21,6 +21,9 @@ export * from "./erc721/ingredient";
 export * from "./erc721/recipe";
 export * from "./erc721/recipe-history";
 
+export * from "./erc998/collection";
+export * from "./erc998/template";
+
 export * from "./erc1155/balance";
 export * from "./erc1155/collection";
 export * from "./erc1155/ingredient";

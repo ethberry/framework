@@ -49,9 +49,11 @@ export const Staking: FC = () => {
       description: emptyStateString,
       deposit: {
         tokenType: TokenType.NATIVE,
+        collection: 0,
       } as IStakingItem,
       reward: {
         tokenType: TokenType.NATIVE,
+        collection: 0,
       } as IStakingItem,
       duration: 30,
       penalty: 1,

@@ -9,8 +9,8 @@ export enum StakingStatus {
 
 export interface IStakingItem extends IIdBase {
   tokenType: TokenType;
-  token: number;
-  criteria: string;
+  collection: number;
+  criteria: number;
   amount: string;
 }
 

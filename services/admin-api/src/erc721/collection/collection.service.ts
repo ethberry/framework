@@ -64,13 +64,19 @@ export class Erc721CollectionService {
   }
 
   public async autocomplete(dto: IErc721CollectionAutocompleteDto): Promise<Array<Erc721CollectionEntity>> {
-    const { collectionType = [] } = dto;
+    const { collectionType = [], collectionStatus = [] } = dto;
 
     const where = {};
 
     if (collectionType.length) {
       Object.assign(where, {
-        collectionType: In(dto.collectionType),
+        collectionType: In(collectionType),
+      });
+    }
+
+    if (collectionStatus.length) {
+      Object.assign(where, {
+        collectionStatus: In(collectionStatus),
       });
     }
 
@@ -79,6 +85,7 @@ export class Erc721CollectionService {
       select: {
         id: true,
         title: true,
+        collectionType: true,
       },
     });
   }

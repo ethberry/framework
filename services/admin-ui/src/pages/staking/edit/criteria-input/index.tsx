@@ -3,21 +3,21 @@ import { useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TokenType } from "@framework/types";
+import { Erc721TemplateStatus, TokenType, Erc1155TokenStatus, Erc998TemplateStatus } from "@framework/types";
 
-export interface ITokenInputProps {
+export interface ICriteriaInputProps {
   prefix: string;
   name?: string;
-  related?: string;
 }
 
-export const CriteriaInput: FC<ITokenInputProps> = props => {
-  const { prefix, name = "criteria", related = "tokenType" } = props;
+export const CriteriaInput: FC<ICriteriaInputProps> = props => {
+  const { prefix, name = "criteria" } = props;
 
   const { formatMessage } = useIntl();
-  const value = useWatch({ name: `${prefix}.${related}` });
+  const tokenType = useWatch({ name: `${prefix}.tokenType` });
+  const collection = useWatch({ name: `${prefix}.collection` });
 
-  switch (value) {
+  switch (tokenType) {
     case TokenType.ERC721:
       return (
         <EntityInput
@@ -25,6 +25,10 @@ export const CriteriaInput: FC<ITokenInputProps> = props => {
           controller="erc721-templates"
           label={formatMessage({ id: "form.labels.erc721TemplateId" })}
           placeholder={formatMessage({ id: "form.placeholders.erc721TemplateId" })}
+          data={{
+            erc721CollectionIds: collection === 0 || collection === 2 ? [] : [collection],
+            templateStatus: [Erc721TemplateStatus.ACTIVE],
+          }}
         />
       );
     case TokenType.ERC998:
@@ -34,6 +38,10 @@ export const CriteriaInput: FC<ITokenInputProps> = props => {
           controller="erc721-templates"
           label={formatMessage({ id: "form.labels.erc998TemplateId" })}
           placeholder={formatMessage({ id: "form.placeholders.erc998TemplateId" })}
+          data={{
+            erc998CollectionIds: collection === 0 || collection === 2 ? [] : [collection],
+            templateStatus: [Erc998TemplateStatus.ACTIVE],
+          }}
         />
       );
     case TokenType.ERC1155:
@@ -43,6 +51,10 @@ export const CriteriaInput: FC<ITokenInputProps> = props => {
           controller="erc1155-tokens"
           label={formatMessage({ id: "form.labels.erc1155TokenId" })}
           placeholder={formatMessage({ id: "form.placeholders.erc1155TokenId" })}
+          data={{
+            erc1155CollectionIds: collection === 0 ? [] : [collection],
+            tokenStatus: [Erc1155TokenStatus.ACTIVE],
+          }}
         />
       );
     case TokenType.NATIVE:

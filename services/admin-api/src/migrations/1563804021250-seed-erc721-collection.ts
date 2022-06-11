@@ -107,7 +107,7 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
-      ),  (
+      ), (
         'LAND',
         '${simpleFormatting}',
         '${imageUrl}',

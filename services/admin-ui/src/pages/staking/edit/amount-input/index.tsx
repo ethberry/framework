@@ -7,15 +7,14 @@ import { TokenType } from "@framework/types";
 export interface ITokenInputProps {
   prefix: string;
   name?: string;
-  related?: string;
 }
 
 export const AmountInput: FC<ITokenInputProps> = props => {
-  const { prefix, name = "amount", related = "tokenType" } = props;
+  const { prefix, name = "amount" } = props;
 
-  const value = useWatch({ name: `${prefix}.${related}` });
+  const tokenType = useWatch({ name: `${prefix}.tokenType` });
 
-  switch (value) {
+  switch (tokenType) {
     case TokenType.NATIVE:
     case TokenType.ERC20:
     case TokenType.ERC1155:

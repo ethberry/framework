@@ -18,12 +18,12 @@ export class CreateStakingRewardTable1654751224240 implements MigrationInterface
           default: "'NATIVE'",
         },
         {
-          name: "token",
+          name: "collection",
           type: "int",
         },
         {
           name: "criteria",
-          type: "varchar",
+          type: "int",
           isNullable: true,
         },
         {
