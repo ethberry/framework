@@ -1,8 +1,12 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { Erc1155CollectionStatus, IErc1155CollectionSearchDto } from "@framework/types";
+import {
+  Erc1155CollectionStatus,
+  IErc1155CollectionAutocompleteDto,
+  IErc1155CollectionSearchDto,
+} from "@framework/types";
 
 import { Erc1155CollectionEntity } from "./collection.entity";
 import { IErc1155CollectionUpdateDto } from "./interfaces";
@@ -53,8 +57,19 @@ export class Erc1155CollectionService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<Erc1155CollectionEntity>> {
+  public async autocomplete(dto: IErc1155CollectionAutocompleteDto): Promise<Array<Erc1155CollectionEntity>> {
+    const { collectionStatus = [] } = dto;
+
+    const where = {};
+
+    if (collectionStatus.length) {
+      Object.assign(where, {
+        collectionStatus: In(collectionStatus),
+      });
+    }
+
     return this.erc1155CollectionEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,

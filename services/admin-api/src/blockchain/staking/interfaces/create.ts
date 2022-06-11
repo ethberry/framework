@@ -2,8 +2,8 @@ import { TokenType } from "@framework/types";
 
 export interface IStakingItemCreateDto {
   tokenType: TokenType;
-  token: number;
-  criteria: string;
+  collection: number;
+  criteria: number;
   amount: string;
 }
 

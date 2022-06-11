@@ -10,7 +10,7 @@ import { IStaking } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { TokenTypeInput } from "./token-type-input";
-import { TokenInput } from "./token-input";
+import { CollectionInput } from "./collection-input";
 import { AmountInput } from "./amount-input";
 import { CriteriaInput } from "./criteria-input";
 
@@ -50,13 +50,13 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <TokenTypeInput prefix="deposit" />
-          <TokenInput prefix="deposit" />
+          <CollectionInput prefix="deposit" />
           <CriteriaInput prefix="deposit" />
           <AmountInput prefix="deposit" />
         </Grid>
         <Grid item xs={6}>
           <TokenTypeInput prefix="reward" />
-          <TokenInput prefix="reward" />
+          <CollectionInput prefix="reward" />
           <CriteriaInput prefix="reward" />
           <AmountInput prefix="reward" />
         </Grid>

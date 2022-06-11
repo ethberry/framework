@@ -9,11 +9,11 @@ import { LeaderboardSearchDto } from "./dto";
 @ApiBearerAuth()
 @Controller("/staking")
 export class StakingHistoryController {
-  constructor(private readonly erc721CollectionService: StakingHistoryService) {}
+  constructor(private readonly stakingHistoryService: StakingHistoryService) {}
 
   @Get("/leaderboard")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: LeaderboardSearchDto): Promise<any> {
-    return this.erc721CollectionService.leaderboard(dto);
+    return this.stakingHistoryService.leaderboard(dto);
   }
 }

@@ -18,14 +18,14 @@ export class StakingItemCreateDto implements IStakingItemCreateDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
-  public token: number;
+  public collection: number;
 
   @ApiProperty({
     type: Number,
   })
   @IsBigNumber({}, { message: "typeMismatch" })
   @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
-  public criteria: string;
+  public criteria: number;
 
   @ApiProperty({
     type: Number,

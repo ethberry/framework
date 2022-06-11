@@ -8,14 +8,17 @@ import { StakingEntity } from "./staking.entity";
 
 @Entity({ schema: ns, name: "staking_deposit" })
 export class StakingDepositEntity extends IdBaseEntity implements IStakingItem {
-  @Column({ type: "int" })
+  @Column({
+    type: "enum",
+    enum: TokenType,
+  })
   public tokenType: TokenType;
 
   @Column({ type: "int" })
-  public token: number;
+  public collection: number;
 
-  @Column({ type: "varchar" })
-  public criteria: string;
+  @Column({ type: "int" })
+  public criteria: number;
 
   @Column({ type: "numeric" })
   public amount: string;

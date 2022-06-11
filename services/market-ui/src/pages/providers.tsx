@@ -3,13 +3,13 @@ import { SnackbarProvider } from "notistack";
 
 import { UserProvider } from "@gemunion/provider-user";
 import { SettingsProvider } from "@gemunion/provider-settings";
-import { GemunionThemeProvider } from "@gemunion/provider-theme";
+import { ThemeProvider } from "@gemunion/provider-theme";
 import { LicenseProvider } from "@gemunion/provider-license";
 import { LocalizationProvider } from "@gemunion/provider-localization";
 import { PopupProvider } from "@gemunion/provider-popup";
 import { WalletProvider } from "@gemunion/provider-wallet";
 import { ApiProvider } from "@gemunion/provider-api";
-import { PickerProvider } from "@gemunion/mui-provider-picker";
+import { PickerProvider } from "@gemunion/provider-picker";
 import { i18n } from "@framework/localization-market-ui";
 import { EnabledLanguages } from "@framework/constants";
 import { SeaportProvider } from "../components/providers/seaport";
@@ -21,7 +21,7 @@ export const Providers: FC = props => {
       <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
         <UserProvider>
           <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
-            <GemunionThemeProvider>
+            <ThemeProvider>
               <LocalizationProvider i18n={i18n} defaultLanguage={EnabledLanguages.EN}>
                 <SnackbarProvider>
                   <PopupProvider>
@@ -33,7 +33,7 @@ export const Providers: FC = props => {
                   </PopupProvider>
                 </SnackbarProvider>
               </LocalizationProvider>
-            </GemunionThemeProvider>
+            </ThemeProvider>
           </SettingsProvider>
         </UserProvider>
       </LicenseProvider>

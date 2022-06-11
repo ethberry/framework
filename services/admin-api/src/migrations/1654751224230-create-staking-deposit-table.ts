@@ -18,12 +18,12 @@ export class CreateStakingDepositTable1654751224230 implements MigrationInterfac
           default: "'NATIVE'",
         },
         {
-          name: "token",
+          name: "collection",
           type: "int",
         },
         {
           name: "criteria",
-          type: "varchar",
+          type: "int",
           isNullable: true,
         },
         {

@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository, In } from "typeorm";
 
-import { Erc721TemplateStatus, IErc721TemplateSearchDto } from "@framework/types";
+import { Erc721TemplateStatus, IErc721TemplateSearchDto, IErc721TemplateAutocompleteDto } from "@framework/types";
 
 import { Erc721TemplateEntity } from "./template.entity";
 import { IErc721TemplateCreateDto, IErc721TemplateUpdateDto } from "./interfaces";
@@ -63,8 +63,25 @@ export class Erc721TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<Erc721TemplateEntity>> {
+  public async autocomplete(dto: IErc721TemplateAutocompleteDto): Promise<Array<Erc721TemplateEntity>> {
+    const { templateStatus = [], erc721CollectionIds = [] } = dto;
+
+    const where = {};
+
+    if (templateStatus.length) {
+      Object.assign(where, {
+        templateStatus: In(templateStatus),
+      });
+    }
+
+    if (erc721CollectionIds.length) {
+      Object.assign(where, {
+        erc721CollectionId: In(erc721CollectionIds),
+      });
+    }
+
     return this.erc721TemplateEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,

@@ -33,6 +33,28 @@ export class SeedErc1155Collection1641526822360 implements MigrationInterface {
         '${chainId}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        'POTIONS',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${erc1155CollectionResourcesAddress}',
+        '${baseTokenURI}',
+        'INACTIVE',
+        'SIMPLE',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'RUNES',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${erc1155CollectionResourcesAddress}',
+        '${baseTokenURI}',
+        'NEW',
+        'SIMPLE',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

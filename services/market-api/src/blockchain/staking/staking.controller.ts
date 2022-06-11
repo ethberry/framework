@@ -18,10 +18,4 @@ export class StakingController {
   public search(@Query() dto: ISearchDto): Promise<[Array<StakingEntity>, number]> {
     return this.stakingService.search(dto);
   }
-
-  @Get("/leaderboard")
-  @UseInterceptors(PaginationInterceptor)
-  public leaderboard(): Promise<any> {
-    return this.stakingService.leaderboard();
-  }
 }

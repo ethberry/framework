@@ -49,21 +49,27 @@ export const Staking: FC = () => {
       description: emptyStateString,
       deposit: {
         tokenType: TokenType.NATIVE,
+        collection: 0,
       } as IStakingItem,
       reward: {
         tokenType: TokenType.NATIVE,
+        collection: 0,
       } as IStakingItem,
       duration: 30,
-      penalty: 1,
+      penalty: 100,
       recurrent: false,
     },
     search: {
+      query: "",
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
+      deposit: {
+        tokenType: [] as Array<TokenType>,
+      },
+      reward: {
+        tokenType: [] as Array<TokenType>,
+      },
     },
-    filter: ({ id: _id, ...rest }) => {
-      console.info("filter", rest);
-      return rest;
-    },
+    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
 
   return (

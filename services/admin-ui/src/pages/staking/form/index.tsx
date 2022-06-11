@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { StakingStatus, IStakingSearchDto } from "@framework/types";
+import { IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -18,8 +18,8 @@ export const StakingSearchForm: FC<IRecipeSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, stakingStatus } = initialValues;
-  const fixedValues = { query, stakingStatus };
+  const { query, stakingStatus, deposit, reward } = initialValues;
+  const fixedValues = { query, stakingStatus, deposit, reward };
 
   return (
     <FormWrapper
@@ -39,6 +39,12 @@ export const StakingSearchForm: FC<IRecipeSearchFormProps> = props => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <SelectInput multiple name="stakingStatus" options={StakingStatus} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="deposit.tokenType" options={TokenType} />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput multiple name="reward.tokenType" options={TokenType} />
           </Grid>
         </Grid>
       </Collapse>

@@ -18,7 +18,12 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc1155TokenService } from "./token.service";
 import { Erc1155TokenEntity } from "./token.entity";
-import { Erc1155TokenCreateDto, Erc1155TokenSearchDto, Erc1155TokenUpdateDto } from "./dto";
+import {
+  Erc1155TokenAutocompleteDto,
+  Erc1155TokenCreateDto,
+  Erc1155TokenSearchDto,
+  Erc1155TokenUpdateDto,
+} from "./dto";
 
 @ApiBearerAuth()
 @Controller("/erc1155-tokens")
@@ -32,8 +37,8 @@ export class Erc1155TokenController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<Erc1155TokenEntity>> {
-    return this.erc1155TokenService.autocomplete();
+  public autocomplete(@Query() dto: Erc1155TokenAutocompleteDto): Promise<Array<Erc1155TokenEntity>> {
+    return this.erc1155TokenService.autocomplete(dto);
   }
 
   @Post("/")
