@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { StakingService } from "./staking.service";
 import { StakingController } from "./staking.controller";
-import { StakingHistoryModule } from "../staking-history/staking-history.module";
+import { StakingHistoryModule } from "./staking-history/staking-history.module";
 import { StakingEntity } from "./staking.entity";
 
 @Module({

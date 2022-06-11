@@ -3,18 +3,16 @@ import { useIntl } from "react-intl";
 import { Grid, Typography } from "@mui/material";
 import { Filter1, Filter2, Filter3, Filter4 } from "@mui/icons-material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
 
-export const Staking: FC = () => {
+export const Leaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
     useCollection<ILeaderboard>({
       baseUrl: "/staking/leaderboard",
-      redirect: (_baseUrl, search) => `/staking?${stringify(search)}`,
     });
 
   const { formatMessage } = useIntl();
@@ -23,7 +21,7 @@ export const Staking: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.erc20-staking.rank" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
       sortable: false,
       flex: 1,
       renderCell: (cell: GridCellParams) => {
@@ -43,19 +41,19 @@ export const Staking: FC = () => {
     },
     {
       field: "secureWallet",
-      headerName: formatMessage({ id: "pages.erc20-staking.address" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.address" }),
       sortable: false,
       flex: 1
     },
     {
       field: "score",
-      headerName: formatMessage({ id: "pages.erc20-staking.score" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.score" }),
       sortable: false,
       flex: 1
     },
     {
       field: "rank",
-      headerName: formatMessage({ id: "pages.erc20-staking.rank" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
       sortable: false,
       flex: 1
     }
@@ -63,9 +61,9 @@ export const Staking: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc20-staking"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
-      <PageHeader message="pages.erc20-staking.title" />
+      <PageHeader message="pages.staking.leaderboard.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 

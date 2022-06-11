@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Put,
   ParseIntPipe,
   Post,
   Query,
@@ -16,6 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 import { StakingService } from "./staking.service";
 import { StakingCreateDto, StakingSearchDto } from "./dto";
 import { StakingEntity } from "./staking.entity";
+import { StakingUpdateDto } from "./dto/update";
 
 @ApiBearerAuth()
 @Controller("/staking")
@@ -34,6 +36,11 @@ export class StakingController {
   @UseInterceptors(ClassSerializerInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingEntity | null> {
     return this.stakingService.findOne({ id }, { relations: { deposit: true, reward: true } });
+  }
+
+  @Put("/:id")
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: StakingUpdateDto): Promise<StakingEntity | null> {
+    return this.stakingService.update({ id }, dto);
   }
 
   @Post("/")

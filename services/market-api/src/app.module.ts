@@ -23,7 +23,7 @@ import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
-import { StakingModule } from "./staking/staking.module";
+import { BlockchainModule } from "./blockchain/blockchain.module";
 
 @Module({
   providers: [
@@ -89,7 +89,7 @@ import { StakingModule } from "./staking/staking.module";
     ProfileModule,
     UserModule,
     EmailModule,
-    StakingModule,
+    BlockchainModule,
   ],
   controllers: [AppController],
 })

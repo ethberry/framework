@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -6,7 +6,7 @@ import { IPaginationDto } from "@gemunion/types-collection";
 import { StakingStatus } from "@framework/types";
 
 import { StakingEntity } from "./staking.entity";
-import { IStakingCreateDto } from "./interfaces";
+import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
 
 @Injectable()
 export class StakingService {
@@ -43,6 +43,18 @@ export class StakingService {
 
   public async create(dto: IStakingCreateDto): Promise<StakingEntity> {
     return this.stakingEntityRepository.create(dto).save();
+  }
+
+  public async update(where: FindOptionsWhere<StakingEntity>, dto: IStakingUpdateDto): Promise<StakingEntity> {
+    const tokenEntity = await this.findOne(where);
+
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    Object.assign(tokenEntity, dto);
+
+    return tokenEntity.save();
   }
 
   public async delete(where: FindOptionsWhere<StakingEntity>): Promise<void> {

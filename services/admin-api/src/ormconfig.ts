@@ -28,7 +28,7 @@ import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity"
 import { StakingEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
-import { StakingHistoryEntity } from "./blockchain/staking-history/staking-history.entity";
+import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
 
 import { Blockchain1563804021000 } from "./migrations/1563804021000-blockchain";
 import { CreateUserTable1563804021040 } from "./migrations/1563804021040-create-user-table";

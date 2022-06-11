@@ -226,11 +226,16 @@
         "title": "My stash"
       },
       "sections": {
-        "staking": "Staking",
         "auctions": "Secondary marketplace",
         "craft": "Craft",
         "marketplace": "Primary marketplace",
         "title": "Sections"
+      },
+      "staking": {
+        "reward": "Reward",
+        "leaderboard": "Leaderboard",
+        "stake": "Stake",
+        "title": "Staking"
       },
       "title": "Dashboard"
     },
@@ -250,11 +255,20 @@
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
-    "erc20-staking": {
-      "address": "Address",
-      "rank": "Rank",
-      "score": "Score",
-      "title": "Leaderboard"
+    "staking": {
+      "title": "Staking",
+      "stake": {
+        "title": "Stake"
+      },
+      "reward": {
+        "title": "Reward"
+      },
+      "leaderboard": {
+        "address": "Address",
+        "rank": "Rank",
+        "score": "Score",
+        "title": "Leaderboard"
+      }
     },
     "erc20-vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
