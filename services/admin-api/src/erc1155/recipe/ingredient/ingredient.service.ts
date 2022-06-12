@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, Repository } from "typeorm";
 
-import { Erc1155RecipeEntity } from "../recipe/recipe.entity";
+import { Erc1155RecipeEntity } from "../recipe.entity";
 import { Erc1155IngredientEntity } from "./ingredient.entity";
 
 @Injectable()

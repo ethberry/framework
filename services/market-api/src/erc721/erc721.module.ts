@@ -7,6 +7,7 @@ import { Erc721DropboxModule } from "./dropbox/dropbox.module";
 import { Erc721TokenModule } from "./token/token.module";
 import { Erc721TokenHistoryModule } from "./token-history/token-history.module";
 import { Erc721MarketplaceModule } from "./marketplace/marketplace.module";
+import { Erc721RecipeModule } from "./recipe/recipe.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { Erc721MarketplaceModule } from "./marketplace/marketplace.module";
     Erc721TokenModule,
     Erc721TokenHistoryModule,
     Erc721MarketplaceModule,
+    Erc721RecipeModule,
   ],
 })
 export class Erc721Module {}

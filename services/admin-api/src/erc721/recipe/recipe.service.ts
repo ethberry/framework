@@ -6,8 +6,8 @@ import { Erc721RecipeStatus, IErc721RecipeSearchDto } from "@framework/types";
 
 import { Erc721RecipeEntity } from "./recipe.entity";
 import { IErc721RecipeCreateDto, IErc721RecipeUpdateDto } from "./interfaces";
-import { Erc721IngredientEntity } from "../ingredient/ingredient.entity";
-import { IngredientService } from "../ingredient/ingredient.service";
+import { Erc721IngredientEntity } from "./ingredient/ingredient.entity";
+import { IngredientService } from "./ingredient/ingredient.service";
 import { IIngredientsDto } from "./interfaces/ingredients";
 
 @Injectable()

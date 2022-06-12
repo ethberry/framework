@@ -5,7 +5,6 @@ import { Erc1155TokenModule } from "./token/token.module";
 import { Erc1155BalanceModule } from "./balance/balance.module";
 import { Erc1155TokenHistoryModule } from "./token-history/token-history.module";
 import { Erc1155RecipeModule } from "./recipe/recipe.module";
-import { Erc1155IngredientModule } from "./ingredient/ingredient.module";
 import { Erc1155MarketplaceModule } from "./marketplace/marketplace.module";
 
 @Module({
@@ -15,7 +14,6 @@ import { Erc1155MarketplaceModule } from "./marketplace/marketplace.module";
     Erc1155BalanceModule,
     Erc1155TokenHistoryModule,
     Erc1155RecipeModule,
-    Erc1155IngredientModule,
     Erc1155MarketplaceModule,
   ],
 })
