@@ -6,8 +6,8 @@ import { Erc1155RecipeStatus, IErc1155RecipeSearchDto } from "@framework/types";
 
 import { Erc1155RecipeEntity } from "./recipe.entity";
 import { IErc1155RecipeCreateDto, IErc1155RecipeUpdateDto } from "./interfaces";
-import { Erc1155IngredientEntity } from "../ingredient/ingredient.entity";
-import { IngredientService } from "../ingredient/ingredient.service";
+import { Erc1155IngredientEntity } from "./ingredient/ingredient.entity";
+import { IngredientService } from "./ingredient/ingredient.service";
 import { IIngredientsDto } from "./interfaces/ingredients";
 
 @Injectable()

@@ -1,20 +1,20 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { IErc721Ingredient } from "@framework/types";
+import { IErc1155Ingredient } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc1155TokenEntity } from "../../erc1155/token/token.entity";
-import { Erc721RecipeEntity } from "../recipe/recipe.entity";
+import { Erc1155TokenEntity } from "../../token/token.entity";
+import { Erc1155RecipeEntity } from "../recipe.entity";
 
-@Entity({ schema: ns, name: "erc721_ingredient" })
-export class Erc721IngredientEntity extends IdBaseEntity implements IErc721Ingredient {
+@Entity({ schema: ns, name: "erc1155_ingredient" })
+export class Erc1155IngredientEntity extends IdBaseEntity implements IErc1155Ingredient {
   @Column({ type: "int" })
-  public erc721RecipeId: number;
+  public erc1155RecipeId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc721RecipeEntity)
-  public erc721Recipe: Erc721RecipeEntity;
+  @ManyToOne(_type => Erc1155RecipeEntity)
+  public erc1155Recipe: Erc1155RecipeEntity;
 
   @Column({ type: "int" })
   public erc1155TokenId: number;

@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { RecipeService } from "./recipe.service";
 import { Erc1155RecipeEntity } from "./recipe.entity";
 import { RecipeController } from "./recipe.controller";
-import { Erc1155IngredientModule } from "../ingredient/ingredient.module";
+import { Erc1155IngredientModule } from "./ingredient/ingredient.module";
 
 @Module({
   imports: [Erc1155IngredientModule, TypeOrmModule.forFeature([Erc1155RecipeEntity])],

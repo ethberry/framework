@@ -15,7 +15,7 @@ export class StakingService {
   ) {}
 
   public search(dto: IStakingSearchDto): Promise<[Array<StakingEntity>, number]> {
-    const { query, deposit = { tokenType: [] }, reward = { tokenType: [] }, stakingStatus, skip, take } = dto;
+    const { query, deposit, reward, stakingStatus, skip, take } = dto;
 
     const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking");
     queryBuilder.leftJoinAndSelect("staking.deposit", "deposit");

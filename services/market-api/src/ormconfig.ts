@@ -10,12 +10,14 @@ import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
 import { Erc721TokenEntity } from "./erc721/token/token.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token-history/token-history.entity";
+import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
+import { Erc721IngredientEntity } from "./erc721/recipe/ingredient/ingredient.entity";
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { Erc1155TokenHistoryEntity } from "./erc1155/token-history/token-history.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
-import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
+import { Erc1155IngredientEntity } from "./erc1155/recipe/ingredient/ingredient.entity";
 import { StakingEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
@@ -35,6 +37,8 @@ const config: PostgresConnectionOptions = {
     Erc721TokenHistoryEntity,
     Erc721TemplateEntity,
     Erc721CollectionEntity,
+    Erc721RecipeEntity,
+    Erc721IngredientEntity,
     Erc1155CollectionEntity,
     Erc1155TokenEntity,
     Erc1155BalanceEntity,

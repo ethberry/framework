@@ -4,7 +4,7 @@ import { Erc1155RecipeStatus, IErc1155Recipe } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc1155IngredientEntity } from "../ingredient/ingredient.entity";
+import { Erc1155IngredientEntity } from "./ingredient/ingredient.entity";
 import { Erc1155TokenEntity } from "../token/token.entity";
 
 @Entity({ schema: ns, name: "erc1155_recipe" })
