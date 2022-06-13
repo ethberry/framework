@@ -8,9 +8,7 @@ export class SeedErc721Ingredient1648525970040 implements MigrationInterface {
       INSERT INTO ${ns}.erc721_ingredient (
         erc721_recipe_id,
         erc1155_token_id,
-        amount,
-        created_at,
-        updated_at
+        amount
       ) VALUES (
         1,
         2,

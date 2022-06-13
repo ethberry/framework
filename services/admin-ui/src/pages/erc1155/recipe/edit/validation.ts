@@ -8,5 +8,8 @@ export const validationSchema2 = Yup.object().shape({
 
 export const validationSchema = Yup.object().shape({
   erc1155TokenId: Yup.mixed().defined("form.validations.valueMissing").required("form.validations.valueMissing"),
-  ingredients: Yup.array().of(validationSchema2),
+  ingredients: Yup.array()
+    .required("form.validations.valueMissing")
+    .min(1, "form.validations.rangeUnderflow")
+    .of(validationSchema2),
 });

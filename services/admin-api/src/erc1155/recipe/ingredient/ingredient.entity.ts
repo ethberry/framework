@@ -13,7 +13,7 @@ export class Erc1155IngredientEntity extends IdBaseEntity implements IErc1155Ing
   public erc1155RecipeId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc1155RecipeEntity)
+  @ManyToOne(_type => Erc1155RecipeEntity, recipe => recipe.ingredients)
   public erc1155Recipe: Erc1155RecipeEntity;
 
   @Column({ type: "int" })

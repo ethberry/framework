@@ -47,17 +47,17 @@ export class StakingService {
 
     if (deposit && deposit.tokenType) {
       if (deposit.tokenType.length === 1) {
-        queryBuilder.andWhere("deposit.tokenType = :tokenType", { tokenType: deposit.tokenType[0] });
+        queryBuilder.andWhere("deposit.tokenType = :depositTokenType", { depositTokenType: deposit.tokenType[0] });
       } else {
-        queryBuilder.andWhere("deposit.tokenType IN(:...tokenType)", { tokenType: deposit.tokenType });
+        queryBuilder.andWhere("deposit.tokenType IN(:...depositTokenType)", { depositTokenType: deposit.tokenType });
       }
     }
 
     if (reward && reward.tokenType) {
       if (reward.tokenType.length === 1) {
-        queryBuilder.andWhere("reward.tokenType = :tokenType", { tokenType: reward.tokenType[0] });
+        queryBuilder.andWhere("reward.tokenType = :rewardTokenType", { rewardTokenType: reward.tokenType[0] });
       } else {
-        queryBuilder.andWhere("reward.tokenType IN(:...tokenType)", { tokenType: reward.tokenType });
+        queryBuilder.andWhere("reward.tokenType IN(:...rewardTokenType)", { rewardTokenType: reward.tokenType });
       }
     }
 

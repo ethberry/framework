@@ -106,7 +106,7 @@ export const Erc1155Recipes: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={selected}
+        initialValues={{ ...selected, title: selected.erc1155Token?.title }}
       />
 
       <Erc1155RecipeEditDialog
