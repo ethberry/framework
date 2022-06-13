@@ -111,4 +111,8 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     interfaceId == type(IERC721Random).interfaceId ||
     super.supportsInterface(interfaceId);
   }
+
+  function getInterface() public view returns (bytes4) {
+    return type(IERC721Random).interfaceId;
+  }
 }

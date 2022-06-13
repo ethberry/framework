@@ -163,10 +163,13 @@ export class Erc721TokenServiceEth {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc721DropboxEntity = await this.erc721TokenService.findOne({ id: ~~dropboxId });
+    let erc721DropboxEntity; // if minted as Staking reward
+    if (~~dropboxId !== 0) {
+      erc721DropboxEntity = await this.erc721TokenService.findOne({ id: ~~dropboxId });
 
-    if (!erc721DropboxEntity) {
-      throw new NotFoundException("dropboxNotFound");
+      if (!erc721DropboxEntity) {
+        throw new NotFoundException("dropboxNotFound");
+      }
     }
 
     const erc721TokenEntity = await this.erc721TokenService.create({

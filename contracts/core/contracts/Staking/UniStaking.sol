@@ -19,6 +19,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
+import "../ERC721/interfaces/IERC721Dropbox.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./AbstractStaking.sol";
 
@@ -29,11 +30,17 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
+  bytes4 private constant IERC721_DROPBOX = 0xe7728dc6;
 
   event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, TokenData tokenData);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp);
+
+  constructor() {
+    _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _setupRole(PAUSER_ROLE, _msgSender());
+  }
 
   function setRules(Rule[] memory rules) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _setRules(rules);
@@ -138,20 +145,19 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
         IERC20(rewardItem.token).safeTransferFrom(address(this), _msgSender(), rewardAmount);
       } else if (rewardItem.itemType == ItemType.ERC721) {
         bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
+        bool dropboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_DROPBOX);
 
         if (randomInterface) {
-          IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenData.templateId, rewardTokenData.dropboxId);
+          IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenData.templateId, 0);
+        } else if (dropboxInterface) {
+          IERC721Dropbox(rewardItem.token).mintDropbox(_msgSender(), rewardTokenData.templateId);
         } else {
           IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenData.templateId);
         }
       } else if (rewardItem.itemType == ItemType.ERC1155) {
         rewardAmount = rewardItem.amount * multiplier;
-        IERC1155Simple(rewardItem.token).mint(
-          _msgSender(),
-          rewardTokenData.tokenId,
-          rewardItem.amount,
-          "0x"
-        );
+        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardTokenData.tokenId, rewardItem.amount, "0x");
+        // todo batch mint reward
       }
     }
   }
