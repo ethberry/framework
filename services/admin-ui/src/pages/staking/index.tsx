@@ -21,6 +21,7 @@ import { IStaking, IStakingItem, IStakingSearchDto, StakingStatus, TokenType } f
 
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
+import { StakingUploadButton } from "../../components/buttons";
 
 export const Staking: FC = () => {
   const {
@@ -96,6 +97,7 @@ export const Staking: FC = () => {
             <ListItem key={i} disableGutters>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
+                <StakingUploadButton rule={rule} />
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
                 </IconButton>
