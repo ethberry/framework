@@ -6,11 +6,11 @@ import { Erc721TokenHistoryService } from "./token-history.service";
 import { Erc721TokenHistoryEntity } from "./token-history.entity";
 import { Erc721TokenHistorySearchDto } from "./dto";
 
-@Public()
-@Controller("/erc721-token/history")
+@Controller("/erc721-token-history")
 export class Erc721TokenHistoryController {
   constructor(private readonly erc721TokenHistoryService: Erc721TokenHistoryService) {}
 
+  @Public()
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: Erc721TokenHistorySearchDto): Promise<[Array<Erc721TokenHistoryEntity>, number]> {

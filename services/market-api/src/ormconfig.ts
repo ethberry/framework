@@ -9,7 +9,7 @@ import { Erc721TemplateEntity } from "./erc721/template/template.entity";
 import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
 import { Erc721TokenEntity } from "./erc721/token/token.entity";
-import { Erc721TokenHistoryEntity } from "./erc721/token-history/token-history.entity";
+import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
 import { Erc721IngredientEntity } from "./erc721/recipe/ingredient/ingredient.entity";
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";

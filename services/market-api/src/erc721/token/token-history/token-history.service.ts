@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IErc721TokenHistorySearchDto } from "@framework/types";
+import { Erc721TokenEventType, IErc721TokenApprovedForAll, IErc721TokenHistorySearchDto } from "@framework/types";
 
 import { Erc721TokenHistoryEntity } from "./token-history.entity";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class Erc721TokenHistoryService {
@@ -37,5 +38,23 @@ export class Erc721TokenHistoryService {
     options?: FindOneOptions<Erc721TokenHistoryEntity>,
   ): Promise<Erc721TokenHistoryEntity | null> {
     return this.erc721TokenHistoryEntityRepository.findOne({ where, ...options });
+  }
+
+  public async getApprove(userEntity: UserEntity, contract: string): Promise<boolean> {
+    const wallet = userEntity.wallet;
+    const queryBuilder = this.erc721TokenHistoryEntityRepository.createQueryBuilder("history");
+
+    queryBuilder.select();
+    queryBuilder.where({ address: contract, eventType: Erc721TokenEventType.ApprovalForAll });
+
+    queryBuilder.andWhere("history.event_data->>'account' = :wallet", { wallet });
+    queryBuilder.addOrderBy("history.updatedAt", "DESC");
+    const historyEntity = await queryBuilder.getOne();
+
+    if (!historyEntity) {
+      return false;
+    }
+
+    return (historyEntity.eventData as IErc721TokenApprovedForAll).approved;
   }
 }

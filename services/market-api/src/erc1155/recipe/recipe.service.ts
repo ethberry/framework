@@ -20,27 +20,31 @@ export class RecipeService {
     const queryBuilder = this.recipeEntityRepository.createQueryBuilder("recipe");
 
     queryBuilder.select();
-    queryBuilder.where({
-      recipeStatus: Erc1155RecipeStatus.ACTIVE,
-    });
-    if (query) {
-      queryBuilder.leftJoin(
-        "(SELECT 1)",
-        "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(recipe.description->'blocks') blocks ON TRUE",
-      );
-      queryBuilder.andWhere(
-        new Brackets(qb => {
-          qb.where("recipe.title ILIKE '%' || :title || '%'", { title: query });
-          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
-        }),
-      );
-    }
 
     queryBuilder.leftJoinAndSelect("recipe.erc1155Token", "token");
     queryBuilder.leftJoinAndSelect("token.erc1155Collection", "collection");
     queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
     queryBuilder.leftJoinAndSelect("ingredients.erc1155Token", "ingredients_token");
+    queryBuilder.leftJoinAndSelect("ingredients_token.erc1155Collection", "ingredients_token_collection");
+
+    queryBuilder.where({
+      recipeStatus: Erc1155RecipeStatus.ACTIVE,
+    });
+
+    if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(token.description->'blocks') blocks ON TRUE",
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("token.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
+
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
