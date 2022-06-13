@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { Grid, IconButton, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
-import { useFormContext } from "react-hook-form";
+import { get, useFormContext, useWatch } from "react-hook-form";
 
 import { NumberInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -17,9 +17,10 @@ export const Ingredients: FC<IIngredientTokenDialogProps> = props => {
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
+  const value = useWatch({ name });
 
   const handleOptionAdd = (): (() => void) => (): void => {
-    const newValue = form.getValues(name);
+    const newValue = get(form.getValues(), name);
     newValue.push({
       erc1155TokenId: 1,
       amount: 1,
@@ -30,7 +31,7 @@ export const Ingredients: FC<IIngredientTokenDialogProps> = props => {
   const handleOptionDelete =
     (i: number): (() => void) =>
     (): void => {
-      const newValue = form.getValues(name);
+      const newValue = get(form.getValues(), name);
       newValue.splice(i, 1);
       form.setValue(name, newValue);
     };
@@ -45,7 +46,7 @@ export const Ingredients: FC<IIngredientTokenDialogProps> = props => {
           </IconButton>
         </Tooltip>
       </Typography>
-      {form.getValues(name).map((_o: IErc721Ingredient, i: number) => (
+      {value.map((_o: IErc721Ingredient, i: number) => (
         <Grid container key={i}>
           <Grid item xs={1}>
             <NumberInput name={`${name}[${i}].amount`} />
