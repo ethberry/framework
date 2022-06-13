@@ -5,7 +5,6 @@ import { Erc721TemplateModule } from "./template/template.module";
 import { Erc721AirdropModule } from "./airdrop/airdrop.module";
 import { Erc721DropboxModule } from "./dropbox/dropbox.module";
 import { Erc721TokenModule } from "./token/token.module";
-import { Erc721TokenHistoryModule } from "./token-history/token-history.module";
 import { Erc721MarketplaceModule } from "./marketplace/marketplace.module";
 import { Erc721RecipeModule } from "./recipe/recipe.module";
 
@@ -16,7 +15,6 @@ import { Erc721RecipeModule } from "./recipe/recipe.module";
     Erc721DropboxModule,
     Erc721AirdropModule,
     Erc721TokenModule,
-    Erc721TokenHistoryModule,
     Erc721MarketplaceModule,
     Erc721RecipeModule,
   ],

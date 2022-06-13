@@ -6,16 +6,16 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IErc1155Recipe } from "@framework/types";
+import { IErc721Recipe } from "@framework/types";
 
-import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
-import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC1155ERC721CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
+import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
-interface IErc1155RecipeCraftButtonProps {
-  recipe: IErc1155Recipe;
+interface IErc721RecipeCraftButtonProps {
+  recipe: IErc721Recipe;
 }
 
-export const Erc1155RecipeCraftButton: FC<IErc1155RecipeCraftButtonProps> = props => {
+export const Erc721RecipeCraftButton: FC<IErc721RecipeCraftButtonProps> = props => {
   const { recipe } = props;
   const [isApproved, setIsApproved] = useState(false);
 
@@ -25,8 +25,8 @@ export const Erc1155RecipeCraftButton: FC<IErc1155RecipeCraftButtonProps> = prop
 
   const meta = useMetamask(() => {
     const contract = new Contract(
-      recipe.erc1155Token!.erc1155Collection!.address,
-      ERC1155SimpleSol.abi,
+      recipe.erc721Template!.erc721Collection!.address,
+      ERC721SimpleSol.abi,
       library.getSigner(),
     );
     return contract.setApprovalForAll(process.env.ERC1155_CRAFT_ADDR, true) as Promise<void>;
@@ -39,11 +39,11 @@ export const Erc1155RecipeCraftButton: FC<IErc1155RecipeCraftButtonProps> = prop
   };
 
   const handleCraft = useMetamask(() => {
-    const contract = new Contract(process.env.ERC1155_CRAFT_ADDR, ERC1155ERC1155CraftSol.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721CraftSol.abi, library.getSigner());
     return (
       contract
         // TODO add item amounts - batch craft?
-        .craft(recipe.erc1155Token?.tokenId, 1) as Promise<void>
+        .craft(recipe.erc721Template?.id, 1) as Promise<void>
     );
   });
 

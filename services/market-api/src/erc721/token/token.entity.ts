@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc721TemplateEntity } from "../template/template.entity";
-import { Erc721TokenHistoryEntity } from "../token-history/token-history.entity";
+import { Erc721TokenHistoryEntity } from "./token-history/token-history.entity";
 import { Erc721DropboxEntity } from "../dropbox/dropbox.entity";
 
 @Entity({ schema: ns, name: "erc721_token" })

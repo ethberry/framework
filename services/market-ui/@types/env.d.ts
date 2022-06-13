@@ -9,6 +9,7 @@ declare global {
       ACCOUNT: string;
       ERC721_MARKETPLACE_ADDR: string;
       ERC721_AIRDROP_ADDR: string;
+      ERC721_CRAFT_ADDR: string;
       ERC1155_MARKETPLACE_ADDR: string;
       ERC1155_CRAFT_ADDR: string;
       ERC1155_RESOURCES_ADDR: string;

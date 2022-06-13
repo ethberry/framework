@@ -10,7 +10,7 @@ import {
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc721TokenEntity } from "../token/token.entity";
+import { Erc721TokenEntity } from "../token.entity";
 
 @Entity({ schema: ns, name: "erc721_token_history" })
 export class Erc721TokenHistoryEntity extends IdDateBaseEntity implements IErc721TokenHistory {

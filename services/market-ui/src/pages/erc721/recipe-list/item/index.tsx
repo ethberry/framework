@@ -12,31 +12,31 @@ import {
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { IErc1155Recipe } from "@framework/types";
+import { IErc721Recipe } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { Erc1155RecipeCraftButton } from "../../../../components/buttons";
+import { Erc721RecipeCraftButton } from "../../../../components/buttons";
 
 interface IRecipeItemProps {
-  recipe: IErc1155Recipe;
+  recipe: IErc721Recipe;
 }
 
-export const Erc1155RecipeItem: FC<IRecipeItemProps> = props => {
+export const Erc721RecipeItem: FC<IRecipeItemProps> = props => {
   const { recipe } = props;
 
   const classes = useStyles();
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc1155-tokens/${recipe.erc1155Token!.id}`}>
-        <CardMedia className={classes.media} image={recipe.erc1155Token?.imageUrl} />
+      <CardActionArea component={RouterLink} to={`/erc721-tokens/${recipe.erc721Template!.id}`}>
+        <CardMedia className={classes.media} image={recipe.erc721Template?.imageUrl} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {recipe.erc1155Token!.title}
+            {recipe.erc721Template!.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={recipe.erc1155Token!.description} />
+            <RichTextDisplay data={recipe.erc721Template!.description} />
           </Typography>
           <List>
             {(recipe.ingredients || []).map(ingredient => (
@@ -56,7 +56,7 @@ export const Erc1155RecipeItem: FC<IRecipeItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <Erc1155RecipeCraftButton recipe={recipe} />
+          <Erc721RecipeCraftButton recipe={recipe} />
         </Grid>
       </CardActions>
     </Card>

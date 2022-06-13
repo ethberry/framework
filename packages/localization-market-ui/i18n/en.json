@@ -230,6 +230,7 @@
       "erc721": {
         "airdrop": "ERC721 Airdrop",
         "collections": "ERC721 Collections",
+        "recipes": "ERC721 Recipes",
         "templates": "ERC721 Templates",
         "title": "ERC721",
         "tokens": "ERC721 Tokens"
@@ -289,6 +290,9 @@
     },
     "erc721-dropboxes": {
       "title": "ERC721 Dropboxes"
+    },
+    "erc721-recipes": {
+      "title": "ERC721 Recipes"
     },
     "erc721-template": {
       "price": "Price: {amount}",
