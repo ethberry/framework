@@ -37,57 +37,57 @@ import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entit
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
 
-import { Blockchain1563804021000 } from "./migrations/1563804021000-blockchain";
-import { CreateUserTable1563804021040 } from "./migrations/1563804021040-create-user-table";
-import { SeedUser1563804021050 } from "./migrations/1563804021050-seed-user";
-import { CreateOtpTable1563804021060 } from "./migrations/1563804021060-create-otp-table";
-import { CreateErc20TokenTable1563804021100 } from "./migrations/1563804021100-create-erc20-token-table";
-import { SeedErc20Token1563804021110 } from "./migrations/1563804021110-seed-erc20-tokens";
-import { CreateErc20TokenHistoryTable1563804021120 } from "./migrations/1563804021120-create-erc20-token-history-table";
-import { CreateErc20VestingTable1563804021115 } from "./migrations/1563804021115-create-erc20-vesting-table";
-import { SeedErc20Vesting1563804021116 } from "./migrations/1563804021116-seed-erc20-vesting";
-import { CreateErc20VestingHistoryTable1563804021117 } from "./migrations/1563804021117-create-erc20-vesting-history-table";
-import { CreateErc721CollectionTable1563804021240 } from "./migrations/1563804021240-create-erc721-collection-table";
-import { SeedErc721Collection1563804021250 } from "./migrations/1563804021250-seed-erc721-collection";
-import { CreateErc721TemplateTable1563804021260 } from "./migrations/1563804021260-create-erc721-template-table";
-import { SeedErc721Templates1563804021270 } from "./migrations/1563804021270-seed-erc721-template";
-import { CreateErc721DropboxTable1563804021275 } from "./migrations/1563804021275-create-erc721-dropbox-table";
-import { SeedErc721Dropbox1563804021276 } from "./migrations/1563804021276-seed-erc721-dropbox";
-import { CreateErc721TokenTable1563804021280 } from "./migrations/1563804021280-create-erc721-token-table";
-import { SeedErc721Token1563804021281 } from "./migrations/1563804021281-seed-erc721-tokens";
-import { CreateErc721TokenHistoryTable1563804021290 } from "./migrations/1563804021290-create-erc721-token-history-table";
-import { CreateErc721MarketplaceHistoryTable1563804021300 } from "./migrations/1563804021300-create-erc721-marketplace-history-table";
-import { CreateErc998CollectionTable1563804021240 } from "./migrations/1563804031240-create-erc998-collection-table";
-import { SeedErc998Collection1563804021250 } from "./migrations/1563804031250-seed-erc998-collection";
-import { CreateErc998TemplateTable1563804021260 } from "./migrations/1563804031260-create-erc998-template-table";
-import { SeedErc998Templates1563804021270 } from "./migrations/1563804031270-seed-erc998-template";
-import { CreateErc998DropboxTable1563804021275 } from "./migrations/1563804031275-create-erc998-dropbox-table";
-import { SeedErc998Dropbox1563804021276 } from "./migrations/1563804031276-seed-erc998-dropbox";
-import { CreateErc998TokenTable1563804021280 } from "./migrations/1563804031280-create-erc998-token-table";
-import { SeedErc998Token1563804021281 } from "./migrations/1563804031281-seed-erc998-tokens";
-import { CreateErc998TokenHistoryTable1563804021290 } from "./migrations/1563804031290-create-erc998-token-history-table";
-import { CreateErc998MarketplaceHistoryTable1563804021300 } from "./migrations/1563804031300-create-erc998-marketplace-history-table";
-import { CreateErc1155RecipeHistory1645160381140 } from "./migrations/1645160381140-create-erc1155-recipe-history";
-import { CreateErc1155CollectionTable1641526822350 } from "./migrations/1641526822350-create-erc1155-collection-table";
-import { SeedErc1155Collection1641526822360 } from "./migrations/1641526822360-seed-erc1155-collection";
-import { CreateErc1155TokenTable1641526822370 } from "./migrations/1641526822370-create-erc1155-token-table";
-import { SeedErc1155Tokens1641526822380 } from "./migrations/1641526822380-seed-erc1155-token";
-import { CreateErc1155TokenHistoryTable1641526822390 } from "./migrations/1641526822390-create-erc1155-token-history-table";
-import { CreateErc1155MarketplaceHistoryTable1641526822391 } from "./migrations/1641526822391-create-erc1155-marketplace-history-table";
-import { CreateErc1155BalanceTable1644208366000 } from "./migrations/1644208366000-create-erc1155-balance-table";
-import { SeedErc1155Balance1644208366010 } from "./migrations/1644208366010-seed-erc1155-balance";
-import { CreateErc1155Recipe1645160381120 } from "./migrations/1645160381120-create-erc1155-recipe-table";
-import { SeedErc1155Recipe1645160381130 } from "./migrations/1645160381130-seed-erc1155-recipe";
-import { CreateErc1155Ingredient1645161089530 } from "./migrations/1645161089530-create-erc1155-ingredient-table";
-import { SeedErc1155Ingredient1645161089540 } from "./migrations/1645161089540-seed-erc1155-ingredient";
-import { CreateErc721AirdropTable1648525967810 } from "./migrations/1648525967800-create-erc721-airdrop-table";
-import { SeedErc721Airdrop1648525967820 } from "./migrations/1648525967820-seed-erc721-airdrop";
+import { Blockchain1563804000000 } from "./migrations/1563804000000-blockchain";
+import { CreateUserTable1563804000010 } from "./migrations/1563804000010-create-user-table";
+import { SeedUser1563804000020 } from "./migrations/1563804000020-seed-user";
+import { CreateOtpTable1563804000060 } from "./migrations/1563804000060-create-otp-table";
+import { CreateErc20TokenTable1563804010110 } from "./migrations/1563804010110-create-erc20-token-table";
+import { SeedErc20Token1563804010120 } from "./migrations/1563804010120-seed-erc20-tokens";
+import { CreateErc20TokenHistoryTable1563804010130 } from "./migrations/1563804010130-create-erc20-token-history-table";
+import { CreateErc20VestingTable1563804010210 } from "./migrations/1563804010210-create-erc20-vesting-table";
+import { SeedErc20Vesting1563804010220 } from "./migrations/1563804010220-seed-erc20-vesting";
+import { CreateErc20VestingHistoryTable1563804010230 } from "./migrations/1563804010230-create-erc20-vesting-history-table";
+import { CreateErc998CollectionTable1563804030010 } from "./migrations/1563804030010-create-erc998-collection-table";
+import { SeedErc998Collection1563804030020 } from "./migrations/1563804030020-seed-erc998-collection";
+import { CreateErc998TemplateTable1563804030110 } from "./migrations/1563804030110-create-erc998-template-table";
+import { SeedErc998Templates1563804030120 } from "./migrations/1563804030120-seed-erc998-template";
+import { CreateErc998DropboxTable1563804030210 } from "./migrations/1563804030210-create-erc998-dropbox-table";
+import { SeedErc998Dropbox1563804030220 } from "./migrations/1563804030220-seed-erc998-dropbox";
+import { CreateErc998TokenTable1563804030310 } from "./migrations/1563804030310-create-erc998-token-table";
+import { SeedErc998Token1563804030320 } from "./migrations/1563804030320-seed-erc998-tokens";
+import { CreateErc998TokenHistoryTable1563804030330 } from "./migrations/1563804030330-create-erc998-token-history-table";
+import { CreateErc998MarketplaceHistoryTable1563804030510 } from "./migrations/1563804030510-create-erc998-marketplace-history-table";
+import { CreateErc721CollectionTable1563804040010 } from "./migrations/1563804040010-create-erc721-collection-table";
+import { SeedErc721Collection1563804040020 } from "./migrations/1563804040020-seed-erc721-collection";
+import { CreateErc721TemplateTable1563804040110 } from "./migrations/1563804040110-create-erc721-template-table";
+import { SeedErc721Templates1563804040120 } from "./migrations/1563804040120-seed-erc721-template";
+import { CreateErc721DropboxTable1563804040210 } from "./migrations/1563804040210-create-erc721-dropbox-table";
+import { SeedErc721Dropbox1563804040220 } from "./migrations/1563804040220-seed-erc721-dropbox";
+import { CreateErc721TokenTable1563804040310 } from "./migrations/1563804040310-create-erc721-token-table";
+import { SeedErc721Token1563804040320 } from "./migrations/1563804040320-seed-erc721-tokens";
+import { CreateErc721TokenHistoryTable1563804040330 } from "./migrations/1563804040330-create-erc721-token-history-table";
+import { CreateErc721MarketplaceHistoryTable1563804040510 } from "./migrations/1563804040510-create-erc721-marketplace-history-table";
+import { CreateErc1155RecipeHistory1563804020430 } from "./migrations/1563804020430-create-erc1155-recipe-history";
+import { CreateErc1155CollectionTable1563804020010 } from "./migrations/1563804020010-create-erc1155-collection-table";
+import { SeedErc1155Collection1563804020020 } from "./migrations/1563804020020-seed-erc1155-collection";
+import { CreateErc1155TokenTable1563804020120 } from "./migrations/1563804020110-create-erc1155-token-table";
+import { SeedErc1155Tokens1563804020120 } from "./migrations/1563804020120-seed-erc1155-token";
+import { CreateErc1155TokenHistoryTable1563804020130 } from "./migrations/1563804020130-create-erc1155-token-history-table";
+import { CreateErc1155MarketplaceHistoryTable1563804020210 } from "./migrations/1563804020210-create-erc1155-marketplace-history-table";
+import { CreateErc1155BalanceTable1563804020310 } from "./migrations/1563804020310-create-erc1155-balance-table";
+import { SeedErc1155Balance1563804020320 } from "./migrations/1563804020320-seed-erc1155-balance";
+import { CreateErc1155Recipe1563804020410 } from "./migrations/1563804020410-create-erc1155-recipe-table";
+import { SeedErc1155Recipe1563804020420 } from "./migrations/1563804020420-seed-erc1155-recipe";
+import { CreateErc1155Ingredient1563804020510 } from "./migrations/1563804020510-create-erc1155-ingredient-table";
+import { SeedErc1155Ingredient1563804020520 } from "./migrations/1563804020520-seed-erc1155-ingredient";
+import { CreateErc721AirdropTable1563804040410 } from "./migrations/1563804040410-create-erc721-airdrop-table";
+import { SeedErc721Airdrop1563804040420 } from "./migrations/1563804040420-seed-erc721-airdrop";
 import { Erc20VestingEntity } from "./erc20/vesting/vesting.entity";
-import { CreateErc721Recipe1648525970000 } from "./migrations/1648525970000-create-erc721-recipe-table";
-import { SeedErc721Recipe1648525970010 } from "./migrations/1648525970010-seed-erc721-recipe";
-import { CreateErc721RecipeHistory1648525970020 } from "./migrations/1648525970020-create-erc721-recipe-history";
-import { CreateErc721Ingredient1648525970030 } from "./migrations/1648525970030-create-erc721-ingredient-table";
-import { SeedErc721Ingredient1648525970040 } from "./migrations/1648525970040-seed-erc721-ingredient";
+import { CreateErc721Recipe1563804040610 } from "./migrations/1563804040610-create-erc721-recipe-table";
+import { SeedErc721Recipe1563804040620 } from "./migrations/1563804040620-seed-erc721-recipe";
+import { CreateErc721RecipeHistory1563804040630 } from "./migrations/1563804040630-create-erc721-recipe-history";
+import { CreateErc721Ingredient1563804040710 } from "./migrations/1563804040710-create-erc721-ingredient-table";
+import { SeedErc721Ingredient1563804040720 } from "./migrations/1563804040720-seed-erc721-ingredient";
 import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { CreateContractManagerTable1652962207600 } from "./migrations/1652962207600-create-contract-manager-table";
@@ -119,13 +119,6 @@ const config: PostgresConnectionOptions = {
     AccessControlEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
-    Erc721CollectionEntity,
-    Erc721TemplateEntity,
-    Erc721TokenEntity,
-    Erc721DropboxEntity,
-    Erc721AirdropEntity,
-    Erc721RecipeEntity,
-    Erc721IngredientEntity,
     Erc998CollectionEntity,
     Erc998TemplateEntity,
     Erc998TokenEntity,
@@ -133,6 +126,13 @@ const config: PostgresConnectionOptions = {
     Erc998AirdropEntity,
     Erc998RecipeEntity,
     Erc998IngredientEntity,
+    Erc721CollectionEntity,
+    Erc721TemplateEntity,
+    Erc721TokenEntity,
+    Erc721DropboxEntity,
+    Erc721AirdropEntity,
+    Erc721RecipeEntity,
+    Erc721IngredientEntity,
     Erc1155CollectionEntity,
     Erc1155TokenEntity,
     Erc1155RecipeEntity,
@@ -160,56 +160,56 @@ const config: PostgresConnectionOptions = {
     createDomainUint256(),
     installExtensionUUID(),
     createLanguageEnum(ns),
-    Blockchain1563804021000,
-    CreateUserTable1563804021040,
-    SeedUser1563804021050,
-    CreateOtpTable1563804021060,
-    CreateErc20TokenTable1563804021100,
-    SeedErc20Token1563804021110,
-    CreateErc20TokenHistoryTable1563804021120,
-    CreateErc20VestingTable1563804021115,
-    SeedErc20Vesting1563804021116,
-    CreateErc20VestingHistoryTable1563804021117,
-    CreateErc721CollectionTable1563804021240,
-    SeedErc721Collection1563804021250,
-    CreateErc721TemplateTable1563804021260,
-    SeedErc721Templates1563804021270,
-    CreateErc721DropboxTable1563804021275,
-    SeedErc721Dropbox1563804021276,
-    CreateErc721TokenTable1563804021280,
-    SeedErc721Token1563804021281,
-    CreateErc721TokenHistoryTable1563804021290,
-    CreateErc721MarketplaceHistoryTable1563804021300,
-    CreateErc998CollectionTable1563804021240,
-    SeedErc998Collection1563804021250,
-    CreateErc998TemplateTable1563804021260,
-    SeedErc998Templates1563804021270,
-    CreateErc998DropboxTable1563804021275,
-    SeedErc998Dropbox1563804021276,
-    CreateErc998TokenTable1563804021280,
-    SeedErc998Token1563804021281,
-    CreateErc998TokenHistoryTable1563804021290,
-    CreateErc998MarketplaceHistoryTable1563804021300,
-    CreateErc1155CollectionTable1641526822350,
-    SeedErc1155Collection1641526822360,
-    CreateErc1155TokenTable1641526822370,
-    SeedErc1155Tokens1641526822380,
-    CreateErc1155TokenHistoryTable1641526822390,
-    CreateErc1155MarketplaceHistoryTable1641526822391,
-    CreateErc1155RecipeHistory1645160381140,
-    CreateErc1155BalanceTable1644208366000,
-    SeedErc1155Balance1644208366010,
-    CreateErc1155Recipe1645160381120,
-    SeedErc1155Recipe1645160381130,
-    CreateErc1155Ingredient1645161089530,
-    SeedErc1155Ingredient1645161089540,
-    CreateErc721AirdropTable1648525967810,
-    SeedErc721Airdrop1648525967820,
-    CreateErc721Recipe1648525970000,
-    SeedErc721Recipe1648525970010,
-    CreateErc721RecipeHistory1648525970020,
-    CreateErc721Ingredient1648525970030,
-    SeedErc721Ingredient1648525970040,
+    Blockchain1563804000000,
+    CreateUserTable1563804000010,
+    SeedUser1563804000020,
+    CreateOtpTable1563804000060,
+    CreateErc20TokenTable1563804010110,
+    SeedErc20Token1563804010120,
+    CreateErc20TokenHistoryTable1563804010130,
+    CreateErc20VestingTable1563804010210,
+    SeedErc20Vesting1563804010220,
+    CreateErc20VestingHistoryTable1563804010230,
+    CreateErc998CollectionTable1563804030010,
+    SeedErc998Collection1563804030020,
+    CreateErc998TemplateTable1563804030110,
+    SeedErc998Templates1563804030120,
+    CreateErc998DropboxTable1563804030210,
+    SeedErc998Dropbox1563804030220,
+    CreateErc998TokenTable1563804030310,
+    SeedErc998Token1563804030320,
+    CreateErc998TokenHistoryTable1563804030330,
+    CreateErc998MarketplaceHistoryTable1563804030510,
+    CreateErc721CollectionTable1563804040010,
+    SeedErc721Collection1563804040020,
+    CreateErc721TemplateTable1563804040110,
+    SeedErc721Templates1563804040120,
+    CreateErc721DropboxTable1563804040210,
+    SeedErc721Dropbox1563804040220,
+    CreateErc721TokenTable1563804040310,
+    SeedErc721Token1563804040320,
+    CreateErc721TokenHistoryTable1563804040330,
+    CreateErc721MarketplaceHistoryTable1563804040510,
+    CreateErc721AirdropTable1563804040410,
+    SeedErc721Airdrop1563804040420,
+    CreateErc721Recipe1563804040610,
+    SeedErc721Recipe1563804040620,
+    CreateErc721RecipeHistory1563804040630,
+    CreateErc721Ingredient1563804040710,
+    SeedErc721Ingredient1563804040720,
+    CreateErc1155CollectionTable1563804020010,
+    SeedErc1155Collection1563804020020,
+    CreateErc1155TokenTable1563804020120,
+    SeedErc1155Tokens1563804020120,
+    CreateErc1155TokenHistoryTable1563804020130,
+    CreateErc1155MarketplaceHistoryTable1563804020210,
+    CreateErc1155RecipeHistory1563804020430,
+    CreateErc1155BalanceTable1563804020310,
+    SeedErc1155Balance1563804020320,
+    CreateErc1155Recipe1563804020410,
+    SeedErc1155Recipe1563804020420,
+    CreateErc1155Ingredient1563804020510,
+    SeedErc1155Ingredient1563804020520,
     CreateContractManagerHistoryTable1652682493386,
     CreateAccessControlTable1653616447230,
     CreateAccessControlHistoryTable1653616447240,
