@@ -71,7 +71,7 @@ contract ERC721Dropbox is IERC721Dropbox, ERC721ACBER, ERC721BaseUrl {
     super.supportsInterface(interfaceId);
   }
 
-  function getInterface() public view returns (bytes4) {
+  function getInterface() public pure returns (bytes4) {
     return type(IERC721Dropbox).interfaceId;
   }
 }

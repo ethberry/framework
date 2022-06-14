@@ -16,6 +16,9 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+
 
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
@@ -23,7 +26,7 @@ import "../ERC721/interfaces/IERC721Dropbox.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 import "./AbstractStaking.sol";
 
-contract UniStaking is AbstractStaking, AccessControl, Pausable {
+contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
@@ -44,6 +47,9 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
 
   function setRules(Rule[] memory rules) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _setRules(rules);
+  }
+
+  function fundEth() public payable whenNotPaused onlyRole(DEFAULT_ADMIN_ROLE) {
   }
 
   function deposit(uint256 ruleId, TokenData memory tokenData) public payable whenNotPaused {
@@ -112,7 +118,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
 
       stake.deposit.amount = 0;
       if (depositItem.itemType == ItemType.NATIVE) {
-        receiver.transfer(stakeAmount);
+        Address.sendValue(payable(receiver), stakeAmount);
       } else if (depositItem.itemType == ItemType.ERC20) {
         IERC20(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositItem.amount);
       } else if (depositItem.itemType == ItemType.ERC721) {
@@ -176,6 +182,13 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable {
 
   function unpause() public onlyRole(PAUSER_ROLE) {
     _unpause();
+  }
+
+  function supportsInterface(bytes4 interfaceId) public view virtual
+  override(AccessControl, ERC1155Receiver) returns (bool) {
+    return
+    interfaceId == type(IERC721Random).interfaceId ||
+    super.supportsInterface(interfaceId);
   }
 
   receive() external payable {
