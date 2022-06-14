@@ -29,29 +29,11 @@ export class SeedErc721Token1563804021281 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         '${defaultJSON}',
-        'RARE',
-        '${wallet}',
-        '2',
-        'MINTED',
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${defaultJSON}',
-        'COMMON',
-        '${wallet}',
-        '1',
-        'MINTED',
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${defaultJSON}',
         'COMMON',
         '${wallet}',
         '2',
         'MINTED',
-        4,
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -60,7 +42,7 @@ export class SeedErc721Token1563804021281 implements MigrationInterface {
         '${wallet}',
         '3',
         'MINTED',
-        4,
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );

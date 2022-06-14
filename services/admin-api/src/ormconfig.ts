@@ -21,6 +21,13 @@ import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
 import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
 import { Erc721IngredientEntity } from "./erc721/recipe/ingredient/ingredient.entity";
+import { Erc998CollectionEntity } from "./erc998/collection/collection.entity";
+import { Erc998TemplateEntity } from "./erc998/template/template.entity";
+import { Erc998TokenEntity } from "./erc998/token/token.entity";
+import { Erc998DropboxEntity } from "./erc998/dropbox/dropbox.entity";
+import { Erc998AirdropEntity } from "./erc998/airdrop/airdrop.entity";
+import { Erc998RecipeEntity } from "./erc998/recipe/recipe.entity";
+import { Erc998IngredientEntity } from "./erc998/recipe/ingredient/ingredient.entity";
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
@@ -50,6 +57,16 @@ import { CreateErc721TokenTable1563804021280 } from "./migrations/1563804021280-
 import { SeedErc721Token1563804021281 } from "./migrations/1563804021281-seed-erc721-tokens";
 import { CreateErc721TokenHistoryTable1563804021290 } from "./migrations/1563804021290-create-erc721-token-history-table";
 import { CreateErc721MarketplaceHistoryTable1563804021300 } from "./migrations/1563804021300-create-erc721-marketplace-history-table";
+import { CreateErc998CollectionTable1563804021240 } from "./migrations/1563804031240-create-erc998-collection-table";
+import { SeedErc998Collection1563804021250 } from "./migrations/1563804031250-seed-erc998-collection";
+import { CreateErc998TemplateTable1563804021260 } from "./migrations/1563804031260-create-erc998-template-table";
+import { SeedErc998Templates1563804021270 } from "./migrations/1563804031270-seed-erc998-template";
+import { CreateErc998DropboxTable1563804021275 } from "./migrations/1563804031275-create-erc998-dropbox-table";
+import { SeedErc998Dropbox1563804021276 } from "./migrations/1563804031276-seed-erc998-dropbox";
+import { CreateErc998TokenTable1563804021280 } from "./migrations/1563804031280-create-erc998-token-table";
+import { SeedErc998Token1563804021281 } from "./migrations/1563804031281-seed-erc998-tokens";
+import { CreateErc998TokenHistoryTable1563804021290 } from "./migrations/1563804031290-create-erc998-token-history-table";
+import { CreateErc998MarketplaceHistoryTable1563804021300 } from "./migrations/1563804031300-create-erc998-marketplace-history-table";
 import { CreateErc1155RecipeHistory1645160381140 } from "./migrations/1645160381140-create-erc1155-recipe-history";
 import { CreateErc1155CollectionTable1641526822350 } from "./migrations/1641526822350-create-erc1155-collection-table";
 import { SeedErc1155Collection1641526822360 } from "./migrations/1641526822360-seed-erc1155-collection";
@@ -109,6 +126,13 @@ const config: PostgresConnectionOptions = {
     Erc721AirdropEntity,
     Erc721RecipeEntity,
     Erc721IngredientEntity,
+    Erc998CollectionEntity,
+    Erc998TemplateEntity,
+    Erc998TokenEntity,
+    Erc998DropboxEntity,
+    Erc998AirdropEntity,
+    Erc998RecipeEntity,
+    Erc998IngredientEntity,
     Erc1155CollectionEntity,
     Erc1155TokenEntity,
     Erc1155RecipeEntity,
@@ -156,6 +180,16 @@ const config: PostgresConnectionOptions = {
     SeedErc721Token1563804021281,
     CreateErc721TokenHistoryTable1563804021290,
     CreateErc721MarketplaceHistoryTable1563804021300,
+    CreateErc998CollectionTable1563804021240,
+    SeedErc998Collection1563804021250,
+    CreateErc998TemplateTable1563804021260,
+    SeedErc998Templates1563804021270,
+    CreateErc998DropboxTable1563804021275,
+    SeedErc998Dropbox1563804021276,
+    CreateErc998TokenTable1563804021280,
+    SeedErc998Token1563804021281,
+    CreateErc998TokenHistoryTable1563804021290,
+    CreateErc998MarketplaceHistoryTable1563804021300,
     CreateErc1155CollectionTable1641526822350,
     SeedErc1155Collection1641526822360,
     CreateErc1155TokenTable1641526822370,

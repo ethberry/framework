@@ -3,19 +3,11 @@ import { IIdDateBase } from "@gemunion/types-collection";
 import { IErc721Template } from "./template";
 import { IErc721TokenHistory } from "./token-history";
 import { IErc721Dropbox } from "./dropbox";
+import { TokenRarity } from "../blockchain/common";
 
 export enum Erc721TokenStatus {
   MINTED = "MINTED",
   BURNED = "BURNED",
-}
-
-export enum TokenRarity {
-  UNKNOWN = "UNKNOWN",
-  COMMON = "COMMON",
-  UNCOMMON = "UNCOMMON",
-  RARE = "RARE",
-  EPIC = "EPIC",
-  LEGENDARY = "LEGENDARY",
 }
 
 export interface IErc721Token extends IIdDateBase {

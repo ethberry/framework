@@ -7,15 +7,14 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedErc721Collection1563804021250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
-    const erc721CollectionHeroAddress = process.env.ERC721_HERO_ADDR || wallet;
-    const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
-    const erc721CollectionLandAddress = process.env.ERC721_LAND_ADDR || wallet;
     const erc721CollectionDropboxAddress = process.env.ERC721_DROPBOX_ADDR || wallet;
     const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
+    const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
+    const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
+    const erc721CollectionBuildingsAddress = process.env.ERC721_BUILDINGS_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - HERO, 5 - SKILLS, 6 - LAND
+    // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - BUILDINGS
     await queryRunner.query(`
       INSERT INTO ${ns}.erc721_collection (
         title,
@@ -78,21 +77,6 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'HEROES',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'HEROES',
-        'GEM721',
-        100,
-        'ACTIVE',
-        'TOKEN',
-        'RANDOM',
-        '${erc721CollectionHeroAddress}',
-        '${baseTokenURI}',
-        '${chainId}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         'SKILLS',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -108,16 +92,16 @@ export class SeedErc721Collection1563804021250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'LAND',
+        'BUILDINGS',
         '${simpleFormatting}',
         '${imageUrl}',
-        'LAND',
+        'BUILDINGS',
         'GEM721',
         100,
         'ACTIVE',
         'TOKEN',
         'SIMPLE',
-        '${erc721CollectionLandAddress}',
+        '${erc721CollectionBuildingsAddress}',
         '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',

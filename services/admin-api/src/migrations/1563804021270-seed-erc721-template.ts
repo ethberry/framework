@@ -21,36 +21,6 @@ export class SeedErc721Templates1563804021270 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        'Warrior',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        'ACTIVE',
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'Rouge',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        'ACTIVE',
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'Mage',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        'ACTIVE',
-        4,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         'Sword',
         '${simpleFormatting}',
         '${imageUrl}',

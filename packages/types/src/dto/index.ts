@@ -25,6 +25,18 @@ export * from "./erc721/token-history/search";
 export * from "./erc721/dropbox/search";
 export * from "./erc721/recipe/search";
 
+export * from "./erc998/airdrop/search";
+export * from "./erc998/collection/autocomplete";
+export * from "./erc998/collection/deploy";
+export * from "./erc998/collection/search";
+export * from "./erc998/template/autocomplete";
+export * from "./erc998/template/search";
+export * from "./erc998/token/search";
+export * from "./erc998/token/asset";
+export * from "./erc998/token-history/search";
+export * from "./erc998/dropbox/search";
+export * from "./erc998/recipe/search";
+
 export * from "./erc1155/collection/autocomplete";
 export * from "./erc1155/collection/deploy";
 export * from "./erc1155/collection/search";

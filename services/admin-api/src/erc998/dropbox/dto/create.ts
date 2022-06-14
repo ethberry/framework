@@ -1,0 +1,37 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { IsInt, IsJSON, IsNumberString, IsString, IsUrl, Min } from "class-validator";
+
+import { IErc998DropboxCreateDto } from "../interfaces";
+
+export class Erc998DropboxCreateDto implements IErc998DropboxCreateDto {
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  public title: string;
+
+  @ApiProperty()
+  @IsJSON({ message: "patternMismatch" })
+  public description: string;
+
+  @ApiProperty()
+  @IsNumberString({}, { message: "typeMismatch" })
+  public price: string;
+
+  @ApiProperty()
+  @IsUrl({}, { message: "patternMismatch" })
+  @IsString({ message: "typeMismatch" })
+  public imageUrl: string;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public erc998CollectionId: number;
+
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public erc998TemplateId: number;
+}
