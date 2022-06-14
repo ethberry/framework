@@ -31,7 +31,7 @@ export class Erc20VestingService {
     }
 
     if (query) {
-      queryBuilder.andWhere("vesting.beneficiary = :beneficiary", { query });
+      queryBuilder.andWhere("vesting.beneficiary = :beneficiary", { beneficiary: query });
     }
 
     queryBuilder.skip(skip);
