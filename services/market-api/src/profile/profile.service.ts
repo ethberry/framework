@@ -23,4 +23,9 @@ export class ProfileService {
     Object.assign(userEntity, { wallet });
     return userEntity.save();
   }
+
+  public detach(userEntity: UserEntity): Promise<UserEntity> {
+    Object.assign(userEntity, { wallet: null });
+    return userEntity.save();
+  }
 }
