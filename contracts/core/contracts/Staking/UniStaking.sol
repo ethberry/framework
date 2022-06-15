@@ -38,7 +38,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
   event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, TokenData tokenData);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
-  event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp);
+  event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
 
   constructor() {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -61,7 +61,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     _stakeIdCounter.increment();
 
     Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenData, rule.deposit.amount);
-    _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0);
+    _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
 
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenData);
 
@@ -94,7 +94,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
 
     require(stake.owner != address(0), "Staking: wrong staking id");
     require(stake.owner == _msgSender(), "Staking: not an owner");
-    require(depositItem.amount != 0, "Staking: deposit withdrawn already");
+    require(stake.activeDeposit, "Staking: deposit withdrawn already");
 
     uint256 multiplier;
     uint256 startTimestamp = stake.startTimestamp;
@@ -115,12 +115,12 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
 
     if (withdrawDeposit) {
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
+      stake.activeDeposit = false;
 
-      stake.deposit.amount = 0;
       if (depositItem.itemType == ItemType.NATIVE) {
         Address.sendValue(payable(receiver), stakeAmount);
       } else if (depositItem.itemType == ItemType.ERC20) {
-        IERC20(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositItem.amount);
+        SafeERC20.safeTransfer(IERC20(depositItem.token), _msgSender(), stakeAmount);
       } else if (depositItem.itemType == ItemType.ERC721) {
         IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenData.tokenId);
       } else if (depositItem.itemType == ItemType.ERC1155) {
@@ -128,7 +128,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
           address(this),
           _msgSender(),
           depositTokenData.tokenId,
-          depositItem.amount,
+          stakeAmount,
           "0x"
         );
       }
@@ -137,7 +137,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     }
 
     if (multiplier != 0) {
-      emit StakingFinish(stakeId, receiver, block.timestamp);
+      emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
       Item storage rewardItem = rule.reward;
       TokenData memory rewardTokenData = rule.reward.tokenData;
@@ -145,24 +145,31 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
 
       if (rewardItem.itemType == ItemType.NATIVE) {
         rewardAmount = rewardItem.amount * multiplier;
-        receiver.transfer(rewardAmount);
+        Address.sendValue(payable(receiver), rewardAmount);
       } else if (rewardItem.itemType == ItemType.ERC20) {
         rewardAmount = rewardItem.amount * multiplier;
-        IERC20(rewardItem.token).safeTransferFrom(address(this), _msgSender(), rewardAmount);
+        SafeERC20.safeTransfer(IERC20(rewardItem.token), _msgSender(), rewardAmount);
       } else if (rewardItem.itemType == ItemType.ERC721) {
         bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
         bool dropboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_DROPBOX);
 
+        // todo multiplier mint erc721
         if (randomInterface) {
-          IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenData.templateId, 0);
+          for (uint i=0; i<multiplier; i++) {
+            IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenData.templateId, 0);
+          }
         } else if (dropboxInterface) {
-          IERC721Dropbox(rewardItem.token).mintDropbox(_msgSender(), rewardTokenData.templateId);
+          for (uint i=0; i<multiplier; i++) {
+            IERC721Dropbox(rewardItem.token).mintDropbox(_msgSender(), rewardTokenData.templateId);
+          }
         } else {
-          IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenData.templateId);
+          for (uint i=0; i<multiplier; i++) {
+            IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenData.templateId);
+          }
         }
       } else if (rewardItem.itemType == ItemType.ERC1155) {
         rewardAmount = rewardItem.amount * multiplier;
-        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardTokenData.tokenId, rewardItem.amount, "0x");
+        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardTokenData.tokenId, rewardAmount, "0x");
         // todo batch mint reward
       }
     }
@@ -173,7 +180,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     uint256 finishTimestamp,
     uint256 period
   ) internal pure virtual returns (uint256) {
-    return (finishTimestamp - startTimestamp) % period;
+    return (finishTimestamp - startTimestamp) / period;
   }
 
   function pause() public onlyRole(PAUSER_ROLE) {

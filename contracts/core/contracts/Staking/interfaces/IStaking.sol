@@ -45,6 +45,7 @@ interface IStaking {
     uint256 ruleId;
     uint256 startTimestamp;
     uint256 cycles;
+    bool activeDeposit;
   }
 
   event RuleCreated(uint256 ruleId, Rule rule);
