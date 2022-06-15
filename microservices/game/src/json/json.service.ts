@@ -21,7 +21,7 @@ export class JsonService {
     const gameServiceApiKey = this.configService.get<string>("GAME_SERVER_API_KEY", "");
 
     return this.httpService
-      .get<Record<string, any>>(`${jsonMicroserviceAddress}/game/${sub}`, {
+      .get<Record<string, any>>(`${jsonMicroserviceAddress}/game/${sub}/profile`, {
         headers: {
           Authorization: `Bearer ${gameServiceApiKey}`,
         },
