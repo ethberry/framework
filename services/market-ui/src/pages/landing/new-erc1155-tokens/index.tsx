@@ -21,13 +21,17 @@ export const NewErc1155: FC = () => {
         url: "/erc1155-tokens/new",
       });
     },
-    { success: false },
+    { success: false, error: false },
   );
 
   const fetchTokens = async (): Promise<any> => {
-    return fn().then((json: IPaginationResult<IErc1155Token>) => {
-      setTemplates(json.rows);
-    });
+    return fn()
+      .then((json: IPaginationResult<IErc1155Token>) => {
+        setTemplates(json.rows);
+      })
+      .catch(e => {
+        console.error(e);
+      });
   };
 
   useEffect(() => {

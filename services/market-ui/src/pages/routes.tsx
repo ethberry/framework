@@ -21,6 +21,7 @@ import { Auctions } from "./auction";
 import { Craft } from "./craft";
 import { MyAssets } from "./personal/assets";
 import { MyAuctions } from "./personal/auction";
+import { MyWallet } from "./connect-wallet";
 
 const routes: Array<RouteObject> = [
   {
@@ -73,6 +74,11 @@ const routes: Array<RouteObject> = [
         path: "/my-auctions",
         element: <Protected />,
         children: [{ index: true, element: <MyAuctions /> }],
+      },
+      {
+        path: "/my-wallet",
+        element: <Protected />,
+        children: [{ index: true, element: <MyWallet /> }],
       },
       {
         path: "/craft",

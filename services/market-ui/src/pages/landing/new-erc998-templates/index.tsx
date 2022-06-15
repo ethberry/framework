@@ -21,13 +21,17 @@ export const NewErc998: FC = () => {
         url: "/erc998-templates/new",
       });
     },
-    { success: false },
+    { success: false, error: false },
   );
 
   const fetchTokens = async (): Promise<void> => {
-    return fn().then((json: IPaginationResult<IErc998Template>) => {
-      setTemplates(json.rows);
-    });
+    return fn()
+      .then((json: IPaginationResult<IErc998Template>) => {
+        setTemplates(json.rows);
+      })
+      .catch(e => {
+        console.error(e);
+      });
   };
 
   useEffect(() => {

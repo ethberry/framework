@@ -21,13 +21,17 @@ export const NewErc721: FC = () => {
         url: "/erc721-templates/new",
       });
     },
-    { success: false },
+    { success: false, error: false },
   );
 
   const fetchTokens = async (): Promise<void> => {
-    return fn().then((json: IPaginationResult<IErc721Template>) => {
-      setTemplates(json.rows);
-    });
+    return fn()
+      .then((json: IPaginationResult<IErc721Template>) => {
+        setTemplates(json.rows);
+      })
+      .catch(e => {
+        console.error(e);
+      });
   };
 
   useEffect(() => {

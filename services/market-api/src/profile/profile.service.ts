@@ -1,4 +1,6 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
+import { Not } from "typeorm";
+
 import { IMetamaskDto, MetamaskService } from "@gemunion/nest-js-module-metamask";
 
 import { UserEntity } from "../user/user.entity";
@@ -21,11 +23,16 @@ export class ProfileService {
       throw new BadRequestException("signatureDoesNotMatch");
     }
 
-    const count = await this.userService.count({ wallet });
+    const count = await this.userService.count({
+      wallet,
+      id: Not(userEntity.id),
+    });
+
     if (count) {
       throw new BadRequestException("walletAlreadyInUse");
     }
 
+    Object.assign(userEntity, { wallet });
     return userEntity.save();
   }
 

@@ -254,6 +254,7 @@
       "personal": {
         "assets": "My assets",
         "auctions": "My auctions",
+        "wallet": "My wallet",
         "title": "My stash"
       },
       "sections": {
@@ -406,6 +407,12 @@
     },
     "my-auctions": {
       "title": "My auctions"
+    },
+    "my-wallet": {
+      "title": "My wallet",
+      "attach": "Attach",
+      "detach": "Detach",
+      "attach": "Attach"
     },
     "profile": {
       "title": "Profile"
