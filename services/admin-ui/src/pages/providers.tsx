@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { SnackbarProvider } from "notistack";
 
+import { getFirebaseAuthStrategy } from "@gemunion/auth-strategy-firebase";
 import { UserProvider } from "@gemunion/provider-user";
 import { SettingsProvider } from "@gemunion/provider-settings";
 import { ThemeProvider } from "@gemunion/provider-theme";
@@ -16,7 +17,7 @@ import { EnabledLanguages } from "@framework/constants";
 export const Providers: FC = props => {
   const { children } = props;
   return (
-    <ApiProvider baseUrl={process.env.BE_URL}>
+    <ApiProvider baseUrl={process.env.BE_URL} getAuthStrategy={getFirebaseAuthStrategy}>
       <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
         <UserProvider>
           <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
