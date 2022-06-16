@@ -6,7 +6,7 @@ import { time } from "@openzeppelin/test-helpers";
 import {
   UniStaking,
   ERC721Simple,
-  ERC721Random,
+  // ERC721Random, hardhat random version contract
   ERC721RandomTest,
   ERC721Dropbox,
   ERC20Simple,
@@ -54,6 +54,26 @@ describe("UniStaking", function () {
   let linkInstance: LinkErc20;
   let vrfInstance: VRFCoordinatorMock;
 
+  before(async function () {
+    const [owner] = await ethers.getSigners();
+
+    // Deploy Chainlink & Vrf contracts
+    const link = await ethers.getContractFactory("LinkErc20");
+    linkInstance = await link.deploy(tokenName, tokenSymbol);
+    console.info(`LINK_ADDR=${linkInstance.address}`);
+    const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
+    await linkInstance.mint(owner.address, linkAmountInWei);
+    const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+    vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    console.info(`VRF_ADDR=${vrfInstance.address}`);
+    if (
+      linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
+      vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
+    ) {
+      console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
+    }
+  });
+
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
     this.provider = waffle.provider;
@@ -81,21 +101,21 @@ describe("UniStaking", function () {
     await erc721RandomInstance.setMaxTemplateId(2);
 
     // Deploy Chainlink & Vrf contracts
-    const link = await ethers.getContractFactory("LinkErc20");
-    linkInstance = await link.deploy(tokenName, tokenSymbol);
-    console.info(`LINK_ADDR=${linkInstance.address.toLowerCase()}`);
-    const linkAmountInWei = BigNumber.from("100000").mul(decimals);
-    await linkInstance.mint(this.owner.address, linkAmountInWei);
-    const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    console.info(`VRF_ADDR=${vrfInstance.address.toLowerCase()}`);
-    if (
-      linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-      vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-    ) {
-      console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-      return;
-    }
+    // const link = await ethers.getContractFactory("LinkErc20");
+    // linkInstance = await link.deploy(tokenName, tokenSymbol);
+    // console.info(`LINK_ADDR=${linkInstance.address.toLowerCase()}`);
+    // const linkAmountInWei = BigNumber.from("100000").mul(decimals);
+    // await linkInstance.mint(this.owner.address, linkAmountInWei);
+    // const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+    // vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    // console.info(`VRF_ADDR=${vrfInstance.address.toLowerCase()}`);
+    // if (
+    //   linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
+    //   vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
+    // ) {
+    //   console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
+    //   return;
+    // }
 
     // Grant roles
     await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
@@ -185,26 +205,6 @@ describe("UniStaking", function () {
     };
   });
 
-  // beforeAll(async function () {
-  //   const [owner] = await ethers.getSigners();
-  //
-  //   // Deploy Chainlink & Vrf contracts
-  //   const link = await ethers.getContractFactory("LinkErc20");
-  //   linkInstance = await link.deploy(tokenName, tokenSymbol);
-  //   console.info(`LINK_ADDR=${linkInstance.address.toLowerCase()}`);
-  //   const linkAmountInWei = BigNumber.from("100000").mul(decimals);
-  //   await linkInstance.mint(owner.address, linkAmountInWei);
-  //   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-  //   vrfInstance = await vrfFactory.deploy(linkInstance.address);
-  //   console.info(`VRF_ADDR=${vrfInstance.address.toLowerCase()}`);
-  //   if (
-  //     linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-  //     vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-  //   ) {
-  //     console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-  //   }
-  // });
-
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("setRule", function () {
@@ -264,6 +264,26 @@ describe("UniStaking", function () {
   });
 
   describe("Staking", function () {
+    // before(async function () {
+    //   const [owner] = await ethers.getSigners();
+    //
+    //   // Deploy Chainlink & Vrf contracts
+    //   const link = await ethers.getContractFactory("LinkErc20");
+    //   linkInstance = await link.deploy(tokenName, tokenSymbol);
+    //   console.info(`LINK_ADDR=${linkInstance.address.toLowerCase()}`);
+    //   const linkAmountInWei = BigNumber.from("100000").mul(decimals);
+    //   await linkInstance.mint(owner.address, linkAmountInWei);
+    //   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+    //   vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    //   console.info(`VRF_ADDR=${vrfInstance.address.toLowerCase()}`);
+    //   if (
+    //     linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
+    //     vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
+    //   ) {
+    //     console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
+    //   }
+    // });
+
     it("should fail for not existing rule", async function () {
       const stakeRule: IRule = {
         deposit: nativeDeposit,
@@ -410,6 +430,26 @@ describe("UniStaking", function () {
   });
 
   describe("Reward", function () {
+    // before(async function () {
+    //   const [owner] = await ethers.getSigners();
+    //
+    //   // Deploy Chainlink & Vrf contracts
+    //   const link = await ethers.getContractFactory("LinkErc20");
+    //   linkInstance = await link.deploy(tokenName, tokenSymbol);
+    //   console.info(`LINK_ADDR=${linkInstance.address}`);
+    //   const linkAmountInWei = BigNumber.from("100000").mul(decimals);
+    //   await linkInstance.mint(owner.address, linkAmountInWei);
+    //   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+    //   vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    //   console.info(`VRF_ADDR=${vrfInstance.address}`);
+    //   if (
+    //     linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
+    //     vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
+    //   ) {
+    //     console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
+    //   }
+    // });
+
     it("should fail for wrong staking id", async function () {
       const stakeRule: IRule = {
         deposit: nativeDeposit,
@@ -592,7 +632,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(0, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
@@ -656,7 +696,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(0, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
