@@ -5,8 +5,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { IUserSearchDto } from "@framework/types";
 
 import { UserEntity } from "./user.entity";
-import { IUserImportDto, IUserUpdateDto } from "./interfaces";
 import { AuthService } from "../auth/auth.service";
+import { IUserImportDto, IUserUpdateDto } from "./interfaces";
 
 @Injectable()
 export class UserService {
@@ -100,5 +100,9 @@ export class UserService {
 
     await this.authService.delete(userEntity);
     return userEntity.remove();
+  }
+
+  public async count(where: FindOptionsWhere<UserEntity>): Promise<number> {
+    return this.userEntityRepository.count({ where });
   }
 }

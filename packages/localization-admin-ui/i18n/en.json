@@ -280,6 +280,13 @@
       "erc721TemplateIds": "Template",
       "erc721TokenId": "Token",
       "erc721TokenIds": "Token",
+      "erc998CollectionId": "Collections",
+      "erc998CollectionIds": "Collections",
+      "erc998DropboxId": "Dropbox",
+      "erc998TemplateId": "Template",
+      "erc998TemplateIds": "Template",
+      "erc998TokenId": "Token",
+      "erc998TokenIds": "Token",
       "item": "Bottle of water",
       "name": "Pink dust",
       "number": "100500",
@@ -366,6 +373,15 @@
         "title": "ERC721",
         "tokens": "ERC721 Tokens"
       },
+      "erc998": {
+        "airdrop": "ERC998 Airdrop",
+        "collections": "ERC998 Collections",
+        "dropbox": "ERC998 Dropbox",
+        "recipes": "ERC998 Recipes",
+        "templates": "ERC998 Templates",
+        "title": "ERC998",
+        "tokens": "ERC998 Tokens"
+      },
       "title": "Dashboard"
     },
     "emails": {
@@ -419,6 +435,35 @@
       "title": "ERC721 Templates"
     },
     "erc721-tokens": {
+      "title": "Tokens",
+      "view": {
+        "attributes": "Attributes",
+        "description": "Description",
+        "imageUrl": "Image",
+        "title": "Title"
+      }
+    },
+    "erc998-airdrops": {
+      "defaultItemTitle": "Airdrop",
+      "title": "ERC998 Airdrop"
+    },
+    "erc998-collections": {
+      "royalty": "Royalty",
+      "title": "ERC998 Collections"
+    },
+    "erc998-dropboxes": {
+      "title": "ERC998 Dropbox"
+    },
+    "erc998-recipes": {
+      "activate": "Activate recipe",
+      "deactivate": "Deactivate recipes",
+      "title": "ERC998 Recipes",
+      "upload": "Upload recipe"
+    },
+    "erc998-templates": {
+      "title": "ERC998 Templates"
+    },
+    "erc998-tokens": {
       "title": "Tokens",
       "view": {
         "attributes": "Attributes",

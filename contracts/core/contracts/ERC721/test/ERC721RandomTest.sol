@@ -13,9 +13,9 @@ import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
 import "../interfaces/IERC721Random.sol";
-import "../../MOCKS/ChainLink/ERC721ChainLinkRinkeby.sol";
+import "../../MOCKS/ChainLink/ERC721ChainLinkHH.sol";
 
-contract ERC721RandomTest is IERC721Random, ERC721ChainLinkRinkeby, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
+contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -100,6 +100,12 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkRinkeby, ERC721ACBER,
 
   function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {
     return _baseURI(_baseTokenURI);
+  }
+
+  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    return
+    interfaceId == type(IERC721Random).interfaceId ||
+    super.supportsInterface(interfaceId);
   }
 
   receive() external payable {

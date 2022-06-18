@@ -9,6 +9,7 @@ import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { AppController } from "./app.controller";
 import { WebhookModule } from "./webhook/webhook.module";
 import { JsonModule } from "./json/json.module";
+import { NotificatorModule } from "./notificator/notificator.module";
 
 @Module({
   providers: [
@@ -32,6 +33,7 @@ import { JsonModule } from "./json/json.module";
     }),
     WebhookModule,
     JsonModule,
+    NotificatorModule,
   ],
   controllers: [AppController],
 })

@@ -12,6 +12,7 @@ import { Profile } from "./profile";
 
 import { erc20Routes } from "./erc20/routes";
 import { erc721Routes } from "./erc721/routes";
+import { erc998Routes } from "./erc998/routes";
 import { erc1155Routes } from "./erc1155/routes";
 import { stakingRoutes } from "./staking/routes";
 
@@ -20,6 +21,7 @@ import { Auctions } from "./auction";
 import { Craft } from "./craft";
 import { MyAssets } from "./personal/assets";
 import { MyAuctions } from "./personal/auction";
+import { MyWallet } from "./connect-wallet";
 
 const routes: Array<RouteObject> = [
   {
@@ -43,6 +45,7 @@ const routes: Array<RouteObject> = [
       },
       ...erc20Routes,
       ...erc721Routes,
+      ...erc998Routes,
       ...erc1155Routes,
       ...stakingRoutes,
       {
@@ -71,6 +74,11 @@ const routes: Array<RouteObject> = [
         path: "/my-auctions",
         element: <Protected />,
         children: [{ index: true, element: <MyAuctions /> }],
+      },
+      {
+        path: "/my-wallet",
+        element: <Protected />,
+        children: [{ index: true, element: <MyWallet /> }],
       },
       {
         path: "/craft",

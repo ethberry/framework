@@ -13,9 +13,11 @@ import "./interfaces/IStaking.sol";
 abstract contract AbstractStaking is IStaking {
   using Counters for Counters.Counter;
 
-  mapping(uint256 => Rule) private _rules;
+  Counters.Counter internal _ruleIdCounter;
+  Counters.Counter internal _stakeIdCounter;
 
-  Counters.Counter private _ruleIdCounter;
+  mapping(uint256 => Rule) internal _rules;
+  mapping(uint256 => Stake) internal _stakes;
 
   function _setRules(Rule[] memory rules) internal {
     uint256 length = rules.length;
@@ -25,8 +27,8 @@ abstract contract AbstractStaking is IStaking {
   }
 
   function _setRule(Rule memory rule) internal {
-    uint256 ruleId = _ruleIdCounter.current();
     _ruleIdCounter.increment();
+    uint256 ruleId = _ruleIdCounter.current();
     _rules[ruleId] = rule;
     emit RuleCreated(ruleId, rule);
   }

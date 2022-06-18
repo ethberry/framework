@@ -21,8 +21,16 @@ export * from "./erc721/ingredient";
 export * from "./erc721/recipe";
 export * from "./erc721/recipe-history";
 
+export * from "./erc998/airdrop";
 export * from "./erc998/collection";
+export * from "./erc998/dropbox";
+export * from "./erc998/token";
+export * from "./erc998/token-history";
 export * from "./erc998/template";
+export * from "./erc998/marketplace-history";
+export * from "./erc998/ingredient";
+export * from "./erc998/recipe";
+export * from "./erc998/recipe-history";
 
 export * from "./erc1155/balance";
 export * from "./erc1155/collection";
