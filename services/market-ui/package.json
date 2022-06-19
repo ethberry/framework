@@ -42,7 +42,7 @@
     "@gemunion/provider-picker": "3.5.1",
     "@gemunion/provider-popup": "0.3.2",
     "@gemunion/provider-settings": "3.0.1",
-    "@gemunion/provider-theme": "4.2.2",
+    "@gemunion/provider-theme": "5.0.1",
     "@gemunion/provider-user": "4.0.1",
     "@gemunion/provider-wallet": "0.13.6",
     "@gemunion/react-hooks": "1.0.1",
