@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
-import { useApi } from "@gemunion/provider-api";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc1155TokenTemplate, IErc1155CollectionDeployDto } from "@framework/types";

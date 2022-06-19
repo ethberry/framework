@@ -4,7 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
-import { useApi } from "@gemunion/provider-api";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
 import { IErc998Template } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";

@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { Contract } from "ethers";
 
-import { ApiError } from "@gemunion/provider-api";
+import { ApiError } from "@gemunion/provider-api-firebase";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useWallet } from "@gemunion/provider-wallet";
 import { IPaginationResult } from "@gemunion/types-collection";
