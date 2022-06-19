@@ -41,7 +41,7 @@
     "@gemunion/provider-localization": "2.1.2",
     "@gemunion/provider-picker": "3.5.1",
     "@gemunion/provider-popup": "0.3.2",
-    "@gemunion/provider-settings": "2.0.20",
+    "@gemunion/provider-settings": "3.0.1",
     "@gemunion/provider-theme": "4.2.2",
     "@gemunion/provider-user": "3.3.13",
     "@gemunion/provider-wallet": "0.13.6",
