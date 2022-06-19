@@ -16,6 +16,7 @@
     "@framework/localization-market-ui": "0.0.1",
     "@framework/seaport-contracts": "0.0.1",
     "@framework/types": "0.0.1",
+    "@gemunion/provider-api-firebase": "1.0.0",
     "@gemunion/common-pages": "8.1.11",
     "@gemunion/constants": "0.8.4",
     "@gemunion/draft-js-utils": "0.3.11",
