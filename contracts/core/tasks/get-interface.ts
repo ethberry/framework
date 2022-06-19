@@ -1,5 +1,5 @@
 import { task } from "hardhat/config";
-import { Contract, ContractInterface, ethers } from "ethers";
+import { ethers } from "ethers";
 
 task("interface", "Prints a contract's interfaceID")
   // .addParam("contract", "The contract's name")
