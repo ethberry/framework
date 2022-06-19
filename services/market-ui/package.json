@@ -36,7 +36,7 @@
     "@gemunion/mui-page-layout": "0.1.11",
     "@gemunion/mui-rte": "2.0.3",
     "@gemunion/popup": "0.0.33",
-    "@gemunion/provider-api": "5.8.4",
+    "@gemunion/provider-api": "6.0.1",
     "@gemunion/provider-license": "1.0.22",
     "@gemunion/provider-localization": "3.0.1",
     "@gemunion/provider-picker": "3.5.1",
