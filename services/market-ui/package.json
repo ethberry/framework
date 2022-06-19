@@ -20,7 +20,7 @@
     "@gemunion/common-pages": "8.1.11",
     "@gemunion/constants": "0.8.4",
     "@gemunion/draft-js-utils": "0.3.11",
-    "@gemunion/firebase-login": "1.1.16",
+    "@gemunion/firebase-login": "2.0.1",
     "@gemunion/history": "1.2.9",
     "@gemunion/metamask-login": "2.0.1",
     "@gemunion/mui-dialog-confirmation": "3.2.2",
