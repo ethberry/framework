@@ -26,6 +26,7 @@ import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { SettingsModule } from "./settings/settings.module";
+import { PageModule } from "./page/page.module";
 
 @Module({
   providers: [
@@ -94,6 +95,7 @@ import { SettingsModule } from "./settings/settings.module";
     ProfileModule,
     UserModule,
     SettingsModule,
+    PageModule,
   ],
   controllers: [AppController],
 })

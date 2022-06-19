@@ -251,11 +251,16 @@
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
       },
+      "pages": {
+        "about-us": "About us",
+        "faq": "FAQ",
+        "title": "Pages"
+      },
       "personal": {
         "assets": "My assets",
         "auctions": "My auctions",
-        "wallet": "My wallet",
-        "title": "My stash"
+        "title": "My stash",
+        "wallet": "My wallet"
       },
       "sections": {
         "auctions": "Secondary marketplace",
@@ -409,10 +414,12 @@
       "title": "My auctions"
     },
     "my-wallet": {
-      "title": "My wallet",
       "attach": "Attach",
       "detach": "Detach",
-      "attach": "Attach"
+      "title": "My wallet"
+    },
+    "page": {
+      "title": "{title}"
     },
     "profile": {
       "title": "Profile"

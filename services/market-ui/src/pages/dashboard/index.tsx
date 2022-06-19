@@ -11,6 +11,7 @@ import { Erc1155Section } from "./sections/erc1155";
 import { Personal } from "./sections/personal";
 import { Sections } from "./sections/sections";
 import { Staking } from "./sections/staking";
+import { Pages } from "./sections/pages";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -30,6 +31,7 @@ export const Dashboard: FC = () => {
           <Personal />
           <Sections />
           <Staking />
+          <Pages />
         </Grid>
       </Grid>
     </div>

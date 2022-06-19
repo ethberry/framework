@@ -22,6 +22,7 @@ import { Craft } from "./craft";
 import { MyAssets } from "./personal/assets";
 import { MyAuctions } from "./personal/auction";
 import { MyWallet } from "./connect-wallet";
+import { Page } from "./page";
 
 const routes: Array<RouteObject> = [
   {
@@ -87,6 +88,10 @@ const routes: Array<RouteObject> = [
           { index: true, element: <Craft /> },
           { path: "/craft/:tab", element: <Craft /> },
         ],
+      },
+      {
+        path: "/pages/:slug",
+        element: <Page />,
       },
       {
         path: "/error/:error",

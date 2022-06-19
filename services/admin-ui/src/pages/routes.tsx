@@ -19,6 +19,7 @@ import { erc1155Routes } from "./erc1155/routes";
 import { Settings } from "./settings";
 import { Email } from "./email";
 import { Staking } from "./staking";
+import { Page } from "./page";
 
 const routes: Array<RouteObject> = [
   {
@@ -46,6 +47,14 @@ const routes: Array<RouteObject> = [
         children: [
           { index: true, element: <User /> },
           { path: "/users/:id", element: <User /> },
+        ],
+      },
+      {
+        path: "/pages",
+        element: <Protected />,
+        children: [
+          { index: true, element: <Page /> },
+          { path: "/pages/:id", element: <Page /> },
         ],
       },
       {

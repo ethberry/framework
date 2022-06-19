@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Email, PeopleAlt, Settings } from "@mui/icons-material";
+import { Email, MenuBook, PeopleAlt, Settings } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -38,6 +38,14 @@ export const Admin: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.admin.settings" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/pages">
+          <ListItemIcon>
+            <MenuBook />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.admin.pages" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/emails">

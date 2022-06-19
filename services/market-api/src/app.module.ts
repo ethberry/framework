@@ -25,6 +25,7 @@ import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
+import { PageModule } from "./page/page.module";
 
 @Module({
   providers: [
@@ -92,6 +93,7 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     UserModule,
     EmailModule,
     BlockchainModule,
+    PageModule,
   ],
   controllers: [AppController],
 })

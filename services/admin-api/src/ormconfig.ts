@@ -105,6 +105,9 @@ import { SeedStakingDepositTable1654751224230 } from "./migrations/1654751224230
 import { CreateStakingRewardTable1654751224240 } from "./migrations/1654751224240-create-staking-reward-table";
 import { SeedStakingRewardTable1654751224250 } from "./migrations/1654751224250-seed-staking-reward-table";
 import { CreateStakingHistoryTable1654751224260 } from "./migrations/1654751224260-create-staking-history-table";
+import { PageEntity } from "./page/page.entity";
+import { CreatePageTable1655626535100 } from "./migrations/1655626535100-create-page-table";
+import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -141,6 +144,7 @@ const config: PostgresConnectionOptions = {
     StakingDepositEntity,
     StakingRewardEntity,
     StakingHistoryEntity,
+    PageEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -226,6 +230,8 @@ const config: PostgresConnectionOptions = {
     CreateStakingRewardTable1654751224240,
     SeedStakingRewardTable1654751224250,
     CreateStakingHistoryTable1654751224260,
+    CreatePageTable1655626535100,
+    SeedPages1655626535110,
   ],
 };
 

@@ -53,6 +53,10 @@
       "DROPBOX": "Dropbox",
       "TOKEN": "Token"
     },
+    "pageStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
     "contractTemplate": {
       "BLACKLIST": "Blacklist",
       "CLIFF": "Cliff",
@@ -178,6 +182,8 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "slug": "Slug",
+      "pageStatus": "Status",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -250,6 +256,7 @@
     },
     "placeholders": {
       "DUMMY": "Dummy",
+      "slug": "terms-and-conditions",
       "address": "0x...",
       "amount": "10",
       "attributes": "{}",
@@ -344,6 +351,7 @@
     "dashboard": {
       "admin": {
         "emails": "Emails",
+        "pages": "Pages",
         "settings": "Settings",
         "title": "Admin",
         "users": "Users"
@@ -475,6 +483,9 @@
     "guest": {
       "forgotPassword": "Forgot password",
       "login": "Login"
+    },
+    "pages": {
+      "title": "Pages"
     },
     "profile": {
       "title": "Profile"

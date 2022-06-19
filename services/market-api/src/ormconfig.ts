@@ -29,6 +29,7 @@ import { Erc1155IngredientEntity } from "./erc1155/recipe/ingredient/ingredient.
 import { StakingEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
+import { PageEntity } from "./page/page.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -67,6 +68,7 @@ const config: PostgresConnectionOptions = {
     StakingEntity,
     StakingDepositEntity,
     StakingRewardEntity,
+    PageEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
