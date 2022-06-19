@@ -11,8 +11,9 @@ import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../ERC721/interfaces/IERC721Random.sol";
+import "../ERC721/interfaces/IERC721Dropbox.sol";
 
-contract ERC721Dropbox is ERC721ACBER, ERC721BaseUrl {
+contract ERC721Dropbox is IERC721Dropbox, ERC721ACBER, ERC721BaseUrl {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -62,5 +63,15 @@ contract ERC721Dropbox is ERC721ACBER, ERC721BaseUrl {
 
   receive() external payable {
     revert();
+  }
+
+  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    return
+    interfaceId == type(IERC721Dropbox).interfaceId ||
+    super.supportsInterface(interfaceId);
+  }
+
+  function getInterface() public pure returns (bytes4) {
+    return type(IERC721Dropbox).interfaceId;
   }
 }

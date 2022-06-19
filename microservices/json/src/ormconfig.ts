@@ -1,6 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
+import { UserEntity } from "./user/user.entity";
 import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
 import { Erc721TemplateEntity } from "./erc721/template/template.entity";
 import { Erc721TokenEntity } from "./erc721/token/token.entity";
@@ -13,6 +14,7 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
+    UserEntity,
     Erc721CollectionEntity,
     Erc721TokenEntity,
     Erc721DropboxEntity,

@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { useApi } from "@gemunion/provider-api";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IErc721Recipe } from "@framework/types";
 

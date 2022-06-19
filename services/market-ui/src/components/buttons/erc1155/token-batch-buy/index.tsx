@@ -5,7 +5,7 @@ import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 import { useFormContext } from "react-hook-form";
 
-import { useApi } from "@gemunion/provider-api";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
 import { IErc1155Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";

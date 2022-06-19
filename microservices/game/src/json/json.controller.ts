@@ -8,7 +8,7 @@ import { JsonService } from "./json.service";
 export class JsonController {
   constructor(private readonly jsonService: JsonService) {}
 
-  @Get("/:sub")
+  @Get("/:sub/profile")
   @UseInterceptors(NotFoundInterceptor)
   public getBalance(@Param("sub") sub: string): Promise<Record<string, any> | undefined> {
     return this.jsonService.getBalance(sub);

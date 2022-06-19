@@ -12,6 +12,14 @@ import { Erc721TokenEntity } from "./erc721/token/token.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
 import { Erc721IngredientEntity } from "./erc721/recipe/ingredient/ingredient.entity";
+import { Erc998CollectionEntity } from "./erc998/collection/collection.entity";
+import { Erc998TemplateEntity } from "./erc998/template/template.entity";
+import { Erc998DropboxEntity } from "./erc998/dropbox/dropbox.entity";
+import { Erc998AirdropEntity } from "./erc998/airdrop/airdrop.entity";
+import { Erc998TokenEntity } from "./erc998/token/token.entity";
+import { Erc998TokenHistoryEntity } from "./erc998/token/token-history/token-history.entity";
+import { Erc998RecipeEntity } from "./erc998/recipe/recipe.entity";
+import { Erc998IngredientEntity } from "./erc998/recipe/ingredient/ingredient.entity";
 import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
@@ -39,6 +47,16 @@ const config: PostgresConnectionOptions = {
     Erc721CollectionEntity,
     Erc721RecipeEntity,
     Erc721IngredientEntity,
+    Erc998CollectionEntity,
+    Erc998TemplateEntity,
+    Erc998DropboxEntity,
+    Erc998AirdropEntity,
+    Erc998TokenEntity,
+    Erc998TokenHistoryEntity,
+    Erc998TemplateEntity,
+    Erc998CollectionEntity,
+    Erc998RecipeEntity,
+    Erc998IngredientEntity,
     Erc1155CollectionEntity,
     Erc1155TokenEntity,
     Erc1155BalanceEntity,

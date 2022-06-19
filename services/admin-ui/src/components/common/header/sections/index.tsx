@@ -6,7 +6,7 @@ import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 
 import { useUser } from "@gemunion/provider-user";
-import { useApi } from "@gemunion/provider-api";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { IUser } from "@framework/types";
 
 import { useStyles } from "./styles";

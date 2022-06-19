@@ -18,6 +18,7 @@ import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
 import { Erc20Module } from "./erc20/erc20.module";
 import { Erc721Module } from "./erc721/erc721.module";
+import { Erc998Module } from "./erc998/erc998.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
@@ -87,6 +88,7 @@ import { SettingsModule } from "./settings/settings.module";
     HealthModule,
     Erc20Module,
     Erc721Module,
+    Erc998Module,
     Erc1155Module,
     BlockchainModule,
     ProfileModule,

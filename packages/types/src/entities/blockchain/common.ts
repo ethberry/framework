@@ -5,3 +5,12 @@ export enum TokenType {
   ERC998 = "ERC998",
   ERC1155 = "ERC1155",
 }
+
+export enum TokenRarity {
+  UNKNOWN = "UNKNOWN",
+  COMMON = "COMMON",
+  UNCOMMON = "UNCOMMON",
+  RARE = "RARE",
+  EPIC = "EPIC",
+  LEGENDARY = "LEGENDARY",
+}

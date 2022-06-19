@@ -10,7 +10,7 @@ interface IStaking {
   enum ItemType {
     // 0: ETH on mainnet, MATIC on polygon, etc.
     NATIVE,
-    // 1: ERC20 items (ERC777 and ERC20 analogues could also technically work)
+    // 1: ERC20 items (ERC777 and other ERC20 analogues could also technically work)
     ERC20,
     // 2: ERC721 items
     ERC721,
@@ -21,8 +21,13 @@ interface IStaking {
   struct Item {
     ItemType itemType;
     address token;
-    uint256 tokenId;
+    TokenData tokenData;
     uint256 amount;
+  }
+
+  struct TokenData {
+    uint256 tokenId;
+    uint256 templateId;
   }
 
   struct Rule {
@@ -32,6 +37,15 @@ interface IStaking {
     uint256 penalty;
     bool recurrent;
     bool active;
+  }
+
+  struct Stake {
+    address owner;
+    Item deposit;
+    uint256 ruleId;
+    uint256 startTimestamp;
+    uint256 cycles;
+    bool activeDeposit;
   }
 
   event RuleCreated(uint256 ruleId, Rule rule);

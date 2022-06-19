@@ -126,6 +126,10 @@
       "erc721CollectionIds": "Collections",
       "erc721TokenId": "Token",
       "erc721TokenIds": "Token",
+      "erc998CollectionId": "Collections",
+      "erc998CollectionIds": "Collections",
+      "erc998TokenId": "Token",
+      "erc998TokenIds": "Token",
       "externalId": "External ID",
       "imageUrl": "Avatar",
       "language": "Language",
@@ -159,6 +163,10 @@
       "erc721CollectionIds": "Collections",
       "erc721TokenId": "Token",
       "erc721TokenIds": "Token",
+      "erc998CollectionId": "Collections",
+      "erc998CollectionIds": "Collections",
+      "erc998TokenId": "Token",
+      "erc998TokenIds": "Token",
       "maxAmount": "100",
       "minAmount": "0.01",
       "password": "******",
@@ -235,9 +243,18 @@
         "title": "ERC721",
         "tokens": "ERC721 Tokens"
       },
+      "erc998": {
+        "airdrop": "ERC998 Airdrop",
+        "collections": "ERC998 Collections",
+        "recipes": "ERC998 Recipes",
+        "templates": "ERC998 Templates",
+        "title": "ERC998",
+        "tokens": "ERC998 Tokens"
+      },
       "personal": {
         "assets": "My assets",
         "auctions": "My auctions",
+        "wallet": "My wallet",
         "title": "My stash"
       },
       "sections": {
@@ -312,12 +329,51 @@
       },
       "title": "ERC721 Tokens"
     },
+    "erc998-airdrop": {
+      "sorry": "Sorry, maybe you will get lucky next time",
+      "title": "ERC998 Airdrop"
+    },
+    "erc998-collection": {
+      "title": "ERC998 Collection: {title}"
+    },
+    "erc998-collections": {
+      "title": "ERC998 Collections"
+    },
+    "erc998-dropbox": {
+      "price": "Price: {amount}",
+      "title": "ERC998 Dropbox: {title}"
+    },
+    "erc998-dropboxes": {
+      "title": "ERC998 Dropboxes"
+    },
+    "erc998-recipes": {
+      "title": "ERC998 Recipes"
+    },
+    "erc998-template": {
+      "price": "Price: {amount}",
+      "title": "ERC998 Template: {title}"
+    },
+    "erc998-templates": {
+      "title": "ERC998 Templates"
+    },
+    "erc998-token": {
+      "price": "Price: {amount}",
+      "title": "ERC998 Token: {title}"
+    },
+    "erc998-tokens": {
+      "sort": {
+        "createdAt": "Date",
+        "price": "Price"
+      },
+      "title": "ERC998 Tokens"
+    },
     "guest": {
       "login": "Login"
     },
     "landing": {
       "erc1155-new": "New 1155 Tokens",
       "erc721-new": "New 721 Templates",
+      "erc998-new": "New 998 Templates",
       "popular": "Popular items"
     },
     "marketplace": {
@@ -351,6 +407,12 @@
     },
     "my-auctions": {
       "title": "My auctions"
+    },
+    "my-wallet": {
+      "title": "My wallet",
+      "attach": "Attach",
+      "detach": "Detach",
+      "attach": "Attach"
     },
     "profile": {
       "title": "Profile"

@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useApi } from "@gemunion/provider-api";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";

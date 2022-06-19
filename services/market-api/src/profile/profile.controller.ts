@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Put, Res } from "@nestjs/common";
+import { Body, Controller, Get, HttpStatus, Post, Put, Res, Delete } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Response } from "express";
 
@@ -28,8 +28,13 @@ export class ProfileController {
     return this.profileService.update(userEntity, dto);
   }
 
-  @Post("/attach")
+  @Post("/wallet")
   public attachWallet(@User() userEntity: UserEntity, @Body() dto: MetamaskDto): Promise<UserEntity> {
     return this.profileService.attach(userEntity, dto);
+  }
+
+  @Delete("/wallet")
+  public detachWallet(@User() userEntity: UserEntity): Promise<UserEntity> {
+    return this.profileService.detach(userEntity);
   }
 }
