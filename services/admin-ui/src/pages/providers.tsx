@@ -11,12 +11,12 @@ import { PopupProvider } from "@gemunion/provider-popup";
 import { WalletProvider } from "@gemunion/provider-wallet";
 import { PickerProvider } from "@gemunion/provider-picker";
 import { i18n } from "@framework/localization-admin-ui";
-import { EnabledLanguages } from "@framework/constants";
+import { EnabledLanguages, ns } from "@framework/constants";
 
 export const Providers: FC = props => {
   const { children } = props;
   return (
-    <FirebaseApiProvider baseUrl={process.env.BE_URL}>
+    <FirebaseApiProvider baseUrl={process.env.BE_URL} storageName={ns}>
       <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
         <UserProvider>
           <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
