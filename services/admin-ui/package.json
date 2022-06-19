@@ -27,7 +27,7 @@
     "@gemunion/mui-form-search": "5.1.11",
     "@gemunion/mui-inputs-core": "6.2.6",
     "@gemunion/mui-inputs-draft": "4.2.6",
-    "@gemunion/mui-inputs-entity": "6.2.5",
+    "@gemunion/mui-inputs-entity": "7.0.1",
     "@gemunion/mui-inputs-image-firebase": "7.2.6",
     "@gemunion/mui-inputs-mask": "5.2.6",
     "@gemunion/mui-inputs-picker": "5.2.1",
