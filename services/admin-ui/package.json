@@ -48,7 +48,7 @@
     "@gemunion/react-hooks-eth": "0.0.19",
     "@gemunion/types-collection": "1.4.3",
     "@gemunion/yup-rules": "1.8.9",
-    "@gemunion/yup-rules-eth": "0.0.7",
+    "@gemunion/yup-rules-eth": "1.0.1",
     "@mui/icons-material": "5.8.4",
     "@mui/lab": "5.0.0-alpha.86",
     "@mui/material": "5.8.4",
