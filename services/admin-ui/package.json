@@ -22,7 +22,7 @@
     "@gemunion/history": "1.2.9",
     "@gemunion/mui-dialog-confirmation": "3.2.2",
     "@gemunion/mui-dialog-delete": "3.2.2",
-    "@gemunion/mui-dialog-form": "6.1.11",
+    "@gemunion/mui-dialog-form": "7.0.1",
     "@gemunion/mui-form": "5.1.8",
     "@gemunion/mui-form-search": "6.0.1",
     "@gemunion/mui-inputs-core": "6.2.6",
