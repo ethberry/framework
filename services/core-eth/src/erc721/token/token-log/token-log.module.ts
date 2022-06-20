@@ -2,8 +2,7 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-
-import { AccessControlEventType, ContractType, Erc20TokenEventType } from "@framework/types";
+import { AccessControlEventType, ContractType, Erc721TokenEventType } from "@framework/types";
 
 import { Erc721TokenLogService } from "./token-log.service";
 
@@ -32,9 +31,13 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
             contractInterface: ERC721Abi,
             // prettier-ignore
             eventNames: [
-              Erc20TokenEventType.Approval,
-              Erc20TokenEventType.Snapshot,
-              Erc20TokenEventType.Transfer,
+              Erc721TokenEventType.Transfer,
+              Erc721TokenEventType.Approval,
+              Erc721TokenEventType.ApprovalForAll,
+              Erc721TokenEventType.DefaultRoyaltyInfo,
+              Erc721TokenEventType.TokenRoyaltyInfo,
+              Erc721TokenEventType.MintRandom,
+              "RandomRequest", // dev
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged

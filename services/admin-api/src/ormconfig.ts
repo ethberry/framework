@@ -7,6 +7,7 @@ import {
   createLanguageEnum,
   createSchema,
   installExtensionUUID,
+  createTokenTypes,
 } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "./user/user.entity";
@@ -37,7 +38,6 @@ import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entit
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
 
-import { Blockchain1563804000000 } from "./migrations/1563804000000-blockchain";
 import { CreateUserTable1563804000010 } from "./migrations/1563804000010-create-user-table";
 import { SeedUser1563804000020 } from "./migrations/1563804000020-seed-user";
 import { CreateOtpTable1563804000060 } from "./migrations/1563804000060-create-otp-table";
@@ -164,7 +164,7 @@ const config: PostgresConnectionOptions = {
     createDomainUint256(),
     installExtensionUUID(),
     createLanguageEnum(ns),
-    Blockchain1563804000000,
+    createTokenTypes(ns),
     CreateUserTable1563804000010,
     SeedUser1563804000020,
     CreateOtpTable1563804000060,

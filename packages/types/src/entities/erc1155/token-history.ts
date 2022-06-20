@@ -4,8 +4,6 @@ export enum Erc1155TokenEventType {
   TransferSingle = "TransferSingle",
   TransferBatch = "TransferBatch",
   ApprovalForAll = "ApprovalForAll",
-  RoleGranted = "RoleGranted",
-  RoleRevoked = "RoleRevoked",
   URI = "URI",
 }
 

@@ -2,7 +2,7 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { ContractType, Erc1155TokenEventType } from "@framework/types";
+import { AccessControlEventType, ContractType, Erc1155TokenEventType } from "@framework/types";
 
 // custom contracts
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
@@ -35,8 +35,9 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
               Erc1155TokenEventType.TransferBatch,
               Erc1155TokenEventType.URI,
               Erc1155TokenEventType.ApprovalForAll,
-              Erc1155TokenEventType.RoleGranted,
-              Erc1155TokenEventType.RoleRevoked
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {

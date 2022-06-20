@@ -30,25 +30,22 @@ export class Erc721TokenControllerEth {
   ) {}
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.Transfer })
-  public transferItem(@Payload() event: ILogEvent<IErc721TokenTransfer>, @Ctx() context: Log): Promise<void> {
+  public transfer(@Payload() event: ILogEvent<IErc721TokenTransfer>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.transfer(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.Approval })
-  public approvalItem(@Payload() event: ILogEvent<IErc721TokenApprove>, @Ctx() context: Log): Promise<void> {
+  public approval(@Payload() event: ILogEvent<IErc721TokenApprove>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.approval(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.ApprovalForAll })
-  public approvalForAllItem(
-    @Payload() event: ILogEvent<IErc721TokenApprovedForAll>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  public approvalForAll(@Payload() event: ILogEvent<IErc721TokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.DefaultRoyaltyInfo })
-  public defaultRoyaltyInfoItem(
+  public defaultRoyaltyInfo(
     @Payload() event: ILogEvent<IErc721DefaultRoyaltyInfo>,
     @Ctx() context: Log,
   ): Promise<void> {
@@ -56,15 +53,12 @@ export class Erc721TokenControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.TokenRoyaltyInfo })
-  public tokenRoyaltyInfoItem(
-    @Payload() event: ILogEvent<IErc721TokenRoyaltyInfo>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  public tokenRoyaltyInfo(@Payload() event: ILogEvent<IErc721TokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.tokenRoyaltyInfo(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.MintRandom })
-  public mintRandomItem(@Payload() event: ILogEvent<IErc721TokenMintRandom>, @Ctx() context: Log): Promise<void> {
+  public mintRandom(@Payload() event: ILogEvent<IErc721TokenMintRandom>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.mintRandom(event, context);
   }
 
