@@ -3,20 +3,44 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, IStakingDeposit, IStakingWithdraw, StakingEventType } from "@framework/types";
+import {
+  ContractType,
+  IStakingDeposit,
+  IStakingFinish,
+  IStakingRuleCreate,
+  IStakingRuleUpdate,
+  IStakingWithdraw,
+  StakingEventType,
+} from "@framework/types";
 
 import { StakingServiceEth } from "./staking.service.eth";
 
 @Controller()
 export class StakingControllerEth {
   constructor(private readonly stakingServiceEth: StakingServiceEth) {}
-  @EventPattern({ contractType: ContractType.ERC20_STAKING, eventName: StakingEventType.StakingStart })
-  public transfer(@Payload() event: ILogEvent<IStakingDeposit>, @Ctx() context: Log): Promise<void> {
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.RuleCreated })
+  public create(@Payload() event: ILogEvent<IStakingRuleCreate>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.create(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.RuleUpdated })
+  public update(@Payload() event: ILogEvent<IStakingRuleUpdate>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.update(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingStart })
+  public start(@Payload() event: ILogEvent<IStakingDeposit>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.start(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC20_STAKING, eventName: StakingEventType.StakingWithdraw })
-  public approval(@Payload() event: ILogEvent<IStakingWithdraw>, @Ctx() context: Log): Promise<void> {
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingWithdraw })
+  public withdraw(@Payload() event: ILogEvent<IStakingWithdraw>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.withdraw(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingFinish })
+  public finish(@Payload() event: ILogEvent<IStakingFinish>, @Ctx() context: Log): Promise<void> {
+    return this.stakingServiceEth.finish(event, context);
   }
 }

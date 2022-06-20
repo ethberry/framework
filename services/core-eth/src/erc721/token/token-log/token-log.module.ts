@@ -2,6 +2,7 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
+
 import { AccessControlEventType, ContractType, Erc721TokenEventType } from "@framework/types";
 
 import { Erc721TokenLogService } from "./token-log.service";
@@ -31,13 +32,18 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
             contractInterface: ERC721Abi,
             // prettier-ignore
             eventNames: [
-              Erc721TokenEventType.Transfer,
               Erc721TokenEventType.Approval,
               Erc721TokenEventType.ApprovalForAll,
               Erc721TokenEventType.DefaultRoyaltyInfo,
-              Erc721TokenEventType.TokenRoyaltyInfo,
               Erc721TokenEventType.MintRandom,
-              "RandomRequest", // dev
+              Erc721TokenEventType.Paused,
+              Erc721TokenEventType.RandomRequest,
+              Erc721TokenEventType.RedeemAirdrop,
+              Erc721TokenEventType.TokenRoyaltyInfo,
+              Erc721TokenEventType.Transfer,
+              Erc721TokenEventType.UnpackAirdrop,
+              Erc721TokenEventType.UnpackDropbox,
+              Erc721TokenEventType.Unpaused,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged
@@ -59,6 +65,6 @@ export class Erc721TokenLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return this.erc721TokenLogService.updateBlock();
+    return await this.erc721TokenLogService.updateBlock();
   }
 }

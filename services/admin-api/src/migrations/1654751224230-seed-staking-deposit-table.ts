@@ -9,7 +9,8 @@ export class SeedStakingDepositTable1654751224230 implements MigrationInterface 
       INSERT INTO ${ns}.staking_deposit (
         token_type,
         collection,
-        criteria,
+        token_id,
+        template_id,
         amount,
         staking_id
       ) VALUES (

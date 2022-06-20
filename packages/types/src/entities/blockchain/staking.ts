@@ -1,5 +1,6 @@
 import { ISearchable, IIdBase } from "@gemunion/types-collection";
 import { TokenType } from "./common";
+import { IStakingTokenData } from "./staking-history";
 
 export enum StakingStatus {
   NEW = "NEW",
@@ -9,10 +10,17 @@ export enum StakingStatus {
 
 export interface IStakingItem extends IIdBase {
   tokenType: TokenType;
-  collection: number;
-  criteria: number;
+  collection: string;
+  tokenData: IStakingTokenData;
   amount: string;
 }
+
+// struct Item {
+//   ItemType itemType;
+//   address token;
+//   TokenData tokenData;
+//   uint256 amount;
+// }
 
 export interface IStaking extends ISearchable {
   deposit: IStakingItem;

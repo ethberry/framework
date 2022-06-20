@@ -19,10 +19,15 @@ export class CreateStakingDepositTable1654751224220 implements MigrationInterfac
         },
         {
           name: "collection",
-          type: "int",
+          type: "varchar",
         },
         {
-          name: "criteria",
+          name: "token_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "template_id",
           type: "int",
           isNullable: true,
         },

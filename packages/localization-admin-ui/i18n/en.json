@@ -439,6 +439,12 @@
       "title": "ERC721 Recipes",
       "upload": "Upload recipe"
     },
+    "staking-rules": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Staking Rules",
+      "upload": "Upload Rule"
+    },
     "erc721-templates": {
       "title": "ERC721 Templates"
     },

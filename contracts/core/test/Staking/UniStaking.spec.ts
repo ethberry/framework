@@ -80,7 +80,7 @@ describe("UniStaking", function () {
 
     // UniStaking
     const stakingFactory = await ethers.getContractFactory("UniStaking");
-    stakingInstance = await stakingFactory.deploy();
+    stakingInstance = await stakingFactory.deploy(1);
     // ERC20 Simple
     const erc20Factory = await ethers.getContractFactory("ERC20Simple");
     erc20Instance = await erc20Factory.deploy("ERC20Simple", "SMP", 1000000000);
@@ -225,6 +225,23 @@ describe("UniStaking", function () {
       );
     });
 
+    it("should fail edit when Rule not exist", async function () {
+      const stakeRule: IRule = {
+        deposit: nativeDeposit,
+        reward: erc721RewardRnd,
+        period: BigNumber.from(stakePeriod),
+        penalty: BigNumber.from(stakePenalty),
+        recurrent: false,
+        active: true,
+      };
+
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      const tx1 = stakingInstance.updateRule(2, false);
+      await expect(tx1).to.be.revertedWith(`Staking: rule does not exist`);
+    });
+
     it("should set one Rule", async function () {
       const stakeRule: IRule = {
         deposit: nativeDeposit,
@@ -261,29 +278,26 @@ describe("UniStaking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // todo count Events?
     });
+
+    it("should edit Rule", async function () {
+      const stakeRule: IRule = {
+        deposit: nativeDeposit,
+        reward: erc721RewardRnd,
+        period: BigNumber.from(stakePeriod),
+        penalty: BigNumber.from(stakePenalty),
+        recurrent: false,
+        active: true,
+      };
+
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      const tx1 = stakingInstance.updateRule(1, false);
+      await expect(tx1).to.emit(stakingInstance, "RuleUpdated").withArgs(1, false);
+    });
   });
 
   describe("Staking", function () {
-    // before(async function () {
-    //   const [owner] = await ethers.getSigners();
-    //
-    //   // Deploy Chainlink & Vrf contracts
-    //   const link = await ethers.getContractFactory("LinkErc20");
-    //   linkInstance = await link.deploy(tokenName, tokenSymbol);
-    //   console.info(`LINK_ADDR=${linkInstance.address.toLowerCase()}`);
-    //   const linkAmountInWei = BigNumber.from("100000").mul(decimals);
-    //   await linkInstance.mint(owner.address, linkAmountInWei);
-    //   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    //   vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    //   console.info(`VRF_ADDR=${vrfInstance.address.toLowerCase()}`);
-    //   if (
-    //     linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-    //     vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-    //   ) {
-    //     console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-    //   }
-    // });
-
     it("should fail for not existing rule", async function () {
       const stakeRule: IRule = {
         deposit: nativeDeposit,
@@ -333,6 +347,25 @@ describe("UniStaking", function () {
 
       const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenData, { value: BigNumber.from(100) });
       await expect(tx1).to.be.revertedWith(`Staking: wrong amount'`);
+    });
+
+    it("should fail for limit exceed", async function () {
+      const stakeRule: IRule = {
+        deposit: nativeDeposit,
+        reward: erc721RewardRnd,
+        period: BigNumber.from(stakePeriod),
+        penalty: BigNumber.from(stakePenalty),
+        recurrent: false,
+        active: true,
+      };
+
+      await stakingInstance.setMaxStake(0);
+
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenData, { value: BigNumber.from(100) });
+      await expect(tx1).to.be.revertedWith(`Staking: stake limit exceeded'`);
     });
 
     it("should stake NATIVE", async function () {

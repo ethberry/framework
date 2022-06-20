@@ -18,7 +18,8 @@ export class CreateContractManagerTable1652962207600 implements MigrationInterfa
         'ERC1155_CRAFT',
         'ERC20_TOKEN',
         'ERC20_VESTING',
-        'ERC20_STAKING'
+        'ERC20_STAKING',
+        'STAKING'
       );
     `);
 

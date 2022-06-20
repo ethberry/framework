@@ -35,30 +35,45 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
   bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
   bytes4 private constant IERC721_DROPBOX = 0xe7728dc6;
 
+  uint256 private _maxStake = 0;
+  mapping(address => uint256) internal _stakeCounter;
+
   event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, TokenData tokenData);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
 
-  constructor() {
+  constructor(uint256 maxStake) {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _setupRole(PAUSER_ROLE, _msgSender());
+
+    setMaxStake(maxStake);
   }
 
   function setRules(Rule[] memory rules) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _setRules(rules);
   }
 
+  function updateRule(uint256 ruleId, bool active) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    _updateRule(ruleId, active);
+  }
+
   function fundEth() public payable whenNotPaused onlyRole(DEFAULT_ADMIN_ROLE) {
+  }
+
+  function setMaxStake(uint256 maxStake) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    _maxStake = maxStake;
   }
 
   function deposit(uint256 ruleId, TokenData memory tokenData) public payable whenNotPaused {
     Rule storage rule = _rules[ruleId];
     require(rule.period != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
+    require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
 
     uint256 stakeId = _stakeIdCounter.current();
     _stakeIdCounter.increment();
+    _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
 
     Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenData, rule.deposit.amount);
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);

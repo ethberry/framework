@@ -32,4 +32,11 @@ abstract contract AbstractStaking is IStaking {
     _rules[ruleId] = rule;
     emit RuleCreated(ruleId, rule);
   }
+
+  function _updateRule(uint256 ruleId, bool active) internal {
+    Rule memory rule = _rules[ruleId];
+    require(rule.period != 0, "Staking: rule does not exist");
+    _rules[ruleId].active = active;
+    emit RuleUpdated(ruleId, active);
+  }
 }

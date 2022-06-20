@@ -13,6 +13,7 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
     const erc721CraftAddr = process.env.ERC721_CRAFT_ADDR || wallet;
     const erc1155Marketplace = process.env.ERC1155_MARKETPLACE_ADDR || wallet;
     const erc1155CraftAddr = process.env.ERC1155_CRAFT_ADDR || wallet;
+    const stakingAddr = process.env.STAKING_ADDR || wallet;
 
     const lastBlock = process.env.STARTING_BLOCK || 0;
 
@@ -65,7 +66,13 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
-       );
+       ), (
+        '${stakingAddr}',
+        'STAKING',
+        '${lastBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      );
     `);
   }
 

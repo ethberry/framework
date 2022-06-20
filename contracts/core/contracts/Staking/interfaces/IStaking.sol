@@ -49,4 +49,5 @@ interface IStaking {
   }
 
   event RuleCreated(uint256 ruleId, Rule rule);
+  event RuleUpdated(uint256 ruleId, bool active);
 }
