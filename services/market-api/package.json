@@ -38,7 +38,7 @@
     "@nestjs/passport": "8.2.2",
     "@nestjs/platform-express": "8.4.7",
     "@nestjs/swagger": "5.2.1",
-    "@nestjs/terminus": "8.0.6",
+    "@nestjs/terminus": "8.0.8",
     "@nestjs/typeorm": "8.1.4",
     "@nestjs/websockets": "8.4.7",
     "amqp-connection-manager": "4.1.3",
