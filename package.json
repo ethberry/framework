@@ -1,0 +1,69 @@
+{
+  "author": {
+    "email": "trejgun+gemunion@gmail.com",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "dependencies": {
+    "lerna": "5.1.4"
+  },
+  "devDependencies": {
+    "@gemunion/eslint-config": "2.0.1",
+    "@types/node": "16.11.41",
+    "@types/react": "17.0.47",
+    "@typescript-eslint/eslint-plugin": "5.28.0",
+    "@typescript-eslint/parser": "5.28.0",
+    "eslint": "8.18.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-config-standard": "17.0.0",
+    "eslint-import-resolver-typescript": "2.7.1",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-jest": "26.5.3",
+    "eslint-plugin-n": "15.2.3",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-react": "7.30.0",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-testing-library": "5.5.1",
+    "husky": "4.3.8",
+    "lint-staged": "13.0.2",
+    "prettier": "2.7.1",
+    "typescript": "4.7.4"
+  },
+  "engines": {
+    "node": ">=12.13"
+  },
+  "license": "UNLICENSED",
+  "name": "@framework/root",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/framework"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap --concurrency 1 --hoist",
+    "build": "lerna run build --stream",
+    "clean": "sh scripts/clean.sh",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:up:besu": "docker compose up -d besu explorer",
+    "git:push:prod": "git push origin master:production",
+    "installdep": "sh scripts/install.sh",
+    "kill": "sudo pkill -9 node",
+    "lint": "lerna run lint --stream",
+    "migration": "lerna exec --scope @framework/admin-api -- npm run migration:run",
+    "precommit": "lint-staged",
+    "prepare:contracts:besu": "npm run --prefix ./contracts/core prepare:contracts:besu",
+    "prepare:contracts:binance": "npm run --prefix ./contracts/core prepare:contracts:binance",
+    "prepare:framework:dev": "sh scripts/prepare-fw.sh development besu",
+    "prepare:framework:prod": "sh scripts/prepare-fw.sh production binance",
+    "prettier": "prettier \"packages/**/*.{ts,tsx}\" \"services/**/*.{ts,tsx}\" \"microservices/**/*.{ts,tsx}\" --write",
+    "registry": "lerna publish",
+    "release": "lerna publish --exact --conventional-commits --registry=https://npm.pkg.github.com/",
+    "release:git": "lerna publish from-package --yes --exact --conventional-commits --ignore-scripts --registry=https://npm.pkg.github.com/",
+    "start": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/admin-ui --scope @framework/public-ui --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm start",
+    "start:prod": "lerna exec --parallel --scope @framework/admin-api --scope @framework/public-api --scope @framework/tpl --scope @framework/pdf --scope @framework/eml -- npm run start:prod",
+    "test": "sh scripts/copy-env.sh && sh scripts/test.sh"
+  },
+  "version": "0.0.1"
+}
