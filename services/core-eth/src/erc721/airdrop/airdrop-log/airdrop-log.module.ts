@@ -65,6 +65,6 @@ export class Erc721AirdropLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc721AirdropLogService.updateBlock();
+    return this.erc721AirdropLogService.updateBlock();
   }
 }

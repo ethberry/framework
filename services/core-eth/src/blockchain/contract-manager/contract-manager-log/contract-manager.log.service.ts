@@ -22,7 +22,6 @@ export class ContractManagerLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved ContractManager@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.CONTRACT_MANAGER, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.CONTRACT_MANAGER, lastBlock);
   }
 }

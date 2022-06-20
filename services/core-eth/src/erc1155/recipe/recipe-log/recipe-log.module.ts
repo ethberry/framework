@@ -55,6 +55,6 @@ export class Erc1155RecipeLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc1155RecipeLogService.updateBlock();
+    return this.erc1155RecipeLogService.updateBlock();
   }
 }

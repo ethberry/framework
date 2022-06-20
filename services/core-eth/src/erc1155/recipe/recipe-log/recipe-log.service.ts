@@ -23,7 +23,6 @@ export class Erc1155RecipeLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved ERC1155Craft@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC1155_CRAFT, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.ERC1155_CRAFT, lastBlock);
   }
 }

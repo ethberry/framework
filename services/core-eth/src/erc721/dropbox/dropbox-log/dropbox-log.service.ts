@@ -23,7 +23,6 @@ export class Erc721DropboxLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved Erc721Dropbox@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC721_DROPBOX, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.ERC721_DROPBOX, lastBlock);
   }
 }

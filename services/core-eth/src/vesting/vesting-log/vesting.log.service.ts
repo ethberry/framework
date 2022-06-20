@@ -27,7 +27,6 @@ export class VestingLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved ERC20Vesting@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC20_VESTING, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.ERC20_VESTING, lastBlock);
   }
 }

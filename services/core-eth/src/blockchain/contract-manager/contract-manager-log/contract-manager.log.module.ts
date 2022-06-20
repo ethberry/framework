@@ -37,7 +37,7 @@ import { ContractManagerService } from "../contract-manager.service";
               ContractManagerEventType.ERC20VestingDeployed,
               ContractManagerEventType.ERC20TokenDeployed,
               ContractManagerEventType.ERC721TokenDeployed,
-              ContractManagerEventType.ERC1155TokenDeployed,
+              ContractManagerEventType.ERC1155TokenDeployed
             ],
           },
           block: {
@@ -56,6 +56,6 @@ export class ContractManagerLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.contractManagerLogService.updateBlock();
+    return this.contractManagerLogService.updateBlock();
   }
 }

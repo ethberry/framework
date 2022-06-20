@@ -23,7 +23,6 @@ export class Erc721AirdropLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved Erc721Airdrop@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC721_AIRDROP, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.ERC721_AIRDROP, lastBlock);
   }
 }

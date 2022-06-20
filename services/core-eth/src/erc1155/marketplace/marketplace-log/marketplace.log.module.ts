@@ -53,6 +53,6 @@ export class Erc1155MarketplaceLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc1155MarketplaceLogService.updateBlock();
+    return this.erc1155MarketplaceLogService.updateBlock();
   }
 }

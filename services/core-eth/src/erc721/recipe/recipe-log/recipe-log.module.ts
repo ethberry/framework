@@ -55,6 +55,6 @@ export class Erc721RecipeLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc721CraftLogService.updateBlock();
+    return this.erc721CraftLogService.updateBlock();
   }
 }

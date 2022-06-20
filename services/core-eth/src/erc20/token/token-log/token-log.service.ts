@@ -33,7 +33,6 @@ export class Erc20LogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved ERC20@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC20_TOKEN, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.ERC20_TOKEN, lastBlock);
   }
 }

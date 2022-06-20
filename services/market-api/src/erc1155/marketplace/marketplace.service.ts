@@ -62,7 +62,7 @@ export class Erc1155MarketplaceService {
   }
 
   public async getSign(data: Record<string, any>): Promise<string> {
-    return await this.signer._signTypedData(
+    return this.signer._signTypedData(
       {
         name: "ERC1155Marketplace",
         version: "1.0.0",

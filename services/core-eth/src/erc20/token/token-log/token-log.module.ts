@@ -53,6 +53,6 @@ export class Erc20TokenLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc20LogService.updateBlock();
+    return this.erc20LogService.updateBlock();
   }
 }

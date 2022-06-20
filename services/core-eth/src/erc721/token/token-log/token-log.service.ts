@@ -27,7 +27,6 @@ export class Erc721TokenLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved ERC721@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.ERC721_TOKEN, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.ERC721_TOKEN, lastBlock);
   }
 }

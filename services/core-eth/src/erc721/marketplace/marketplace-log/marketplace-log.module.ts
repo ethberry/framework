@@ -54,6 +54,6 @@ export class Erc721MarketplaceLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc721MarketplaceLogService.updateBlock();
+    return this.erc721MarketplaceLogService.updateBlock();
   }
 }
