@@ -6,8 +6,8 @@ import {
   createDomainUint256,
   createLanguageEnum,
   createSchema,
-  installExtensionUUID,
   createTokenTypes,
+  installExtensionUUID,
 } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "./user/user.entity";

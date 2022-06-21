@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IErc721Token } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { Erc721TokenAuctionButton } from "../../../../components/buttons";
+import { Erc721LevelUpButton, Erc721TokenAuctionButton } from "../../../../components/buttons";
 import { RarityBadge } from "./badge";
 
 interface IErc721TokenProps {
@@ -36,6 +36,7 @@ export const Erc721Token: FC<IErc721TokenProps> = props => {
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <Erc721TokenAuctionButton token={token} />
+            <Erc721LevelUpButton token={token} />
           </Grid>
         </Grid>
       </CardActions>
