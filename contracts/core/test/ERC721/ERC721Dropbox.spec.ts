@@ -45,8 +45,6 @@ describe("ERC721Dropbox", function () {
 
   describe("unpack", function () {
     it("should unpack", async function () {
-      // await itemInstance.setMaxTemplateId(2);
-
       const signature = await this.owner._signTypedData(
         // Domain
         {

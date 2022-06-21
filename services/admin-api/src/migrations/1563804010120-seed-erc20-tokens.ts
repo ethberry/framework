@@ -65,7 +65,7 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
         '${simpleFormatting}',
         '${constants.WeiPerEther.toString()}',
         'New token',
-        'NEW20',
+        'BL20',
         '${erc20TokenAddress}',
         'NEW',
         'BLACKLIST',

@@ -10,10 +10,9 @@ export class SeedErc998Collection1563804030020 implements MigrationInterface {
     const erc998CollectionDropboxAddress = process.env.ERC998_DROPBOX_ADDR || wallet;
     const erc998CollectionAirdropAddress = process.env.ERC998_AIRDROP_ADDR || wallet;
     const erc998CollectionHeroAddress = process.env.ERC998_HERO_ADDR || wallet;
-    const erc998CollectionLandAddress = process.env.ERC998_LAND_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 1 - 998.AIR, 2 - 998.DB, 3 - HERO, 4 - LAND
+    // 1 - 998.AIR, 2 - 998.DB, 3 - HERO, 4 - ITEM
     await queryRunner.query(`
       INSERT INTO ${ns}.erc998_collection (
         title,
@@ -35,7 +34,7 @@ export class SeedErc998Collection1563804030020 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         'AIRDROP_ERC998',
-        'GEM998',
+        'AIR998',
         100,
         'ACTIVE',
         'AIRDROP',
@@ -50,7 +49,7 @@ export class SeedErc998Collection1563804030020 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         'DROPBOX_ERC998',
-        'GEM998',
+        'DROP998',
         100,
         'ACTIVE',
         'DROPBOX',
@@ -65,27 +64,12 @@ export class SeedErc998Collection1563804030020 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         'HEROES',
-        'GEM998',
+        'HERO998',
         100,
         'ACTIVE',
         'TOKEN',
         'RANDOM',
         '${erc998CollectionHeroAddress}',
-        '${baseTokenURI}',
-        '${chainId}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'LAND',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'LAND',
-        'GEM998',
-        100,
-        'ACTIVE',
-        'TOKEN',
-        'SIMPLE',
-        '${erc998CollectionLandAddress}',
         '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',

@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IErc998Token } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { Erc998TokenAuctionButton } from "../../../../components/buttons";
+import { Erc998LevelUpButton, Erc998TokenAuctionButton } from "../../../../components/buttons";
 import { RarityBadge } from "./badge";
 
 interface IErc998TokenProps {
@@ -36,6 +36,7 @@ export const Erc998Token: FC<IErc998TokenProps> = props => {
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <Erc998TokenAuctionButton token={token} />
+            <Erc998LevelUpButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

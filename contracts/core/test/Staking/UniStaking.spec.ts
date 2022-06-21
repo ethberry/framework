@@ -97,9 +97,6 @@ describe("UniStaking", function () {
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
     erc1155Instance = await erc1155Factory.deploy("https://localhost");
 
-    // Set max templates
-    await erc721RandomInstance.setMaxTemplateId(2);
-
     // Deploy Chainlink & Vrf contracts
     // const link = await ethers.getContractFactory("LinkErc20");
     // linkInstance = await link.deploy(tokenName, tokenSymbol);
@@ -390,7 +387,6 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      await erc721RandomInstance.setMaxTemplateId(2);
       await erc721RandomInstance.mintCommon(this.owner.address, 1);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -971,7 +967,6 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.setMaxTemplateId(2);
       await erc721RandomInstance.mintCommon(this.owner.address, 1);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -1008,7 +1003,6 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.setMaxTemplateId(2);
       await erc721RandomInstance.mintCommon(this.owner.address, 1);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -1046,7 +1040,6 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.setMaxTemplateId(2);
       await erc721RandomInstance.mintCommon(this.owner.address, 1);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -1083,7 +1076,6 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.setMaxTemplateId(2);
       await erc721RandomInstance.mintCommon(this.owner.address, 1);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -1121,7 +1113,6 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.setMaxTemplateId(2);
       await erc721RandomInstance.mintCommon(this.owner.address, 1);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -1159,7 +1150,6 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.setMaxTemplateId(2);
       await erc721RandomInstance.mintCommon(this.owner.address, 1);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);

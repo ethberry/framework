@@ -28,8 +28,6 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
 
   mapping(bytes32 => Request) internal _queue;
 
-  uint256 private _maxTemplateId = 0;
-
   bytes32 public constant TEMPLATE_ID = keccak256("templateId");
   bytes32 public constant RARITY = keccak256("rarity");
 
@@ -45,7 +43,6 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
 
   function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     require(templateId != 0, "ERC721Random: wrong type");
-    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
     tokenId = _tokenIdTracker.current();
 
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
@@ -60,7 +57,6 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     uint256 dropboxId
   ) external override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
-    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
     _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
   }
 
@@ -92,10 +88,6 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
 
     // common
     return 1;
-  }
-
-  function setMaxTemplateId(uint256 maxTemplateId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _maxTemplateId = maxTemplateId;
   }
 
   function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {

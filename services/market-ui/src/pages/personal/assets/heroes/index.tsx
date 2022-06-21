@@ -7,11 +7,11 @@ import { stringify } from "qs";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { IErc721AssetSearchDto, IErc721Token } from "@framework/types";
+import { IErc998AssetSearchDto, IErc998Token } from "@framework/types";
 
 import { AssetsTabs, ITabPanelProps } from "../tabs";
-import { Erc721Token } from "../../../erc721/token-list/item";
-import { Erc721TokenSearchForm } from "../../../erc721/token-list/form";
+import { Erc998Token } from "../../../erc998/token-list/item";
+import { Erc998TokenSearchForm } from "../../../erc998/token-list/form";
 
 export const Heroes: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -21,10 +21,10 @@ export const Heroes: FC<ITabPanelProps> = props => {
   }
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc721Token, IErc721AssetSearchDto>({
-      baseUrl: "/erc721-tokens",
+    useCollection<IErc998Token, IErc998AssetSearchDto>({
+      baseUrl: "/erc998-tokens",
       search: {
-        erc721CollectionIds: [4],
+        erc998CollectionIds: [3],
         rarity: [],
       },
       redirect: (_baseUrl, search) => `/my-assets/${value}?${stringify(search)}`,
@@ -38,13 +38,13 @@ export const Heroes: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc998TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc721Token token={token} />
+              <Erc998Token token={token} />
             </Grid>
           ))}
         </Grid>

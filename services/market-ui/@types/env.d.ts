@@ -15,6 +15,7 @@ declare global {
       ERC1155_RESOURCES_ADDR: string;
       CHAIN_ID: string;
       SEAPORT_ADDR: string;
+      METADATA_ADDR: string;
     }
   }
 }

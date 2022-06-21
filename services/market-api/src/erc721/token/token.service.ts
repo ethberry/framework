@@ -107,4 +107,23 @@ export class Erc721TokenService {
 
     return queryBuilder.getOne();
   }
+
+  public getToken(address: string, tokenId: string): Promise<Erc721TokenEntity | null> {
+    const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("token.erc721Template", "template");
+    queryBuilder.leftJoinAndSelect("template.erc721Collection", "collection");
+
+    queryBuilder.andWhere("collection.address = :address", {
+      address,
+    });
+
+    queryBuilder.andWhere("token.tokenId = :tokenId", {
+      tokenId,
+    });
+
+    return queryBuilder.getOne();
+  }
 }

@@ -17,8 +17,6 @@ import "./interfaces/IERC721Simple.sol";
 contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
   using Counters for Counters.Counter;
 
-  uint256 private _maxTemplateId = 0;
-
   bytes32 public constant TEMPLATE_ID = keccak256("templateId");
   bytes32 public constant GRADE = keccak256("grade");
 
@@ -34,15 +32,16 @@ contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
 
   function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     require(templateId != 0, "ERC721Graded: wrong type");
-    require(templateId <= _maxTemplateId, "ERC721Graded: wrong type");
     tokenId = _tokenIdTracker.current();
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     upsertRecordField(tokenId, GRADE, 1);
     safeMint(to);
   }
 
-  function setMaxTemplateId(uint256 maxTemplateId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _maxTemplateId = maxTemplateId;
+  function levelUp(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
+    uint256 grade = getRecordFieldValue(tokenId, GRADE);
+    upsertRecordField(tokenId, GRADE, grade + 1);
+    return true;
   }
 
   function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {

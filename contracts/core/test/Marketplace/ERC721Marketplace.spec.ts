@@ -36,7 +36,6 @@ describe("ERC721Marketplace", function () {
 
     await itemInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
     await dropboxInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
-    // await itemInstance.setMaxTemplateId(tokenId);
 
     network = await ethers.provider.getNetwork();
 

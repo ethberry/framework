@@ -53,10 +53,6 @@
       "DROPBOX": "Dropbox",
       "TOKEN": "Token"
     },
-    "pageStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
     "contractTemplate": {
       "BLACKLIST": "Blacklist",
       "CLIFF": "Cliff",
@@ -78,6 +74,10 @@
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "pageStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "rarity": {
       "COMMON": "Common",
@@ -182,8 +182,6 @@
     },
     "labels": {
       "DUMMY": "Dummy",
-      "slug": "Slug",
-      "pageStatus": "Status",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -226,6 +224,7 @@
       "language": "Language",
       "name": "Name",
       "owner": "Owner",
+      "pageStatus": "Status",
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
@@ -235,6 +234,7 @@
       "recurrent": "Is recurrent?",
       "role": "Role",
       "royalty": "Royalty",
+      "slug": "Slug",
       "stakingStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
@@ -256,7 +256,6 @@
     },
     "placeholders": {
       "DUMMY": "Dummy",
-      "slug": "terms-and-conditions",
       "address": "0x...",
       "amount": "10",
       "attributes": "{}",
@@ -306,6 +305,7 @@
       "rarity": "Legendary",
       "royalty": "1",
       "search": "Search...",
+      "slug": "terms-and-conditions",
       "symbol": "XXX",
       "text": "qwerty",
       "title": "Title",
