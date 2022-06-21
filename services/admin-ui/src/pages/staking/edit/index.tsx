@@ -24,7 +24,7 @@ export interface IStakingEditDialogProps {
 export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, penalty, recurrent, deposit, reward, duration } = initialValues;
+  const { id, title, description, penalty, recurrent, deposit, reward, duration, stakingStatus } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -34,8 +34,9 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     penalty,
     recurrent,
     duration,
+    stakingStatus,
   };
-
+  console.log("fixedValues", fixedValues);
   return (
     <FormDialog
       initialValues={fixedValues}
@@ -44,9 +45,15 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       data-testid="StakingEditDialog"
       {...rest}
     >
-      <TextInput name="title" />
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <TextInput name="title" />
+        </Grid>
+        <Grid item xs={6}>
+          <TextInput name="stakingStatus" readOnly={true} />
+        </Grid>
+      </Grid>
       <RichTextEditor name="description" />
-
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <TokenTypeInput prefix="deposit" />

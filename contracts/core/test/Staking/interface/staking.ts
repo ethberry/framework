@@ -12,11 +12,6 @@ export interface IRule {
 export interface IItem {
   itemType: BigNumber;
   token: string;
-  tokenData: IItemData;
-  amount: BigNumber;
-}
-
-export interface IItemData {
   tokenId: BigNumber;
-  templateId: BigNumber;
+  amount: BigNumber;
 }

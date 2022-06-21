@@ -30,20 +30,16 @@ export interface IStakingRule {
 export interface IStakingItemSol {
   itemType: StakingItemType;
   address: string;
-  tokenData: IStakingTokenData;
-  amount: string;
-}
-
-export interface IStakingTokenData {
   tokenId: string;
-  templateId: string;
+  amount: string;
 }
 
 export enum StakingItemType {
   NATIVE = "0",
   ERC20 = "1",
   ERC721 = "2",
-  ERC1155 = "3",
+  ERC998 = "3",
+  ERC1155 = "4",
 }
 
 export interface IStakingDeposit {

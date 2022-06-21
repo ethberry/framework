@@ -9,21 +9,21 @@ export class SeedStakingRewardTable1654751224250 implements MigrationInterface {
       INSERT INTO ${ns}.staking_reward (
         token_type,
         collection,
-        criteria,
+        token_id,
         amount,
         staking_id
       ) VALUES (
+        'ERC721D',
+        2,
+        1,
+        null,
+        2
+      ), (
         'ERC721',
         3,
         1,
         null,
         1
-      ), (
-        'ERC721',
-        2,
-        1,
-        null,
-        2
       ), (
         'ERC1155',
         1,

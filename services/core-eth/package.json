@@ -19,6 +19,7 @@
     "@gemunion/nest-js-module-typeorm-debug": "1.1.38",
     "@gemunion/nest-js-module-typeorm-helpers": "0.9.0",
     "@gemunion/nest-js-module-winston": "0.0.19",
+    "@gemunion/nest-js-validators": "1.5.8",
     "@gemunion/nest-js-utils": "1.5.9",
     "@gemunion/nestjs-ethers": "2.0.15",
     "@gemunion/types-collection": "1.4.3",

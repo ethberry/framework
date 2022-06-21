@@ -3,7 +3,7 @@ import { TokenType } from "@framework/types";
 export interface IStakingItemCreateDto {
   tokenType: TokenType;
   collection: number;
-  criteria: number;
+  tokenId: number;
   amount: string;
 }
 

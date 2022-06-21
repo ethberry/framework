@@ -22,13 +22,13 @@ export class CreateStakingRewardTable1654751224240 implements MigrationInterface
           type: "int",
         },
         {
-          name: "criteria",
+          name: "token_id",
           type: "int",
           isNullable: true,
         },
         {
           name: "amount",
-          type: "varchar",
+          type: "uint256",
           isNullable: true,
         },
         {

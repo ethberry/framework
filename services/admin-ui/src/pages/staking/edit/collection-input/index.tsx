@@ -40,7 +40,18 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc721-collections"
           data={{
-            collectionType: [Erc721CollectionType.DROPBOX, Erc721CollectionType.TOKEN],
+            collectionType: [Erc721CollectionType.TOKEN],
+            collectionStatus: [Erc721CollectionStatus.ACTIVE],
+          }}
+        />
+      );
+    case TokenType.ERC721D:
+      return (
+        <EntityInput
+          name={`${prefix}.${name}`}
+          controller="erc721-collections"
+          data={{
+            collectionType: [Erc721CollectionType.DROPBOX],
             collectionStatus: [Erc721CollectionStatus.ACTIVE],
           }}
         />
@@ -51,7 +62,18 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc998-collections"
           data={{
-            collectionType: [Erc998CollectionType.DROPBOX, Erc998CollectionType.TOKEN],
+            collectionType: [Erc998CollectionType.TOKEN],
+            collectionStatus: [Erc998CollectionStatus.ACTIVE],
+          }}
+        />
+      );
+    case TokenType.ERC998D:
+      return (
+        <EntityInput
+          name={`${prefix}.${name}`}
+          controller="erc998-collections"
+          data={{
+            collectionType: [Erc998CollectionType.DROPBOX],
             collectionStatus: [Erc998CollectionStatus.ACTIVE],
           }}
         />

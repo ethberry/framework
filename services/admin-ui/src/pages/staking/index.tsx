@@ -51,10 +51,14 @@ export const Staking: FC = () => {
       deposit: {
         tokenType: TokenType.NATIVE,
         collection: 0,
+        // tokenId: "0",
+        // amount: "0",
       } as IStakingItem,
       reward: {
         tokenType: TokenType.NATIVE,
         collection: 0,
+        // tokenId: "0",
+        // amount: "0",
       } as IStakingItem,
       duration: 30,
       penalty: 100,
@@ -70,7 +74,34 @@ export const Staking: FC = () => {
         tokenType: [] as Array<TokenType>,
       },
     },
-    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
+    filter: ({ id, title, description, stakingStatus, reward, deposit, ...rest }) => {
+      const clean = ({ tokenType, collection, tokenId, amount, stakingId }: IStakingItem) => ({
+        tokenType,
+        collection,
+        tokenId,
+        amount,
+        stakingId,
+      });
+      if (id && stakingStatus === StakingStatus.NEW) {
+        return {
+          title,
+          description,
+          reward: clean(reward!),
+          deposit: clean(deposit!),
+        };
+      } else if (id && stakingStatus !== StakingStatus.NEW) {
+        return {
+          title,
+          description,
+        };
+      } else {
+        return {
+          title,
+          description,
+          ...rest,
+        };
+      }
+    },
   });
 
   return (

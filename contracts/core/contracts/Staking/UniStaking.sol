@@ -38,7 +38,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
 
-  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, TokenData tokenData);
+  event StakingStart(uint256 stakingId, uint256 ruleId, address owner, uint256 startTimestamp, uint256 tokenId);
 
   event StakingWithdraw(uint256 stakingId, address owner, uint256 withdrawTimestamp);
   event StakingFinish(uint256 stakingId, address owner, uint256 finishTimestamp, uint256 multiplier);
@@ -65,7 +65,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     _maxStake = maxStake;
   }
 
-  function deposit(uint256 ruleId, TokenData memory tokenData) public payable whenNotPaused {
+  function deposit(uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
     Rule storage rule = _rules[ruleId];
     require(rule.period != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
@@ -75,22 +75,22 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     _stakeIdCounter.increment();
     _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
 
-    Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenData, rule.deposit.amount);
+    Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenId, rule.deposit.amount);
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
 
-    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenData);
+    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
 
     if (depositItem.itemType == ItemType.NATIVE) {
       require(msg.value == depositItem.amount, "Staking: wrong amount");
     } else if (depositItem.itemType == ItemType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
-    } else if (depositItem.itemType == ItemType.ERC721) {
-      IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenData.tokenId);
+    } else if (depositItem.itemType == ItemType.ERC721 || depositItem.itemType == ItemType.ERC998) {
+      IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
     } else if (depositItem.itemType == ItemType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(
         _msgSender(),
         address(this),
-        tokenData.tokenId,
+        tokenId,
         depositItem.amount,
         "0x"
       );
@@ -105,7 +105,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     Stake storage stake = _stakes[stakeId];
     Rule storage rule = _rules[stake.ruleId];
     Item storage depositItem = _stakes[stakeId].deposit;
-    TokenData memory depositTokenData = depositItem.tokenData;
+    uint256 depositTokenId = depositItem.tokenId;
 
     require(stake.owner != address(0), "Staking: wrong staking id");
     require(stake.owner == _msgSender(), "Staking: not an owner");
@@ -136,13 +136,13 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
         Address.sendValue(payable(receiver), stakeAmount);
       } else if (depositItem.itemType == ItemType.ERC20) {
         SafeERC20.safeTransfer(IERC20(depositItem.token), _msgSender(), stakeAmount);
-      } else if (depositItem.itemType == ItemType.ERC721) {
-        IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenData.tokenId);
+      } else if (depositItem.itemType == ItemType.ERC721 || depositItem.itemType == ItemType.ERC998) {
+        IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenId);
       } else if (depositItem.itemType == ItemType.ERC1155) {
         IERC1155(depositItem.token).safeTransferFrom(
           address(this),
           _msgSender(),
-          depositTokenData.tokenId,
+            depositTokenId,
           stakeAmount,
           "0x"
         );
@@ -155,7 +155,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
       Item storage rewardItem = rule.reward;
-      TokenData memory rewardTokenData = rule.reward.tokenData;
+      uint256 rewardTokenId = rule.reward.tokenId;
       uint256 rewardAmount;
 
       if (rewardItem.itemType == ItemType.NATIVE) {
@@ -164,27 +164,26 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
       } else if (rewardItem.itemType == ItemType.ERC20) {
         rewardAmount = rewardItem.amount * multiplier;
         SafeERC20.safeTransfer(IERC20(rewardItem.token), _msgSender(), rewardAmount);
-      } else if (rewardItem.itemType == ItemType.ERC721) {
+      } else if (rewardItem.itemType == ItemType.ERC721 || rewardItem.itemType == ItemType.ERC998) {
         bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
         bool dropboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_DROPBOX);
 
-        // todo multiplier mint erc721
         if (randomInterface) {
           for (uint i=0; i<multiplier; i++) {
-            IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenData.templateId, 0);
+            IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenId, 0);
           }
         } else if (dropboxInterface) {
           for (uint i=0; i<multiplier; i++) {
-            IERC721Dropbox(rewardItem.token).mintDropbox(_msgSender(), rewardTokenData.templateId);
+            IERC721Dropbox(rewardItem.token).mintDropbox(_msgSender(), rewardTokenId);
           }
         } else {
           for (uint i=0; i<multiplier; i++) {
-            IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenData.templateId);
+            IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenId);
           }
         }
       } else if (rewardItem.itemType == ItemType.ERC1155) {
         rewardAmount = rewardItem.amount * multiplier;
-        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardTokenData.tokenId, rewardAmount, "0x");
+        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardTokenId, rewardAmount, "0x");
         // todo batch mint reward
       }
     }

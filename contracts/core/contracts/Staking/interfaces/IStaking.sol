@@ -14,20 +14,17 @@ interface IStaking {
     ERC20,
     // 2: ERC721 items
     ERC721,
-    // 3: ERC1155 items
+    // 3: ERC998 heroes
+    ERC998,
+    // 4: ERC1155 items
     ERC1155
   }
 
   struct Item {
     ItemType itemType;
     address token;
-    TokenData tokenData;
+    uint256 tokenId; // or templateId or dropboxId
     uint256 amount;
-  }
-
-  struct TokenData {
-    uint256 tokenId;
-    uint256 templateId;
   }
 
   struct Rule {

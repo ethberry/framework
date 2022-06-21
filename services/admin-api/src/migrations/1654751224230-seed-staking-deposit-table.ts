@@ -10,19 +10,18 @@ export class SeedStakingDepositTable1654751224230 implements MigrationInterface 
         token_type,
         collection,
         token_id,
-        template_id,
         amount,
         staking_id
       ) VALUES (
         'NATIVE',
-        1,
-        null,
+        0,
+        0,
         '${constants.WeiPerEther.toString()}',
         1
       ), (
         'ERC20',
-        2,
-        null,
+        1,
+        0,
         '${constants.WeiPerEther.toString()}',
         2
       ), (

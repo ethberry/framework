@@ -1,6 +1,9 @@
 import { ISearchable, IIdBase } from "@gemunion/types-collection";
 import { TokenType } from "./common";
-import { IStakingTokenData } from "./staking-history";
+import { IErc20Token } from "../erc20/token";
+import { IErc721Collection } from "../erc721/collection";
+import { IErc998Collection } from "../erc998/collection";
+import { IErc1155Collection } from "../erc1155/collection";
 
 export enum StakingStatus {
   NEW = "NEW",
@@ -10,17 +13,15 @@ export enum StakingStatus {
 
 export interface IStakingItem extends IIdBase {
   tokenType: TokenType;
-  collection: string;
-  tokenData: IStakingTokenData;
+  collection: number;
+  tokenId: number;
   amount: string;
+  stakingId: number;
+  erc20?: IErc20Token;
+  erc721?: IErc721Collection;
+  erc998?: IErc998Collection;
+  erc1155?: IErc1155Collection;
 }
-
-// struct Item {
-//   ItemType itemType;
-//   address token;
-//   TokenData tokenData;
-//   uint256 amount;
-// }
 
 export interface IStaking extends ISearchable {
   deposit: IStakingItem;

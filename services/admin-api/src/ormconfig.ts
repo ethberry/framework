@@ -3,11 +3,11 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 import { ns } from "@framework/constants";
 import {
-  createDomainUint256,
+  // createDomainUint256,
   createLanguageEnum,
   createSchema,
   installExtensionUUID,
-  createTokenTypes,
+  // createTokenTypes,
 } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "./user/user.entity";
@@ -108,6 +108,8 @@ import { CreateStakingHistoryTable1654751224260 } from "./migrations/16547512242
 import { PageEntity } from "./page/page.entity";
 import { CreatePageTable1655626535100 } from "./migrations/1655626535100-create-page-table";
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
+import { createTokenTypes } from "./migrations/1561991000005-create-token-types";
+import { createDomainUint256 } from "./migrations/1561991000002-create-uint256";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

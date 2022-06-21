@@ -2,10 +2,14 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingSearchDto, StakingStatus } from "@framework/types";
+import { IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingEntity } from "./staking.entity";
 import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
+import { Erc20TokenEntity } from "../../erc20/token/token.entity";
+import { Erc721CollectionEntity } from "../../erc721/collection/collection.entity";
+import { Erc1155CollectionEntity } from "../../erc1155/collection/collection.entity";
+import { Erc998CollectionEntity } from "../../erc998/collection/collection.entity";
 
 @Injectable()
 export class StakingService {
@@ -20,6 +24,62 @@ export class StakingService {
     const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking");
     queryBuilder.leftJoinAndSelect("staking.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("staking.reward", "reward");
+
+    queryBuilder.leftJoinAndMapOne(
+      "reward.erc20",
+      Erc20TokenEntity,
+      "reward_erc20_token",
+      `reward.collection = reward_erc20_token.id and reward.tokenType = '${TokenType.ERC20}'`,
+    );
+
+    queryBuilder.leftJoinAndMapOne(
+      "reward.erc721",
+      Erc721CollectionEntity,
+      "reward_erc721_collection",
+      `reward.collection = reward_erc721_collection.id and (reward.tokenType = '${TokenType.ERC721}' or reward.tokenType = '${TokenType.ERC721D}')`,
+    );
+
+    queryBuilder.leftJoinAndMapOne(
+      "reward.erc998",
+      Erc998CollectionEntity,
+      "reward_erc998_collection",
+      `reward.collection = reward_erc998_collection.id and (reward.tokenType = '${TokenType.ERC998}' or reward.tokenType = '${TokenType.ERC998D}')`,
+    );
+
+    queryBuilder.leftJoinAndMapOne(
+      "reward.erc1155",
+      Erc1155CollectionEntity,
+      "reward_erc1155_collection",
+      `reward.collection = reward_erc1155_collection.id and reward.tokenType = '${TokenType.ERC1155}'`,
+    );
+
+    queryBuilder.leftJoinAndMapOne(
+      "deposit.erc20",
+      Erc20TokenEntity,
+      "deposit_erc20_token",
+      `deposit.collection = deposit_erc20_token.id and deposit.tokenType = '${TokenType.ERC20}'`,
+    );
+
+    queryBuilder.leftJoinAndMapOne(
+      "deposit.erc721",
+      Erc721CollectionEntity,
+      "deposit_erc721_collection",
+      `deposit.collection = deposit_erc721_collection.id and (deposit.tokenType = '${TokenType.ERC721}' or deposit.tokenType = '${TokenType.ERC721D}')`,
+    );
+
+    queryBuilder.leftJoinAndMapOne(
+      "deposit.erc998",
+      Erc998CollectionEntity,
+      "deposit_erc998_collection",
+      `deposit.collection = deposit_erc998_collection.id and (deposit.tokenType = '${TokenType.ERC998}' or deposit.tokenType = '${TokenType.ERC998D}')`,
+    );
+
+    queryBuilder.leftJoinAndMapOne(
+      "deposit.erc1155",
+      Erc1155CollectionEntity,
+      "deposit_erc1155_collection",
+      `deposit.collection = deposit_erc1155_collection.id and deposit.tokenType = '${TokenType.ERC1155}'`,
+    );
 
     queryBuilder.select();
 
@@ -83,15 +143,19 @@ export class StakingService {
   }
 
   public async update(where: FindOptionsWhere<StakingEntity>, dto: IStakingUpdateDto): Promise<StakingEntity> {
-    const tokenEntity = await this.findOne(where);
+    const { reward, deposit, ...rest } = dto;
+    const stakingEntity = await this.findOne(where, { relations: { deposit: true, reward: true } });
 
-    if (!tokenEntity) {
+    if (!stakingEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    Object.assign(tokenEntity, dto);
+    Object.assign(stakingEntity.deposit, deposit);
+    Object.assign(stakingEntity.reward, reward);
 
-    return tokenEntity.save();
+    Object.assign(stakingEntity, rest);
+
+    return stakingEntity.save();
   }
 
   public async delete(where: FindOptionsWhere<StakingEntity>): Promise<void> {

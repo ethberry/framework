@@ -2,10 +2,10 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
-import { Contract } from "ethers";
+import { Contract, BigNumber } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { IStaking, StakingStatus } from "@framework/types";
+import { IStaking, StakingStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/UniStaking.sol/UniStaking.json";
@@ -25,9 +25,52 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     if (rule.stakingStatus !== StakingStatus.NEW) {
       return Promise.reject(new Error(""));
     }
-    console.log("rule", rule);
+
+    const depositCollection =
+      rule.deposit.tokenType === TokenType.ERC20
+        ? rule.deposit.erc20!.address
+        : rule.deposit.tokenType === TokenType.ERC721 || rule.deposit.tokenType === TokenType.ERC721D
+        ? rule.deposit.erc721!.address
+        : rule.deposit.tokenType === TokenType.ERC998 || rule.deposit.tokenType === TokenType.ERC998D
+        ? rule.deposit.erc998!.address
+        : rule.deposit.tokenType === TokenType.ERC1155
+        ? rule.deposit.erc1155!.address
+        : "0x0000000000000000000000000000000000000000";
+    const rewardCollection =
+      rule.reward.tokenType === TokenType.ERC20
+        ? rule.reward.erc20!.address
+        : rule.reward.tokenType === TokenType.ERC721 || rule.reward.tokenType === TokenType.ERC721D
+        ? rule.reward.erc721!.address
+        : rule.reward.tokenType === TokenType.ERC998 || rule.reward.tokenType === TokenType.ERC998D
+        ? rule.reward.erc998!.address
+        : rule.reward.tokenType === TokenType.ERC1155
+        ? rule.reward.erc1155!.address
+        : "0x0000000000000000000000000000000000000000";
+
+    const stakingRule = {
+      deposit: {
+        amount: BigNumber.from(rule.deposit.amount || 0),
+        itemType: Object.keys(TokenType).indexOf(rule.deposit.tokenType),
+        tokenId: ~~rule.deposit.tokenId,
+        token: depositCollection,
+      },
+      reward: {
+        amount: BigNumber.from(rule.reward.amount || 0),
+        itemType: Object.keys(TokenType).indexOf(rule.reward.tokenType),
+        tokenId: ~~rule.reward.tokenId,
+        token: rewardCollection,
+      },
+      period: BigNumber.from(rule.duration || 0), // todo fix same name
+      penalty: BigNumber.from(rule.penalty || 0),
+      recurrent: rule.recurrent,
+      active: true, // todo add var in interface
+    };
+    console.log("Rule", rule);
+    console.log("stakingRule", stakingRule);
+    console.log("depositCollection", depositCollection);
+    console.log("rewardCollection", rewardCollection);
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
-    return contract.setRules([rule]) as Promise<void>;
+    return contract.setRules([stakingRule]) as Promise<void>;
   });
 
   const handleLoadRule = (rule: IStaking): (() => Promise<void>) => {

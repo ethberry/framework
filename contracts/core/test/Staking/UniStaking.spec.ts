@@ -100,23 +100,6 @@ describe("UniStaking", function () {
     // Set max templates
     await erc721RandomInstance.setMaxTemplateId(2);
 
-    // Deploy Chainlink & Vrf contracts
-    // const link = await ethers.getContractFactory("LinkErc20");
-    // linkInstance = await link.deploy(tokenName, tokenSymbol);
-    // console.info(`LINK_ADDR=${linkInstance.address.toLowerCase()}`);
-    // const linkAmountInWei = BigNumber.from("100000").mul(decimals);
-    // await linkInstance.mint(this.owner.address, linkAmountInWei);
-    // const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    // vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    // console.info(`VRF_ADDR=${vrfInstance.address.toLowerCase()}`);
-    // if (
-    //   linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-    //   vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-    // ) {
-    //   console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-    //   return;
-    // }
-
     // Grant roles
     await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
     await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
@@ -137,70 +120,70 @@ describe("UniStaking", function () {
     nativeDeposit = {
       itemType: BigNumber.from(0), // NATIVE
       token: "0x0000000000000000000000000000000000000000",
-      tokenData: { tokenId: BigNumber.from(0), templateId: BigNumber.from(0) },
+      tokenId: BigNumber.from(0),
       amount: BigNumber.from(1000),
     };
 
     nativeReward = {
       itemType: BigNumber.from(0), // NATIVE
       token: "0x0000000000000000000000000000000000000000",
-      tokenData: { tokenId: BigNumber.from(0), templateId: BigNumber.from(0) },
+      tokenId: BigNumber.from(0),
       amount: BigNumber.from(1000),
     };
 
     erc721Deposit = {
       itemType: BigNumber.from(2), // ERC721
       token: erc721RandomInstance.address,
-      tokenData: { tokenId: BigNumber.from(1), templateId: BigNumber.from(0) },
+      tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc721RewardSmpl = {
       itemType: BigNumber.from(2), // ERC721
       token: erc721SimpleInstance.address,
-      tokenData: { tokenId: BigNumber.from(0), templateId: BigNumber.from(1) },
+      tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc721RewardRnd = {
       itemType: BigNumber.from(2), // ERC721
       token: erc721RandomInstance.address,
-      tokenData: { tokenId: BigNumber.from(0), templateId: BigNumber.from(1) },
+      tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc721RewardDbx = {
       itemType: BigNumber.from(2), // ERC721
       token: erc721DropboxInstance.address,
-      tokenData: { tokenId: BigNumber.from(0), templateId: BigNumber.from(1) },
+      tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc20Deposit = {
       itemType: BigNumber.from(1), // ERC20
       token: erc20Instance.address,
-      tokenData: { tokenId: BigNumber.from(0), templateId: BigNumber.from(0) },
+      tokenId: BigNumber.from(0),
       amount: BigNumber.from(100),
     };
 
     erc20Reward = {
       itemType: BigNumber.from(1), // ERC20
       token: erc20Instance.address,
-      tokenData: { tokenId: BigNumber.from(0), templateId: BigNumber.from(0) },
+      tokenId: BigNumber.from(0),
       amount: BigNumber.from(100),
     };
 
     erc1155Deposit = {
-      itemType: BigNumber.from(3), // ERC1155
+      itemType: BigNumber.from(4), // ERC1155
       token: erc1155Instance.address,
-      tokenData: { tokenId: BigNumber.from(1), templateId: BigNumber.from(0) },
+      tokenId: BigNumber.from(1),
       amount: BigNumber.from(100),
     };
 
     erc1155Reward = {
-      itemType: BigNumber.from(3), // ERC1155
+      itemType: BigNumber.from(4), // ERC1155
       token: erc1155Instance.address,
-      tokenData: { tokenId: BigNumber.from(1), templateId: BigNumber.from(0) },
+      tokenId: BigNumber.from(1),
       amount: BigNumber.from(100),
     };
   });
@@ -311,7 +294,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(2, erc721RewardRnd.tokenData, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(2, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
       await expect(tx1).to.be.revertedWith(`Staking: rule doesn't exist'`);
     });
 
@@ -328,7 +311,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenData, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
       await expect(tx1).to.be.revertedWith(`Staking: rule doesn't active'`);
     });
 
@@ -345,7 +328,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenData, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
       await expect(tx1).to.be.revertedWith(`Staking: wrong amount'`);
     });
 
@@ -364,7 +347,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenData, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
       await expect(tx1).to.be.revertedWith(`Staking: stake limit exceeded'`);
     });
 
@@ -381,7 +364,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
     });
 
@@ -403,7 +386,7 @@ describe("UniStaking", function () {
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
 
-      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -429,7 +412,7 @@ describe("UniStaking", function () {
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
 
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -454,7 +437,7 @@ describe("UniStaking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -499,7 +482,7 @@ describe("UniStaking", function () {
       // STAKE
       const tx1 = stakingInstance
         .connect(this.receiver)
-        .deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+        .deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
 
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
@@ -529,7 +512,7 @@ describe("UniStaking", function () {
       // STAKE
       const tx1 = stakingInstance
         .connect(this.receiver)
-        .deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+        .deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -558,7 +541,7 @@ describe("UniStaking", function () {
       // STAKE
       const tx1 = stakingInstance
         .connect(this.receiver)
-        .deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+        .deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -590,7 +573,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -622,7 +605,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -657,7 +640,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -690,7 +673,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -721,7 +704,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -752,7 +735,7 @@ describe("UniStaking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenData, { value: nativeDeposit.amount });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -764,7 +747,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
-      const balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      const balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles));
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
@@ -787,7 +770,7 @@ describe("UniStaking", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -823,7 +806,7 @@ describe("UniStaking", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -858,7 +841,7 @@ describe("UniStaking", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -896,7 +879,7 @@ describe("UniStaking", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -933,7 +916,7 @@ describe("UniStaking", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -970,7 +953,7 @@ describe("UniStaking", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
 
       await expect(tx1).to.emit(erc20Instance, "Transfer");
@@ -984,7 +967,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles));
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
@@ -1009,7 +992,7 @@ describe("UniStaking", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1046,7 +1029,7 @@ describe("UniStaking", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1084,7 +1067,7 @@ describe("UniStaking", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1121,7 +1104,7 @@ describe("UniStaking", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1159,7 +1142,7 @@ describe("UniStaking", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1197,7 +1180,7 @@ describe("UniStaking", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1210,7 +1193,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles));
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -1233,7 +1216,7 @@ describe("UniStaking", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -1247,7 +1230,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount.mul(stakeCycles));
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
@@ -1268,7 +1251,7 @@ describe("UniStaking", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -1283,7 +1266,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Reward.amount.mul(stakeCycles));
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
@@ -1304,7 +1287,7 @@ describe("UniStaking", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -1320,7 +1303,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
       randomRequest(erc721RandomInstance, vrfInstance, 1);
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
@@ -1341,7 +1324,7 @@ describe("UniStaking", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -1356,7 +1339,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
       balance = await erc721SimpleInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
@@ -1377,7 +1360,7 @@ describe("UniStaking", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -1392,7 +1375,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
       balance = await erc721DropboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
@@ -1413,7 +1396,7 @@ describe("UniStaking", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenData);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -1426,7 +1409,7 @@ describe("UniStaking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
-      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenData.tokenId);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles).add(erc1155Reward.amount));
     });
   });
