@@ -11,7 +11,6 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
     const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
     const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
     const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
-    const erc721CollectionBuildingsAddress = process.env.ERC721_BUILDINGS_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - BUILDINGS
@@ -36,7 +35,7 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         'AIRDROP_ERC721',
-        'GEM721',
+        'AIR721',
         100,
         'ACTIVE',
         'AIRDROP',
@@ -51,7 +50,7 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         'DROPBOX_ERC721',
-        'GEM721',
+        'DROP721',
         100,
         'ACTIVE',
         'DROPBOX',
@@ -66,7 +65,7 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         'ITEMS',
-        'GEM721',
+        'ITEM721',
         100,
         'ACTIVE',
         'TOKEN',
@@ -81,27 +80,12 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         'SKILLS',
-        'GEM721',
+        'SKIL721',
         100,
         'ACTIVE',
         'TOKEN',
         'GRADED',
         '${erc721CollectionSkillAddress}',
-        '${baseTokenURI}',
-        '${chainId}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        'BUILDINGS',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'BUILDINGS',
-        'GEM721',
-        100,
-        'ACTIVE',
-        'TOKEN',
-        'SIMPLE',
-        '${erc721CollectionBuildingsAddress}',
         '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',

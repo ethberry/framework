@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Post, Put, Res, Delete } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpStatus, Post, Put, Res } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Response } from "express";
 

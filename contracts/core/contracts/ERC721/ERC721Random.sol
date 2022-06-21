@@ -28,9 +28,8 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
 
   mapping(bytes32 => Request) internal _queue;
 
-  uint256 private _maxTemplateId = 0;
-
   bytes32 public constant TEMPLATE_ID = keccak256("templateId");
+  bytes32 public constant GRADE = keccak256("grade");
   bytes32 public constant RARITY = keccak256("rarity");
 
   constructor(
@@ -45,10 +44,10 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
 
   function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     require(templateId != 0, "ERC721Random: wrong type");
-    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
     tokenId = _tokenIdTracker.current();
 
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, 1);
 
     safeMint(to);
@@ -60,8 +59,13 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     uint256 dropboxId
   ) external override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
-    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
     _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
+  }
+
+  function levelUp(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
+    uint256 grade = getRecordFieldValue(tokenId, GRADE);
+    upsertRecordField(tokenId, GRADE, grade + 1);
+    return true;
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
@@ -70,6 +74,7 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     Request memory request = _queue[requestId];
 
     upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, rarity);
 
     emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.dropboxId);
@@ -94,10 +99,6 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     return 1;
   }
 
-  function setMaxTemplateId(uint256 maxTemplateId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _maxTemplateId = maxTemplateId;
-  }
-
   function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
@@ -110,9 +111,5 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     return
     interfaceId == type(IERC721Random).interfaceId ||
     super.supportsInterface(interfaceId);
-  }
-
-  function getInterface() public pure returns (bytes4) {
-    return type(IERC721Random).interfaceId;
   }
 }

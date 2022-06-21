@@ -15,9 +15,6 @@ async function main() {
   // const maxItemTypes = 15;
   // const maxHeroTypes = 3;
   const rlNum = 100; // royaltyNumerator
-  const maxHeroTypes = 3;
-  const maxItemTypes = 10;
-  const maxSkillTypes = 10;
   let tx: ContractTransaction;
   const [owner] = await ethers.getSigners();
 
@@ -107,9 +104,6 @@ async function main() {
   // Grant role to ERC1155ERC721Craft in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, craft721Instance.address);
   console.info("Hero - MINTER_ROLE granted to ERC1155ERC721Craft: ", tx.hash);
-  // Set max types in Hero
-  tx = await heroInstance.setMaxTemplateId(maxHeroTypes);
-  console.info("Hero - Set Max types: ", tx.hash);
 
   // ERC721 Collection Item
   // Grant role to Marketplace in Item
@@ -127,9 +121,6 @@ async function main() {
   // Grant role to ERC1155ERC721Craft in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, craft721Instance.address);
   console.info("Item - MINTER_ROLE granted to ERC1155ERC721Craft: ", tx.hash);
-  // Set max types in Item
-  tx = await itemInstance.setMaxTemplateId(maxItemTypes);
-  console.info("Item - Set Max types: ", tx.hash);
 
   // ERC721 Collection Skill
   // Grant role to Marketplace in Skill
@@ -147,9 +138,6 @@ async function main() {
   // // Grant role to ERC721Dropbox in Skill
   // tx = await skillInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
   // console.info("Skill - MINTER_ROLE granted to ERC721Dropbox: ", tx.hash);
-  // Set max types in Skill
-  tx = await itemInstance.setMaxTemplateId(maxSkillTypes);
-  console.info("Skill - Set Max types: ", tx.hash);
 
   // ERC721 Dropbox
   // Grant role to Marketplace in Dropbox

@@ -107,4 +107,23 @@ export class Erc998TokenService {
 
     return queryBuilder.getOne();
   }
+
+  public getToken(address: string, tokenId: string): Promise<Erc998TokenEntity | null> {
+    const queryBuilder = this.erc998TokenEntityRepository.createQueryBuilder("token");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("token.erc998Template", "template");
+    queryBuilder.leftJoinAndSelect("template.erc998Collection", "collection");
+
+    queryBuilder.andWhere("collection.address = :address", {
+      address,
+    });
+
+    queryBuilder.andWhere("token.tokenId = :tokenId", {
+      tokenId,
+    });
+
+    return queryBuilder.getOne();
+  }
 }

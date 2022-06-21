@@ -33,7 +33,6 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721BaseUrl {
     safeMint(to);
   }
 
-
   function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
