@@ -7,16 +7,20 @@ import { Erc721CollectionRoyaltyMenuItem } from "./royalty";
 import { ContractGrantRoleMenuItem } from "./grant-role";
 import { ContractRevokeRoleMenuItem } from "./revoke-role";
 import { ContractRenounceRoleMenuItem } from "./renounce-role";
+import { BlacklistAddMenuItem } from "./blacklist-add";
+import { UnBlacklistMenuItem } from "./blacklist-remove";
 
 export enum ContractActions {
   SNAPSHOT = "SNAPSHOT",
   ROYALTY = "ROYALTY",
+  BLACKLIST_ADD = "BLACKLIST_ADD",
+  BLACKLIST_REMOVE = "BLACKLIST_REMOVE",
 }
 
 export interface IContractActionsMenu {
   contract: any;
   disabled?: boolean;
-  actions?: Array<ContractActions>;
+  actions?: Array<ContractActions | null>;
 }
 
 export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
@@ -49,6 +53,8 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
       </IconButton>
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem address={contract.address} /> : null}
+        {actions.includes(ContractActions.BLACKLIST_ADD) ? <BlacklistAddMenuItem address={contract.address} /> : null}
+        {actions.includes(ContractActions.BLACKLIST_REMOVE) ? <UnBlacklistMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.ROYALTY) ? (
           <Erc721CollectionRoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
         ) : null}

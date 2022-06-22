@@ -90,7 +90,11 @@ export const Erc20Token: FC = () => {
                 </IconButton>
                 <ContractActionsMenu
                   contract={token}
-                  actions={[ContractActions.SNAPSHOT]}
+                  actions={[
+                    ContractActions.SNAPSHOT,
+                    token.contractTemplate === Erc20TokenTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    token.contractTemplate === Erc20TokenTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
+                  ]}
                   disabled={
                     token.contractTemplate === Erc20TokenTemplate.EXTERNAL ||
                     token.contractTemplate === Erc20TokenTemplate.NATIVE

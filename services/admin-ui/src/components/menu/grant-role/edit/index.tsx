@@ -25,7 +25,7 @@ export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.edit"
+      message="dialogs.grantRole"
       data-testid="AccessControlGrantRoleDialog"
       {...rest}
     >

@@ -37,6 +37,8 @@ import { StakingEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
+import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
+import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 
 import { CreateUserTable1563804000010 } from "./migrations/1563804000010-create-user-table";
 import { SeedUser1563804000020 } from "./migrations/1563804000020-seed-user";
@@ -89,11 +91,12 @@ import { CreateErc721RecipeHistory1563804040630 } from "./migrations/15638040406
 import { CreateErc721Ingredient1563804040710 } from "./migrations/1563804040710-create-erc721-ingredient-table";
 import { SeedErc721Ingredient1563804040720 } from "./migrations/1563804040720-seed-erc721-ingredient";
 import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
-import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { CreateContractManagerTable1652962207600 } from "./migrations/1652962207600-create-contract-manager-table";
 import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager-table";
 import { CreateAccessControlTable1653616447230 } from "./migrations/1653616447230-create-access-control-table";
 import { CreateAccessControlHistoryTable1653616447240 } from "./migrations/1653616447240-create-access-control-history-table";
+import { CreateAccessListTable1653616447330 } from "./migrations/1653616447330-create-access-list-table";
+import { CreateAccessListHistoryTable1653616447340 } from "./migrations/1653616447340-create-access-list-history-table";
 import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-create-seaport-table";
 import { CreateSeaportHistoryTable1653820928950 } from "./migrations/1653820928950-create-seaport-history-table";
 import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
@@ -120,6 +123,7 @@ const config: PostgresConnectionOptions = {
     SettingsEntity,
     ContractManagerEntity,
     AccessControlEntity,
+    AccessListEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
     Erc998CollectionEntity,
@@ -217,6 +221,8 @@ const config: PostgresConnectionOptions = {
     CreateContractManagerHistoryTable1652682493386,
     CreateAccessControlTable1653616447230,
     CreateAccessControlHistoryTable1653616447240,
+    CreateAccessListTable1653616447330,
+    CreateAccessListHistoryTable1653616447340,
     CreateSeaportTable1653820928940,
     CreateSeaportHistoryTable1653820928950,
     CreateContractManagerTable1652962207600,

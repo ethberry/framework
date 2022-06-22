@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity >=0.8.13;
+pragma solidity ^0.8.13;
 
 interface IERC721Royalty {
   function setDefaultRoyalty(address royaltyReceiver, uint96 royalty) external;

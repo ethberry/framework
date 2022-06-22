@@ -8,24 +8,24 @@ import { AccessControlEntity } from "./access-control.entity";
 export class AccessControlService {
   constructor(
     @InjectRepository(AccessControlEntity)
-    private readonly contractManagerHistoryEntityRepository: Repository<AccessControlEntity>,
+    private readonly accessControlEntityRepository: Repository<AccessControlEntity>,
   ) {}
 
   public async create(dto: DeepPartial<AccessControlEntity>): Promise<AccessControlEntity> {
-    return this.contractManagerHistoryEntityRepository.create(dto).save();
+    return this.accessControlEntityRepository.create(dto).save();
   }
 
   public findOne(
     where: FindOptionsWhere<AccessControlEntity>,
     options?: FindOneOptions<AccessControlEntity>,
   ): Promise<AccessControlEntity | null> {
-    return this.contractManagerHistoryEntityRepository.findOne({ where, ...options });
+    return this.accessControlEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
     where: FindOptionsWhere<AccessControlEntity>,
     options?: FindOneOptions<AccessControlEntity>,
   ): Promise<Array<AccessControlEntity>> {
-    return this.contractManagerHistoryEntityRepository.find({ where, ...options });
+    return this.accessControlEntityRepository.find({ where, ...options });
   }
 }

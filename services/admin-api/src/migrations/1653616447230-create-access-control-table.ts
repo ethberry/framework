@@ -28,7 +28,7 @@ export class CreateAccessControlTable1653616447230 implements MigrationInterface
           type: "varchar",
         },
         {
-          name: "wallet",
+          name: "account",
           type: "varchar",
         },
         {
