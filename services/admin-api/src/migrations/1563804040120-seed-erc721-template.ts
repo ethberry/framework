@@ -130,6 +130,66 @@ export class SeedErc721Templates1563804040120 implements MigrationInterface {
         3,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        'Shield wall',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        'ACTIVE',
+        4,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Back stub',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        'ACTIVE',
+        4,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Fireball',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        'ACTIVE',
+        4,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Physical resistance',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        'ACTIVE',
+        5,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Magic resistance',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        'ACTIVE',
+        5,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Ward save',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        'ACTIVE',
+        5,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

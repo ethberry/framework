@@ -5,11 +5,17 @@ import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 
+const usdt: Record<string, string> = {
+  "1": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+  "56": "0x55d398326f99059ff775485246999027b3197955",
+  "1337": constants.AddressZero,
+};
+
 export class SeedErc20Token1563804010120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc20TokenAddress = process.env.ERC20_COIN || wallet;
-    const chainId = process.env.CHAIN_ID || 1337;
+    const chainId = process.env.CHAIN_ID || "1337";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.erc20_token (
@@ -78,7 +84,7 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'USD Teter',
         'USDT',
-        '${erc20TokenAddress}',
+        '${usdt[chainId]}',
         'ACTIVE',
         'EXTERNAL',
         '${chainId}',

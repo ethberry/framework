@@ -11,6 +11,7 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
     const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
     const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
     const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
+    const erc721CollectionRuneAddress = process.env.ERC721_RUNE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - BUILDINGS
@@ -86,6 +87,21 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
         'TOKEN',
         'GRADED',
         '${erc721CollectionSkillAddress}',
+        '${baseTokenURI}',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'RUNES',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'RUNES',
+        'RUNE721',
+        100,
+        'ACTIVE',
+        'TOKEN',
+        'RANDOM',
+        '${erc721CollectionRuneAddress}',
         '${baseTokenURI}',
         '${chainId}',
         '${currentDateTime}',
