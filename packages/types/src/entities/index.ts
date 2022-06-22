@@ -9,7 +9,6 @@ export * from "./erc20/token";
 export * from "./erc20/token-history";
 export * from "./erc20/vesting";
 export * from "./erc20/vesting-history";
-export * from "./blockchain/staking-history";
 
 export * from "./erc721/airdrop";
 export * from "./erc721/collection";
@@ -44,7 +43,10 @@ export * from "./erc1155/recipe-history";
 
 export * from "./blockchain/access-control";
 export * from "./blockchain/access-control-history";
+export * from "./blockchain/access-list";
+export * from "./blockchain/access-list-history";
 export * from "./blockchain/contract-manager";
 export * from "./blockchain/contract-manager-history";
 export * from "./blockchain/staking";
+export * from "./blockchain/staking-history";
 export * from "./blockchain/common";

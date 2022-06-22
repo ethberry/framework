@@ -1,3 +1,5 @@
+export * from "./erc20/vesting-release";
+
 export * from "./erc721/dropbox-buy";
 export * from "./erc721/level-up";
 export * from "./erc721/recipe-craft";

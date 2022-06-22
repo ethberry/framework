@@ -53,7 +53,7 @@ export const Erc20Vesting: FC = () => {
       <Breadcrumbs path={["dashboard", "erc20-vesting"]} />
 
       <PageHeader message="pages.erc20-vesting.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
         <Erc20VestingDeployButton />

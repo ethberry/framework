@@ -45,7 +45,7 @@ export class SeedErc1155Collection1563804020020 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'RUNES',
+        'SHARDS',
         '${simpleFormatting}',
         '${imageUrl}',
         '${erc1155CollectionResourcesAddress}',

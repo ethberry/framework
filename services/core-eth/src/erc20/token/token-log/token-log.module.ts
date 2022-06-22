@@ -2,7 +2,7 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractType, Erc20TokenEventType } from "@framework/types";
+import { AccessControlEventType, AccessListEventType, ContractType, Erc20TokenEventType } from "@framework/types";
 
 import { Erc20LogService } from "./token-log.service";
 
@@ -32,6 +32,10 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
               Erc20TokenEventType.Approval,
               Erc20TokenEventType.Snapshot,
               Erc20TokenEventType.Transfer,
+              AccessListEventType.Blacklisted,
+              AccessListEventType.UnBlacklisted,
+              // AccessListEventType.Whitelisted,
+              // AccessListEventType.UnWhitelisted,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged

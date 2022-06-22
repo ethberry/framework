@@ -33,8 +33,13 @@
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
-    "renounce": "Renounce role",
-    "revoke": "Revoke role",
+    "renounceRole": "Renounce role",
+    "revokeRole": "Revoke role",
+    "grantRole": "Grant role",
+    "blacklist": "Add to blacklist",
+    "unBlacklist": "Remove from blacklist",
+    "whitelist": "Add to whitelist",
+    "unWhitelist": "Remove from whitelist",
     "view": "View"
   },
   "enums": {
@@ -153,6 +158,8 @@
       "percent": "%"
     },
     "buttons": {
+      "blacklist": "Blacklist",
+      "unblacklist": "Un blacklist",
       "accept": "Accept",
       "add": "Add",
       "cancel": "Cancel",

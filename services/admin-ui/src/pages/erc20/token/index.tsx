@@ -64,7 +64,7 @@ export const Erc20Token: FC = () => {
       <Breadcrumbs path={["dashboard", "erc20-tokens"]} />
 
       <PageHeader message="pages.erc20-tokens.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
@@ -90,7 +90,11 @@ export const Erc20Token: FC = () => {
                 </IconButton>
                 <ContractActionsMenu
                   contract={token}
-                  actions={[ContractActions.SNAPSHOT]}
+                  actions={[
+                    ContractActions.SNAPSHOT,
+                    token.contractTemplate === Erc20TokenTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    token.contractTemplate === Erc20TokenTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
+                  ]}
                   disabled={
                     token.contractTemplate === Erc20TokenTemplate.EXTERNAL ||
                     token.contractTemplate === Erc20TokenTemplate.NATIVE

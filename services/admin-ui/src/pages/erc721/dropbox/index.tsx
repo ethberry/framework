@@ -66,7 +66,7 @@ export const Erc721Dropbox: FC = () => {
       <Breadcrumbs path={["dashboard", "erc721-dropboxes"]} />
 
       <PageHeader message="pages.erc721-dropboxes.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"

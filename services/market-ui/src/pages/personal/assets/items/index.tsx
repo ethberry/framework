@@ -32,7 +32,7 @@ export const Items: FC<ITabPanelProps> = props => {
   return (
     <Grid>
       <PageHeader message="pages.assets.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>
       </PageHeader>

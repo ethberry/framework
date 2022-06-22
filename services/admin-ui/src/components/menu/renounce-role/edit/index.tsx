@@ -50,19 +50,19 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   useEffect(() => {
     void fn().then((rows: Array<IAccessControl>) => {
-      setRows(rows.filter(row => row.wallet === user.profile.wallet));
+      setRows(rows.filter(row => row.account === user.profile.wallet));
     });
   }, []);
 
   return (
-    <ConfirmationDialog message="dialogs.renounce" data-testid="AccessControlRenounceRoleDialog" {...rest}>
+    <ConfirmationDialog message="dialogs.renounceRole" data-testid="AccessControlRenounceRoleDialog" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
             {rows.map((access, i) => (
               <ListItem key={i}>
                 <ListItemText>
-                  {access.wallet} ({access.role})
+                  {access.account} ({access.role})
                 </ListItemText>
                 <ListItemSecondaryAction>
                   <IconButton onClick={handleRenounce(access)}>

@@ -10,7 +10,7 @@ export class AccessControlEntity extends IdDateBaseEntity implements IAccessCont
   public address: string;
 
   @Column({ type: "varchar" })
-  public wallet: string;
+  public account: string;
 
   @Column({
     type: "enum",

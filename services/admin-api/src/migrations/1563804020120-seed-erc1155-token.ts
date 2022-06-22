@@ -71,13 +71,33 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Wall',
+        'Healing potion',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
         '${constants.WeiPerEther.toString()}',
         '5',
-        1,
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Mana potion',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        '5',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Antidote',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        '${constants.WeiPerEther.toString()}',
+        '5',
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );
