@@ -6,7 +6,7 @@ import { ns } from "@framework/constants";
 export class SeedStakingRewardTable1654751224250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      INSERT INTO ${ns}.staking_reward (
+      INSERT INTO ${ns}.staking_rule_reward (
         token_type,
         collection,
         token_id,
@@ -35,6 +35,6 @@ export class SeedStakingRewardTable1654751224250 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_reward`);
+    await queryRunner.dropTable(`${ns}.staking_rule_reward`);
   }
 }

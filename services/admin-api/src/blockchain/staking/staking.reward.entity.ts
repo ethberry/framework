@@ -10,7 +10,7 @@ import { Erc721CollectionEntity } from "../../erc721/collection/collection.entit
 import { Erc1155CollectionEntity } from "../../erc1155/collection/collection.entity";
 import { Erc998CollectionEntity } from "../../erc998/collection/collection.entity";
 
-@Entity({ schema: ns, name: "staking_reward" })
+@Entity({ schema: ns, name: "staking_rule_reward" })
 export class StakingRewardEntity extends IdBaseEntity implements IStakingItem {
   @Column({
     type: "enum",

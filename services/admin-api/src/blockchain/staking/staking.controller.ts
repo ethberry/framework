@@ -2,7 +2,10 @@ import {
   Body,
   ClassSerializerInterceptor,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   ParseIntPipe,
   Post,
@@ -46,5 +49,11 @@ export class StakingController {
   @Post("/")
   public create(@Body() dto: StakingCreateDto): Promise<StakingEntity> {
     return this.stakingService.create(dto);
+  }
+
+  @Delete("/:id")
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
+    return await this.stakingService.delete({ id });
   }
 }

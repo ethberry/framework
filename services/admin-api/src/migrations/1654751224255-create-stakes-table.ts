@@ -2,18 +2,17 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateStakingTable1654751224200 implements MigrationInterface {
+export class CreateStakesTable1654751224255 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.staking_status_enum AS ENUM (
-        'NEW',
+      CREATE TYPE ${ns}.stake_status_enum AS ENUM (
         'ACTIVE',
-        'INACTIVE'
+        'FINISH'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.staking`,
+      name: `${ns}.stakes`,
       columns: [
         {
           name: "id",
@@ -21,29 +20,21 @@ export class CreateStakingTable1654751224200 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "title",
+          name: "owner",
           type: "varchar",
         },
         {
-          name: "description",
-          type: "json",
+          name: "stake_status",
+          type: `${ns}.stake_status_enum`,
+          default: "'ACTIVE'",
         },
         {
-          name: "duration",
+          name: "start_timestamp",
+          type: "timestamptz",
+        },
+        {
+          name: "staking_rule_id",
           type: "int",
-        },
-        {
-          name: "penalty",
-          type: "int",
-        },
-        {
-          name: "recurrent",
-          type: "boolean",
-        },
-        {
-          name: "staking_status",
-          type: `${ns}.staking_status_enum`,
-          default: "'NEW'",
         },
         {
           name: "created_at",
@@ -54,12 +45,20 @@ export class CreateStakingTable1654751224200 implements MigrationInterface {
           type: "timestamptz",
         },
       ],
+      foreignKeys: [
+        {
+          columnNames: ["staking_rule_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.staking_rule`,
+        },
+      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking`);
+    await queryRunner.dropTable(`${ns}.stakes`);
+    await queryRunner.query(`DROP TYPE ${ns}.stake_status_enum;`);
   }
 }

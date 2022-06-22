@@ -190,6 +190,7 @@ describe("UniStaking", function () {
   describe("setRule", function () {
     it("should fail for wrong role", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -207,6 +208,7 @@ describe("UniStaking", function () {
 
     it("should fail edit when Rule not exist", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -224,6 +226,7 @@ describe("UniStaking", function () {
 
     it("should set one Rule", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -238,6 +241,7 @@ describe("UniStaking", function () {
 
     it("should set multiple Rules", async function () {
       const stakeRule1: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -247,6 +251,7 @@ describe("UniStaking", function () {
       };
 
       const stakeRule2: IRule = {
+        externalId: BigNumber.from(2),
         deposit: nativeDeposit,
         reward: erc721RewardDbx,
         period: BigNumber.from(stakePeriod),
@@ -261,6 +266,7 @@ describe("UniStaking", function () {
 
     it("should edit Rule", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -280,6 +286,7 @@ describe("UniStaking", function () {
   describe("Staking", function () {
     it("should fail for not existing rule", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -297,6 +304,7 @@ describe("UniStaking", function () {
 
     it("should fail for not active rule", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -314,6 +322,7 @@ describe("UniStaking", function () {
 
     it("should fail for wrong pay amount", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -331,6 +340,7 @@ describe("UniStaking", function () {
 
     it("should fail for limit exceed", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -350,6 +360,7 @@ describe("UniStaking", function () {
 
     it("should stake NATIVE", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -367,6 +378,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC20", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc20Deposit,
         reward: erc20Reward,
         period: BigNumber.from(stakePeriod),
@@ -392,6 +404,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC721", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc721Deposit,
         reward: erc20Reward,
         period: BigNumber.from(stakePeriod),
@@ -417,6 +430,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC1155", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
         reward: erc20Reward,
         period: BigNumber.from(stakePeriod),
@@ -464,6 +478,7 @@ describe("UniStaking", function () {
 
     it("should fail for wrong staking id", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: nativeReward,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -488,12 +503,13 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
-      const tx2 = stakingInstance.connect(this.receiver).receiveReward(1, true, true);
+      const tx2 = stakingInstance.connect(this.receiver).receiveReward(2, true, true);
       await expect(tx2).to.be.revertedWith(`Staking: wrong staking id`);
     });
 
     it("should fail for not an owner", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: nativeReward,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -517,12 +533,13 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
-      const tx2 = stakingInstance.receiveReward(0, true, true);
+      const tx2 = stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.be.revertedWith(`Staking: not an owner`);
     });
 
     it("should fail for withdrawn already", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: nativeReward,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -546,17 +563,18 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
-      const tx2 = await stakingInstance.connect(this.receiver).receiveReward(0, true, true);
+      const tx2 = await stakingInstance.connect(this.receiver).receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.changeEtherBalance(this.receiver, nativeReward.amount.mul(2).add(nativeReward.amount));
 
-      const tx3 = stakingInstance.connect(this.receiver).receiveReward(0, true, true);
+      const tx3 = stakingInstance.connect(this.receiver).receiveReward(1, true, true);
       await expect(tx3).to.be.revertedWith(`Staking: deposit withdrawn already`);
     });
 
     it("should stake NATIVE & receive NATIVE", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: nativeReward,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -578,7 +596,7 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.changeEtherBalance(
@@ -589,6 +607,7 @@ describe("UniStaking", function () {
 
     it("should stake NATIVE & receive ERC20", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc20Reward,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -612,7 +631,7 @@ describe("UniStaking", function () {
       await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
       let balance = await erc20Instance.balanceOf(stakingInstance.address);
       expect(balance).to.equal(erc20Reward.amount.mul(stakeCycles));
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc20Instance, "Transfer");
@@ -624,6 +643,7 @@ describe("UniStaking", function () {
 
     it("should stake NATIVE & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -644,7 +664,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
@@ -657,6 +677,7 @@ describe("UniStaking", function () {
 
     it("should stake NATIVE & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardSmpl,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -677,7 +698,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
@@ -688,6 +709,7 @@ describe("UniStaking", function () {
 
     it("should stake NATIVE & receive ERC721 Dropbox", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc721RewardDbx,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -708,7 +730,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
@@ -719,6 +741,7 @@ describe("UniStaking", function () {
 
     it("should stake NATIVE & receive ERC1155", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: nativeDeposit,
         reward: erc1155Reward,
         period: BigNumber.from(stakePeriod), // 60 sec
@@ -739,7 +762,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
@@ -750,6 +773,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC20 & receive NATIVE", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc20Deposit,
         reward: nativeReward,
         period: BigNumber.from(stakePeriod),
@@ -776,7 +800,7 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount.mul(stakeCycles));
@@ -786,6 +810,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC20 & receive ERC20", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc20Deposit,
         reward: erc20Reward,
         period: BigNumber.from(stakePeriod),
@@ -812,7 +837,7 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -821,6 +846,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC20 & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc20Deposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -846,7 +872,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
@@ -859,6 +885,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC20 & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc20Deposit,
         reward: erc721RewardSmpl,
         period: BigNumber.from(stakePeriod),
@@ -884,7 +911,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
@@ -896,6 +923,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC20 & receive ERC721 Dropbox", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc20Deposit,
         reward: erc721RewardDbx,
         period: BigNumber.from(stakePeriod),
@@ -903,7 +931,6 @@ describe("UniStaking", function () {
         recurrent: false,
         active: true,
       };
-
       // SET RULE
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
@@ -921,7 +948,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
@@ -933,6 +960,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC20 & receive ERC1155", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc20Deposit,
         reward: erc1155Reward,
         period: BigNumber.from(stakePeriod),
@@ -959,7 +987,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
@@ -971,6 +999,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC721 & receive NATIVE", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc721Deposit,
         reward: nativeReward,
         period: BigNumber.from(stakePeriod),
@@ -997,7 +1026,7 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount.mul(stakeCycles));
@@ -1007,6 +1036,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC721 & receive ERC20", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc721Deposit,
         reward: erc20Reward,
         period: BigNumber.from(stakePeriod),
@@ -1033,7 +1063,7 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -1044,6 +1074,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC721 & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc721Deposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -1069,7 +1100,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
@@ -1080,6 +1111,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC721 & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc721Deposit,
         reward: erc721RewardSmpl,
         period: BigNumber.from(stakePeriod),
@@ -1105,7 +1137,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
@@ -1117,6 +1149,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC721 & receive ERC721 Dropbox", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc721Deposit,
         reward: erc721RewardDbx,
         period: BigNumber.from(stakePeriod),
@@ -1142,7 +1175,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
@@ -1154,6 +1187,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC721 & receive ERC1155", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc721Deposit,
         reward: erc1155Reward,
         period: BigNumber.from(stakePeriod),
@@ -1179,7 +1213,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
@@ -1191,6 +1225,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC1155  & receive NATIVE", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
         reward: nativeReward,
         period: BigNumber.from(stakePeriod),
@@ -1216,7 +1251,7 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount.mul(stakeCycles));
@@ -1226,6 +1261,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC1155  & receive ERC20", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
         reward: erc20Reward,
         period: BigNumber.from(stakePeriod),
@@ -1251,7 +1287,7 @@ describe("UniStaking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -1262,6 +1298,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC1155  & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
         reward: erc721RewardRnd,
         period: BigNumber.from(stakePeriod),
@@ -1286,7 +1323,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
@@ -1299,6 +1336,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC1155  & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
         reward: erc721RewardSmpl,
         period: BigNumber.from(stakePeriod),
@@ -1323,7 +1361,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
@@ -1335,6 +1373,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC1155  & receive ERC721 Dropbox", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
         reward: erc721RewardDbx,
         period: BigNumber.from(stakePeriod),
@@ -1359,7 +1398,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
@@ -1371,6 +1410,7 @@ describe("UniStaking", function () {
 
     it("should stake ERC1155  & receive ERC1155", async function () {
       const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
         reward: erc1155Reward,
         period: BigNumber.from(stakePeriod),
@@ -1395,7 +1435,7 @@ describe("UniStaking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      const tx2 = await stakingInstance.receiveReward(0, true, true);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
@@ -1403,4 +1443,5 @@ describe("UniStaking", function () {
       expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles).add(erc1155Reward.amount));
     });
   });
+  // todo test recurrent
 });

@@ -98,6 +98,9 @@ export const Staking: FC = () => {
         return {
           title,
           description,
+          ruleId: "0",
+          reward: clean(reward!),
+          deposit: clean(deposit!),
           ...rest,
         };
       }
@@ -153,7 +156,7 @@ export const Staking: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: "FIX ME STAKING" }}
+        initialValues={{ ...selected, title: `${selected.title}` }}
       />
 
       <StakingEditDialog

@@ -11,6 +11,7 @@ export enum StakingEventType {
 export interface IStakingRuleCreate {
   ruleId: string;
   rule: IStakingRule;
+  externalId: string;
 }
 
 export interface IStakingRuleUpdate {
@@ -25,6 +26,7 @@ export interface IStakingRule {
   penalty: string;
   recurrent: boolean;
   active: boolean;
+  externalId: string;
 }
 
 export interface IStakingItemSol {

@@ -14,6 +14,7 @@ export class SeedStakingTable1654751224210 implements MigrationInterface {
         duration,
         penalty,
         recurrent,
+        rule_id,
         staking_status,
         created_at,
         updated_at
@@ -23,7 +24,8 @@ export class SeedStakingTable1654751224210 implements MigrationInterface {
         30,
         1,
         false,
-        'ACTIVE',
+        '0',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -32,7 +34,8 @@ export class SeedStakingTable1654751224210 implements MigrationInterface {
         30,
         1,
         false,
-        'ACTIVE',
+        '0',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -41,7 +44,8 @@ export class SeedStakingTable1654751224210 implements MigrationInterface {
         30,
         1,
         false,
-        'ACTIVE',
+        '0',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       );

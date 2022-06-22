@@ -12,8 +12,9 @@ export class StakingHistoryService {
   ) {}
 
   public async leaderboard(dto: ILeaderboardSearchDto): Promise<any> {
-    const { skip, take, owner } = dto;
-
-    return Promise.resolve({ skip, take, owner });
+    // const { skip, take, owner } = dto;
+    console.info("dto", dto);
+    // todo get it work
+    return Promise.resolve();
   }
 }

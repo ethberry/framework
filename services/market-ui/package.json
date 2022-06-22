@@ -55,6 +55,7 @@
     "@mui/styles": "5.8.4",
     "@mui/x-data-grid": "5.12.2",
     "@web3-react/core": "6.1.9",
+    "date-fns": "2.28.0",
     "clsx": "1.1.1",
     "ethers": "5.6.9",
     "firebase": "9.8.3",

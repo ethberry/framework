@@ -2,12 +2,12 @@ import { Column, Entity, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IStaking, StakingStatus } from "@framework/types";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { SearchableEntity, BigNumberColumn } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { StakingDepositEntity } from "./staking.deposit.entity";
 import { StakingRewardEntity } from "./staking.reward.entity";
 
-@Entity({ schema: ns, name: "staking" })
+@Entity({ schema: ns, name: "staking_rule" })
 export class StakingEntity extends SearchableEntity implements IStaking {
   @Column({ type: "varchar" })
   public title: string;
@@ -32,4 +32,7 @@ export class StakingEntity extends SearchableEntity implements IStaking {
     enum: StakingStatus,
   })
   public stakingStatus: StakingStatus;
+
+  @BigNumberColumn()
+  public ruleId: string;
 }

@@ -7,6 +7,7 @@ export interface IRule {
   penalty: BigNumber;
   recurrent: boolean;
   active: boolean;
+  externalId: BigNumber;
 }
 
 export interface IItem {

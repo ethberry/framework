@@ -13,6 +13,9 @@ export const Leaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
     useCollection<ILeaderboard>({
       baseUrl: "/staking/leaderboard",
+      empty: {
+        wallet: "",
+      },
     });
 
   const { formatMessage } = useIntl();

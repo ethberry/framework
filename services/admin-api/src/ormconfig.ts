@@ -98,8 +98,8 @@ import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-crea
 import { CreateSeaportHistoryTable1653820928950 } from "./migrations/1653820928950-create-seaport-history-table";
 import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
 import { SeedSettingsTable1654437010010 } from "./migrations/1654437010010-seed-settings-table";
-import { CreateStakingTable1654751224200 } from "./migrations/1654751224200-create-staking-table";
-import { SeedStakingTable1654751224210 } from "./migrations/1654751224210-seed-staking-table";
+import { CreateStakingRuleTable1654751224200 } from "./migrations/1654751224200-create-staking-rule-table";
+import { SeedStakingTable1654751224210 } from "./migrations/1654751224210-seed-staking-rule-table";
 import { CreateStakingDepositTable1654751224220 } from "./migrations/1654751224220-create-staking-deposit-table";
 import { SeedStakingDepositTable1654751224230 } from "./migrations/1654751224230-seed-staking-deposit-table";
 import { CreateStakingRewardTable1654751224240 } from "./migrations/1654751224240-create-staking-reward-table";
@@ -225,7 +225,7 @@ const config: PostgresConnectionOptions = {
     SeedContractManager1652962207610,
     CreateSettingsTable1654437010000,
     SeedSettingsTable1654437010010,
-    CreateStakingTable1654751224200,
+    CreateStakingRuleTable1654751224200,
     SeedStakingTable1654751224210,
     CreateStakingDepositTable1654751224220,
     SeedStakingDepositTable1654751224230,

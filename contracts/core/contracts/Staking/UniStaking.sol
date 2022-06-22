@@ -67,12 +67,12 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
 
   function deposit(uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
     Rule storage rule = _rules[ruleId];
-    require(rule.period != 0, "Staking: rule doesn't exist");
+    require(rule.externalId != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
     require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
 
-    uint256 stakeId = _stakeIdCounter.current();
     _stakeIdCounter.increment();
+    uint256 stakeId = _stakeIdCounter.current();
     _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
 
     Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenId, rule.deposit.amount);

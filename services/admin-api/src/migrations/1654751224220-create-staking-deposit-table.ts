@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateStakingDepositTable1654751224220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.staking_deposit`,
+      name: `${ns}.staking_rule_deposit`,
       columns: [
         {
           name: "id",
@@ -50,6 +50,6 @@ export class CreateStakingDepositTable1654751224220 implements MigrationInterfac
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_deposit`);
+    await queryRunner.dropTable(`${ns}.staking_rule_deposit`);
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -12,7 +12,8 @@ export class StakingHistoryController {
   constructor(private readonly stakingHistoryService: StakingHistoryService) {}
 
   @Get("/leaderboard")
-  @UseInterceptors(PaginationInterceptor)
+  // @UseInterceptors(PaginationInterceptor)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public search(@Query() dto: LeaderboardSearchDto): Promise<any> {
     return this.stakingHistoryService.leaderboard(dto);
   }

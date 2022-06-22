@@ -8,8 +8,9 @@ import { StakingEntity } from "./staking.entity";
 import { Erc20TokenEntity } from "../../erc20/token/token.entity";
 import { Erc721CollectionEntity } from "../../erc721/collection/collection.entity";
 import { Erc1155CollectionEntity } from "../../erc1155/collection/collection.entity";
+import { Erc998CollectionEntity } from "../../erc998/collection/collection.entity";
 
-@Entity({ schema: ns, name: "staking_reward" })
+@Entity({ schema: ns, name: "staking_rule_reward" })
 export class StakingRewardEntity extends IdBaseEntity implements IStakingItem {
   @Column({
     type: "enum",
@@ -36,6 +37,6 @@ export class StakingRewardEntity extends IdBaseEntity implements IStakingItem {
 
   public erc20: Erc20TokenEntity;
   public erc721: Erc721CollectionEntity;
-  public erc998: Erc721CollectionEntity;
+  public erc998: Erc998CollectionEntity;
   public erc1155: Erc1155CollectionEntity;
 }

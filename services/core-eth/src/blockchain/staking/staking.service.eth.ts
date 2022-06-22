@@ -1,8 +1,9 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
+  StakingStatus,
   IStakingDeposit,
   IStakingFinish,
   IStakingRuleCreate,
@@ -27,13 +28,42 @@ export class StakingServiceEth {
   ) {}
 
   public async create(event: ILogEvent<IStakingRuleCreate>, context: Log): Promise<void> {
-    console.log("create-event", event);
     await this.updateHistory(event, context);
+    const {
+      args: { ruleId, externalId },
+    } = event;
+
+    const stakingEntity = await this.stakingService.findOne({ id: ~~externalId });
+
+    if (!stakingEntity) {
+      throw new NotFoundException("stakingRuleNotFound");
+    }
+
+    Object.assign(stakingEntity, {
+      ruleId,
+      stakingStatus: StakingStatus.ACTIVE,
+    });
+
+    await stakingEntity.save();
   }
 
   public async update(event: ILogEvent<IStakingRuleUpdate>, context: Log): Promise<void> {
-    console.log("update-event", event);
     await this.updateHistory(event, context);
+    const {
+      args: { ruleId, active },
+    } = event;
+
+    const stakingEntity = await this.stakingService.findOne({ ruleId });
+
+    if (!stakingEntity) {
+      throw new NotFoundException("stakingRuleNotFound");
+    }
+
+    Object.assign(stakingEntity, {
+      stakingStatus: active ? StakingStatus.ACTIVE : StakingStatus.INACTIVE,
+    });
+
+    await stakingEntity.save();
   }
 
   public async start(event: ILogEvent<IStakingDeposit>, context: Log): Promise<void> {
@@ -49,7 +79,21 @@ export class StakingServiceEth {
   }
 
   private async updateHistory(event: ILogEvent<TStakingEventData>, context: Log) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), StakingServiceEth.name);
+    this.loggerService.log(
+      JSON.stringify(
+        Object.assign(
+          { name: event.name, signature: event.signature, topic: event.topic, args: event.args },
+          {
+            address: context.address,
+            transactionHash: context.transactionHash,
+            blockNumber: context.blockNumber,
+          },
+        ),
+        null,
+        "\t",
+      ),
+      StakingServiceEth.name,
+    );
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;

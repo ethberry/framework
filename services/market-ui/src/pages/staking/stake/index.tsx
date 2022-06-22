@@ -10,58 +10,67 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Casino, FilterList } from "@mui/icons-material";
+import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IStaking, IStakingItem, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
+import { StakingDepositButton } from "../../../components/buttons";
 import { StakingSearchForm } from "./form";
+import { StakingViewDialog } from "./view";
 
 export const Stake: FC = () => {
-  const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IStaking, IStakingSearchDto>({
-      baseUrl: "/staking",
-      empty: {
-        title: "",
-        description: emptyStateString,
-        deposit: {
-          tokenType: TokenType.NATIVE,
-          collection: 0,
-        } as IStakingItem,
-        reward: {
-          tokenType: TokenType.NATIVE,
-          collection: 0,
-        } as IStakingItem,
-        duration: 30,
-        penalty: 100,
-        recurrent: false,
+  const {
+    rows,
+    count,
+    search,
+    isLoading,
+    selected,
+    isViewDialogOpen,
+    isFiltersOpen,
+    handleView,
+    handleViewConfirm,
+    handleViewCancel,
+    handleToggleFilters,
+    handleSearch,
+    handleChangePage,
+  } = useCollection<IStaking, IStakingSearchDto>({
+    baseUrl: "/staking",
+    empty: {
+      title: "",
+      description: emptyStateString,
+      deposit: {
+        tokenType: TokenType.NATIVE,
+        collection: 0,
+      } as IStakingItem,
+      reward: {
+        tokenType: TokenType.NATIVE,
+        collection: 0,
+      } as IStakingItem,
+      duration: 30,
+      penalty: 100,
+      recurrent: false,
+    },
+    search: {
+      query: "",
+      stakingStatus: [StakingStatus.ACTIVE],
+      deposit: {
+        tokenType: [] as Array<TokenType>,
       },
-      search: {
-        query: "",
-        stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
-        deposit: {
-          tokenType: [] as Array<TokenType>,
-        },
-        reward: {
-          tokenType: [] as Array<TokenType>,
-        },
+      reward: {
+        tokenType: [] as Array<TokenType>,
       },
-      filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
-    });
-
-  const handleStake = (_rule: IStaking) => {
-    return () => {
-      alert("Not implemented");
-    };
-  };
+    },
+    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
+  });
 
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.stake"]} />
 
-      <PageHeader message="pages.staking.stake.title">
+      <PageHeader message="pages.staking.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -78,8 +87,9 @@ export const Stake: FC = () => {
             <ListItem key={i}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleStake(rule)}>
-                  <Casino />
+                <StakingDepositButton rule={rule} />
+                <IconButton onClick={handleView(rule)}>
+                  <Visibility />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -93,6 +103,13 @@ export const Stake: FC = () => {
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
+      />
+
+      <StakingViewDialog
+        onCancel={handleViewCancel}
+        onConfirm={handleViewConfirm}
+        open={isViewDialogOpen}
+        initialValues={selected}
       />
     </Grid>
   );

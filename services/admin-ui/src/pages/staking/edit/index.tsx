@@ -36,7 +36,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     duration,
     stakingStatus,
   };
-  console.log("fixedValues", fixedValues);
+
   return (
     <FormDialog
       initialValues={fixedValues}

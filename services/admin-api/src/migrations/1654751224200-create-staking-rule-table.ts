@@ -2,20 +2,18 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateStakingHistoryTable1654751224260 implements MigrationInterface {
+export class CreateStakingRuleTable1654751224200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.staking_event_enum AS ENUM (
-        'RuleCreated',
-        'RuleUpdated',
-        'StakingStart',
-        'StakingWithdraw',
-        'StakingFinish'
+      CREATE TYPE ${ns}.staking_status_enum AS ENUM (
+        'NEW',
+        'ACTIVE',
+        'INACTIVE'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.staking_history`,
+      name: `${ns}.staking_rule`,
       columns: [
         {
           name: "id",
@@ -23,20 +21,33 @@ export class CreateStakingHistoryTable1654751224260 implements MigrationInterfac
           isPrimary: true,
         },
         {
-          name: "address",
+          name: "title",
           type: "varchar",
         },
         {
-          name: "transaction_hash",
-          type: "varchar",
-        },
-        {
-          name: "event_type",
-          type: `${ns}.staking_event_enum`,
-        },
-        {
-          name: "event_data",
+          name: "description",
           type: "json",
+        },
+        {
+          name: "duration",
+          type: "int",
+        },
+        {
+          name: "penalty",
+          type: "int",
+        },
+        {
+          name: "recurrent",
+          type: "boolean",
+        },
+        {
+          name: "rule_id",
+          type: "uint256",
+        },
+        {
+          name: "staking_status",
+          type: `${ns}.staking_status_enum`,
+          default: "'NEW'",
         },
         {
           name: "created_at",
@@ -53,7 +64,6 @@ export class CreateStakingHistoryTable1654751224260 implements MigrationInterfac
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.staking_event_enum;`);
+    await queryRunner.dropTable(`${ns}.staking_rule`);
   }
 }

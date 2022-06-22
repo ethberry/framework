@@ -34,6 +34,7 @@ interface IStaking {
     uint256 penalty;
     bool recurrent;
     bool active;
+    uint256 externalId;
   }
 
   struct Stake {
@@ -45,6 +46,6 @@ interface IStaking {
     bool activeDeposit;
   }
 
-  event RuleCreated(uint256 ruleId, Rule rule);
+  event RuleCreated(uint256 ruleId, Rule rule, uint256 externalId);
   event RuleUpdated(uint256 ruleId, bool active);
 }

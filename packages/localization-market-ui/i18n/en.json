@@ -426,6 +426,15 @@
       "title": "Profile"
     },
     "staking": {
+      "deposit": "Deposit",
+      "view": {
+        "address": "Address",
+        "beneficiary": "Beneficiary",
+        "contractTemplate": "Template",
+        "duration": "Duration",
+        "finish": "Finish",
+        "startTimestamp": "Start time"
+      },
       "leaderboard": {
         "address": "Address",
         "rank": "Rank",
@@ -453,6 +462,7 @@
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
-    "userHasWrongRole": "Insufficient permissions"
+    "userHasWrongRole": "Insufficient permissions",
+    "walletIsNotConnected": "Wallet is not connected"
   }
 }

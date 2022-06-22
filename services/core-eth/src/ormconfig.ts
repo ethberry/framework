@@ -6,7 +6,6 @@ import { ContractManagerEntity } from "./blockchain/contract-manager/contract-ma
 import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
 import { Erc20TokenEntity } from "./erc20/token/token.entity";
 import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
-import { StakingModule } from "./blockchain/staking/staking.module";
 import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
 import { Erc721TokenEntity } from "./erc721/token/token.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
@@ -27,6 +26,10 @@ import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity"
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
+import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
+import { StakingEntity } from "./blockchain/staking/staking.entity";
+import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
+import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -40,7 +43,10 @@ const config: PostgresConnectionOptions = {
     Erc20TokenHistoryEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
-    StakingModule,
+    StakingEntity,
+    StakingDepositEntity,
+    StakingRewardEntity,
+    StakingHistoryEntity,
     Erc721CollectionEntity,
     Erc721TemplateEntity,
     Erc721TokenEntity,

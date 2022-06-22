@@ -14,3 +14,5 @@ export * from "./erc1155/recipe-craft";
 export * from "./erc1155/token-batch-buy";
 export * from "./erc1155/token-sell";
 export * from "./erc1155/token-single-buy";
+
+export * from "./staking-deposit";

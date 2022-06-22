@@ -30,7 +30,7 @@ abstract contract AbstractStaking is IStaking {
     _ruleIdCounter.increment();
     uint256 ruleId = _ruleIdCounter.current();
     _rules[ruleId] = rule;
-    emit RuleCreated(ruleId, rule);
+    emit RuleCreated(ruleId, rule, rule.externalId);
   }
 
   function _updateRule(uint256 ruleId, bool active) internal {

@@ -30,4 +30,5 @@ export interface IStaking extends ISearchable {
   penalty: number;
   recurrent: boolean;
   stakingStatus: StakingStatus;
+  ruleId: string;
 }

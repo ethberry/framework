@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
-import { Contract, BigNumber } from "ethers";
+import { Contract, BigNumber, constants } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { IStaking, StakingStatus, TokenType } from "@framework/types";
@@ -35,7 +35,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
         ? rule.deposit.erc998!.address
         : rule.deposit.tokenType === TokenType.ERC1155
         ? rule.deposit.erc1155!.address
-        : "0x0000000000000000000000000000000000000000";
+        : constants.AddressZero; // NATIVE
     const rewardCollection =
       rule.reward.tokenType === TokenType.ERC20
         ? rule.reward.erc20!.address
@@ -45,18 +45,41 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
         ? rule.reward.erc998!.address
         : rule.reward.tokenType === TokenType.ERC1155
         ? rule.reward.erc1155!.address
-        : "0x0000000000000000000000000000000000000000";
+        : constants.AddressZero; // NATIVE
+
+    const depositType =
+      rule.deposit.tokenType === TokenType.ERC20
+        ? 1
+        : rule.deposit.tokenType === TokenType.ERC721 || rule.deposit.tokenType === TokenType.ERC721D
+        ? 2
+        : rule.deposit.tokenType === TokenType.ERC998 || rule.deposit.tokenType === TokenType.ERC998D
+        ? 3
+        : rule.deposit.tokenType === TokenType.ERC1155
+        ? 4
+        : 0; // NATIVE
+
+    const rewardType =
+      rule.reward.tokenType === TokenType.ERC20
+        ? 1
+        : rule.reward.tokenType === TokenType.ERC721 || rule.reward.tokenType === TokenType.ERC721D
+        ? 2
+        : rule.reward.tokenType === TokenType.ERC998 || rule.reward.tokenType === TokenType.ERC998D
+        ? 3
+        : rule.reward.tokenType === TokenType.ERC1155
+        ? 4
+        : 0; // NATIVE
 
     const stakingRule = {
+      externalId: BigNumber.from(rule.id),
       deposit: {
         amount: BigNumber.from(rule.deposit.amount || 0),
-        itemType: Object.keys(TokenType).indexOf(rule.deposit.tokenType),
+        itemType: depositType,
         tokenId: ~~rule.deposit.tokenId,
         token: depositCollection,
       },
       reward: {
         amount: BigNumber.from(rule.reward.amount || 0),
-        itemType: Object.keys(TokenType).indexOf(rule.reward.tokenType),
+        itemType: rewardType,
         tokenId: ~~rule.reward.tokenId,
         token: rewardCollection,
       },
@@ -65,10 +88,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
-    console.log("Rule", rule);
-    console.log("stakingRule", stakingRule);
-    console.log("depositCollection", depositCollection);
-    console.log("rewardCollection", rewardCollection);
+
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
@@ -84,14 +104,14 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
   const metaToggleRule = useMetamask((rule: IStaking) => {
     let ruleStatus: boolean;
     if (rule.stakingStatus === StakingStatus.NEW) {
-      // this should never happen
+      // it should never happen
       return Promise.reject(new Error(""));
     } else {
       ruleStatus = rule.stakingStatus !== StakingStatus.ACTIVE;
     }
 
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
-    return contract.updateRule(rule.id, ruleStatus) as Promise<void>;
+    return contract.updateRule(rule.ruleId, ruleStatus) as Promise<void>;
   });
 
   const handleToggleRule = (rule: IStaking): (() => Promise<void>) => {
