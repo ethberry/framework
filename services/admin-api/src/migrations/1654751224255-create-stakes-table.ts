@@ -33,6 +33,10 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
           type: "timestamptz",
         },
         {
+          name: "stake_id",
+          type: "uint256",
+        },
+        {
           name: "staking_rule_id",
           type: "int",
         },
