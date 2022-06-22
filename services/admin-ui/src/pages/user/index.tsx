@@ -64,7 +64,7 @@ export const User: FC = () => {
       <Breadcrumbs path={["dashboard", "users"]} />
 
       <PageHeader message="pages.users.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"

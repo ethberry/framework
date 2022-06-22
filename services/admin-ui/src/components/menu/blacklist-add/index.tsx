@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import { NoAccounts } from "@mui/icons-material";
+import { DoNotDisturbOn } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useWeb3React } from "@web3-react/core";
 import { Contract } from "ethers";
@@ -44,7 +44,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
     <>
       <MenuItem onClick={handleBlacklist}>
         <ListItemIcon>
-          <NoAccounts fontSize="small" />
+          <DoNotDisturbOn fontSize="small" />
         </ListItemIcon>
         <Typography variant="inherit">
           <FormattedMessage id="form.buttons.blacklist" />

@@ -61,7 +61,7 @@ export const Erc998Airdrop: FC = () => {
       <Breadcrumbs path={["dashboard", "erc998-airdrops"]} />
 
       <PageHeader message="pages.erc998-airdrops.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"

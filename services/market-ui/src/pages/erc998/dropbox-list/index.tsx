@@ -39,7 +39,7 @@ export const Erc998DropboxList: FC<IErc998DropboxListProps> = props => {
       <Breadcrumbs path={["dashboard", "erc998-dropboxes"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc998-dropboxes.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"

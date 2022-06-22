@@ -39,7 +39,7 @@ export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
       <Breadcrumbs path={["dashboard", "erc998-templates"]} isHidden={embedded} />
 
       <PageHeader message="pages.erc998-templates.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"

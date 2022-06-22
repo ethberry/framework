@@ -1,15 +1,15 @@
 import { FC, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
-import { NoAccounts } from "@mui/icons-material";
+import { DoNotDisturbOff } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { AccessListUnBlacklistDialog } from "./edit";
 
-export interface IBlacklistRemoveMenuItemProps {
+export interface IUnBlacklistMenuItemProps {
   address: string;
 }
 
-export const UnBlacklistMenuItem: FC<IBlacklistRemoveMenuItemProps> = props => {
+export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
   const { address } = props;
 
   const [isUnBlacklistDialogOpen, setIsUnBlacklistDialogOpen] = useState(false);
@@ -30,7 +30,7 @@ export const UnBlacklistMenuItem: FC<IBlacklistRemoveMenuItemProps> = props => {
     <>
       <MenuItem onClick={handleUnBlacklist}>
         <ListItemIcon>
-          <NoAccounts fontSize="small" />
+          <DoNotDisturbOff fontSize="small" />
         </ListItemIcon>
         <Typography variant="inherit">
           <FormattedMessage id="form.buttons.unblacklist" />

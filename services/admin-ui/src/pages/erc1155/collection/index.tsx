@@ -65,7 +65,7 @@ export const Erc1155Collection: FC = () => {
       <Breadcrumbs path={["dashboard", "erc1155-collections"]} />
 
       <PageHeader message="pages.erc1155-collections.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
