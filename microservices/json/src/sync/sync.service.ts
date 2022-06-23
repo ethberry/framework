@@ -4,7 +4,7 @@ import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";
 
 @Injectable()
-export class GameService {
+export class SyncService {
   constructor(private readonly userService: UserService) {}
 
   public async getProfileBySub(sub: string): Promise<UserEntity> {
