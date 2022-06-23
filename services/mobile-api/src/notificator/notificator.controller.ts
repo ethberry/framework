@@ -9,8 +9,9 @@ import { NotificatorService } from "./notificator.service";
 export class NotificatorController {
   constructor(private notificatorService: NotificatorService) {}
 
+  // TODO listen to real events
   @EventPattern(GameType.DUMMY)
-  dummy(@Payload() data: IMessage): void {
+  public dummy(@Payload() data: IMessage): void {
     return this.notificatorService.dummy(data);
   }
 }

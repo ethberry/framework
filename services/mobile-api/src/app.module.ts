@@ -23,6 +23,9 @@ import { UserModule } from "./user/user.module";
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { OtpModule } from "./otp/otp.module";
+import { SyncModule } from "./sync/sync.module";
+import { NotificatorModule } from "./notificator/notificator.module";
+import { WebhookModule } from "./webhook/webhook.module";
 
 @Module({
   providers: [
@@ -91,6 +94,9 @@ import { OtpModule } from "./otp/otp.module";
     ProfileModule,
     UserModule,
     OtpModule,
+    SyncModule,
+    NotificatorModule,
+    WebhookModule,
   ],
   controllers: [AppController],
 })

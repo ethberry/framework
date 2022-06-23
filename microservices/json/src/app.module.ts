@@ -18,7 +18,7 @@ import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
-import { GameModule } from "./game/game.module";
+import { SyncModule } from "./sync/sync.module";
 
 @Module({
   providers: [
@@ -66,7 +66,7 @@ import { GameModule } from "./game/game.module";
     AuthModule,
     Erc721Module,
     Erc1155Module,
-    GameModule,
+    SyncModule,
   ],
   controllers: [AppController],
 })
