@@ -42,7 +42,10 @@ export class StakingController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: StakingUpdateDto): Promise<StakingRuleEntity | null> {
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: StakingUpdateDto,
+  ): Promise<StakingRuleEntity | null> {
     return this.stakingService.update({ id }, dto);
   }
 

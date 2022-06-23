@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IStake, StakeStatus } from "@framework/types";
-import { SearchableEntity, BigNumberColumn } from "@gemunion/nest-js-module-typeorm-helpers";
+import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { StakingRuleEntity } from "../staking.entity";
 

@@ -45,14 +45,11 @@ export class Erc721TokenService {
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
     const { attributes } = erc721TokenEntity;
+    // TODO filter tokenId, templateId, dropboxId
     const attributesArr = Object.entries(attributes).map(([key, value]: [string, any]) => ({
       trait_type: key,
       value,
     }));
-    attributesArr.push({
-      trait_type: "Rarity",
-      value: erc721TokenEntity.rarity as string,
-    });
 
     return {
       description: getPainText(erc721TokenEntity.erc721Template.description),

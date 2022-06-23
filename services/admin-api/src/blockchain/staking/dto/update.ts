@@ -1,12 +1,12 @@
-import { ApiPropertyOptional, ApiProperty } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
+  IsBoolean,
+  IsEnum,
+  IsInt,
   IsJSON,
+  IsNumber,
   IsOptional,
   IsString,
-  IsInt,
-  IsEnum,
-  IsNumber,
-  IsBoolean,
   Min,
   ValidateIf,
   ValidateNested,
@@ -14,7 +14,7 @@ import {
 import { Transform, Type } from "class-transformer";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-import { IStakingRuleUpdateDto, IStakingRuleItemUpdateDto } from "../interfaces";
+import { IStakingRuleItemUpdateDto, IStakingRuleUpdateDto } from "../interfaces";
 import { TokenType } from "@framework/types";
 
 export class StakingItemUpdateDto implements IStakingRuleItemUpdateDto {

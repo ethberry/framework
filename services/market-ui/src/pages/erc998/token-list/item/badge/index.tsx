@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { IErc998Token, TokenRarity } from "@framework/types";
+import { IErc998Token } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -14,13 +14,13 @@ export const RarityBadge: FC<IRarityBadgeProps> = props => {
 
   const classes = useStyles(token);
 
-  if (token.rarity === TokenRarity.UNKNOWN) {
+  if (!token.attributes.rarity) {
     return null;
   }
 
   return (
     <div className={classes.root}>
-      <FormattedMessage id={`enums.rarity.${token.rarity}`} />
+      <FormattedMessage id={`enums.rarity.${token.attributes.rarity as string}`} />
     </div>
   );
 };

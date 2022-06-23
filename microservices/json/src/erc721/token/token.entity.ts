@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { Erc721TokenStatus, IErc721Token, TokenRarity } from "@framework/types";
+import { Erc721TokenStatus, IErc721Token } from "@framework/types";
 import { ns } from "@framework/constants";
 import { BigNumberColumn, IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
@@ -9,15 +9,8 @@ import { Erc721DropboxEntity } from "../dropbox/dropbox.entity";
 
 @Entity({ schema: ns, name: "erc721_token" })
 export class Erc721TokenEntity extends IdDateBaseEntity implements IErc721Token {
-  // Do not add transformer
   @Column({ type: "json" })
   public attributes: any;
-
-  @Column({
-    type: "enum",
-    enum: TokenRarity,
-  })
-  public rarity: TokenRarity;
 
   @Column({
     type: "enum",

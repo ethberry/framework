@@ -6,7 +6,6 @@ import { ns } from "@framework/constants";
 export class SeedErc721Token1563804040320 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
       INSERT INTO ${ns}.erc721_token (
@@ -19,7 +18,9 @@ export class SeedErc721Token1563804040320 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        '${defaultJSON}',
+        '${JSON.stringify({
+          rarity: 1,
+        })}',
         'COMMON',
         '${wallet}',
         '1',
@@ -28,7 +29,9 @@ export class SeedErc721Token1563804040320 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${defaultJSON}',
+        '${JSON.stringify({
+          rarity: 1,
+        })}',
         'COMMON',
         '${wallet}',
         '2',
@@ -37,7 +40,9 @@ export class SeedErc721Token1563804040320 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${defaultJSON}',
+        '${JSON.stringify({
+          rarity: 5,
+        })}',
         'LEGENDARY',
         '${wallet}',
         '3',

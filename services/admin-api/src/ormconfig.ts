@@ -2,13 +2,7 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 import { ns } from "@framework/constants";
-import {
-  // createDomainUint256,
-  createLanguageEnum,
-  createSchema,
-  installExtensionUUID,
-  // createTokenTypes,
-} from "@gemunion/nest-js-module-typeorm-helpers";
+import { createLanguageEnum, createSchema, installExtensionUUID } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "./user/user.entity";
 import { OtpEntity } from "./otp/otp.entity";
@@ -48,7 +42,9 @@ import { SeedErc20Token1563804010120 } from "./migrations/1563804010120-seed-erc
 import { CreateErc20TokenHistoryTable1563804010130 } from "./migrations/1563804010130-create-erc20-token-history-table";
 import { CreateErc20VestingTable1563804010210 } from "./migrations/1563804010210-create-erc20-vesting-table";
 import { SeedErc20Vesting1563804010220 } from "./migrations/1563804010220-seed-erc20-vesting";
-import { CreateErc20VestingHistoryTable1563804010230 } from "./migrations/1563804010230-create-erc20-vesting-history-table";
+import {
+  CreateErc20VestingHistoryTable1563804010230
+} from "./migrations/1563804010230-create-erc20-vesting-history-table";
 import { CreateErc998CollectionTable1563804030010 } from "./migrations/1563804030010-create-erc998-collection-table";
 import { SeedErc998Collection1563804030020 } from "./migrations/1563804030020-seed-erc998-collection";
 import { CreateErc998TemplateTable1563804030110 } from "./migrations/1563804030110-create-erc998-template-table";
@@ -57,8 +53,12 @@ import { CreateErc998DropboxTable1563804030210 } from "./migrations/156380403021
 import { SeedErc998Dropbox1563804030220 } from "./migrations/1563804030220-seed-erc998-dropbox";
 import { CreateErc998TokenTable1563804030310 } from "./migrations/1563804030310-create-erc998-token-table";
 import { SeedErc998Token1563804030320 } from "./migrations/1563804030320-seed-erc998-tokens";
-import { CreateErc998TokenHistoryTable1563804030330 } from "./migrations/1563804030330-create-erc998-token-history-table";
-import { CreateErc998MarketplaceHistoryTable1563804030510 } from "./migrations/1563804030510-create-erc998-marketplace-history-table";
+import {
+  CreateErc998TokenHistoryTable1563804030330
+} from "./migrations/1563804030330-create-erc998-token-history-table";
+import {
+  CreateErc998MarketplaceHistoryTable1563804030510
+} from "./migrations/1563804030510-create-erc998-marketplace-history-table";
 import { CreateErc721CollectionTable1563804040010 } from "./migrations/1563804040010-create-erc721-collection-table";
 import { SeedErc721Collection1563804040020 } from "./migrations/1563804040020-seed-erc721-collection";
 import { CreateErc721TemplateTable1563804040110 } from "./migrations/1563804040110-create-erc721-template-table";
@@ -67,15 +67,23 @@ import { CreateErc721DropboxTable1563804040210 } from "./migrations/156380404021
 import { SeedErc721Dropbox1563804040220 } from "./migrations/1563804040220-seed-erc721-dropbox";
 import { CreateErc721TokenTable1563804040310 } from "./migrations/1563804040310-create-erc721-token-table";
 import { SeedErc721Token1563804040320 } from "./migrations/1563804040320-seed-erc721-tokens";
-import { CreateErc721TokenHistoryTable1563804040330 } from "./migrations/1563804040330-create-erc721-token-history-table";
-import { CreateErc721MarketplaceHistoryTable1563804040510 } from "./migrations/1563804040510-create-erc721-marketplace-history-table";
+import {
+  CreateErc721TokenHistoryTable1563804040330
+} from "./migrations/1563804040330-create-erc721-token-history-table";
+import {
+  CreateErc721MarketplaceHistoryTable1563804040510
+} from "./migrations/1563804040510-create-erc721-marketplace-history-table";
 import { CreateErc1155RecipeHistory1563804020430 } from "./migrations/1563804020430-create-erc1155-recipe-history";
 import { CreateErc1155CollectionTable1563804020010 } from "./migrations/1563804020010-create-erc1155-collection-table";
 import { SeedErc1155Collection1563804020020 } from "./migrations/1563804020020-seed-erc1155-collection";
 import { CreateErc1155TokenTable1563804020120 } from "./migrations/1563804020110-create-erc1155-token-table";
 import { SeedErc1155Tokens1563804020120 } from "./migrations/1563804020120-seed-erc1155-token";
-import { CreateErc1155TokenHistoryTable1563804020130 } from "./migrations/1563804020130-create-erc1155-token-history-table";
-import { CreateErc1155MarketplaceHistoryTable1563804020210 } from "./migrations/1563804020210-create-erc1155-marketplace-history-table";
+import {
+  CreateErc1155TokenHistoryTable1563804020130
+} from "./migrations/1563804020130-create-erc1155-token-history-table";
+import {
+  CreateErc1155MarketplaceHistoryTable1563804020210
+} from "./migrations/1563804020210-create-erc1155-marketplace-history-table";
 import { CreateErc1155BalanceTable1563804020310 } from "./migrations/1563804020310-create-erc1155-balance-table";
 import { SeedErc1155Balance1563804020320 } from "./migrations/1563804020320-seed-erc1155-balance";
 import { CreateErc1155Recipe1563804020410 } from "./migrations/1563804020410-create-erc1155-recipe-table";
@@ -90,11 +98,15 @@ import { SeedErc721Recipe1563804040620 } from "./migrations/1563804040620-seed-e
 import { CreateErc721RecipeHistory1563804040630 } from "./migrations/1563804040630-create-erc721-recipe-history";
 import { CreateErc721Ingredient1563804040710 } from "./migrations/1563804040710-create-erc721-ingredient-table";
 import { SeedErc721Ingredient1563804040720 } from "./migrations/1563804040720-seed-erc721-ingredient";
-import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
+import {
+  CreateContractManagerHistoryTable1652682493386
+} from "./migrations/1652682493386-create-contract-manager-history-table";
 import { CreateContractManagerTable1652962207600 } from "./migrations/1652962207600-create-contract-manager-table";
 import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager-table";
 import { CreateAccessControlTable1653616447230 } from "./migrations/1653616447230-create-access-control-table";
-import { CreateAccessControlHistoryTable1653616447240 } from "./migrations/1653616447240-create-access-control-history-table";
+import {
+  CreateAccessControlHistoryTable1653616447240
+} from "./migrations/1653616447240-create-access-control-history-table";
 import { CreateAccessListTable1653616447330 } from "./migrations/1653616447330-create-access-list-table";
 import { CreateAccessListHistoryTable1653616447340 } from "./migrations/1653616447340-create-access-list-history-table";
 import { CreateSeaportTable1653820928940 } from "./migrations/1653820928940-create-seaport-table";

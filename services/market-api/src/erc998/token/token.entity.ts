@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
-import { Erc998TokenStatus, IErc998Token, TokenRarity } from "@framework/types";
+import { Erc998TokenStatus, IErc998Token } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-helpers";
 
@@ -12,12 +12,6 @@ import { Erc998DropboxEntity } from "../dropbox/dropbox.entity";
 export class Erc998TokenEntity extends IdDateBaseEntity implements IErc998Token {
   @JsonColumn()
   public attributes: any;
-
-  @Column({
-    type: "enum",
-    enum: TokenRarity,
-  })
-  public rarity: TokenRarity;
 
   @Column({
     type: "enum",

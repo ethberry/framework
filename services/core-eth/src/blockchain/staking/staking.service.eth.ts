@@ -3,13 +3,13 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  StakingRuleStatus,
+  IStakingRuleCreate,
   IStakingRuleDeposit,
   IStakingRuleFinish,
-  IStakingRuleCreate,
   IStakingRuleUpdate,
   IStakingRuleWithdraw,
   StakingEventType,
+  StakingRuleStatus,
   TStakingEventData,
 } from "@framework/types";
 

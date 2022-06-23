@@ -1,7 +1,7 @@
 import { EventPattern, Payload } from "@nestjs/microservices";
 import { Controller } from "@nestjs/common";
 
-import { IMessage, GameType } from "@framework/types";
+import { GameType, IMessage } from "@framework/types";
 
 import { NotificatorService } from "./notificator.service";
 

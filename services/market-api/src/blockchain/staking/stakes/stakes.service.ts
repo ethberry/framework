@@ -1,10 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { StakesEntity } from "./stakes.entity";
-import { Erc721TemplateEntity } from "../../../erc721/template/template.entity";
-import { StakesSearchDto } from "./dto";
 import { IStakesSearchDto } from "@framework/types";
 
 @Injectable()
