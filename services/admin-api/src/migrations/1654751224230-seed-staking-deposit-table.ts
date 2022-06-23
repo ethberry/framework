@@ -11,7 +11,7 @@ export class SeedStakingDepositTable1654751224230 implements MigrationInterface 
         collection,
         token_id,
         amount,
-        staking_id
+        staking_rule_id
       ) VALUES (
         'NATIVE',
         1,

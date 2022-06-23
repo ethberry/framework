@@ -23,12 +23,20 @@ export const Seaport: FC = () => {
             <FormattedMessage id="pages.dashboard.blockchain.seaport" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/staking">
+        <ListItem button component={RouterLink} to="/staking-rules">
           <ListItemIcon>
             <Casino />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.blockchain.staking" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/stakes">
+          <ListItemIcon>
+            <Casino />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.blockchain.stakes" />
           </ListItemText>
         </ListItem>
       </List>

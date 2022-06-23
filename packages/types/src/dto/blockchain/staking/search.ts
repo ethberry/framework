@@ -1,13 +1,17 @@
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { StakingStatus, TokenType } from "../../../entities";
+import { StakeStatus, StakingRuleStatus, TokenType } from "../../../entities";
 
-export interface IStakingItemSearchDto {
+export interface IStakingRuleItemSearchDto {
   tokenType: Array<TokenType>;
 }
 
-export interface IStakingSearchDto extends ISearchDto {
-  stakingStatus: Array<StakingStatus>;
-  deposit: IStakingItemSearchDto;
-  reward: IStakingItemSearchDto;
+export interface IStakingRuleSearchDto extends ISearchDto {
+  stakingStatus: Array<StakingRuleStatus>;
+  deposit: IStakingRuleItemSearchDto;
+  reward: IStakingRuleItemSearchDto;
+}
+
+export interface IStakesSearchDto extends ISearchDto {
+  stakeStatus: Array<StakeStatus>;
 }

@@ -256,6 +256,7 @@
       "royalty": "Royalty",
       "slug": "Slug",
       "stakingStatus": "Status",
+      "stakeStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
       "templateStatus": "Status",
@@ -379,7 +380,8 @@
       },
       "blockchain": {
         "seaport": "Seaport settings",
-        "staking": "Staking",
+        "staking": "Staking Rules",
+        "stakes": "Stakes",
         "title": "Blockchain"
       },
       "erc1155": {

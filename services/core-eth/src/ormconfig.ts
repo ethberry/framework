@@ -27,9 +27,10 @@ import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
 import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
-import { StakingEntity } from "./blockchain/staking/staking.entity";
+import { StakingRuleEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
+import { StakesEntity } from "./blockchain/staking/stakes/stakes.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -43,7 +44,8 @@ const config: PostgresConnectionOptions = {
     Erc20TokenHistoryEntity,
     Erc20TokenEntity,
     Erc20VestingEntity,
-    StakingEntity,
+    StakingRuleEntity,
+    StakesEntity,
     StakingDepositEntity,
     StakingRewardEntity,
     StakingHistoryEntity,

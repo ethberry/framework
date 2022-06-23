@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, Repository } from "typeorm";
 
-import { TokenType, IStakingSearchDto } from "@framework/types";
+import { TokenType, IStakingRuleSearchDto } from "@framework/types";
 
-import { StakingEntity } from "./staking.entity";
+import { StakingRuleEntity } from "./staking.entity";
 import { Erc20TokenEntity } from "../../erc20/token/token.entity";
 import { Erc721CollectionEntity } from "../../erc721/collection/collection.entity";
 import { Erc998CollectionEntity } from "../../erc998/collection/collection.entity";
@@ -13,11 +13,11 @@ import { Erc1155CollectionEntity } from "../../erc1155/collection/collection.ent
 @Injectable()
 export class StakingService {
   constructor(
-    @InjectRepository(StakingEntity)
-    private readonly stakingEntityRepository: Repository<StakingEntity>,
+    @InjectRepository(StakingRuleEntity)
+    private readonly stakingEntityRepository: Repository<StakingRuleEntity>,
   ) {}
 
-  // public search(dto: IStakingSearchDto): Promise<[Array<StakingEntity>, number]> {
+  // public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRuleEntity>, number]> {
   //   const { query, deposit, reward, stakingStatus, skip, take } = dto;
   //
   //   const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking");
@@ -73,7 +73,7 @@ export class StakingService {
   //
   //   return queryBuilder.getManyAndCount();
   // }
-  public search(dto: IStakingSearchDto): Promise<[Array<StakingEntity>, number]> {
+  public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRuleEntity>, number]> {
     const { query, deposit, reward, stakingStatus, skip, take } = dto;
 
     const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking");

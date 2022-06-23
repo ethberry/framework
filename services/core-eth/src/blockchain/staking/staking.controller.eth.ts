@@ -5,11 +5,11 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
-  IStakingDeposit,
-  IStakingFinish,
+  IStakingRuleDeposit,
+  IStakingRuleFinish,
   IStakingRuleCreate,
   IStakingRuleUpdate,
-  IStakingWithdraw,
+  IStakingRuleWithdraw,
   StakingEventType,
 } from "@framework/types";
 
@@ -30,17 +30,17 @@ export class StakingControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingStart })
-  public start(@Payload() event: ILogEvent<IStakingDeposit>, @Ctx() context: Log): Promise<void> {
+  public start(@Payload() event: ILogEvent<IStakingRuleDeposit>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.start(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingWithdraw })
-  public withdraw(@Payload() event: ILogEvent<IStakingWithdraw>, @Ctx() context: Log): Promise<void> {
+  public withdraw(@Payload() event: ILogEvent<IStakingRuleWithdraw>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.withdraw(event, context);
   }
 
   @EventPattern({ contractType: ContractType.STAKING, eventName: StakingEventType.StakingFinish })
-  public finish(@Payload() event: ILogEvent<IStakingFinish>, @Ctx() context: Log): Promise<void> {
+  public finish(@Payload() event: ILogEvent<IStakingRuleFinish>, @Ctx() context: Log): Promise<void> {
     return this.stakingServiceEth.finish(event, context);
   }
 }

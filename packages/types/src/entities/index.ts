@@ -47,6 +47,7 @@ export * from "./blockchain/access-list";
 export * from "./blockchain/access-list-history";
 export * from "./blockchain/contract-manager";
 export * from "./blockchain/contract-manager-history";
+export * from "./blockchain/staking-rule";
 export * from "./blockchain/staking";
 export * from "./blockchain/staking-history";
 export * from "./blockchain/common";

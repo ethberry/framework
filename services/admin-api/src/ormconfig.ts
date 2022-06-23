@@ -33,7 +33,7 @@ import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity"
 import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
 import { Erc1155IngredientEntity } from "./erc1155/recipe/ingredient/ingredient.entity";
-import { StakingEntity } from "./blockchain/staking/staking.entity";
+import { StakingRuleEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
@@ -102,7 +102,7 @@ import { CreateSeaportHistoryTable1653820928950 } from "./migrations/16538209289
 import { CreateSettingsTable1654437010000 } from "./migrations/1654437010000-create-settings-table";
 import { SeedSettingsTable1654437010010 } from "./migrations/1654437010010-seed-settings-table";
 import { CreateStakingRuleTable1654751224200 } from "./migrations/1654751224200-create-staking-rule-table";
-import { SeedStakingTable1654751224210 } from "./migrations/1654751224210-seed-staking-rule-table";
+import { SeedStakingRuleTable1654751224210 } from "./migrations/1654751224210-seed-staking-rule-table";
 import { CreateStakingDepositTable1654751224220 } from "./migrations/1654751224220-create-staking-deposit-table";
 import { SeedStakingDepositTable1654751224230 } from "./migrations/1654751224230-seed-staking-deposit-table";
 import { CreateStakingRewardTable1654751224240 } from "./migrations/1654751224240-create-staking-reward-table";
@@ -113,6 +113,8 @@ import { CreatePageTable1655626535100 } from "./migrations/1655626535100-create-
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
 import { createTokenTypes } from "./migrations/1561991000005-create-token-types";
 import { createDomainUint256 } from "./migrations/1561991000002-create-uint256";
+import { CreateStakesTable1654751224255 } from "./migrations/1654751224255-create-stakes-table";
+import { StakesEntity } from "./blockchain/staking/stakes/stakes.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -146,7 +148,8 @@ const config: PostgresConnectionOptions = {
     Erc1155TokenEntity,
     Erc1155RecipeEntity,
     Erc1155IngredientEntity,
-    StakingEntity,
+    StakesEntity,
+    StakingRuleEntity,
     StakingDepositEntity,
     StakingRewardEntity,
     StakingHistoryEntity,
@@ -232,11 +235,12 @@ const config: PostgresConnectionOptions = {
     CreateSettingsTable1654437010000,
     SeedSettingsTable1654437010010,
     CreateStakingRuleTable1654751224200,
-    SeedStakingTable1654751224210,
+    SeedStakingRuleTable1654751224210,
     CreateStakingDepositTable1654751224220,
     SeedStakingDepositTable1654751224230,
     CreateStakingRewardTable1654751224240,
     SeedStakingRewardTable1654751224250,
+    CreateStakesTable1654751224255,
     CreateStakingHistoryTable1654751224260,
     CreatePageTable1655626535100,
     SeedPages1655626535110,

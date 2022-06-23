@@ -3,9 +3,9 @@ import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IStakingItemSearchDto, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRuleItemSearchDto, IStakingRuleSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-export class StakingItemSearchDto implements IStakingItemSearchDto {
+export class StakingItemSearchDto implements IStakingRuleItemSearchDto {
   @ApiPropertyOptional({
     enum: TokenType,
     isArray: true,
@@ -19,18 +19,18 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
   public tokenType: Array<TokenType>;
 }
 
-export class StakingSearchDto extends SearchDto implements IStakingSearchDto {
+export class StakingSearchDto extends SearchDto implements IStakingRuleSearchDto {
   @ApiPropertyOptional({
-    enum: StakingStatus,
+    enum: StakingRuleStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<StakingStatus>)
-  @IsEnum(StakingStatus, { each: true, message: "badInput" })
-  public stakingStatus: Array<StakingStatus>;
+  @Transform(({ value }) => value as Array<StakingRuleStatus>)
+  @IsEnum(StakingRuleStatus, { each: true, message: "badInput" })
+  public stakingStatus: Array<StakingRuleStatus>;
 
   @ApiPropertyOptional({
     type: StakingItemSearchDto,

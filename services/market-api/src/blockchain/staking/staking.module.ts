@@ -3,11 +3,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { StakingService } from "./staking.service";
 import { StakingController } from "./staking.controller";
-import { StakingEntity } from "./staking.entity";
+import { StakingRuleEntity } from "./staking.entity";
 import { StakingHistoryModule } from "./staking-history/staking-history.module";
+import { StakesModule } from "./stakes/stakes.module";
 
 @Module({
-  imports: [StakingHistoryModule, TypeOrmModule.forFeature([StakingEntity])],
+  imports: [StakesModule, StakingHistoryModule, TypeOrmModule.forFeature([StakingRuleEntity])],
   providers: [StakingService],
   controllers: [StakingController],
   exports: [StakingService],

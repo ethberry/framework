@@ -29,16 +29,26 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
           default: "'ACTIVE'",
         },
         {
-          name: "start_timestamp",
-          type: "timestamptz",
-        },
-        {
           name: "stake_id",
           type: "uint256",
         },
         {
+          name: "start_timestamp",
+          type: "timestamptz",
+        },
+        {
+          name: "withdraw_timestamp",
+          type: "timestamptz",
+          isNullable: true,
+        },
+        {
           name: "staking_rule_id",
           type: "int",
+        },
+        {
+          name: "multiplier",
+          type: "int",
+          isNullable: true,
         },
         {
           name: "created_at",

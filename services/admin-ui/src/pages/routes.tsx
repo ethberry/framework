@@ -20,6 +20,7 @@ import { Settings } from "./settings";
 import { Email } from "./email";
 import { Staking } from "./staking";
 import { Page } from "./page";
+import { Stakes } from "./stakes";
 
 const routes: Array<RouteObject> = [
   {
@@ -73,11 +74,19 @@ const routes: Array<RouteObject> = [
         children: [{ index: true, element: <Seaport /> }],
       },
       {
-        path: "/staking",
+        path: "/staking-rules",
         element: <Protected />,
         children: [
           { index: true, element: <Staking /> },
-          { path: "/staking/:id", element: <Staking /> },
+          { path: "/staking-rules/:id", element: <Staking /> },
+        ],
+      },
+      {
+        path: "/stakes",
+        element: <Protected />,
+        children: [
+          { index: true, element: <Stakes /> },
+          { path: "/stakes/:id", element: <Stakes /> },
         ],
       },
       ...erc20Routes,

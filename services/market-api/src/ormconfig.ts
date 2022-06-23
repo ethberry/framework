@@ -26,10 +26,11 @@ import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { Erc1155TokenHistoryEntity } from "./erc1155/token-history/token-history.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
 import { Erc1155IngredientEntity } from "./erc1155/recipe/ingredient/ingredient.entity";
-import { StakingEntity } from "./blockchain/staking/staking.entity";
+import { StakingRuleEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 import { PageEntity } from "./page/page.entity";
+import { StakesEntity } from "./blockchain/staking/stakes/stakes.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -65,7 +66,8 @@ const config: PostgresConnectionOptions = {
     Erc1155RecipeEntity,
     Erc1155IngredientEntity,
     UserEntity,
-    StakingEntity,
+    StakesEntity,
+    StakingRuleEntity,
     StakingDepositEntity,
     StakingRewardEntity,
     PageEntity,

@@ -11,7 +11,7 @@ export class SeedStakingRewardTable1654751224250 implements MigrationInterface {
         collection,
         token_id,
         amount,
-        staking_id
+        staking_rule_id
       ) VALUES (
         'ERC721D',
         2,

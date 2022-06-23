@@ -32,15 +32,15 @@ export class CreateStakingRewardTable1654751224240 implements MigrationInterface
           isNullable: true,
         },
         {
-          name: "staking_id",
+          name: "staking_rule_id",
           type: "int",
         },
       ],
       foreignKeys: [
         {
-          columnNames: ["staking_id"],
+          columnNames: ["staking_rule_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.staking`,
+          referencedTableName: `${ns}.staking_rule`,
           onDelete: "CASCADE",
         },
       ],

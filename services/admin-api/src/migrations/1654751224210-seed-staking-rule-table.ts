@@ -3,12 +3,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
 
-export class SeedStakingTable1654751224210 implements MigrationInterface {
+export class SeedStakingRuleTable1654751224210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.staking (
+      INSERT INTO ${ns}.staking_rule (
         title,
         description,
         duration,

@@ -5,24 +5,24 @@ import { Check, Close, CloudUpload } from "@mui/icons-material";
 import { Contract, BigNumber, constants } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { IStaking, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRule, StakingRuleStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/UniStaking.sol/UniStaking.json";
 
-export interface IStakingUploadButtonProps {
-  rule: IStaking;
+export interface IStakingRuleUploadButtonProps {
+  rule: IStakingRule;
 }
 
-export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
+export const StakingUploadButton: FC<IStakingRuleUploadButtonProps> = props => {
   const { rule } = props;
 
   const { formatMessage } = useIntl();
 
   const { library } = useWeb3React();
 
-  const metaLoadRule = useMetamask((rule: IStaking) => {
-    if (rule.stakingStatus !== StakingStatus.NEW) {
+  const metaLoadRule = useMetamask((rule: IStakingRule) => {
+    if (rule.stakingStatus !== StakingRuleStatus.NEW) {
       return Promise.reject(new Error(""));
     }
 
@@ -93,7 +93,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
-  const handleLoadRule = (rule: IStaking): (() => Promise<void>) => {
+  const handleLoadRule = (rule: IStakingRule): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaLoadRule(rule).then(() => {
         // TODO reload
@@ -101,20 +101,20 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     };
   };
 
-  const metaToggleRule = useMetamask((rule: IStaking) => {
+  const metaToggleRule = useMetamask((rule: IStakingRule) => {
     let ruleStatus: boolean;
-    if (rule.stakingStatus === StakingStatus.NEW) {
+    if (rule.stakingStatus === StakingRuleStatus.NEW) {
       // it should never happen
       return Promise.reject(new Error(""));
     } else {
-      ruleStatus = rule.stakingStatus !== StakingStatus.ACTIVE;
+      ruleStatus = rule.stakingStatus !== StakingRuleStatus.ACTIVE;
     }
 
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
     return contract.updateRule(rule.ruleId, ruleStatus) as Promise<void>;
   });
 
-  const handleToggleRule = (rule: IStaking): (() => Promise<void>) => {
+  const handleToggleRule = (rule: IStakingRule): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaToggleRule(rule).then(() => {
         // TODO reload
@@ -122,7 +122,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     };
   };
 
-  if (rule.stakingStatus === StakingStatus.NEW) {
+  if (rule.stakingStatus === StakingRuleStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.staking-rules.upload" })}>
         <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
@@ -136,13 +136,13 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     <Tooltip
       title={formatMessage({
         id:
-          rule.stakingStatus === StakingStatus.ACTIVE
+          rule.stakingStatus === StakingRuleStatus.ACTIVE
             ? "pages.staking-rules.deactivate"
             : "pages.staking-rules.activate",
       })}
     >
       <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">
-        {rule.stakingStatus === StakingStatus.ACTIVE ? <Close /> : <Check />}
+        {rule.stakingStatus === StakingRuleStatus.ACTIVE ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRuleSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import { StakingEntity } from "./staking.entity";
-import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
+import { StakingRuleEntity } from "./staking.entity";
+import { IStakingRuleCreateDto, IStakingRuleUpdateDto } from "./interfaces";
 import { Erc20TokenEntity } from "../../erc20/token/token.entity";
 import { Erc721CollectionEntity } from "../../erc721/collection/collection.entity";
 import { Erc1155CollectionEntity } from "../../erc1155/collection/collection.entity";
@@ -14,16 +14,16 @@ import { Erc998CollectionEntity } from "../../erc998/collection/collection.entit
 @Injectable()
 export class StakingService {
   constructor(
-    @InjectRepository(StakingEntity)
-    private readonly stakingEntityRepository: Repository<StakingEntity>,
+    @InjectRepository(StakingRuleEntity)
+    private readonly stakingEntityRepository: Repository<StakingRuleEntity>,
   ) {}
 
-  public search(dto: IStakingSearchDto): Promise<[Array<StakingEntity>, number]> {
+  public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRuleEntity>, number]> {
     const { query, deposit, reward, stakingStatus, skip, take } = dto;
 
-    const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking");
-    queryBuilder.leftJoinAndSelect("staking.deposit", "deposit");
-    queryBuilder.leftJoinAndSelect("staking.reward", "reward");
+    const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking_rule");
+    queryBuilder.leftJoinAndSelect("staking_rule.deposit", "deposit");
+    queryBuilder.leftJoinAndSelect("staking_rule.reward", "reward");
 
     queryBuilder.leftJoinAndMapOne(
       "reward.erc20",
@@ -87,11 +87,11 @@ export class StakingService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(staking.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(staking_rule.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("staking.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("staking_rule.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -99,9 +99,9 @@ export class StakingService {
 
     if (stakingStatus) {
       if (stakingStatus.length === 1) {
-        queryBuilder.andWhere("staking.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
+        queryBuilder.andWhere("staking_rule.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
       } else {
-        queryBuilder.andWhere("staking.stakingStatus IN(:...stakingStatus)", { stakingStatus });
+        queryBuilder.andWhere("staking_rule.stakingStatus IN(:...stakingStatus)", { stakingStatus });
       }
     }
 
@@ -125,24 +125,27 @@ export class StakingService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "staking.id": "ASC",
+      "staking_rule.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
   public findOne(
-    where: FindOptionsWhere<StakingEntity>,
-    options?: FindOneOptions<StakingEntity>,
-  ): Promise<StakingEntity | null> {
+    where: FindOptionsWhere<StakingRuleEntity>,
+    options?: FindOneOptions<StakingRuleEntity>,
+  ): Promise<StakingRuleEntity | null> {
     return this.stakingEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IStakingCreateDto): Promise<StakingEntity> {
+  public async create(dto: IStakingRuleCreateDto): Promise<StakingRuleEntity> {
     return this.stakingEntityRepository.create(dto).save();
   }
 
-  public async update(where: FindOptionsWhere<StakingEntity>, dto: IStakingUpdateDto): Promise<StakingEntity> {
+  public async update(
+    where: FindOptionsWhere<StakingRuleEntity>,
+    dto: IStakingRuleUpdateDto,
+  ): Promise<StakingRuleEntity> {
     const { reward, deposit, ...rest } = dto;
     const stakingEntity = await this.findOne(where, { relations: { deposit: true, reward: true } });
 
@@ -158,17 +161,17 @@ export class StakingService {
     return stakingEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<StakingEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<StakingRuleEntity>): Promise<void> {
     const stakingEntity = await this.findOne(where);
 
     if (!stakingEntity) {
       return;
     }
 
-    if (stakingEntity.stakingStatus === StakingStatus.NEW) {
+    if (stakingEntity.stakingStatus === StakingRuleStatus.NEW) {
       await stakingEntity.remove();
     } else {
-      Object.assign(stakingEntity, { recipeStatus: StakingStatus.INACTIVE });
+      Object.assign(stakingEntity, { recipeStatus: StakingRuleStatus.INACTIVE });
       await stakingEntity.save();
     }
   }

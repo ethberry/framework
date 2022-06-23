@@ -15,11 +15,11 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStaking, IStakingItem, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRule, IStakingRuleItem, IStakingRuleSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
 import { StakingDepositButton } from "../../../components/buttons";
 import { StakingSearchForm } from "./form";
-import { StakingViewDialog } from "./view";
+// import { StakingViewDialog } from "./view";
 
 export const Stake: FC = () => {
   const {
@@ -36,7 +36,7 @@ export const Stake: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
-  } = useCollection<IStaking, IStakingSearchDto>({
+  } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking",
     empty: {
       title: "",
@@ -44,18 +44,18 @@ export const Stake: FC = () => {
       deposit: {
         tokenType: TokenType.NATIVE,
         collection: 0,
-      } as IStakingItem,
+      } as IStakingRuleItem,
       reward: {
         tokenType: TokenType.NATIVE,
         collection: 0,
-      } as IStakingItem,
+      } as IStakingRuleItem,
       duration: 30,
       penalty: 100,
       recurrent: false,
     },
     search: {
       query: "",
-      stakingStatus: [StakingStatus.ACTIVE],
+      stakingStatus: [StakingRuleStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
       },
@@ -105,12 +105,12 @@ export const Stake: FC = () => {
         onChange={handleChangePage}
       />
 
-      <StakingViewDialog
-        onCancel={handleViewCancel}
-        onConfirm={handleViewConfirm}
-        open={isViewDialogOpen}
-        initialValues={selected}
-      />
+      {/* <StakingViewDialog */}
+      {/*  onCancel={handleViewCancel} */}
+      {/*  onConfirm={handleViewConfirm} */}
+      {/*  open={isViewDialogOpen} */}
+      {/*  initialValues={selected} */}
+      {/* /> */}
     </Grid>
   );
 };

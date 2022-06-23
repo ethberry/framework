@@ -67,6 +67,7 @@ fi
   echo "ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR"
   echo "ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR"
   echo "ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR"
+  echo "STAKING_ADDR=$STAKING_ADDR"
   echo ""
 
   echo "done with contract's addrs"
@@ -93,6 +94,7 @@ fi
   sed -i -e "s/ERC721_AIRDROP_ADDR=.*/ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/ERC1155_CRAFT_ADDR=.*/ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
+  sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   rm $CURDIR/services/admin-ui/.env.$BASE_MODE-e
 
   echo "setting-up MARKET UI .env.$BASE_MODE"
@@ -114,6 +116,7 @@ fi
   sed -i -e "s/ERC721_AIRDROP_ADDR=.*/ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/ERC1155_CRAFT_ADDR=.*/ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
+  sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   rm $CURDIR/services/market-ui/.env.$BASE_MODE-e
 
   echo "setting-up core-eth .env.$BASE_MODE"
@@ -133,6 +136,7 @@ fi
   sed -i -e "s/ERC721_AIRDROP_ADDR=.*/ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/ERC1155_CRAFT_ADDR=.*/ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   rm $CURDIR/services/core-eth/.env.$BASE_MODE-e
 
   echo "setting-up admin-API .env.$BASE_MODE"
@@ -157,6 +161,7 @@ fi
   sed -i -e "s/ERC721_AIRDROP_ADDR=.*/ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/ERC1155_CRAFT_ADDR=.*/ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
+  sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   rm $CURDIR/services/admin-api/.env.$BASE_MODE-e
 
   echo "setting-up market-API .env.$BASE_MODE"
@@ -180,6 +185,8 @@ fi
   sed -i -e "s/ERC721_AIRDROP_ADDR=.*/ERC721_AIRDROP_ADDR=$ERC721_AIRDROP_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/ERC1155_CRAFT_ADDR=.*/ERC1155_CRAFT_ADDR=$ERC1155_CRAFT_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/ERC1155_MARKETPLACE_ADDR=.*/ERC1155_MARKETPLACE_ADDR=$ERC1155_MARKETPLACE_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
+  sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
+
   rm $CURDIR/services/market-api/.env.$BASE_MODE-e
 
   echo "ALL done"

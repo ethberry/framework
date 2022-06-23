@@ -2,16 +2,16 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
-import { IStakingItem, TokenType } from "@framework/types";
+import { IStakingRuleItem, TokenType } from "@framework/types";
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { StakingEntity } from "./staking.entity";
+import { StakingRuleEntity } from "./staking.entity";
 import { Erc20TokenEntity } from "../../erc20/token/token.entity";
 import { Erc721CollectionEntity } from "../../erc721/collection/collection.entity";
 import { Erc1155CollectionEntity } from "../../erc1155/collection/collection.entity";
 import { Erc998CollectionEntity } from "../../erc998/collection/collection.entity";
 
 @Entity({ schema: ns, name: "staking_rule_reward" })
-export class StakingRewardEntity extends IdBaseEntity implements IStakingItem {
+export class StakingRewardEntity extends IdBaseEntity implements IStakingRuleItem {
   @Column({
     type: "enum",
     enum: TokenType,
@@ -27,13 +27,12 @@ export class StakingRewardEntity extends IdBaseEntity implements IStakingItem {
   @Column({ type: "numeric" })
   public amount: string;
 
-  // @Exclude()
   @Column({ type: "int" })
-  public stakingId: number;
+  public stakingRuleId: number;
 
   @JoinColumn()
-  @OneToOne(_type => StakingEntity)
-  public staking: StakingEntity;
+  @OneToOne(_type => StakingRuleEntity)
+  public stakingRule: StakingRuleEntity;
 
   public erc20: Erc20TokenEntity;
   public erc721: Erc721CollectionEntity;

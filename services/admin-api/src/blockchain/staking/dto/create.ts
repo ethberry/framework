@@ -5,9 +5,9 @@ import { Transform, Type } from "class-transformer";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { TokenType } from "@framework/types";
 
-import { IStakingCreateDto, IStakingItemCreateDto } from "../interfaces";
+import { IStakingRuleCreateDto, IStakingRuleItemCreateDto } from "../interfaces";
 
-export class StakingItemCreateDto implements IStakingItemCreateDto {
+export class StakingItemCreateDto implements IStakingRuleItemCreateDto {
   @ApiProperty({
     enum: TokenType,
   })
@@ -34,7 +34,7 @@ export class StakingItemCreateDto implements IStakingItemCreateDto {
   public amount: string;
 }
 
-export class StakingCreateDto implements IStakingCreateDto {
+export class StakingCreateDto implements IStakingRuleCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   public title: string;
