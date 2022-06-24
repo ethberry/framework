@@ -1,7 +1,5 @@
-import { Controller, Get, HttpCode, HttpStatus, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, HttpCode, HttpStatus, Query } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { StakingHistoryService } from "./staking-history.service";
 import { LeaderboardSearchDto } from "./dto";

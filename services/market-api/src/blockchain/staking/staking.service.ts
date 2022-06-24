@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, Repository } from "typeorm";
 
-import { TokenType, IStakingRuleSearchDto } from "@framework/types";
+import { IStakingRuleSearchDto, TokenType } from "@framework/types";
 
 import { StakingRuleEntity } from "./staking.entity";
 import { Erc20TokenEntity } from "../../erc20/token/token.entity";

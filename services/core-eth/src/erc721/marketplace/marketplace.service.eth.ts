@@ -40,8 +40,9 @@ export class Erc721MarketplaceServiceEth {
 
     const erc721TokenEntity = await this.erc721TokenService.create({
       tokenId,
-      attributes: erc721TemplateEntity.attributes,
-      rarity: TokenRarity.COMMON,
+      attributes: Object.assign(erc721TemplateEntity.attributes, {
+        rarity: TokenRarity.COMMON,
+      }),
       owner: from.toLowerCase(),
       erc721Template: erc721TemplateEntity,
     });
@@ -62,8 +63,7 @@ export class Erc721MarketplaceServiceEth {
 
     const erc721TokenEntity = await this.erc721TokenService.create({
       tokenId,
-      attributes: "{}",
-      rarity: TokenRarity.UNKNOWN,
+      attributes: {},
       owner: from.toLowerCase(),
       erc721Dropbox: erc721DropboxEntity,
     });

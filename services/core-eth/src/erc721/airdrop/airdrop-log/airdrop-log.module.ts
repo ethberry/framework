@@ -64,7 +64,7 @@ export class Erc721AirdropLogModule implements OnModuleDestroy {
   constructor(private readonly erc721AirdropLogService: Erc721AirdropLogService) {}
 
   // save last block on SIGTERM
-  public async onModuleDestroy(): Promise<number> {
+  public onModuleDestroy(): Promise<number> {
     return this.erc721AirdropLogService.updateBlock();
   }
 }

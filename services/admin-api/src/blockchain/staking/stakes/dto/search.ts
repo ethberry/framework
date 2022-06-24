@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 
-import { StakeStatus, IStakesSearchDto } from "@framework/types";
+import { IStakesSearchDto, StakeStatus } from "@framework/types";
 
 export class StakesSearchDto extends SearchDto implements IStakesSearchDto {
   @ApiPropertyOptional({

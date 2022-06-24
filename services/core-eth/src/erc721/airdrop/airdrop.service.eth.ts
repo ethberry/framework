@@ -17,7 +17,6 @@ import {
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
   TErc721TokenEventData,
-  TokenRarity,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
@@ -175,7 +174,6 @@ export class Erc721AirdropServiceEth {
       tokenId,
       attributes: erc721TemplateEntity.attributes,
       owner: from.toLowerCase(),
-      rarity: TokenRarity.UNKNOWN,
       erc721Template: erc721TemplateEntity,
     });
 

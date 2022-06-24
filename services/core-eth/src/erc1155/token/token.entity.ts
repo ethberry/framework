@@ -2,13 +2,13 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { Erc1155TokenStatus, IErc1155Token } from "@framework/types";
 import { ns } from "@framework/constants";
-import { BigNumberColumn, JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc1155CollectionEntity } from "../collection/collection.entity";
 
 @Entity({ schema: ns, name: "erc1155_token" })
 export class Erc1155TokenEntity extends SearchableEntity implements IErc1155Token {
-  @JsonColumn()
+  @Column({ type: "json" })
   public attributes: any;
 
   @BigNumberColumn()

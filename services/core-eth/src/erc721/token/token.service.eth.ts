@@ -145,7 +145,6 @@ export class Erc721TokenServiceEth {
       tokenId,
       attributes: erc721TemplateEntity.attributes,
       owner: from.toLowerCase(),
-      rarity: TokenRarity.UNKNOWN,
       erc721Template: erc721TemplateEntity,
     });
 
@@ -174,11 +173,12 @@ export class Erc721TokenServiceEth {
 
     const erc721TokenEntity = await this.erc721TokenService.create({
       tokenId,
-      attributes: erc721TemplateEntity.attributes,
+      attributes: Object.assign(erc721TemplateEntity.attributes, {
+        rarity: Object.values(TokenRarity)[~~rarity],
+      }),
       owner: to.toLowerCase(),
       erc721Template: erc721TemplateEntity,
       erc721Token: erc721DropboxEntity,
-      rarity: Object.values(TokenRarity)[~~rarity],
     });
 
     await this.updateHistory(event, context, erc721TokenEntity.id);

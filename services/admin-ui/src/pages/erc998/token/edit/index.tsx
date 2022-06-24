@@ -5,7 +5,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc998TokenStatus, IErc998Token, TokenRarity } from "@framework/types";
+import { Erc998TokenStatus, IErc998Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -19,12 +19,11 @@ export interface IErc998TokenEditDialogProps {
 export const Erc998TokenEditDialog: FC<IErc998TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, attributes, rarity, owner, tokenStatus, tokenId, erc998Template } = initialValues;
+  const { id, attributes, owner, tokenStatus, tokenId, erc998Template } = initialValues;
 
   const fixedValues = {
     id,
     attributes,
-    rarity,
     owner,
     tokenStatus,
     tokenId,
@@ -45,7 +44,6 @@ export const Erc998TokenEditDialog: FC<IErc998TokenEditDialogProps> = props => {
       <TextInput name="tokenId" readOnly />
       <SelectInput name="tokenStatus" options={Erc998TokenStatus} readOnly />
       <TextInput name="owner" readOnly />
-      <SelectInput name="rarity" options={TokenRarity} readOnly />
       <EntityInput name="erc998CollectionId" controller="erc998-collections" readOnly />
       <img src={erc998Template?.imageUrl} width={200} height={200} alt={erc998Template?.title} />
     </FormDialog>

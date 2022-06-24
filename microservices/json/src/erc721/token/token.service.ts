@@ -7,7 +7,7 @@ import { BigNumber } from "ethers";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { Erc721TokenEntity } from "./token.entity";
-import { IOpenSeaErc721Metadata } from "../../common/interfaces";
+import { IOpenSeaMetadata } from "../../common/interfaces";
 
 @Injectable()
 export class Erc721TokenService {
@@ -35,7 +35,7 @@ export class Erc721TokenService {
     return queryBuilder.getOne();
   }
 
-  public async getTokenMetadata(address: string, tokenId: BigNumber): Promise<IOpenSeaErc721Metadata> {
+  public async getTokenMetadata(address: string, tokenId: BigNumber): Promise<IOpenSeaMetadata> {
     const erc721TokenEntity = await this.getToken(address, tokenId.toString());
 
     if (!erc721TokenEntity) {
@@ -45,14 +45,11 @@ export class Erc721TokenService {
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
     const { attributes } = erc721TokenEntity;
+    // TODO filter tokenId, templateId, dropboxId
     const attributesArr = Object.entries(attributes).map(([key, value]: [string, any]) => ({
       trait_type: key,
       value,
     }));
-    attributesArr.push({
-      trait_type: "Rarity",
-      value: erc721TokenEntity.rarity as string,
-    });
 
     return {
       description: getPainText(erc721TokenEntity.erc721Template.description),

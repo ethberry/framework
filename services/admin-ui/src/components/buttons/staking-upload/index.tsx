@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
-import { Contract, BigNumber, constants } from "ethers";
+import { BigNumber, constants, Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { IStakingRule, StakingRuleStatus, TokenType } from "@framework/types";

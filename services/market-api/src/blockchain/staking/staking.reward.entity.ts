@@ -1,5 +1,4 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
-import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
 import { IStakingRuleItem, TokenType } from "@framework/types";

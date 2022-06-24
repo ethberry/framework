@@ -8,7 +8,7 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-  Pagination,
+  Pagination
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 

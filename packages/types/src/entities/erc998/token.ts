@@ -3,7 +3,6 @@ import { IIdDateBase } from "@gemunion/types-collection";
 import { IErc998Template } from "./template";
 import { IErc998TokenHistory } from "./token-history";
 import { IErc998Dropbox } from "./dropbox";
-import { TokenRarity } from "../blockchain/common";
 
 export enum Erc998TokenStatus {
   MINTED = "MINTED",
@@ -12,7 +11,6 @@ export enum Erc998TokenStatus {
 
 export interface IErc998Token extends IIdDateBase {
   attributes: any;
-  rarity: TokenRarity;
   tokenId: string;
   tokenStatus: Erc998TokenStatus;
   owner: string;

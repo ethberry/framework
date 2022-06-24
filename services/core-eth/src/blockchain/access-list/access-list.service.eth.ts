@@ -6,8 +6,8 @@ import {
   AccessListEventType,
   IBlacklisted,
   IUnBlacklisted,
-  IWhitelisted,
   IUnWhitelisted,
+  IWhitelisted,
   TAccessListEventData,
 } from "@framework/types";
 

@@ -6,7 +6,7 @@ import { BigNumber } from "ethers";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { Erc1155TokenEntity } from "./token.entity";
-import { IOpenSeaErc1155Metadata } from "../../common/interfaces";
+import { IOpenSeaMetadata } from "../../common/interfaces";
 
 @Injectable()
 export class Erc1155TokenService {
@@ -33,7 +33,7 @@ export class Erc1155TokenService {
     return queryBuilder.getOne();
   }
 
-  public async getTokenMetadata(address: string, tokenId: BigNumber): Promise<IOpenSeaErc1155Metadata> {
+  public async getTokenMetadata(address: string, tokenId: BigNumber): Promise<IOpenSeaMetadata> {
     const erc1155TokenEntity = await this.getToken(address, tokenId.toString());
 
     if (!erc1155TokenEntity) {

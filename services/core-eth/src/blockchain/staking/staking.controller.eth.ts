@@ -5,9 +5,9 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
+  IStakingRuleCreate,
   IStakingRuleDeposit,
   IStakingRuleFinish,
-  IStakingRuleCreate,
   IStakingRuleUpdate,
   IStakingRuleWithdraw,
   StakingEventType,

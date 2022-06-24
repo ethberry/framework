@@ -29,9 +29,9 @@ export class Erc998TokenService {
 
     if (rarity) {
       if (rarity.length === 1) {
-        queryBuilder.andWhere("token.rarity = :rarity", { rarity: rarity[0] });
+        queryBuilder.andWhere("token.attributes->>'rarity' = :rarity", { rarity: rarity[0] });
       } else {
-        queryBuilder.andWhere("token.rarity IN(:...rarity)", { rarity });
+        queryBuilder.andWhere("token.attributes->>'rarity' IN(:...rarity)", { rarity });
       }
     }
 

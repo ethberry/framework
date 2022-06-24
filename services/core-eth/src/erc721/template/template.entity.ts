@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 import { Erc721TemplateStatus, IErc721Template } from "@framework/types";
 import { ns } from "@framework/constants";
-import { BigNumberColumn, JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc721CollectionEntity } from "../collection/collection.entity";
 import { Erc721TokenEntity } from "../token/token.entity";
@@ -13,7 +13,7 @@ export class Erc721TemplateEntity extends SearchableEntity implements IErc721Tem
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @JsonColumn()
+  @Column({ type: "json" })
   public attributes: any;
 
   @BigNumberColumn()
