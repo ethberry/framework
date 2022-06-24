@@ -75,8 +75,28 @@ describe("ERC721Graded", function () {
     });
   });
 
+  describe("getRecordFieldValue", function () {
+    it("should get record field value", async function () {
+      await erc721Instance.mintCommon(this.receiver.address, templateId);
+      const value = await erc721Instance.getRecordFieldValue(
+        tokenId,
+        utils.keccak256(ethers.utils.toUtf8Bytes("grade")),
+      );
+      expect(value).to.equal(1);
+    });
+
+    it("should fail: field not found", async function () {
+      await erc721Instance.mintCommon(this.receiver.address, templateId);
+      const value = erc721Instance.getRecordFieldValue(
+        tokenId,
+        utils.keccak256(ethers.utils.toUtf8Bytes("non-existing-field")),
+      );
+      await expect(value).to.be.revertedWith("GC: field not found");
+    });
+  });
+
   describe("levelUp", function () {
-    it("should mint to wallet", async function () {
+    it("should level up", async function () {
       await erc721Instance.mintCommon(this.receiver.address, templateId);
 
       const tx1 = erc721Instance.levelUp(tokenId);
