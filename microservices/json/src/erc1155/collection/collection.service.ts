@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { Erc1155CollectionEntity } from "./collection.entity";
-import { IOpenSeaErc1155Metadata } from "../../common/interfaces";
+import { IOpenSeaMetadata } from "../../common/interfaces";
 
 @Injectable()
 export class Erc1155CollectionService {
@@ -22,7 +22,7 @@ export class Erc1155CollectionService {
     return this.erc1155CollectionEntityRepository.findOne({ where, ...options });
   }
 
-  public async getCollectionMetadata(address: string): Promise<IOpenSeaErc1155Metadata> {
+  public async getCollectionMetadata(address: string): Promise<IOpenSeaMetadata> {
     const erc1155CollectionEntity = await this.findOne({ address });
 
     if (!erc1155CollectionEntity) {

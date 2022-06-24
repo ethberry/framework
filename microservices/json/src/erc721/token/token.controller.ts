@@ -4,7 +4,7 @@ import { BigNumber } from "ethers";
 import { AddressPipe, ApiAddress, ApiBigNumber, BigNumberPipe, Public } from "@gemunion/nest-js-utils";
 
 import { Erc721TokenService } from "./token.service";
-import { IOpenSeaErc721Metadata } from "../../common/interfaces";
+import { IOpenSeaMetadata } from "../../common/interfaces";
 
 @Public()
 @Controller("/erc721")
@@ -17,7 +17,7 @@ export class Erc721TokenController {
   public getTokenMetadata(
     @Param("address", AddressPipe) address: string,
     @Param("tokenId", BigNumberPipe) tokenId: BigNumber,
-  ): Promise<IOpenSeaErc721Metadata> {
+  ): Promise<IOpenSeaMetadata> {
     return this.erc721TokenService.getTokenMetadata(address, tokenId);
   }
 }

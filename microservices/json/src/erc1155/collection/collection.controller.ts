@@ -3,7 +3,7 @@ import { Controller, Get, Param } from "@nestjs/common";
 import { AddressPipe, ApiAddress, Public } from "@gemunion/nest-js-utils";
 
 import { Erc1155CollectionService } from "./collection.service";
-import { IOpenSeaErc1155Metadata } from "../../common/interfaces";
+import { IOpenSeaMetadata } from "../../common/interfaces";
 
 @Public()
 @Controller("/erc1155")
@@ -12,7 +12,7 @@ export class Erc1155CollectionController {
 
   @ApiAddress("address")
   @Get("/:address")
-  public getCollectionMetadata(@Param("address", AddressPipe) address: string): Promise<IOpenSeaErc1155Metadata> {
+  public getCollectionMetadata(@Param("address", AddressPipe) address: string): Promise<IOpenSeaMetadata> {
     return this.erc1155CollectionService.getCollectionMetadata(address);
   }
 }
