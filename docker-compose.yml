@@ -4,7 +4,7 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres:alpine
+    image: postgres
     user: root
     ports:
       - "5432:5432"
