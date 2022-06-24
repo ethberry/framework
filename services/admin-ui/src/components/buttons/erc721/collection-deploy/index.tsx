@@ -42,7 +42,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721CollectionDeployDto) => {
-      const { contractTemplate, name, symbol, baseTokenURI, royalty } = values;
+      const { contractTemplate, name, symbol, royalty, baseTokenURI } = values;
 
       return api
         .fetchJson({
@@ -58,8 +58,8 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
             getBytecodeByErc721TokenTemplate(contractTemplate),
             name,
             symbol,
-            baseTokenURI,
             royalty,
+            baseTokenURI,
             Object.keys(Erc721TokenTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,
             sign.signature,

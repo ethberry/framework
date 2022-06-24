@@ -28,26 +28,27 @@ contract ERC721Dropbox is IERC721Dropbox, ERC721ACBER, ERC721BaseUrl {
   constructor(
     string memory name,
     string memory symbol,
-    string memory baseTokenURI,
-    uint96 royalty
-  ) ERC721ACBER(name, symbol, baseTokenURI, royalty) {
+    uint96 royalty,
+    string memory baseTokenURI
+  ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _setupRole(MINTER_ROLE, _msgSender());
 
     _tokenIdTracker.increment();
   }
 
-  function mintDropbox(
-    address to,
-    uint256 templateId
-  ) public onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  function mintDropbox(address to, uint256 templateId) public onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     tokenId = _tokenIdTracker.current();
     _itemData[tokenId] = ItemData(templateId);
     _safeMint(to, tokenId);
     _tokenIdTracker.increment();
   }
 
-  function unpack(address collection, uint256 tokenId, uint256 dropboxId) public {
+  function unpack(
+    address collection,
+    uint256 tokenId,
+    uint256 dropboxId
+  ) public {
     require(_isApprovedOrOwner(_msgSender(), tokenId), "ERC721Dropbox: unpack caller is not owner nor approved");
 
     ItemData memory data = _itemData[tokenId];
@@ -57,7 +58,11 @@ contract ERC721Dropbox is IERC721Dropbox, ERC721ACBER, ERC721BaseUrl {
     IERC721Random(collection).mintRandom(_msgSender(), data.templateId, dropboxId);
   }
 
-  function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {
+  function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    _setBaseURI(baseTokenURI);
+  }
+
+  function _baseURI() internal view virtual override returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 
@@ -66,8 +71,6 @@ contract ERC721Dropbox is IERC721Dropbox, ERC721ACBER, ERC721BaseUrl {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return
-    interfaceId == type(IERC721Dropbox).interfaceId ||
-    super.supportsInterface(interfaceId);
+    return interfaceId == type(IERC721Dropbox).interfaceId || super.supportsInterface(interfaceId);
   }
 }

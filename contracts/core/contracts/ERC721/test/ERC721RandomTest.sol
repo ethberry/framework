@@ -34,9 +34,9 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
   constructor(
     string memory name,
     string memory symbol,
-    string memory baseTokenURI,
-    uint96 royalty
-  ) ERC721ACBER(name, symbol, baseTokenURI, royalty) {
+    uint96 royalty,
+    string memory baseTokenURI
+  ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
     // should start from 1
     _tokenIdTracker.increment();
   }
@@ -90,14 +90,16 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     return 1;
   }
 
-  function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {
+  function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    _setBaseURI(baseTokenURI);
+  }
+
+  function _baseURI() internal view virtual override returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return
-    interfaceId == type(IERC721Random).interfaceId ||
-    super.supportsInterface(interfaceId);
+    return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }
 
   receive() external payable {

@@ -47,11 +47,20 @@ describe("ERC1155ERC1155Craft", function () {
       await expect(tx).revertedWith("ERC1155: caller is not owner nor approved");
     });
 
-    it("should fail: insufficient balance", async function () {
+    it("should fail: burn amount exceeds balance", async function () {
+      await resourceInstance.mint(this.owner.address, tokenId, 5, "0x");
+      await resourceInstance.mint(this.receiver.address, tokenId, 5, "0x");
       await resourceInstance.connect(this.receiver).setApprovalForAll(refineryInstance.address, true);
 
       const tx = refineryInstance.connect(this.receiver).craft(1, 1);
       await expect(tx).revertedWith("ERC1155: burn amount exceeds balance");
+    });
+
+    it("should fail: burn amount exceeds totalSupply", async function () {
+      await resourceInstance.connect(this.receiver).setApprovalForAll(refineryInstance.address, true);
+
+      const tx = refineryInstance.connect(this.receiver).craft(1, 1);
+      await expect(tx).revertedWith("ERC1155: burn amount exceeds totalSupply");
     });
 
     it("should fail: no such recipe", async function () {

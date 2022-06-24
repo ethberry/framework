@@ -39,10 +39,10 @@ contract ERC721Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   constructor(
     string memory name,
     string memory symbol,
-    string memory baseTokenURI,
     uint256 cap,
-    uint96 royalty
-  ) ERC721ACBCR(name, symbol, baseTokenURI, cap, royalty) EIP712(name, "1.0.0") {
+    uint96 royalty,
+    string memory baseTokenURI
+  ) ERC721ACBCR(name, symbol, cap, royalty) ERC721BaseUrl(baseTokenURI) EIP712(name, "1.0.0") {
     _setupRole(PAUSER_ROLE, _msgSender());
     _tokenIdTracker.increment();
   }
@@ -102,7 +102,11 @@ contract ERC721Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
     super._burn(tokenId);
   }
 
-  function _baseURI() internal view virtual override(ERC721, ERC721ACBCR) returns (string memory) {
+  function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    _setBaseURI(baseTokenURI);
+  }
+
+  function _baseURI() internal view virtual override returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 

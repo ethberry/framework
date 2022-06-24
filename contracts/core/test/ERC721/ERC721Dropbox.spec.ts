@@ -1,8 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
-
-import { ERC721Dropbox, ERC721Marketplace, ERC721Simple } from "../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -18,30 +16,30 @@ import {
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC721Dropbox", function () {
-  let marketplaceInstance: ERC721Marketplace;
-  let itemInstance: ERC721Simple;
-  let dropboxInstance: ERC721Dropbox;
   let network: Network;
 
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
     const marketplaceFactory = await ethers.getContractFactory("ERC721Marketplace");
-    marketplaceInstance = await marketplaceFactory.deploy(tokenName);
+    this.marketplaceInstance = await marketplaceFactory.deploy(tokenName);
     const itemFactory = await ethers.getContractFactory("ERC721Simple");
-    itemInstance = await itemFactory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
+    this.itemInstance = await itemFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     const dropboxFactory = await ethers.getContractFactory("ERC721Dropbox");
-    dropboxInstance = await dropboxFactory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
+    this.erc721Instance = await dropboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
-    await itemInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
-    await dropboxInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
+    await this.itemInstance.grantRole(MINTER_ROLE, this.marketplaceInstance.address);
+    await this.erc721Instance.grantRole(MINTER_ROLE, this.marketplaceInstance.address);
 
     network = await ethers.provider.getNetwork();
 
-    this.contractInstance = dropboxInstance;
+    this.contractInstance = this.erc721Instance;
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  // commented out because it has no mintCommon function, instead it has mintDropbox
+  // shouldGetTokenURI();
+  // shouldSetBaseURI();
 
   describe("unpack", function () {
     it("should unpack", async function () {
@@ -51,7 +49,7 @@ describe("ERC721Dropbox", function () {
           name: tokenName,
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: marketplaceInstance.address,
+          verifyingContract: this.marketplaceInstance.address,
         },
         // Types
         {
@@ -65,20 +63,20 @@ describe("ERC721Dropbox", function () {
         // Value
         {
           nonce,
-          collection: dropboxInstance.address,
+          collection: this.erc721Instance.address,
           templateId,
           price: amount,
         },
       );
 
-      const tx1 = marketplaceInstance
+      const tx1 = this.marketplaceInstance
         .connect(this.receiver)
-        .buyDropbox(nonce, dropboxInstance.address, templateId, this.owner.address, signature, { value: amount });
+        .buyDropbox(nonce, this.erc721Instance.address, templateId, this.owner.address, signature, { value: amount });
       await expect(tx1)
-        .to.emit(dropboxInstance, "Transfer")
+        .to.emit(this.erc721Instance, "Transfer")
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
 
-      // const tx2 = dropboxInstance.connect(receiver).unpack(itemInstance.address, tokenId);
+      // const tx2 = erc721Instance.connect(receiver).unpack(itemInstance.address, tokenId);
       // await expect(tx2).to.not.reverted;
     });
   });

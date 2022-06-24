@@ -1,7 +1,5 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
-
-import { ERC721Simple, ERC721NonReceiverMock, ERC721ReceiverMock } from "../../typechain-types";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
@@ -13,57 +11,57 @@ import {
   tokenSymbol,
 } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
+import { shouldGetTokenURI } from "./shared/tokenURI";
+import { shouldSetBaseURI } from "./shared/setBaseURI";
 
 describe("ERC721Simple", function () {
-  let erc721Instance: ERC721Simple;
-  let erc721ReceiverInstance: ERC721ReceiverMock;
-  let erc721NonReceiverInstance: ERC721NonReceiverMock;
-
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
     const erc721Factory = await ethers.getContractFactory("ERC721Simple");
-    erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
+    this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
-    erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
+    this.erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
     const erc721NonReceiverFactory = await ethers.getContractFactory("ERC721NonReceiverMock");
-    erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
+    this.erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
 
-    this.contractInstance = erc721Instance;
+    this.contractInstance = this.erc721Instance;
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGetTokenURI();
+  shouldSetBaseURI();
 
   describe("mintCommon", function () {
     it("should mint to wallet", async function () {
-      const tx = erc721Instance.mintCommon(this.receiver.address, templateId);
+      const tx = this.erc721Instance.mintCommon(this.receiver.address, templateId);
       await expect(tx)
-        .to.emit(erc721Instance, "Transfer")
+        .to.emit(this.erc721Instance, "Transfer")
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
 
-      const balance = await erc721Instance.balanceOf(this.receiver.address);
+      const balance = await this.erc721Instance.balanceOf(this.receiver.address);
       expect(balance).to.equal(1);
     });
 
     it("should mint to receiver", async function () {
-      const tx = erc721Instance.mintCommon(erc721ReceiverInstance.address, templateId);
+      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, templateId);
       await expect(tx)
-        .to.emit(erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, erc721ReceiverInstance.address, tokenId);
+        .to.emit(this.erc721Instance, "Transfer")
+        .withArgs(ethers.constants.AddressZero, this.erc721ReceiverInstance.address, tokenId);
 
-      const balance = await erc721Instance.balanceOf(erc721ReceiverInstance.address);
+      const balance = await this.erc721Instance.balanceOf(this.erc721ReceiverInstance.address);
       expect(balance).to.equal(1);
     });
 
     it("should fail: wrong role", async function () {
-      const tx = erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, templateId);
+      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, templateId);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
       );
     });
 
     it("should fail: to mint to non receiver", async function () {
-      const tx = erc721Instance.mintCommon(erc721NonReceiverInstance.address, templateId);
+      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, templateId);
       await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
     });
   });
