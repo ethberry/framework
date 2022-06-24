@@ -23,9 +23,9 @@ contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
   constructor(
     string memory name,
     string memory symbol,
-    string memory baseTokenURI,
-    uint96 royalty
-  ) ERC721ACBER(name, symbol, baseTokenURI, royalty) {
+    uint96 royalty,
+    string memory baseTokenURI
+  ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
     // should start from 1
     _tokenIdTracker.increment();
   }
@@ -44,7 +44,11 @@ contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
     return true;
   }
 
-  function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {
+  function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
+    _setBaseURI(baseTokenURI);
+  }
+
+  function _baseURI() internal view virtual override returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 

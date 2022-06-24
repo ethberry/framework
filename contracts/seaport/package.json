@@ -5,7 +5,7 @@
     "url": "https://www.gemunion.io/"
   },
   "dependencies": {
-    "@gemunion/contracts": "0.5.4",
+    "@gemunion/contracts": "0.5.5",
     "@gemunion/utils-eth": "0.0.2",
     "@nomiclabs/hardhat-ethers": "2.0.6",
     "@nomiclabs/hardhat-etherscan": "3.1.0",

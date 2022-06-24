@@ -30,9 +30,9 @@ describe("ERC721Marketplace", function () {
     const marketplaceFactory = await ethers.getContractFactory("ERC721Marketplace");
     marketplaceInstance = await marketplaceFactory.deploy(tokenName);
     const itemFactory = await ethers.getContractFactory("ERC721Simple");
-    itemInstance = await itemFactory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
+    itemInstance = await itemFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     const dropboxFactory = await ethers.getContractFactory("ERC721Dropbox");
-    dropboxInstance = await dropboxFactory.deploy(tokenName, tokenSymbol, baseTokenURI, royalty);
+    dropboxInstance = await dropboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     await itemInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);
     await dropboxInstance.grantRole(MINTER_ROLE, marketplaceInstance.address);

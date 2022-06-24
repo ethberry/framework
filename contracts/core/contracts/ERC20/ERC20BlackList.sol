@@ -35,8 +35,8 @@ contract ERC20BlackList is ERC20ACBCS, BlackList {
     address to,
     uint256 amount
   ) internal override {
-    require(!isBlacklisted(from), "ERC20BlackList: sender is BlackListed");
-    require(!isBlacklisted(to), "ERC20BlackList: receiver is BlackListed");
+    require(!this.isBlacklisted(from), "ERC20BlackList: sender is BlackListed");
+    require(!this.isBlacklisted(to), "ERC20BlackList: receiver is BlackListed");
     super._beforeTokenTransfer(from, to, amount);
   }
 }

@@ -35,22 +35,22 @@ async function main() {
 
   // ERC721 contract - Item
   const itemFactory = await ethers.getContractFactory("ERC721RandomTest");
-  const itemInstance = await itemFactory.deploy("Item", "ITEM", "https://fw-json-api.gemunion.io/erc721/1/", rlNum);
+  const itemInstance = await itemFactory.deploy("Item", "ITEM", rlNum, "https://fw-json-api.gemunion.io/erc721/1/");
   console.info(`ERC721_ITEM_ADDR=${itemInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Hero
   const heroFactory = await ethers.getContractFactory("ERC721RandomTest");
-  const heroInstance = await heroFactory.deploy("Hero", "HERO", "https://fw-json-api.gemunion.io/erc721/2/", rlNum);
+  const heroInstance = await heroFactory.deploy("Hero", "HERO", rlNum, "https://fw-json-api.gemunion.io/erc721/2/");
   console.info(`ERC721_HERO_ADDR=${heroInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Skill
   const skillFactory = await ethers.getContractFactory("ERC721Graded");
-  const skillInstance = await skillFactory.deploy("Skill", "SKILL", "https://fw-json-api.gemunion.io/erc721/3/", rlNum);
+  const skillInstance = await skillFactory.deploy("Skill", "SKILL", rlNum, "https://fw-json-api.gemunion.io/erc721/3/");
   console.info(`ERC721_SKILL_ADDR=${skillInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Land
   const landFactory = await ethers.getContractFactory("ERC721Simple");
-  const landInstance = await landFactory.deploy("Land", "LND", "https://fw-json-api.gemunion.io/erc721/4/", rlNum);
+  const landInstance = await landFactory.deploy("Land", "LND", rlNum, "https://fw-json-api.gemunion.io/erc721/4/");
   console.info(`ERC721_LAND_ADDR=${landInstance.address.toLowerCase()}`);
 
   // ERC721 Marketplace contract

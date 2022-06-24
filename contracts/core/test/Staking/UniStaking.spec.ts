@@ -86,13 +86,13 @@ describe("UniStaking", function () {
     erc20Instance = await erc20Factory.deploy("ERC20Simple", "SMP", 1000000000);
     // ERC721 Simple
     const simple721Factory = await ethers.getContractFactory("ERC721Simple");
-    erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", "https://localhost", 100);
+    erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", 100, "https://localhost");
     // ERC721 Random
     const erc721randomFactory = await ethers.getContractFactory("ERC721RandomTest");
-    erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", "https://localhost", 100);
+    erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", 100, "https://localhost");
     // ERC721 Dropbox
     const dropboxFactory = await ethers.getContractFactory("ERC721Dropbox");
-    erc721DropboxInstance = await dropboxFactory.deploy("ERC721Dropbox", "DBX", "https://localhost", 100);
+    erc721DropboxInstance = await dropboxFactory.deploy("ERC721Dropbox", "DBX", 100, "https://localhost");
     // ERC1155
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
     erc1155Instance = await erc1155Factory.deploy("https://localhost");

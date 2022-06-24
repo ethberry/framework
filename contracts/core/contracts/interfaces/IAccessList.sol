@@ -6,9 +6,9 @@
 
 pragma solidity ^0.8.13;
 
-interface IAccessList  {
-  event Blacklisted(address indexed account);
-  event UnBlacklisted(address indexed account);
-  event Whitelisted(address indexed account);
-  event UnWhitelisted(address indexed account);
+import "@gemunion/contracts/contracts/AccessList/interfaces/IBlackList.sol";
+import "@gemunion/contracts/contracts/AccessList/interfaces/IWhiteList.sol";
+
+interface IAccessList is IBlackList, IWhiteList {
+
 }

@@ -13,8 +13,8 @@ import { Erc721TokenTemplate, IErc721CollectionDeployDto } from "@framework/type
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721GradedSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC721RandomTestSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
-// import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+// import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
@@ -24,8 +24,7 @@ function getBytecodeByErc721TokenTemplate(template: Erc721TokenTemplate) {
     case Erc721TokenTemplate.GRADED:
       return ERC721GradedSol.bytecode;
     case Erc721TokenTemplate.RANDOM:
-      return ERC721RandomTestSol.bytecode;
-    // return ERC721RandomSol.bytecode;
+      return ERC721RandomSol.bytecode;
     default:
       throw new Error("Unknown template");
   }
@@ -43,7 +42,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721CollectionDeployDto) => {
-      const { contractTemplate, name, symbol, baseTokenURI, royalty } = values;
+      const { contractTemplate, name, symbol, royalty, baseTokenURI } = values;
 
       return api
         .fetchJson({
@@ -59,8 +58,8 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
             getBytecodeByErc721TokenTemplate(contractTemplate),
             name,
             symbol,
-            baseTokenURI,
             royalty,
+            baseTokenURI,
             Object.keys(Erc721TokenTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,
             sign.signature,
