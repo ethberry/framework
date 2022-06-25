@@ -9,7 +9,7 @@ export function shouldSetBaseURI() {
       await this.erc721Instance.mintCommon(this.owner.address, templateId);
       await this.erc721Instance.setBaseURI(newURI);
       const uri = await this.erc721Instance.tokenURI(tokenId);
-      expect(uri).to.equal(`${newURI}${this.erc721Instance.address.toLowerCase()}/${tokenId}`);
+      expect(uri).to.equal(`${newURI}/${this.erc721Instance.address.toLowerCase()}/${tokenId}`);
     });
   });
 }

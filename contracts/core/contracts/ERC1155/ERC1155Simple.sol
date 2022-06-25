@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.9;
 
 import "@gemunion/contracts/contracts/ERC1155/preset/ERC1155ACBS.sol";
 import "@gemunion/contracts/contracts/ERC1155/ERC1155BaseUrl.sol";
