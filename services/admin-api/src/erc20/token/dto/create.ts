@@ -1,10 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsEthereumAddress, IsJSON, IsString, MaxLength, Validate } from "class-validator";
+import { IsEnum, IsEthereumAddress, IsInt, IsJSON, IsString, MaxLength, Min, Validate } from "class-validator";
 
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
-import { Erc20TokenTemplate } from "@framework/types";
-
-import { IErc20TokenCreateDto } from "../interfaces";
+import { Erc20TokenTemplate, IErc20TokenCreateDto } from "@framework/types";
 
 export class Erc20TokenCreateDto implements IErc20TokenCreateDto {
   @ApiProperty({
@@ -18,6 +16,11 @@ export class Erc20TokenCreateDto implements IErc20TokenCreateDto {
   @IsString({ message: "typeMismatch" })
   @MaxLength(5, { message: "rangeOverflow" })
   public symbol: string;
+
+  @ApiProperty()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public decimals: number;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

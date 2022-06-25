@@ -56,7 +56,7 @@ async function main() {
 
   // ERC721 contract - ERC721Dropbox
   const erc721DropFactory = await ethers.getContractFactory("ERC721Dropbox");
-  const erc721DropInstance = await erc721DropFactory.deploy("ERC721Dropbox", "DBX", "http://localhost:3011/", 100);
+  const erc721DropInstance = await erc721DropFactory.deploy("ERC721Dropbox", "DBX", 100, "http://localhost:3011/");
   console.info(`ERC721_DROPBOX_ADDR=${erc721DropInstance.address.toLowerCase()}`);
 
   // ERC721 contract - ERC721Airdrop
@@ -64,9 +64,9 @@ async function main() {
   const airdropboxInstance = await airdropboxFactory.deploy(
     "ERC721Airdrop",
     "AIRDROP",
-    "http://localhost:3011/",
-    100,
     10000,
+    100,
+    "http://localhost:3011/",
   );
   console.info(`ERC721_AIRDROP_ADDR=${airdropboxInstance.address.toLowerCase()}`);
 

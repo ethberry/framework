@@ -18,15 +18,29 @@ async function main() {
   const [owner] = await ethers.getSigners();
 
   // Deploy
-  // ERC20 Coin Simple
-  const coinFactory = await ethers.getContractFactory("ERC20Simple");
-  const coinInstance = await coinFactory.deploy("ERC20SimpleCoin", "COINS", 1000000000);
-  console.info(`ERC20_COIN_ADDR=${coinInstance.address.toLowerCase()}`);
+  // ERC20 Simple Active
+  const coinActiveFactory = await ethers.getContractFactory("ERC20Simple");
+  const coinActiveInstance = await coinActiveFactory.deploy("Space Credits", "GEM20", 1000000000);
+  console.info(`ERC20_ACTIVE_ADDR=${coinActiveInstance.address.toLowerCase()}`);
+
+  // ERC20 Simple Inactive
+  const coinInactiveFactory = await ethers.getContractFactory("ERC20Simple");
+  const coinInactiveInstance = await coinInactiveFactory.deploy("Inactive token", "OFF20", 1000000000);
+  console.info(`ERC20_INACTIVE_ADDR=${coinInactiveInstance.address.toLowerCase()}`);
+
+  // ERC20 Simple New
+  const coinNewFactory = await ethers.getContractFactory("ERC20Simple");
+  const coinNewInstance = await coinNewFactory.deploy("Inactive token", "OFF20", 1000000000);
+  console.info(`ERC20_NEW_ADDR=${coinNewInstance.address.toLowerCase()}`);
 
   // ERC20 Coin
   const coinbFactory = await ethers.getContractFactory("ERC20BlackList");
-  const coinbInstance = await coinbFactory.deploy("ERC20BlCoin", "COINB", 1000000000);
-  console.info(`ERC20_COIN_BL_ADDR=${coinbInstance.address.toLowerCase()}`);
+  const coinbInstance = await coinbFactory.deploy("Black list matters", "BLM20", 1000000000);
+  console.info(`ERC20_BLACKLIST_ADDR=${coinbInstance.address.toLowerCase()}`);
+
+  const usdtFactory = await ethers.getContractFactory("TetherToken");
+  const usdtInstance = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
+  console.info(`ERC20_USDT_ADDR=${usdtInstance.address.toLowerCase()}`);
 
   // MANAGER
   const vestFactory = await ethers.getContractFactory("ContractManager");
@@ -68,8 +82,8 @@ async function main() {
   const erc721DropInstance = await erc721DropFactory.deploy(
     "ERC721Dropbox",
     "DBX",
-    "https://fw-json-api.gemunion.io/",
     100,
+    "https://fw-json-api.gemunion.io/",
   );
   console.info(`ERC721_DROPBOX_ADDR=${erc721DropInstance.address.toLowerCase()}`);
 
@@ -78,9 +92,9 @@ async function main() {
   const airdropboxInstance = await airdropboxFactory.deploy(
     "ERC721Airdrop",
     "AIRDROP",
-    "https://fw-json-api.gemunion.io/",
-    100,
     10000,
+    100,
+    "https://fw-json-api.gemunion.io/",
   );
   console.info(`ERC721_AIRDROP_ADDR=${airdropboxInstance.address.toLowerCase()}`);
 

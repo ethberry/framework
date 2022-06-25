@@ -21,8 +21,8 @@ async function main() {
   const erc721DropInstance = await erc721DropFactory.deploy(
     "ERC721Dropbox",
     "DBX",
-    "https://fw-json-api.gemunion.io/",
     100,
+    "https://fw-json-api.gemunion.io/",
   );
   console.info(`ERC721_DROPBOX_ADDR=${erc721DropInstance.address.toLowerCase()}`);
 
@@ -31,9 +31,9 @@ async function main() {
   const airdropboxInstance = await airdropboxFactory.deploy(
     "ERC721Airdrop",
     "AIRDROP",
-    "https://fw-json-api.gemunion.io/",
-    100,
     10000,
+    100,
+    "https://fw-json-api.gemunion.io/",
   );
   console.info(`ERC721_AIRDROP_ADDR=${airdropboxInstance.address.toLowerCase()}`);
 

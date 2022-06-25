@@ -4,10 +4,15 @@ import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { Erc20TokenStatus, IErc20TokenAutocompleteDto, IErc20TokenSearchDto } from "@framework/types";
+import {
+  Erc20TokenStatus,
+  IErc20TokenAutocompleteDto,
+  IErc20TokenCreateDto,
+  IErc20TokenSearchDto,
+} from "@framework/types";
 
 import { Erc20TokenEntity } from "./token.entity";
-import { IErc20TokenCreateDto, IErc20TokenUpdateDto } from "./interfaces";
+import { IErc20TokenUpdateDto } from "./interfaces";
 
 @Injectable()
 export class Erc20TokenService {
@@ -94,7 +99,7 @@ export class Erc20TokenService {
     return this.erc20TokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IErc20TokenCreateDto): Promise<Erc20TokenEntity> {
+  public create(dto: IErc20TokenCreateDto): Promise<Erc20TokenEntity> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
     return this.erc20TokenEntityRepository
       .create({

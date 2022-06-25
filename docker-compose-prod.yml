@@ -129,7 +129,6 @@ services:
       # BLOCKCHAIN
       CHAIN_ID: "${CHAIN_ID}"
 
-      COIN_ADDR: "${COIN_ADDR}"
       ITEMS_ADDR: "${ITEMS_ADDR}"
       HERO_ADDR: "${HERO_ADDR}"
       REFINERY_ADDR: "${REFINERY_ADDR}"
@@ -176,7 +175,6 @@ services:
       # BLOCKCHAIN
       CHAIN_ID: "${CHAIN_ID}"
 
-      COIN_ADDR: "${COIN_ADDR}"
       ITEMS_ADDR: "${ITEMS_ADDR}"
       HERO_ADDR: "${HERO_ADDR}"
       REFINERY_ADDR: "${REFINERY_ADDR}"
@@ -217,10 +215,8 @@ services:
       JSON_RPC_ADDR: "${JSON_RPC_ADDR}"
       CHAIN_ID: "${CHAIN_ID}"
 
-    # Contracts
+      # Contracts
       CONTRACT_MANAGER_ADDR : "${CONTRACT_MANAGER_ADDR}"
-      ERC20_COIN_ADDR : "${ERC20_COIN_ADDR}"
-      ERC20_COIN_BL_ADDR : "${ERC20_COIN_BL_ADDR}"
       ERC721_ITEM_ADDR : "${ERC721_ITEM_ADDR}"
       ERC721_HERO_ADDR : "${ERC721_HERO_ADDR}"
       ERC721_SKILL_ADDR : "${ERC721_SKILL_ADDR}"

@@ -22,6 +22,9 @@ export class Erc20TokenEntity extends Mixin(ContractBaseEntity, SearchableEntity
   @Column({ type: "varchar" })
   public symbol: string;
 
+  @Column({ type: "int" })
+  public decimals: number;
+
   @Column({ type: "varchar" })
   public name: string;
 

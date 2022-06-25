@@ -1,21 +1,13 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc20TokenTemplate, IErc20Token } from "@framework/types";
+import { Erc20TokenTemplate, IErc20Token, IErc20TokenCreateDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { AddressInput } from "./address-input";
-
-export interface IErc20TokenCreateDto {
-  contractTemplate: Erc20TokenTemplate;
-  symbol: string;
-  title: string;
-  description: string;
-  address: string;
-}
 
 export interface IErc20TokenDeployDialogProps {
   open: boolean;
@@ -27,6 +19,7 @@ export const Erc20TokenCreateDialog: FC<IErc20TokenDeployDialogProps> = props =>
   const fixedValues: IErc20TokenCreateDto = {
     contractTemplate: Erc20TokenTemplate.EXTERNAL,
     symbol: "",
+    decimals: 18,
     title: "",
     description: emptyStateString,
     address: "",
@@ -46,6 +39,7 @@ export const Erc20TokenCreateDialog: FC<IErc20TokenDeployDialogProps> = props =>
         disabledOptions={[Erc20TokenTemplate.SIMPLE, Erc20TokenTemplate.BLACKLIST]}
       />
       <TextInput name="symbol" />
+      <NumberInput name="decimals" />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <AddressInput />

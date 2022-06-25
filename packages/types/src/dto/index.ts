@@ -9,9 +9,10 @@ export * from "./page/search";
 export * from "./user/common";
 export * from "./user/search";
 
+export * from "./erc20/token/autocomplete";
+export * from "./erc20/token/create";
 export * from "./erc20/token/deploy";
 export * from "./erc20/token/search";
-export * from "./erc20/token/autocomplete";
 export * from "./erc20/vesting/deploy";
 export * from "./erc20/vesting/search";
 

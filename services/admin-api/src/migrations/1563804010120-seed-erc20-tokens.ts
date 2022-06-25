@@ -8,13 +8,16 @@ import { simpleFormatting } from "@gemunion/draft-js-utils";
 const usdt: Record<string, string> = {
   "1": "0xdac17f958d2ee523a2206206994597c13d831ec7",
   "56": "0x55d398326f99059ff775485246999027b3197955",
-  "1337": constants.AddressZero,
+  "1337": process.env.ERC20_USDT_ADDR || wallet,
 };
 
 export class SeedErc20Token1563804010120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc20TokenAddress = process.env.ERC20_COIN || wallet;
+    const erc20TokenActiveAddress = process.env.ERC20_ACTIVE_ADDR || wallet;
+    const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR || wallet;
+    const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR || wallet;
+    const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || "1337";
 
     await queryRunner.query(`
@@ -24,6 +27,7 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
         amount,
         name,
         symbol,
+        decimals,
         address,
         token_status,
         contract_template,
@@ -36,6 +40,7 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'Ethereum',
         'ETH',
+        18,
         '${constants.AddressZero}',
         'ACTIVE',
         'NATIVE',
@@ -48,7 +53,8 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'Space Credits',
         'GEM20',
-        '${erc20TokenAddress}',
+        18,
+        '${erc20TokenActiveAddress}',
         'ACTIVE',
         'SIMPLE',
         '${chainId}',
@@ -59,8 +65,9 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
         '${simpleFormatting}',
         '${constants.WeiPerEther.toString()}',
         'Inactive token',
-        'INACTIVE20',
-        '${erc20TokenAddress}',
+        'OFF20',
+        18,
+        '${erc20TokenInactiveAddress}',
         'INACTIVE',
         'SIMPLE',
         '${chainId}',
@@ -71,9 +78,23 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
         '${simpleFormatting}',
         '${constants.WeiPerEther.toString()}',
         'New token',
-        'BL20',
-        '${erc20TokenAddress}',
+        'NEW20',
+        18,
+        '${erc20TokenNewAddress}',
         'NEW',
+        'SIMPLE',
+        '${chainId}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Black list token',
+        '${simpleFormatting}',
+        '${constants.WeiPerEther.toString()}',
+        'Black list token',
+        'BLM20',
+        18,
+        '${erc20TokenBlackListAddress}',
+        'ACTIVE',
         'BLACKLIST',
         '${chainId}',
         '${currentDateTime}',
@@ -81,9 +102,10 @@ export class SeedErc20Token1563804010120 implements MigrationInterface {
       ), (
         'USDT',
         '${simpleFormatting}',
-        '${constants.WeiPerEther.toString()}',
-        'USD Teter',
+        '100000000000',
+        'Tether USD',
         'USDT',
+        6,
         '${usdt[chainId]}',
         'ACTIVE',
         'EXTERNAL',
