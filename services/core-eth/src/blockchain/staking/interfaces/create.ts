@@ -1,17 +1,17 @@
 import { TokenType } from "@framework/types";
 
-export interface IStakingRuleItemCreateDto {
+export interface IStakingItemCreateDto {
   tokenType: TokenType;
   collection: number;
   tokenId: number;
   amount: string;
 }
 
-export interface IStakingRuleCreateDto {
+export interface IStakingCreateDto {
   title: string;
   description: string;
-  deposit: IStakingRuleItemCreateDto;
-  reward: IStakingRuleItemCreateDto;
+  deposit: IStakingItemCreateDto;
+  reward: IStakingItemCreateDto;
   duration: number;
   penalty: number;
   recurrent: boolean;

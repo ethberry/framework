@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { Erc998TemplateStatus, IErc998TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc998TemplateSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -19,8 +19,8 @@ export const Erc998TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, templateStatus, erc998CollectionIds } = initialValues;
-  const fixedValues = { query, templateStatus, erc998CollectionIds };
+  const { query, templateStatus, uniContractIds } = initialValues;
+  const fixedValues = { query, templateStatus, uniContractIds };
 
   return (
     <FormWrapper
@@ -39,10 +39,10 @@ export const Erc998TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc998CollectionIds" controller="erc998-collections" multiple />
+            <EntityInput name="uniContractIds" controller="erc998-collections" multiple />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="templateStatus" options={Erc998TemplateStatus} />
+            <SelectInput multiple name="templateStatus" options={UniTemplateStatus} />
           </Grid>
         </Grid>
       </Collapse>

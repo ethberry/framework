@@ -5,9 +5,10 @@ import { Transform, Type } from "class-transformer";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { TokenType } from "@framework/types";
 
-import { IStakingRuleCreateDto, IStakingRuleItemCreateDto } from "../interfaces";
+import { IStakingCreateDto, IStakingItemCreateDto } from "../interfaces";
+import { AssetDto } from "../../../uni-token/dto";
 
-export class StakingItemCreateDto implements IStakingRuleItemCreateDto {
+export class StakingItemCreateDto implements IStakingItemCreateDto {
   @ApiProperty({
     enum: TokenType,
   })
@@ -34,7 +35,7 @@ export class StakingItemCreateDto implements IStakingRuleItemCreateDto {
   public amount: string;
 }
 
-export class StakingCreateDto implements IStakingRuleCreateDto {
+export class StakingCreateDto implements IStakingCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   public title: string;
@@ -44,18 +45,18 @@ export class StakingCreateDto implements IStakingRuleCreateDto {
   public description: string;
 
   @ApiProperty({
-    type: StakingItemCreateDto,
+    type: AssetDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemCreateDto)
-  public deposit: StakingItemCreateDto;
+  @Type(() => AssetDto)
+  public deposit: AssetDto;
 
   @ApiProperty({
-    type: StakingItemCreateDto,
+    type: AssetDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemCreateDto)
-  public reward: StakingItemCreateDto;
+  @Type(() => AssetDto)
+  public reward: AssetDto;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })

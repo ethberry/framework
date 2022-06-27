@@ -5,7 +5,7 @@ import { Check, Close, CloudUpload } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { Erc721RecipeStatus, IErc721Recipe } from "@framework/types";
+import { ExchangeStatus, IErc721Recipe } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155ERC721CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
@@ -22,7 +22,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
   const { library } = useWeb3React();
 
   const metaLoadRecipe = useMetamask((recipe: IErc721Recipe) => {
-    if (recipe.recipeStatus !== Erc721RecipeStatus.NEW) {
+    if (recipe.recipeStatus !== ExchangeStatus.NEW) {
       return Promise.reject(new Error(""));
     }
     const ids = recipe.ingredients.map(ingredient => ingredient.erc1155TokenId);
@@ -52,11 +52,11 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
 
   const metaToggleRecipe = useMetamask((recipe: IErc721Recipe) => {
     let recipeStatus: boolean;
-    if (recipe.recipeStatus === Erc721RecipeStatus.NEW) {
+    if (recipe.recipeStatus === ExchangeStatus.NEW) {
       // this should never happen
       return Promise.reject(new Error(""));
     } else {
-      recipeStatus = recipe.recipeStatus !== Erc721RecipeStatus.ACTIVE;
+      recipeStatus = recipe.recipeStatus !== ExchangeStatus.ACTIVE;
     }
 
     const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC721CraftSol.abi, library.getSigner());
@@ -71,7 +71,7 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
     };
   };
 
-  if (recipe.recipeStatus === Erc721RecipeStatus.NEW) {
+  if (recipe.recipeStatus === ExchangeStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.erc721-recipes.upload" })}>
         <IconButton onClick={handleLoadRecipe(recipe)} data-testid="Erc721RecipeUploadButton">
@@ -85,13 +85,13 @@ export const Erc721RecipeUploadButton: FC<IErc721RecipeButtonProps> = props => {
     <Tooltip
       title={formatMessage({
         id:
-          recipe.recipeStatus === Erc721RecipeStatus.ACTIVE
+          recipe.recipeStatus === ExchangeStatus.ACTIVE
             ? "pages.erc721-recipes.deactivate"
             : "pages.erc721-recipes.activate",
       })}
     >
       <IconButton onClick={handleToggleRecipe(recipe)} data-testid="Erc721RecipeToggleButton">
-        {recipe.recipeStatus === Erc721RecipeStatus.ACTIVE ? <Close /> : <Check />}
+        {recipe.recipeStatus === ExchangeStatus.ACTIVE ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { Erc998IngredientEntity } from "../ingredient/ingredient.entity";
-import { Erc998TemplateEntity } from "../template/template.entity";
+import { UniTemplateEntity } from "../template/template.entity";
 import { Erc998DropboxEntity } from "../dropbox/dropbox.entity";
 import { Erc998RecipeHistoryEntity } from "./recipe-history/recipe-history.entity";
 
@@ -15,8 +15,8 @@ export class Erc998RecipeEntity extends IdDateBaseEntity implements IErc998Recip
   public erc998TemplateId: number | null;
 
   @JoinColumn()
-  @OneToOne(_type => Erc998TemplateEntity)
-  public erc998Template: Erc998TemplateEntity;
+  @OneToOne(_type => UniTemplateEntity)
+  public erc998Template: UniTemplateEntity;
 
   @Column({ type: "varchar" })
   public erc998DropboxId: number | null;

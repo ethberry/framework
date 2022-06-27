@@ -17,7 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStakingRule, IStakingRuleItem, IStakingRuleSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
+import { IStaking, IStakingItem, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
@@ -43,7 +43,7 @@ export const Staking: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IStakingRule, IStakingRuleSearchDto>({
+  } = useCollection<IStaking, IStakingSearchDto>({
     baseUrl: "/staking-rules",
     empty: {
       title: "",
@@ -53,20 +53,20 @@ export const Staking: FC = () => {
         collection: 0,
         // tokenId: "0",
         // amount: "0",
-      } as IStakingRuleItem,
+      } as IStakingItem,
       reward: {
         tokenType: TokenType.NATIVE,
         collection: 0,
         // tokenId: "0",
         // amount: "0",
-      } as IStakingRuleItem,
+      } as IStakingItem,
       duration: 30,
       penalty: 100,
       recurrent: false,
     },
     search: {
       query: "",
-      stakingStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
+      stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
       },
@@ -75,21 +75,21 @@ export const Staking: FC = () => {
       },
     },
     filter: ({ id, title, description, stakingStatus, reward, deposit, ...rest }) => {
-      const clean = ({ tokenType, collection, tokenId, amount, stakingRuleId }: IStakingRuleItem) => ({
+      const clean = ({ tokenType, collection, tokenId, amount, stakingRuleId }: IStakingItem) => ({
         tokenType,
         collection,
         tokenId,
         amount,
         stakingRuleId,
       });
-      if (id && stakingStatus === StakingRuleStatus.NEW) {
+      if (id && stakingStatus === StakingStatus.NEW) {
         return {
           title,
           description,
           reward: clean(reward!),
           deposit: clean(deposit!),
         };
-      } else if (id && stakingStatus !== StakingRuleStatus.NEW) {
+      } else if (id && stakingStatus !== StakingStatus.NEW) {
         return {
           title,
           description,
@@ -135,7 +135,7 @@ export const Staking: FC = () => {
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingStatus !== StakingRuleStatus.NEW}>
+                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingStatus !== StakingStatus.NEW}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

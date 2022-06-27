@@ -1,16 +1,16 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IStakingRuleItem, TokenType } from "@framework/types";
+import { IStakingItem, TokenType } from "@framework/types";
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { StakingRuleEntity } from "./staking.entity";
-import { Erc20TokenEntity } from "../../erc20/token/token.entity";
-import { Erc721CollectionEntity } from "../../erc721/collection/collection.entity";
-import { Erc1155CollectionEntity } from "../../erc1155/collection/collection.entity";
-import { Erc998CollectionEntity } from "../../erc998/collection/collection.entity";
+import { StakingEntity } from "./staking.entity";
+import { UniTemplateEntity } from "../../erc20/token/token.entity";
+import { UniContractEntity } from "../../erc721/collection/collection.entity";
+import { UniContractEntity } from "../../erc1155/collection/collection.entity";
+import { UniContractEntity } from "../../erc998/collection/collection.entity";
 
-@Entity({ schema: ns, name: "staking_rule_reward" })
-export class StakingRewardEntity extends IdBaseEntity implements IStakingRuleItem {
+@Entity({ schema: ns, name: "staking_reward" })
+export class StakingRewardEntity extends IdBaseEntity implements IStakingItem {
   @Column({
     type: "enum",
     enum: TokenType,
@@ -30,11 +30,11 @@ export class StakingRewardEntity extends IdBaseEntity implements IStakingRuleIte
   public stakingRuleId: number;
 
   @JoinColumn()
-  @OneToOne(_type => StakingRuleEntity)
-  public stakingRule: StakingRuleEntity;
+  @OneToOne(_type => StakingEntity)
+  public stakingRule: StakingEntity;
 
-  public erc20: Erc20TokenEntity;
-  public erc721: Erc721CollectionEntity;
-  public erc998: Erc998CollectionEntity;
-  public erc1155: Erc1155CollectionEntity;
+  public erc20: UniTemplateEntity;
+  public erc721: UniContractEntity;
+  public erc998: UniContractEntity;
+  public erc1155: UniContractEntity;
 }

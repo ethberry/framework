@@ -2,14 +2,14 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { Erc721CollectionStatus, Erc721CollectionType, IErc721CollectionSearchDto } from "@framework/types";
+import { UniContractStatus, UniContractType, IErc721ContractSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
 
 interface IErc721CollectionSearchFormProps {
-  onSubmit: (values: IErc721CollectionSearchDto) => Promise<void>;
-  initialValues: IErc721CollectionSearchDto;
+  onSubmit: (values: IErc721ContractSearchDto) => Promise<void>;
+  initialValues: IErc721ContractSearchDto;
   open: boolean;
 }
 
@@ -18,8 +18,8 @@ export const Erc721CollectionSearchForm: FC<IErc721CollectionSearchFormProps> = 
 
   const classes = useStyles();
 
-  const { query, collectionStatus, collectionType } = initialValues;
-  const fixedValues = { query, collectionStatus, collectionType };
+  const { query, contractStatus, collectionType } = initialValues;
+  const fixedValues = { query, contractStatus, collectionType };
 
   return (
     <FormWrapper
@@ -38,10 +38,10 @@ export const Erc721CollectionSearchForm: FC<IErc721CollectionSearchFormProps> = 
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput multiple name="collectionStatus" options={Erc721CollectionStatus} />
+            <SelectInput multiple name="contractStatus" options={UniContractStatus} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="collectionType" options={Erc721CollectionType} />
+            <SelectInput multiple name="collectionType" options={UniContractType} />
           </Grid>
         </Grid>
       </Collapse>

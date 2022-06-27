@@ -17,7 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc1155TokenStatus, IErc1155Token, IErc1155TokenSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc1155Token, IErc1155TemplateSearchDto } from "@framework/types";
 
 import { Erc1155TokenEditDialog } from "./edit";
 import { Erc1155TokenSearchForm } from "./form";
@@ -42,7 +42,7 @@ export const Erc1155Token: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IErc1155Token, IErc1155TokenSearchDto>({
+  } = useCollection<IErc1155Token, IErc1155TemplateSearchDto>({
     baseUrl: "/erc1155-tokens",
     empty: {
       title: "",
@@ -56,7 +56,7 @@ export const Erc1155Token: FC = () => {
       query: "",
       tokenId: "",
       erc1155CollectionIds: [],
-      tokenStatus: [Erc1155TokenStatus.ACTIVE],
+      tokenStatus: [UniTemplateStatus.ACTIVE],
     },
     filter: ({ id, title, description, attributes, price, amount, imageUrl, erc1155CollectionId, tokenStatus }) =>
       id
@@ -91,7 +91,7 @@ export const Erc1155Token: FC = () => {
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(token)} disabled={token.tokenStatus === Erc1155TokenStatus.INACTIVE}>
+                <IconButton onClick={handleDelete(token)} disabled={token.tokenStatus === UniTemplateStatus.INACTIVE}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

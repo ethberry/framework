@@ -4,17 +4,17 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { IErc721TokenSearchDto } from "@framework/types";
 
-import { Erc721TokenEntity } from "./token.entity";
 import { IErc721TokenUpdateDto } from "./interfaces";
+import { UniTokenEntity } from "../../uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc721TokenService {
   constructor(
-    @InjectRepository(Erc721TokenEntity)
-    private readonly erc721TokenEntityRepository: Repository<Erc721TokenEntity>,
+    @InjectRepository(UniTokenEntity)
+    private readonly erc721TokenEntityRepository: Repository<UniTokenEntity>,
   ) {}
 
-  public async search(dto: IErc721TokenSearchDto): Promise<[Array<Erc721TokenEntity>, number]> {
+  public async search(dto: IErc721TokenSearchDto): Promise<[Array<UniTokenEntity>, number]> {
     const { query, tokenStatus, skip, take, tokenId, rarity, erc721CollectionIds } = dto;
 
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
@@ -77,7 +77,7 @@ export class Erc721TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<Erc721TokenEntity>> {
+  public async autocomplete(): Promise<Array<UniTokenEntity>> {
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["id", "tokenId"]);
@@ -92,16 +92,13 @@ export class Erc721TokenService {
   }
 
   public findOne(
-    where: FindOptionsWhere<Erc721TokenEntity>,
-    options?: FindOneOptions<Erc721TokenEntity>,
-  ): Promise<Erc721TokenEntity | null> {
+    where: FindOptionsWhere<UniTokenEntity>,
+    options?: FindOneOptions<UniTokenEntity>,
+  ): Promise<UniTokenEntity | null> {
     return this.erc721TokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(
-    where: FindOptionsWhere<Erc721TokenEntity>,
-    dto: IErc721TokenUpdateDto,
-  ): Promise<Erc721TokenEntity> {
+  public async update(where: FindOptionsWhere<UniTokenEntity>, dto: IErc721TokenUpdateDto): Promise<UniTokenEntity> {
     const tokenEntity = await this.findOne(where);
 
     if (!tokenEntity) {

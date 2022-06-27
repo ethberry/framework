@@ -4,13 +4,13 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc1155TokenStatus, IErc1155TokenSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc1155TemplateSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSubmit: (values: IErc1155TokenSearchDto) => Promise<void>;
-  initialValues: IErc1155TokenSearchDto;
+  onSubmit: (values: IErc1155TemplateSearchDto) => Promise<void>;
+  initialValues: IErc1155TemplateSearchDto;
   open: boolean;
 }
 
@@ -42,7 +42,7 @@ export const Erc1155TokenSearchForm: FC<ITokenSearchFormProps> = props => {
             <EntityInput name="erc1155CollectionIds" controller="erc1155-collections" multiple />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="tokenStatus" options={Erc1155TokenStatus} />
+            <SelectInput multiple name="tokenStatus" options={UniTemplateStatus} />
           </Grid>
           <Grid item xs={6}>
             <TextInput name="tokenId" />

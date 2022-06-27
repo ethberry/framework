@@ -7,14 +7,14 @@
 // import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 // import { IStake } from "@framework/types";
 //
-// export interface IStakingRuleViewDialogProps {
+// export interface IStakingViewDialogProps {
 //   open: boolean;
 //   onCancel: () => void;
 //   onConfirm: () => void;
 //   initialValues: IStake;
 // }
 //
-// export const StakingViewDialog: FC<IStakingRuleViewDialogProps> = props => {
+// export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
 //   const { initialValues, onConfirm, ...rest } = props;
 //
 //   const { id, deposit, reward, duration, penalty, recurrent, stakingStatus, ruleId } = initialValues;

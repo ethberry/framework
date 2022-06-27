@@ -42,7 +42,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "staking_rule_id",
+          name: "staking_id",
           type: "int",
         },
         {
@@ -61,9 +61,9 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["staking_rule_id"],
+          columnNames: ["staking_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.staking_rule`,
+          referencedTableName: `${ns}.staking`,
         },
       ],
     });

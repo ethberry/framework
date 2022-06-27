@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { Erc998CollectionStatus, Erc998CollectionType, IErc998Collection } from "@framework/types";
+import { UniContractStatus, UniContractType, IErc998Collection } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
@@ -25,7 +25,7 @@ export const Erc998CollectionEditDialog: FC<IErc998CollectionEditDialogProps> = 
     description,
     baseTokenURI,
     imageUrl,
-    collectionStatus,
+    contractStatus,
     collectionType,
     address,
     symbol,
@@ -37,7 +37,7 @@ export const Erc998CollectionEditDialog: FC<IErc998CollectionEditDialogProps> = 
     id,
     title,
     description,
-    collectionStatus,
+    contractStatus,
     collectionType,
     imageUrl,
   };
@@ -62,11 +62,11 @@ export const Erc998CollectionEditDialog: FC<IErc998CollectionEditDialogProps> = 
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput
-        name="collectionStatus"
-        options={Erc998CollectionStatus}
-        disabledOptions={[Erc998CollectionStatus.NEW]}
+        name="contractStatus"
+        options={UniContractStatus}
+        disabledOptions={[UniContractStatus.NEW]}
       />
-      <SelectInput name="collectionType" options={Erc998CollectionType} readOnly />
+      <SelectInput name="collectionType" options={UniContractType} readOnly />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

@@ -4,7 +4,7 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   Erc721RecipeEventType,
-  Erc721RecipeStatus,
+  ExchangeStatus,
   IErc721RecipeCrafted,
   IErc721RecipeCreated,
   IErc721RecipeUpdated,
@@ -39,7 +39,7 @@ export class Erc721RecipeServiceEth {
     }
 
     Object.assign(recipeEntity, {
-      recipeStatus: Erc721RecipeStatus.ACTIVE,
+      recipeStatus: ExchangeStatus.ACTIVE,
     });
 
     await recipeEntity.save();
@@ -59,7 +59,7 @@ export class Erc721RecipeServiceEth {
     }
 
     Object.assign(recipeEntity, {
-      recipeStatus: active ? Erc721RecipeStatus.ACTIVE : Erc721RecipeStatus.INACTIVE,
+      recipeStatus: active ? ExchangeStatus.ACTIVE : ExchangeStatus.INACTIVE,
     });
 
     await recipeEntity.save();

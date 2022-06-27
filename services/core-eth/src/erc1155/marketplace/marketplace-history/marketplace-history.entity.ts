@@ -8,7 +8,7 @@ import {
   TErc1155MarketplaceEventData,
 } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { Erc1155TokenEntity } from "../../token/token.entity";
+import { UniTemplateEntity } from "../../token/token.entity";
 
 @Entity({ schema: ns, name: "erc1155_marketplace_history" })
 export class Erc1155MarketplaceHistoryEntity extends IdDateBaseEntity implements IErc1155MarketplaceHistory {
@@ -33,6 +33,6 @@ export class Erc1155MarketplaceHistoryEntity extends IdDateBaseEntity implements
   public erc1155TokenId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc1155TokenEntity)
-  public erc1155Token?: Erc1155TokenEntity;
+  @ManyToOne(_type => UniTemplateEntity)
+  public erc1155Token?: UniTemplateEntity;
 }

@@ -21,8 +21,8 @@ export const Erc998TemplateSearchForm: FC<IErc998TemplateSearchFormProps> = prop
 
   const classes = useStyles();
 
-  const { query, erc998CollectionIds, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, erc998CollectionIds, minPrice, maxPrice };
+  const { query, uniContractIds, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, uniContractIds, minPrice, maxPrice };
 
   return (
     <FormWrapper
@@ -48,7 +48,7 @@ export const Erc998TemplateSearchForm: FC<IErc998TemplateSearchFormProps> = prop
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="erc998CollectionIds" controller="erc998-collections" multiple />
+              <EntityInput name="uniContractIds" controller="erc998-collections" multiple />
             </Grid>
           ) : null}
         </Grid>

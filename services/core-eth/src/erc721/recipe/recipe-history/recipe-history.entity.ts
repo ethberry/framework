@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { Erc721RecipeEventType, IErc721RecipeHistory, TErc721RecipeEventData } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc721RecipeEntity } from "../recipe.entity";
+import { CraftEntity } from "../recipe.entity";
 
 @Entity({ schema: ns, name: "erc721_recipe_history" })
 export class Erc721RecipeHistoryEntity extends IdDateBaseEntity implements IErc721RecipeHistory {
@@ -27,6 +27,6 @@ export class Erc721RecipeHistoryEntity extends IdDateBaseEntity implements IErc7
   public erc721RecipeId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc721RecipeEntity, recipe => recipe.history)
-  public erc721Recipe?: Erc721RecipeEntity;
+  @ManyToOne(_type => CraftEntity, recipe => recipe.history)
+  public erc721Recipe?: CraftEntity;
 }

@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { IStake, StakeStatus } from "@framework/types";
 import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { StakingRuleEntity } from "../staking.entity";
+import { StakingEntity } from "../staking.entity";
 
 @Entity({ schema: ns, name: "stakes" })
 export class StakesEntity extends SearchableEntity implements IStake {
@@ -34,6 +34,6 @@ export class StakesEntity extends SearchableEntity implements IStake {
   public stakingRuleId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => StakingRuleEntity, rule => rule.stakes)
-  public stakingRule: StakingRuleEntity;
+  @ManyToOne(_type => StakingEntity, rule => rule.stakes)
+  public stakingRule: StakingEntity;
 }

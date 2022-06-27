@@ -9,8 +9,7 @@ import {
 } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-
-import { Erc998TokenEntity } from "../token.entity";
+import { UniTokenEntity } from "../../../uni-token/uni-token.entity";
 
 @Entity({ schema: ns, name: "erc998_token_history" })
 export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IErc998TokenHistory {
@@ -32,9 +31,9 @@ export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IErc99
   public eventData: IErc998TokenTransfer | IErc998TokenApprove | IErc998TokenApprovedForAll;
 
   @Column({ type: "int", nullable: true })
-  public erc998TokenId: number | null;
+  public uniTokenId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc998TokenEntity, token => token.history)
-  public erc998Token?: Erc998TokenEntity;
+  @ManyToOne(_type => UniTokenEntity)
+  public uniToken?: UniTokenEntity;
 }

@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { Erc998TokenStatus, IErc998Token } from "@framework/types";
+import { UniTokenStatus, IErc998Token } from "@framework/types";
 import { ns } from "@framework/constants";
 import { BigNumberColumn, IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc998TemplateEntity } from "../template/template.entity";
+import { UniTemplateEntity } from "../template/template.entity";
 import { Erc998DropboxEntity } from "../dropbox/dropbox.entity";
 
 @Entity({ schema: ns, name: "erc998_token" })
@@ -14,9 +14,9 @@ export class Erc998TokenEntity extends IdDateBaseEntity implements IErc998Token 
 
   @Column({
     type: "enum",
-    enum: Erc998TokenStatus,
+    enum: UniTokenStatus,
   })
-  public tokenStatus: Erc998TokenStatus;
+  public tokenStatus: UniTokenStatus;
 
   @BigNumberColumn()
   public tokenId: string;
@@ -28,8 +28,8 @@ export class Erc998TokenEntity extends IdDateBaseEntity implements IErc998Token 
   public erc998TemplateId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc998TemplateEntity, template => template.erc998Tokens)
-  public erc998Template: Erc998TemplateEntity;
+  @ManyToOne(_type => UniTemplateEntity, template => template.erc998Tokens)
+  public erc998Template: UniTemplateEntity;
 
   @Column({ type: "int" })
   public erc998DropboxId: number;

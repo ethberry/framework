@@ -5,7 +5,7 @@ import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-in
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { Erc1155TokenStatus, IErc1155Token } from "@framework/types";
+import { UniTemplateStatus, IErc1155Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { Erc20PriceInput } from "../../../../components/inputs/erc20-price";
@@ -58,7 +58,7 @@ export const Erc1155TokenEditDialog: FC<IErc1155TokenEditDialogProps> = props =>
       <JsonInput name="attributes" />
       <Erc20PriceInput />
       <NumberInput name="amount" />
-      <SelectInput name="tokenStatus" options={Erc1155TokenStatus} />
+      <SelectInput name="tokenStatus" options={UniTemplateStatus} />
       <EntityInput name="erc1155CollectionId" controller="erc1155-collections" readOnly={!!id} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { Erc20TokenStatus, IErc20Token } from "@framework/types";
+import { UniTokenStatus, IErc20Contract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
@@ -41,7 +41,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         <BlockchainInfoPopover name={name} symbol={symbol} decimals={decimals} address={address} amount={amount} />
         <TextInput name="title" />
         <RichTextEditor name="description" />
-        <SelectInput name="tokenStatus" options={Erc20TokenStatus} disabledOptions={[Erc20TokenStatus.NEW]} />
+        <SelectInput name="tokenStatus" options={UniTokenStatus} disabledOptions={[UniTokenStatus.NEW]} />
       </FormDialog>
     </>
   );

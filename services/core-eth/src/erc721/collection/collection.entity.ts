@@ -2,13 +2,13 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { ContractBaseEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { Erc721CollectionStatus, Erc721CollectionType, Erc721TokenTemplate, IErc721Collection } from "@framework/types";
+import { UniContractStatus, UniContractType, Erc721TokenTemplate, IErc721Collection } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { Erc721TemplateEntity } from "../template/template.entity";
+import { UniTemplateEntity } from "../template/template.entity";
 
 @Entity({ schema: ns, name: "erc721_collection" })
-export class Erc721CollectionEntity extends Mixin(ContractBaseEntity, SearchableEntity) implements IErc721Collection {
+export class UniContractEntity extends Mixin(ContractBaseEntity, SearchableEntity) implements IErc721Collection {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
@@ -26,15 +26,15 @@ export class Erc721CollectionEntity extends Mixin(ContractBaseEntity, Searchable
 
   @Column({
     type: "enum",
-    enum: Erc721CollectionStatus,
+    enum: UniContractStatus,
   })
-  public collectionStatus: Erc721CollectionStatus;
+  public contractStatus: UniContractStatus;
 
   @Column({
     type: "enum",
-    enum: Erc721CollectionType,
+    enum: UniContractType,
   })
-  public collectionType: Erc721CollectionType;
+  public collectionType: UniContractType;
 
   @Column({
     type: "enum",
@@ -42,6 +42,6 @@ export class Erc721CollectionEntity extends Mixin(ContractBaseEntity, Searchable
   })
   public contractTemplate: Erc721TokenTemplate;
 
-  @OneToMany(_type => Erc721TemplateEntity, template => template.erc721Collection)
-  public erc721Templates: Array<Erc721TemplateEntity>;
+  @OneToMany(_type => UniTemplateEntity, template => template.erc721Collection)
+  public erc721Templates: Array<UniTemplateEntity>;
 }

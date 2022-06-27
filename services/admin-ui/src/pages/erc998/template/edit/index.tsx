@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc998CollectionType, Erc998TemplateStatus, IErc998Template } from "@framework/types";
+import { UniContractType, UniTemplateStatus, IErc998Template } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
@@ -58,12 +58,12 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
       <JsonInput name="attributes" />
       <Erc20PriceInput />
       <NumberInput name="amount" />
-      {id ? <SelectInput name="templateStatus" options={Erc998TemplateStatus} /> : null}
+      {id ? <SelectInput name="templateStatus" options={UniTemplateStatus} /> : null}
       <EntityInput
         name="erc998CollectionId"
         controller="erc998-collections"
         data={{
-          collectionType: [Erc998CollectionType.TOKEN],
+          collectionType: [UniContractType.TOKEN],
         }}
       />
       <AvatarInput name="imageUrl" />

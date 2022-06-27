@@ -1,34 +1,19 @@
-import { ISearchable, IIdBase } from "@gemunion/types-collection";
-import { TokenType } from "./common";
-import { IErc20Token } from "../erc20/token";
-import { IErc721Collection } from "../erc721/collection";
-import { IErc998Collection } from "../erc998/collection";
-import { IErc1155Collection } from "../erc1155/collection";
+import { ISearchable } from "@gemunion/types-collection";
 
-export enum StakingRuleStatus {
+import { IAsset } from "./asset";
+
+export enum StakingStatus {
   NEW = "NEW",
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
 }
 
-export interface IStakingRuleItem extends IIdBase {
-  tokenType: TokenType;
-  collection: number;
-  tokenId: number;
-  amount: string;
-  stakingRuleId: number;
-  erc20?: IErc20Token;
-  erc721?: IErc721Collection;
-  erc998?: IErc998Collection;
-  erc1155?: IErc1155Collection;
-}
-
-export interface IStakingRule extends ISearchable {
-  deposit: IStakingRuleItem;
-  reward: IStakingRuleItem;
+export interface IStaking extends ISearchable {
+  deposit: IAsset;
+  reward: IAsset;
   duration: number;
   penalty: number;
   recurrent: boolean;
-  stakingStatus: StakingRuleStatus;
+  stakingStatus: StakingStatus;
   ruleId: string;
 }

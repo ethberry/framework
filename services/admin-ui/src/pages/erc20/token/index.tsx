@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc20TokenStatus, Erc20TokenTemplate, IErc20Token, IErc20TokenSearchDto } from "@framework/types";
+import { UniTokenStatus, Erc20TokenTemplate, IErc20Token, IErc20TokenSearchDto } from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
@@ -53,7 +53,7 @@ export const Erc20Token: FC = () => {
     },
     search: {
       query: "",
-      tokenStatus: [Erc20TokenStatus.ACTIVE],
+      tokenStatus: [UniTokenStatus.ACTIVE],
       contractTemplate: [],
     },
     filter: ({ title, description, tokenStatus }) => ({ title, description, tokenStatus }),
@@ -85,7 +85,7 @@ export const Erc20Token: FC = () => {
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(token)} disabled={token.tokenStatus === Erc20TokenStatus.INACTIVE}>
+                <IconButton onClick={handleDelete(token)} disabled={token.tokenStatus === UniTokenStatus.INACTIVE}>
                   <Delete />
                 </IconButton>
                 <ContractActionsMenu

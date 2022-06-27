@@ -3,21 +3,21 @@ import { IsArray, IsEnum, IsNumber, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { Erc998TokenStatus, IErc998TokenSearchDto, TokenRarity } from "@framework/types";
+import { UniTokenStatus, IErc998TokenSearchDto, TokenRarity } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 export class Erc998TokenSearchDto extends SearchDto implements IErc998TokenSearchDto {
   @ApiPropertyOptional({
-    enum: Erc998TokenStatus,
+    enum: UniTokenStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<Erc998TokenStatus>)
-  @IsEnum(Erc998TokenStatus, { each: true, message: "badInput" })
-  public tokenStatus: Array<Erc998TokenStatus>;
+  @Transform(({ value }) => value as Array<UniTokenStatus>)
+  @IsEnum(UniTokenStatus, { each: true, message: "badInput" })
+  public tokenStatus: Array<UniTokenStatus>;
 
   @ApiPropertyOptional({
     type: Number,
@@ -29,7 +29,7 @@ export class Erc998TokenSearchDto extends SearchDto implements IErc998TokenSearc
   @IsNumber({}, { each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public erc998CollectionIds: Array<number>;
+  public uniContractIds: Array<number>;
 
   @ApiPropertyOptional({
     enum: TokenRarity,

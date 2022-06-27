@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 
 import { EntityInput, IAutocompleteOption } from "@gemunion/mui-inputs-entity";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { Erc20TokenStatus } from "@framework/types";
+import { UniTokenStatus } from "@framework/types";
 
 export const Erc20PriceInput: FC = () => {
   const [decimals, setDecimals] = useState(18);
@@ -21,7 +21,7 @@ export const Erc20PriceInput: FC = () => {
           name="erc20TokenId"
           controller="erc20-tokens"
           data={{
-            tokenStatus: [Erc20TokenStatus.ACTIVE],
+            tokenStatus: [UniTokenStatus.ACTIVE],
           }}
           onChange={(
             _event: ChangeEvent<unknown>,

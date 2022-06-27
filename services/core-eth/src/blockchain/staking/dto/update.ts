@@ -14,10 +14,10 @@ import {
 import { Transform, Type } from "class-transformer";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-import { IStakingRuleItemUpdateDto, IStakingRuleUpdateDto } from "../interfaces";
+import { IStakingItemUpdateDto, IStakingUpdateDto } from "../interfaces";
 import { TokenType } from "@framework/types";
 
-export class StakingItemUpdateDto implements IStakingRuleItemUpdateDto {
+export class StakingItemUpdateDto implements IStakingItemUpdateDto {
   @ApiProperty({
     enum: TokenType,
   })
@@ -49,7 +49,7 @@ export class StakingItemUpdateDto implements IStakingRuleItemUpdateDto {
   public stakingRuleId: number;
 }
 
-export class StakingUpdateDto implements IStakingRuleUpdateDto {
+export class StakingUpdateDto implements IStakingUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

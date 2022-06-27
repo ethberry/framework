@@ -2,19 +2,19 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingRuleSearchDto, StakingRuleStatus } from "@framework/types";
+import { IStakingSearchDto, StakingStatus } from "@framework/types";
 
-import { StakingRuleEntity } from "./staking.entity";
-import { IStakingRuleCreateDto, IStakingRuleUpdateDto } from "./interfaces";
+import { StakingEntity } from "./staking.entity";
+import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
 
 @Injectable()
 export class StakingService {
   constructor(
-    @InjectRepository(StakingRuleEntity)
-    private readonly stakingEntityRepository: Repository<StakingRuleEntity>,
+    @InjectRepository(StakingEntity)
+    private readonly stakingEntityRepository: Repository<StakingEntity>,
   ) {}
 
-  public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRuleEntity>, number]> {
+  public search(dto: IStakingSearchDto): Promise<[Array<StakingEntity>, number]> {
     const { query, deposit, reward, stakingStatus, skip, take } = dto;
 
     const queryBuilder = this.stakingEntityRepository.createQueryBuilder("staking");
@@ -72,20 +72,20 @@ export class StakingService {
   }
 
   public findOne(
-    where: FindOptionsWhere<StakingRuleEntity>,
-    options?: FindOneOptions<StakingRuleEntity>,
-  ): Promise<StakingRuleEntity | null> {
+    where: FindOptionsWhere<StakingEntity>,
+    options?: FindOneOptions<StakingEntity>,
+  ): Promise<StakingEntity | null> {
     return this.stakingEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IStakingRuleCreateDto): Promise<StakingRuleEntity> {
+  public async create(dto: IStakingCreateDto): Promise<StakingEntity> {
     return this.stakingEntityRepository.create(dto).save();
   }
 
   public async update(
-    where: FindOptionsWhere<StakingRuleEntity>,
-    dto: IStakingRuleUpdateDto,
-  ): Promise<StakingRuleEntity> {
+    where: FindOptionsWhere<StakingEntity>,
+    dto: IStakingUpdateDto,
+  ): Promise<StakingEntity> {
     const tokenEntity = await this.findOne(where);
 
     if (!tokenEntity) {
@@ -97,17 +97,17 @@ export class StakingService {
     return tokenEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<StakingRuleEntity>): Promise<void> {
+  public async delete(where: FindOptionsWhere<StakingEntity>): Promise<void> {
     const stakingEntity = await this.findOne(where);
 
     if (!stakingEntity) {
       return;
     }
 
-    if (stakingEntity.stakingStatus === StakingRuleStatus.NEW) {
+    if (stakingEntity.stakingStatus === StakingStatus.NEW) {
       await stakingEntity.remove();
     } else {
-      Object.assign(stakingEntity, { recipeStatus: StakingRuleStatus.INACTIVE });
+      Object.assign(stakingEntity, { recipeStatus: StakingStatus.INACTIVE });
       await stakingEntity.save();
     }
   }

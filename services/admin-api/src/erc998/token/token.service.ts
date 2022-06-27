@@ -4,20 +4,20 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { IErc998TokenSearchDto } from "@framework/types";
 
-import { Erc998TokenEntity } from "./token.entity";
 import { IErc998TokenUpdateDto } from "./interfaces";
+import { UniTokenEntity } from "../../uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc998TokenService {
   constructor(
-    @InjectRepository(Erc998TokenEntity)
-    private readonly erc998TokenEntityRepository: Repository<Erc998TokenEntity>,
+    @InjectRepository(UniTokenEntity)
+    private readonly uniTokenEntityRepository: Repository<UniTokenEntity>,
   ) {}
 
-  public async search(dto: IErc998TokenSearchDto): Promise<[Array<Erc998TokenEntity>, number]> {
-    const { query, tokenStatus, skip, take, tokenId, rarity, erc998CollectionIds } = dto;
+  public async search(dto: IErc998TokenSearchDto): Promise<[Array<UniTokenEntity>, number]> {
+    const { query, tokenStatus, skip, take, tokenId, rarity, uniContractIds } = dto;
 
-    const queryBuilder = this.erc998TokenEntityRepository.createQueryBuilder("token");
+    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
@@ -43,13 +43,13 @@ export class Erc998TokenService {
       }
     }
 
-    if (erc998CollectionIds) {
-      if (erc998CollectionIds.length === 1) {
-        queryBuilder.andWhere("template.erc998CollectionId = :erc998CollectionId", {
-          erc998CollectionId: erc998CollectionIds[0],
+    if (uniContractIds) {
+      if (uniContractIds.length === 1) {
+        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
+          uniContractId: uniContractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.erc998CollectionId IN(:...erc998CollectionIds)", { erc998CollectionIds });
+        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
       }
     }
 
@@ -77,8 +77,8 @@ export class Erc998TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<Erc998TokenEntity>> {
-    const queryBuilder = this.erc998TokenEntityRepository.createQueryBuilder("token");
+  public async autocomplete(): Promise<Array<UniTokenEntity>> {
+    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["id", "tokenId"]);
     queryBuilder.leftJoin("token.template", "template");
@@ -92,16 +92,13 @@ export class Erc998TokenService {
   }
 
   public findOne(
-    where: FindOptionsWhere<Erc998TokenEntity>,
-    options?: FindOneOptions<Erc998TokenEntity>,
-  ): Promise<Erc998TokenEntity | null> {
-    return this.erc998TokenEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<UniTokenEntity>,
+    options?: FindOneOptions<UniTokenEntity>,
+  ): Promise<UniTokenEntity | null> {
+    return this.uniTokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(
-    where: FindOptionsWhere<Erc998TokenEntity>,
-    dto: IErc998TokenUpdateDto,
-  ): Promise<Erc998TokenEntity> {
+  public async update(where: FindOptionsWhere<UniTokenEntity>, dto: IErc998TokenUpdateDto): Promise<UniTokenEntity> {
     const tokenEntity = await this.findOne(where);
 
     if (!tokenEntity) {

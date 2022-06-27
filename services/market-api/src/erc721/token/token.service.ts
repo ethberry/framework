@@ -2,23 +2,23 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { Erc721TokenStatus, IErc721AssetSearchDto } from "@framework/types";
+import { UniTokenStatus, IErc721AssetSearchDto } from "@framework/types";
 
-import { Erc721TokenEntity } from "./token.entity";
 import { UserEntity } from "../../user/user.entity";
 import { IErc721TokenAutocompleteDto } from "./interface";
+import { UniTokenEntity } from "../../uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc721TokenService {
   constructor(
-    @InjectRepository(Erc721TokenEntity)
-    private readonly erc721TokenEntityRepository: Repository<Erc721TokenEntity>,
+    @InjectRepository(UniTokenEntity)
+    private readonly uniTokenEntityRepository: Repository<UniTokenEntity>,
   ) {}
 
-  public async search(dto: IErc721AssetSearchDto, userEntity: UserEntity): Promise<[Array<Erc721TokenEntity>, number]> {
+  public async search(dto: IErc721AssetSearchDto, userEntity: UserEntity): Promise<[Array<UniTokenEntity>, number]> {
     const { skip, take, rarity, erc721CollectionIds } = dto;
 
-    const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
+    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
@@ -60,7 +60,7 @@ export class Erc721TokenService {
       }
     }
 
-    queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: Erc721TokenStatus.MINTED });
+    queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: UniTokenStatus.MINTED });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -72,9 +72,9 @@ export class Erc721TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc721TokenAutocompleteDto): Promise<Array<Erc721TokenEntity>> {
+  public async autocomplete(dto: IErc721TokenAutocompleteDto): Promise<Array<UniTokenEntity>> {
     const { wallet } = dto;
-    const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
+    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["id", "tokenId"]);
     queryBuilder.andWhere("token.owner = :owner", { owner: wallet });
@@ -89,14 +89,14 @@ export class Erc721TokenService {
   }
 
   public findOne(
-    where: FindOptionsWhere<Erc721TokenEntity>,
-    options?: FindOneOptions<Erc721TokenEntity>,
-  ): Promise<Erc721TokenEntity | null> {
-    return this.erc721TokenEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<UniTokenEntity>,
+    options?: FindOneOptions<UniTokenEntity>,
+  ): Promise<UniTokenEntity | null> {
+    return this.uniTokenEntityRepository.findOne({ where, ...options });
   }
 
-  public findOnePlus(where: FindOptionsWhere<Erc721TokenEntity>): Promise<Erc721TokenEntity | null> {
-    const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
+  public findOnePlus(where: FindOptionsWhere<UniTokenEntity>): Promise<UniTokenEntity | null> {
+    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
     queryBuilder.where(where);
@@ -108,8 +108,8 @@ export class Erc721TokenService {
     return queryBuilder.getOne();
   }
 
-  public getToken(address: string, tokenId: string): Promise<Erc721TokenEntity | null> {
-    const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
+  public getToken(address: string, tokenId: string): Promise<UniTokenEntity | null> {
+    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 

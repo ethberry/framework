@@ -1,7 +1,7 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsJSON, IsNumberString, IsOptional, IsString, IsUrl, Min } from "class-validator";
 
-import { Erc721TemplateStatus } from "@framework/types";
+import { UniTemplateStatus } from "@framework/types";
 
 import { IErc721TemplateUpdateDto } from "../interfaces";
 
@@ -57,6 +57,6 @@ export class Erc721TemplateUpdateDto implements IErc721TemplateUpdateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(Erc721TemplateStatus, { message: "badInput" })
-  public templateStatus: Erc721TemplateStatus;
+  @IsEnum(UniTemplateStatus, { message: "badInput" })
+  public templateStatus: UniTemplateStatus;
 }

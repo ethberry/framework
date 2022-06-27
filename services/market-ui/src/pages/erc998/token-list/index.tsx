@@ -4,7 +4,7 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc998AssetSearchDto, IErc998Token } from "@framework/types";
+import { IErc998AssetSearchDto, IUniToken } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998Token } from "./item";
@@ -18,11 +18,11 @@ export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc998Token, IErc998AssetSearchDto>({
+    useCollection<IUniToken, IErc998AssetSearchDto>({
       baseUrl: "/erc998-tokens",
       embedded,
       search: {
-        erc998CollectionIds: [],
+        uniContractIds: [],
         rarity: [],
       },
     });

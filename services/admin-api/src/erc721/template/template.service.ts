@@ -2,19 +2,19 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { Erc721TemplateStatus, IErc721TemplateAutocompleteDto, IErc721TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc721TemplateAutocompleteDto, IErc721TemplateSearchDto } from "@framework/types";
 
-import { Erc721TemplateEntity } from "./template.entity";
 import { IErc721TemplateCreateDto, IErc721TemplateUpdateDto } from "./interfaces";
+import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc721TemplateService {
   constructor(
-    @InjectRepository(Erc721TemplateEntity)
-    private readonly erc721TemplateEntityRepository: Repository<Erc721TemplateEntity>,
+    @InjectRepository(UniTemplateEntity)
+    private readonly erc721TemplateEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
-  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<Erc721TemplateEntity>, number]> {
+  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
     const { query, templateStatus, skip, take, erc721CollectionIds } = dto;
 
     const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
@@ -63,7 +63,7 @@ export class Erc721TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc721TemplateAutocompleteDto): Promise<Array<Erc721TemplateEntity>> {
+  public async autocomplete(dto: IErc721TemplateAutocompleteDto): Promise<Array<UniTemplateEntity>> {
     const { templateStatus = [], erc721CollectionIds = [] } = dto;
 
     const where = {};
@@ -90,16 +90,16 @@ export class Erc721TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<Erc721TemplateEntity>,
-    options?: FindOneOptions<Erc721TemplateEntity>,
-  ): Promise<Erc721TemplateEntity | null> {
+    where: FindOptionsWhere<UniTemplateEntity>,
+    options?: FindOneOptions<UniTemplateEntity>,
+  ): Promise<UniTemplateEntity | null> {
     return this.erc721TemplateEntityRepository.findOne({ where, ...options });
   }
 
   public async update(
-    where: FindOptionsWhere<Erc721TemplateEntity>,
+    where: FindOptionsWhere<UniTemplateEntity>,
     dto: Partial<IErc721TemplateUpdateDto>,
-  ): Promise<Erc721TemplateEntity> {
+  ): Promise<UniTemplateEntity> {
     const templateEntity = await this.findOne(where);
 
     if (!templateEntity) {
@@ -111,11 +111,11 @@ export class Erc721TemplateService {
     return templateEntity.save();
   }
 
-  public async create(dto: IErc721TemplateCreateDto): Promise<Erc721TemplateEntity> {
+  public async create(dto: IErc721TemplateCreateDto): Promise<UniTemplateEntity> {
     return this.erc721TemplateEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<Erc721TemplateEntity>): Promise<Erc721TemplateEntity> {
-    return this.update(where, { templateStatus: Erc721TemplateStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<UniTemplateEntity>): Promise<UniTemplateEntity> {
+    return this.update(where, { templateStatus: UniTemplateStatus.INACTIVE });
   }
 }

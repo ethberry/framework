@@ -2,15 +2,15 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { Erc998CollectionType, Erc998DropboxStatus, IErc998DropboxSearchDto } from "@framework/types";
+import { UniContractType, DropboxStatus, IDropboxSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
 interface IDropboxSearchFormProps {
-  onSubmit: (values: IErc998DropboxSearchDto) => Promise<void>;
-  initialValues: IErc998DropboxSearchDto;
+  onSubmit: (values: IDropboxSearchDto) => Promise<void>;
+  initialValues: IDropboxSearchDto;
   open: boolean;
 }
 
@@ -19,8 +19,8 @@ export const Erc998DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, dropboxStatus, erc998CollectionIds } = initialValues;
-  const fixedValues = { query, dropboxStatus, erc998CollectionIds };
+  const { query, dropboxStatus, uniContractIds } = initialValues;
+  const fixedValues = { query, dropboxStatus, uniContractIds };
 
   return (
     <FormWrapper
@@ -29,7 +29,7 @@ export const Erc998DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="Erc998DropboxSearchForm"
+      data-testid="DropboxSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -40,14 +40,14 @@ export const Erc998DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <EntityInput
-              name="erc998CollectionIds"
+              name="uniContractIds"
               controller="erc998-collections"
               multiple
-              data={{ collectionType: [Erc998CollectionType.DROPBOX] }}
+              data={{ collectionType: [UniContractType.DROPBOX] }}
             />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="dropboxStatus" options={Erc998DropboxStatus} />
+            <SelectInput multiple name="dropboxStatus" options={DropboxStatus} />
           </Grid>
         </Grid>
       </Collapse>

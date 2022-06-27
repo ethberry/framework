@@ -7,7 +7,7 @@ import { stringify } from "qs";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { IErc998AssetSearchDto, IErc998Token } from "@framework/types";
+import { IErc998AssetSearchDto, IUniToken } from "@framework/types";
 
 import { AssetsTabs, ITabPanelProps } from "../tabs";
 import { Erc998Token } from "../../../erc998/token-list/item";
@@ -21,10 +21,10 @@ export const Heroes: FC<ITabPanelProps> = props => {
   }
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc998Token, IErc998AssetSearchDto>({
+    useCollection<IUniToken, IErc998AssetSearchDto>({
       baseUrl: "/erc998-tokens",
       search: {
-        erc998CollectionIds: [3],
+        uniContractIds: [3],
         rarity: [],
       },
       redirect: (_baseUrl, search) => `/my-assets/${value}?${stringify(search)}`,

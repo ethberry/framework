@@ -19,7 +19,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { StakingService } from "./staking.service";
 import { StakingCreateDto, StakingSearchDto } from "./dto";
-import { StakingRuleEntity } from "./staking.entity";
+import { StakingEntity } from "./staking.entity";
 import { StakingUpdateDto } from "./dto/update";
 
 @ApiBearerAuth()
@@ -30,14 +30,14 @@ export class StakingController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   @UseInterceptors(ClassSerializerInterceptor)
-  public search(@Query() dto: StakingSearchDto): Promise<[Array<StakingRuleEntity>, number]> {
+  public search(@Query() dto: StakingSearchDto): Promise<[Array<StakingEntity>, number]> {
     return this.stakingService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   @UseInterceptors(ClassSerializerInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingRuleEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingEntity | null> {
     return this.stakingService.findOne({ id }, { relations: { deposit: true, reward: true } });
   }
 
@@ -45,12 +45,12 @@ export class StakingController {
   public update(
     @Param("id", ParseIntPipe) id: number,
     @Body() dto: StakingUpdateDto,
-  ): Promise<StakingRuleEntity | null> {
+  ): Promise<StakingEntity | null> {
     return this.stakingService.update({ id }, dto);
   }
 
   @Post("/")
-  public create(@Body() dto: StakingCreateDto): Promise<StakingRuleEntity> {
+  public create(@Body() dto: StakingCreateDto): Promise<StakingEntity> {
     return this.stakingService.create(dto);
   }
 

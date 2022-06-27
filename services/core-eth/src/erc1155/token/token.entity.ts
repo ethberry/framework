@@ -1,13 +1,13 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
-import { Erc1155TokenStatus, IErc1155Token } from "@framework/types";
+import { UniTemplateStatus, IErc1155Token } from "@framework/types";
 import { ns } from "@framework/constants";
 import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc1155CollectionEntity } from "../collection/collection.entity";
+import { UniContractEntity } from "../collection/collection.entity";
 
 @Entity({ schema: ns, name: "erc1155_token" })
-export class Erc1155TokenEntity extends SearchableEntity implements IErc1155Token {
+export class UniTemplateEntity extends SearchableEntity implements IErc1155Token {
   @Column({ type: "json" })
   public attributes: any;
 
@@ -28,14 +28,14 @@ export class Erc1155TokenEntity extends SearchableEntity implements IErc1155Toke
 
   @Column({
     type: "enum",
-    enum: Erc1155TokenStatus,
+    enum: UniTemplateStatus,
   })
-  public tokenStatus: Erc1155TokenStatus;
+  public tokenStatus: UniTemplateStatus;
 
   @Column({ type: "int" })
   public erc1155CollectionId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc1155CollectionEntity, collection => collection.erc1155Tokens)
-  public erc1155Collection: Erc1155CollectionEntity;
+  @ManyToOne(_type => UniContractEntity, collection => collection.erc1155Tokens)
+  public erc1155Collection: UniContractEntity;
 }

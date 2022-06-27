@@ -4,7 +4,7 @@ import { IErc998Ingredient } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc1155TokenEntity } from "../../erc1155/token/token.entity";
+import { UniTemplateEntity } from "../../erc1155/token/token.entity";
 import { Erc998RecipeEntity } from "../recipe/recipe.entity";
 
 @Entity({ schema: ns, name: "erc998_ingredient" })
@@ -20,8 +20,8 @@ export class Erc998IngredientEntity extends IdDateBaseEntity implements IErc998I
   public erc1155TokenId: number;
 
   @JoinColumn()
-  @OneToOne(_type => Erc1155TokenEntity)
-  public erc1155Token: Erc1155TokenEntity;
+  @OneToOne(_type => UniTemplateEntity)
+  public erc1155Token: UniTemplateEntity;
 
   @Column({ type: "int" })
   public amount: number;

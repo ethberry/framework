@@ -6,7 +6,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { Erc721TemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateItem } from "./item";
@@ -28,7 +28,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
       search: {
         query: "",
         erc721CollectionIds: id ? [~~id] : [],
-        templateStatus: [Erc721TemplateStatus.ACTIVE],
+        templateStatus: [UniTemplateStatus.ACTIVE],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
       },

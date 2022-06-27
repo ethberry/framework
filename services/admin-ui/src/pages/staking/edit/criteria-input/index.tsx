@@ -4,11 +4,11 @@ import { useIntl } from "react-intl";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import {
-  Erc1155TokenStatus,
+  UniTemplateStatus,
   Erc721DropboxStatus,
-  Erc721TemplateStatus,
-  Erc998DropboxStatus,
-  Erc998TemplateStatus,
+  UniTemplateStatus,
+  DropboxStatus,
+  UniTemplateStatus,
   TokenType,
 } from "@framework/types";
 
@@ -34,20 +34,7 @@ export const CriteriaInput: FC<ICriteriaInputProps> = props => {
           placeholder={formatMessage({ id: "form.placeholders.erc721TemplateId" })}
           data={{
             erc721CollectionIds: collection === 0 ? [] : [collection],
-            templateStatus: [Erc721TemplateStatus.ACTIVE],
-          }}
-        />
-      );
-    case TokenType.ERC721D:
-      return (
-        <EntityInput
-          name={`${prefix}.${name}`}
-          controller="erc721-dropboxes"
-          label={formatMessage({ id: "form.labels.erc721DropboxId" })}
-          placeholder={formatMessage({ id: "form.placeholders.erc721DropboxId" })}
-          data={{
-            erc721CollectionIds: collection === 2 ? [] : [collection],
-            dropboxStatus: [Erc721DropboxStatus.ACTIVE],
+            templateStatus: [UniTemplateStatus.ACTIVE],
           }}
         />
       );
@@ -59,21 +46,8 @@ export const CriteriaInput: FC<ICriteriaInputProps> = props => {
           label={formatMessage({ id: "form.labels.erc998TemplateId" })}
           placeholder={formatMessage({ id: "form.placeholders.erc998TemplateId" })}
           data={{
-            erc998CollectionIds: collection === 0 || collection === 2 ? [] : [collection],
-            templateStatus: [Erc998TemplateStatus.ACTIVE],
-          }}
-        />
-      );
-    case TokenType.ERC998D:
-      return (
-        <EntityInput
-          name={`${prefix}.${name}`}
-          controller="erc998-dropboxes"
-          label={formatMessage({ id: "form.labels.erc998DropboxId" })}
-          placeholder={formatMessage({ id: "form.placeholders.erc998DropboxId" })}
-          data={{
-            erc998CollectionIds: collection === 0 || collection === 2 ? [] : [collection],
-            dropboxStatus: [Erc998DropboxStatus.ACTIVE],
+            uniContractIds: collection === 0 || collection === 2 ? [] : [collection],
+            templateStatus: [UniTemplateStatus.ACTIVE],
           }}
         />
       );
@@ -86,7 +60,7 @@ export const CriteriaInput: FC<ICriteriaInputProps> = props => {
           placeholder={formatMessage({ id: "form.placeholders.erc1155TokenId" })}
           data={{
             erc1155CollectionIds: collection === 0 ? [] : [collection],
-            tokenStatus: [Erc1155TokenStatus.ACTIVE],
+            tokenStatus: [UniTemplateStatus.ACTIVE],
           }}
         />
       );

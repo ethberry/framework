@@ -18,7 +18,7 @@ export const Erc998CollectionDeployDialog: FC<IErc998CollectionDeployDialogProps
     contractTemplate: Erc998TokenTemplate.SIMPLE,
     name: "",
     symbol: "",
-    baseTokenURI: `${process.env.BE_URL}/erc998`,
+    baseTokenURI: `${process.env.BE_URL}/metadata`,
     royalty: 0,
   };
 

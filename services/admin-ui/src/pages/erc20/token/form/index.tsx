@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { Erc20TokenStatus, Erc20TokenTemplate, IErc20TokenSearchDto } from "@framework/types";
+import { UniTokenStatus, Erc20TokenTemplate, IErc20TokenSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
@@ -38,7 +38,7 @@ export const Erc20TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput name="tokenStatus" options={Erc20TokenStatus} multiple />
+            <SelectInput name="tokenStatus" options={UniTokenStatus} multiple />
           </Grid>
           <Grid item xs={6}>
             <SelectInput name="contractTemplate" options={Erc20TokenTemplate} multiple />

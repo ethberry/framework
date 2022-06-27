@@ -2,26 +2,26 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { Erc1155TokenEntity } from "./token.entity";
+import { UniTemplateEntity } from "./token.entity";
 
 @Injectable()
 export class Erc1155TokenService {
   constructor(
-    @InjectRepository(Erc1155TokenEntity)
-    private readonly erc1155TokenEntityRepository: Repository<Erc1155TokenEntity>,
+    @InjectRepository(UniTemplateEntity)
+    private readonly erc1155TokenEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<Erc1155TokenEntity>,
-    options?: FindOneOptions<Erc1155TokenEntity>,
-  ): Promise<Erc1155TokenEntity | null> {
+    where: FindOptionsWhere<UniTemplateEntity>,
+    options?: FindOneOptions<UniTemplateEntity>,
+  ): Promise<UniTemplateEntity | null> {
     return this.erc1155TokenEntityRepository.findOne({ where, ...options });
   }
 
   public async update(
-    where: FindOptionsWhere<Erc1155TokenEntity>,
-    dto: DeepPartial<Erc1155TokenEntity>,
-  ): Promise<Erc1155TokenEntity> {
+    where: FindOptionsWhere<UniTemplateEntity>,
+    dto: DeepPartial<UniTemplateEntity>,
+  ): Promise<UniTemplateEntity> {
     const { ...rest } = dto;
 
     const tokenEntity = await this.findOne(where);
@@ -35,7 +35,7 @@ export class Erc1155TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(tokenId: string, address: string): Promise<Erc1155TokenEntity | null> {
+  public getToken(tokenId: string, address: string): Promise<UniTemplateEntity | null> {
     const queryBuilder = this.erc1155TokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();

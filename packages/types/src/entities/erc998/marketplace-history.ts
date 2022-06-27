@@ -1,6 +1,6 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { IErc998Token } from "./token";
+import { IUniToken } from "../uni-token/uni-token";
 
 export enum Erc998MarketplaceEventType {
   Redeem = "Redeem",
@@ -22,6 +22,6 @@ export interface IErc998MarketplaceHistory extends IIdDateBase {
   transactionHash: string;
   eventType: Erc998MarketplaceEventType;
   eventData: TErc998MarketplaceEventData;
-  erc998TokenId: number | null;
-  erc998Token?: IErc998Token;
+  uniTokenId: number | null;
+  uniToken?: IUniToken;
 }

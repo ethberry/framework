@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { Erc1155CollectionStatus, IErc1155Collection } from "@framework/types";
+import { UniContractStatus, IErc1155Collection } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
@@ -19,13 +19,13 @@ export interface IErc1155CollectionEditDialogProps {
 export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, imageUrl, address, collectionStatus, baseTokenURI } = initialValues;
+  const { id, title, description, imageUrl, address, contractStatus, baseTokenURI } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
     imageUrl,
-    collectionStatus,
+    contractStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -42,9 +42,9 @@ export const Erc1155CollectionEditDialog: FC<IErc1155CollectionEditDialogProps> 
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput
-        name="collectionStatus"
-        options={Erc1155CollectionStatus}
-        disabledOptions={[Erc1155CollectionStatus.NEW]}
+        name="contractStatus"
+        options={UniContractStatus}
+        disabledOptions={[UniContractStatus.NEW]}
       />
       <AvatarInput name="imageUrl" />
     </FormDialog>

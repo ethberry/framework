@@ -1,23 +1,22 @@
 import { Column, Entity, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
+import { IStaking, StakingStatus } from "@framework/types";
 import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { StakingDepositEntity } from "./staking.deposit.entity";
-import { StakingRewardEntity } from "./staking.reward.entity";
 import { StakesEntity } from "./stakes/stakes.entity";
+import { AssetEntity } from "../asset/asset.entity";
 
-@Entity({ schema: ns, name: "staking_rule" })
-export class StakingRuleEntity extends SearchableEntity implements IStakingRule {
+@Entity({ schema: ns, name: "staking" })
+export class StakingEntity extends SearchableEntity implements IStaking {
   @Column({ type: "varchar" })
   public title: string;
 
-  @OneToOne(_type => StakingDepositEntity, deposit => deposit.stakingRule, { cascade: true })
-  public deposit: StakingDepositEntity;
+  @OneToOne(_type => AssetEntity)
+  public deposit: AssetEntity;
 
-  @OneToOne(_type => StakingRewardEntity, reward => reward.stakingRule, { cascade: true })
-  public reward: StakingRewardEntity;
+  @OneToOne(_type => AssetEntity)
+  public reward: AssetEntity;
 
   @Column({ type: "int" })
   public duration: number;
@@ -30,9 +29,9 @@ export class StakingRuleEntity extends SearchableEntity implements IStakingRule 
 
   @Column({
     type: "enum",
-    enum: StakingRuleStatus,
+    enum: StakingStatus,
   })
-  public stakingStatus: StakingRuleStatus;
+  public stakingStatus: StakingStatus;
 
   @BigNumberColumn()
   public ruleId: string;

@@ -6,7 +6,7 @@ import { Erc1155TokenServiceEth } from "./token.service.eth";
 import { Erc1155TokenService } from "./token.service";
 import { Erc1155TokenHistoryModule } from "./token-history/token-history.module";
 import { Erc1155RecipeModule } from "../recipe/recipe.module";
-import { Erc1155TokenEntity } from "./token.entity";
+import { UniTemplateEntity } from "./token.entity";
 import { Erc1155CollectionModule } from "../collection/collection.module";
 import { Erc1155BalanceModule } from "../balance/balance.module";
 import { Erc1155TokenLogModule } from "./token-log/token-log.module";
@@ -23,7 +23,7 @@ import { AccessControlModule } from "../../blockchain/access-control/access-cont
     Erc1155CollectionModule,
     Erc1155BalanceModule,
     AccessControlModule,
-    TypeOrmModule.forFeature([Erc1155TokenEntity]),
+    TypeOrmModule.forFeature([UniTemplateEntity]),
   ],
   providers: [Logger, Erc1155TokenService, Erc1155TokenServiceEth],
   controllers: [Erc1155TokenControllerEth],

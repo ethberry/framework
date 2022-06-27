@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { Erc998TokenStatus } from "@framework/types";
+import { UniTokenStatus } from "@framework/types";
 
 import { Erc998TokenEntity } from "./token.entity";
 
@@ -44,7 +44,7 @@ export class Erc998TokenService {
   public getToken(
     tokenId: string,
     address: string,
-    tokenStatus?: Erc998TokenStatus,
+    tokenStatus?: UniTokenStatus,
   ): Promise<Erc998TokenEntity | null> {
     const queryBuilder = this.erc998TokenEntityRepository.createQueryBuilder("token");
 

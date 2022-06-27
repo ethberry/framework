@@ -17,7 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc998DropboxStatus, IErc998Dropbox, IErc998DropboxSearchDto, IErc998Template } from "@framework/types";
+import { DropboxStatus, IErc998Dropbox, IDropboxSearchDto, IErc998Template } from "@framework/types";
 
 import { Erc998DropboxEditDialog } from "./edit";
 import { Erc998DropboxSearchForm } from "./form";
@@ -42,7 +42,7 @@ export const Erc998Dropbox: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IErc998Dropbox, IErc998DropboxSearchDto>({
+  } = useCollection<IErc998Dropbox, IDropboxSearchDto>({
     baseUrl: "/erc998-dropboxes",
     empty: {
       title: "",
@@ -52,8 +52,8 @@ export const Erc998Dropbox: FC = () => {
     },
     search: {
       query: "",
-      dropboxStatus: [Erc998DropboxStatus.ACTIVE],
-      erc998CollectionIds: [],
+      dropboxStatus: [DropboxStatus.ACTIVE],
+      uniContractIds: [],
     },
     filter: ({ id, title, description, imageUrl, price, dropboxStatus, erc998TemplateId, erc998CollectionId }) =>
       id
@@ -90,7 +90,7 @@ export const Erc998Dropbox: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(dropbox)}
-                  disabled={dropbox.dropboxStatus === Erc998DropboxStatus.INACTIVE}
+                  disabled={dropbox.dropboxStatus === DropboxStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>

@@ -1,9 +1,11 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsJSON, IsNumberString, IsOptional, IsString, IsUrl, Min } from "class-validator";
+import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
-import { Erc998TemplateStatus } from "@framework/types";
+import { UniTemplateStatus } from "@framework/types";
 
 import { IErc998TemplateUpdateDto } from "../interfaces";
+import { AssetDto } from "../../../uni-token/dto";
 
 export class Erc998TemplateUpdateDto implements IErc998TemplateUpdateDto {
   @ApiPropertyOptional()
@@ -21,10 +23,13 @@ export class Erc998TemplateUpdateDto implements IErc998TemplateUpdateDto {
   @IsJSON({ message: "patternMismatch" })
   public attributes: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    type: AssetDto,
+  })
   @IsOptional()
-  @IsNumberString({}, { message: "typeMismatch" })
-  public price: string;
+  @ValidateNested()
+  @Type(() => AssetDto)
+  public price: AssetDto;
 
   @ApiPropertyOptional({
     type: Number,
@@ -57,6 +62,6 @@ export class Erc998TemplateUpdateDto implements IErc998TemplateUpdateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(Erc998TemplateStatus, { message: "badInput" })
-  public templateStatus: Erc998TemplateStatus;
+  @IsEnum(UniTemplateStatus, { message: "badInput" })
+  public templateStatus: UniTemplateStatus;
 }

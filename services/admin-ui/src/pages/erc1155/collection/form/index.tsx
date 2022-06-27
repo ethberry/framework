@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { Erc1155CollectionStatus, IErc1155CollectionSearchDto } from "@framework/types";
+import { UniContractStatus, IErc1155CollectionSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
@@ -18,8 +18,8 @@ export const Erc1155CollectionSearchForm: FC<IErc1155CollectionSearchFormProps> 
 
   const classes = useStyles();
 
-  const { query, collectionStatus } = initialValues;
-  const fixedValues = { query, collectionStatus };
+  const { query, contractStatus } = initialValues;
+  const fixedValues = { query, contractStatus };
 
   return (
     <FormWrapper
@@ -38,7 +38,7 @@ export const Erc1155CollectionSearchForm: FC<IErc1155CollectionSearchFormProps> 
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <SelectInput multiple name="collectionStatus" options={Erc1155CollectionStatus} />
+            <SelectInput multiple name="contractStatus" options={UniContractStatus} />
           </Grid>
         </Grid>
       </Collapse>

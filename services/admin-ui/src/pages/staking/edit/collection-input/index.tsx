@@ -3,13 +3,13 @@ import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import {
-  Erc1155CollectionStatus,
-  Erc20TokenStatus,
+  UniContractStatus,
+  UniTokenStatus,
   Erc20TokenTemplate,
-  Erc721CollectionStatus,
-  Erc721CollectionType,
-  Erc998CollectionStatus,
-  Erc998CollectionType,
+  UniContractStatus,
+  UniContractType,
+  UniContractStatus,
+  UniContractType,
   TokenType,
 } from "@framework/types";
 
@@ -30,7 +30,7 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc1155-collections"
           data={{
-            collectionStatus: [Erc1155CollectionStatus.ACTIVE],
+            contractStatus: [UniContractStatus.ACTIVE],
           }}
         />
       );
@@ -40,8 +40,8 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc721-collections"
           data={{
-            collectionType: [Erc721CollectionType.TOKEN],
-            collectionStatus: [Erc721CollectionStatus.ACTIVE],
+            collectionType: [UniContractType.TOKEN],
+            contractStatus: [UniContractStatus.ACTIVE],
           }}
         />
       );
@@ -51,8 +51,8 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc721-collections"
           data={{
-            collectionType: [Erc721CollectionType.DROPBOX],
-            collectionStatus: [Erc721CollectionStatus.ACTIVE],
+            collectionType: [UniContractType.DROPBOX],
+            contractStatus: [UniContractStatus.ACTIVE],
           }}
         />
       );
@@ -62,8 +62,8 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc998-collections"
           data={{
-            collectionType: [Erc998CollectionType.TOKEN],
-            collectionStatus: [Erc998CollectionStatus.ACTIVE],
+            collectionType: [UniContractType.TOKEN],
+            contractStatus: [UniContractStatus.ACTIVE],
           }}
         />
       );
@@ -73,8 +73,8 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc998-collections"
           data={{
-            collectionType: [Erc998CollectionType.DROPBOX],
-            collectionStatus: [Erc998CollectionStatus.ACTIVE],
+            collectionType: [UniContractType.DROPBOX],
+            contractStatus: [UniContractStatus.ACTIVE],
           }}
         />
       );
@@ -85,7 +85,7 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           controller="erc20-tokens"
           data={{
             contractTemplate: [Erc20TokenTemplate.NATIVE],
-            tokenStatus: [Erc20TokenStatus.ACTIVE],
+            tokenStatus: [UniTokenStatus.ACTIVE],
           }}
         />
       );
@@ -96,7 +96,7 @@ export const CollectionInput: FC<ITokenInputProps> = props => {
           controller="erc20-tokens"
           data={{
             contractTemplate: [Erc20TokenTemplate.EXTERNAL, Erc20TokenTemplate.BLACKLIST, Erc20TokenTemplate.SIMPLE],
-            tokenStatus: [Erc20TokenStatus.ACTIVE],
+            tokenStatus: [UniTokenStatus.ACTIVE],
           }}
         />
       );

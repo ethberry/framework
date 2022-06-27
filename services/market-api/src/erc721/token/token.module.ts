@@ -2,12 +2,12 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc721TokenService } from "./token.service";
-import { Erc721TokenEntity } from "./token.entity";
 import { Erc721TokenController } from "./token.controller";
 import { Erc721TokenHistoryModule } from "./token-history/token-history.module";
+import { UniTokenEntity } from "../../uni-token/uni-token.entity";
 
 @Module({
-  imports: [Erc721TokenHistoryModule, TypeOrmModule.forFeature([Erc721TokenEntity])],
+  imports: [Erc721TokenHistoryModule, TypeOrmModule.forFeature([UniTokenEntity])],
   providers: [Erc721TokenService],
   controllers: [Erc721TokenController],
   exports: [Erc721TokenService],

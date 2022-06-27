@@ -2,18 +2,18 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { Erc721TemplateStatus, IErc721TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc721TemplateSearchDto } from "@framework/types";
 
-import { Erc721TemplateEntity } from "./template.entity";
+import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc721TemplateService {
   constructor(
-    @InjectRepository(Erc721TemplateEntity)
-    private readonly erc721TemplateEntityRepository: Repository<Erc721TemplateEntity>,
+    @InjectRepository(UniTemplateEntity)
+    private readonly erc721TemplateEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
-  public async autocomplete(): Promise<Array<Erc721TemplateEntity>> {
+  public async autocomplete(): Promise<Array<UniTemplateEntity>> {
     return this.erc721TemplateEntityRepository.find({
       select: {
         id: true,
@@ -22,7 +22,7 @@ export class Erc721TemplateService {
     });
   }
 
-  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<Erc721TemplateEntity>, number]> {
+  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
     const { query, templateStatus, skip, take, erc721CollectionIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
 
@@ -89,13 +89,13 @@ export class Erc721TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<Erc721TemplateEntity>,
-    options?: FindOneOptions<Erc721TemplateEntity>,
-  ): Promise<Erc721TemplateEntity | null> {
+    where: FindOptionsWhere<UniTemplateEntity>,
+    options?: FindOneOptions<UniTemplateEntity>,
+  ): Promise<UniTemplateEntity | null> {
     return this.erc721TemplateEntityRepository.findOne({ where, ...options });
   }
 
-  public async getNewTemplates(): Promise<[Array<Erc721TemplateEntity>, number]> {
+  public async getNewTemplates(): Promise<[Array<UniTemplateEntity>, number]> {
     const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
@@ -103,7 +103,7 @@ export class Erc721TemplateService {
     queryBuilder.leftJoinAndSelect("template.erc721Collection", "collection");
 
     queryBuilder.andWhere("template.templateStatus = :templateStatus", {
-      templateStatus: Erc721TemplateStatus.ACTIVE,
+      templateStatus: UniTemplateStatus.ACTIVE,
     });
 
     queryBuilder.orderBy({

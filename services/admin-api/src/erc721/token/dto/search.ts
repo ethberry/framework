@@ -3,21 +3,21 @@ import { IsArray, IsEnum, IsNumber, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { Erc721TokenStatus, IErc721TokenSearchDto, TokenRarity } from "@framework/types";
+import { UniTokenStatus, IErc721TokenSearchDto, TokenRarity } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 export class Erc721TokenSearchDto extends SearchDto implements IErc721TokenSearchDto {
   @ApiPropertyOptional({
-    enum: Erc721TokenStatus,
+    enum: UniTokenStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<Erc721TokenStatus>)
-  @IsEnum(Erc721TokenStatus, { each: true, message: "badInput" })
-  public tokenStatus: Array<Erc721TokenStatus>;
+  @Transform(({ value }) => value as Array<UniTokenStatus>)
+  @IsEnum(UniTokenStatus, { each: true, message: "badInput" })
+  public tokenStatus: Array<UniTokenStatus>;
 
   @ApiPropertyOptional({
     type: Number,

@@ -5,14 +5,14 @@ import { utils, Wallet } from "ethers";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
 import {
-  Erc1155TokenTemplate,
-  Erc20TokenTemplate,
+  Erc1155ContractTemplate,
+  Erc20ContractTemplate,
   Erc20VestingTemplate,
-  Erc721TokenTemplate,
+  Erc721ContractTemplate,
   IErc1155CollectionDeployDto,
   IErc20TokenDeployDto,
   IErc20VestingDeployDto,
-  IErc721CollectionDeployDto,
+  IErc721ContractDeployDto,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -60,11 +60,11 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc20TokenTemplate(contractTemplate),
+        bytecode: this.getBytecodeByErc20ContractTemplate(contractTemplate),
         name,
         symbol,
         cap,
-        templateId: Object.keys(Erc20TokenTemplate).indexOf(contractTemplate),
+        templateId: Object.keys(Erc20ContractTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -107,7 +107,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async erc721Token(dto: IErc721CollectionDeployDto): Promise<IServerSignature> {
+  public async erc721Token(dto: IErc721ContractDeployDto): Promise<IServerSignature> {
     const { contractTemplate, name, symbol, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
@@ -134,12 +134,12 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc721TokenTemplate(contractTemplate),
+        bytecode: this.getBytecodeByErc721ContractTemplate(contractTemplate),
         name,
         symbol,
         baseTokenURI,
         royalty,
-        templateId: Object.keys(Erc721TokenTemplate).indexOf(contractTemplate),
+        templateId: Object.keys(Erc721ContractTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -170,20 +170,20 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc1155TokenTemplate(contractTemplate),
+        bytecode: this.getBytecodeByErc1155ContractTemplate(contractTemplate),
         baseTokenURI,
-        templateId: Object.keys(Erc1155TokenTemplate).indexOf(contractTemplate),
+        templateId: Object.keys(Erc1155ContractTemplate).indexOf(contractTemplate),
       },
     );
 
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public getBytecodeByErc20TokenTemplate(contractTemplate: Erc20TokenTemplate) {
+  public getBytecodeByErc20ContractTemplate(contractTemplate: Erc20ContractTemplate) {
     switch (contractTemplate) {
-      case Erc20TokenTemplate.SIMPLE:
+      case Erc20ContractTemplate.ERC20_SIMPLE:
         return ERC20Simple.bytecode;
-      case Erc20TokenTemplate.BLACKLIST:
+      case Erc20ContractTemplate.ERC20_BLACKLIST:
         return ERC20BlackList.bytecode;
       default:
         throw new Error("Unknown template");
@@ -203,13 +203,13 @@ export class ContractManagerSignService {
     }
   }
 
-  public getBytecodeByErc721TokenTemplate(contractTemplate: Erc721TokenTemplate) {
+  public getBytecodeByErc721ContractTemplate(contractTemplate: Erc721ContractTemplate) {
     switch (contractTemplate) {
-      case Erc721TokenTemplate.SIMPLE:
+      case Erc721ContractTemplate.ERC721_SIMPLE:
         return ERC721Simple.bytecode;
-      case Erc721TokenTemplate.GRADED:
+      case Erc721ContractTemplate.ERC721_GRADED:
         return ERC721Graded.bytecode;
-      case Erc721TokenTemplate.RANDOM:
+      case Erc721ContractTemplate.ERC721_RANDOM:
         return ERC721RandomTest.bytecode;
       // return ERC721Random.bytecode;
       default:
@@ -217,9 +217,9 @@ export class ContractManagerSignService {
     }
   }
 
-  public getBytecodeByErc1155TokenTemplate(contractTemplate: Erc1155TokenTemplate) {
+  public getBytecodeByErc1155ContractTemplate(contractTemplate: Erc1155ContractTemplate) {
     switch (contractTemplate) {
-      case Erc1155TokenTemplate.SIMPLE:
+      case Erc1155ContractTemplate.ERC1155_SIMPLE:
         return ERC1155Simple.bytecode;
       default:
         throw new Error("Unknown template");

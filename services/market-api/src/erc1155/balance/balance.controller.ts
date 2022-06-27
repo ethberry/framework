@@ -4,8 +4,8 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { Erc1155BalanceService } from "./balance.service";
-import { Erc1155BalanceEntity } from "./balance.entity";
 import { UserEntity } from "../../user/user.entity";
+import { UniBalanceEntity } from "../../uni-token/uni-balance.entity";
 
 @ApiBearerAuth()
 @Controller("/erc1155-balances")
@@ -14,7 +14,7 @@ export class Erc1155BalanceController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@User() userEntity: UserEntity): Promise<[Array<Erc1155BalanceEntity>, number]> {
+  public search(@User() userEntity: UserEntity): Promise<[Array<UniBalanceEntity>, number]> {
     return this.erc1155BalanceService.search(userEntity);
   }
 }

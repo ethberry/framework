@@ -17,7 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc721TemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
 import { Erc721TemplateSearchForm } from "./form";
@@ -55,7 +55,7 @@ export const Erc721Template: FC = () => {
     },
     search: {
       query: "",
-      templateStatus: [Erc721TemplateStatus.ACTIVE],
+      templateStatus: [UniTemplateStatus.ACTIVE],
       erc721CollectionIds: [],
     },
     filter: ({
@@ -110,7 +110,7 @@ export const Erc721Template: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(template)}
-                  disabled={template.templateStatus === Erc721TemplateStatus.INACTIVE}
+                  disabled={template.templateStatus === UniTemplateStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>

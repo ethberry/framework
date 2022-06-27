@@ -2,18 +2,17 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { Erc998TemplateStatus, IErc998TemplateSearchDto } from "@framework/types";
-
-import { Erc998TemplateEntity } from "./template.entity";
+import { UniTemplateStatus, IErc998TemplateSearchDto } from "@framework/types";
+import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc998TemplateService {
   constructor(
-    @InjectRepository(Erc998TemplateEntity)
-    private readonly erc998TemplateEntityRepository: Repository<Erc998TemplateEntity>,
+    @InjectRepository(UniTemplateEntity)
+    private readonly erc998TemplateEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
-  public async autocomplete(): Promise<Array<Erc998TemplateEntity>> {
+  public async autocomplete(): Promise<Array<UniTemplateEntity>> {
     return this.erc998TemplateEntityRepository.find({
       select: {
         id: true,
@@ -22,8 +21,8 @@ export class Erc998TemplateService {
     });
   }
 
-  public async search(dto: IErc998TemplateSearchDto): Promise<[Array<Erc998TemplateEntity>, number]> {
-    const { query, templateStatus, skip, take, erc998CollectionIds, minPrice, maxPrice } = dto;
+  public async search(dto: IErc998TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
+    const { query, templateStatus, skip, take, uniContractIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.erc998TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
@@ -38,13 +37,13 @@ export class Erc998TemplateService {
       }
     }
 
-    if (erc998CollectionIds) {
-      if (erc998CollectionIds.length === 1) {
-        queryBuilder.andWhere("template.erc998CollectionId = :erc998CollectionId", {
-          erc998CollectionId: erc998CollectionIds[0],
+    if (uniContractIds) {
+      if (uniContractIds.length === 1) {
+        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
+          uniContractId: uniContractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.erc998CollectionId IN(:...erc998CollectionIds)", { erc998CollectionIds });
+        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
       }
     }
 
@@ -89,13 +88,13 @@ export class Erc998TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<Erc998TemplateEntity>,
-    options?: FindOneOptions<Erc998TemplateEntity>,
-  ): Promise<Erc998TemplateEntity | null> {
+    where: FindOptionsWhere<UniTemplateEntity>,
+    options?: FindOneOptions<UniTemplateEntity>,
+  ): Promise<UniTemplateEntity | null> {
     return this.erc998TemplateEntityRepository.findOne({ where, ...options });
   }
 
-  public async getNewTemplates(): Promise<[Array<Erc998TemplateEntity>, number]> {
+  public async getNewTemplates(): Promise<[Array<UniTemplateEntity>, number]> {
     const queryBuilder = this.erc998TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
@@ -103,7 +102,7 @@ export class Erc998TemplateService {
     queryBuilder.leftJoinAndSelect("template.erc998Collection", "collection");
 
     queryBuilder.andWhere("template.templateStatus = :templateStatus", {
-      templateStatus: Erc998TemplateStatus.ACTIVE,
+      templateStatus: UniTemplateStatus.ACTIVE,
     });
 
     queryBuilder.orderBy({

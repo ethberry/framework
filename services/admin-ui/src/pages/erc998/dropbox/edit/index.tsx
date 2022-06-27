@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc998CollectionType, Erc998DropboxStatus, IErc998Dropbox } from "@framework/types";
+import { UniContractType, DropboxStatus, IErc998Dropbox } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
@@ -47,12 +47,12 @@ export const Erc998DropboxEditDialog: FC<IErc998DropboxEditDialogProps> = props 
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <Erc20PriceInput />
-      {id ? <SelectInput name="dropboxStatus" options={Erc998DropboxStatus} /> : null}
+      {id ? <SelectInput name="dropboxStatus" options={DropboxStatus} /> : null}
       <EntityInput name="erc998TemplateId" controller="erc998-templates" />
       <EntityInput
         name="erc998CollectionId"
         controller="erc998-collections"
-        data={{ collectionType: [Erc998CollectionType.DROPBOX] }}
+        data={{ collectionType: [UniContractType.DROPBOX] }}
       />
       <AvatarInput name="imageUrl" />
     </FormDialog>

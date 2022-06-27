@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { Erc998TokenStatus, IErc998TokenSearchDto, TokenRarity } from "@framework/types";
+import { UniTokenStatus, IErc998TokenSearchDto, TokenRarity } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -19,8 +19,8 @@ export const Erc998TokenSearchForm: FC<ITokenSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, tokenStatus, erc998CollectionIds, rarity, tokenId } = initialValues;
-  const fixedValues = { query, tokenStatus, erc998CollectionIds, rarity, tokenId };
+  const { query, tokenStatus, uniContractIds, rarity, tokenId } = initialValues;
+  const fixedValues = { query, tokenStatus, uniContractIds, rarity, tokenId };
 
   return (
     <FormWrapper
@@ -39,13 +39,13 @@ export const Erc998TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc998CollectionIds" controller="erc998-collections" multiple />
+            <EntityInput name="uniContractIds" controller="erc998-collections" multiple />
           </Grid>
           <Grid item xs={6}>
             <TextInput name="tokenId" />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="tokenStatus" options={Erc998TokenStatus} />
+            <SelectInput multiple name="tokenStatus" options={UniTokenStatus} />
           </Grid>
           <Grid item xs={6}>
             <SelectInput name="rarity" options={TokenRarity} multiple />

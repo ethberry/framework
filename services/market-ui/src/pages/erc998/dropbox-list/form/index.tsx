@@ -4,15 +4,15 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { IErc998DropboxSearchDto } from "@framework/types";
+import { IDropboxSearchDto } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { useStyles } from "./styles";
 
 interface IErc998DropboxSearchFormProps {
-  onSubmit: (values: IErc998DropboxSearchDto) => Promise<void>;
+  onSubmit: (values: IDropboxSearchDto) => Promise<void>;
 
-  initialValues: IErc998DropboxSearchDto;
+  initialValues: IDropboxSearchDto;
   open: boolean;
   embedded?: boolean;
 }
@@ -22,8 +22,8 @@ export const Erc998DropboxSearchForm: FC<IErc998DropboxSearchFormProps> = props 
 
   const classes = useStyles();
 
-  const { query, erc998CollectionIds, erc998TemplateCollectionIds, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, erc998CollectionIds, erc998TemplateCollectionIds, minPrice, maxPrice };
+  const { query, uniContractIds, erc998TemplateCollectionIds, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, uniContractIds, erc998TemplateCollectionIds, minPrice, maxPrice };
 
   return (
     <FormWrapper
@@ -49,7 +49,7 @@ export const Erc998DropboxSearchForm: FC<IErc998DropboxSearchFormProps> = props 
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="erc998CollectionIds" controller="erc998-collections" multiple />
+              <EntityInput name="uniContractIds" controller="erc998-collections" multiple />
             </Grid>
           ) : null}
         </Grid>

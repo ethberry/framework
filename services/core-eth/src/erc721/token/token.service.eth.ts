@@ -7,7 +7,7 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   Erc721TokenEventType,
-  Erc721TokenStatus,
+  UniTokenStatus,
   IErc721AirdropRedeem,
   IErc721DefaultRoyaltyInfo,
   IErc721RandomRequest,
@@ -70,12 +70,12 @@ export class Erc721TokenServiceEth {
       erc721TokenEntity.erc721Template
         ? (erc721TokenEntity.erc721Template.instanceCount += 1)
         : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
-      erc721TokenEntity.tokenStatus = Erc721TokenStatus.MINTED;
+      erc721TokenEntity.tokenStatus = UniTokenStatus.MINTED;
     }
 
     if (to === constants.AddressZero) {
       // erc721TokenEntity.erc721Template.instanceCount -= 1;
-      erc721TokenEntity.tokenStatus = Erc721TokenStatus.BURNED;
+      erc721TokenEntity.tokenStatus = UniTokenStatus.BURNED;
     }
 
     erc721TokenEntity.owner = to;

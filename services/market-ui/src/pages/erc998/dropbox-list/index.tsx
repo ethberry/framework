@@ -6,7 +6,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { Erc998DropboxStatus, IErc998Dropbox, IErc998DropboxSearchDto } from "@framework/types";
+import { DropboxStatus, IErc998Dropbox, IDropboxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { DropboxItem } from "./item";
@@ -22,13 +22,13 @@ export const Erc998DropboxList: FC<IErc998DropboxListProps> = props => {
   const { id = "" } = useParams<{ id: string }>();
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc998Dropbox, IErc998DropboxSearchDto>({
+    useCollection<IErc998Dropbox, IDropboxSearchDto>({
       baseUrl: "/erc998-dropboxes",
       embedded,
       search: {
         query: "",
-        erc998CollectionIds: id ? [~~id] : [],
-        dropboxStatus: [Erc998DropboxStatus.ACTIVE],
+        uniContractIds: id ? [~~id] : [],
+        dropboxStatus: [DropboxStatus.ACTIVE],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
       },

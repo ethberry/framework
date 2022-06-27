@@ -2,20 +2,20 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { Erc998TemplateStatus, IErc998TemplateAutocompleteDto, IErc998TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IErc998TemplateAutocompleteDto, IErc998TemplateSearchDto } from "@framework/types";
 
-import { Erc998TemplateEntity } from "./template.entity";
 import { IErc998TemplateCreateDto, IErc998TemplateUpdateDto } from "./interfaces";
+import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc998TemplateService {
   constructor(
-    @InjectRepository(Erc998TemplateEntity)
-    private readonly erc998TemplateEntityRepository: Repository<Erc998TemplateEntity>,
+    @InjectRepository(UniTemplateEntity)
+    private readonly erc998TemplateEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
-  public async search(dto: IErc998TemplateSearchDto): Promise<[Array<Erc998TemplateEntity>, number]> {
-    const { query, templateStatus, skip, take, erc998CollectionIds } = dto;
+  public async search(dto: IErc998TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
+    const { query, templateStatus, skip, take, uniContractIds } = dto;
 
     const queryBuilder = this.erc998TemplateEntityRepository.createQueryBuilder("template");
 
@@ -29,13 +29,13 @@ export class Erc998TemplateService {
       }
     }
 
-    if (erc998CollectionIds) {
-      if (erc998CollectionIds.length === 1) {
-        queryBuilder.andWhere("template.erc998CollectionId = :erc998CollectionId", {
-          erc998CollectionId: erc998CollectionIds[0],
+    if (uniContractIds) {
+      if (uniContractIds.length === 1) {
+        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
+          uniContractId: uniContractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.erc998CollectionId IN(:...erc998CollectionIds)", { erc998CollectionIds });
+        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
       }
     }
 
@@ -63,8 +63,8 @@ export class Erc998TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc998TemplateAutocompleteDto): Promise<Array<Erc998TemplateEntity>> {
-    const { templateStatus = [], erc998CollectionIds = [] } = dto;
+  public async autocomplete(dto: IErc998TemplateAutocompleteDto): Promise<Array<UniTemplateEntity>> {
+    const { templateStatus = [], uniContractIds = [] } = dto;
 
     const where = {};
 
@@ -74,9 +74,9 @@ export class Erc998TemplateService {
       });
     }
 
-    if (erc998CollectionIds.length) {
+    if (uniContractIds.length) {
       Object.assign(where, {
-        erc998CollectionId: In(erc998CollectionIds),
+        uniContractId: In(uniContractIds),
       });
     }
 
@@ -90,16 +90,16 @@ export class Erc998TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<Erc998TemplateEntity>,
-    options?: FindOneOptions<Erc998TemplateEntity>,
-  ): Promise<Erc998TemplateEntity | null> {
+    where: FindOptionsWhere<UniTemplateEntity>,
+    options?: FindOneOptions<UniTemplateEntity>,
+  ): Promise<UniTemplateEntity | null> {
     return this.erc998TemplateEntityRepository.findOne({ where, ...options });
   }
 
   public async update(
-    where: FindOptionsWhere<Erc998TemplateEntity>,
+    where: FindOptionsWhere<UniTemplateEntity>,
     dto: Partial<IErc998TemplateUpdateDto>,
-  ): Promise<Erc998TemplateEntity> {
+  ): Promise<UniTemplateEntity> {
     const templateEntity = await this.findOne(where);
 
     if (!templateEntity) {
@@ -111,11 +111,11 @@ export class Erc998TemplateService {
     return templateEntity.save();
   }
 
-  public async create(dto: IErc998TemplateCreateDto): Promise<Erc998TemplateEntity> {
+  public async create(dto: IErc998TemplateCreateDto): Promise<UniTemplateEntity> {
     return this.erc998TemplateEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<Erc998TemplateEntity>): Promise<Erc998TemplateEntity> {
-    return this.update(where, { templateStatus: Erc998TemplateStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<UniTemplateEntity>): Promise<UniTemplateEntity> {
+    return this.update(where, { templateStatus: UniTemplateStatus.INACTIVE });
   }
 }

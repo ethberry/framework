@@ -1,9 +1,9 @@
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { Erc721TokenStatus, TokenRarity } from "../../../entities";
+import { TokenRarity, UniTokenStatus } from "../../../entities";
 
 export interface IErc721TokenSearchDto extends ISearchDto {
-  tokenStatus: Array<Erc721TokenStatus>;
+  tokenStatus: Array<UniTokenStatus>;
   tokenId: string;
   rarity: Array<TokenRarity>;
   erc721CollectionIds: Array<number>;

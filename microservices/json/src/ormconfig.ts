@@ -2,12 +2,13 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 import { UserEntity } from "./user/user.entity";
-import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
-import { Erc721TemplateEntity } from "./erc721/template/template.entity";
-import { Erc721TokenEntity } from "./erc721/token/token.entity";
-import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
-import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
-import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
+import { UniContractEntity } from "./uni-token/uni-contract.entity";
+import { UniTemplateEntity } from "./uni-token/uni-template.entity";
+import { UniTokenEntity } from "./uni-token/uni-token.entity";
+import { AirdropEntity } from "./blockchain/airdrop/airdrop.entity";
+import { DropboxEntity } from "./blockchain/dropbox/dropbox.entity";
+import { AssetEntity } from "./blockchain/asset/asset";
+import { AssetComponentEntity } from "./blockchain/asset/asset-component";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -15,12 +16,13 @@ const config: PostgresConnectionOptions = {
   type: "postgres",
   entities: [
     UserEntity,
-    Erc721CollectionEntity,
-    Erc721TokenEntity,
-    Erc721DropboxEntity,
-    Erc721TemplateEntity,
-    Erc1155CollectionEntity,
-    Erc1155TokenEntity,
+    AssetEntity,
+    AssetComponentEntity,
+    UniContractEntity,
+    UniTemplateEntity,
+    UniTokenEntity,
+    AirdropEntity,
+    DropboxEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

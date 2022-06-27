@@ -2,16 +2,16 @@ import { Column, Entity } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { BigNumberColumn, ContractBaseEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { Erc20TokenStatus, Erc20TokenTemplate, IErc20Token } from "@framework/types";
+import { UniTokenStatus, Erc20TokenTemplate, IErc20Contract } from "@framework/types";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "erc20_token" })
-export class Erc20TokenEntity extends Mixin(ContractBaseEntity, SearchableEntity) implements IErc20Token {
+export class UniTemplateEntity extends Mixin(ContractBaseEntity, SearchableEntity) implements IErc20Contract {
   @Column({
     type: "enum",
-    enum: Erc20TokenStatus,
+    enum: UniTokenStatus,
   })
-  public tokenStatus: Erc20TokenStatus;
+  public tokenStatus: UniTokenStatus;
 
   @Column({
     type: "enum",

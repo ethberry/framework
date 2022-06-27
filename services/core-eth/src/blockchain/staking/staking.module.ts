@@ -7,7 +7,7 @@ import { StakesModule } from "./stakes/stakes.module";
 import { StakingControllerEth } from "./staking.controller.eth";
 import { StakingLogModule } from "./staking-log/staking.log.module";
 import { StakingServiceEth } from "./staking.service.eth";
-import { StakingRuleEntity } from "./staking.entity";
+import { StakingEntity } from "./staking.entity";
 import { StakingService } from "./staking.service";
 
 @Module({
@@ -16,7 +16,7 @@ import { StakingService } from "./staking.service";
     StakingLogModule,
     StakingHistoryModule,
     ContractManagerModule,
-    TypeOrmModule.forFeature([StakingRuleEntity]),
+    TypeOrmModule.forFeature([StakingEntity]),
   ],
   providers: [Logger, StakingServiceEth, StakingService],
   controllers: [StakingControllerEth],

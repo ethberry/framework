@@ -5,10 +5,10 @@ import { utils, Wallet } from "ethers";
 import { prepareEip712 } from "@gemunion/butils";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
-import { Erc20TokenTemplate } from "@framework/types";
+import { UniContractTemplate } from "@framework/types";
 
 import { Erc721TemplateService } from "../template/template.service";
-import { Erc721DropboxService } from "../dropbox/dropbox.service";
+import { DropboxService } from "../../blockchain/dropbox/dropbox.service";
 import { ISignTemplateDto } from "./interfaces";
 
 @Injectable()
@@ -18,13 +18,13 @@ export class Erc721MarketplaceService {
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
     private readonly erc721TemplateService: Erc721TemplateService,
-    private readonly erc721DropboxService: Erc721DropboxService,
+    private readonly dropboxService: DropboxService,
   ) {}
 
   public async signTemplate(dto: ISignTemplateDto): Promise<IServerSignature> {
     const templateEntity = await this.erc721TemplateService.findOne(
       { id: dto.templateId },
-      { relations: { erc721Collection: true, erc20Token: true } },
+      { relations: { uniContract: true, price: true } },
     );
 
     if (!templateEntity) {
@@ -36,13 +36,13 @@ export class Erc721MarketplaceService {
     }
 
     const totalTokenPrice =
-      templateEntity.erc20Token.contractTemplate === Erc20TokenTemplate.NATIVE
+      templateEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.ERC20_NATIVE
         ? utils.parseUnits(templateEntity.price.toString(), "wei")
         : 0;
 
     const signData = {
       nonce: utils.randomBytes(32),
-      collection: templateEntity.erc721Collection.address,
+      collection: templateEntity.uniContract.address,
       templateId: dto.templateId, // Dropbox content
       price: totalTokenPrice,
     };
@@ -51,9 +51,9 @@ export class Erc721MarketplaceService {
   }
 
   public async signDropbox(dto: ISignTemplateDto): Promise<IServerSignature> {
-    const dropboxEntity = await this.erc721DropboxService.findOne(
+    const dropboxEntity = await this.dropboxService.findOne(
       { id: dto.templateId },
-      { relations: { erc721Collection: true, erc721Template: true } },
+      { relations: { uniContract: true, item: true } },
     );
 
     if (!dropboxEntity) {
@@ -61,8 +61,8 @@ export class Erc721MarketplaceService {
     }
 
     const templateEntity = await this.erc721TemplateService.findOne(
-      { id: dropboxEntity.erc721TemplateId },
-      { relations: { erc721Collection: true } },
+      { id: dropboxEntity.item.components[0].uniTokenId },
+      { relations: { uniContract: true } },
     );
 
     if (!templateEntity) {
@@ -74,13 +74,13 @@ export class Erc721MarketplaceService {
     }
 
     const totalTokenPrice =
-      dropboxEntity.erc20Token.contractTemplate === Erc20TokenTemplate.NATIVE
+      dropboxEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.ERC20_NATIVE
         ? utils.parseUnits(dropboxEntity.price.toString(), "wei")
         : 0;
 
     const signData = {
       nonce: utils.randomBytes(32),
-      collection: dropboxEntity.erc721Collection.address,
+      collection: dropboxEntity.uniContract.address,
       templateId: templateEntity.id, // Dropbox content
       price: totalTokenPrice,
     };

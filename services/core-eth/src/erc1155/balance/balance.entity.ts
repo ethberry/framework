@@ -5,7 +5,7 @@ import { BigNumberColumn, IdDateBaseEntity } from "@gemunion/nest-js-module-type
 import { ns } from "@framework/constants";
 import { IErc1155Balance } from "@framework/types";
 
-import { Erc1155TokenEntity } from "../token/token.entity";
+import { UniTemplateEntity } from "../token/token.entity";
 
 @Entity({ schema: ns, name: "erc1155_balance" })
 export class Erc1155BalanceEntity extends IdDateBaseEntity implements IErc1155Balance {
@@ -19,6 +19,6 @@ export class Erc1155BalanceEntity extends IdDateBaseEntity implements IErc1155Ba
   public erc1155TokenId: number;
 
   @JoinColumn()
-  @OneToOne(_type => Erc1155TokenEntity)
-  public erc1155Token: Erc1155TokenEntity;
+  @OneToOne(_type => UniTemplateEntity)
+  public erc1155Token: UniTemplateEntity;
 }

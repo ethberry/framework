@@ -3,8 +3,8 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { Erc998TemplateService } from "./template.service";
-import { Erc998TemplateEntity } from "./template.entity";
 import { Erc998TemplateSearchDto } from "./dto";
+import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
 
 @Public()
 @Controller("/erc998-templates")
@@ -13,24 +13,24 @@ export class Erc998TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc998TemplateSearchDto): Promise<[Array<Erc998TemplateEntity>, number]> {
+  public search(@Query() dto: Erc998TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
     return this.erc998TemplateService.search(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<Erc998TemplateEntity>> {
+  public autocomplete(): Promise<Array<UniTemplateEntity>> {
     return this.erc998TemplateService.autocomplete();
   }
 
   @Get("/new")
   @UseInterceptors(PaginationInterceptor)
-  public getNewTemplates(): Promise<[Array<Erc998TemplateEntity>, number]> {
+  public getNewTemplates(): Promise<[Array<UniTemplateEntity>, number]> {
     return this.erc998TemplateService.getNewTemplates();
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<Erc998TemplateEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {
     return this.erc998TemplateService.findOne({ id }, { relations: ["erc998Collection"] });
   }
 }

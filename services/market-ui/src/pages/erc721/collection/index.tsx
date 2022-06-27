@@ -3,7 +3,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IErc721Collection, IErc721CollectionSearchDto } from "@framework/types";
+import { IErc721Collection, IErc721ContractSearchDto } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
@@ -12,7 +12,7 @@ import { Erc721TemplateList } from "../template-list";
 import { useStyles } from "./styles";
 
 export const Erc721Collection: FC = () => {
-  const { selected, isLoading } = useCollection<IErc721Collection, IErc721CollectionSearchDto>({
+  const { selected, isLoading } = useCollection<IErc721Collection, IErc721ContractSearchDto>({
     baseUrl: "/erc721-collections",
     empty: {
       title: "",

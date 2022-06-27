@@ -1,5 +1,5 @@
 import { IIdDateBase } from "@gemunion/types-collection";
-import { IErc998Token } from "./token";
+import { IUniToken } from "../uni-token/uni-token";
 
 export enum Erc998TokenEventType {
   Approval = "Approval",
@@ -96,6 +96,6 @@ export interface IErc998TokenHistory extends IIdDateBase {
   transactionHash: string;
   eventType: Erc998TokenEventType;
   eventData: TErc998TokenEventData;
-  erc998TokenId: number | null;
-  erc998Token?: IErc998Token;
+  uniTokenId: number | null;
+  uniToken?: IUniToken;
 }

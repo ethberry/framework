@@ -5,10 +5,10 @@ import { prepareEip712 } from "@gemunion/butils";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
-import { Erc20TokenTemplate } from "@framework/types";
+import { UniContractTemplate } from "@framework/types";
 
-import { Erc1155TokenService } from "../token/token.service";
 import { ISignTokensDto } from "./interfaces";
+import { Erc1155TemplateService } from "../template/template.service";
 
 @Injectable()
 export class Erc1155MarketplaceService {
@@ -16,7 +16,7 @@ export class Erc1155MarketplaceService {
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
-    private readonly erc1155TokenService: Erc1155TokenService,
+    private readonly erc1155TemplateService: Erc1155TemplateService,
   ) {}
 
   public async signToken(dto: ISignTokensDto): Promise<IServerSignature> {
@@ -25,9 +25,9 @@ export class Erc1155MarketplaceService {
     const tokenIds: Array<number> = [];
     await Promise.all(
       dto.erc1155TokenIds.map(async (erc1155TokenId, index) => {
-        const tokenEntity = await this.erc1155TokenService.findOne(
+        const tokenEntity = await this.erc1155TemplateService.findOne(
           { id: erc1155TokenId },
-          { relations: { erc1155Collection: true } },
+          { relations: { uniContract: true } },
         );
 
         if (!tokenEntity) {
@@ -39,12 +39,12 @@ export class Erc1155MarketplaceService {
         }
 
         const tokenPrice =
-          tokenEntity.erc20Token.contractTemplate === Erc20TokenTemplate.NATIVE
+          tokenEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.ERC20_NATIVE
             ? BigNumber.from(tokenEntity.price).mul(dto.amounts[index])
             : constants.Zero;
         totalTokenPrice = totalTokenPrice.add(tokenPrice);
-        collections.push(tokenEntity.erc1155Collection.address);
-        tokenIds.push(~~tokenEntity.tokenId);
+        collections.push(tokenEntity.uniContract.address);
+        // tokenIds.push(~~tokenEntity.tokenId);
       }),
     );
 

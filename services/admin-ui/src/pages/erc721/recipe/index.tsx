@@ -16,7 +16,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { Erc721RecipeStatus, IErc721Recipe, IErc721RecipeSearchDto } from "@framework/types";
+import { ExchangeStatus, IErc721Recipe, IErc721RecipeSearchDto } from "@framework/types";
 
 import { Erc721RecipeEditDialog } from "./edit";
 import { Erc721RecipeSearchForm } from "./form";
@@ -49,7 +49,7 @@ export const Erc721Recipes: FC = () => {
     },
     search: {
       query: "",
-      recipeStatus: [Erc721RecipeStatus.ACTIVE, Erc721RecipeStatus.NEW],
+      recipeStatus: [ExchangeStatus.ACTIVE, ExchangeStatus.NEW],
     },
     filter: ({ erc721TemplateId, erc721DropboxId, ingredients }) => ({
       erc721TemplateId,
@@ -88,7 +88,7 @@ export const Erc721Recipes: FC = () => {
                 <IconButton onClick={handleEdit(recipe)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(recipe)} disabled={recipe.recipeStatus !== Erc721RecipeStatus.NEW}>
+                <IconButton onClick={handleDelete(recipe)} disabled={recipe.recipeStatus !== ExchangeStatus.NEW}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

@@ -1,11 +1,11 @@
 import { Column, Entity } from "typeorm";
 
-import { IStakingRuleHistory, StakingEventType, TStakingEventData } from "@framework/types";
+import { IStakingHistory, StakingEventType, TStakingEventData } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 @Entity({ schema: ns, name: "staking_history" })
-export class StakingHistoryEntity extends IdDateBaseEntity implements IStakingRuleHistory {
+export class StakingHistoryEntity extends IdDateBaseEntity implements IStakingHistory {
   @Column({ type: "varchar" })
   public address: string;
 

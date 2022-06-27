@@ -6,7 +6,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { IStakingRule } from "@framework/types";
+import { IStaking } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { TokenTypeInput } from "./token-type-input";
@@ -14,14 +14,14 @@ import { CollectionInput } from "./collection-input";
 import { AmountInput } from "./amount-input";
 import { CriteriaInput } from "./criteria-input";
 
-export interface IStakingRuleEditDialogProps {
+export interface IStakingEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IStakingRule>, form: any) => Promise<void>;
-  initialValues: IStakingRule;
+  onConfirm: (values: Partial<IStaking>, form: any) => Promise<void>;
+  initialValues: IStaking;
 }
 
-export const StakingEditDialog: FC<IStakingRuleEditDialogProps> = props => {
+export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, penalty, recurrent, deposit, reward, duration, stakingStatus } = initialValues;

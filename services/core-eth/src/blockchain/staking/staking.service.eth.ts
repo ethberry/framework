@@ -3,13 +3,13 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  IStakingRuleCreate,
-  IStakingRuleDeposit,
-  IStakingRuleFinish,
-  IStakingRuleUpdate,
-  IStakingRuleWithdraw,
+  IStakingCreate,
+  IStakingDeposit,
+  IStakingFinish,
+  IStakingUpdate,
+  IStakingWithdraw,
   StakingEventType,
-  StakingRuleStatus,
+  StakingStatus,
   TStakingEventData,
 } from "@framework/types";
 
@@ -29,7 +29,7 @@ export class StakingServiceEth {
     private readonly contractManagerService: ContractManagerService,
   ) {}
 
-  public async create(event: ILogEvent<IStakingRuleCreate>, context: Log): Promise<void> {
+  public async create(event: ILogEvent<IStakingCreate>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { ruleId, externalId },
@@ -43,13 +43,13 @@ export class StakingServiceEth {
 
     Object.assign(stakingEntity, {
       ruleId,
-      stakingStatus: StakingRuleStatus.ACTIVE,
+      stakingStatus: StakingStatus.ACTIVE,
     });
 
     await stakingEntity.save();
   }
 
-  public async update(event: ILogEvent<IStakingRuleUpdate>, context: Log): Promise<void> {
+  public async update(event: ILogEvent<IStakingUpdate>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { ruleId, active },
@@ -62,13 +62,13 @@ export class StakingServiceEth {
     }
 
     Object.assign(stakingEntity, {
-      stakingStatus: active ? StakingRuleStatus.ACTIVE : StakingRuleStatus.INACTIVE,
+      stakingStatus: active ? StakingStatus.ACTIVE : StakingStatus.INACTIVE,
     });
 
     await stakingEntity.save();
   }
 
-  public async start(event: ILogEvent<IStakingRuleDeposit>, context: Log): Promise<void> {
+  public async start(event: ILogEvent<IStakingDeposit>, context: Log): Promise<void> {
     // await this.updateHistory(event, context);
     const {
       args: { stakingId, ruleId, owner, startTimestamp },
@@ -89,11 +89,11 @@ export class StakingServiceEth {
     // });
   }
 
-  public async withdraw(event: ILogEvent<IStakingRuleWithdraw>, context: Log): Promise<void> {
+  public async withdraw(event: ILogEvent<IStakingWithdraw>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async finish(event: ILogEvent<IStakingRuleFinish>, context: Log): Promise<void> {
+  public async finish(event: ILogEvent<IStakingFinish>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

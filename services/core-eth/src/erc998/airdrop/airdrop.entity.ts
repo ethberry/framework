@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { Erc998AirdropStatus, IErc998Airdrop } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc998TemplateEntity } from "../template/template.entity";
+import { UniTemplateEntity } from "../template/template.entity";
 import { Erc998TokenEntity } from "../token/token.entity";
 
 @Entity({ schema: ns, name: "erc998_air_drop" })
@@ -16,8 +16,8 @@ export class Erc998AirdropEntity extends IdDateBaseEntity implements IErc998Aird
   public erc998TemplateId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc998TemplateEntity, template => template.erc998Airdrops)
-  public erc998Template: Erc998TemplateEntity;
+  @ManyToOne(_type => UniTemplateEntity, template => template.erc998Airdrops)
+  public erc998Template: UniTemplateEntity;
 
   @Column({ type: "int" })
   public erc998TokenId: number;

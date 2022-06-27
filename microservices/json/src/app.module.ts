@@ -16,10 +16,8 @@ import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
 import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
-import { Erc721Module } from "./erc721/erc721.module";
-import { Erc1155Module } from "./erc1155/erc1155.module";
 import { SyncModule } from "./sync/sync.module";
-import { Erc998Module } from "./erc998/erc998.module";
+import { MetadataModule } from "./metadata/metadata.module";
 
 @Module({
   providers: [
@@ -65,9 +63,7 @@ import { Erc998Module } from "./erc998/erc998.module";
     RequestLoggerModule,
     HealthModule,
     AuthModule,
-    Erc721Module,
-    Erc998Module,
-    Erc1155Module,
+    MetadataModule,
     SyncModule,
   ],
   controllers: [AppController],

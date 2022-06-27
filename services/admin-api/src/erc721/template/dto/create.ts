@@ -1,7 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, IsNumberString, IsString, IsUrl, Min } from "class-validator";
+import { IsInt, IsJSON, ValidateNested, IsString, IsUrl, Min } from "class-validator";
+import { Type } from "class-transformer";
 
 import { IErc721TemplateCreateDto } from "../interfaces";
+import { AssetDto } from "../../../uni-token/dto";
 
 export class Erc721TemplateCreateDto implements IErc721TemplateCreateDto {
   @ApiProperty()
@@ -16,9 +18,12 @@ export class Erc721TemplateCreateDto implements IErc721TemplateCreateDto {
   @IsJSON({ message: "patternMismatch" })
   public attributes: string;
 
-  @ApiProperty()
-  @IsNumberString({}, { message: "typeMismatch" })
-  public price: string;
+  @ApiProperty({
+    type: AssetDto,
+  })
+  @ValidateNested()
+  @Type(() => AssetDto)
+  public price: AssetDto;
 
   @ApiProperty({
     type: Number,

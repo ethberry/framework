@@ -5,7 +5,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc721TokenStatus, IErc721Token } from "@framework/types";
+import { UniTokenStatus, IErc721Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -42,7 +42,7 @@ export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
       <RichTextDisplay data={erc721Template?.description} />
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
-      <SelectInput name="tokenStatus" options={Erc721TokenStatus} readOnly />
+      <SelectInput name="tokenStatus" options={UniTokenStatus} readOnly />
       <TextInput name="owner" readOnly />
       <EntityInput name="erc721CollectionId" controller="erc721-collections" readOnly />
       <img src={erc721Template?.imageUrl} width={200} height={200} alt={erc721Template?.title} />

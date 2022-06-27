@@ -6,20 +6,20 @@ import {
 } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
-import { Erc20TokenEntity } from "./erc20/token/token.entity";
+import { UniTemplateEntity } from "./erc20/token/token.entity";
 import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
-import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
-import { Erc721TokenEntity } from "./erc721/token/token.entity";
+import { UniContractEntity } from "./erc721/collection/collection.entity";
+import { UniTokenEntity } from "./erc721/token/token.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace/marketplace-history/marketplace-history.entity";
-import { Erc721TemplateEntity } from "./erc721/template/template.entity";
+import { UniTemplateEntity } from "./erc721/template/template.entity";
 import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
 import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
-import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
+import { CraftEntity } from "./erc721/recipe/recipe.entity";
 import { Erc721RecipeHistoryEntity } from "./erc721/recipe/recipe-history/recipe-history.entity";
 import { Erc721IngredientEntity } from "./erc721/ingredient/ingredient.entity";
-import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
-import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
+import { UniContractEntity } from "./erc1155/collection/collection.entity";
+import { UniTemplateEntity } from "./erc1155/token/token.entity";
 import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
 import { Erc1155MarketplaceHistoryEntity } from "./erc1155/marketplace/marketplace-history/marketplace-history.entity";
 import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
@@ -31,7 +31,7 @@ import {
   AccessControlHistoryEntity
 } from "./blockchain/access-control/access-control-history/access-control-history.entity";
 import { StakingHistoryEntity } from "./blockchain/staking/staking-history/staking-history.entity";
-import { StakingRuleEntity } from "./blockchain/staking/staking.entity";
+import { StakingEntity } from "./blockchain/staking/staking.entity";
 import { StakingDepositEntity } from "./blockchain/staking/staking.deposit.entity";
 import { StakingRewardEntity } from "./blockchain/staking/staking.reward.entity";
 import { StakesEntity } from "./blockchain/staking/stakes/stakes.entity";
@@ -46,25 +46,25 @@ const config: PostgresConnectionOptions = {
     AccessControlEntity,
     AccessControlHistoryEntity,
     Erc20TokenHistoryEntity,
-    Erc20TokenEntity,
+    UniTemplateEntity,
     Erc20VestingEntity,
-    StakingRuleEntity,
+    StakingEntity,
     StakesEntity,
     StakingDepositEntity,
     StakingRewardEntity,
     StakingHistoryEntity,
-    Erc721CollectionEntity,
-    Erc721TemplateEntity,
-    Erc721TokenEntity,
+    UniContractEntity,
+    UniTemplateEntity,
+    UniTokenEntity,
     Erc721TokenHistoryEntity,
     Erc721MarketplaceHistoryEntity,
     Erc721AirdropEntity,
     Erc721DropboxEntity,
-    Erc721RecipeEntity,
+    CraftEntity,
     Erc721RecipeHistoryEntity,
     Erc721IngredientEntity,
-    Erc1155CollectionEntity,
-    Erc1155TokenEntity,
+    UniContractEntity,
+    UniTemplateEntity,
     Erc1155RecipeEntity,
     Erc1155RecipeHistoryEntity,
     Erc1155IngredientEntity,

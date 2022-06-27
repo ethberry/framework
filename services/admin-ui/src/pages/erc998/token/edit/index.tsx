@@ -5,7 +5,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc998TokenStatus, IErc998Token } from "@framework/types";
+import { UniTokenStatus, IErc998Token } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -42,7 +42,7 @@ export const Erc998TokenEditDialog: FC<IErc998TokenEditDialogProps> = props => {
       <RichTextDisplay data={erc998Template?.description} />
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
-      <SelectInput name="tokenStatus" options={Erc998TokenStatus} readOnly />
+      <SelectInput name="tokenStatus" options={UniTokenStatus} readOnly />
       <TextInput name="owner" readOnly />
       <EntityInput name="erc998CollectionId" controller="erc998-collections" readOnly />
       <img src={erc998Template?.imageUrl} width={200} height={200} alt={erc998Template?.title} />

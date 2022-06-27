@@ -1,6 +1,6 @@
-import { Erc721TemplateStatus } from "../../../entities";
+import { UniTemplateStatus } from "../../../entities";
 
 export interface IErc721TemplateAutocompleteDto {
-  templateStatus: Array<Erc721TemplateStatus>;
+  templateStatus: Array<UniTemplateStatus>;
   erc721CollectionIds: Array<number>;
 }

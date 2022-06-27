@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc1155CollectionStatus, IErc1155Collection, IErc1155CollectionSearchDto } from "@framework/types";
+import { UniContractStatus, IErc1155Collection, IErc1155CollectionSearchDto } from "@framework/types";
 
 import { Erc1155CollectionEditDialog } from "./edit";
 import { Erc1155CollectionSearchForm } from "./form";
@@ -50,13 +50,13 @@ export const Erc1155Collection: FC = () => {
     },
     search: {
       query: "",
-      collectionStatus: [Erc1155CollectionStatus.ACTIVE],
+      contractStatus: [UniContractStatus.ACTIVE],
     },
-    filter: ({ title, description, imageUrl, collectionStatus }) => ({
+    filter: ({ title, description, imageUrl, contractStatus }) => ({
       title,
       description,
       imageUrl,
-      collectionStatus,
+      contractStatus,
     }),
   });
 
@@ -87,7 +87,7 @@ export const Erc1155Collection: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(collection)}
-                  disabled={collection.collectionStatus === Erc1155CollectionStatus.INACTIVE}
+                  disabled={collection.contractStatus === UniContractStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>

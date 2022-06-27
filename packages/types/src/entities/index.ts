@@ -5,41 +5,19 @@ export * from "./user";
 export * from "./settings";
 export * from "./leaderboard";
 
-export * from "./erc20/token";
 export * from "./erc20/token-history";
 export * from "./erc20/vesting";
 export * from "./erc20/vesting-history";
 
-export * from "./erc721/airdrop";
-export * from "./erc721/collection";
-export * from "./erc721/dropbox";
-export * from "./erc721/token";
 export * from "./erc721/token-history";
-export * from "./erc721/template";
 export * from "./erc721/marketplace-history";
-export * from "./erc721/ingredient";
-export * from "./erc721/recipe";
-export * from "./erc721/recipe-history";
+export * from "./blockchain/exchange";
 
-export * from "./erc998/airdrop";
-export * from "./erc998/collection";
-export * from "./erc998/dropbox";
-export * from "./erc998/token";
 export * from "./erc998/token-history";
-export * from "./erc998/template";
 export * from "./erc998/marketplace-history";
-export * from "./erc998/ingredient";
-export * from "./erc998/recipe";
-export * from "./erc998/recipe-history";
 
-export * from "./erc1155/balance";
-export * from "./erc1155/collection";
-export * from "./erc1155/ingredient";
 export * from "./erc1155/marketplace-history";
-export * from "./erc1155/token";
 export * from "./erc1155/token-history";
-export * from "./erc1155/recipe";
-export * from "./erc1155/recipe-history";
 
 export * from "./blockchain/access-control";
 export * from "./blockchain/access-control-history";
@@ -51,3 +29,12 @@ export * from "./blockchain/staking-rule";
 export * from "./blockchain/staking";
 export * from "./blockchain/staking-history";
 export * from "./blockchain/common";
+export * from "./blockchain/asset";
+export * from "./blockchain/asset-component";
+export * from "./blockchain/dropbox";
+export * from "./blockchain/airdrop";
+
+export * from "./uni-token/uni-balance";
+export * from "./uni-token/uni-contract";
+export * from "./uni-token/uni-template";
+export * from "./uni-token/uni-token";

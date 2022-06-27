@@ -13,7 +13,7 @@ import {
 import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { Erc721TokenStatus, IErc721Template, IErc721Token, IErc721TokenSearchDto } from "@framework/types";
+import { UniTokenStatus, IErc721Template, IErc721Token, IErc721TokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721TokenEditDialog } from "./edit";
@@ -41,7 +41,7 @@ export const Erc721Token: FC = () => {
     },
     search: {
       query: "",
-      tokenStatus: [Erc721TokenStatus.MINTED],
+      tokenStatus: [UniTokenStatus.MINTED],
       rarity: [],
       erc721CollectionIds: [],
       tokenId: "",

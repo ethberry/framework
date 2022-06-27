@@ -1,22 +1,22 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { Erc721TokenStatus, IErc721Token } from "@framework/types";
+import { UniTokenStatus, IErc721Token } from "@framework/types";
 import { ns } from "@framework/constants";
 import { BigNumberColumn, IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { Erc721TemplateEntity } from "../template/template.entity";
+import { UniTemplateEntity } from "../template/template.entity";
 import { Erc721DropboxEntity } from "../dropbox/dropbox.entity";
 
 @Entity({ schema: ns, name: "erc721_token" })
-export class Erc721TokenEntity extends IdDateBaseEntity implements IErc721Token {
+export class UniTokenEntity extends IdDateBaseEntity implements IErc721Token {
   @Column({ type: "json" })
   public attributes: any;
 
   @Column({
     type: "enum",
-    enum: Erc721TokenStatus,
+    enum: UniTokenStatus,
   })
-  public tokenStatus: Erc721TokenStatus;
+  public tokenStatus: UniTokenStatus;
 
   @BigNumberColumn()
   public tokenId: string;
@@ -28,8 +28,8 @@ export class Erc721TokenEntity extends IdDateBaseEntity implements IErc721Token 
   public erc721TemplateId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => Erc721TemplateEntity, template => template.erc721Tokens)
-  public erc721Template: Erc721TemplateEntity;
+  @ManyToOne(_type => UniTemplateEntity, template => template.erc721Tokens)
+  public erc721Template: UniTemplateEntity;
 
   @Column({ type: "int" })
   public erc721DropboxId: number;
@@ -42,6 +42,6 @@ export class Erc721TokenEntity extends IdDateBaseEntity implements IErc721Token 
   public erc721TokenId: number;
 
   @JoinColumn()
-  @OneToOne(_type => Erc721TokenEntity, dropbox => dropbox.erc721Token)
-  public erc721Token: Erc721TokenEntity;
+  @OneToOne(_type => UniTokenEntity, dropbox => dropbox.erc721Token)
+  public erc721Token: UniTokenEntity;
 }
