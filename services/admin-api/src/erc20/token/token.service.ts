@@ -87,6 +87,7 @@ export class Erc20TokenService {
       select: {
         id: true,
         title: true,
+        decimals: true,
         contractTemplate: true,
       },
     });

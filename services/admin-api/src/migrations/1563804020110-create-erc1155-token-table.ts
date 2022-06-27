@@ -58,6 +58,10 @@ export class CreateErc1155TokenTable1563804020120 implements MigrationInterface 
           type: "int",
         },
         {
+          name: "erc20_token_id",
+          type: "int",
+        },
+        {
           name: "token_status",
           type: `${ns}.erc1155_token_status_enum`,
           default: "'ACTIVE'",
@@ -76,6 +80,12 @@ export class CreateErc1155TokenTable1563804020120 implements MigrationInterface 
           columnNames: ["erc1155_collection_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.erc1155_collection`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["erc20_token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.erc20_token`,
           onDelete: "CASCADE",
         },
       ],

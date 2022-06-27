@@ -50,6 +50,7 @@ export const Erc1155Token: FC = () => {
       price: constants.WeiPerEther.toString(),
       attributes: "{}",
       amount: 0,
+      erc20TokenId: 1,
     },
     search: {
       query: "",

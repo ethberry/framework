@@ -53,6 +53,10 @@ export class CreateErc721TemplateTable1563804040110 implements MigrationInterfac
           type: "int",
         },
         {
+          name: "erc20_token_id",
+          type: "int",
+        },
+        {
           name: "template_status",
           type: `${ns}.erc721_template_status_enum`,
           default: "'ACTIVE'",
@@ -71,6 +75,12 @@ export class CreateErc721TemplateTable1563804040110 implements MigrationInterfac
           columnNames: ["erc721_collection_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.erc721_collection`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["erc20_token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.erc20_token`,
           onDelete: "CASCADE",
         },
       ],

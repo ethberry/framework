@@ -7,6 +7,7 @@ import { BigNumberColumn, JsonColumn, SearchableEntity } from "@gemunion/nest-js
 import { Erc998CollectionEntity } from "../collection/collection.entity";
 import { Erc998TokenEntity } from "../token/token.entity";
 import { Erc998AirdropEntity } from "../airdrop/airdrop.entity";
+import { Erc20TokenEntity } from "../../erc20/token/token.entity";
 
 @Entity({ schema: ns, name: "erc998_template" })
 export class Erc998TemplateEntity extends SearchableEntity implements IErc998Template {
@@ -30,6 +31,13 @@ export class Erc998TemplateEntity extends SearchableEntity implements IErc998Tem
     enum: Erc998TemplateStatus,
   })
   public templateStatus: Erc998TemplateStatus;
+
+  @Column({ type: "int" })
+  public erc20TokenId: number;
+
+  @JoinColumn()
+  @ManyToOne(_type => Erc20TokenEntity)
+  public erc20Token: Erc20TokenEntity;
 
   @Column({ type: "int" })
   public erc998CollectionId: number;

@@ -7,6 +7,7 @@ import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-type
 import { Erc721CollectionEntity } from "../collection/collection.entity";
 import { Erc721TemplateEntity } from "../template/template.entity";
 import { Erc721TokenEntity } from "../token/token.entity";
+import { Erc20TokenEntity } from "../../erc20/token/token.entity";
 
 @Entity({ schema: ns, name: "erc721_dropbox" })
 export class Erc721DropboxEntity extends SearchableEntity implements IErc721Dropbox {
@@ -21,6 +22,13 @@ export class Erc721DropboxEntity extends SearchableEntity implements IErc721Drop
     enum: Erc721DropboxStatus,
   })
   public dropboxStatus: Erc721DropboxStatus;
+
+  @Column({ type: "int" })
+  public erc20TokenId: number;
+
+  @JoinColumn()
+  @ManyToOne(_type => Erc20TokenEntity)
+  public erc20Token: Erc20TokenEntity;
 
   @Column({ type: "int" })
   public erc721TemplateId: number;

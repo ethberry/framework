@@ -28,6 +28,7 @@ export class Erc998TemplateService {
 
     queryBuilder.select();
     queryBuilder.leftJoinAndSelect("template.erc998Collection", "collection");
+    queryBuilder.leftJoinAndSelect("template.erc20Token", "erc20_token");
 
     if (templateStatus) {
       if (templateStatus.length === 1) {

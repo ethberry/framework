@@ -21,6 +21,14 @@ export class Erc998TemplateCreateDto implements IErc998TemplateCreateDto {
   public price: string;
 
   @ApiProperty({
+    type: Number,
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public erc20TokenId: number;
+
+  @ApiProperty({
     minimum: 0,
   })
   @IsInt({ message: "typeMismatch" })

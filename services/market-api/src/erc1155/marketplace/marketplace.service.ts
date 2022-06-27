@@ -1,10 +1,11 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, utils, Wallet } from "ethers";
+import { BigNumber, constants, utils, Wallet } from "ethers";
 import { prepareEip712 } from "@gemunion/butils";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
+import { Erc20TokenTemplate } from "@framework/types";
 
 import { Erc1155TokenService } from "../token/token.service";
 import { ISignTokensDto } from "./interfaces";
@@ -37,7 +38,10 @@ export class Erc1155MarketplaceService {
           throw new NotFoundException("limitExceeded");
         }
 
-        const tokenPrice = BigNumber.from(tokenEntity.price).mul(dto.amounts[index]);
+        const tokenPrice =
+          tokenEntity.erc20Token.contractTemplate === Erc20TokenTemplate.NATIVE
+            ? BigNumber.from(tokenEntity.price).mul(dto.amounts[index])
+            : constants.Zero;
         totalTokenPrice = totalTokenPrice.add(tokenPrice);
         collections.push(tokenEntity.erc1155Collection.address);
         tokenIds.push(~~tokenEntity.tokenId);

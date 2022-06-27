@@ -1,10 +1,11 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, utils, Wallet } from "ethers";
+import { utils, Wallet } from "ethers";
 
 import { prepareEip712 } from "@gemunion/butils";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
+import { Erc20TokenTemplate } from "@framework/types";
 
 import { Erc998TemplateService } from "../template/template.service";
 import { Erc998DropboxService } from "../dropbox/dropbox.service";
@@ -23,7 +24,7 @@ export class Erc998MarketplaceService {
   public async signTemplate(dto: ISignTemplateDto): Promise<IServerSignature> {
     const templateEntity = await this.erc998TemplateService.findOne(
       { id: dto.templateId },
-      { relations: { erc998Collection: true } },
+      { relations: { erc998Collection: true, erc20Token: true } },
     );
 
     if (!templateEntity) {
@@ -34,7 +35,11 @@ export class Erc998MarketplaceService {
       throw new NotFoundException("limitExceeded");
     }
 
-    const totalTokenPrice = utils.parseUnits(templateEntity.price.toString(), "wei");
+    const totalTokenPrice =
+      templateEntity.erc20Token.contractTemplate === Erc20TokenTemplate.NATIVE
+        ? utils.parseUnits(templateEntity.price.toString(), "wei")
+        : 0;
+
     const signData = {
       nonce: utils.randomBytes(32),
       collection: templateEntity.erc998Collection.address,
@@ -68,12 +73,16 @@ export class Erc998MarketplaceService {
       throw new NotFoundException("limitExceeded");
     }
 
-    const tokenPrice = BigNumber.from(dropboxEntity.price);
+    const totalTokenPrice =
+      dropboxEntity.erc20Token.contractTemplate === Erc20TokenTemplate.NATIVE
+        ? utils.parseUnits(dropboxEntity.price.toString(), "wei")
+        : 0;
+
     const signData = {
       nonce: utils.randomBytes(32),
       collection: dropboxEntity.erc998Collection.address,
       templateId: templateEntity.id, // Dropbox content
-      price: tokenPrice,
+      price: totalTokenPrice,
     };
     const signature = await Promise.resolve(this.getSign(signData));
     return { nonce: utils.hexlify(signData.nonce), signature };

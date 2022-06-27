@@ -6,9 +6,9 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { Erc721CollectionType, Erc721DropboxStatus, IErc721Dropbox } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
+import { Erc20PriceInput } from "../../../../components/inputs/erc20-price";
 
 export interface IErc721DropboxEditDialogProps {
   open: boolean;
@@ -46,7 +46,7 @@ export const Erc721DropboxEditDialog: FC<IErc721DropboxEditDialogProps> = props 
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <EthInput name="price" />
+      <Erc20PriceInput />
       {id ? <SelectInput name="dropboxStatus" options={Erc721DropboxStatus} /> : null}
       <EntityInput name="erc721TemplateId" controller="erc721-templates" />
       <EntityInput

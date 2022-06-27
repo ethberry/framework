@@ -20,6 +20,7 @@ export class Erc1155TokenService {
 
     queryBuilder.select();
     queryBuilder.leftJoinAndSelect("token.erc1155Collection", "collection");
+    queryBuilder.leftJoinAndSelect("token.erc20Token", "erc20_token");
 
     // search only ACTIVE collections
     queryBuilder.andWhere("collection.collectionStatus = 'ACTIVE'");

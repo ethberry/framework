@@ -16,6 +16,14 @@ export class Erc721DropboxCreateDto implements IErc721DropboxCreateDto {
   @IsNumberString({}, { message: "typeMismatch" })
   public price: string;
 
+  @ApiProperty({
+    type: Number,
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public erc20TokenId: number;
+
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })

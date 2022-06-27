@@ -18,6 +18,7 @@ export class SeedErc998Templates1563804030120 implements MigrationInterface {
         price,
         template_status,
         erc998_collection_id,
+        erc20_token_id,
         created_at,
         updated_at
       ) VALUES (
@@ -28,6 +29,7 @@ export class SeedErc998Templates1563804030120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
         3,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -38,6 +40,7 @@ export class SeedErc998Templates1563804030120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
         3,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -48,6 +51,7 @@ export class SeedErc998Templates1563804030120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
         3,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       );

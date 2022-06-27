@@ -51,13 +51,14 @@ export const Erc998Template: FC = () => {
       attributes: "{}",
       amount: 0,
       erc998CollectionId: 3,
+      erc20TokenId: 1,
     },
     search: {
       query: "",
       templateStatus: [Erc998TemplateStatus.ACTIVE],
       erc998CollectionIds: [],
     },
-    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, erc998CollectionId }) => ({
+    filter: ({
       title,
       description,
       attributes,
@@ -66,6 +67,17 @@ export const Erc998Template: FC = () => {
       imageUrl,
       templateStatus,
       erc998CollectionId,
+      erc20TokenId,
+    }) => ({
+      title,
+      description,
+      attributes,
+      price,
+      amount,
+      imageUrl,
+      templateStatus,
+      erc998CollectionId,
+      erc20TokenId,
     }),
   });
 

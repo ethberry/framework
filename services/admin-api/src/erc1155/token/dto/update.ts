@@ -27,6 +27,14 @@ export class Erc1155TokenUpdateDto implements IErc1155TokenUpdateDto {
   public price: string;
 
   @ApiPropertyOptional({
+    type: Number,
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public erc20TokenId: number;
+
+  @ApiPropertyOptional({
     minimum: 0,
   })
   @IsOptional()

@@ -3,6 +3,7 @@ import { IIdDateBase } from "@gemunion/types-collection";
 import { IErc998Collection } from "./collection";
 import { IErc998Airdrop } from "./airdrop";
 import { IErc998Token } from "./token";
+import { IErc20Token } from "../erc20/token";
 
 export enum Erc998TemplateStatus {
   ACTIVE = "ACTIVE",
@@ -17,6 +18,8 @@ export interface IErc998Template extends IIdDateBase {
   price: string;
   amount: number;
   templateStatus: Erc998TemplateStatus;
+  erc20TokenId: number;
+  erc20Token?: IErc20Token;
   erc998CollectionId: number;
   erc998Collection?: IErc998Collection;
   erc998Tokens?: Array<IErc998Token>;

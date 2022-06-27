@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IErc1155Token } from "@framework/types";
+import { Erc20TokenTemplate, IErc1155Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
@@ -47,7 +47,9 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
           [1],
           process.env.ACCOUNT,
           json.signature,
-          { value: tokenPrice },
+          {
+            value: token?.erc20Token?.contractTemplate === Erc20TokenTemplate.NATIVE ? tokenPrice : 0,
+          },
         ) as Promise<void>;
       });
   });

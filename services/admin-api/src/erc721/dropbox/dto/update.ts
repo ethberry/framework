@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsJSON, IsNumberString, IsOptional, IsString, IsUrl } from "class-validator";
+import { IsEnum, IsInt, IsJSON, IsNumberString, IsOptional, IsString, IsUrl, Min } from "class-validator";
 
 import { Erc721DropboxStatus } from "@framework/types";
 
@@ -21,6 +21,14 @@ export class Erc721DropboxUpdateDto implements IErc721DropboxUpdateDto {
   @IsNumberString({}, { message: "typeMismatch" })
   public price: string;
 
+  @ApiPropertyOptional({
+    type: Number,
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public erc20TokenId: number;
+
   @ApiPropertyOptional()
   @IsOptional()
   @IsUrl({}, { message: "patternMismatch" })
@@ -32,6 +40,7 @@ export class Erc721DropboxUpdateDto implements IErc721DropboxUpdateDto {
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public erc721CollectionId: number;
 
   @ApiPropertyOptional({
@@ -39,6 +48,7 @@ export class Erc721DropboxUpdateDto implements IErc721DropboxUpdateDto {
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public erc721TemplateId: number;
 
   @ApiPropertyOptional()

@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IErc998Template } from "@framework/types";
+import { Erc20TokenTemplate, IErc998Template } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC998MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
@@ -42,7 +42,7 @@ export const Erc998ItemTemplateBuyButton: FC<IErc998TemplateBuyButtonProps> = pr
           process.env.ACCOUNT,
           sign.signature,
           {
-            value: commonItemPrice,
+            value: template?.erc20Token?.contractTemplate === Erc20TokenTemplate.NATIVE ? commonItemPrice : 0,
           },
         ) as Promise<void>;
       });

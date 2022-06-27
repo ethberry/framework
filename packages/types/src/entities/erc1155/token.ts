@@ -1,6 +1,7 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IErc1155Collection } from "./collection";
+import { IErc20Token } from "../erc20/token";
 
 export enum Erc1155TokenStatus {
   ACTIVE = "ACTIVE",
@@ -16,6 +17,8 @@ export interface IErc1155Token extends IIdDateBase {
   amount: number;
   tokenId: string;
   tokenStatus: Erc1155TokenStatus;
+  erc20TokenId: number;
+  erc20Token?: IErc20Token;
   erc1155CollectionId: number;
   erc1155Collection?: IErc1155Collection;
 }

@@ -22,6 +22,8 @@ export class Erc721DropboxService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("dropbox.erc721Collection", "collection");
+    queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "template");
+    queryBuilder.leftJoinAndSelect("dropbox.erc20Token", "erc20_token");
 
     if (erc721CollectionIds) {
       if (erc721CollectionIds.length === 1) {
@@ -62,9 +64,6 @@ export class Erc721DropboxService {
         }),
       );
     }
-
-    queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "template");
-    // queryBuilder.leftJoinAndSelect("template.erc721Collection", "erc721Collection");
 
     if (erc721TemplateCollectionIds) {
       if (erc721TemplateCollectionIds.length === 1) {

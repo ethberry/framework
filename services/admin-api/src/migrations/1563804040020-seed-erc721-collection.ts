@@ -14,7 +14,7 @@ export class SeedErc721Collection1563804040020 implements MigrationInterface {
     const erc721CollectionRuneAddress = process.env.ERC721_RUNE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - BUILDINGS
+    // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.erc721_collection (
         title,

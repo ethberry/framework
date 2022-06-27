@@ -18,6 +18,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         price,
         token_id,
         erc1155_collection_id,
+        erc20_token_id,
         created_at,
         updated_at
       ) VALUES (
@@ -28,6 +29,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         '1',
         1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -38,6 +40,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         '2',
         1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -48,6 +51,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         '3',
         1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -58,6 +62,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         '4',
         1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -68,6 +73,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         '5',
         1,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -77,6 +83,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${defaultJSON}',
         '${constants.WeiPerEther.toString()}',
         '5',
+        2,
         2,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -88,6 +95,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${constants.WeiPerEther.toString()}',
         '5',
         2,
+        2,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -97,6 +105,7 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
         '${defaultJSON}',
         '${constants.WeiPerEther.toString()}',
         '5',
+        2,
         2,
         '${currentDateTime}',
         '${currentDateTime}'

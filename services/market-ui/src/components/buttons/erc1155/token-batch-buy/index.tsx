@@ -7,7 +7,7 @@ import { useFormContext } from "react-hook-form";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IErc1155Token } from "@framework/types";
+import { Erc20TokenTemplate, IErc1155Token } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
@@ -26,7 +26,12 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
   const { library } = useWeb3React();
 
   const handleBatchBuy = useMetamask(async () => {
-    const tokenPricesEth = rows.map(token => utils.parseUnits(token.price, "wei"));
+    const totalTokenPrice = rows.map(token => {
+      if (token.erc20Token?.contractTemplate === Erc20TokenTemplate.NATIVE) {
+        return utils.parseUnits(token.price, "wei");
+      }
+      return constants.Zero;
+    });
     let totalTokenValue = constants.Zero;
     let collection = "";
     let indx = 0;
@@ -38,7 +43,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
           memo.erc1155TokenIds.push(token!.id);
           memo.amounts.push(amount);
           tokenIds.push(~~token!.tokenId);
-          totalTokenValue = totalTokenValue.add(tokenPricesEth[indx].mul(amount));
+          totalTokenValue = totalTokenValue.add(totalTokenPrice[indx].mul(amount));
           indx++;
           collection = token!.erc1155Collection!.address.toLowerCase();
         }
@@ -74,6 +79,3 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
     </Button>
   );
 };
-// listen.from-to: 49130 49098
-// listen.from-to: 49189 49157
-// listen.from-to: 49248 49216
