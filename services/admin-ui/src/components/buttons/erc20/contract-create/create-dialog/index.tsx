@@ -17,7 +17,7 @@ export interface IErc20TokenDeployDialogProps {
 
 export const Erc20TokenCreateDialog: FC<IErc20TokenDeployDialogProps> = props => {
   const fixedValues: IErc20TokenCreateDto = {
-    contractTemplate: Erc20ContractTemplate.ERC20_EXTERNAL,
+    contractTemplate: Erc20ContractTemplate.EXTERNAL,
     symbol: "",
     decimals: 18,
     title: "",
@@ -36,7 +36,7 @@ export const Erc20TokenCreateDialog: FC<IErc20TokenDeployDialogProps> = props =>
       <SelectInput
         name="contractTemplate"
         options={Erc20ContractTemplate}
-        disabledOptions={[Erc20ContractTemplate.ERC20_SIMPLE, Erc20ContractTemplate.ERC20_BLACKLIST]}
+        disabledOptions={[Erc20ContractTemplate.SIMPLE, Erc20ContractTemplate.BLACKLIST]}
       />
       <TextInput name="symbol" />
       <NumberInput name="decimals" />

@@ -12,9 +12,11 @@ export enum UniTemplateStatus {
 export interface IUniTemplate extends ISearchable {
   imageUrl: string;
   attributes: any;
-  price: IAsset;
+  price?: IAsset;
   priceId: number;
+  cap: number;
   amount: number;
+  decimals: number;
   templateStatus: UniTemplateStatus;
   uniContractId: number;
   uniContract?: IUniContract;

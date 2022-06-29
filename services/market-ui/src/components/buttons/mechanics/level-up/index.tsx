@@ -43,12 +43,7 @@ export const LevelUpButton: FC<ILevelUpButtonProps> = props => {
       });
   });
 
-  if (
-    !(
-      contractTemplate === UniContractTemplate.ERC998_GRADED ||
-      contractTemplate === UniContractTemplate.ERC998_RANDOM
-    )
-  ) {
+  if (!(contractTemplate === UniContractTemplate.GRADED || contractTemplate === UniContractTemplate.RANDOM)) {
     return null;
   }
 

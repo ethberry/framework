@@ -15,7 +15,7 @@ export interface IErc998CollectionDeployDialogProps {
 
 export const Erc998ContractDeployDialog: FC<IErc998CollectionDeployDialogProps> = props => {
   const fixedValues: IErc998CollectionDeployDto = {
-    contractTemplate: Erc998ContractTemplate.ERC998_SIMPLE,
+    contractTemplate: Erc998ContractTemplate.SIMPLE,
     name: "",
     symbol: "",
     baseTokenURI: `${process.env.BE_URL}/metadata`,

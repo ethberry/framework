@@ -39,7 +39,7 @@ export class Erc1155MarketplaceService {
         }
 
         const tokenPrice =
-          tokenEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.ERC20_NATIVE
+          tokenEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
             ? BigNumber.from(tokenEntity.price).mul(dto.amounts[index])
             : constants.Zero;
         totalTokenPrice = totalTokenPrice.add(tokenPrice);

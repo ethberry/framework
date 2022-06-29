@@ -43,7 +43,7 @@ export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = pr
           sign.signature,
           {
             value:
-              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.ERC20_NATIVE
+              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.NATIVE
                 ? commonItemPrice
                 : 0,
           },

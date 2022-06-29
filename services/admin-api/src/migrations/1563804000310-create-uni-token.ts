@@ -2,16 +2,17 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateErc1155MarketplaceHistoryTable1563804020210 implements MigrationInterface {
+export class CreateUniToken1563804000310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc1155_marketplace_event_enum AS ENUM (
-        'Redeem'
+      CREATE TYPE ${ns}.uni_token_status_enum AS ENUM (
+        'MINTED',
+        'BURNED'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.erc1155_marketplace_history`,
+      name: `${ns}.uni_token`,
       columns: [
         {
           name: "id",
@@ -19,23 +20,24 @@ export class CreateErc1155MarketplaceHistoryTable1563804020210 implements Migrat
           isPrimary: true,
         },
         {
-          name: "address",
-          type: "varchar",
-        },
-        {
-          name: "transaction_hash",
-          type: "varchar",
-        },
-        {
-          name: "event_type",
-          type: `${ns}.erc1155_marketplace_event_enum`,
-        },
-        {
-          name: "event_data",
+          name: "attributes",
           type: "json",
         },
         {
-          name: "uni_token_id",
+          name: "royalty",
+          type: "int",
+        },
+        {
+          name: "token_id",
+          type: "uint256",
+        },
+        {
+          name: "token_status",
+          type: `${ns}.uni_token_status_enum`,
+          default: "'MINTED'",
+        },
+        {
+          name: "uni_template_id",
           type: "int",
           isNullable: true,
         },
@@ -50,9 +52,9 @@ export class CreateErc1155MarketplaceHistoryTable1563804020210 implements Migrat
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_token_id"],
+          columnNames: ["uni_template_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_token`,
+          referencedTableName: `${ns}.uni_template`,
           onDelete: "CASCADE",
         },
       ],
@@ -62,7 +64,7 @@ export class CreateErc1155MarketplaceHistoryTable1563804020210 implements Migrat
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc1155_marketplace_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc1155_marketplace_event_enum;`);
+    await queryRunner.dropTable(`${ns}.uni_token`);
+    await queryRunner.query(`DROP TYPE ${ns}.uni_token_status_enum;`);
   }
 }

@@ -27,7 +27,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
 
   const handleBatchBuy = useMetamask(async () => {
     const totalTokenPrice = rows.map(token => {
-      if (token.price.components[0].uniContract?.contractTemplate === UniContractTemplate.ERC20_NATIVE) {
+      if (token.price.components[0].uniContract?.contractTemplate === UniContractTemplate.NATIVE) {
         return utils.parseUnits(token.price.components[0].amount, "wei");
       }
       return constants.Zero;

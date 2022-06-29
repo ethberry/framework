@@ -53,7 +53,7 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="erc20-tokens"
           data={{
-            contractTemplate: [Erc20ContractTemplate.ERC20_NATIVE],
+            contractTemplate: [Erc20ContractTemplate.NATIVE],
             tokenStatus: [UniContractStatus.ACTIVE],
           }}
         />
@@ -65,9 +65,9 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
           controller="erc20-tokens"
           data={{
             contractTemplate: [
-              Erc20ContractTemplate.ERC20_EXTERNAL,
-              Erc20ContractTemplate.ERC20_BLACKLIST,
-              Erc20ContractTemplate.ERC20_SIMPLE,
+              Erc20ContractTemplate.EXTERNAL,
+              Erc20ContractTemplate.BLACKLIST,
+              Erc20ContractTemplate.SIMPLE,
             ],
             tokenStatus: [UniContractStatus.ACTIVE],
           }}

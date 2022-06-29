@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateErc20VestingHistoryTable1563804010230 implements MigrationInterface {
+export class CreateErc20VestingHistory1563804010230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc20_vesting_event_enum AS ENUM (

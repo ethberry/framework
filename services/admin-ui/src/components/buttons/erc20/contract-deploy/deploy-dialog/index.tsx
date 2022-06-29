@@ -16,7 +16,7 @@ export interface IErc20TokenDeployDialogProps {
 
 export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props => {
   const fixedValues: IErc20TokenDeployDto = {
-    contractTemplate: Erc20ContractTemplate.ERC20_SIMPLE,
+    contractTemplate: Erc20ContractTemplate.SIMPLE,
     name: "",
     symbol: "",
     cap: constants.WeiPerEther.mul(1e6).toString(),
@@ -33,7 +33,7 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
       <SelectInput
         name="contractTemplate"
         options={Erc20ContractTemplate}
-        disabledOptions={[Erc20ContractTemplate.ERC20_EXTERNAL, Erc20ContractTemplate.ERC20_NATIVE]}
+        disabledOptions={[Erc20ContractTemplate.EXTERNAL, Erc20ContractTemplate.NATIVE]}
       />
       <TextInput name="name" />
       <TextInput name="symbol" />

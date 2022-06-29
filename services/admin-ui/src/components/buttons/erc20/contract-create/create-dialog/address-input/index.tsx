@@ -17,11 +17,11 @@ export const AddressInput: FC<IAddressInputProps> = props => {
   const contractTemplate = useWatch({ name: "contractTemplate" });
 
   useEffect(() => {
-    if (contractTemplate === Erc20ContractTemplate.ERC20_NATIVE) {
+    if (contractTemplate === Erc20ContractTemplate.NATIVE) {
       form.setValue(name, constants.AddressZero);
       form.clearErrors(name);
     }
   }, [contractTemplate]);
 
-  return <TextInput name={name} readOnly={contractTemplate === Erc20ContractTemplate.ERC20_NATIVE} />;
+  return <TextInput name={name} readOnly={contractTemplate === Erc20ContractTemplate.NATIVE} />;
 };

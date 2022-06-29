@@ -1,17 +1,17 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateErc721TemplateTable1563804040110 implements MigrationInterface {
+export class CreateUniTemplate1563804000210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc721_template_status_enum AS ENUM (
+      CREATE TYPE ${ns}.uni_template_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.erc721_template`,
+      name: `${ns}.uni_template`,
       columns: [
         {
           name: "id",
@@ -35,30 +35,32 @@ export class CreateErc721TemplateTable1563804040110 implements MigrationInterfac
           type: "json",
         },
         {
-          name: "price",
+          name: "price_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "cap",
           type: "uint256",
+          default: 0,
         },
         {
           name: "amount",
+          type: "uint256",
+          default: 0,
+        },
+        {
+          name: "decimals",
           type: "int",
           default: 0,
         },
         {
-          name: "instance_count",
-          type: "int",
-          default: 0,
-        },
-        {
-          name: "erc721_collection_id",
-          type: "int",
-        },
-        {
-          name: "erc20_token_id",
+          name: "uni_contract_id",
           type: "int",
         },
         {
           name: "template_status",
-          type: `${ns}.erc721_template_status_enum`,
+          type: `${ns}.uni_template_status_enum`,
           default: "'ACTIVE'",
         },
         {
@@ -72,15 +74,15 @@ export class CreateErc721TemplateTable1563804040110 implements MigrationInterfac
       ],
       foreignKeys: [
         {
-          columnNames: ["erc721_collection_id"],
+          columnNames: ["uni_contract_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc721_collection`,
+          referencedTableName: `${ns}.uni_contract`,
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["erc20_token_id"],
+          columnNames: ["price_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc20_token`,
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],

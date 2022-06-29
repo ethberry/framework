@@ -36,7 +36,7 @@ export class Erc721MarketplaceService {
     }
 
     const totalTokenPrice =
-      templateEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.ERC20_NATIVE
+      templateEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
         ? utils.parseUnits(templateEntity.price.toString(), "wei")
         : 0;
 
@@ -74,7 +74,7 @@ export class Erc721MarketplaceService {
     }
 
     const totalTokenPrice =
-      dropboxEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.ERC20_NATIVE
+      dropboxEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
         ? utils.parseUnits(dropboxEntity.price.toString(), "wei")
         : 0;
 

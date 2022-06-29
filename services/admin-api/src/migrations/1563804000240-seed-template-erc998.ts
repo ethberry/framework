@@ -1,57 +1,88 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedErc998Templates1563804030120 implements MigrationInterface {
+export class SeedUniTemplateErc998At1563804000240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.erc998_template (
+      INSERT INTO ${ns}.asset (
+        id,
+        external_id,
+        asset_type
+      ) VALUES (
+        30101,
+        30101,
+        'TEMPLATE'
+      ), (
+        30102,
+        30102,
+        'TEMPLATE'
+      ), (
+        30103,
+        30103,
+        'TEMPLATE'
+      );
+    `);
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.uni_template (
+        id,
         title,
         description,
         image_url,
         attributes,
-        price,
+        price_id,
+        cap,
+        amount,
+        decimals,
         template_status,
-        erc998_collection_id,
-        erc20_token_id,
+        uni_contract_id,
         created_at,
         updated_at
       ) VALUES (
+        30101,
         'Warrior',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
+        30101,
+        0,
+        1,
+        0,
         'ACTIVE',
-        3,
-        2,
+        23,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        30102,
         'Rouge',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
+        30102,
+        0,
+        1,
+        0,
         'ACTIVE',
-        3,
-        2,
+        23,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        30103,
         'Mage',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
+        30103,
+        0,
+        1,
+        0,
         'ACTIVE',
-        3,
-        2,
+        23,
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -59,6 +90,6 @@ export class SeedErc998Templates1563804030120 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.erc998_template RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.uni_template RESTART IDENTITY CASCADE;`);
   }
 }

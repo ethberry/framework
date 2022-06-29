@@ -4,109 +4,176 @@ import { constants } from "ethers";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
+export class SeedUniTemplateErc1155At1563804000250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.erc1155_token (
+      INSERT INTO ${ns}.asset (
+        id,
+        external_id,
+        asset_type
+      ) VALUES (
+        40101,
+        40101,
+        'TEMPLATE'
+      ), (
+        40102,
+        40102,
+        'TEMPLATE'
+      ), (
+        40103,
+        40103,
+        'TEMPLATE'
+      ), (
+        40104,
+        40104,
+        'TEMPLATE'
+      ), (
+        40105,
+        40105,
+        'TEMPLATE'
+      ), (
+        40201,
+        40201,
+        'TEMPLATE'
+      ), (
+        40202,
+        40202,
+        'TEMPLATE'
+      ), (
+        40203,
+        40203,
+        'TEMPLATE'
+      );
+    `);
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.uni_template (
+        id,
         title,
         description,
         image_url,
         attributes,
-        price,
-        token_id,
-        erc1155_collection_id,
-        erc20_token_id,
+        price_id,
+        cap,
+        amount,
+        decimals,
+        template_status,
+        uni_contract_id,
         created_at,
         updated_at
       ) VALUES (
+        40101,
         'Gold',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
+        40101,
+        0,
         '${constants.WeiPerEther.toString()}',
-        '1',
-        1,
-        2,
+        0,
+        'ACTIVE',
+        31,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Iron',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        '2',
-        1,
-        2,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
+        40102,
         'Wood',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
+        40102,
+        0,
         '${constants.WeiPerEther.toString()}',
-        '3',
-        1,
-        2,
+        0,
+        'ACTIVE',
+        31,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        'Iron ingot',
+        40103,
+        'Iron',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
+        40103,
+        0,
         '${constants.WeiPerEther.toString()}',
-        '4',
-        1,
-        2,
+        0,
+        'ACTIVE',
+        31,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        40104,
         'Wood log',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        '5',
-        1,
-        2,
+        40104,
+        0,
+       '0',
+        0,
+        'ACTIVE',
+        31,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        40105,
+        'Iron ingot',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '${defaultJSON}',
+        40105,
+        0,
+        '0',
+        0,
+        'ACTIVE',
+        31,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        40201,
         'Healing potion',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        '5',
-        2,
-        2,
+        40201,
+        0,
+        '0',
+        0,
+        'ACTIVE',
+        32,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        40202,
         'Mana potion',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        '5',
-        2,
-        2,
+        40202,
+        0,
+        '0',
+        0,
+        'ACTIVE',
+        32,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        40203,
         'Antidote',
         '${simpleFormatting}',
         '${imageUrl}',
         '${defaultJSON}',
-        '${constants.WeiPerEther.toString()}',
-        '5',
-        2,
-        2,
+        40203,
+        0,
+        '0',
+        0,
+        'ACTIVE',
+        33,
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -114,6 +181,6 @@ export class SeedErc1155Tokens1563804020120 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.erc1155_token RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.uni_template RESTART IDENTITY CASCADE;`);
   }
 }

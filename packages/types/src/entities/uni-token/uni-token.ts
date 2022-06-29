@@ -11,7 +11,6 @@ export interface IUniToken extends IIdDateBase {
   attributes: any;
   tokenId: string;
   royalty: number;
-  owner: string;
   tokenStatus: UniTokenStatus;
   uniTemplateId: number | null;
   uniTemplate?: IUniTemplate;

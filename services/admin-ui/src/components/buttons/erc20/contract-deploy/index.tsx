@@ -18,9 +18,9 @@ import { Erc20TokenDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc20TokenTemplate(template: Erc20ContractTemplate) {
   switch (template) {
-    case Erc20ContractTemplate.ERC20_SIMPLE:
+    case Erc20ContractTemplate.SIMPLE:
       return ERC20SimpleSol.bytecode;
-    case Erc20ContractTemplate.ERC20_BLACKLIST:
+    case Erc20ContractTemplate.BLACKLIST:
       return ERC20BlackListSol.bytecode;
     default:
       throw new Error("Unknown template");

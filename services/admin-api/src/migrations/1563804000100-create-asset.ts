@@ -2,11 +2,12 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateAsset1563804000210 implements MigrationInterface {
+export class CreateAsset1563804000100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.asset_type_enum AS ENUM (
-        'MARKETPLACE',
+        'TEMPLATE',
+        'DROPBOX',
         'EXCHANGE',
         'STAKING'
       );
@@ -23,7 +24,7 @@ export class CreateAsset1563804000210 implements MigrationInterface {
         {
           name: "asset_type",
           type: `${ns}.asset_type_enum`,
-          default: "'MARKETPLACE'",
+          default: "'TEMPLATE'",
         },
         {
           name: "external_id",

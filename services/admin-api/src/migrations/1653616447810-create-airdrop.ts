@@ -2,18 +2,18 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateErc721RecipeHistory1563804040630 implements MigrationInterface {
+export class CreateAirdropTable1563804040410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc721_exchange_event_enum AS ENUM (
-        'RecipeCreated',
-        'RecipeUpdated',
-        'RecipeCrafted'
+      CREATE TYPE ${ns}.airdrop_status_enum AS ENUM (
+        'NEW',
+        'REDEEMED',
+        'UNPACKED'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.erc721_exchange_history`,
+      name: `${ns}.airdrop`,
       columns: [
         {
           name: "id",
@@ -21,25 +21,26 @@ export class CreateErc721RecipeHistory1563804040630 implements MigrationInterfac
           isPrimary: true,
         },
         {
-          name: "address",
+          name: "account",
           type: "varchar",
         },
         {
-          name: "transaction_hash",
-          type: "varchar",
+          name: "uni_template_id",
+          type: "int",
         },
         {
-          name: "event_type",
-          type: `${ns}.erc721_exchange_event_enum`,
-        },
-        {
-          name: "event_data",
-          type: "json",
-        },
-        {
-          name: "erc721_exchange_id",
+          name: "uni_token_id",
           type: "int",
           isNullable: true,
+        },
+        {
+          name: "airdrop_status",
+          type: `${ns}.airdrop_status_enum`,
+          default: "'NEW'",
+        },
+        {
+          name: "signature",
+          type: "varchar",
         },
         {
           name: "created_at",
@@ -52,9 +53,15 @@ export class CreateErc721RecipeHistory1563804040630 implements MigrationInterfac
       ],
       foreignKeys: [
         {
-          columnNames: ["erc721_exchange_id"],
+          columnNames: ["uni_template_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc721_recipe`,
+          referencedTableName: `${ns}.uni_template`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["uni_token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.uni_token`,
           onDelete: "CASCADE",
         },
       ],
@@ -64,7 +71,6 @@ export class CreateErc721RecipeHistory1563804040630 implements MigrationInterfac
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc721_token_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc721_marketplace_event_enum;`);
+    await queryRunner.dropTable(`${ns}.air_drop`);
   }
 }

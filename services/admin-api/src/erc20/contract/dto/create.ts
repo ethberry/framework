@@ -9,7 +9,7 @@ export class Erc20TokenCreateDto implements IErc20TokenCreateDto {
     enum: Erc20ContractTemplate,
   })
   @IsEnum(Erc20ContractTemplate, { message: "badInput" })
-  @Validate(ForbidEnumValues, [Erc20ContractTemplate.ERC20_SIMPLE, Erc20ContractTemplate.ERC20_BLACKLIST])
+  @Validate(ForbidEnumValues, [Erc20ContractTemplate.SIMPLE, Erc20ContractTemplate.BLACKLIST])
   public contractTemplate: Erc20ContractTemplate;
 
   @ApiProperty()

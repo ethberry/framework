@@ -4,7 +4,7 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
-export class SeedUniContract1563804000130 implements MigrationInterface {
+export class SeedUniContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc721CollectionDropboxAddress = process.env.ERC721_DROPBOX_ADDR || wallet;
@@ -17,6 +17,7 @@ export class SeedUniContract1563804000130 implements MigrationInterface {
     // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.uni_contract (
+        id,
         address,
         chain_id,
         title,
@@ -28,10 +29,12 @@ export class SeedUniContract1563804000130 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
+        contract_role,
         contract_template,
         created_at,
         updated_at
       ) VALUES  (
+        11,
         '${erc721CollectionAirdropAddress}',
         '${chainId}',
         'AIRDROP_ERC721',
@@ -42,11 +45,13 @@ export class SeedUniContract1563804000130 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC721',
         'AIRDROP',
         'UNKNOWN',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        12,
         '${erc721CollectionDropboxAddress}',
         '${chainId}',
         'DROPBOX_ERC721',
@@ -57,11 +62,13 @@ export class SeedUniContract1563804000130 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC721',
         'DROPBOX',
         'UNKNOWN',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        13,
         '${erc721CollectionItemsAddress}',
         '${chainId}',
         'ITEMS',
@@ -72,11 +79,13 @@ export class SeedUniContract1563804000130 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC721',
         'TOKEN',
-        'ERC721_RANDOM',
+        'RANDOM',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        14,
         '${erc721CollectionSkillAddress}',
         '${chainId}',
         'SKILLS',
@@ -87,11 +96,13 @@ export class SeedUniContract1563804000130 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC721',
         'TOKEN',
-        'ERC721_GRADED',
+        'GRADED',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        15,
         '${erc721CollectionRuneAddress}',
         '${chainId}',
         'RUNES',
@@ -102,8 +113,9 @@ export class SeedUniContract1563804000130 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC721',
         'TOKEN',
-        'ERC721_SIMPLE',
+        'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
       )

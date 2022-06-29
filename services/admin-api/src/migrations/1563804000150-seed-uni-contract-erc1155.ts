@@ -4,7 +4,7 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
-export class SeedUniContract1563804000150 implements MigrationInterface {
+export class SeedUniContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc1155CollectionResourcesAddress = process.env.ERC1155_RESOURCES_ADDR || wallet;
@@ -15,6 +15,7 @@ export class SeedUniContract1563804000150 implements MigrationInterface {
     // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.uni_contract (
+        id,
         address,
         chain_id,
         title,
@@ -26,10 +27,12 @@ export class SeedUniContract1563804000150 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
+        contract_role,
         contract_template,
         created_at,
         updated_at
-      ) VALUES  (
+      ) VALUES (
+        31,
         '${erc1155CollectionResourcesAddress}',
         '${chainId}',
         'RESOURCES',
@@ -40,11 +43,13 @@ export class SeedUniContract1563804000150 implements MigrationInterface {
         0,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC1155',
         'TOKEN',
-        'ERC1155_SIMPLE',
+        'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        32,
         '${erc1155CollectionPotionsAddress}',
         '${chainId}',
         'POTIONS',
@@ -55,11 +60,13 @@ export class SeedUniContract1563804000150 implements MigrationInterface {
         0,
         '${baseTokenURI}',
         'INACTIVE',
+        'ERC1155',
         'TOKEN',
-        'ERC1155_SIMPLE',
+        'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        33,
         '${erc1155CollectionShardsAddress}',
         '${chainId}',
         'SHARDS',
@@ -70,8 +77,9 @@ export class SeedUniContract1563804000150 implements MigrationInterface {
         0,
         '${baseTokenURI}',
         'NEW',
+        'ERC1155',
         'TOKEN',
-        'ERC1155_SIMPLE',
+        'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
       )

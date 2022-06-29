@@ -23,17 +23,12 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.uni_contract_template_enum AS ENUM (
         'UNKNOWN',
-        'ERC20_SIMPLE',
-        'ERC20_BLACKLIST',
-        'ERC20_EXTERNAL',
-        'ERC20_NATIVE',
-        'ERC721_SIMPLE',
-        'ERC721_GRADED',
-        'ERC721_RANDOM',
-        'ERC998_SIMPLE',
-        'ERC998_GRADED',
-        'ERC998_RANDOM',
-        'ERC1155_SIMPLE'
+        'SIMPLE',
+        'BLACKLIST',
+        'EXTERNAL',
+        'NATIVE',
+        'GRADED',
+        'RANDOM'
       );
     `);
 

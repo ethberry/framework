@@ -94,16 +94,12 @@ export const Erc20Contract: FC = () => {
                   contract={token}
                   actions={[
                     ContractActions.SNAPSHOT,
-                    token.contractTemplate === UniContractTemplate.ERC20_BLACKLIST
-                      ? ContractActions.BLACKLIST_ADD
-                      : null,
-                    token.contractTemplate === UniContractTemplate.ERC20_BLACKLIST
-                      ? ContractActions.BLACKLIST_REMOVE
-                      : null,
+                    token.contractTemplate === UniContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    token.contractTemplate === UniContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
                   ]}
                   disabled={
-                    token.contractTemplate === UniContractTemplate.ERC20_EXTERNAL ||
-                    token.contractTemplate === UniContractTemplate.ERC20_NATIVE
+                    token.contractTemplate === UniContractTemplate.EXTERNAL ||
+                    token.contractTemplate === UniContractTemplate.NATIVE
                   }
                 />
               </ListItemSecondaryAction>

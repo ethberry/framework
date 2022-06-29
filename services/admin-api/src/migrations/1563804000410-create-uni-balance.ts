@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateAssetComponent1563804000220 implements MigrationInterface {
+export class CreateUniBalanceTable1563804000410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.asset_component`,
+      name: `${ns}.uni_balance`,
       columns: [
         {
           name: "id",
@@ -13,32 +13,31 @@ export class CreateAssetComponent1563804000220 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "token_type",
-          type: `${ns}.token_type_enum`,
-          default: "'NATIVE'",
-        },
-        {
-          name: "uni_contract_id",
-          type: "int",
-        },
-        {
-          name: "uni_token_id",
-          type: "int",
+          name: "account",
+          type: "varchar",
         },
         {
           name: "amount",
           type: "uint256",
         },
         {
-          name: "asset_id",
+          name: "uni_token_id",
           type: "int",
+        },
+        {
+          name: "created_at",
+          type: "timestamptz",
+        },
+        {
+          name: "updated_at",
+          type: "timestamptz",
         },
       ],
       foreignKeys: [
         {
-          columnNames: ["asset_id"],
+          columnNames: ["uni_token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.asset`,
+          referencedTableName: `${ns}.uni_token`,
           onDelete: "CASCADE",
         },
       ],
@@ -48,6 +47,6 @@ export class CreateAssetComponent1563804000220 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.asset_component`);
+    await queryRunner.dropTable(`${ns}.erc1155_balance`);
   }
 }

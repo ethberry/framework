@@ -28,11 +28,7 @@ export class Erc721GradeService {
     }
 
     const { contractTemplate } = tokenEntity.uniTemplate.uniContract;
-    if (
-      !(
-        contractTemplate === UniContractTemplate.ERC721_GRADED || contractTemplate === UniContractTemplate.ERC721_RANDOM
-      )
-    ) {
+    if (!(contractTemplate === UniContractTemplate.GRADED || contractTemplate === UniContractTemplate.RANDOM)) {
       throw new BadRequestException("wrongTokenType");
     }
 

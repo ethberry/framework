@@ -14,7 +14,7 @@ export interface IErc1155TokenDeployDialogProps {
 
 export const Erc1155TokenDeployDialog: FC<IErc1155TokenDeployDialogProps> = props => {
   const fixedValues: IUniContractDeployDto = {
-    contractTemplate: Erc1155ContractTemplate.ERC1155_SIMPLE,
+    contractTemplate: Erc1155ContractTemplate.SIMPLE,
     baseTokenURI: `${process.env.BE_URL}/metadata`,
   };
 

@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateErc20TokenHistoryTable1563804010130 implements MigrationInterface {
+export class CreateErc20ContractHistory1563804010130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc20_token_event_enum AS ENUM (
+      CREATE TYPE ${ns}.erc20_contract_event_enum AS ENUM (
         'Transfer',
         'Approval',
         'Snapshot',
@@ -15,7 +15,7 @@ export class CreateErc20TokenHistoryTable1563804010130 implements MigrationInter
     `);
 
     const table = new Table({
-      name: `${ns}.erc20_token_history`,
+      name: `${ns}.erc20_contract_history`,
       columns: [
         {
           name: "id",
@@ -32,7 +32,7 @@ export class CreateErc20TokenHistoryTable1563804010130 implements MigrationInter
         },
         {
           name: "event_type",
-          type: `${ns}.erc20_token_event_enum`,
+          type: `${ns}.erc20_contract_event_enum`,
         },
         {
           name: "event_data",
@@ -53,7 +53,7 @@ export class CreateErc20TokenHistoryTable1563804010130 implements MigrationInter
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc20_token_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc20_token_event_enum;`);
+    await queryRunner.dropTable(`${ns}.erc20_contract_history`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc20_contract_event_enum;`);
   }
 }

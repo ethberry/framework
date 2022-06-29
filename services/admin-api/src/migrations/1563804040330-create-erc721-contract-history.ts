@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateErc998TokenHistoryTable1563804030330 implements MigrationInterface {
+export class CreateErc721ContractHistory1563804040330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc998_token_event_enum AS ENUM (
+      CREATE TYPE ${ns}.erc721_token_event_enum AS ENUM (
         'Approval',
         'ApprovalForAll',
         'DefaultRoyaltyInfo',
@@ -25,7 +25,7 @@ export class CreateErc998TokenHistoryTable1563804030330 implements MigrationInte
     `);
 
     const table = new Table({
-      name: `${ns}.erc998_token_history`,
+      name: `${ns}.erc721_contract_history`,
       columns: [
         {
           name: "id",
@@ -42,14 +42,14 @@ export class CreateErc998TokenHistoryTable1563804030330 implements MigrationInte
         },
         {
           name: "event_type",
-          type: `${ns}.erc998_token_event_enum`,
+          type: `${ns}.erc721_token_event_enum`,
         },
         {
           name: "event_data",
           type: "json",
         },
         {
-          name: "erc998_token_id",
+          name: "uni_token_id",
           type: "int",
           isNullable: true,
         },
@@ -64,9 +64,9 @@ export class CreateErc998TokenHistoryTable1563804030330 implements MigrationInte
       ],
       foreignKeys: [
         {
-          columnNames: ["erc998_token_id"],
+          columnNames: ["uni_token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc998_token`,
+          referencedTableName: `${ns}.uni_token`,
           onDelete: "CASCADE",
         },
       ],
@@ -76,7 +76,7 @@ export class CreateErc998TokenHistoryTable1563804030330 implements MigrationInte
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc998_token_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc998_token_event_enum;`);
+    await queryRunner.dropTable(`${ns}.erc721_contract_history`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_token_event_enum;`);
   }
 }

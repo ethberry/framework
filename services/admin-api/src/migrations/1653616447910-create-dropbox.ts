@@ -1,17 +1,17 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateErc998DropboxTable1563804030210 implements MigrationInterface {
+export class CreateDropbox1653616447910 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc998_dropbox_status_enum AS ENUM (
+      CREATE TYPE ${ns}.dropbox_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.erc998_dropbox`,
+      name: `${ns}.dropbox`,
       columns: [
         {
           name: "id",
@@ -31,20 +31,20 @@ export class CreateErc998DropboxTable1563804030210 implements MigrationInterface
           type: "varchar",
         },
         {
-          name: "price",
-          type: "uint256",
-        },
-        {
-          name: "erc998_collection_id",
+          name: "price_id",
           type: "int",
         },
         {
-          name: "erc998_template_id",
+          name: "uni_contract_id",
+          type: "int",
+        },
+        {
+          name: "uni_template_id",
           type: "int",
         },
         {
           name: "dropbox_status",
-          type: `${ns}.erc998_dropbox_status_enum`,
+          type: `${ns}.dropbox_status_enum`,
           default: "'ACTIVE'",
         },
         {
@@ -58,15 +58,21 @@ export class CreateErc998DropboxTable1563804030210 implements MigrationInterface
       ],
       foreignKeys: [
         {
-          columnNames: ["erc998_collection_id"],
+          columnNames: ["uni_contract_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc998_collection`,
+          referencedTableName: `${ns}.uni_contract`,
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["erc998_template_id"],
+          columnNames: ["uni_template_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc998_template`,
+          referencedTableName: `${ns}.uni_template`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["price_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],
@@ -76,7 +82,7 @@ export class CreateErc998DropboxTable1563804030210 implements MigrationInterface
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc998_dropbox`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc998_dropbox_status_enum;`);
+    await queryRunner.dropTable(`${ns}.erc721_dropbox`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_dropbox_status_enum;`);
   }
 }

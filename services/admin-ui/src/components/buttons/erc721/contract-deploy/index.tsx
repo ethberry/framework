@@ -19,11 +19,11 @@ import { Erc721CollectionDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc721TokenTemplate(template: Erc721ContractTemplate) {
   switch (template) {
-    case Erc721ContractTemplate.ERC721_SIMPLE:
+    case Erc721ContractTemplate.SIMPLE:
       return ERC721SimpleSol.bytecode;
-    case Erc721ContractTemplate.ERC721_GRADED:
+    case Erc721ContractTemplate.GRADED:
       return ERC721GradedSol.bytecode;
-    case Erc721ContractTemplate.ERC721_RANDOM:
+    case Erc721ContractTemplate.RANDOM:
       return ERC721RandomSol.bytecode;
     default:
       throw new Error("Unknown template");

@@ -17,7 +17,7 @@ import { Erc1155TokenDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc1155TokenTemplate(template: Erc1155ContractTemplate) {
   switch (template) {
-    case Erc1155ContractTemplate.ERC1155_SIMPLE:
+    case Erc1155ContractTemplate.SIMPLE:
       return ERC1155SimpleSol.bytecode;
     default:
       throw new Error("Unknown template");

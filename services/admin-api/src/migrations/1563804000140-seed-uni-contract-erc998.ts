@@ -4,7 +4,7 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
-export class SeedUniContract1563804000140 implements MigrationInterface {
+export class SeedUniContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc998CollectionDropboxAddress = process.env.ERC998_DROPBOX_ADDR || wallet;
@@ -16,6 +16,7 @@ export class SeedUniContract1563804000140 implements MigrationInterface {
     // 1 - 998.AIR, 2 - 998.DB, 3 - HERO
     await queryRunner.query(`
       INSERT INTO ${ns}.uni_contract (
+        id,
         address,
         chain_id,
         title,
@@ -27,10 +28,12 @@ export class SeedUniContract1563804000140 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
+        contract_role,
         contract_template,
         created_at,
         updated_at
       ) VALUES  (
+        21,
         '${erc998CollectionAirdropAddress}',
         '${chainId}',
         'AIRDROP_ERC998',
@@ -41,11 +44,13 @@ export class SeedUniContract1563804000140 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC998',
         'AIRDROP',
         'UNKNOWN',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        22,
         '${erc998CollectionDropboxAddress}',
         '${chainId}',
         'DROPBOX_ERC998',
@@ -56,11 +61,13 @@ export class SeedUniContract1563804000140 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC998',
         'DROPBOX',
         'UNKNOWN',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        23,
         '${erc998CollectionHeroAddress}',
         '${chainId}',
         'HEROES',
@@ -71,8 +78,9 @@ export class SeedUniContract1563804000140 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC998',
         'TOKEN',
-        'ERC998_RANDOM',
+        'RANDOM',
         '${currentDateTime}',
         '${currentDateTime}'
       )

@@ -3,7 +3,7 @@ import { wallet } from "@gemunion/constants";
 
 import { ns } from "@framework/constants";
 
-export class SeedAirdrop1563804040420 implements MigrationInterface {
+export class SeedAirdropErc721At1563804040420 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const signDbItem1 =
@@ -16,37 +16,37 @@ export class SeedAirdrop1563804040420 implements MigrationInterface {
       "0x385e0d108f82a9c44a168e7a86815ba90380c61b07100086f4fecebe6d84611534295b17ffec9af85dd76f5e1096421eabe79915a0fde321f85aabc48709aaa71b";
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.erc721_airdrop (
-        owner,
-        erc721_template_id,
+      INSERT INTO ${ns}.airdrop (
+        account,
+        uni_template_id,
         airdrop_status,
         signature,
         created_at,
         updated_at
       ) VALUES (
         '${wallet}',
-        9,
+        20201,
         'NEW',
         '${signDbItem1}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        10,
+        20202,
         'NEW',
         '${signDbItem2}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        11,
+        20203,
         'UNPACKED',
         '${signDbItem3}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        9,
+        20204,
         'REDEEMED',
         '${signDbItem4}',
         '${currentDateTime}',
@@ -56,6 +56,6 @@ export class SeedAirdrop1563804040420 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.erc721_air_drop RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.air_drop RESTART IDENTITY CASCADE;`);
   }
 }

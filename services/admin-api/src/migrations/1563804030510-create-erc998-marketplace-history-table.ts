@@ -36,7 +36,7 @@ export class CreateErc998MarketplaceHistoryTable1563804030510 implements Migrati
           type: "json",
         },
         {
-          name: "erc998_token_id",
+          name: "uni_token_id",
           type: "int",
           isNullable: true,
         },
@@ -51,9 +51,9 @@ export class CreateErc998MarketplaceHistoryTable1563804030510 implements Migrati
       ],
       foreignKeys: [
         {
-          columnNames: ["erc998_token_id"],
+          columnNames: ["uni_token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.erc998_token`,
+          referencedTableName: `${ns}.uni_token`,
           onDelete: "CASCADE",
         },
       ],

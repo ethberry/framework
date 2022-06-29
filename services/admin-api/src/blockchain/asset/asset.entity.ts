@@ -6,7 +6,7 @@ import { AssetType, IAsset } from "@framework/types";
 
 import { AssetComponentEntity } from "./asset-component.entity";
 
-@Entity({ schema: ns, name: "uni_token" })
+@Entity({ schema: ns, name: "asset" })
 export class AssetEntity extends IdDateBaseEntity implements IAsset {
   @JoinColumn()
   @OneToMany(_type => AssetComponentEntity, component => component.assetId)

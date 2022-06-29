@@ -181,9 +181,9 @@ export class ContractManagerSignService {
 
   public getBytecodeByErc20ContractTemplate(contractTemplate: Erc20ContractTemplate) {
     switch (contractTemplate) {
-      case Erc20ContractTemplate.ERC20_SIMPLE:
+      case Erc20ContractTemplate.SIMPLE:
         return ERC20Simple.bytecode;
-      case Erc20ContractTemplate.ERC20_BLACKLIST:
+      case Erc20ContractTemplate.BLACKLIST:
         return ERC20BlackList.bytecode;
       default:
         throw new Error("Unknown template");
@@ -205,11 +205,11 @@ export class ContractManagerSignService {
 
   public getBytecodeByErc721ContractTemplate(contractTemplate: Erc721ContractTemplate) {
     switch (contractTemplate) {
-      case Erc721ContractTemplate.ERC721_SIMPLE:
+      case Erc721ContractTemplate.SIMPLE:
         return ERC721Simple.bytecode;
-      case Erc721ContractTemplate.ERC721_GRADED:
+      case Erc721ContractTemplate.GRADED:
         return ERC721Graded.bytecode;
-      case Erc721ContractTemplate.ERC721_RANDOM:
+      case Erc721ContractTemplate.RANDOM:
         return ERC721RandomTest.bytecode;
       // return ERC721Random.bytecode;
       default:
@@ -219,7 +219,7 @@ export class ContractManagerSignService {
 
   public getBytecodeByErc1155ContractTemplate(contractTemplate: Erc1155ContractTemplate) {
     switch (contractTemplate) {
-      case Erc1155ContractTemplate.ERC1155_SIMPLE:
+      case Erc1155ContractTemplate.SIMPLE:
         return ERC1155Simple.bytecode;
       default:
         throw new Error("Unknown template");

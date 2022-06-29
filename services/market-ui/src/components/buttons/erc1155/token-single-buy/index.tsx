@@ -49,7 +49,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
           json.signature,
           {
             value:
-              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.ERC20_NATIVE
+              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.NATIVE
                 ? tokenPrice
                 : 0,
           },

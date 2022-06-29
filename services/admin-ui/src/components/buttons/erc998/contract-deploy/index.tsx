@@ -19,11 +19,11 @@ import { Erc998ContractDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc998TokenTemplate(template: Erc998ContractTemplate) {
   switch (template) {
-    case Erc998ContractTemplate.ERC998_SIMPLE:
+    case Erc998ContractTemplate.SIMPLE:
       return ERC998SimpleSol.bytecode;
-    case Erc998ContractTemplate.ERC998_GRADED:
+    case Erc998ContractTemplate.GRADED:
       return ERC998GradedSol.bytecode;
-    case Erc998ContractTemplate.ERC998_RANDOM:
+    case Erc998ContractTemplate.RANDOM:
       return ERC998RandomTestSol.bytecode;
     // return ERC998RandomSol.bytecode;
     default:
