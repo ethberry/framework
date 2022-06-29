@@ -3,10 +3,10 @@ import { IsEthereumAddress, IsInt, IsString, Min, ValidateIf } from "class-valid
 import { Type } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
-import { IErc998TokenHistorySearchDto } from "@framework/types";
+import { IUniTokenHistorySearchDto } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-export class Erc998TokenHistorySearchDto extends PaginationDto implements IErc998TokenHistorySearchDto {
+export class Erc998TokenHistorySearchDto extends PaginationDto implements IUniTokenHistorySearchDto {
   @ApiPropertyOptional()
   @ValidateIf(o => !(o.collection && o.tokenId))
   @IsInt({ message: "typeMismatch" })

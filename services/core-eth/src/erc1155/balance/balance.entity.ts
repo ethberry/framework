@@ -1,24 +1,23 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
-import { BigNumber } from "ethers";
 
-import { BigNumberColumn, IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@framework/constants";
-import { IErc1155Balance } from "@framework/types";
+import { IUniBalance } from "@framework/types";
 
-import { UniTemplateEntity } from "../token/token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Entity({ schema: ns, name: "erc1155_balance" })
-export class Erc1155BalanceEntity extends IdDateBaseEntity implements IErc1155Balance {
+export class Erc1155BalanceEntity extends IdDateBaseEntity implements IUniBalance {
   @Column({ type: "varchar" })
-  public wallet: string;
+  public account: string;
 
-  @BigNumberColumn()
-  public amount: BigNumber;
+  @Column({ type: "varchar" })
+  public amount: string;
 
   @Column({ type: "int" })
-  public erc1155TokenId: number;
+  public uniTokenId: number;
 
   @JoinColumn()
-  @OneToOne(_type => UniTemplateEntity)
-  public erc1155Token: UniTemplateEntity;
+  @OneToOne(_type => UniTokenEntity)
+  public uniToken: UniTokenEntity;
 }

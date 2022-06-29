@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { IErc1155TemplateSearchDto } from "@framework/types";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc1155TemplateService {
@@ -22,7 +22,7 @@ export class Erc1155TemplateService {
     queryBuilder.leftJoinAndSelect("token.erc20Token", "erc20_token");
 
     // search only ACTIVE collections
-    queryBuilder.andWhere("collection.contractStatus = 'ACTIVE'");
+    queryBuilder.andWhere("contract.contractStatus = 'ACTIVE'");
 
     if (uniContractIds) {
       if (uniContractIds.length === 1) {

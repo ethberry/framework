@@ -3,9 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
-import { UniContractType } from "@framework/types";
+import { UniContractRole } from "@framework/types";
 
-import { UniContractEntity } from "../../uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Injectable()
 export class Erc998CollectionService {
@@ -25,21 +25,21 @@ export class Erc998CollectionService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(collection.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(contract.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("collection.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("contract.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }
 
-    queryBuilder.andWhere("collection.collectionType IN(:...collectionTypes)", {
-      collectionTypes: [UniContractType.TOKEN, UniContractType.DROPBOX],
+    queryBuilder.andWhere("contract.collectionType IN(:...collectionTypes)", {
+      collectionTypes: [UniContractRole.TOKEN, UniContractRole.DROPBOX],
     });
 
-    queryBuilder.orderBy("collection.createdAt", "DESC");
+    queryBuilder.orderBy("contract.createdAt", "DESC");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

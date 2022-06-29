@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UniTemplateEntity } from "./token.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc20TokenService {

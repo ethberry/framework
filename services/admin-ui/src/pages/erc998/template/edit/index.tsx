@@ -4,34 +4,23 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { UniContractType, UniTemplateStatus, IErc998Template } from "@framework/types";
+import { UniContractRole, UniTemplateStatus, IUniTemplate, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
-import { Erc20PriceInput } from "../../../../components/inputs/erc20-price";
+import { PriceInput } from "../../../../components/inputs/price";
 
-export interface IErc998TemplateEditDialogProps {
+export interface IUniTemplateEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc998Template>, form: any) => Promise<void>;
-  initialValues: IErc998Template;
+  onConfirm: (values: Partial<IUniTemplate>, form: any) => Promise<void>;
+  initialValues: IUniTemplate;
 }
 
-export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = props => {
+export const Erc998TemplateEditDialog: FC<IUniTemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const {
-    id,
-    title,
-    description,
-    attributes,
-    price,
-    amount,
-    templateStatus,
-    erc998CollectionId,
-    erc20TokenId,
-    imageUrl,
-  } = initialValues;
+  const { id, title, description, attributes, price, amount, templateStatus, uniContractId, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -40,8 +29,7 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
     price,
     amount,
     templateStatus,
-    erc998CollectionId,
-    erc20TokenId,
+    uniContractId,
     imageUrl,
   };
 
@@ -56,14 +44,15 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <JsonInput name="attributes" />
-      <Erc20PriceInput />
+      <PriceInput prefix="price" />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={UniTemplateStatus} /> : null}
       <EntityInput
-        name="erc998CollectionId"
-        controller="erc998-collections"
+        name="uniContractId"
+        controller="uni-contract"
         data={{
-          collectionType: [UniContractType.TOKEN],
+          tokenType: [TokenType.ERC998],
+          contractRole: [UniContractRole.TOKEN],
         }}
       />
       <AvatarInput name="imageUrl" />

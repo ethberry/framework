@@ -3,7 +3,7 @@ import { wallet } from "@gemunion/constants";
 
 import { ns } from "@framework/constants";
 
-export class SeedErc721Airdrop1563804040420 implements MigrationInterface {
+export class SeedAirdrop1563804040420 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const signDbItem1 =
@@ -16,7 +16,7 @@ export class SeedErc721Airdrop1563804040420 implements MigrationInterface {
       "0x385e0d108f82a9c44a168e7a86815ba90380c61b07100086f4fecebe6d84611534295b17ffec9af85dd76f5e1096421eabe79915a0fde321f85aabc48709aaa71b";
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.erc721_air_drop (
+      INSERT INTO ${ns}.erc721_airdrop (
         owner,
         erc721_template_id,
         airdrop_status,

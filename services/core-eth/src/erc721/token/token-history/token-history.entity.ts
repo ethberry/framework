@@ -22,5 +22,5 @@ export class Erc721TokenHistoryEntity extends IdDateBaseEntity implements IErc72
   public eventData: TErc721TokenEventData;
 
   @Column({ type: "int", nullable: true })
-  public erc721TokenId: number | null;
+  public uniTokenId: number | null;
 }

@@ -9,7 +9,7 @@ import { AssetComponentEntity } from "./asset-component.entity";
 @Entity({ schema: ns, name: "uni_token" })
 export class AssetEntity extends IdDateBaseEntity implements IAsset {
   @JoinColumn()
-  @OneToMany(_type => AssetComponentEntity, component => component.priceId)
+  @OneToMany(_type => AssetComponentEntity, component => component.assetId)
   public components: Array<AssetComponentEntity>;
 
   @Column({

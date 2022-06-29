@@ -1,3 +1,3 @@
-export interface IErc998TokenAutocompleteDto {
+export interface IUniTokenAutocompleteDto {
   wallet: string;
 }

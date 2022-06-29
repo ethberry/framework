@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { IErc721Template } from "@framework/types";
+import { IUniTemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { formatEther } from "../../../../utils/money";
+import { formatPrice } from "../../../../utils/money";
 import { Erc721ItemTemplateBuyButton } from "../../../../components/buttons";
 
 interface IErc721TemplateItemProps {
-  template: IErc721Template;
+  template: IUniTemplate;
 }
 
 export const TemplateItem: FC<IErc721TemplateItemProps> = props => {
@@ -29,7 +29,7 @@ export const TemplateItem: FC<IErc721TemplateItemProps> = props => {
             <RichTextDisplay data={template.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatEther(template.price)}
+            {formatPrice(template.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

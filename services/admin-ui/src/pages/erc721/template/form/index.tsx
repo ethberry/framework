@@ -19,8 +19,8 @@ export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, templateStatus, erc721CollectionIds } = initialValues;
-  const fixedValues = { query, templateStatus, erc721CollectionIds };
+  const { query, templateStatus, uniContractIds } = initialValues;
+  const fixedValues = { query, templateStatus, uniContractIds };
 
   return (
     <FormWrapper
@@ -39,7 +39,7 @@ export const Erc721TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc721CollectionIds" controller="erc721-collections" multiple />
+            <EntityInput name="uniContractIds" controller="erc721-collections" multiple />
           </Grid>
           <Grid item xs={6}>
             <SelectInput multiple name="templateStatus" options={UniTemplateStatus} />

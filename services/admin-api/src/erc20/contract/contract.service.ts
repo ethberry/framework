@@ -14,8 +14,8 @@ import {
 } from "@framework/types";
 
 import { IErc20TemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
-import { UniContractEntity } from "../../uni-token/uni-contract.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Injectable()
 export class Erc20ContractService {

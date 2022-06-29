@@ -12,11 +12,11 @@ import {
   IAccessControlRoleRevoked,
   IErc998DefaultRoyaltyInfo,
   IErc998RandomRequest,
-  IErc998TokenApprove,
-  IErc998TokenApprovedForAll,
-  IErc998TokenMintRandom,
-  IErc998TokenRoyaltyInfo,
-  IErc998TokenTransfer,
+  IUniTokenApprove,
+  IUniTokenApprovedForAll,
+  IUniTokenMintRandom,
+  IUniTokenRoyaltyInfo,
+  IUniTokenTransfer,
 } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
@@ -30,17 +30,17 @@ export class Erc998TokenControllerEth {
   ) {}
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: Erc998TokenEventType.Transfer })
-  public transfer(@Payload() event: ILogEvent<IErc998TokenTransfer>, @Ctx() context: Log): Promise<void> {
+  public transfer(@Payload() event: ILogEvent<IUniTokenTransfer>, @Ctx() context: Log): Promise<void> {
     return this.erc998TokenServiceEth.transfer(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: Erc998TokenEventType.Approval })
-  public approval(@Payload() event: ILogEvent<IErc998TokenApprove>, @Ctx() context: Log): Promise<void> {
+  public approval(@Payload() event: ILogEvent<IUniTokenApprove>, @Ctx() context: Log): Promise<void> {
     return this.erc998TokenServiceEth.approval(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: Erc998TokenEventType.ApprovalForAll })
-  public approvalForAll(@Payload() event: ILogEvent<IErc998TokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
+  public approvalForAll(@Payload() event: ILogEvent<IUniTokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
     return this.erc998TokenServiceEth.approvalForAll(event, context);
   }
 
@@ -53,12 +53,12 @@ export class Erc998TokenControllerEth {
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: Erc998TokenEventType.TokenRoyaltyInfo })
-  public tokenRoyaltyInfo(@Payload() event: ILogEvent<IErc998TokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
+  public tokenRoyaltyInfo(@Payload() event: ILogEvent<IUniTokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.erc998TokenServiceEth.tokenRoyaltyInfo(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: Erc998TokenEventType.MintRandom })
-  public mintRandom(@Payload() event: ILogEvent<IErc998TokenMintRandom>, @Ctx() context: Log): Promise<void> {
+  public mintRandom(@Payload() event: ILogEvent<IUniTokenMintRandom>, @Ctx() context: Log): Promise<void> {
     return this.erc998TokenServiceEth.mintRandom(event, context);
   }
 

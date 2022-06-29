@@ -8,7 +8,7 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   Erc721TokenEventType,
   UniTokenStatus,
-  IErc721AirdropRedeem,
+  IAirdropRedeem,
   IErc721DefaultRoyaltyInfo,
   IErc721RandomRequest,
   IErc721TokenApprove,
@@ -22,7 +22,7 @@ import {
 
 import { delay } from "../../common/utils";
 import { Erc721TemplateService } from "../template/template.service";
-import { Erc721CollectionService } from "../collection/collection.service";
+import { Erc721ContractService } from "../contract/contract.service";
 import { Erc721TokenHistoryService } from "./token-history/token-history.service";
 import { Erc721TokenService } from "./token.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
@@ -40,7 +40,7 @@ export class Erc721TokenServiceEth {
     private readonly erc721TokenService: Erc721TokenService,
     private readonly erc721TemplateService: Erc721TemplateService,
     private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
-    private readonly erc721CollectionService: Erc721CollectionService,
+    private readonly erc721ContractService: Erc721ContractService,
   ) {
     this.airdropAddr = configService.get<string>("ERC721_AIRDROP_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
@@ -67,9 +67,10 @@ export class Erc721TokenServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc721TokenEntity.erc721Template
-        ? (erc721TokenEntity.erc721Template.instanceCount += 1)
-        : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
+      erc721TokenEntity.uniTemplate.instanceCount += 1;
+      // erc721TokenEntity.erc721Template
+      //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
+      //   : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
       erc721TokenEntity.tokenStatus = UniTokenStatus.MINTED;
     }
 
@@ -83,9 +84,10 @@ export class Erc721TokenServiceEth {
     await erc721TokenEntity.save();
 
     // need to save updates in nested entities too
-    erc721TokenEntity.erc721Template
-      ? await erc721TokenEntity.erc721Template.save()
-      : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
+    await erc721TokenEntity.uniTemplate.save();
+    // erc721TokenEntity.erc721Template
+    //   ? await erc721TokenEntity.erc721Template.save()
+    //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
   }
 
   public async approval(event: ILogEvent<IErc721TokenApprove>, context: Log): Promise<void> {
@@ -111,7 +113,7 @@ export class Erc721TokenServiceEth {
       args: { royaltyNumerator },
     } = event;
 
-    const erc721CollectionEntity = await this.erc721CollectionService.findOne({
+    const erc721CollectionEntity = await this.erc721ContractService.findOne({
       address: context.address.toLowerCase(),
     });
 
@@ -130,7 +132,7 @@ export class Erc721TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async redeem(event: ILogEvent<IErc721AirdropRedeem>, context: Log): Promise<void> {
+  public async redeem(event: ILogEvent<IAirdropRedeem>, context: Log): Promise<void> {
     const {
       args: { from, tokenId, templateId },
     } = event;
@@ -145,7 +147,7 @@ export class Erc721TokenServiceEth {
       tokenId,
       attributes: erc721TemplateEntity.attributes,
       owner: from.toLowerCase(),
-      erc721Template: erc721TemplateEntity,
+      uniTemplate: erc721TemplateEntity,
     });
 
     await this.updateHistory(event, context, erc721TokenEntity.id);
@@ -177,8 +179,8 @@ export class Erc721TokenServiceEth {
         rarity: Object.values(TokenRarity)[~~rarity],
       }),
       owner: to.toLowerCase(),
-      erc721Template: erc721TemplateEntity,
-      erc721Token: erc721DropboxEntity,
+      uniTemplate: erc721TemplateEntity,
+      // erc721Token: erc721DropboxEntity,
     });
 
     await this.updateHistory(event, context, erc721TokenEntity.id);
@@ -200,7 +202,7 @@ export class Erc721TokenServiceEth {
       eventType: name as Erc721TokenEventType,
       eventData: args,
       // ApprovedForAll has no tokenId
-      erc721TokenId: erc721TokenId || null,
+      uniTokenId: erc721TokenId || null,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

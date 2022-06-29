@@ -4,7 +4,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { UniTemplateStatus, IErc721TemplateSearchDto } from "@framework/types";
 
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc721TemplateService {
@@ -23,7 +23,7 @@ export class Erc721TemplateService {
   }
 
   public async search(dto: IErc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
-    const { query, templateStatus, skip, take, erc721CollectionIds, minPrice, maxPrice } = dto;
+    const { query, templateStatus, skip, take, uniContractIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
@@ -38,13 +38,13 @@ export class Erc721TemplateService {
       }
     }
 
-    if (erc721CollectionIds) {
-      if (erc721CollectionIds.length === 1) {
-        queryBuilder.andWhere("template.erc721CollectionId = :erc721CollectionId", {
-          erc721CollectionId: erc721CollectionIds[0],
+    if (uniContractIds) {
+      if (uniContractIds.length === 1) {
+        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
+          uniContractId: uniContractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.erc721CollectionId IN(:...erc721CollectionIds)", { erc721CollectionIds });
+        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
       }
     }
 

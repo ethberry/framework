@@ -4,7 +4,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { UniContractStatus } from "@framework/types";
 import { ISearchDto } from "@gemunion/types-collection";
-import { UniContractEntity } from "../../uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Injectable()
 export class Erc1155ContractService {
@@ -23,17 +23,17 @@ export class Erc1155ContractService {
     if (query) {
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("collection.title ILIKE '%' || :title || '%'", { title: query });
-          qb.orWhere("collection.description ILIKE '%' || :description || '%'", { description: query });
+          qb.where("contract.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("contract.description ILIKE '%' || :description || '%'", { description: query });
         }),
       );
     }
 
-    queryBuilder.andWhere("collection.contractStatus = :contractStatus", {
+    queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: UniContractStatus.ACTIVE,
     });
 
-    queryBuilder.orderBy("collection.createdAt", "DESC");
+    queryBuilder.orderBy("contract.createdAt", "DESC");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

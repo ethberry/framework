@@ -4,7 +4,7 @@ import { Erc721CollectionModule } from "./contract/contract.module";
 import { Erc721TemplateModule } from "./template/template.module";
 import { Erc721TokenModule } from "./token/token.module";
 import { Erc721MarketplaceModule } from "./marketplace/marketplace.module";
-import { Erc721GradeModule } from "../blockchain/grade/grade.module";
+import { Erc721GradeModule } from "../mechanics/grade/grade.module";
 
 @Module({
   imports: [

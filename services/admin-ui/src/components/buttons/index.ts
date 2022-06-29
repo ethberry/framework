@@ -1,13 +1,12 @@
-export * from "./erc20/token-deploy";
+export * from "./erc20/contract-deploy";
+export * from "./erc20/contract-create";
 export * from "./erc20/vesting-deploy";
 
-export * from "./erc721/collection-deploy";
-export * from "./erc721/recipe-upload";
+export * from "./erc721/contract-deploy";
 
-export * from "./erc998/collection-deploy";
-export * from "./erc998/recipe-upload";
+export * from "./erc998/contract-deploy";
 
-export * from "./erc1155/recipe-upload";
-export * from "./erc1155/collection-deploy";
+export * from "./erc1155/contract-deploy";
 
-export * from "./staking-upload";
+export * from "./mechanics/staking-upload";
+export * from "./mechanics/exchange-upload";

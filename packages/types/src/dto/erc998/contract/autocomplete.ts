@@ -1,6 +1,6 @@
-import { UniContractStatus, UniContractType } from "../../../entities";
+import { UniContractStatus, UniContractRole } from "../../../entities";
 
 export interface IErc998CollectionAutocompleteDto {
   contractStatus: Array<UniContractStatus>;
-  contractType: Array<UniContractType>;
+  contractRole: Array<UniContractRole>;
 }

@@ -35,7 +35,7 @@ export class Erc1155TokenServiceEth {
 
     await this.updateHistory(event, context);
 
-    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), id, ~~value);
+    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), id, value);
   }
 
   public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatch>, context: Log): Promise<void> {
@@ -52,7 +52,7 @@ export class Erc1155TokenServiceEth {
           to.toLowerCase(),
           context.address.toLowerCase(),
           tokenId.toString(),
-          ~~values[i],
+          values[i],
         ),
       ),
     );
@@ -66,7 +66,7 @@ export class Erc1155TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: number) {
+  private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {
     const erc1155TokenEntity = await this.erc1155TokenService.getToken(tokenId, address);
 
     if (!erc1155TokenEntity) {
@@ -74,12 +74,12 @@ export class Erc1155TokenServiceEth {
     }
 
     if (from !== constants.AddressZero) {
-      erc1155TokenEntity.instanceCount += amount;
+      erc1155TokenEntity.instanceCount += ~~amount;
       await this.erc1155BalanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 
     if (to !== constants.AddressZero) {
-      // erc1155TokenEntity.instanceCount -= amount;
+      // erc1155TokenEntity.instanceCount -= ~~amount;
       await this.erc1155BalanceService.increment(erc1155TokenEntity.id, to, amount);
     }
   }

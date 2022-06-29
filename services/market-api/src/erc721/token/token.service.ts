@@ -6,7 +6,7 @@ import { UniTokenStatus, IErc721AssetSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../user/user.entity";
 import { IErc721TokenAutocompleteDto } from "./interface";
-import { UniTokenEntity } from "../../uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc721TokenService {
@@ -116,7 +116,7 @@ export class Erc721TokenService {
     queryBuilder.leftJoinAndSelect("token.erc721Template", "template");
     queryBuilder.leftJoinAndSelect("template.erc721Collection", "collection");
 
-    queryBuilder.andWhere("collection.address = :address", {
+    queryBuilder.andWhere("contract.address = :address", {
       address,
     });
 

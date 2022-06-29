@@ -4,30 +4,30 @@ import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } f
 
 import { UniTokenStatus } from "@framework/types";
 
-import { Erc998TokenEntity } from "./token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc998TokenService {
   constructor(
-    @InjectRepository(Erc998TokenEntity)
-    private readonly erc998TokenEntityRepository: Repository<Erc998TokenEntity>,
+    @InjectRepository(UniTokenEntity)
+    private readonly uniTokenEntityRepository: Repository<UniTokenEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<Erc998TokenEntity>,
-    options?: FindOneOptions<Erc998TokenEntity>,
-  ): Promise<Erc998TokenEntity | null> {
-    return this.erc998TokenEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<UniTokenEntity>,
+    options?: FindOneOptions<UniTokenEntity>,
+  ): Promise<UniTokenEntity | null> {
+    return this.uniTokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<Erc998TokenEntity>): Promise<Erc998TokenEntity> {
-    return this.erc998TokenEntityRepository.create(dto).save();
+  public async create(dto: DeepPartial<UniTokenEntity>): Promise<UniTokenEntity> {
+    return this.uniTokenEntityRepository.create(dto).save();
   }
 
   public async update(
-    where: FindOptionsWhere<Erc998TokenEntity>,
-    dto: DeepPartial<Erc998TokenEntity>,
-  ): Promise<Erc998TokenEntity> {
+    where: FindOptionsWhere<UniTokenEntity>,
+    dto: DeepPartial<UniTokenEntity>,
+  ): Promise<UniTokenEntity> {
     const { ...rest } = dto;
 
     const tokenEntity = await this.findOne(where);
@@ -41,12 +41,8 @@ export class Erc998TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(
-    tokenId: string,
-    address: string,
-    tokenStatus?: UniTokenStatus,
-  ): Promise<Erc998TokenEntity | null> {
-    const queryBuilder = this.erc998TokenEntityRepository.createQueryBuilder("token");
+  public getToken(tokenId: string, address: string, tokenStatus?: UniTokenStatus): Promise<UniTokenEntity | null> {
+    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 

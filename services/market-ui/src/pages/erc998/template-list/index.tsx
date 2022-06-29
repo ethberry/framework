@@ -12,11 +12,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { TemplateItem } from "./item";
 import { Erc998TemplateSearchForm } from "./form";
 
-export interface IErc998TemplateListProps {
+export interface IUniTemplateListProps {
   embedded?: boolean;
 }
 
-export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
+export const Erc998TemplateList: FC<IUniTemplateListProps> = props => {
   const { embedded } = props;
 
   const { id = "" } = useParams<{ id: string }>();

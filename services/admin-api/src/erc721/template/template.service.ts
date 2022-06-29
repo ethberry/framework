@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 import { UniTemplateStatus, IErc721TemplateAutocompleteDto, IErc721TemplateSearchDto } from "@framework/types";
 
 import { IErc721TemplateCreateDto, IErc721TemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc721TemplateService {
@@ -15,7 +15,7 @@ export class Erc721TemplateService {
   ) {}
 
   public async search(dto: IErc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
-    const { query, templateStatus, skip, take, erc721CollectionIds } = dto;
+    const { query, templateStatus, skip, take, uniContractIds } = dto;
 
     const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
 
@@ -29,13 +29,13 @@ export class Erc721TemplateService {
       }
     }
 
-    if (erc721CollectionIds) {
-      if (erc721CollectionIds.length === 1) {
-        queryBuilder.andWhere("template.erc721CollectionId = :erc721CollectionId", {
-          erc721CollectionId: erc721CollectionIds[0],
+    if (uniContractIds) {
+      if (uniContractIds.length === 1) {
+        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
+          uniContractId: uniContractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.erc721CollectionId IN(:...erc721CollectionIds)", { erc721CollectionIds });
+        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
       }
     }
 
@@ -64,7 +64,7 @@ export class Erc721TemplateService {
   }
 
   public async autocomplete(dto: IErc721TemplateAutocompleteDto): Promise<Array<UniTemplateEntity>> {
-    const { templateStatus = [], erc721CollectionIds = [] } = dto;
+    const { templateStatus = [], uniContractIds = [] } = dto;
 
     const where = {};
 
@@ -74,9 +74,9 @@ export class Erc721TemplateService {
       });
     }
 
-    if (erc721CollectionIds.length) {
+    if (uniContractIds.length) {
       Object.assign(where, {
-        erc721CollectionId: In(erc721CollectionIds),
+        uniContractId: In(uniContractIds),
       });
     }
 

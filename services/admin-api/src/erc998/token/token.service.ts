@@ -4,8 +4,8 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { IErc998TokenSearchDto } from "@framework/types";
 
-import { IErc998TokenUpdateDto } from "./interfaces";
-import { UniTokenEntity } from "../../uni-token/uni-token.entity";
+import { IUniTokenUpdateDto } from "./interfaces";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc998TokenService {
@@ -98,7 +98,7 @@ export class Erc998TokenService {
     return this.uniTokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(where: FindOptionsWhere<UniTokenEntity>, dto: IErc998TokenUpdateDto): Promise<UniTokenEntity> {
+  public async update(where: FindOptionsWhere<UniTokenEntity>, dto: IUniTokenUpdateDto): Promise<UniTokenEntity> {
     const tokenEntity = await this.findOne(where);
 
     if (!tokenEntity) {

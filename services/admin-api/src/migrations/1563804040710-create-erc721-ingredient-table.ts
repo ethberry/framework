@@ -13,7 +13,7 @@ export class CreateErc721Ingredient1563804040710 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "erc721_recipe_id",
+          name: "erc721_exchange_id",
           type: "int",
           isPrimary: true,
         },
@@ -29,7 +29,7 @@ export class CreateErc721Ingredient1563804040710 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["erc721_recipe_id"],
+          columnNames: ["erc721_exchange_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.erc721_recipe`,
           onDelete: "CASCADE",

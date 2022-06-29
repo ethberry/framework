@@ -29,7 +29,7 @@ export class Erc721TemplateSearchDto extends SearchDto implements IErc721Templat
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public erc721CollectionIds: Array<number>;
+  public uniContractIds: Array<number>;
 
   @ApiPropertyOptional({
     type: Number,

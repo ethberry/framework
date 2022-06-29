@@ -5,19 +5,19 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 import { UniContractStatus, IErc721ContractAutocompleteDto, IErc721ContractSearchDto } from "@framework/types";
 
 import { IErc721CollectionUpdateDto } from "./interfaces";
-import { UniContractEntity } from "../../uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Injectable()
 export class Erc721CollectionService {
   constructor(
     @InjectRepository(UniContractEntity)
-    private readonly erc721CollectionEntityRepository: Repository<UniContractEntity>,
+    private readonly uniContractEntityRepository: Repository<UniContractEntity>,
   ) {}
 
   public search(dto: IErc721ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
-    const { query, contractStatus, contractType, skip, take } = dto;
+    const { query, contractStatus, contractRole, skip, take } = dto;
 
-    const queryBuilder = this.erc721CollectionEntityRepository.createQueryBuilder("collection");
+    const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
 
@@ -25,11 +25,11 @@ export class Erc721CollectionService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(collection.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(contract.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("collection.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("contract.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -37,25 +37,25 @@ export class Erc721CollectionService {
 
     if (contractStatus) {
       if (contractStatus.length === 1) {
-        queryBuilder.andWhere("collection.contractStatus = :contractStatus", {
+        queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
           contractStatus: contractStatus[0],
         });
       } else {
-        queryBuilder.andWhere("collection.contractStatus IN(:...contractStatus)", { contractStatus });
+        queryBuilder.andWhere("contract.contractStatus IN(:...contractStatus)", { contractStatus });
       }
     }
 
-    if (contractType) {
-      if (contractType.length === 1) {
-        queryBuilder.andWhere("collection.contractType = :contractType", {
-          contractType: contractType[0],
+    if (contractRole) {
+      if (contractRole.length === 1) {
+        queryBuilder.andWhere("contract.contractRole = :contractRole", {
+          contractRole: contractRole[0],
         });
       } else {
-        queryBuilder.andWhere("collection.contractType IN(:...contractTypes)", { contractType });
+        queryBuilder.andWhere("contract.contractRole IN(:...contractRole)", { contractRole });
       }
     }
 
-    queryBuilder.orderBy("collection.createdAt", "DESC");
+    queryBuilder.orderBy("contract.createdAt", "DESC");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -64,13 +64,13 @@ export class Erc721CollectionService {
   }
 
   public async autocomplete(dto: IErc721ContractAutocompleteDto): Promise<Array<UniContractEntity>> {
-    const { contractType = [], contractStatus = [] } = dto;
+    const { contractRole = [], contractStatus = [] } = dto;
 
     const where = {};
 
-    if (contractType.length) {
+    if (contractRole.length) {
       Object.assign(where, {
-        collectionType: In(contractType),
+        collectionType: In(contractRole),
       });
     }
 
@@ -80,7 +80,7 @@ export class Erc721CollectionService {
       });
     }
 
-    return this.erc721CollectionEntityRepository.find({
+    return this.uniContractEntityRepository.find({
       where,
       select: {
         id: true,
@@ -94,14 +94,14 @@ export class Erc721CollectionService {
     where: FindOptionsWhere<UniContractEntity>,
     options?: FindOneOptions<UniContractEntity>,
   ): Promise<UniContractEntity | null> {
-    return this.erc721CollectionEntityRepository.findOne({ where, ...options });
+    return this.uniContractEntityRepository.findOne({ where, ...options });
   }
 
   public async update(
     where: FindOptionsWhere<UniContractEntity>,
     dto: Partial<IErc721CollectionUpdateDto>,
   ): Promise<UniContractEntity> {
-    const collectionEntity = await this.erc721CollectionEntityRepository.findOne({ where });
+    const collectionEntity = await this.uniContractEntityRepository.findOne({ where });
 
     if (!collectionEntity) {
       throw new NotFoundException("collectionNotFound");

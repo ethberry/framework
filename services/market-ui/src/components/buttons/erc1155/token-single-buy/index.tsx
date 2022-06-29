@@ -6,17 +6,17 @@ import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { Erc20TokenTemplate, IErc1155Token } from "@framework/types";
+import { IUniTemplate, UniContractTemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
-  token: IErc1155Token;
+  template: IUniTemplate;
 }
 
 export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> = props => {
-  const { token } = props;
+  const { template } = props;
 
   const api = useApi();
   const { library } = useWeb3React();
@@ -27,7 +27,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
         url: "/erc1155-marketplace/sign-token",
         method: "POST",
         data: {
-          erc1155TokenIds: [token.id],
+          erc1155TokenIds: [template.id],
           amounts: [1],
         },
       })
@@ -38,17 +38,20 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
           library.getSigner(),
         );
         const nonce = utils.arrayify(json.nonce);
-        const tokenPrice = utils.parseUnits(token.price, "wei");
+        const tokenPrice = utils.parseUnits(template.price.components[0].amount, "wei");
 
         return contract.buyResources(
           nonce,
-          token.erc1155Collection?.address.toLowerCase(),
-          [~~token.tokenId],
+          template.uniContract?.address.toLowerCase(),
+          [~~template.id],
           [1],
           process.env.ACCOUNT,
           json.signature,
           {
-            value: token?.erc20Token?.contractTemplate === Erc20TokenTemplate.NATIVE ? tokenPrice : 0,
+            value:
+              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.ERC20_NATIVE
+                ? tokenPrice
+                : 0,
           },
         ) as Promise<void>;
       });

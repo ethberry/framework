@@ -3,14 +3,14 @@ import { Theme, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-import { IErc998Template } from "@framework/types";
+import { IUniTemplate } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { TemplateItem } from "../../../erc998/template-list/item";
 import { MultiCarouselButtonGroup } from "./button-group";
 
 declare interface IMultiCarouselProps {
-  template: Array<IErc998Template>;
+  template: Array<IUniTemplate>;
 }
 
 export enum IResolutions {

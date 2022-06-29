@@ -7,7 +7,7 @@ import { Erc721TokenService } from "./token.service";
 import { Erc721AssetSearchDto } from "./dto";
 import { UserEntity } from "../../user/user.entity";
 import { Erc721TokenAutocompleteDto } from "./dto/autocomplete";
-import { UniTokenEntity } from "../../uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @ApiBearerAuth()
 @Controller("/erc721-tokens")

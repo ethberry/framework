@@ -19,7 +19,6 @@ export enum ContractType {
   ERC20_VESTING = "ERC20_VESTING",
   ERC20_STAKING = "ERC20_STAKING",
   STAKING = "STAKING",
-  SEAPORT = "SEAPORT",
 }
 
 export interface IContractManagerUpdateDto {

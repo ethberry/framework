@@ -16,8 +16,8 @@ export class Erc721MarketplaceControllerEth {
     return this.erc721MarketplaceServiceEth.redeem(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_MARKETPLACE, eventName: Erc721MarketplaceEventType.RedeemDropbox })
-  public purchaseDropbox(@Payload() event: ILogEvent<IErc721MarketplaceRedeem>, @Ctx() context: Log): Promise<void> {
-    return this.erc721MarketplaceServiceEth.redeemDropbox(event, context);
-  }
+  // @EventPattern({ contractType: ContractType.ERC721_MARKETPLACE, eventName: Erc721MarketplaceEventType.RedeemDropbox })
+  // public purchaseDropbox(@Payload() event: ILogEvent<IErc721MarketplaceRedeem>, @Ctx() context: Log): Promise<void> {
+  //   return this.erc721MarketplaceServiceEth.redeemDropbox(event, context);
+  // }
 }

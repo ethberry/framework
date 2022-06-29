@@ -1,3 +1,3 @@
-export interface IErc998TokenUpdateDto {
+export interface IUniTokenUpdateDto {
   attributes: string;
 }

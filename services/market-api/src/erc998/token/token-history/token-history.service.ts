@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { Erc998TokenEventType, IErc998TokenApprovedForAll, IErc998TokenHistorySearchDto } from "@framework/types";
+import { Erc998TokenEventType, IUniTokenApprovedForAll, IUniTokenHistorySearchDto } from "@framework/types";
 
 import { Erc998TokenHistoryEntity } from "./token-history.entity";
 import { UserEntity } from "../../../user/user.entity";
@@ -14,7 +14,7 @@ export class Erc998TokenHistoryService {
     private readonly erc998TokenHistoryEntityRepository: Repository<Erc998TokenHistoryEntity>,
   ) {}
 
-  public async search(dto: IErc998TokenHistorySearchDto): Promise<[Array<Erc998TokenHistoryEntity>, number]> {
+  public async search(dto: IUniTokenHistorySearchDto): Promise<[Array<Erc998TokenHistoryEntity>, number]> {
     const { erc998TokenId, collection, tokenId, take, skip } = dto;
     const queryBuilder = this.erc998TokenHistoryEntityRepository.createQueryBuilder("history");
 
@@ -55,6 +55,6 @@ export class Erc998TokenHistoryService {
       return false;
     }
 
-    return (historyEntity.eventData as IErc998TokenApprovedForAll).approved;
+    return (historyEntity.eventData as IUniTokenApprovedForAll).approved;
   }
 }

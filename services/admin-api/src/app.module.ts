@@ -24,7 +24,7 @@ import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
-import { BlockchainModule } from "./blockchain/blockchain.module";
+import { MechanicsModule } from "./mechanics/mechanics.module";
 import { SettingsModule } from "./settings/settings.module";
 import { PageModule } from "./page/page.module";
 
@@ -91,7 +91,7 @@ import { PageModule } from "./page/page.module";
     Erc721Module,
     Erc998Module,
     Erc1155Module,
-    BlockchainModule,
+    MechanicsModule,
     ProfileModule,
     UserModule,
     SettingsModule,

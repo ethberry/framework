@@ -8,7 +8,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { UniContractTemplate } from "@framework/types";
 
 import { Erc721TemplateService } from "../template/template.service";
-import { DropboxService } from "../../blockchain/dropbox/dropbox.service";
+import { DropboxService } from "../../mechanics/dropbox/dropbox.service";
 import { ISignTemplateDto } from "./interfaces";
 
 @Injectable()

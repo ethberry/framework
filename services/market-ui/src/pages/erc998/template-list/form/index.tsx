@@ -9,14 +9,14 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { useStyles } from "./styles";
 
-interface IErc998TemplateSearchFormProps {
+interface IUniTemplateSearchFormProps {
   onSubmit: (values: IErc998TemplateSearchDto) => Promise<void>;
   initialValues: IErc998TemplateSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
-export const Erc998TemplateSearchForm: FC<IErc998TemplateSearchFormProps> = props => {
+export const Erc998TemplateSearchForm: FC<IUniTemplateSearchFormProps> = props => {
   const { onSubmit, initialValues, open, embedded } = props;
 
   const classes = useStyles();

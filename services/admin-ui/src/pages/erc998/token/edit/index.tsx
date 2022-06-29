@@ -5,21 +5,21 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { UniTokenStatus, IErc998Token } from "@framework/types";
+import { UniTokenStatus, IUniToken } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IErc998TokenEditDialogProps {
+export interface IUniTokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc998Token>, form?: any) => Promise<void>;
-  initialValues: IErc998Token;
+  onConfirm: (values: Partial<IUniToken>, form?: any) => Promise<void>;
+  initialValues: IUniToken;
 }
 
-export const Erc998TokenEditDialog: FC<IErc998TokenEditDialogProps> = props => {
+export const Erc998TokenEditDialog: FC<IUniTokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, attributes, owner, tokenStatus, tokenId, erc998Template } = initialValues;
+  const { id, attributes, owner, tokenStatus, tokenId, uniTemplate } = initialValues;
 
   const fixedValues = {
     id,
@@ -27,7 +27,7 @@ export const Erc998TokenEditDialog: FC<IErc998TokenEditDialogProps> = props => {
     owner,
     tokenStatus,
     tokenId,
-    erc998CollectionId: erc998Template!.erc998CollectionId,
+    erc998CollectionId: uniTemplate!.uniContractId,
   };
 
   return (
@@ -38,14 +38,14 @@ export const Erc998TokenEditDialog: FC<IErc998TokenEditDialogProps> = props => {
       data-testid="Erc998TokenEditDialog"
       {...rest}
     >
-      <Typography variant="h5">{erc998Template?.title}</Typography>
-      <RichTextDisplay data={erc998Template?.description} />
+      <Typography variant="h5">{uniTemplate?.title}</Typography>
+      <RichTextDisplay data={uniTemplate?.description} />
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
       <SelectInput name="tokenStatus" options={UniTokenStatus} readOnly />
       <TextInput name="owner" readOnly />
       <EntityInput name="erc998CollectionId" controller="erc998-collections" readOnly />
-      <img src={erc998Template?.imageUrl} width={200} height={200} alt={erc998Template?.title} />
+      <img src={uniTemplate?.imageUrl} width={200} height={200} alt={uniTemplate?.title} />
     </FormDialog>
   );
 };

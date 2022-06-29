@@ -5,7 +5,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc721TokenService } from "./token.service";
 import { Erc721TokenSearchDto, Erc721TokenUpdateDto } from "./dto";
-import { UniTokenEntity } from "../../uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @ApiBearerAuth()
 @Controller("/erc721-tokens")

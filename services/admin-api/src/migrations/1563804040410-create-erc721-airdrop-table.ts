@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateErc721AirdropTable1563804040410 implements MigrationInterface {
+export class CreateAirdropTable1563804040410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.erc721_airdrop_status_enum AS ENUM (
@@ -13,7 +13,7 @@ export class CreateErc721AirdropTable1563804040410 implements MigrationInterface
     `);
 
     const table = new Table({
-      name: `${ns}.erc721_air_drop`,
+      name: `${ns}.erc721_airdrop`,
       columns: [
         {
           name: "id",

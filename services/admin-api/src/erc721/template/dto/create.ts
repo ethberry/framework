@@ -3,7 +3,7 @@ import { IsInt, IsJSON, ValidateNested, IsString, IsUrl, Min } from "class-valid
 import { Type } from "class-transformer";
 
 import { IErc721TemplateCreateDto } from "../interfaces";
-import { AssetDto } from "../../../uni-token/dto";
+import { AssetDto } from "../../../blockchain/asset/dto";
 
 export class Erc721TemplateCreateDto implements IErc721TemplateCreateDto {
   @ApiProperty()

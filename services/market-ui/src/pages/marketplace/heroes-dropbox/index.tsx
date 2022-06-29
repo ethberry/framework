@@ -3,11 +3,11 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc721Dropbox, IErc721DropboxSearchDto } from "@framework/types";
+import { IDropbox, IDropboxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { DropboxItem } from "../../erc721/dropbox-list/item";
+import { DropboxItem } from "../../mechanics/dropbox-list/item";
 
 export const HeroesDropbox: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -16,11 +16,11 @@ export const HeroesDropbox: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IErc721Dropbox, IErc721DropboxSearchDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<IDropbox, IDropboxSearchDto>({
     baseUrl: "/erc721-dropboxes",
     search: {
-      erc721CollectionIds: [2], // Erc721Dropbox Collection
-      erc721TemplateCollectionIds: [4], // Erc721Hero Collection
+      uniContractIds: [2], // Erc721Dropbox Collection
+      uniTemplateContractIds: [4], // Erc721Hero Collection
     },
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });

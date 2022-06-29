@@ -2,21 +2,21 @@ import { FC, Fragment } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IErc998Template, IErc998Token } from "@framework/types";
+import { IUniTemplate, IUniToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { Erc998TokenAuctionButton } from "../../../components/buttons";
+import { Erc998TokenSellButton } from "../../../components/buttons";
 
 export const Erc998Token: FC = () => {
-  const { selected, isLoading } = useCollection<IErc998Token>({
+  const { selected, isLoading } = useCollection<IUniToken>({
     baseUrl: "/erc998-tokens",
     empty: {
-      erc998Template: {
+      uniTemplate: {
         description: emptyStateString,
-      } as IErc998Template,
+      } as IUniTemplate,
     },
   });
 
@@ -28,20 +28,20 @@ export const Erc998Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998-token"]} data={[{}, selected.erc998Template]} />
+      <Breadcrumbs path={["dashboard", "erc998-token"]} data={[{}, selected.uniTemplate]} />
 
-      <PageHeader message="pages.erc998-token.title" data={selected.erc998Template} />
+      <PageHeader message="pages.erc998-token.title" data={selected.uniTemplate} />
 
       <Grid container>
         <Grid item xs={9}>
-          <img src={selected.erc998Template!.imageUrl} />
+          <img src={selected.uniTemplate!.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={selected.erc998Template!.description} />
+            <RichTextDisplay data={selected.uniTemplate!.description} />
           </Typography>
         </Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
-            <Erc998TokenAuctionButton token={selected} />
+            <Erc998TokenSellButton token={selected} />
           </Paper>
         </Grid>
       </Grid>

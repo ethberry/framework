@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
-import { IAssetDto } from "../../uni-token/interfaces";
+import { IAssetDto } from "../uni-token/interfaces";
 
 @Injectable()
 export class AssetService {

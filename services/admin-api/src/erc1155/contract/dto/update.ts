@@ -5,9 +5,9 @@ import { Transform } from "class-transformer";
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { UniContractStatus } from "@framework/types";
 
-import { IErc1155CollectionUpdateDto } from "../interfaces";
+import { IUniContractUpdateDto } from "../interfaces";
 
-export class Erc1155CollectionUpdateDto implements IErc1155CollectionUpdateDto {
+export class Erc1155CollectionUpdateDto implements IUniContractUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

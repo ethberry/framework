@@ -10,7 +10,7 @@ import {
   Erc998TemplateSearchDto,
   Erc998TemplateUpdateDto,
 } from "./dto";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @ApiBearerAuth()
 @Controller("/erc998-templates")

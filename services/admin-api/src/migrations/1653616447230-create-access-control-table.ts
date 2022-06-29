@@ -50,7 +50,7 @@ export class CreateAccessControlTable1653616447230 implements MigrationInterface
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.seaport`);
+    await queryRunner.dropTable(`${ns}.access_control`);
     await queryRunner.query(`DROP TYPE ${ns}.access_control_roles_enum;`);
   }
 }

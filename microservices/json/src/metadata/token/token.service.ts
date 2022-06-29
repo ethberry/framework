@@ -21,9 +21,9 @@ export class MetadataTokenService {
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("token.erc1155Collection", "collection");
+    queryBuilder.leftJoinAndSelect("token.erc1155Collection", "contract");
 
-    queryBuilder.andWhere("collection.address = :address", {
+    queryBuilder.andWhere("contract.address = :address", {
       address,
     });
     queryBuilder.andWhere("token.tokenId = :tokenId", {

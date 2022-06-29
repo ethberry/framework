@@ -5,8 +5,8 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { UniTokenStatus, IErc998AssetSearchDto } from "@framework/types";
 
 import { UserEntity } from "../../user/user.entity";
-import { IErc998TokenAutocompleteDto } from "./interface";
-import { UniTokenEntity } from "../../uni-token/uni-token.entity";
+import { IUniTokenAutocompleteDto } from "./interface";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc998TokenService {
@@ -72,7 +72,7 @@ export class Erc998TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc998TokenAutocompleteDto): Promise<Array<UniTokenEntity>> {
+  public async autocomplete(dto: IUniTokenAutocompleteDto): Promise<Array<UniTokenEntity>> {
     const { wallet } = dto;
     const queryBuilder = this.erc998TokenEntityRepository.createQueryBuilder("token");
 
@@ -116,7 +116,7 @@ export class Erc998TokenService {
     queryBuilder.leftJoinAndSelect("token.erc998Template", "template");
     queryBuilder.leftJoinAndSelect("template.erc998Collection", "collection");
 
-    queryBuilder.andWhere("collection.address = :address", {
+    queryBuilder.andWhere("contract.address = :address", {
       address,
     });
 

@@ -10,7 +10,7 @@ export class SeedErc721Recipe1563804040620 implements MigrationInterface {
       INSERT INTO ${ns}.erc721_recipe (
         erc721_template_id,
         erc721_dropbox_id,
-        recipe_status,
+        exchange_status,
         created_at,
         updated_at
       ) VALUES (

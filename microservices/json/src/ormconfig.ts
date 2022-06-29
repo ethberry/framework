@@ -5,8 +5,8 @@ import { UserEntity } from "./user/user.entity";
 import { UniContractEntity } from "./uni-token/uni-contract.entity";
 import { UniTemplateEntity } from "./uni-token/uni-template.entity";
 import { UniTokenEntity } from "./uni-token/uni-token.entity";
-import { AirdropEntity } from "./blockchain/airdrop/airdrop.entity";
-import { DropboxEntity } from "./blockchain/dropbox/dropbox.entity";
+import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
+import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 import { AssetEntity } from "./blockchain/asset/asset";
 import { AssetComponentEntity } from "./blockchain/asset/asset-component";
 

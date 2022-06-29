@@ -11,5 +11,5 @@ export interface IAssetComponent extends IIdBase {
   uniTokenId: number;
   uniToken?: IUniToken;
   amount: string;
-  priceId: number;
+  assetId: number;
 }

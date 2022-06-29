@@ -92,7 +92,7 @@
       "UNCOMMON": "Uncommon",
       "UNKNOWN": "Unknown"
     },
-    "recipeStatus": {
+    "exchangeStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -233,7 +233,7 @@
       "price": "Price",
       "random": "Random",
       "rarity": "Rarity",
-      "recipeStatus": "Status",
+      "exchangeStatus": "Status",
       "recurrent": "Is recurrent?",
       "role": "Role",
       "royalty": "Royalty",
@@ -348,7 +348,6 @@
         "users": "Users"
       },
       "blockchain": {
-        "seaport": "Seaport settings",
         "stakes": "Stakes",
         "staking": "Staking Rules",
         "title": "Blockchain"
@@ -484,9 +483,6 @@
     },
     "recipes": {
       "title": "Craft"
-    },
-    "seaport": {
-      "title": "Seaport"
     },
     "settings": {
       "title": "Settings"

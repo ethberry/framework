@@ -5,7 +5,7 @@ import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc721AssetSearchDto, IErc721Token } from "@framework/types";
+import { IErc721AssetSearchDto, IUniToken } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { AssetsTabs, ITabPanelProps } from "../tabs";
@@ -20,7 +20,7 @@ export const Items: FC<ITabPanelProps> = props => {
   }
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc721Token, IErc721AssetSearchDto>({
+    useCollection<IUniToken, IErc721AssetSearchDto>({
       baseUrl: "/erc721-tokens",
       search: {
         erc721CollectionIds: [3],

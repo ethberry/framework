@@ -48,7 +48,7 @@ export class Erc1155MarketplaceService {
       }),
     );
 
-    // Must be in one collection
+    // Must be in one contract
     if (!collections.every((val, i, arr) => val === arr[0])) {
       throw new NotFoundException("collectionsNotSame");
     }

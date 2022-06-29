@@ -2,7 +2,7 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
-import { DropboxModule } from "../../blockchain/dropbox/dropbox.module";
+import { DropboxModule } from "../../mechanics/dropbox/dropbox.module";
 import { Erc998TemplateModule } from "../template/template.module";
 import { Erc998MarketplaceService } from "./marketplace.service";
 import { Erc998MarketplaceController } from "./marketplace.controller";

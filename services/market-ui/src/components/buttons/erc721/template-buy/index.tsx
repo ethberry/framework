@@ -6,12 +6,12 @@ import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { Erc20TokenTemplate, IErc721Template } from "@framework/types";
+import { IUniTemplate, UniContractTemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
 interface IErc721TemplateBuyButtonProps {
-  template: IErc721Template;
+  template: IUniTemplate;
 }
 
 export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = props => {
@@ -34,15 +34,18 @@ export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = pr
           library.getSigner(),
         );
         const nonce = utils.arrayify(sign.nonce);
-        const commonItemPrice = utils.parseUnits(template.price, "wei");
+        const commonItemPrice = utils.parseUnits(template.price.components[0].amount, "wei");
         return contract.buyCommon(
           nonce,
-          template.erc721Collection?.address,
+          template.uniContract?.address,
           template.id,
           process.env.ACCOUNT,
           sign.signature,
           {
-            value: template?.erc20Token?.contractTemplate === Erc20TokenTemplate.NATIVE ? commonItemPrice : 0,
+            value:
+              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.ERC20_NATIVE
+                ? commonItemPrice
+                : 0,
           },
         ) as Promise<void>;
       });

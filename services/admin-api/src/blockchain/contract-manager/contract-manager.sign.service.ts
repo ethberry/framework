@@ -9,7 +9,7 @@ import {
   Erc20ContractTemplate,
   Erc20VestingTemplate,
   Erc721ContractTemplate,
-  IErc1155CollectionDeployDto,
+  IUniContractDeployDto,
   IErc20TokenDeployDto,
   IErc20VestingDeployDto,
   IErc721ContractDeployDto,
@@ -146,7 +146,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async erc1155Token(dto: IErc1155CollectionDeployDto): Promise<IServerSignature> {
+  public async erc1155Token(dto: IUniContractDeployDto): Promise<IServerSignature> {
     const { contractTemplate, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);

@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { UniContractStatus, UniContractType, IErc721ContractSearchDto } from "@framework/types";
+import { UniContractStatus, UniContractRole, IErc721ContractSearchDto } from "@framework/types";
 import { SearchDto } from "@gemunion/collection";
 
 export class Erc721CollectionSearchDto extends SearchDto implements IErc721ContractSearchDto {
@@ -19,14 +19,14 @@ export class Erc721CollectionSearchDto extends SearchDto implements IErc721Contr
   public contractStatus: Array<UniContractStatus>;
 
   @ApiPropertyOptional({
-    enum: UniContractType,
+    enum: UniContractRole,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<UniContractType>)
-  @IsEnum(UniContractType, { each: true, message: "badInput" })
-  public contractType: Array<UniContractType>;
+  @Transform(({ value }) => value as Array<UniContractRole>)
+  @IsEnum(UniContractRole, { each: true, message: "badInput" })
+  public contractRole: Array<UniContractRole>;
 }

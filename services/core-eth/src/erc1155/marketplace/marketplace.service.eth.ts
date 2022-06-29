@@ -50,7 +50,7 @@ export class Erc1155MarketplaceServiceEth {
             amount: args.amounts[indx],
             price: args.price,
           },
-          erc1155TokenId: erc1155TokenEntity.id,
+          uniTokenId: erc1155TokenEntity.id,
         });
       }),
     );

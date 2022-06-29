@@ -4,7 +4,7 @@ import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } f
 
 import { UniTokenStatus } from "@framework/types";
 
-import { UniTokenEntity } from "./token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc721TokenService {
@@ -41,11 +41,7 @@ export class Erc721TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(
-    tokenId: string,
-    address: string,
-    tokenStatus?: UniTokenStatus,
-  ): Promise<UniTokenEntity | null> {
+  public getToken(tokenId: string, address: string, tokenStatus?: UniTokenStatus): Promise<UniTokenEntity | null> {
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();

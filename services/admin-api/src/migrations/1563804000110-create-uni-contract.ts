@@ -13,7 +13,7 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.uni_contract_type_enum AS ENUM (
+      CREATE TYPE ${ns}.uni_contract_role_enum AS ENUM (
         'TOKEN',
         'DROPBOX',
         'AIRDROP'
@@ -89,7 +89,12 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
         },
         {
           name: "contract_type",
-          type: `${ns}.uni_contract_type_enum`,
+          type: `${ns}.token_type_enum`,
+          default: "'NATIVE'",
+        },
+        {
+          name: "contract_role",
+          type: `${ns}.uni_contract_role_enum`,
           default: "'TOKEN'",
         },
         {
@@ -114,7 +119,7 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.uni_contract`);
     await queryRunner.query(`DROP TYPE ${ns}.uni_contract_status_enum;`);
-    await queryRunner.query(`DROP TYPE ${ns}.uni_contract_type_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.uni_contract_role_enum;`);
     await queryRunner.query(`DROP TYPE ${ns}.uni_contract_template_enum;`);
   }
 }

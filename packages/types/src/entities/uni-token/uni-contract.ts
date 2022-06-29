@@ -2,9 +2,10 @@ import { IContract, ISearchable } from "@gemunion/types-collection";
 
 import { IErc20TokenHistory } from "../erc20/token-history";
 import { IErc721TokenHistory } from "../erc721/token-history";
-import { IErc998TokenHistory } from "../erc998/token-history";
+import { IUniTokenHistory } from "../erc998/token-history";
 import { IErc1155TokenHistory } from "../erc1155/token-history";
 import { IUniTemplate } from "./uni-template";
+import { TokenType } from "../blockchain/common";
 
 export enum UniContractStatus {
   ACTIVE = "ACTIVE",
@@ -12,7 +13,7 @@ export enum UniContractStatus {
   NEW = "NEW",
 }
 
-export enum UniContractType {
+export enum UniContractRole {
   TOKEN = "TOKEN",
   DROPBOX = "DROPBOX",
   AIRDROP = "AIRDROP",
@@ -68,8 +69,9 @@ export interface IUniContract extends IContract, ISearchable {
   royalty: number;
   baseTokenURI: string;
   contractStatus: UniContractStatus;
-  contractType: UniContractType;
+  contractType: TokenType;
+  contractRole: UniContractRole;
   contractTemplate: UniContractTemplate;
   uniTemplates: Array<IUniTemplate>;
-  history?: Array<IErc20TokenHistory | IErc721TokenHistory | IErc998TokenHistory | IErc1155TokenHistory>;
+  history?: Array<IErc20TokenHistory | IErc721TokenHistory | IUniTokenHistory | IErc1155TokenHistory>;
 }

@@ -11,16 +11,16 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
-import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { UniTemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IUniTemplate, IErc721TemplateSearchDto } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
 import { Erc721TemplateSearchForm } from "./form";
+import { emptyPrice } from "../../../components/inputs/empty-price";
 
 export const Erc721Template: FC = () => {
   const {
@@ -42,23 +42,22 @@ export const Erc721Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IErc721Template, IErc721TemplateSearchDto>({
+  } = useCollection<IUniTemplate, IErc721TemplateSearchDto>({
     baseUrl: "/erc721-templates",
     empty: {
       title: "",
       description: emptyStateString,
-      price: constants.WeiPerEther.toString(),
+      price: emptyPrice,
       attributes: "{}",
       amount: 0,
-      erc721CollectionId: 3,
-      erc20TokenId: 1,
+      uniContractId: 3,
     },
     search: {
       query: "",
       templateStatus: [UniTemplateStatus.ACTIVE],
-      erc721CollectionIds: [],
+      uniContractIds: [],
     },
-    filter: ({
+    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, uniContractId }) => ({
       title,
       description,
       attributes,
@@ -66,18 +65,7 @@ export const Erc721Template: FC = () => {
       amount,
       imageUrl,
       templateStatus,
-      erc721CollectionId,
-      erc20TokenId,
-    }) => ({
-      title,
-      description,
-      attributes,
-      price,
-      amount,
-      imageUrl,
-      templateStatus,
-      erc721CollectionId,
-      erc20TokenId,
+      uniContractId,
     }),
   });
 

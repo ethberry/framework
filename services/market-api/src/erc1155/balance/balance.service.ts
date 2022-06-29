@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { UserEntity } from "../../user/user.entity";
-import { UniBalanceEntity } from "../../uni-token/uni-balance.entity";
+import { UniBalanceEntity } from "../../blockchain/uni-token/uni-balance.entity";
 
 @Injectable()
 export class Erc1155BalanceService {

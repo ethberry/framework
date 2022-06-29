@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc1155TemplateService } from "./template.service";
 import { Erc1155TokenController } from "./template.controller";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([UniTemplateEntity])],

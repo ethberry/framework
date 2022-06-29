@@ -4,8 +4,8 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 
 import { UniTemplateStatus, IErc998TemplateAutocompleteDto, IErc998TemplateSearchDto } from "@framework/types";
 
-import { IErc998TemplateCreateDto, IErc998TemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { IUniTemplateCreateDto, IUniTemplateUpdateDto } from "./interfaces";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc998TemplateService {
@@ -98,7 +98,7 @@ export class Erc998TemplateService {
 
   public async update(
     where: FindOptionsWhere<UniTemplateEntity>,
-    dto: Partial<IErc998TemplateUpdateDto>,
+    dto: Partial<IUniTemplateUpdateDto>,
   ): Promise<UniTemplateEntity> {
     const templateEntity = await this.findOne(where);
 
@@ -111,7 +111,7 @@ export class Erc998TemplateService {
     return templateEntity.save();
   }
 
-  public async create(dto: IErc998TemplateCreateDto): Promise<UniTemplateEntity> {
+  public async create(dto: IUniTemplateCreateDto): Promise<UniTemplateEntity> {
     return this.erc998TemplateEntityRepository.create(dto).save();
   }
 

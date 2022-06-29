@@ -3,13 +3,13 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc1155Token, IErc1155TemplateSearchDto } from "@framework/types";
+import { IUniTemplate, IErc1155TemplateSearchDto } from "@framework/types";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
 import { TokenItem } from "./item";
-import { Erc1155TokenBatchBuyButton } from "../../../components/buttons/erc1155/token-batch-buy";
+import { Erc1155TokenBatchBuyButton } from "../../../components/buttons";
 
 export const Resources: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -18,15 +18,15 @@ export const Resources: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IErc1155Token, IErc1155TemplateSearchDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<IUniTemplate, IErc1155TemplateSearchDto>({
     baseUrl: "/erc1155-tokens",
     search: {
-      erc1155CollectionIds: [],
+      uniContractIds: [],
     },
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });
 
-  const initialValues = rows.reduce((memo, current) => Object.assign(memo, { [current.tokenId]: 0 }), {});
+  const initialValues = rows.reduce((memo, current) => Object.assign(memo, { [current.id]: 0 }), {});
 
   return (
     <FormWrapper

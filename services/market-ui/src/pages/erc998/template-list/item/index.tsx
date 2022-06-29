@@ -1,18 +1,18 @@
 import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { IErc998Template } from "@framework/types";
+import { IUniTemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { formatEther } from "../../../../utils/money";
+import { formatPrice } from "../../../../utils/money";
 import { Erc998ItemTemplateBuyButton } from "../../../../components/buttons";
 
-interface IErc998TemplateItemProps {
-  template: IErc998Template;
+interface IUniTemplateItemProps {
+  template: IUniTemplate;
 }
 
-export const TemplateItem: FC<IErc998TemplateItemProps> = props => {
+export const TemplateItem: FC<IUniTemplateItemProps> = props => {
   const { template } = props;
 
   const classes = useStyles();
@@ -29,7 +29,7 @@ export const TemplateItem: FC<IErc998TemplateItemProps> = props => {
             <RichTextDisplay data={template.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatEther(template.price)}
+            {formatPrice(template.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

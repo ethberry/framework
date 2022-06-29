@@ -1,9 +1,9 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsJSON, IsOptional } from "class-validator";
 
-import { IErc998TokenUpdateDto } from "../interfaces";
+import { IUniTokenUpdateDto } from "../interfaces";
 
-export class Erc998TokenUpdateDto implements IErc998TokenUpdateDto {
+export class Erc998TokenUpdateDto implements IUniTokenUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsJSON({ message: "patternMismatch" })

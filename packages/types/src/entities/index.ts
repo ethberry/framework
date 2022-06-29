@@ -11,7 +11,6 @@ export * from "./erc20/vesting-history";
 
 export * from "./erc721/token-history";
 export * from "./erc721/marketplace-history";
-export * from "./blockchain/exchange";
 
 export * from "./erc998/token-history";
 export * from "./erc998/marketplace-history";
@@ -25,14 +24,17 @@ export * from "./blockchain/access-list";
 export * from "./blockchain/access-list-history";
 export * from "./blockchain/contract-manager";
 export * from "./blockchain/contract-manager-history";
-export * from "./blockchain/staking-rule";
-export * from "./blockchain/staking";
-export * from "./blockchain/staking-history";
 export * from "./blockchain/common";
 export * from "./blockchain/asset";
 export * from "./blockchain/asset-component";
-export * from "./blockchain/dropbox";
-export * from "./blockchain/airdrop";
+
+export * from "./mechanics/airdrop";
+export * from "./mechanics/dropbox";
+export * from "./mechanics/exchange";
+export * from "./mechanics/exchange-history";
+export * from "./mechanics/staking-rule";
+export * from "./mechanics/staking";
+export * from "./mechanics/staking-history";
 
 export * from "./uni-token/uni-balance";
 export * from "./uni-token/uni-contract";

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { BigNumber } from "ethers";
 
 import { Erc1155BalanceEntity } from "./balance.entity";
 
@@ -22,28 +23,28 @@ export class Erc1155BalanceService {
     return this.erc1155BalanceEntityRepository.create(dto).save();
   }
 
-  public async increment(erc1155TokenId: number, wallet: string, amount: number): Promise<Erc1155BalanceEntity> {
-    const balanceEntity = await this.findOne({ erc1155TokenId, wallet });
+  public async increment(uniTokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
+    const balanceEntity = await this.findOne({ uniTokenId, account });
 
     if (!balanceEntity) {
       return this.create({
-        erc1155TokenId,
-        wallet,
+        uniTokenId,
+        account,
         amount,
       });
     }
 
-    balanceEntity.amount = balanceEntity.amount.add(amount);
+    balanceEntity.amount = BigNumber.from(balanceEntity.amount).add(amount).toString();
     return balanceEntity.save();
   }
 
-  public async decrement(erc1155TokenId: number, wallet: string, amount: number): Promise<Erc1155BalanceEntity> {
-    const balanceEntity = await this.findOne({ erc1155TokenId, wallet });
+  public async decrement(uniTokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
+    const balanceEntity = await this.findOne({ uniTokenId, account });
 
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");
     } else {
-      balanceEntity.amount = balanceEntity.amount.sub(amount);
+      balanceEntity.amount = BigNumber.from(balanceEntity.amount).add(amount).toString();
       return balanceEntity.save();
     }
   }

@@ -13,7 +13,6 @@ import { ContractManagerService } from "../../blockchain/contract-manager/contra
 import { Erc998MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
 import { Erc998TokenService } from "../token/token.service";
 import { Erc998TemplateService } from "../template/template.service";
-import { Erc998DropboxService } from "../dropbox/dropbox.service";
 
 @Injectable()
 export class Erc998MarketplaceServiceEth {
@@ -24,7 +23,6 @@ export class Erc998MarketplaceServiceEth {
     private readonly erc998MarketplaceHistoryService: Erc998MarketplaceHistoryService,
     private readonly erc998TokenService: Erc998TokenService,
     private readonly erc998TemplateService: Erc998TemplateService,
-    private readonly erc998DropboxService: Erc998DropboxService,
   ) {}
 
   public async redeem(event: ILogEvent<IErc998MarketplaceRedeem>, context: Log): Promise<void> {
@@ -44,34 +42,34 @@ export class Erc998MarketplaceServiceEth {
         rarity: TokenRarity.COMMON,
       }),
       owner: from.toLowerCase(),
-      erc998Template: erc998TemplateEntity,
+      uniTemplate: erc998TemplateEntity,
     });
 
     await this.updateHistory(event, erc998TokenEntity.id, context);
   }
 
-  public async redeemDropbox(event: ILogEvent<IErc998MarketplaceRedeem>, context: Log): Promise<void> {
-    const {
-      args: { from, tokenId, templateId },
-    } = event;
+  // public async redeemDropbox(event: ILogEvent<IErc998MarketplaceRedeem>, context: Log): Promise<void> {
+  //   const {
+  //     args: { from, tokenId, templateId },
+  //   } = event;
+  //
+  //   const erc998DropboxEntity = await this.erc998DropboxService.findOne({ erc998TemplateId: ~~templateId });
+  //
+  //   if (!erc998DropboxEntity) {
+  //     throw new NotFoundException("templateNotFound");
+  //   }
+  //
+  //   const erc998TokenEntity = await this.erc998TokenService.create({
+  //     tokenId,
+  //     attributes: {},
+  //     owner: from.toLowerCase(),
+  //     erc998Dropbox: erc998DropboxEntity,
+  //   });
+  //
+  //   await this.updateHistory(event, erc998TokenEntity.id, context);
+  // }
 
-    const erc998DropboxEntity = await this.erc998DropboxService.findOne({ erc998TemplateId: ~~templateId });
-
-    if (!erc998DropboxEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    const erc998TokenEntity = await this.erc998TokenService.create({
-      tokenId,
-      attributes: {},
-      owner: from.toLowerCase(),
-      erc998Dropbox: erc998DropboxEntity,
-    });
-
-    await this.updateHistory(event, erc998TokenEntity.id, context);
-  }
-
-  private async updateHistory(event: ILogEvent<TErc998MarketplaceEventData>, erc998TokenId: number, context: Log) {
+  private async updateHistory(event: ILogEvent<TErc998MarketplaceEventData>, uniTokenId: number, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc998MarketplaceServiceEth.name);
 
     const { args, name } = event;
@@ -82,7 +80,7 @@ export class Erc998MarketplaceServiceEth {
       transactionHash: transactionHash.toLowerCase(),
       eventType: name as Erc998MarketplaceEventType,
       eventData: args,
-      erc998TokenId,
+      uniTokenId,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

@@ -3,7 +3,6 @@ import { Logger, Module } from "@nestjs/common";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 
 import { Erc998TokenModule } from "../token/token.module";
-import { Erc998DropboxModule } from "../dropbox/dropbox.module";
 import { Erc998TemplateModule } from "../template/template.module";
 import { Erc998MarketplaceServiceEth } from "./marketplace.service.eth";
 import { Erc998MarketplaceControllerEth } from "./marketplace.controller.eth";
@@ -16,7 +15,6 @@ import { Erc998MarketplaceLogModule } from "./marketplace-log/marketplace-log.mo
     Erc998MarketplaceLogModule,
     Erc998MarketplaceHistoryModule,
     Erc998TokenModule,
-    Erc998DropboxModule,
     Erc998TemplateModule,
   ],
   providers: [Logger, Erc998MarketplaceServiceEth],

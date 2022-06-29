@@ -27,5 +27,5 @@ export class Erc721TemplateAutocompleteDto implements IErc721TemplateAutocomplet
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public erc721CollectionIds: Array<number>;
+  public uniContractIds: Array<number>;
 }

@@ -13,7 +13,7 @@ import {
 import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { UniTokenStatus, IErc721Template, IErc721Token, IErc721TokenSearchDto } from "@framework/types";
+import { UniTokenStatus, IUniTemplate, IUniToken, IErc721TokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721TokenEditDialog } from "./edit";
@@ -34,10 +34,10 @@ export const Erc721Token: FC = () => {
     handleEditConfirm,
     handleSearch,
     handleChangePage,
-  } = useCollection<IErc721Token, IErc721TokenSearchDto>({
+  } = useCollection<IUniToken, IErc721TokenSearchDto>({
     baseUrl: "/erc721-tokens",
     empty: {
-      erc721Template: {} as IErc721Template,
+      uniTemplate: {} as IUniTemplate,
     },
     search: {
       query: "",
@@ -68,7 +68,7 @@ export const Erc721Token: FC = () => {
         <List>
           {rows.map((token, i) => (
             <ListItem key={i}>
-              <ListItemText>{token.erc721Template?.title}</ListItemText>
+              <ListItemText>{token.uniTemplate?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(token)}>
                   <Create />

@@ -10,11 +10,11 @@ import { useCollection } from "@gemunion/react-hooks";
 import { Erc998Token } from "./item";
 import { Erc998TokenSearchForm } from "./form";
 
-export interface IErc998TokenListProps {
+export interface IUniTokenListProps {
   embedded?: boolean;
 }
 
-export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
+export const Erc998TokenList: FC<IUniTokenListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =

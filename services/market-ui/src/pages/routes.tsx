@@ -14,13 +14,10 @@ import { erc20Routes } from "./erc20/routes";
 import { erc721Routes } from "./erc721/routes";
 import { erc998Routes } from "./erc998/routes";
 import { erc1155Routes } from "./erc1155/routes";
-import { stakingRoutes } from "./staking/routes";
+import { stakingRoutes } from "./mechanics/staking/routes";
 
 import { Marketplace } from "./marketplace";
-import { Auctions } from "./auction";
-import { Craft } from "./craft";
 import { MyAssets } from "./personal/assets";
-import { MyAuctions } from "./personal/auction";
 import { MyWallet } from "./connect-wallet";
 import { Page } from "./page";
 
@@ -57,13 +54,6 @@ const routes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/auctions",
-        children: [
-          { index: true, element: <Auctions /> },
-          { path: "/auctions/:tab", element: <Auctions /> },
-        ],
-      },
-      {
         path: "/my-assets",
         element: <Protected />,
         children: [
@@ -72,22 +62,9 @@ const routes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/my-auctions",
-        element: <Protected />,
-        children: [{ index: true, element: <MyAuctions /> }],
-      },
-      {
         path: "/my-wallet",
         element: <Protected />,
         children: [{ index: true, element: <MyWallet /> }],
-      },
-      {
-        path: "/craft",
-        element: <Protected />,
-        children: [
-          { index: true, element: <Craft /> },
-          { path: "/craft/:tab", element: <Craft /> },
-        ],
       },
       {
         path: "/pages/:slug",

@@ -6,7 +6,7 @@ export class SeedErc721Ingredient1563804040720 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.erc721_ingredient (
-        erc721_recipe_id,
+        erc721_exchange_id,
         erc1155_token_id,
         amount
       ) VALUES (

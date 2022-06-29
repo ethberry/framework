@@ -4,10 +4,10 @@ import { Type } from "class-transformer";
 
 import { UniTemplateStatus } from "@framework/types";
 
-import { IErc998TemplateUpdateDto } from "../interfaces";
-import { AssetDto } from "../../../uni-token/dto";
+import { IUniTemplateUpdateDto } from "../interfaces";
+import { AssetDto } from "../../../blockchain/asset/dto";
 
-export class Erc998TemplateUpdateDto implements IErc998TemplateUpdateDto {
+export class Erc998TemplateUpdateDto implements IUniTemplateUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

@@ -54,20 +54,20 @@ export interface IErc721TokenRoyaltyInfo {
   royaltyNumerator: boolean;
 }
 
-export interface IErc721DropboxUnpack {
+export interface IDropboxUnpack {
   collection: string;
   tokenId: string;
   templateId: string;
 }
 
-export interface IErc721AirdropUnpack {
+export interface IAirdropUnpack {
   collection: string;
   tokenId: string;
   templateId: string;
   airdropId: string;
 }
 
-export interface IErc721AirdropRedeem {
+export interface IAirdropRedeem {
   from: string;
   collection: string;
   tokenId: string;
@@ -86,9 +86,9 @@ export type TErc721TokenEventData =
   | IErc721TokenApprovedForAll
   | IErc721DefaultRoyaltyInfo
   | IErc721TokenRoyaltyInfo
-  | IErc721DropboxUnpack
-  | IErc721AirdropUnpack
-  | IErc721AirdropRedeem
+  | IDropboxUnpack
+  | IAirdropUnpack
+  | IAirdropRedeem
   | IErc721TokenMintRandom
   | IErc721RandomRequest;
 

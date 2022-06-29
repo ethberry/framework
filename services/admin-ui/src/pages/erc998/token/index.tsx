@@ -13,7 +13,7 @@ import {
 import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { UniTokenStatus, IErc998Template, IErc998Token, IErc998TokenSearchDto } from "@framework/types";
+import { UniTokenStatus, IUniTemplate, IUniToken, IErc998TokenSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998TokenEditDialog } from "./edit";
@@ -34,10 +34,10 @@ export const Erc998Token: FC = () => {
     handleEditConfirm,
     handleSearch,
     handleChangePage,
-  } = useCollection<IErc998Token, IErc998TokenSearchDto>({
+  } = useCollection<IUniToken, IErc998TokenSearchDto>({
     baseUrl: "/erc998-tokens",
     empty: {
-      erc998Template: {} as IErc998Template,
+      uniTemplate: {} as IUniTemplate,
     },
     search: {
       query: "",
@@ -68,7 +68,7 @@ export const Erc998Token: FC = () => {
         <List>
           {rows.map((token, i) => (
             <ListItem key={i}>
-              <ListItemText>{token.erc998Template?.title}</ListItemText>
+              <ListItemText>{token.uniTemplate?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(token)}>
                   <Create />

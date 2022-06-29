@@ -4,7 +4,7 @@ import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/ne
 
 import { Erc721TemplateService } from "./template.service";
 import { Erc721TemplateSearchDto } from "./dto";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Public()
 @Controller("/erc721-templates")

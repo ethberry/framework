@@ -1,8 +1,8 @@
 import { UniTemplateStatus } from "@framework/types";
 
-import { IAssetDto } from "../../../uni-token/interfaces";
+import { IAssetDto } from "../../../blockchain/asset/interfaces";
 
-export interface IErc998TemplateUpdateDto {
+export interface IUniTemplateUpdateDto {
   title: string;
   description: string;
   attributes: string;

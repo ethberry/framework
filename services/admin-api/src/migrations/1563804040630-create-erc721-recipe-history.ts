@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateErc721RecipeHistory1563804040630 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc721_recipe_event_enum AS ENUM (
+      CREATE TYPE ${ns}.erc721_exchange_event_enum AS ENUM (
         'RecipeCreated',
         'RecipeUpdated',
         'RecipeCrafted'
@@ -13,7 +13,7 @@ export class CreateErc721RecipeHistory1563804040630 implements MigrationInterfac
     `);
 
     const table = new Table({
-      name: `${ns}.erc721_recipe_history`,
+      name: `${ns}.erc721_exchange_history`,
       columns: [
         {
           name: "id",
@@ -30,14 +30,14 @@ export class CreateErc721RecipeHistory1563804040630 implements MigrationInterfac
         },
         {
           name: "event_type",
-          type: `${ns}.erc721_recipe_event_enum`,
+          type: `${ns}.erc721_exchange_event_enum`,
         },
         {
           name: "event_data",
           type: "json",
         },
         {
-          name: "erc721_recipe_id",
+          name: "erc721_exchange_id",
           type: "int",
           isNullable: true,
         },
@@ -52,7 +52,7 @@ export class CreateErc721RecipeHistory1563804040630 implements MigrationInterfac
       ],
       foreignKeys: [
         {
-          columnNames: ["erc721_recipe_id"],
+          columnNames: ["erc721_exchange_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.erc721_recipe`,
           onDelete: "CASCADE",

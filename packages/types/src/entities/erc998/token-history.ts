@@ -16,13 +16,13 @@ export enum Erc998TokenEventType {
   Unpaused = "Unpaused",
 }
 
-export interface IErc998TokenTransfer {
+export interface IUniTokenTransfer {
   from: string;
   to: string;
   tokenId: string;
 }
 
-export interface IErc998TokenMintRandom {
+export interface IUniTokenMintRandom {
   to: string;
   tokenId: string;
   templateId: string;
@@ -30,13 +30,13 @@ export interface IErc998TokenMintRandom {
   dropboxId: string;
 }
 
-export interface IErc998TokenApprove {
+export interface IUniTokenApprove {
   owner: string;
   approved: string;
   tokenId: string;
 }
 
-export interface IErc998TokenApprovedForAll {
+export interface IUniTokenApprovedForAll {
   owner: string;
   operator: string;
   approved: boolean;
@@ -47,7 +47,7 @@ export interface IErc998DefaultRoyaltyInfo {
   royaltyNumerator: string;
 }
 
-export interface IErc998TokenRoyaltyInfo {
+export interface IUniTokenRoyaltyInfo {
   tokenId: string;
   royaltyReceiver: string;
   royaltyNumerator: boolean;
@@ -80,18 +80,18 @@ export interface IErc998RandomRequest {
 }
 
 export type TErc998TokenEventData =
-  | IErc998TokenTransfer
-  | IErc998TokenApprove
-  | IErc998TokenApprovedForAll
+  | IUniTokenTransfer
+  | IUniTokenApprove
+  | IUniTokenApprovedForAll
   | IErc998DefaultRoyaltyInfo
-  | IErc998TokenRoyaltyInfo
+  | IUniTokenRoyaltyInfo
   | IErc998DropboxUnpack
   | IErc998AirdropUnpack
   | IErc998AirdropRedeem
-  | IErc998TokenMintRandom
+  | IUniTokenMintRandom
   | IErc998RandomRequest;
 
-export interface IErc998TokenHistory extends IIdDateBase {
+export interface IUniTokenHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc998TokenEventType;

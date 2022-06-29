@@ -3,17 +3,17 @@ import { FormattedMessage } from "react-intl";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IErc721Template } from "@framework/types";
+import { IUniTemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { formatEther } from "../../../utils/money";
+import { formatPrice } from "../../../utils/money";
 import { useStyles } from "./styles";
 import { Erc721ItemTemplateBuyButton } from "../../../components/buttons";
 
 export const Erc721Template: FC = () => {
-  const { selected, isLoading } = useCollection<IErc721Template>({
+  const { selected, isLoading } = useCollection<IUniTemplate>({
     baseUrl: "/erc721-templates",
     empty: {
       description: emptyStateString,
@@ -42,7 +42,7 @@ export const Erc721Template: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc721-template.price" values={{ amount: formatEther(selected.price) }} />
+              <FormattedMessage id="pages.erc721-template.price" values={{ amount: formatPrice(selected.price) }} />
             </Typography>
             <Erc721ItemTemplateBuyButton template={selected} />
           </Paper>

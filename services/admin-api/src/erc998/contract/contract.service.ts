@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { UniContractStatus, IErc998CollectionAutocompleteDto, IErc998CollectionSearchDto } from "@framework/types";
+import { UniContractStatus, IErc998CollectionAutocompleteDto, IErc998ContractSearchDto } from "@framework/types";
 
 import { IErc998CollectionUpdateDto } from "./interfaces";
-import { UniContractEntity } from "../../uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Injectable()
 export class Erc998CollectionService {
@@ -14,8 +14,8 @@ export class Erc998CollectionService {
     private readonly uniContractEntityRepository: Repository<UniContractEntity>,
   ) {}
 
-  public search(dto: IErc998CollectionSearchDto): Promise<[Array<UniContractEntity>, number]> {
-    const { query, contractStatus, contractType, skip, take } = dto;
+  public search(dto: IErc998ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
+    const { query, contractStatus, contractRole, skip, take } = dto;
 
     const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("collection");
 
@@ -25,11 +25,11 @@ export class Erc998CollectionService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(collection.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(contract.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("collection.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("contract.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -37,25 +37,25 @@ export class Erc998CollectionService {
 
     if (contractStatus) {
       if (contractStatus.length === 1) {
-        queryBuilder.andWhere("collection.contractStatus = :contractStatus", {
+        queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
           contractStatus: contractStatus[0],
         });
       } else {
-        queryBuilder.andWhere("collection.contractStatus IN(:...contractStatus)", { contractStatus });
+        queryBuilder.andWhere("contract.contractStatus IN(:...contractStatus)", { contractStatus });
       }
     }
 
-    if (contractType) {
-      if (contractType.length === 1) {
-        queryBuilder.andWhere("collection.contractType = :contractType", {
-          contractType: contractType[0],
+    if (contractRole) {
+      if (contractRole.length === 1) {
+        queryBuilder.andWhere("contract.contractRole = :contractRole", {
+          contractRole: contractRole[0],
         });
       } else {
-        queryBuilder.andWhere("collection.contractType IN(:...contractType)", { contractType });
+        queryBuilder.andWhere("contract.contractRole IN(:...contractRole)", { contractRole });
       }
     }
 
-    queryBuilder.orderBy("collection.createdAt", "DESC");
+    queryBuilder.orderBy("contract.createdAt", "DESC");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -64,13 +64,13 @@ export class Erc998CollectionService {
   }
 
   public async autocomplete(dto: IErc998CollectionAutocompleteDto): Promise<Array<UniContractEntity>> {
-    const { contractType = [], contractStatus = [] } = dto;
+    const { contractRole = [], contractStatus = [] } = dto;
 
     const where = {};
 
-    if (contractType.length) {
+    if (contractRole.length) {
       Object.assign(where, {
-        contractType: In(contractType),
+        contractRole: In(contractRole),
       });
     }
 

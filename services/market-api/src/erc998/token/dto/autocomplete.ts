@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEthereumAddress, IsString } from "class-validator";
 
-import { IErc998TokenAutocompleteDto } from "../interface";
+import { IUniTokenAutocompleteDto } from "../interface";
 
-export class Erc998TokenAutocompleteDto implements IErc998TokenAutocompleteDto {
+export class Erc998TokenAutocompleteDto implements IUniTokenAutocompleteDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })

@@ -11,16 +11,16 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
-import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { UniTemplateStatus, IErc998Template, IErc998TemplateSearchDto } from "@framework/types";
+import { UniTemplateStatus, IUniTemplate, IErc998TemplateSearchDto } from "@framework/types";
 
 import { Erc998TemplateEditDialog } from "./edit";
 import { Erc998TemplateSearchForm } from "./form";
+import { emptyPrice } from "../../../components/inputs/empty-price";
 
 export const Erc998Template: FC = () => {
   const {
@@ -42,23 +42,22 @@ export const Erc998Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IErc998Template, IErc998TemplateSearchDto>({
+  } = useCollection<IUniTemplate, IErc998TemplateSearchDto>({
     baseUrl: "/erc998-templates",
     empty: {
       title: "",
       description: emptyStateString,
-      price: constants.WeiPerEther.toString(),
+      price: emptyPrice,
       attributes: "{}",
       amount: 0,
-      erc998CollectionId: 3,
-      erc20TokenId: 1,
+      uniContractId: 3,
     },
     search: {
       query: "",
       templateStatus: [UniTemplateStatus.ACTIVE],
       uniContractIds: [],
     },
-    filter: ({
+    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, uniContractId }) => ({
       title,
       description,
       attributes,
@@ -66,18 +65,7 @@ export const Erc998Template: FC = () => {
       amount,
       imageUrl,
       templateStatus,
-      erc998CollectionId,
-      erc20TokenId,
-    }) => ({
-      title,
-      description,
-      attributes,
-      price,
-      amount,
-      imageUrl,
-      templateStatus,
-      erc998CollectionId,
-      erc20TokenId,
+      uniContractId,
     }),
   });
 

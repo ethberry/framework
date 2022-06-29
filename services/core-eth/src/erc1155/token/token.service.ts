@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UniTemplateEntity } from "./token.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Injectable()
 export class Erc1155TokenService {
@@ -42,7 +42,7 @@ export class Erc1155TokenService {
 
     queryBuilder.leftJoinAndSelect("token.erc1155Collection", "collection");
 
-    queryBuilder.andWhere("collection.address = :address", {
+    queryBuilder.andWhere("contract.address = :address", {
       address,
     });
     queryBuilder.andWhere("token.tokenId = :tokenId", {

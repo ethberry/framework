@@ -1,6 +1,6 @@
-import { IAssetDto } from "../../../uni-token/interfaces";
+import { IAssetDto } from "../../../blockchain/asset/interfaces";
 
-export interface IErc998TemplateCreateDto {
+export interface IUniTemplateCreateDto {
   title: string;
   description: string;
   attributes: string;

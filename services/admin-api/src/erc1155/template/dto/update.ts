@@ -3,7 +3,7 @@ import { IsEnum, IsInt, IsJSON, ValidateNested, IsOptional, IsString, IsUrl, Min
 import { Type } from "class-transformer";
 
 import { IErc1155TemplateUpdateDto } from "../interfaces";
-import { AssetDto } from "../../../uni-token/dto";
+import { AssetDto } from "../../../blockchain/asset/dto";
 import { UniTemplateStatus } from "@framework/types";
 
 export class Erc1155TemplateUpdateDto implements IErc1155TemplateUpdateDto {

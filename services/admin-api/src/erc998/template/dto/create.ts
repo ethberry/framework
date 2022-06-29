@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsJSON, ValidateNested, IsString, IsUrl, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IErc998TemplateCreateDto } from "../interfaces";
-import { AssetDto } from "../../../uni-token/dto";
+import { IUniTemplateCreateDto } from "../interfaces";
+import { AssetDto } from "../../../blockchain/asset/dto";
 
-export class Erc998TemplateCreateDto implements IErc998TemplateCreateDto {
+export class Erc998TemplateCreateDto implements IUniTemplateCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   public title: string;

@@ -8,14 +8,14 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
-interface IErc998TokenSearchFormProps {
+interface IUniTokenSearchFormProps {
   onSubmit: (values: IErc998AssetSearchDto) => Promise<void>;
   initialValues: IErc998AssetSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
-export const Erc998TokenSearchForm: FC<IErc998TokenSearchFormProps> = props => {
+export const Erc998TokenSearchForm: FC<IUniTokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();

@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateErc721Recipe1563804040610 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.erc721_recipe_status_enum AS ENUM (
+      CREATE TYPE ${ns}.erc721_exchange_status_enum AS ENUM (
         'NEW',
         'ACTIVE',
         'INACTIVE'
@@ -31,8 +31,8 @@ export class CreateErc721Recipe1563804040610 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "recipe_status",
-          type: `${ns}.erc721_recipe_status_enum`,
+          name: "exchange_status",
+          type: `${ns}.erc721_exchange_status_enum`,
           default: "'NEW'",
         },
         {
@@ -65,6 +65,6 @@ export class CreateErc721Recipe1563804040610 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.erc721_recipe`);
-    await queryRunner.query(`DROP TYPE ${ns}.erc721_recipe_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.erc721_exchange_status_enum;`);
   }
 }
