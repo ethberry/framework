@@ -4,7 +4,7 @@ import { IsEnum, IsEthereumAddress, IsInt, IsJSON, IsString, MaxLength, Min, Val
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
 import { Erc20ContractTemplate, IErc20TokenCreateDto } from "@framework/types";
 
-export class Erc20TokenCreateDto implements IErc20TokenCreateDto {
+export class Erc20ContractCreateDto implements IErc20TokenCreateDto {
   @ApiProperty({
     enum: Erc20ContractTemplate,
   })

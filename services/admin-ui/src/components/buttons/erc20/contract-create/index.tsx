@@ -19,7 +19,7 @@ export const Erc20TokenCreateButton: FC<IErc20TokenCreateButtonProps> = props =>
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: "/erc20-tokens",
+      url: "/erc20-contracts",
       method: "POST",
       data: values,
     });

@@ -15,12 +15,12 @@ export const Erc20Sections: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc20-tokens">
+        <ListItem button component={RouterLink} to="/erc20-contracts">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc20.tokens" />
+            <FormattedMessage id="pages.dashboard.erc20.contracts" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc20-vesting">

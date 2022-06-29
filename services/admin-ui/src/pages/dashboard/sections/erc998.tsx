@@ -15,12 +15,12 @@ export const Erc998Section: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc998-collections">
+        <ListItem button component={RouterLink} to="/erc998-contracts">
           <ListItemIcon>
             <Collections />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc998.collections" />
+            <FormattedMessage id="pages.dashboard.erc998.contracts" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc998-templates">

@@ -23,7 +23,7 @@ import { Erc998CollectionSearchForm } from "./form";
 import { Erc998TokenDeployButton } from "../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 
-export const Erc998Collection: FC = () => {
+export const Erc998Contract: FC = () => {
   const {
     rows,
     count,

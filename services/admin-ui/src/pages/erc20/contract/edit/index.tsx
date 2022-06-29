@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { UniTokenStatus, IUniContract, UniContractStatus } from "@framework/types";
+import { IUniContract, UniContractStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
@@ -50,7 +50,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         />
         <TextInput name="title" />
         <RichTextEditor name="description" />
-        <SelectInput name="contractStatus" options={UniTokenStatus} disabledOptions={[UniContractStatus.NEW]} />
+        <SelectInput name="contractStatus" options={UniContractStatus} disabledOptions={[UniContractStatus.NEW]} />
       </FormDialog>
     </>
   );

@@ -4,43 +4,51 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc20ContractService } from "./contract.service";
-import { Erc20ContractAutocompleteDto, Erc20TokenCreateDto, Erc20TokenSearchDto, Erc20TokenUpdateDto } from "./dto";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
+import {
+  Erc20ContractAutocompleteDto,
+  Erc20ContractCreateDto,
+  Erc20ContractSearchDto,
+  Erc20ContractUpdateDto,
+} from "./dto";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @ApiBearerAuth()
-@Controller("/erc20-tokens")
+@Controller("/erc20-contracts")
 export class Erc20TokenController {
-  constructor(private readonly erc20TokenService: Erc20ContractService) {}
+  constructor(private readonly erc20ContractService: Erc20ContractService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc20TokenSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
-    return this.erc20TokenService.search(dto);
+  public search(@Query() dto: Erc20ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
+    return this.erc20ContractService.search(dto);
   }
 
   @Post("/")
-  public create(@Body() dto: Erc20TokenCreateDto): Promise<UniTemplateEntity> {
-    return this.erc20TokenService.create(dto);
+  public create(@Body() dto: Erc20ContractCreateDto): Promise<UniContractEntity> {
+    return this.erc20ContractService.create(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc20ContractAutocompleteDto): Promise<Array<UniTemplateEntity>> {
-    return this.erc20TokenService.autocomplete(dto);
+  public autocomplete(@Query() dto: Erc20ContractAutocompleteDto): Promise<Array<UniContractEntity>> {
+    return this.erc20ContractService.autocomplete(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc20TokenUpdateDto): Promise<UniTemplateEntity> {
-    return this.erc20TokenService.update({ id }, dto);
+  public update(
+    @Param("id", ParseIntPipe) id: number,
+    @Body() dto: Erc20ContractUpdateDto,
+  ): Promise<UniContractEntity> {
+    return this.erc20ContractService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {
-    return this.erc20TokenService.findOne({ id });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniContractEntity | null> {
+    return this.erc20ContractService.findOne({ id });
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity> {
-    return this.erc20TokenService.delete({ id });
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<UniContractEntity> {
+    return this.erc20ContractService.delete({ id });
   }
 }

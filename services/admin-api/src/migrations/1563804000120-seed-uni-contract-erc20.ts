@@ -142,6 +142,8 @@ export class SeedUniContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.uni_contract_id_seq', 6, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

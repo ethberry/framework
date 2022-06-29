@@ -2,17 +2,17 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/firebase-login";
 
-import { Erc998Collection } from "./contract";
+import { Erc998Contract } from "./contract";
 import { Erc998Template } from "./template";
 import { Erc998Token } from "./token";
 
 export const erc998Routes: Array<RouteObject> = [
   {
-    path: "/erc998-contract",
+    path: "/erc998-contractы",
     element: <Protected />,
     children: [
-      { index: true, element: <Erc998Collection /> },
-      { path: "/erc998-collections/:id", element: <Erc998Collection /> },
+      { index: true, element: <Erc998Contract /> },
+      { path: "/erc998-contractы/:id", element: <Erc998Contract /> },
     ],
   },
   {

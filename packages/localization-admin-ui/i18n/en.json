@@ -48,15 +48,15 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
-    "contractStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
-    },
     "collectionType": {
       "AIRDROP": "Airdrop",
       "DROPBOX": "Dropbox",
       "TOKEN": "Token"
+    },
+    "contractStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
     },
     "contractTemplate": {
       "BLACKLIST": "Blacklist",
@@ -75,6 +75,11 @@
     "emailType": {
       "DUMMY": "Test email"
     },
+    "exchangeStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
@@ -91,11 +96,6 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon",
       "UNKNOWN": "Unknown"
-    },
-    "exchangeStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -199,27 +199,23 @@
       "beneficiary": "Beneficiary",
       "cap": "Cap",
       "collection": "Collection",
-      "contractStatus": "Status",
       "collectionType": "Type",
       "comment": "Comment",
       "confirm": "Confirm",
+      "contractStatus": "Status",
       "contractTemplate": "Template",
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "dateTime": "Date time",
       "decimals": "Decimals",
+      "decimals": "Decimals",
       "description": "Description",
       "displayName": "Display name",
       "dropboxStatus": "Status",
       "duration": "Duration",
       "email": "Email",
-      "uniContractId": "Contract",
-      "uniContractIds": "Contracts",
-      "uniTokenId": "Token",
-      "uniTokenIds": "Tokens",
-      "uniTemplateId": "Template",
-      "uniTemplateIds": "Templates",
+      "exchangeStatus": "Status",
       "imageUrl": "Avatar",
       "ingredients": "Ingredients",
       "item": "Item",
@@ -233,7 +229,6 @@
       "price": "Price",
       "random": "Random",
       "rarity": "Rarity",
-      "exchangeStatus": "Status",
       "recurrent": "Is recurrent?",
       "role": "Role",
       "royalty": "Royalty",
@@ -249,6 +244,12 @@
       "tokenStatus": "Status",
       "tokenType": "Type",
       "type": "Type",
+      "uniContractId": "Contract",
+      "uniContractIds": "Contracts",
+      "uniTemplateId": "Template",
+      "uniTemplateIds": "Templates",
+      "uniTokenId": "Token",
+      "uniTokenIds": "Tokens",
       "updatedAt": "Updated",
       "url": "Url",
       "userId": "User",
@@ -259,6 +260,7 @@
       "year": "Year"
     },
     "placeholders": {
+      "decimals": "18",
       "DUMMY": "Dummy",
       "address": "0x...",
       "amount": "10",
@@ -277,12 +279,6 @@
       "displayName": "Gordon Freeman",
       "duration": "30",
       "email": "me@google.com",
-      "uniContractId": "Contract",
-      "uniContractIds": "Contracts",
-      "uniTokenId": "Token",
-      "uniTokenIds": "Token",
-      "uniTemplateId": "Template",
-      "uniTemplateIds": "Template",
       "item": "Bottle of water",
       "name": "Pink dust",
       "number": "100500",
@@ -303,6 +299,12 @@
       "token": "Bottle of water",
       "tokenId": "Bottle of water",
       "tokenStatus": "Status",
+      "uniContractId": "Contract",
+      "uniContractIds": "Contracts",
+      "uniTemplateId": "Template",
+      "uniTemplateIds": "Template",
+      "uniTokenId": "Token",
+      "uniTokenIds": "Token",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
       "userIds": "Gordon Freeman"
@@ -353,19 +355,19 @@
         "title": "Blockchain"
       },
       "erc1155": {
-        "collections": "ERC1155 Collections",
+        "contracts": "ERC1155 Contracts",
         "recipes": "ERC1155 Recipes",
         "title": "ERC1155",
         "tokens": "ERC1155 Tokens"
       },
       "erc20": {
+        "contracts": "ERC20 Contracts",
         "title": "ERC20",
-        "tokens": "ERC20 Tokens",
         "vesting": "ERC20 Vesting"
       },
       "erc721": {
         "airdrop": "ERC721 Airdrop",
-        "collections": "ERC721 Collections",
+        "contracts": "ERC721 Contracts",
         "dropbox": "ERC721 Dropbox",
         "recipes": "ERC721 Recipes",
         "templates": "ERC721 Templates",
@@ -374,7 +376,7 @@
       },
       "erc998": {
         "airdrop": "ERC998 Airdrop",
-        "collections": "ERC998 Collections",
+        "contracts": "ERC998 Contracts",
         "dropbox": "ERC998 Dropbox",
         "recipes": "ERC998 Recipes",
         "templates": "ERC998 Templates",
@@ -398,9 +400,9 @@
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
-    "erc20-tokens": {
+    "erc20-contracts": {
       "snapshot": "Make snapshot",
-      "title": "ERC20 Tokens"
+      "title": "ERC20 Contracts"
     },
     "erc20-vesting": {
       "title": "ERC20 Vesting",

@@ -5,7 +5,7 @@ import { Transform } from "class-transformer";
 import { SearchDto } from "@gemunion/collection";
 import { Erc20ContractTemplate, IErc20ContractSearchDto, UniContractStatus } from "@framework/types";
 
-export class Erc20TokenSearchDto extends SearchDto implements IErc20ContractSearchDto {
+export class Erc20ContractSearchDto extends SearchDto implements IErc20ContractSearchDto {
   @ApiPropertyOptional({
     enum: UniContractStatus,
     isArray: true,

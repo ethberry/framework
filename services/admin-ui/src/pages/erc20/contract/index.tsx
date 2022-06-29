@@ -44,7 +44,7 @@ export const Erc20Contract: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IUniContract, IErc20ContractSearchDto>({
-    baseUrl: "/erc20-tokens",
+    baseUrl: "/erc20-contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -60,9 +60,9 @@ export const Erc20Contract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc20-tokens"]} />
+      <Breadcrumbs path={["dashboard", "erc20-contracts"]} />
 
-      <PageHeader message="pages.erc20-tokens.title">
+      <PageHeader message="pages.erc20-contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

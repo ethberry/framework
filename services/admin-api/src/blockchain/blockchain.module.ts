@@ -7,4 +7,4 @@ import { AccessListModule } from "./access-list/access-list.module";
 @Module({
   imports: [ContractManagerModule, AccessControlModule, AccessListModule],
 })
-export class MechanicsModule {}
+export class BlockchainModule {}
