@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { Erc20ContractTemplate, IUniContract, IErc20TokenDeployDto } from "@framework/types";
+import { Erc20ContractTemplate, IErc20TokenDeployDto, IUniContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

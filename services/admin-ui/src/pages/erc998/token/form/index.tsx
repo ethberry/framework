@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { UniTokenStatus, IErc998TokenSearchDto, TokenRarity } from "@framework/types";
+import { IErc998TokenSearchDto, TokenRarity, UniTokenStatus } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 

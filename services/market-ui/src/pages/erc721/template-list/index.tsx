@@ -6,7 +6,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { UniTemplateStatus, IUniTemplate, IErc721TemplateSearchDto } from "@framework/types";
+import { IErc721TemplateSearchDto, IUniTemplate, UniTemplateStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateItem } from "./item";

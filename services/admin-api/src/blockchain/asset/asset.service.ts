@@ -4,7 +4,6 @@ import { DeepPartial, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
 import { IAssetDto } from "./interfaces";
-import { IAsset } from "@framework/types";
 import { AssetComponentEntity } from "./asset-component.entity";
 
 @Injectable()

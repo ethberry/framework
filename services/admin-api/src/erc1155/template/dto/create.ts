@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, ValidateNested, IsString, IsUrl, Min } from "class-validator";
+import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";

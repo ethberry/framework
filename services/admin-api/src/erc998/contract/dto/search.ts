@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { UniContractStatus, UniContractRole, IErc998ContractSearchDto } from "@framework/types";
+import { IErc998ContractSearchDto, UniContractRole, UniContractStatus } from "@framework/types";
 import { SearchDto } from "@gemunion/collection";
 
 export class Erc998CollectionSearchDto extends SearchDto implements IErc998ContractSearchDto {

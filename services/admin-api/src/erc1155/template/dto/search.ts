@@ -4,7 +4,7 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { UniTemplateStatus, IErc1155TemplateSearchDto } from "@framework/types";
+import { IErc1155TemplateSearchDto, UniTemplateStatus } from "@framework/types";
 
 export class Erc1155TemplateSearchDto extends SearchDto implements IErc1155TemplateSearchDto {
   @ApiPropertyOptional({

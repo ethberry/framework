@@ -2,7 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { UniTemplateStatus, IErc1155TemplateAutocompleteDto, IErc1155TemplateSearchDto } from "@framework/types";
+import {
+  IErc1155TemplateAutocompleteDto,
+  IErc1155TemplateSearchDto,
+  TokenType,
+  UniTemplateStatus,
+} from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { IErc1155TemplateCreateDto, IErc1155TemplateUpdateDto } from "./interfaces";
@@ -12,33 +17,36 @@ import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-t
 export class Erc1155TemplateService {
   constructor(
     @InjectRepository(UniTemplateEntity)
-    private readonly erc1155TokenEntityRepository: Repository<UniTemplateEntity>,
+    private readonly erc1155TemplateEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
   public async search(dto: IErc1155TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
     const { query, skip, take, uniContractIds, templateStatus } = dto;
 
-    const queryBuilder = this.erc1155TokenEntityRepository.createQueryBuilder("token");
+    const queryBuilder = this.erc1155TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC1155 });
+
     if (uniContractIds) {
       if (uniContractIds.length === 1) {
-        queryBuilder.andWhere("token.uniContractId = :uniContractId", {
+        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
           uniContractId: uniContractIds[0],
         });
       } else {
-        queryBuilder.andWhere("token.uniContractId IN(:...uniContractIds)", { uniContractIds });
+        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
       }
     }
 
     if (templateStatus) {
       if (templateStatus.length === 1) {
-        queryBuilder.andWhere("token.templateStatus = :templateStatus", {
-          tokenStatus: templateStatus[0],
+        queryBuilder.andWhere("template.templateStatus = :templateStatus", {
+          templateStatus: templateStatus[0],
         });
       } else {
-        queryBuilder.andWhere("token.templateStatus IN(:...templateStatus)", { templateStatus });
+        queryBuilder.andWhere("template.templateStatus IN(:...templateStatus)", { templateStatus });
       }
     }
 
@@ -46,11 +54,11 @@ export class Erc1155TemplateService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(token.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(template.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("token.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("template.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -60,7 +68,7 @@ export class Erc1155TemplateService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "token.createdAt": "DESC",
+      "template.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -83,7 +91,7 @@ export class Erc1155TemplateService {
       });
     }
 
-    return this.erc1155TokenEntityRepository.find({
+    return this.erc1155TemplateEntityRepository.find({
       where,
       select: {
         id: true,
@@ -96,7 +104,7 @@ export class Erc1155TemplateService {
     where: FindOptionsWhere<UniTemplateEntity>,
     options?: FindOneOptions<UniTemplateEntity>,
   ): Promise<UniTemplateEntity | null> {
-    return this.erc1155TokenEntityRepository.findOne({ where, ...options });
+    return this.erc1155TemplateEntityRepository.findOne({ where, ...options });
   }
 
   public async getMaxTokenIdForCollection(collectionId: number): Promise<number> {
@@ -109,7 +117,7 @@ export class Erc1155TemplateService {
         erc1155_collection_id = $1
     `;
 
-    const result: Array<{ tokenId: number }> = await this.erc1155TokenEntityRepository.query(queryString, [
+    const result: Array<{ tokenId: number }> = await this.erc1155TemplateEntityRepository.query(queryString, [
       collectionId,
     ]);
 
@@ -119,7 +127,7 @@ export class Erc1155TemplateService {
   public async create(dto: IErc1155TemplateCreateDto): Promise<UniTemplateEntity> {
     const maxTokenId = await this.getMaxTokenIdForCollection(dto.erc1155CollectionId);
 
-    return this.erc1155TokenEntityRepository
+    return this.erc1155TemplateEntityRepository
       .create({
         // tokenId: (maxTokenId + 1).toString(),
         ...dto,

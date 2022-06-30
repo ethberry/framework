@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { utils, Wallet, BigNumber } from "ethers";
+import { BigNumber, utils, Wallet } from "ethers";
 
 import { prepareEip712 } from "@gemunion/butils";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";

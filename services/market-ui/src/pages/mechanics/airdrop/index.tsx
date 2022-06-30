@@ -60,13 +60,7 @@ export const Airdrop: FC = () => {
   const metaClick = useMetamask((airdrop: IAirdrop) => {
     const contract = new Contract(process.env.ERC721_AIRDROP_ADDR, ERC721AirdropSol.abi, library.getSigner());
 
-    return contract.redeem(
-      account,
-      airdrop.id,
-      airdrop.item,
-      process.env.ACCOUNT,
-      airdrop.signature,
-    ) as Promise<void>;
+    return contract.redeem(account, airdrop.id, airdrop.item, process.env.ACCOUNT, airdrop.signature) as Promise<void>;
   });
 
   const handleClick = (airdrop: IAirdrop) => {

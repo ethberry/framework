@@ -3,7 +3,7 @@ import { useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { UniTemplateStatus, TokenType } from "@framework/types";
+import { TokenType, UniTemplateStatus } from "@framework/types";
 
 export interface IUniTokenInputProps {
   prefix: string;

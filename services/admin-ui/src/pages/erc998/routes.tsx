@@ -8,11 +8,11 @@ import { Erc998Token } from "./token";
 
 export const erc998Routes: Array<RouteObject> = [
   {
-    path: "/erc998-contractы",
+    path: "/erc998-contracts",
     element: <Protected />,
     children: [
       { index: true, element: <Erc998Contract /> },
-      { path: "/erc998-contractы/:id", element: <Erc998Contract /> },
+      { path: "/erc998-contracts/:id", element: <Erc998Contract /> },
     ],
   },
   {

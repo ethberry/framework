@@ -5,7 +5,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { UniTokenStatus, IUniToken } from "@framework/types";
+import { IUniToken, UniTokenStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

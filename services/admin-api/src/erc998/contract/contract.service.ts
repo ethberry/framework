@@ -13,7 +13,7 @@ import { IErc998CollectionUpdateDto } from "./interfaces";
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @Injectable()
-export class Erc998CollectionService {
+export class Erc998ContractService {
   constructor(
     @InjectRepository(UniContractEntity)
     private readonly uniContractEntityRepository: Repository<UniContractEntity>,
@@ -25,6 +25,8 @@ export class Erc998CollectionService {
     const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC998 });
 
     if (query) {
       queryBuilder.leftJoin(

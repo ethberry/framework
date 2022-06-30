@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsJSON, ValidateNested, IsOptional, IsString, IsUrl, Min } from "class-validator";
+import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { DropboxStatus } from "@framework/types";

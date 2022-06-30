@@ -6,11 +6,6 @@ import { Erc1155BalanceModule } from "./balance/balance.module";
 import { Erc1155MarketplaceModule } from "./marketplace/marketplace.module";
 
 @Module({
-  imports: [
-    Erc1155CollectionModule,
-    Erc1155TokenModule,
-    Erc1155BalanceModule,
-    Erc1155MarketplaceModule,
-  ],
+  imports: [Erc1155CollectionModule, Erc1155TokenModule, Erc1155BalanceModule, Erc1155MarketplaceModule],
 })
 export class Erc1155Module {}

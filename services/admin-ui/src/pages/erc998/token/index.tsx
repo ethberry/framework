@@ -13,7 +13,7 @@ import {
 import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { UniTokenStatus, IUniTemplate, IUniToken, IErc998TokenSearchDto } from "@framework/types";
+import { IErc998TokenSearchDto, IUniTemplate, IUniToken, UniTokenStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998TokenEditDialog } from "./edit";

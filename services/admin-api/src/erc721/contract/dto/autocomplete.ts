@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { UniContractStatus, UniContractRole, IErc721ContractAutocompleteDto } from "@framework/types";
+import { IErc721ContractAutocompleteDto, UniContractRole, UniContractStatus } from "@framework/types";
 
 export class Erc721CollectionAutocompleteDto implements IErc721ContractAutocompleteDto {
   @ApiPropertyOptional({

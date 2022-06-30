@@ -10,20 +10,20 @@ import { Erc1155CollectionItem } from "./item";
 
 export const Erc1155ContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IUniContract, ISearchDto>({
-    baseUrl: "/erc1155-collections",
+    baseUrl: "/erc1155-contracts",
   });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc1155-collections"]} />
+      <Breadcrumbs path={["dashboard", "erc1155-contracts"]} />
 
-      <PageHeader message="pages.erc1155-collections.title" />
+      <PageHeader message="pages.erc1155-contracts.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(collection => (
             <Grid item lg={4} sm={6} xs={12} key={collection.id}>
-              <Erc1155CollectionItem collection={collection} />
+              <Erc1155CollectionItem contract={collection} />
             </Grid>
           ))}
         </Grid>

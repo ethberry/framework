@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { UniTemplateStatus, IErc998TemplateSearchDto } from "@framework/types";
+import { IErc998TemplateSearchDto, UniTemplateStatus } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 export class Erc998TemplateSearchDto extends SearchDto implements IErc998TemplateSearchDto {

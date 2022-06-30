@@ -18,7 +18,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { AirdropService } from "./airdrop.service";
 import { AirdropEntity } from "./airdrop.entity";
-import { Erc998AirdropCreateDto, AirdropItemUpdateDto, AirdropSearchDto } from "./dto";
+import { AirdropItemUpdateDto, AirdropSearchDto, Erc998AirdropCreateDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/erc998-airdrops")

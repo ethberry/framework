@@ -2,7 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { UniTemplateStatus, IErc998TemplateAutocompleteDto, IErc998TemplateSearchDto } from "@framework/types";
+import {
+  IErc998TemplateAutocompleteDto,
+  IErc998TemplateSearchDto,
+  TokenType,
+  UniTemplateStatus,
+} from "@framework/types";
 
 import { IUniTemplateCreateDto, IUniTemplateUpdateDto } from "./interfaces";
 import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
@@ -20,6 +25,9 @@ export class Erc998TemplateService {
     const queryBuilder = this.erc998TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC998 });
 
     if (templateStatus) {
       if (templateStatus.length === 1) {

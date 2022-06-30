@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
@@ -31,14 +31,6 @@ export class Erc998TemplateUpdateDto implements IUniTemplateUpdateDto {
   @ValidateNested()
   @Type(() => AssetDto)
   public price: AssetDto;
-
-  @ApiPropertyOptional({
-    type: Number,
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public erc20TokenId: number;
 
   @ApiPropertyOptional({
     minimum: 0,

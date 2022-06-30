@@ -8,8 +8,8 @@ import { Erc1155CollectionSearchDto } from "./dto";
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @ApiBearerAuth()
-@Controller("/erc1155-collections")
-export class Erc1155CollectionController {
+@Controller("/erc1155-contracts")
+export class Erc1155ContractController {
   constructor(private readonly erc1155ContractService: Erc1155ContractService) {}
 
   @Get("/")

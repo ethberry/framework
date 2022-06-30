@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc20ContractTemplate, TokenType, UniContractStatus, UniContractRole } from "@framework/types";
+import { Erc20ContractTemplate, TokenType, UniContractRole, UniContractStatus } from "@framework/types";
 
 export interface IUniContractInputProps {
   prefix: string;
@@ -19,7 +19,7 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
       return (
         <EntityInput
           name={`${prefix}.${name}`}
-          controller="erc1155-collections"
+          controller="uni-contracts"
           data={{
             contractStatus: [UniContractStatus.ACTIVE],
             contractType: [TokenType.ERC1155],

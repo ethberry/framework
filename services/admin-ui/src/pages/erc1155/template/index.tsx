@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { UniTemplateStatus, IUniTemplate, IErc1155TemplateSearchDto } from "@framework/types";
+import { IErc1155TemplateSearchDto, IUniTemplate, UniTemplateStatus } from "@framework/types";
 
 import { Erc1155TokenEditDialog } from "./edit";
 import { Erc1155TemplateSearchForm } from "./form";
@@ -43,7 +43,7 @@ export const Erc1155Template: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IUniTemplate, IErc1155TemplateSearchDto>({
-    baseUrl: "/erc1155-tokens",
+    baseUrl: "/erc1155-templates",
     empty: {
       title: "",
       description: emptyStateString,

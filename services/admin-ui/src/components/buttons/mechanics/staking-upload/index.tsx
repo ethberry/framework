@@ -2,10 +2,10 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
-import { BigNumber, constants, Contract } from "ethers";
+import { BigNumber, Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { IStaking, StakingStatus, TokenType } from "@framework/types";
+import { IStaking, StakingStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/UniStaking.sol/UniStaking.json";

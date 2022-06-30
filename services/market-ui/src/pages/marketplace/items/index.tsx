@@ -3,7 +3,7 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IUniTemplate, IErc721TemplateSearchDto } from "@framework/types";
+import { IErc721TemplateSearchDto, IUniTemplate } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";

@@ -82,7 +82,10 @@ export class StakingRulesService {
     return this.stakingRuleEntityRepository.create(dto).save();
   }
 
-  public async update(where: FindOptionsWhere<StakingRulesEntity>, dto: IStakingUpdateDto): Promise<StakingRulesEntity> {
+  public async update(
+    where: FindOptionsWhere<StakingRulesEntity>,
+    dto: IStakingUpdateDto,
+  ): Promise<StakingRulesEntity> {
     const { reward, deposit, ...rest } = dto;
     const stakingEntity = await this.findOne(where, { relations: { deposit: true, reward: true } });
 

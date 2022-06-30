@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { UniTemplateStatus, IErc998TemplateAutocompleteDto } from "@framework/types";
+import { IErc998TemplateAutocompleteDto, UniTemplateStatus } from "@framework/types";
 
 export class Erc998TemplateAutocompleteDto implements IErc998TemplateAutocompleteDto {
   @ApiPropertyOptional({

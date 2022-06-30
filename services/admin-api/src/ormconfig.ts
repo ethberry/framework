@@ -7,7 +7,7 @@ import {
   createLanguageEnum,
   createSchema,
   createTokenTypes,
-  installExtensionUUID,
+  installExtensionUUID
 } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UserEntity } from "./user/user.entity";
@@ -61,13 +61,19 @@ import { SeedErc20Vesting1563804010220 } from "./migrations/1563804010220-seed-e
 import { CreateErc20VestingHistory1563804010230 } from "./migrations/1563804010230-create-erc20-vesting-history";
 
 import { CreateErc998ContractHistory1563804030330 } from "./migrations/1563804030330-create-erc998-contract-history";
-import { CreateErc998MarketplaceHistoryTable1563804030510 } from "./migrations/1563804030510-create-erc998-marketplace-history-table";
+import {
+  CreateErc998MarketplaceHistoryTable1563804030510
+} from "./migrations/1563804030510-create-erc998-marketplace-history-table";
 
 import { CreateErc721ContractHistory1563804040330 } from "./migrations/1563804040330-create-erc721-contract-history";
-import { CreateErc721MarketplaceHistoryTable1563804040510 } from "./migrations/1563804040510-create-erc721-marketplace-history-table";
+import {
+  CreateErc721MarketplaceHistoryTable1563804040510
+} from "./migrations/1563804040510-create-erc721-marketplace-history-table";
 
 import { CreateErc1155ContractHistory1563804020130 } from "./migrations/1563804020130-create-erc1155-contract-history";
-import { CreateErc1155MarketplaceHistoryTable1563804020210 } from "./migrations/1563804020210-create-erc1155-marketplace-history-table";
+import {
+  CreateErc1155MarketplaceHistoryTable1563804020210
+} from "./migrations/1563804020210-create-erc1155-marketplace-history-table";
 
 import { CreateAirdropTable1563804040410 } from "./migrations/1653616447810-create-airdrop";
 import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-seed-airdrop-erc721";
@@ -77,15 +83,21 @@ import { SeedDropboxErc721At1653616447920 } from "./migrations/1653616447920-see
 
 import { CreateExchange1653616448010 } from "./migrations/1653616448010-create-exchange";
 import { SeedExchangeErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-exchange-erc1155-erc1155";
-import { SeedExchangeErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-exchange-erc721-erc1155-recipe";
+import {
+  SeedExchangeErc721Erc1155At1653616448030
+} from "./migrations/1653616448030-seed-exchange-erc721-erc1155-recipe";
 import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-exchnage-history";
 
 import { Erc20VestingEntity } from "./erc20/vesting/vesting.entity";
-import { CreateContractManagerHistoryTable1652682493386 } from "./migrations/1652682493386-create-contract-manager-history-table";
+import {
+  CreateContractManagerHistoryTable1652682493386
+} from "./migrations/1652682493386-create-contract-manager-history-table";
 import { CreateContractManagerTable1652962207600 } from "./migrations/1652962207600-create-contract-manager-table";
 import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager-table";
 import { CreateAccessControlTable1653616447230 } from "./migrations/1653616447230-create-access-control-table";
-import { CreateAccessControlHistoryTable1653616447240 } from "./migrations/1653616447240-create-access-control-history-table";
+import {
+  CreateAccessControlHistoryTable1653616447240
+} from "./migrations/1653616447240-create-access-control-history-table";
 import { CreateAccessListTable1653616447330 } from "./migrations/1653616447330-create-access-list-table";
 import { CreateAccessListHistoryTable1653616447340 } from "./migrations/1653616447340-create-access-list-history-table";
 import { CreateSettingsTable1563804000010 } from "./migrations/1563804000010-create-settings-table";

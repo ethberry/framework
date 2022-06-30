@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, OneToMany, Column } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@framework/constants";

@@ -24,10 +24,7 @@ export class DropboxController {
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: DropboxUpdateDto,
-  ): Promise<DropboxEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: DropboxUpdateDto): Promise<DropboxEntity> {
     return this.dropboxService.update({ id }, dto);
   }
 

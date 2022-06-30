@@ -5,10 +5,6 @@ import { Erc998TemplateModule } from "./template/template.module";
 import { Erc998TokenModule } from "./token/token.module";
 
 @Module({
-  imports: [
-    Erc998ContractModule,
-    Erc998TemplateModule,
-    Erc998TokenModule,
-  ],
+  imports: [Erc998ContractModule, Erc998TemplateModule, Erc998TokenModule],
 })
 export class Erc998Module {}

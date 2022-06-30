@@ -23,12 +23,12 @@ export const Erc1155Section: FC = () => {
             <FormattedMessage id="pages.dashboard.erc1155.contracts" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc1155-tokens">
+        <ListItem button component={RouterLink} to="/erc1155-templates">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc1155.tokens" />
+            <FormattedMessage id="pages.dashboard.erc1155.templates" />
           </ListItemText>
         </ListItem>
       </List>

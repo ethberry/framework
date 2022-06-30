@@ -7,7 +7,6 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   Erc721TokenEventType,
-  UniTokenStatus,
   IAirdropRedeem,
   IErc721DefaultRoyaltyInfo,
   IErc721RandomRequest,
@@ -18,6 +17,7 @@ import {
   IErc721TokenTransfer,
   TErc721TokenEventData,
   TokenRarity,
+  UniTokenStatus,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";

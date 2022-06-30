@@ -20,7 +20,7 @@ import { Erc1155CollectionAutocompleteDto, Erc1155CollectionSearchDto, Erc1155Co
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @ApiBearerAuth()
-@Controller("/erc1155-collections")
+@Controller("/erc1155-contracts")
 export class Erc1155ContractController {
   constructor(private readonly erc1155CollectionService: Erc1155ContractService) {}
 

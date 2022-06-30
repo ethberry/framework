@@ -17,7 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/ne
 
 import { ExchangeService } from "./exchange.service";
 import { ExchangeEntity } from "./exchange.entity";
-import { ExchangeCreateDto, Erc721RecipeSearchDto, Erc721RecipeUpdateDto } from "./dto";
+import { Erc721RecipeSearchDto, Erc721RecipeUpdateDto, ExchangeCreateDto } from "./dto";
 
 @Public()
 @Controller("/erc721-recipes")
@@ -53,10 +53,7 @@ export class ExchangeController {
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: Erc721RecipeUpdateDto,
-  ): Promise<ExchangeEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc721RecipeUpdateDto): Promise<ExchangeEntity> {
     return this.recipeService.update({ id }, dto);
   }
 

@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { UniContractRole, UniTemplateStatus, IUniTemplate, TokenType } from "@framework/types";
+import { IUniTemplate, TokenType, UniContractRole, UniTemplateStatus } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { UniContractStatus, UniContractRole, IErc998ContractSearchDto } from "@framework/types";
+import { IErc998ContractSearchDto, UniContractRole, UniContractStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";

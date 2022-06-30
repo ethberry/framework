@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { ValidateNested, IsOptional, IsString } from "class-validator";
+import { IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IAirdropItemUpdateDto } from "../interfaces";

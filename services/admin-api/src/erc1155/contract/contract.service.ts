@@ -2,7 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { UniContractStatus, IErc1155ContractAutocompleteDto, IErc1155ContractSearchDto } from "@framework/types";
+import {
+  IErc1155ContractAutocompleteDto,
+  IErc1155ContractSearchDto,
+  TokenType,
+  UniContractStatus,
+} from "@framework/types";
 
 import { IUniContractUpdateDto } from "./interfaces";
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
@@ -17,9 +22,11 @@ export class Erc1155ContractService {
   public search(dto: IErc1155ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
     const { query, contractStatus, skip, take } = dto;
 
-    const queryBuilder = this.erc1155CollectionEntityRepository.createQueryBuilder("collection");
+    const queryBuilder = this.erc1155CollectionEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC1155 });
 
     if (query) {
       queryBuilder.leftJoin(

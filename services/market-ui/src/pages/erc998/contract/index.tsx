@@ -3,7 +3,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IUniContract, IErc998ContractSearchDto } from "@framework/types";
+import { IErc998ContractSearchDto, IUniContract } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";

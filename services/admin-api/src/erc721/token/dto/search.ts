@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsNumber, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { UniTokenStatus, IErc721TokenSearchDto, TokenRarity } from "@framework/types";
+import { IErc721TokenSearchDto, TokenRarity, UniTokenStatus } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 export class Erc721TokenSearchDto extends SearchDto implements IErc721TokenSearchDto {

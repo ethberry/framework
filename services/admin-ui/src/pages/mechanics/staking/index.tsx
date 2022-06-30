@@ -18,13 +18,13 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
-  IStaking,
+  AssetType,
   IAsset,
+  IAssetComponent,
+  IStaking,
   IStakingSearchDto,
   StakingStatus,
   TokenType,
-  AssetType,
-  IAssetComponent,
 } from "@framework/types";
 
 import { StakingEditDialog } from "./edit";

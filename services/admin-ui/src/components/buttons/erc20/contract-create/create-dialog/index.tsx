@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc20ContractTemplate, IUniContract, IErc20TokenCreateDto } from "@framework/types";
+import { Erc20ContractTemplate, IErc20TokenCreateDto, IUniContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { AddressInput } from "./address-input";

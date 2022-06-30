@@ -357,7 +357,7 @@
       "erc1155": {
         "contracts": "ERC1155 Contracts",
         "title": "ERC1155",
-        "tokens": "ERC1155 Tokens"
+        "templates": "ERC1155 Templates"
       },
       "erc20": {
         "contracts": "ERC20 Contracts",
@@ -390,8 +390,8 @@
       "title": "Exchange rules",
       "upload": "Upload rule"
     },
-    "erc1155-tokens": {
-      "title": "ERC1155 Tokens"
+    "erc1155-templates": {
+      "title": "ERC1155 Templates"
     },
     "erc20-contracts": {
       "snapshot": "Make snapshot",

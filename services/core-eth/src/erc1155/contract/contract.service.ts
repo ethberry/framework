@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
-
 @Injectable()
 export class Erc1155CollectionService {
   constructor(

@@ -18,16 +18,16 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
-  UniContractTemplate,
-  IUniContract,
   IErc20ContractSearchDto,
-  UniContractStatus,
+  IUniContract,
   IUniTemplate,
+  UniContractStatus,
+  UniContractTemplate,
 } from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
-import { Erc20TokenDeployButton, Erc20TokenCreateButton } from "../../../components/buttons";
+import { Erc20TokenCreateButton, Erc20TokenDeployButton } from "../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 
 export const Erc20Contract: FC = () => {

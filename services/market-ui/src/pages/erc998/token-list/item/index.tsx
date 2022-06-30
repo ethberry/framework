@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IUniToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { LevelUpButton, Erc998TokenSellButton } from "../../../../components/buttons";
+import { Erc998TokenSellButton, LevelUpButton } from "../../../../components/buttons";
 import { RarityBadge } from "./badge";
 
 interface IUniTokenProps {

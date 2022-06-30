@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { ContractBaseEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IUniContract, UniContractStatus, UniContractTemplate, UniContractRole, TokenType } from "@framework/types";
+import { IUniContract, TokenType, UniContractRole, UniContractStatus, UniContractTemplate } from "@framework/types";
 import { ns } from "@framework/constants";
 import { UniTemplateEntity } from "./uni-template.entity";
 

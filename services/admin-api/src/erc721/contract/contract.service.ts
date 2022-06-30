@@ -3,10 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import {
-  UniContractStatus,
   IErc721ContractAutocompleteDto,
   IErc721ContractSearchDto,
   TokenType,
+  UniContractStatus,
 } from "@framework/types";
 
 import { IErc721CollectionUpdateDto } from "./interfaces";

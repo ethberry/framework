@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { UniTemplateStatus, IUniTemplate, IErc998TemplateSearchDto } from "@framework/types";
+import { IErc998TemplateSearchDto, IUniTemplate, UniTemplateStatus } from "@framework/types";
 
 import { Erc998TemplateEditDialog } from "./edit";
 import { Erc998TemplateSearchForm } from "./form";

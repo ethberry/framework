@@ -7,7 +7,7 @@ import { UniContractStatus } from "@framework/types";
 
 import { IErc998CollectionUpdateDto } from "../interfaces";
 
-export class Erc998CollectionUpdateDto implements IErc998CollectionUpdateDto {
+export class Erc998ContractUpdateDto implements IErc998CollectionUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

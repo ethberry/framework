@@ -1,7 +1,9 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
+import {
+  ContractManagerHistoryEntity
+} from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
 import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
@@ -13,7 +15,9 @@ import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-h
 import { Erc1155MarketplaceHistoryEntity } from "./erc1155/marketplace/marketplace-history/marketplace-history.entity";
 import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
-import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
+import {
+  AccessControlHistoryEntity
+} from "./blockchain/access-control/access-control-history/access-control-history.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakesEntity } from "./mechanics/staking/stakes/stakes.entity";

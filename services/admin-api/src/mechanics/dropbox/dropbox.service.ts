@@ -79,10 +79,7 @@ export class DropboxService {
     return this.erc998DropboxEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(
-    where: FindOptionsWhere<DropboxEntity>,
-    dto: Partial<IDropboxUpdateDto>,
-  ): Promise<DropboxEntity> {
+  public async update(where: FindOptionsWhere<DropboxEntity>, dto: Partial<IDropboxUpdateDto>): Promise<DropboxEntity> {
     const templateEntity = await this.findOne(where);
 
     if (!templateEntity) {

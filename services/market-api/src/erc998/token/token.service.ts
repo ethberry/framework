@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UniTokenStatus, IErc998AssetSearchDto } from "@framework/types";
+import { IErc998AssetSearchDto, UniTokenStatus } from "@framework/types";
 
 import { UserEntity } from "../../user/user.entity";
 import { IUniTokenAutocompleteDto } from "./interface";

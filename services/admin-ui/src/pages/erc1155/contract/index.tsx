@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { UniContractStatus, IUniContract, IErc1155ContractSearchDto } from "@framework/types";
+import { IErc1155ContractSearchDto, IUniContract, UniContractStatus } from "@framework/types";
 
 import { Erc1155CollectionEditDialog } from "./edit";
 import { Erc1155CollectionSearchForm } from "./form";
@@ -43,7 +43,7 @@ export const Erc1155Contract: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IUniContract, IErc1155ContractSearchDto>({
-    baseUrl: "/erc1155-collections",
+    baseUrl: "/erc1155-contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -62,9 +62,9 @@ export const Erc1155Contract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc1155-collections"]} />
+      <Breadcrumbs path={["dashboard", "erc1155-contracts"]} />
 
-      <PageHeader message="pages.erc1155-collections.title">
+      <PageHeader message="pages.erc1155-contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -78,20 +78,20 @@ export const Erc1155Contract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((collection, i) => (
+          {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText>{collection.title}</ListItemText>
+              <ListItemText>{contract.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(collection)}>
+                <IconButton onClick={handleEdit(contract)}>
                   <Create />
                 </IconButton>
                 <IconButton
-                  onClick={handleDelete(collection)}
-                  disabled={collection.contractStatus === UniContractStatus.INACTIVE}
+                  onClick={handleDelete(contract)}
+                  disabled={contract.contractStatus === UniContractStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu contract={collection} />
+                <ContractActionsMenu contract={contract} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

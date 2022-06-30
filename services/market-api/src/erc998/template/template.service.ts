@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UniTemplateStatus, IErc998TemplateSearchDto } from "@framework/types";
+import { IErc998TemplateSearchDto, UniTemplateStatus } from "@framework/types";
 import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
 
 @Injectable()
