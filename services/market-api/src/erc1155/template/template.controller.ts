@@ -17,12 +17,6 @@ export class Erc1155TokenController {
     return this.erc1155TokenService.search(dto);
   }
 
-  @Get("/new")
-  @UseInterceptors(PaginationInterceptor)
-  public getNewTemplates(): Promise<[Array<UniTemplateEntity>, number]> {
-    return this.erc1155TokenService.getNewTokens();
-  }
-
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {

@@ -22,12 +22,6 @@ export class Erc998TemplateController {
     return this.erc998TemplateService.autocomplete();
   }
 
-  @Get("/new")
-  @UseInterceptors(PaginationInterceptor)
-  public getNewTemplates(): Promise<[Array<UniTemplateEntity>, number]> {
-    return this.erc998TemplateService.getNewTemplates();
-  }
-
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {

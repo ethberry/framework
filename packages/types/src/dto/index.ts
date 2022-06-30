@@ -1,5 +1,6 @@
 export * from "./blockchain/contract-manager/search";
 export * from "./blockchain/uni-contract/autocomplete";
+export * from "./blockchain/uni-template/search";
 
 export * from "./mechanics/staking/search";
 export * from "./mechanics/airdrop/search";

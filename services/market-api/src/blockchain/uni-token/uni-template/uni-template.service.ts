@@ -1,33 +1,24 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 
-import { IErc998TemplateSearchDto } from "@framework/types";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { UniTemplateEntity } from "./uni-template.entity";
+import { IUniTemplateSearchDto, UniTemplateStatus } from "@framework/types";
+import { ITemplateNewDto } from "./interfaces";
 
 @Injectable()
-export class Erc998TemplateService {
+export class UniTemplateService {
   constructor(
     @InjectRepository(UniTemplateEntity)
-    private readonly erc998TemplateEntityRepository: Repository<UniTemplateEntity>,
+    private readonly uniTemplateEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
-  public async autocomplete(): Promise<Array<UniTemplateEntity>> {
-    return this.erc998TemplateEntityRepository.find({
-      select: {
-        id: true,
-        title: true,
-      },
-    });
-  }
-
-  public async search(dto: IErc998TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
+  public async search(dto: IUniTemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
     const { query, templateStatus, skip, take, uniContractIds, minPrice, maxPrice } = dto;
-    const queryBuilder = this.erc998TemplateEntityRepository.createQueryBuilder("template");
+    const queryBuilder = this.uniTemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
-    queryBuilder.leftJoinAndSelect("template.erc998Collection", "collection");
-    queryBuilder.leftJoinAndSelect("template.erc20Token", "erc20_token");
+    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
 
     if (templateStatus) {
       if (templateStatus.length === 1) {
@@ -87,10 +78,41 @@ export class Erc998TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public findOne(
-    where: FindOptionsWhere<UniTemplateEntity>,
-    options?: FindOneOptions<UniTemplateEntity>,
-  ): Promise<UniTemplateEntity | null> {
-    return this.erc998TemplateEntityRepository.findOne({ where, ...options });
+  public async autocomplete(): Promise<Array<UniTemplateEntity>> {
+    return this.uniTemplateEntityRepository.find({
+      select: {
+        id: true,
+        title: true,
+      },
+    });
+  }
+
+  public async getNewTemplates(dto: ITemplateNewDto): Promise<[Array<UniTemplateEntity>, number]> {
+    const { tokenType } = dto;
+
+    const queryBuilder = this.uniTemplateEntityRepository.createQueryBuilder("template");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
+
+    if (tokenType) {
+      queryBuilder.andWhere("contract.contractType = :contractType", {
+        contractType: tokenType,
+      });
+    }
+
+    queryBuilder.andWhere("template.templateStatus = :templateStatus", {
+      templateStatus: UniTemplateStatus.ACTIVE,
+    });
+
+    queryBuilder.orderBy({
+      "template.createdAt": "DESC",
+    });
+
+    queryBuilder.skip(0);
+    queryBuilder.take(10);
+
+    return queryBuilder.getManyAndCount();
   }
 }

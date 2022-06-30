@@ -79,21 +79,4 @@ export class Erc1155TemplateService {
   ): Promise<UniTemplateEntity | null> {
     return this.erc1155TokenEntityRepository.findOne({ where, ...options });
   }
-
-  public async getNewTokens(): Promise<[Array<UniTemplateEntity>, number]> {
-    const queryBuilder = this.erc1155TokenEntityRepository.createQueryBuilder("token");
-
-    queryBuilder.select();
-
-    queryBuilder.leftJoinAndSelect("token.erc1155Collection", "collection");
-
-    queryBuilder.orderBy({
-      "token.createdAt": "DESC",
-    });
-
-    queryBuilder.skip(0);
-    queryBuilder.take(10);
-
-    return queryBuilder.getManyAndCount();
-  }
 }

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Construction, Filter, Storage, Storefront } from "@mui/icons-material";
+import { Filter, Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,12 +15,12 @@ export const Erc998Section: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc998-collections">
+        <ListItem button component={RouterLink} to="/erc998-contracts">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc998.collections" />
+            <FormattedMessage id="pages.dashboard.erc998.contracts" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc998-templates">
@@ -37,22 +37,6 @@ export const Erc998Section: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.erc998.tokens" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/erc998-airdrop">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc998.airdrop" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/erc998-recipes">
-          <ListItemIcon>
-            <Construction />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc998.recipes" />
           </ListItemText>
         </ListItem>
       </List>

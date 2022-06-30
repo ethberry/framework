@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
-import { IUniTemplate } from "@framework/types";
+import { IUniTemplate, TokenType } from "@framework/types";
 
 import { MultiCarousel } from "./multi-carousel";
 import { useStyles } from "./styles";
@@ -18,7 +18,10 @@ export const NewErc1155: FC = () => {
   const { fn, isLoading } = useApiCall(
     async api => {
       return api.fetchJson({
-        url: "/erc1155-tokens/new",
+        url: "/uni-templates/new",
+        data: {
+          tokenType: TokenType.ERC1155,
+        },
       });
     },
     { success: false, error: false },

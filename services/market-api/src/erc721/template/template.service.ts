@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IErc721TemplateSearchDto, UniTemplateStatus } from "@framework/types";
+import { IErc721TemplateSearchDto } from "@framework/types";
 
 import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
@@ -93,26 +93,5 @@ export class Erc721TemplateService {
     options?: FindOneOptions<UniTemplateEntity>,
   ): Promise<UniTemplateEntity | null> {
     return this.erc721TemplateEntityRepository.findOne({ where, ...options });
-  }
-
-  public async getNewTemplates(): Promise<[Array<UniTemplateEntity>, number]> {
-    const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
-
-    queryBuilder.select();
-
-    queryBuilder.leftJoinAndSelect("template.erc721Collection", "collection");
-
-    queryBuilder.andWhere("template.templateStatus = :templateStatus", {
-      templateStatus: UniTemplateStatus.ACTIVE,
-    });
-
-    queryBuilder.orderBy({
-      "template.createdAt": "DESC",
-    });
-
-    queryBuilder.skip(0);
-    queryBuilder.take(10);
-
-    return queryBuilder.getManyAndCount();
   }
 }

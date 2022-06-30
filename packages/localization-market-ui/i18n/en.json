@@ -208,10 +208,10 @@
     },
     "dashboard": {
       "erc1155": {
-        "collections": "ERC1155 Collections",
+        "contracts": "ERC1155 Contracts",
         "recipes": "ERC1155 Recipes",
         "title": "ERC1155",
-        "tokens": "ERC1155 Tokens"
+        "templates": "ERC1155 Templates"
       },
       "erc20": {
         "title": "ERC20",
@@ -219,7 +219,7 @@
       },
       "erc721": {
         "airdrop": "ERC721 Airdrop",
-        "collections": "ERC721 Collections",
+        "contracts": "ERC721 Contracts",
         "recipes": "ERC721 Recipes",
         "templates": "ERC721 Templates",
         "title": "ERC721",
@@ -227,7 +227,7 @@
       },
       "erc998": {
         "airdrop": "ERC998 Airdrop",
-        "collections": "ERC998 Collections",
+        "contracts": "ERC998 Contracts",
         "recipes": "ERC998 Recipes",
         "templates": "ERC998 Templates",
         "title": "ERC998",

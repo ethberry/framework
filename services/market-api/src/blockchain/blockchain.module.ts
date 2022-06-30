@@ -1,6 +1,8 @@
 import { Module } from "@nestjs/common";
 
+import { UniModule } from "./uni-token/uni.module";
+
 @Module({
-  imports: [],
+  imports: [UniModule],
 })
 export class BlockchainModule {}
