@@ -19,12 +19,11 @@ export interface IErc721TokenEditDialogProps {
 export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, attributes, owner, tokenStatus, tokenId, uniTemplate } = initialValues;
+  const { id, attributes, tokenStatus, tokenId, uniTemplate } = initialValues;
 
   const fixedValues = {
     id,
     attributes,
-    owner,
     tokenStatus,
     tokenId,
     uniContractId: uniTemplate!.uniContractId,
@@ -43,7 +42,6 @@ export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
       <SelectInput name="tokenStatus" options={UniTokenStatus} readOnly />
-      <TextInput name="owner" readOnly />
       <EntityInput name="erc721CollectionId" controller="erc721-collections" readOnly />
       <img src={uniTemplate?.imageUrl} width={200} height={200} alt={uniTemplate?.title} />
     </FormDialog>

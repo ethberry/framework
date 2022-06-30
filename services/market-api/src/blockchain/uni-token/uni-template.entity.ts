@@ -24,13 +24,13 @@ export class UniTemplateEntity extends SearchableEntity implements IUniTemplate 
   public priceId: number;
 
   @Column({ type: "int" })
-  public amount: number;
+  public cap: string;
+
+  @Column({ type: "int" })
+  public amount: string;
 
   @Column({ type: "int" })
   public decimals: number;
-
-  @Column({ type: "int" })
-  public instanceCount: number;
 
   @Column({
     type: "enum",

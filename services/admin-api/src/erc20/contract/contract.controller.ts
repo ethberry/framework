@@ -44,7 +44,7 @@ export class Erc20TokenController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniContractEntity | null> {
-    return this.erc20ContractService.findOne({ id });
+    return this.erc20ContractService.findOne({ id }, { relations: { uniTemplates: true } });
   }
 
   @Delete("/:id")

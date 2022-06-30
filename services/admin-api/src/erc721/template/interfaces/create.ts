@@ -5,7 +5,7 @@ export interface IErc721TemplateCreateDto {
   description: string;
   attributes: string;
   price: IAssetDto;
-  amount: number;
+  amount: string;
   imageUrl: string;
   erc721CollectionId: number;
 }

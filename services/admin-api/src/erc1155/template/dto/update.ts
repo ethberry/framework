@@ -2,9 +2,11 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsJSON, ValidateNested, IsOptional, IsString, IsUrl, Min } from "class-validator";
 import { Type } from "class-transformer";
 
+import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { UniTemplateStatus } from "@framework/types";
+
 import { IErc1155TemplateUpdateDto } from "../interfaces";
 import { AssetDto } from "../../../blockchain/asset/dto";
-import { UniTemplateStatus } from "@framework/types";
 
 export class Erc1155TemplateUpdateDto implements IErc1155TemplateUpdateDto {
   @ApiPropertyOptional()
@@ -42,9 +44,8 @@ export class Erc1155TemplateUpdateDto implements IErc1155TemplateUpdateDto {
     minimum: 0,
   })
   @IsOptional()
-  @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
-  public amount: number;
+  @IsBigNumber({ minimum: "0" }, { message: "typeMismatch" })
+  public amount: string;
 
   @ApiPropertyOptional()
   @IsOptional()

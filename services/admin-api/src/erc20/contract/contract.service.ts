@@ -35,6 +35,8 @@ export class Erc20ContractService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("contract.uniTemplates", "uniTemplates");
+
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC20 });
 
     if (contractStatus) {

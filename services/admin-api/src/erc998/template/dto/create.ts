@@ -2,6 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, IsJSON, ValidateNested, IsString, IsUrl, Min } from "class-validator";
 import { Type } from "class-transformer";
 
+import { IsBigNumber } from "@gemunion/nest-js-validators";
+
 import { IUniTemplateCreateDto } from "../interfaces";
 import { AssetDto } from "../../../blockchain/asset/dto";
 
@@ -36,9 +38,8 @@ export class Erc998TemplateCreateDto implements IUniTemplateCreateDto {
   @ApiProperty({
     minimum: 0,
   })
-  @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
-  public amount: number;
+  @IsBigNumber({ minimum: "0" }, { message: "typeMismatch" })
+  public amount: string;
 
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })

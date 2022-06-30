@@ -49,7 +49,7 @@ export const Erc998Template: FC = () => {
       description: emptyStateString,
       price: emptyPrice,
       attributes: "{}",
-      amount: 0,
+      amount: "0",
       uniContractId: 3,
     },
     search: {

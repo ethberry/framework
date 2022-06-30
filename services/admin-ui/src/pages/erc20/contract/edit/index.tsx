@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { constants } from "ethers";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -8,6 +7,7 @@ import { IUniContract, UniContractStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
+import { formatEther } from "../../../../utils/money";
 
 export interface IErc20TokenEditDialogProps {
   open: boolean;
@@ -19,7 +19,9 @@ export interface IErc20TokenEditDialogProps {
 export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, contractStatus, name, symbol, address } = initialValues;
+  const { id, title, description, contractStatus, name, symbol, address, uniTemplates } = initialValues;
+
+  const [uniTemplate] = uniTemplates;
 
   const fixedValues = {
     id,
@@ -44,9 +46,9 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         <BlockchainInfoPopover
           name={name}
           symbol={symbol}
-          decimals={18}
           address={address}
-          amount={constants.WeiPerEther.toString()}
+          decimals={uniTemplate.decimals}
+          cap={formatEther(uniTemplate.amount)}
         />
         <TextInput name="title" />
         <RichTextEditor name="description" />

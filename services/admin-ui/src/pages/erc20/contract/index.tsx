@@ -11,12 +11,19 @@ import {
   Pagination,
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
+import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { UniContractTemplate, IUniContract, IErc20ContractSearchDto, UniContractStatus } from "@framework/types";
+import {
+  UniContractTemplate,
+  IUniContract,
+  IErc20ContractSearchDto,
+  UniContractStatus,
+  IUniTemplate,
+} from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
@@ -49,6 +56,12 @@ export const Erc20Contract: FC = () => {
       title: "",
       description: emptyStateString,
       symbol: "",
+      uniTemplates: [
+        {
+          decimals: 18,
+          cap: constants.WeiPerEther.toString(),
+        } as IUniTemplate,
+      ],
     },
     search: {
       query: "",

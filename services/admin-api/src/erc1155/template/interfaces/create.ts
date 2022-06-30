@@ -6,6 +6,6 @@ export interface IErc1155TemplateCreateDto {
   attributes: string;
   imageUrl: string;
   price: IAssetDto;
-  amount: number;
+  amount: string;
   erc1155CollectionId: number;
 }

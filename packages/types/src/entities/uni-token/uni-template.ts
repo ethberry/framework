@@ -14,8 +14,8 @@ export interface IUniTemplate extends ISearchable {
   attributes: any;
   price?: IAsset;
   priceId: number;
-  cap: number;
-  amount: number;
+  cap: string;
+  amount: string;
   decimals: number;
   templateStatus: UniTemplateStatus;
   uniContractId: number;

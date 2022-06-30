@@ -5,7 +5,7 @@ export interface IErc721TemplateUpdateDto {
   description: string;
   attributes: string;
   price: string;
-  amount: number;
+  amount: string;
   imageUrl: string;
   templateStatus: UniTemplateStatus;
 }

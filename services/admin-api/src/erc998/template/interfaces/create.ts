@@ -5,7 +5,7 @@ export interface IUniTemplateCreateDto {
   description: string;
   attributes: string;
   price: IAssetDto;
-  amount: number;
+  amount: string;
   imageUrl: string;
   erc998CollectionId: number;
 }

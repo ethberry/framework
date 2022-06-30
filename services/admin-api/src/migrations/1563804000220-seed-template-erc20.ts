@@ -10,38 +10,6 @@ export class SeedUniTemplateErc20At1563804000220 implements MigrationInterface {
     const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.asset (
-        id,
-        external_id,
-        asset_type
-      ) VALUES (
-        10101,
-        10101,
-        'TEMPLATE'
-      ), (
-        10102,
-        10102,
-        'TEMPLATE'
-      ), (
-        10103,
-        10103,
-        'TEMPLATE'
-      ), (
-        10104,
-        10104,
-        'TEMPLATE'
-      ), (
-        10105,
-        10105,
-        'TEMPLATE'
-      ), (
-        10106,
-        10106,
-        'TEMPLATE'
-      );
-    `);
-
-    await queryRunner.query(`
       INSERT INTO ${ns}.uni_template (
         id,
         title,
@@ -134,8 +102,8 @@ export class SeedUniTemplateErc20At1563804000220 implements MigrationInterface {
         '${defaultJSON}',
         null,
         0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
-        18,
+        '100000000000',
+        6,
         'ACTIVE',
         6,
         '${currentDateTime}',

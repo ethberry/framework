@@ -2,6 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { UniTemplateStatus } from "@framework/types";
 
 import { IUniTemplateUpdateDto } from "../interfaces";
@@ -43,9 +44,8 @@ export class Erc998TemplateUpdateDto implements IUniTemplateUpdateDto {
     minimum: 0,
   })
   @IsOptional()
-  @IsInt({ message: "typeMismatch" })
-  @Min(0, { message: "rangeUnderflow" })
-  public amount: number;
+  @IsBigNumber({ minimum: "0" }, { message: "typeMismatch" })
+  public amount: string;
 
   @ApiPropertyOptional()
   @IsOptional()
