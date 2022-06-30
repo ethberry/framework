@@ -6,9 +6,9 @@ export enum StakeStatus {
   INACTIVE = "FINISH",
 }
 
-export interface IStake extends ISearchable {
-  owner: string;
-  stakeId: string;
+export interface IStakingStake extends ISearchable {
+  account: string;
+  externalId: string;
   stakeStatus: StakeStatus;
   startTimestamp: string;
   withdrawTimestamp: string;

@@ -58,7 +58,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     }
 
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
-    return contract.updateRule(rule.ruleId, ruleStatus) as Promise<void>;
+    return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
   });
 
   const handleToggleRule = (rule: IStakingRule): (() => Promise<void>) => {

@@ -1,6 +1,6 @@
 import { IAssetDto } from "../../../../blockchain/asset/interfaces";
 
-export interface IExchangeCreateDto {
+export interface IExchangeRuleCreateDto {
   item: IAssetDto;
   ingredients: IAssetDto;
 }

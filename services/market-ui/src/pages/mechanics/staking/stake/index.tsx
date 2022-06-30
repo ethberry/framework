@@ -34,7 +34,7 @@ export const Stake: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IStakingRule, IStakingSearchDto>({
-    baseUrl: "/staking",
+    baseUrl: "/staking-rules",
     empty: {
       title: "",
       description: emptyStateString,
@@ -59,7 +59,7 @@ export const Stake: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking", "staking.stake"]} />
+      <Breadcrumbs path={["dashboard", "staking-rules", "staking-rules.stake"]} />
 
       <PageHeader message="pages.staking.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>

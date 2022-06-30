@@ -17,9 +17,9 @@ export class StakingRulesService {
   public search(dto: IStakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
     const { query, deposit, reward, stakingStatus, skip, take } = dto;
 
-    const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("staking");
-    queryBuilder.leftJoinAndSelect("staking.deposit", "deposit");
-    queryBuilder.leftJoinAndSelect("staking.reward", "reward");
+    const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
+    queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
+    queryBuilder.leftJoinAndSelect("rule.reward", "reward");
 
     queryBuilder.select();
 
@@ -27,11 +27,11 @@ export class StakingRulesService {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(staking.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(rule.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("staking.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("rule.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -39,9 +39,9 @@ export class StakingRulesService {
 
     if (stakingStatus) {
       if (stakingStatus.length === 1) {
-        queryBuilder.andWhere("staking.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
+        queryBuilder.andWhere("rule.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
       } else {
-        queryBuilder.andWhere("staking.stakingStatus IN(:...stakingStatus)", { stakingStatus });
+        queryBuilder.andWhere("rule.stakingStatus IN(:...stakingStatus)", { stakingStatus });
       }
     }
 
@@ -65,7 +65,7 @@ export class StakingRulesService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "staking.id": "ASC",
+      "rule.id": "ASC",
     });
 
     return queryBuilder.getManyAndCount();

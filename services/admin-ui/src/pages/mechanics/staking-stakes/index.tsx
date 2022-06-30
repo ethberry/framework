@@ -13,7 +13,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IStake, IStakesSearchDto } from "@framework/types";
+import { IStakingStake, IStakingStakesSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { StakesSearchForm } from "./form";
@@ -34,8 +34,8 @@ export const Stakes: FC = () => {
     handleViewCancel,
     handleSearch,
     handleChangePage,
-  } = useCollection<IStake, IStakesSearchDto>({
-    baseUrl: "/stakes",
+  } = useCollection<IStakingStake, IStakingStakesSearchDto>({
+    baseUrl: "/staking-stakes",
     search: {
       query: "",
       stakeStatus: [],
@@ -63,7 +63,7 @@ export const Stakes: FC = () => {
         <List>
           {rows.map((stake, i) => (
             <ListItem key={i}>
-              <ListItemText>{stake.owner}</ListItemText>
+              <ListItemText>{stake.account}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(stake)}>
                   <Visibility />

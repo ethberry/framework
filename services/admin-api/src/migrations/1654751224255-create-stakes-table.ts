@@ -12,7 +12,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
     `);
 
     const table = new Table({
-      name: `${ns}.stakes`,
+      name: `${ns}.staking_stakes`,
       columns: [
         {
           name: "id",
@@ -20,7 +20,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "owner",
+          name: "account",
           type: "varchar",
         },
         {
@@ -29,7 +29,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
           default: "'ACTIVE'",
         },
         {
-          name: "stake_id",
+          name: "external_id",
           type: "uint256",
         },
         {
@@ -42,7 +42,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "staking_id",
+          name: "staking_rule_id",
           type: "int",
         },
         {
@@ -61,7 +61,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["staking_id"],
+          columnNames: ["staking_rule_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.staking_rules`,
         },
@@ -72,7 +72,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.stakes`);
+    await queryRunner.dropTable(`${ns}.staking_stakes`);
     await queryRunner.query(`DROP TYPE ${ns}.stake_status_enum;`);
   }
 }

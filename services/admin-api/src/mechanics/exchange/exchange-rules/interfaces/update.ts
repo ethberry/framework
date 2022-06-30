@@ -1,7 +1,7 @@
 import { ExchangeStatus } from "@framework/types";
 
-import { IExchangeCreateDto } from "./create";
+import { IExchangeRuleCreateDto } from "./create";
 
-export interface IExchangeUpdateDto extends IExchangeCreateDto {
+export interface IExchangeRuleUpdateDto extends IExchangeRuleCreateDto {
   exchangeStatus: ExchangeStatus;
 }

@@ -41,8 +41,16 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           type: "boolean",
         },
         {
-          name: "rule_id",
-          type: "uint256",
+          name: "deposit_id",
+          type: "int",
+        },
+        {
+          name: "reward_id",
+          type: "int",
+        },
+        {
+          name: "external_id",
+          type: "varchar",
         },
         {
           name: "staking_status",
@@ -56,6 +64,20 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["deposit_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["reward_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
         },
       ],
     });

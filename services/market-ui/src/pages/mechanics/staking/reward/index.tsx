@@ -6,7 +6,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 export const Reward: FC = () => {
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking", "staking.reward"]} />
+      <Breadcrumbs path={["dashboard", "staking-rules", "staking-rules.reward"]} />
 
       <PageHeader message="pages.staking.reward.title" />
 

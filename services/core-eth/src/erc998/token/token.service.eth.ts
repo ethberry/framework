@@ -67,7 +67,7 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context, erc998TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc998TokenEntity.uniTemplate.instanceCount += 1;
+      erc998TokenEntity.uniTemplate.amount += 1;
       // erc998TokenEntity.uniTemplate
       //   ? (erc998TokenEntity.uniTemplate.instanceCount += 1)
       //   : (erc998TokenEntity.erc998Dropbox.erc998Template.instanceCount += 1);

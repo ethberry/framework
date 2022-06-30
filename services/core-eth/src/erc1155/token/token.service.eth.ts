@@ -74,7 +74,7 @@ export class Erc1155TokenServiceEth {
     }
 
     if (from !== constants.AddressZero) {
-      erc1155TokenEntity.instanceCount += ~~amount;
+      erc1155TokenEntity.amount += ~~amount;
       await this.erc1155BalanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 

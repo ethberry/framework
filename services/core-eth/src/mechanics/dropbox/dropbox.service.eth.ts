@@ -66,7 +66,7 @@ export class Erc721DropboxServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc721TokenEntity.uniTemplate.instanceCount += 1;
+      erc721TokenEntity.uniTemplate.amount += 1;
       // erc721TokenEntity.erc721Template
       //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
       //   : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);

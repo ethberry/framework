@@ -9,11 +9,13 @@ export enum StakingStatus {
 }
 
 export interface IStakingRule extends ISearchable {
-  deposit: IAsset;
-  reward: IAsset;
+  depositId: number;
+  deposit?: IAsset;
+  rewardId: number;
+  reward?: IAsset;
   duration: number;
   penalty: number;
   recurrent: boolean;
   stakingStatus: StakingStatus;
-  ruleId: string;
+  externalId: string;
 }

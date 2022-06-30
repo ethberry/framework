@@ -6,11 +6,11 @@ import { Reward } from "./reward";
 
 export const stakingRoutes: Array<RouteObject> = [
   {
-    path: "/staking",
+    path: "/staking-rules",
     children: [
       { index: true, element: <Stake /> },
-      { path: "/staking/leaderboard", element: <Leaderboard /> },
-      { path: "/staking/reward", element: <Reward /> },
+      { path: "/staking-rules/leaderboard", element: <Leaderboard /> },
+      { path: "/staking-rules/reward", element: <Reward /> },
     ],
   },
 ];

@@ -16,7 +16,7 @@ import { AccessControlEntity } from "./blockchain/access-control/access-control.
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
-import { StakesEntity } from "./mechanics/staking/stakes/stakes.entity";
+import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { ExchangeHistoryEntity } from "./mechanics/exchange/exchange-history/exchange-history.entity";
 import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
 import { UniTokenEntity } from "./blockchain/uni-token/uni-token/uni-token.entity";
@@ -37,7 +37,7 @@ const config: PostgresConnectionOptions = {
     Erc20TokenHistoryEntity,
     Erc20VestingEntity,
     StakingRulesEntity,
-    StakesEntity,
+    StakingStakesEntity,
     StakingHistoryEntity,
     Erc721TokenHistoryEntity,
     Erc721MarketplaceHistoryEntity,
