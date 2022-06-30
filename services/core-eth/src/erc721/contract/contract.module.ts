@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc721ContractService } from "./contract.service";
 import { Erc721TokenModule } from "../token/token.module";
-import { ContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([ContractEntity]), forwardRef(() => Erc721TokenModule)],

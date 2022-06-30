@@ -1,28 +1,24 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 
-import {
-  IErc1155ContractAutocompleteDto,
-  IErc1155ContractSearchDto,
-  TokenType,
-  ContractStatus,
-} from "@framework/types";
-
-import { IContractUpdateDto } from "./interfaces";
+import { IErc1155ContractSearchDto, TokenType } from "@framework/types";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 
 @Injectable()
-export class Erc1155ContractService {
+export class Erc1155ContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
-    private readonly erc1155CollectionEntityRepository: Repository<ContractEntity>,
-  ) {}
+    protected readonly contractEntityRepository: Repository<ContractEntity>,
+  ) {
+    super(contractEntityRepository);
+  }
 
   public search(dto: IErc1155ContractSearchDto): Promise<[Array<ContractEntity>, number]> {
     const { query, contractStatus, skip, take } = dto;
 
-    const queryBuilder = this.erc1155CollectionEntityRepository.createQueryBuilder("contract");
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
 
@@ -58,53 +54,5 @@ export class Erc1155ContractService {
     queryBuilder.take(take);
 
     return queryBuilder.getManyAndCount();
-  }
-
-  public async autocomplete(dto: IErc1155ContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractStatus = [] } = dto;
-
-    const where = {};
-
-    if (contractStatus.length) {
-      Object.assign(where, {
-        contractStatus: In(contractStatus),
-      });
-    }
-
-    return this.erc1155CollectionEntityRepository.find({
-      where,
-      select: {
-        id: true,
-        title: true,
-      },
-    });
-  }
-
-  public findOne(
-    where: FindOptionsWhere<ContractEntity>,
-    options?: FindOneOptions<ContractEntity>,
-  ): Promise<ContractEntity | null> {
-    return this.erc1155CollectionEntityRepository.findOne({ where, ...options });
-  }
-
-  public async update(
-    where: FindOptionsWhere<ContractEntity>,
-    dto: Partial<IContractUpdateDto>,
-  ): Promise<ContractEntity> {
-    const collectionEntity = await this.erc1155CollectionEntityRepository.findOne({ where });
-
-    if (!collectionEntity) {
-      throw new NotFoundException("collectionNotFound");
-    }
-
-    Object.assign(collectionEntity, dto);
-
-    return collectionEntity.save();
-  }
-
-  public async delete(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
-    return this.update(where, {
-      contractStatus: ContractStatus.INACTIVE,
-    });
   }
 }

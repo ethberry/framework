@@ -4,10 +4,10 @@ import { ns } from "@framework/constants";
 import { DropboxStatus, IDropbox } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { ContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
-import { TokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { AssetEntity } from "../../blockchain/asset/asset.entity";
-import { TemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Entity({ schema: ns, name: "dropbox" })
 export class DropboxEntity extends SearchableEntity implements IDropbox {

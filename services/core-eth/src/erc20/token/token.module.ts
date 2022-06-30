@@ -11,7 +11,7 @@ import { AccessListModule } from "../../blockchain/access-list/access-list.modul
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 import { AccessListServiceEth } from "../../blockchain/access-list/access-list.service.eth";
 import { AccessListHistoryModule } from "../../blockchain/access-list/access-list-history/access-list-history.module";
-import { TemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Module({
   imports: [

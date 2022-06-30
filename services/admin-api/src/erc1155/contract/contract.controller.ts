@@ -16,7 +16,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc1155ContractService } from "./contract.service";
-import { Erc1155CollectionAutocompleteDto, Erc1155CollectionSearchDto, Erc1155CollectionUpdateDto } from "./dto";
+import { Erc1155CollectionSearchDto, Erc1155CollectionUpdateDto } from "./dto";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @ApiBearerAuth()
@@ -28,11 +28,6 @@ export class Erc1155ContractController {
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: Erc1155CollectionSearchDto): Promise<[Array<ContractEntity>, number]> {
     return this.erc1155CollectionService.search(dto);
-  }
-
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc1155CollectionAutocompleteDto): Promise<Array<ContractEntity>> {
-    return this.erc1155CollectionService.autocomplete(dto);
   }
 
   @Put("/:id")

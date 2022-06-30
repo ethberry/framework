@@ -8,7 +8,7 @@ import { TemplateEntity } from "./template.entity";
 import { TemplateNewDto } from "./dto/new";
 
 @Public()
-@Controller("/uni-templates")
+@Controller("/templates")
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 

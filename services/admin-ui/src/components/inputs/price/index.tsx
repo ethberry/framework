@@ -8,8 +8,8 @@ import { IAssetComponent } from "@framework/types";
 
 import { emptyPrice } from "../empty-price";
 import { TokenTypeInput } from "./token-type-input";
-import { ContractInput } from "./uni-contract-input";
-import { TokenInput } from "./uni-token-input";
+import { ContractInput } from "./contract-input";
+import { TokenInput } from "./token-input";
 import { AmountInput } from "./amount-input";
 
 export interface IStakingEditDialogProps {

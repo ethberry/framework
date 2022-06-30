@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { DropboxStatus, IDropboxSearchDto, ContractRole } from "@framework/types";
+import { ContractRole, DropboxStatus, IDropboxSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -41,7 +41,7 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
           <Grid item xs={6}>
             <EntityInput
               name="contractIds"
-              controller="uni-collections"
+              controller="collections"
               multiple
               data={{ contractType: [ContractRole.DROPBOX] }}
             />

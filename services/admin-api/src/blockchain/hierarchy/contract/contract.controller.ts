@@ -6,7 +6,7 @@ import { ContractService } from "./contract.service";
 import { ContractEntity } from "./contract.entity";
 
 @ApiBearerAuth()
-@Controller("/uni-contracts")
+@Controller("/contracts")
 export class ContractController {
   constructor(private readonly contractService: ContractService) {}
 

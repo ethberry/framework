@@ -4,12 +4,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc20ContractService } from "./contract.service";
-import {
-  Erc20ContractAutocompleteDto,
-  Erc20ContractCreateDto,
-  Erc20ContractSearchDto,
-  Erc20ContractUpdateDto,
-} from "./dto";
+import { Erc20ContractCreateDto, Erc20ContractSearchDto, Erc20ContractUpdateDto } from "./dto";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @ApiBearerAuth()
@@ -26,11 +21,6 @@ export class Erc20TokenController {
   @Post("/")
   public create(@Body() dto: Erc20ContractCreateDto): Promise<ContractEntity> {
     return this.erc20ContractService.create(dto);
-  }
-
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc20ContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    return this.erc20ContractService.autocomplete(dto);
   }
 
   @Put("/:id")

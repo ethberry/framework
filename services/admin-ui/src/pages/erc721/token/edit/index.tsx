@@ -5,7 +5,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IToken, TokenStatus } from "@framework/types";
+import { IToken, TokenStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -42,7 +42,7 @@ export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
       <SelectInput name="tokenStatus" options={TokenStatus} readOnly />
-      <EntityInput name="contractId" controller="erc721-contracts" readOnly />
+      <EntityInput name="contractId" controller="contracts" readOnly data={{ contractType: [TokenType.ERC721] }} />
       <img src={template?.imageUrl} width={200} height={200} alt={template?.title} />
     </FormDialog>
   );

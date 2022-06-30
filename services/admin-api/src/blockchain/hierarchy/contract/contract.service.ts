@@ -1,16 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { In, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { IContractAutocompleteDto } from "@framework/types";
+import { ContractStatus, IContractAutocompleteDto } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
+import { IErc20ContractUpdateDto } from "../../../erc20/contract/interfaces";
+import { TemplateEntity } from "../template/template.entity";
 
 @Injectable()
 export class ContractService {
   constructor(
     @InjectRepository(ContractEntity)
-    private readonly contractEntityRepository: Repository<ContractEntity>,
+    protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
@@ -50,5 +52,31 @@ export class ContractService {
         contractType: true,
       },
     });
+  }
+
+  public findOne(
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
+    return this.contractEntityRepository.findOne({ where, ...options });
+  }
+
+  public async update(
+    where: FindOptionsWhere<ContractEntity>,
+    dto: Partial<IErc20ContractUpdateDto>,
+  ): Promise<ContractEntity> {
+    const contractEntity = await this.findOne(where);
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    Object.assign(contractEntity, dto);
+
+    return contractEntity.save();
+  }
+
+  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
+    return this.update(where, { contractStatus: ContractStatus.INACTIVE });
   }
 }

@@ -50,7 +50,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
             <Grid item xs={6}>
               <EntityInput
                 name="contractIds"
-                controller="uni-contracts"
+                controller="contracts"
                 multiple
                 data={{ contractType: [TokenType.ERC1155] }}
               />

@@ -19,9 +19,9 @@ import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-ru
 import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { ExchangeHistoryEntity } from "./mechanics/exchange/exchange-history/exchange-history.entity";
 import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
-import { TokenEntity } from "./blockchain/uni-token/uni-token/uni-token.entity";
-import { ContractEntity } from "./blockchain/uni-token/uni-contract/uni-contract.entity";
-import { TemplateEntity } from "./blockchain/uni-token/uni-template/uni-template.entity";
+import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
+import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
+import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { AssetEntity } from "./blockchain/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
 

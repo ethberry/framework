@@ -1,23 +1,20 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 
-import {
-  IErc998CollectionAutocompleteDto,
-  IErc998ContractSearchDto,
-  TokenType,
-  ContractStatus,
-} from "@framework/types";
+import { IErc998ContractSearchDto, TokenType } from "@framework/types";
 
-import { IErc998CollectionUpdateDto } from "./interfaces";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 
 @Injectable()
-export class Erc998ContractService {
+export class Erc998ContractService extends ContractService {
   constructor(
     @InjectRepository(ContractEntity)
-    private readonly contractEntityRepository: Repository<ContractEntity>,
-  ) {}
+    protected readonly contractEntityRepository: Repository<ContractEntity>,
+  ) {
+    super(contractEntityRepository);
+  }
 
   public search(dto: IErc998ContractSearchDto): Promise<[Array<ContractEntity>, number]> {
     const { query, contractStatus, contractRole, skip, take } = dto;
@@ -68,62 +65,5 @@ export class Erc998ContractService {
     queryBuilder.take(take);
 
     return queryBuilder.getManyAndCount();
-  }
-
-  public async autocomplete(dto: IErc998CollectionAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractRole = [], contractStatus = [] } = dto;
-
-    const where = {
-      contractType: TokenType.ERC998,
-    };
-
-    if (contractRole.length) {
-      Object.assign(where, {
-        contractRole: In(contractRole),
-      });
-    }
-
-    if (contractStatus.length) {
-      Object.assign(where, {
-        contractStatus: In(contractStatus),
-      });
-    }
-
-    return this.contractEntityRepository.find({
-      where,
-      select: {
-        id: true,
-        title: true,
-        contractType: true,
-      },
-    });
-  }
-
-  public findOne(
-    where: FindOptionsWhere<ContractEntity>,
-    options?: FindOneOptions<ContractEntity>,
-  ): Promise<ContractEntity | null> {
-    return this.contractEntityRepository.findOne({ where, ...options });
-  }
-
-  public async update(
-    where: FindOptionsWhere<ContractEntity>,
-    dto: Partial<IErc998CollectionUpdateDto>,
-  ): Promise<ContractEntity> {
-    const contractEntity = await this.contractEntityRepository.findOne({ where });
-
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    Object.assign(contractEntity, dto);
-
-    return contractEntity.save();
-  }
-
-  public async delete(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
-    return this.update(where, {
-      contractStatus: ContractStatus.INACTIVE,
-    });
   }
 }

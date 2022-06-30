@@ -4,7 +4,7 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { IErc998TemplateSearchDto } from "@framework/types";
+import { IErc998TemplateSearchDto, TokenType } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { useStyles } from "./styles";
@@ -48,7 +48,12 @@ export const Erc998TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="contractIds" controller="erc998-collections" multiple />
+              <EntityInput
+                name="contractIds"
+                controller="contracts"
+                multiple
+                data={{ contractType: [TokenType.ERC998] }}
+              />
             </Grid>
           ) : null}
         </Grid>

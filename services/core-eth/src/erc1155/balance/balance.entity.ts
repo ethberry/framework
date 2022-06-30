@@ -4,7 +4,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@framework/constants";
 import { IBalance } from "@framework/types";
 
-import { TokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "erc1155_balance" })
 export class Erc1155BalanceEntity extends IdDateBaseEntity implements IBalance {

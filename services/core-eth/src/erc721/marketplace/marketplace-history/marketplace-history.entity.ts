@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { Erc721MarketplaceEventType, IErc721MarketplaceHistory, TErc721MarketplaceEventData } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { TokenEntity } from "../../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../../blockchain/hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "erc721_marketplace_history" })
 export class Erc721MarketplaceHistoryEntity extends IdDateBaseEntity implements IErc721MarketplaceHistory {
