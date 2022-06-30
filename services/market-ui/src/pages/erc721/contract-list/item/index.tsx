@@ -6,18 +6,18 @@ import { IUniContract } from "@framework/types";
 
 import { useStyles } from "./styles";
 
-interface IErc721TokenItemProps {
+interface IErc721ContractItemProps {
   contract: IUniContract;
 }
 
-export const CollectionItem: FC<IErc721TokenItemProps> = props => {
+export const ContractItem: FC<IErc721ContractItemProps> = props => {
   const { contract } = props;
 
   const classes = useStyles();
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc721-collections/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc721-contracts/${contract.id}`}>
         <CardMedia className={classes.media} image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

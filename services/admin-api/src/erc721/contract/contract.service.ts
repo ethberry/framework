@@ -10,7 +10,7 @@ import {
 } from "@framework/types";
 
 import { IErc721CollectionUpdateDto } from "./interfaces";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @Injectable()
 export class Erc721ContractService {
@@ -73,11 +73,13 @@ export class Erc721ContractService {
   public async autocomplete(dto: IErc721ContractAutocompleteDto): Promise<Array<UniContractEntity>> {
     const { contractRole = [], contractStatus = [] } = dto;
 
-    const where = {};
+    const where = {
+      contractType: TokenType.ERC721,
+    };
 
     if (contractRole.length) {
       Object.assign(where, {
-        collectionType: In(contractRole),
+        contractRole: In(contractRole),
       });
     }
 
@@ -108,15 +110,15 @@ export class Erc721ContractService {
     where: FindOptionsWhere<UniContractEntity>,
     dto: Partial<IErc721CollectionUpdateDto>,
   ): Promise<UniContractEntity> {
-    const collectionEntity = await this.uniContractEntityRepository.findOne({ where });
+    const contractEntity = await this.uniContractEntityRepository.findOne({ where });
 
-    if (!collectionEntity) {
-      throw new NotFoundException("collectionNotFound");
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
-    Object.assign(collectionEntity, dto);
+    Object.assign(contractEntity, dto);
 
-    return collectionEntity.save();
+    return contractEntity.save();
   }
 
   public async delete(where: FindOptionsWhere<UniContractEntity>): Promise<UniContractEntity> {

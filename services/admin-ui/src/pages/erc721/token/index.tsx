@@ -43,7 +43,7 @@ export const Erc721Token: FC = () => {
       query: "",
       tokenStatus: [UniTokenStatus.MINTED],
       rarity: [],
-      erc721CollectionIds: [],
+      uniContractIds: [],
       tokenId: "",
     },
     filter: ({ attributes }) => ({ attributes }),

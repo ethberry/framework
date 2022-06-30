@@ -2,8 +2,6 @@ import type { RouteObject } from "react-router-dom";
 
 import { Erc721ContractList } from "./contract-list";
 import { Erc721Contract } from "./contract";
-import { Erc721DropboxList } from "../mechanics/dropbox-list";
-import { Erc721Dropbox } from "../mechanics/dropbox";
 import { Erc721TemplateList } from "./template-list";
 import { Erc721Template } from "./template";
 import { Erc721TokenList } from "./token-list";
@@ -11,17 +9,10 @@ import { Erc721Token } from "./token";
 
 export const erc721Routes: Array<RouteObject> = [
   {
-    path: "/erc721-collections",
+    path: "/erc721-contracts",
     children: [
       { index: true, element: <Erc721ContractList /> },
-      { path: "/erc721-collections/:id", element: <Erc721Contract /> },
-    ],
-  },
-  {
-    path: "/erc721-dropboxes",
-    children: [
-      { index: true, element: <Erc721DropboxList /> },
-      { path: "/erc721-dropboxes/:id", element: <Erc721Dropbox /> },
+      { path: "/erc721-contracts/:id", element: <Erc721Contract /> },
     ],
   },
   {

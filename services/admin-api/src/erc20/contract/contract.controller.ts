@@ -10,7 +10,7 @@ import {
   Erc20ContractSearchDto,
   Erc20ContractUpdateDto,
 } from "./dto";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @ApiBearerAuth()
 @Controller("/erc20-contracts")

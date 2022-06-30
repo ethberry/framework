@@ -22,7 +22,7 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
       baseUrl: "/erc721-tokens",
       embedded,
       search: {
-        erc721CollectionIds: [],
+        uniContractIds: [],
         rarity: [],
       },
     });

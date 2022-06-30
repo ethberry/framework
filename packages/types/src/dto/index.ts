@@ -1,8 +1,10 @@
 export * from "./blockchain/contract-manager/search";
-export * from "./blockchain/staking/search";
-export * from "./blockchain/airdrop/search";
-export * from "./blockchain/dropbox/search";
-export * from "./blockchain/exchange/search";
+export * from "./blockchain/uni-contract/autocomplete";
+
+export * from "./mechanics/staking/search";
+export * from "./mechanics/airdrop/search";
+export * from "./mechanics/dropbox/search";
+export * from "./mechanics/exchange/search";
 
 export * from "./auth/login";
 export * from "./auth/password";

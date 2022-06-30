@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 import { UniTemplateStatus, IErc998TemplateAutocompleteDto, IErc998TemplateSearchDto } from "@framework/types";
 
 import { IUniTemplateCreateDto, IUniTemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Injectable()
 export class Erc998TemplateService {

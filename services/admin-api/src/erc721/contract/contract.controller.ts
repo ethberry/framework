@@ -17,7 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc721ContractService } from "./contract.service";
 import { Erc721CollectionAutocompleteDto, Erc721CollectionSearchDto, Erc721CollectionUpdateDto } from "./dto";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @ApiBearerAuth()
 @Controller("/erc721-contracts")

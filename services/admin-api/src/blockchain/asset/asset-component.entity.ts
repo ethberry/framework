@@ -3,8 +3,8 @@ import { Entity, Column, JoinColumn, OneToOne } from "typeorm";
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IAssetComponent, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
-import { UniContractEntity } from "../uni-token/uni-contract.entity";
-import { UniTokenEntity } from "../uni-token/uni-token.entity";
+import { UniContractEntity } from "../uni-token/uni-contract/uni-contract.entity";
+import { UniTokenEntity } from "../uni-token/uni-token/uni-token.entity";
 
 @Entity({ schema: ns, name: "asset_component" })
 export class AssetComponentEntity extends IdBaseEntity implements IAssetComponent {

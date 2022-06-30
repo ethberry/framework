@@ -19,8 +19,8 @@ export const Erc721TokenSearchForm: FC<ITokenSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, tokenStatus, erc721CollectionIds, rarity, tokenId } = initialValues;
-  const fixedValues = { query, tokenStatus, erc721CollectionIds, rarity, tokenId };
+  const { query, tokenStatus, uniContractIds, rarity, tokenId } = initialValues;
+  const fixedValues = { query, tokenStatus, uniContractIds, rarity, tokenId };
 
   return (
     <FormWrapper
@@ -39,7 +39,7 @@ export const Erc721TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <EntityInput name="erc721CollectionIds" controller="erc721-collections" multiple />
+            <EntityInput name="uniContractIds" controller="erc721-contracts" multiple />
           </Grid>
           <Grid item xs={6}>
             <TextInput name="tokenId" />

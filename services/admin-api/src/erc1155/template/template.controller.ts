@@ -23,7 +23,7 @@ import {
   Erc1155TemplateSearchDto,
   Erc1155TemplateUpdateDto,
 } from "./dto";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @ApiBearerAuth()
 @Controller("/erc1155-tokens")

@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { IErc998TokenSearchDto } from "@framework/types";
 
 import { IUniTokenUpdateDto } from "./interfaces";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc998TokenService {

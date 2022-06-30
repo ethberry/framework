@@ -29,7 +29,7 @@ export class Erc721TokenSearchDto extends SearchDto implements IErc721TokenSearc
   @IsNumber({}, { each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public erc721CollectionIds: Array<number>;
+  public uniContractIds: Array<number>;
 
   @ApiPropertyOptional({
     enum: TokenRarity,

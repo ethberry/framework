@@ -22,6 +22,7 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
           controller="erc1155-collections"
           data={{
             contractStatus: [UniContractStatus.ACTIVE],
+            contractType: [TokenType.ERC1155],
           }}
         />
       );
@@ -29,10 +30,11 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
       return (
         <EntityInput
           name={`${prefix}.${name}`}
-          controller="erc721-collections"
+          controller="uni-contracts"
           data={{
-            collectionType: [UniContractRole.TOKEN],
+            contractRole: [UniContractRole.TOKEN],
             contractStatus: [UniContractStatus.ACTIVE],
+            contractType: [TokenType.ERC721],
           }}
         />
       );
@@ -40,10 +42,11 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
       return (
         <EntityInput
           name={`${prefix}.${name}`}
-          controller="erc998-collections"
+          controller="uni-contracts"
           data={{
-            collectionType: [UniContractRole.TOKEN],
+            contractRole: [UniContractRole.TOKEN],
             contractStatus: [UniContractStatus.ACTIVE],
+            contractType: [TokenType.ERC998],
           }}
         />
       );
@@ -51,10 +54,11 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
       return (
         <EntityInput
           name={`${prefix}.${name}`}
-          controller="erc20-tokens"
+          controller="uni-contracts"
           data={{
             contractTemplate: [Erc20ContractTemplate.NATIVE],
-            tokenStatus: [UniContractStatus.ACTIVE],
+            contractStatus: [UniContractStatus.ACTIVE],
+            contractType: [TokenType.ERC998],
           }}
         />
       );
@@ -62,14 +66,15 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
       return (
         <EntityInput
           name={`${prefix}.${name}`}
-          controller="erc20-tokens"
+          controller="uni-contracts"
           data={{
             contractTemplate: [
               Erc20ContractTemplate.EXTERNAL,
               Erc20ContractTemplate.BLACKLIST,
               Erc20ContractTemplate.SIMPLE,
             ],
-            tokenStatus: [UniContractStatus.ACTIVE],
+            contractStatus: [UniContractStatus.ACTIVE],
+            contractType: [TokenType.ERC20],
           }}
         />
       );

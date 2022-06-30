@@ -14,8 +14,8 @@ import {
   UniTemplateStatus,
 } from "@framework/types";
 
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 import { IErc20ContractUpdateDto } from "./interfaces";
 
 @Injectable()
@@ -89,9 +89,9 @@ export class Erc20ContractService {
     queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: UniTemplateStatus.ACTIVE });
 
     queryBuilder.select(["id", "title", "decimals"]);
-    queryBuilder.leftJoin("template.contract", "contract");
 
     if (contractTemplate.length) {
+      queryBuilder.leftJoin("template.contract", "contract");
       queryBuilder.andWhere("contract.contractTemplate IN(:...contractTemplate)", { contractTemplate });
     }
 

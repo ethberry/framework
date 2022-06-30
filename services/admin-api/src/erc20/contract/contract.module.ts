@@ -4,8 +4,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc20ContractService } from "./contract.service";
 import { Erc20TokenController } from "./contract.controller";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @Module({
   imports: [ConfigModule, TypeOrmModule.forFeature([UniContractEntity, UniTemplateEntity])],

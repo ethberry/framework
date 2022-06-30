@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 import { UniContractStatus, IErc1155ContractAutocompleteDto, IErc1155ContractSearchDto } from "@framework/types";
 
 import { IUniContractUpdateDto } from "./interfaces";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @Injectable()
 export class Erc1155ContractService {

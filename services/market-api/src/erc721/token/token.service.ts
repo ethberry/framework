@@ -16,7 +16,7 @@ export class Erc721TokenService {
   ) {}
 
   public async search(dto: IErc721AssetSearchDto, userEntity: UserEntity): Promise<[Array<UniTokenEntity>, number]> {
-    const { skip, take, rarity, erc721CollectionIds } = dto;
+    const { skip, take, rarity, uniContractIds } = dto;
 
     const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
@@ -38,23 +38,23 @@ export class Erc721TokenService {
       }
     }
 
-    if (erc721CollectionIds) {
-      if (erc721CollectionIds.length === 1) {
+    if (uniContractIds) {
+      if (uniContractIds.length === 1) {
         queryBuilder.andWhere(
           new Brackets(qb => {
-            qb.where("template.erc721CollectionId = :erc721CollectionId", {
-              erc721CollectionId: erc721CollectionIds[0],
+            qb.where("template.uniContractId = :uniContractId", {
+              uniContractId: uniContractIds[0],
             });
-            qb.orWhere("dropbox.erc721CollectionId = :erc721CollectionId", {
-              erc721CollectionId: erc721CollectionIds[0],
+            qb.orWhere("dropbox.uniContractId = :uniContractId", {
+              uniContractId: uniContractIds[0],
             });
           }),
         );
       } else {
         queryBuilder.andWhere(
           new Brackets(qb => {
-            qb.where("template.erc721CollectionId IN(:...erc721CollectionIds)", { erc721CollectionIds });
-            qb.orWhere("dropbox.erc721CollectionId IN(:...erc721CollectionIds)", { erc721CollectionIds });
+            qb.where("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
+            qb.orWhere("dropbox.uniContractId IN(:...uniContractIds)", { uniContractIds });
           }),
         );
       }

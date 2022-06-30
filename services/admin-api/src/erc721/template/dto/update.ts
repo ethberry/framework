@@ -53,7 +53,7 @@ export class Erc721TemplateUpdateDto implements IErc721TemplateUpdateDto {
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  public erc721CollectionId: number;
+  public uniContractId: number;
 
   @ApiPropertyOptional()
   @IsOptional()

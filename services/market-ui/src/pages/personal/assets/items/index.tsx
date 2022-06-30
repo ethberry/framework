@@ -23,7 +23,7 @@ export const Items: FC<ITabPanelProps> = props => {
     useCollection<IUniToken, IErc721AssetSearchDto>({
       baseUrl: "/erc721-tokens",
       search: {
-        erc721CollectionIds: [3],
+        uniContractIds: [3],
         rarity: [],
       },
       redirect: (_baseUrl, search) => `/my-assets/${value}?${stringify(search)}`,

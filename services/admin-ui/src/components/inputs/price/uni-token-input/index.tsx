@@ -26,7 +26,7 @@ export const UniTokenInput: FC<IUniTokenInputProps> = props => {
           label={formatMessage({ id: "form.labels.uniTemplateIds" })}
           placeholder={formatMessage({ id: "form.placeholders.uniTemplateIds" })}
           data={{
-            erc721CollectionIds: collection === 0 ? [] : [collection],
+            uniContractIds: collection === 0 ? [] : [collection],
             templateStatus: [UniTemplateStatus.ACTIVE],
           }}
         />
@@ -52,7 +52,7 @@ export const UniTokenInput: FC<IUniTokenInputProps> = props => {
           label={formatMessage({ id: "form.labels.erc1155TokenId" })}
           placeholder={formatMessage({ id: "form.placeholders.erc1155TokenId" })}
           data={{
-            erc1155CollectionIds: collection === 0 ? [] : [collection],
+            uniContractIds: collection === 0 ? [] : [collection],
             tokenStatus: [UniTemplateStatus.ACTIVE],
           }}
         />

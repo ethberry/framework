@@ -8,7 +8,7 @@ import { Erc721CollectionSearchDto } from "./dto";
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @ApiBearerAuth()
-@Controller("/erc721-collections")
+@Controller("/erc721-contracts")
 export class Erc721CollectionController {
   constructor(private readonly erc721CollectionService: Erc721CollectionService) {}
 

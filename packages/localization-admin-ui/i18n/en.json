@@ -210,7 +210,6 @@
       "dateRangeStart": "From",
       "dateTime": "Date time",
       "decimals": "Decimals",
-      "decimals": "Decimals",
       "description": "Description",
       "displayName": "Display name",
       "dropboxStatus": "Status",
@@ -357,7 +356,6 @@
       },
       "erc1155": {
         "contracts": "ERC1155 Contracts",
-        "recipes": "ERC1155 Recipes",
         "title": "ERC1155",
         "tokens": "ERC1155 Tokens"
       },
@@ -367,19 +365,13 @@
         "vesting": "ERC20 Vesting"
       },
       "erc721": {
-        "airdrop": "ERC721 Airdrop",
         "contracts": "ERC721 Contracts",
-        "dropbox": "ERC721 Dropbox",
-        "recipes": "ERC721 Recipes",
         "templates": "ERC721 Templates",
         "title": "ERC721",
         "tokens": "ERC721 Tokens"
       },
       "erc998": {
-        "airdrop": "ERC998 Airdrop",
         "contracts": "ERC998 Contracts",
-        "dropbox": "ERC998 Dropbox",
-        "recipes": "ERC998 Recipes",
         "templates": "ERC998 Templates",
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
@@ -389,14 +381,14 @@
     "emails": {
       "title": "Emails"
     },
-    "erc1155-collections": {
-      "title": "ERC1155 Collections"
+    "erc1155-contracts": {
+      "title": "ERC1155 Contracts"
     },
-    "erc1155-recipes": {
-      "activate": "Activate recipe",
-      "deactivate": "Deactivate recipes",
-      "title": "ERC1155 Recipes",
-      "upload": "Upload recipe"
+    "exchanges": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Exchange rules",
+      "upload": "Upload rule"
     },
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
@@ -416,22 +408,16 @@
         "startTimestamp": "Start time"
       }
     },
-    "erc721-airdrops": {
+    "airdrops": {
       "defaultItemTitle": "Airdrop",
       "title": "ERC721 Airdrop"
     },
-    "erc721-collections": {
+    "erc721-contracts": {
       "royalty": "Royalty",
-      "title": "ERC721 Collections"
+      "title": "ERC721 Contracts"
     },
-    "erc721-dropboxes": {
-      "title": "ERC721 Dropbox"
-    },
-    "erc721-recipes": {
-      "activate": "Activate recipe",
-      "deactivate": "Deactivate recipes",
-      "title": "ERC721 Recipes",
-      "upload": "Upload recipe"
+    "dropboxes": {
+      "title": "Dropboxes"
     },
     "erc721-templates": {
       "title": "ERC721 Templates"
@@ -445,22 +431,9 @@
         "title": "Title"
       }
     },
-    "erc998-airdrops": {
-      "defaultItemTitle": "Airdrop",
-      "title": "ERC998 Airdrop"
-    },
-    "erc998-collections": {
+    "erc998-contracts": {
       "royalty": "Royalty",
-      "title": "ERC998 Collections"
-    },
-    "erc998-dropboxes": {
-      "title": "ERC998 Dropbox"
-    },
-    "erc998-recipes": {
-      "activate": "Activate recipe",
-      "deactivate": "Deactivate recipes",
-      "title": "ERC998 Recipes",
-      "upload": "Upload recipe"
+      "title": "ERC998 Contracts"
     },
     "erc998-templates": {
       "title": "ERC998 Templates"
@@ -483,9 +456,6 @@
     },
     "profile": {
       "title": "Profile"
-    },
-    "recipes": {
-      "title": "Craft"
     },
     "settings": {
       "title": "Settings"

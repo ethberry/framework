@@ -2,10 +2,15 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { UniContractStatus, IErc998CollectionAutocompleteDto, IErc998ContractSearchDto } from "@framework/types";
+import {
+  IErc998CollectionAutocompleteDto,
+  IErc998ContractSearchDto,
+  TokenType,
+  UniContractStatus,
+} from "@framework/types";
 
 import { IErc998CollectionUpdateDto } from "./interfaces";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @Injectable()
 export class Erc998CollectionService {
@@ -17,7 +22,7 @@ export class Erc998CollectionService {
   public search(dto: IErc998ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
     const { query, contractStatus, contractRole, skip, take } = dto;
 
-    const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("collection");
+    const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
 
@@ -66,7 +71,9 @@ export class Erc998CollectionService {
   public async autocomplete(dto: IErc998CollectionAutocompleteDto): Promise<Array<UniContractEntity>> {
     const { contractRole = [], contractStatus = [] } = dto;
 
-    const where = {};
+    const where = {
+      contractType: TokenType.ERC998,
+    };
 
     if (contractRole.length) {
       Object.assign(where, {
@@ -101,15 +108,15 @@ export class Erc998CollectionService {
     where: FindOptionsWhere<UniContractEntity>,
     dto: Partial<IErc998CollectionUpdateDto>,
   ): Promise<UniContractEntity> {
-    const collectionEntity = await this.uniContractEntityRepository.findOne({ where });
+    const contractEntity = await this.uniContractEntityRepository.findOne({ where });
 
-    if (!collectionEntity) {
-      throw new NotFoundException("collectionNotFound");
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
-    Object.assign(collectionEntity, dto);
+    Object.assign(contractEntity, dto);
 
-    return collectionEntity.save();
+    return contractEntity.save();
   }
 
   public async delete(where: FindOptionsWhere<UniContractEntity>): Promise<UniContractEntity> {

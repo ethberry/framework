@@ -6,7 +6,7 @@ import { UniTemplateStatus, IErc1155TemplateAutocompleteDto, IErc1155TemplateSea
 import { ns } from "@framework/constants";
 
 import { IErc1155TemplateCreateDto, IErc1155TemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Injectable()
 export class Erc1155TemplateService {

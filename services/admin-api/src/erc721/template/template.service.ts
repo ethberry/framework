@@ -2,24 +2,32 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { UniTemplateStatus, IErc721TemplateAutocompleteDto, IErc721TemplateSearchDto } from "@framework/types";
+import {
+  UniTemplateStatus,
+  IErc721TemplateAutocompleteDto,
+  IErc721TemplateSearchDto,
+  TokenType
+} from "@framework/types";
 
 import { IErc721TemplateCreateDto, IErc721TemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Injectable()
 export class Erc721TemplateService {
   constructor(
     @InjectRepository(UniTemplateEntity)
-    private readonly erc721TemplateEntityRepository: Repository<UniTemplateEntity>,
+    private readonly uniTemplateEntityRepository: Repository<UniTemplateEntity>,
   ) {}
 
   public async search(dto: IErc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
     const { query, templateStatus, skip, take, uniContractIds } = dto;
 
-    const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
+    const queryBuilder = this.uniTemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC721 });
 
     if (templateStatus) {
       if (templateStatus.length === 1) {
@@ -80,7 +88,7 @@ export class Erc721TemplateService {
       });
     }
 
-    return this.erc721TemplateEntityRepository.find({
+    return this.uniTemplateEntityRepository.find({
       where,
       select: {
         id: true,
@@ -93,7 +101,7 @@ export class Erc721TemplateService {
     where: FindOptionsWhere<UniTemplateEntity>,
     options?: FindOneOptions<UniTemplateEntity>,
   ): Promise<UniTemplateEntity | null> {
-    return this.erc721TemplateEntityRepository.findOne({ where, ...options });
+    return this.uniTemplateEntityRepository.findOne({ where, ...options });
   }
 
   public async update(
@@ -112,7 +120,7 @@ export class Erc721TemplateService {
   }
 
   public async create(dto: IErc721TemplateCreateDto): Promise<UniTemplateEntity> {
-    return this.erc721TemplateEntityRepository.create(dto).save();
+    return this.uniTemplateEntityRepository.create(dto).save();
   }
 
   public async delete(where: FindOptionsWhere<UniTemplateEntity>): Promise<UniTemplateEntity> {

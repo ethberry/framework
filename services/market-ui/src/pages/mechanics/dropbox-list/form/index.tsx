@@ -49,7 +49,7 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="uniContractIds" controller="erc721-collections" multiple />
+              <EntityInput name="uniContractIds" controller="erc721-contracts" multiple />
             </Grid>
           ) : null}
         </Grid>

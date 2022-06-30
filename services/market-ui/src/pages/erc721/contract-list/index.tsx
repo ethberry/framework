@@ -6,24 +6,24 @@ import { IUniContract } from "@framework/types";
 import { ISearchDto } from "@gemunion/types-collection";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { CollectionItem } from "./item";
+import { ContractItem } from "./item";
 
 export const Erc721ContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IUniContract, ISearchDto>({
-    baseUrl: "/erc721-collections",
+    baseUrl: "/erc721-contracts",
   });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-collections"]} />
+      <Breadcrumbs path={["dashboard", "erc721-contracts"]} />
 
-      <PageHeader message="pages.erc721-collections.title" />
+      <PageHeader message="pages.erc721-contracts.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(collection => (
             <Grid item lg={4} sm={6} xs={12} key={collection.id}>
-              <CollectionItem contract={collection} />
+              <ContractItem contract={collection} />
             </Grid>
           ))}
         </Grid>

@@ -258,14 +258,11 @@
       },
       "title": "Dashboard"
     },
-    "erc1155-collection": {
-      "title": "ERC1155 Collection: {title}"
+    "erc1155-contract": {
+      "title": "ERC1155 Contract: {title}"
     },
-    "erc1155-collections": {
-      "title": "ERC1155 Collections"
-    },
-    "erc1155-recipes": {
-      "title": "ERC1155 Recipes"
+    "erc1155-contracts": {
+      "title": "ERC1155 Contracts"
     },
     "erc1155-token": {
       "price": "Price: {amount}",
@@ -282,21 +279,18 @@
       "sorry": "Sorry, maybe you will get lucky next time",
       "title": "ERC721 Airdrop"
     },
-    "erc721-collection": {
-      "title": "ERC721 Collection: {title}"
+    "erc721-contract": {
+      "title": "ERC721 Contract: {title}"
     },
-    "erc721-collections": {
-      "title": "ERC721 Collections"
+    "erc721-contracts": {
+      "title": "ERC721 Contracts"
     },
-    "erc721-dropbox": {
+    "dropbox": {
       "price": "Price: {amount}",
-      "title": "ERC721 Dropbox: {title}"
+      "title": "Dropbox: {title}"
     },
-    "erc721-dropboxes": {
-      "title": "ERC721 Dropboxes"
-    },
-    "erc721-recipes": {
-      "title": "ERC721 Recipes"
+    "exchanges": {
+      "title": "Exchanges"
     },
     "erc721-template": {
       "price": "Price: {amount}",
@@ -316,25 +310,15 @@
       },
       "title": "ERC721 Tokens"
     },
-    "erc998-airdrop": {
+    "airdrop": {
       "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "ERC998 Airdrop"
+      "title": "Airdrop"
     },
-    "erc998-collection": {
-      "title": "ERC998 Collection: {title}"
+    "erc998-contract": {
+      "title": "ERC998 Contract: {title}"
     },
-    "erc998-collections": {
-      "title": "ERC998 Collections"
-    },
-    "erc998-dropbox": {
-      "price": "Price: {amount}",
-      "title": "ERC998 Dropbox: {title}"
-    },
-    "erc998-dropboxes": {
-      "title": "ERC998 Dropboxes"
-    },
-    "erc998-recipes": {
-      "title": "ERC998 Recipes"
+    "erc998-contracts": {
+      "title": "ERC998 Contracts"
     },
     "erc998-template": {
       "price": "Price: {amount}",

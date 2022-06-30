@@ -13,7 +13,7 @@ import { useStyles } from "./styles";
 
 export const Erc721Contract: FC = () => {
   const { selected, isLoading } = useCollection<IUniContract, IErc721ContractSearchDto>({
-    baseUrl: "/erc721-collections",
+    baseUrl: "/erc721-contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -29,9 +29,9 @@ export const Erc721Contract: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-collections", "erc721-contract"]} data={[{}, {}, selected]} />
+      <Breadcrumbs path={["dashboard", "erc721-contracts", "erc721-contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.erc721-collection.title" data={selected} />
+      <PageHeader message="pages.erc721-contract.title" data={selected} />
 
       <Box display="flex">
         <Box margin={1}>

@@ -6,5 +6,5 @@ export interface IErc721TokenSearchDto extends ISearchDto {
   tokenStatus: Array<UniTokenStatus>;
   tokenId: string;
   rarity: Array<TokenRarity>;
-  erc721CollectionIds: Array<number>;
+  uniContractIds: Array<number>;
 }

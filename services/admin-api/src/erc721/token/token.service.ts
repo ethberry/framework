@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { IErc721TokenSearchDto } from "@framework/types";
 
 import { IErc721TokenUpdateDto } from "./interfaces";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc721TokenService {
@@ -15,7 +15,7 @@ export class Erc721TokenService {
   ) {}
 
   public async search(dto: IErc721TokenSearchDto): Promise<[Array<UniTokenEntity>, number]> {
-    const { query, tokenStatus, skip, take, tokenId, rarity, erc721CollectionIds } = dto;
+    const { query, tokenStatus, skip, take, tokenId, rarity, uniContractIds } = dto;
 
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
 
@@ -43,13 +43,13 @@ export class Erc721TokenService {
       }
     }
 
-    if (erc721CollectionIds) {
-      if (erc721CollectionIds.length === 1) {
-        queryBuilder.andWhere("template.erc721CollectionId = :erc721CollectionId", {
-          erc721CollectionId: erc721CollectionIds[0],
+    if (uniContractIds) {
+      if (uniContractIds.length === 1) {
+        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
+          uniContractId: uniContractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.erc721CollectionId IN(:...erc721CollectionIds)", { erc721CollectionIds });
+        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
       }
     }
 

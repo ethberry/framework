@@ -3,6 +3,6 @@ import { IPaginationDto } from "@gemunion/types-collection";
 import { TokenRarity } from "../../../entities";
 
 export interface IErc721AssetSearchDto extends IPaginationDto {
-  erc721CollectionIds: Array<number>;
+  uniContractIds: Array<number>;
   rarity: Array<TokenRarity>;
 }

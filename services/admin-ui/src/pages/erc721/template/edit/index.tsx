@@ -48,11 +48,11 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={UniTemplateStatus} /> : null}
       <EntityInput
-        name="erc721CollectionId"
-        controller="erc721-collections"
+        name="uniContractId"
+        controller="uni-contracts"
         data={{
-          contractRole: [TokenType.ERC721],
-          contractType: [UniContractRole.TOKEN],
+          contractRole: [UniContractRole.TOKEN],
+          contractType: [TokenType.ERC721],
         }}
       />
       <AvatarInput name="imageUrl" />
