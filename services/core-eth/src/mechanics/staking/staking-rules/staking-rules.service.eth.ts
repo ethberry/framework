@@ -16,7 +16,7 @@ import {
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 import { StakingHistoryService } from "../staking-history/staking-history.service";
 import { StakingRulesService } from "./staking-rules.service";
-import { StakesService } from "../stakes/stakes.service";
+import { StakingStakesService } from "../staking-stakes/staking-stakes.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
@@ -24,7 +24,7 @@ export class StakingRulesServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly stakingRulesService: StakingRulesService,
-    private readonly stakesService: StakesService,
+    private readonly stakingStakesService: StakingStakesService,
     private readonly historyService: StakingHistoryService,
     private readonly contractManagerService: ContractManagerService,
   ) {}
@@ -55,7 +55,7 @@ export class StakingRulesServiceEth {
       args: { ruleId, active },
     } = event;
 
-    const stakingEntity = await this.stakingRulesService.findOne({ ruleId });
+    const stakingEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
 
     if (!stakingEntity) {
       throw new NotFoundException("stakingRuleNotFound");
@@ -68,20 +68,20 @@ export class StakingRulesServiceEth {
     await stakingEntity.save();
   }
 
-  public async start(event: ILogEvent<IStakingDeposit>, context: Log): Promise<void> {
+  public async start(_event: ILogEvent<IStakingDeposit>, _context: Log): Promise<void> {
     // await this.updateHistory(event, context);
-    const {
-      args: { stakingId, ruleId, owner, startTimestamp },
-    } = event;
-
+    // const {
+    //   args: { stakingId, externalId, owner, startTimestamp },
+    // } = event;
+    //
     // const stakingEntity = await this.stakingRulesService.findOne({ ruleId });
     //
     // if (!stakingEntity) {
     //   throw new NotFoundException("stakingRuleNotFound");
     // }
     // console.log("args", owner, stakingId, startTimestamp, stakingEntity.id);
-    console.log("args", owner, stakingId, startTimestamp);
-    // await this.stakesService.create({
+    // console.log("args", owner, stakingId, startTimestamp);
+    // await this.stakingStakesService.create({
     //   owner,
     //   stakeId: stakingId,
     //   startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
@@ -114,7 +114,7 @@ export class StakingRulesServiceEth {
       StakingRulesServiceEth.name,
     );
 
-    const { args, name } = event;
+    const { name } = event;
     const { transactionHash, address, blockNumber } = context;
 
     await this.historyService.create({

@@ -33,7 +33,7 @@ export * from "./mechanics/dropbox";
 export * from "./mechanics/exchange-rule";
 export * from "./mechanics/exchange-history";
 export * from "./mechanics/staking-rule";
-export * from "./mechanics/staking";
+export * from "./mechanics/staking-stake";
 export * from "./mechanics/staking-history";
 
 export * from "./uni-token/uni-balance";

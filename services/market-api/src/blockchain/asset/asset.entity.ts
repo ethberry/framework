@@ -18,5 +18,5 @@ export class AssetEntity extends IdBaseEntity implements IAsset {
   public assetType: AssetType;
 
   @Column({ type: "int" })
-  public externalId: number;
+  public externalId: string;
 }

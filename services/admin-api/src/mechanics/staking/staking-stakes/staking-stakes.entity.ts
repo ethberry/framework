@@ -1,18 +1,18 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IStake, StakeStatus } from "@framework/types";
-import { BigNumberColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IStakingStake, StakeStatus } from "@framework/types";
+import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { StakingRulesEntity } from "../staking-rules/staking-rules.entity";
 
-@Entity({ schema: ns, name: "stakes" })
-export class StakesEntity extends SearchableEntity implements IStake {
+@Entity({ schema: ns, name: "staking_stakes" })
+export class StakingStakesEntity extends SearchableEntity implements IStakingStake {
   @Column({ type: "varchar" })
-  public owner: string;
+  public account: string;
 
-  @BigNumberColumn()
-  public stakeId: string;
+  @Column({ type: "numeric" })
+  public externalId: string;
 
   @Column({
     type: "enum",
@@ -28,7 +28,6 @@ export class StakesEntity extends SearchableEntity implements IStake {
 
   @Column({ type: "int" })
   public multiplier: number;
-  // stakingRuleId
 
   @Column({ type: "int" })
   public stakingRuleId: number;

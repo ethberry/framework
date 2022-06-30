@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { ExchangeStatus, IExchangeSearchDto } from "@framework/types";
 
 import { ExchangeRulesEntity } from "./exchange-rules.entity";
-import { IExchangeCreateDto, IExchangeUpdateDto } from "./interfaces";
+import { IExchangeRuleCreateDto, IExchangeRuleUpdateDto } from "./interfaces";
 import { AssetService } from "../../../blockchain/asset/asset.service";
 
 @Injectable()
@@ -74,25 +74,24 @@ export class ExchangeRulesService {
     return this.recipeEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IExchangeCreateDto): Promise<ExchangeRulesEntity> {
-    const { ingredients, ...rest } = dto;
-
-    // TODO get template by dropbox
-
-    const recipeEntity = await this.recipeEntityRepository.create(rest).save();
+  public async create(dto: IExchangeRuleCreateDto): Promise<ExchangeRulesEntity> {
+    const { ingredients, item } = dto;
 
     // add new
-    await this.assetService.create({
-      ...ingredients,
-      externalId: recipeEntity.id,
-    });
+    const ingredientsEntity = await this.assetService.create(ingredients);
+    const itemEntity = await this.assetService.create(item);
 
-    return recipeEntity;
+    return this.recipeEntityRepository
+      .create({
+        ingredients: ingredientsEntity,
+        item: itemEntity,
+      })
+      .save();
   }
 
   public async update(
     where: FindOptionsWhere<ExchangeRulesEntity>,
-    dto: Partial<IExchangeUpdateDto>,
+    dto: Partial<IExchangeRuleUpdateDto>,
   ): Promise<ExchangeRulesEntity> {
     const { ingredients, ...rest } = dto;
 

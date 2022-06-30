@@ -1,8 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { constants } from "ethers";
 
+import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { ns } from "@framework/constants";
 
-export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterface {
+export class SeedStakingRules1654751224210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -12,13 +14,13 @@ export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterf
         external_id,
         asset_type
       ) VALUES (
-        70201,
-        70201,
-        'EXCHANGE'
+        80101,
+        80101,
+        'STAKING'
       ), (
-        70202,
-        70202,
-        'EXCHANGE'
+        80102,
+        80102,
+        'STAKING'
       );
     `);
 
@@ -30,44 +32,50 @@ export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterf
         amount,
         asset_id
       ) VALUES (
+        'ERC20',
+        2,
+        10002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        80101
+      ), (
         'ERC721',
         13,
         40101, -- sword
         1,
-        70201
-      ), (
-        'ERC1155',
-        31,
-        40102, -- wood
-        10,
-        70202
-      ), (
-        'ERC1155',
-        31,
-        40103, -- iron
-        10,
-        70202
+        80102
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.exchange_rules (
-        item_id,
-        ingredients_id,
-        exchange_status,
+      INSERT INTO ${ns}.staking_rules (
+        title,
+        description,
+        duration,
+        penalty,
+        recurrent,
+        deposit_id,
+        reward_id,
+        external_id,
+        staking_status,
         created_at,
         updated_at
       ) VALUES (
-        70201,
-        70202,
-        'ACTIVE',
+        'ERC20 <> ERC721',
+        '${simpleFormatting}',
+        30,
+        1,
+        false,
+        80101,
+        80102,
+        80101,
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
-      )
+      );
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.exchange_rules RESTART IDENTITY CASCADE;`);
+    await queryRunner.dropTable(`${ns}.staking_rules`);
   }
 }

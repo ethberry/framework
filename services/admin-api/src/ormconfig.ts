@@ -24,7 +24,7 @@ import { AccessControlEntity } from "./blockchain/access-control/access-control.
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
-import { StakesEntity } from "./mechanics/staking/stakes/stakes.entity";
+import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
@@ -95,7 +95,7 @@ import { CreateAccessListHistoryTable1653616447340 } from "./migrations/16536164
 import { CreateSettingsTable1563804000010 } from "./migrations/1563804000010-create-settings-table";
 import { SeedSettingsTable1563804000020 } from "./migrations/1563804000020-seed-settings-table";
 import { CreateStakingRules1654751224200 } from "./migrations/1654751224200-create-staking-rules";
-import { SeedStakingRules1654751224210 } from "./migrations/1654751224210-seed-staking-rules";
+import { SeedStakingRules1654751224210 } from "./migrations/1654751224210-seed-staking-rules-erc20-erc721";
 import { CreateStakingHistoryTable1654751224260 } from "./migrations/1654751224260-create-staking-history-table";
 import { CreatePageTable1655626535100 } from "./migrations/1655626535100-create-page-table";
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
@@ -115,8 +115,8 @@ const config: PostgresConnectionOptions = {
     Erc20VestingEntity,
     UniContractEntity,
     UniTemplateEntity,
-    StakesEntity,
     StakingRulesEntity,
+    StakingStakesEntity,
     StakingHistoryEntity,
     PageEntity,
     AssetEntity,

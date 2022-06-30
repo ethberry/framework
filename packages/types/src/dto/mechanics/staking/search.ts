@@ -12,6 +12,6 @@ export interface IStakingSearchDto extends ISearchDto {
   reward: IStakingItemSearchDto;
 }
 
-export interface IStakesSearchDto extends ISearchDto {
+export interface IStakingStakesSearchDto extends ISearchDto {
   stakeStatus: Array<StakeStatus>;
 }

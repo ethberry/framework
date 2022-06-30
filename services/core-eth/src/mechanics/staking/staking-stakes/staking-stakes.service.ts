@@ -1,32 +1,32 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { IStakesSearchDto } from "@framework/types";
+import { IStakingStakesSearchDto } from "@framework/types";
 
-import { StakesEntity } from "./stakes.entity";
+import { StakingStakesEntity } from "./staking-stakes.entity";
 
 @Injectable()
-export class StakesService {
+export class StakingStakesService {
   constructor(
-    @InjectRepository(StakesEntity)
-    private readonly stakesEntityRepository: Repository<StakesEntity>,
+    @InjectRepository(StakingStakesEntity)
+    private readonly stakesEntityRepository: Repository<StakingStakesEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<StakesEntity>,
-    options?: FindOneOptions<StakesEntity>,
-  ): Promise<StakesEntity | null> {
+    where: FindOptionsWhere<StakingStakesEntity>,
+    options?: FindOneOptions<StakingStakesEntity>,
+  ): Promise<StakingStakesEntity | null> {
     return this.stakesEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
-    where: FindOptionsWhere<StakesEntity>,
-    options?: FindOneOptions<StakesEntity>,
-  ): Promise<Array<StakesEntity>> {
+    where: FindOptionsWhere<StakingStakesEntity>,
+    options?: FindOneOptions<StakingStakesEntity>,
+  ): Promise<Array<StakingStakesEntity>> {
     return this.stakesEntityRepository.find({ where, ...options });
   }
 
-  public async search(dto: IStakesSearchDto): Promise<[Array<StakesEntity>, number]> {
+  public async search(dto: IStakingStakesSearchDto): Promise<[Array<StakingStakesEntity>, number]> {
     const { stakeStatus, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
@@ -49,7 +49,7 @@ export class StakesService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async create(dto: DeepPartial<StakesEntity>): Promise<StakesEntity> {
+  public async create(dto: DeepPartial<StakingStakesEntity>): Promise<StakingStakesEntity> {
     return this.stakesEntityRepository.create(dto).save();
   }
 }

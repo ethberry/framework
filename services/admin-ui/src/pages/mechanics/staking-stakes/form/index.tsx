@@ -3,13 +3,13 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IStakesSearchDto, StakeStatus } from "@framework/types";
+import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface IStakesSearchFormProps {
-  onSubmit: (values: IStakesSearchDto) => Promise<void>;
-  initialValues: IStakesSearchDto;
+  onSubmit: (values: IStakingStakesSearchDto) => Promise<void>;
+  initialValues: IStakingStakesSearchDto;
   open: boolean;
 }
 

@@ -4,10 +4,10 @@ import { IsEnum, IsOptional } from "class-validator";
 
 import { ExchangeStatus } from "@framework/types";
 
-import { IExchangeUpdateDto } from "../interfaces";
+import { IExchangeRuleUpdateDto } from "../interfaces";
 import { ExchangeCreateDto } from "./index";
 
-export class Erc721RecipeUpdateDto extends ExchangeCreateDto implements IExchangeUpdateDto {
+export class Erc721RecipeUpdateDto extends ExchangeCreateDto implements IExchangeRuleUpdateDto {
   @ApiPropertyOptional({
     enum: ExchangeStatus,
   })

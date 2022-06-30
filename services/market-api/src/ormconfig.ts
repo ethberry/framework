@@ -10,7 +10,7 @@ import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { Erc998TokenHistoryEntity } from "./erc998/token/token-history/token-history.entity";
 import { Erc1155TokenHistoryEntity } from "./erc1155/token-history/token-history.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
-import { StakesEntity } from "./mechanics/staking/stakes/stakes.entity";
+import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { UniContractEntity } from "./blockchain/uni-token/uni-contract/uni-contract.entity";
 import { UniTemplateEntity } from "./blockchain/uni-token/uni-template/uni-template.entity";
 import { UniTokenEntity } from "./blockchain/uni-token/uni-token/uni-token.entity";
@@ -29,8 +29,8 @@ const config: PostgresConnectionOptions = {
     Erc998TokenHistoryEntity,
     Erc1155TokenHistoryEntity,
     UserEntity,
-    StakesEntity,
     ExchangeRulesEntity,
+    StakingStakesEntity,
     StakingRulesEntity,
     PageEntity,
     DropboxEntity,

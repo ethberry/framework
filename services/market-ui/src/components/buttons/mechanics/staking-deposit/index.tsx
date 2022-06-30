@@ -27,13 +27,13 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
     }
     let override;
     if (
-      rule.deposit.components[0].tokenType === TokenType.NATIVE ||
-      rule.deposit.components[0].tokenType === TokenType.ERC20
+      rule.deposit?.components[0].tokenType === TokenType.NATIVE ||
+      rule.deposit?.components[0].tokenType === TokenType.ERC20
     ) {
       override = { value: BigNumber.from(rule.deposit.components[0].amount) };
     }
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
-    return contract.deposit(rule.ruleId, rule.deposit.components[0].uniTokenId || 0, override) as Promise<void>;
+    return contract.deposit(rule.externalId, rule.deposit?.components[0].uniTokenId || 0, override) as Promise<void>;
   });
 
   const handleDeposit = (rule: IStakingRule): (() => Promise<void>) => {
@@ -46,7 +46,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
 
   if (rule.stakingStatus === StakingStatus.ACTIVE) {
     return (
-      <Tooltip title={formatMessage({ id: "pages.staking.deposit" })}>
+      <Tooltip title={formatMessage({ id: "pages.staking-rules.deposit" })}>
         <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositButton">
           <Casino />
         </IconButton>

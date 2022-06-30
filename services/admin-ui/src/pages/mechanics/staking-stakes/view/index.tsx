@@ -5,25 +5,18 @@ import { format, formatDistance, parseISO } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { IStake } from "@framework/types";
+import { IStakingStake } from "@framework/types";
 
 export interface IStakesViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: IStake;
+  initialValues: IStakingStake;
 }
 
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  // owner: string;
-  // stakeId: string;
-  // stakeStatus: StakeStatus;
-  // startTimestamp: string;
-  // withdrawTimestamp: string;
-  // multiplier: number;
-  // stakingRuleId: number;
-  const { id, owner, stakeId, stakeStatus, startTimestamp, withdrawTimestamp, multiplier, stakingRule } = initialValues;
+  const { id, account, stakeStatus, startTimestamp, stakingRule } = initialValues;
 
   const dateStart = new Date(startTimestamp);
   const dateFinish = new Date(new Date(dateStart.getTime() + +stakingRule.duration));
@@ -44,14 +37,14 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
                 <FormattedMessage id="pages.erc20-vesting.view.address" />
               </TableCell>
               {/* link to scanner */}
-              <TableCell align="right">{owner}</TableCell>
+              <TableCell align="right">{account}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="pages.erc20-vesting.view.beneficiary" />
               </TableCell>
               {/* link to scanner */}
-              <TableCell align="right">{owner}</TableCell>
+              <TableCell align="right">{account}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
@@ -63,7 +56,9 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="pages.erc20-vesting.view.duration" />
               </TableCell>
-              <TableCell align="right">{formatDistance(new Date(+stakingRule.duration), 0, { addSuffix: true })}</TableCell>
+              <TableCell align="right">
+                {formatDistance(new Date(+stakingRule.duration), 0, { addSuffix: true })}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

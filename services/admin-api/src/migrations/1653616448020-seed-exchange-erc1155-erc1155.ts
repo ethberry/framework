@@ -88,6 +88,6 @@ export class SeedExchangeErc1155Erc1155At1653616448020 implements MigrationInter
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.exchange RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.exchange_rules RESTART IDENTITY CASCADE;`);
   }
 }

@@ -1,6 +1,7 @@
 import { FC, MouseEvent } from "react";
 import { FormattedMessage } from "react-intl";
-import { Grid, List, ListItem, ListItemText } from "@mui/material";
+import { Grid, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Mail } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
@@ -30,7 +31,10 @@ export const Email: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {Object.values(EmailType).map((email, i) => (
-            <ListItem button key={i} onClick={sendEmail(email)} disableGutters>
+            <ListItem button key={i} onClick={sendEmail(email)}>
+              <ListItemIcon>
+                <Mail />
+              </ListItemIcon>
               <ListItemText>
                 <FormattedMessage id={`enums.emailType.${email}`} />
               </ListItemText>
