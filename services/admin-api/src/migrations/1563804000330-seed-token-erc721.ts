@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedUniTokenErc1155At1563804000350 implements MigrationInterface {
+export class SeedUniTokenErc721At1563804000330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
@@ -18,81 +18,63 @@ export class SeedUniTokenErc1155At1563804000350 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        40101,
+        20101,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        40101,
+        20101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40102,
+        20102,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        40102,
+        20102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40103,
+        20103,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        40103,
+        30103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40104,
-        '${defaultJSON}',
-        100,
-        '4',
-        'MINTED',
-        40105,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        40105,
-        '${defaultJSON}',
-        100,
-        '5',
-        'MINTED',
-        40105,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        40201,
+        20201,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        40201,
+        20201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40202,
+        20202,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        40202,
+        20202,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40203,
+        20203,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        40203,
+        20203,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.uni_token_id_seq', 40203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.uni_token_id_seq', 20203, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

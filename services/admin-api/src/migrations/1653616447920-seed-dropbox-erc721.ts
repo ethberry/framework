@@ -14,8 +14,8 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         external_id,
         asset_type
       ) VALUES (
-        50101,
-        50101,
+        60101,
+        60101,
         'DROPBOX'
       );
     `);
@@ -32,7 +32,7 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        50101
+        60101
       );
     `);
 

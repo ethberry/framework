@@ -22,7 +22,7 @@ export class StakingLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved Staking@lastBlock:", lastBlock);
+    console.info("Saved Mechanics@lastBlock:", lastBlock);
     return await this.contractManagerService.updateLastBlockByType(ContractType.STAKING, lastBlock);
   }
 }

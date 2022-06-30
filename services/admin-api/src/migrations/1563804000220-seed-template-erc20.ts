@@ -110,6 +110,8 @@ export class SeedUniTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.uni_template_id_seq', 10006, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

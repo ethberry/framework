@@ -15,7 +15,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
   imports: [
     ConfigModule,
     ContractManagerModule,
-    // Staking
+    // Mechanics
     EthersContractModule.forRootAsync(EthersContractModule, {
       imports: [ConfigModule, ContractManagerModule],
       inject: [ConfigService, ContractManagerService],

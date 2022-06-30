@@ -29,7 +29,7 @@
 //   return (
 //     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
 //       {/* TODO i18n */}
-//       <Typography variant="h5">Staking #{id}</Typography>
+//       <Typography variant="h5">Mechanics #{id}</Typography>
 //       <TableContainer component={Paper}>
 //         <Table aria-label="vesting table">
 //           <TableBody>

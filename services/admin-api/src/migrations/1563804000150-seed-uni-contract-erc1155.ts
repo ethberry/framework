@@ -12,7 +12,7 @@ export class SeedUniContractErc1155At1563804000150 implements MigrationInterface
     const erc1155CollectionShardsAddress = process.env.ERC1155_SHARDS_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - RUNES
+    // 31 - ITEMS, 32 - SKILLS, 33 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.uni_contract (
         id,

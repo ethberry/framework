@@ -21,7 +21,7 @@ import { AirdropEntity } from "./airdrop.entity";
 import { AirdropItemUpdateDto, AirdropSearchDto, Erc998AirdropCreateDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/erc998-airdrops")
+@Controller("/airdrops")
 export class AirdropController {
   constructor(private readonly airdropService: AirdropService) {}
 

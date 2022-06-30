@@ -1,4 +1,4 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import { IIdBase } from "@gemunion/types-collection";
 
 import { IAssetComponent } from "./asset-component";
 
@@ -8,7 +8,7 @@ export enum AssetType {
   "STAKING" = "STAKING",
 }
 
-export interface IAsset extends IIdDateBase {
+export interface IAsset extends IIdBase {
   components: Array<IAssetComponent>;
   assetType: AssetType;
   externalId: number;

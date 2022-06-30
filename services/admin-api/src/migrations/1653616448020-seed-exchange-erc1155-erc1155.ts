@@ -12,20 +12,20 @@ export class SeedExchangeErc1155Erc1155At1653616448020 implements MigrationInter
         external_id,
         asset_type
       ) VALUES (
-        60101,
-        60101,
+        70101,
+        70101,
         'EXCHANGE'
       ), (
-        60102,
-        60102,
+        70102,
+        70102,
         'EXCHANGE'
       ), (
-        60111,
-        60111,
+        70111,
+        70111,
         'EXCHANGE'
       ), (
-        60112,
-        60112,
+        70112,
+        70112,
         'EXCHANGE'
       );
     `);
@@ -42,25 +42,25 @@ export class SeedExchangeErc1155Erc1155At1653616448020 implements MigrationInter
         31,
         40102, -- wood
         1,
-        60101
+        70101
       ), (
         'ERC1155',
         31,
         40103, -- iron
         10,
-        60111
+        70111
       ), (
         'ERC1155',
         31,
         40104, -- wood log
         1,
-        60102
+        70102
       ), (
         'ERC1155',
         31,
         40105, -- iron ingot
         10,
-        60112
+        70112
       );
     `);
 
@@ -72,14 +72,14 @@ export class SeedExchangeErc1155Erc1155At1653616448020 implements MigrationInter
         created_at,
         updated_at
       ) VALUES (
-        60101,
-        60111,
+        70101,
+        70111,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        60102,
-        60112,
+        70102,
+        70112,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -10,6 +10,7 @@ export class AirdropSearchDto extends PaginationDto implements IAirdropSearchDto
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }) => (value === "" ? null : (value as string)))
   public account: string;
 
   @ApiPropertyOptional({

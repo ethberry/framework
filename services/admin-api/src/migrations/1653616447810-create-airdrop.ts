@@ -25,7 +25,7 @@ export class CreateAirdropTable1563804040410 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "uni_template_id",
+          name: "item_id",
           type: "int",
         },
         {
@@ -53,9 +53,9 @@ export class CreateAirdropTable1563804040410 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_template_id"],
+          columnNames: ["item_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_template`,
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
         {

@@ -28,6 +28,12 @@ export class AirdropService {
 
     const queryBuilder = this.airdropEntityRepository.createQueryBuilder("airdrop");
 
+    queryBuilder.leftJoinAndSelect("airdrop.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "components");
+    queryBuilder.leftJoinAndSelect("components.uniToken", "token");
+    queryBuilder.leftJoinAndSelect("token.uniTemplate", "template");
+    queryBuilder.leftJoinAndSelect("components.uniContract", "contract");
+
     queryBuilder.select();
 
     if (account) {

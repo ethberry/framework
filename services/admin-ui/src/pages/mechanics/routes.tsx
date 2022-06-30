@@ -10,11 +10,11 @@ import { Stakes } from "./stakes";
 
 export const mechanics: Array<RouteObject> = [
   {
-    path: "/airdrop",
+    path: "/airdrops",
     element: <Protected />,
     children: [
       { index: true, element: <Airdrop /> },
-      { path: "/airdrop/:id", element: <Airdrop /> },
+      { path: "/airdrops/:id", element: <Airdrop /> },
     ],
   },
   {

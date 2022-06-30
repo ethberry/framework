@@ -191,7 +191,6 @@
     },
     "labels": {
       "DUMMY": "Dummy",
-      "contractRole": "Role",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",
@@ -203,6 +202,7 @@
       "collectionType": "Type",
       "comment": "Comment",
       "confirm": "Confirm",
+      "contractRole": "Role",
       "contractStatus": "Status",
       "contractTemplate": "Template",
       "createdAt": "Created",
@@ -260,9 +260,9 @@
       "year": "Year"
     },
     "placeholders": {
-      "decimals": "18",
       "DUMMY": "Dummy",
       "address": "0x...",
+      "account": "0x...",
       "amount": "10",
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
@@ -274,6 +274,7 @@
       "comment": "Fraud",
       "confirm": "******",
       "createdAt": "now",
+      "decimals": "18",
       "definition": "10",
       "description": "Description",
       "displayName": "Gordon Freeman",
@@ -338,6 +339,10 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "airdrops": {
+      "defaultItemTitle": "Airdrop",
+      "title": "ERC721 Airdrop"
+    },
     "blockchain": {
       "title": "Blockchain Settings"
     },
@@ -349,15 +354,10 @@
         "title": "Admin",
         "users": "Users"
       },
-      "blockchain": {
-        "stakes": "Stakes",
-        "staking": "Staking Rules",
-        "title": "Blockchain"
-      },
       "erc1155": {
         "contracts": "ERC1155 Contracts",
-        "title": "ERC1155",
-        "templates": "ERC1155 Templates"
+        "templates": "ERC1155 Templates",
+        "title": "ERC1155"
       },
       "erc20": {
         "contracts": "ERC20 Contracts",
@@ -376,19 +376,24 @@
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
       },
+      "mechanics": {
+        "airdrops": "Airdrops",
+        "dropbox": "Dropbox",
+        "exchange": "Exchange",
+        "stakes": "Stakes",
+        "staking-rules": "Staking Rules",
+        "title": "Mechanics"
+      },
       "title": "Dashboard"
+    },
+    "dropboxes": {
+      "title": "Dropboxes"
     },
     "emails": {
       "title": "Emails"
     },
     "erc1155-contracts": {
       "title": "ERC1155 Contracts"
-    },
-    "exchanges": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Exchange rules",
-      "upload": "Upload rule"
     },
     "erc1155-templates": {
       "title": "ERC1155 Templates"
@@ -408,16 +413,9 @@
         "startTimestamp": "Start time"
       }
     },
-    "airdrops": {
-      "defaultItemTitle": "Airdrop",
-      "title": "ERC721 Airdrop"
-    },
     "erc721-contracts": {
       "royalty": "Royalty",
       "title": "ERC721 Contracts"
-    },
-    "dropboxes": {
-      "title": "Dropboxes"
     },
     "erc721-templates": {
       "title": "ERC721 Templates"
@@ -446,6 +444,12 @@
         "imageUrl": "Image",
         "title": "Title"
       }
+    },
+    "exchanges": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Exchange rules",
+      "upload": "Upload rule"
     },
     "guest": {
       "forgotPassword": "Forgot password",

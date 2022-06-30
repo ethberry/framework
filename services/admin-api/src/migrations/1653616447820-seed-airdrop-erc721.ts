@@ -16,37 +16,95 @@ export class SeedAirdropErc721At1563804040420 implements MigrationInterface {
       "0x385e0d108f82a9c44a168e7a86815ba90380c61b07100086f4fecebe6d84611534295b17ffec9af85dd76f5e1096421eabe79915a0fde321f85aabc48709aaa71b";
 
     await queryRunner.query(`
+      INSERT INTO ${ns}.asset (
+        id,
+        external_id,
+        asset_type
+      ) VALUES (
+        50101,
+        50101,
+        'AIRDROP'
+      ), (
+        50102,
+        50102,
+        'AIRDROP'
+      ), (
+        50103,
+        50103,
+        'AIRDROP'
+      ), (
+        50104,
+        50104,
+        'AIRDROP'
+      );
+    `);
+
+    await queryRunner.query(`
+      INSERT INTO ${ns}.asset_component (
+        token_type,
+        uni_contract_id,
+        uni_token_id,
+        amount,
+        asset_id
+      ) VALUES (
+        'ERC721',
+        13,
+        20101, -- sword
+        '1',
+        50101
+      ), (
+        'ERC721',
+        13,
+        20102, -- mace
+        '1',
+        50102
+      ), (
+        'ERC721',
+        13,
+        20103, -- axe
+        '1',
+        50103
+      ), (
+        'ERC1155',
+        31,
+        40101, -- gold
+        '1000',
+        50104
+      );
+    `);
+
+    await queryRunner.query(`
       INSERT INTO ${ns}.airdrop (
         account,
-        uni_template_id,
+        item_id,
         airdrop_status,
         signature,
         created_at,
         updated_at
       ) VALUES (
         '${wallet}',
-        20201,
+        50101,
         'NEW',
         '${signDbItem1}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        20202,
+        50102,
         'NEW',
         '${signDbItem2}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        20203,
+        50103,
         'UNPACKED',
         '${signDbItem3}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        20204,
+        50104,
         'REDEEMED',
         '${signDbItem4}',
         '${currentDateTime}',

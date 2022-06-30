@@ -41,6 +41,18 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
+        {
+          columnNames: ["uni_contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.uni_contract`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["uni_token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.uni_token`,
+          onDelete: "CASCADE",
+        },
       ],
     });
 

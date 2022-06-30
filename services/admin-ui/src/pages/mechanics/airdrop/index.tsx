@@ -42,7 +42,7 @@ export const Airdrop: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IAirdrop, IAirdropSearchDto>({
-    baseUrl: "/erc721-airdrops",
+    baseUrl: "/airdrops",
     empty: {
       account: "",
       item: emptyPrice,
@@ -59,9 +59,9 @@ export const Airdrop: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721-airdrops"]} />
+      <Breadcrumbs path={["dashboard", "airdrops"]} />
 
-      <PageHeader message="pages.erc721-airdrops.title">
+      <PageHeader message="pages.airdrops.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -106,7 +106,7 @@ export const Airdrop: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: formatMessage({ id: "pages.erc721-airdrops.defaultItemTitle" }) }}
+        initialValues={{ ...selected, title: formatMessage({ id: "pages.airdrops.defaultItemTitle" }) }}
       />
 
       <AirdropEditDialog

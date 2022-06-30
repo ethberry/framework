@@ -20,9 +20,6 @@ export class UniTokenEntity extends IdDateBaseEntity implements IUniToken {
   @BigNumberColumn()
   public tokenId: string;
 
-  @Column({ type: "varchar" })
-  public owner: string;
-
   @Column({ type: "int" })
   public royalty: number;
 

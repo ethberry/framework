@@ -164,7 +164,7 @@ export class Erc998TokenServiceEth {
       throw new NotFoundException("templateNotFound");
     }
 
-    let erc998DropboxEntity; // if minted as Staking reward
+    let erc998DropboxEntity; // if minted as Mechanics reward
     if (~~dropboxId !== 0) {
       erc998DropboxEntity = await this.erc998TokenService.findOne({ id: ~~dropboxId });
 
