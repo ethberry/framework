@@ -20,16 +20,16 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
   AssetType,
   IAsset,
-  IAssetComponent,
   IStakingRule,
   IStakingSearchDto,
   StakingStatus,
   TokenType,
 } from "@framework/types";
 
+import { StakingUploadButton } from "../../../components/buttons";
+import { emptyPrice } from "../../../components/inputs/empty-price";
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
-import { StakingUploadButton } from "../../../components/buttons";
 
 export const Staking: FC = () => {
   const {
@@ -58,25 +58,11 @@ export const Staking: FC = () => {
       description: emptyStateString,
       deposit: {
         assetType: AssetType.STAKING,
-        components: [
-          {
-            tokenType: TokenType.NATIVE,
-            uniContractId: 0,
-            uniTokenId: 0,
-            amount: "0",
-          } as IAssetComponent,
-        ],
+        components: emptyPrice.components,
       } as IAsset,
       reward: {
         assetType: AssetType.STAKING,
-        components: [
-          {
-            tokenType: TokenType.NATIVE,
-            uniContractId: 0,
-            uniTokenId: 0,
-            amount: "0",
-          } as IAssetComponent,
-        ],
+        components: emptyPrice.components,
       } as IAsset,
       duration: 30,
       penalty: 100,
