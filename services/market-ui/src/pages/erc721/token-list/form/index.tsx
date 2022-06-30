@@ -33,7 +33,7 @@ export const Erc721TokenSearchForm: FC<IErc721TokenSearchFormProps> = props => {
       data-testid="Erc721TokenSearchForm"
     >
       <Collapse in={open}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <EntityInput name="uniContractIds" controller="erc721-contracts" multiple />
           </Grid>

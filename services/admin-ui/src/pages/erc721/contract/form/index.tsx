@@ -36,7 +36,7 @@ export const Erc721CollectionSearchForm: FC<IErc721CollectionSearchFormProps> = 
         </Grid>
       </Grid>
       <Collapse in={open}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <SelectInput multiple name="contractStatus" options={UniContractStatus} />
           </Grid>
