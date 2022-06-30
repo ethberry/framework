@@ -1,10 +1,10 @@
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { UniTemplateStatus } from "../../../entities";
+import { TemplateStatus } from "../../../entities";
 
 export interface IErc1155TemplateSearchDto extends ISearchDto {
-  uniContractIds: Array<number>;
+  contractIds: Array<number>;
   maxPrice: string;
   minPrice: string;
-  templateStatus: Array<UniTemplateStatus>;
+  templateStatus: Array<TemplateStatus>;
 }

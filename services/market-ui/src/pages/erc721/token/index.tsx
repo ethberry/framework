@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IUniTemplate, IUniToken } from "@framework/types";
+import { ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -11,12 +11,12 @@ import { useStyles } from "./styles";
 import { Erc721TokenSellButton } from "../../../components/buttons";
 
 export const Erc721Token: FC = () => {
-  const { selected, isLoading } = useCollection<IUniToken>({
+  const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/erc721-tokens",
     empty: {
-      uniTemplate: {
+      template: {
         description: emptyStateString,
-      } as IUniTemplate,
+      } as ITemplate,
     },
   });
 
@@ -28,15 +28,15 @@ export const Erc721Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-token"]} data={[{}, selected.uniTemplate]} />
+      <Breadcrumbs path={["dashboard", "erc721-token"]} data={[{}, selected.template]} />
 
-      <PageHeader message="pages.erc721-token.title" data={selected.uniTemplate} />
+      <PageHeader message="pages.erc721-token.title" data={selected.template} />
 
       <Grid container>
         <Grid item xs={9}>
-          <img src={selected.uniTemplate!.imageUrl} />
+          <img src={selected.template!.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={selected.uniTemplate!.description} />
+            <RichTextDisplay data={selected.template!.description} />
           </Typography>
         </Grid>
         <Grid item xs={3}>

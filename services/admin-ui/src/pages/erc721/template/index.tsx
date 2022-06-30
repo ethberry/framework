@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IErc721TemplateSearchDto, IUniTemplate, UniTemplateStatus } from "@framework/types";
+import { IErc721TemplateSearchDto, ITemplate, TemplateStatus } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
 import { Erc721TemplateSearchForm } from "./form";
@@ -42,7 +42,7 @@ export const Erc721Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IUniTemplate, IErc721TemplateSearchDto>({
+  } = useCollection<ITemplate, IErc721TemplateSearchDto>({
     baseUrl: "/erc721-templates",
     empty: {
       title: "",
@@ -50,14 +50,14 @@ export const Erc721Template: FC = () => {
       price: emptyPrice,
       attributes: "{}",
       amount: "0",
-      uniContractId: 3,
+      contractId: 3,
     },
     search: {
       query: "",
-      templateStatus: [UniTemplateStatus.ACTIVE],
-      uniContractIds: [],
+      templateStatus: [TemplateStatus.ACTIVE],
+      contractIds: [],
     },
-    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, uniContractId }) => ({
+    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, contractId }) => ({
       title,
       description,
       attributes,
@@ -65,7 +65,7 @@ export const Erc721Template: FC = () => {
       amount,
       imageUrl,
       templateStatus,
-      uniContractId,
+      contractId,
     }),
   });
 
@@ -98,7 +98,7 @@ export const Erc721Template: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(template)}
-                  disabled={template.templateStatus === UniTemplateStatus.INACTIVE}
+                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>

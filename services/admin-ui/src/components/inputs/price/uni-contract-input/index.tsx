@@ -2,15 +2,15 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc20ContractTemplate, TokenType, UniContractRole, UniContractStatus } from "@framework/types";
+import { Erc20ContractTemplate, TokenType, ContractRole, ContractStatus } from "@framework/types";
 
-export interface IUniContractInputProps {
+export interface IContractInputProps {
   prefix: string;
   name?: string;
 }
 
-export const UniContractInput: FC<IUniContractInputProps> = props => {
-  const { prefix, name = "uniContractId" } = props;
+export const ContractInput: FC<IContractInputProps> = props => {
+  const { prefix, name = "contractId" } = props;
 
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
 
@@ -21,7 +21,7 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="uni-contracts"
           data={{
-            contractStatus: [UniContractStatus.ACTIVE],
+            contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC1155],
           }}
         />
@@ -32,8 +32,8 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="uni-contracts"
           data={{
-            contractRole: [UniContractRole.TOKEN],
-            contractStatus: [UniContractStatus.ACTIVE],
+            contractRole: [ContractRole.TOKEN],
+            contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC721],
           }}
         />
@@ -44,8 +44,8 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="uni-contracts"
           data={{
-            contractRole: [UniContractRole.TOKEN],
-            contractStatus: [UniContractStatus.ACTIVE],
+            contractRole: [ContractRole.TOKEN],
+            contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC998],
           }}
         />
@@ -57,7 +57,7 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
           controller="uni-contracts"
           data={{
             contractTemplate: [Erc20ContractTemplate.NATIVE],
-            contractStatus: [UniContractStatus.ACTIVE],
+            contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC998],
           }}
         />
@@ -73,7 +73,7 @@ export const UniContractInput: FC<IUniContractInputProps> = props => {
               Erc20ContractTemplate.BLACKLIST,
               Erc20ContractTemplate.SIMPLE,
             ],
-            contractStatus: [UniContractStatus.ACTIVE],
+            contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC20],
           }}
         />

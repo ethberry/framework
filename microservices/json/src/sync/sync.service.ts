@@ -2,12 +2,12 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 
 import { UserService } from "../user/user.service";
 import { UserEntity } from "../user/user.entity";
-import { UniBalanceService } from "../blockchain/uni-token/uni-balance/uni-balance.service";
-import { UniBalanceEntity } from "../blockchain/uni-token/uni-balance/uni-balance.entity";
+import { BalanceService } from "../blockchain/hierarchy/balance/balance.service";
+import { BalanceEntity } from "../blockchain/hierarchy/balance/balance.entity";
 
 @Injectable()
 export class SyncService {
-  constructor(private readonly userService: UserService, private readonly uniBalanceService: UniBalanceService) {}
+  constructor(private readonly userService: UserService, private readonly balanceService: BalanceService) {}
 
   public async getProfileBySub(sub: string): Promise<UserEntity> {
     const userEntity = await this.userService.findOne({ sub });
@@ -19,10 +19,10 @@ export class SyncService {
     return userEntity;
   }
 
-  public async getBalanceBySub(sub: string): Promise<Array<UniBalanceEntity>> {
+  public async getBalanceBySub(sub: string): Promise<Array<BalanceEntity>> {
     const userEntity = await this.getProfileBySub(sub);
 
-    return this.uniBalanceService.findAll(
+    return this.balanceService.findAll(
       {
         account: userEntity.wallet,
       },
@@ -30,8 +30,8 @@ export class SyncService {
         join: {
           alias: "balance",
           leftJoinAndSelect: {
-            token: "balance.uniToken",
-            template: "token.uniTemplate",
+            token: "balance.token",
+            template: "token.template",
           },
         },
       },

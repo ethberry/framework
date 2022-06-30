@@ -2,14 +2,14 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "type
 
 import { ns } from "@framework/constants";
 import { JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IUniTemplate, UniTemplateStatus } from "@framework/types";
+import { ITemplate, TemplateStatus } from "@framework/types";
 
-import { UniContractEntity } from "../uni-contract/uni-contract.entity";
-import { UniTokenEntity } from "../uni-token/uni-token.entity";
+import { ContractEntity } from "../uni-contract/uni-contract.entity";
+import { TokenEntity } from "../uni-token/uni-token.entity";
 import { AssetEntity } from "../../asset/asset.entity";
 
-@Entity({ schema: ns, name: "uni_template" })
-export class UniTemplateEntity extends SearchableEntity implements IUniTemplate {
+@Entity({ schema: ns, name: "template" })
+export class TemplateEntity extends SearchableEntity implements ITemplate {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
@@ -34,17 +34,17 @@ export class UniTemplateEntity extends SearchableEntity implements IUniTemplate 
 
   @Column({
     type: "enum",
-    enum: UniTemplateStatus,
+    enum: TemplateStatus,
   })
-  public templateStatus: UniTemplateStatus;
+  public templateStatus: TemplateStatus;
 
   @Column({ type: "int" })
-  public uniContractId: number;
+  public contractId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => UniContractEntity)
-  public uniContract: UniContractEntity;
+  @ManyToOne(_type => ContractEntity)
+  public contract: ContractEntity;
 
-  @OneToMany(_type => UniTokenEntity, token => token.uniTemplate)
-  public uniTokens: Array<UniTokenEntity>;
+  @OneToMany(_type => TokenEntity, token => token.template)
+  public tokens: Array<TokenEntity>;
 }

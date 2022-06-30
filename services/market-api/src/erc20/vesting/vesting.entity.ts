@@ -1,11 +1,11 @@
 import { Column, Entity } from "typeorm";
 
-import { ContractBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { ContractBaseEntity as DeployableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { Erc20VestingTemplate, IErc20Vesting } from "@framework/types";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "erc20_vesting" })
-export class Erc20VestingEntity extends ContractBaseEntity implements IErc20Vesting {
+export class Erc20VestingEntity extends DeployableEntity implements IErc20Vesting {
   @Column({ type: "varchar" })
   public address: string;
 

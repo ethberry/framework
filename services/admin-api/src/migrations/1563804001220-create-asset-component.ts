@@ -18,11 +18,11 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
           default: "'NATIVE'",
         },
         {
-          name: "uni_contract_id",
+          name: "contract_id",
           type: "int",
         },
         {
-          name: "uni_token_id",
+          name: "token_id",
           type: "int",
         },
         {
@@ -42,15 +42,15 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["uni_contract_id"],
+          columnNames: ["contract_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_contract`,
+          referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["uni_token_id"],
+          columnNames: ["token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_token`,
+          referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",
         },
       ],

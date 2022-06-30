@@ -16,7 +16,7 @@ export class Erc998AssetSearchDto extends PaginationDto implements IErc998AssetS
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public uniContractIds: Array<number>;
+  public contractIds: Array<number>;
 
   @ApiPropertyOptional({
     enum: TokenRarity,

@@ -10,7 +10,7 @@ import {
   Erc998TemplateSearchDto,
   Erc998TemplateUpdateDto,
 } from "./dto";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @ApiBearerAuth()
 @Controller("/erc998-templates")
@@ -19,36 +19,33 @@ export class Erc998TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc998TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
+  public search(@Query() dto: Erc998TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc998TemplateService.search(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc998TemplateAutocompleteDto): Promise<Array<UniTemplateEntity>> {
+  public autocomplete(@Query() dto: Erc998TemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
     return this.erc998TemplateService.autocomplete(dto);
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: Erc998TemplateUpdateDto,
-  ): Promise<UniTemplateEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc998TemplateUpdateDto): Promise<TemplateEntity> {
     return this.erc998TemplateService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
     return this.erc998TemplateService.findOne({ id });
   }
 
   @Post("/")
-  public create(@Body() dto: Erc998TemplateCreateDto): Promise<UniTemplateEntity> {
+  public create(@Body() dto: Erc998TemplateCreateDto): Promise<TemplateEntity> {
     return this.erc998TemplateService.create(dto);
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity> {
     return this.erc998TemplateService.delete({ id });
   }
 }

@@ -22,8 +22,8 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, uniContractIds, uniTemplateContractIds, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, uniContractIds, uniTemplateContractIds, minPrice, maxPrice };
+  const { query, contractIds, templateContractIds, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, contractIds, templateContractIds, minPrice, maxPrice };
 
   return (
     <FormWrapper
@@ -49,7 +49,7 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="uniContractIds" controller="erc721-contracts" multiple />
+              <EntityInput name="contractIds" controller="erc721-contracts" multiple />
             </Grid>
           ) : null}
         </Grid>

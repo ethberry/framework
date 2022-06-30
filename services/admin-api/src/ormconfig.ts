@@ -14,10 +14,10 @@ import { UserEntity } from "./user/user.entity";
 import { OtpEntity } from "./otp/otp.entity";
 import { SettingsEntity } from "./settings/settings.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
-import { UniContractEntity } from "./blockchain/uni-token/uni-contract/uni-contract.entity";
-import { UniTemplateEntity } from "./blockchain/uni-token/uni-template/uni-template.entity";
-import { UniTokenEntity } from "./blockchain/uni-token/uni-token/uni-token.entity";
-import { UniBalanceEntity } from "./blockchain/uni-token/uni-balance/uni-balance.entity";
+import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
+import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
+import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
+import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { AssetEntity } from "./blockchain/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
@@ -36,26 +36,26 @@ import { CreateOtpTable1563804000060 } from "./migrations/1563804000060-create-o
 
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
-import { CreateUniContract1563804000110 } from "./migrations/1563804000110-create-uni-contract";
-import { SeedUniContractErc20At1563804000120 } from "./migrations/1563804000120-seed-uni-contract-erc20";
-import { SeedUniContractErc721At1563804000130 } from "./migrations/1563804000130-seed-uni-contract-erc721";
-import { SeedUniContractErc998At1563804000140 } from "./migrations/1563804000140-seed-uni-contract-erc998";
-import { SeedUniContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-uni-contract-erc1155";
+import { CreateContract1563804000110 } from "./migrations/1563804000110-create-uni-contract";
+import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-seed-uni-contract-erc20";
+import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-uni-contract-erc721";
+import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-uni-contract-erc998";
+import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-uni-contract-erc1155";
 
-import { CreateUniTemplate1563804000210 } from "./migrations/1563804000210-create-uni-template";
-import { SeedUniTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
-import { SeedUniTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
-import { SeedUniTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
-import { SeedUniTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
+import { CreateTemplate1563804000210 } from "./migrations/1563804000210-create-uni-template";
+import { SeedTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
+import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
+import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
+import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
 
-import { CreateUniToken1563804000310 } from "./migrations/1563804000310-create-uni-token";
-import { SeedUniTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
-import { SeedUniTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
-import { SeedUniTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
-import { SeedUniTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
+import { CreateToken1563804000310 } from "./migrations/1563804000310-create-uni-token";
+import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
+import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
+import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
+import { SeedTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
 
-import { CreateUniBalanceTable1563804000410 } from "./migrations/1563804000410-create-uni-balance";
-import { SeedUniBalanceErc1155At1563804020410 } from "./migrations/1563804000410-seed-uni-balance-erc1155";
+import { CreateBalanceTable1563804000410 } from "./migrations/1563804000410-create-uni-balance";
+import { SeedBalanceErc1155At1563804020410 } from "./migrations/1563804000410-seed-uni-balance-erc1155";
 
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
 
@@ -113,18 +113,18 @@ const config: PostgresConnectionOptions = {
     AccessControlEntity,
     AccessListEntity,
     Erc20VestingEntity,
-    UniContractEntity,
-    UniTemplateEntity,
+    ContractEntity,
+    TemplateEntity,
     StakingRulesEntity,
     StakingStakesEntity,
     StakingHistoryEntity,
     PageEntity,
     AssetEntity,
     AssetComponentEntity,
-    UniContractEntity,
-    UniTemplateEntity,
-    UniTokenEntity,
-    UniBalanceEntity,
+    ContractEntity,
+    TemplateEntity,
+    TokenEntity,
+    BalanceEntity,
     AirdropEntity,
     DropboxEntity,
     ExchangeRulesEntity,
@@ -156,26 +156,26 @@ const config: PostgresConnectionOptions = {
 
     CreateAsset1563804000100,
 
-    CreateUniContract1563804000110,
-    SeedUniContractErc20At1563804000120,
-    SeedUniContractErc721At1563804000130,
-    SeedUniContractErc998At1563804000140,
-    SeedUniContractErc1155At1563804000150,
+    CreateContract1563804000110,
+    SeedContractErc20At1563804000120,
+    SeedContractErc721At1563804000130,
+    SeedContractErc998At1563804000140,
+    SeedContractErc1155At1563804000150,
 
-    CreateUniTemplate1563804000210,
-    SeedUniTemplateErc20At1563804000220,
-    SeedUniTemplateErc721At1563804000230,
-    SeedUniTemplateErc998At1563804000240,
-    SeedUniTemplateErc1155At1563804000250,
+    CreateTemplate1563804000210,
+    SeedTemplateErc20At1563804000220,
+    SeedTemplateErc721At1563804000230,
+    SeedTemplateErc998At1563804000240,
+    SeedTemplateErc1155At1563804000250,
 
-    CreateUniToken1563804000310,
-    SeedUniTokenErc20At1563804000320,
-    SeedUniTokenErc721At1563804000330,
-    SeedUniTokenErc998At1563804000340,
-    SeedUniTokenErc1155At1563804000350,
+    CreateToken1563804000310,
+    SeedTokenErc20At1563804000320,
+    SeedTokenErc721At1563804000330,
+    SeedTokenErc998At1563804000340,
+    SeedTokenErc1155At1563804000350,
 
-    CreateUniBalanceTable1563804000410,
-    SeedUniBalanceErc1155At1563804020410,
+    CreateBalanceTable1563804000410,
+    SeedBalanceErc1155At1563804020410,
 
     CreateAssetComponent1563804001220,
 

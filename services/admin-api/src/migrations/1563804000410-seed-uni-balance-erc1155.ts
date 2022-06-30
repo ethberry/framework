@@ -4,15 +4,15 @@ import { constants } from "ethers";
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 
-export class SeedUniBalanceErc1155At1563804020410 implements MigrationInterface {
+export class SeedBalanceErc1155At1563804020410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.uni_balance (
+      INSERT INTO ${ns}.balance (
         account,
         amount,
-        uni_token_id,
+        token_id,
         created_at,
         updated_at
       ) VALUES (

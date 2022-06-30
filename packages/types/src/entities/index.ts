@@ -36,7 +36,7 @@ export * from "./mechanics/staking-rule";
 export * from "./mechanics/staking-stake";
 export * from "./mechanics/staking-history";
 
-export * from "./uni-token/uni-balance";
-export * from "./uni-token/uni-contract";
-export * from "./uni-token/uni-template";
-export * from "./uni-token/uni-token";
+export * from "./hierarchy/balance";
+export * from "./hierarchy/contract";
+export * from "./hierarchy/template";
+export * from "./hierarchy/token";

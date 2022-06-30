@@ -8,20 +8,20 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
-interface IUniTokenSearchFormProps {
+interface ITokenSearchFormProps {
   onSubmit: (values: IErc998AssetSearchDto) => Promise<void>;
   initialValues: IErc998AssetSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
-export const Erc998TokenSearchForm: FC<IUniTokenSearchFormProps> = props => {
+export const Erc998TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
-  const { uniContractIds, rarity } = initialValues;
-  const fixedValues = { uniContractIds, rarity };
+  const { contractIds, rarity } = initialValues;
+  const fixedValues = { contractIds, rarity };
 
   return (
     <FormWrapper
@@ -35,7 +35,7 @@ export const Erc998TokenSearchForm: FC<IUniTokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput name="uniContractIds" controller="erc998-collections" multiple />
+            <EntityInput name="contractIds" controller="erc998-collections" multiple />
           </Grid>
           <Grid item xs={6}>
             <SelectInput name="rarity" options={TokenRarity} multiple />

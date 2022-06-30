@@ -4,7 +4,7 @@ import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/ne
 
 import { Erc721TemplateService } from "./template.service";
 import { Erc721TemplateSearchDto } from "./dto";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Public()
 @Controller("/erc721-templates")
@@ -13,18 +13,18 @@ export class Erc721TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
+  public search(@Query() dto: Erc721TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc721TemplateService.search(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<UniTemplateEntity>> {
+  public autocomplete(): Promise<Array<TemplateEntity>> {
     return this.erc721TemplateService.autocomplete();
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
     return this.erc721TemplateService.findOne({ id }, { relations: ["erc721Collection"] });
   }
 }

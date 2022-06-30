@@ -6,23 +6,23 @@ import { BigNumber } from "ethers";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { IOpenSeaMetadata } from "../../common/interfaces";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 
 @Injectable()
 export class MetadataTokenService {
   constructor(
-    @InjectRepository(UniTokenEntity)
-    private readonly uniTokenEntityRepository: Repository<UniTokenEntity>,
+    @InjectRepository(TokenEntity)
+    private readonly tokenEntityRepository: Repository<TokenEntity>,
     private readonly configService: ConfigService,
   ) {}
 
-  public getToken(address: string, tokenId: string): Promise<UniTokenEntity | null> {
-    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
+  public getToken(address: string, tokenId: string): Promise<TokenEntity | null> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("token.uniTemplate", "template");
-    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
+    queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.andWhere("contract.address = :address", {
       address,
@@ -35,21 +35,21 @@ export class MetadataTokenService {
   }
 
   public async getTokenMetadata(address: string, tokenId: BigNumber): Promise<IOpenSeaMetadata> {
-    const uniTokenEntity = await this.getToken(address, tokenId.toString());
+    const tokenEntity = await this.getToken(address, tokenId.toString());
 
-    if (!uniTokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
-    const { attributes } = uniTokenEntity;
+    const { attributes } = tokenEntity;
 
     return {
-      description: getPainText(uniTokenEntity.uniTemplate.description),
-      external_url: `${baseUrl}/metadata/${uniTokenEntity.uniTemplate.uniContract.address}/${uniTokenEntity.id}`,
-      image: uniTokenEntity.uniTemplate.imageUrl,
-      name: uniTokenEntity.uniTemplate.title,
+      description: getPainText(tokenEntity.template.description),
+      external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.id}`,
+      image: tokenEntity.template.imageUrl,
+      name: tokenEntity.template.title,
       attributes,
     };
   }

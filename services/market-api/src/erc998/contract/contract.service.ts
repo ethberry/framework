@@ -3,18 +3,18 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
-import { UniContractRole } from "@framework/types";
+import { ContractRole } from "@framework/types";
 
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @Injectable()
 export class Erc998CollectionService {
   constructor(
-    @InjectRepository(UniContractEntity)
-    private readonly erc998CollectionEntityRepository: Repository<UniContractEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly erc998CollectionEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<UniContractEntity>, number]> {
+  public search(dto: ISearchDto): Promise<[Array<ContractEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.erc998CollectionEntityRepository.createQueryBuilder("collection");
@@ -36,7 +36,7 @@ export class Erc998CollectionService {
     }
 
     queryBuilder.andWhere("contract.collectionType IN(:...collectionTypes)", {
-      collectionTypes: [UniContractRole.TOKEN, UniContractRole.DROPBOX],
+      collectionTypes: [ContractRole.TOKEN, ContractRole.DROPBOX],
     });
 
     queryBuilder.orderBy("contract.createdAt", "DESC");
@@ -47,7 +47,7 @@ export class Erc998CollectionService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<UniContractEntity>> {
+  public async autocomplete(): Promise<Array<ContractEntity>> {
     return this.erc998CollectionEntityRepository.find({
       select: {
         id: true,
@@ -57,9 +57,9 @@ export class Erc998CollectionService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniContractEntity>,
-    options?: FindOneOptions<UniContractEntity>,
-  ): Promise<UniContractEntity | null> {
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
     return this.erc998CollectionEntityRepository.findOne({ where, ...options });
   }
 }

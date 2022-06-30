@@ -23,8 +23,8 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,
-        uni_contract_id,
-        uni_token_id,
+        contract_id,
+        token_id,
         amount,
         asset_id
       ) VALUES (
@@ -43,8 +43,8 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         image_url,
         item_id,
         dropbox_status,
-        uni_contract_id,
-        uni_template_id,
+        contract_id,
+        template_id,
         created_at,
         updated_at
       ) VALUES (

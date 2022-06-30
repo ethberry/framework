@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IErc1155TemplateSearchDto, IUniTemplate, UniTemplateStatus } from "@framework/types";
+import { IErc1155TemplateSearchDto, ITemplate, TemplateStatus } from "@framework/types";
 
 import { Erc1155TokenEditDialog } from "./edit";
 import { Erc1155TemplateSearchForm } from "./form";
@@ -42,7 +42,7 @@ export const Erc1155Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IUniTemplate, IErc1155TemplateSearchDto>({
+  } = useCollection<ITemplate, IErc1155TemplateSearchDto>({
     baseUrl: "/erc1155-templates",
     empty: {
       title: "",
@@ -53,13 +53,13 @@ export const Erc1155Template: FC = () => {
     },
     search: {
       query: "",
-      uniContractIds: [],
-      templateStatus: [UniTemplateStatus.ACTIVE],
+      contractIds: [],
+      templateStatus: [TemplateStatus.ACTIVE],
     },
-    filter: ({ id, title, description, attributes, price, amount, imageUrl, uniContractId, templateStatus }) =>
+    filter: ({ id, title, description, attributes, price, amount, imageUrl, contractId, templateStatus }) =>
       id
         ? { title, description, attributes, price, amount, imageUrl, templateStatus }
-        : { title, description, attributes, price, amount, imageUrl, uniContractId },
+        : { title, description, attributes, price, amount, imageUrl, contractId },
   });
 
   return (
@@ -89,10 +89,7 @@ export const Erc1155Template: FC = () => {
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>
-                <IconButton
-                  onClick={handleDelete(token)}
-                  disabled={token.templateStatus === UniTemplateStatus.INACTIVE}
-                >
+                <IconButton onClick={handleDelete(token)} disabled={token.templateStatus === TemplateStatus.INACTIVE}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

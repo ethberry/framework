@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { IUniTemplate } from "@framework/types";
+import { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
@@ -10,7 +10,7 @@ import { formatPrice } from "../../../../utils/money";
 import { Erc1155TokenSingleBuyButton } from "../../../../components/buttons";
 
 interface IErc1155TemplateItemProps {
-  token: IUniTemplate;
+  token: ITemplate;
 }
 
 export const Erc1155Template: FC<IErc1155TemplateItemProps> = props => {

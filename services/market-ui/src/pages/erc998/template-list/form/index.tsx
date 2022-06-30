@@ -9,20 +9,20 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { useStyles } from "./styles";
 
-interface IUniTemplateSearchFormProps {
+interface ITemplateSearchFormProps {
   onSubmit: (values: IErc998TemplateSearchDto) => Promise<void>;
   initialValues: IErc998TemplateSearchDto;
   open: boolean;
   embedded?: boolean;
 }
 
-export const Erc998TemplateSearchForm: FC<IUniTemplateSearchFormProps> = props => {
+export const Erc998TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
   const { onSubmit, initialValues, open, embedded } = props;
 
   const classes = useStyles();
 
-  const { query, uniContractIds, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, uniContractIds, minPrice, maxPrice };
+  const { query, contractIds, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, contractIds, minPrice, maxPrice };
 
   return (
     <FormWrapper
@@ -48,7 +48,7 @@ export const Erc998TemplateSearchForm: FC<IUniTemplateSearchFormProps> = props =
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput name="uniContractIds" controller="erc998-collections" multiple />
+              <EntityInput name="contractIds" controller="erc998-collections" multiple />
             </Grid>
           ) : null}
         </Grid>

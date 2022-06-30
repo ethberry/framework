@@ -17,13 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import {
-  IErc20ContractSearchDto,
-  IUniContract,
-  IUniTemplate,
-  UniContractStatus,
-  UniContractTemplate,
-} from "@framework/types";
+import { IErc20ContractSearchDto, IContract, ITemplate, ContractStatus, ContractTemplate } from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20TokenSearchForm } from "./form";
@@ -50,22 +44,22 @@ export const Erc20Contract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-  } = useCollection<IUniContract, IErc20ContractSearchDto>({
+  } = useCollection<IContract, IErc20ContractSearchDto>({
     baseUrl: "/erc20-contracts",
     empty: {
       title: "",
       description: emptyStateString,
       symbol: "",
-      uniTemplates: [
+      templates: [
         {
           decimals: 18,
           cap: constants.WeiPerEther.toString(),
-        } as IUniTemplate,
+        } as ITemplate,
       ],
     },
     search: {
       query: "",
-      contractStatus: [UniContractStatus.ACTIVE],
+      contractStatus: [ContractStatus.ACTIVE],
       contractTemplate: [],
     },
     filter: ({ title, description, contractStatus }) => ({ title, description, contractStatus }),
@@ -97,22 +91,19 @@ export const Erc20Contract: FC = () => {
                 <IconButton onClick={handleEdit(token)}>
                   <Create />
                 </IconButton>
-                <IconButton
-                  onClick={handleDelete(token)}
-                  disabled={token.contractStatus === UniContractStatus.INACTIVE}
-                >
+                <IconButton onClick={handleDelete(token)} disabled={token.contractStatus === ContractStatus.INACTIVE}>
                   <Delete />
                 </IconButton>
                 <ContractActionsMenu
                   contract={token}
                   actions={[
                     ContractActions.SNAPSHOT,
-                    token.contractTemplate === UniContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
-                    token.contractTemplate === UniContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
+                    token.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    token.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
                   ]}
                   disabled={
-                    token.contractTemplate === UniContractTemplate.EXTERNAL ||
-                    token.contractTemplate === UniContractTemplate.NATIVE
+                    token.contractTemplate === ContractTemplate.EXTERNAL ||
+                    token.contractTemplate === ContractTemplate.NATIVE
                   }
                 />
               </ListItemSecondaryAction>

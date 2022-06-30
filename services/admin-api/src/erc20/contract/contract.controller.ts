@@ -10,7 +10,7 @@ import {
   Erc20ContractSearchDto,
   Erc20ContractUpdateDto,
 } from "./dto";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @ApiBearerAuth()
 @Controller("/erc20-contracts")
@@ -19,36 +19,33 @@ export class Erc20TokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc20ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
+  public search(@Query() dto: Erc20ContractSearchDto): Promise<[Array<ContractEntity>, number]> {
     return this.erc20ContractService.search(dto);
   }
 
   @Post("/")
-  public create(@Body() dto: Erc20ContractCreateDto): Promise<UniContractEntity> {
+  public create(@Body() dto: Erc20ContractCreateDto): Promise<ContractEntity> {
     return this.erc20ContractService.create(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc20ContractAutocompleteDto): Promise<Array<UniContractEntity>> {
+  public autocomplete(@Query() dto: Erc20ContractAutocompleteDto): Promise<Array<ContractEntity>> {
     return this.erc20ContractService.autocomplete(dto);
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: Erc20ContractUpdateDto,
-  ): Promise<UniContractEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc20ContractUpdateDto): Promise<ContractEntity> {
     return this.erc20ContractService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniContractEntity | null> {
-    return this.erc20ContractService.findOne({ id }, { relations: { uniTemplates: true } });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity | null> {
+    return this.erc20ContractService.findOne({ id }, { relations: { templates: true } });
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<UniContractEntity> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity> {
     return this.erc20ContractService.delete({ id });
   }
 }

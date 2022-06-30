@@ -3,7 +3,7 @@ import { Card, CardActionArea, CardActions, CardContent, CardMedia, Typography }
 import { Link as RouterLink } from "react-router-dom";
 import { useIntl } from "react-intl";
 
-import { IUniTemplate } from "@framework/types";
+import { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { NumberInput } from "@gemunion/mui-inputs-core";
 
@@ -11,7 +11,7 @@ import { useStyles } from "./styles";
 import { formatPrice } from "../../../../utils/money";
 
 interface IErc1155TokenItemProps {
-  template: IUniTemplate;
+  template: ITemplate;
 }
 
 export const TokenItem: FC<IErc1155TokenItemProps> = props => {

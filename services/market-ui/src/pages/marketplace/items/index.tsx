@@ -3,7 +3,7 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc721TemplateSearchDto, IUniTemplate } from "@framework/types";
+import { IErc721TemplateSearchDto, ITemplate } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
@@ -16,10 +16,10 @@ export const Items: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IUniTemplate, IErc721TemplateSearchDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<ITemplate, IErc721TemplateSearchDto>({
     baseUrl: "/erc721-templates",
     search: {
-      uniContractIds: [3], // Erc721 Items
+      contractIds: [3], // Erc721 Items
     },
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });

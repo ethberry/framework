@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { IUniToken } from "@framework/types";
+import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface IRarityBadgeProps {
-  token: IUniToken;
+  token: IToken;
 }
 
 export const RarityBadge: FC<IRarityBadgeProps> = props => {

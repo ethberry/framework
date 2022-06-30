@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateUniBalanceTable1563804000410 implements MigrationInterface {
+export class CreateBalanceTable1563804000410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.uni_balance`,
+      name: `${ns}.balance`,
       columns: [
         {
           name: "id",
@@ -21,7 +21,7 @@ export class CreateUniBalanceTable1563804000410 implements MigrationInterface {
           type: "uint256",
         },
         {
-          name: "uni_token_id",
+          name: "token_id",
           type: "int",
         },
         {
@@ -35,9 +35,9 @@ export class CreateUniBalanceTable1563804000410 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_token_id"],
+          columnNames: ["token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_token`,
+          referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",
         },
       ],

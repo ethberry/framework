@@ -2,18 +2,18 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { Erc1155ContractTemplate, IUniContract, IUniContractDeployDto } from "@framework/types";
+import { Erc1155ContractTemplate, IContract, IContractDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
 export interface IErc1155TokenDeployDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUniContract>, form: any) => Promise<void>;
+  onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
 }
 
 export const Erc1155TokenDeployDialog: FC<IErc1155TokenDeployDialogProps> = props => {
-  const fixedValues: IUniContractDeployDto = {
+  const fixedValues: IContractDeployDto = {
     contractTemplate: Erc1155ContractTemplate.SIMPLE,
     baseTokenURI: `${process.env.BE_URL}/metadata`,
   };

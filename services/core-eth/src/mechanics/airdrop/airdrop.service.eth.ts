@@ -16,7 +16,7 @@ import {
   IErc721TokenRoyaltyInfo,
   IErc721TokenTransfer,
   TErc721TokenEventData,
-  UniTokenStatus,
+  TokenStatus,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
@@ -62,7 +62,7 @@ export class AirdropServiceEth {
     let erc721TokenEntity;
     if (context.address.toLowerCase() === this.airdropAddr) {
       const airdropEntity = await this.airdropService.findOne({ id: ~~tokenId }, { relations: { item: true } });
-      erc721TokenEntity = airdropEntity?.item.components[0].uniToken;
+      erc721TokenEntity = airdropEntity?.item.components[0].token;
     } else {
       erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
     }
@@ -74,16 +74,16 @@ export class AirdropServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc721TokenEntity.uniTemplate.amount += 1;
+      erc721TokenEntity.template.amount += 1;
       // erc721TokenEntity.erc721Template
       //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
       //   : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
-      erc721TokenEntity.tokenStatus = UniTokenStatus.MINTED;
+      erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
     }
 
     if (to === constants.AddressZero) {
       // erc721TokenEntity.erc721Template.instanceCount -= 1;
-      erc721TokenEntity.tokenStatus = UniTokenStatus.BURNED;
+      erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     }
 
     erc721TokenEntity.owner = to;
@@ -91,7 +91,7 @@ export class AirdropServiceEth {
     await erc721TokenEntity.save();
 
     // need to save updates in nested entities too
-    await erc721TokenEntity.uniTemplate.save();
+    await erc721TokenEntity.template.save();
     // erc721TokenEntity.erc721Template
     //   ? await erc721TokenEntity.erc721Template.save()
     //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
@@ -118,7 +118,7 @@ export class AirdropServiceEth {
 
     const airdropEntity = await this.airdropService.findOne({ id: ~~tokenId }, { relations: { item: true } });
 
-    const erc721TokenEntity = airdropEntity?.item.components[0].uniToken;
+    const erc721TokenEntity = airdropEntity?.item.components[0].token;
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -170,7 +170,7 @@ export class AirdropServiceEth {
       tokenId,
       attributes: erc721TemplateEntity.attributes,
       owner: from.toLowerCase(),
-      uniTemplate: erc721TemplateEntity,
+      template: erc721TemplateEntity,
     });
 
     // Update Airdrop
@@ -215,7 +215,7 @@ export class AirdropServiceEth {
       eventType: name as Erc721TokenEventType,
       eventData: args,
       // ApprovedForAll has no tokenId
-      uniTokenId: erc721TokenId || null,
+      tokenId: erc721TokenId || null,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

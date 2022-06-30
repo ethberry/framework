@@ -1,16 +1,16 @@
 import { IIdBase } from "@gemunion/types-collection";
 
 import { TokenType } from "./common";
-import { IUniContract } from "../uni-token/uni-contract";
-import { IUniToken } from "../uni-token/uni-token";
+import { IContract } from "../hierarchy/contract";
+import { IToken } from "../hierarchy/token";
 import { IAsset } from "./asset";
 
 export interface IAssetComponent extends IIdBase {
   tokenType: TokenType;
-  uniContractId: number;
-  uniContract?: IUniContract;
-  uniTokenId: number;
-  uniToken?: IUniToken;
+  contractId: number;
+  contract?: IContract;
+  tokenId: number;
+  token?: IToken;
   amount: string;
   asset?: IAsset;
   assetId: number;

@@ -6,15 +6,15 @@ import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IUniTemplate, TokenType } from "@framework/types";
+import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC998MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 
-interface IUniTemplateBuyButtonProps {
-  template: IUniTemplate;
+interface ITemplateBuyButtonProps {
+  template: ITemplate;
 }
 
-export const Erc998ItemTemplateBuyButton: FC<IUniTemplateBuyButtonProps> = props => {
+export const Erc998ItemTemplateBuyButton: FC<ITemplateBuyButtonProps> = props => {
   const { template } = props;
 
   const api = useApi();
@@ -35,16 +35,9 @@ export const Erc998ItemTemplateBuyButton: FC<IUniTemplateBuyButtonProps> = props
         );
         const nonce = utils.arrayify(sign.nonce);
         const commonItemPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");
-        return contract.buyCommon(
-          nonce,
-          template.uniContract?.address,
-          template.id,
-          process.env.ACCOUNT,
-          sign.signature,
-          {
-            value: template.price?.components[0].tokenType === TokenType.NATIVE ? commonItemPrice : 0,
-          },
-        ) as Promise<void>;
+        return contract.buyCommon(nonce, template.contract?.address, template.id, process.env.ACCOUNT, sign.signature, {
+          value: template.price?.components[0].tokenType === TokenType.NATIVE ? commonItemPrice : 0,
+        }) as Promise<void>;
       });
   });
 

@@ -29,25 +29,20 @@ export const ExchangeItem: FC<IRecipeItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc721-tokens/${rule.item.components[0].uniToken!.id}`}>
-        <CardMedia className={classes.media} image={rule.item.components[0].uniToken!.uniTemplate!.imageUrl} />
+      <CardActionArea component={RouterLink} to={`/erc721-tokens/${rule.item.components[0].token!.id}`}>
+        <CardMedia className={classes.media} image={rule.item.components[0].token!.template!.imageUrl} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {rule.item.components[0].uniToken!.uniTemplate!.title}
+            {rule.item.components[0].token!.template!.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={rule.item.components[0].uniToken!.uniTemplate!.description} />
+            <RichTextDisplay data={rule.item.components[0].token!.template!.description} />
           </Typography>
           <List>
             {rule.ingredients.components.map(component => (
-              <ListItem
-                key={component.id}
-                button
-                component={RouterLink}
-                to={`/erc1155-tokens/${component.uniToken!.id}`}
-              >
+              <ListItem key={component.id} button component={RouterLink} to={`/erc1155-tokens/${component.token!.id}`}>
                 <ListItemText>
-                  {component.uniToken!.uniTemplate!.title} ({component.amount})
+                  {component.token!.template!.title} ({component.amount})
                 </ListItemText>
               </ListItem>
             ))}

@@ -4,10 +4,10 @@ import { Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-import { IUniTemplateCreateDto } from "../interfaces";
+import { ITemplateCreateDto } from "../interfaces";
 import { AssetDto } from "../../../blockchain/asset/dto";
 
-export class Erc998TemplateCreateDto implements IUniTemplateCreateDto {
+export class Erc998TemplateCreateDto implements ITemplateCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   public title: string;

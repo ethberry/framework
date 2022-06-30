@@ -6,7 +6,7 @@ import { prepareEip712 } from "@gemunion/butils";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
-import { UniContractTemplate } from "@framework/types";
+import { ContractTemplate } from "@framework/types";
 
 import { ISignTokensDto } from "./interfaces";
 import { Erc1155TemplateService } from "../template/template.service";
@@ -28,7 +28,7 @@ export class Erc1155MarketplaceService {
       dto.erc1155TokenIds.map(async (erc1155TokenId, index) => {
         const templateEntity = await this.erc1155TemplateService.findOne(
           { id: erc1155TokenId },
-          { relations: { uniContract: true } },
+          { relations: { contract: true } },
         );
 
         if (!templateEntity) {
@@ -41,11 +41,11 @@ export class Erc1155MarketplaceService {
         }
 
         const tokenPrice =
-          templateEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
+          templateEntity.price.components[0].contract.contractTemplate === ContractTemplate.NATIVE
             ? BigNumber.from(templateEntity.price).mul(dto.amounts[index])
             : constants.Zero;
         totalTokenPrice = totalTokenPrice.add(tokenPrice);
-        collections.push(templateEntity.uniContract.address);
+        collections.push(templateEntity.contract.address);
         // tokenIds.push(~~templateEntity.tokenId);
       }),
     );

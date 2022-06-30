@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc20ContractTemplate, IErc20TokenCreateDto, IUniContract } from "@framework/types";
+import { Erc20ContractTemplate, IErc20TokenCreateDto, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { AddressInput } from "./address-input";
@@ -12,7 +12,7 @@ import { AddressInput } from "./address-input";
 export interface IErc20TokenDeployDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUniContract>, form: any) => Promise<void>;
+  onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
 }
 
 export const Erc20TokenCreateDialog: FC<IErc20TokenDeployDialogProps> = props => {

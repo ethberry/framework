@@ -1,6 +1,6 @@
-import { UniTemplateStatus } from "../../../entities";
+import { TemplateStatus } from "../../../entities";
 
 export interface IErc998TemplateAutocompleteDto {
-  templateStatus: Array<UniTemplateStatus>;
-  uniContractIds: Array<number>;
+  templateStatus: Array<TemplateStatus>;
+  contractIds: Array<number>;
 }

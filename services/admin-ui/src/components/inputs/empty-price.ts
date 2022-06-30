@@ -4,10 +4,10 @@ export const emptyPrice = {
   components: [
     {
       tokenType: TokenType.NATIVE,
-      uniContractId: 0,
-      uniTokenId: 0,
-      uniToken: {
-        uniTemplate: {
+      contractId: 0,
+      tokenId: 0,
+      token: {
+        template: {
           title: "",
         },
       },

@@ -7,7 +7,7 @@ import { Erc998TokenService } from "./token.service";
 import { Erc998AssetSearchDto } from "./dto";
 import { UserEntity } from "../../user/user.entity";
 import { Erc998TokenAutocompleteDto } from "./dto/autocomplete";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 
 @ApiBearerAuth()
 @Controller("/erc998-tokens")
@@ -19,18 +19,18 @@ export class Erc998TokenController {
   public search(
     @Query() dto: Erc998AssetSearchDto,
     @User() userEntity: UserEntity,
-  ): Promise<[Array<UniTokenEntity>, number]> {
+  ): Promise<[Array<TokenEntity>, number]> {
     return this.erc998TokenService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc998TokenAutocompleteDto): Promise<Array<UniTokenEntity>> {
+  public autocomplete(@Query() dto: Erc998TokenAutocompleteDto): Promise<Array<TokenEntity>> {
     return this.erc998TokenService.autocomplete(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTokenEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
     return this.erc998TokenService.findOnePlus({ id });
   }
 }

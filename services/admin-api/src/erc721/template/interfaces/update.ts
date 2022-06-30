@@ -1,4 +1,4 @@
-import { UniTemplateStatus } from "@framework/types";
+import { TemplateStatus } from "@framework/types";
 
 export interface IErc721TemplateUpdateDto {
   title: string;
@@ -7,5 +7,5 @@ export interface IErc721TemplateUpdateDto {
   price: string;
   amount: string;
   imageUrl: string;
-  templateStatus: UniTemplateStatus;
+  templateStatus: TemplateStatus;
 }

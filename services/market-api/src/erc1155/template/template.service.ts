@@ -3,17 +3,17 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { IErc1155TemplateSearchDto } from "@framework/types";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Injectable()
 export class Erc1155TemplateService {
   constructor(
-    @InjectRepository(UniTemplateEntity)
-    private readonly erc1155TokenEntityRepository: Repository<UniTemplateEntity>,
+    @InjectRepository(TemplateEntity)
+    private readonly erc1155TokenEntityRepository: Repository<TemplateEntity>,
   ) {}
 
-  public async search(dto: IErc1155TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
-    const { query, skip, take, uniContractIds, minPrice, maxPrice } = dto;
+  public async search(dto: IErc1155TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+    const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
     const queryBuilder = this.erc1155TokenEntityRepository.createQueryBuilder("token");
 
@@ -24,13 +24,13 @@ export class Erc1155TemplateService {
     // search only ACTIVE collections
     queryBuilder.andWhere("contract.contractStatus = 'ACTIVE'");
 
-    if (uniContractIds) {
-      if (uniContractIds.length === 1) {
-        queryBuilder.andWhere("token.uniContractId = :uniContractId", {
-          uniContractId: uniContractIds[0],
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("token.contractId = :contractId", {
+          contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("token.uniContractId IN(:...uniContractIds)", { uniContractIds });
+        queryBuilder.andWhere("token.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
@@ -74,9 +74,9 @@ export class Erc1155TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniTemplateEntity>,
-    options?: FindOneOptions<UniTemplateEntity>,
-  ): Promise<UniTemplateEntity | null> {
+    where: FindOptionsWhere<TemplateEntity>,
+    options?: FindOneOptions<TemplateEntity>,
+  ): Promise<TemplateEntity | null> {
     return this.erc1155TokenEntityRepository.findOne({ where, ...options });
   }
 }

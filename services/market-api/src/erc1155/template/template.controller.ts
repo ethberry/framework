@@ -4,7 +4,7 @@ import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/ne
 
 import { Erc1155TemplateService } from "./template.service";
 import { Erc1155TemplateSearchDto } from "./dto";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Public()
 @Controller("/erc1155-tokens")
@@ -13,13 +13,13 @@ export class Erc1155TokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc1155TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
+  public search(@Query() dto: Erc1155TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc1155TokenService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
     return this.erc1155TokenService.findOne({ id });
   }
 }

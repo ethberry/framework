@@ -2,15 +2,15 @@ import { FC } from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { IUniContract } from "@framework/types";
+import { IContract } from "@framework/types";
 
 import { useStyles } from "./styles";
 
-interface IUniTokenItemProps {
-  contract: IUniContract;
+interface ITokenItemProps {
+  contract: IContract;
 }
 
-export const CollectionItem: FC<IUniTokenItemProps> = props => {
+export const CollectionItem: FC<ITokenItemProps> = props => {
   const { contract } = props;
 
   const classes = useStyles();

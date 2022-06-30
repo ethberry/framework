@@ -5,17 +5,17 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { IErc721TokenSearchDto } from "@framework/types";
 
 import { IErc721TokenUpdateDto } from "./interfaces";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 
 @Injectable()
 export class Erc721TokenService {
   constructor(
-    @InjectRepository(UniTokenEntity)
-    private readonly erc721TokenEntityRepository: Repository<UniTokenEntity>,
+    @InjectRepository(TokenEntity)
+    private readonly erc721TokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
-  public async search(dto: IErc721TokenSearchDto): Promise<[Array<UniTokenEntity>, number]> {
-    const { query, tokenStatus, skip, take, tokenId, rarity, uniContractIds } = dto;
+  public async search(dto: IErc721TokenSearchDto): Promise<[Array<TokenEntity>, number]> {
+    const { query, tokenStatus, skip, take, tokenId, rarity, contractIds } = dto;
 
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
 
@@ -43,13 +43,13 @@ export class Erc721TokenService {
       }
     }
 
-    if (uniContractIds) {
-      if (uniContractIds.length === 1) {
-        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
-          uniContractId: uniContractIds[0],
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
@@ -77,7 +77,7 @@ export class Erc721TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<UniTokenEntity>> {
+  public async autocomplete(): Promise<Array<TokenEntity>> {
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["id", "tokenId"]);
@@ -92,13 +92,13 @@ export class Erc721TokenService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniTokenEntity>,
-    options?: FindOneOptions<UniTokenEntity>,
-  ): Promise<UniTokenEntity | null> {
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindOneOptions<TokenEntity>,
+  ): Promise<TokenEntity | null> {
     return this.erc721TokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(where: FindOptionsWhere<UniTokenEntity>, dto: IErc721TokenUpdateDto): Promise<UniTokenEntity> {
+  public async update(where: FindOptionsWhere<TokenEntity>, dto: IErc721TokenUpdateDto): Promise<TokenEntity> {
     const tokenEntity = await this.findOne(where);
 
     if (!tokenEntity) {

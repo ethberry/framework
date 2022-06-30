@@ -4,8 +4,8 @@ import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IAssetComponent, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { UniContractEntity } from "../uni-token/uni-contract/uni-contract.entity";
-import { UniTokenEntity } from "../uni-token/uni-token/uni-token.entity";
+import { ContractEntity } from "../uni-token/uni-contract/uni-contract.entity";
+import { TokenEntity } from "../uni-token/uni-token/uni-token.entity";
 import { AssetEntity } from "./asset.entity";
 
 @Entity({ schema: ns, name: "asset_component" })
@@ -17,18 +17,18 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   public tokenType: TokenType;
 
   @Column({ type: "int" })
-  public uniContractId: number;
+  public contractId: number;
 
   @JoinColumn()
-  @OneToOne(_type => UniContractEntity)
-  public uniContract: UniContractEntity;
+  @OneToOne(_type => ContractEntity)
+  public contract: ContractEntity;
 
   @Column({ type: "int" })
-  public uniTokenId: number;
+  public tokenId: number;
 
   @JoinColumn()
-  @OneToOne(_type => UniTokenEntity)
-  public uniToken: UniTokenEntity;
+  @OneToOne(_type => TokenEntity)
+  public token: TokenEntity;
 
   @Column({ type: "numeric" })
   public amount: string;

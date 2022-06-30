@@ -1,13 +1,13 @@
-import { UniTemplateStatus } from "@framework/types";
+import { TemplateStatus } from "@framework/types";
 
 import { IAssetDto } from "../../../blockchain/asset/interfaces";
 
-export interface IUniTemplateUpdateDto {
+export interface ITemplateUpdateDto {
   title: string;
   description: string;
   attributes: string;
   price: IAssetDto;
   amount: string;
   imageUrl: string;
-  templateStatus: UniTemplateStatus;
+  templateStatus: TemplateStatus;
 }

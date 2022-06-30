@@ -81,7 +81,7 @@ export const Exchange: FC = () => {
         <List>
           {rows.map((recipe, i) => (
             <ListItem key={i}>
-              <ListItemText>{recipe.item.components[0].uniToken!.uniTemplate!.title}</ListItemText>
+              <ListItemText>{recipe.item.components[0].token!.template!.title}</ListItemText>
               <ListItemSecondaryAction>
                 <ExchangeUploadButton rule={recipe} />
                 <IconButton onClick={handleEdit(recipe)}>
@@ -108,7 +108,7 @@ export const Exchange: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: selected.item.components[0].uniToken!.uniTemplate!.title }}
+        initialValues={{ ...selected, title: selected.item.components[0].token!.template!.title }}
       />
 
       <ExchangeEditDialog

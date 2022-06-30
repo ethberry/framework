@@ -4,10 +4,12 @@ import { useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
+import { IAssetComponent } from "@framework/types";
+
 import { emptyPrice } from "../empty-price";
 import { TokenTypeInput } from "./token-type-input";
-import { UniContractInput } from "./uni-contract-input";
-import { UniTokenInput } from "./uni-token-input";
+import { ContractInput } from "./uni-contract-input";
+import { TokenInput } from "./uni-token-input";
 import { AmountInput } from "./amount-input";
 
 export interface IStakingEditDialogProps {
@@ -32,23 +34,30 @@ export const PriceInput: FC<IStakingEditDialogProps> = props => {
 
   const handleOptionDelete =
     (i: number): (() => void) =>
-      (): void => {
-        const newValue = get(form.getValues(), nestedPrefix);
-        newValue.splice(i, 1);
-        form.setValue(nestedPrefix, newValue);
-      };
+    (): void => {
+      const newValue = get(form.getValues(), nestedPrefix);
+      newValue.splice(i, 1);
+      form.setValue(nestedPrefix, newValue);
+    };
 
   return (
     <Box mt={2}>
       <Typography>Price</Typography>
 
-      {value?.map((o: any, i: number) => (
-        <Box key={`${o.uniContractId}_${o.uniTokenId}_${i}`} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
+      {value?.map((o: IAssetComponent, i: number) => (
+        <Box
+          key={`${o.contractId}_${o.tokenId}_${i}`}
+          mt={1}
+          mb={1}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
           <Box flex={1}>
             <Paper sx={{ p: 2 }}>
               <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} />
-              <UniContractInput prefix={`${nestedPrefix}[${i}]`} />
-              <UniTokenInput prefix={`${nestedPrefix}[${i}]`} />
+              <ContractInput prefix={`${nestedPrefix}[${i}]`} />
+              <TokenInput prefix={`${nestedPrefix}[${i}]`} />
               <AmountInput prefix={`${nestedPrefix}[${i}]`} />
             </Paper>
           </Box>

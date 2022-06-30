@@ -52,12 +52,12 @@ export const Dropbox: FC = () => {
     search: {
       query: "",
       dropboxStatus: [DropboxStatus.ACTIVE],
-      uniContractIds: [],
+      contractIds: [],
     },
-    filter: ({ id, title, description, imageUrl, price, dropboxStatus, uniTemplateId, uniContractId }) =>
+    filter: ({ id, title, description, imageUrl, price, dropboxStatus, templateId, contractId }) =>
       id
-        ? { title, description, imageUrl, price, dropboxStatus, uniTemplateId, uniContractId }
-        : { title, description, imageUrl, price, uniTemplateId, uniContractId },
+        ? { title, description, imageUrl, price, dropboxStatus, templateId, contractId }
+        : { title, description, imageUrl, price, templateId, contractId },
   });
 
   return (

@@ -12,7 +12,7 @@ import { Erc721TokenService } from "./token.service";
 import { Erc721TokenLogModule } from "./token-log/token-log.module";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.e
     Erc721TemplateModule,
     AccessControlModule,
     forwardRef(() => Erc721ContractModule),
-    TypeOrmModule.forFeature([UniTokenEntity]),
+    TypeOrmModule.forFeature([TokenEntity]),
   ],
   providers: [Logger, Erc721TokenService, Erc721TokenServiceEth],
   controllers: [Erc721TokenControllerEth],

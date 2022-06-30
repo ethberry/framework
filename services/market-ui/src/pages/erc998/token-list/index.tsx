@@ -4,25 +4,25 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc998AssetSearchDto, IUniToken } from "@framework/types";
+import { IErc998AssetSearchDto, IToken } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998Token } from "./item";
 import { Erc998TokenSearchForm } from "./form";
 
-export interface IUniTokenListProps {
+export interface ITokenListProps {
   embedded?: boolean;
 }
 
-export const Erc998TokenList: FC<IUniTokenListProps> = props => {
+export const Erc998TokenList: FC<ITokenListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IUniToken, IErc998AssetSearchDto>({
+    useCollection<IToken, IErc998AssetSearchDto>({
       baseUrl: "/erc998-tokens",
       embedded,
       search: {
-        uniContractIds: [],
+        contractIds: [],
         rarity: [],
       },
     });

@@ -4,8 +4,8 @@ export const emptyPrice = {
   components: [
     {
       tokenType: TokenType.NATIVE,
-      uniContractId: 0,
-      uniTokenId: 0,
+      contractId: 0,
+      tokenId: 0,
       amount: "0",
     } as IAssetComponent,
   ],

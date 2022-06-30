@@ -35,11 +35,11 @@ export class CreateDropbox1653616447910 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "uni_contract_id",
+          name: "contract_id",
           type: "int",
         },
         {
-          name: "uni_template_id",
+          name: "template_id",
           type: "int",
         },
         {
@@ -58,15 +58,15 @@ export class CreateDropbox1653616447910 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_contract_id"],
+          columnNames: ["contract_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_contract`,
+          referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["uni_template_id"],
+          columnNames: ["template_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_template`,
+          referencedTableName: `${ns}.template`,
           onDelete: "CASCADE",
         },
         {

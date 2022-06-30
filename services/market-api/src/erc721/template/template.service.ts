@@ -4,16 +4,16 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { IErc721TemplateSearchDto } from "@framework/types";
 
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Injectable()
 export class Erc721TemplateService {
   constructor(
-    @InjectRepository(UniTemplateEntity)
-    private readonly erc721TemplateEntityRepository: Repository<UniTemplateEntity>,
+    @InjectRepository(TemplateEntity)
+    private readonly erc721TemplateEntityRepository: Repository<TemplateEntity>,
   ) {}
 
-  public async autocomplete(): Promise<Array<UniTemplateEntity>> {
+  public async autocomplete(): Promise<Array<TemplateEntity>> {
     return this.erc721TemplateEntityRepository.find({
       select: {
         id: true,
@@ -22,8 +22,8 @@ export class Erc721TemplateService {
     });
   }
 
-  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
-    const { query, templateStatus, skip, take, uniContractIds, minPrice, maxPrice } = dto;
+  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+    const { query, templateStatus, skip, take, contractIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
@@ -38,13 +38,13 @@ export class Erc721TemplateService {
       }
     }
 
-    if (uniContractIds) {
-      if (uniContractIds.length === 1) {
-        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
-          uniContractId: uniContractIds[0],
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
@@ -89,9 +89,9 @@ export class Erc721TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniTemplateEntity>,
-    options?: FindOneOptions<UniTemplateEntity>,
-  ): Promise<UniTemplateEntity | null> {
+    where: FindOptionsWhere<TemplateEntity>,
+    options?: FindOneOptions<TemplateEntity>,
+  ): Promise<TemplateEntity | null> {
     return this.erc721TemplateEntityRepository.findOne({ where, ...options });
   }
 }

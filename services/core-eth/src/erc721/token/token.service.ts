@@ -2,32 +2,29 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UniTokenStatus } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc721TokenService {
   constructor(
-    @InjectRepository(UniTokenEntity)
-    private readonly erc721TokenEntityRepository: Repository<UniTokenEntity>,
+    @InjectRepository(TokenEntity)
+    private readonly erc721TokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<UniTokenEntity>,
-    options?: FindOneOptions<UniTokenEntity>,
-  ): Promise<UniTokenEntity | null> {
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindOneOptions<TokenEntity>,
+  ): Promise<TokenEntity | null> {
     return this.erc721TokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<UniTokenEntity>): Promise<UniTokenEntity> {
+  public async create(dto: DeepPartial<TokenEntity>): Promise<TokenEntity> {
     return this.erc721TokenEntityRepository.create(dto).save();
   }
 
-  public async update(
-    where: FindOptionsWhere<UniTokenEntity>,
-    dto: DeepPartial<UniTokenEntity>,
-  ): Promise<UniTokenEntity> {
+  public async update(where: FindOptionsWhere<TokenEntity>, dto: DeepPartial<TokenEntity>): Promise<TokenEntity> {
     const { ...rest } = dto;
 
     const tokenEntity = await this.findOne(where);
@@ -41,7 +38,7 @@ export class Erc721TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(tokenId: string, address: string, tokenStatus?: UniTokenStatus): Promise<UniTokenEntity | null> {
+  public getToken(tokenId: string, address: string, tokenStatus?: TokenStatus): Promise<TokenEntity | null> {
     const queryBuilder = this.erc721TokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();

@@ -11,6 +11,6 @@ export const formatMoney = (amount = 0, currency = "$"): string => {
 
 export const formatPrice = (asset?: IAsset): string => {
   return asset
-    ? `${formatEther(asset.components[0].amount, asset.components[0].uniToken!.uniTemplate!.uniContract!.symbol)}}`
+    ? `${formatEther(asset.components[0].amount, asset.components[0].token!.template!.contract!.symbol)}}`
     : "";
 };

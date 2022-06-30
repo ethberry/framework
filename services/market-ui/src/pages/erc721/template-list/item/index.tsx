@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { IUniTemplate } from "@framework/types";
+import { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
@@ -9,7 +9,7 @@ import { formatPrice } from "../../../../utils/money";
 import { Erc721ItemTemplateBuyButton } from "../../../../components/buttons";
 
 interface IErc721TemplateItemProps {
-  template: IUniTemplate;
+  template: ITemplate;
 }
 
 export const TemplateItem: FC<IErc721TemplateItemProps> = props => {

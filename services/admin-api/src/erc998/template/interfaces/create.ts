@@ -1,6 +1,6 @@
 import { IAssetDto } from "../../../blockchain/asset/interfaces";
 
-export interface IUniTemplateCreateDto {
+export interface ITemplateCreateDto {
   title: string;
   description: string;
   attributes: string;

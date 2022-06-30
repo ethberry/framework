@@ -14,7 +14,7 @@ export class AirdropService {
   ) {}
 
   public async search(dto: Partial<IAirdropSearchDto>): Promise<[Array<AirdropEntity>, number]> {
-    const { skip, take, account, airdropStatus, uniTemplateIds } = dto;
+    const { skip, take, account, airdropStatus, templateIds } = dto;
 
     const queryBuilder = this.airdropEntityRepository.createQueryBuilder("airdrop");
 
@@ -36,13 +36,13 @@ export class AirdropService {
       }
     }
 
-    if (uniTemplateIds) {
-      if (uniTemplateIds.length === 1) {
-        queryBuilder.andWhere("airdrop.uniTemplateId = :uniTemplateId", {
-          uniTemplateId: uniTemplateIds[0],
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("airdrop.templateId = :templateId", {
+          templateId: templateIds[0],
         });
       } else {
-        queryBuilder.andWhere("airdrop.uniTemplateId IN(:...uniTemplateIds)", { uniTemplateIds });
+        queryBuilder.andWhere("airdrop.templateId IN(:...templateIds)", { templateIds });
       }
     }
 

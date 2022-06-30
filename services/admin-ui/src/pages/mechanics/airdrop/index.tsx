@@ -50,9 +50,9 @@ export const Airdrop: FC = () => {
     search: {
       account: "",
       airdropStatus: [],
-      uniTemplateIds: [],
+      templateIds: [],
     },
-    filter: ({ id, owner, uniTemplateIds, list }: any) => (id ? { owner, uniTemplateIds } : { list }),
+    filter: ({ id, owner, templateIds, list }: any) => (id ? { owner, templateIds } : { list }),
   });
 
   const { formatMessage } = useIntl();
@@ -80,7 +80,7 @@ export const Airdrop: FC = () => {
           {rows.map((airdrop, i) => (
             <ListItem key={i}>
               <ListItemText>{airdrop.account}</ListItemText>
-              <ListItemText>{airdrop.item.components[0].uniToken!.uniTemplate!.title}</ListItemText>
+              <ListItemText>{airdrop.item.components[0].token!.template!.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(airdrop)} disabled={airdrop.airdropStatus !== AirdropStatus.NEW}>
                   <Create />

@@ -2,14 +2,14 @@ import { FC, Fragment } from "react";
 import { Grid, Pagination } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IUniContract } from "@framework/types";
+import { IContract } from "@framework/types";
 import { ISearchDto } from "@gemunion/types-collection";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155CollectionItem } from "./item";
 
 export const Erc1155ContractList: FC = () => {
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IUniContract, ISearchDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
     baseUrl: "/erc1155-contracts",
   });
 

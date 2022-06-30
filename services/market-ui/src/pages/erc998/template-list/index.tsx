@@ -6,29 +6,29 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc998TemplateSearchDto, IUniTemplate, UniTemplateStatus } from "@framework/types";
+import { IErc998TemplateSearchDto, ITemplate, TemplateStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateItem } from "./item";
 import { Erc998TemplateSearchForm } from "./form";
 
-export interface IUniTemplateListProps {
+export interface ITemplateListProps {
   embedded?: boolean;
 }
 
-export const Erc998TemplateList: FC<IUniTemplateListProps> = props => {
+export const Erc998TemplateList: FC<ITemplateListProps> = props => {
   const { embedded } = props;
 
   const { id = "" } = useParams<{ id: string }>();
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IUniTemplate, IErc998TemplateSearchDto>({
+    useCollection<ITemplate, IErc998TemplateSearchDto>({
       baseUrl: "/erc998-templates",
       embedded,
       search: {
         query: "",
-        uniContractIds: id ? [~~id] : [],
-        templateStatus: [UniTemplateStatus.ACTIVE],
+        contractIds: id ? [~~id] : [],
+        templateStatus: [TemplateStatus.ACTIVE],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
       },

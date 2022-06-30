@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateUniContract1563804000110 implements MigrationInterface {
+export class CreateContract1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.uni_contract_status_enum AS ENUM (
+      CREATE TYPE ${ns}.contract_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE',
         'NEW'
@@ -13,7 +13,7 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.uni_contract_role_enum AS ENUM (
+      CREATE TYPE ${ns}.contract_role_enum AS ENUM (
         'TOKEN',
         'DROPBOX',
         'AIRDROP'
@@ -21,7 +21,7 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.uni_contract_template_enum AS ENUM (
+      CREATE TYPE ${ns}.contract_template_enum AS ENUM (
         'UNKNOWN',
         'SIMPLE',
         'BLACKLIST',
@@ -33,7 +33,7 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
     `);
 
     const table = new Table({
-      name: `${ns}.uni_contract`,
+      name: `${ns}.contract`,
       columns: [
         {
           name: "id",
@@ -79,7 +79,7 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
         },
         {
           name: "contract_status",
-          type: `${ns}.uni_contract_status_enum`,
+          type: `${ns}.contract_status_enum`,
           default: "'NEW'",
         },
         {
@@ -89,12 +89,12 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
         },
         {
           name: "contract_role",
-          type: `${ns}.uni_contract_role_enum`,
+          type: `${ns}.contract_role_enum`,
           default: "'TOKEN'",
         },
         {
           name: "contract_template",
-          type: `${ns}.uni_contract_template_enum`,
+          type: `${ns}.contract_template_enum`,
           default: "'UNKNOWN'",
         },
         {
@@ -112,9 +112,9 @@ export class CreateUniContract1563804000110 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.uni_contract`);
-    await queryRunner.query(`DROP TYPE ${ns}.uni_contract_status_enum;`);
-    await queryRunner.query(`DROP TYPE ${ns}.uni_contract_role_enum;`);
-    await queryRunner.query(`DROP TYPE ${ns}.uni_contract_template_enum;`);
+    await queryRunner.dropTable(`${ns}.contract`);
+    await queryRunner.query(`DROP TYPE ${ns}.contract_status_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.contract_role_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.contract_template_enum;`);
   }
 }

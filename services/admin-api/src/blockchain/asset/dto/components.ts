@@ -18,13 +18,13 @@ export class AssetComponentDto implements IAssetComponentDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
-  public uniContractId: number;
+  public contractId: number;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
-  public uniTokenId: number;
+  public tokenId: number;
 
   @ApiProperty({
     type: Number,

@@ -42,7 +42,7 @@ export class Erc998MarketplaceServiceEth {
         rarity: TokenRarity.COMMON,
       }),
       owner: from.toLowerCase(),
-      uniTemplate: erc998TemplateEntity,
+      template: erc998TemplateEntity,
     });
 
     await this.updateHistory(event, erc998TokenEntity.id, context);
@@ -69,7 +69,7 @@ export class Erc998MarketplaceServiceEth {
   //   await this.updateHistory(event, erc998TokenEntity.id, context);
   // }
 
-  private async updateHistory(event: ILogEvent<TErc998MarketplaceEventData>, uniTokenId: number, context: Log) {
+  private async updateHistory(event: ILogEvent<TErc998MarketplaceEventData>, tokenId: number, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc998MarketplaceServiceEth.name);
 
     const { args, name } = event;
@@ -80,7 +80,7 @@ export class Erc998MarketplaceServiceEth {
       transactionHash: transactionHash.toLowerCase(),
       eventType: name as Erc998MarketplaceEventType,
       eventData: args,
-      uniTokenId,
+      tokenId,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

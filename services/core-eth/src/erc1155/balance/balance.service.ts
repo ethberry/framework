@@ -23,12 +23,12 @@ export class Erc1155BalanceService {
     return this.erc1155BalanceEntityRepository.create(dto).save();
   }
 
-  public async increment(uniTokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
-    const balanceEntity = await this.findOne({ uniTokenId, account });
+  public async increment(tokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
+    const balanceEntity = await this.findOne({ tokenId, account });
 
     if (!balanceEntity) {
       return this.create({
-        uniTokenId,
+        tokenId,
         account,
         amount,
       });
@@ -38,8 +38,8 @@ export class Erc1155BalanceService {
     return balanceEntity.save();
   }
 
-  public async decrement(uniTokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
-    const balanceEntity = await this.findOne({ uniTokenId, account });
+  public async decrement(tokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
+    const balanceEntity = await this.findOne({ tokenId, account });
 
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");

@@ -6,13 +6,13 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IUniToken, UniContractTemplate } from "@framework/types";
+import { IToken, ContractTemplate } from "@framework/types";
 import { IServerSignature } from "@gemunion/types-collection";
 
 import MetaDataManipulatorSol from "@framework/core-contracts/artifacts/contracts/MetaData/MetaDataManipulator.sol/MetaDataManipulator.json";
 
 interface ILevelUpButtonProps {
-  token: IUniToken;
+  token: IToken;
 }
 
 export const LevelUpButton: FC<ILevelUpButtonProps> = props => {
@@ -22,7 +22,7 @@ export const LevelUpButton: FC<ILevelUpButtonProps> = props => {
 
   const api = useApi();
 
-  const { contractTemplate, address } = token.uniTemplate!.uniContract!;
+  const { contractTemplate, address } = token.template!.contract!;
 
   const handleLevelUp = useMetamask(() => {
     return api
@@ -43,7 +43,7 @@ export const LevelUpButton: FC<ILevelUpButtonProps> = props => {
       });
   });
 
-  if (!(contractTemplate === UniContractTemplate.GRADED || contractTemplate === UniContractTemplate.RANDOM)) {
+  if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
     return null;
   }
 

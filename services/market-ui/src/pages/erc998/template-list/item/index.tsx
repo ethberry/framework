@@ -1,18 +1,18 @@
 import { FC } from "react";
 import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { IUniTemplate } from "@framework/types";
+import { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
 import { formatPrice } from "../../../../utils/money";
 import { Erc998ItemTemplateBuyButton } from "../../../../components/buttons";
 
-interface IUniTemplateItemProps {
-  template: IUniTemplate;
+interface ITemplateItemProps {
+  template: ITemplate;
 }
 
-export const TemplateItem: FC<IUniTemplateItemProps> = props => {
+export const TemplateItem: FC<ITemplateItemProps> = props => {
   const { template } = props;
 
   const classes = useStyles();

@@ -1,3 +1,3 @@
-export interface IUniTokenUpdateDto {
+export interface ITokenUpdateDto {
   attributes: string;
 }

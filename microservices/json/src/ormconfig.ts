@@ -4,10 +4,10 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { UserEntity } from "./user/user.entity";
 import { AssetEntity } from "./blockchain/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
-import { UniContractEntity } from "./blockchain/uni-token/uni-contract/uni-contract.entity";
-import { UniTemplateEntity } from "./blockchain/uni-token/uni-template/uni-template.entity";
-import { UniTokenEntity } from "./blockchain/uni-token/uni-token/uni-token.entity";
-import { UniBalanceEntity } from "./blockchain/uni-token/uni-balance/uni-balance.entity";
+import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
+import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
+import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
+import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 
@@ -19,10 +19,10 @@ const config: PostgresConnectionOptions = {
     UserEntity,
     AssetEntity,
     AssetComponentEntity,
-    UniContractEntity,
-    UniTemplateEntity,
-    UniTokenEntity,
-    UniBalanceEntity,
+    ContractEntity,
+    TemplateEntity,
+    TokenEntity,
+    BalanceEntity,
     AirdropEntity,
     DropboxEntity,
   ],

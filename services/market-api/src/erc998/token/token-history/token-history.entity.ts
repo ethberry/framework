@@ -2,17 +2,17 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import {
   Erc998TokenEventType,
-  IUniTokenApprove,
-  IUniTokenApprovedForAll,
-  IUniTokenHistory,
-  IUniTokenTransfer,
+  ITokenApprove,
+  ITokenApprovedForAll,
+  ITokenHistory,
+  ITokenTransfer,
 } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { UniTokenEntity } from "../../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../../blockchain/hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "erc998_token_history" })
-export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IUniTokenHistory {
+export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements ITokenHistory {
   @Column({ type: "varchar" })
   public address: string;
 
@@ -28,12 +28,12 @@ export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IUniTo
   @Column({
     type: "json",
   })
-  public eventData: IUniTokenTransfer | IUniTokenApprove | IUniTokenApprovedForAll;
+  public eventData: ITokenTransfer | ITokenApprove | ITokenApprovedForAll;
 
   @Column({ type: "int", nullable: true })
-  public uniTokenId: number | null;
+  public tokenId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => UniTokenEntity)
-  public uniToken?: UniTokenEntity;
+  @ManyToOne(_type => TokenEntity)
+  public token?: TokenEntity;
 }

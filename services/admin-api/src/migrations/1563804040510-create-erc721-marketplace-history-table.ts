@@ -36,7 +36,7 @@ export class CreateErc721MarketplaceHistoryTable1563804040510 implements Migrati
           type: "json",
         },
         {
-          name: "uni_token_id",
+          name: "token_id",
           type: "int",
           isNullable: true,
         },
@@ -51,9 +51,9 @@ export class CreateErc721MarketplaceHistoryTable1563804040510 implements Migrati
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_token_id"],
+          columnNames: ["token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_token`,
+          referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",
         },
       ],

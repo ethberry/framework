@@ -19,8 +19,8 @@ export const ItemsDropbox: FC<ITabPanelProps> = props => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IDropbox, IDropboxSearchDto>({
     baseUrl: "/erc721-dropboxes",
     search: {
-      uniContractIds: [2], // Erc721Dropbox Collection
-      uniTemplateContractIds: [3], // Erc721Items Collection
+      contractIds: [2], // Erc721Dropbox Collection
+      templateContractIds: [3], // Erc721Items Collection
     },
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });

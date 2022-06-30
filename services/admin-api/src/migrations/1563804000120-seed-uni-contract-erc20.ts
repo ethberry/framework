@@ -11,7 +11,7 @@ const usdt: Record<string, string> = {
   "1337": process.env.ERC20_USDT_ADDR || wallet,
 };
 
-export class SeedUniContractErc20At1563804000120 implements MigrationInterface {
+export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc20TokenActiveAddress = process.env.ERC20_ACTIVE_ADDR || wallet;
@@ -21,7 +21,7 @@ export class SeedUniContractErc20At1563804000120 implements MigrationInterface {
     const chainId = process.env.CHAIN_ID || "1337";
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.uni_contract (
+      INSERT INTO ${ns}.contract (
         id,
         address,
         chain_id,
@@ -143,10 +143,10 @@ export class SeedUniContractErc20At1563804000120 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.uni_contract_id_seq', 6, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 6, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.uni_contract RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.contract RESTART IDENTITY CASCADE;`);
   }
 }

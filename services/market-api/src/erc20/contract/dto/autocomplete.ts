@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { Erc20ContractTemplate, IErc20ContractAutocompleteDto, UniContractStatus } from "@framework/types";
+import { Erc20ContractTemplate, IErc20ContractAutocompleteDto, ContractStatus } from "@framework/types";
 
 export class Erc20ContractAutocompleteDto implements IErc20ContractAutocompleteDto {
   @ApiPropertyOptional({
@@ -16,5 +16,5 @@ export class Erc20ContractAutocompleteDto implements IErc20ContractAutocompleteD
   public contractTemplate: Array<Erc20ContractTemplate>;
 
   // not allowed
-  public contractStatus: Array<UniContractStatus>;
+  public contractStatus: Array<ContractStatus>;
 }

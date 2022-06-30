@@ -3,14 +3,14 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { Erc998ContractTemplate, IErc998CollectionDeployDto, IUniToken } from "@framework/types";
+import { Erc998ContractTemplate, IErc998CollectionDeployDto, IToken } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
 export interface IErc998CollectionDeployDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUniToken>, form?: any) => Promise<void>;
+  onConfirm: (values: Partial<IToken>, form?: any) => Promise<void>;
 }
 
 export const Erc998ContractDeployDialog: FC<IErc998CollectionDeployDialogProps> = props => {

@@ -2,9 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsString, IsUrl, MaxLength } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { Erc1155ContractTemplate, IUniContractDeployDto } from "@framework/types";
+import { Erc1155ContractTemplate, IContractDeployDto } from "@framework/types";
 
-export class Erc1155TokenDeployDto implements IUniContractDeployDto {
+export class Erc1155TokenDeployDto implements IContractDeployDto {
   @ApiProperty({
     enum: Erc1155ContractTemplate,
   })

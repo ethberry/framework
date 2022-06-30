@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { IUniContract, UniContractRole, UniContractStatus } from "@framework/types";
+import { IContract, ContractRole, ContractStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
@@ -12,8 +12,8 @@ import { BlockchainInfoPopover } from "../../../../components/popover";
 export interface IErc998CollectionEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUniContract>, form: any) => Promise<void>;
-  initialValues: IUniContract;
+  onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
+  initialValues: IContract;
 }
 
 export const Erc998CollectionEditDialog: FC<IErc998CollectionEditDialogProps> = props => {
@@ -61,12 +61,8 @@ export const Erc998CollectionEditDialog: FC<IErc998CollectionEditDialogProps> = 
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput
-        name="contractStatus"
-        options={UniContractStatus}
-        disabledOptions={[UniContractStatus.NEW]}
-      />
-      <SelectInput name="contractRole" options={UniContractRole} readOnly />
+      <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+      <SelectInput name="contractRole" options={ContractRole} readOnly />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

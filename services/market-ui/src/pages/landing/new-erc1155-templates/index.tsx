@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
-import { IUniTemplate, TokenType } from "@framework/types";
+import { ITemplate, TokenType } from "@framework/types";
 
 import { MultiCarousel } from "./multi-carousel";
 import { useStyles } from "./styles";
@@ -13,7 +13,7 @@ import { useStyles } from "./styles";
 export const NewErc1155: FC = () => {
   const classes = useStyles();
 
-  const [templates, setTemplates] = useState<Array<IUniTemplate>>([]);
+  const [templates, setTemplates] = useState<Array<ITemplate>>([]);
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -29,7 +29,7 @@ export const NewErc1155: FC = () => {
 
   const fetchTokens = async (): Promise<any> => {
     return fn()
-      .then((json: IPaginationResult<IUniTemplate>) => {
+      .then((json: IPaginationResult<ITemplate>) => {
         setTemplates(json.rows);
       })
       .catch(e => {

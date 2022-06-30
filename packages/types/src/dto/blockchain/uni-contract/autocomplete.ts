@@ -1,8 +1,8 @@
-import { UniContractStatus, UniContractRole, TokenType, UniContractTemplate } from "../../../entities";
+import { ContractStatus, ContractRole, TokenType, ContractTemplate } from "../../../entities";
 
-export interface IUniContractAutocompleteDto {
-  contractStatus: Array<UniContractStatus>;
-  contractRole: Array<UniContractRole>;
-  contractTemplate: Array<UniContractTemplate>;
+export interface IContractAutocompleteDto {
+  contractStatus: Array<ContractStatus>;
+  contractRole: Array<ContractRole>;
+  contractTemplate: Array<ContractTemplate>;
   contractType: Array<TokenType>;
 }

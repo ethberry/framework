@@ -2,30 +2,30 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @Injectable()
 export class Erc721ContractService {
   constructor(
-    @InjectRepository(UniContractEntity)
-    private readonly erc721CollectionEntityRepository: Repository<UniContractEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly erc721CollectionEntityRepository: Repository<ContractEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<UniContractEntity>,
-    options?: FindOneOptions<UniContractEntity>,
-  ): Promise<UniContractEntity | null> {
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
     return this.erc721CollectionEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
-    where: FindOptionsWhere<UniContractEntity>,
-    options?: FindOneOptions<UniContractEntity>,
-  ): Promise<Array<UniContractEntity>> {
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<Array<ContractEntity>> {
     return this.erc721CollectionEntityRepository.find({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<UniContractEntity>): Promise<UniContractEntity> {
+  public async create(dto: DeepPartial<ContractEntity>): Promise<ContractEntity> {
     return this.erc721CollectionEntityRepository.create(dto).save();
   }
 }

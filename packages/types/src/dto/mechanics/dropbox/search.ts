@@ -4,8 +4,8 @@ import { DropboxStatus } from "../../../entities";
 
 export interface IDropboxSearchDto extends ISearchDto {
   dropboxStatus: Array<DropboxStatus>;
-  uniContractIds: Array<number>;
-  uniTemplateContractIds?: Array<number>;
+  contractIds: Array<number>;
+  templateContractIds?: Array<number>;
   maxPrice: string;
   minPrice: string;
 }

@@ -1,8 +1,8 @@
-import { UniContractStatus } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
-export interface IUniContractUpdateDto {
+export interface IContractUpdateDto {
   title: string;
   description: string;
   imageUrl: string;
-  contractStatus: UniContractStatus;
+  contractStatus: ContractStatus;
 }

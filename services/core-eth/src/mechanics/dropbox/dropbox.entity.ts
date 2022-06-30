@@ -4,10 +4,10 @@ import { ns } from "@framework/constants";
 import { DropboxStatus, IDropbox } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { ContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { TokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 import { AssetEntity } from "../../blockchain/asset/asset.entity";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Entity({ schema: ns, name: "dropbox" })
 export class DropboxEntity extends SearchableEntity implements IDropbox {
@@ -29,19 +29,19 @@ export class DropboxEntity extends SearchableEntity implements IDropbox {
   public dropboxStatus: DropboxStatus;
 
   @Column({ type: "int" })
-  public uniTemplateId: number;
+  public templateId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => UniTemplateEntity)
-  public uniTemplate: UniTemplateEntity;
+  @ManyToOne(_type => TemplateEntity)
+  public template: TemplateEntity;
 
   @Column({ type: "int" })
-  public uniContractId: number;
+  public contractId: number;
 
   @JoinColumn()
-  @ManyToOne(_type => UniContractEntity)
-  public uniContract: UniContractEntity;
+  @ManyToOne(_type => ContractEntity)
+  public contract: ContractEntity;
 
-  @OneToOne(_type => UniTokenEntity)
-  public token: UniTokenEntity;
+  @OneToOne(_type => TokenEntity)
+  public token: TokenEntity;
 }

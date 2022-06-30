@@ -3,7 +3,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { SyncService } from "./sync.service";
 import { UserEntity } from "../user/user.entity";
-import { UniBalanceEntity } from "../blockchain/uni-token/uni-balance/uni-balance.entity";
+import { BalanceEntity } from "../blockchain/hierarchy/balance/balance.entity";
 
 @ApiBearerAuth()
 @Controller("/sync")
@@ -18,7 +18,7 @@ export class SyncController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get("/:sub/balance")
-  public getBalanceBySub(@Param("sub") sub: string): Promise<Array<UniBalanceEntity>> {
+  public getBalanceBySub(@Param("sub") sub: string): Promise<Array<BalanceEntity>> {
     return this.tokenService.getBalanceBySub(sub);
   }
 }

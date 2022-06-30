@@ -3,16 +3,16 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { UserEntity } from "../../user/user.entity";
-import { UniBalanceEntity } from "../../blockchain/uni-token/uni-balance/uni-balance.entity";
+import { BalanceEntity } from "../../blockchain/hierarchy/balance/balance.entity";
 
 @Injectable()
 export class Erc1155BalanceService {
   constructor(
-    @InjectRepository(UniBalanceEntity)
-    private readonly erc1155BalanceEntityRepository: Repository<UniBalanceEntity>,
+    @InjectRepository(BalanceEntity)
+    private readonly erc1155BalanceEntityRepository: Repository<BalanceEntity>,
   ) {}
 
-  public search(userEntity: UserEntity): Promise<[Array<UniBalanceEntity>, number]> {
+  public search(userEntity: UserEntity): Promise<[Array<BalanceEntity>, number]> {
     return this.erc1155BalanceEntityRepository.findAndCount({
       where: {
         account: userEntity.wallet,

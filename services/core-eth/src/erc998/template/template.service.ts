@@ -1,19 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Injectable()
 export class Erc998TemplateService {
   constructor(
-    @InjectRepository(UniTemplateEntity)
-    private readonly erc998TemplateEntityRepository: Repository<UniTemplateEntity>,
+    @InjectRepository(TemplateEntity)
+    private readonly erc998TemplateEntityRepository: Repository<TemplateEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<UniTemplateEntity>,
-    options?: FindOneOptions<UniTemplateEntity>,
-  ): Promise<UniTemplateEntity | null> {
+    where: FindOptionsWhere<TemplateEntity>,
+    options?: FindOneOptions<TemplateEntity>,
+  ): Promise<TemplateEntity | null> {
     return this.erc998TemplateEntityRepository.findOne({ where, ...options });
   }
 }

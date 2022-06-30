@@ -1,11 +1,11 @@
 import { Column, Entity } from "typeorm";
 
-import { Erc998TokenEventType, IUniTokenHistory, TErc998TokenEventData } from "@framework/types";
+import { Erc998TokenEventType, ITokenHistory, TErc998TokenEventData } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 @Entity({ schema: ns, name: "erc998_token_history" })
-export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IUniTokenHistory {
+export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements ITokenHistory {
   @Column({ type: "varchar" })
   public address: string;
 
@@ -22,5 +22,5 @@ export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IUniTo
   public eventData: TErc998TokenEventData;
 
   @Column({ type: "int", nullable: true })
-  public uniTokenId: number | null;
+  public tokenId: number | null;
 }

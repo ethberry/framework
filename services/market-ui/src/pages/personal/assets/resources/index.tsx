@@ -5,7 +5,7 @@ import { BigNumber } from "ethers";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IPaginationDto } from "@gemunion/types-collection";
-import { IUniBalance } from "@framework/types";
+import { IBalance } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Token } from "./item";
@@ -18,7 +18,7 @@ export const Resources: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IUniBalance, IPaginationDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<IBalance, IPaginationDto>({
     baseUrl: "/erc1155-balances",
     redirect: (_baseUrl, search) => `/my-assets/${value}?${stringify(search)}`,
   });
@@ -31,7 +31,7 @@ export const Resources: FC<ITabPanelProps> = props => {
         <Grid container spacing={2}>
           {rows.map(balance => (
             <Grid item lg={4} sm={6} xs={12} key={balance.id}>
-              <Erc1155Token token={balance.uniToken!} balance={BigNumber.from(balance.amount).toString()} />
+              <Erc1155Token token={balance.token!} balance={BigNumber.from(balance.amount).toString()} />
             </Grid>
           ))}
         </Grid>

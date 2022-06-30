@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsJSON, IsNumberString, IsOptional, IsString, IsUrl } from "class-validator";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { UniTemplateStatus } from "@framework/types";
+import { TemplateStatus } from "@framework/types";
 
 import { IErc721TemplateUpdateDto } from "../interfaces";
 
@@ -45,10 +45,10 @@ export class Erc721TemplateUpdateDto implements IErc721TemplateUpdateDto {
   })
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
-  public uniContractId: number;
+  public contractId: number;
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(UniTemplateStatus, { message: "badInput" })
-  public templateStatus: UniTemplateStatus;
+  @IsEnum(TemplateStatus, { message: "badInput" })
+  public templateStatus: TemplateStatus;
 }

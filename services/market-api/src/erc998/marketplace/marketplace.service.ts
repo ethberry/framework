@@ -9,7 +9,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { Erc998TemplateService } from "../template/template.service";
 import { DropboxService } from "../../mechanics/dropbox/dropbox.service";
 import { ISignTemplateDto } from "./interfaces";
-import { UniContractTemplate } from "@framework/types";
+import { ContractTemplate } from "@framework/types";
 
 @Injectable()
 export class Erc998MarketplaceService {
@@ -24,7 +24,7 @@ export class Erc998MarketplaceService {
   public async signTemplate(dto: ISignTemplateDto): Promise<IServerSignature> {
     const templateEntity = await this.erc998TemplateService.findOne(
       { id: dto.templateId },
-      { relations: { uniContract: true, price: true } },
+      { relations: { contract: true, price: true } },
     );
 
     if (!templateEntity) {
@@ -37,13 +37,13 @@ export class Erc998MarketplaceService {
     }
 
     const totalTokenPrice =
-      templateEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
+      templateEntity.price.components[0].contract.contractTemplate === ContractTemplate.NATIVE
         ? utils.parseUnits(templateEntity.price.toString(), "wei")
         : 0;
 
     const signData = {
       nonce: utils.randomBytes(32),
-      collection: templateEntity.uniContract.address,
+      collection: templateEntity.contract.address,
       templateId: dto.templateId, // Dropbox content
       price: totalTokenPrice,
     };
@@ -54,7 +54,7 @@ export class Erc998MarketplaceService {
   public async signDropbox(dto: ISignTemplateDto): Promise<IServerSignature> {
     const dropboxEntity = await this.erc998DropboxService.findOne(
       { id: dto.templateId },
-      { relations: { uniContract: true, item: true } },
+      { relations: { contract: true, item: true } },
     );
 
     if (!dropboxEntity) {
@@ -62,8 +62,8 @@ export class Erc998MarketplaceService {
     }
 
     const templateEntity = await this.erc998TemplateService.findOne(
-      { id: dropboxEntity.item.components[0].uniTokenId },
-      { relations: { uniContract: true } },
+      { id: dropboxEntity.item.components[0].tokenId },
+      { relations: { contract: true } },
     );
 
     if (!templateEntity) {
@@ -76,13 +76,13 @@ export class Erc998MarketplaceService {
     }
 
     const totalTokenPrice =
-      dropboxEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
+      dropboxEntity.price.components[0].contract.contractTemplate === ContractTemplate.NATIVE
         ? utils.parseUnits(dropboxEntity.price.toString(), "wei")
         : 0;
 
     const signData = {
       nonce: utils.randomBytes(32),
-      collection: dropboxEntity.uniContract.address,
+      collection: dropboxEntity.contract.address,
       templateId: templateEntity.id, // Dropbox content
       price: totalTokenPrice,
     };

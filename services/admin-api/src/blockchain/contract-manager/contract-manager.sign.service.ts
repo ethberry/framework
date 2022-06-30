@@ -12,7 +12,7 @@ import {
   IErc20TokenDeployDto,
   IErc20VestingDeployDto,
   IErc721ContractDeployDto,
-  IUniContractDeployDto,
+  IContractDeployDto,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -146,7 +146,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async erc1155Token(dto: IUniContractDeployDto): Promise<IServerSignature> {
+  public async erc1155Token(dto: IContractDeployDto): Promise<IServerSignature> {
     const { contractTemplate, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);

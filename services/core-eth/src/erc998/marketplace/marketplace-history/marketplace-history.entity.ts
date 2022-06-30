@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { ns } from "@framework/constants";
 import { Erc998MarketplaceEventType, IErc998MarketplaceHistory, TErc998MarketplaceEventData } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { UniTokenEntity } from "../../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Entity({ schema: ns, name: "erc998_marketplace_history" })
 export class Erc998MarketplaceHistoryEntity extends IdDateBaseEntity implements IErc998MarketplaceHistory {
@@ -25,9 +25,9 @@ export class Erc998MarketplaceHistoryEntity extends IdDateBaseEntity implements 
   public eventData: TErc998MarketplaceEventData;
 
   @Column({ type: "int", nullable: true })
-  public uniTokenId: number | null;
+  public tokenId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => UniTokenEntity)
-  public uniToken?: UniTokenEntity;
+  @ManyToOne(_type => TokenEntity)
+  public token?: TokenEntity;
 }

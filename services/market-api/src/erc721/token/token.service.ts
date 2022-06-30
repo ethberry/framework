@@ -2,23 +2,23 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IErc721AssetSearchDto, UniTokenStatus } from "@framework/types";
+import { IErc721AssetSearchDto, TokenStatus } from "@framework/types";
 
 import { UserEntity } from "../../user/user.entity";
 import { IErc721TokenAutocompleteDto } from "./interface";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 
 @Injectable()
 export class Erc721TokenService {
   constructor(
-    @InjectRepository(UniTokenEntity)
-    private readonly uniTokenEntityRepository: Repository<UniTokenEntity>,
+    @InjectRepository(TokenEntity)
+    private readonly tokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
-  public async search(dto: IErc721AssetSearchDto, userEntity: UserEntity): Promise<[Array<UniTokenEntity>, number]> {
-    const { skip, take, rarity, uniContractIds } = dto;
+  public async search(dto: IErc721AssetSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+    const { skip, take, rarity, contractIds } = dto;
 
-    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
@@ -38,29 +38,29 @@ export class Erc721TokenService {
       }
     }
 
-    if (uniContractIds) {
-      if (uniContractIds.length === 1) {
+    if (contractIds) {
+      if (contractIds.length === 1) {
         queryBuilder.andWhere(
           new Brackets(qb => {
-            qb.where("template.uniContractId = :uniContractId", {
-              uniContractId: uniContractIds[0],
+            qb.where("template.contractId = :contractId", {
+              contractId: contractIds[0],
             });
-            qb.orWhere("dropbox.uniContractId = :uniContractId", {
-              uniContractId: uniContractIds[0],
+            qb.orWhere("dropbox.contractId = :contractId", {
+              contractId: contractIds[0],
             });
           }),
         );
       } else {
         queryBuilder.andWhere(
           new Brackets(qb => {
-            qb.where("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
-            qb.orWhere("dropbox.uniContractId IN(:...uniContractIds)", { uniContractIds });
+            qb.where("template.contractId IN(:...contractIds)", { contractIds });
+            qb.orWhere("dropbox.contractId IN(:...contractIds)", { contractIds });
           }),
         );
       }
     }
 
-    queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: UniTokenStatus.MINTED });
+    queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: TokenStatus.MINTED });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -72,9 +72,9 @@ export class Erc721TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc721TokenAutocompleteDto): Promise<Array<UniTokenEntity>> {
+  public async autocomplete(dto: IErc721TokenAutocompleteDto): Promise<Array<TokenEntity>> {
     const { wallet } = dto;
-    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["id", "tokenId"]);
     queryBuilder.andWhere("token.owner = :owner", { owner: wallet });
@@ -89,14 +89,14 @@ export class Erc721TokenService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniTokenEntity>,
-    options?: FindOneOptions<UniTokenEntity>,
-  ): Promise<UniTokenEntity | null> {
-    return this.uniTokenEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindOneOptions<TokenEntity>,
+  ): Promise<TokenEntity | null> {
+    return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public findOnePlus(where: FindOptionsWhere<UniTokenEntity>): Promise<UniTokenEntity | null> {
-    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
+  public findOnePlus(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
     queryBuilder.where(where);
@@ -108,8 +108,8 @@ export class Erc721TokenService {
     return queryBuilder.getOne();
   }
 
-  public getToken(address: string, tokenId: string): Promise<UniTokenEntity | null> {
-    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
+  public getToken(address: string, tokenId: string): Promise<TokenEntity | null> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 

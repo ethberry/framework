@@ -5,5 +5,5 @@ import { AirdropStatus } from "../../../entities";
 export interface IAirdropSearchDto extends IPaginationDto {
   account: string;
   airdropStatus: Array<AirdropStatus>;
-  uniTemplateIds: Array<number>;
+  templateIds: Array<number>;
 }

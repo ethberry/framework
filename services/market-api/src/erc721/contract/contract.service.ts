@@ -4,20 +4,20 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { UniContractRole } from "@framework/types";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractRole } from "@framework/types";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @Injectable()
 export class Erc721CollectionService {
   constructor(
-    @InjectRepository(UniContractEntity)
-    private readonly uniContractEntityRepository: Repository<UniContractEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public search(dto: ISearchDto): Promise<[Array<UniContractEntity>, number]> {
+  public search(dto: ISearchDto): Promise<[Array<ContractEntity>, number]> {
     const { query, skip, take } = dto;
 
-    const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("collection");
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("collection");
 
     queryBuilder.select();
 
@@ -36,7 +36,7 @@ export class Erc721CollectionService {
     }
 
     queryBuilder.andWhere("contract.collectionType IN(:...collectionTypes)", {
-      collectionTypes: [UniContractRole.TOKEN, UniContractRole.DROPBOX],
+      collectionTypes: [ContractRole.TOKEN, ContractRole.DROPBOX],
     });
 
     queryBuilder.orderBy("contract.createdAt", "DESC");
@@ -47,8 +47,8 @@ export class Erc721CollectionService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<UniContractEntity>> {
-    return this.uniContractEntityRepository.find({
+  public async autocomplete(): Promise<Array<ContractEntity>> {
+    return this.contractEntityRepository.find({
       select: {
         id: true,
         title: true,
@@ -57,9 +57,9 @@ export class Erc721CollectionService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniContractEntity>,
-    options?: FindOneOptions<UniContractEntity>,
-  ): Promise<UniContractEntity | null> {
-    return this.uniContractEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
+    return this.contractEntityRepository.findOne({ where, ...options });
   }
 }

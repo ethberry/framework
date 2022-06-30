@@ -6,7 +6,7 @@ import { Skeleton } from "@mui/lab";
 import { Link as RouterLink } from "react-router-dom";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IUniContract } from "@framework/types";
+import { IContract } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
@@ -15,7 +15,7 @@ import { Erc1155TemplateList } from "../template-list";
 import { useStyles } from "./styles";
 
 export const Erc1155Contract: FC = () => {
-  const { selected, isLoading } = useCollection<IUniContract>({
+  const { selected, isLoading } = useCollection<IContract>({
     baseUrl: "/erc1155-contracts",
     empty: {
       title: "",

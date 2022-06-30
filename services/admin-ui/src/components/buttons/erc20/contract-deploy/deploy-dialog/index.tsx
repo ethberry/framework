@@ -4,14 +4,14 @@ import { constants } from "ethers";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { Erc20ContractTemplate, IErc20TokenDeployDto, IUniContract } from "@framework/types";
+import { Erc20ContractTemplate, IErc20TokenDeployDto, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
 export interface IErc20TokenDeployDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUniContract>, form: any) => Promise<void>;
+  onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
 }
 
 export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props => {

@@ -1,6 +1,6 @@
-import { UniContractStatus, Erc20ContractTemplate } from "../../../entities";
+import { ContractStatus, Erc20ContractTemplate } from "../../../entities";
 
 export interface IErc20ContractAutocompleteDto {
-  contractStatus: Array<UniContractStatus>;
+  contractStatus: Array<ContractStatus>;
   contractTemplate: Array<Erc20ContractTemplate>;
 }

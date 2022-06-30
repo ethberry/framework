@@ -21,8 +21,8 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
 
   const classes = useStyles();
 
-  const { query, uniContractIds, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, uniContractIds, minPrice, maxPrice };
+  const { query, contractIds, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, contractIds, minPrice, maxPrice };
 
   return (
     <FormWrapper
@@ -49,7 +49,7 @@ export const Erc1155TokenSearchForm: FC<IErc1155TokenSearchFormProps> = props =>
           {!embedded ? (
             <Grid item xs={6}>
               <EntityInput
-                name="uniContractIds"
+                name="contractIds"
                 controller="uni-contracts"
                 multiple
                 data={{ contractType: [TokenType.ERC1155] }}

@@ -10,14 +10,14 @@ import {
   IErc998AirdropRedeem,
   IErc998DefaultRoyaltyInfo,
   IErc998RandomRequest,
-  IUniTokenApprove,
-  IUniTokenApprovedForAll,
-  IUniTokenMintRandom,
-  IUniTokenRoyaltyInfo,
-  IUniTokenTransfer,
+  ITokenApprove,
+  ITokenApprovedForAll,
+  ITokenMintRandom,
+  ITokenRoyaltyInfo,
+  ITokenTransfer,
   TErc998TokenEventData,
   TokenRarity,
-  UniTokenStatus,
+  TokenStatus,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
@@ -46,7 +46,7 @@ export class Erc998TokenServiceEth {
     this.itemsAddr = configService.get<string>("ERC998_ITEM_ADDR", "");
   }
 
-  public async transfer(event: ILogEvent<IUniTokenTransfer>, context: Log): Promise<void> {
+  public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
     const {
       args: { from, to, tokenId },
     } = event;
@@ -67,16 +67,16 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context, erc998TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc998TokenEntity.uniTemplate.amount += 1;
-      // erc998TokenEntity.uniTemplate
-      //   ? (erc998TokenEntity.uniTemplate.instanceCount += 1)
+      erc998TokenEntity.template.amount += 1;
+      // erc998TokenEntity.template
+      //   ? (erc998TokenEntity.template.instanceCount += 1)
       //   : (erc998TokenEntity.erc998Dropbox.erc998Template.instanceCount += 1);
-      erc998TokenEntity.tokenStatus = UniTokenStatus.MINTED;
+      erc998TokenEntity.tokenStatus = TokenStatus.MINTED;
     }
 
     if (to === constants.AddressZero) {
       // erc998TokenEntity.erc998Template.instanceCount -= 1;
-      erc998TokenEntity.tokenStatus = UniTokenStatus.BURNED;
+      erc998TokenEntity.tokenStatus = TokenStatus.BURNED;
     }
 
     erc998TokenEntity.owner = to;
@@ -84,13 +84,13 @@ export class Erc998TokenServiceEth {
     await erc998TokenEntity.save();
 
     // need to save updates in nested entities too
-    await erc998TokenEntity.uniTemplate.save();
+    await erc998TokenEntity.template.save();
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
     //   : await erc998TokenEntity.erc998Dropbox.erc998Template.save();
   }
 
-  public async approval(event: ILogEvent<IUniTokenApprove>, context: Log): Promise<void> {
+  public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
     const {
       args: { tokenId },
     } = event;
@@ -104,7 +104,7 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context, erc998TokenEntity.id);
   }
 
-  public async approvalForAll(event: ILogEvent<IUniTokenApprovedForAll>, context: Log): Promise<void> {
+  public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
@@ -128,7 +128,7 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async tokenRoyaltyInfo(event: ILogEvent<IUniTokenRoyaltyInfo>, context: Log): Promise<void> {
+  public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfo>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
@@ -147,13 +147,13 @@ export class Erc998TokenServiceEth {
       tokenId,
       attributes: erc998TemplateEntity.attributes,
       owner: from.toLowerCase(),
-      uniTemplate: erc998TemplateEntity,
+      template: erc998TemplateEntity,
     });
 
     await this.updateHistory(event, context, erc998TokenEntity.id);
   }
 
-  public async mintRandom(event: ILogEvent<IUniTokenMintRandom>, context: Log): Promise<void> {
+  public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
       args: { to, tokenId, templateId, rarity, dropboxId },
     } = event;
@@ -179,8 +179,8 @@ export class Erc998TokenServiceEth {
         rarity: Object.values(TokenRarity)[~~rarity],
       }),
       owner: to.toLowerCase(),
-      uniTemplate: erc998TemplateEntity,
-      // uniToken: erc998DropboxEntity,
+      template: erc998TemplateEntity,
+      // token: erc998DropboxEntity,
     });
 
     await this.updateHistory(event, context, erc998TokenEntity.id);
@@ -202,7 +202,7 @@ export class Erc998TokenServiceEth {
       eventType: name as Erc998TokenEventType,
       eventData: args,
       // ApprovedForAll has no tokenId
-      uniTokenId: erc998TokenId || null,
+      tokenId: erc998TokenId || null,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

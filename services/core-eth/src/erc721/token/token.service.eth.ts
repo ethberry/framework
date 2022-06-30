@@ -17,7 +17,7 @@ import {
   IErc721TokenTransfer,
   TErc721TokenEventData,
   TokenRarity,
-  UniTokenStatus,
+  TokenStatus,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
@@ -67,16 +67,16 @@ export class Erc721TokenServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc721TokenEntity.uniTemplate.amount += 1;
+      erc721TokenEntity.template.amount += 1;
       // erc721TokenEntity.erc721Template
       //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
       //   : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
-      erc721TokenEntity.tokenStatus = UniTokenStatus.MINTED;
+      erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
     }
 
     if (to === constants.AddressZero) {
       // erc721TokenEntity.erc721Template.instanceCount -= 1;
-      erc721TokenEntity.tokenStatus = UniTokenStatus.BURNED;
+      erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     }
 
     erc721TokenEntity.owner = to;
@@ -84,7 +84,7 @@ export class Erc721TokenServiceEth {
     await erc721TokenEntity.save();
 
     // need to save updates in nested entities too
-    await erc721TokenEntity.uniTemplate.save();
+    await erc721TokenEntity.template.save();
     // erc721TokenEntity.erc721Template
     //   ? await erc721TokenEntity.erc721Template.save()
     //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
@@ -147,7 +147,7 @@ export class Erc721TokenServiceEth {
       tokenId,
       attributes: erc721TemplateEntity.attributes,
       owner: from.toLowerCase(),
-      uniTemplate: erc721TemplateEntity,
+      template: erc721TemplateEntity,
     });
 
     await this.updateHistory(event, context, erc721TokenEntity.id);
@@ -179,7 +179,7 @@ export class Erc721TokenServiceEth {
         rarity: Object.values(TokenRarity)[~~rarity],
       }),
       owner: to.toLowerCase(),
-      uniTemplate: erc721TemplateEntity,
+      template: erc721TemplateEntity,
       // erc721Token: erc721DropboxEntity,
     });
 
@@ -202,7 +202,7 @@ export class Erc721TokenServiceEth {
       eventType: name as Erc721TokenEventType,
       eventData: args,
       // ApprovedForAll has no tokenId
-      uniTokenId: erc721TokenId || null,
+      tokenId: erc721TokenId || null,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

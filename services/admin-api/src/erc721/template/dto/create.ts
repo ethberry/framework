@@ -42,5 +42,5 @@ export class Erc721TemplateCreateDto implements IErc721TemplateCreateDto {
     minimum: 1,
   })
   @IsInt({ message: "typeMismatch" })
-  public uniContractId: number;
+  public contractId: number;
 }

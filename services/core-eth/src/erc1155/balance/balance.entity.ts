@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@framework/constants";
-import { IUniBalance } from "@framework/types";
+import { IBalance } from "@framework/types";
 
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Entity({ schema: ns, name: "erc1155_balance" })
-export class Erc1155BalanceEntity extends IdDateBaseEntity implements IUniBalance {
+export class Erc1155BalanceEntity extends IdDateBaseEntity implements IBalance {
   @Column({ type: "varchar" })
   public account: string;
 
@@ -15,9 +15,9 @@ export class Erc1155BalanceEntity extends IdDateBaseEntity implements IUniBalanc
   public amount: string;
 
   @Column({ type: "int" })
-  public uniTokenId: number;
+  public tokenId: number;
 
   @JoinColumn()
-  @OneToOne(_type => UniTokenEntity)
-  public uniToken: UniTokenEntity;
+  @OneToOne(_type => TokenEntity)
+  public token: TokenEntity;
 }

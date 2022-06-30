@@ -24,11 +24,7 @@ export const ExchangeButton: FC<IExchangeButtonProps> = props => {
   const api = useApi();
 
   const meta = useMetamask(() => {
-    const contract = new Contract(
-      rule.item.components[0].uniContract!.address,
-      ERC998SimpleSol.abi,
-      library.getSigner(),
-    );
+    const contract = new Contract(rule.item.components[0].contract!.address, ERC998SimpleSol.abi, library.getSigner());
     return contract.setApprovalForAll(process.env.EXCHANGE_ADDR, true) as Promise<void>;
   });
 
@@ -43,14 +39,14 @@ export const ExchangeButton: FC<IExchangeButtonProps> = props => {
     return (
       contract
         // TODO add item amounts - batch craft?
-        .craft(rule.item.components[0].uniTokenId, 1) as Promise<void>
+        .craft(rule.item.components[0].tokenId, 1) as Promise<void>
     );
   });
 
   const getApprove = async (): Promise<void> => {
     return api
       .fetchJson({
-        url: `/erc1155-token-history/${rule.ingredients.components[0].uniContract!.address}/approve`,
+        url: `/erc1155-token-history/${rule.ingredients.components[0].contract!.address}/approve`,
       })
       .then((approve: boolean) => {
         setIsApproved(approve);

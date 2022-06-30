@@ -7,13 +7,13 @@ import { useFormContext } from "react-hook-form";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IUniTemplate, UniContractTemplate } from "@framework/types";
+import { ITemplate, ContractTemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
-  rows: Array<IUniTemplate>;
+  rows: Array<ITemplate>;
 }
 
 export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> = props => {
@@ -27,7 +27,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
 
   const handleBatchBuy = useMetamask(async () => {
     const totalTokenPrice = rows.map(token => {
-      if (token.price?.components[0].uniContract?.contractTemplate === UniContractTemplate.NATIVE) {
+      if (token.price?.components[0].contract?.contractTemplate === ContractTemplate.NATIVE) {
         return utils.parseUnits(token.price?.components[0].amount, "wei");
       }
       return constants.Zero;
@@ -39,13 +39,13 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
     const { erc1155TokenIds, amounts } = Object.entries(values).reduce(
       (memo, [tokenId, amount]) => {
         if (amount > 0) {
-          const template = rows.find(template => template.uniTokens![0].tokenId === tokenId);
+          const template = rows.find(template => template.tokens![0].tokenId === tokenId);
           memo.erc1155TokenIds.push(template!.id);
           memo.amounts.push(amount);
-          tokenIds.push(~~template!.uniTokens![0].tokenId);
+          tokenIds.push(~~template!.tokens![0].tokenId);
           totalTokenValue = totalTokenValue.add(totalTokenPrice[indx].mul(amount));
           indx++;
-          collection = template!.uniContract!.address.toLowerCase();
+          collection = template!.contract!.address.toLowerCase();
         }
         return memo;
       },

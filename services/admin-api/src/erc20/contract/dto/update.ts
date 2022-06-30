@@ -3,7 +3,7 @@ import { IsEnum, IsJSON, IsOptional, IsString, Validate } from "class-validator"
 import { Transform } from "class-transformer";
 
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
-import { UniContractStatus } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { IErc20ContractUpdateDto } from "../interfaces";
 
@@ -19,11 +19,11 @@ export class Erc20ContractUpdateDto implements IErc20ContractUpdateDto {
   public description: string;
 
   @ApiPropertyOptional({
-    enum: UniContractStatus,
+    enum: ContractStatus,
   })
   @IsOptional()
-  @Transform(({ value }) => value as UniContractStatus)
-  @IsEnum(UniContractStatus, { message: "badInput" })
-  @Validate(ForbidEnumValues, [UniContractStatus.NEW])
-  public contractStatus: UniContractStatus;
+  @Transform(({ value }) => value as ContractStatus)
+  @IsEnum(ContractStatus, { message: "badInput" })
+  @Validate(ForbidEnumValues, [ContractStatus.NEW])
+  public contractStatus: ContractStatus;
 }

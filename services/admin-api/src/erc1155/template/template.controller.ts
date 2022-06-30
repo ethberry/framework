@@ -23,7 +23,7 @@ import {
   Erc1155TemplateUpdateDto,
   Erc1155TokenCreateDto,
 } from "./dto";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @ApiBearerAuth()
 @Controller("/erc1155-templates")
@@ -32,31 +32,28 @@ export class Erc1155TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc1155TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
+  public search(@Query() dto: Erc1155TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc1155TemplateService.search(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc1155TemplateAutocompleteDto): Promise<Array<UniTemplateEntity>> {
+  public autocomplete(@Query() dto: Erc1155TemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
     return this.erc1155TemplateService.autocomplete(dto);
   }
 
   @Post("/")
-  public create(@Body() dto: Erc1155TokenCreateDto): Promise<UniTemplateEntity> {
+  public create(@Body() dto: Erc1155TokenCreateDto): Promise<TemplateEntity> {
     return this.erc1155TemplateService.create(dto);
   }
 
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: Erc1155TemplateUpdateDto,
-  ): Promise<UniTemplateEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc1155TemplateUpdateDto): Promise<TemplateEntity> {
     return this.erc1155TemplateService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniTemplateEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
     return this.erc1155TemplateService.findOne({ id });
   }
 

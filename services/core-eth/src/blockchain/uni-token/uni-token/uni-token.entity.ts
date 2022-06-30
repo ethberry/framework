@@ -1,21 +1,21 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
-import { IUniToken, UniTokenStatus } from "@framework/types";
+import { IToken, TokenStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { UniTemplateEntity } from "../uni-template/uni-template.entity";
+import { TemplateEntity } from "../uni-template/uni-template.entity";
 
-@Entity({ schema: ns, name: "uni_token" })
-export class UniTokenEntity extends IdDateBaseEntity implements IUniToken {
+@Entity({ schema: ns, name: "token" })
+export class TokenEntity extends IdDateBaseEntity implements IToken {
   @Column({ type: "json" })
   public attributes: any;
 
   @Column({
     type: "enum",
-    enum: UniTokenStatus,
+    enum: TokenStatus,
   })
-  public tokenStatus: UniTokenStatus;
+  public tokenStatus: TokenStatus;
 
   @Column({ type: "numeric" })
   public tokenId: string;
@@ -24,12 +24,12 @@ export class UniTokenEntity extends IdDateBaseEntity implements IUniToken {
   public owner: string;
 
   @Column({ type: "int" })
-  public uniTemplateId: number;
+  public templateId: number;
 
   @Column({ type: "int" })
   public royalty: number;
 
   @JoinColumn()
-  @ManyToOne(_type => UniTemplateEntity, template => template.uniTokens)
-  public uniTemplate: UniTemplateEntity;
+  @ManyToOne(_type => TemplateEntity, template => template.tokens)
+  public template: TemplateEntity;
 }

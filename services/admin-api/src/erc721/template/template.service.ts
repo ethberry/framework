@@ -2,31 +2,26 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import {
-  IErc721TemplateAutocompleteDto,
-  IErc721TemplateSearchDto,
-  TokenType,
-  UniTemplateStatus,
-} from "@framework/types";
+import { IErc721TemplateAutocompleteDto, IErc721TemplateSearchDto, TokenType, TemplateStatus } from "@framework/types";
 
 import { IErc721TemplateCreateDto, IErc721TemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Injectable()
 export class Erc721TemplateService {
   constructor(
-    @InjectRepository(UniTemplateEntity)
-    private readonly uniTemplateEntityRepository: Repository<UniTemplateEntity>,
+    @InjectRepository(TemplateEntity)
+    private readonly templateEntityRepository: Repository<TemplateEntity>,
   ) {}
 
-  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
-    const { query, templateStatus, skip, take, uniContractIds } = dto;
+  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+    const { query, templateStatus, skip, take, contractIds } = dto;
 
-    const queryBuilder = this.uniTemplateEntityRepository.createQueryBuilder("template");
+    const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC721 });
 
     if (templateStatus) {
@@ -37,13 +32,13 @@ export class Erc721TemplateService {
       }
     }
 
-    if (uniContractIds) {
-      if (uniContractIds.length === 1) {
-        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
-          uniContractId: uniContractIds[0],
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
@@ -71,8 +66,8 @@ export class Erc721TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc721TemplateAutocompleteDto): Promise<Array<UniTemplateEntity>> {
-    const { templateStatus = [], uniContractIds = [] } = dto;
+  public async autocomplete(dto: IErc721TemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
+    const { templateStatus = [], contractIds = [] } = dto;
 
     const where = {};
 
@@ -82,13 +77,13 @@ export class Erc721TemplateService {
       });
     }
 
-    if (uniContractIds.length) {
+    if (contractIds.length) {
       Object.assign(where, {
-        uniContractId: In(uniContractIds),
+        contractId: In(contractIds),
       });
     }
 
-    return this.uniTemplateEntityRepository.find({
+    return this.templateEntityRepository.find({
       where,
       select: {
         id: true,
@@ -98,16 +93,16 @@ export class Erc721TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniTemplateEntity>,
-    options?: FindOneOptions<UniTemplateEntity>,
-  ): Promise<UniTemplateEntity | null> {
-    return this.uniTemplateEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<TemplateEntity>,
+    options?: FindOneOptions<TemplateEntity>,
+  ): Promise<TemplateEntity | null> {
+    return this.templateEntityRepository.findOne({ where, ...options });
   }
 
   public async update(
-    where: FindOptionsWhere<UniTemplateEntity>,
+    where: FindOptionsWhere<TemplateEntity>,
     dto: Partial<IErc721TemplateUpdateDto>,
-  ): Promise<UniTemplateEntity> {
+  ): Promise<TemplateEntity> {
     const templateEntity = await this.findOne(where);
 
     if (!templateEntity) {
@@ -119,11 +114,11 @@ export class Erc721TemplateService {
     return templateEntity.save();
   }
 
-  public async create(dto: IErc721TemplateCreateDto): Promise<UniTemplateEntity> {
-    return this.uniTemplateEntityRepository.create(dto).save();
+  public async create(dto: IErc721TemplateCreateDto): Promise<TemplateEntity> {
+    return this.templateEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<UniTemplateEntity>): Promise<UniTemplateEntity> {
-    return this.update(where, { templateStatus: UniTemplateStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity> {
+    return this.update(where, { templateStatus: TemplateStatus.INACTIVE });
   }
 }

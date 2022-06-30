@@ -4,7 +4,7 @@ import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
 export const validationSchema = Yup.object().shape({
   owner: addressValidationSchema,
-  uniTemplateIds: Yup.number().required("form.validations.valueMissing"),
+  templateIds: Yup.number().required("form.validations.valueMissing"),
 });
 
 export const validationSchema2 = Yup.object().shape({

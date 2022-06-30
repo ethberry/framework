@@ -25,9 +25,9 @@ export class ExchangeRulesService {
 
     queryBuilder.leftJoinAndSelect("rule.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "components");
-    queryBuilder.leftJoinAndSelect("components.uniToken", "token");
-    queryBuilder.leftJoinAndSelect("token.uniTemplate", "template");
-    queryBuilder.leftJoinAndSelect("components.uniContract", "contract");
+    queryBuilder.leftJoinAndSelect("components.token", "token");
+    queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("components.contract", "contract");
 
     queryBuilder.leftJoinAndSelect("rule.ingredients", "ingredients");
     // queryBuilder.leftJoinAndSelect("template.erc721Collection", "templateCollection");

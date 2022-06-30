@@ -27,7 +27,7 @@ export const Erc721DropboxList: FC<IDropboxListProps> = props => {
       embedded,
       search: {
         query: "",
-        uniContractIds: id ? [~~id] : [],
+        contractIds: id ? [~~id] : [],
         dropboxStatus: [DropboxStatus.ACTIVE],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),

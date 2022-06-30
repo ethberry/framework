@@ -15,7 +15,7 @@ export class DropboxService {
   ) {}
 
   public async search(dto: IDropboxSearchDto): Promise<[Array<DropboxEntity>, number]> {
-    const { query, dropboxStatus, skip, take, uniContractIds } = dto;
+    const { query, dropboxStatus, skip, take, contractIds } = dto;
 
     const queryBuilder = this.erc998DropboxEntityRepository.createQueryBuilder("dropbox");
 
@@ -43,13 +43,13 @@ export class DropboxService {
       }
     }
 
-    if (uniContractIds) {
-      if (uniContractIds.length === 1) {
-        queryBuilder.andWhere("dropbox.uniContractId = :uniContractId", {
-          uniContractId: uniContractIds[0],
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("dropbox.contractId = :contractId", {
+          contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("dropbox.uniContractId IN(:...uniContractIds)", { uniContractIds });
+        queryBuilder.andWhere("dropbox.contractId IN(:...contractIds)", { contractIds });
       }
     }
 

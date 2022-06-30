@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IErc998ContractSearchDto, UniContractRole, UniContractStatus } from "@framework/types";
+import { IErc998ContractSearchDto, ContractRole, ContractStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
@@ -38,10 +38,10 @@ export const Erc998CollectionSearchForm: FC<IErc998CollectionSearchFormProps> = 
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <SelectInput multiple name="contractStatus" options={UniContractStatus} />
+            <SelectInput multiple name="contractStatus" options={ContractStatus} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="contractRole" options={UniContractRole} />
+            <SelectInput multiple name="contractRole" options={ContractRole} />
           </Grid>
         </Grid>
       </Collapse>

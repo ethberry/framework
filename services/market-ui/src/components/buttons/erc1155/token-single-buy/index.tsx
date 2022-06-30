@@ -6,13 +6,13 @@ import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IUniTemplate, UniContractTemplate } from "@framework/types";
+import { ITemplate, ContractTemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
-  template: IUniTemplate;
+  template: ITemplate;
 }
 
 export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> = props => {
@@ -42,16 +42,14 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
 
         return contract.buyResources(
           nonce,
-          template.uniContract?.address.toLowerCase(),
+          template.contract?.address.toLowerCase(),
           [~~template.id],
           [1],
           process.env.ACCOUNT,
           json.signature,
           {
             value:
-              template.price?.components[0].uniContract!.contractTemplate === UniContractTemplate.NATIVE
-                ? tokenPrice
-                : 0,
+              template.price?.components[0].contract!.contractTemplate === ContractTemplate.NATIVE ? tokenPrice : 0,
           },
         ) as Promise<void>;
       });

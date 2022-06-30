@@ -29,7 +29,7 @@ export class CreateAirdropTable1563804040410 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "uni_token_id",
+          name: "token_id",
           type: "int",
           isNullable: true,
         },
@@ -59,9 +59,9 @@ export class CreateAirdropTable1563804040410 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["uni_token_id"],
+          columnNames: ["token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_token`,
+          referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",
         },
       ],

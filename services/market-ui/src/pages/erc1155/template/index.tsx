@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IUniTemplate } from "@framework/types";
+import { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
@@ -13,7 +13,7 @@ import { useStyles } from "./styles";
 import { Erc1155TokenSingleBuyButton } from "../../../components/buttons";
 
 export const Erc1155Template: FC = () => {
-  const { selected, isLoading } = useCollection<IUniTemplate>({
+  const { selected, isLoading } = useCollection<ITemplate>({
     baseUrl: "/erc721-tokens",
     empty: {
       title: "",

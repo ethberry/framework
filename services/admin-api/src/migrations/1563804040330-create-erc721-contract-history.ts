@@ -49,7 +49,7 @@ export class CreateErc721ContractHistory1563804040330 implements MigrationInterf
           type: "json",
         },
         {
-          name: "uni_token_id",
+          name: "token_id",
           type: "int",
           isNullable: true,
         },
@@ -64,9 +64,9 @@ export class CreateErc721ContractHistory1563804040330 implements MigrationInterf
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_token_id"],
+          columnNames: ["token_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_token`,
+          referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",
         },
       ],

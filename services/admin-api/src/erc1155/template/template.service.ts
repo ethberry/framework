@@ -6,37 +6,37 @@ import {
   IErc1155TemplateAutocompleteDto,
   IErc1155TemplateSearchDto,
   TokenType,
-  UniTemplateStatus,
+  TemplateStatus,
 } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { IErc1155TemplateCreateDto, IErc1155TemplateUpdateDto } from "./interfaces";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Injectable()
 export class Erc1155TemplateService {
   constructor(
-    @InjectRepository(UniTemplateEntity)
-    private readonly erc1155TemplateEntityRepository: Repository<UniTemplateEntity>,
+    @InjectRepository(TemplateEntity)
+    private readonly erc1155TemplateEntityRepository: Repository<TemplateEntity>,
   ) {}
 
-  public async search(dto: IErc1155TemplateSearchDto): Promise<[Array<UniTemplateEntity>, number]> {
-    const { query, skip, take, uniContractIds, templateStatus } = dto;
+  public async search(dto: IErc1155TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+    const { query, skip, take, contractIds, templateStatus } = dto;
 
     const queryBuilder = this.erc1155TemplateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC1155 });
 
-    if (uniContractIds) {
-      if (uniContractIds.length === 1) {
-        queryBuilder.andWhere("template.uniContractId = :uniContractId", {
-          uniContractId: uniContractIds[0],
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.uniContractId IN(:...uniContractIds)", { uniContractIds });
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
@@ -74,8 +74,8 @@ export class Erc1155TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc1155TemplateAutocompleteDto): Promise<Array<UniTemplateEntity>> {
-    const { templateStatus = [], uniContractIds = [] } = dto;
+  public async autocomplete(dto: IErc1155TemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
+    const { templateStatus = [], contractIds = [] } = dto;
 
     const where = {};
 
@@ -85,9 +85,9 @@ export class Erc1155TemplateService {
       });
     }
 
-    if (uniContractIds.length) {
+    if (contractIds.length) {
       Object.assign(where, {
-        uniContractIds: In(uniContractIds),
+        contractIds: In(contractIds),
       });
     }
 
@@ -101,9 +101,9 @@ export class Erc1155TemplateService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniTemplateEntity>,
-    options?: FindOneOptions<UniTemplateEntity>,
-  ): Promise<UniTemplateEntity | null> {
+    where: FindOptionsWhere<TemplateEntity>,
+    options?: FindOneOptions<TemplateEntity>,
+  ): Promise<TemplateEntity | null> {
     return this.erc1155TemplateEntityRepository.findOne({ where, ...options });
   }
 
@@ -124,8 +124,8 @@ export class Erc1155TemplateService {
     return result[0].tokenId;
   }
 
-  public async create(dto: IErc1155TemplateCreateDto): Promise<UniTemplateEntity> {
-    const maxTokenId = await this.getMaxTokenIdForCollection(dto.erc1155CollectionId);
+  public async create(dto: IErc1155TemplateCreateDto): Promise<TemplateEntity> {
+    const _maxTokenId = await this.getMaxTokenIdForCollection(dto.erc1155CollectionId);
 
     return this.erc1155TemplateEntityRepository
       .create({
@@ -136,9 +136,9 @@ export class Erc1155TemplateService {
   }
 
   public async update(
-    where: FindOptionsWhere<UniTemplateEntity>,
+    where: FindOptionsWhere<TemplateEntity>,
     dto: Partial<IErc1155TemplateUpdateDto>,
-  ): Promise<UniTemplateEntity> {
+  ): Promise<TemplateEntity> {
     const tokenEntity = await this.findOne(where);
 
     if (!tokenEntity) {
@@ -150,7 +150,7 @@ export class Erc1155TemplateService {
     return tokenEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<UniTemplateEntity>): Promise<UniTemplateEntity> {
-    return this.update(where, { templateStatus: UniTemplateStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity> {
+    return this.update(where, { templateStatus: TemplateStatus.INACTIVE });
   }
 }

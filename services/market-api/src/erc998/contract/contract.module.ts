@@ -3,10 +3,10 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc998CollectionService } from "./contract.service";
 import { Erc998CollectionController } from "./contract.controller";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UniContractEntity])],
+  imports: [TypeOrmModule.forFeature([ContractEntity])],
   providers: [Erc998CollectionService],
   controllers: [Erc998CollectionController],
   exports: [Erc998CollectionService],

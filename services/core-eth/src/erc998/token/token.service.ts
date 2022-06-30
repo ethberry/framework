@@ -2,32 +2,29 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { UniTokenStatus } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc998TokenService {
   constructor(
-    @InjectRepository(UniTokenEntity)
-    private readonly uniTokenEntityRepository: Repository<UniTokenEntity>,
+    @InjectRepository(TokenEntity)
+    private readonly tokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<UniTokenEntity>,
-    options?: FindOneOptions<UniTokenEntity>,
-  ): Promise<UniTokenEntity | null> {
-    return this.uniTokenEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<TokenEntity>,
+    options?: FindOneOptions<TokenEntity>,
+  ): Promise<TokenEntity | null> {
+    return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<UniTokenEntity>): Promise<UniTokenEntity> {
-    return this.uniTokenEntityRepository.create(dto).save();
+  public async create(dto: DeepPartial<TokenEntity>): Promise<TokenEntity> {
+    return this.tokenEntityRepository.create(dto).save();
   }
 
-  public async update(
-    where: FindOptionsWhere<UniTokenEntity>,
-    dto: DeepPartial<UniTokenEntity>,
-  ): Promise<UniTokenEntity> {
+  public async update(where: FindOptionsWhere<TokenEntity>, dto: DeepPartial<TokenEntity>): Promise<TokenEntity> {
     const { ...rest } = dto;
 
     const tokenEntity = await this.findOne(where);
@@ -41,8 +38,8 @@ export class Erc998TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(tokenId: string, address: string, tokenStatus?: UniTokenStatus): Promise<UniTokenEntity | null> {
-    const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
+  public getToken(tokenId: string, address: string, tokenStatus?: TokenStatus): Promise<TokenEntity | null> {
+    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 

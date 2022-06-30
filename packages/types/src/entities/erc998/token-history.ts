@@ -1,5 +1,5 @@
 import { IIdDateBase } from "@gemunion/types-collection";
-import { IUniToken } from "../uni-token/uni-token";
+import { IToken } from "../hierarchy/token";
 
 export enum Erc998TokenEventType {
   Approval = "Approval",
@@ -16,13 +16,13 @@ export enum Erc998TokenEventType {
   Unpaused = "Unpaused",
 }
 
-export interface IUniTokenTransfer {
+export interface ITokenTransfer {
   from: string;
   to: string;
   tokenId: string;
 }
 
-export interface IUniTokenMintRandom {
+export interface ITokenMintRandom {
   to: string;
   tokenId: string;
   templateId: string;
@@ -30,13 +30,13 @@ export interface IUniTokenMintRandom {
   dropboxId: string;
 }
 
-export interface IUniTokenApprove {
+export interface ITokenApprove {
   owner: string;
   approved: string;
   tokenId: string;
 }
 
-export interface IUniTokenApprovedForAll {
+export interface ITokenApprovedForAll {
   owner: string;
   operator: string;
   approved: boolean;
@@ -47,7 +47,7 @@ export interface IErc998DefaultRoyaltyInfo {
   royaltyNumerator: string;
 }
 
-export interface IUniTokenRoyaltyInfo {
+export interface ITokenRoyaltyInfo {
   tokenId: string;
   royaltyReceiver: string;
   royaltyNumerator: boolean;
@@ -80,22 +80,22 @@ export interface IErc998RandomRequest {
 }
 
 export type TErc998TokenEventData =
-  | IUniTokenTransfer
-  | IUniTokenApprove
-  | IUniTokenApprovedForAll
+  | ITokenTransfer
+  | ITokenApprove
+  | ITokenApprovedForAll
   | IErc998DefaultRoyaltyInfo
-  | IUniTokenRoyaltyInfo
+  | ITokenRoyaltyInfo
   | IErc998DropboxUnpack
   | IErc998AirdropUnpack
   | IErc998AirdropRedeem
-  | IUniTokenMintRandom
+  | ITokenMintRandom
   | IErc998RandomRequest;
 
-export interface IUniTokenHistory extends IIdDateBase {
+export interface ITokenHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc998TokenEventType;
   eventData: TErc998TokenEventData;
-  uniTokenId: number | null;
-  uniToken?: IUniToken;
+  tokenId: number | null;
+  token?: IToken;
 }

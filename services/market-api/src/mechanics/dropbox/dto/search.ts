@@ -30,7 +30,7 @@ export class DropboxSearchDto extends SearchDto implements IDropboxSearchDto {
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public uniContractIds: Array<number>;
+  public contractIds: Array<number>;
 
   @ApiPropertyOptional({
     type: Number,

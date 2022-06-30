@@ -33,8 +33,8 @@ export class SeedExchangeErc1155Erc1155At1653616448020 implements MigrationInter
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,
-        uni_contract_id,
-        uni_token_id,
+        contract_id,
+        token_id,
         amount,
         asset_id
       ) VALUES (

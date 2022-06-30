@@ -5,37 +5,37 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { IOpenSeaMetadata } from "../../common/interfaces";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @Injectable()
 export class MetadataContractService {
   constructor(
-    @InjectRepository(UniContractEntity)
-    private readonly uniContractEntityRepository: Repository<UniContractEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly contractEntityRepository: Repository<ContractEntity>,
     private readonly configService: ConfigService,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<UniContractEntity>,
-    options?: FindOneOptions<UniContractEntity>,
-  ): Promise<UniContractEntity | null> {
-    return this.uniContractEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
+    return this.contractEntityRepository.findOne({ where, ...options });
   }
 
   public async getContractMetadata(address: string): Promise<IOpenSeaMetadata> {
-    const uniContractEntity = await this.findOne({ address });
+    const contractEntity = await this.findOne({ address });
 
-    if (!uniContractEntity) {
+    if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
 
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
     return {
-      description: getPainText(uniContractEntity.description),
-      external_url: `${baseUrl}/metadata/${uniContractEntity.address}`,
-      image: uniContractEntity.imageUrl,
-      name: uniContractEntity.title,
+      description: getPainText(contractEntity.description),
+      external_url: `${baseUrl}/metadata/${contractEntity.address}`,
+      image: contractEntity.imageUrl,
+      name: contractEntity.title,
     };
   }
 }

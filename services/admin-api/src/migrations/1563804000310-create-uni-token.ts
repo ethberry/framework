@@ -2,17 +2,17 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateUniToken1563804000310 implements MigrationInterface {
+export class CreateToken1563804000310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.uni_token_status_enum AS ENUM (
+      CREATE TYPE ${ns}.token_status_enum AS ENUM (
         'MINTED',
         'BURNED'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.uni_token`,
+      name: `${ns}.token`,
       columns: [
         {
           name: "id",
@@ -33,11 +33,11 @@ export class CreateUniToken1563804000310 implements MigrationInterface {
         },
         {
           name: "token_status",
-          type: `${ns}.uni_token_status_enum`,
+          type: `${ns}.token_status_enum`,
           default: "'MINTED'",
         },
         {
-          name: "uni_template_id",
+          name: "template_id",
           type: "int",
           isNullable: true,
         },
@@ -52,9 +52,9 @@ export class CreateUniToken1563804000310 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_template_id"],
+          columnNames: ["template_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_template`,
+          referencedTableName: `${ns}.template`,
           onDelete: "CASCADE",
         },
       ],
@@ -64,7 +64,7 @@ export class CreateUniToken1563804000310 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.uni_token`);
-    await queryRunner.query(`DROP TYPE ${ns}.uni_token_status_enum;`);
+    await queryRunner.dropTable(`${ns}.token`);
+    await queryRunner.query(`DROP TYPE ${ns}.token_status_enum;`);
   }
 }

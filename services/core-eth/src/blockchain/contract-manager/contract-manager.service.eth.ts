@@ -17,7 +17,7 @@ import {
   IContractManagerERC20VestingDeployed,
   IContractManagerERC721TokenDeployed,
   TContractManagerEventData,
-  UniContractTemplate,
+  ContractTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
@@ -88,7 +88,7 @@ export class ContractManagerServiceEth {
       name,
       symbol,
       description: emptyStateString,
-      contractTemplate: Object.values(UniContractTemplate)[~~templateId],
+      contractTemplate: Object.values(ContractTemplate)[~~templateId],
       chainId: this.chainId,
     });
 
@@ -117,7 +117,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
-      contractTemplate: Object.values(UniContractTemplate)[~~templateId],
+      contractTemplate: Object.values(ContractTemplate)[~~templateId],
     });
 
     await this.erc721LogService.addListener({
@@ -140,7 +140,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       chainId: this.chainId,
       baseTokenURI,
-      contractTemplate: Object.values(UniContractTemplate)[~~templateId],
+      contractTemplate: Object.values(ContractTemplate)[~~templateId],
     });
 
     await this.erc1155LogService.addListener({

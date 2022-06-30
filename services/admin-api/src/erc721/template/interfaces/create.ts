@@ -7,5 +7,5 @@ export interface IErc721TemplateCreateDto {
   price: IAssetDto;
   amount: string;
   imageUrl: string;
-  uniContractId: number;
+  contractId: number;
 }

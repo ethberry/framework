@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedUniTemplateErc1155At1563804000250 implements MigrationInterface {
+export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
@@ -50,7 +50,7 @@ export class SeedUniTemplateErc1155At1563804000250 implements MigrationInterface
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.uni_template (
+      INSERT INTO ${ns}.template (
         id,
         title,
         description,
@@ -61,7 +61,7 @@ export class SeedUniTemplateErc1155At1563804000250 implements MigrationInterface
         amount,
         decimals,
         template_status,
-        uni_contract_id,
+        contract_id,
         created_at,
         updated_at
       ) VALUES (
@@ -179,10 +179,10 @@ export class SeedUniTemplateErc1155At1563804000250 implements MigrationInterface
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.uni_template_id_seq', 40203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 40203, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.uni_template RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.template RESTART IDENTITY CASCADE;`);
   }
 }

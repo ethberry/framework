@@ -9,33 +9,33 @@ import {
   IErc20ContractSearchDto,
   IErc20TokenCreateDto,
   TokenType,
-  UniContractStatus,
-  UniContractTemplate,
-  UniTemplateStatus,
+  ContractStatus,
+  ContractTemplate,
+  TemplateStatus,
 } from "@framework/types";
 
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 import { IErc20ContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class Erc20ContractService {
   constructor(
-    @InjectRepository(UniContractEntity)
-    private readonly uniContractEntityRepository: Repository<UniContractEntity>,
-    @InjectRepository(UniTemplateEntity)
-    private readonly uniTemplateEntityRepository: Repository<UniTemplateEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly contractEntityRepository: Repository<ContractEntity>,
+    @InjectRepository(TemplateEntity)
+    private readonly templateEntityRepository: Repository<TemplateEntity>,
     private readonly configService: ConfigService,
   ) {}
 
-  public async search(dto: IErc20ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
+  public async search(dto: IErc20ContractSearchDto): Promise<[Array<ContractEntity>, number]> {
     const { query, contractStatus, contractTemplate, skip, take } = dto;
 
-    const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("contract");
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("contract.uniTemplates", "uniTemplates");
+    queryBuilder.leftJoinAndSelect("contract.templates", "templates");
 
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC20 });
 
@@ -81,12 +81,12 @@ export class Erc20ContractService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc20ContractAutocompleteDto): Promise<Array<UniContractEntity>> {
+  public async autocomplete(dto: IErc20ContractAutocompleteDto): Promise<Array<ContractEntity>> {
     const { contractTemplate = [] } = dto;
 
-    const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("template");
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("template");
 
-    queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: UniTemplateStatus.ACTIVE });
+    queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     queryBuilder.select(["id", "title", "decimals"]);
 
@@ -99,23 +99,23 @@ export class Erc20ContractService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniContractEntity>,
-    options?: FindOneOptions<UniContractEntity>,
-  ): Promise<UniContractEntity | null> {
-    return this.uniContractEntityRepository.findOne({ where, ...options });
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
+    return this.contractEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IErc20TokenCreateDto): Promise<UniContractEntity> {
+  public async create(dto: IErc20TokenCreateDto): Promise<ContractEntity> {
     const { address, symbol, decimals, contractTemplate, title, description } = dto;
     const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
 
-    const contractEntity = await this.uniContractEntityRepository
+    const contractEntity = await this.contractEntityRepository
       .create({
         address,
         symbol,
         royalty: 0,
         contractType: TokenType.ERC20,
-        contractTemplate: contractTemplate as unknown as UniContractTemplate,
+        contractTemplate: contractTemplate as unknown as ContractTemplate,
         name: title,
         title,
         description,
@@ -124,12 +124,12 @@ export class Erc20ContractService {
       })
       .save();
 
-    await this.uniTemplateEntityRepository
+    await this.templateEntityRepository
       .create({
         decimals,
         title,
         description,
-        uniContract: contractEntity,
+        contract: contractEntity,
         imageUrl: "",
         attributes: "{}",
       })
@@ -139,9 +139,9 @@ export class Erc20ContractService {
   }
 
   public async update(
-    where: FindOptionsWhere<UniContractEntity>,
+    where: FindOptionsWhere<ContractEntity>,
     dto: Partial<IErc20ContractUpdateDto>,
-  ): Promise<UniContractEntity> {
+  ): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 
     if (!contractEntity) {
@@ -153,7 +153,7 @@ export class Erc20ContractService {
     return contractEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<UniTemplateEntity>): Promise<UniContractEntity> {
-    return this.update(where, { contractStatus: UniContractStatus.INACTIVE });
+  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
+    return this.update(where, { contractStatus: ContractStatus.INACTIVE });
   }
 }

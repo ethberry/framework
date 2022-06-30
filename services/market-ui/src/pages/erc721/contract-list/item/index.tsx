@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-import { IUniContract } from "@framework/types";
+import { IContract } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface IErc721ContractItemProps {
-  contract: IUniContract;
+  contract: IContract;
 }
 
 export const ContractItem: FC<IErc721ContractItemProps> = props => {

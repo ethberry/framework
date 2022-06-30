@@ -39,8 +39,8 @@ export const DropboxBuyButton: FC<IDropboxBuyButtonProps> = props => {
 
         return contract.buyDropbox(
           nonce,
-          dropbox.uniContract?.address,
-          dropbox.uniTemplateId, // Dropbox content
+          dropbox.contract?.address,
+          dropbox.templateId, // Dropbox content
           process.env.ACCOUNT,
           sign.signature,
           {

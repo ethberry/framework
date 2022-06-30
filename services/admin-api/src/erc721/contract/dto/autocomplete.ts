@@ -2,30 +2,30 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { IErc721ContractAutocompleteDto, UniContractRole, UniContractStatus } from "@framework/types";
+import { IErc721ContractAutocompleteDto, ContractRole, ContractStatus } from "@framework/types";
 
 export class Erc721CollectionAutocompleteDto implements IErc721ContractAutocompleteDto {
   @ApiPropertyOptional({
-    enum: UniContractStatus,
+    enum: ContractStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<UniContractStatus>)
-  @IsEnum(UniContractStatus, { each: true, message: "badInput" })
-  public contractStatus: Array<UniContractStatus>;
+  @Transform(({ value }) => value as Array<ContractStatus>)
+  @IsEnum(ContractStatus, { each: true, message: "badInput" })
+  public contractStatus: Array<ContractStatus>;
 
   @ApiPropertyOptional({
-    enum: UniContractRole,
+    enum: ContractRole,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<UniContractRole>)
-  @IsEnum(UniContractRole, { each: true, message: "badInput" })
-  public contractRole: Array<UniContractRole>;
+  @Transform(({ value }) => value as Array<ContractRole>)
+  @IsEnum(ContractRole, { each: true, message: "badInput" })
+  public contractRole: Array<ContractRole>;
 }

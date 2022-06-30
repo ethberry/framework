@@ -1,13 +1,13 @@
 import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
-import { ContractBaseEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IUniContract, TokenType, UniContractRole, UniContractStatus, UniContractTemplate } from "@framework/types";
+import { ContractBaseEntity as DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IContract, TokenType, ContractRole, ContractStatus, ContractTemplate } from "@framework/types";
 import { ns } from "@framework/constants";
-import { UniTemplateEntity } from "../uni-template/uni-template.entity";
+import { TemplateEntity } from "../uni-template/uni-template.entity";
 
-@Entity({ schema: ns, name: "uni_contract" })
-export class UniContractEntity extends Mixin(ContractBaseEntity, SearchableEntity) implements IUniContract {
+@Entity({ schema: ns, name: "contract" })
+export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
@@ -25,9 +25,9 @@ export class UniContractEntity extends Mixin(ContractBaseEntity, SearchableEntit
 
   @Column({
     type: "enum",
-    enum: UniContractStatus,
+    enum: ContractStatus,
   })
-  public contractStatus: UniContractStatus;
+  public contractStatus: ContractStatus;
 
   @Column({
     type: "enum",
@@ -37,16 +37,16 @@ export class UniContractEntity extends Mixin(ContractBaseEntity, SearchableEntit
 
   @Column({
     type: "enum",
-    enum: UniContractRole,
+    enum: ContractRole,
   })
-  public contractRole: UniContractRole;
+  public contractRole: ContractRole;
 
   @Column({
     type: "enum",
-    enum: UniContractTemplate,
+    enum: ContractTemplate,
   })
-  public contractTemplate: UniContractTemplate;
+  public contractTemplate: ContractTemplate;
 
-  @OneToMany(_type => UniTemplateEntity, template => template.uniContract)
-  public uniTemplates: Array<UniTemplateEntity>;
+  @OneToMany(_type => TemplateEntity, template => template.contract)
+  public templates: Array<TemplateEntity>;
 }

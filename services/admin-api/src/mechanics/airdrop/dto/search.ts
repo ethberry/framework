@@ -23,7 +23,7 @@ export class AirdropSearchDto extends PaginationDto implements IAirdropSearchDto
   @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
-  public uniTemplateIds: Array<number>;
+  public templateIds: Array<number>;
 
   @ApiPropertyOptional({
     enum: AirdropStatus,

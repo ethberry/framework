@@ -24,16 +24,16 @@ export class AssetService {
       // remove old
       await Promise.allSettled(
         asset.components
-          .filter(oldItem => !dto.components.find(newItem => newItem.uniTokenId === oldItem.uniTokenId))
+          .filter(oldItem => !dto.components.find(newItem => newItem.tokenId === oldItem.tokenId))
           .map(oldItem => oldItem.remove()),
       );
 
       // change existing
       const changedComponents = await Promise.allSettled(
         asset.components
-          .filter(oldItem => dto.components.find(newItem => newItem.uniTokenId === oldItem.uniTokenId))
+          .filter(oldItem => dto.components.find(newItem => newItem.tokenId === oldItem.tokenId))
           .map(oldItem => {
-            oldItem.amount = dto.components.find(newItem => newItem.uniTokenId === oldItem.uniTokenId)!.amount;
+            oldItem.amount = dto.components.find(newItem => newItem.tokenId === oldItem.tokenId)!.amount;
             return oldItem.save();
           }),
       ).then(values =>
@@ -46,7 +46,7 @@ export class AssetService {
       // add new
       const newComponents = await Promise.allSettled(
         dto.components
-          .filter(newItem => !asset.components.find(oldItem => newItem.uniTokenId === oldItem.uniTokenId))
+          .filter(newItem => !asset.components.find(oldItem => newItem.tokenId === oldItem.tokenId))
           .map(newItem => this.assetComponentEntityRepository.create({ ...newItem, assetId: asset.id })),
       ).then(values =>
         values

@@ -8,7 +8,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 
 import { ILevelUpDtoDto } from "./interfaces";
 import { Erc721TokenService } from "../../erc721/token/token.service";
-import { UniContractTemplate } from "@framework/types";
+import { ContractTemplate } from "@framework/types";
 
 @Injectable()
 export class Erc721GradeService {
@@ -27,8 +27,8 @@ export class Erc721GradeService {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const { contractTemplate } = tokenEntity.uniTemplate.uniContract;
-    if (!(contractTemplate === UniContractTemplate.GRADED || contractTemplate === UniContractTemplate.RANDOM)) {
+    const { contractTemplate } = tokenEntity.template.contract;
+    if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
       throw new BadRequestException("wrongTokenType");
     }
 

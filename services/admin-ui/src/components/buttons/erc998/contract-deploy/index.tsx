@@ -31,11 +31,11 @@ function getBytecodeByErc998TokenTemplate(template: Erc998ContractTemplate) {
   }
 }
 
-export interface IUniTokenDeployButtonProps {
+export interface ITokenDeployButtonProps {
   className?: string;
 }
 
-export const Erc998TokenDeployButton: FC<IUniTokenDeployButtonProps> = props => {
+export const Erc998TokenDeployButton: FC<ITokenDeployButtonProps> = props => {
   const { className } = props;
 
   const { library } = useWeb3React();

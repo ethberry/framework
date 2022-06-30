@@ -17,7 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc721ContractService } from "./contract.service";
 import { Erc721CollectionAutocompleteDto, Erc721CollectionSearchDto, Erc721CollectionUpdateDto } from "./dto";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @ApiBearerAuth()
 @Controller("/erc721-contracts")
@@ -26,12 +26,12 @@ export class Erc721ContractController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc721CollectionSearchDto): Promise<[Array<UniContractEntity>, number]> {
+  public search(@Query() dto: Erc721CollectionSearchDto): Promise<[Array<ContractEntity>, number]> {
     return this.erc721ContractService.search(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc721CollectionAutocompleteDto): Promise<Array<UniContractEntity>> {
+  public autocomplete(@Query() dto: Erc721CollectionAutocompleteDto): Promise<Array<ContractEntity>> {
     return this.erc721ContractService.autocomplete(dto);
   }
 
@@ -39,13 +39,13 @@ export class Erc721ContractController {
   public update(
     @Param("id", ParseIntPipe) id: number,
     @Body() dto: Erc721CollectionUpdateDto,
-  ): Promise<UniContractEntity> {
+  ): Promise<ContractEntity> {
     return this.erc721ContractService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<UniContractEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<ContractEntity | null> {
     return this.erc721ContractService.findOne({ id });
   }
 

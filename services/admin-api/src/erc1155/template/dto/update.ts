@@ -3,7 +3,7 @@ import { IsEnum, IsInt, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested
 import { Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { UniTemplateStatus } from "@framework/types";
+import { TemplateStatus } from "@framework/types";
 
 import { IErc1155TemplateUpdateDto } from "../interfaces";
 import { AssetDto } from "../../../blockchain/asset/dto";
@@ -55,6 +55,6 @@ export class Erc1155TemplateUpdateDto implements IErc1155TemplateUpdateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @IsEnum(UniTemplateStatus, { message: "badInput" })
-  public templateStatus: UniTemplateStatus;
+  @IsEnum(TemplateStatus, { message: "badInput" })
+  public templateStatus: TemplateStatus;
 }

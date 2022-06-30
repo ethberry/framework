@@ -3,11 +3,11 @@ import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, Validate } from "class-val
 import { Transform } from "class-transformer";
 
 import { ForbidEnumValues } from "@gemunion/nest-js-validators";
-import { UniContractStatus } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
-import { IUniContractUpdateDto } from "../interfaces";
+import { IContractUpdateDto } from "../interfaces";
 
-export class Erc1155CollectionUpdateDto implements IUniContractUpdateDto {
+export class Erc1155CollectionUpdateDto implements IContractUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
@@ -25,11 +25,11 @@ export class Erc1155CollectionUpdateDto implements IUniContractUpdateDto {
   public imageUrl: string;
 
   @ApiPropertyOptional({
-    enum: UniContractStatus,
+    enum: ContractStatus,
   })
   @IsOptional()
-  @Transform(({ value }) => value as UniContractStatus)
-  @IsEnum(UniContractStatus, { message: "badInput" })
-  @Validate(ForbidEnumValues, [UniContractStatus.NEW])
-  public contractStatus: UniContractStatus;
+  @Transform(({ value }) => value as ContractStatus)
+  @IsEnum(ContractStatus, { message: "badInput" })
+  @Validate(ForbidEnumValues, [ContractStatus.NEW])
+  public contractStatus: ContractStatus;
 }

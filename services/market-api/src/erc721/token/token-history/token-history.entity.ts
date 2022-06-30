@@ -10,7 +10,7 @@ import {
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { UniTokenEntity } from "../../../blockchain/uni-token/uni-token/uni-token.entity";
+import { TokenEntity } from "../../../blockchain/hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "erc721_token_history" })
 export class Erc721TokenHistoryEntity extends IdDateBaseEntity implements IErc721TokenHistory {
@@ -32,9 +32,9 @@ export class Erc721TokenHistoryEntity extends IdDateBaseEntity implements IErc72
   public eventData: IErc721TokenTransfer | IErc721TokenApprove | IErc721TokenApprovedForAll;
 
   @Column({ type: "int", nullable: true })
-  public uniTokenId: number | null;
+  public tokenId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => UniTokenEntity)
-  public uniToken?: UniTokenEntity;
+  @ManyToOne(_type => TokenEntity)
+  public token?: TokenEntity;
 }

@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IUniTemplate, TokenType, UniContractRole, UniTemplateStatus } from "@framework/types";
+import { ITemplate, TokenType, ContractRole, TemplateStatus } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
@@ -13,14 +13,14 @@ import { PriceInput } from "../../../../components/inputs/price";
 export interface IErc721TemplateEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUniTemplate>, form: any) => Promise<void>;
-  initialValues: IUniTemplate;
+  onConfirm: (values: Partial<ITemplate>, form: any) => Promise<void>;
+  initialValues: ITemplate;
 }
 
 export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, attributes, price, amount, templateStatus, uniContractId, imageUrl } = initialValues;
+  const { id, title, description, attributes, price, amount, templateStatus, contractId, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -29,7 +29,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     price,
     amount,
     templateStatus,
-    uniContractId,
+    contractId,
     imageUrl,
   };
 
@@ -46,12 +46,12 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
       <JsonInput name="attributes" />
       <PriceInput prefix="price" />
       <NumberInput name="amount" />
-      {id ? <SelectInput name="templateStatus" options={UniTemplateStatus} /> : null}
+      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
-        name="uniContractId"
+        name="contractId"
         controller="uni-contracts"
         data={{
-          contractRole: [UniContractRole.TOKEN],
+          contractRole: [ContractRole.TOKEN],
           contractType: [TokenType.ERC721],
         }}
       />

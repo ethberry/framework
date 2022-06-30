@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { IUniToken } from "@framework/types";
+import { IToken } from "@framework/types";
 
 interface IErc721TokenSellButtonProps {
-  token: IUniToken;
+  token: IToken;
 }
 
 export const Erc721TokenSellButton: FC<IErc721TokenSellButtonProps> = () => {

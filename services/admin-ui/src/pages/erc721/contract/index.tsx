@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IErc721ContractSearchDto, IUniContract, UniContractStatus } from "@framework/types";
+import { IErc721ContractSearchDto, IContract, ContractStatus } from "@framework/types";
 
 import { Erc721CollectionEditDialog } from "./edit";
 import { Erc721CollectionSearchForm } from "./form";
@@ -42,7 +42,7 @@ export const Erc721Contract: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IUniContract, IErc721ContractSearchDto>({
+  } = useCollection<IContract, IErc721ContractSearchDto>({
     baseUrl: "/erc721-contracts",
     empty: {
       title: "",
@@ -50,7 +50,7 @@ export const Erc721Contract: FC = () => {
     },
     search: {
       query: "",
-      contractStatus: [UniContractStatus.ACTIVE],
+      contractStatus: [ContractStatus.ACTIVE],
       contractRole: [],
     },
     filter: ({ title, description, imageUrl, contractStatus }) => ({
@@ -88,7 +88,7 @@ export const Erc721Contract: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(contract)}
-                  disabled={contract.contractStatus === UniContractStatus.INACTIVE}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>

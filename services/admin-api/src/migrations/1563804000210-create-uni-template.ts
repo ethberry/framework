@@ -1,17 +1,17 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { ns } from "@framework/constants";
 
-export class CreateUniTemplate1563804000210 implements MigrationInterface {
+export class CreateTemplate1563804000210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.uni_template_status_enum AS ENUM (
+      CREATE TYPE ${ns}.template_status_enum AS ENUM (
         'ACTIVE',
         'INACTIVE'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.uni_template`,
+      name: `${ns}.template`,
       columns: [
         {
           name: "id",
@@ -55,12 +55,12 @@ export class CreateUniTemplate1563804000210 implements MigrationInterface {
           default: 0,
         },
         {
-          name: "uni_contract_id",
+          name: "contract_id",
           type: "int",
         },
         {
           name: "template_status",
-          type: `${ns}.uni_template_status_enum`,
+          type: `${ns}.template_status_enum`,
           default: "'ACTIVE'",
         },
         {
@@ -74,9 +74,9 @@ export class CreateUniTemplate1563804000210 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["uni_contract_id"],
+          columnNames: ["contract_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.uni_contract`,
+          referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
         },
         {

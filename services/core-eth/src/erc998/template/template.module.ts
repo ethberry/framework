@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc998TemplateService } from "./template.service";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UniTemplateEntity])],
+  imports: [TypeOrmModule.forFeature([TemplateEntity])],
   providers: [Erc998TemplateService],
   exports: [Erc998TemplateService],
 })

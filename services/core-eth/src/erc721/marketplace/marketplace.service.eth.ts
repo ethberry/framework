@@ -44,7 +44,7 @@ export class Erc721MarketplaceServiceEth {
         rarity: TokenRarity.COMMON,
       }),
       owner: from.toLowerCase(),
-      uniTemplate: erc721TemplateEntity,
+      template: erc721TemplateEntity,
     });
 
     await this.updateHistory(event, erc721TokenEntity.id, context);
@@ -55,7 +55,7 @@ export class Erc721MarketplaceServiceEth {
   //     args: { from, tokenId, templateId },
   //   } = event;
   //
-  //   const erc721DropboxEntity = await this.erc721DropboxService.findOne({ uniTemplateIds: ~~templateId });
+  //   const erc721DropboxEntity = await this.erc721DropboxService.findOne({ templateIds: ~~templateId });
   //
   //   if (!erc721DropboxEntity) {
   //     throw new NotFoundException("templateNotFound");
@@ -71,7 +71,7 @@ export class Erc721MarketplaceServiceEth {
   //   await this.updateHistory(event, erc721TokenEntity.id, context);
   // }
 
-  private async updateHistory(event: ILogEvent<TErc721MarketplaceEventData>, uniTokenId: number, context: Log) {
+  private async updateHistory(event: ILogEvent<TErc721MarketplaceEventData>, tokenId: number, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc721MarketplaceServiceEth.name);
 
     const { args, name } = event;
@@ -82,7 +82,7 @@ export class Erc721MarketplaceServiceEth {
       transactionHash: transactionHash.toLowerCase(),
       eventType: name as Erc721MarketplaceEventType,
       eventData: args,
-      uniTokenId,
+      tokenId,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

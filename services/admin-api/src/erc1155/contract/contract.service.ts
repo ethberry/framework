@@ -6,20 +6,20 @@ import {
   IErc1155ContractAutocompleteDto,
   IErc1155ContractSearchDto,
   TokenType,
-  UniContractStatus,
+  ContractStatus,
 } from "@framework/types";
 
-import { IUniContractUpdateDto } from "./interfaces";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
+import { IContractUpdateDto } from "./interfaces";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 
 @Injectable()
 export class Erc1155ContractService {
   constructor(
-    @InjectRepository(UniContractEntity)
-    private readonly erc1155CollectionEntityRepository: Repository<UniContractEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly erc1155CollectionEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public search(dto: IErc1155ContractSearchDto): Promise<[Array<UniContractEntity>, number]> {
+  public search(dto: IErc1155ContractSearchDto): Promise<[Array<ContractEntity>, number]> {
     const { query, contractStatus, skip, take } = dto;
 
     const queryBuilder = this.erc1155CollectionEntityRepository.createQueryBuilder("contract");
@@ -60,7 +60,7 @@ export class Erc1155ContractService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IErc1155ContractAutocompleteDto): Promise<Array<UniContractEntity>> {
+  public async autocomplete(dto: IErc1155ContractAutocompleteDto): Promise<Array<ContractEntity>> {
     const { contractStatus = [] } = dto;
 
     const where = {};
@@ -81,16 +81,16 @@ export class Erc1155ContractService {
   }
 
   public findOne(
-    where: FindOptionsWhere<UniContractEntity>,
-    options?: FindOneOptions<UniContractEntity>,
-  ): Promise<UniContractEntity | null> {
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<ContractEntity | null> {
     return this.erc1155CollectionEntityRepository.findOne({ where, ...options });
   }
 
   public async update(
-    where: FindOptionsWhere<UniContractEntity>,
-    dto: Partial<IUniContractUpdateDto>,
-  ): Promise<UniContractEntity> {
+    where: FindOptionsWhere<ContractEntity>,
+    dto: Partial<IContractUpdateDto>,
+  ): Promise<ContractEntity> {
     const collectionEntity = await this.erc1155CollectionEntityRepository.findOne({ where });
 
     if (!collectionEntity) {
@@ -102,9 +102,9 @@ export class Erc1155ContractService {
     return collectionEntity.save();
   }
 
-  public async delete(where: FindOptionsWhere<UniContractEntity>): Promise<UniContractEntity> {
+  public async delete(where: FindOptionsWhere<ContractEntity>): Promise<ContractEntity> {
     return this.update(where, {
-      contractStatus: UniContractStatus.INACTIVE,
+      contractStatus: ContractStatus.INACTIVE,
     });
   }
 }

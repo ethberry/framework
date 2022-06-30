@@ -2,7 +2,7 @@ import { Observable } from "rxjs";
 import { finalize } from "rxjs/operators";
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { InjectRedis } from "@liaoliaots/nestjs-redis";
-import { Redis } from "ioredis";
+import Redis from "ioredis";
 
 import { RedisProviderType } from "@framework/types";
 

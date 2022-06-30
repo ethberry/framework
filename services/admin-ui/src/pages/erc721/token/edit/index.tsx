@@ -5,28 +5,28 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IUniToken, UniTokenStatus } from "@framework/types";
+import { IToken, TokenStatus } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
 export interface IErc721TokenEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IUniToken>, form?: any) => Promise<void>;
-  initialValues: IUniToken;
+  onConfirm: (values: Partial<IToken>, form?: any) => Promise<void>;
+  initialValues: IToken;
 }
 
 export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, attributes, tokenStatus, tokenId, uniTemplate } = initialValues;
+  const { id, attributes, tokenStatus, tokenId, template } = initialValues;
 
   const fixedValues = {
     id,
     attributes,
     tokenStatus,
     tokenId,
-    uniContractId: uniTemplate!.uniContractId,
+    contractId: template!.contractId,
   };
 
   return (
@@ -37,13 +37,13 @@ export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
       data-testid="Erc721TokenEditDialog"
       {...rest}
     >
-      <Typography variant="h5">{uniTemplate?.title}</Typography>
-      <RichTextDisplay data={uniTemplate?.description} />
+      <Typography variant="h5">{template?.title}</Typography>
+      <RichTextDisplay data={template?.description} />
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
-      <SelectInput name="tokenStatus" options={UniTokenStatus} readOnly />
-      <EntityInput name="uniContractId" controller="erc721-contracts" readOnly />
-      <img src={uniTemplate?.imageUrl} width={200} height={200} alt={uniTemplate?.title} />
+      <SelectInput name="tokenStatus" options={TokenStatus} readOnly />
+      <EntityInput name="contractId" controller="erc721-contracts" readOnly />
+      <img src={template?.imageUrl} width={200} height={200} alt={template?.title} />
     </FormDialog>
   );
 };

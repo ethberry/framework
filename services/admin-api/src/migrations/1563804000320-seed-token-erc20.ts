@@ -2,19 +2,19 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedUniTokenErc20At1563804000320 implements MigrationInterface {
+export class SeedTokenErc20At1563804000320 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.uni_token (
+      INSERT INTO ${ns}.token (
         id,
         attributes,
         royalty,
         token_id,
         token_status,
-        uni_template_id,
+        template_id,
         created_at,
         updated_at
       ) VALUES (
@@ -74,10 +74,10 @@ export class SeedUniTokenErc20At1563804000320 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.uni_token_id_seq', 10006, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 10006, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.uni_token RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.token RESTART IDENTITY CASCADE;`);
   }
 }

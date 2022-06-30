@@ -4,7 +4,7 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
-export class SeedUniContractErc998At1563804000140 implements MigrationInterface {
+export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc998CollectionDropboxAddress = process.env.ERC998_DROPBOX_ADDR || wallet;
@@ -15,7 +15,7 @@ export class SeedUniContractErc998At1563804000140 implements MigrationInterface 
 
     // 1 - 998.AIR, 2 - 998.DB, 3 - HERO
     await queryRunner.query(`
-      INSERT INTO ${ns}.uni_contract (
+      INSERT INTO ${ns}.contract (
         id,
         address,
         chain_id,
@@ -86,10 +86,10 @@ export class SeedUniContractErc998At1563804000140 implements MigrationInterface 
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.uni_contract_id_seq', 23, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 23, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.uni_contract RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.contract RESTART IDENTITY CASCADE;`);
   }
 }

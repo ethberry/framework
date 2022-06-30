@@ -10,7 +10,7 @@ import { Erc1155BalanceModule } from "../balance/balance.module";
 import { Erc1155TokenLogModule } from "./token-log/token-log.module";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
-import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
+import { TemplateEntity } from "../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template/uni-t
     Erc1155CollectionModule,
     Erc1155BalanceModule,
     AccessControlModule,
-    TypeOrmModule.forFeature([UniTemplateEntity]),
+    TypeOrmModule.forFeature([TemplateEntity]),
   ],
   providers: [Logger, Erc1155TokenService, Erc1155TokenServiceEth],
   controllers: [Erc1155TokenControllerEth],
