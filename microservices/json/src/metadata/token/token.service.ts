@@ -6,7 +6,7 @@ import { BigNumber } from "ethers";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { IOpenSeaMetadata } from "../../common/interfaces";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Injectable()
 export class MetadataTokenService {

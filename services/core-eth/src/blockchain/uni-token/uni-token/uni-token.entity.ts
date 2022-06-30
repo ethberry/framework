@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { IUniToken, UniTokenStatus } from "@framework/types";
 import { ns } from "@framework/constants";
-import { BigNumberColumn, IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { UniTemplateEntity } from "../uni-template/uni-template.entity";
 
@@ -17,7 +17,7 @@ export class UniTokenEntity extends IdDateBaseEntity implements IUniToken {
   })
   public tokenStatus: UniTokenStatus;
 
-  @BigNumberColumn()
+  @Column({ type: "numeric" })
   public tokenId: string;
 
   @Column({ type: "varchar" })

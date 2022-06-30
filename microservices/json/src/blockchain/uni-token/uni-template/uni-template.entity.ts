@@ -1,19 +1,19 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IUniTemplate, UniTemplateStatus } from "@framework/types";
 
-import { UniContractEntity } from "./uni-contract.entity";
-import { UniTokenEntity } from "./uni-token.entity";
-import { AssetEntity } from "../asset/asset.entity";
+import { UniContractEntity } from "../uni-contract/uni-contract.entity";
+import { UniTokenEntity } from "../uni-token/uni-token.entity";
+import { AssetEntity } from "../../asset/asset.entity";
 
 @Entity({ schema: ns, name: "uni_template" })
 export class UniTemplateEntity extends SearchableEntity implements IUniTemplate {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @Column({ type: "json" })
+  @JsonColumn()
   public attributes: any;
 
   @JoinColumn()
