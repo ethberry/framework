@@ -30,7 +30,7 @@ export * from "./blockchain/asset-component";
 
 export * from "./mechanics/airdrop";
 export * from "./mechanics/dropbox";
-export * from "./mechanics/exchange";
+export * from "./mechanics/exchange-rule";
 export * from "./mechanics/exchange-history";
 export * from "./mechanics/staking-rule";
 export * from "./mechanics/staking";

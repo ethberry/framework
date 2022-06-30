@@ -8,7 +8,7 @@ export enum StakingStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IStaking extends ISearchable {
+export interface IStakingRule extends ISearchable {
   deposit: IAsset;
   reward: IAsset;
   duration: number;

@@ -51,7 +51,7 @@ export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterf
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.exchange (
+      INSERT INTO ${ns}.exchange_rules (
         item_id,
         ingredients_id,
         exchange_status,

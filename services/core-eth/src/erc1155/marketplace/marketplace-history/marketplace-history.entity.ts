@@ -9,7 +9,7 @@ import {
 } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { UniTemplateEntity } from "../../../blockchain/uni-token/uni-template.entity";
+import { UniTemplateEntity } from "../../../blockchain/uni-token/uni-template/uni-template.entity";
 
 @Entity({ schema: ns, name: "erc1155_marketplace_history" })
 export class Erc1155MarketplaceHistoryEntity extends IdDateBaseEntity implements IErc1155MarketplaceHistory {

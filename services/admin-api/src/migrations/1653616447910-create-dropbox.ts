@@ -31,7 +31,7 @@ export class CreateDropbox1653616447910 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "price_id",
+          name: "item_id",
           type: "int",
         },
         {
@@ -70,7 +70,7 @@ export class CreateDropbox1653616447910 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["price_id"],
+          columnNames: ["item_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",

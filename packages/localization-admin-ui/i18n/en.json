@@ -378,8 +378,8 @@
       },
       "mechanics": {
         "airdrops": "Airdrops",
-        "dropbox": "Dropbox",
-        "exchange": "Exchange",
+        "dropboxes": "Dropboxes",
+        "exchange-rules": "Exchange Rules",
         "stakes": "Stakes",
         "staking-rules": "Staking Rules",
         "title": "Mechanics"
@@ -445,7 +445,7 @@
         "title": "Title"
       }
     },
-    "exchanges": {
+    "exchange-rules": {
       "activate": "Activate rule",
       "deactivate": "Deactivate rule",
       "title": "Exchange rules",

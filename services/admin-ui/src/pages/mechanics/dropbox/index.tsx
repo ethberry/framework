@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { DropboxStatus, IDropbox, IDropboxSearchDto } from "@framework/types";
 
-import { Erc721DropboxEditDialog } from "./edit";
+import { DropboxEditDialog } from "./edit";
 import { Erc721DropboxSearchForm } from "./form";
 import { emptyPrice } from "../../../components/inputs/empty-price";
 
@@ -62,16 +62,16 @@ export const Dropbox: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721-dropboxes"]} />
+      <Breadcrumbs path={["dashboard", "dropboxes"]} />
 
-      <PageHeader message="pages.erc721-dropboxes.title">
+      <PageHeader message="pages.dropboxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="Erc721TemplateCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="DropboxCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
@@ -111,7 +111,7 @@ export const Dropbox: FC = () => {
         initialValues={selected}
       />
 
-      <Erc721DropboxEditDialog
+      <DropboxEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

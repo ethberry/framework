@@ -5,13 +5,13 @@ import { Check, Close, CloudUpload } from "@mui/icons-material";
 import { BigNumber, Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { IStaking, StakingStatus } from "@framework/types";
+import { IStakingRule, StakingStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/UniStaking.sol/UniStaking.json";
 
 export interface IStakingUploadButtonProps {
-  rule: IStaking;
+  rule: IStakingRule;
 }
 
 export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
@@ -21,7 +21,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
 
   const { library } = useWeb3React();
 
-  const metaLoadRule = useMetamask((rule: IStaking) => {
+  const metaLoadRule = useMetamask((rule: IStakingRule) => {
     if (rule.stakingStatus !== StakingStatus.NEW) {
       return Promise.reject(new Error(""));
     }
@@ -40,7 +40,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
-  const handleLoadRule = (rule: IStaking): (() => Promise<void>) => {
+  const handleLoadRule = (rule: IStakingRule): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaLoadRule(rule).then(() => {
         // TODO reload
@@ -48,7 +48,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     };
   };
 
-  const metaToggleRule = useMetamask((rule: IStaking) => {
+  const metaToggleRule = useMetamask((rule: IStakingRule) => {
     let ruleStatus: boolean;
     if (rule.stakingStatus === StakingStatus.NEW) {
       // it should never happen
@@ -61,7 +61,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     return contract.updateRule(rule.ruleId, ruleStatus) as Promise<void>;
   });
 
-  const handleToggleRule = (rule: IStaking): (() => Promise<void>) => {
+  const handleToggleRule = (rule: IStakingRule): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaToggleRule(rule).then(() => {
         // TODO reload

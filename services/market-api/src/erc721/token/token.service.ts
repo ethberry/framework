@@ -6,7 +6,7 @@ import { IErc721AssetSearchDto, UniTokenStatus } from "@framework/types";
 
 import { UserEntity } from "../../user/user.entity";
 import { IErc721TokenAutocompleteDto } from "./interface";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc721TokenService {

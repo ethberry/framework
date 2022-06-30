@@ -4,7 +4,7 @@ import { Public } from "@gemunion/nest-js-utils";
 
 import { Erc20ContractService } from "./contract.service";
 import { Erc20ContractAutocompleteDto } from "./dto/autocomplete";
-import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract/uni-contract.entity";
 
 @Public()
 @Controller("/erc20-tokens")

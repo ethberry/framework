@@ -11,11 +11,11 @@ import { Erc998TokenHistoryEntity } from "./erc998/token/token-history/token-his
 import { Erc1155TokenHistoryEntity } from "./erc1155/token-history/token-history.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakesEntity } from "./mechanics/staking/stakes/stakes.entity";
-import { UniContractEntity } from "./blockchain/uni-token/uni-contract.entity";
-import { UniTemplateEntity } from "./blockchain/uni-token/uni-template.entity";
-import { UniTokenEntity } from "./blockchain/uni-token/uni-token.entity";
-import { UniBalanceEntity } from "./blockchain/uni-token/uni-balance.entity";
-import { ExchangeEntity } from "./mechanics/exchange/exchange.entity";
+import { UniContractEntity } from "./blockchain/uni-token/uni-contract/uni-contract.entity";
+import { UniTemplateEntity } from "./blockchain/uni-token/uni-template/uni-template.entity";
+import { UniTokenEntity } from "./blockchain/uni-token/uni-token/uni-token.entity";
+import { UniBalanceEntity } from "./blockchain/uni-token/uni-balance/uni-balance.entity";
+import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
 import { AssetEntity } from "./blockchain/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
 
@@ -30,7 +30,7 @@ const config: PostgresConnectionOptions = {
     Erc1155TokenHistoryEntity,
     UserEntity,
     StakesEntity,
-    ExchangeEntity,
+    ExchangeRulesEntity,
     StakingRulesEntity,
     PageEntity,
     DropboxEntity,

@@ -12,7 +12,7 @@ import { Erc998TokenService } from "./token.service";
 import { Erc998TokenLogModule } from "./token-log/token-log.module";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Module({
   imports: [

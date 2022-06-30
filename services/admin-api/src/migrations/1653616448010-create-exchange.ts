@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateExchange1653616448010 implements MigrationInterface {
+export class CreateExchangeRules1653616448010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.exchange_status_enum AS ENUM (
@@ -13,7 +13,7 @@ export class CreateExchange1653616448010 implements MigrationInterface {
     `);
 
     const table = new Table({
-      name: `${ns}.exchange`,
+      name: `${ns}.exchange_rules`,
       columns: [
         {
           name: "id",

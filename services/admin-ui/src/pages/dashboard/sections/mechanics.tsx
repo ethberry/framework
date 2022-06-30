@@ -23,20 +23,20 @@ export const Mechanics: FC = () => {
             <FormattedMessage id="pages.dashboard.mechanics.airdrops" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/dropbox">
+        <ListItem button component={RouterLink} to="/dropboxes">
           <ListItemIcon>
             <Inventory />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.dropbox" />
+            <FormattedMessage id="pages.dashboard.mechanics.dropboxes" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/exchange">
+        <ListItem button component={RouterLink} to="/exchange-rules">
           <ListItemIcon>
             <Construction />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.exchange" />
+            <FormattedMessage id="pages.dashboard.mechanics.exchange-rules" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking-rules">

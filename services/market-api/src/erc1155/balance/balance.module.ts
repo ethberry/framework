@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc1155BalanceService } from "./balance.service";
 import { Erc1155BalanceController } from "./balance.controller";
-import { UniBalanceEntity } from "../../blockchain/uni-token/uni-balance.entity";
+import { UniBalanceEntity } from "../../blockchain/uni-token/uni-balance/uni-balance.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([UniBalanceEntity])],

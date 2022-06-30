@@ -16,7 +16,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ExchangeStatus, IExchange, IExchangeSearchDto } from "@framework/types";
+import { ExchangeStatus, IExchangeRule, IExchangeSearchDto } from "@framework/types";
 
 import { ExchangeEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
@@ -43,9 +43,10 @@ export const Exchange: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IExchange, IExchangeSearchDto>({
-    baseUrl: "/erc1155-recipes",
+  } = useCollection<IExchangeRule, IExchangeSearchDto>({
+    baseUrl: "/exchange-rules",
     empty: {
+      item: emptyPrice,
       ingredients: emptyPrice,
     },
     search: {
@@ -60,9 +61,9 @@ export const Exchange: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc1155-recipes"]} />
+      <Breadcrumbs path={["dashboard", "exchange-rules"]} />
 
-      <PageHeader message="pages.erc1155-recipes.title">
+      <PageHeader message="pages.exchange-rules.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -82,7 +83,7 @@ export const Exchange: FC = () => {
             <ListItem key={i}>
               <ListItemText>{recipe.item.components[0].uniToken!.uniTemplate!.title}</ListItemText>
               <ListItemSecondaryAction>
-                <ExchangeUploadButton recipe={recipe} />
+                <ExchangeUploadButton rule={recipe} />
                 <IconButton onClick={handleEdit(recipe)}>
                   <Create />
                 </IconButton>

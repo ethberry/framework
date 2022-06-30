@@ -41,7 +41,7 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         title,
         description,
         image_url,
-        price_id,
+        item_id,
         dropbox_status,
         uni_contract_id,
         uni_template_id,
@@ -49,6 +49,16 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         updated_at
       ) VALUES (
         'Sword Dropbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        50101,
+        'ACTIVE',
+        12,
+        20101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Warrior Dropbox',
         '${simpleFormatting}',
         '${imageUrl}',
         50101,

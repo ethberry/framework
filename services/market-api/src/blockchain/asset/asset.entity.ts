@@ -1,15 +1,14 @@
-import { Column, Entity, JoinColumn, OneToMany } from "typeorm";
+import { Column, Entity, OneToMany } from "typeorm";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@framework/constants";
 import { AssetType, IAsset } from "@framework/types";
 
 import { AssetComponentEntity } from "./asset-component.entity";
 
-@Entity({ schema: ns, name: "uni_token" })
-export class AssetEntity extends IdDateBaseEntity implements IAsset {
-  @JoinColumn()
-  @OneToMany(_type => AssetComponentEntity, component => component.assetId)
+@Entity({ schema: ns, name: "asset" })
+export class AssetEntity extends IdBaseEntity implements IAsset {
+  @OneToMany(_type => AssetComponentEntity, component => component.asset)
   public components: Array<AssetComponentEntity>;
 
   @Column({

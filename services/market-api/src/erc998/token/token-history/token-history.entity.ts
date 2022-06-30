@@ -9,7 +9,7 @@ import {
 } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { UniTokenEntity } from "../../../blockchain/uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Entity({ schema: ns, name: "erc998_token_history" })
 export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IUniTokenHistory {

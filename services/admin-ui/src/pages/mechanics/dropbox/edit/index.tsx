@@ -17,11 +17,10 @@ export interface IDropboxEditDialogProps {
   initialValues: IDropbox;
 }
 
-export const Erc721DropboxEditDialog: FC<IDropboxEditDialogProps> = props => {
+export const DropboxEditDialog: FC<IDropboxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, price, imageUrl, dropboxStatus, uniTemplateId, uniContractId } =
-    initialValues;
+  const { id, title, description, price, imageUrl, dropboxStatus, uniTemplateId, uniContractId } = initialValues;
 
   const fixedValues = {
     id,

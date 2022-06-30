@@ -5,7 +5,7 @@ import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { Erc1155BalanceService } from "./balance.service";
 import { UserEntity } from "../../user/user.entity";
-import { UniBalanceEntity } from "../../blockchain/uni-token/uni-balance.entity";
+import { UniBalanceEntity } from "../../blockchain/uni-token/uni-balance/uni-balance.entity";
 
 @ApiBearerAuth()
 @Controller("/erc1155-balances")

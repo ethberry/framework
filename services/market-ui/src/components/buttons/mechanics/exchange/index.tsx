@@ -6,13 +6,13 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IExchange } from "@framework/types";
+import { IExchangeRule } from "@framework/types";
 
 import ERC1155ERC998CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
 import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 interface IExchangeButtonProps {
-  rule: IExchange;
+  rule: IExchangeRule;
 }
 
 export const ExchangeButton: FC<IExchangeButtonProps> = props => {

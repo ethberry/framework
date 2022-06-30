@@ -63,7 +63,7 @@ export class CreateStakesTable1654751224255 implements MigrationInterface {
         {
           columnNames: ["staking_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.staking`,
+          referencedTableName: `${ns}.staking_rules`,
         },
       ],
     });

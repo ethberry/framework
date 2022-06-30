@@ -8,14 +8,14 @@ import {
   ListItem,
   ListItemSecondaryAction,
   ListItemText,
-  Pagination
+  Pagination,
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStaking, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingDepositButton } from "../../../../components/buttons";
 import { StakingSearchForm } from "./form";
@@ -33,7 +33,7 @@ export const Stake: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
-  } = useCollection<IStaking, IStakingSearchDto>({
+  } = useCollection<IStakingRule, IStakingSearchDto>({
     baseUrl: "/staking",
     empty: {
       title: "",

@@ -25,7 +25,7 @@ import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 import { StakesEntity } from "./mechanics/staking/stakes/stakes.entity";
-import { ExchangeEntity } from "./mechanics/exchange/exchange.entity";
+import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
 import { PageEntity } from "./page/page.entity";
@@ -51,6 +51,7 @@ import { SeedUniTemplateErc1155At1563804000250 } from "./migrations/156380400025
 import { CreateUniToken1563804000310 } from "./migrations/1563804000310-create-uni-token";
 import { SeedUniTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
 import { SeedUniTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
+import { SeedUniTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
 import { SeedUniTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
 
 import { CreateUniBalanceTable1563804000410 } from "./migrations/1563804000410-create-uni-balance";
@@ -78,7 +79,7 @@ import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-see
 import { CreateDropbox1653616447910 } from "./migrations/1653616447910-create-dropbox";
 import { SeedDropboxErc721At1653616447920 } from "./migrations/1653616447920-seed-dropbox-erc721";
 
-import { CreateExchange1653616448010 } from "./migrations/1653616448010-create-exchange";
+import { CreateExchangeRules1653616448010 } from "./migrations/1653616448010-create-exchange";
 import { SeedExchangeErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-exchange-erc1155-erc1155";
 import { SeedExchangeErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-exchange-erc721-erc1155-recipe";
 import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-exchnage-history";
@@ -93,8 +94,8 @@ import { CreateAccessListTable1653616447330 } from "./migrations/1653616447330-c
 import { CreateAccessListHistoryTable1653616447340 } from "./migrations/1653616447340-create-access-list-history-table";
 import { CreateSettingsTable1563804000010 } from "./migrations/1563804000010-create-settings-table";
 import { SeedSettingsTable1563804000020 } from "./migrations/1563804000020-seed-settings-table";
-import { CreateStakingTable1654751224200 } from "./migrations/1654751224200-create-staking-table";
-import { SeedStakingTable1654751224210 } from "./migrations/1654751224210-seed-staking-table";
+import { CreateStakingRules1654751224200 } from "./migrations/1654751224200-create-staking-rules";
+import { SeedStakingRules1654751224210 } from "./migrations/1654751224210-seed-staking-rules";
 import { CreateStakingHistoryTable1654751224260 } from "./migrations/1654751224260-create-staking-history-table";
 import { CreatePageTable1655626535100 } from "./migrations/1655626535100-create-page-table";
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
@@ -126,7 +127,7 @@ const config: PostgresConnectionOptions = {
     UniBalanceEntity,
     AirdropEntity,
     DropboxEntity,
-    ExchangeEntity,
+    ExchangeRulesEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -170,6 +171,7 @@ const config: PostgresConnectionOptions = {
     CreateUniToken1563804000310,
     SeedUniTokenErc20At1563804000320,
     SeedUniTokenErc721At1563804000330,
+    SeedUniTokenErc998At1563804000340,
     SeedUniTokenErc1155At1563804000350,
 
     CreateUniBalanceTable1563804000410,
@@ -202,13 +204,13 @@ const config: PostgresConnectionOptions = {
     CreateDropbox1653616447910,
     SeedDropboxErc721At1653616447920,
 
-    CreateExchange1653616448010,
+    CreateExchangeRules1653616448010,
     SeedExchangeErc1155Erc1155At1653616448020,
     SeedExchangeErc721Erc1155At1653616448030,
     CreateExchangeHistory1653616448050,
 
-    CreateStakingTable1654751224200,
-    SeedStakingTable1654751224210,
+    CreateStakingRules1654751224200,
+    SeedStakingRules1654751224210,
     CreateStakesTable1654751224255,
     CreateStakingHistoryTable1654751224260,
 

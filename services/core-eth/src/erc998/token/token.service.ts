@@ -4,7 +4,7 @@ import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } f
 
 import { UniTokenStatus } from "@framework/types";
 
-import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token/uni-token.entity";
 
 @Injectable()
 export class Erc998TokenService {

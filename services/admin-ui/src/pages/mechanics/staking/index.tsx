@@ -21,7 +21,7 @@ import {
   AssetType,
   IAsset,
   IAssetComponent,
-  IStaking,
+  IStakingRule,
   IStakingSearchDto,
   StakingStatus,
   TokenType,
@@ -51,7 +51,7 @@ export const Staking: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IStaking, IStakingSearchDto>({
+  } = useCollection<IStakingRule, IStakingSearchDto>({
     baseUrl: "/staking-rules",
     empty: {
       title: "",
@@ -96,9 +96,9 @@ export const Staking: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking"]} />
+      <Breadcrumbs path={["dashboard", "staking-rules"]} />
 
-      <PageHeader message="pages.staking.title">
+      <PageHeader message="pages.staking-rules.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

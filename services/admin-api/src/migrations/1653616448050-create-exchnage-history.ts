@@ -54,7 +54,7 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
         {
           columnNames: ["exchange_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.exchange`,
+          referencedTableName: `${ns}.exchange_rules`,
           onDelete: "CASCADE",
         },
       ],

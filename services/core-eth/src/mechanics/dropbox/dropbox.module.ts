@@ -30,4 +30,4 @@ import { Erc721ContractModule } from "../../erc721/contract/contract.module";
   controllers: [Erc721DropboxControllerEth],
   exports: [Erc721DropboxService, Erc721DropboxServiceEth],
 })
-export class Erc721DropboxModule {}
+export class DropboxModule {}

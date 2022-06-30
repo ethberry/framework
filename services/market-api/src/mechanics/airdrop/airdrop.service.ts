@@ -7,7 +7,7 @@ import { IAirdropSearchDto } from "@framework/types";
 import { AirdropEntity } from "./airdrop.entity";
 
 @Injectable()
-export class Erc998AirdropService {
+export class AirdropService {
   constructor(
     @InjectRepository(AirdropEntity)
     private readonly airdropEntityRepository: Repository<AirdropEntity>,

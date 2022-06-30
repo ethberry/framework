@@ -1,6 +1,6 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { IExchange } from "./exchange";
+import { IExchangeRule } from "./exchange-rule";
 
 export enum ExchangeEventType {
   RecipeCreated = "RecipeCreated",
@@ -34,5 +34,5 @@ export interface IExchangeHistory extends IIdDateBase {
   eventType: ExchangeEventType;
   eventData: TExchangeEventData;
   exchangeId: number | null;
-  exchange?: IExchange;
+  exchange?: IExchangeRule;
 }

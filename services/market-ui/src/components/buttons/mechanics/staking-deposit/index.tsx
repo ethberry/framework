@@ -5,13 +5,13 @@ import { Casino } from "@mui/icons-material";
 import { BigNumber, Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { IStaking, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRule, StakingStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/UniStaking.sol/UniStaking.json";
 
 export interface IStakingDepositButtonProps {
-  rule: IStaking;
+  rule: IStakingRule;
 }
 
 export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
@@ -21,7 +21,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
 
   const { library } = useWeb3React();
 
-  const metaDeposit = useMetamask((rule: IStaking) => {
+  const metaDeposit = useMetamask((rule: IStakingRule) => {
     if (rule.stakingStatus !== StakingStatus.ACTIVE) {
       return Promise.reject(new Error(""));
     }
@@ -36,7 +36,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
     return contract.deposit(rule.ruleId, rule.deposit.components[0].uniTokenId || 0, override) as Promise<void>;
   });
 
-  const handleDeposit = (rule: IStaking): (() => Promise<void>) => {
+  const handleDeposit = (rule: IStakingRule): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaDeposit(rule).then(() => {
         // TODO reload page

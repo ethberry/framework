@@ -26,11 +26,11 @@ export const mechanics: Array<RouteObject> = [
     ],
   },
   {
-    path: "/exchange",
+    path: "/exchange-rules",
     element: <Protected />,
     children: [
       { index: true, element: <Exchange /> },
-      { path: "/exchange/:id", element: <Exchange /> },
+      { path: "/exchange-rules/:id", element: <Exchange /> },
     ],
   },
   {

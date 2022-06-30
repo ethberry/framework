@@ -6,6 +6,11 @@ export const emptyPrice = {
       tokenType: TokenType.NATIVE,
       uniContractId: 0,
       uniTokenId: 0,
+      uniToken: {
+        uniTemplate: {
+          title: "",
+        },
+      },
       amount: "0",
     } as IAssetComponent,
   ],
