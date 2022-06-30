@@ -42,8 +42,8 @@ export const PriceInput: FC<IStakingEditDialogProps> = props => {
     <Box mt={2}>
       <Typography>Price</Typography>
 
-      {value?.map((_o: any, i: number) => (
-        <Box mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
+      {value?.map((o: any, i: number) => (
+        <Box key={`${o.uniContractId}_${o.uniTokenId}_${i}`} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
           <Box flex={1}>
             <Paper sx={{ p: 2 }}>
               <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} />
