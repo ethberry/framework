@@ -43,7 +43,7 @@ export const Erc721Contract: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IUniContract, IErc721ContractSearchDto>({
-    baseUrl: "/erc721-collections",
+    baseUrl: "/erc721-contracts",
     empty: {
       title: "",
       description: emptyStateString,

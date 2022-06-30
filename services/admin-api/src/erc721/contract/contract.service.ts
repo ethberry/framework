@@ -2,13 +2,18 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { UniContractStatus, IErc721ContractAutocompleteDto, IErc721ContractSearchDto } from "@framework/types";
+import {
+  UniContractStatus,
+  IErc721ContractAutocompleteDto,
+  IErc721ContractSearchDto,
+  TokenType,
+} from "@framework/types";
 
 import { IErc721CollectionUpdateDto } from "./interfaces";
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Injectable()
-export class Erc721CollectionService {
+export class Erc721ContractService {
   constructor(
     @InjectRepository(UniContractEntity)
     private readonly uniContractEntityRepository: Repository<UniContractEntity>,
@@ -20,6 +25,8 @@ export class Erc721CollectionService {
     const queryBuilder = this.uniContractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType: TokenType.ERC721 });
 
     if (query) {
       queryBuilder.leftJoin(

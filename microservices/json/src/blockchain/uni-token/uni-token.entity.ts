@@ -24,10 +24,10 @@ export class UniTokenEntity extends IdDateBaseEntity implements IUniToken {
   public owner: string;
 
   @Column({ type: "int" })
-  public uniTemplateId: number;
+  public royalty: number;
 
   @Column({ type: "int" })
-  public royalty: number;
+  public uniTemplateId: number;
 
   @JoinColumn()
   @ManyToOne(_type => UniTemplateEntity, template => template.uniTokens)

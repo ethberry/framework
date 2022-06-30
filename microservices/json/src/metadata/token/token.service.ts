@@ -6,22 +6,23 @@ import { BigNumber } from "ethers";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { IOpenSeaMetadata } from "../../common/interfaces";
-import { UniTemplateEntity } from "../../uni-token/uni-template.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Injectable()
 export class MetadataTokenService {
   constructor(
-    @InjectRepository(UniTemplateEntity)
-    private readonly uniTokenEntityRepository: Repository<UniTemplateEntity>,
+    @InjectRepository(UniTokenEntity)
+    private readonly uniTokenEntityRepository: Repository<UniTokenEntity>,
     private readonly configService: ConfigService,
   ) {}
 
-  public getToken(address: string, tokenId: string): Promise<UniTemplateEntity | null> {
+  public getToken(address: string, tokenId: string): Promise<UniTokenEntity | null> {
     const queryBuilder = this.uniTokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("token.erc1155Collection", "contract");
+    queryBuilder.leftJoinAndSelect("token.uniTemplate", "template");
+    queryBuilder.leftJoinAndSelect("template.uniContract", "contract");
 
     queryBuilder.andWhere("contract.address = :address", {
       address,
@@ -34,21 +35,21 @@ export class MetadataTokenService {
   }
 
   public async getTokenMetadata(address: string, tokenId: BigNumber): Promise<IOpenSeaMetadata> {
-    const uniTemplateEntity = await this.getToken(address, tokenId.toString());
+    const uniTokenEntity = await this.getToken(address, tokenId.toString());
 
-    if (!uniTemplateEntity) {
+    if (!uniTokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
-    const { attributes } = uniTemplateEntity;
+    const { attributes } = uniTokenEntity;
 
     return {
-      description: getPainText(uniTemplateEntity.description),
-      external_url: `${baseUrl}/metadata/${uniTemplateEntity.uniContract.address}/${uniTemplateEntity.id}`,
-      image: uniTemplateEntity.imageUrl,
-      name: uniTemplateEntity.title,
+      description: getPainText(uniTokenEntity.uniTemplate.description),
+      external_url: `${baseUrl}/metadata/${uniTokenEntity.uniTemplate.uniContract.address}/${uniTokenEntity.id}`,
+      image: uniTokenEntity.uniTemplate.imageUrl,
+      name: uniTokenEntity.uniTemplate.title,
       attributes,
     };
   }

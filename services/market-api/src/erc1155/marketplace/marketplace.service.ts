@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { BigNumber, constants, utils, Wallet } from "ethers";
+
 import { prepareEip712 } from "@gemunion/butils";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
@@ -25,26 +26,27 @@ export class Erc1155MarketplaceService {
     const tokenIds: Array<number> = [];
     await Promise.all(
       dto.erc1155TokenIds.map(async (erc1155TokenId, index) => {
-        const tokenEntity = await this.erc1155TemplateService.findOne(
+        const templateEntity = await this.erc1155TemplateService.findOne(
           { id: erc1155TokenId },
           { relations: { uniContract: true } },
         );
 
-        if (!tokenEntity) {
+        if (!templateEntity) {
           throw new NotFoundException("tokenNotFound");
         }
 
-        if (tokenEntity.amount > 0 && tokenEntity.amount <= tokenEntity.instanceCount) {
+        const cap = BigNumber.from(templateEntity.cap);
+        if (cap.gt(0) && cap.lte(templateEntity.amount)) {
           throw new NotFoundException("limitExceeded");
         }
 
         const tokenPrice =
-          tokenEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
-            ? BigNumber.from(tokenEntity.price).mul(dto.amounts[index])
+          templateEntity.price.components[0].uniContract.contractTemplate === UniContractTemplate.NATIVE
+            ? BigNumber.from(templateEntity.price).mul(dto.amounts[index])
             : constants.Zero;
         totalTokenPrice = totalTokenPrice.add(tokenPrice);
-        collections.push(tokenEntity.uniContract.address);
-        // tokenIds.push(~~tokenEntity.tokenId);
+        collections.push(templateEntity.uniContract.address);
+        // tokenIds.push(~~templateEntity.tokenId);
       }),
     );
 

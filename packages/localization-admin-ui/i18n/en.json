@@ -48,7 +48,7 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
-    "collectionType": {
+    "contractRole": {
       "AIRDROP": "Airdrop",
       "DROPBOX": "Dropbox",
       "TOKEN": "Token"
@@ -191,6 +191,7 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "contractRole": "Role",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",

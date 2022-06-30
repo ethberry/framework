@@ -2,13 +2,13 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 import { UserEntity } from "./user/user.entity";
-import { UniContractEntity } from "./uni-token/uni-contract.entity";
-import { UniTemplateEntity } from "./uni-token/uni-template.entity";
-import { UniTokenEntity } from "./uni-token/uni-token.entity";
+import { UniContractEntity } from "./blockchain/uni-token/uni-contract.entity";
+import { UniTemplateEntity } from "./blockchain/uni-token/uni-template.entity";
+import { UniTokenEntity } from "./blockchain/uni-token/uni-token.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
-import { AssetEntity } from "./blockchain/asset/asset";
-import { AssetComponentEntity } from "./blockchain/asset/asset-component";
+import { AssetEntity } from "./blockchain/asset/asset.entity";
+import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { utils, Wallet } from "ethers";
+import { utils, Wallet, BigNumber } from "ethers";
 
 import { prepareEip712 } from "@gemunion/butils";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
@@ -31,7 +31,8 @@ export class Erc998MarketplaceService {
       throw new NotFoundException("templateNotFound");
     }
 
-    if (templateEntity.amount > 0 && templateEntity.amount <= templateEntity.instanceCount) {
+    const cap = BigNumber.from(templateEntity.cap);
+    if (cap.gt(0) && cap.lte(templateEntity.amount)) {
       throw new NotFoundException("limitExceeded");
     }
 
@@ -69,7 +70,8 @@ export class Erc998MarketplaceService {
       throw new NotFoundException("templateNotFound");
     }
 
-    if (templateEntity.amount > 0 && templateEntity.amount <= templateEntity.instanceCount) {
+    const cap = BigNumber.from(templateEntity.cap);
+    if (cap.gt(0) && cap.lte(templateEntity.amount)) {
       throw new NotFoundException("limitExceeded");
     }
 

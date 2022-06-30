@@ -3,8 +3,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { ns } from "@framework/constants";
 import { AirdropStatus, IAirdrop } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-
-import { AssetEntity } from "../../asset/asset";
+import { AssetEntity } from "../../blockchain/asset/asset.entity";
 
 @Entity({ schema: ns, name: "airdrop" })
 export class AirdropEntity extends IdDateBaseEntity implements IAirdrop {
@@ -12,11 +11,11 @@ export class AirdropEntity extends IdDateBaseEntity implements IAirdrop {
   public account: string;
 
   @Column({ type: "int" })
-  public assetId: number;
+  public itemId: number;
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public asset: AssetEntity;
+  public item: AssetEntity;
 
   @Column({
     type: "enum",

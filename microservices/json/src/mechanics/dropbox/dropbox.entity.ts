@@ -1,25 +1,22 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { DropboxStatus, IDropbox } from "@framework/types";
-import { AssetEntity } from "../../asset/asset";
-import { UniContractEntity } from "../../uni-token/uni-contract.entity";
+import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-@Entity({ schema: ns, name: "erc721_dropbox" })
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
+import { AssetEntity } from "../../blockchain/asset/asset.entity";
+import { UniTemplateEntity } from "../../blockchain/uni-token/uni-template.entity";
+
+@Entity({ schema: ns, name: "dropbox" })
 export class DropboxEntity extends SearchableEntity implements IDropbox {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @Column({ type: "int" })
-  public priceId: number;
-
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
   public price: AssetEntity;
-
-  @Column({ type: "int" })
-  public itemId: number;
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
@@ -32,9 +29,19 @@ export class DropboxEntity extends SearchableEntity implements IDropbox {
   public dropboxStatus: DropboxStatus;
 
   @Column({ type: "int" })
+  public uniTemplateId: number;
+
+  @JoinColumn()
+  @ManyToOne(_type => UniTemplateEntity)
+  public uniTemplate: UniTemplateEntity;
+
+  @Column({ type: "int" })
   public uniContractId: number;
 
   @JoinColumn()
   @ManyToOne(_type => UniContractEntity)
   public uniContract: UniContractEntity;
+
+  @OneToOne(_type => UniTokenEntity)
+  public token: UniTokenEntity;
 }

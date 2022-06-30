@@ -37,7 +37,7 @@ export const Erc20VestingSearchForm: FC<IVestingSearchFormProps> = props => {
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <SelectInput name="contractTemplate" options={Erc20VestingTemplate} multiple />
           </Grid>
         </Grid>

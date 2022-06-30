@@ -1,14 +1,14 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { Erc721CollectionService } from "./contract.service";
-import { Erc721CollectionController } from "./contract.controller";
+import { Erc721ContractService } from "./contract.service";
+import { Erc721ContractController } from "./contract.controller";
 import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([UniContractEntity])],
-  providers: [Erc721CollectionService],
-  controllers: [Erc721CollectionController],
-  exports: [Erc721CollectionService],
+  providers: [Erc721ContractService],
+  controllers: [Erc721ContractController],
+  exports: [Erc721ContractService],
 })
 export class Erc721ContractModule {}

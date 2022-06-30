@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { getPainText } from "@gemunion/draft-js-utils";
 
 import { IOpenSeaMetadata } from "../../common/interfaces";
-import { UniContractEntity } from "../../uni-token/uni-contract.entity";
+import { UniContractEntity } from "../../blockchain/uni-token/uni-contract.entity";
 
 @Injectable()
 export class MetadataContractService {

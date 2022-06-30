@@ -9,6 +9,8 @@ export const formatMoney = (amount = 0, currency = "$"): string => {
   return `${currency}${amount.toFixed(2)}`;
 };
 
-export const formatPrice = (asset: IAsset): string => {
-  return `${formatEther(asset.components[0].amount, asset.components[0].uniToken!.uniTemplate!.uniContract!.symbol)}}`;
+export const formatPrice = (asset?: IAsset): string => {
+  return asset
+    ? `${formatEther(asset.components[0].amount, asset.components[0].uniToken!.uniTemplate!.uniContract!.symbol)}}`
+    : "";
 };

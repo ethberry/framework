@@ -6,9 +6,9 @@ import { IUniTemplate, UniTemplateStatus } from "@framework/types";
 
 import { UniContractEntity } from "./uni-contract.entity";
 import { UniTokenEntity } from "./uni-token.entity";
-import { AssetEntity } from "../blockchain/asset/asset.entity";
+import { AssetEntity } from "../asset/asset.entity";
 
-@Entity({ schema: ns, name: "erc721_template" })
+@Entity({ schema: ns, name: "uni_template" })
 export class UniTemplateEntity extends SearchableEntity implements IUniTemplate {
   @Column({ type: "varchar" })
   public imageUrl: string;
@@ -24,13 +24,13 @@ export class UniTemplateEntity extends SearchableEntity implements IUniTemplate 
   public priceId: number;
 
   @Column({ type: "int" })
-  public amount: number;
+  public cap: string;
+
+  @Column({ type: "int" })
+  public amount: string;
 
   @Column({ type: "int" })
   public decimals: number;
-
-  @Column({ type: "int" })
-  public instanceCount: number;
 
   @Column({
     type: "enum",

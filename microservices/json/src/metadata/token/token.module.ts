@@ -4,7 +4,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { MetadataTokenService } from "./token.service";
 import { MetadataTokenController } from "./token.controller";
-import { UniTokenEntity } from "../../uni-token/uni-token.entity";
+import { UniTokenEntity } from "../../blockchain/uni-token/uni-token.entity";
 
 @Module({
   imports: [ConfigModule, TypeOrmModule.forFeature([UniTokenEntity])],
@@ -12,4 +12,4 @@ import { UniTokenEntity } from "../../uni-token/uni-token.entity";
   controllers: [MetadataTokenController],
   exports: [MetadataTokenService],
 })
-export class Erc1155TokenModule {}
+export class MetadataTokenModule {}

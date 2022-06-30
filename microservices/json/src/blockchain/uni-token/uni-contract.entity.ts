@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { ContractBaseEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IUniContract, UniContractStatus, UniContractTemplate, UniContractRole } from "@framework/types";
+import { IUniContract, UniContractStatus, UniContractTemplate, UniContractRole, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { UniTemplateEntity } from "./uni-template.entity";
 
@@ -31,9 +31,15 @@ export class UniContractEntity extends Mixin(ContractBaseEntity, SearchableEntit
 
   @Column({
     type: "enum",
+    enum: TokenType,
+  })
+  public contractType: TokenType;
+
+  @Column({
+    type: "enum",
     enum: UniContractRole,
   })
-  public contractType: UniContractRole;
+  public contractRole: UniContractRole;
 
   @Column({
     type: "enum",

@@ -57,7 +57,7 @@ export const Erc721CollectionEditDialog: FC<IErc721CollectionEditDialogProps> = 
         symbol={symbol}
         address={address}
         baseTokenURI={baseTokenURI}
-        royalty={royalty}
+        royalty={`%${royalty / 100}`}
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />

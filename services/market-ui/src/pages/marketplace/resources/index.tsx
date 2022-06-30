@@ -44,7 +44,7 @@ export const Resources: FC<ITabPanelProps> = props => {
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <TokenItem token={token} />
+              <TokenItem template={token} />
             </Grid>
           ))}
         </Grid>

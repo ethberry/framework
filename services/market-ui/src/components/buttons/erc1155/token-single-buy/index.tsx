@@ -38,7 +38,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
           library.getSigner(),
         );
         const nonce = utils.arrayify(json.nonce);
-        const tokenPrice = utils.parseUnits(template.price.components[0].amount, "wei");
+        const tokenPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");
 
         return contract.buyResources(
           nonce,
@@ -49,7 +49,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
           json.signature,
           {
             value:
-              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.NATIVE
+              template.price?.components[0].uniContract!.contractTemplate === UniContractTemplate.NATIVE
                 ? tokenPrice
                 : 0,
           },

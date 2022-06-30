@@ -34,7 +34,7 @@ export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = pr
           library.getSigner(),
         );
         const nonce = utils.arrayify(sign.nonce);
-        const commonItemPrice = utils.parseUnits(template.price.components[0].amount, "wei");
+        const commonItemPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");
         return contract.buyCommon(
           nonce,
           template.uniContract?.address,
@@ -43,7 +43,7 @@ export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = pr
           sign.signature,
           {
             value:
-              template?.price.components[0].uniContract!.contractTemplate === UniContractTemplate.NATIVE
+              template.price?.components[0].uniContract!.contractTemplate === UniContractTemplate.NATIVE
                 ? commonItemPrice
                 : 0,
           },
