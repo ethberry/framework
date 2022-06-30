@@ -32,7 +32,7 @@ export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {
       {...rest}
     >
       <PriceInput prefix="item" />
-      <PriceInput prefix="ingredients" />
+      <PriceInput prefix="ingredients" multiple />
     </FormDialog>
   );
 };
