@@ -36,7 +36,7 @@ export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
         </Grid>
       </Grid>
       <Collapse in={open}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <SelectInput name="stakeStatus" options={StakeStatus} multiple />
           </Grid>

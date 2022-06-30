@@ -33,7 +33,7 @@ export const Erc998TokenSearchForm: FC<IUniTokenSearchFormProps> = props => {
       data-testid="Erc998TokenSearchForm"
     >
       <Collapse in={open}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <EntityInput name="uniContractIds" controller="erc998-collections" multiple />
           </Grid>
