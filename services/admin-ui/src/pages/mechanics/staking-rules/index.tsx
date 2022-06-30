@@ -18,8 +18,6 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import {
-  AssetType,
-  IAsset,
   IStakingRule,
   IStakingSearchDto,
   StakingStatus,
@@ -56,14 +54,8 @@ export const Staking: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      deposit: {
-        assetType: AssetType.STAKING,
-        components: emptyPrice.components,
-      } as IAsset,
-      reward: {
-        assetType: AssetType.STAKING,
-        components: emptyPrice.components,
-      } as IAsset,
+      deposit: emptyPrice,
+      reward: emptyPrice,
       duration: 30,
       penalty: 100,
       recurrent: false,
