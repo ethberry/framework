@@ -10,6 +10,7 @@ import { imageUrl } from "@framework/constants";
 
 import {
   ContractManagerEventType,
+  ContractTemplate,
   ContractType,
   Erc20VestingTemplate,
   IContractManagerERC1155TokenDeployed,
@@ -17,7 +18,6 @@ import {
   IContractManagerERC20VestingDeployed,
   IContractManagerERC721TokenDeployed,
   TContractManagerEventData,
-  ContractTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";

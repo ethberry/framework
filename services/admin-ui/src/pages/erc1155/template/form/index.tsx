@@ -4,17 +4,17 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IErc1155TemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
-interface ITokenSearchFormProps {
-  onSubmit: (values: IErc1155TemplateSearchDto) => Promise<void>;
-  initialValues: IErc1155TemplateSearchDto;
+interface IErc1155TokenSearchFormProps {
+  onSubmit: (values: ITemplateSearchDto) => Promise<void>;
+  initialValues: ITemplateSearchDto;
   open: boolean;
 }
 
-export const Erc1155TemplateSearchForm: FC<ITokenSearchFormProps> = props => {
+export const Erc1155TemplateSearchForm: FC<IErc1155TokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();

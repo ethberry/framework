@@ -5,7 +5,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc1155TemplateSearchDto, ITemplate } from "@framework/types";
+import { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Template } from "./item";
@@ -21,7 +21,7 @@ export const Erc1155TemplateList: FC<IErc1155TokenListProps> = props => {
   const { id } = useParams<{ id: string }>();
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<ITemplate, IErc1155TemplateSearchDto>({
+    useCollection<ITemplate, ITemplateSearchDto>({
       baseUrl: "/erc1155-tokens",
       embedded,
       search: {

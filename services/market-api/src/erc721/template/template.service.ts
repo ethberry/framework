@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IErc721TemplateSearchDto } from "@framework/types";
+import { ITemplateSearchDto } from "@framework/types";
 
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
@@ -22,7 +22,7 @@ export class Erc721TemplateService {
     });
   }
 
-  public async search(dto: IErc721TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+  public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, skip, take, contractIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.erc721TemplateEntityRepository.createQueryBuilder("template");
 

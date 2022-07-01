@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IErc1155TemplateSearchDto } from "@framework/types";
+import { ITemplateSearchDto } from "@framework/types";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Injectable()
@@ -12,7 +12,7 @@ export class Erc1155TemplateService {
     private readonly erc1155TokenEntityRepository: Repository<TemplateEntity>,
   ) {}
 
-  public async search(dto: IErc1155TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+  public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
     const queryBuilder = this.erc1155TokenEntityRepository.createQueryBuilder("token");

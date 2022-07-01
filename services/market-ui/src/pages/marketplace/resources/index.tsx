@@ -3,7 +3,7 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc1155TemplateSearchDto, ITemplate } from "@framework/types";
+import { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useCollection } from "@gemunion/react-hooks";
 
@@ -18,7 +18,7 @@ export const Resources: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<ITemplate, IErc1155TemplateSearchDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/erc1155-tokens",
     search: {
       contractIds: [],

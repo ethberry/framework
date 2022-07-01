@@ -4,14 +4,14 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { IErc721TemplateSearchDto, TokenType } from "@framework/types";
+import { ITemplateSearchDto, TokenType } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { useStyles } from "./styles";
 
 interface IErc721TemplateSearchFormProps {
-  onSubmit: (values: IErc721TemplateSearchDto) => Promise<void>;
-  initialValues: IErc721TemplateSearchDto;
+  onSubmit: (values: ITemplateSearchDto) => Promise<void>;
+  initialValues: ITemplateSearchDto;
   open: boolean;
   embedded?: boolean;
 }

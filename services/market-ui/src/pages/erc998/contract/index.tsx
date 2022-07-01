@@ -3,7 +3,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 import { Skeleton } from "@mui/lab";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { IErc998ContractSearchDto, IContract } from "@framework/types";
+import { IContract, IContractSearchDto } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
@@ -12,7 +12,7 @@ import { Erc998TemplateList } from "../template-list";
 import { useStyles } from "./styles";
 
 export const Erc998Collection: FC = () => {
-  const { selected, isLoading } = useCollection<IContract, IErc998ContractSearchDto>({
+  const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc998-collections",
     empty: {
       title: "",

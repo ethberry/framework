@@ -6,7 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { ITemplate, ContractTemplate } from "@framework/types";
+import { ContractTemplate, ITemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
 

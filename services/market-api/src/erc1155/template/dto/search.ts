@@ -3,10 +3,10 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IErc1155TemplateSearchDto, TemplateStatus } from "@framework/types";
+import { ITemplateSearchDto, TemplateStatus } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-export class Erc1155TemplateSearchDto extends SearchDto implements IErc1155TemplateSearchDto {
+export class Erc1155TemplateSearchDto extends SearchDto implements ITemplateSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,

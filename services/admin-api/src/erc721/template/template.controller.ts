@@ -4,13 +4,13 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc721TemplateService } from "./template.service";
-import {
-  Erc721TemplateAutocompleteDto,
-  Erc721TemplateCreateDto,
-  Erc721TemplateSearchDto,
-  Erc721TemplateUpdateDto,
-} from "./dto";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import {
+  TemplateAutocompleteDto,
+  TemplateCreateDto,
+  TemplateSearchDto,
+  TemplateUpdateDto,
+} from "../../blockchain/hierarchy/template/dto";
 
 @ApiBearerAuth()
 @Controller("/erc721-templates")
@@ -19,17 +19,17 @@ export class Erc721TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc721TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+  public search(@Query() dto: TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc721TemplateService.search(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc721TemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
+  public autocomplete(@Query() dto: TemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
     return this.erc721TemplateService.autocomplete(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc721TemplateUpdateDto): Promise<TemplateEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TemplateUpdateDto): Promise<TemplateEntity> {
     return this.erc721TemplateService.update({ id }, dto);
   }
 
@@ -40,7 +40,7 @@ export class Erc721TemplateController {
   }
 
   @Post("/")
-  public create(@Body() dto: Erc721TemplateCreateDto): Promise<TemplateEntity> {
+  public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
     return this.erc721TemplateService.create(dto);
   }
 

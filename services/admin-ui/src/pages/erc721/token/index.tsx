@@ -13,7 +13,7 @@ import {
 import { Create, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc721TokenSearchDto, ITemplate, IToken, TokenStatus } from "@framework/types";
+import { ITemplate, IToken, ITokenSearchDto, TokenStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721TokenEditDialog } from "./edit";
@@ -34,7 +34,7 @@ export const Erc721Token: FC = () => {
     handleEditConfirm,
     handleSearch,
     handleChangePage,
-  } = useCollection<IToken, IErc721TokenSearchDto>({
+  } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/erc721-tokens",
     empty: {
       template: {} as ITemplate,

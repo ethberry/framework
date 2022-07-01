@@ -6,7 +6,7 @@ import { useWeb3React } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IToken, ContractTemplate } from "@framework/types";
+import { ContractTemplate, IToken } from "@framework/types";
 import { IServerSignature } from "@gemunion/types-collection";
 
 import MetaDataManipulatorSol from "@framework/core-contracts/artifacts/contracts/MetaData/MetaDataManipulator.sol/MetaDataManipulator.json";

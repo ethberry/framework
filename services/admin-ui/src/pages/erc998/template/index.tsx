@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IErc998TemplateSearchDto, ITemplate, TemplateStatus } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, TemplateStatus } from "@framework/types";
 
 import { Erc998TemplateEditDialog } from "./edit";
 import { Erc998TemplateSearchForm } from "./form";
@@ -42,7 +42,7 @@ export const Erc998Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<ITemplate, IErc998TemplateSearchDto>({
+  } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/erc998-templates",
     empty: {
       title: "",

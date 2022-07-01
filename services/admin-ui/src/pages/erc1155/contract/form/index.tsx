@@ -2,18 +2,18 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IErc1155ContractSearchDto, ContractStatus } from "@framework/types";
+import { ContractStatus, IContractSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
 
-interface IContractSearchFormProps {
-  onSubmit: (values: IErc1155ContractSearchDto) => Promise<void>;
-  initialValues: IErc1155ContractSearchDto;
+interface IErc1155ContractSearchFormProps {
+  onSubmit: (values: IContractSearchDto) => Promise<void>;
+  initialValues: IContractSearchDto;
   open: boolean;
 }
 
-export const Erc1155CollectionSearchForm: FC<IContractSearchFormProps> = props => {
+export const Erc1155ContractSearchForm: FC<IErc1155ContractSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();

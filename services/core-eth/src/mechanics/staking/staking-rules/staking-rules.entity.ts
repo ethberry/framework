@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, OneToOne, JoinColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IStakingRule, StakingStatus } from "@framework/types";

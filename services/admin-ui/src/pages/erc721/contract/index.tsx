@@ -16,10 +16,10 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IErc721ContractSearchDto, IContract, ContractStatus } from "@framework/types";
+import { ContractStatus, IContract, IContractSearchDto } from "@framework/types";
 
 import { Erc721CollectionEditDialog } from "./edit";
-import { Erc721CollectionSearchForm } from "./form";
+import { Erc721ContractSearchForm } from "./form";
 import { Erc721TokenDeployButton } from "../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 
@@ -42,7 +42,7 @@ export const Erc721Contract: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IContract, IErc721ContractSearchDto>({
+  } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc721-contracts",
     empty: {
       title: "",
@@ -75,7 +75,7 @@ export const Erc721Contract: FC = () => {
         <Erc721TokenDeployButton />
       </PageHeader>
 
-      <Erc721CollectionSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc721ContractSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

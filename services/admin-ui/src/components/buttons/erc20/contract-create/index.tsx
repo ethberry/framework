@@ -5,14 +5,14 @@ import { FormattedMessage } from "react-intl";
 
 import { useApiCall } from "@gemunion/react-hooks";
 
-import { Erc20TokenCreateDialog } from "./create-dialog";
+import { Erc20ContractCreateDialog } from "./create-dialog";
 
 export interface IErc20TokenCreateButtonProps {
   className?: string;
   onUpdate: () => Promise<void>;
 }
 
-export const Erc20TokenCreateButton: FC<IErc20TokenCreateButtonProps> = props => {
+export const Erc20ContractCreateButton: FC<IErc20TokenCreateButtonProps> = props => {
   const { className, onUpdate } = props;
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -51,7 +51,11 @@ export const Erc20TokenCreateButton: FC<IErc20TokenCreateButtonProps> = props =>
       >
         <FormattedMessage id="form.buttons.create" />
       </Button>
-      <Erc20TokenCreateDialog onConfirm={handleCreateConfirm} onCancel={handleCreateCancel} open={isCreateDialogOpen} />
+      <Erc20ContractCreateDialog
+        onConfirm={handleCreateConfirm}
+        onCancel={handleCreateCancel}
+        open={isCreateDialogOpen}
+      />
     </Fragment>
   );
 };

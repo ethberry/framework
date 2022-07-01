@@ -16,8 +16,9 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc998ContractService } from "./contract.service";
-import { Erc998CollectionSearchDto, Erc998ContractUpdateDto } from "./dto";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { ContractUpdateDto } from "../../blockchain/hierarchy/contract/dto/update";
+import { ContractSearchDto } from "../../blockchain/hierarchy/contract/dto/search";
 
 @ApiBearerAuth()
 @Controller("/erc998-contracts")
@@ -26,12 +27,12 @@ export class Erc998ContractController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc998CollectionSearchDto): Promise<[Array<ContractEntity>, number]> {
+  public search(@Query() dto: ContractSearchDto): Promise<[Array<ContractEntity>, number]> {
     return this.erc998ContractService.search(dto);
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc998ContractUpdateDto): Promise<ContractEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: ContractUpdateDto): Promise<ContractEntity> {
     return this.erc998ContractService.update({ id }, dto);
   }
 

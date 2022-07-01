@@ -4,8 +4,8 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc998TokenService } from "./token.service";
-import { Erc998TokenSearchDto, Erc998TokenUpdateDto } from "./dto";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TokenSearchDto, TokenUpdateDto } from "../../blockchain/hierarchy/token/dto";
 
 @ApiBearerAuth()
 @Controller("/erc998-tokens")
@@ -14,7 +14,7 @@ export class Erc998TokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc998TokenSearchDto): Promise<[Array<TokenEntity>, number]> {
+  public search(@Query() dto: TokenSearchDto): Promise<[Array<TokenEntity>, number]> {
     return this.erc998TokenService.search(dto);
   }
 
@@ -24,7 +24,7 @@ export class Erc998TokenController {
   }
 
   @Put("/:id")
-  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: Erc998TokenUpdateDto): Promise<TokenEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TokenUpdateDto): Promise<TokenEntity> {
     return this.erc998TokenService.update({ id }, dto);
   }
 

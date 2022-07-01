@@ -2,19 +2,19 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IErc721TokenSearchDto, TokenRarity, TokenStatus, TokenType } from "@framework/types";
+import { ITokenSearchDto, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
-interface ITokenSearchFormProps {
-  onSubmit: (values: IErc721TokenSearchDto) => Promise<void>;
-  initialValues: IErc721TokenSearchDto;
+interface IErc721TokenSearchFormProps {
+  onSubmit: (values: ITokenSearchDto) => Promise<void>;
+  initialValues: ITokenSearchDto;
   open: boolean;
 }
 
-export const Erc721TokenSearchForm: FC<ITokenSearchFormProps> = props => {
+export const Erc721TokenSearchForm: FC<IErc721TokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();

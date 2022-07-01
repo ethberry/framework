@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { ContractBaseEntity as DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IContract, TokenType, ContractRole, ContractStatus, ContractTemplate } from "@framework/types";
+import { ContractRole, ContractStatus, ContractTemplate, IContract, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { TemplateEntity } from "../template/template.entity";
 

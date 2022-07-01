@@ -7,7 +7,7 @@ import { useFormContext } from "react-hook-form";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
-import { ITemplate, ContractTemplate } from "@framework/types";
+import { ContractTemplate, ITemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";

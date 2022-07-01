@@ -2,25 +2,26 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { SearchDto } from "@gemunion/collection";
 
-import { Erc721CollectionService } from "./contract.service";
-import { Erc721CollectionSearchDto } from "./dto";
+import { Erc721ContractService } from "./contract.service";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { ContractAutocompleteDto } from "../../blockchain/hierarchy/contract/dto/autocomplete";
 
 @ApiBearerAuth()
 @Controller("/erc721-contracts")
-export class Erc721CollectionController {
-  constructor(private readonly erc721CollectionService: Erc721CollectionService) {}
+export class Erc721ContractController {
+  constructor(private readonly erc721CollectionService: Erc721ContractService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc721CollectionSearchDto): Promise<[Array<ContractEntity>, number]> {
+  public search(@Query() dto: SearchDto): Promise<[Array<ContractEntity>, number]> {
     return this.erc721CollectionService.search(dto);
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<ContractEntity>> {
-    return this.erc721CollectionService.autocomplete();
+  public autocomplete(@Query() dto: ContractAutocompleteDto): Promise<Array<ContractEntity>> {
+    return this.erc721CollectionService.autocomplete(dto);
   }
 
   @Get("/:id")

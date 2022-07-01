@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ContractStatus, IContractAutocompleteDto } from "@framework/types";
+import { ContractStatus, IContractAutocompleteDto, IContractSearchDto, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
-import { IErc20ContractUpdateDto } from "../../../erc20/contract/interfaces";
 import { TemplateEntity } from "../template/template.entity";
+import { IContractUpdateDto } from "./interfaces";
 
 @Injectable()
 export class ContractService {
@@ -14,6 +14,69 @@ export class ContractService {
     @InjectRepository(ContractEntity)
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
+
+  public async search(dto: IContractSearchDto, contractType: TokenType): Promise<[Array<ContractEntity>, number]> {
+    const { query, contractStatus, contractTemplate, contractRole, skip, take } = dto;
+
+    const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
+
+    queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("contract.templates", "templates");
+
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+
+    if (contractStatus) {
+      if (contractStatus.length === 1) {
+        queryBuilder.andWhere("contract.contractStatus = :contractStatus", { contractStatus: contractStatus[0] });
+      } else {
+        queryBuilder.andWhere("contract.contractStatus IN(:...contractStatus)", { contractStatus });
+      }
+    }
+
+    if (contractTemplate) {
+      if (contractTemplate.length === 1) {
+        queryBuilder.andWhere("contract.contractTemplate = :contractTemplate", {
+          contractTemplate: contractTemplate[0],
+        });
+      } else {
+        queryBuilder.andWhere("contract.contractTemplate IN(:...contractTemplate)", { contractTemplate });
+      }
+    }
+
+    if (contractRole) {
+      if (contractRole.length === 1) {
+        queryBuilder.andWhere("contract.contractRole = :contractRole", {
+          contractRole: contractRole[0],
+        });
+      } else {
+        queryBuilder.andWhere("contract.contractRole IN(:...contractRole)", { contractRole });
+      }
+    }
+
+    if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(contract.description->'blocks') blocks ON TRUE",
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("contract.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy({
+      "contract.createdAt": "DESC",
+    });
+
+    return queryBuilder.getManyAndCount();
+  }
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
     const { contractRole = [], contractStatus = [], contractTemplate = [], contractType = [] } = dto;
@@ -63,7 +126,7 @@ export class ContractService {
 
   public async update(
     where: FindOptionsWhere<ContractEntity>,
-    dto: Partial<IErc20ContractUpdateDto>,
+    dto: Partial<IContractUpdateDto>,
   ): Promise<ContractEntity> {
     const contractEntity = await this.findOne(where);
 

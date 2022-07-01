@@ -9,10 +9,10 @@ import {
   Erc20ContractTemplate,
   Erc20VestingTemplate,
   Erc721ContractTemplate,
+  IContractDeployDto,
   IErc20TokenDeployDto,
   IErc20VestingDeployDto,
   IErc721ContractDeployDto,
-  IContractDeployDto,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";

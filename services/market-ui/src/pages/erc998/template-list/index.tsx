@@ -6,7 +6,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc998TemplateSearchDto, ITemplate, TemplateStatus } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, TemplateStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateItem } from "./item";
@@ -22,7 +22,7 @@ export const Erc998TemplateList: FC<ITemplateListProps> = props => {
   const { id = "" } = useParams<{ id: string }>();
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<ITemplate, IErc998TemplateSearchDto>({
+    useCollection<ITemplate, ITemplateSearchDto>({
       baseUrl: "/erc998-templates",
       embedded,
       search: {

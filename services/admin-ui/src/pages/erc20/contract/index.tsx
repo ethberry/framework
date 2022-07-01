@@ -17,11 +17,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IErc20ContractSearchDto, IContract, ITemplate, ContractStatus, ContractTemplate } from "@framework/types";
+import { ContractStatus, ContractTemplate, IContract, IContractSearchDto, ITemplate } from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
-import { Erc20TokenSearchForm } from "./form";
-import { Erc20TokenCreateButton, Erc20TokenDeployButton } from "../../../components/buttons";
+import { Erc20ContractSearchForm } from "./form";
+import { Erc20ContractCreateButton, Erc20TokenDeployButton } from "../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 
 export const Erc20Contract: FC = () => {
@@ -44,7 +44,7 @@ export const Erc20Contract: FC = () => {
     handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-  } = useCollection<IContract, IErc20ContractSearchDto>({
+  } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/erc20-contracts",
     empty: {
       title: "",
@@ -76,11 +76,11 @@ export const Erc20Contract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Erc20TokenCreateButton onUpdate={fetch} />
+        <Erc20ContractCreateButton onUpdate={fetch} />
         <Erc20TokenDeployButton />
       </PageHeader>
 
-      <Erc20TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <Erc20ContractSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
