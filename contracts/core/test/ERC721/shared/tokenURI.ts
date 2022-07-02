@@ -12,7 +12,7 @@ export function shouldGetTokenURI() {
 
     it("should fail: URI query for nonexistent token", async function () {
       const uri = this.erc721Instance.tokenURI(tokenId);
-      await expect(uri).to.be.revertedWith("ERC721Metadata: URI query for nonexistent token");
+      await expect(uri).to.be.revertedWith("ERC721: invalid token ID");
     });
   });
 }

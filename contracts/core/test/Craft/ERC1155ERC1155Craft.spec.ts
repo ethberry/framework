@@ -44,7 +44,7 @@ describe("ERC1155ERC1155Craft", function () {
 
     it("should fail: insufficient permissions", async function () {
       const tx = refineryInstance.connect(this.receiver).craft(1, 1);
-      await expect(tx).revertedWith("ERC1155: caller is not owner nor approved");
+      await expect(tx).revertedWith("ERC1155: caller is not token owner nor approved");
     });
 
     it("should fail: burn amount exceeds balance", async function () {
