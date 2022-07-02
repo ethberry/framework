@@ -4,11 +4,11 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc998AssetSearchDto, IToken } from "@framework/types";
+import { IErc998AssetSearchDto, IToken, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998Token } from "./item";
-import { Erc998TokenSearchForm } from "./form";
+import { TokenSearchForm } from "../../../components/forms/token-search";
 
 export interface ITokenListProps {
   embedded?: boolean;
@@ -40,7 +40,12 @@ export const Erc998TokenList: FC<ITokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc998TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <TokenSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

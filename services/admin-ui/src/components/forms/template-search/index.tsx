@@ -8,14 +8,15 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
-interface IErc721TemplateSearchFormProps {
+interface ITemplateSearchFormProps {
   onSubmit: (values: ITemplateSearchDto) => Promise<void>;
   initialValues: ITemplateSearchDto;
   open: boolean;
+  contractType: Array<TokenType>;
 }
 
-export const Erc721TemplateSearchForm: FC<IErc721TemplateSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
+  const { onSubmit, initialValues, open, contractType } = props;
 
   const classes = useStyles();
 
@@ -29,7 +30,7 @@ export const Erc721TemplateSearchForm: FC<IErc721TemplateSearchFormProps> = prop
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="Erc721TemplateSearchForm"
+      data-testid="TemplateSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -39,12 +40,7 @@ export const Erc721TemplateSearchForm: FC<IErc721TemplateSearchFormProps> = prop
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{ contractType: [TokenType.ERC721] }}
-            />
+            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
           </Grid>
           <Grid item xs={6}>
             <SelectInput multiple name="templateStatus" options={TemplateStatus} />

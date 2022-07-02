@@ -8,15 +8,15 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
-interface IErc721TokenSearchFormProps {
+interface ITokenSearchFormProps {
   onSubmit: (values: IErc721AssetSearchDto) => Promise<void>;
   initialValues: IErc721AssetSearchDto;
   open: boolean;
-  embedded?: boolean;
+  contractType: Array<TokenType>;
 }
 
-export const Erc721TokenSearchForm: FC<IErc721TokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
+  const { onSubmit, initialValues, open, contractType } = props;
 
   const classes = useStyles();
 
@@ -30,17 +30,12 @@ export const Erc721TokenSearchForm: FC<IErc721TokenSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="Erc721TokenSearchForm"
+      data-testid="TokenSearchForm"
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{ contractType: [TokenType.ERC721] }}
-            />
+            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
           </Grid>
           <Grid item xs={6}>
             <SelectInput name="rarity" options={TokenRarity} multiple />

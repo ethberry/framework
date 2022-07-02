@@ -7,19 +7,20 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
 
-interface IErc998ContractSearchFormProps {
+interface IContractSearchFormProps {
   onSubmit: (values: IContractSearchDto) => Promise<void>;
   initialValues: IContractSearchDto;
   open: boolean;
+  contractTemplateOptions: Record<string, string>;
 }
 
-export const Erc998ContractSearchForm: FC<IErc998ContractSearchFormProps> = props => {
-  const { onSubmit, initialValues, open } = props;
+export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
+  const { onSubmit, initialValues, open, contractTemplateOptions } = props;
 
   const classes = useStyles();
 
-  const { query, contractStatus, contractRole } = initialValues;
-  const fixedValues = { query, contractStatus, contractRole };
+  const { query, contractStatus, contractTemplate, contractRole } = initialValues;
+  const fixedValues = { query, contractStatus, contractTemplate, contractRole };
 
   return (
     <FormWrapper
@@ -28,7 +29,7 @@ export const Erc998ContractSearchForm: FC<IErc998ContractSearchFormProps> = prop
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="Erc998CollectionSearchForm"
+      data-testid="ContractSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -36,11 +37,14 @@ export const Erc998ContractSearchForm: FC<IErc998ContractSearchFormProps> = prop
         </Grid>
       </Grid>
       <Collapse in={open}>
-        <Grid container spacing={2} alignItems="flex-end">
+        <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput multiple name="contractStatus" options={ContractStatus} />
+            <SelectInput name="contractStatus" options={ContractStatus} multiple />
           </Grid>
           <Grid item xs={6}>
+            <SelectInput name="contractTemplate" options={contractTemplateOptions} multiple />
+          </Grid>
+          <Grid item xs={12}>
             <SelectInput multiple name="contractRole" options={ContractRole} />
           </Grid>
         </Grid>

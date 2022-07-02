@@ -16,11 +16,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ITemplate, ITemplateSearchDto, TemplateStatus } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
-import { Erc721TemplateSearchForm } from "./form";
 import { emptyPrice } from "../../../components/inputs/empty-price";
+import { TemplateSearchForm } from "../../../components/forms/template-search";
 
 export const Erc721Template: FC = () => {
   const {
@@ -85,7 +85,12 @@ export const Erc721Template: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721TemplateSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <TemplateSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

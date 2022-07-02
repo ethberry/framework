@@ -16,12 +16,12 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ContractStatus, IContract, IContractSearchDto } from "@framework/types";
+import { ContractStatus, Erc1155ContractTemplate, IContract, IContractSearchDto } from "@framework/types";
 
 import { Erc1155CollectionEditDialog } from "./edit";
-import { Erc1155ContractSearchForm } from "./form";
 import { Erc1155TokenDeployButton } from "../../../components/buttons";
 import { ContractActionsMenu } from "../../../components/menu";
+import { ContractSearchForm } from "../../../components/forms/contract-search";
 
 export const Erc1155Contract: FC = () => {
   const {
@@ -74,7 +74,12 @@ export const Erc1155Contract: FC = () => {
         <Erc1155TokenDeployButton />
       </PageHeader>
 
-      <Erc1155ContractSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <ContractSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractTemplateOptions={Erc1155ContractTemplate}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

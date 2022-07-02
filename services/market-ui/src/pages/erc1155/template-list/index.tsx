@@ -5,11 +5,11 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, ITemplateSearchDto } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Template } from "./item";
-import { Erc1155TokenSearchForm } from "./form";
+import { TemplateSearchForm } from "../../../components/forms/template-search";
 
 export interface IErc1155TokenListProps {
   embedded?: boolean;
@@ -43,7 +43,13 @@ export const Erc1155TemplateList: FC<IErc1155TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc1155TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <TemplateSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC1155]}
+        embedded={embedded}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
