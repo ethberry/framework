@@ -9,14 +9,14 @@ import { ContractStatus, IContract } from "@framework/types";
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
 
-export interface IContractEditDialogProps {
+export interface IErc1155ContractEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IContract;
 }
 
-export const Erc1155CollectionEditDialog: FC<IContractEditDialogProps> = props => {
+export const Erc1155CollectionEditDialog: FC<IErc1155ContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, imageUrl, address, contractStatus, baseTokenURI } = initialValues;
@@ -35,7 +35,7 @@ export const Erc1155CollectionEditDialog: FC<IContractEditDialogProps> = props =
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid="Erc1155CollectionEditDialog"
+      data-testid="Erc1155ContractEditDialog"
       {...rest}
     >
       <BlockchainInfoPopover address={address} baseTokenURI={baseTokenURI} />

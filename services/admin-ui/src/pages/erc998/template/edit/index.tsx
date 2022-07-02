@@ -44,7 +44,7 @@ export const Erc998TemplateEditDialog: FC<ITemplateEditDialogProps> = props => {
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <JsonInput name="attributes" />
-      <PriceInput prefix="price" />
+      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput

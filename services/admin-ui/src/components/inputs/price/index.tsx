@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
-import { IAssetComponent } from "@framework/types";
+import { IAssetComponent, TokenType } from "@framework/types";
 
 import { emptyPrice } from "../empty-price";
 import { TokenTypeInput } from "./token-type-input";
@@ -15,10 +15,11 @@ import { AmountInput } from "./amount-input";
 export interface IStakingEditDialogProps {
   prefix: string;
   multiple?: boolean;
+  disabledOptions?: Array<TokenType>;
 }
 
 export const PriceInput: FC<IStakingEditDialogProps> = props => {
-  const { prefix, multiple = false } = props;
+  const { prefix, multiple = false, disabledOptions } = props;
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
@@ -55,7 +56,7 @@ export const PriceInput: FC<IStakingEditDialogProps> = props => {
         >
           <Box flex={1}>
             <Paper sx={{ p: 2 }}>
-              <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} />
+              <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledOptions} />
               <ContractInput prefix={`${nestedPrefix}[${i}]`} />
               <TokenInput prefix={`${nestedPrefix}[${i}]`} />
               <AmountInput prefix={`${nestedPrefix}[${i}]`} />

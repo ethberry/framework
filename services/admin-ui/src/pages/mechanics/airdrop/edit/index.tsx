@@ -33,7 +33,7 @@ export const AirdropEditDialog: FC<IAirdropEditDialogProps> = props => {
         {...rest}
         data-testid="AirdropEditDialog"
       >
-        <TextInput name="owner" />
+        <TextInput name="account" />
         <PriceInput prefix="item" />
       </FormDialog>
     );
@@ -47,7 +47,7 @@ export const AirdropEditDialog: FC<IAirdropEditDialogProps> = props => {
       data-testid="AirdropAddDialog"
       {...rest}
     >
-      <TextInput name="owner" />
+      <TextInput name="account" />
       <PriceInput prefix="item" />
     </FormDialog>
   );

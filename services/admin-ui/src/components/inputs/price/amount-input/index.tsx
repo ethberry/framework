@@ -18,7 +18,7 @@ export const AmountInput: FC<ITokenInputProps> = props => {
     case TokenType.NATIVE:
     case TokenType.ERC20:
     case TokenType.ERC1155:
-      return <EthInput name={`${prefix}.${name}`} />;
+      return <EthInput name={`${prefix}.${name}`} />; // TODO use decimals
     case TokenType.ERC721:
     case TokenType.ERC998:
     default:

@@ -15,14 +15,31 @@ export const ContractInput: FC<IContractInputProps> = props => {
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
 
   switch (tokenType) {
-    case TokenType.ERC1155:
+    case TokenType.NATIVE:
       return (
         <EntityInput
           name={`${prefix}.${name}`}
           controller="contracts"
           data={{
+            contractTemplate: [Erc20ContractTemplate.NATIVE],
             contractStatus: [ContractStatus.ACTIVE],
-            contractType: [TokenType.ERC1155],
+            contractType: [TokenType.ERC20],
+          }}
+        />
+      );
+    case TokenType.ERC20:
+      return (
+        <EntityInput
+          name={`${prefix}.${name}`}
+          controller="contracts"
+          data={{
+            contractTemplate: [
+              Erc20ContractTemplate.EXTERNAL,
+              Erc20ContractTemplate.BLACKLIST,
+              Erc20ContractTemplate.SIMPLE,
+            ],
+            contractStatus: [ContractStatus.ACTIVE],
+            contractType: [TokenType.ERC20],
           }}
         />
       );
@@ -50,31 +67,14 @@ export const ContractInput: FC<IContractInputProps> = props => {
           }}
         />
       );
-    case TokenType.NATIVE:
+    case TokenType.ERC1155:
       return (
         <EntityInput
           name={`${prefix}.${name}`}
           controller="contracts"
           data={{
-            contractTemplate: [Erc20ContractTemplate.NATIVE],
             contractStatus: [ContractStatus.ACTIVE],
-            contractType: [TokenType.ERC998],
-          }}
-        />
-      );
-    case TokenType.ERC20:
-      return (
-        <EntityInput
-          name={`${prefix}.${name}`}
-          controller="contracts"
-          data={{
-            contractTemplate: [
-              Erc20ContractTemplate.EXTERNAL,
-              Erc20ContractTemplate.BLACKLIST,
-              Erc20ContractTemplate.SIMPLE,
-            ],
-            contractStatus: [ContractStatus.ACTIVE],
-            contractType: [TokenType.ERC20],
+            contractType: [TokenType.ERC1155],
           }}
         />
       );

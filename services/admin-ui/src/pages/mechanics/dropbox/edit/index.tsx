@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractRole, DropboxStatus, IDropbox } from "@framework/types";
+import { ContractRole, DropboxStatus, IDropbox, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
@@ -45,7 +45,7 @@ export const DropboxEditDialog: FC<IDropboxEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <PriceInput prefix="price" />
+      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       {id ? <SelectInput name="dropboxStatus" options={DropboxStatus} /> : null}
       <EntityInput name="templateId" controller="templates" />
       <EntityInput name="contract" controller="contract" data={{ contractRole: [ContractRole.DROPBOX] }} />

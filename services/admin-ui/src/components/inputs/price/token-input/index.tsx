@@ -15,7 +15,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
 
   const { formatMessage } = useIntl();
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
-  const collection = useWatch({ name: `${prefix}.collection` });
+  const contract = useWatch({ name: `${prefix}.contractId` });
 
   switch (tokenType) {
     case TokenType.ERC721:
@@ -26,7 +26,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
           label={formatMessage({ id: "form.labels.templateIds" })}
           placeholder={formatMessage({ id: "form.placeholders.templateIds" })}
           data={{
-            contractIds: collection === 0 ? [] : [collection],
+            contractIds: contract === 0 ? [] : [contract],
             templateStatus: [TemplateStatus.ACTIVE],
           }}
         />
@@ -39,7 +39,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
           label={formatMessage({ id: "form.labels.erc998TemplateId" })}
           placeholder={formatMessage({ id: "form.placeholders.erc998TemplateId" })}
           data={{
-            contractIds: collection === 0 || collection === 2 ? [] : [collection],
+            contractIds: contract === 0 || contract === 2 ? [] : [contract],
             templateStatus: [TemplateStatus.ACTIVE],
           }}
         />
@@ -48,11 +48,11 @@ export const TokenInput: FC<ITokenInputProps> = props => {
       return (
         <EntityInput
           name={`${prefix}.${name}`}
-          controller="erc1155-tokens"
+          controller="erc1155-templates"
           label={formatMessage({ id: "form.labels.erc1155TokenId" })}
           placeholder={formatMessage({ id: "form.placeholders.erc1155TokenId" })}
           data={{
-            contractIds: collection === 0 ? [] : [collection],
+            contractIds: contract === 0 ? [] : [contract],
             tokenStatus: [TemplateStatus.ACTIVE],
           }}
         />

@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 
-import { Erc1155TokenEditDialog } from "./edit";
+import { Erc1155TemplateEditDialog } from "./edit";
 import { emptyPrice } from "../../../components/inputs/empty-price";
 import { TemplateSearchForm } from "../../../components/forms/template-search";
 
@@ -118,7 +118,7 @@ export const Erc1155Template: FC = () => {
         initialValues={selected}
       />
 
-      <Erc1155TokenEditDialog
+      <Erc1155TemplateEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

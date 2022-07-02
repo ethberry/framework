@@ -48,7 +48,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
           symbol={symbol}
           address={address}
           decimals={template.decimals}
-          cap={formatEther(template.amount)}
+          cap={formatEther(template.amount, template.decimals, "")}
         />
         <TextInput name="title" />
         <RichTextEditor name="description" />
