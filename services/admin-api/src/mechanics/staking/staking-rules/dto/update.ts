@@ -1,53 +1,9 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  IsBoolean,
-  IsEnum,
-  IsInt,
-  IsJSON,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-  ValidateIf,
-  ValidateNested,
-} from "class-validator";
-import { Transform, Type } from "class-transformer";
-import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { IsBoolean, IsInt, IsJSON, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
-import { IStakingItemUpdateDto, IStakingUpdateDto } from "../interfaces";
-import { TokenType } from "@framework/types";
-
-export class StakingItemUpdateDto implements IStakingItemUpdateDto {
-  @ApiProperty({
-    enum: TokenType,
-  })
-  @Transform(({ value }) => value as TokenType)
-  @IsEnum(TokenType, { message: "badInput" })
-  public tokenType: TokenType;
-
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public collection: number;
-
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
-  public tokenId: number;
-
-  @ApiProperty({
-    type: Number,
-  })
-  @IsBigNumber({}, { message: "typeMismatch" })
-  @ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.TokenType))
-  public amount: string;
-
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public stakingRuleId: number;
-}
+import { IStakingUpdateDto } from "../interfaces";
+import { AssetDto } from "../../../../blockchain/asset/dto";
 
 export class StakingUpdateDto implements IStakingUpdateDto {
   @ApiPropertyOptional()
@@ -61,20 +17,20 @@ export class StakingUpdateDto implements IStakingUpdateDto {
   public description: string;
 
   @ApiPropertyOptional({
-    type: StakingItemUpdateDto,
+    type: AssetDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => StakingItemUpdateDto)
-  public deposit: StakingItemUpdateDto;
+  @Type(() => AssetDto)
+  public deposit: AssetDto;
 
   @ApiPropertyOptional({
-    type: StakingItemUpdateDto,
+    type: AssetDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => StakingItemUpdateDto)
-  public reward: StakingItemUpdateDto;
+  @Type(() => AssetDto)
+  public reward: AssetDto;
 
   @ApiPropertyOptional()
   @IsOptional()

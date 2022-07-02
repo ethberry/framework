@@ -1,4 +1,4 @@
-import { IContract } from "@gemunion/types-collection";
+import { IDeployable } from "@gemunion/types-collection";
 
 import { IVestingHistory } from "./vesting-history";
 
@@ -8,7 +8,7 @@ export enum VestingTemplate {
   "CLIFF" = "CLIFF", // 0 -> 100
 }
 
-export interface IVesting extends IContract {
+export interface IVesting extends IDeployable {
   beneficiary: string;
   duration: number;
   startTimestamp: string;

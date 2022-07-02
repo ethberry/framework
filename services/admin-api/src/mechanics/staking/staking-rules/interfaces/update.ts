@@ -1,18 +1,10 @@
-import { TokenType } from "@framework/types";
-
-export interface IStakingItemUpdateDto {
-  tokenType: TokenType;
-  collection: number;
-  tokenId: number;
-  amount: string;
-  stakingRuleId: number;
-}
+import { IAssetDto } from "../../../../blockchain/asset/interfaces";
 
 export interface IStakingUpdateDto {
   title: string;
   description: string;
-  deposit: IStakingItemUpdateDto;
-  reward: IStakingItemUpdateDto;
+  deposit: IAssetDto;
+  reward: IAssetDto;
   duration: number;
   penalty: number;
   recurrent: boolean;

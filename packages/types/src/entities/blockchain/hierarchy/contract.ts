@@ -1,4 +1,4 @@
-import { IContract as IDeployable, ISearchable } from "@gemunion/types-collection";
+import { IDeployable, ISearchable } from "@gemunion/types-collection";
 
 import { IErc20TokenHistory } from "../../erc20/token-history";
 import { IErc721TokenHistory } from "../../erc721/token-history";
