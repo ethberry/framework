@@ -12,24 +12,22 @@ import {
   ContractManagerEventType,
   ContractTemplate,
   ContractType,
-  VestingTemplate,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
-  IContractManagerVestingDeployed,
   IContractManagerERC721TokenDeployed,
+  IContractManagerVestingDeployed,
   TContractManagerEventData,
+  VestingTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
-import { Erc20ContractService } from "../../erc20/contract/contract.service";
 import { VestingService } from "../../mechanics/vesting/vesting.service";
-import { Erc721ContractService } from "../../erc721/contract/contract.service";
-import { Erc1155CollectionService } from "../../erc1155/contract/contract.service";
 import { Erc20LogService } from "../../erc20/token/token-log/token-log.service";
 import { Erc721TokenLogService } from "../../erc721/token/token-log/token-log.service";
 import { Erc1155LogService } from "../../erc1155/token/token-log/token-log.service";
 import { VestingLogService } from "../../mechanics/vesting/vesting-log/vesting.log.service";
 import { ContractManagerService } from "./contract-manager.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -41,10 +39,8 @@ export class ContractManagerServiceEth {
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
-    private readonly erc20VestingService: VestingService,
-    private readonly erc20ContractService: Erc20ContractService,
-    private readonly erc721ContractService: Erc721ContractService,
-    private readonly erc1155CollectionService: Erc1155CollectionService,
+    private readonly vestingService: VestingService,
+    private readonly contractService: ContractService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
@@ -60,7 +56,7 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.erc20VestingService.create({
+    await this.vestingService.create({
       address: addr.toLowerCase(),
       beneficiary: beneficiary.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
@@ -82,7 +78,7 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.erc20ContractService.create({
+    await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
       name,
@@ -107,7 +103,7 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.erc721ContractService.create({
+    await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
       name,
@@ -133,7 +129,7 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.erc1155CollectionService.create({
+    await this.contractService.create({
       address: addr.toLowerCase(),
       title: "new 1155 contract",
       description: emptyStateString,

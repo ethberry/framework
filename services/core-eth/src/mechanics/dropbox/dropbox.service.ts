@@ -5,16 +5,16 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { DropboxEntity } from "./dropbox.entity";
 
 @Injectable()
-export class Erc721DropboxService {
+export class DropboxService {
   constructor(
     @InjectRepository(DropboxEntity)
-    private readonly erc721DropboxEntityRepository: Repository<DropboxEntity>,
+    private readonly dropboxEntityRepository: Repository<DropboxEntity>,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<DropboxEntity>,
     options?: FindOneOptions<DropboxEntity>,
   ): Promise<DropboxEntity | null> {
-    return this.erc721DropboxEntityRepository.findOne({ where, ...options });
+    return this.dropboxEntityRepository.findOne({ where, ...options });
   }
 }

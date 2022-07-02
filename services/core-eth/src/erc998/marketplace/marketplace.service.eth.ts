@@ -11,8 +11,8 @@ import {
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { Erc998MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
-import { Erc998TokenService } from "../token/token.service";
-import { Erc998TemplateService } from "../template/template.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 
 @Injectable()
 export class Erc998MarketplaceServiceEth {
@@ -21,8 +21,8 @@ export class Erc998MarketplaceServiceEth {
     private readonly loggerService: LoggerService,
     private readonly contractManagerService: ContractManagerService,
     private readonly erc998MarketplaceHistoryService: Erc998MarketplaceHistoryService,
-    private readonly erc998TokenService: Erc998TokenService,
-    private readonly erc998TemplateService: Erc998TemplateService,
+    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
   ) {}
 
   public async redeem(event: ILogEvent<IErc998MarketplaceRedeem>, context: Log): Promise<void> {
@@ -30,13 +30,13 @@ export class Erc998MarketplaceServiceEth {
       args: { from, tokenId, templateId },
     } = event;
 
-    const erc998TemplateEntity = await this.erc998TemplateService.findOne({ id: ~~templateId });
+    const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
 
     if (!erc998TemplateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc998TokenEntity = await this.erc998TokenService.create({
+    const erc998TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: Object.assign(erc998TemplateEntity.attributes, {
         rarity: TokenRarity.COMMON,
@@ -59,7 +59,7 @@ export class Erc998MarketplaceServiceEth {
   //     throw new NotFoundException("templateNotFound");
   //   }
   //
-  //   const erc998TokenEntity = await this.erc998TokenService.create({
+  //   const erc998TokenEntity = await this.tokenService.create({
   //     tokenId,
   //     attributes: {},
   //     owner: from.toLowerCase(),

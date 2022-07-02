@@ -4,9 +4,9 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { Erc1155MarketplaceEventType, IErc1155MarketplaceRedeem, TErc1155MarketplaceEventData } from "@framework/types";
 
-import { Erc1155TokenService } from "../token/token.service";
 import { Erc1155MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 
 @Injectable()
 export class Erc1155MarketplaceServiceEth {
@@ -14,7 +14,7 @@ export class Erc1155MarketplaceServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly erc1155TokenService: Erc1155TokenService,
+    private readonly tokenService: TokenService,
     private readonly erc1155MarketplaceHistoryService: Erc1155MarketplaceHistoryService,
   ) {}
 
@@ -35,7 +35,7 @@ export class Erc1155MarketplaceServiceEth {
     await Promise.all(
       tokenIds.map(async (token, indx) => {
         // Check existence of all tokenIds
-        const erc1155TokenEntity = await this.erc1155TokenService.findOne({ id: ~~token });
+        const erc1155TokenEntity = await this.tokenService.findOne({ id: ~~token });
         if (!erc1155TokenEntity) {
           throw new NotFoundException("tokenNotFound");
         }

@@ -3,31 +3,31 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { DropboxEntity } from "./dropbox.entity";
-import { Erc721DropboxService } from "./dropbox.service";
+import { DropboxService } from "./dropbox.service";
 import { Erc721DropboxLogModule } from "./dropbox-log/dropbox-log.module";
 import { Erc721DropboxControllerEth } from "./dropbox.controller.eth";
 import { Erc721DropboxServiceEth } from "./dropbox.service.eth";
 import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
-import { Erc721TokenModule } from "../../erc721/token/token.module";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
-import { Erc721TemplateModule } from "../../erc721/template/template.module";
 import { Erc721TokenHistoryModule } from "../../erc721/token/token-history/token-history.module";
-import { Erc721ContractModule } from "../../erc721/contract/contract.module";
+import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
+import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
+import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
 
 @Module({
   imports: [
     ConfigModule,
-    Erc721TokenModule,
+    TokenModule,
     Erc721DropboxLogModule,
     AccessControlModule,
     ContractManagerModule,
-    Erc721TemplateModule,
+    TemplateModule,
     Erc721TokenHistoryModule,
-    Erc721ContractModule,
+    ContractModule,
     TypeOrmModule.forFeature([DropboxEntity]),
   ],
-  providers: [Logger, Erc721DropboxService, Erc721DropboxServiceEth],
+  providers: [Logger, DropboxService, Erc721DropboxServiceEth],
   controllers: [Erc721DropboxControllerEth],
-  exports: [Erc721DropboxService, Erc721DropboxServiceEth],
+  exports: [DropboxService, Erc721DropboxServiceEth],
 })
 export class DropboxModule {}

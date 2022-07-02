@@ -13,9 +13,9 @@ import {
 } from "@framework/types";
 
 import { Erc1155TokenHistoryService } from "./token-history/token-history.service";
-import { Erc1155BalanceService } from "../balance/balance.service";
-import { Erc1155TokenService } from "./token.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth {
@@ -24,8 +24,8 @@ export class Erc1155TokenServiceEth {
     private readonly loggerService: LoggerService,
     private readonly contractManagerService: ContractManagerService,
     private readonly erc1155TokenHistoryService: Erc1155TokenHistoryService,
-    private readonly erc1155BalanceService: Erc1155BalanceService,
-    private readonly erc1155TokenService: Erc1155TokenService,
+    private readonly balanceService: BalanceService,
+    private readonly tokenService: TokenService,
   ) {}
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingle>, context: Log): Promise<void> {
@@ -67,20 +67,20 @@ export class Erc1155TokenServiceEth {
   }
 
   private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {
-    const erc1155TokenEntity = await this.erc1155TokenService.getToken(tokenId, address);
+    const erc1155TokenEntity = await this.tokenService.getToken(tokenId, address);
 
     if (!erc1155TokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
     if (from !== constants.AddressZero) {
-      erc1155TokenEntity.amount += ~~amount;
-      await this.erc1155BalanceService.decrement(erc1155TokenEntity.id, from, amount);
+      erc1155TokenEntity.template.amount += ~~amount;
+      await this.balanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 
     if (to !== constants.AddressZero) {
       // erc1155TokenEntity.instanceCount -= ~~amount;
-      await this.erc1155BalanceService.increment(erc1155TokenEntity.id, to, amount);
+      await this.balanceService.increment(erc1155TokenEntity.id, to, amount);
     }
   }
 

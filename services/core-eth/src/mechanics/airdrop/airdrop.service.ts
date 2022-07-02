@@ -8,18 +8,18 @@ import { AirdropEntity } from "./airdrop.entity";
 export class AirdropService {
   constructor(
     @InjectRepository(AirdropEntity)
-    private readonly erc721AirdropEntityRepository: Repository<AirdropEntity>,
+    private readonly airdropEntityRepository: Repository<AirdropEntity>,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<AirdropEntity>,
     options?: FindOneOptions<AirdropEntity>,
   ): Promise<AirdropEntity | null> {
-    return this.erc721AirdropEntityRepository.findOne({ where, ...options });
+    return this.airdropEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: DeepPartial<AirdropEntity>): Promise<AirdropEntity> {
-    return this.erc721AirdropEntityRepository.create(dto).save();
+    return this.airdropEntityRepository.create(dto).save();
   }
 
   public async update(where: FindOptionsWhere<AirdropEntity>, dto: DeepPartial<AirdropEntity>): Promise<AirdropEntity> {

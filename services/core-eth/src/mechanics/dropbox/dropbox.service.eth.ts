@@ -19,12 +19,12 @@ import {
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
-import { Erc721TemplateService } from "../../erc721/template/template.service";
-import { Erc721ContractService } from "../../erc721/contract/contract.service";
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
-import { Erc721TokenService } from "../../erc721/token/token.service";
 import { Erc721TokenHistoryService } from "../../erc721/token/token-history/token-history.service";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 
 @Injectable()
 export class Erc721DropboxServiceEth {
@@ -36,10 +36,10 @@ export class Erc721DropboxServiceEth {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly erc721TokenService: Erc721TokenService,
-    private readonly erc721TemplateService: Erc721TemplateService,
+    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
     private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
-    private readonly erc721ContractService: Erc721ContractService,
+    private readonly contractService: ContractService,
   ) {
     this.airdropAddr = configService.get<string>("ERC721_AIRDROP_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
@@ -57,7 +57,7 @@ export class Erc721DropboxServiceEth {
     );
     await delay(1618);
 
-    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -94,7 +94,7 @@ export class Erc721DropboxServiceEth {
       args: { tokenId },
     } = event;
 
-    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -112,7 +112,7 @@ export class Erc721DropboxServiceEth {
       args: { royaltyNumerator },
     } = event;
 
-    const erc721CollectionEntity = await this.erc721ContractService.findOne({
+    const erc721CollectionEntity = await this.contractService.findOne({
       address: context.address.toLowerCase(),
     });
 
@@ -136,13 +136,13 @@ export class Erc721DropboxServiceEth {
       args: { from, tokenId, templateId },
     } = event;
 
-    const erc721TemplateEntity = await this.erc721TemplateService.findOne({ id: ~~templateId });
+    const erc721TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
 
     if (!erc721TemplateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc721TokenEntity = await this.erc721TokenService.create({
+    const erc721TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: erc721TemplateEntity.attributes,
       owner: from.toLowerCase(),
@@ -157,13 +157,13 @@ export class Erc721DropboxServiceEth {
       args: { collection, tokenId },
     } = event;
 
-    const erc721CollectionEntity = await this.erc721ContractService.findOne({ address: collection.toLowerCase() });
+    const erc721CollectionEntity = await this.contractService.findOne({ address: collection.toLowerCase() });
 
     if (!erc721CollectionEntity) {
       throw new NotFoundException("collectionNotFound");
     }
 
-    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");

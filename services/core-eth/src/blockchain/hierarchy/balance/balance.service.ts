@@ -3,10 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber } from "ethers";
 
-import { BalanceEntity } from "../../blockchain/hierarchy/balance/balance.entity";
+import { BalanceEntity } from "./balance.entity";
 
 @Injectable()
-export class Erc1155BalanceService {
+export class BalanceService {
   constructor(
     @InjectRepository(BalanceEntity)
     private readonly erc1155BalanceEntityRepository: Repository<BalanceEntity>,
@@ -44,7 +44,7 @@ export class Erc1155BalanceService {
     if (!balanceEntity) {
       throw new NotFoundException("balanceNotFound");
     } else {
-      balanceEntity.amount = BigNumber.from(balanceEntity.amount).add(amount).toString();
+      balanceEntity.amount = BigNumber.from(balanceEntity.amount).sub(amount).toString();
       return balanceEntity.save();
     }
   }

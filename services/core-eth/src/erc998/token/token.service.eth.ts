@@ -21,11 +21,11 @@ import {
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
-import { Erc998TemplateService } from "../template/template.service";
-import { Erc998CollectionService } from "../contract/contract.service";
 import { Erc998TokenHistoryService } from "./token-history/token-history.service";
-import { Erc998TokenService } from "./token.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 
 @Injectable()
 export class Erc998TokenServiceEth {
@@ -37,10 +37,10 @@ export class Erc998TokenServiceEth {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly erc998TokenService: Erc998TokenService,
-    private readonly erc998TemplateService: Erc998TemplateService,
+    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
     private readonly erc998TokenHistoryService: Erc998TokenHistoryService,
-    private readonly erc998CollectionService: Erc998CollectionService,
+    private readonly contractService: ContractService,
   ) {
     this.airdropAddr = configService.get<string>("ERC998_AIRDROP_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC998_ITEM_ADDR", "");
@@ -58,7 +58,7 @@ export class Erc998TokenServiceEth {
     );
     await delay(1618);
 
-    const erc998TokenEntity = await this.erc998TokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -95,7 +95,7 @@ export class Erc998TokenServiceEth {
       args: { tokenId },
     } = event;
 
-    const erc998TokenEntity = await this.erc998TokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -113,7 +113,7 @@ export class Erc998TokenServiceEth {
       args: { royaltyNumerator },
     } = event;
 
-    const erc998CollectionEntity = await this.erc998CollectionService.findOne({
+    const erc998CollectionEntity = await this.contractService.findOne({
       address: context.address.toLowerCase(),
     });
 
@@ -137,13 +137,13 @@ export class Erc998TokenServiceEth {
       args: { from, tokenId, templateId },
     } = event;
 
-    const erc998TemplateEntity = await this.erc998TemplateService.findOne({ id: ~~templateId });
+    const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
 
     if (!erc998TemplateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc998TokenEntity = await this.erc998TokenService.create({
+    const erc998TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: erc998TemplateEntity.attributes,
       owner: from.toLowerCase(),
@@ -158,7 +158,7 @@ export class Erc998TokenServiceEth {
       args: { to, tokenId, templateId, rarity, dropboxId },
     } = event;
 
-    const erc998TemplateEntity = await this.erc998TemplateService.findOne({ id: ~~templateId });
+    const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
 
     if (!erc998TemplateEntity) {
       throw new NotFoundException("templateNotFound");
@@ -166,14 +166,14 @@ export class Erc998TokenServiceEth {
 
     let erc998DropboxEntity; // if minted as Mechanics reward
     if (~~dropboxId !== 0) {
-      erc998DropboxEntity = await this.erc998TokenService.findOne({ id: ~~dropboxId });
+      erc998DropboxEntity = await this.tokenService.findOne({ id: ~~dropboxId });
 
       if (!erc998DropboxEntity) {
         throw new NotFoundException("dropboxNotFound");
       }
     }
 
-    const erc998TokenEntity = await this.erc998TokenService.create({
+    const erc998TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: Object.assign(erc998TemplateEntity.attributes, {
         rarity: Object.values(TokenRarity)[~~rarity],

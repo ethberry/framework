@@ -1,13 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { TokenStatus } from "@framework/types";
-
-import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TokenEntity } from "./token.entity";
 
 @Injectable()
-export class Erc998TokenService {
+export class TokenService {
   constructor(
     @InjectRepository(TokenEntity)
     private readonly tokenEntityRepository: Repository<TokenEntity>,
@@ -38,33 +36,24 @@ export class Erc998TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(tokenId: string, address: string, tokenStatus?: TokenStatus): Promise<TokenEntity | null> {
+  public getToken(tokenId: string, address: string): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("token.erc998Template", "template");
-    queryBuilder.leftJoinAndSelect("template.erc998Collection", "collectionToken");
-    queryBuilder.leftJoinAndSelect("token.erc998Dropbox", "dropbox");
-    queryBuilder.leftJoinAndSelect("dropbox.erc998Collection", "collectionDropbox");
-    queryBuilder.leftJoinAndSelect("dropbox.erc998Template", "templateDropbox");
+    queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    // queryBuilder.leftJoinAndSelect("token.erc998Dropbox", "dropbox");
+    // queryBuilder.leftJoinAndSelect("dropbox.erc998Collection", "collectionDropbox");
+    // queryBuilder.leftJoinAndSelect("dropbox.erc998Template", "templateDropbox");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {
       tokenId,
     });
 
-    queryBuilder.andWhere(
-      new Brackets(qb => {
-        qb.where("collectionToken.address = :address", { address });
-        qb.orWhere("collectionDropbox.address = :address", { address });
-      }),
-    );
-
-    if (tokenStatus) {
-      queryBuilder.andWhere("token.tokenStatus = :tokenStatus", {
-        tokenStatus,
-      });
-    }
+    queryBuilder.andWhere("contract.address = :address", {
+      address,
+    });
 
     return queryBuilder.getOne();
   }

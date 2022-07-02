@@ -21,11 +21,11 @@ import {
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
-import { Erc721TemplateService } from "../template/template.service";
-import { Erc721ContractService } from "../contract/contract.service";
 import { Erc721TokenHistoryService } from "./token-history/token-history.service";
-import { Erc721TokenService } from "./token.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 
 @Injectable()
 export class Erc721TokenServiceEth {
@@ -37,10 +37,10 @@ export class Erc721TokenServiceEth {
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly erc721TokenService: Erc721TokenService,
-    private readonly erc721TemplateService: Erc721TemplateService,
+    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
     private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
-    private readonly erc721ContractService: Erc721ContractService,
+    private readonly contractService: ContractService,
   ) {
     this.airdropAddr = configService.get<string>("ERC721_AIRDROP_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
@@ -58,7 +58,7 @@ export class Erc721TokenServiceEth {
     );
     await delay(1618);
 
-    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -95,7 +95,7 @@ export class Erc721TokenServiceEth {
       args: { tokenId },
     } = event;
 
-    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -113,7 +113,7 @@ export class Erc721TokenServiceEth {
       args: { royaltyNumerator },
     } = event;
 
-    const erc721CollectionEntity = await this.erc721ContractService.findOne({
+    const erc721CollectionEntity = await this.contractService.findOne({
       address: context.address.toLowerCase(),
     });
 
@@ -137,13 +137,13 @@ export class Erc721TokenServiceEth {
       args: { from, tokenId, templateId },
     } = event;
 
-    const erc721TemplateEntity = await this.erc721TemplateService.findOne({ id: ~~templateId });
+    const erc721TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
 
     if (!erc721TemplateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc721TokenEntity = await this.erc721TokenService.create({
+    const erc721TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: erc721TemplateEntity.attributes,
       owner: from.toLowerCase(),
@@ -158,7 +158,7 @@ export class Erc721TokenServiceEth {
       args: { to, tokenId, templateId, rarity, dropboxId },
     } = event;
 
-    const erc721TemplateEntity = await this.erc721TemplateService.findOne({ id: ~~templateId });
+    const erc721TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
 
     if (!erc721TemplateEntity) {
       throw new NotFoundException("templateNotFound");
@@ -166,14 +166,14 @@ export class Erc721TokenServiceEth {
 
     let erc721DropboxEntity; // if minted as Mechanics reward
     if (~~dropboxId !== 0) {
-      erc721DropboxEntity = await this.erc721TokenService.findOne({ id: ~~dropboxId });
+      erc721DropboxEntity = await this.tokenService.findOne({ id: ~~dropboxId });
 
       if (!erc721DropboxEntity) {
         throw new NotFoundException("dropboxNotFound");
       }
     }
 
-    const erc721TokenEntity = await this.erc721TokenService.create({
+    const erc721TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: Object.assign(erc721TemplateEntity.attributes, {
         rarity: Object.values(TokenRarity)[~~rarity],

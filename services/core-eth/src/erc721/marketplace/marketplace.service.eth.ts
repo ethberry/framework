@@ -11,8 +11,8 @@ import {
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { Erc721MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
-import { Erc721TokenService } from "../token/token.service";
-import { Erc721TemplateService } from "../template/template.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 // import { Erc721DropboxService } from "../../mechanics/dropbox/dropbox.service";
 
 @Injectable()
@@ -22,8 +22,8 @@ export class Erc721MarketplaceServiceEth {
     private readonly loggerService: LoggerService,
     private readonly contractManagerService: ContractManagerService,
     private readonly erc721MarketplaceHistoryService: Erc721MarketplaceHistoryService,
-    private readonly erc721TokenService: Erc721TokenService,
-    private readonly erc721TemplateService: Erc721TemplateService, // private readonly erc721DropboxService: Erc721DropboxService,
+    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService, // private readonly erc721DropboxService: Erc721DropboxService,
   ) {}
 
   public async redeem(event: ILogEvent<IErc721MarketplaceRedeem>, context: Log): Promise<void> {
@@ -31,13 +31,13 @@ export class Erc721MarketplaceServiceEth {
       args: { from, tokenId, templateId },
     } = event;
 
-    const erc721TemplateEntity = await this.erc721TemplateService.findOne({ id: ~~templateId });
+    const erc721TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
 
     if (!erc721TemplateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc721TokenEntity = await this.erc721TokenService.create({
+    const erc721TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: Object.assign(erc721TemplateEntity.attributes, {
         rarity: TokenRarity.COMMON,
@@ -60,7 +60,7 @@ export class Erc721MarketplaceServiceEth {
   //     throw new NotFoundException("templateNotFound");
   //   }
   //
-  //   const erc721TokenEntity = await this.erc721TokenService.create({
+  //   const erc721TokenEntity = await this.tokenService.create({
   //     tokenId,
   //     attributes: {},
   //     owner: from.toLowerCase(),
