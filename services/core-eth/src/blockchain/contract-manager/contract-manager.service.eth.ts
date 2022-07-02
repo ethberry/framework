@@ -15,14 +15,14 @@ import {
   VestingTemplate,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
-  IContractManagerERC20VestingDeployed,
+  IContractManagerVestingDeployed,
   IContractManagerERC721TokenDeployed,
   TContractManagerEventData,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
 import { Erc20ContractService } from "../../erc20/contract/contract.service";
-import { VestingService } from "../../mechanics/vesting/vesting/vesting.service";
+import { VestingService } from "../../mechanics/vesting/vesting.service";
 import { Erc721ContractService } from "../../erc721/contract/contract.service";
 import { Erc1155CollectionService } from "../../erc1155/contract/contract.service";
 import { Erc20LogService } from "../../erc20/token/token-log/token-log.service";
@@ -53,7 +53,7 @@ export class ContractManagerServiceEth {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
 
-  public async erc20Vesting(event: ILogEvent<IContractManagerERC20VestingDeployed>, ctx: Log): Promise<void> {
+  public async vesting(event: ILogEvent<IContractManagerVestingDeployed>, ctx: Log): Promise<void> {
     const {
       args: { addr, beneficiary, startTimestamp, duration, templateId },
     } = event;

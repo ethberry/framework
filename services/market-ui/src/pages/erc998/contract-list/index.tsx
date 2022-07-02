@@ -8,16 +8,16 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { CollectionItem } from "./item";
 
-export const Erc998CollectionList: FC = () => {
+export const Erc998ContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
-    baseUrl: "/erc998-collections",
+    baseUrl: "/erc998-contracts",
   });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998-collections"]} />
+      <Breadcrumbs path={["dashboard", "erc998-contracts"]} />
 
-      <PageHeader message="pages.erc998-collections.title" />
+      <PageHeader message="pages.erc998-contracts.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

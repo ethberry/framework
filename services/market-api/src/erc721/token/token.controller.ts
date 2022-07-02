@@ -4,10 +4,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { Erc721TokenService } from "./token.service";
-import { Erc721AssetSearchDto } from "./dto";
 import { UserEntity } from "../../user/user.entity";
-import { Erc721TokenAutocompleteDto } from "./dto/autocomplete";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TokenAutocompleteDto } from "../../blockchain/hierarchy/token/dto/autocomplete";
+import { AssetSearchDto } from "../../blockchain/hierarchy/token/dto";
 
 @ApiBearerAuth()
 @Controller("/erc721-tokens")
@@ -16,15 +16,12 @@ export class Erc721TokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(
-    @Query() dto: Erc721AssetSearchDto,
-    @User() userEntity: UserEntity,
-  ): Promise<[Array<TokenEntity>, number]> {
+  public search(@Query() dto: AssetSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
     return this.erc721TokenService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc721TokenAutocompleteDto): Promise<Array<TokenEntity>> {
+  public autocomplete(@Query() dto: TokenAutocompleteDto): Promise<Array<TokenEntity>> {
     return this.erc721TokenService.autocomplete(dto);
   }
 

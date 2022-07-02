@@ -3,8 +3,8 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { Erc721TemplateService } from "./template.service";
-import { Erc721TemplateSearchDto } from "./dto";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import { TemplateSearchDto } from "../../blockchain/hierarchy/template/dto";
 
 @Public()
 @Controller("/erc721-templates")
@@ -13,7 +13,7 @@ export class Erc721TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc721TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+  public search(@Query() dto: TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc721TemplateService.search(dto);
   }
 
@@ -25,6 +25,6 @@ export class Erc721TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc721TemplateService.findOne({ id }, { relations: ["erc721Collection"] });
+    return this.erc721TemplateService.findOne({ id }, { relations: ["contract"] });
   }
 }

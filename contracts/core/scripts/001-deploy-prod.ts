@@ -27,7 +27,7 @@ async function main() {
   // ERC20 Vesting Factory
   const vestFactory = await ethers.getContractFactory("VestingFactory");
   const vestInstance = await vestFactory.deploy();
-  console.info(`ERC20_VESTING=${vestInstance.address.toLowerCase()}`);
+  console.info(`VESTING=${vestInstance.address.toLowerCase()}`);
 
   // ERC721 contract - Item
   const itemFactory = await ethers.getContractFactory("Item");

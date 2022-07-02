@@ -9,7 +9,7 @@ import {
   ContractType,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
-  IContractManagerERC20VestingDeployed,
+  IContractManagerVestingDeployed,
   IContractManagerERC721TokenDeployed,
 } from "@framework/types";
 
@@ -23,11 +23,8 @@ export class ContractManagerControllerEth {
     contractType: ContractType.CONTRACT_MANAGER,
     eventName: ContractManagerEventType.ERC20VestingDeployed,
   })
-  public erc20Vesting(
-    @Payload() event: ILogEvent<IContractManagerERC20VestingDeployed>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.erc20Vesting(event, ctx);
+  public erc20Vesting(@Payload() event: ILogEvent<IContractManagerVestingDeployed>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.vesting(event, ctx);
   }
 
   @EventPattern({

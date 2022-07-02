@@ -14,7 +14,7 @@ import { Erc1155TokenSingleBuyButton } from "../../../components/buttons";
 
 export const Erc1155Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
-    baseUrl: "/erc721-tokens",
+    baseUrl: "/erc1155-templates",
     empty: {
       title: "",
       description: emptyStateString,

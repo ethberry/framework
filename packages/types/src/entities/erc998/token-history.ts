@@ -1,5 +1,5 @@
 import { IIdDateBase } from "@gemunion/types-collection";
-import { IToken } from "../hierarchy/token";
+import { IToken } from "../blockchain/hierarchy/token";
 
 export enum Erc998TokenEventType {
   Approval = "Approval",

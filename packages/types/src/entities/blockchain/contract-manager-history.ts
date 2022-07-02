@@ -7,7 +7,7 @@ export enum ContractManagerEventType {
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
 }
 
-export interface IContractManagerERC20VestingDeployed {
+export interface IContractManagerVestingDeployed {
   addr: string;
   beneficiary: string;
   startTimestamp: string; // in seconds
@@ -39,7 +39,7 @@ export interface IContractManagerERC1155TokenDeployed {
 }
 
 export type TContractManagerEventData =
-  | IContractManagerERC20VestingDeployed
+  | IContractManagerVestingDeployed
   | IContractManagerERC20TokenDeployed
   | IContractManagerERC721TokenDeployed
   | IContractManagerERC1155TokenDeployed;

@@ -11,4 +11,4 @@ import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.ent
   controllers: [Erc1155ContractController],
   exports: [Erc1155ContractService],
 })
-export class Erc1155CollectionModule {}
+export class Erc1155ContractModule {}

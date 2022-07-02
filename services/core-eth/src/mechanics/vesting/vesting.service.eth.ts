@@ -5,8 +5,8 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { VestingEventType, IVestingERC20Released, IVestingEtherReleased, TVestingEventData } from "@framework/types";
 
-import { VestingHistoryService } from "../vesting-history/vesting-history.service";
-import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
+import { VestingHistoryService } from "./vesting-history/vesting-history.service";
+import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()
 export class VestingServiceEth {

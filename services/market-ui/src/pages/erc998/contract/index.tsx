@@ -11,9 +11,9 @@ import { useCollection } from "@gemunion/react-hooks";
 import { Erc998TemplateList } from "../template-list";
 import { useStyles } from "./styles";
 
-export const Erc998Collection: FC = () => {
+export const Erc998Contract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
-    baseUrl: "/erc998-collections",
+    baseUrl: "/erc998-contracts",
     empty: {
       title: "",
       description: emptyStateString,
@@ -29,9 +29,9 @@ export const Erc998Collection: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998-collections", "erc998-contract"]} data={[{}, {}, selected]} />
+      <Breadcrumbs path={["dashboard", "erc998-contracts", "erc998-contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.erc998-collection.title" data={selected} />
+      <PageHeader message="pages.erc998-contracts.title" data={selected} />
 
       <Box display="flex">
         <Box margin={1}>

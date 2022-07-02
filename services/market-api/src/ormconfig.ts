@@ -8,7 +8,7 @@ import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-his
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { Erc998TokenHistoryEntity } from "./erc998/token/token-history/token-history.entity";
-import { Erc1155TokenHistoryEntity } from "./erc1155/token-history/token-history.entity";
+import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";

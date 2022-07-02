@@ -1,12 +1,11 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
-import { useParams } from "react-router";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, ITemplateSearchDto, TemplateStatus } from "@framework/types";
+import { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { TemplateItem } from "./item";
@@ -19,16 +18,13 @@ export interface IErc721TemplateListProps {
 export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
   const { embedded } = props;
 
-  const { id = "" } = useParams<{ id: string }>();
-
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<ITemplate, ITemplateSearchDto>({
       baseUrl: "/erc721-templates",
       embedded,
       search: {
         query: "",
-        contractIds: id ? [~~id] : [],
-        templateStatus: [TemplateStatus.ACTIVE],
+        contractIds: [],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
       },

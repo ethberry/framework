@@ -3,8 +3,8 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { Erc998TemplateService } from "./template.service";
-import { Erc998TemplateSearchDto } from "./dto";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import { TemplateSearchDto } from "../../blockchain/hierarchy/template/dto";
 
 @Public()
 @Controller("/erc998-templates")
@@ -13,7 +13,7 @@ export class Erc998TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc998TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
+  public search(@Query() dto: TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc998TemplateService.search(dto);
   }
 

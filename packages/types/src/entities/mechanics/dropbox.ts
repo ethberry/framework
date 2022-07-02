@@ -1,7 +1,7 @@
 import { ISearchable } from "@gemunion/types-collection";
 
-import { IContract } from "../hierarchy/contract";
-import { ITemplate } from "../hierarchy/template";
+import { IContract } from "../blockchain/hierarchy/contract";
+import { ITemplate } from "../blockchain/hierarchy/template";
 import { IAsset } from "../blockchain/asset";
 
 export enum DropboxStatus {

@@ -5,7 +5,7 @@ import { ContractManagerControllerEth } from "./contract-manager.controller.eth"
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
 import { ContractManagerHistoryModule } from "./contract-manager-history/contract-manager-history.module";
-import { VestingModule } from "../../mechanics/vesting/vesting/vesting.module";
+import { VestingModule } from "../../mechanics/vesting/vesting.module";
 import { Erc721ContractModule } from "../../erc721/contract/contract.module";
 import { Erc1155CollectionModule } from "../../erc1155/contract/contract.module";
 import { Erc20TokenLogModule } from "../../erc20/token/token-log/token-log.module";

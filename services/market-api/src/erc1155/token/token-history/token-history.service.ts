@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { Erc1155TokenHistoryEntity } from "./token-history.entity";
-import { UserEntity } from "../../user/user.entity";
+import { UserEntity } from "../../../user/user.entity";
 import { Erc1155TokenEventType, IErc1155TokenApprovalForAll } from "@framework/types";
 
 @Injectable()
@@ -21,13 +21,13 @@ export class Erc1155TokenHistoryService {
   }
 
   public async getApprove(userEntity: UserEntity, contract: string): Promise<boolean> {
-    const wallet = userEntity.wallet;
+    const account = userEntity.wallet;
     const queryBuilder = this.Erc1155TokenHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
     queryBuilder.where({ address: contract, eventType: Erc1155TokenEventType.ApprovalForAll });
 
-    queryBuilder.andWhere("history.event_data->>'account' = :wallet", { wallet });
+    queryBuilder.andWhere("history.event_data->>'account' = :account", { account });
     queryBuilder.addOrderBy("history.updatedAt", "DESC");
     const historyEntity = await queryBuilder.getOne();
 

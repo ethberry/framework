@@ -36,7 +36,7 @@ export * from "./mechanics/staking-rule";
 export * from "./mechanics/staking-stake";
 export * from "./mechanics/staking-history";
 
-export * from "./hierarchy/balance";
-export * from "./hierarchy/contract";
-export * from "./hierarchy/template";
-export * from "./hierarchy/token";
+export * from "./blockchain/hierarchy/balance";
+export * from "./blockchain/hierarchy/contract";
+export * from "./blockchain/hierarchy/template";
+export * from "./blockchain/hierarchy/token";

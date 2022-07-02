@@ -1,8 +1,9 @@
 import { Module } from "@nestjs/common";
 
 import { TemplateModule } from "./template/template.module";
+import { ContractModule } from "./contract/contract.module";
 
 @Module({
-  imports: [TemplateModule],
+  imports: [ContractModule, TemplateModule],
 })
 export class HierarchyModule {}

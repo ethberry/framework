@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 
-import { Erc998CollectionList } from "./contract-list";
-import { Erc998Collection } from "./contract";
+import { Erc998ContractList } from "./contract-list";
+import { Erc998Contract } from "./contract";
 import { Erc998TemplateList } from "./template-list";
 import { Erc998Template } from "./template";
 import { Erc998TokenList } from "./token-list";
@@ -9,10 +9,10 @@ import { Erc998Token } from "./token";
 
 export const erc998Routes: Array<RouteObject> = [
   {
-    path: "/erc998-collections",
+    path: "/erc998-contracts",
     children: [
-      { index: true, element: <Erc998CollectionList /> },
-      { path: "/erc998-collections/:id", element: <Erc998Collection /> },
+      { index: true, element: <Erc998ContractList /> },
+      { path: "/erc998-contracts/:id", element: <Erc998Contract /> },
     ],
   },
   {

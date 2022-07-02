@@ -4,7 +4,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
-import { VestingEntity } from "./mechanics/vesting/vesting/vesting.entity";
+import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace/marketplace-history/marketplace-history.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";

@@ -13,7 +13,7 @@ import { ContractManagerService } from "../../blockchain/contract-manager/contra
 import { Erc721MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
 import { Erc721TokenService } from "../token/token.service";
 import { Erc721TemplateService } from "../template/template.service";
-import { Erc721DropboxService } from "../../mechanics/dropbox/dropbox.service";
+// import { Erc721DropboxService } from "../../mechanics/dropbox/dropbox.service";
 
 @Injectable()
 export class Erc721MarketplaceServiceEth {
@@ -23,8 +23,7 @@ export class Erc721MarketplaceServiceEth {
     private readonly contractManagerService: ContractManagerService,
     private readonly erc721MarketplaceHistoryService: Erc721MarketplaceHistoryService,
     private readonly erc721TokenService: Erc721TokenService,
-    private readonly erc721TemplateService: Erc721TemplateService,
-    private readonly erc721DropboxService: Erc721DropboxService,
+    private readonly erc721TemplateService: Erc721TemplateService, // private readonly erc721DropboxService: Erc721DropboxService,
   ) {}
 
   public async redeem(event: ILogEvent<IErc721MarketplaceRedeem>, context: Log): Promise<void> {

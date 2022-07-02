@@ -1,32 +1,27 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { TemplateEntity } from "./template.entity";
-import { ITemplateSearchDto, TemplateStatus } from "@framework/types";
+import { ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateNewDto } from "./interfaces";
 
 @Injectable()
 export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
-    private readonly templateEntityRepository: Repository<TemplateEntity>,
+    protected readonly templateEntityRepository: Repository<TemplateEntity>,
   ) {}
 
-  public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
-    const { query, templateStatus, skip, take, contractIds, minPrice, maxPrice } = dto;
+  public async search(dto: ITemplateSearchDto, contractType: TokenType): Promise<[Array<TemplateEntity>, number]> {
+    const { query, skip, take, contractIds /*, minPrice, maxPrice */ } = dto;
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    if (templateStatus) {
-      if (templateStatus.length === 1) {
-        queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: templateStatus[0] });
-      } else {
-        queryBuilder.andWhere("template.templateStatus IN(:...templateStatus)", { templateStatus });
-      }
-    }
+    queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -52,18 +47,18 @@ export class TemplateService {
       );
     }
 
-    if (maxPrice) {
-      queryBuilder.andWhere("template.price <= :maxPrice", { maxPrice });
-    }
-
-    if (minPrice) {
-      queryBuilder.andWhere("template.price >= :minPrice", { minPrice });
-    }
+    // if (maxPrice) {
+    //   queryBuilder.andWhere("template.price <= :maxPrice", { maxPrice });
+    // }
+    //
+    // if (minPrice) {
+    //   queryBuilder.andWhere("template.price >= :minPrice", { minPrice });
+    // }
 
     queryBuilder.andWhere(
       new Brackets(qb => {
         qb.where("template.amount = 0");
-        qb.orWhere("template.amount > template.instanceCount");
+        qb.orWhere("template.amount > template.cap");
       }),
     );
 
@@ -114,5 +109,12 @@ export class TemplateService {
     queryBuilder.take(10);
 
     return queryBuilder.getManyAndCount();
+  }
+
+  public findOne(
+    where: FindOptionsWhere<TemplateEntity>,
+    options?: FindOneOptions<TemplateEntity>,
+  ): Promise<TemplateEntity | null> {
+    return this.templateEntityRepository.findOne({ where, ...options });
   }
 }

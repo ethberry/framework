@@ -1,3 +1,3 @@
 export interface ITokenAutocompleteDto {
-  wallet: string;
+  account: string;
 }

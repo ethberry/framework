@@ -41,7 +41,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '3',
         'MINTED',
-        30103,
+        20103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

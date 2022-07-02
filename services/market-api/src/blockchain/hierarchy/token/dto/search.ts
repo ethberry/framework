@@ -5,7 +5,7 @@ import { Transform, Type } from "class-transformer";
 import { PaginationDto } from "@gemunion/collection";
 import { IErc721AssetSearchDto, TokenRarity } from "@framework/types";
 
-export class Erc721AssetSearchDto extends PaginationDto implements IErc721AssetSearchDto {
+export class AssetSearchDto extends PaginationDto implements IErc721AssetSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,

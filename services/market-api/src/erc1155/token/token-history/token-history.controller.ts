@@ -4,7 +4,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { AddressPipe, ApiAddress, User } from "@gemunion/nest-js-utils";
 
 import { Erc1155TokenHistoryService } from "./token-history.service";
-import { UserEntity } from "../../user/user.entity";
+import { UserEntity } from "../../../user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc1155-token-history")

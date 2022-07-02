@@ -1,11 +1,11 @@
 import { IContract as IDeployable, ISearchable } from "@gemunion/types-collection";
 
-import { IErc20TokenHistory } from "../erc20/token-history";
-import { IErc721TokenHistory } from "../erc721/token-history";
-import { IErc998TokenHistory } from "../erc998/token-history";
-import { IErc1155TokenHistory } from "../erc1155/token-history";
+import { IErc20TokenHistory } from "../../erc20/token-history";
+import { IErc721TokenHistory } from "../../erc721/token-history";
+import { IErc998TokenHistory } from "../../erc998/token-history";
+import { IErc1155TokenHistory } from "../../erc1155/token-history";
 import { ITemplate } from "./template";
-import { TokenType } from "../blockchain/common";
+import { TokenType } from "../common";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",

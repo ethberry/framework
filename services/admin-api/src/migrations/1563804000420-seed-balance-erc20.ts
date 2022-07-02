@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
 
-export class SeedBalanceErc1155At1563804020410 implements MigrationInterface {
+export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -18,19 +18,19 @@ export class SeedBalanceErc1155At1563804020410 implements MigrationInterface {
       ) VALUES (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        40101,
+        10001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        40102,
+        10002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        40103,
+        10006,
         '${currentDateTime}',
         '${currentDateTime}'
       );
