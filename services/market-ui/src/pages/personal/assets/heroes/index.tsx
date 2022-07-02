@@ -7,11 +7,11 @@ import { stringify } from "qs";
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { IErc998AssetSearchDto, IToken } from "@framework/types";
+import { IErc998AssetSearchDto, IToken, TokenType } from "@framework/types";
 
 import { AssetsTabs, ITabPanelProps } from "../tabs";
 import { Erc998Token } from "../../../erc998/token-list/item";
-import { Erc998TokenSearchForm } from "../../../erc998/token-list/form";
+import { TokenSearchForm } from "../../../../components/forms/token-search";
 
 export const Heroes: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -38,7 +38,12 @@ export const Heroes: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc998TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <TokenSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC998]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

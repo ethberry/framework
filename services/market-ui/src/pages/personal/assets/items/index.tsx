@@ -5,12 +5,12 @@ import { FilterList } from "@mui/icons-material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc721AssetSearchDto, IToken } from "@framework/types";
+import { IErc721AssetSearchDto, IToken, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { AssetsTabs, ITabPanelProps } from "../tabs";
 import { Erc721Token } from "../../../erc721/token-list/item";
-import { Erc721TokenSearchForm } from "../../../erc721/token-list/form";
+import { TokenSearchForm } from "../../../../components/forms/token-search";
 
 export const Items: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -37,7 +37,12 @@ export const Items: FC<ITabPanelProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <TokenSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
