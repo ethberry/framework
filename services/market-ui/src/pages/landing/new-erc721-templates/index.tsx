@@ -18,7 +18,7 @@ export const NewErc721: FC = () => {
   const { fn, isLoading } = useApiCall(
     async api => {
       return api.fetchJson({
-        url: "/uni-templates/new",
+        url: "/templates/new",
         data: {
           tokenType: TokenType.ERC721,
         },

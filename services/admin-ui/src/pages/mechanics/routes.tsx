@@ -7,6 +7,7 @@ import { Dropbox } from "./dropbox";
 import { Exchange } from "./exchange";
 import { Staking } from "./staking-rules";
 import { Stakes } from "./staking-stakes";
+import { Vesting } from "./vesting";
 
 export const mechanics: Array<RouteObject> = [
   {
@@ -47,6 +48,14 @@ export const mechanics: Array<RouteObject> = [
     children: [
       { index: true, element: <Stakes /> },
       { path: "/staking-stakes/:id", element: <Stakes /> },
+    ],
+  },
+  {
+    path: "/vesting",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Vesting /> },
+      { path: "/vesting/:id", element: <Vesting /> },
     ],
   },
 ];

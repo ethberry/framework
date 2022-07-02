@@ -26,7 +26,7 @@ import {
   ContractManagerSearchDto,
   Erc1155TokenDeployDto,
   Erc20TokenDeployDto,
-  Erc20VestingDeployDto,
+  VestingDeployDto,
   Erc721TokenDeployDto,
 } from "./dto";
 import { IContractManagerUpdateDto } from "./interfaces";
@@ -77,7 +77,7 @@ export class ContractManagerController {
   }
 
   @Post("/erc20-vesting")
-  public erc20Vesting(@Body() dto: Erc20VestingDeployDto): Promise<IServerSignature> {
+  public erc20Vesting(@Body() dto: VestingDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc20Vesting(dto);
   }
 

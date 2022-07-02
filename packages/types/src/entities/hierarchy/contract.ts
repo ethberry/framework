@@ -2,7 +2,7 @@ import { IContract as IDeployable, ISearchable } from "@gemunion/types-collectio
 
 import { IErc20TokenHistory } from "../erc20/token-history";
 import { IErc721TokenHistory } from "../erc721/token-history";
-import { ITokenHistory } from "../erc998/token-history";
+import { IErc998TokenHistory } from "../erc998/token-history";
 import { IErc1155TokenHistory } from "../erc1155/token-history";
 import { ITemplate } from "./template";
 import { TokenType } from "../blockchain/common";
@@ -64,5 +64,5 @@ export interface IContract extends IDeployable, ISearchable {
   contractRole: ContractRole;
   contractTemplate: ContractTemplate;
   templates: Array<ITemplate>;
-  history?: Array<IErc20TokenHistory | IErc721TokenHistory | ITokenHistory | IErc1155TokenHistory>;
+  history?: Array<IErc20TokenHistory | IErc721TokenHistory | IErc998TokenHistory | IErc1155TokenHistory>;
 }

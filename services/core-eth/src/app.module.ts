@@ -12,7 +12,6 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
-import { VestingModule } from "./vesting/vesting.module";
 import { Erc20Module } from "./erc20/erc20.module";
 import { Erc721Module } from "./erc721/erc721.module";
 import { Erc998Module } from "./erc998/erc998.module";
@@ -46,7 +45,6 @@ import { NotificatorModule } from "./notificator/notificator.module";
     }),
     RequestLoggerModule,
     HealthModule,
-    VestingModule,
     Erc20Module,
     Erc721Module,
     Erc998Module,

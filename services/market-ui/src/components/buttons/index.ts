@@ -1,4 +1,4 @@
-export * from "./erc20/vesting-release";
+export * from "./mechanics/vesting-release";
 
 export * from "./erc721/template-buy";
 export * from "./erc721/token-sell";

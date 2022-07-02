@@ -3,27 +3,27 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber } from "ethers";
 
-import { Erc1155BalanceEntity } from "./balance.entity";
+import { BalanceEntity } from "../../blockchain/hierarchy/balance/balance.entity";
 
 @Injectable()
 export class Erc1155BalanceService {
   constructor(
-    @InjectRepository(Erc1155BalanceEntity)
-    private readonly erc1155BalanceEntityRepository: Repository<Erc1155BalanceEntity>,
+    @InjectRepository(BalanceEntity)
+    private readonly erc1155BalanceEntityRepository: Repository<BalanceEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<Erc1155BalanceEntity>,
-    options?: FindOneOptions<Erc1155BalanceEntity>,
-  ): Promise<Erc1155BalanceEntity | null> {
+    where: FindOptionsWhere<BalanceEntity>,
+    options?: FindOneOptions<BalanceEntity>,
+  ): Promise<BalanceEntity | null> {
     return this.erc1155BalanceEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<Erc1155BalanceEntity>): Promise<Erc1155BalanceEntity> {
+  public async create(dto: DeepPartial<BalanceEntity>): Promise<BalanceEntity> {
     return this.erc1155BalanceEntityRepository.create(dto).save();
   }
 
-  public async increment(tokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
+  public async increment(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
     const balanceEntity = await this.findOne({ tokenId, account });
 
     if (!balanceEntity) {
@@ -38,7 +38,7 @@ export class Erc1155BalanceService {
     return balanceEntity.save();
   }
 
-  public async decrement(tokenId: number, account: string, amount: string): Promise<Erc1155BalanceEntity> {
+  public async decrement(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
     const balanceEntity = await this.findOne({ tokenId, account });
 
     if (!balanceEntity) {

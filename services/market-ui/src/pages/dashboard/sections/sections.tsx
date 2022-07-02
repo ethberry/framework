@@ -23,14 +23,6 @@ export const Sections: FC = () => {
             <FormattedMessage id="pages.dashboard.sections.marketplace" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/craft">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.sections.craft" />
-          </ListItemText>
-        </ListItem>
       </List>
     </Paper>
   );

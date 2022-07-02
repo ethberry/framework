@@ -4,7 +4,7 @@ import {
   Erc998TokenEventType,
   ITokenApprove,
   ITokenApprovedForAll,
-  ITokenHistory,
+  IErc998TokenHistory,
   ITokenTransfer,
 } from "@framework/types";
 import { ns } from "@framework/constants";
@@ -12,7 +12,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { TokenEntity } from "../../../blockchain/hierarchy/token/token.entity";
 
 @Entity({ schema: ns, name: "erc998_token_history" })
-export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements ITokenHistory {
+export class Erc998TokenHistoryEntity extends IdDateBaseEntity implements IErc998TokenHistory {
   @Column({ type: "varchar" })
   public address: string;
 

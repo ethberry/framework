@@ -60,9 +60,9 @@ import { SeedBalanceErc1155At1563804020410 } from "./migrations/1563804000410-se
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
 
 import { CreateErc20ContractHistory1563804010130 } from "./migrations/1563804010130-create-erc20-contract-history";
-import { CreateErc20Vesting1563804010210 } from "./migrations/1563804010210-create-erc20-vesting";
-import { SeedErc20Vesting1563804010220 } from "./migrations/1563804010220-seed-erc20-vesting";
-import { CreateErc20VestingHistory1563804010230 } from "./migrations/1563804010230-create-erc20-vesting-history";
+import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-vesting";
+import { SeedVesting1563804010220 } from "./migrations/1563804010220-seed-vesting";
+import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-create-vesting-history";
 
 import { CreateErc998ContractHistory1563804030330 } from "./migrations/1563804030330-create-erc998-contract-history";
 import { CreateErc998MarketplaceHistory1563804030510 } from "./migrations/1563804030510-create-erc998-marketplace-history";
@@ -84,7 +84,7 @@ import { SeedExchangeErc1155Erc1155At1653616448020 } from "./migrations/16536164
 import { SeedExchangeErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-exchange-erc721-erc1155-recipe";
 import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-exchnage-history";
 
-import { Erc20VestingEntity } from "./erc20/vesting/vesting.entity";
+import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { CreateContractManagerHistory1652682493386 } from "./migrations/1652682493386-create-contract-manager-history";
 import { CreateContractManager1652962207600 } from "./migrations/1652962207600-create-contract-manager";
 import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager";
@@ -112,7 +112,7 @@ const config: PostgresConnectionOptions = {
     ContractManagerEntity,
     AccessControlEntity,
     AccessListEntity,
-    Erc20VestingEntity,
+    VestingEntity,
     ContractEntity,
     TemplateEntity,
     StakingRulesEntity,
@@ -180,9 +180,9 @@ const config: PostgresConnectionOptions = {
     CreateAssetComponent1563804001220,
 
     CreateErc20ContractHistory1563804010130,
-    CreateErc20Vesting1563804010210,
-    SeedErc20Vesting1563804010220,
-    CreateErc20VestingHistory1563804010230,
+    CreateVesting1563804010210,
+    SeedVesting1563804010220,
+    CreateVestingHistory1563804010230,
     CreateErc998ContractHistory1563804030330,
     CreateErc998MarketplaceHistory1563804030510,
     CreateErc721ContractHistory1563804040330,

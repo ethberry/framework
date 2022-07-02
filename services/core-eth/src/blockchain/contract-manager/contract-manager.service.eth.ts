@@ -12,7 +12,7 @@ import {
   ContractManagerEventType,
   ContractTemplate,
   ContractType,
-  Erc20VestingTemplate,
+  VestingTemplate,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
   IContractManagerERC20VestingDeployed,
@@ -22,13 +22,13 @@ import {
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
 import { Erc20ContractService } from "../../erc20/contract/contract.service";
-import { Erc20VestingService } from "../../vesting/vesting/vesting.service";
+import { VestingService } from "../../mechanics/vesting/vesting/vesting.service";
 import { Erc721ContractService } from "../../erc721/contract/contract.service";
 import { Erc1155CollectionService } from "../../erc1155/contract/contract.service";
 import { Erc20LogService } from "../../erc20/token/token-log/token-log.service";
 import { Erc721TokenLogService } from "../../erc721/token/token-log/token-log.service";
 import { Erc1155LogService } from "../../erc1155/token/token-log/token-log.service";
-import { VestingLogService } from "../../vesting/vesting-log/vesting.log.service";
+import { VestingLogService } from "../../mechanics/vesting/vesting-log/vesting.log.service";
 import { ContractManagerService } from "./contract-manager.service";
 
 @Injectable()
@@ -41,7 +41,7 @@ export class ContractManagerServiceEth {
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
-    private readonly erc20VestingService: Erc20VestingService,
+    private readonly erc20VestingService: VestingService,
     private readonly erc20ContractService: Erc20ContractService,
     private readonly erc721ContractService: Erc721ContractService,
     private readonly erc1155CollectionService: Erc1155CollectionService,
@@ -65,7 +65,7 @@ export class ContractManagerServiceEth {
       beneficiary: beneficiary.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
       duration: ~~duration * 1000, // msec
-      contractTemplate: Object.values(Erc20VestingTemplate)[~~templateId],
+      contractTemplate: Object.values(VestingTemplate)[~~templateId],
       chainId: this.chainId,
     });
 

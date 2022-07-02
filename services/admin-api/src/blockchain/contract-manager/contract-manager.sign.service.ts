@@ -7,12 +7,12 @@ import { IServerSignature } from "@gemunion/types-collection";
 import {
   Erc1155ContractTemplate,
   Erc20ContractTemplate,
-  Erc20VestingTemplate,
   Erc721ContractTemplate,
   IContractDeployDto,
   IErc20TokenDeployDto,
-  IErc20VestingDeployDto,
+  IVestingDeployDto,
   IErc721ContractDeployDto,
+  VestingTemplate,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -71,7 +71,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async erc20Vesting(dto: IErc20VestingDeployDto): Promise<IServerSignature> {
+  public async erc20Vesting(dto: IVestingDeployDto): Promise<IServerSignature> {
     const { contractTemplate, beneficiary, startTimestamp, duration } = dto;
     const nonce = utils.randomBytes(32);
     const signature = await this.signer._signTypedData(
@@ -100,7 +100,7 @@ export class ContractManagerSignService {
         beneficiary,
         startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds
         duration: duration * 60 * 60 * 24, // in seconds
-        templateId: Object.keys(Erc20VestingTemplate).indexOf(contractTemplate),
+        templateId: Object.keys(VestingTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -190,13 +190,13 @@ export class ContractManagerSignService {
     }
   }
 
-  public getBytecodeByErc20VestingTemplate(contractTemplate: Erc20VestingTemplate) {
+  public getBytecodeByErc20VestingTemplate(contractTemplate: VestingTemplate) {
     switch (contractTemplate) {
-      case Erc20VestingTemplate.LINEAR:
+      case VestingTemplate.LINEAR:
         return LinearVesting.bytecode;
-      case Erc20VestingTemplate.GRADED:
+      case VestingTemplate.GRADED:
         return GradedVesting.bytecode;
-      case Erc20VestingTemplate.CLIFF:
+      case VestingTemplate.CLIFF:
         return CliffVesting.bytecode;
       default:
         throw new Error("Unknown template");

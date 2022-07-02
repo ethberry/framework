@@ -6,8 +6,8 @@ export * from "./settings";
 export * from "./leaderboard";
 
 export * from "./erc20/token-history";
-export * from "./erc20/vesting";
-export * from "./erc20/vesting-history";
+export * from "./mechanics/vesting";
+export * from "./mechanics/vesting-history";
 
 export * from "./erc721/token-history";
 export * from "./erc721/marketplace-history";

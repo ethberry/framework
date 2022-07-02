@@ -4,14 +4,13 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
-import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
+import { VestingEntity } from "./mechanics/vesting/vesting/vesting.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace/marketplace-history/marketplace-history.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
 import { Erc1155MarketplaceHistoryEntity } from "./erc1155/marketplace/marketplace-history/marketplace-history.entity";
-import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
@@ -35,7 +34,7 @@ const config: PostgresConnectionOptions = {
     AccessControlEntity,
     AccessControlHistoryEntity,
     Erc20TokenHistoryEntity,
-    Erc20VestingEntity,
+    VestingEntity,
     StakingRulesEntity,
     StakingStakesEntity,
     StakingHistoryEntity,
@@ -47,7 +46,6 @@ const config: PostgresConnectionOptions = {
     ExchangeHistoryEntity,
     Erc1155TokenHistoryEntity,
     Erc1155MarketplaceHistoryEntity,
-    Erc1155BalanceEntity,
     ContractEntity,
     TemplateEntity,
     TokenEntity,

@@ -213,10 +213,6 @@
         "title": "ERC1155",
         "templates": "ERC1155 Templates"
       },
-      "erc20": {
-        "title": "ERC20",
-        "vesting": "ERC20 Vesting"
-      },
       "erc721": {
         "airdrop": "ERC721 Airdrop",
         "contracts": "ERC721 Contracts",
@@ -250,11 +246,14 @@
         "marketplace": "Primary marketplace",
         "title": "Sections"
       },
-      "staking": {
-        "leaderboard": "Leaderboard",
-        "reward": "Reward",
-        "stake": "Stake",
-        "title": "Staking"
+      "mechanics": {
+        "leaderboard": "Staking Leaderboard",
+        "exchange": "Exchange",
+        "airdrop": "Airdrop",
+        "reward": "Staking Reward",
+        "stake": "Staking Stake",
+        "title": "Mechanics",
+        "vesting": "Vesting"
       },
       "title": "Dashboard"
     },

@@ -3,7 +3,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 import { UserEntity } from "./user/user.entity";
 import { PageEntity } from "./page/page.entity";
-import { Erc20VestingEntity } from "./erc20/vesting/vesting.entity";
+import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
@@ -24,7 +24,7 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
-    Erc20VestingEntity,
+    VestingEntity,
     Erc721TokenHistoryEntity,
     Erc998TokenHistoryEntity,
     Erc1155TokenHistoryEntity,

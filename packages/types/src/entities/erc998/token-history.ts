@@ -91,7 +91,7 @@ export type TErc998TokenEventData =
   | ITokenMintRandom
   | IErc998RandomRequest;
 
-export interface ITokenHistory extends IIdDateBase {
+export interface IErc998TokenHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc998TokenEventType;
