@@ -4,7 +4,7 @@ import { BigNumber } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
 import {
-  UniStaking,
+  Staking,
   ERC721Simple,
   // ERC721Random, hardhat random version contract
   ERC721RandomTest,
@@ -29,8 +29,8 @@ import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 import { IRule, IItem } from "./interface/staking";
 import { randomRequest } from "../shared/accessControl/randomRequest";
 
-describe("UniStaking", function () {
-  let stakingInstance: UniStaking;
+describe("Staking", function () {
+  let stakingInstance: Staking;
   let erc721RandomInstance: ERC721RandomTest;
   let erc721DropboxInstance: ERC721Dropbox;
   let erc721SimpleInstance: ERC721Simple;
@@ -78,8 +78,8 @@ describe("UniStaking", function () {
     [this.owner, this.receiver] = await ethers.getSigners();
     this.provider = waffle.provider;
 
-    // UniStaking
-    const stakingFactory = await ethers.getContractFactory("UniStaking");
+    // Staking
+    const stakingFactory = await ethers.getContractFactory("Staking");
     stakingInstance = await stakingFactory.deploy(1);
     // ERC20 Simple
     const erc20Factory = await ethers.getContractFactory("ERC20Simple");

@@ -48,7 +48,7 @@ async function main() {
   console.info(`ERC1155_MARKETPLACE_ADDR=${market1155Instance.address.toLowerCase()}`);
 
   // Uni Mechanics contract
-  const stakingFactory = await ethers.getContractFactory("UniStaking");
+  const stakingFactory = await ethers.getContractFactory("Staking");
   const stakingInstance = await stakingFactory.deploy(10);
   console.info(`STAKING_ADDR=${stakingInstance.address.toLowerCase()}`);
 }

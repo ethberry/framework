@@ -19,17 +19,22 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
-
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Dropbox.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
-import "./AbstractStaking.sol";
+import "./interfaces/IStaking.sol";
 
-contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
+contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
+
+  Counters.Counter internal _ruleIdCounter;
+  Counters.Counter internal _stakeIdCounter;
+
+  mapping(uint256 => Rule) internal _rules;
+  mapping(uint256 => Stake) internal _stakes;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
@@ -58,8 +63,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     _updateRule(ruleId, active);
   }
 
-  function fundEth() public payable whenNotPaused onlyRole(DEFAULT_ADMIN_ROLE) {
-  }
+  function fundEth() public payable whenNotPaused onlyRole(DEFAULT_ADMIN_ROLE) {}
 
   function setMaxStake(uint256 maxStake) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _maxStake = maxStake;
@@ -87,13 +91,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     } else if (depositItem.itemType == ItemType.ERC721 || depositItem.itemType == ItemType.ERC998) {
       IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
     } else if (depositItem.itemType == ItemType.ERC1155) {
-      IERC1155(depositItem.token).safeTransferFrom(
-        _msgSender(),
-        address(this),
-        tokenId,
-        depositItem.amount,
-        "0x"
-      );
+      IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
     }
   }
 
@@ -139,13 +137,7 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
       } else if (depositItem.itemType == ItemType.ERC721 || depositItem.itemType == ItemType.ERC998) {
         IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenId);
       } else if (depositItem.itemType == ItemType.ERC1155) {
-        IERC1155(depositItem.token).safeTransferFrom(
-          address(this),
-          _msgSender(),
-            depositTokenId,
-          stakeAmount,
-          "0x"
-        );
+        IERC1155(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenId, stakeAmount, "0x");
       }
     } else {
       stake.startTimestamp = block.timestamp;
@@ -169,15 +161,15 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
         bool dropboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_DROPBOX);
 
         if (randomInterface) {
-          for (uint i=0; i<multiplier; i++) {
+          for (uint256 i = 0; i < multiplier; i++) {
             IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenId, 0);
           }
         } else if (dropboxInterface) {
-          for (uint i=0; i<multiplier; i++) {
+          for (uint256 i = 0; i < multiplier; i++) {
             IERC721Dropbox(rewardItem.token).mintDropbox(_msgSender(), rewardTokenId);
           }
         } else {
-          for (uint i=0; i<multiplier; i++) {
+          for (uint256 i = 0; i < multiplier; i++) {
             IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenId);
           }
         }
@@ -205,14 +197,38 @@ contract UniStaking is AbstractStaking, AccessControl, Pausable, ERC1155Holder, 
     _unpause();
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual
-  override(AccessControl, ERC1155Receiver) returns (bool) {
-    return
-    interfaceId == type(IERC721Random).interfaceId ||
-    super.supportsInterface(interfaceId);
+  function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    virtual
+    override(AccessControl, ERC1155Receiver)
+    returns (bool)
+  {
+    return super.supportsInterface(interfaceId);
   }
 
   receive() external payable {
     revert();
+  }
+
+  function _setRules(Rule[] memory rules) internal {
+    uint256 length = rules.length;
+    for (uint256 i; i < length; i++) {
+      _setRule(rules[i]);
+    }
+  }
+
+  function _setRule(Rule memory rule) internal {
+    _ruleIdCounter.increment();
+    uint256 ruleId = _ruleIdCounter.current();
+    _rules[ruleId] = rule;
+    emit RuleCreated(ruleId, rule, rule.externalId);
+  }
+
+  function _updateRule(uint256 ruleId, bool active) internal {
+    Rule memory rule = _rules[ruleId];
+    require(rule.period != 0, "Staking: rule does not exist");
+    _rules[ruleId].active = active;
+    emit RuleUpdated(ruleId, active);
   }
 }

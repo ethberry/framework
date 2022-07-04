@@ -6,7 +6,7 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractType, StakingEventType } from "@framework/types";
 
 // system contract
-import UniStakingSol from "@framework/core-contracts/artifacts/contracts/Staking/UniStaking.sol/UniStaking.json";
+import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/Staking.sol/Staking.json";
 import { StakingLogService } from "./staking.log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
@@ -31,7 +31,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.STAKING,
             contractAddress: [stakingAddr],
-            contractInterface: UniStakingSol.abi,
+            contractInterface: StakingSol.abi,
             // prettier-ignore
             eventNames: [
               StakingEventType.RuleCreated,
