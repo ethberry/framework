@@ -10,6 +10,7 @@ import { imageUrl } from "@framework/constants";
 
 import {
   ContractManagerEventType,
+  ContractRole,
   ContractTemplate,
   ContractType,
   IContractManagerERC1155TokenDeployed,
@@ -17,6 +18,7 @@ import {
   IContractManagerERC721TokenDeployed,
   IContractManagerVestingDeployed,
   TContractManagerEventData,
+  TokenType,
   VestingTemplate,
 } from "@framework/types";
 
@@ -28,6 +30,7 @@ import { Erc1155LogService } from "../../erc1155/token/token-log/token-log.servi
 import { VestingLogService } from "../../mechanics/vesting/vesting-log/vesting.log.service";
 import { ContractManagerService } from "./contract-manager.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
+import { TemplateService } from "../hierarchy/template/template.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -45,6 +48,7 @@ export class ContractManagerServiceEth {
     private readonly erc721LogService: Erc721TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
+    private readonly templateService: TemplateService,
   ) {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
@@ -73,22 +77,34 @@ export class ContractManagerServiceEth {
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployed>, ctx: Log): Promise<void> {
     const {
-      args: { addr, name, symbol, templateId },
+      args: { addr, name, symbol, cap, templateId },
     } = event;
 
     await this.updateHistory(event, ctx);
 
-    await this.contractService.create({
+    const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
       name,
       symbol,
       description: emptyStateString,
+      imageUrl,
+      royalty: 0, // todo default or nullable in entity?
       contractTemplate: Object.values(ContractTemplate)[~~templateId],
+      contractType: TokenType.ERC20,
+      contractRole: ContractRole.TOKEN,
       chainId: this.chainId,
     });
 
-    // TODO save decimals and cap to template
+    await this.templateService.create({
+      title: name,
+      description: emptyStateString,
+      imageUrl,
+      attributes: "{}",
+      cap,
+      decimals: 18,
+      contractId: erc20ContractEntity.id,
+    });
 
     await this.erc20LogService.addListener({
       address: addr.toLowerCase(),
@@ -134,6 +150,7 @@ export class ContractManagerServiceEth {
       title: "new 1155 contract",
       description: emptyStateString,
       imageUrl,
+      royalty: 0, // todo default or nullable in entity?
       chainId: this.chainId,
       baseTokenURI,
       contractTemplate: Object.values(ContractTemplate)[~~templateId],
