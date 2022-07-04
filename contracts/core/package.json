@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@chainlink/contracts": "0.4.1",
-    "@gemunion/contracts": "0.6.0",
+    "@gemunion/contracts": "0.6.3",
     "@gemunion/utils-eth": "0.0.3",
     "@nomiclabs/hardhat-ethers": "2.0.6",
     "@nomiclabs/hardhat-etherscan": "3.1.0",

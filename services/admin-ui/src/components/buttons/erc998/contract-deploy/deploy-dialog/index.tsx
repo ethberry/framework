@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { Erc998ContractTemplate, IErc998CollectionDeployDto, IToken } from "@framework/types";
+import { Erc998ContractTemplate, IErc998ContractDeployDto, IToken } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -14,7 +14,7 @@ export interface IErc998CollectionDeployDialogProps {
 }
 
 export const Erc998ContractDeployDialog: FC<IErc998CollectionDeployDialogProps> = props => {
-  const fixedValues: IErc998CollectionDeployDto = {
+  const fixedValues: IErc998ContractDeployDto = {
     contractTemplate: Erc998ContractTemplate.SIMPLE,
     name: "",
     symbol: "",

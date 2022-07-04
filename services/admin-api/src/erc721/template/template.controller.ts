@@ -36,12 +36,23 @@ export class Erc721TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc721TemplateService.findOne({ id });
+    return this.erc721TemplateService.findOne(
+      { id },
+      {
+        join: {
+          alias: "asset",
+          leftJoinAndSelect: {
+            price: "asset.price",
+            // components: "price.components",
+          },
+        },
+      },
+    );
   }
 
   @Post("/")
   public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
-    return this.erc721TemplateService.create(dto);
+    return this.erc721TemplateService.createTemplate(dto);
   }
 
   @Delete("/:id")

@@ -4,6 +4,7 @@ export enum ContractManagerEventType {
   ERC20VestingDeployed = "ERC20VestingDeployed",
   ERC20TokenDeployed = "ERC20TokenDeployed",
   ERC721TokenDeployed = "ERC721TokenDeployed",
+  ERC998TokenDeployed = "ERC998TokenDeployed",
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
 }
 
@@ -32,6 +33,15 @@ export interface IContractManagerERC721TokenDeployed {
   templateId: string;
 }
 
+export interface IContractManagerERC998TokenDeployed {
+  addr: string;
+  name: string;
+  symbol: string;
+  baseTokenURI: string;
+  royalty: string;
+  templateId: string;
+}
+
 export interface IContractManagerERC1155TokenDeployed {
   addr: string;
   baseTokenURI: string;
@@ -42,6 +52,7 @@ export type TContractManagerEventData =
   | IContractManagerVestingDeployed
   | IContractManagerERC20TokenDeployed
   | IContractManagerERC721TokenDeployed
+  | IContractManagerERC998TokenDeployed
   | IContractManagerERC1155TokenDeployed;
 
 export interface IContractManagerHistory extends IIdDateBase {

@@ -8,6 +8,7 @@ import { ContractManagerHistoryModule } from "./contract-manager-history/contrac
 import { VestingModule } from "../../mechanics/vesting/vesting.module";
 import { Erc20TokenLogModule } from "../../erc20/token/token-log/token-log.module";
 import { Erc721TokenLogModule } from "../../erc721/token/token-log/token-log.module";
+import { Erc998TokenLogModule } from "../../erc998/token/token-log/token-log.module";
 import { Erc1155TokenLogModule } from "../../erc1155/token/token-log/token-log.module";
 import { VestingLogModule } from "../../mechanics/vesting/vesting-log/vesting.log.module";
 import { ContractManagerModule } from "./contract-manager.module";
@@ -20,6 +21,7 @@ import { TemplateModule } from "../hierarchy/template/template.module";
     ConfigModule,
     Erc20TokenLogModule,
     Erc721TokenLogModule,
+    Erc998TokenLogModule,
     Erc1155TokenLogModule,
     VestingLogModule,
     ContractManagerLogModule,

@@ -13,6 +13,8 @@ import {
   IVestingDeployDto,
   IErc721ContractDeployDto,
   VestingTemplate,
+  IErc998ContractDeployDto,
+  Erc998ContractTemplate,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -24,6 +26,12 @@ import ERC721Simple from "@framework/core-contracts/artifacts/contracts/ERC721/E
 import ERC721Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 import ERC721RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
 // import ERC721Random from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+// todo add actual 998 contracts!
+import ERC998Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC998Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
+import ERC998RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+// import ERC998Random from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
+
 import ERC1155Simple from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 @Injectable()
@@ -126,8 +134,8 @@ export class ContractManagerSignService {
           { name: "bytecode", type: "bytes" },
           { name: "name", type: "string" },
           { name: "symbol", type: "string" },
-          { name: "baseTokenURI", type: "string" },
           { name: "royalty", type: "uint96" },
+          { name: "baseTokenURI", type: "string" },
           { name: "templateId", type: "uint256" },
         ],
       },
@@ -140,6 +148,45 @@ export class ContractManagerSignService {
         baseTokenURI,
         royalty,
         templateId: Object.keys(Erc721ContractTemplate).indexOf(contractTemplate),
+      },
+    );
+
+    return { nonce: utils.hexlify(nonce), signature };
+  }
+
+  public async erc998Token(dto: IErc998ContractDeployDto): Promise<IServerSignature> {
+    const { contractTemplate, name, symbol, royalty, baseTokenURI } = dto;
+
+    const nonce = utils.randomBytes(32);
+    const signature = await this.signer._signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "name", type: "string" },
+          { name: "symbol", type: "string" },
+          { name: "royalty", type: "uint96" },
+          { name: "baseTokenURI", type: "string" },
+          { name: "templateId", type: "uint256" },
+        ],
+      },
+      // Value
+      {
+        nonce,
+        bytecode: this.getBytecodeByErc998ContractTemplate(contractTemplate),
+        name,
+        symbol,
+        baseTokenURI,
+        royalty,
+        templateId: Object.keys(Erc998ContractTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -212,6 +259,19 @@ export class ContractManagerSignService {
       case Erc721ContractTemplate.RANDOM:
         return ERC721RandomTest.bytecode;
       // return ERC721Random.bytecode;
+      default:
+        throw new Error("Unknown template");
+    }
+  }
+
+  public getBytecodeByErc998ContractTemplate(contractTemplate: Erc998ContractTemplate) {
+    switch (contractTemplate) {
+      case Erc998ContractTemplate.SIMPLE:
+        return ERC998Simple.bytecode;
+      case Erc998ContractTemplate.GRADED:
+        return ERC998Graded.bytecode;
+      case Erc998ContractTemplate.RANDOM:
+        return ERC998RandomTest.bytecode;
       default:
         throw new Error("Unknown template");
     }

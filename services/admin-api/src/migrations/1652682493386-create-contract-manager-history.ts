@@ -9,6 +9,7 @@ export class CreateContractManagerHistory1652682493386 implements MigrationInter
         'ERC20VestingDeployed',
         'ERC20TokenDeployed',
         'ERC721TokenDeployed',
+        'ERC998TokenDeployed',
         'ERC1155TokenDeployed'
       );
     `);

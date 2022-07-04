@@ -4,7 +4,7 @@ import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { VestingTemplate, IVesting } from "@framework/types";
 import { ns } from "@framework/constants";
 
-@Entity({ schema: ns, name: "_vesting" })
+@Entity({ schema: ns, name: "vesting" })
 export class VestingEntity extends DeployableEntity implements IVesting {
   @Column({ type: "varchar" })
   public address: string;

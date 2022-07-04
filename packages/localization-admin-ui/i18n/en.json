@@ -240,7 +240,7 @@
       "templateStatus": "Status",
       "title": "Title",
       "token": "Token",
-      "tokenId": "Token",
+      "erc1155TokenId": "Token Id",
       "tokenStatus": "Status",
       "tokenType": "Type",
       "type": "Type",

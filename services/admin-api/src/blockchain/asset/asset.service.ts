@@ -47,14 +47,15 @@ export class AssetService {
       const newComponents = await Promise.allSettled(
         dto.components
           .filter(newItem => !asset.components.find(oldItem => newItem.tokenId === oldItem.tokenId))
-          .map(newItem => this.assetComponentEntityRepository.create({ ...newItem, assetId: asset.id })),
+          .map(newItem => this.assetComponentEntityRepository.create({ ...newItem, assetId: asset.id }).save()),
       ).then(values =>
         values
           .filter(c => c.status === "fulfilled")
           .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
           .map(c => c.value),
       );
-
+      console.log("changedComponents", changedComponents);
+      console.log("newComponents", newComponents);
       Object.assign(asset, { components: [...changedComponents, ...newComponents] });
     }
 

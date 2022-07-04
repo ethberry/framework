@@ -36,7 +36,7 @@ export const Vesting: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IVesting, IVestingSearchDto>({
-    baseUrl: "/erc20-vesting",
+    baseUrl: "/vesting",
     search: {
       query: "",
       contractTemplate: [],

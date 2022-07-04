@@ -28,6 +28,7 @@ import {
   Erc20TokenDeployDto,
   VestingDeployDto,
   Erc721TokenDeployDto,
+  Erc998TokenDeployDto,
 } from "./dto";
 import { IContractManagerUpdateDto } from "./interfaces";
 
@@ -84,6 +85,11 @@ export class ContractManagerController {
   @Post("/erc721-token")
   public erc721Token(@Body() dto: Erc721TokenDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc721Token(dto);
+  }
+
+  @Post("/erc998-token")
+  public erc998Token(@Body() dto: Erc998TokenDeployDto): Promise<IServerSignature> {
+    return this.contractManagerSignService.erc998Token(dto);
   }
 
   @Post("/erc1155-token")

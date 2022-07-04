@@ -37,6 +37,7 @@ import { ContractManagerService } from "../contract-manager.service";
               ContractManagerEventType.ERC20VestingDeployed,
               ContractManagerEventType.ERC20TokenDeployed,
               ContractManagerEventType.ERC721TokenDeployed,
+              ContractManagerEventType.ERC998TokenDeployed,
               ContractManagerEventType.ERC1155TokenDeployed
             ],
           },
