@@ -45,7 +45,7 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
             <SelectInput name="contractTemplate" options={contractTemplateOptions} multiple />
           </Grid>
           <Grid item xs={12}>
-            <SelectInput multiple name="contractRole" options={ContractRole} />
+            <SelectInput name="contractRole" options={ContractRole} multiple/>
           </Grid>
         </Grid>
       </Collapse>
