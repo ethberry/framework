@@ -1,10 +1,24 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNumber, IsOptional, Min } from "class-validator";
+import { IsArray, IsEnum, IsNumber, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { ITokenSearchDto, TokenRarity, TokenStatus } from "@framework/types";
+import { ITokenAttributesSearchDto, ITokenSearchDto, TokenRarity, TokenStatus } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
+
+export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
+  @ApiPropertyOptional({
+    enum: TokenRarity,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<TokenRarity>)
+  @IsEnum(TokenRarity, { each: true, message: "badInput" })
+  public rarity: Array<TokenRarity>;
+}
 
 export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   @ApiPropertyOptional({
@@ -32,16 +46,11 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   public contractIds: Array<number>;
 
   @ApiPropertyOptional({
-    enum: TokenRarity,
-    isArray: true,
-    // https://github.com/OAI/OpenAPI-Specification/issues/1706
-    // format: "deepObject"
+    type: TokenAttributesSearchDto,
   })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<TokenRarity>)
-  @IsEnum(TokenRarity, { each: true, message: "badInput" })
-  public rarity: Array<TokenRarity>;
+  @ValidateNested()
+  @Type(() => TokenAttributesSearchDto)
+  public attributes: TokenAttributesSearchDto;
 
   @ApiPropertyOptional({
     type: Number,

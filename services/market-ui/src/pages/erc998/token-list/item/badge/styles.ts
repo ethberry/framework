@@ -25,7 +25,6 @@ export const useStyles = makeStyles<Theme>(
             return "purple";
           case TokenRarity.LEGENDARY:
             return "orange";
-          case TokenRarity.UNKNOWN:
           default:
             return "transparent";
         }

@@ -32,7 +32,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     contractId,
     imageUrl,
   };
-  console.log("price", price);
+
   return (
     <FormDialog
       initialValues={fixedValues}

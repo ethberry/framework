@@ -15,7 +15,7 @@ export class TokenService {
   ) {}
 
   public async search(dto: ITokenSearchDto, contractType: TokenType): Promise<[Array<TokenEntity>, number]> {
-    const { query, tokenStatus, skip, take, tokenId, rarity, contractIds } = dto;
+    const { query, tokenStatus, skip, take, tokenId, attributes = {}, contractIds } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
     queryBuilder.leftJoinAndSelect("token.template", "template");
@@ -25,17 +25,15 @@ export class TokenService {
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("token.erc721Template", "template");
-
     if (tokenId) {
       queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
     }
 
-    if (rarity) {
-      if (rarity.length === 1) {
-        queryBuilder.andWhere("token.attributes->>'rarity' = :rarity", { rarity: rarity[0] });
+    if (attributes.rarity) {
+      if (attributes.rarity.length === 1) {
+        queryBuilder.andWhere("token.attributes->>'rarity' = :rarity", { rarity: attributes.rarity[0] });
       } else {
-        queryBuilder.andWhere("token.attributes->>'rarity' IN(:...rarity)", { rarity });
+        queryBuilder.andWhere("token.attributes->>'rarity' IN(:...rarity)", { rarity: attributes.rarity });
       }
     }
 

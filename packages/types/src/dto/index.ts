@@ -2,7 +2,6 @@ export * from "./blockchain/contract-manager/search";
 export * from "./blockchain/hierarchy/contract/autocomplete";
 export * from "./blockchain/hierarchy/contract/search";
 export * from "./blockchain/hierarchy/template/autocomplete";
-export * from "./blockchain/hierarchy/template/autocomplete1155";
 export * from "./blockchain/hierarchy/template/search";
 export * from "./blockchain/hierarchy/token/autocomplete";
 export * from "./blockchain/hierarchy/token/search";

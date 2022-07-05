@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { TokenRarity } from "@framework/types";
 
 export class SeedTokenErc721At1563804000330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -19,7 +20,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         updated_at
       ) VALUES (
         20101,
-        '${defaultJSON}',
+        '${JSON.stringify({ rarity: TokenRarity.RARE })}',
         100,
         '1',
         'MINTED',
@@ -28,7 +29,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         20102,
-        '${defaultJSON}',
+        '${JSON.stringify({ rarity: TokenRarity.RARE })}',
         100,
         '2',
         'MINTED',
@@ -37,7 +38,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         20103,
-        '${defaultJSON}',
+        '${JSON.stringify({ rarity: TokenRarity.LEGENDARY })}',
         100,
         '3',
         'MINTED',

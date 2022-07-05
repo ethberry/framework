@@ -7,7 +7,6 @@ export enum TokenType {
 }
 
 export enum TokenRarity {
-  UNKNOWN = "UNKNOWN",
   COMMON = "COMMON",
   UNCOMMON = "UNCOMMON",
   RARE = "RARE",

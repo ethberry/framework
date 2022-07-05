@@ -42,7 +42,9 @@ export const Erc721Token: FC = () => {
     search: {
       query: "",
       tokenStatus: [TokenStatus.MINTED],
-      rarity: [],
+      attributes: {
+        rarity: [],
+      },
       contractIds: [],
       tokenId: "",
     },

@@ -54,8 +54,7 @@ export class AssetService {
           .map(c => <PromiseFulfilledResult<AssetComponentEntity>>c)
           .map(c => c.value),
       );
-      console.log("changedComponents", changedComponents);
-      console.log("newComponents", newComponents);
+
       Object.assign(asset, { components: [...changedComponents, ...newComponents] });
     }
 
