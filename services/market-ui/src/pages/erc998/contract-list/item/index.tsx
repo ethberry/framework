@@ -10,7 +10,7 @@ interface ITokenItemProps {
   contract: IContract;
 }
 
-export const CollectionItem: FC<ITokenItemProps> = props => {
+export const ContractItem: FC<ITokenItemProps> = props => {
   const { contract } = props;
 
   const classes = useStyles();

@@ -20,7 +20,7 @@ export const Mechanics: FC = () => {
             <Savings />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc20.vesting" />
+            <FormattedMessage id="pages.dashboard.mechanics.vesting" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/airdrops">

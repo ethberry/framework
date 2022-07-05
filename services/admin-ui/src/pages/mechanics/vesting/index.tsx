@@ -50,9 +50,9 @@ export const Vesting: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc20-vesting"]} />
+      <Breadcrumbs path={["dashboard", "vesting"]} />
 
-      <PageHeader message="pages.erc20-vesting.title">
+      <PageHeader message="pages.vesting.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>

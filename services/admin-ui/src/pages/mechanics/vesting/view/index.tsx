@@ -7,14 +7,14 @@ import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IVesting } from "@framework/types";
 
-export interface IErc20VestingViewDialogProps {
+export interface IVestingViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
   initialValues: IVesting;
 }
 
-export const VestingViewDialog: FC<IErc20VestingViewDialogProps> = props => {
+export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
   const { id, beneficiary, address, duration, contractTemplate, startTimestamp } = initialValues;
@@ -35,39 +35,39 @@ export const VestingViewDialog: FC<IErc20VestingViewDialogProps> = props => {
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.address" />
+                <FormattedMessage id="pages.vesting.view.address" />
               </TableCell>
               {/* link to scanner */}
               <TableCell align="right">{address}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.beneficiary" />
+                <FormattedMessage id="pages.vesting.view.beneficiary" />
               </TableCell>
               {/* link to scanner */}
               <TableCell align="right">{beneficiary}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.startTimestamp" />
+                <FormattedMessage id="pages.vesting.view.startTimestamp" />
               </TableCell>
               <TableCell align="right">{format(parseISO(startTimestamp), humanReadableDateTimeFormat)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.duration" />
+                <FormattedMessage id="pages.vesting.view.duration" />
               </TableCell>
               <TableCell align="right">{formatDistance(new Date(+duration), 0, { addSuffix: true })}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.finish" />
+                <FormattedMessage id="pages.vesting.view.finish" />
               </TableCell>
               <TableCell align="right">{formatDistance(dateFinish, Date.now(), { addSuffix: true })}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.contractTemplate" />
+                <FormattedMessage id="pages.vesting.view.contractTemplate" />
               </TableCell>
               <TableCell align="right">{contractTemplate}</TableCell>
             </TableRow>

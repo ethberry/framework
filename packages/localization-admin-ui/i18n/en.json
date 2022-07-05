@@ -359,8 +359,7 @@
       },
       "erc20": {
         "contracts": "ERC20 Contracts",
-        "title": "ERC20",
-        "vesting": "ERC20 Vesting"
+        "title": "ERC20"
       },
       "erc721": {
         "contracts": "ERC721 Contracts",
@@ -375,6 +374,7 @@
         "tokens": "ERC998 Tokens"
       },
       "mechanics": {
+        "vesting": "Vesting",
         "airdrops": "Airdrops",
         "dropboxes": "Dropboxes",
         "exchange-rules": "Exchange Rules",
@@ -400,8 +400,8 @@
       "snapshot": "Make snapshot",
       "title": "ERC20 Contracts"
     },
-    "erc20-vesting": {
-      "title": "ERC20 Vesting",
+    "vesting": {
+      "title": "Vesting",
       "view": {
         "address": "Address",
         "beneficiary": "Beneficiary",

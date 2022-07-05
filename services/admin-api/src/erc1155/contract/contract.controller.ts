@@ -17,8 +17,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc1155ContractService } from "./contract.service";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
-import { ContractSearchDto } from "../../blockchain/hierarchy/contract/dto/search";
-import { ContractUpdateDto } from "../../blockchain/hierarchy/contract/dto/update";
+import { ContractSearchDto, ContractUpdateDto } from "../../blockchain/hierarchy/contract/dto";
 
 @ApiBearerAuth()
 @Controller("/erc1155-contracts")

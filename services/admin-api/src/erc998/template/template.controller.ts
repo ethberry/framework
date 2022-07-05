@@ -5,12 +5,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { Erc998TemplateService } from "./template.service";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
-import {
-  TemplateAutocompleteDto,
-  TemplateCreateDto,
-  TemplateSearchDto,
-  TemplateUpdateDto,
-} from "../../blockchain/hierarchy/template/dto";
+import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../blockchain/hierarchy/template/dto";
 
 @ApiBearerAuth()
 @Controller("/erc998-templates")
@@ -21,11 +16,6 @@ export class Erc998TemplateController {
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc998TemplateService.search(dto);
-  }
-
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: TemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
-    return this.erc998TemplateService.autocomplete(dto);
   }
 
   @Put("/:id")

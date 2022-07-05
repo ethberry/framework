@@ -47,7 +47,7 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
       <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]} />
       <NumberInput name="amount" />
       <SelectInput name="templateStatus" options={TemplateStatus} />
-      <EntityInput name="contractId" controller="erc1155-contracts" readOnly={!!id} />
+      <EntityInput name="contractId" controller="contracts" readOnly={!!id} />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

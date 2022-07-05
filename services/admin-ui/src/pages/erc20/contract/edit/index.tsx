@@ -32,8 +32,6 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
 
   const message = id ? "dialogs.edit" : "dialogs.create";
 
-  // TODO get decimals and cap from template
-
   return (
     <>
       <FormDialog

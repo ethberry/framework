@@ -21,9 +21,9 @@ export const Erc721ContractList: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
-          {rows.map(collection => (
-            <Grid item lg={4} sm={6} xs={12} key={collection.id}>
-              <ContractItem contract={collection} />
+          {rows.map(contract => (
+            <Grid item lg={4} sm={6} xs={12} key={contract.id}>
+              <ContractItem contract={contract} />
             </Grid>
           ))}
         </Grid>

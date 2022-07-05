@@ -33,11 +33,12 @@ async function main() {
   const coinNewInstance = await coinNewFactory.deploy("Inactive token", "OFF20", 1000000000);
   console.info(`ERC20_NEW_ADDR=${coinNewInstance.address.toLowerCase()}`);
 
-  // ERC20 Coin
+  // ERC20 Black List
   const coinbFactory = await ethers.getContractFactory("ERC20BlackList");
   const coinbInstance = await coinbFactory.deploy("Black list matters", "BLM20", 1000000000);
   console.info(`ERC20_BLACKLIST_ADDR=${coinbInstance.address.toLowerCase()}`);
 
+  // USDT
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   const usdtInstance = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
   console.info(`ERC20_USDT_ADDR=${usdtInstance.address.toLowerCase()}`);

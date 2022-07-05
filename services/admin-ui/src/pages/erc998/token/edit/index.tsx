@@ -42,7 +42,7 @@ export const Erc998TokenEditDialog: FC<ITokenEditDialogProps> = props => {
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
       <SelectInput name="tokenStatus" options={TokenStatus} readOnly />
-      <EntityInput name="erc998CollectionId" controller="erc998-collections" readOnly />
+      <EntityInput name="contractId" controller="contract" readOnly />
       <img src={template?.imageUrl} width={200} height={200} alt={template?.title} />
     </FormDialog>
   );

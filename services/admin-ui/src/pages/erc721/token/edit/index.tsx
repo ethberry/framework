@@ -42,7 +42,14 @@ export const Erc721TokenEditDialog: FC<IErc721TokenEditDialogProps> = props => {
       <JsonInput name="attributes" />
       <TextInput name="tokenId" readOnly />
       <SelectInput name="tokenStatus" options={TokenStatus} readOnly />
-      <EntityInput name="contractId" controller="contracts" readOnly data={{ contractType: [TokenType.ERC721] }} />
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        readOnly
+        data={{
+          contractType: [TokenType.ERC721],
+        }}
+      />
       <img src={template?.imageUrl} width={200} height={200} alt={template?.title} />
     </FormDialog>
   );

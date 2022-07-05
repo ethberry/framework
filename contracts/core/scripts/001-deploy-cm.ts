@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  // C.MANAGER
+  // CONTRACT MANAGER
   const vestFactory = await ethers.getContractFactory("ContractManager");
   const vestInstance = await vestFactory.deploy();
   console.info(`CONTRACT_MANAGER_ADDR=${vestInstance.address.toLowerCase()}`);
