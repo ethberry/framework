@@ -23,6 +23,7 @@ import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Dropbox.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
+import "../interfaces/IAsset.sol";
 import "./interfaces/IStaking.sol";
 
 contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
@@ -79,18 +80,18 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     uint256 stakeId = _stakeIdCounter.current();
     _stakeCounter[_msgSender()] = _stakeCounter[_msgSender()] + 1;
 
-    Item memory depositItem = Item(rule.deposit.itemType, rule.deposit.token, tokenId, rule.deposit.amount);
+    Asset memory depositItem = Asset(rule.deposit.tokenType, rule.deposit.token, tokenId, rule.deposit.amount);
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
 
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
 
-    if (depositItem.itemType == ItemType.NATIVE) {
+    if (depositItem.tokenType == TokenType.NATIVE) {
       require(msg.value == depositItem.amount, "Staking: wrong amount");
-    } else if (depositItem.itemType == ItemType.ERC20) {
+    } else if (depositItem.tokenType == TokenType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
-    } else if (depositItem.itemType == ItemType.ERC721 || depositItem.itemType == ItemType.ERC998) {
+    } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
       IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
-    } else if (depositItem.itemType == ItemType.ERC1155) {
+    } else if (depositItem.tokenType == TokenType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
     }
   }
@@ -102,7 +103,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   ) public virtual whenNotPaused {
     Stake storage stake = _stakes[stakeId];
     Rule storage rule = _rules[stake.ruleId];
-    Item storage depositItem = _stakes[stakeId].deposit;
+    Asset storage depositItem = _stakes[stakeId].deposit;
     uint256 depositTokenId = depositItem.tokenId;
 
     require(stake.owner != address(0), "Staking: wrong staking id");
@@ -130,13 +131,13 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
       stake.activeDeposit = false;
 
-      if (depositItem.itemType == ItemType.NATIVE) {
+      if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), stakeAmount);
-      } else if (depositItem.itemType == ItemType.ERC20) {
+      } else if (depositItem.tokenType == TokenType.ERC20) {
         SafeERC20.safeTransfer(IERC20(depositItem.token), _msgSender(), stakeAmount);
-      } else if (depositItem.itemType == ItemType.ERC721 || depositItem.itemType == ItemType.ERC998) {
+      } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
         IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenId);
-      } else if (depositItem.itemType == ItemType.ERC1155) {
+      } else if (depositItem.tokenType == TokenType.ERC1155) {
         IERC1155(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenId, stakeAmount, "0x");
       }
     } else {
@@ -146,17 +147,17 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     if (multiplier != 0) {
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
-      Item storage rewardItem = rule.reward;
+      Asset storage rewardItem = rule.reward;
       uint256 rewardTokenId = rule.reward.tokenId;
       uint256 rewardAmount;
 
-      if (rewardItem.itemType == ItemType.NATIVE) {
+      if (rewardItem.tokenType == TokenType.NATIVE) {
         rewardAmount = rewardItem.amount * multiplier;
         Address.sendValue(payable(receiver), rewardAmount);
-      } else if (rewardItem.itemType == ItemType.ERC20) {
+      } else if (rewardItem.tokenType == TokenType.ERC20) {
         rewardAmount = rewardItem.amount * multiplier;
         SafeERC20.safeTransfer(IERC20(rewardItem.token), _msgSender(), rewardAmount);
-      } else if (rewardItem.itemType == ItemType.ERC721 || rewardItem.itemType == ItemType.ERC998) {
+      } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
         bool dropboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_DROPBOX);
 
@@ -173,7 +174,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
             IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenId);
           }
         }
-      } else if (rewardItem.itemType == ItemType.ERC1155) {
+      } else if (rewardItem.tokenType == TokenType.ERC1155) {
         rewardAmount = rewardItem.amount * multiplier;
         IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardTokenId, rewardAmount, "0x");
         // todo batch mint reward
