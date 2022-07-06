@@ -19,7 +19,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
 
   const [isBlacklistDialogOpen, setIsBlacklistDialogOpen] = useState(false);
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleBlacklist = (): void => {
     setIsBlacklistDialogOpen(true);
@@ -30,7 +30,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
   };
 
   const meta = useMetamask((values: IBlacklistDto) => {
-    const contract = new Contract(address, ERC20BlackListSol.abi, library.getSigner());
+    const contract = new Contract(address, ERC20BlackListSol.abi, provider?.getSigner());
     return contract.blacklist(values.address) as Promise<void>;
   });
 

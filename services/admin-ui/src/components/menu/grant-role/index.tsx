@@ -21,7 +21,7 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleGrantRole = (): void => {
     setIsGrantRoleDialogOpen(true);
@@ -32,7 +32,7 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
   };
 
   const meta = useMetamask((values: IGrantRoleDto) => {
-    const contract = new Contract(address, IAccessControlSol.abi, library.getSigner());
+    const contract = new Contract(address, IAccessControlSol.abi, provider?.getSigner());
     return contract.grantRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 

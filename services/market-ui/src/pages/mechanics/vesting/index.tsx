@@ -16,7 +16,7 @@ import { VestingReleaseButton } from "../../../components/buttons";
 export const Vesting: FC = () => {
   const [vesting, setVesting] = useState<IVesting | null>(null);
 
-  const { active, account } = useWeb3React();
+  const { isActive, account } = useWeb3React();
   const { formatMessage } = useIntl();
   const { enqueueSnackbar } = useSnackbar();
   const { openConnectWalletDialog } = useWallet();
@@ -31,7 +31,7 @@ export const Vesting: FC = () => {
   );
 
   const fetchVesting = async (): Promise<void> => {
-    if (!active) {
+    if (!isActive) {
       return;
     }
 
@@ -57,9 +57,9 @@ export const Vesting: FC = () => {
 
   useEffect(() => {
     void fetchVesting();
-  }, [active, account]);
+  }, [isActive, account]);
 
-  if (!active) {
+  if (!isActive) {
     return (
       <Tooltip title={formatMessage({ id: "components.header.wallet.connect" })} enterDelay={300}>
         <IconButton color="inherit" onClick={handleOpenConnectWalletDialog}>

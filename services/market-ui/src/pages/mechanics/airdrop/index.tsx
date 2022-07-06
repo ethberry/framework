@@ -19,7 +19,7 @@ import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC7
 export const Airdrop: FC = () => {
   const [airdrops, setAirdrops] = useState<Array<IAirdrop>>([]);
 
-  const { library, active, account } = useWeb3React();
+  const { provider, isActive, account } = useWeb3React();
   const { formatMessage } = useIntl();
   const { enqueueSnackbar } = useSnackbar();
   const { openConnectWalletDialog } = useWallet();
@@ -58,7 +58,7 @@ export const Airdrop: FC = () => {
   };
 
   const metaClick = useMetamask((airdrop: IAirdrop) => {
-    const contract = new Contract(process.env.ERC721_AIRDROP_ADDR, ERC721AirdropSol.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_AIRDROP_ADDR, ERC721AirdropSol.abi, provider?.getSigner());
 
     return contract.redeem(account, airdrop.id, airdrop.item, process.env.ACCOUNT, airdrop.signature) as Promise<void>;
   });
@@ -75,9 +75,9 @@ export const Airdrop: FC = () => {
 
   useEffect(() => {
     void fetchDropbox();
-  }, [active, account]);
+  }, [isActive, account]);
 
-  if (!active) {
+  if (!isActive) {
     return (
       <Tooltip title={formatMessage({ id: "components.header.wallet.connect" })} enterDelay={300}>
         <IconButton color="inherit" onClick={handleOpenConnectWalletDialog}>

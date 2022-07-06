@@ -24,7 +24,7 @@ export const AccessListUnBlacklistDialog: FC<IBlacklistRemoveDialogProps> = prop
 
   const [rows, setRows] = useState<Array<IAccessList>>([]);
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -36,7 +36,7 @@ export const AccessListUnBlacklistDialog: FC<IBlacklistRemoveDialogProps> = prop
   );
 
   const metaUnBlacklist = useMetamask((values: IAccessList) => {
-    const contract = new Contract(data.address, ERC20BlackListSol.abi, library.getSigner());
+    const contract = new Contract(data.address, ERC20BlackListSol.abi, provider?.getSigner());
     return contract.unBlacklist(values.address) as Promise<void>;
   });
 

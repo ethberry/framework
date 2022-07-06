@@ -23,7 +23,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
   const values: Record<string, number> = form.getValues();
 
   const api = useApi();
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleBatchBuy = useMetamask(async () => {
     const totalTokenPrice = rows.map(token => {
@@ -64,7 +64,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
         const contract = new Contract(
           process.env.ERC1155_MARKETPLACE_ADDR,
           ERC1155MarketplaceSol.abi,
-          library.getSigner(),
+          provider?.getSigner(),
         );
         const nonce = utils.arrayify(json.nonce);
         return contract.buyResources(nonce, collection, tokenIds, amounts, process.env.ACCOUNT, json.signature, {

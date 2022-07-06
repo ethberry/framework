@@ -15,10 +15,10 @@ export interface IErc20TokenSnapshotMenuItemProps {
 export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = props => {
   const { address } = props;
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleSnapshot = useMetamask(() => {
-    const contract = new Contract(address, ERC20SimpleSol.abi, library.getSigner());
+    const contract = new Contract(address, ERC20SimpleSol.abi, provider?.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 

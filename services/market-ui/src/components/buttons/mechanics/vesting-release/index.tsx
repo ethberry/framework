@@ -16,11 +16,11 @@ export interface IVestingReleaseButtonProps {
 export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
   const { vesting } = props;
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
   const { formatMessage } = useIntl();
 
   const metaRelease = useMetamask((vesting: IVesting) => {
-    const contract = new Contract(vesting.address, CliffVestingSol.abi, library.getSigner());
+    const contract = new Contract(vesting.address, CliffVestingSol.abi, provider?.getSigner());
     return contract.release(vesting.address) as Promise<void>;
   });
 

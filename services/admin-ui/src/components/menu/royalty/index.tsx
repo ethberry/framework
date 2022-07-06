@@ -20,7 +20,7 @@ export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuIte
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
 
-  const { library, account } = useWeb3React();
+  const { provider, account } = useWeb3React();
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);
@@ -31,7 +31,7 @@ export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuIte
   };
 
   const meta = useMetamask((values: IRoyaltyDto) => {
-    const contract = new Contract(address, IERC721RoyaltySol.abi, library.getSigner());
+    const contract = new Contract(address, IERC721RoyaltySol.abi, provider?.getSigner());
     return contract.setDefaultRoyalty(account, values.royalty) as Promise<void>;
   });
 

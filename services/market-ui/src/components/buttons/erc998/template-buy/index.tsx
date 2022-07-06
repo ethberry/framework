@@ -18,7 +18,7 @@ export const Erc998ItemTemplateBuyButton: FC<ITemplateBuyButtonProps> = props =>
   const { template } = props;
 
   const api = useApi();
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleBuy = useMetamask(() => {
     return api
@@ -31,7 +31,7 @@ export const Erc998ItemTemplateBuyButton: FC<ITemplateBuyButtonProps> = props =>
         const contract = new Contract(
           process.env.ERC721_MARKETPLACE_ADDR,
           ERC998MarketplaceSol.abi,
-          library.getSigner(),
+          provider?.getSigner(),
         );
         const nonce = utils.arrayify(sign.nonce);
         const commonItemPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");
