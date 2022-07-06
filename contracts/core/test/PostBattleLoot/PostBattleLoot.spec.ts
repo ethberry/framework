@@ -13,7 +13,7 @@ import {
   tokenId,
   tokenName,
 } from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
+import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
 
 describe("PostBattleLoot", function () {
   let pblInstance: PostBattleLoot;

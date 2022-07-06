@@ -3,7 +3,7 @@ import { ethers } from "hardhat";
 
 import { ERC1155ERC1155Craft, ERC1155Simple } from "../../typechain-types";
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE, tokenId } from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
+import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
 
 describe("ERC1155ERC1155Craft", function () {
   let resourceInstance: ERC1155Simple;

@@ -1,8 +1,8 @@
 import { BigNumber } from "ethers";
 
 export interface IRule {
-  deposit: IItem;
-  reward: IItem;
+  deposit: IAsset;
+  reward: IAsset;
   period: BigNumber;
   penalty: BigNumber;
   recurrent: boolean;
@@ -10,8 +10,8 @@ export interface IRule {
   externalId: BigNumber;
 }
 
-export interface IItem {
-  itemType: BigNumber;
+export interface IAsset {
+  tokenType: BigNumber;
   token: string;
   tokenId: BigNumber;
   amount: BigNumber;

@@ -25,9 +25,9 @@ import {
   LINK_ADDR,
   VRF_ADDR,
 } from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { IRule, IItem } from "./interface/staking";
-import { randomRequest } from "../shared/accessControl/randomRequest";
+import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+import { IRule, IAsset } from "./interface/staking";
+import { randomRequest } from "../shared/AccessControl/randomRequest";
 
 describe("Staking", function () {
   let stakingInstance: Staking;
@@ -39,16 +39,16 @@ describe("Staking", function () {
   let stakePeriod: number;
   let stakePenalty: number;
   let stakeCycles: number;
-  let nativeDeposit: IItem;
-  let nativeReward: IItem;
-  let erc20Deposit: IItem;
-  let erc20Reward: IItem;
-  let erc721RewardRnd: IItem;
-  let erc721RewardDbx: IItem;
-  let erc721RewardSmpl: IItem;
-  let erc721Deposit: IItem;
-  let erc1155Reward: IItem;
-  let erc1155Deposit: IItem;
+  let nativeDeposit: IAsset;
+  let nativeReward: IAsset;
+  let erc20Deposit: IAsset;
+  let erc20Reward: IAsset;
+  let erc721RewardRnd: IAsset;
+  let erc721RewardDbx: IAsset;
+  let erc721RewardSmpl: IAsset;
+  let erc721Deposit: IAsset;
+  let erc1155Reward: IAsset;
+  let erc1155Deposit: IAsset;
   this.timeout(142000);
 
   let linkInstance: LinkErc20;
@@ -115,70 +115,70 @@ describe("Staking", function () {
     stakeCycles = 2;
 
     nativeDeposit = {
-      itemType: BigNumber.from(0), // NATIVE
+      tokenType: BigNumber.from(0), // NATIVE
       token: "0x0000000000000000000000000000000000000000",
       tokenId: BigNumber.from(0),
       amount: BigNumber.from(1000),
     };
 
     nativeReward = {
-      itemType: BigNumber.from(0), // NATIVE
+      tokenType: BigNumber.from(0), // NATIVE
       token: "0x0000000000000000000000000000000000000000",
       tokenId: BigNumber.from(0),
       amount: BigNumber.from(1000),
     };
 
     erc721Deposit = {
-      itemType: BigNumber.from(2), // ERC721
+      tokenType: BigNumber.from(2), // ERC721
       token: erc721RandomInstance.address,
       tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc721RewardSmpl = {
-      itemType: BigNumber.from(2), // ERC721
+      tokenType: BigNumber.from(2), // ERC721
       token: erc721SimpleInstance.address,
       tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc721RewardRnd = {
-      itemType: BigNumber.from(2), // ERC721
+      tokenType: BigNumber.from(2), // ERC721
       token: erc721RandomInstance.address,
       tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc721RewardDbx = {
-      itemType: BigNumber.from(2), // ERC721
+      tokenType: BigNumber.from(2), // ERC721
       token: erc721DropboxInstance.address,
       tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
 
     erc20Deposit = {
-      itemType: BigNumber.from(1), // ERC20
+      tokenType: BigNumber.from(1), // ERC20
       token: erc20Instance.address,
       tokenId: BigNumber.from(0),
       amount: BigNumber.from(100),
     };
 
     erc20Reward = {
-      itemType: BigNumber.from(1), // ERC20
+      tokenType: BigNumber.from(1), // ERC20
       token: erc20Instance.address,
       tokenId: BigNumber.from(0),
       amount: BigNumber.from(100),
     };
 
     erc1155Deposit = {
-      itemType: BigNumber.from(4), // ERC1155
+      tokenType: BigNumber.from(4), // ERC1155
       token: erc1155Instance.address,
       tokenId: BigNumber.from(1),
       amount: BigNumber.from(100),
     };
 
     erc1155Reward = {
-      itemType: BigNumber.from(4), // ERC1155
+      tokenType: BigNumber.from(4), // ERC1155
       token: erc1155Instance.address,
       tokenId: BigNumber.from(1),
       amount: BigNumber.from(100),

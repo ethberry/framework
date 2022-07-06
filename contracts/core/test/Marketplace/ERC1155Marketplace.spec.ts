@@ -13,7 +13,7 @@ import {
   tokenId,
   tokenName,
 } from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
+import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
 
 describe("ERC1155Marketplace", function () {
   let marketplaceInstance: ERC1155Marketplace;
