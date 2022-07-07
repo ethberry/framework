@@ -15,7 +15,7 @@ import { IUser } from "@framework/types";
 export const MyWallet: FC = () => {
   const [data, setData] = useState<IMetamaskDto>({ nonce: "", signature: "", wallet: "" });
 
-  const { account, library } = useWeb3React();
+  const { account, provider } = useWeb3React();
 
   const user = useUser<IUser>();
 
@@ -35,8 +35,8 @@ export const MyWallet: FC = () => {
   );
 
   const handleAttach = useMetamask(() => {
-    return library
-      .getSigner()
+    return provider
+      ?.getSigner()
       .signMessage(`${phrase}${data.nonce}`)
       .then((signature: string) => {
         setData({ ...data, signature });

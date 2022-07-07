@@ -31,7 +31,7 @@ export interface IErc1155TokenDeployButtonProps {
 export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
   const { className } = props;
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
   const api = useApi();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
@@ -46,7 +46,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, library.getSigner());
+          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, provider?.getSigner());
 
           return contract.deployERC1155Token(
             nonce,

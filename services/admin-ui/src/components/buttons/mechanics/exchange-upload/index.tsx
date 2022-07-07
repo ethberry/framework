@@ -19,7 +19,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const metaLoadRecipe = useMetamask((exchange: IExchangeRule) => {
     if (exchange.exchangeStatus !== ExchangeStatus.NEW) {
@@ -27,7 +27,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
     }
 
     // TODO check one contract for ingredients
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, library.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
 
     return contract.createRecipe(exchange.id, exchange.ingredients.components) as Promise<void>;
   });
@@ -49,7 +49,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
       exchangeStatus = recipe.exchangeStatus !== ExchangeStatus.ACTIVE;
     }
 
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, library.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
     return contract.updateRecipe(recipe.id, exchangeStatus) as Promise<void>;
   });
 

@@ -25,7 +25,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
   const user = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
@@ -38,7 +38,7 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
   );
 
   const metaRevokeRole = useMetamask((values: IAccessControl) => {
-    const contract = new Contract(data.address, IAccessControlSol.abi, library.getSigner());
+    const contract = new Contract(data.address, IAccessControlSol.abi, provider?.getSigner());
     return contract.revokeRole(values.role, values.address) as Promise<void>;
   });
 

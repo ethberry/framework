@@ -19,12 +19,12 @@ export const ExchangeButton: FC<IExchangeButtonProps> = props => {
   const { rule } = props;
   const [isApproved, setIsApproved] = useState(false);
 
-  const { library, active } = useWeb3React();
+  const { provider, isActive } = useWeb3React();
 
   const api = useApi();
 
   const meta = useMetamask(() => {
-    const contract = new Contract(rule.item.components[0].contract!.address, ERC998SimpleSol.abi, library.getSigner());
+    const contract = new Contract(rule.item.components[0].contract!.address, ERC998SimpleSol.abi, provider?.getSigner());
     return contract.setApprovalForAll(process.env.EXCHANGE_ADDR, true) as Promise<void>;
   });
 
@@ -35,7 +35,7 @@ export const ExchangeButton: FC<IExchangeButtonProps> = props => {
   };
 
   const handleCraft = useMetamask(() => {
-    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC998CraftSol.abi, library.getSigner());
+    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC998CraftSol.abi, provider?.getSigner());
     return (
       contract
         // TODO add item amounts - batch craft?
@@ -58,11 +58,11 @@ export const ExchangeButton: FC<IExchangeButtonProps> = props => {
   }, []);
 
   return isApproved ? (
-    <Button onClick={handleCraft} disabled={!active} data-testid="ExchangeCraftButton">
+    <Button onClick={handleCraft} disabled={!isActive} data-testid="ExchangeCraftButton">
       <FormattedMessage id="form.buttons.craft" />
     </Button>
   ) : (
-    <Button onClick={handleApprove} disabled={!active} data-testid="ExchangeCraftButton">
+    <Button onClick={handleApprove} disabled={!isActive} data-testid="ExchangeCraftButton">
       <FormattedMessage id="form.buttons.approve" />
     </Button>
   );

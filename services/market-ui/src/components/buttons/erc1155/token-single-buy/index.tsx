@@ -19,7 +19,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
   const { template } = props;
 
   const api = useApi();
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleBuy = useMetamask(() => {
     return api
@@ -35,7 +35,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
         const contract = new Contract(
           process.env.ERC1155_MARKETPLACE_ADDR,
           ERC1155MarketplaceSol.abi,
-          library.getSigner(),
+          provider?.getSigner(),
         );
         const nonce = utils.arrayify(json.nonce);
         const tokenPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");

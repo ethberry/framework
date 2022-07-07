@@ -19,7 +19,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const metaLoadRule = useMetamask((rule: IStakingRule) => {
     if (rule.stakingStatus !== StakingStatus.NEW) {
@@ -36,7 +36,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       active: true, // todo add var in interface
     };
 
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -57,7 +57,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       ruleStatus = rule.stakingStatus !== StakingStatus.ACTIVE;
     }
 
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, provider?.getSigner());
     return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
   });
 

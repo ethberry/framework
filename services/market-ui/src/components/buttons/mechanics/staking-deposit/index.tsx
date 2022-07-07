@@ -19,7 +19,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const metaDeposit = useMetamask((rule: IStakingRule) => {
     if (rule.stakingStatus !== StakingStatus.ACTIVE) {
@@ -32,7 +32,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
     ) {
       override = { value: BigNumber.from(rule.deposit.components[0].amount) };
     }
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, library.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, provider?.getSigner());
     return contract.deposit(rule.externalId, rule.deposit?.components[0].tokenId || 0, override) as Promise<void>;
   });
 

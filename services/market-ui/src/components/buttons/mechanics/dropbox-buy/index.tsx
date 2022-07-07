@@ -19,7 +19,7 @@ export const DropboxBuyButton: FC<IDropboxBuyButtonProps> = props => {
   const { dropbox } = props;
 
   const api = useApi();
-  const { library } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleBuy = useMetamask(() => {
     return api
@@ -32,7 +32,7 @@ export const DropboxBuyButton: FC<IDropboxBuyButtonProps> = props => {
         const contract = new Contract(
           process.env.ERC721_MARKETPLACE_ADDR,
           ERC998MarketplaceSol.abi,
-          library.getSigner(),
+          provider?.getSigner(),
         );
         const nonce = utils.arrayify(sign.nonce);
         const commonDropboxPrice = utils.parseUnits(dropbox.price.components[0].amount, "wei");

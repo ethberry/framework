@@ -18,7 +18,7 @@ interface ILevelUpButtonProps {
 export const LevelUpButton: FC<ILevelUpButtonProps> = props => {
   const { token } = props;
 
-  const { library, active } = useWeb3React();
+  const { provider, isActive } = useWeb3React();
 
   const api = useApi();
 
@@ -35,7 +35,7 @@ export const LevelUpButton: FC<ILevelUpButtonProps> = props => {
         },
       })
       .then((sign: IServerSignature) => {
-        const contract = new Contract(process.env.METADATA_ADDR, MetaDataManipulatorSol.abi, library.getSigner());
+        const contract = new Contract(process.env.METADATA_ADDR, MetaDataManipulatorSol.abi, provider?.getSigner());
         const nonce = utils.arrayify(sign.nonce);
         return contract.levelUp(nonce, address, token.tokenId, sign.signature, {
           value: constants.WeiPerEther,
@@ -48,7 +48,7 @@ export const LevelUpButton: FC<ILevelUpButtonProps> = props => {
   }
 
   return (
-    <Button onClick={handleLevelUp} disabled={!active} data-testid="Erc998LevelUpButton">
+    <Button onClick={handleLevelUp} disabled={!isActive} data-testid="Erc998LevelUpButton">
       <FormattedMessage id="form.buttons.levelUp" />
     </Button>
   );
