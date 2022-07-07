@@ -57,16 +57,26 @@ export const Erc998Template: FC = () => {
       templateStatus: [TemplateStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, contractId }) => ({
-      title,
-      description,
-      attributes,
-      price,
-      amount,
-      imageUrl,
-      templateStatus,
-      contractId,
-    }),
+    filter: ({ id, title, description, attributes, price, amount, imageUrl, templateStatus, contractId }) =>
+      id
+        ? {
+            title,
+            description,
+            attributes,
+            price,
+            amount,
+            imageUrl,
+            templateStatus,
+          }
+        : {
+            title,
+            description,
+            attributes,
+            price,
+            amount,
+            imageUrl,
+            contractId,
+          },
   });
 
   return (

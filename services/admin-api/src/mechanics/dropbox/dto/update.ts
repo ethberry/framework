@@ -26,14 +26,6 @@ export class DropboxUpdateDto implements IDropboxUpdateDto {
   @Type(() => AssetDto)
   public price: AssetDto;
 
-  @ApiPropertyOptional({
-    type: Number,
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public erc20TokenId: number;
-
   @ApiPropertyOptional()
   @IsOptional()
   @IsUrl({}, { message: "patternMismatch" })

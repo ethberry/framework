@@ -27,17 +27,6 @@ export class ExchangeRulesService {
     queryBuilder.leftJoinAndSelect("item.components", "components");
     queryBuilder.leftJoinAndSelect("components.token", "token");
     queryBuilder.leftJoinAndSelect("token.template", "template");
-    queryBuilder.leftJoinAndSelect("components.contract", "contract");
-
-    queryBuilder.leftJoinAndSelect("rule.ingredients", "ingredients");
-    // queryBuilder.leftJoinAndSelect("template.erc721Collection", "templateCollection");
-    // queryBuilder.leftJoinAndSelect("recipe.erc721Dropbox", "dropbox");
-    // queryBuilder.leftJoinAndSelect("dropbox.erc721Collection", "dropboxCollection");
-    // queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "dropboxTemplate");
-    // queryBuilder.leftJoinAndSelect("dropboxTemplate.erc721Collection", "dropboxTemplateCollection");
-    // queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
-    // queryBuilder.leftJoinAndSelect("ingredients.erc1155Token", "ingredientsToken");
-    // queryBuilder.leftJoinAndSelect("ingredientsToken.erc1155Collection", "ingredientsTokenCollection");
 
     if (query) {
       queryBuilder.leftJoin(

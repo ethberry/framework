@@ -54,6 +54,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
           contractRole: [ContractRole.TOKEN],
           contractType: [TokenType.ERC721],
         }}
+        readOnly={!!id}
       />
       <AvatarInput name="imageUrl" />
     </FormDialog>

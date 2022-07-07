@@ -21,14 +21,6 @@ export class DropboxCreateDto implements IDropboxCreateDto {
   @Type(() => AssetDto)
   public price: AssetDto;
 
-  @ApiProperty({
-    type: Number,
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public erc20TokenId: number;
-
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })

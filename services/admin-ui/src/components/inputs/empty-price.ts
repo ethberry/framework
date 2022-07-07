@@ -6,11 +6,6 @@ export const emptyPrice = {
       tokenType: TokenType.NATIVE,
       contractId: 0,
       tokenId: 0,
-      // token: {
-      //   template: {
-      //     title: "",
-      //   },
-      // },
       amount: "0",
     } as IAssetComponent,
   ],

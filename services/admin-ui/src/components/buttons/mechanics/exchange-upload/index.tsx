@@ -63,7 +63,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
 
   if (rule.exchangeStatus === ExchangeStatus.NEW) {
     return (
-      <Tooltip title={formatMessage({ id: "pages.erc1155-recipes.upload" })}>
+      <Tooltip title={formatMessage({ id: "pages.exchange-rules.upload" })}>
         <IconButton onClick={handleLoadRecipe(rule)} data-testid="ExchangeUploadButton">
           <CloudUpload />
         </IconButton>
@@ -76,8 +76,8 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
       title={formatMessage({
         id:
           rule.exchangeStatus === ExchangeStatus.ACTIVE
-            ? "pages.erc1155-recipes.deactivate"
-            : "pages.erc1155-recipes.activate",
+            ? "pages.exchange-rules.deactivate"
+            : "pages.exchange-rules.activate",
       })}
     >
       <IconButton onClick={handleToggleRecipe(rule)} data-testid="ExchangeToggleButton">

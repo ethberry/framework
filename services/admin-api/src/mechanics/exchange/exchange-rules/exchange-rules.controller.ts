@@ -37,10 +37,18 @@ export class ExchangeRulesController {
       { id },
       {
         join: {
-          alias: "recipe",
+          alias: "rule",
           leftJoinAndSelect: {
-            erc721Token: "erc721.erc721Token",
-            ingredients: "erc721.ingredients",
+            item: "rule.item",
+            item_components: "item.components",
+            item_token: "item_components.token",
+            item_contract: "item_components.contract",
+            item_template: "item_token.template",
+            ingredients: "rule.ingredients",
+            ingredients_components: "ingredients.components",
+            ingredients_token: "ingredients_components.token",
+            ingredients_contract: "ingredients_components.contract",
+            ingredients_template: "ingredients_token.template",
           },
         },
       },

@@ -108,7 +108,7 @@ export const Exchange: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: selected.item.components[0].token!.template!.title }}
+        initialValues={{ ...selected, title: selected.item.components[0]?.token?.template?.title }}
       />
 
       <ExchangeEditDialog

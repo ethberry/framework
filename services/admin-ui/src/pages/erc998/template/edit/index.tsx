@@ -54,6 +54,7 @@ export const Erc998TemplateEditDialog: FC<ITemplateEditDialogProps> = props => {
           tokenType: [TokenType.ERC998],
           contractRole: [ContractRole.TOKEN],
         }}
+        readOnly={!!id}
       />
       <AvatarInput name="imageUrl" />
     </FormDialog>
