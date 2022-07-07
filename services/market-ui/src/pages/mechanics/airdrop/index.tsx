@@ -37,7 +37,7 @@ export const Airdrop: FC = () => {
   );
 
   const fetchDropbox = async (): Promise<void> => {
-    if (!active) {
+    if (!isActive) {
       return;
     }
 
