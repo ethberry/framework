@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
@@ -18,6 +18,6 @@ export class BalanceEntity extends IdDateBaseEntity implements IBalance {
   public tokenId: number;
 
   @JoinColumn()
-  @OneToOne(_type => TokenEntity)
+  @ManyToOne(_type => TokenEntity)
   public token: TokenEntity;
 }

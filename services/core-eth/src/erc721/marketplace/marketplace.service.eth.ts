@@ -13,6 +13,7 @@ import { ContractManagerService } from "../../blockchain/contract-manager/contra
 import { Erc721MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 // import { Erc721DropboxService } from "../../mechanics/dropbox/dropbox.service";
 
 @Injectable()
@@ -23,6 +24,7 @@ export class Erc721MarketplaceServiceEth {
     private readonly contractManagerService: ContractManagerService,
     private readonly erc721MarketplaceHistoryService: Erc721MarketplaceHistoryService,
     private readonly tokenService: TokenService,
+    private readonly balanceService: BalanceService,
     private readonly templateService: TemplateService, // private readonly erc721DropboxService: Erc721DropboxService,
   ) {}
 
@@ -42,8 +44,14 @@ export class Erc721MarketplaceServiceEth {
       attributes: Object.assign(erc721TemplateEntity.attributes, {
         rarity: TokenRarity.COMMON,
       }),
-      owner: from.toLowerCase(),
+      royalty: erc721TemplateEntity.contract.royalty,
       template: erc721TemplateEntity,
+    });
+
+    await this.balanceService.create({
+      account: from.toLowerCase(),
+      amount: "1",
+      tokenId: erc721TokenEntity.id,
     });
 
     await this.updateHistory(event, erc721TokenEntity.id, context);

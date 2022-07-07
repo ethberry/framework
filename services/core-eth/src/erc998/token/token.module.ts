@@ -13,6 +13,7 @@ import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
 import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
+import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
     TemplateModule,
     AccessControlModule,
     TokenModule,
+    BalanceModule,
     ContractModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],

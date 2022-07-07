@@ -13,6 +13,7 @@ import { ContractManagerService } from "../../blockchain/contract-manager/contra
 import { Erc998MarketplaceHistoryService } from "./marketplace-history/marketplace-history.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 
 @Injectable()
 export class Erc998MarketplaceServiceEth {
@@ -21,8 +22,9 @@ export class Erc998MarketplaceServiceEth {
     private readonly loggerService: LoggerService,
     private readonly contractManagerService: ContractManagerService,
     private readonly erc998MarketplaceHistoryService: Erc998MarketplaceHistoryService,
-    private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
+    private readonly tokenService: TokenService,
+    private readonly balanceService: BalanceService,
   ) {}
 
   public async redeem(event: ILogEvent<IErc998MarketplaceRedeem>, context: Log): Promise<void> {
@@ -41,8 +43,14 @@ export class Erc998MarketplaceServiceEth {
       attributes: Object.assign(erc998TemplateEntity.attributes, {
         rarity: TokenRarity.COMMON,
       }),
-      owner: from.toLowerCase(),
+      royalty: erc998TemplateEntity.contract.royalty,
       template: erc998TemplateEntity,
+    });
+
+    await this.balanceService.create({
+      account: from.toLowerCase(),
+      amount: "1",
+      tokenId: erc998TokenEntity.id,
     });
 
     await this.updateHistory(event, erc998TokenEntity.id, context);

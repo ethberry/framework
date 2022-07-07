@@ -33,7 +33,7 @@ export class Erc721TemplateController {
           alias: "asset",
           leftJoinAndSelect: {
             price: "asset.price",
-            // components: "price.components",
+            components: "price.components",
           },
         },
       },

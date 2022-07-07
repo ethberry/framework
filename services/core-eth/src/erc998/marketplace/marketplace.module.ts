@@ -8,6 +8,7 @@ import { Erc998MarketplaceHistoryModule } from "./marketplace-history/marketplac
 import { Erc998MarketplaceLogModule } from "./marketplace-log/marketplace-log.module";
 import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
+import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module";
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
     Erc998MarketplaceHistoryModule,
     TokenModule,
     TemplateModule,
+    BalanceModule,
   ],
   providers: [Logger, Erc998MarketplaceServiceEth],
   controllers: [Erc998MarketplaceControllerEth],

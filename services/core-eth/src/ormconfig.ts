@@ -23,6 +23,7 @@ import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity"
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { AssetEntity } from "./blockchain/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
+import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -48,6 +49,7 @@ const config: PostgresConnectionOptions = {
     Erc1155MarketplaceHistoryEntity,
     ContractEntity,
     TemplateEntity,
+    BalanceEntity,
     TokenEntity,
     AssetEntity,
     AssetComponentEntity,

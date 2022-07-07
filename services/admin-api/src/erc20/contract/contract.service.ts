@@ -9,6 +9,7 @@ import { ContractTemplate, IContractSearchDto, IErc20TokenCreateDto, TokenType }
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 
 @Injectable()
 export class Erc20ContractService extends ContractService {
@@ -17,6 +18,8 @@ export class Erc20ContractService extends ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
+    @InjectRepository(TokenEntity)
+    protected readonly tokenEntityRepository: Repository<TokenEntity>,
     protected readonly configService: ConfigService,
   ) {
     super(contractEntityRepository);
@@ -45,7 +48,7 @@ export class Erc20ContractService extends ContractService {
       })
       .save();
 
-    await this.templateEntityRepository
+    const templateEntity = await this.templateEntityRepository
       .create({
         decimals,
         title,
@@ -53,6 +56,15 @@ export class Erc20ContractService extends ContractService {
         contract: contractEntity,
         imageUrl: "",
         attributes: "{}",
+      })
+      .save();
+
+    await this.tokenEntityRepository
+      .create({
+        attributes: "{}",
+        tokenId: "0",
+        royalty: 0,
+        template: templateEntity,
       })
       .save();
 

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -26,6 +26,17 @@ export class Erc721TemplateService extends TemplateService {
 
   public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
     const { price } = dto;
+
+    // populate NATIVE or ERC20
+    for (const component of price.components) {
+      if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
+        const template = await this.findOne({ contractId: component.contractId }, { relations: { tokens: true } });
+        if (!template) {
+          throw new NotFoundException("templateNotFound");
+        }
+        component.tokenId = template.tokens[0].id;
+      }
+    }
 
     const assetEntity = await this.assetService.create({
       assetType: AssetType.TEMPLATE,

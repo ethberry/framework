@@ -26,6 +26,7 @@ import { ContractManagerService } from "../../blockchain/contract-manager/contra
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 
 @Injectable()
 export class Erc998TokenServiceEth {
@@ -38,6 +39,7 @@ export class Erc998TokenServiceEth {
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
+    private readonly balanceService: BalanceService,
     private readonly templateService: TemplateService,
     private readonly erc998TokenHistoryService: Erc998TokenHistoryService,
     private readonly contractService: ContractService,
@@ -79,12 +81,15 @@ export class Erc998TokenServiceEth {
       erc998TokenEntity.tokenStatus = TokenStatus.BURNED;
     }
 
-    erc998TokenEntity.owner = to;
+    // change token's owner
+    erc998TokenEntity.balance.account = to.toLowerCase();
 
     await erc998TokenEntity.save();
 
     // need to save updates in nested entities too
     await erc998TokenEntity.template.save();
+    await erc998TokenEntity.balance.save();
+
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
     //   : await erc998TokenEntity.erc998Dropbox.erc998Template.save();
@@ -146,8 +151,14 @@ export class Erc998TokenServiceEth {
     const erc998TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: erc998TemplateEntity.attributes,
-      owner: from.toLowerCase(),
+      royalty: erc998TemplateEntity.contract.royalty,
       template: erc998TemplateEntity,
+    });
+
+    await this.balanceService.create({
+      account: from.toLowerCase(),
+      amount: "1",
+      tokenId: erc998TokenEntity.id,
     });
 
     await this.updateHistory(event, context, erc998TokenEntity.id);
@@ -178,9 +189,15 @@ export class Erc998TokenServiceEth {
       attributes: Object.assign(erc998TemplateEntity.attributes, {
         rarity: Object.values(TokenRarity)[~~rarity],
       }),
-      owner: to.toLowerCase(),
+      royalty: erc998TemplateEntity.contract.royalty,
       template: erc998TemplateEntity,
       // token: erc998DropboxEntity,
+    });
+
+    await this.balanceService.create({
+      account: to.toLowerCase(),
+      amount: "1",
+      tokenId: erc998TokenEntity.id,
     });
 
     await this.updateHistory(event, context, erc998TokenEntity.id);

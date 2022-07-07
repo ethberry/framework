@@ -33,6 +33,7 @@ import { VestingLogService } from "../../mechanics/vesting/vesting-log/vesting.l
 import { ContractManagerService } from "./contract-manager.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
+import { TokenService } from "../hierarchy/token/token.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -52,6 +53,7 @@ export class ContractManagerServiceEth {
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
     private readonly templateService: TemplateService,
+    private readonly tokenService: TokenService,
   ) {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
@@ -108,7 +110,7 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
     });
 
-    await this.templateService.create({
+    const templateEntity = await this.templateService.create({
       title: name,
       description: emptyStateString,
       imageUrl,
@@ -116,6 +118,13 @@ export class ContractManagerServiceEth {
       cap,
       decimals: 18,
       contractId: erc20ContractEntity.id,
+    });
+
+    await this.tokenService.create({
+      attributes: "{}",
+      tokenId: "0",
+      royalty: 0,
+      template: templateEntity,
     });
 
     await this.erc20LogService.addListener({

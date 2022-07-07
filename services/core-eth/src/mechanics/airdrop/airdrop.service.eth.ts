@@ -26,6 +26,7 @@ import { AirdropService } from "./airdrop.service";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 
 @Injectable()
 export class AirdropServiceEth {
@@ -39,6 +40,7 @@ export class AirdropServiceEth {
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
+    private readonly balanceService: BalanceService,
     private readonly airdropService: AirdropService,
     private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
     private readonly contractService: ContractService,
@@ -86,12 +88,15 @@ export class AirdropServiceEth {
       erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     }
 
-    erc721TokenEntity.owner = to;
+    // change token's owner
+    erc721TokenEntity.balance.account = to.toLowerCase();
 
     await erc721TokenEntity.save();
 
     // need to save updates in nested entities too
     await erc721TokenEntity.template.save();
+    await erc721TokenEntity.balance.save();
+
     // erc721TokenEntity.erc721Template
     //   ? await erc721TokenEntity.erc721Template.save()
     //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
@@ -169,8 +174,14 @@ export class AirdropServiceEth {
     const erc721TokenEntity = await this.tokenService.create({
       tokenId,
       attributes: erc721TemplateEntity.attributes,
-      owner: from.toLowerCase(),
+      royalty: erc721TemplateEntity.contract.royalty,
       template: erc721TemplateEntity,
+    });
+
+    await this.balanceService.create({
+      account: from.toLowerCase(),
+      amount: "1",
+      tokenId: erc721TokenEntity.id,
     });
 
     // Update Airdrop

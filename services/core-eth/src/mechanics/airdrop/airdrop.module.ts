@@ -13,12 +13,14 @@ import { Erc721TokenHistoryModule } from "../../erc721/token/token-history/token
 import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
 import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
+import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module";
 
 @Module({
   imports: [
     AirdropLogModule,
     TemplateModule,
     TokenModule,
+    BalanceModule,
     ConfigModule,
     ContractManagerModule,
     AccessControlModule,
