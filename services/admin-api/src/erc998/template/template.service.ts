@@ -6,14 +6,16 @@ import { ITemplateSearchDto, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { AssetService } from "../../blockchain/asset/asset.service";
 
 @Injectable()
 export class Erc998TemplateService extends TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
+    protected readonly assetService: AssetService,
   ) {
-    super(templateEntityRepository);
+    super(templateEntityRepository, assetService);
   }
 
   public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {

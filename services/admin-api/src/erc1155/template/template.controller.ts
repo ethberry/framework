@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -26,7 +27,7 @@ export class Erc1155TemplateController {
   constructor(private readonly erc1155TemplateService: Erc1155TemplateService) {}
 
   @Get("/")
-  @UseInterceptors(PaginationInterceptor)
+  @UseInterceptors(PaginationInterceptor, ClassSerializerInterceptor)
   public search(@Query() dto: TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc1155TemplateService.search(dto);
   }
@@ -42,7 +43,7 @@ export class Erc1155TemplateController {
   }
 
   @Get("/:id")
-  @UseInterceptors(NotFoundInterceptor)
+  @UseInterceptors(NotFoundInterceptor, ClassSerializerInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
     return this.erc1155TemplateService.findOne({ id });
   }

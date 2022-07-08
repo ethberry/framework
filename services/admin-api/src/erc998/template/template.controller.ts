@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  ClassSerializerInterceptor,
+  Put,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -13,7 +25,7 @@ export class Erc998TemplateController {
   constructor(private readonly erc998TemplateService: Erc998TemplateService) {}
 
   @Get("/")
-  @UseInterceptors(PaginationInterceptor)
+  @UseInterceptors(PaginationInterceptor, ClassSerializerInterceptor)
   public search(@Query() dto: TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc998TemplateService.search(dto);
   }
@@ -24,7 +36,7 @@ export class Erc998TemplateController {
   }
 
   @Get("/:id")
-  @UseInterceptors(NotFoundInterceptor)
+  @UseInterceptors(NotFoundInterceptor, ClassSerializerInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
     return this.erc998TemplateService.findOne({ id });
   }

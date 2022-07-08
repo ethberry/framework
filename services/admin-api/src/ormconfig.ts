@@ -61,7 +61,9 @@ import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-see
 import { SeedBalanceErc1155At1563804020450 } from "./migrations/1563804000450-seed-balance-erc1155";
 
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
-import { SeedAssetComponents1563804001230 } from "./migrations/1563804001230-seed-asset-component-erc721";
+import { SeedAssetComponentsErc721At1563804001230 } from "./migrations/1563804001230-seed-asset-component-erc721";
+import { SeedAssetComponentsErc998At1563804001240 } from "./migrations/1563804001240-seed-asset-component-erc998";
+import { SeedAssetComponentsErc1155At1563804001250 } from "./migrations/1563804001250-seed-asset-component-erc1155";
 
 import { CreateErc20ContractHistory1563804010130 } from "./migrations/1563804010130-create-erc20-contract-history";
 import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-vesting";
@@ -185,7 +187,9 @@ const config: PostgresConnectionOptions = {
     SeedBalanceErc1155At1563804020450,
 
     CreateAssetComponent1563804001220,
-    SeedAssetComponents1563804001230,
+    SeedAssetComponentsErc721At1563804001230,
+    SeedAssetComponentsErc998At1563804001240,
+    SeedAssetComponentsErc1155At1563804001250,
 
     CreateErc20ContractHistory1563804010130,
     CreateVesting1563804010210,

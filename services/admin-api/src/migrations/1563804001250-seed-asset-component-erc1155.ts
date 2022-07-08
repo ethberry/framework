@@ -3,7 +3,7 @@ import { constants } from "ethers";
 
 import { ns } from "@framework/constants";
 
-export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterface {
+export class SeedAssetComponentsErc1155At1563804001250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -17,103 +17,49 @@ export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterf
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20101
+        40101
       ), (
         'ERC20',
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20102
+        40102
       ), (
         'ERC20',
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20103
+        40103
       ), (
         'ERC20',
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20201
+        40104
       ), (
         'ERC20',
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20202
+        40105
       ), (
         'ERC20',
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20203
+        40201
       ), (
         'ERC20',
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20204
+        40202
       ), (
         'ERC20',
         2,
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        20205
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20206
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20207
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20208
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20301
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20302
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20303
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20401
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20402
-      ), (
-        'ERC20',
-        2,
-        10002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        20403
+        40203
       );
     `);
   }

@@ -1,12 +1,13 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AssetService } from "./asset.service";
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
+import { TemplateModule } from "../hierarchy/template/template.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity])],
+  imports: [forwardRef(() => TemplateModule), TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity])],
   providers: [AssetService],
   exports: [AssetService],
 })

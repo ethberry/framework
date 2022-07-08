@@ -33,7 +33,7 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   @Column({ type: "numeric" })
   public amount: string;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", select: false })
   public assetId: number;
 
   @JoinColumn()

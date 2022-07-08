@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
+import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
 import { JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
@@ -20,6 +21,7 @@ export class TemplateEntity extends SearchableEntity implements ITemplate {
   @OneToOne(_type => AssetEntity)
   public price: AssetEntity;
 
+  @Exclude()
   @Column({ type: "int" })
   public priceId: number;
 

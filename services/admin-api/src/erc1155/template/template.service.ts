@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { AssetType, ITemplateSearchDto, TokenType } from "@framework/types";
+import { ITemplateSearchDto, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
@@ -16,11 +16,10 @@ export class Erc1155TemplateService extends TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
+    protected readonly assetService: AssetService,
     protected readonly tokenService: Erc1155TokenService,
-    private readonly assetService: AssetService,
-    private readonly assetComponentService: AssetService,
   ) {
-    super(templateEntityRepository);
+    super(templateEntityRepository, assetService);
   }
 
   public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
@@ -43,29 +42,6 @@ export class Erc1155TemplateService extends TemplateService {
   }
 
   public async create(dto: ITemplateCreateDto): Promise<TemplateEntity> {
-    const { price } = dto;
-
-    // populate NATIVE or ERC20
-    for (const component of price.components) {
-      if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
-        const template = await this.findOne({ contractId: component.contractId }, { relations: { tokens: true } });
-        if (!template) {
-          throw new NotFoundException("templateNotFound");
-        }
-        component.tokenId = template.tokens[0].id;
-      }
-    }
-
-    const assetEntity = await this.assetService.create({
-      assetType: AssetType.TEMPLATE,
-      externalId: "0",
-      components: [],
-    });
-
-    await this.assetComponentService.update(assetEntity, price);
-
-    Object.assign(dto, { price: assetEntity });
-
     const templateEntity = await super.create(dto);
 
     const maxTokenId = await this.getMaxTokenIdForTemplate(templateEntity.id);

@@ -1,5 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, Min, ValidateIf } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsInt, Min, ValidateIf, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
@@ -8,6 +8,12 @@ import { TokenType } from "@framework/types";
 import { IAssetComponentDto } from "../interfaces";
 
 export class AssetComponentDto implements IAssetComponentDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public id?: number;
+
   @ApiProperty({
     enum: TokenType,
   })

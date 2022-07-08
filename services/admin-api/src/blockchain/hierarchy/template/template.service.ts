@@ -1,16 +1,19 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, forwardRef, Inject } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ITemplateAutocompleteDto, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { AssetType, ITemplateAutocompleteDto, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
+import { AssetService } from "../../asset/asset.service";
 
 @Injectable()
 export class TemplateService {
   constructor(
     @InjectRepository(TemplateEntity)
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
+    @Inject(forwardRef(() => AssetService))
+    protected readonly assetService: AssetService,
   ) {}
 
   public async search(dto: ITemplateSearchDto, contractType: TokenType): Promise<[Array<TemplateEntity>, number]> {
@@ -99,6 +102,18 @@ export class TemplateService {
   }
 
   public async create(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+    const { price } = dto;
+
+    const assetEntity = await this.assetService.create({
+      assetType: AssetType.TEMPLATE,
+      externalId: "0",
+      components: [],
+    });
+
+    await this.assetService.update(assetEntity, price);
+
+    Object.assign(dto, { price: assetEntity });
+
     return this.templateEntityRepository.create(dto).save();
   }
 
@@ -106,13 +121,26 @@ export class TemplateService {
     where: FindOptionsWhere<TemplateEntity>,
     dto: Partial<ITemplateUpdateDto>,
   ): Promise<TemplateEntity> {
-    const templateEntity = await this.findOne(where);
+    const { price, ...rest } = dto;
+    const templateEntity = await this.findOne(where, {
+      join: {
+        alias: "asset",
+        leftJoinAndSelect: {
+          price: "asset.price",
+          components: "price.components",
+        },
+      },
+    });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    Object.assign(templateEntity, dto);
+    Object.assign(templateEntity, rest);
+
+    if (price) {
+      await this.assetService.update(templateEntity.price, price);
+    }
 
     return templateEntity.save();
   }
