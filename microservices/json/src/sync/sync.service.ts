@@ -22,19 +22,6 @@ export class SyncService {
   public async getBalanceBySub(sub: string): Promise<Array<BalanceEntity>> {
     const userEntity = await this.getProfileBySub(sub);
 
-    return this.balanceService.findAll(
-      {
-        account: userEntity.wallet,
-      },
-      {
-        join: {
-          alias: "balance",
-          leftJoinAndSelect: {
-            token: "balance.token",
-            template: "token.template",
-          },
-        },
-      },
-    );
+    return this.balanceService.getBalanceByUser(userEntity);
   }
 }
