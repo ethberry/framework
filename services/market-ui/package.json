@@ -19,7 +19,7 @@
     "@gemunion/draft-js-utils": "0.3.13",
     "@gemunion/firebase-login": "2.0.4",
     "@gemunion/history": "1.2.9",
-    "@gemunion/metamask-login": "2.0.5",
+    "@gemunion/metamask-login": "3.0.2",
     "@gemunion/mui-dialog-confirmation": "3.2.4",
     "@gemunion/mui-dialog-delete": "3.2.4",
     "@gemunion/mui-dialog-form": "7.0.11",
