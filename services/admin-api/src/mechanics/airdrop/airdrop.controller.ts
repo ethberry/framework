@@ -18,7 +18,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { AirdropService } from "./airdrop.service";
 import { AirdropEntity } from "./airdrop.entity";
-import { AirdropItemUpdateDto, AirdropSearchDto, Erc998AirdropCreateDto } from "./dto";
+import { AirdropItem, AirdropItemUpdateDto, AirdropSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/airdrops")
@@ -32,7 +32,7 @@ export class AirdropController {
   }
 
   @Post("/")
-  public create(@Body() dto: Erc998AirdropCreateDto): Promise<Array<AirdropEntity | null>> {
+  public create(@Body() dto: AirdropItem): Promise<Array<AirdropEntity | null>> {
     return this.airdropService.create(dto);
   }
 
@@ -47,7 +47,18 @@ export class AirdropController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<AirdropEntity | null> {
-    return this.airdropService.findOne({ id });
+    return this.airdropService.findOne(
+      { id },
+      {
+        join: {
+          alias: "asset",
+          leftJoinAndSelect: {
+            price: "asset.item",
+            components: "price.components",
+          },
+        },
+      },
+    );
   }
 
   @Delete("/:id")

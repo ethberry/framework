@@ -53,10 +53,10 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       <RichTextEditor name="description" />
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <PriceInput prefix="deposit" />
+          <PriceInput prefix="deposit" name="Deposit" />
         </Grid>
         <Grid item xs={6}>
-          <PriceInput prefix="reward" />
+          <PriceInput prefix="reward" name="Reward" />
         </Grid>
       </Grid>
       <NumberInput

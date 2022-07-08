@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { AirdropEditDialog } from "./edit";
 import { AirdropSearchForm } from "./form";
-import { emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyItem } from "../../../components/inputs/empty-price";
 
 export const Airdrop: FC = () => {
   const {
@@ -45,14 +45,15 @@ export const Airdrop: FC = () => {
     baseUrl: "/airdrops",
     empty: {
       account: "",
-      item: emptyPrice,
+      item: emptyItem,
     },
     search: {
       account: "",
       airdropStatus: [],
       templateIds: [],
     },
-    filter: ({ id, owner, templateIds, list }: any) => (id ? { owner, templateIds } : { list }),
+    filter: ({ id, owner, templateIds, item, list, account }: any) =>
+      id ? { owner, templateIds, item, account } : { list, item, account },
   });
 
   const { formatMessage } = useIntl();
@@ -80,7 +81,7 @@ export const Airdrop: FC = () => {
           {rows.map((airdrop, i) => (
             <ListItem key={i}>
               <ListItemText>{airdrop.account}</ListItemText>
-              <ListItemText>{airdrop.item.components[0].token!.template!.title}</ListItemText>
+              <ListItemText>{airdrop.item.components[0]?.token?.template?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(airdrop)} disabled={airdrop.airdropStatus !== AirdropStatus.NEW}>
                   <Create />

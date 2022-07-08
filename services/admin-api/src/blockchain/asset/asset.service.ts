@@ -24,7 +24,7 @@ export class AssetService {
   }
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<AssetEntity> {
-    // TODO transactions
+    // TODO transactions?
 
     // patch NATIVE and ERC20 tokens
     for (const component of dto.components) {
@@ -33,6 +33,13 @@ export class AssetService {
           { contractId: component.contractId },
           { relations: { tokens: true } },
         );
+        if (!template) {
+          throw new NotFoundException("templateNotFound");
+        }
+        component.tokenId = template.tokens[0].id;
+      }
+      if (component.tokenType === TokenType.ERC1155) {
+        const template = await this.templateService.findOne({ id: component.tokenId }, { relations: { tokens: true } });
         if (!template) {
           throw new NotFoundException("templateNotFound");
         }

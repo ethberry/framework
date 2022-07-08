@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ExchangeStatus, IExchangeSearchDto } from "@framework/types";
+import { AssetType, ExchangeStatus, IExchangeSearchDto } from "@framework/types";
 
 import { ExchangeRulesEntity } from "./exchange-rules.entity";
 import { IExchangeRuleCreateDto, IExchangeRuleUpdateDto } from "./interfaces";
@@ -27,6 +27,7 @@ export class ExchangeRulesService {
     queryBuilder.leftJoinAndSelect("item.components", "components");
     queryBuilder.leftJoinAndSelect("components.token", "token");
     queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     if (query) {
       queryBuilder.leftJoin(
@@ -66,9 +67,21 @@ export class ExchangeRulesService {
   public async create(dto: IExchangeRuleCreateDto): Promise<ExchangeRulesEntity> {
     const { ingredients, item } = dto;
 
-    // add new
-    const ingredientsEntity = await this.assetService.create(ingredients);
-    const itemEntity = await this.assetService.create(item);
+    // add new ingredient
+    const ingredientsEntity = await this.assetService.create({
+      assetType: AssetType.EXCHANGE,
+      externalId: "0",
+      components: [],
+    });
+    await this.assetService.update(ingredientsEntity, ingredients);
+
+    // add new item
+    const itemEntity = await this.assetService.create({
+      assetType: AssetType.EXCHANGE,
+      externalId: "0",
+      components: [],
+    });
+    await this.assetService.update(itemEntity, item);
 
     return this.recipeEntityRepository
       .create({

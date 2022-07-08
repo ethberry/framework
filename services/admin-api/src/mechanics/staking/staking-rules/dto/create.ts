@@ -72,10 +72,10 @@ export class StakingCreateDto implements IStakingCreateDto {
   @IsBoolean({ message: "typeMismatch" })
   public recurrent: boolean;
 
-  @ApiProperty({
-    type: Number,
-    minimum: 1,
-  })
-  @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
-  public ruleId: string;
+  // @ApiProperty({
+  //   type: Number,
+  //   minimum: 1,
+  // })
+  // @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
+  // public ruleId: string;
 }

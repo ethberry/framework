@@ -2,16 +2,18 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingSearchDto, StakingStatus } from "@framework/types";
+import { AssetType, IStakingSearchDto, StakingStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./staking-rules.entity";
 import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
+import { AssetService } from "../../../blockchain/asset/asset.service";
 
 @Injectable()
 export class StakingRulesService {
   constructor(
     @InjectRepository(StakingRulesEntity)
     private readonly stakingRuleEntityRepository: Repository<StakingRulesEntity>,
+    protected readonly assetService: AssetService,
   ) {}
 
   public search(dto: IStakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
@@ -79,6 +81,24 @@ export class StakingRulesService {
   }
 
   public async create(dto: IStakingCreateDto): Promise<StakingRulesEntity> {
+    const { deposit, reward } = dto;
+
+    const depositEntity = await this.assetService.create({
+      assetType: AssetType.STAKING,
+      externalId: "0",
+      components: [],
+    });
+    await this.assetService.update(depositEntity, deposit);
+
+    const rewardEntity = await this.assetService.create({
+      assetType: AssetType.STAKING,
+      externalId: "0",
+      components: [],
+    });
+    await this.assetService.update(rewardEntity, reward);
+
+    Object.assign(dto, { deposit: depositEntity, reward: rewardEntity });
+
     return this.stakingRuleEntityRepository.create(dto).save();
   }
 

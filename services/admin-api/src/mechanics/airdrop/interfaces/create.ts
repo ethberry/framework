@@ -5,6 +5,12 @@ export interface IAirdropItem {
   item: IAssetDto;
 }
 
+export interface IAirdropSign {
+  account: string;
+  airdropId: number;
+  templateId: number;
+}
+
 export interface IAirdropCreateDto {
   list: Array<IAirdropItem>;
 }
