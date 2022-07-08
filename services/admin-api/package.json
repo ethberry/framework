@@ -26,7 +26,7 @@
     "@gemunion/nest-js-module-typeorm-helpers": "0.9.3",
     "@gemunion/nest-js-module-winston-logdna": "2.0.1",
     "@gemunion/nest-js-utils": "2.0.1",
-    "@gemunion/nest-js-validators": "1.5.10",
+    "@gemunion/nest-js-validators": "2.0.1",
     "@gemunion/nestjs-ethers": "2.0.18",
     "@gemunion/types-collection": "1.4.4",
     "@gemunion/types-jwt": "0.3.2",
