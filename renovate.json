@@ -1,4 +1,4 @@
 {
   "extends": ["github>gemunion/renovate-config"],
-  "baseBranches": ["dev", "uni-token"]
+  "baseBranches": ["dev", "uni-token", "nestjs9"]
 }
