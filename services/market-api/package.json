@@ -37,7 +37,7 @@
     "@nestjs/microservices": "9.0.0",
     "@nestjs/passport": "8.2.2",
     "@nestjs/platform-express": "9.0.0",
-    "@nestjs/swagger": "5.2.1",
+    "@nestjs/swagger": "6.0.0",
     "@nestjs/terminus": "8.1.1",
     "@nestjs/typeorm": "8.1.4",
     "@nestjs/websockets": "9.0.0",
