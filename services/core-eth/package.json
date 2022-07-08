@@ -23,7 +23,7 @@
     "@gemunion/nest-js-utils": "1.5.10",
     "@gemunion/nestjs-ethers": "2.0.18",
     "@gemunion/types-collection": "1.4.4",
-    "@gemunion/collection": "1.2.22",
+    "@gemunion/collection": "2.0.1",
     "@nestjs/axios": "0.0.8",
     "@nestjs/common": "9.0.0",
     "@nestjs/config": "2.1.0",

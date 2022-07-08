@@ -13,7 +13,7 @@
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/butils": "0.1.4",
-    "@gemunion/collection": "1.2.22",
+    "@gemunion/collection": "2.0.1",
     "@gemunion/constants": "0.8.4",
     "@gemunion/draft-js-utils": "0.3.13",
     "@gemunion/nest-js-guards": "1.4.7",
