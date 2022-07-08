@@ -4,12 +4,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { Wallet } from "ethers";
 
-import { AirdropStatus, IAirdropSearchDto } from "@framework/types";
+import { AirdropStatus, AssetType, IAirdropSearchDto } from "@framework/types";
 import { prepareEip712 } from "@gemunion/butils";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
-import { IAirdropCreateDto, IAirdropItem } from "./interfaces";
+import { IAirdropItem } from "./interfaces";
 import { AirdropEntity } from "./airdrop.entity";
+import { AssetService } from "../../blockchain/asset/asset.service";
+import { AirdropSignService } from "./airdrop.sign.service";
 
 @Injectable()
 export class AirdropService {
@@ -21,6 +23,8 @@ export class AirdropService {
     private readonly configService: ConfigService,
     @InjectRepository(AirdropEntity)
     private readonly airdropEntityRepository: Repository<AirdropEntity>,
+    protected readonly assetService: AssetService,
+    protected readonly airdropSignService: AirdropSignService,
   ) {}
 
   public async search(dto: Partial<IAirdropSearchDto>): Promise<[Array<AirdropEntity>, number]> {
@@ -57,17 +61,28 @@ export class AirdropService {
     return this.airdropEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IAirdropCreateDto): Promise<Array<AirdropEntity | null>> {
-    const { list } = dto;
+  public async create(dto: IAirdropItem): Promise<Array<AirdropEntity | null>> {
+    // const { list } = dto;
+    const list = [dto];
 
     const results = await Promise.allSettled(
       list.map(async ({ account, item }) => {
+        const assetEntity = await this.assetService.create({
+          assetType: AssetType.AIRDROP,
+          externalId: "0",
+          components: [],
+        });
+
+        await this.assetService.update(assetEntity, item);
+        Object.assign(item, assetEntity);
+
         let signature = "0x";
         const airdropEntity = await this.airdropEntityRepository.create({ account, item, signature }).save();
-        signature = await this.getSign({
+
+        signature = await this.airdropSignService.airdropSign({
           account,
-          item,
           airdropId: airdropEntity.id,
+          templateId: airdropEntity.item.id,
         });
         Object.assign(airdropEntity, { signature });
         return airdropEntity.save();

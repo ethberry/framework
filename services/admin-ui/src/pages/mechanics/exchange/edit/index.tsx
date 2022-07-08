@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { IExchangeRule } from "@framework/types";
 
-import { validationSchema } from "./validation";
+// import { validationSchema2 } from "./validation";
 import { PriceInput } from "../../../../components/inputs/price";
 
 export interface IExchangeEditDialogProps {
@@ -26,13 +26,13 @@ export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {
   return (
     <FormDialog
       initialValues={fixedValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema2}
       message={"dialogs.edit"}
       data-testid="ExchangeEditDialog"
       {...rest}
     >
-      <PriceInput prefix="item" />
-      <PriceInput prefix="ingredients" multiple />
+      <PriceInput prefix="item" name="Item" />
+      <PriceInput prefix="ingredients" multiple name="Ingredients" />
     </FormDialog>
   );
 };

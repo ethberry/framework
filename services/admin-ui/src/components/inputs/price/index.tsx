@@ -12,14 +12,15 @@ import { ContractInput } from "./contract-input";
 import { TokenInput } from "./token-input";
 import { AmountInput } from "./amount-input";
 
-export interface IStakingEditDialogProps {
+export interface IPriceEditDialogProps {
+  name?: string;
   prefix: string;
   multiple?: boolean;
   disabledOptions?: Array<TokenType>;
 }
 
-export const PriceInput: FC<IStakingEditDialogProps> = props => {
-  const { prefix, multiple = false, disabledOptions } = props;
+export const PriceInput: FC<IPriceEditDialogProps> = props => {
+  const { name, prefix, multiple = false, disabledOptions } = props;
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
@@ -43,7 +44,7 @@ export const PriceInput: FC<IStakingEditDialogProps> = props => {
 
   return (
     <Box mt={2}>
-      <Typography>Price</Typography>
+      <Typography>{name || "Price"}</Typography>
 
       {value?.map((o: IAssetComponent, i: number) => (
         <Box

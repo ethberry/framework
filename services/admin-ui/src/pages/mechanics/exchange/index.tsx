@@ -82,6 +82,9 @@ export const Exchange: FC = () => {
           {rows.map((recipe, i) => (
             <ListItem key={i}>
               <ListItemText>{recipe.item.components[0].token!.template!.title}</ListItemText>
+              <ListItemText style={{ display: "flex", justifyContent: "space-around" }}>
+                {recipe.item.components[0].token!.template!.contract?.title}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <ExchangeUploadButton rule={recipe} />
                 <IconButton onClick={handleEdit(recipe)}>

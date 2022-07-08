@@ -90,6 +90,9 @@ export const Erc1155Template: FC = () => {
           {rows.map((token, i) => (
             <ListItem key={i}>
               <ListItemText>{token.title}</ListItemText>
+              <ListItemText style={{ display: "flex", justifyContent: "space-around" }}>
+                {token.contract?.title}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(token)}>
                   <Create />

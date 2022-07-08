@@ -191,6 +191,7 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "account": "Account",
       "address": "Address",
       "airdropStatus": "Status",
       "amount": "Amount",

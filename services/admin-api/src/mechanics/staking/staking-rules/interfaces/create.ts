@@ -11,7 +11,7 @@ export interface IStakingItemCreateDto {
 export interface IStakingCreateDto {
   title: string;
   description: string;
-  ruleId: string;
+  // ruleId?: string;
   deposit: IAssetDto;
   reward: IAssetDto;
   duration: number;

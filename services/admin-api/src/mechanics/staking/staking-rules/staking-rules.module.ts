@@ -6,9 +6,10 @@ import { StakingRulesController } from "./staking-rules.controller";
 import { StakingHistoryModule } from "../staking-history/staking-history.module";
 import { StakingRulesEntity } from "./staking-rules.entity";
 import { StakingStakesModule } from "../staking-stakes/staking-stakes.module";
+import { AssetModule } from "../../../blockchain/asset/asset.module";
 
 @Module({
-  imports: [StakingHistoryModule, StakingStakesModule, TypeOrmModule.forFeature([StakingRulesEntity])],
+  imports: [AssetModule, StakingHistoryModule, StakingStakesModule, TypeOrmModule.forFeature([StakingRulesEntity])],
   providers: [StakingRulesService],
   controllers: [StakingRulesController],
   exports: [StakingRulesService],

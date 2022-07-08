@@ -107,6 +107,9 @@ export const Erc721Template: FC = () => {
           {rows.map((template, i) => (
             <ListItem key={i}>
               <ListItemText>{template.title}</ListItemText>
+              <ListItemText style={{ display: "flex", justifyContent: "space-around" }}>
+                {template.contract?.title}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(template)}>
                   <Create />
