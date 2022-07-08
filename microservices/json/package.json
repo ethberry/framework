@@ -15,7 +15,7 @@
     "@gemunion/nest-js-module-throttler": "2.0.1",
     "@gemunion/nest-js-module-typeorm-debug": "2.0.1",
     "@gemunion/nest-js-module-typeorm-helpers": "0.9.3",
-    "@gemunion/nest-js-module-winston-logdna": "1.3.27",
+    "@gemunion/nest-js-module-winston-logdna": "2.0.1",
     "@gemunion/nest-js-utils": "2.0.1",
     "@liaoliaots/nestjs-redis": "8.2.2",
     "@nestjs/common": "9.0.1",
