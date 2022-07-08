@@ -43,7 +43,7 @@
     "@gemunion/provider-user": "4.0.4",
     "@gemunion/provider-wallet": "2.0.1",
     "@gemunion/react-hooks": "1.0.8",
-    "@gemunion/react-hooks-eth": "0.0.23",
+    "@gemunion/react-hooks-eth": "1.0.2",
     "@gemunion/types-collection": "1.4.4",
     "@gemunion/types-jwt": "0.3.2",
     "@gemunion/yup-rules": "2.0.4",
