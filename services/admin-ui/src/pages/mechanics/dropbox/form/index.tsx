@@ -41,9 +41,9 @@ export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
           <Grid item xs={6}>
             <EntityInput
               name="contractIds"
-              controller="collections"
+              controller="contracts"
               multiple
-              data={{ contractType: [ContractRole.DROPBOX] }}
+              data={{ contractRole: [ContractRole.DROPBOX] }}
             />
           </Grid>
           <Grid item xs={6}>

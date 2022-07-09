@@ -17,6 +17,18 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         60101,
         60101,
         'DROPBOX'
+      ), (
+        60102,
+        60102,
+        'DROPBOX'
+      ), (
+        60201,
+        60201,
+        'DROPBOX'
+      ), (
+        60202,
+        60202,
+        'DROPBOX'
       );
     `);
 
@@ -33,6 +45,24 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         10002, -- space credit
         '${constants.WeiPerEther.toString()}',
         60101
+      ), (
+        'ERC721',
+        2,
+        20101, -- sword
+        '1',
+        60102
+      ), (
+        'ERC20',
+        2,
+        10002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        60201
+      ), (
+        'ERC998',
+        2,
+        30101, -- warrior
+        '1',
+        60202
       );
     `);
 
@@ -42,6 +72,7 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         description,
         image_url,
         item_id,
+        price_id,
         dropbox_status,
         contract_id,
         template_id,
@@ -51,7 +82,8 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         'Sword Dropbox',
         '${simpleFormatting}',
         '${imageUrl}',
-        50101,
+        60101,
+        60102,
         'ACTIVE',
         12,
         20101,
@@ -61,7 +93,8 @@ export class SeedDropboxErc721At1653616447920 implements MigrationInterface {
         'Warrior Dropbox',
         '${simpleFormatting}',
         '${imageUrl}',
-        50101,
+        60202,
+        60202,
         'ACTIVE',
         12,
         20101,

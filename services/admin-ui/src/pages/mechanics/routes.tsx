@@ -19,11 +19,11 @@ export const mechanics: Array<RouteObject> = [
     ],
   },
   {
-    path: "/dropbox",
+    path: "/dropboxes",
     element: <Protected />,
     children: [
       { index: true, element: <Dropbox /> },
-      { path: "/dropbox/:id", element: <Dropbox /> },
+      { path: "/dropboxes/:id", element: <Dropbox /> },
     ],
   },
   {

@@ -1,4 +1,5 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
 import { DropboxStatus, IDropbox } from "@framework/types";
@@ -13,6 +14,10 @@ import { TemplateEntity } from "../../blockchain/hierarchy/template/template.ent
 export class DropboxEntity extends SearchableEntity implements IDropbox {
   @Column({ type: "varchar" })
   public imageUrl: string;
+
+  @Exclude()
+  @Column({ type: "int" })
+  public priceId: number;
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
