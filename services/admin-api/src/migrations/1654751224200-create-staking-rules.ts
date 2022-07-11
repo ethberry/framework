@@ -51,6 +51,7 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
         {
           name: "external_id",
           type: "varchar",
+          isNullable: true,
         },
         {
           name: "staking_status",

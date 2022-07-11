@@ -9,8 +9,10 @@ import { ContractRevokeRoleMenuItem } from "./revoke-role";
 import { ContractRenounceRoleMenuItem } from "./renounce-role";
 import { BlacklistAddMenuItem } from "./blacklist-add";
 import { UnBlacklistMenuItem } from "./blacklist-remove";
+import { MintTokenMenuItem } from "./mint-token";
 
 export enum ContractActions {
+  MINT = "MINT",
   SNAPSHOT = "SNAPSHOT",
   ROYALTY = "ROYALTY",
   BLACKLIST_ADD = "BLACKLIST_ADD",
@@ -58,6 +60,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {actions.includes(ContractActions.ROYALTY) ? (
           <Erc721CollectionRoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
         ) : null}
+        <MintTokenMenuItem address={contract.address} />
         <ContractGrantRoleMenuItem address={contract.address} />
         <ContractRevokeRoleMenuItem address={contract.address} />
         <ContractRenounceRoleMenuItem address={contract.address} />

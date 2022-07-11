@@ -11,13 +11,13 @@ import { IDropboxCreateDto, IDropboxUpdateDto } from "./interfaces";
 export class DropboxService {
   constructor(
     @InjectRepository(DropboxEntity)
-    private readonly erc998DropboxEntityRepository: Repository<DropboxEntity>,
+    private readonly dropboxEntityRepository: Repository<DropboxEntity>,
   ) {}
 
   public async search(dto: IDropboxSearchDto): Promise<[Array<DropboxEntity>, number]> {
     const { query, dropboxStatus, skip, take, contractIds } = dto;
 
-    const queryBuilder = this.erc998DropboxEntityRepository.createQueryBuilder("dropbox");
+    const queryBuilder = this.dropboxEntityRepository.createQueryBuilder("dropbox");
 
     queryBuilder.select();
 
@@ -64,7 +64,7 @@ export class DropboxService {
   }
 
   public async autocomplete(): Promise<Array<DropboxEntity>> {
-    return this.erc998DropboxEntityRepository.find({
+    return this.dropboxEntityRepository.find({
       select: {
         id: true,
         title: true,
@@ -76,7 +76,7 @@ export class DropboxService {
     where: FindOptionsWhere<DropboxEntity>,
     options?: FindOneOptions<DropboxEntity>,
   ): Promise<DropboxEntity | null> {
-    return this.erc998DropboxEntityRepository.findOne({ where, ...options });
+    return this.dropboxEntityRepository.findOne({ where, ...options });
   }
 
   public async update(where: FindOptionsWhere<DropboxEntity>, dto: Partial<IDropboxUpdateDto>): Promise<DropboxEntity> {
@@ -92,7 +92,7 @@ export class DropboxService {
   }
 
   public async create(dto: IDropboxCreateDto): Promise<DropboxEntity> {
-    return this.erc998DropboxEntityRepository.create(dto).save();
+    return this.dropboxEntityRepository.create(dto).save();
   }
 
   public async delete(where: FindOptionsWhere<DropboxEntity>): Promise<DropboxEntity> {

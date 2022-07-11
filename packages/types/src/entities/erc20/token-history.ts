@@ -24,7 +24,7 @@ export interface IErc20TokenSnapshot {
 
 export type TErc20TokenEventData = IErc20TokenTransfer | IErc20TokenApprove | IErc20TokenSnapshot;
 
-export interface IErc20TokenHistory extends IIdDateBase {
+export interface IErc20ContractHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: Erc20TokenEventType;

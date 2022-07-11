@@ -50,7 +50,7 @@ export const Erc998Contract: FC = () => {
     },
     search: {
       query: "",
-      contractStatus: [ContractStatus.ACTIVE],
+      contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractTemplate: [],
       contractRole: [],
     },

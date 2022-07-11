@@ -49,7 +49,11 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, provider?.getSigner());
+          const contract = new Contract(
+            process.env.CONTRACT_MANAGER_ADDR,
+            ContractManagerSol.abi,
+            provider?.getSigner(),
+          );
           return contract.deployERC20Token(
             nonce,
             getBytecodeByErc20TokenTemplate(contractTemplate),
