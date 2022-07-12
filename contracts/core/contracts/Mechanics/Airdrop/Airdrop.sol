@@ -15,8 +15,8 @@ import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../interfaces/IAsset.sol";
-import "../ERC721/interfaces/IERC721Simple.sol";
-import "../ERC1155/interfaces/IERC1155Simple.sol";
+import "../../ERC721/interfaces/IERC721Simple.sol";
+import "../../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   using Address for address;

@@ -19,12 +19,12 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
-import "../Dropbox/interfaces/IDropbox.sol";
-import "../ERC721/interfaces/IERC721Random.sol";
-import "../ERC721/interfaces/IERC721Simple.sol";
-import "../ERC1155/interfaces/IERC1155Simple.sol";
-import "../interfaces/IAsset.sol";
 import "./interfaces/IStaking.sol";
+import "../interfaces/IAsset.sol";
+import "../Dropbox/interfaces/IDropbox.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
+import "../../ERC721/interfaces/IERC721Simple.sol";
+import "../../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
   using Address for address;

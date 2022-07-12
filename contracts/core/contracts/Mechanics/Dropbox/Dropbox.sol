@@ -10,8 +10,8 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../ERC721/interfaces/IERC721Random.sol";
 import "./interfaces/IDropbox.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
 
 contract Dropbox is IDropbox, ERC721ACBER, ERC721BaseUrl {
   using Address for address;

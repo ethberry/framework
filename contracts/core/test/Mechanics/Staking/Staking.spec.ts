@@ -13,7 +13,7 @@ import {
   ERC1155Simple,
   LinkErc20,
   VRFCoordinatorMock,
-} from "../../typechain-types";
+} from "../../../typechain-types";
 import {
   DEFAULT_ADMIN_ROLE,
   PAUSER_ROLE,
@@ -24,10 +24,10 @@ import {
   tokenSymbol,
   LINK_ADDR,
   VRF_ADDR,
-} from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+} from "../../constants";
+import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 import { IRule, IAsset } from "./interface/staking";
-import { randomRequest } from "../shared/AccessControl/randomRequest";
+import { randomRequest } from "../../shared/AccessControl/randomRequest";
 
 describe("Staking", function () {
   let stakingInstance: Staking;

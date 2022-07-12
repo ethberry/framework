@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { Airdrop, ERC1155Simple, ERC721Simple } from "../../typechain-types";
+import { Airdrop, ERC1155Simple, ERC721Simple } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -14,10 +14,10 @@ import {
   tokenName,
   tokenSymbol,
   nonce,
-} from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
-import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
-import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
+} from "../../constants";
+import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldGetTokenURI } from "../../ERC721/shared/tokenURI";
+import { shouldSetBaseURI } from "../../ERC721/shared/setBaseURI";
 
 describe("Airdrop", function () {
   let airdropInstance: Airdrop;

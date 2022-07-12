@@ -17,8 +17,8 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-import "../interfaces/IAsset.sol";
-import "../Dropbox/interfaces/IDropbox.sol";
+import "../Mechanics/interfaces/IAsset.sol";
+import "../Mechanics/Dropbox/interfaces/IDropbox.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";

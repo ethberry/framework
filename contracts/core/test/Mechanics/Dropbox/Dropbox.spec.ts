@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { DropboxTest, ERC721Simple, Marketplace } from "../../typechain-types";
+import { DropboxTest, ERC721Simple, Marketplace } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -13,10 +13,10 @@ import {
   tokenId,
   tokenName,
   tokenSymbol,
-} from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
-import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
-import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
+} from "../../constants";
+import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldGetTokenURI } from "../../ERC721/shared/tokenURI";
+import { shouldSetBaseURI } from "../../ERC721/shared/setBaseURI";
 
 describe("Dropbox", function () {
   let marketplaceInstance: Marketplace;
