@@ -1223,7 +1223,7 @@ describe("Staking", function () {
       expect(balance).to.equal(1);
     });
 
-    it("should stake ERC1155  & receive NATIVE", async function () {
+    it("should stake ERC1155 & receive NATIVE", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
@@ -1259,7 +1259,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
-    it("should stake ERC1155  & receive ERC20", async function () {
+    it("should stake ERC1155 & receive ERC20", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
@@ -1296,7 +1296,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
-    it("should stake ERC1155  & receive ERC721 Random", async function () {
+    it("should stake ERC1155 & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
@@ -1334,7 +1334,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
-    it("should stake ERC1155  & receive ERC721 Common", async function () {
+    it("should stake ERC1155 & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
@@ -1371,7 +1371,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
-    it("should stake ERC1155  & receive ERC721 Dropbox", async function () {
+    it("should stake ERC1155 & receive ERC721 Dropbox", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
@@ -1408,7 +1408,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
-    it("should stake ERC1155  & receive ERC1155", async function () {
+    it("should stake ERC1155 & receive ERC1155", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc1155Deposit,

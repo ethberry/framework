@@ -14,11 +14,12 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBCR.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "../interfaces/IAsset.sol";
+import "../Asset/Asset.sol";
+import "../Asset/interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 
-contract Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
+contract Airdrop is AssetHelper, EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -28,12 +29,9 @@ contract Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   mapping(uint256 => Asset) internal _itemData;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes32 public constant PERMIT_SIGNATURE =
-    keccak256(
-      "EIP712(bytes32 nonce,address account,Asset item)Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)"
-    );
-  bytes32 public constant ASSET_TYPEHASH =
-    keccak256(abi.encodePacked("Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)"));
+
+  bytes32 internal immutable PERMIT_SIGNATURE =
+    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset item)", ASSET_SIGNATURE));
 
   event RedeemAirdrop(address from, uint256 tokenId, Asset item);
   event UnpackAirdrop(address from, uint256 tokenId, Asset item);
@@ -73,11 +71,11 @@ contract Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
     emit RedeemAirdrop(_msgSender(), tokenId, item);
   }
 
-  function hashAssetStruct(Asset memory item) public pure returns (bytes32) {
-    return keccak256(abi.encode(ASSET_TYPEHASH, item.tokenType, item.token, item.tokenId, item.amount));
-  }
-
-  function _hash(bytes32 nonce, address account, Asset memory item) internal view returns (bytes32) {
+  function _hash(
+    bytes32 nonce,
+    address account,
+    Asset memory item
+  ) internal view returns (bytes32) {
     return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStruct(item))));
   }
 

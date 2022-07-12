@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.9;
 
-import "../../interfaces/IAsset.sol";
+import "../../Asset/interfaces/IAsset.sol";
 
 interface IStaking {
   struct Rule {

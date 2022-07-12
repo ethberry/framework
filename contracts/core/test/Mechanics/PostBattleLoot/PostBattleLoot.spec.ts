@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC1155Simple, PostBattleLoot } from "../../typechain-types";
+import { ERC1155Simple, PostBattleLoot } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -12,8 +12,8 @@ import {
   PAUSER_ROLE,
   tokenId,
   tokenName,
-} from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+} from "../../constants";
+import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 
 describe("PostBattleLoot", function () {
   let pblInstance: PostBattleLoot;

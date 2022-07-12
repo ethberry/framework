@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { Marketplace, ERC1155Simple, ERC721Simple, ERC20Simple } from "../../typechain-types";
+import { Marketplace, ERC1155Simple, ERC721Simple, ERC20Simple } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -14,8 +14,8 @@ import {
   tokenName,
   tokenSymbol,
   royalty,
-} from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+} from "../../constants";
+import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 
 describe("Marketplace", function () {
   let marketplaceInstance: Marketplace;

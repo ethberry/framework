@@ -12,7 +12,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-import "../ERC1155/interfaces/IERC1155Simple.sol";
+import "../../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract PostBattleLoot is AccessControl, Pausable, EIP712 {
   using Address for address;
@@ -22,7 +22,7 @@ contract PostBattleLoot is AccessControl, Pausable, EIP712 {
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   bytes32 private immutable PERMIT_SIGNATURE =
-  keccak256("EIP712(bytes32 nonce,address account,address collection,uint256[] tokenIds,uint256[] amounts)");
+    keccak256("EIP712(bytes32 nonce,address account,address collection,uint256[] tokenIds,uint256[] amounts)");
 
   event Redeem(address from, address collection, uint256[] tokenIds, uint256[] amounts);
 
@@ -61,18 +61,18 @@ contract PostBattleLoot is AccessControl, Pausable, EIP712 {
     uint256[] memory amounts
   ) internal view returns (bytes32) {
     return
-    _hashTypedDataV4(
-      keccak256(
-        abi.encode(
-          PERMIT_SIGNATURE,
-          nonce,
-          account,
-          collection,
-          keccak256(abi.encodePacked(tokenIds)),
-          keccak256(abi.encodePacked(amounts))
+      _hashTypedDataV4(
+        keccak256(
+          abi.encode(
+            PERMIT_SIGNATURE,
+            nonce,
+            account,
+            collection,
+            keccak256(abi.encodePacked(tokenIds)),
+            keccak256(abi.encodePacked(amounts))
+          )
         )
-      )
-    );
+      );
   }
 
   function _verify(
