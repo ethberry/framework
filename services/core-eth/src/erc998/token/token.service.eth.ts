@@ -6,22 +6,22 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
-  Erc998TokenEventType,
-  IErc998AirdropRedeem,
-  IErc998DefaultRoyaltyInfo,
-  IErc998RandomRequest,
+  ContractEventType,
+  IAirdropRedeem,
+  IDefaultRoyaltyInfo,
+  IRandomRequest,
   ITokenApprove,
   ITokenApprovedForAll,
   ITokenMintRandom,
   ITokenRoyaltyInfo,
   ITokenTransfer,
-  TErc998TokenEventData,
+  TContractEventData,
   TokenRarity,
   TokenStatus,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
-import { Erc998TokenHistoryService } from "./token-history/token-history.service";
+import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
@@ -41,10 +41,10 @@ export class Erc998TokenServiceEth {
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
     private readonly templateService: TemplateService,
-    private readonly erc998TokenHistoryService: Erc998TokenHistoryService,
+    private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.airdropAddr = configService.get<string>("ERC998_AIRDROP_ADDR", "");
+    this.airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC998_ITEM_ADDR", "");
   }
 
@@ -113,7 +113,7 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async defaultRoyaltyInfo(event: ILogEvent<IErc998DefaultRoyaltyInfo>, context: Log): Promise<void> {
+  public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfo>, context: Log): Promise<void> {
     const {
       args: { royaltyNumerator },
     } = event;
@@ -137,7 +137,7 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async redeem(event: ILogEvent<IErc998AirdropRedeem>, context: Log): Promise<void> {
+  public async redeem(event: ILogEvent<IAirdropRedeem>, context: Log): Promise<void> {
     const {
       args: { from, tokenId, templateId },
     } = event;
@@ -203,20 +203,20 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context, erc998TokenEntity.id);
   }
 
-  public async randomRequest(event: ILogEvent<IErc998RandomRequest>, context: Log): Promise<void> {
+  public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  private async updateHistory(event: ILogEvent<TErc998TokenEventData>, context: Log, erc998TokenId?: number) {
+  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log, erc998TokenId?: number) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc998TokenServiceEth.name);
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    await this.erc998TokenHistoryService.create({
+    await this.contractHistoryService.create({
       address: address.toLowerCase(),
       transactionHash: transactionHash.toLowerCase(),
-      eventType: name as Erc998TokenEventType,
+      eventType: name as ContractEventType,
       eventData: args,
       // ApprovedForAll has no tokenId
       tokenId: erc998TokenId || null,

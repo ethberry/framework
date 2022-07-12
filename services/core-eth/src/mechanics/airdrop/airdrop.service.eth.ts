@@ -7,21 +7,21 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   AirdropStatus,
-  Erc721TokenEventType,
+  ContractEventType,
   IAirdropRedeem,
   IAirdropUnpack,
-  IErc721DefaultRoyaltyInfo,
-  IErc721TokenApprove,
-  IErc721TokenApprovedForAll,
-  IErc721TokenRoyaltyInfo,
-  IErc721TokenTransfer,
-  TErc721TokenEventData,
+  IDefaultRoyaltyInfo,
+  ITokenApprove,
+  ITokenApprovedForAll,
+  ITokenRoyaltyInfo,
+  ITokenTransfer,
+  TContractEventData,
   TokenStatus,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
-import { Erc721TokenHistoryService } from "../../erc721/token/token-history/token-history.service";
+import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { AirdropService } from "./airdrop.service";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
@@ -42,14 +42,14 @@ export class AirdropServiceEth {
     private readonly templateService: TemplateService,
     private readonly balanceService: BalanceService,
     private readonly airdropService: AirdropService,
-    private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
+    private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {
     this.airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
   }
 
-  public async transfer(event: ILogEvent<IErc721TokenTransfer>, context: Log): Promise<void> {
+  public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
     const {
       args: { from, to, tokenId },
     } = event;
@@ -102,7 +102,7 @@ export class AirdropServiceEth {
     //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
   }
 
-  public async approval(event: ILogEvent<IErc721TokenApprove>, context: Log): Promise<void> {
+  public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
     const {
       args: { tokenId },
     } = event;
@@ -116,7 +116,7 @@ export class AirdropServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
   }
 
-  public async approvalAirdrop(event: ILogEvent<IErc721TokenApprove>, context: Log): Promise<void> {
+  public async approvalAirdrop(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
     const {
       args: { tokenId },
     } = event;
@@ -132,11 +132,11 @@ export class AirdropServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
   }
 
-  public async approvalForAll(event: ILogEvent<IErc721TokenApprovedForAll>, context: Log): Promise<void> {
+  public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async defaultRoyaltyInfo(event: ILogEvent<IErc721DefaultRoyaltyInfo>, context: Log): Promise<void> {
+  public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfo>, context: Log): Promise<void> {
     const {
       args: { royaltyNumerator },
     } = event;
@@ -156,7 +156,7 @@ export class AirdropServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async tokenRoyaltyInfo(event: ILogEvent<IErc721TokenRoyaltyInfo>, context: Log): Promise<void> {
+  public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfo>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
@@ -214,16 +214,16 @@ export class AirdropServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
   }
 
-  private async updateHistory(event: ILogEvent<TErc721TokenEventData>, context: Log, erc721TokenId?: number) {
+  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log, erc721TokenId?: number) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), AirdropServiceEth.name);
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    await this.erc721TokenHistoryService.create({
+    await this.contractHistoryService.create({
       address: address.toLowerCase(),
       transactionHash: transactionHash.toLowerCase(),
-      eventType: name as Erc721TokenEventType,
+      eventType: name as ContractEventType,
       eventData: args,
       // ApprovedForAll has no tokenId
       tokenId: erc721TokenId || null,

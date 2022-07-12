@@ -18,6 +18,7 @@ import { Erc998Module } from "./erc998/erc998.module";
 import { Erc1155Module } from "./erc1155/erc1155.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { NotificatorModule } from "./notificator/notificator.module";
+import { MechanicsModule } from "./mechanics/mechanics.module";
 
 @Module({
   providers: [
@@ -49,6 +50,7 @@ import { NotificatorModule } from "./notificator/notificator.module";
     Erc721Module,
     Erc998Module,
     Erc1155Module,
+    MechanicsModule,
     BlockchainModule,
     NotificatorModule,
   ],

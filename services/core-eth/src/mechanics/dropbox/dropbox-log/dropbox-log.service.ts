@@ -6,7 +6,7 @@ import { ContractType } from "@framework/types";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 
 @Injectable()
-export class Erc721DropboxLogService {
+export class DropboxLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
     private readonly contractManagerService: ContractManagerService,
@@ -23,6 +23,6 @@ export class Erc721DropboxLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractManagerService.updateLastBlockByType(ContractType.ERC721_DROPBOX, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.DROPBOX, lastBlock);
   }
 }

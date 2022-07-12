@@ -9,7 +9,7 @@ import { AirdropControllerEth } from "./airdrop.controller.eth";
 import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
 import { AirdropServiceEth } from "./airdrop.service.eth";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
-import { Erc721TokenHistoryModule } from "../../erc721/token/token-history/token-history.module";
+import { ContractHistoryModule } from "../../blockchain/contract-history/contract-history.module";
 import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
 import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
@@ -24,7 +24,7 @@ import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module
     ConfigModule,
     ContractManagerModule,
     AccessControlModule,
-    Erc721TokenHistoryModule,
+    ContractHistoryModule,
     ContractModule,
     TypeOrmModule.forFeature([AirdropEntity]),
   ],

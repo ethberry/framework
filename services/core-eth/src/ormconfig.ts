@@ -3,14 +3,11 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
-import { Erc20ContractHistoryEntity } from "./erc20/token/contract-history/contract-history.entity";
+import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
-import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
-import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace/marketplace-history/marketplace-history.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
-import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
-import { Erc1155MarketplaceHistoryEntity } from "./erc1155/marketplace/marketplace-history/marketplace-history.entity";
+import { MarketplaceHistoryEntity } from "./mechanics/marketplace/marketplace-history/marketplace-history.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
@@ -34,19 +31,16 @@ const config: PostgresConnectionOptions = {
     ContractManagerHistoryEntity,
     AccessControlEntity,
     AccessControlHistoryEntity,
-    Erc20ContractHistoryEntity,
+    ContractHistoryEntity,
     VestingEntity,
     StakingRulesEntity,
     StakingStakesEntity,
     StakingHistoryEntity,
-    Erc721TokenHistoryEntity,
-    Erc721MarketplaceHistoryEntity,
     AirdropEntity,
     DropboxEntity,
     ExchangeRulesEntity,
     ExchangeHistoryEntity,
-    Erc1155TokenHistoryEntity,
-    Erc1155MarketplaceHistoryEntity,
+    MarketplaceHistoryEntity,
     ContractEntity,
     TemplateEntity,
     BalanceEntity,

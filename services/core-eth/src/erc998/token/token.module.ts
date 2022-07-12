@@ -2,7 +2,7 @@ import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { Erc998TokenHistoryModule } from "./token-history/token-history.module";
+import { ContractHistoryModule } from "../../blockchain/contract-history/contract-history.module";
 
 import { Erc998TokenControllerEth } from "./token.controller.eth";
 import { Erc998TokenServiceEth } from "./token.service.eth";
@@ -19,7 +19,7 @@ import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module
   imports: [
     ConfigModule,
     ContractManagerModule,
-    Erc998TokenHistoryModule,
+    ContractHistoryModule,
     Erc998TokenLogModule,
     TemplateModule,
     AccessControlModule,

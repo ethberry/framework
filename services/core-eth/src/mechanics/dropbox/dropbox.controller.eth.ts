@@ -6,78 +6,72 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   ContractType,
-  Erc721TokenEventType,
+  ContractEventType,
   IAccessControlRoleAdminChanged,
   IAccessControlRoleGranted,
   IAccessControlRoleRevoked,
   IDropboxUnpack,
-  IErc721DefaultRoyaltyInfo,
-  IErc721TokenApprove,
-  IErc721TokenApprovedForAll,
-  IErc721TokenRoyaltyInfo,
-  IErc721TokenTransfer,
+  IDefaultRoyaltyInfo,
+  ITokenApprove,
+  ITokenApprovedForAll,
+  ITokenRoyaltyInfo,
+  ITokenTransfer,
 } from "@framework/types";
 
-import { Erc721DropboxServiceEth } from "./dropbox.service.eth";
+import { DropboxServiceEth } from "./dropbox.service.eth";
 import { AccessControlServiceEth } from "../../blockchain/access-control/access-control.service.eth";
 
 @Controller()
-export class Erc721DropboxControllerEth {
+export class DropboxControllerEth {
   constructor(
-    private readonly erc721TokenServiceEth: Erc721DropboxServiceEth,
+    private readonly tokenServiceEth: DropboxServiceEth,
     private readonly accessControlServiceEth: AccessControlServiceEth,
   ) {}
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.Transfer })
-  public transferDropbox(@Payload() event: ILogEvent<IErc721TokenTransfer>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.transfer(event, context);
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: ContractEventType.Transfer })
+  public transferDropbox(@Payload() event: ILogEvent<ITokenTransfer>, @Ctx() context: Log): Promise<void> {
+    return this.tokenServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.Approval })
-  public approvalDropbox(@Payload() event: ILogEvent<IErc721TokenApprove>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.approval(event, context);
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: ContractEventType.Approval })
+  public approvalDropbox(@Payload() event: ILogEvent<ITokenApprove>, @Ctx() context: Log): Promise<void> {
+    return this.tokenServiceEth.approval(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.ApprovalForAll })
-  public approvalForAllDropbox(
-    @Payload() event: ILogEvent<IErc721TokenApprovedForAll>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.erc721TokenServiceEth.approvalForAll(event, context);
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: ContractEventType.ApprovalForAll })
+  public approvalForAllDropbox(@Payload() event: ILogEvent<ITokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
+    return this.tokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.DefaultRoyaltyInfo })
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: ContractEventType.DefaultRoyaltyInfo })
   public defaultRoyaltyInfoDropbox(
-    @Payload() event: ILogEvent<IErc721DefaultRoyaltyInfo>,
+    @Payload() event: ILogEvent<IDefaultRoyaltyInfo>,
     @Ctx() context: Log,
   ): Promise<void> {
-    return this.erc721TokenServiceEth.defaultRoyaltyInfo(event, context);
+    return this.tokenServiceEth.defaultRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.TokenRoyaltyInfo })
-  public tokenRoyaltyInfoDropbox(
-    @Payload() event: ILogEvent<IErc721TokenRoyaltyInfo>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.erc721TokenServiceEth.tokenRoyaltyInfo(event, context);
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: ContractEventType.TokenRoyaltyInfo })
+  public tokenRoyaltyInfoDropbox(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
+    return this.tokenServiceEth.tokenRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: Erc721TokenEventType.UnpackDropbox })
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: ContractEventType.UnpackDropbox })
   public unpackItemDropbox(@Payload() event: ILogEvent<IDropboxUnpack>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.unpack(event, context);
+    return this.tokenServiceEth.unpack(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: AccessControlEventType.RoleGranted })
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: AccessControlEventType.RoleGranted })
   public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGranted>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleGranted(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: AccessControlEventType.RoleRevoked })
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: AccessControlEventType.RoleRevoked })
   public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevoked>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleRevoked(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_DROPBOX, eventName: AccessControlEventType.RoleAdminChanged })
+  @EventPattern({ contractType: ContractType.DROPBOX, eventName: AccessControlEventType.RoleAdminChanged })
   public roleAdmin(@Payload() event: ILogEvent<IAccessControlRoleAdminChanged>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleAdminChanged(event, context);
   }

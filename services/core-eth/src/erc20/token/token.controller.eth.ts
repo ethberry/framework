@@ -7,7 +7,7 @@ import {
   AccessControlEventType,
   AccessListEventType,
   ContractType,
-  Erc20TokenEventType,
+  ContractEventType,
   IAccessControlRoleAdminChanged,
   IAccessControlRoleGranted,
   IAccessControlRoleRevoked,
@@ -30,17 +30,17 @@ export class Erc20TokenControllerEth {
     private readonly accessListServiceEth: AccessListServiceEth,
   ) {}
 
-  @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: Erc20TokenEventType.Transfer })
+  @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IErc20TokenTransfer>, @Ctx() context: Log): Promise<void> {
     return this.erc20TokenServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: Erc20TokenEventType.Approval })
+  @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: ContractEventType.Approval })
   public approval(@Payload() event: ILogEvent<IErc20TokenApprove>, @Ctx() context: Log): Promise<void> {
     return this.erc20TokenServiceEth.approval(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: Erc20TokenEventType.Snapshot })
+  @EventPattern({ contractType: ContractType.ERC20_TOKEN, eventName: ContractEventType.Snapshot })
   public snapshot(@Payload() event: ILogEvent<IErc20TokenSnapshot>, @Ctx() context: Log): Promise<void> {
     return this.erc20TokenServiceEth.snapshot(event, context);
   }

@@ -4,14 +4,14 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  Erc20TokenEventType,
+  ContractEventType,
   IErc20TokenApprove,
   IErc20TokenSnapshot,
   IErc20TokenTransfer,
-  TErc20TokenEventData,
+  TContractEventData,
 } from "@framework/types";
 
-import { Erc20ContractHistoryService } from "./contract-history/contract-history.service";
+import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
@@ -22,7 +22,7 @@ export class Erc20TokenServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly erc20ContractHistoryService: Erc20ContractHistoryService,
+    private readonly contractHistoryService: ContractHistoryService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
@@ -60,16 +60,16 @@ export class Erc20TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  private async updateHistory(event: ILogEvent<TErc20TokenEventData>, context: Log) {
+  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc20TokenServiceEth.name);
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    await this.erc20ContractHistoryService.create({
+    await this.contractHistoryService.create({
       address,
       transactionHash,
-      eventType: name as Erc20TokenEventType,
+      eventType: name as ContractEventType,
       eventData: args,
     });
 

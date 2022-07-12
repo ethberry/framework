@@ -5,18 +5,18 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
+  ContractEventType,
   ContractType,
-  Erc721TokenEventType,
   IAccessControlRoleAdminChanged,
   IAccessControlRoleGranted,
   IAccessControlRoleRevoked,
   IAirdropRedeem,
   IAirdropUnpack,
-  IErc721DefaultRoyaltyInfo,
-  IErc721TokenApprove,
-  IErc721TokenApprovedForAll,
-  IErc721TokenRoyaltyInfo,
-  IErc721TokenTransfer,
+  IDefaultRoyaltyInfo,
+  ITokenApprove,
+  ITokenApprovedForAll,
+  ITokenRoyaltyInfo,
+  ITokenTransfer,
 } from "@framework/types";
 import { AirdropServiceEth } from "./airdrop.service.eth";
 import { AccessControlServiceEth } from "../../blockchain/access-control/access-control.service.eth";
@@ -28,61 +28,55 @@ export class AirdropControllerEth {
     private readonly accessControlServiceEth: AccessControlServiceEth,
   ) {}
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.Transfer })
-  public transferAirdrop(@Payload() event: ILogEvent<IErc721TokenTransfer>, @Ctx() context: Log): Promise<void> {
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: ContractEventType.Transfer })
+  public transferAirdrop(@Payload() event: ILogEvent<ITokenTransfer>, @Ctx() context: Log): Promise<void> {
     return this.erc721AirdropServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.Approval })
-  public approvalAirdrop(@Payload() event: ILogEvent<IErc721TokenApprove>, @Ctx() context: Log): Promise<void> {
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: ContractEventType.Approval })
+  public approvalAirdrop(@Payload() event: ILogEvent<ITokenApprove>, @Ctx() context: Log): Promise<void> {
     return this.erc721AirdropServiceEth.approvalAirdrop(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.ApprovalForAll })
-  public approvalForAllAirdrop(
-    @Payload() event: ILogEvent<IErc721TokenApprovedForAll>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: ContractEventType.ApprovalForAll })
+  public approvalForAllAirdrop(@Payload() event: ILogEvent<ITokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
     return this.erc721AirdropServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.DefaultRoyaltyInfo })
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: ContractEventType.DefaultRoyaltyInfo })
   public defaultRoyaltyInfoAirdrop(
-    @Payload() event: ILogEvent<IErc721DefaultRoyaltyInfo>,
+    @Payload() event: ILogEvent<IDefaultRoyaltyInfo>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.erc721AirdropServiceEth.defaultRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.TokenRoyaltyInfo })
-  public tokenRoyaltyInfoAirdrop(
-    @Payload() event: ILogEvent<IErc721TokenRoyaltyInfo>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: ContractEventType.TokenRoyaltyInfo })
+  public tokenRoyaltyInfoAirdrop(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.erc721AirdropServiceEth.tokenRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.RedeemAirdrop })
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: ContractEventType.RedeemAirdrop })
   public redeemAirdrop(@Payload() event: ILogEvent<IAirdropRedeem>, @Ctx() context: Log): Promise<void> {
     return this.erc721AirdropServiceEth.redeem(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: Erc721TokenEventType.UnpackAirdrop })
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: ContractEventType.UnpackAirdrop })
   public unpackAirdrop(@Payload() event: ILogEvent<IAirdropUnpack>, @Ctx() context: Log): Promise<void> {
     return this.erc721AirdropServiceEth.unpackAirdrop(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: AccessControlEventType.RoleGranted })
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: AccessControlEventType.RoleGranted })
   public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGranted>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleGranted(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: AccessControlEventType.RoleRevoked })
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: AccessControlEventType.RoleRevoked })
   public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevoked>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleRevoked(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_AIRDROP, eventName: AccessControlEventType.RoleAdminChanged })
+  @EventPattern({ contractType: ContractType.AIRDROP, eventName: AccessControlEventType.RoleAdminChanged })
   public roleAdmin(@Payload() event: ILogEvent<IAccessControlRoleAdminChanged>, @Ctx() context: Log): Promise<void> {
     return this.accessControlServiceEth.roleAdminChanged(event, context);
   }

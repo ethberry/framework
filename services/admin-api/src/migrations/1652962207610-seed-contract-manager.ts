@@ -8,6 +8,12 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
     const erc721MarketplaceAddr = process.env.MARKETPLACE_ADDR || wallet;
+    const erc721AirdropAddr = process.env.ERC721_AIRDROP_ADDR || wallet;
+    const erc721DropboxAddr = process.env.ERC721_DROPBOX_ADDR || wallet;
+    const erc721CraftAddr = process.env.ERC721_CRAFT_ADDR || wallet;
+    const erc1155Marketplace = process.env.MARKETPLACE_ADDR || wallet;
+    const erc1155CraftAddr = process.env.ERC1155_CRAFT_ADDR || wallet;
+    const erc721MarketplaceAddr = process.env.MARKETPLACE_ADDR || wallet;
     const erc721AirdropAddr = process.env.AIRDROP_ADDR || wallet;
     const erc721DropboxAddr = process.env.DROPBOX_ADDR || wallet;
     const erc721CraftAddr = process.env.EXCHANGE_ADDR || wallet;
@@ -32,7 +38,7 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
         '${currentDateTime}'
       ), (
        '${erc721MarketplaceAddr}',
-        'ERC721_MARKETPLACE',
+        'MARKETPLACE',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -56,7 +62,7 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
         '${currentDateTime}'
       ), (
        '${erc1155Marketplace}',
-        'ERC1155_MARKETPLACE',
+        'MARKETPLACE',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

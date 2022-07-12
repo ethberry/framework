@@ -6,7 +6,7 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   ContractType,
-  Erc1155TokenEventType,
+  ContractEventType,
   IAccessControlRoleAdminChanged,
   IAccessControlRoleGranted,
   IAccessControlRoleRevoked,
@@ -26,22 +26,22 @@ export class Erc1155TokenControllerEth {
     private readonly accessControlServiceEth: AccessControlServiceEth,
   ) {}
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.TransferSingle })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.TransferSingle })
   public transferSingle(@Payload() event: ILogEvent<IErc1155TokenTransferSingle>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.transferSingle(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.TransferBatch })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.TransferBatch })
   public transferBatch(@Payload() event: ILogEvent<IErc1155TokenTransferBatch>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.transferBatch(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.ApprovalForAll })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.ApprovalForAll })
   public approvalForAll(@Payload() event: ILogEvent<IErc1155TokenApprovalForAll>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: Erc1155TokenEventType.URI })
+  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.URI })
   public uri(@Payload() event: ILogEvent<IErc1155TokenUri>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.uri(event, context);
   }

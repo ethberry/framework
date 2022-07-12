@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractType, Erc721TokenEventType } from "@framework/types";
+import { AccessControlEventType, ContractType, ContractEventType } from "@framework/types";
 
 import { AirdropLogService } from "./airdrop-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
@@ -23,27 +23,27 @@ import AirdropSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
         configService: ConfigService,
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
-        const erc721airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
+        const airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
         const fromBlock =
-          (await contractManagerService.getLastBlock(erc721airdropAddr)) ||
+          (await contractManagerService.getLastBlock(airdropAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
 
         return {
           contract: {
-            contractType: ContractType.ERC721_AIRDROP,
-            contractAddress: [erc721airdropAddr],
+            contractType: ContractType.AIRDROP,
+            contractAddress: [airdropAddr],
             contractInterface: AirdropSol.abi,
             // prettier-ignore
             eventNames: [
-              Erc721TokenEventType.Approval,
-              Erc721TokenEventType.ApprovalForAll,
-              Erc721TokenEventType.DefaultRoyaltyInfo,
-              Erc721TokenEventType.Paused,
-              Erc721TokenEventType.RedeemAirdrop,
-              Erc721TokenEventType.TokenRoyaltyInfo,
-              Erc721TokenEventType.Transfer,
-              Erc721TokenEventType.UnpackDropbox,
-              Erc721TokenEventType.Unpaused,
+              ContractEventType.Approval,
+              ContractEventType.ApprovalForAll,
+              ContractEventType.DefaultRoyaltyInfo,
+              ContractEventType.Paused,
+              ContractEventType.RedeemAirdrop,
+              ContractEventType.TokenRoyaltyInfo,
+              ContractEventType.Transfer,
+              ContractEventType.UnpackDropbox,
+              ContractEventType.Unpaused,
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
@@ -61,10 +61,10 @@ import AirdropSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
   exports: [AirdropLogService],
 })
 export class AirdropLogModule implements OnModuleDestroy {
-  constructor(private readonly erc721AirdropLogService: AirdropLogService) {}
+  constructor(private readonly airdropLogService: AirdropLogService) {}
 
   // save last block on SIGTERM
   public onModuleDestroy(): Promise<number> {
-    return this.erc721AirdropLogService.updateBlock();
+    return this.airdropLogService.updateBlock();
   }
 }

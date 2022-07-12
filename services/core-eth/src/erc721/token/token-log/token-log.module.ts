@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractType, Erc721TokenEventType } from "@framework/types";
+import { AccessControlEventType, ContractType, ContractEventType } from "@framework/types";
 
 import { Erc721TokenLogService } from "./token-log.service";
 
@@ -32,18 +32,18 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
             contractInterface: ERC721Abi,
             // prettier-ignore
             eventNames: [
-              Erc721TokenEventType.Approval,
-              Erc721TokenEventType.ApprovalForAll,
-              Erc721TokenEventType.DefaultRoyaltyInfo,
-              Erc721TokenEventType.MintRandom,
-              Erc721TokenEventType.Paused,
-              Erc721TokenEventType.RandomRequest,
-              Erc721TokenEventType.RedeemAirdrop,
-              Erc721TokenEventType.TokenRoyaltyInfo,
-              Erc721TokenEventType.Transfer,
-              Erc721TokenEventType.UnpackAirdrop,
-              Erc721TokenEventType.UnpackDropbox,
-              Erc721TokenEventType.Unpaused,
+              ContractEventType.Approval,
+              ContractEventType.ApprovalForAll,
+              ContractEventType.DefaultRoyaltyInfo,
+              ContractEventType.MintRandom,
+              ContractEventType.Paused,
+              ContractEventType.RandomRequest,
+              ContractEventType.RedeemAirdrop,
+              ContractEventType.TokenRoyaltyInfo,
+              ContractEventType.Transfer,
+              ContractEventType.UnpackAirdrop,
+              ContractEventType.UnpackDropbox,
+              ContractEventType.Unpaused,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged

@@ -8,7 +8,7 @@ export enum ExchangeEventType {
   RecipeCrafted = "RecipeCrafted",
 }
 
-export interface IErc721RecipeCreated {
+export interface IRecipeCreated {
   recipeId: string;
   ids: Array<string>;
   amounts: Array<string>;
@@ -16,17 +16,17 @@ export interface IErc721RecipeCreated {
   tokenId: string;
 }
 
-export interface IErc721RecipeUpdated {
+export interface IRecipeUpdated {
   recipeId: string;
   active: boolean;
 }
 
-export interface IErc721RecipeCrafted {
+export interface IRecipeCrafted {
   from: string;
   recipeId: string;
 }
 
-export type TExchangeEventData = IErc721RecipeCreated | IErc721RecipeUpdated | IErc721RecipeCrafted;
+export type TExchangeEventData = IRecipeCreated | IRecipeUpdated | IRecipeCrafted;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;

@@ -5,9 +5,9 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ExchangeEventType,
   ExchangeStatus,
-  IErc721RecipeCrafted,
-  IErc721RecipeCreated,
-  IErc721RecipeUpdated,
+  IRecipeCrafted,
+  IRecipeCreated,
+  IRecipeUpdated,
   TExchangeEventData,
 } from "@framework/types";
 
@@ -25,7 +25,7 @@ export class ExchangeRulesServiceEth {
     private readonly erc1155RecipeHistoryService: ExchangeHistoryService,
   ) {}
 
-  public async create(event: ILogEvent<IErc721RecipeCreated>, context: Log): Promise<void> {
+  public async create(event: ILogEvent<IRecipeCreated>, context: Log): Promise<void> {
     const {
       args: { recipeId },
     } = event;
@@ -45,7 +45,7 @@ export class ExchangeRulesServiceEth {
     await recipeEntity.save();
   }
 
-  public async update(event: ILogEvent<IErc721RecipeUpdated>, context: Log): Promise<void> {
+  public async update(event: ILogEvent<IRecipeUpdated>, context: Log): Promise<void> {
     const {
       args: { recipeId, active },
     } = event;
@@ -65,7 +65,7 @@ export class ExchangeRulesServiceEth {
     await recipeEntity.save();
   }
 
-  public async craft(event: ILogEvent<IErc721RecipeCrafted>, context: Log): Promise<void> {
+  public async craft(event: ILogEvent<IRecipeCrafted>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

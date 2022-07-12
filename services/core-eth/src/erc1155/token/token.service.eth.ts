@@ -4,15 +4,15 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  Erc1155TokenEventType,
+  ContractEventType,
   IErc1155TokenApprovalForAll,
   IErc1155TokenTransferBatch,
   IErc1155TokenTransferSingle,
   IErc1155TokenUri,
-  TErc1155TokenEventData,
+  TContractEventData,
 } from "@framework/types";
 
-import { Erc1155TokenHistoryService } from "./token-history/token-history.service";
+import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
@@ -23,7 +23,7 @@ export class Erc1155TokenServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly erc1155TokenHistoryService: Erc1155TokenHistoryService,
+    private readonly contractHistoryService: ContractHistoryService,
     private readonly balanceService: BalanceService,
     private readonly tokenService: TokenService,
   ) {}
@@ -84,16 +84,16 @@ export class Erc1155TokenServiceEth {
     }
   }
 
-  private async updateHistory(event: ILogEvent<TErc1155TokenEventData>, context: Log) {
+  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc1155TokenServiceEth.name);
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    await this.erc1155TokenHistoryService.create({
+    await this.contractHistoryService.create({
       address: address.toLowerCase(),
       transactionHash: transactionHash.toLowerCase(),
-      eventType: name as Erc1155TokenEventType,
+      eventType: name as ContractEventType,
       eventData: args,
     });
 

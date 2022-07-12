@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { Erc20TokenControllerEth } from "./token.controller.eth";
 import { Erc20TokenServiceEth } from "./token.service.eth";
-import { Erc20ContractHistoryModule } from "./contract-history/contract-history.module";
+import { ContractHistoryModule } from "../../blockchain/contract-history/contract-history.module";
 import { Erc20TokenLogModule } from "./token-log/token-log.module";
 import { AccessControlModule } from "../../blockchain/access-control/access-control.module";
 import { AccessListModule } from "../../blockchain/access-list/access-list.module";
@@ -21,7 +21,7 @@ import { ContractModule } from "../../blockchain/hierarchy/contract/contract.mod
     ContractManagerModule,
     BalanceModule,
     ContractModule,
-    Erc20ContractHistoryModule,
+    ContractHistoryModule,
     Erc20TokenLogModule,
     AccessControlModule,
     AccessListModule,

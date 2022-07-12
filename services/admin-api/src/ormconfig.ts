@@ -65,19 +65,12 @@ import { SeedAssetComponentsErc721At1563804001230 } from "./migrations/156380400
 import { SeedAssetComponentsErc998At1563804001240 } from "./migrations/1563804001240-seed-asset-component-erc998";
 import { SeedAssetComponentsErc1155At1563804001250 } from "./migrations/1563804001250-seed-asset-component-erc1155";
 
-import { CreateErc20ContractHistory1563804010130 } from "./migrations/1563804010130-create-erc20-contract-history";
+import { CreateContractHistory1563804040330 } from "./migrations/1563804040330-create-contract-history";
 import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-vesting";
 import { SeedVesting1563804010220 } from "./migrations/1563804010220-seed-vesting";
 import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-create-vesting-history";
 
-import { CreateErc998ContractHistory1563804030330 } from "./migrations/1563804030330-create-erc998-contract-history";
-import { CreateErc998MarketplaceHistory1563804030510 } from "./migrations/1563804030510-create-erc998-marketplace-history";
-
-import { CreateErc721ContractHistory1563804040330 } from "./migrations/1563804040330-create-erc721-contract-history";
-import { CreateErc721MarketplaceHistory1563804040510 } from "./migrations/1563804040510-create-erc721-marketplace-history";
-
-import { CreateErc1155ContractHistory1563804020130 } from "./migrations/1563804020130-create-erc1155-contract-history";
-import { CreateErc1155MarketplaceHistory1563804020210 } from "./migrations/1563804020210-create-erc1155-marketplace-history";
+import { CreateMarketplaceHistory1563804020210 } from "./migrations/1563804020210-create-marketplace-history";
 
 import { CreateAirdropTable1563804040410 } from "./migrations/1653616447810-create-airdrop";
 import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-seed-airdrop-erc721";
@@ -191,16 +184,11 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsErc998At1563804001240,
     SeedAssetComponentsErc1155At1563804001250,
 
-    CreateErc20ContractHistory1563804010130,
+    CreateContractHistory1563804040330,
     CreateVesting1563804010210,
     SeedVesting1563804010220,
     CreateVestingHistory1563804010230,
-    CreateErc998ContractHistory1563804030330,
-    CreateErc998MarketplaceHistory1563804030510,
-    CreateErc721ContractHistory1563804040330,
-    CreateErc721MarketplaceHistory1563804040510,
-    CreateErc1155ContractHistory1563804020130,
-    CreateErc1155MarketplaceHistory1563804020210,
+    CreateMarketplaceHistory1563804020210,
 
     CreateContractManagerHistory1652682493386,
     CreateAccessControl1653616447230,
