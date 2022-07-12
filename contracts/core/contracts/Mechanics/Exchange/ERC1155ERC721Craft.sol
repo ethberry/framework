@@ -10,9 +10,9 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
-import "../ERC1155/interfaces/IERC1155Simple.sol";
-import "../ERC721/interfaces/IERC721Simple.sol";
-import "../ERC721/interfaces/IERC721Random.sol";
+import "../../ERC1155/interfaces/IERC1155Simple.sol";
+import "../../ERC721/interfaces/IERC721Simple.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
 
 contract ERC1155ERC721Craft is AccessControl, Pausable {
   using Address for address;

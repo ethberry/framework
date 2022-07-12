@@ -10,27 +10,35 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-import "../interfaces/IAsset.sol";
+import "../Mechanics/interfaces/IAsset.sol";
+import "../Mechanics/Dropbox/interfaces/IDropbox.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
-import "../ERC721/interfaces/IERC721Dropbox.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 
-contract Marketplace is AccessControl, Pausable, EIP712 {
+contract Marketplace is AccessControl, Pausable, EIP712, ERC1155Holder {
   using Address for address;
 
   mapping(bytes32 => bool) private _expired;
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-  bytes32 private immutable PERMIT_SIGNATURE =
-    keccak256("EIP712(bytes32 nonce,address token,uint256 templateId,uint256 price)");
+  bytes32 private constant PERMIT_SIGNATURE =
+    keccak256(
+      "EIP712(bytes32 nonce,Asset item,Asset price)Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)"
+    );
+  bytes32 public constant ASSET_TYPEHASH =
+    keccak256(abi.encodePacked("Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)"));
 
-  event Redeem(address from, address collection, uint256 tokenId, uint256 templateId, uint256 price);
-  event RedeemDropbox(address from, address collection, uint256 tokenId, uint256 templateId, uint256 price);
+  event RedeemCommon(address from, Asset item, Asset price);
+  event RedeemDropbox(address from, Asset item, Asset price);
 
   constructor(string memory name) EIP712(name, "1.0.0") {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -38,9 +46,10 @@ contract Marketplace is AccessControl, Pausable, EIP712 {
     _setupRole(PAUSER_ROLE, _msgSender());
   }
 
-  function buyCommon(
+  function purchaseCommon(
     bytes32 nonce,
-    Asset calldata asset,
+    Asset calldata item,
+    Asset calldata price,
     address signer,
     bytes calldata signature
   ) public payable whenNotPaused {
@@ -49,25 +58,36 @@ contract Marketplace is AccessControl, Pausable, EIP712 {
     require(!_expired[nonce], "Marketplace: Expired signature");
     _expired[nonce] = true;
 
-    bool isVerified = _verify(signer, _hash(nonce, asset.token, asset.tokenId, msg.value), signature);
+    bool isVerified = _verify(signer, _hash(nonce, item, price), signature);
     require(isVerified, "Marketplace: Invalid signature");
 
-    uint256 tokenId;
-    if (asset.tokenType == TokenType.ERC721 || asset.tokenType == TokenType.ERC998) {
-      tokenId = IERC721Simple(asset.token).mintCommon(_msgSender(), asset.tokenId);
-    } else if (asset.tokenType == TokenType.ERC1155) {
-      IERC1155Simple(asset.token).mint(_msgSender(), asset.tokenId, asset.amount, "0x");
-      tokenId = asset.tokenId;
+    if (price.tokenType == TokenType.NATIVE) {
+      require(price.amount == msg.value, "Marketplace: Wrong amount");
+    } else if (price.tokenType == TokenType.ERC20) {
+      IERC20(price.token).transferFrom(_msgSender(), address(this), price.amount);
+    } else if (price.tokenType == TokenType.ERC1155) {
+      IERC1155(price.token).safeTransferFrom(_msgSender(), address(this), price.tokenId, price.amount, "0x");
     } else {
       revert("Marketplace: unsupported token type");
     }
 
-    emit Redeem(_msgSender(), asset.token, tokenId, asset.tokenId, msg.value);
+    uint256 tokenId;
+    if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+      tokenId = IERC721Simple(item.token).mintCommon(_msgSender(), item.tokenId);
+    } else if (item.tokenType == TokenType.ERC1155) {
+      IERC1155Simple(item.token).mint(_msgSender(), item.tokenId, item.amount, "0x");
+      tokenId = item.tokenId;
+    } else {
+      revert("Marketplace: unsupported token type");
+    }
+
+    emit RedeemCommon(_msgSender(), item, price);
   }
 
-  function buyDropbox(
+  function purchaseDropbox(
     bytes32 nonce,
-    Asset calldata asset,
+    Asset calldata item,
+    Asset calldata price,
     address signer,
     bytes calldata signature
   ) public payable whenNotPaused {
@@ -76,26 +96,40 @@ contract Marketplace is AccessControl, Pausable, EIP712 {
     require(!_expired[nonce], "Marketplace: Expired signature");
     _expired[nonce] = true;
 
-    bool isVerified = _verify(signer, _hash(nonce, asset.token, asset.tokenId, msg.value), signature);
+    bool isVerified = _verify(signer, _hash(nonce, item, price), signature);
     require(isVerified, "Marketplace: Invalid signature");
 
-    uint256 tokenId;
-    if (asset.tokenType == TokenType.ERC721 || asset.tokenType == TokenType.ERC998) {
-      tokenId = IERC721Dropbox(asset.token).mintDropbox(_msgSender(), asset.tokenId);
+    if (price.tokenType == TokenType.NATIVE) {
+      require(price.amount == msg.value, "Marketplace: Wrong amount");
+    } else if (price.tokenType == TokenType.ERC20) {
+      IERC20(price.token).transferFrom(_msgSender(), address(this), price.amount);
+    } else if (price.tokenType == TokenType.ERC1155) {
+      IERC1155(price.token).safeTransferFrom(_msgSender(), address(this), price.tokenId, price.amount, "0x");
     } else {
       revert("Marketplace: unsupported token type");
     }
 
-    emit RedeemDropbox(_msgSender(), asset.token, tokenId, asset.tokenId, msg.value);
+    uint256 tokenId;
+    if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+      tokenId = IDropbox(item.token).mintDropbox(_msgSender(), item.tokenId);
+    } else {
+      revert("Marketplace: unsupported token type");
+    }
+
+    emit RedeemDropbox(_msgSender(), item, price);
+  }
+
+  function hashAssetStruct(Asset memory item) public pure returns (bytes32) {
+    return keccak256(abi.encode(ASSET_TYPEHASH, item.tokenType, item.token, item.tokenId, item.amount));
   }
 
   function _hash(
     bytes32 nonce,
-    address token,
-    uint256 templateId,
-    uint256 price
+    Asset memory item,
+    Asset memory price
   ) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, token, templateId, price)));
+    return
+      _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, hashAssetStruct(item), hashAssetStruct(price))));
   }
 
   function _verify(
@@ -116,5 +150,15 @@ contract Marketplace is AccessControl, Pausable, EIP712 {
 
   receive() external payable {
     revert();
+  }
+
+  function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    virtual
+    override(AccessControl, ERC1155Receiver)
+    returns (bool)
+  {
+    return super.supportsInterface(interfaceId);
   }
 }

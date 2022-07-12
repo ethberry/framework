@@ -5,13 +5,13 @@ import { baseTokenURI, templateId, tokenId } from "../../constants";
 export function shouldGetTokenURI() {
   describe("tokenURI", function () {
     it("should get token uri", async function () {
-      await this.erc721Instance.mintCommon(this.owner.address, templateId);
-      const uri = await this.erc721Instance.tokenURI(tokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${this.erc721Instance.address.toLowerCase()}/${tokenId}`);
+      await this.contractInstance.mintCommon(this.owner.address, templateId);
+      const uri = await this.contractInstance.tokenURI(tokenId);
+      expect(uri).to.equal(`${baseTokenURI}/${this.contractInstance.address.toLowerCase()}/${tokenId}`);
     });
 
     it("should fail: URI query for nonexistent token", async function () {
-      const uri = this.erc721Instance.tokenURI(tokenId);
+      const uri = this.contractInstance.tokenURI(tokenId);
       await expect(uri).to.be.revertedWith("ERC721: invalid token ID");
     });
   });

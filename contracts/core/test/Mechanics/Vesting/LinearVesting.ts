@@ -3,7 +3,7 @@ import { ethers, web3 } from "hardhat";
 import { constants } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
-import { LinearVesting } from "../../typechain-types";
+import { LinearVesting } from "../../../typechain-types";
 
 describe("LinearVesting", function () {
   const span = 2500;
