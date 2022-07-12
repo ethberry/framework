@@ -6,7 +6,7 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractType, StakingEventType } from "@framework/types";
 
 // system contract
-import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/Staking.sol/Staking.json";
+import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 import { StakingLogService } from "./staking.log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";

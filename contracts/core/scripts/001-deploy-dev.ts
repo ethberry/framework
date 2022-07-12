@@ -69,14 +69,14 @@ async function main() {
   console.info(`ERC721_LAND_ADDR=${landInstance.address.toLowerCase()}`);
 
   // ERC721 Marketplace contract
-  const market721Factory = await ethers.getContractFactory("ERC721Marketplace");
-  const market721Instance = await market721Factory.deploy("ERC721Marketplace");
-  console.info(`ERC721_MARKETPLACE_ADDR=${market721Instance.address.toLowerCase()}`);
+  const marketFactory = await ethers.getContractFactory("Marketplace");
+  const marketInstance = await marketFactory.deploy("Marketplace");
+  console.info(`MARKETPLACE_ADDR=${marketInstance.address.toLowerCase()}`);
 
   // Craft contract - CraftERC721
-  const craft721Factory = await ethers.getContractFactory("ERC1155ERC721Craft");
-  const craft721Instance = await craft721Factory.deploy();
-  console.info(`ERC721_CRAFT_ADDR=${craft721Instance.address.toLowerCase()}`);
+  const exchangeFactory = await ethers.getContractFactory("ERC1155ERC721Craft");
+  const exchangeInstance = await exchangeFactory.deploy();
+  console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
 
   // ERC721 contract - ERC721Dropbox
   const erc721DropFactory = await ethers.getContractFactory("ERC721Dropbox");
@@ -86,77 +86,67 @@ async function main() {
     100,
     "https://fw-json-api.gemunion.io/",
   );
-  console.info(`ERC721_DROPBOX_ADDR=${erc721DropInstance.address.toLowerCase()}`);
+  console.info(`DROPBOX_ADDR=${erc721DropInstance.address.toLowerCase()}`);
 
   // ERC721 contract - ERC721Airdrop
-  const airdropboxFactory = await ethers.getContractFactory("ERC721Airdrop");
-  const airdropboxInstance = await airdropboxFactory.deploy(
-    "ERC721Airdrop",
+  const airdropFactory = await ethers.getContractFactory("ERC721Airdrop");
+  const airdropInstance = await airdropFactory.deploy(
+    "Airdrop",
     "AIRDROP",
     10000,
     100,
     "https://fw-json-api.gemunion.io/",
   );
-  console.info(`ERC721_AIRDROP_ADDR=${airdropboxInstance.address.toLowerCase()}`);
+  console.info(`AIRDROP_ADDR=${airdropInstance.address.toLowerCase()}`);
 
   // ERC1155 contract - Resources
   const resFactory = await ethers.getContractFactory("ERC1155Simple");
   const resInstance = await resFactory.deploy("https://fw-json-api.gemunion.io/erc1155/1/");
   console.info(`ERC1155_RESOURCES_ADDR=${resInstance.address.toLowerCase()}`);
 
-  // Craft contract - CraftERC1155
-  const craftFactory = await ethers.getContractFactory("ERC1155ERC1155Craft");
-  const craftInstance = await craftFactory.deploy();
-  console.info(`ERC1155_CRAFT_ADDR=${craftInstance.address.toLowerCase()}`);
-
-  // ERC1155 Marketplace contract
-  const market1155Factory = await ethers.getContractFactory("ERC1155Marketplace");
-  const market1155Instance = await market1155Factory.deploy("ERC1155Marketplace");
-  console.info(`ERC1155_MARKETPLACE_ADDR=${market1155Instance.address.toLowerCase()}`);
-
   // Setup Contracts
   await blockAwait(ethers.provider);
 
   // ERC721 Collection Hero
   // Grant role to Marketplace in Hero
-  tx = await heroInstance.grantRole(MINTER_ROLE, market721Instance.address);
+  tx = await heroInstance.grantRole(MINTER_ROLE, marketInstance.address);
   console.info("Hero - MINTER_ROLE granted to Marketplace721: ", tx.hash);
   // Grant role to VRFCoordinator in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
   console.info("Hero - MINTER_ROLE granted to VRFCoordinator: ", tx.hash);
   // Grant role to ERC721Airdrop in Hero
-  tx = await heroInstance.grantRole(MINTER_ROLE, airdropboxInstance.address);
+  tx = await heroInstance.grantRole(MINTER_ROLE, airdropInstance.address);
   console.info("Hero - MINTER_ROLE granted to ERC721Airdrop: ", tx.hash);
   // Grant role to ERC721Dropbox in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
   console.info("Hero - MINTER_ROLE granted to ERC721Dropbox: ", tx.hash);
   // Grant role to CraftErc721 in Hero
-  tx = await heroInstance.grantRole(MINTER_ROLE, craft721Instance.address);
+  tx = await heroInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Hero - MINTER_ROLE granted to CraftErc721: ", tx.hash);
 
   // ERC721 Collection Item
   // Grant role to Marketplace in Item
-  tx = await itemInstance.grantRole(MINTER_ROLE, market721Instance.address);
+  tx = await itemInstance.grantRole(MINTER_ROLE, marketInstance.address);
   console.info("Item - MINTER_ROLE granted to Marketplace721: ", tx.hash);
   // Grant role to VRFCoordinator in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
   console.info("Item - MINTER_ROLE granted to VRFCoordinator: ", tx.hash);
   // Grant role to ERC721Airdrop in Item
-  tx = await itemInstance.grantRole(MINTER_ROLE, airdropboxInstance.address);
+  tx = await itemInstance.grantRole(MINTER_ROLE, airdropInstance.address);
   console.info("Item - MINTER_ROLE granted to ERC721Airdrop: ", tx.hash);
   // Grant role to ERC721Dropbox in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, erc721DropInstance.address);
   console.info("Item - MINTER_ROLE granted to ERC721Dropbox: ", tx.hash);
   // Grant role to CraftErc721 in Item
-  tx = await itemInstance.grantRole(MINTER_ROLE, craft721Instance.address);
+  tx = await itemInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Item - MINTER_ROLE granted to CraftErc721: ", tx.hash);
 
   // ERC721 Collection Skill
   // Grant role to Marketplace in Skill
-  tx = await skillInstance.grantRole(MINTER_ROLE, market721Instance.address);
+  tx = await skillInstance.grantRole(MINTER_ROLE, marketInstance.address);
   console.info("Skill - MINTER_ROLE granted to Marketplace721: ", tx.hash);
   // Grant role to CraftErc721 in Skill
-  tx = await skillInstance.grantRole(MINTER_ROLE, craft721Instance.address);
+  tx = await skillInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Skill - MINTER_ROLE granted to CraftErc721: ", tx.hash);
   // Grant role to VRFCoordinator in Skill
   // tx = await skillInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
@@ -170,23 +160,23 @@ async function main() {
 
   // ERC721 Dropbox
   // Grant role to Marketplace in Dropbox
-  tx = await erc721DropInstance.grantRole(MINTER_ROLE, market721Instance.address);
+  tx = await erc721DropInstance.grantRole(MINTER_ROLE, marketInstance.address);
   console.info("ERC721Dropbox - MINTER_ROLE granted to Marketplace721: ", tx.hash);
 
   // ERC721 Airdrop
   // Grant role to Marketplace in Airdrop
-  tx = await airdropboxInstance.grantRole(MINTER_ROLE, market721Instance.address);
+  tx = await airdropInstance.grantRole(MINTER_ROLE, marketInstance.address);
   console.info("ERC721Airdrop - MINTER_ROLE granted to Marketplace721: ", tx.hash);
 
   // ERC1155 Resources
   // Grant role to Marketplace in Resources
-  tx = await resInstance.grantRole(MINTER_ROLE, market1155Instance.address);
+  tx = await resInstance.grantRole(MINTER_ROLE, marketInstance.address);
   console.info("Resources - MINTER_ROLE granted to Marketplace1155: ", tx.hash);
   // Grant role to Craft in Resources
-  tx = await resInstance.grantRole(MINTER_ROLE, craftInstance.address);
+  tx = await resInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Resources - MINTER_ROLE granted to Craft: ", tx.hash);
   // Approve Craft in Resources for Owner
-  tx = await resInstance.setApprovalForAll(craftInstance.address, true);
+  tx = await resInstance.setApprovalForAll(exchangeInstance.address, true);
   console.info(`Resources - setApprovalForAll for Craft `, tx.hash);
 
   // Fund LINK to Items

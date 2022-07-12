@@ -8,7 +8,8 @@ import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
 import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import ERC998MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
+
+import MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Marketplace/Marketplace.sol/Marketplace.json";
 
 interface ITemplateBuyButtonProps {
   template: ITemplate;
@@ -28,11 +29,7 @@ export const Erc998ItemTemplateBuyButton: FC<ITemplateBuyButtonProps> = props =>
         data: { templateId: template.id },
       })
       .then((sign: IServerSignature) => {
-        const contract = new Contract(
-          process.env.ERC721_MARKETPLACE_ADDR,
-          ERC998MarketplaceSol.abi,
-          provider?.getSigner(),
-        );
+        const contract = new Contract(process.env.MARKETPLACE_ADDR, MarketplaceSol.abi, provider?.getSigner());
         const nonce = utils.arrayify(sign.nonce);
         const commonItemPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");
         return contract.buyCommon(nonce, template.contract?.address, template.id, process.env.ACCOUNT, sign.signature, {

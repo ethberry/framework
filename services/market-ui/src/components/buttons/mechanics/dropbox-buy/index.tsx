@@ -9,7 +9,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { IDropbox, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC998MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC721Marketplace.sol/ERC721Marketplace.json";
+import MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Marketplace/Marketplace.sol/Marketplace.json";
 
 interface IDropboxBuyButtonProps {
   dropbox: IDropbox;
@@ -29,11 +29,7 @@ export const DropboxBuyButton: FC<IDropboxBuyButtonProps> = props => {
         data: { templateId: dropbox.id },
       })
       .then((sign: IServerSignature) => {
-        const contract = new Contract(
-          process.env.ERC721_MARKETPLACE_ADDR,
-          ERC998MarketplaceSol.abi,
-          provider?.getSigner(),
-        );
+        const contract = new Contract(process.env.MARKETPLACE_ADDR, MarketplaceSol.abi, provider?.getSigner());
         const nonce = utils.arrayify(sign.nonce);
         const commonDropboxPrice = utils.parseUnits(dropbox.price.components[0].amount, "wei");
 

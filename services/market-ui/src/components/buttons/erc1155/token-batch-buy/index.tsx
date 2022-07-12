@@ -10,7 +10,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { ContractTemplate, ITemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
+import MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Marketplace/Marketplace.sol/Marketplace.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
   rows: Array<ITemplate>;
@@ -61,11 +61,7 @@ export const Erc1155TokenBatchBuyButton: FC<IErc1155TokenSingleBuyButtonProps> =
         },
       })
       .then((json: IServerSignature) => {
-        const contract = new Contract(
-          process.env.ERC1155_MARKETPLACE_ADDR,
-          ERC1155MarketplaceSol.abi,
-          provider?.getSigner(),
-        );
+        const contract = new Contract(process.env.MARKETPLACE_ADDR, MarketplaceSol.abi, provider?.getSigner());
         const nonce = utils.arrayify(json.nonce);
         return contract.buyResources(nonce, collection, tokenIds, amounts, process.env.ACCOUNT, json.signature, {
           value: totalTokenValue,

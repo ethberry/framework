@@ -14,7 +14,7 @@ import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { AirdropStatus, IAirdrop } from "@framework/types";
 
-import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
+import AirdropSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Airdrop/Airdrop.sol/Airdrop.json";
 
 export const Airdrop: FC = () => {
   const [airdrops, setAirdrops] = useState<Array<IAirdrop>>([]);
@@ -58,7 +58,7 @@ export const Airdrop: FC = () => {
   };
 
   const metaClick = useMetamask((airdrop: IAirdrop) => {
-    const contract = new Contract(process.env.ERC721_AIRDROP_ADDR, ERC721AirdropSol.abi, provider?.getSigner());
+    const contract = new Contract(process.env.AIRDROP_ADDR, AirdropSol.abi, provider?.getSigner());
 
     return contract.redeem(account, airdrop.id, airdrop.item, process.env.ACCOUNT, airdrop.signature) as Promise<void>;
   });

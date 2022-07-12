@@ -9,12 +9,22 @@ import { Vesting } from "./vesting";
 import { Stake } from "./staking/stake";
 import { Leaderboard } from "./staking/leaderboard";
 import { Reward } from "./staking/reward";
+import { DropboxList } from "./dropbox-list";
+import { Dropbox } from "./dropbox";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   {
     path: "/airdrop",
     element: <AirdropWrapper />,
     children: [{ index: true, element: <Airdrop /> }],
+  },
+  {
+    path: "/dropboxes",
+    element: <Protected />,
+    children: [
+      { index: true, element: <DropboxList /> },
+      { path: "/dropboxes/:id", element: <Dropbox /> },
+    ],
   },
   {
     path: "/exchange",

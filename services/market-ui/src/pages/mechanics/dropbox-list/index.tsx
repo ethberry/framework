@@ -10,13 +10,13 @@ import { DropboxStatus, IDropbox, IDropboxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { DropboxItem } from "./item";
-import { Erc721DropboxSearchForm } from "./form";
+import { DropboxSearchForm } from "./form";
 
 export interface IDropboxListProps {
   embedded?: boolean;
 }
 
-export const Erc721DropboxList: FC<IDropboxListProps> = props => {
+export const DropboxList: FC<IDropboxListProps> = props => {
   const { embedded } = props;
 
   const { id = "" } = useParams<{ id: string }>();
@@ -47,12 +47,7 @@ export const Erc721DropboxList: FC<IDropboxListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721DropboxSearchForm
-        onSubmit={handleSearch}
-        initialValues={search}
-        open={isFiltersOpen}
-        embedded={embedded}
-      />
+      <DropboxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

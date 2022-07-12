@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ContractTemplate, IToken } from "@framework/types";
 import { IServerSignature } from "@gemunion/types-collection";
 
-import MetaDataManipulatorSol from "@framework/core-contracts/artifacts/contracts/MetaData/MetaDataManipulator.sol/MetaDataManipulator.json";
+import MetaDataManipulatorSol from "@framework/core-contracts/artifacts/contracts/Mechanics/MetaData/MetaDataManipulator.sol/MetaDataManipulator.json";
 
 interface ILevelUpButtonProps {
   token: IToken;

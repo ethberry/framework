@@ -8,7 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import { IStakingRule, StakingStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import StakingSol from "@framework/core-contracts/artifacts/contracts/Staking/Staking.sol/Staking.json";
+import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
 export interface IStakingUploadButtonProps {
   rule: IStakingRule;

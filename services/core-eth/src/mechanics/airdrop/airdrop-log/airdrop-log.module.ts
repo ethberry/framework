@@ -8,8 +8,8 @@ import { AccessControlEventType, ContractType, Erc721TokenEventType } from "@fra
 import { AirdropLogService } from "./airdrop-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
-// system contract
-import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Airdrop.sol/ERC721Airdrop.json";
+
+import AirdropSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Airdrop/Airdrop.sol/Airdrop.json";
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC7
         configService: ConfigService,
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
-        const erc721airdropAddr = configService.get<string>("ERC721_AIRDROP_ADDR", "");
+        const erc721airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
         const fromBlock =
           (await contractManagerService.getLastBlock(erc721airdropAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
@@ -32,7 +32,7 @@ import ERC721AirdropSol from "@framework/core-contracts/artifacts/contracts/ERC7
           contract: {
             contractType: ContractType.ERC721_AIRDROP,
             contractAddress: [erc721airdropAddr],
-            contractInterface: ERC721AirdropSol.abi,
+            contractInterface: AirdropSol.abi,
             // prettier-ignore
             eventNames: [
               Erc721TokenEventType.Approval,

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { utils, Wallet } from "ethers";
+import { Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
@@ -23,7 +23,7 @@ export class AirdropSignService {
         name: "ERC721Airdrop",
         version: "1.0.0",
         chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
-        verifyingContract: this.configService.get<string>("ERC721_AIRDROP_ADDR", ""),
+        verifyingContract: this.configService.get<string>("AIRDROP_ADDR", ""),
       },
       // Types
       {

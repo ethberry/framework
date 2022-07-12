@@ -43,7 +43,7 @@ export class Erc721DropboxServiceEth {
     private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.airdropAddr = configService.get<string>("ERC721_AIRDROP_ADDR", "");
+    this.airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
   }
 

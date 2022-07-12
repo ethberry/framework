@@ -17,7 +17,7 @@ interface IDropboxSearchFormProps {
   embedded?: boolean;
 }
 
-export const Erc721DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
+export const DropboxSearchForm: FC<IDropboxSearchFormProps> = props => {
   const { onSubmit, initialValues, open, embedded } = props;
 
   const classes = useStyles();

@@ -6,7 +6,8 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractType, Erc1155MarketplaceEventType } from "@framework/types";
 
 // system contract
-import ERC1155MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Marketplace/ERC1155Marketplace.sol/ERC1155Marketplace.json";
+import MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Marketplace/Marketplace.sol/Marketplace.json";
+
 import { Erc1155MarketplaceLogService } from "./marketplace.log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
@@ -23,7 +24,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
         configService: ConfigService,
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
-        const erc1155marketAddr = configService.get<string>("ERC1155_MARKETPLACE_ADDR", "");
+        const erc1155marketAddr = configService.get<string>("MARKETPLACE_ADDR", "");
         const fromBlock =
           (await contractManagerService.getLastBlock(erc1155marketAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
@@ -31,7 +32,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.ERC1155_MARKETPLACE,
             contractAddress: [erc1155marketAddr],
-            contractInterface: ERC1155MarketplaceSol.abi,
+            contractInterface: MarketplaceSol.abi,
             // prettier-ignore
             eventNames: [
               Erc1155MarketplaceEventType.Redeem,

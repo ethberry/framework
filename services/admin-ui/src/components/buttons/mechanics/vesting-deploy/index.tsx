@@ -11,9 +11,9 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { VestingTemplate, IVestingDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import LinearVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/LinearVesting.sol/LinearVesting.json";
-import GradedVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/GradedVesting.sol/GradedVesting.json";
-import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Vesting/CliffVesting.sol/CliffVesting.json";
+import LinearVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
+import GradedVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
+import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { VestingDeployDialog } from "./deploy-dialog";
 
@@ -52,7 +52,11 @@ export const VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, provider?.getSigner());
+          const contract = new Contract(
+            process.env.CONTRACT_MANAGER_ADDR,
+            ContractManagerSol.abi,
+            provider?.getSigner(),
+          );
           return contract.deployERC20Vesting(
             nonce,
             getBytecodeByVestingTemplate(contractTemplate),

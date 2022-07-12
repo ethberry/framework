@@ -8,7 +8,7 @@ import { Erc721DropboxLogService } from "./dropbox-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 // system contract
-import ERC721DropboxSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Dropbox.sol/ERC721Dropbox.json";
+import ERC721DropboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Dropbox/Dropbox.sol/Dropbox.json";
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import ERC721DropboxSol from "@framework/core-contracts/artifacts/contracts/ERC7
         configService: ConfigService,
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
-        const erc721dropboxAddr = configService.get<string>("ERC721_DROPBOX_ADDR", "");
+        const erc721dropboxAddr = configService.get<string>("DROPBOX_ADDR", "");
         const fromBlock =
           (await contractManagerService.getLastBlock(erc721dropboxAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");

@@ -8,7 +8,7 @@ import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IExchangeRule } from "@framework/types";
 
-import ERC1155ERC998CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
+import ERC1155ERC998CraftSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/ERC1155ERC721Craft.sol/ERC1155ERC721Craft.json";
 import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 interface IExchangeButtonProps {
@@ -24,7 +24,11 @@ export const ExchangeButton: FC<IExchangeButtonProps> = props => {
   const api = useApi();
 
   const meta = useMetamask(() => {
-    const contract = new Contract(rule.item.components[0].contract!.address, ERC998SimpleSol.abi, provider?.getSigner());
+    const contract = new Contract(
+      rule.item.components[0].contract!.address,
+      ERC998SimpleSol.abi,
+      provider?.getSigner(),
+    );
     return contract.setApprovalForAll(process.env.EXCHANGE_ADDR, true) as Promise<void>;
   });
 
@@ -35,7 +39,7 @@ export const ExchangeButton: FC<IExchangeButtonProps> = props => {
   };
 
   const handleCraft = useMetamask(() => {
-    const contract = new Contract(process.env.ERC721_CRAFT_ADDR, ERC1155ERC998CraftSol.abi, provider?.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ERC1155ERC998CraftSol.abi, provider?.getSigner());
     return (
       contract
         // TODO add item amounts - batch craft?

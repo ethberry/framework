@@ -7,8 +7,8 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721CollectionDropboxAddress = process.env.ERC721_DROPBOX_ADDR || wallet;
-    const erc721CollectionAirdropAddress = process.env.ERC721_AIRDROP_ADDR || wallet;
+    const erc721CollectionDropboxAddress = process.env.DROPBOX_ADDR || wallet;
+    const erc721CollectionAirdropAddress = process.env.AIRDROP_ADDR || wallet;
     const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
     const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
     const erc721CollectionRuneAddress = process.env.ERC721_RUNE_ADDR || wallet;

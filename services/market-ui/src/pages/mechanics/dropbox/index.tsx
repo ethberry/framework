@@ -12,7 +12,7 @@ import { DropboxBuyButton } from "../../../components/buttons";
 import { formatPrice } from "../../../utils/money";
 import { useStyles } from "./styles";
 
-export const Erc721Dropbox: FC = () => {
+export const Dropbox: FC = () => {
   const { selected, isLoading } = useCollection<IDropbox>({
     baseUrl: "/erc721-dropboxes",
     empty: {

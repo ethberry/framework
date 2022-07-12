@@ -6,7 +6,7 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractType, ExchangeEventType } from "@framework/types";
 
 // system contract
-import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Craft/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
 import { ExchangeLogService } from "./exchange-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
@@ -23,7 +23,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
         configService: ConfigService,
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
-        const erc1155craftAddr = configService.get<string>("ERC1155_CRAFT_ADDR", "");
+        const erc1155craftAddr = configService.get<string>("EXCHANGE_ADDR", "");
         const fromBlock =
           (await contractManagerService.getLastBlock(erc1155craftAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
