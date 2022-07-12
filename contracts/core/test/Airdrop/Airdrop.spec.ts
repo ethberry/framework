@@ -19,8 +19,8 @@ import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
 
 describe("Airdrop", function () {
   let airdropInstance: Airdrop;
-  let erc1155Instance: ERC1155Simple;
   let erc721Instance: ERC721Simple;
+  let erc1155Instance: ERC1155Simple;
   let network: Network;
 
   beforeEach(async function () {
@@ -29,13 +29,13 @@ describe("Airdrop", function () {
     const airdropFactory = await ethers.getContractFactory("Airdrop");
     airdropInstance = await airdropFactory.deploy(tokenName, tokenSymbol, amount, royalty, baseTokenURI);
 
-    const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
-    await erc1155Instance.grantRole(MINTER_ROLE, airdropInstance.address);
-
     const erc721Factory = await ethers.getContractFactory("ERC721Simple");
     erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     await erc721Instance.grantRole(MINTER_ROLE, airdropInstance.address);
+
+    const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
+    erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
+    await erc1155Instance.grantRole(MINTER_ROLE, airdropInstance.address);
 
     network = await ethers.provider.getNetwork();
 
@@ -329,7 +329,7 @@ describe("Airdrop", function () {
 
       await expect(tx2)
         .to.emit(airdropInstance, "UnpackAirdrop")
-        .withArgs(tokenId, [2, erc721Instance.address, tokenId, 1]);
+        .withArgs(this.receiver.address, tokenId, [2, erc721Instance.address, tokenId, 1]);
     });
 
     it("should unpack (approved)", async function () {
@@ -393,7 +393,7 @@ describe("Airdrop", function () {
 
       await expect(tx3)
         .to.emit(airdropInstance, "UnpackAirdrop")
-        .withArgs(tokenId, [2, erc721Instance.address, tokenId, 1]);
+        .withArgs(this.stranger.address, tokenId, [2, erc721Instance.address, tokenId, 1]);
     });
 
     it("should fail: caller is not token owner nor approved", async function () {
@@ -509,7 +509,7 @@ describe("Airdrop", function () {
 
       await expect(tx2)
         .to.emit(airdropInstance, "UnpackAirdrop")
-        .withArgs(tokenId, [2, erc721Instance.address, tokenId, 1]);
+        .withArgs(this.receiver.address, tokenId, [2, erc721Instance.address, tokenId, 1]);
 
       const tx3 = airdropInstance.connect(this.receiver).unpack(tokenId);
 
