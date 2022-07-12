@@ -12,15 +12,14 @@ import {
   Query,
   UseInterceptors,
 } from "@nestjs/common";
-import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { ExchangeRulesService } from "./exchange-rules.service";
 import { ExchangeRulesEntity } from "./exchange-rules.entity";
 import { Erc721RecipeSearchDto, Erc721RecipeUpdateDto, ExchangeCreateDto } from "./dto";
 
-@ApiBearerAuth()
+@Public()
 @Controller("/exchange-rules")
 export class ExchangeRulesController {
   constructor(private readonly recipeService: ExchangeRulesService) {}

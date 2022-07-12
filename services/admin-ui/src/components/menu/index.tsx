@@ -9,8 +9,10 @@ import { ContractRevokeRoleMenuItem } from "./revoke-role";
 import { ContractRenounceRoleMenuItem } from "./renounce-role";
 import { BlacklistAddMenuItem } from "./blacklist-add";
 import { UnBlacklistMenuItem } from "./blacklist-remove";
+import { MintTokenMenuItem } from "./mint-token";
 
 export enum ContractActions {
+  MINT = "MINT",
   SNAPSHOT = "SNAPSHOT",
   ROYALTY = "ROYALTY",
   BLACKLIST_ADD = "BLACKLIST_ADD",
@@ -52,6 +54,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+        <MintTokenMenuItem address={contract.address} />
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.BLACKLIST_ADD) ? <BlacklistAddMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.BLACKLIST_REMOVE) ? <UnBlacklistMenuItem address={contract.address} /> : null}

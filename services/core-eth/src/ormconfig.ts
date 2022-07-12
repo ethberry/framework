@@ -3,7 +3,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
-import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
+import { Erc20ContractHistoryEntity } from "./erc20/token/contract-history/contract-history.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace/marketplace-history/marketplace-history.entity";
@@ -34,7 +34,7 @@ const config: PostgresConnectionOptions = {
     ContractManagerHistoryEntity,
     AccessControlEntity,
     AccessControlHistoryEntity,
-    Erc20TokenHistoryEntity,
+    Erc20ContractHistoryEntity,
     VestingEntity,
     StakingRulesEntity,
     StakingStakesEntity,

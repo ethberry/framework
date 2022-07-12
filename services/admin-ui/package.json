@@ -14,7 +14,7 @@
     "@framework/core-contracts": "0.0.1",
     "@framework/localization-admin-ui": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/collection": "2.0.1",
+    "@gemunion/collection": "1.2.22",
     "@gemunion/common-pages": "9.0.12",
     "@gemunion/constants": "0.8.4",
     "@gemunion/draft-js-utils": "0.3.13",

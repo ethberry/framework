@@ -47,8 +47,8 @@ export const DropboxEditDialog: FC<IDropboxEditDialogProps> = props => {
       <RichTextEditor name="description" />
       <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       {id ? <SelectInput name="dropboxStatus" options={DropboxStatus} /> : null}
-      <EntityInput name="templateId" controller="templates" />
-      <EntityInput name="contract" controller="contract" data={{ contractRole: [ContractRole.DROPBOX] }} />
+      <EntityInput name="templateId" controller="templates" data={{}} />
+      <EntityInput name="contract" controller="contracts" data={{ contractRole: [ContractRole.DROPBOX] }} />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

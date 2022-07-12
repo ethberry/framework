@@ -13,12 +13,14 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { IVesting, IVestingSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../components/buttons";
+import { format, parseISO } from "date-fns";
 
 export const Vesting: FC = () => {
   const {
@@ -67,6 +69,7 @@ export const Vesting: FC = () => {
             <ListItem key={i}>
               <ListItemText>{vesting.beneficiary}</ListItemText>
               <ListItemText>{vesting.contractTemplate}</ListItemText>
+              <ListItemText>{format(parseISO(vesting.startTimestamp), humanReadableDateTimeFormat)}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(vesting)}>
                   <Visibility />

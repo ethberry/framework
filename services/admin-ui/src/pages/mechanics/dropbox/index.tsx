@@ -47,6 +47,7 @@ export const Dropbox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      templateId: 0,
       price: emptyPrice,
     },
     search: {
