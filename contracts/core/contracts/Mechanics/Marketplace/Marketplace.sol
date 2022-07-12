@@ -55,30 +55,32 @@ contract Marketplace is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Hol
     require(!_expired[nonce], "Marketplace: Expired signature");
     _expired[nonce] = true;
 
+    address account = _msgSender();
+
     bool isVerified = _verify(signer, _hash(nonce, item, price), signature);
     require(isVerified, "Marketplace: Invalid signature");
 
     if (price.tokenType == TokenType.NATIVE) {
       require(price.amount == msg.value, "Marketplace: Wrong amount");
     } else if (price.tokenType == TokenType.ERC20) {
-      IERC20(price.token).transferFrom(_msgSender(), address(this), price.amount);
+      IERC20(price.token).transferFrom(account, address(this), price.amount);
     } else if (price.tokenType == TokenType.ERC1155) {
-      IERC1155(price.token).safeTransferFrom(_msgSender(), address(this), price.tokenId, price.amount, "0x");
+      IERC1155(price.token).safeTransferFrom(account, address(this), price.tokenId, price.amount, "0x");
     } else {
       revert("Marketplace: unsupported token type");
     }
 
     uint256 tokenId;
     if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
-      tokenId = IERC721Simple(item.token).mintCommon(_msgSender(), item.tokenId);
+      tokenId = IERC721Simple(item.token).mintCommon(account, item.tokenId);
     } else if (item.tokenType == TokenType.ERC1155) {
-      IERC1155Simple(item.token).mint(_msgSender(), item.tokenId, item.amount, "0x");
+      IERC1155Simple(item.token).mint(account, item.tokenId, item.amount, "0x");
       tokenId = item.tokenId;
     } else {
       revert("Marketplace: unsupported token type");
     }
 
-    emit RedeemCommon(_msgSender(), item, price);
+    emit RedeemCommon(account, item, price);
   }
 
   function purchaseDropbox(
@@ -93,27 +95,29 @@ contract Marketplace is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Hol
     require(!_expired[nonce], "Marketplace: Expired signature");
     _expired[nonce] = true;
 
+    address account = _msgSender();
+
     bool isVerified = _verify(signer, _hash(nonce, item, price), signature);
     require(isVerified, "Marketplace: Invalid signature");
 
     if (price.tokenType == TokenType.NATIVE) {
       require(price.amount == msg.value, "Marketplace: Wrong amount");
     } else if (price.tokenType == TokenType.ERC20) {
-      IERC20(price.token).transferFrom(_msgSender(), address(this), price.amount);
+      IERC20(price.token).transferFrom(account, address(this), price.amount);
     } else if (price.tokenType == TokenType.ERC1155) {
-      IERC1155(price.token).safeTransferFrom(_msgSender(), address(this), price.tokenId, price.amount, "0x");
+      IERC1155(price.token).safeTransferFrom(account, address(this), price.tokenId, price.amount, "0x");
     } else {
       revert("Marketplace: unsupported token type");
     }
 
     uint256 tokenId;
     if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
-      tokenId = IDropbox(item.token).mintDropbox(_msgSender(), item.tokenId);
+      tokenId = IDropbox(item.token).mintDropbox(account, item.tokenId);
     } else {
       revert("Marketplace: unsupported token type");
     }
 
-    emit RedeemDropbox(_msgSender(), item, price);
+    emit RedeemDropbox(account, item, price);
   }
 
   function _hash(

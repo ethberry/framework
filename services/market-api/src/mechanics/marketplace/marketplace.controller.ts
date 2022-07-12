@@ -8,7 +8,7 @@ import { SignTemplateDto } from "./dto";
 
 @Public()
 @Controller("/marketplace")
-export class Erc721MarketplaceController {
+export class MarketplaceController {
   constructor(private readonly erc721MarketplaceService: MarketplaceService) {}
 
   @Post("/sign-template")

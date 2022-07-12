@@ -15,4 +15,15 @@ abstract contract AssetHelper {
   function hashAssetStruct(Asset memory item) public pure returns (bytes32) {
     return keccak256(abi.encode(ASSET_TYPEHASH, item.tokenType, item.token, item.tokenId, item.amount));
   }
+
+  function hashAssetStructArray(Asset[] memory items) public pure returns (bytes32) {
+    uint256 length = items.length;
+    bytes32[] memory padded = new bytes32[](length);
+    for (uint256 i = 0; i < length; i++) {
+      padded[i] = hashAssetStruct(items[i]);
+    }
+    return keccak256(
+      abi.encodePacked(padded)
+    );
+  }
 }

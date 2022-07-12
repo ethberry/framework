@@ -12,19 +12,21 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
+import "../Asset/Asset.sol";
+import "../Asset/interfaces/IAsset.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 
-contract PostBattleLoot is AccessControl, Pausable, EIP712 {
+contract PostBattleLoot is AssetHelper, AccessControl, Pausable, EIP712 {
   using Address for address;
 
   mapping(bytes32 => bool) private _expired;
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-  bytes32 private immutable PERMIT_SIGNATURE =
-    keccak256("EIP712(bytes32 nonce,address account,address collection,uint256[] tokenIds,uint256[] amounts)");
+  bytes32 internal immutable PERMIT_SIGNATURE =
+    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items)", ASSET_SIGNATURE));
 
-  event Redeem(address from, address collection, uint256[] tokenIds, uint256[] amounts);
+  event RedeemLoot(address from, Asset[] item);
 
   constructor(string memory name) EIP712(name, "1.0.0") {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -34,10 +36,7 @@ contract PostBattleLoot is AccessControl, Pausable, EIP712 {
 
   function redeem(
     bytes32 nonce,
-    address account,
-    address collection,
-    uint256[] memory tokenIds,
-    uint256[] memory amounts,
+    Asset[] memory items,
     address signer,
     bytes calldata signature
   ) external whenNotPaused {
@@ -46,33 +45,28 @@ contract PostBattleLoot is AccessControl, Pausable, EIP712 {
     require(!_expired[nonce], "PostBattleLoot: Expired signature");
     _expired[nonce] = true;
 
-    bool isVerified = _verify(signer, _hash(nonce, account, collection, tokenIds, amounts), signature);
+    address account = _msgSender();
+
+    bool isVerified = _verify(signer, _hash(nonce, account, items), signature);
     require(isVerified, "PostBattleLoot: Invalid signature");
 
-    emit Redeem(account, collection, tokenIds, amounts);
-    IERC1155Simple(collection).mintBatch(account, tokenIds, amounts, "0x");
+    emit RedeemLoot(account, items);
+
+    for (uint256 i = 0; i < items.length; i++) {
+      if (items[i].tokenType == TokenType.ERC1155) {
+        IERC1155Simple(items[i].token).mint(account, items[i].tokenId, items[i].amount, "0x");
+      } else {
+        revert("PostBattleLoot: unsupported token type");
+      }
+    }
   }
 
   function _hash(
     bytes32 nonce,
     address account,
-    address collection,
-    uint256[] memory tokenIds,
-    uint256[] memory amounts
+    Asset[] memory items
   ) internal view returns (bytes32) {
-    return
-      _hashTypedDataV4(
-        keccak256(
-          abi.encode(
-            PERMIT_SIGNATURE,
-            nonce,
-            account,
-            collection,
-            keccak256(abi.encodePacked(tokenIds)),
-            keccak256(abi.encodePacked(amounts))
-          )
-        )
-      );
+    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStructArray(items))));
   }
 
   function _verify(

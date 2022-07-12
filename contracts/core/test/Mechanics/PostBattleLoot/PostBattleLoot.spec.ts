@@ -17,7 +17,7 @@ import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 
 describe("PostBattleLoot", function () {
   let pblInstance: PostBattleLoot;
-  let resourcesInstance: ERC1155Simple;
+  let erc1155Instance: ERC1155Simple;
   let network: Network;
 
   beforeEach(async function () {
@@ -25,10 +25,10 @@ describe("PostBattleLoot", function () {
 
     const pblFactory = await ethers.getContractFactory("PostBattleLoot");
     pblInstance = await pblFactory.deploy(tokenName);
-    const resourcesFactory = await ethers.getContractFactory("ERC1155Simple");
-    resourcesInstance = await resourcesFactory.deploy(baseTokenURI);
+    const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
+    erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
 
-    await resourcesInstance.grantRole(MINTER_ROLE, pblInstance.address);
+    await erc1155Instance.grantRole(MINTER_ROLE, pblInstance.address);
 
     network = await ethers.provider.getNetwork();
 
@@ -52,35 +52,47 @@ describe("PostBattleLoot", function () {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "collection", type: "address" },
-            { name: "tokenIds", type: "uint256[]" },
-            { name: "amounts", type: "uint256[]" },
+            { name: "items", type: "Asset[]" },
+          ],
+          Asset: [
+            { name: "tokenType", type: "uint256" },
+            { name: "token", type: "address" },
+            { name: "tokenId", type: "uint256" },
+            { name: "amount", type: "uint256" },
           ],
         },
         // Value
         {
           nonce,
           account: this.receiver.address,
-          collection: resourcesInstance.address,
-          tokenIds: [tokenId],
-          amounts: [amount],
+          items: [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
         },
       );
 
-      const tx = pblInstance
-        .connect(this.receiver)
-        .redeem(
-          nonce,
-          this.receiver.address,
-          resourcesInstance.address,
-          [tokenId],
-          [amount],
-          this.owner.address,
-          signature,
-        );
-      await expect(tx)
-        .to.emit(resourcesInstance, "TransferBatch")
-        .withArgs(pblInstance.address, ethers.constants.AddressZero, this.receiver.address, [tokenId], [amount]);
+      const tx1 = pblInstance.connect(this.receiver).redeem(
+        nonce,
+        [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        this.owner.address,
+        signature,
+      );
+
+      await expect(tx1).to.emit(pblInstance, "RedeemLoot");
+      // https://github.com/TrueFiEng/Waffle/pull/751
+      // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
     });
 
     it("should fail: duplicate mint", async function () {
@@ -97,47 +109,59 @@ describe("PostBattleLoot", function () {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "collection", type: "address" },
-            { name: "tokenIds", type: "uint256[]" },
-            { name: "amounts", type: "uint256[]" },
+            { name: "items", type: "Asset[]" },
+          ],
+          Asset: [
+            { name: "tokenType", type: "uint256" },
+            { name: "token", type: "address" },
+            { name: "tokenId", type: "uint256" },
+            { name: "amount", type: "uint256" },
           ],
         },
         // Value
         {
           nonce,
           account: this.receiver.address,
-          collection: resourcesInstance.address,
-          tokenIds: [tokenId],
-          amounts: [amount],
+          items: [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
         },
       );
 
-      const tx = pblInstance
-        .connect(this.receiver)
-        .redeem(
-          nonce,
-          this.receiver.address,
-          resourcesInstance.address,
-          [tokenId],
-          [amount],
-          this.owner.address,
-          signature,
-        );
-      await expect(tx)
-        .to.emit(resourcesInstance, "TransferBatch")
-        .withArgs(pblInstance.address, ethers.constants.AddressZero, this.receiver.address, [tokenId], [amount]);
+      const tx1 = pblInstance.connect(this.receiver).redeem(
+        nonce,
+        [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        this.owner.address,
+        signature,
+      );
 
-      const tx2 = pblInstance
-        .connect(this.receiver)
-        .redeem(
-          nonce,
-          this.receiver.address,
-          resourcesInstance.address,
-          [tokenId],
-          [amount],
-          this.owner.address,
-          signature,
-        );
+      await expect(tx1).to.emit(pblInstance, "RedeemLoot");
+
+      const tx2 = pblInstance.connect(this.receiver).redeem(
+        nonce,
+        [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        this.owner.address,
+        signature,
+      );
       await expect(tx2).to.be.revertedWith("PostBattleLoot: Expired signature");
     });
 
@@ -155,45 +179,62 @@ describe("PostBattleLoot", function () {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "collection", type: "address" },
-            { name: "tokenIds", type: "uint256[]" },
-            { name: "amounts", type: "uint256[]" },
+            { name: "items", type: "Asset[]" },
+          ],
+          Asset: [
+            { name: "tokenType", type: "uint256" },
+            { name: "token", type: "address" },
+            { name: "tokenId", type: "uint256" },
+            { name: "amount", type: "uint256" },
           ],
         },
         // Value
         {
           nonce,
           account: this.receiver.address,
-          collection: resourcesInstance.address,
-          tokenIds: [tokenId],
-          amounts: [amount],
+          items: [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
         },
       );
 
-      const tx = pblInstance
-        .connect(this.receiver)
-        .redeem(
-          nonce,
-          this.receiver.address,
-          resourcesInstance.address,
-          [tokenId],
-          [amount],
-          this.receiver.address,
-          signature,
-        );
-      await expect(tx).to.be.revertedWith(`PostBattleLoot: Wrong signer`);
+      const tx1 = pblInstance.connect(this.receiver).redeem(
+        nonce,
+        [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        this.receiver.address,
+        signature,
+      );
+
+      await expect(tx1).to.be.revertedWith(`PostBattleLoot: Wrong signer`);
     });
 
     it("should fail for wrong signature", async function () {
       const tx = pblInstance.redeem(
         nonce,
-        this.receiver.address,
-        resourcesInstance.address,
-        [tokenId],
-        [amount],
+        [
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
         this.owner.address,
         ethers.utils.formatBytes32String("signature"),
       );
+
       await expect(tx).to.be.revertedWith(`PostBattleLoot: Invalid signature`);
     });
   });

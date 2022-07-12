@@ -4,7 +4,7 @@ import { BigNumber, utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IAssetComponent, ITemplate, TokenType } from "@framework/types";
+import { ITemplate, TokenType } from "@framework/types";
 
 import { ISignTemplateDto } from "./interfaces";
 import { DropboxService } from "../dropbox/dropbox.service";
@@ -38,7 +38,7 @@ export class MarketplaceService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSign(nonce, templateEntity, templateEntity.price.components[0]);
+    const signature = await this.getSign(nonce, templateEntity);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
@@ -56,7 +56,7 @@ export class MarketplaceService {
 
     const templateEntity = await this.templateService.findOne(
       { id: dropboxEntity.item.components[0].tokenId },
-      { relations: { contract: true } },
+      { relations: { contract: true, price: true } },
     );
 
     if (!templateEntity) {
@@ -70,11 +70,11 @@ export class MarketplaceService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSign(nonce, templateEntity, templateEntity.price.components[0]);
+    const signature = await this.getSign(nonce, templateEntity);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async getSign(nonce: Uint8Array, template: ITemplate, price: IAssetComponent): Promise<string> {
+  public async getSign(nonce: Uint8Array, templateEntity: ITemplate): Promise<string> {
     return this.signer._signTypedData(
       // Domain
       {
@@ -101,16 +101,16 @@ export class MarketplaceService {
       {
         nonce,
         item: {
-          tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
-          token: template.contract?.address,
-          tokenId: template.id,
-          amount: template.amount,
+          tokenType: Object.keys(TokenType).indexOf(templateEntity.contract!.contractType),
+          token: templateEntity.contract!.address,
+          tokenId: templateEntity.id,
+          amount: templateEntity.amount,
         },
         price: {
-          tokenType: Object.keys(TokenType).indexOf(price.tokenType),
-          token: price.contract?.address,
-          tokenId: price.tokenId,
-          amount: price.amount,
+          tokenType: Object.keys(TokenType).indexOf(templateEntity.price!.components[0].tokenType),
+          token: templateEntity.price!.components[0].contract?.address,
+          tokenId: templateEntity.price!.components[0].tokenId,
+          amount: templateEntity.price!.components[0].amount,
         },
       },
     );

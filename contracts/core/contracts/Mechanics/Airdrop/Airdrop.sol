@@ -58,7 +58,9 @@ contract Airdrop is AssetHelper, EIP712, ERC721ACBCR, ERC721Pausable, ERC721Base
     require(!_expired[nonce], "Airdrop: Expired signature");
     _expired[nonce] = true;
 
-    bool isVerified = _verify(signer, _hash(nonce, _msgSender(), item), signature);
+    address account = _msgSender();
+
+    bool isVerified = _verify(signer, _hash(nonce, account, item), signature);
     require(isVerified, "Airdrop: Invalid signature");
 
     uint256 tokenId = _tokenIdTracker.current();
@@ -66,9 +68,9 @@ contract Airdrop is AssetHelper, EIP712, ERC721ACBCR, ERC721Pausable, ERC721Base
 
     _itemData[tokenId] = item;
 
-    _safeMint(_msgSender(), tokenId);
+    _safeMint(account, tokenId);
 
-    emit RedeemAirdrop(_msgSender(), tokenId, item);
+    emit RedeemAirdrop(account, tokenId, item);
   }
 
   function _hash(
