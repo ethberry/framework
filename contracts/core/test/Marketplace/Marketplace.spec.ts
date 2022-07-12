@@ -114,6 +114,7 @@ describe("Marketplace", function () {
         );
 
         await expect(tx1)
+          .to.changeEtherBalance(this.receiver, -amount)
           .to.emit(marketplaceInstance, "RedeemCommon")
           .withArgs(
             this.receiver.address,
@@ -122,6 +123,71 @@ describe("Marketplace", function () {
           )
           .to.emit(erc721Instance, "Transfer")
           .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+      });
+
+      it("should fail: Wrong amount", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount: 1,
+            },
+            price: {
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 0,
+            token: ethers.constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+          {
+            value: 0,
+          },
+        );
+
+        await expect(tx1).to.be.revertedWith(`Marketplace: Wrong amount`);
       });
     });
 
@@ -200,6 +266,136 @@ describe("Marketplace", function () {
           .to.emit(erc20Instance, "Transfer")
           .withArgs(this.receiver.address, marketplaceInstance.address, amount);
       });
+
+      it("should fail: insufficient allowance", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount: 1,
+            },
+            price: {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        await erc20Instance.mint(this.receiver.address, amount);
+        // await erc20Instance.connect(this.receiver).approve(marketplaceInstance.address, amount);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
+      });
+
+      it("should fail: transfer amount exceeds balance", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount: 1,
+            },
+            price: {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        // await erc20Instance.mint(this.receiver.address, amount);
+        await erc20Instance.connect(this.receiver).approve(marketplaceInstance.address, amount);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+      });
     });
 
     describe("ERC1155 > ERC721", function () {
@@ -276,6 +472,691 @@ describe("Marketplace", function () {
           .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId)
           .to.emit(erc1155Instance, "TransferSingle")
           .withArgs(marketplaceInstance.address, this.receiver.address, marketplaceInstance.address, tokenId, amount);
+      });
+
+      it("should fail: caller is not token owner nor approved", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount: 1,
+            },
+            price: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
+        // await erc1155Instance.connect(this.receiver).setApprovalForAll(marketplaceInstance.address, true);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC1155: caller is not token owner nor approved`);
+      });
+
+      it("should fail: insufficient balance for transfer", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount: 1,
+            },
+            price: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        // await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
+        await erc1155Instance.connect(this.receiver).setApprovalForAll(marketplaceInstance.address, true);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount: 1,
+          },
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC1155: insufficient balance for transfer`);
+      });
+    });
+
+    describe("NATIVE > ERC1155", function () {
+      it("should purchase", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+            price: {
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 0,
+            token: ethers.constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+          {
+            value: amount,
+          },
+        );
+
+        await expect(tx1)
+          .to.changeEtherBalance(this.receiver, -amount)
+          .to.emit(marketplaceInstance, "RedeemCommon")
+          .withArgs(
+            this.receiver.address,
+            [4, erc1155Instance.address, tokenId, amount],
+            [0, ethers.constants.AddressZero, tokenId, amount],
+          )
+          .to.emit(erc1155Instance, "TransferSingle")
+          .withArgs(marketplaceInstance.address, ethers.constants.AddressZero, this.receiver.address, tokenId, amount);
+      });
+
+      it("should fail: Wrong amount", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+            price: {
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 0,
+            token: ethers.constants.AddressZero,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+          {
+            value: 0,
+          },
+        );
+
+        await expect(tx1).to.be.revertedWith(`Marketplace: Wrong amount`);
+      });
+    });
+
+    describe("ERC20 > ERC1155", function () {
+      it("should purchase", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+            price: {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        await erc20Instance.mint(this.receiver.address, amount);
+        await erc20Instance.connect(this.receiver).approve(marketplaceInstance.address, amount);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1)
+          .to.emit(marketplaceInstance, "RedeemCommon")
+          .withArgs(
+            this.receiver.address,
+            [2, erc1155Instance.address, tokenId, amount],
+            [1, erc20Instance.address, tokenId, amount],
+          )
+          .to.emit(erc1155Instance, "TransferSingle")
+          .withArgs(marketplaceInstance.address, ethers.constants.AddressZero, this.receiver.address, tokenId, amount)
+          .to.emit(erc20Instance, "Transfer")
+          .withArgs(this.receiver.address, marketplaceInstance.address, amount);
+      });
+
+      it("should fail: insufficient allowance", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+            price: {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        await erc20Instance.mint(this.receiver.address, amount);
+        // await erc20Instance.connect(this.receiver).approve(marketplaceInstance.address, amount);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: insufficient allowance`);
+      });
+
+      it("should fail: transfer amount exceeds balance", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount,
+            },
+            price: {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          },
+        );
+
+        // await erc20Instance.mint(this.receiver.address, amount);
+        await erc20Instance.connect(this.receiver).approve(marketplaceInstance.address, amount);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId,
+            amount,
+          },
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC20: transfer amount exceeds balance`);
+      });
+    });
+
+    describe("ERC1155 > ERC1155", function () {
+      it("should purchase", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: 1,
+              amount,
+            },
+            price: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: 2,
+              amount,
+            },
+          },
+        );
+
+        await erc1155Instance.mint(this.receiver.address, 2, amount, "0x");
+        await erc1155Instance.connect(this.receiver).setApprovalForAll(marketplaceInstance.address, true);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 1,
+            amount,
+          },
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 2,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1)
+          .to.emit(marketplaceInstance, "RedeemCommon")
+          .withArgs(
+            this.receiver.address,
+            [4, erc1155Instance.address, 1, amount],
+            [4, erc1155Instance.address, 2, amount],
+          )
+          .to.emit(erc1155Instance, "TransferSingle")
+          .withArgs(marketplaceInstance.address, ethers.constants.AddressZero, this.receiver.address, 1, amount)
+          .to.emit(erc1155Instance, "TransferSingle")
+          .withArgs(marketplaceInstance.address, this.receiver.address, marketplaceInstance.address, 2, amount);
+      });
+
+      it("should fail: caller is not token owner nor approved", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: 1,
+              amount,
+            },
+            price: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: 2,
+              amount,
+            },
+          },
+        );
+
+        await erc1155Instance.mint(this.receiver.address, 2, amount, "0x");
+        // await erc1155Instance.connect(this.receiver).setApprovalForAll(marketplaceInstance.address, true);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 1,
+            amount,
+          },
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 2,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC1155: caller is not token owner nor approved`);
+      });
+
+      it("should fail: insufficient balance for transfer", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: marketplaceInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "item", type: "Asset" },
+              { name: "price", type: "Asset" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            item: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: 1,
+              amount,
+            },
+            price: {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId: 2,
+              amount,
+            },
+          },
+        );
+
+        // await erc1155Instance.mint(this.receiver.address, 2, amount, "0x");
+        await erc1155Instance.connect(this.receiver).setApprovalForAll(marketplaceInstance.address, true);
+
+        const tx1 = marketplaceInstance.connect(this.receiver).purchaseCommon(
+          nonce,
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 1,
+            amount,
+          },
+          {
+            tokenType: 4,
+            token: erc1155Instance.address,
+            tokenId: 2,
+            amount,
+          },
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.be.revertedWith(`ERC1155: insufficient balance for transfer`);
       });
     });
   });
