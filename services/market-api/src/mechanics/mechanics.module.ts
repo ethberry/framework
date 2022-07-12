@@ -5,8 +5,9 @@ import { DropboxModule } from "./dropbox/dropbox.module";
 import { ExchangeModule } from "./exchange/exchange.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
+import { MarketplaceModule } from "./marketplace/marketplace.module";
 
 @Module({
-  imports: [AirdropModule, DropboxModule, ExchangeModule, StakingModule, VestingModule],
+  imports: [AirdropModule, DropboxModule, ExchangeModule, StakingModule, VestingModule, MarketplaceModule],
 })
 export class MechanicsModule {}

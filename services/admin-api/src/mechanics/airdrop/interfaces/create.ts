@@ -10,7 +10,3 @@ export interface IAirdropSign {
   airdropId: number;
   templateId: number;
 }
-
-export interface IAirdropCreateDto {
-  list: Array<IAirdropItem>;
-}

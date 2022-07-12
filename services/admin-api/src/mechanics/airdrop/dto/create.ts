@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEthereumAddress, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IAirdropCreateDto, IAirdropItem } from "../interfaces";
+import { IAirdropItem } from "../interfaces";
 import { AssetDto } from "../../../blockchain/asset/dto";
 
 export class AirdropItem implements IAirdropItem {
@@ -17,14 +17,4 @@ export class AirdropItem implements IAirdropItem {
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
   public account: string;
-}
-
-export class Erc998AirdropCreateDto implements IAirdropCreateDto {
-  @ApiProperty({
-    type: AirdropItem,
-    isArray: true,
-  })
-  @ValidateNested({ each: true })
-  @Type(() => AirdropItem)
-  public list: Array<AirdropItem>;
 }

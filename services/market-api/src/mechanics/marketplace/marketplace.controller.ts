@@ -3,13 +3,13 @@ import { Body, Controller, Post } from "@nestjs/common";
 import { Public } from "@gemunion/nest-js-utils";
 import { IServerSignature } from "@gemunion/types-collection";
 
-import { Erc721MarketplaceService } from "./marketplace.service";
+import { MarketplaceService } from "./marketplace.service";
 import { SignTemplateDto } from "./dto";
 
 @Public()
-@Controller("/erc721-marketplace")
+@Controller("/marketplace")
 export class Erc721MarketplaceController {
-  constructor(private readonly erc721MarketplaceService: Erc721MarketplaceService) {}
+  constructor(private readonly erc721MarketplaceService: MarketplaceService) {}
 
   @Post("/sign-template")
   public signTemplate(@Body() dto: SignTemplateDto): Promise<IServerSignature> {
