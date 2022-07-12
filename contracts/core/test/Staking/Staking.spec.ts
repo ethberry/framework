@@ -8,7 +8,7 @@ import {
   ERC721Simple,
   // ERC721Random, hardhat random version contract
   ERC721RandomTest,
-  ERC721Dropbox,
+  Dropbox,
   ERC20Simple,
   ERC1155Simple,
   LinkErc20,
@@ -32,7 +32,7 @@ import { randomRequest } from "../shared/AccessControl/randomRequest";
 describe("Staking", function () {
   let stakingInstance: Staking;
   let erc721RandomInstance: ERC721RandomTest;
-  let erc721DropboxInstance: ERC721Dropbox;
+  let erc721DropboxInstance: Dropbox;
   let erc721SimpleInstance: ERC721Simple;
   let erc20Instance: ERC20Simple;
   let erc1155Instance: ERC1155Simple;
@@ -91,7 +91,7 @@ describe("Staking", function () {
     const erc721randomFactory = await ethers.getContractFactory("ERC721RandomTest");
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", 100, "https://localhost");
     // ERC721 Dropbox
-    const dropboxFactory = await ethers.getContractFactory("ERC721Dropbox");
+    const dropboxFactory = await ethers.getContractFactory("Dropbox");
     erc721DropboxInstance = await dropboxFactory.deploy("ERC721Dropbox", "DBX", 100, "https://localhost");
     // ERC1155
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");

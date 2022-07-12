@@ -18,8 +18,6 @@ import "../interfaces/IAsset.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 
-import "hardhat/console.sol";
-
 contract Airdrop is EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
   using Address for address;
   using Counters for Counters.Counter;

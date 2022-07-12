@@ -16,6 +16,8 @@ import {
   nonce,
 } from "../constants";
 import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
+import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
 
 describe("Airdrop", function () {
   let airdropInstance: Airdrop;
@@ -26,7 +28,7 @@ describe("Airdrop", function () {
   beforeEach(async function () {
     [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
 
-    const airdropFactory = await ethers.getContractFactory("Airdrop");
+    const airdropFactory = await ethers.getContractFactory("AirdropTest");
     airdropInstance = await airdropFactory.deploy(tokenName, tokenSymbol, amount, royalty, baseTokenURI);
 
     const erc721Factory = await ethers.getContractFactory("ERC721Simple");
@@ -43,6 +45,8 @@ describe("Airdrop", function () {
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  shouldGetTokenURI();
+  shouldSetBaseURI();
 
   describe("redeem", function () {
     it("should redeem ERC721", async function () {

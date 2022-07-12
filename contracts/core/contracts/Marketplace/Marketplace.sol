@@ -18,9 +18,9 @@ import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
 import "../interfaces/IAsset.sol";
+import "../Dropbox/interfaces/IDropbox.sol";
 import "../ERC721/interfaces/IERC721Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
-import "../ERC721/interfaces/IERC721Dropbox.sol";
 import "../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract Marketplace is AccessControl, Pausable, EIP712, ERC1155Holder {
@@ -111,7 +111,7 @@ contract Marketplace is AccessControl, Pausable, EIP712, ERC1155Holder {
 
     uint256 tokenId;
     if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
-      tokenId = IERC721Dropbox(item.token).mintDropbox(_msgSender(), item.tokenId);
+      tokenId = IDropbox(item.token).mintDropbox(_msgSender(), item.tokenId);
     } else {
       revert("Marketplace: unsupported token type");
     }
