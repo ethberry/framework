@@ -6,7 +6,7 @@ import "react-multi-carousel/lib/styles.css";
 import { ITemplate } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { TemplateItem } from "../../../erc721/template-list/item";
+import { Erc721TemplateItem } from "../../../erc721/template-list/item";
 import { MultiCarouselButtonGroup } from "./button-group";
 
 declare interface IMultiCarouselProps {
@@ -66,7 +66,7 @@ export const MultiCarousel: FC<IMultiCarouselProps> = props => {
       infinite
     >
       {template.map(template => (
-        <TemplateItem key={template.id} template={template} />
+        <Erc721TemplateItem key={template.id} template={template} />
       ))}
     </Carousel>
   );

@@ -7,19 +7,19 @@ import { ExchangeRulesService } from "./exchange-rules.service";
 import { ExchangeRulesEntity } from "./exchange-rules.entity";
 
 @Public()
-@Controller("/erc1155-recipes")
+@Controller("/exchange/rules")
 export class ExchangeRulesController {
-  constructor(private readonly recipeService: ExchangeRulesService) {}
+  constructor(private readonly exchangeRulesService: ExchangeRulesService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: SearchDto): Promise<[Array<ExchangeRulesEntity>, number]> {
-    return this.recipeService.search(dto);
+    return this.exchangeRulesService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<ExchangeRulesEntity | null> {
-    return this.recipeService.findOne({ id });
+    return this.exchangeRulesService.findOne({ id });
   }
 }

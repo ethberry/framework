@@ -26,6 +26,7 @@ import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { PageModule } from "./page/page.module";
+import { MechanicsModule } from "./mechanics/mechanics.module";
 
 @Module({
   providers: [
@@ -94,6 +95,7 @@ import { PageModule } from "./page/page.module";
     EmailModule,
     BlockchainModule,
     PageModule,
+    MechanicsModule,
   ],
   controllers: [AppController],
 })

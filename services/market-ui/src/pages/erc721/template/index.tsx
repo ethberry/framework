@@ -10,7 +10,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { formatPrice } from "../../../utils/money";
 import { useStyles } from "./styles";
-import { Erc721ItemTemplateBuyButton } from "../../../components/buttons";
+import { TemplatePurchaseButton } from "../../../components/buttons";
 
 export const Erc721Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
@@ -44,7 +44,7 @@ export const Erc721Template: FC = () => {
             <Typography variant="body2" color="textSecondary" component="p">
               <FormattedMessage id="pages.erc721-template.price" values={{ amount: formatPrice(selected.price) }} />
             </Typography>
-            <Erc721ItemTemplateBuyButton template={selected} />
+            <TemplatePurchaseButton template={selected} />
           </Paper>
         </Grid>
       </Grid>

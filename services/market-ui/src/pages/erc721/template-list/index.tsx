@@ -8,7 +8,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { ITemplate, ITemplateSearchDto, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { TemplateItem } from "./item";
+import { Erc721TemplateItem } from "./item";
 import { TemplateSearchForm } from "../../../components/forms/template-search";
 
 export interface IErc721TemplateListProps {
@@ -55,7 +55,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(template => (
             <Grid item lg={4} sm={6} xs={12} key={template.id}>
-              <TemplateItem template={template} />
+              <Erc721TemplateItem template={template} />
             </Grid>
           ))}
         </Grid>

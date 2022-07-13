@@ -16,7 +16,7 @@ import { IExchangeRule } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { ExchangeButton } from "../../../../components/buttons";
+import { ExchangeCraftButton } from "../../../../components/buttons";
 
 interface IRecipeItemProps {
   rule: IExchangeRule;
@@ -51,7 +51,7 @@ export const ExchangeItem: FC<IRecipeItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <ExchangeButton rule={rule} />
+          <ExchangeCraftButton rule={rule} />
         </Grid>
       </CardActions>
     </Card>

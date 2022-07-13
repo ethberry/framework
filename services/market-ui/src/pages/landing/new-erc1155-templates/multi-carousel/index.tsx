@@ -66,7 +66,7 @@ export const MultiCarousel: FC<IMultiCarouselProps> = props => {
       infinite
     >
       {token.map(token => (
-        <Erc1155Template key={token.id} token={token} />
+        <Erc1155Template key={token.id} template={token} />
       ))}
     </Carousel>
   );

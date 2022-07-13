@@ -42,7 +42,7 @@ fi
   echo "preparing contracts via hardhat..";
 
   # Grep output to -> .env.tmp
-  npm run prepare:contracts:$BLOCKCHAIN | grep 'CONTRACT_MANAGER_ADDR\|MARKETPLACE_ADDR\|EXCHANGE_ADDR\|DROPBOX_ADDR\|AIRDROP_ADDR'>> .env.tmp
+  npm run prepare:contracts:$BLOCKCHAIN | grep 'CONTRACT_MANAGER_ADDR\|EXCHANGE_ADDR\|DROPBOX_ADDR\|AIRDROP_ADDR'>> .env.tmp
 
   # Substitutions + fixes -> to .env.tmp2
   cat .env.tmp | sed -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g" >.env.tmp2
@@ -61,7 +61,6 @@ fi
   echo "Contracts address:";
 
   echo "CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR"
-  echo "MARKETPLACE_ADDR=$MARKETPLACE_ADDR"
   echo "EXCHANGE_ADDR=$EXCHANGE_ADDR"
   echo "DROPBOX_ADDR=$DROPBOX_ADDR"
   echo "AIRDROP_ADDR=$AIRDROP_ADDR"
@@ -86,7 +85,6 @@ fi
   sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
-  sed -i -e "s/MARKETPLACE_ADDR=.*/MARKETPLACE_ADDR=$MARKETPLACE_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/DROPBOX_ADDR=.*/DROPBOX_ADDR=$DROPBOX_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/AIRDROP_ADDR=.*/AIRDROP_ADDR=$AIRDROP_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
@@ -106,7 +104,6 @@ fi
   sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/market-ui/.env.$BASE_MODE
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
-  sed -i -e "s/MARKETPLACE_ADDR=.*/MARKETPLACE_ADDR=$MARKETPLACE_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/DROPBOX_ADDR=.*/DROPBOX_ADDR=$DROPBOX_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/AIRDROP_ADDR=.*/AIRDROP_ADDR=$AIRDROP_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
@@ -124,7 +121,6 @@ fi
   sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/core-eth/.env.$BASE_MODE
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
-  sed -i -e "s/MARKETPLACE_ADDR=.*/MARKETPLACE_ADDR=$MARKETPLACE_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/DROPBOX_ADDR=.*/DROPBOX_ADDR=$DROPBOX_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/AIRDROP_ADDR=.*/AIRDROP_ADDR=$AIRDROP_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
@@ -148,7 +144,6 @@ fi
   sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/admin-api/.env.$BASE_MODE
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
-  sed -i -e "s/MARKETPLACE_ADDR=.*/MARKETPLACE_ADDR=$MARKETPLACE_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/DROPBOX_ADDR=.*/DROPBOX_ADDR=$DROPBOX_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/AIRDROP_ADDR=.*/AIRDROP_ADDR=$AIRDROP_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
@@ -171,7 +166,6 @@ fi
   sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/market-api/.env.$BASE_MODE
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
-  sed -i -e "s/MARKETPLACE_ADDR=.*/MARKETPLACE_ADDR=$MARKETPLACE_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/DROPBOX_ADDR=.*/DROPBOX_ADDR=$DROPBOX_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/AIRDROP_ADDR=.*/AIRDROP_ADDR=$AIRDROP_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE

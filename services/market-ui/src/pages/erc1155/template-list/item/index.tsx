@@ -7,36 +7,36 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
 import { formatPrice } from "../../../../utils/money";
-import { Erc1155TokenSingleBuyButton } from "../../../../components/buttons";
+import { TemplatePurchaseButton } from "../../../../components/buttons";
 
 interface IErc1155TemplateItemProps {
-  token: ITemplate;
+  template: ITemplate;
 }
 
 export const Erc1155Template: FC<IErc1155TemplateItemProps> = props => {
-  const { token } = props;
+  const { template } = props;
 
   const classes = useStyles();
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc1155-tokens/${token.id}`}>
-        <CardMedia className={classes.media} image={token.imageUrl} />
+      <CardActionArea component={RouterLink} to={`/erc1155-tokens/${template.id}`}>
+        <CardMedia className={classes.media} image={template.imageUrl} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {token.title}
+            {template.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={token.description} />
+            <RichTextDisplay data={template.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(token.price)}
+            {formatPrice(template.price)}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <Erc1155TokenSingleBuyButton template={token} />
+          <TemplatePurchaseButton template={template} />
         </Grid>
       </CardActions>
     </Card>

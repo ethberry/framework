@@ -55,7 +55,7 @@ export const Erc1155TemplateList: FC<IErc1155TokenListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc1155Template token={token} />
+              <Erc1155Template template={token} />
             </Grid>
           ))}
         </Grid>

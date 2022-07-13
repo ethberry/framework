@@ -4,11 +4,8 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { UserEntity } from "./user/user.entity";
 import { PageEntity } from "./page/page.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
-import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
-import { Erc998TokenHistoryEntity } from "./erc998/token/token-history/token-history.entity";
-import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
@@ -18,6 +15,7 @@ import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
 import { AssetEntity } from "./mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
+import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -25,9 +23,7 @@ const config: PostgresConnectionOptions = {
   type: "postgres",
   entities: [
     VestingEntity,
-    Erc721TokenHistoryEntity,
-    Erc998TokenHistoryEntity,
-    Erc1155TokenHistoryEntity,
+    ContractHistoryEntity,
     UserEntity,
     ExchangeRulesEntity,
     StakingStakesEntity,

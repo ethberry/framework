@@ -6,13 +6,13 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
 import { formatPrice } from "../../../../utils/money";
-import { Erc721ItemTemplateBuyButton } from "../../../../components/buttons";
+import { TemplatePurchaseButton } from "../../../../components/buttons";
 
 interface IErc721TemplateItemProps {
   template: ITemplate;
 }
 
-export const TemplateItem: FC<IErc721TemplateItemProps> = props => {
+export const Erc721TemplateItem: FC<IErc721TemplateItemProps> = props => {
   const { template } = props;
 
   const classes = useStyles();
@@ -35,7 +35,7 @@ export const TemplateItem: FC<IErc721TemplateItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <Erc721ItemTemplateBuyButton template={template} />
+          <TemplatePurchaseButton template={template} />
         </Grid>
       </CardActions>
     </Card>

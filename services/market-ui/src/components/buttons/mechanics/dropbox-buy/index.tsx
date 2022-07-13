@@ -29,7 +29,7 @@ export const DropboxBuyButton: FC<IDropboxBuyButtonProps> = props => {
         data: { templateId: dropbox.id },
       })
       .then((sign: IServerSignature) => {
-        const contract = new Contract(process.env.MARKETPLACE_ADDR, ExchangeSol.abi, provider?.getSigner());
+        const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
         const nonce = utils.arrayify(sign.nonce);
         const commonDropboxPrice = utils.parseUnits(dropbox.price.components[0].amount, "wei");
 

@@ -44,14 +44,9 @@ async function main() {
   const skillInstance = await skillFactory.deploy("Skill", "SKILL", "http://localhost:3011/erc721/3/", rlNum);
   console.info(`ERC721_SKILL_ADDR=${skillInstance.address.toLowerCase()}`);
 
-  // Marketplace
-  const marketFactory = await ethers.getContractFactory("Marketplace");
-  const marketInstance = await marketFactory.deploy("Marketplace");
-  console.info(`MARKETPLACE_ADDR=${marketInstance.address.toLowerCase()}`);
-
   // Exchange
   const exchangeFactory = await ethers.getContractFactory("Exchange");
-  const exchangeInstance = await exchangeFactory.deploy();
+  const exchangeInstance = await exchangeFactory.deploy("Exchange");
   console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
 
   // Dropbox
@@ -74,7 +69,7 @@ async function main() {
 
   // ERC721 Collection Hero
   // Grant role to Marketplace in Hero
-  tx = await heroInstance.grantRole(MINTER_ROLE, marketInstance.address);
+  tx = await heroInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Hero - MINTER_ROLE granted to Marketplace721: ", tx.hash);
   // Grant role to VRFCoordinator in Hero
   tx = await heroInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
@@ -91,7 +86,7 @@ async function main() {
 
   // ERC721 Collection Item
   // Grant role to Marketplace in Item
-  tx = await itemInstance.grantRole(MINTER_ROLE, marketInstance.address);
+  tx = await itemInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Item - MINTER_ROLE granted to Marketplace721: ", tx.hash);
   // Grant role to VRFCoordinator in Item
   tx = await itemInstance.grantRole(MINTER_ROLE, vrfCoordinatorAddr);
@@ -108,7 +103,7 @@ async function main() {
 
   // ERC721 Collection Skill
   // Grant role to Marketplace in Skill
-  tx = await skillInstance.grantRole(MINTER_ROLE, marketInstance.address);
+  tx = await skillInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Skill - MINTER_ROLE granted to Marketplace721: ", tx.hash);
   // Grant role to ERC1155ERC721Craft in Skill
   tx = await skillInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -125,17 +120,17 @@ async function main() {
 
   // ERC721 Dropbox
   // Grant role to Marketplace in Dropbox
-  tx = await erc721DropInstance.grantRole(MINTER_ROLE, marketInstance.address);
+  tx = await erc721DropInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("ERC721Dropbox - MINTER_ROLE granted to Marketplace721: ", tx.hash);
 
   // ERC721 Airdrop
   // Grant role to Marketplace in Airdrop
-  tx = await airdropboxInstance.grantRole(MINTER_ROLE, marketInstance.address);
+  tx = await airdropboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("ERC721Airdrop - MINTER_ROLE granted to Marketplace721: ", tx.hash);
 
   // ERC1155 Resources
   // Grant role to Marketplace in Resources
-  tx = await resInstance.grantRole(MINTER_ROLE, marketInstance.address);
+  tx = await resInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
   console.info("Resources - MINTER_ROLE granted to Marketplace1155: ", tx.hash);
   // Grant role to Craft in Resources
   tx = await resInstance.grantRole(MINTER_ROLE, exchangeInstance.address);

@@ -15,7 +15,7 @@ import { erc998Routes } from "./erc998/routes";
 import { erc1155Routes } from "./erc1155/routes";
 import { mechanicsRoutes } from "./mechanics/routes";
 
-import { Marketplace } from "./marketplace";
+import { Marketplace } from "./mechanics/marketplace";
 import { MyAssets } from "./personal/assets";
 import { MyWallet } from "./connect-wallet";
 import { Page } from "./page";

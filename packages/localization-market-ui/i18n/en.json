@@ -347,31 +347,23 @@
       "popular": "Popular items"
     },
     "marketplace": {
-      "heroes": {
-        "title": "Heroes"
+      "erc998": {
+        "title": "ERC998"
       },
-      "heroesdb": {
-        "title": "Heroes Dropbox"
+      "dropbox": {
+        "title": "Dropbox"
       },
-      "items": {
-        "title": "Items"
+      "erc721": {
+        "title": "ERC721"
       },
-      "itemsdb": {
-        "title": "Items Dropbox"
-      },
-      "resources": {
-        "title": "Resources"
-      },
-      "skills": {
-        "title": "Items"
+      "erc1155": {
+        "title": "ERC1155"
       },
       "tabs": {
-        "heroes": "Heroes",
-        "heroesdb": "Heroes Dropbox",
-        "items": "Items",
-        "itemsdb": "Items Dropbox",
-        "resources": "Resources",
-        "skills": "Skills"
+        "erc998": "ERC998",
+        "dropbox": "Dropbox",
+        "erc721": "ERC721",
+        "erc1155": "ERC1155"
       },
       "title": "Primary market"
     },

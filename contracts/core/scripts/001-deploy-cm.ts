@@ -6,14 +6,9 @@ async function main() {
   const vestInstance = await vestFactory.deploy();
   console.info(`CONTRACT_MANAGER_ADDR=${vestInstance.address.toLowerCase()}`);
 
-  // Marketplace contract
-  const marketFactory = await ethers.getContractFactory("Marketplace");
-  const marketInstance = await marketFactory.deploy("Marketplace");
-  console.info(`MARKETPLACE_ADDR=${marketInstance.address.toLowerCase()}`);
-
   // Exchange
   const exchangeFactory = await ethers.getContractFactory("Exchange");
-  const exchangeInstance = await exchangeFactory.deploy();
+  const exchangeInstance = await exchangeFactory.deploy("Exchange");
   console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
 
   // Dropbox

@@ -10,7 +10,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { formatPrice } from "../../../utils/money";
 import { useStyles } from "./styles";
-import { Erc1155TokenSingleBuyButton } from "../../../components/buttons";
+import { TemplatePurchaseButton } from "../../../components/buttons";
 
 export const Erc1155Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
@@ -46,7 +46,7 @@ export const Erc1155Template: FC = () => {
               <FormattedMessage id="pages.erc1155-token.price" />
               {formatPrice(selected.price)}
             </Typography>
-            <Erc1155TokenSingleBuyButton template={selected} />
+            <TemplatePurchaseButton template={selected} />
           </Paper>
         </Grid>
       </Grid>

@@ -43,9 +43,9 @@ export class Erc721TemplateController {
       { id },
       {
         join: {
-          alias: "asset",
+          alias: "template",
           leftJoinAndSelect: {
-            price: "asset.price",
+            price: "template.price",
             components: "price.components",
           },
         },

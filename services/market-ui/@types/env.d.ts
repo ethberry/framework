@@ -7,7 +7,6 @@ declare global {
       BE_URL: string;
       GEMUNION_API_KEY: string;
       ACCOUNT: string;
-      MARKETPLACE_ADDR: string;
       AIRDROP_ADDR: string;
       EXCHANGE_ADDR: string;
       STAKING_ADDR: string;

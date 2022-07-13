@@ -1,6 +1,6 @@
-import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 
-import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { TemplateService } from "./template.service";
 import { TemplateEntity } from "./template.entity";
@@ -15,5 +15,23 @@ export class TemplateController {
   @UseInterceptors(PaginationInterceptor)
   public getNewTemplates(@Query() dto: TemplateNewDto): Promise<[Array<TemplateEntity>, number]> {
     return this.templateService.getNewTemplates(dto);
+  }
+
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
+    return this.templateService.findOne(
+      { id },
+      {
+        join: {
+          alias: "template",
+          leftJoinAndSelect: {
+            price: "template.price",
+            components: "price.components",
+            contract: "components.contract",
+          },
+        },
+      },
+    );
   }
 }

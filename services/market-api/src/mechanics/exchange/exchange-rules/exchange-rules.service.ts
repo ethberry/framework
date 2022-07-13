@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
-
 import { ExchangeStatus } from "@framework/types";
+
 import { ExchangeRulesEntity } from "./exchange-rules.entity";
 
 @Injectable()
