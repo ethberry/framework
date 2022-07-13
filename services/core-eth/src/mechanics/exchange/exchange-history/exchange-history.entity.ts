@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { ExchangeEventType, IExchangeHistory, TExchangeEventData } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { ExchangeRulesEntity } from "../exchange-rules/exchange-rules.entity";
+import { ExchangeEntity } from "../exchange.entity";
 
 @Entity({ schema: ns, name: "exchange_history" })
 export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchangeHistory {
@@ -27,6 +27,6 @@ export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchange
   public exchangeId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => ExchangeRulesEntity)
-  public exchange?: ExchangeRulesEntity;
+  @ManyToOne(_type => ExchangeEntity)
+  public exchange?: ExchangeEntity;
 }

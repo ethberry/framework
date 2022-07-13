@@ -70,8 +70,6 @@ import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-ve
 import { SeedVesting1563804010220 } from "./migrations/1563804010220-seed-vesting";
 import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-create-vesting-history";
 
-import { CreateMarketplaceHistory1563804020210 } from "./migrations/1563804020210-create-marketplace-history";
-
 import { CreateAirdropTable1563804040410 } from "./migrations/1653616447810-create-airdrop";
 import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-seed-airdrop-erc721";
 
@@ -188,7 +186,6 @@ const config: PostgresConnectionOptions = {
     CreateVesting1563804010210,
     SeedVesting1563804010220,
     CreateVestingHistory1563804010230,
-    CreateMarketplaceHistory1563804020210,
 
     CreateContractManagerHistory1652682493386,
     CreateAccessControl1653616447230,

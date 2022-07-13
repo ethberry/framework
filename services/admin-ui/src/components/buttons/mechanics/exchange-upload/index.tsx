@@ -8,7 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import { ExchangeStatus, IExchangeRule } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 export interface IExchangeButtonProps {
   rule: IExchangeRule;

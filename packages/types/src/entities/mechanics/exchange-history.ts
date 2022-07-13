@@ -3,30 +3,16 @@ import { IIdDateBase } from "@gemunion/types-collection";
 import { IExchangeRule } from "./exchange-rule";
 
 export enum ExchangeEventType {
-  RecipeCreated = "RecipeCreated",
-  RecipeUpdated = "RecipeUpdated",
-  RecipeCrafted = "RecipeCrafted",
+  Transaction = "Transaction",
 }
 
-export interface IRecipeCreated {
-  recipeId: string;
-  ids: Array<string>;
-  amounts: Array<string>;
-  collection: string;
-  tokenId: string;
-}
-
-export interface IRecipeUpdated {
-  recipeId: string;
-  active: boolean;
-}
-
-export interface IRecipeCrafted {
+export interface ITransaction {
   from: string;
-  recipeId: string;
+  items: Array<[number, string, string, string]>;
+  ingredients: Array<[number, string, string, string]>;
 }
 
-export type TExchangeEventData = IRecipeCreated | IRecipeUpdated | IRecipeCrafted;
+export type TExchangeEventData = ITransaction;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;

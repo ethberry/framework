@@ -53,7 +53,7 @@ export class Erc721TokenServiceEth {
       args: { from, to, tokenId },
     } = event;
 
-    // Wait until Token will be created by Marketplace Redeem or Airdrop Redeem or MintRandom events
+    // Wait until Token will be created by Exchange
     this.loggerService.log(
       `Erc721Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
       Erc721TokenServiceEth.name,

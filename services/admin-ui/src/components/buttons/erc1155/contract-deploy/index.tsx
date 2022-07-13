@@ -46,7 +46,11 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
         })
         .then((sign: IServerSignature) => {
           const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(process.env.CONTRACT_MANAGER_ADDR, ContractManagerSol.abi, provider?.getSigner());
+          const contract = new Contract(
+            process.env.CONTRACT_MANAGER_ADDR,
+            ContractManagerSol.abi,
+            provider?.getSigner(),
+          );
 
           return contract.deployERC1155Token(
             nonce,

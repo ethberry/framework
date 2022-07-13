@@ -20,9 +20,10 @@ export const formatPrice = (asset?: IAsset): string => {
 };
 
 export const getEthPrice = (template: ITemplate) => {
+  template.price?.components[0].amount;
   return template.price?.components.reduce((memo, current) => {
     if (current.tokenType === TokenType.NATIVE) {
-      memo.add(current.amount);
+      return memo.add(current.amount);
     }
     return memo;
   }, BigNumber.from(0));

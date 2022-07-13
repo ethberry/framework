@@ -9,14 +9,13 @@ export class CreateContractManager1652962207600 implements MigrationInterface {
         'CONTRACT_MANAGER',
         'AIRDROP',
         'DROPBOX',
+        'STAKING',
+        'VESTING',
         'EXCHANGE',
         'ERC20_TOKEN',
         'ERC721_TOKEN',
         'ERC998_TOKEN',
-        'ERC1155_TOKEN',
-        'MARKETPLACE',
-        'STAKING',
-        'VESTING'
+        'ERC1155_TOKEN'
       );
     `);
 

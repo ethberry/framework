@@ -20,7 +20,7 @@ import { ExchangeStatus, IExchangeRule, IExchangeSearchDto } from "@framework/ty
 
 import { ExchangeEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
-import { ExchangeUploadButton } from "../../../components/buttons";
+// import { ExchangeUploadButton } from "../../../components/buttons";
 import { emptyPrice } from "../../../components/inputs/empty-price";
 
 export const Exchange: FC = () => {
@@ -86,7 +86,7 @@ export const Exchange: FC = () => {
                 {recipe.item.components[0].token!.template!.contract?.title}
               </ListItemText>
               <ListItemSecondaryAction>
-                <ExchangeUploadButton rule={recipe} />
+                {/* <ExchangeUploadButton rule={recipe} />*/}
                 <IconButton onClick={handleEdit(recipe)}>
                   <Create />
                 </IconButton>

@@ -6,7 +6,7 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractType, ExchangeEventType } from "@framework/types";
 
 // system contract
-import ERC1155ERC1155CraftSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/ERC1155ERC1155Craft.sol/ERC1155ERC1155Craft.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 import { ExchangeLogService } from "./exchange-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
@@ -23,20 +23,18 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
         configService: ConfigService,
         contractManagerService: ContractManagerService,
       ): Promise<IModuleOptions> => {
-        const erc1155craftAddr = configService.get<string>("EXCHANGE_ADDR", "");
+        const exchangeAddr = configService.get<string>("EXCHANGE_ADDR", "");
         const fromBlock =
-          (await contractManagerService.getLastBlock(erc1155craftAddr)) ||
+          (await contractManagerService.getLastBlock(exchangeAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
         return {
           contract: {
-            contractType: ContractType.ERC1155_CRAFT,
-            contractAddress: [erc1155craftAddr],
-            contractInterface: ERC1155ERC1155CraftSol.abi,
+            contractType: ContractType.EXCHANGE,
+            contractAddress: [exchangeAddr],
+            contractInterface: ExchangeSol.abi,
             // prettier-ignore
             eventNames: [
-              ExchangeEventType.RecipeCrafted,
-              ExchangeEventType.RecipeCreated,
-              ExchangeEventType.RecipeUpdated,
+              ExchangeEventType.Transaction,
             ],
           },
           block: {

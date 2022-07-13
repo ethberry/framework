@@ -13,11 +13,13 @@ import { ContractHistoryModule } from "../../blockchain/contract-history/contrac
 import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
 import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
+import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module";
 
 @Module({
   imports: [
     ConfigModule,
     TokenModule,
+    BalanceModule,
     DropboxLogModule,
     AccessControlModule,
     ContractManagerModule,

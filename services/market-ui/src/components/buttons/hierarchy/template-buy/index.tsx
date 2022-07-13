@@ -39,11 +39,12 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           })
           .then((sign: IServerSignature) => {
             const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
+
             return contract.execute(
               utils.arrayify(sign.nonce),
               [
                 {
-                  tokenType: 3,
+                  tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
                   token: template.contract?.address,
                   tokenId: template.id,
                   amount: 1,

@@ -9,13 +9,13 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
-import { MintTokenDialog, IMintTokenDto } from "./edit";
+import { MintErc20TokenDialog, IMintErc20TokenDto } from "./edit";
 
 export interface IOzMintTokenMenuItemProps {
   address: string;
 }
 
-export const MintTokenMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
+export const MintErc20TokenMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
   const { address } = props;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
@@ -30,12 +30,12 @@ export const MintTokenMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
     setIsMintTokenDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IMintTokenDto) => {
+  const meta = useMetamask((values: IMintErc20TokenDto) => {
     const contract = new Contract(address, ERC20SimpleSol.abi, provider?.getSigner());
     return contract.mint(values.recipient, BigNumber.from(values.amount)) as Promise<void>;
   });
 
-  const handleMintTokenConfirmed = async (values: IMintTokenDto): Promise<void> => {
+  const handleMintTokenConfirmed = async (values: IMintErc20TokenDto): Promise<void> => {
     await meta(values).finally(() => {
       setIsMintTokenDialogOpen(false);
     });
@@ -51,7 +51,7 @@ export const MintTokenMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
           <FormattedMessage id="form.buttons.mintToken" />
         </Typography>
       </MenuItem>
-      <MintTokenDialog
+      <MintErc20TokenDialog
         onCancel={handleMintTokenCancel}
         onConfirm={handleMintTokenConfirmed}
         open={isMintTokenDialogOpen}

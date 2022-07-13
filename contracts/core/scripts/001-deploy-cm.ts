@@ -16,7 +16,7 @@ async function main() {
   const dropInstance = await dropFactory.deploy("Dropbox", "DBX", 100, "https://fw-json-api.gemunion.io/");
   console.info(`DROPBOX_ADDR=${dropInstance.address.toLowerCase()}`);
 
-  // ERC721Airdrop contract
+  // Airdrop contract
   const airdropFactory = await ethers.getContractFactory("Airdrop");
   const airdropInstance = await airdropFactory.deploy(
     "Airdrop",

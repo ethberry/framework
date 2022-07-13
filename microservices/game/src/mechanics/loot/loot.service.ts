@@ -38,7 +38,7 @@ export class LootService {
         name: "Exchange",
         version: "1.0.0",
         chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
-        verifyingContract: this.configService.get<string>("POST_BATTLE_LOOT_ADDR", ""),
+        verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
       },
       // Types
       {

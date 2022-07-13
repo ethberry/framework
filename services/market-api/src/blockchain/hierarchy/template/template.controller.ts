@@ -27,8 +27,9 @@ export class TemplateController {
           alias: "template",
           leftJoinAndSelect: {
             price: "template.price",
+            contract: "template.contract",
             components: "price.components",
-            contract: "components.contract",
+            components_contract: "components.contract",
           },
         },
       },

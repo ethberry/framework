@@ -23,6 +23,6 @@ export class ExchangeLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractManagerService.updateLastBlockByType(ContractType.ERC1155_CRAFT, lastBlock);
+    return this.contractManagerService.updateLastBlockByType(ContractType.EXCHANGE, lastBlock);
   }
 }

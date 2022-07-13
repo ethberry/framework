@@ -2,21 +2,21 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ExchangeRulesEntity } from "./exchange-rules.entity";
+import { ExchangeEntity } from "./exchange.entity";
 
 @Injectable()
-export class ExchangeRulesService {
+export class ExchangeService {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    @InjectRepository(ExchangeRulesEntity)
-    private readonly recipeEntityRepository: Repository<ExchangeRulesEntity>,
+    @InjectRepository(ExchangeEntity)
+    private readonly recipeEntityRepository: Repository<ExchangeEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<ExchangeRulesEntity>,
-    options?: FindOneOptions<ExchangeRulesEntity>,
-  ): Promise<ExchangeRulesEntity | null> {
+    where: FindOptionsWhere<ExchangeEntity>,
+    options?: FindOneOptions<ExchangeEntity>,
+  ): Promise<ExchangeEntity | null> {
     return this.recipeEntityRepository.findOne({ where, ...options });
   }
 }

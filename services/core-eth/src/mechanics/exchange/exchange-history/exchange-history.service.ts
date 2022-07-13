@@ -8,10 +8,10 @@ import { ExchangeHistoryEntity } from "./exchange-history.entity";
 export class ExchangeHistoryService {
   constructor(
     @InjectRepository(ExchangeHistoryEntity)
-    private readonly erc1155HistoryEntity: Repository<ExchangeHistoryEntity>,
+    private readonly exchangeHistoryEntity: Repository<ExchangeHistoryEntity>,
   ) {}
 
   public async create(dto: DeepPartial<ExchangeHistoryEntity>): Promise<ExchangeHistoryEntity> {
-    return this.erc1155HistoryEntity.create(dto).save();
+    return this.exchangeHistoryEntity.create(dto).save();
   }
 }

@@ -4,13 +4,7 @@ import { ns } from "@framework/constants";
 
 export class CreateExchangeHistory1653616448050 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.exchange_event_enum AS ENUM (
-        'RecipeCreated',
-        'RecipeUpdated',
-        'RecipeCrafted'
-      );
-    `);
+    await queryRunner.query(`CREATE TYPE ${ns}.exchange_event_enum AS ENUM ('Transaction');`);
 
     const table = new Table({
       name: `${ns}.exchange_history`,
