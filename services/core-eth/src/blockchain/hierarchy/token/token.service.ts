@@ -42,6 +42,7 @@ export class TokenService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     // queryBuilder.leftJoinAndSelect("token.erc998Dropbox", "dropbox");
     // queryBuilder.leftJoinAndSelect("dropbox.erc998Collection", "collectionDropbox");

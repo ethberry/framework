@@ -53,15 +53,17 @@ export class Erc721TokenServiceEth {
       args: { from, to, tokenId },
     } = event;
 
+    console.log("transfer!event", event);
+
     // Wait until Token will be created by Exchange
     this.loggerService.log(
       `Erc721Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
       Erc721TokenServiceEth.name,
     );
-    await delay(1618);
+    await delay(3141);
 
     const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
-
+    console.log("Found-tokenEntity", tokenEntity);
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
@@ -74,21 +76,19 @@ export class Erc721TokenServiceEth {
       //   ? (tokenEntity.erc721Template.instanceCount += 1)
       //   : (tokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
       tokenEntity.tokenStatus = TokenStatus.MINTED;
-    }
-
-    if (to === constants.AddressZero) {
+    } else if (to === constants.AddressZero) {
       // tokenEntity.erc721Template.instanceCount -= 1;
       tokenEntity.tokenStatus = TokenStatus.BURNED;
+    } else {
+      // change token's owner
+      tokenEntity.balance[0].account = to.toLowerCase();
     }
-
-    // change token's owner
-    tokenEntity.balance.account = to.toLowerCase();
 
     await tokenEntity.save();
 
     // need to save updates in nested entities too
     await tokenEntity.template.save();
-    await tokenEntity.balance.save();
+    await tokenEntity.balance[0].save();
     // tokenEntity.erc721Template
 
     //   ? await tokenEntity.erc721Template.save()

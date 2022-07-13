@@ -13,5 +13,5 @@ interface IERC721Random is IERC721Simple {
     address to,
     uint256 templateId,
     uint256 dropboxId
-  ) external;
+  ) external returns (uint256);
 }

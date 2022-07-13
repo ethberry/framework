@@ -81,21 +81,19 @@ export class AirdropServiceEth {
       //   ? (tokenEntity.erc721Template.instanceCount += 1)
       //   : (tokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
       tokenEntity.tokenStatus = TokenStatus.MINTED;
-    }
-
-    if (to === constants.AddressZero) {
+    } else if (to === constants.AddressZero) {
       // tokenEntity.erc721Template.instanceCount -= 1;
       tokenEntity.tokenStatus = TokenStatus.BURNED;
+    } else {
+      // change token's owner
+      tokenEntity.balance[0].account = to.toLowerCase();
     }
-
-    // change token's owner
-    tokenEntity.balance.account = to.toLowerCase();
 
     await tokenEntity.save();
 
     // need to save updates in nested entities too
     await tokenEntity.template.save();
-    await tokenEntity.balance.save();
+    await tokenEntity.balance[0].save();
 
     // tokenEntity.erc721Template
     //   ? await tokenEntity.erc721Template.save()

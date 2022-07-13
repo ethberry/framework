@@ -30,7 +30,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       .then((template: ITemplate) => {
         return api
           .fetchJson({
-            url: "/exchange/purchase/template",
+            url: "/marketplace/template",
             method: "POST",
             data: {
               templateId: template.id,

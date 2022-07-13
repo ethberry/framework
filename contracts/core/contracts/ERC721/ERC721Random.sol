@@ -57,8 +57,9 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     address to,
     uint256 templateId,
     uint256 dropboxId
-  ) external override onlyRole(MINTER_ROLE) {
+  ) external override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     require(templateId != 0, "ERC721Random: wrong type");
+    tokenId = _tokenIdTracker.current();
     _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
   }
 

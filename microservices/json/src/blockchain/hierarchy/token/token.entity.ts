@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
-import { IToken, TokenStatus } from "@framework/types";
+import { IBalance, IToken, TokenStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
@@ -29,4 +29,6 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   @JoinColumn()
   @ManyToOne(_type => TemplateEntity, template => template.tokens)
   public template: TemplateEntity;
+
+  public balance: IBalance;
 }

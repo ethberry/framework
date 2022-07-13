@@ -73,21 +73,19 @@ export class DropboxServiceEth {
       //   ? (TokenEntity.erc721Template.instanceCount += 1)
       //   : (TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
       TokenEntity.tokenStatus = TokenStatus.MINTED;
-    }
-
-    if (to === constants.AddressZero) {
+    } else if (to === constants.AddressZero) {
       // TokenEntity.erc721Template.instanceCount -= 1;
       TokenEntity.tokenStatus = TokenStatus.BURNED;
+    } else {
+      // change token's owner
+      TokenEntity.balance[0].account = to.toLowerCase();
     }
-
-    // change token's owner
-    TokenEntity.balance.account = to.toLowerCase();
 
     await TokenEntity.save();
 
     // need to save updates in nested entities too
     await TokenEntity.template.save();
-    await TokenEntity.balance.save();
+    await TokenEntity.balance[0].save();
 
     // TokenEntity.erc721Template
     //   ? await TokenEntity.erc721Template.save()

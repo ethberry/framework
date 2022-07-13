@@ -32,5 +32,5 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   public template: TemplateEntity;
 
   @OneToMany(_type => BalanceEntity, balance => balance.token)
-  public balance: BalanceEntity;
+  public balance: Array<BalanceEntity>;
 }

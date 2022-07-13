@@ -74,21 +74,19 @@ export class Erc998TokenServiceEth {
       //   ? (erc998TokenEntity.template.instanceCount += 1)
       //   : (erc998TokenEntity.erc998Dropbox.erc998Template.instanceCount += 1);
       erc998TokenEntity.tokenStatus = TokenStatus.MINTED;
-    }
-
-    if (to === constants.AddressZero) {
+    } else if (to === constants.AddressZero) {
       // erc998TokenEntity.erc998Template.instanceCount -= 1;
       erc998TokenEntity.tokenStatus = TokenStatus.BURNED;
+    } else {
+      // change token's owner
+      erc998TokenEntity.balance[0].account = to.toLowerCase();
     }
-
-    // change token's owner
-    erc998TokenEntity.balance.account = to.toLowerCase();
 
     await erc998TokenEntity.save();
 
     // need to save updates in nested entities too
     await erc998TokenEntity.template.save();
-    await erc998TokenEntity.balance.save();
+    await erc998TokenEntity.balance[0].save();
 
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
