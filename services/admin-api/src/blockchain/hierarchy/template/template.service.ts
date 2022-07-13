@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "type
 import { AssetType, ITemplateAutocompleteDto, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../asset/asset.service";
+import { AssetService } from "../../../mechanics/asset/asset.service";
 
 @Injectable()
 export class TemplateService {

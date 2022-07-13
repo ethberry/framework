@@ -14,9 +14,7 @@ import { LicenseModule } from "@gemunion/nest-js-module-license";
 
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
-import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
-import { SyncModule } from "./sync/sync.module";
 import { MetadataModule } from "./metadata/metadata.module";
 
 @Module({
@@ -62,9 +60,7 @@ import { MetadataModule } from "./metadata/metadata.module";
     }),
     RequestLoggerModule,
     HealthModule,
-    AuthModule,
     MetadataModule,
-    SyncModule,
   ],
   controllers: [AppController],
 })

@@ -79,6 +79,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "exit 0"
   },
-  "title": "EML",
+  "title": "JSON",
   "version": "0.0.1"
 }

@@ -6,7 +6,7 @@ import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { TokenType } from "@framework/types";
 
 import { IStakingCreateDto, IStakingItemCreateDto } from "../interfaces";
-import { AssetDto } from "../../../../blockchain/asset/dto";
+import { AssetDto } from "../../../asset/dto";
 
 export class StakingItemCreateDto implements IStakingItemCreateDto {
   @ApiProperty({

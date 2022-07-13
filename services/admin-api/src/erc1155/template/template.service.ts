@@ -9,7 +9,7 @@ import { TemplateEntity } from "../../blockchain/hierarchy/template/template.ent
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { ITemplateCreateDto } from "../../blockchain/hierarchy/template/interfaces";
 import { Erc1155TokenService } from "../token/token.service";
-import { AssetService } from "../../blockchain/asset/asset.service";
+import { AssetService } from "../../mechanics/asset/asset.service";
 
 @Injectable()
 export class Erc1155TemplateService extends TemplateService {

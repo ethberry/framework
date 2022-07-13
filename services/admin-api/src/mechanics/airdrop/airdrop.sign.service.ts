@@ -20,7 +20,7 @@ export class AirdropSignService {
     const signature = await this.signer._signTypedData(
       // Domain
       {
-        name: "ERC721Airdrop",
+        name: "Airdrop",
         version: "1.0.0",
         chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
         verifyingContract: this.configService.get<string>("AIRDROP_ADDR", ""),

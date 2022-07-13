@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from "typeorm";
 
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IAssetComponent, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { ContractEntity } from "../hierarchy/contract/contract.entity";
-import { TokenEntity } from "../hierarchy/token/token.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { AssetEntity } from "./asset.entity";
 
 @Entity({ schema: ns, name: "asset_component" })

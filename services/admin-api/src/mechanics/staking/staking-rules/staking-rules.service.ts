@@ -6,7 +6,7 @@ import { AssetType, IStakingSearchDto, StakingStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./staking-rules.entity";
 import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
-import { AssetService } from "../../../blockchain/asset/asset.service";
+import { AssetService } from "../../asset/asset.service";
 
 @Injectable()
 export class StakingRulesService {

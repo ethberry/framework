@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 
 import { ITemplateSearchDto, TokenType } from "@framework/types";
 
-import { AssetService } from "../../blockchain/asset/asset.service";
+import { AssetService } from "../../mechanics/asset/asset.service";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 

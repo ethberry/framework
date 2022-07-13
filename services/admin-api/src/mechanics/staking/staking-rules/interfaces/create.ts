@@ -1,5 +1,5 @@
 import { TokenType } from "@framework/types";
-import { IAssetDto } from "../../../../blockchain/asset/interfaces";
+import { IAssetDto } from "../../../asset/interfaces";
 
 export interface IStakingItemCreateDto {
   tokenType: TokenType;

@@ -5,7 +5,7 @@ import { DeepPartial, Repository } from "typeorm";
 import { AssetEntity } from "./asset.entity";
 import { IAssetDto } from "./interfaces";
 import { AssetComponentEntity } from "./asset-component.entity";
-import { TemplateService } from "../hierarchy/template/template.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenType } from "@framework/types";
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { IAssetDto } from "../../../blockchain/asset/interfaces";
+import { IAssetDto } from "../../asset/interfaces";
 
 export interface IDropboxCreateDto {
   title: string;

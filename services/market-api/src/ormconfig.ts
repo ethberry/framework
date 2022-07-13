@@ -16,8 +16,8 @@ import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity"
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
-import { AssetEntity } from "./blockchain/asset/asset.entity";
-import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
+import { AssetEntity } from "./mechanics/asset/asset.entity";
+import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

@@ -3,7 +3,7 @@ import { IsEthereumAddress, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IAirdropItem } from "../interfaces";
-import { AssetDto } from "../../../blockchain/asset/dto";
+import { AssetDto } from "../../asset/dto";
 
 export class AirdropItem implements IAirdropItem {
   @ApiProperty({

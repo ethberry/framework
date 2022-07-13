@@ -1,6 +1,6 @@
 import { TemplateStatus } from "@framework/types";
 
-import { IAssetDto } from "../../../asset/interfaces";
+import { IAssetDto } from "../../../../mechanics/asset/interfaces";
 
 export interface ITemplateUpdateDto {
   title: string;

@@ -10,7 +10,7 @@ import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { IAirdropItem } from "./interfaces";
 import { AirdropEntity } from "./airdrop.entity";
-import { AssetService } from "../../blockchain/asset/asset.service";
+import { AssetService } from "../asset/asset.service";
 import { AirdropSignService } from "./airdrop.sign.service";
 
 @Injectable()

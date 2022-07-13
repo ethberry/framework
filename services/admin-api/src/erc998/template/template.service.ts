@@ -6,7 +6,7 @@ import { ITemplateSearchDto, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { AssetService } from "../../blockchain/asset/asset.service";
+import { AssetService } from "../../mechanics/asset/asset.service";
 
 @Injectable()
 export class Erc998TemplateService extends TemplateService {

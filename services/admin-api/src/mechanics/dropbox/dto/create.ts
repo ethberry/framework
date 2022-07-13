@@ -3,7 +3,7 @@ import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-valid
 import { Type } from "class-transformer";
 
 import { IDropboxCreateDto } from "../interfaces";
-import { AssetDto } from "../../../blockchain/asset/dto";
+import { AssetDto } from "../../asset/dto";
 
 export class DropboxCreateDto implements IDropboxCreateDto {
   @ApiProperty()

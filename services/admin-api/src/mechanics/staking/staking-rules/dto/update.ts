@@ -3,7 +3,7 @@ import { IsBoolean, IsInt, IsJSON, IsNumber, IsOptional, IsString, Min, Validate
 import { Type } from "class-transformer";
 
 import { IStakingUpdateDto } from "../interfaces";
-import { AssetDto } from "../../../../blockchain/asset/dto";
+import { AssetDto } from "../../../asset/dto";
 
 export class StakingUpdateDto implements IStakingUpdateDto {
   @ApiPropertyOptional()

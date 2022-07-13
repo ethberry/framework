@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { ExchangeStatus, IExchangeRule } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { AssetEntity } from "../../../blockchain/asset/asset.entity";
+import { AssetEntity } from "../../asset/asset.entity";
 
 @Entity({ schema: ns, name: "exchange_rules" })
 export class ExchangeRulesEntity extends IdDateBaseEntity implements IExchangeRule {

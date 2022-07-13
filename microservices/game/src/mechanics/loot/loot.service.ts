@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { utils, Wallet } from "ethers";
 
@@ -20,15 +20,10 @@ export class LootService {
   ) {}
 
   public async signPostBattleLoot(userEntity: UserEntity): Promise<IServerSignature> {
+    const templateEntities = await this.templateService.findAll({});
+
     const nonce = utils.randomBytes(32);
-
-    const templateEntity = await this.templateService.findOne({});
-
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    const signature = await this.getSign(nonce, [templateEntity], userEntity);
+    const signature = await this.getSign(nonce, templateEntities, userEntity);
     return { nonce: utils.hexlify(nonce), signature };
   }
 

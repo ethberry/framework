@@ -6,7 +6,7 @@ import { AssetType, ExchangeStatus, IExchangeSearchDto } from "@framework/types"
 
 import { ExchangeRulesEntity } from "./exchange-rules.entity";
 import { IExchangeRuleCreateDto, IExchangeRuleUpdateDto } from "./interfaces";
-import { AssetService } from "../../../blockchain/asset/asset.service";
+import { AssetService } from "../../asset/asset.service";
 
 @Injectable()
 export class ExchangeRulesService {

@@ -3,7 +3,7 @@ import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { ISignTemplateDto } from "../interfaces";
-import { AssetDto } from "../../../blockchain/asset/dto";
+import { AssetDto } from "../../asset/dto";
 
 export class SignTemplateDto implements ISignTemplateDto {
   @ApiProperty({

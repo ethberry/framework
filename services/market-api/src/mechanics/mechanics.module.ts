@@ -6,7 +6,7 @@ import { ExchangeModule } from "./exchange/exchange.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
 import { MarketplaceModule } from "./marketplace/marketplace.module";
-import { LootModule } from "./loot/loot.module";
+import { LootModule } from "../../../../microservices/game/src/mechanics/loot/loot.module";
 
 @Module({
   imports: [AirdropModule, DropboxModule, ExchangeModule, StakingModule, VestingModule, MarketplaceModule, LootModule],

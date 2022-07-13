@@ -18,8 +18,8 @@ import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchang
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
-import { AssetEntity } from "./blockchain/asset/asset.entity";
-import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
+import { AssetEntity } from "./mechanics/asset/asset.entity";
+import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 
 // Check typeORM documentation for more information.

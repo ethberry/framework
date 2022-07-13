@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { DropboxStatus } from "@framework/types";
 
 import { IDropboxUpdateDto } from "../interfaces";
-import { AssetDto } from "../../../blockchain/asset/dto";
+import { AssetDto } from "../../asset/dto";
 
 export class DropboxUpdateDto implements IDropboxUpdateDto {
   @ApiPropertyOptional()

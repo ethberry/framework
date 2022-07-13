@@ -18,8 +18,8 @@ import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity"
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
-import { AssetEntity } from "./blockchain/asset/asset.entity";
-import { AssetComponentEntity } from "./blockchain/asset/asset-component.entity";
+import { AssetEntity } from "./mechanics/asset/asset.entity";
+import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";

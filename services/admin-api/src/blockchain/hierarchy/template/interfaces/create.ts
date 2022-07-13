@@ -1,4 +1,4 @@
-import { IAssetDto } from "../../../asset/interfaces";
+import { IAssetDto } from "../../../../mechanics/asset/interfaces";
 
 export interface ITemplateCreateDto {
   title: string;
