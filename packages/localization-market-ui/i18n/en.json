@@ -141,6 +141,8 @@
       "updatedAt": "Updated"
     },
     "placeholders": {
+      "maxPrice": "1",
+      "minPrice": "1",
       "amount": "100",
       "confirm": "******",
       "contractId": "Contract",
@@ -236,6 +238,7 @@
       "mechanics": {
         "airdrop": "Airdrop",
         "craft": "Craft",
+        "dropboxes": "Dropboxes",
         "leaderboard": "Staking Leaderboard",
         "reward": "Staking Reward",
         "stake": "Staking Stake",
@@ -260,6 +263,9 @@
         "title": "Sections"
       },
       "title": "Dashboard"
+    },
+    "dropboxes": {
+      "title": "Dropboxes"
     },
     "dropbox": {
       "price": "Price: {amount}",
@@ -341,7 +347,7 @@
       "login": "Login"
     },
     "landing": {
-      "erc1155-new": "New 1155 Tokens",
+      "erc1155-new": "New 1155 Templates",
       "erc721-new": "New 721 Templates",
       "erc998-new": "New 998 Templates",
       "popular": "Popular items"

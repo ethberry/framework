@@ -11,11 +11,11 @@ import { IRecipe } from "@framework/types";
 import ERC1155ERC998CraftSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
-interface IExchangeCraftButtonProps {
+interface ICraftButtonProps {
   rule: IRecipe;
 }
 
-export const ExchangeCraftButton: FC<IExchangeCraftButtonProps> = props => {
+export const CraftButton: FC<ICraftButtonProps> = props => {
   const { rule } = props;
   const [isApproved, setIsApproved] = useState(false);
 

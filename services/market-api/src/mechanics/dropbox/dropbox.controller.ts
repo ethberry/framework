@@ -8,19 +8,19 @@ import { DropboxEntity } from "./dropbox.entity";
 import { DropboxSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/erc998-dropboxes")
+@Controller("/dropboxes")
 export class DropboxController {
-  constructor(private readonly erc998DropboxService: DropboxService) {}
+  constructor(private readonly dropboxService: DropboxService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: DropboxSearchDto): Promise<[Array<DropboxEntity>, number]> {
-    return this.erc998DropboxService.search(dto);
+    return this.dropboxService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<DropboxEntity | null> {
-    return this.erc998DropboxService.findOne({ id });
+    return this.dropboxService.findOne({ id });
   }
 }

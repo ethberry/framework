@@ -14,15 +14,16 @@ export class DropboxService {
   ) {}
 
   public async search(dto: IDropboxSearchDto): Promise<[Array<DropboxEntity>, number]> {
-    const { query, dropboxStatus, skip, take, contractIds, templateContractIds, minPrice, maxPrice } = dto;
+    const { query, dropboxStatus, skip, take, contractIds, templateContractIds } = dto;
 
     const queryBuilder = this.erc998DropboxEntityRepository.createQueryBuilder("dropbox");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("dropbox.erc998Collection", "collection");
-    queryBuilder.leftJoinAndSelect("dropbox.erc998Template", "template");
-    queryBuilder.leftJoinAndSelect("dropbox.erc20Token", "erc20_token");
+    queryBuilder.leftJoinAndSelect("dropbox.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
+    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -42,13 +43,14 @@ export class DropboxService {
       }
     }
 
-    if (maxPrice) {
-      queryBuilder.andWhere("dropbox.price <= :maxPrice", { maxPrice });
-    }
-
-    if (minPrice) {
-      queryBuilder.andWhere("dropbox.price >= :minPrice", { minPrice });
-    }
+    // TODO restore
+    // if (maxPrice) {
+    //   queryBuilder.andWhere("dropbox.price <= :maxPrice", { maxPrice });
+    // }
+    //
+    // if (minPrice) {
+    //   queryBuilder.andWhere("dropbox.price >= :minPrice", { minPrice });
+    // }
 
     if (query) {
       queryBuilder.leftJoin(

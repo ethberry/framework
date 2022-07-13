@@ -13,9 +13,12 @@ import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
 import "./interfaces/IERC721Simple.sol";
+import "./interfaces/IERC721Graded.sol";
 
-contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
+contract ERC721Graded is IERC721Simple, IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
   using Counters for Counters.Counter;
+
+  event LevelUp(address from, uint256 tokenId, uint256 grade);
 
   bytes32 public constant TEMPLATE_ID = keccak256("templateId");
   bytes32 public constant GRADE = keccak256("grade");
@@ -41,6 +44,7 @@ contract ERC721Graded is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
   function levelUp(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     upsertRecordField(tokenId, GRADE, grade + 1);
+    emit LevelUp(_msgSender(), tokenId, grade + 1);
     return true;
   }
 

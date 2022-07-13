@@ -86,13 +86,10 @@ export class TemplateService {
     }
 
     return this.templateEntityRepository.find({
-      relations: ["tokens"],
-      loadRelationIds: true,
       where,
       select: {
         id: true,
         title: true,
-        tokens: true,
       },
     });
   }

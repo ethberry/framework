@@ -11,13 +11,17 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
-contract MetaDataManipulator is AccessControl, Pausable, EIP712 {
+import "../Asset/Asset.sol";
+import "../Asset/interfaces/IAsset.sol";
+import "../../ERC721/interfaces/IERC721Graded.sol";
+
+contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
   mapping(bytes32 => bool) private _expired;
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-  bytes32 private immutable PERMIT_SIGNATURE =
-    keccak256("EIP712(bytes32 nonce,address collection,uint256 tokenId,uint256 price)");
+  bytes32 internal immutable PERMIT_SIGNATURE =
+    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset item)", ASSET_SIGNATURE));
 
   constructor(string memory name) EIP712(name, "1.0.0") {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -27,8 +31,7 @@ contract MetaDataManipulator is AccessControl, Pausable, EIP712 {
 
   function levelUp(
     bytes32 nonce,
-    address collection,
-    uint256 tokenId,
+    Asset memory item,
     address signer,
     bytes calldata signature
   ) external payable {
@@ -37,19 +40,20 @@ contract MetaDataManipulator is AccessControl, Pausable, EIP712 {
     require(!_expired[nonce], "MetaDataManipulator: Expired signature");
     _expired[nonce] = true;
 
-    bool isVerified = _verify(signer, _hash(nonce, collection, tokenId, msg.value), signature);
+    address account = _msgSender();
+
+    bool isVerified = _verify(signer, _hash(nonce, account, item), signature);
     require(isVerified, "MetaDataManipulator: Invalid signature");
 
-    // TODO change metadata
+    IERC721Graded(item.token).levelUp(item.tokenId);
   }
 
   function _hash(
     bytes32 nonce,
-    address collection,
-    uint256 tokenId,
-    uint256 price
+    address account,
+    Asset memory item
   ) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, collection, tokenId, price)));
+    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStruct(item))));
   }
 
   function _verify(

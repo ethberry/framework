@@ -23,7 +23,7 @@ export const DropboxList: FC<IDropboxListProps> = props => {
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IDropbox, IDropboxSearchDto>({
-      baseUrl: "/erc721-dropboxes",
+      baseUrl: "/dropboxes",
       embedded,
       search: {
         query: "",
@@ -36,9 +36,9 @@ export const DropboxList: FC<IDropboxListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-dropboxes"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "dropboxes"]} isHidden={embedded} />
 
-      <PageHeader message="pages.erc721-dropboxes.title">
+      <PageHeader message="pages.dropboxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

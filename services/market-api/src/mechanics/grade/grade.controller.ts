@@ -7,7 +7,7 @@ import { Erc721GradeService } from "./grade.service";
 import { LevelUpDto } from "./dto";
 
 @Public()
-@Controller("/erc721-grade")
+@Controller("/grade")
 export class Erc721GradeController {
   constructor(private readonly erc721GradeService: Erc721GradeService) {}
 

@@ -16,7 +16,7 @@ import { IRecipe } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { ExchangeCraftButton } from "../../../../components/buttons";
+import { CraftButton } from "../../../../components/buttons";
 
 interface IRecipeItemProps {
   recipe: IRecipe;
@@ -51,7 +51,7 @@ export const Recipe: FC<IRecipeItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <ExchangeCraftButton rule={recipe} />
+          <CraftButton rule={recipe} />
         </Grid>
       </CardActions>
     </Card>

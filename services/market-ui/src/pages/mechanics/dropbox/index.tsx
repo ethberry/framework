@@ -42,7 +42,7 @@ export const Dropbox: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc721-dropbox.price" values={{ amount: formatPrice(selected.price) }} />
+              <FormattedMessage id="pages.dropbox.price" values={{ amount: formatPrice(selected.price) }} />
             </Typography>
             <DropboxBuyButton dropbox={selected} />
           </Paper>

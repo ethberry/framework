@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange } from "../../../typechain-types";
+import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, Dropbox } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -22,6 +22,7 @@ describe("Exchange", function () {
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
   let erc1155Instance: ERC1155Simple;
+  let dropboxInstance: Dropbox;
   let network: Network;
 
   beforeEach(async function () {
@@ -41,6 +42,10 @@ describe("Exchange", function () {
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
     erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
     await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
+
+    const dropboxFactory = await ethers.getContractFactory("Dropbox");
+    dropboxInstance = await dropboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+    await dropboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     network = await ethers.provider.getNetwork();
 
@@ -291,12 +296,12 @@ describe("Exchange", function () {
 
         await expect(tx1)
           .to.changeEtherBalance(this.receiver, -amount)
-          .to.emit(exchangeInstance, "RedeemCommon")
-          .withArgs(
-            this.receiver.address,
-            [2, erc721Instance.address, tokenId, 1],
-            [0, ethers.constants.AddressZero, tokenId, amount],
-          )
+          .to.emit(exchangeInstance, "Transaction")
+          // .withArgs(
+          //   this.receiver.address,
+          //   [[2, erc721Instance.address, tokenId, 1]],
+          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          // )
           .to.emit(erc721Instance, "Transfer")
           .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
       });
@@ -451,7 +456,7 @@ describe("Exchange", function () {
         );
 
         await expect(tx1)
-          .to.emit(exchangeInstance, "RedeemCommon")
+          .to.emit(exchangeInstance, "Transaction")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721Instance.address, tokenId, 1]],
@@ -918,7 +923,7 @@ describe("Exchange", function () {
 
         await expect(tx1)
           .to.changeEtherBalance(this.receiver, -amount)
-          .to.emit(exchangeInstance, "RedeemCommon")
+          .to.emit(exchangeInstance, "Transaction")
           // .withArgs(
           //   this.receiver.address,
           //   [[4, erc1155Instance.address, tokenId, amount]],
@@ -1078,7 +1083,7 @@ describe("Exchange", function () {
         );
 
         await expect(tx1)
-          .to.emit(exchangeInstance, "RedeemCommon")
+          .to.emit(exchangeInstance, "Transaction")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc1155Instance.address, tokenId, amount]],
@@ -1467,6 +1472,92 @@ describe("Exchange", function () {
         );
 
         await expect(tx1).to.be.revertedWith(`ERC1155: insufficient balance for transfer`);
+      });
+    });
+
+    describe("NATIVE > DROPBOX", function () {
+      it("should execute", async function () {
+        const signature = await this.owner._signTypedData(
+          // Domain
+          {
+            name: tokenName,
+            version: "1.0.0",
+            chainId: network.chainId,
+            verifyingContract: exchangeInstance.address,
+          },
+          // Types
+          {
+            EIP712: [
+              { name: "nonce", type: "bytes32" },
+              { name: "account", type: "address" },
+              { name: "items", type: "Asset[]" },
+              { name: "ingredients", type: "Asset[]" },
+            ],
+            Asset: [
+              { name: "tokenType", type: "uint256" },
+              { name: "token", type: "address" },
+              { name: "tokenId", type: "uint256" },
+              { name: "amount", type: "uint256" },
+            ],
+          },
+          // Value
+          {
+            nonce,
+            account: this.receiver.address,
+            items: [
+              {
+                tokenType: 2,
+                token: dropboxInstance.address,
+                tokenId,
+                amount: 1,
+              },
+            ],
+            ingredients: [
+              {
+                tokenType: 0,
+                token: ethers.constants.AddressZero,
+                tokenId,
+                amount,
+              },
+            ],
+          },
+        );
+
+        const tx1 = exchangeInstance.connect(this.receiver).execute(
+          nonce,
+          [
+            {
+              tokenType: 2,
+              token: dropboxInstance.address,
+              tokenId,
+              amount: 1,
+            },
+          ],
+          [
+            {
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          ],
+          this.owner.address,
+          signature,
+          {
+            value: amount,
+          },
+        );
+
+        await expect(tx1)
+          .to.changeEtherBalance(this.receiver, -amount)
+          .to.emit(exchangeInstance, "Transaction")
+          // .withArgs(
+          //   this.receiver.address,
+          //   [[2, erc721Instance.address, tokenId, 1]],
+          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          // )
+          .to.emit(dropboxInstance, "Transfer")
+          .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
       });
     });
 
