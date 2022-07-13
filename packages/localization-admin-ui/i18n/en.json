@@ -485,7 +485,7 @@
   "snackbar": {
     "active": "Successfully activated",
     "approved": "Successfully approved",
-    "collectionNotFound": "Collection not found",
+    "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",
     "deleted": "Successfully deleted",
@@ -516,6 +516,7 @@
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
+    "templateNotFound": "Template not found",
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected"
   }

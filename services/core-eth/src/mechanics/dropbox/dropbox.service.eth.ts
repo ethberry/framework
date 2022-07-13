@@ -117,17 +117,17 @@ export class DropboxServiceEth {
       args: { royaltyNumerator },
     } = event;
 
-    const erc721CollectionEntity = await this.contractService.findOne({
+    const contractEntity = await this.contractService.findOne({
       address: context.address.toLowerCase(),
     });
 
-    if (!erc721CollectionEntity) {
-      throw new NotFoundException("collectionNotFound");
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
-    erc721CollectionEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
+    contractEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
 
-    await erc721CollectionEntity.save();
+    await contractEntity.save();
 
     await this.updateHistory(event, context);
   }
@@ -141,17 +141,17 @@ export class DropboxServiceEth {
       args: { from, tokenId, templateId },
     } = event;
 
-    const erc721TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
+    const templateEntity = await this.templateService.findOne({ id: ~~templateId });
 
-    if (!erc721TemplateEntity) {
+    if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
     const TokenEntity = await this.tokenService.create({
       tokenId,
-      attributes: erc721TemplateEntity.attributes,
-      royalty: erc721TemplateEntity.contract.royalty,
-      template: erc721TemplateEntity,
+      attributes: templateEntity.attributes,
+      royalty: templateEntity.contract.royalty,
+      template: templateEntity,
     });
 
     await this.balanceService.create({
@@ -168,10 +168,10 @@ export class DropboxServiceEth {
       args: { collection, tokenId },
     } = event;
 
-    const erc721CollectionEntity = await this.contractService.findOne({ address: collection.toLowerCase() });
+    const contractEntity = await this.contractService.findOne({ address: collection.toLowerCase() });
 
-    if (!erc721CollectionEntity) {
-      throw new NotFoundException("collectionNotFound");
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
     const TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());

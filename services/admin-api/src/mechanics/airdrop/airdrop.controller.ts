@@ -32,7 +32,7 @@ export class AirdropController {
   }
 
   @Post("/")
-  public create(@Body() dto: AirdropItem): Promise<Array<AirdropEntity | null>> {
+  public create(@Body() dto: AirdropItem): Promise<AirdropEntity> {
     return this.airdropService.create(dto);
   }
 

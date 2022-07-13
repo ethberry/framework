@@ -29,21 +29,31 @@ export class AssetService {
     // patch NATIVE and ERC20 tokens
     for (const component of dto.components) {
       if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
-        const template = await this.templateService.findOne(
+        const templateEntity = await this.templateService.findOne(
           { contractId: component.contractId },
           { relations: { tokens: true } },
         );
-        if (!template) {
+        if (!templateEntity) {
           throw new NotFoundException("templateNotFound");
         }
-        component.tokenId = template.tokens[0].id;
-      }
-      if (component.tokenType === TokenType.ERC1155) {
-        const template = await this.templateService.findOne({ id: component.tokenId }, { relations: { tokens: true } });
-        if (!template) {
+        component.tokenId = templateEntity.tokens[0].id;
+      } else if (component.tokenType === TokenType.ERC721 || component.tokenType === TokenType.ERC998) {
+        const templateEntity = await this.templateService.findOne(
+          { id: component.tokenId },
+          { relations: { tokens: true } },
+        );
+        if (!templateEntity) {
           throw new NotFoundException("templateNotFound");
         }
-        component.tokenId = template.tokens[0].id;
+      } else if (component.tokenType === TokenType.ERC1155) {
+        const templateEntity = await this.templateService.findOne(
+          { id: component.tokenId },
+          { relations: { tokens: true } },
+        );
+        if (!templateEntity) {
+          throw new NotFoundException("templateNotFound");
+        }
+        component.tokenId = templateEntity.tokens[0].id;
       }
     }
 

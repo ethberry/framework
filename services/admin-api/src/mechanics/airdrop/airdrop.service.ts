@@ -2,16 +2,16 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { Wallet } from "ethers";
+import { utils, Wallet } from "ethers";
 
-import { AirdropStatus, AssetType, IAirdropSearchDto } from "@framework/types";
-import { prepareEip712 } from "@gemunion/butils";
+import { AirdropStatus, AssetType, IAirdropSearchDto, TokenType } from "@framework/types";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { IAirdropItem } from "./interfaces";
 import { AirdropEntity } from "./airdrop.entity";
 import { AssetService } from "../asset/asset.service";
-import { AirdropSignService } from "./airdrop.sign.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
 @Injectable()
 export class AirdropService {
@@ -24,7 +24,7 @@ export class AirdropService {
     @InjectRepository(AirdropEntity)
     private readonly airdropEntityRepository: Repository<AirdropEntity>,
     protected readonly assetService: AssetService,
-    protected readonly airdropSignService: AirdropSignService,
+    protected readonly templateService: TemplateService,
   ) {}
 
   public async search(dto: Partial<IAirdropSearchDto>): Promise<[Array<AirdropEntity>, number]> {
@@ -61,49 +61,30 @@ export class AirdropService {
     return this.airdropEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IAirdropItem): Promise<Array<AirdropEntity | null>> {
-    // const { list } = dto;
-    const list = [dto];
+  public async create(dto: IAirdropItem): Promise<AirdropEntity> {
+    const { account } = dto;
 
-    const results = await Promise.allSettled(
-      list.map(async ({ account, item }) => {
-        const assetEntity = await this.assetService.create({
-          assetType: AssetType.AIRDROP,
-          externalId: "0",
-          components: [],
-        });
-
-        await this.assetService.update(assetEntity, item);
-        Object.assign(item, assetEntity);
-
-        let signature = "0x";
-        const airdropEntity = await this.airdropEntityRepository.create({ account, item, signature }).save();
-
-        signature = await this.airdropSignService.airdropSign({
-          account,
-          airdropId: airdropEntity.id,
-          templateId: airdropEntity.item.id,
-        });
-        Object.assign(airdropEntity, { signature });
-        return airdropEntity.save();
-      }),
-    );
-
-    return results.map(results => {
-      if (results.status === "fulfilled") {
-        return results.value;
-      } else {
-        this.loggerService.error(results.reason);
-        return null;
-      }
+    const assetEntity = await this.assetService.create({
+      assetType: AssetType.AIRDROP,
+      externalId: "0",
+      components: [],
     });
+
+    const airdropEntity = await this.airdropEntityRepository
+      .create({
+        account,
+        item: assetEntity,
+        signature: "0x",
+        nonce: "",
+      })
+      .save();
+
+    return this.update({ id: airdropEntity.id }, dto);
   }
 
-  public async delete(where: FindOptionsWhere<AirdropEntity>): Promise<DeleteResult> {
-    return this.airdropEntityRepository.delete(where);
-  }
+  public async update(where: FindOptionsWhere<AirdropEntity>, dto: IAirdropItem): Promise<AirdropEntity> {
+    const { account, item } = dto;
 
-  public async update(where: FindOptionsWhere<AirdropEntity>, dto: Partial<IAirdropItem>): Promise<AirdropEntity> {
     const airdropEntity = await this.findOne(where);
 
     if (!airdropEntity) {
@@ -115,26 +96,67 @@ export class AirdropService {
       throw new NotFoundException("airdropRedeemed");
     }
 
-    const signature = await this.getSign({
-      account: dto.account,
-      asset: dto.item,
-      airdropId: airdropEntity.id,
-    });
-    Object.assign(airdropEntity, { ...dto, signature });
+    await this.assetService.update(airdropEntity.item, item);
+
+    const templateEntity = await this.templateService.findOne(
+      { id: item.components[0].tokenId },
+      { relations: { contract: true } },
+    );
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
+
+    const nonce = utils.randomBytes(32);
+    const signature = await this.airdropSign(nonce, account, templateEntity, item.components[0].amount);
+
+    Object.assign(airdropEntity, { signature, nonce: utils.hexlify(nonce) });
 
     return airdropEntity.save();
   }
 
-  public async getSign(data: Record<string, any>): Promise<string> {
+  public async delete(where: FindOptionsWhere<AirdropEntity>): Promise<DeleteResult> {
+    return this.airdropEntityRepository.delete(where);
+  }
+
+  public async airdropSign(
+    nonce: Uint8Array,
+    account: string,
+    templateEntity: TemplateEntity,
+    amount: string,
+  ): Promise<string> {
     return this.signer._signTypedData(
+      // Domain
       {
         name: "Airdrop",
         version: "1.0.0",
         chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
         verifyingContract: this.configService.get<string>("AIRDROP_ADDR", ""),
       },
-      prepareEip712(data), // TODO fix asset
-      data,
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "account", type: "address" },
+          { name: "item", type: "Asset" },
+        ],
+        Asset: [
+          { name: "tokenType", type: "uint256" },
+          { name: "token", type: "address" },
+          { name: "tokenId", type: "uint256" },
+          { name: "amount", type: "uint256" },
+        ],
+      },
+      // Value
+      {
+        nonce,
+        account,
+        item: {
+          tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
+          token: templateEntity.contract.address,
+          tokenId: templateEntity.id,
+          amount,
+        },
+      },
     );
   }
 }

@@ -43,6 +43,10 @@ export class CreateAirdropTable1563804040410 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "nonce",
+          type: "varchar",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

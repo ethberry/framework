@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { IAirdrop, TokenType } from "@framework/types";
 
-import { validationSchema, validationSchema2 } from "./validation";
+import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../components/inputs/price";
 
 export interface IAirdropEditDialogProps {
@@ -24,28 +24,15 @@ export const AirdropEditDialog: FC<IAirdropEditDialogProps> = props => {
     account,
   };
 
-  if (id) {
-    return (
-      <FormDialog
-        initialValues={fixedValues}
-        validationSchema={validationSchema}
-        message="dialogs.edit"
-        {...rest}
-        data-testid="AirdropEditDialog"
-      >
-        <TextInput name="account" />
-        <PriceInput prefix="item" />
-      </FormDialog>
-    );
-  }
+  const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
     <FormDialog
       initialValues={fixedValues}
-      validationSchema={validationSchema2}
-      message="dialogs.create"
+      validationSchema={validationSchema}
+      message={message}
       {...rest}
-      data-testid="AirdropAddDialog"
+      data-testid="AirdropEditDialog"
     >
       <TextInput name="account" />
       <PriceInput prefix="item" name="Item" disabledOptions={[TokenType.NATIVE]} />

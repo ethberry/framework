@@ -123,7 +123,7 @@ export class Erc998TokenServiceEth {
     });
 
     if (!erc998CollectionEntity) {
-      throw new NotFoundException("collectionNotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     erc998CollectionEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();

@@ -26,4 +26,7 @@ export class AirdropEntity extends IdDateBaseEntity implements IAirdrop {
 
   @Column({ type: "varchar" })
   public signature: string;
+
+  @Column({ type: "varchar" })
+  public nonce: string;
 }

@@ -7,18 +7,10 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
-    const erc721MarketplaceAddr = process.env.MARKETPLACE_ADDR || wallet;
-    const erc721AirdropAddr = process.env.ERC721_AIRDROP_ADDR || wallet;
-    const erc721DropboxAddr = process.env.ERC721_DROPBOX_ADDR || wallet;
-    const erc721CraftAddr = process.env.ERC721_CRAFT_ADDR || wallet;
-    const erc1155Marketplace = process.env.MARKETPLACE_ADDR || wallet;
-    const erc1155CraftAddr = process.env.ERC1155_CRAFT_ADDR || wallet;
-    const erc721MarketplaceAddr = process.env.MARKETPLACE_ADDR || wallet;
-    const erc721AirdropAddr = process.env.AIRDROP_ADDR || wallet;
-    const erc721DropboxAddr = process.env.DROPBOX_ADDR || wallet;
-    const erc721CraftAddr = process.env.EXCHANGE_ADDR || wallet;
-    const erc1155Marketplace = process.env.MARKETPLACE_ADDR || wallet;
-    const erc1155CraftAddr = process.env.EXCHANGE_ADDR || wallet;
+    const marketplaceAddr = process.env.MARKETPLACE_ADDR || wallet;
+    const airdropAddr = process.env.AIRDROP_ADDR || wallet;
+    const dropboxAddr = process.env.DROPBOX_ADDR || wallet;
+    const exchangeAddr = process.env.EXCHANGE_ADDR || wallet;
     const stakingAddr = process.env.STAKING_ADDR || wallet;
 
     const lastBlock = process.env.STARTING_BLOCK || 0;
@@ -37,42 +29,30 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-       '${erc721MarketplaceAddr}',
+       '${marketplaceAddr}',
         'MARKETPLACE',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc721AirdropAddr}',
-        'ERC721_AIRDROP',
+        '${airdropAddr}',
+        'AIRDROP',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-       '${erc721DropboxAddr}',
-        'ERC721_DROPBOX',
+       '${dropboxAddr}',
+        'DROPBOX',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${erc721CraftAddr}',
-        'ERC721_CRAFT',
+        '${exchangeAddr}',
+        'EXCHANGE',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-       '${erc1155Marketplace}',
-        'MARKETPLACE',
-        '${lastBlock}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${erc1155CraftAddr}',
-        'ERC1155_CRAFT',
-        '${lastBlock}',
-        '${currentDateTime}',
-        '${currentDateTime}'
-       ), (
         '${stakingAddr}',
         'STAKING',
         '${lastBlock}',

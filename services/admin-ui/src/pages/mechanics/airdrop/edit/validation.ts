@@ -2,11 +2,9 @@ import * as Yup from "yup";
 
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
 
-export const validationSchema = Yup.object().shape({
-  owner: addressValidationSchema,
-  templateIds: Yup.number().required("form.validations.valueMissing"),
-});
+import { assetValidationSchema } from "../../../../components/inputs/price-schema";
 
-export const validationSchema2 = Yup.object().shape({
-  list: Yup.array().of(validationSchema),
+export const validationSchema = Yup.object().shape({
+  account: addressValidationSchema,
+  item: assetValidationSchema,
 });

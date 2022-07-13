@@ -61,45 +61,45 @@ export class AirdropServiceEth {
     );
     await delay(1618);
 
-    let erc721TokenEntity;
+    let tokenEntity;
     if (context.address.toLowerCase() === this.airdropAddr) {
       const airdropEntity = await this.airdropService.findOne({ id: ~~tokenId }, { relations: { item: true } });
-      erc721TokenEntity = airdropEntity?.item.components[0].token;
+      tokenEntity = airdropEntity?.item.components[0].token;
     } else {
-      erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+      tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
     }
 
-    if (!erc721TokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, tokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc721TokenEntity.template.amount += 1;
-      // erc721TokenEntity.erc721Template
-      //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
-      //   : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
-      erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
+      tokenEntity.template.amount += 1;
+      // tokenEntity.erc721Template
+      //   ? (tokenEntity.erc721Template.instanceCount += 1)
+      //   : (tokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
+      tokenEntity.tokenStatus = TokenStatus.MINTED;
     }
 
     if (to === constants.AddressZero) {
-      // erc721TokenEntity.erc721Template.instanceCount -= 1;
-      erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
+      // tokenEntity.erc721Template.instanceCount -= 1;
+      tokenEntity.tokenStatus = TokenStatus.BURNED;
     }
 
     // change token's owner
-    erc721TokenEntity.balance.account = to.toLowerCase();
+    tokenEntity.balance.account = to.toLowerCase();
 
-    await erc721TokenEntity.save();
+    await tokenEntity.save();
 
     // need to save updates in nested entities too
-    await erc721TokenEntity.template.save();
-    await erc721TokenEntity.balance.save();
+    await tokenEntity.template.save();
+    await tokenEntity.balance.save();
 
-    // erc721TokenEntity.erc721Template
-    //   ? await erc721TokenEntity.erc721Template.save()
-    //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
+    // tokenEntity.erc721Template
+    //   ? await tokenEntity.erc721Template.save()
+    //   : await tokenEntity.erc721Dropbox.erc721Template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -107,13 +107,13 @@ export class AirdropServiceEth {
       args: { tokenId },
     } = event;
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
-    if (!erc721TokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, tokenEntity.id);
   }
 
   public async approvalAirdrop(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -123,13 +123,13 @@ export class AirdropServiceEth {
 
     const airdropEntity = await this.airdropService.findOne({ id: ~~tokenId }, { relations: { item: true } });
 
-    const erc721TokenEntity = airdropEntity?.item.components[0].token;
+    const tokenEntity = airdropEntity?.item.components[0].token;
 
-    if (!erc721TokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, tokenEntity.id);
   }
 
   public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
@@ -141,17 +141,17 @@ export class AirdropServiceEth {
       args: { royaltyNumerator },
     } = event;
 
-    const erc721CollectionEntity = await this.contractService.findOne({
+    const contractEntity = await this.contractService.findOne({
       address: context.address.toLowerCase(),
     });
 
-    if (!erc721CollectionEntity) {
-      throw new NotFoundException("collectionNotFound");
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
-    erc721CollectionEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
+    contractEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
 
-    await erc721CollectionEntity.save();
+    await contractEntity.save();
 
     await this.updateHistory(event, context);
   }
@@ -165,23 +165,23 @@ export class AirdropServiceEth {
       args: { from, tokenId, templateId },
     } = event;
 
-    const erc721TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
+    const templateEntity = await this.templateService.findOne({ id: ~~templateId });
 
-    if (!erc721TemplateEntity) {
+    if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc721TokenEntity = await this.tokenService.create({
+    const tokenEntity = await this.tokenService.create({
       tokenId,
-      attributes: erc721TemplateEntity.attributes,
-      royalty: erc721TemplateEntity.contract.royalty,
-      template: erc721TemplateEntity,
+      attributes: templateEntity.attributes,
+      royalty: templateEntity.contract.royalty,
+      template: templateEntity,
     });
 
     await this.balanceService.create({
       account: from.toLowerCase(),
       amount: "1",
-      tokenId: erc721TokenEntity.id,
+      tokenId: tokenEntity.id,
     });
 
     // Update Airdrop
@@ -190,11 +190,11 @@ export class AirdropServiceEth {
       {
         airdropStatus: AirdropStatus.REDEEMED,
         // TODO fix me
-        // erc721Token: erc721TokenEntity
+        // erc721Token: tokenEntity
       },
     );
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, tokenEntity.id);
   }
 
   public async unpackAirdrop(event: ILogEvent<IAirdropUnpack>, context: Log): Promise<void> {
@@ -202,16 +202,16 @@ export class AirdropServiceEth {
       args: { tokenId, airdropId },
     } = event;
 
-    const erc721TokenEntity = await this.tokenService.findOne({ id: ~~airdropId });
+    const tokenEntity = await this.tokenService.findOne({ id: ~~airdropId });
 
-    if (!erc721TokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
     // Update Airdrop status
     await this.airdropService.update({ id: ~~tokenId }, { airdropStatus: AirdropStatus.UNPACKED });
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, tokenEntity.id);
   }
 
   private async updateHistory(event: ILogEvent<TContractEventData>, context: Log, erc721TokenId?: number) {

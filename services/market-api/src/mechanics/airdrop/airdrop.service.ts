@@ -22,10 +22,10 @@ export class AirdropService {
 
     queryBuilder.andWhere("airdrop.account = :account", { account });
 
-    queryBuilder.leftJoin("airdrop.erc998Token", "token");
+    queryBuilder.leftJoin("airdrop.token", "token");
     queryBuilder.addSelect(["token.id", "token.tokenId"]);
 
-    queryBuilder.leftJoin("airdrop.erc998Template", "template");
+    queryBuilder.leftJoin("airdrop.template", "template");
     queryBuilder.addSelect(["template.title", "template.imageUrl"]);
 
     if (airdropStatus) {

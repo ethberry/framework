@@ -1,5 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
+import { utils } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -79,6 +80,7 @@ export class SeedAirdropErc721At1563804040420 implements MigrationInterface {
         item_id,
         airdrop_status,
         signature,
+        nonce,
         created_at,
         updated_at
       ) VALUES (
@@ -86,6 +88,7 @@ export class SeedAirdropErc721At1563804040420 implements MigrationInterface {
         50101,
         'NEW',
         '${signDbItem1}',
+        '${utils.hexlify(utils.randomBytes(32))}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -93,6 +96,7 @@ export class SeedAirdropErc721At1563804040420 implements MigrationInterface {
         50102,
         'NEW',
         '${signDbItem2}',
+        '${utils.hexlify(utils.randomBytes(32))}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -100,6 +104,7 @@ export class SeedAirdropErc721At1563804040420 implements MigrationInterface {
         50103,
         'UNPACKED',
         '${signDbItem3}',
+        '${utils.hexlify(utils.randomBytes(32))}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -107,6 +112,7 @@ export class SeedAirdropErc721At1563804040420 implements MigrationInterface {
         50104,
         'REDEEMED',
         '${signDbItem4}',
+        '${utils.hexlify(utils.randomBytes(32))}',
         '${currentDateTime}',
         '${currentDateTime}'
       )
