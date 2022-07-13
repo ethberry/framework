@@ -20,7 +20,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const { template } = props;
 
   const api = useApi();
-  const { provider } = useWeb3React();
+  const { provider, account } = useWeb3React();
 
   const handleBuy = useMetamask(() => {
     return api
@@ -32,7 +32,10 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           .fetchJson({
             url: "/exchange/purchase/template",
             method: "POST",
-            data: { templateId: template.id },
+            data: {
+              templateId: template.id,
+              account,
+            },
           })
           .then((sign: IServerSignature) => {
             const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, Min } from "class-validator";
+import { IsEthereumAddress, IsInt, IsString, Min } from "class-validator";
 
 import { ISignDropboxDto } from "../interfaces";
 
@@ -10,4 +10,9 @@ export class SignDropboxDto implements ISignDropboxDto {
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public dropboxId: number;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  public account: string;
 }

@@ -9,7 +9,6 @@ import { ITemplate, TokenType } from "@framework/types";
 import { ISignDropboxDto, ISignTemplateDto } from "./interfaces";
 import { DropboxService } from "../../dropbox/dropbox.service";
 import { TemplateService } from "../../../blockchain/hierarchy/template/template.service";
-import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class MarketplaceService {
@@ -21,8 +20,8 @@ export class MarketplaceService {
     private readonly dropboxService: DropboxService,
   ) {}
 
-  public async signTemplate(dto: ISignTemplateDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { templateId } = dto;
+  public async signTemplate(dto: ISignTemplateDto): Promise<IServerSignature> {
+    const { templateId, account } = dto;
     const templateEntity = await this.templateService.findOne(
       { id: templateId },
       {
@@ -49,12 +48,12 @@ export class MarketplaceService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSign(nonce, templateEntity, userEntity);
+    const signature = await this.getSign(nonce, templateEntity, account);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async signDropbox(dto: ISignDropboxDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { dropboxId } = dto;
+  public async signDropbox(dto: ISignDropboxDto): Promise<IServerSignature> {
+    const { dropboxId, account } = dto;
 
     const dropboxEntity = await this.dropboxService.findOne(
       { id: dropboxId },
@@ -91,11 +90,11 @@ export class MarketplaceService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSign(nonce, templateEntity, userEntity);
+    const signature = await this.getSign(nonce, templateEntity, account);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async getSign(nonce: Uint8Array, templateEntity: ITemplate, userEntity: UserEntity): Promise<string> {
+  public async getSign(nonce: Uint8Array, templateEntity: ITemplate, account: string): Promise<string> {
     return this.signer._signTypedData(
       // Domain
       {
@@ -122,23 +121,21 @@ export class MarketplaceService {
       // Value
       {
         nonce,
-        account: userEntity.wallet,
+        account,
         items: [
           {
             tokenType: Object.keys(TokenType).indexOf(templateEntity.contract!.contractType),
             token: templateEntity.contract!.address,
             tokenId: templateEntity.id,
-            amount: templateEntity.amount,
+            amount: 1,
           },
         ],
-        ingredients: [
-          {
-            tokenType: Object.keys(TokenType).indexOf(templateEntity.price!.components[0].tokenType),
-            token: templateEntity.price!.components[0].contract?.address,
-            tokenId: templateEntity.price!.components[0].tokenId,
-            amount: templateEntity.price!.components[0].amount,
-          },
-        ],
+        ingredients: templateEntity.price?.components.map(component => ({
+          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+          token: component.contract?.address,
+          tokenId: component.tokenId,
+          amount: component.amount,
+        })),
       },
     );
   }
