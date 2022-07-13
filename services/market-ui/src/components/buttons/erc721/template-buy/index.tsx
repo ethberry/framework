@@ -9,7 +9,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { ContractTemplate, ITemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Marketplace/Marketplace.sol/Marketplace.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 interface IErc721TemplateBuyButtonProps {
   template: ITemplate;
@@ -29,7 +29,7 @@ export const Erc721ItemTemplateBuyButton: FC<IErc721TemplateBuyButtonProps> = pr
         data: { templateId: template.id },
       })
       .then((sign: IServerSignature) => {
-        const contract = new Contract(process.env.MARKETPLACE_ADDR, MarketplaceSol.abi, provider?.getSigner());
+        const contract = new Contract(process.env.MARKETPLACE_ADDR, ExchangeSol.abi, provider?.getSigner());
         const nonce = utils.arrayify(sign.nonce);
         const commonItemPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");
         return contract.buyCommon(nonce, template.contract?.address, template.id, process.env.ACCOUNT, sign.signature, {

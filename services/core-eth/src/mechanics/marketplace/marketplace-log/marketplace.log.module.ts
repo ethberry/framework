@@ -6,7 +6,7 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractType, MarketplaceEventType } from "@framework/types";
 
 // system contract
-import MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Marketplace/Marketplace.sol/Marketplace.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 import { MarketplaceLogService } from "./marketplace.log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
@@ -32,7 +32,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.MARKETPLACE,
             contractAddress: [erc1155marketAddr],
-            contractInterface: MarketplaceSol.abi,
+            contractInterface: ExchangeSol.abi,
             // prettier-ignore
             eventNames: [
               MarketplaceEventType.RedeemCommon,

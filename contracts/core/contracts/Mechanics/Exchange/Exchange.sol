@@ -9,91 +9,125 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
+import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+
+import "../Asset/Asset.sol";
+import "../Asset/interfaces/IAsset.sol";
+import "../Dropbox/interfaces/IDropbox.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 
-contract Exchange is AccessControl, Pausable {
+contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder {
   using Address for address;
 
+  mapping(bytes32 => bool) private _expired;
+
+  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-  struct Recipe {
-    address resources;
-    uint256[] ids;
-    uint256[] amounts;
-    address reward;
-    uint256 templateId;
-    uint256 dropboxId;
-    bool active;
-  }
+  bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
+  bytes4 private constant IERC721_DROPBOX = 0xe7728dc6;
 
-  event RecipeCreated(
-    uint256 recipeId,
-    address resources,
-    uint256[] ids,
-    uint256[] amounts,
-    address reward,
-    uint256 templateId,
-    uint256 dropboxId
-  );
+  bytes32 internal immutable PERMIT_SIGNATURE =
+    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items,Asset[] ingredients)", ASSET_SIGNATURE));
 
-  event RecipeUpdated(uint256 recipeId, bool active);
+  event Transaction(address from, Asset[] items, Asset[] ingredients);
 
-  event RecipeCrafted(address from, uint256 recipeId);
-
-  mapping(uint256 => Recipe) private _recipes;
-
-  constructor() {
+  constructor(string memory name) EIP712(name, "1.0.0") {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    _setupRole(MINTER_ROLE, _msgSender());
     _setupRole(PAUSER_ROLE, _msgSender());
   }
 
-  function createRecipe(
-    uint256 recipeId,
-    address resources,
-    uint256[] memory ids,
-    uint256[] memory amounts,
-    address reward,
-    uint256 templateId,
-    uint256 dropboxId
-  ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require(ids.length == amounts.length, "ERC1155ERC721Craft: ids and amounts length mismatch");
-    Recipe memory recipe = _recipes[recipeId];
-    require(recipe.templateId == 0, "ERC1155ERC721Craft: recipe already exist");
+  function execute(
+    bytes32 nonce,
+    Asset[] memory items,
+    Asset[] memory ingredients,
+    address signer,
+    bytes calldata signature
+  ) external payable whenNotPaused {
+    require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
 
-    _recipes[recipeId] = Recipe(resources, ids, amounts, reward, templateId, dropboxId, true);
-    emit RecipeCreated(recipeId, resources, ids, amounts, reward, templateId, dropboxId);
+    require(!_expired[nonce], "Exchange: Expired signature");
+    _expired[nonce] = true;
+
+    address account = _msgSender();
+
+    bool isVerified = _verify(signer, _hash(nonce, account, items, ingredients), signature);
+    require(isVerified, "Exchange: Invalid signature");
+
+    emit Transaction(account, items, ingredients);
+
+    uint256 length1 = ingredients.length;
+    for (uint256 i = 0; i < length1; i++) {
+      Asset memory ingredient = ingredients[i];
+      if (ingredient.tokenType == TokenType.NATIVE) {
+        require(ingredient.amount == msg.value, "Marketplace: Wrong amount");
+      } else if (ingredient.tokenType == TokenType.ERC20) {
+        IERC20(ingredient.token).transferFrom(account, address(this), ingredient.amount);
+      } else if (ingredient.tokenType == TokenType.ERC1155) {
+        IERC1155(ingredient.token).safeTransferFrom(
+          account,
+          address(this),
+          ingredient.tokenId,
+          ingredient.amount,
+          "0x"
+        );
+      } else {
+        revert("Exchange: unsupported token type");
+      }
+    }
+
+    uint256 length2 = items.length;
+    for (uint256 i = 0; i < length2; i++) {
+      Asset memory item = items[i];
+      if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
+        bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM);
+        bool dropboxInterface = IERC721(item.token).supportsInterface(IERC721_DROPBOX);
+
+        if (randomInterface) {
+          IERC721Random(item.token).mintRandom(account, item.tokenId, 0);
+        } else if (dropboxInterface) {
+          IDropbox(item.token).mintDropbox(account, item.tokenId);
+        } else {
+          IERC721Simple(item.token).mintCommon(account, item.tokenId);
+        }
+
+      } else if (item.tokenType == TokenType.ERC1155) {
+        IERC1155Simple(item.token).mint(account, item.tokenId, item.amount, "0x");
+      } else {
+        revert("Exchange: unsupported token type");
+      }
+    }
   }
 
-  function updateRecipe(uint256 recipeId, bool active) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    Recipe memory recipe = _recipes[recipeId];
-    require(recipe.templateId != 0, "ERC1155ERC721Craft: recipe does not exist");
-    _recipes[recipeId].active = active;
-    emit RecipeUpdated(recipeId, active);
+  function _hash(
+    bytes32 nonce,
+    address account,
+    Asset[] memory items,
+    Asset[] memory ingredients
+  ) internal view returns (bytes32) {
+    return
+      _hashTypedDataV4(
+        keccak256(
+          abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStructArray(items), hashAssetStructArray(ingredients))
+        )
+      );
   }
 
-  function craftCommon(uint256 recipeId) public {
-    Recipe memory recipe = _recipes[recipeId];
-
-    require(recipe.active, "ERC1155ERC721Craft: recipe is not active");
-
-    emit RecipeCrafted(_msgSender(), recipeId);
-
-    IERC1155Simple(recipe.resources).burnBatch(_msgSender(), recipe.ids, recipe.amounts);
-    IERC721Simple(recipe.reward).mintCommon(_msgSender(), recipe.templateId);
-  }
-
-  function craftRandom(uint256 recipeId) public {
-    Recipe memory recipe = _recipes[recipeId];
-
-    require(recipe.active, "ERC1155ERC721Craft: recipe is not active");
-
-    emit RecipeCrafted(_msgSender(), recipeId);
-
-    IERC1155Simple(recipe.resources).burnBatch(_msgSender(), recipe.ids, recipe.amounts);
-    IERC721Random(recipe.reward).mintRandom(_msgSender(), recipe.templateId, recipe.dropboxId);
+  function _verify(
+    address signer,
+    bytes32 digest,
+    bytes memory signature
+  ) internal view returns (bool) {
+    return SignatureChecker.isValidSignatureNow(signer, digest, signature);
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {
@@ -104,7 +138,13 @@ contract Exchange is AccessControl, Pausable {
     _unpause();
   }
 
-  receive() external payable {
-    revert();
+  function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    virtual
+    override(AccessControl, ERC1155Receiver)
+    returns (bool)
+  {
+    return super.supportsInterface(interfaceId);
   }
 }

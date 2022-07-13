@@ -35,7 +35,7 @@ export class LootService {
     return this.signer._signTypedData(
       // Domain
       {
-        name: "PostBattleLoot",
+        name: "Exchange",
         version: "1.0.0",
         chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
         verifyingContract: this.configService.get<string>("POST_BATTLE_LOOT_ADDR", ""),
@@ -46,6 +46,7 @@ export class LootService {
           { name: "nonce", type: "bytes32" },
           { name: "account", type: "address" },
           { name: "items", type: "Asset[]" },
+          { name: "ingredients", type: "Asset[]" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },
@@ -58,12 +59,13 @@ export class LootService {
       {
         nonce,
         account: userEntity.wallet,
-        item: templateEntities.map(templateEntity => ({
+        items: templateEntities.map(templateEntity => ({
           tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
           token: templateEntity.contract.address,
           tokenId: templateEntity.id,
           amount: templateEntity.amount,
         })),
+        ingredients: [],
       },
     );
   }

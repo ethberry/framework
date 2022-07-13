@@ -9,7 +9,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { ContractTemplate, ITemplate } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
-import MarketplaceSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Marketplace/Marketplace.sol/Marketplace.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 interface IErc1155TokenSingleBuyButtonProps {
   template: ITemplate;
@@ -32,7 +32,7 @@ export const Erc1155TokenSingleBuyButton: FC<IErc1155TokenSingleBuyButtonProps> 
         },
       })
       .then((json: IServerSignature) => {
-        const contract = new Contract(process.env.MARKETPLACE_ADDR, MarketplaceSol.abi, provider?.getSigner());
+        const contract = new Contract(process.env.MARKETPLACE_ADDR, ExchangeSol.abi, provider?.getSigner());
         const nonce = utils.arrayify(json.nonce);
         const tokenPrice = utils.parseUnits(template.price?.components[0].amount || "0", "wei");
 

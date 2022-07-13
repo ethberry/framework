@@ -21,11 +21,11 @@ export class ExchangeRulesService {
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("recipe.erc1155Token", "token");
-    queryBuilder.leftJoinAndSelect("token.erc1155Collection", "collection");
+    queryBuilder.leftJoinAndSelect("recipe.token", "token");
+    queryBuilder.leftJoinAndSelect("token.contract", "contract");
     queryBuilder.leftJoinAndSelect("recipe.ingredients", "ingredients");
-    queryBuilder.leftJoinAndSelect("ingredients.erc1155Token", "ingredients_token");
-    queryBuilder.leftJoinAndSelect("ingredients_token.erc1155Collection", "ingredients_token_collection");
+    queryBuilder.leftJoinAndSelect("ingredients.token", "ingredients_token");
+    queryBuilder.leftJoinAndSelect("ingredients_token.contract", "ingredients_token_contract");
 
     queryBuilder.where({
       exchangeStatus: ExchangeStatus.ACTIVE,
