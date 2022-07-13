@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { IExchangeRule } from "@framework/types";
+import { IRecipe } from "@framework/types";
 
 // import { validationSchema2 } from "./validation";
 import { PriceInput } from "../../../../components/inputs/price";
@@ -9,8 +9,8 @@ import { PriceInput } from "../../../../components/inputs/price";
 export interface IExchangeEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IExchangeRule>, form: any) => Promise<void>;
-  initialValues: IExchangeRule;
+  onConfirm: (values: Partial<IRecipe>, form: any) => Promise<void>;
+  initialValues: IRecipe;
 }
 
 export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {

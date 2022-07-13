@@ -13,7 +13,7 @@ export class CreateExchangeRules1653616448010 implements MigrationInterface {
     `);
 
     const table = new Table({
-      name: `${ns}.exchange_rules`,
+      name: `${ns}.recipe`,
       columns: [
         {
           name: "id",

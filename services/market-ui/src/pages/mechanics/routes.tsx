@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/firebase-login";
 
-import { ExchangeList } from "./exchange";
+import { CraftList } from "./craft";
 import { Airdrop } from "./airdrop";
 import { AirdropWrapper } from "./airdrop/wrapper";
 import { VestingWrapper } from "./vesting/wrapper";
@@ -27,11 +27,11 @@ export const mechanicsRoutes: Array<RouteObject> = [
     ],
   },
   {
-    path: "/exchange",
+    path: "/craft",
     element: <Protected />,
     children: [
-      { index: true, element: <ExchangeList /> },
-      { path: "/exchange/:tab", element: <ExchangeList /> },
+      { index: true, element: <CraftList /> },
+      { path: "/craft/:tab", element: <CraftList /> },
     ],
   },
   {

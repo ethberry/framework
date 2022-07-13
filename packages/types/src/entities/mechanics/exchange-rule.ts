@@ -9,7 +9,7 @@ export enum ExchangeStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IExchangeRule extends IIdDateBase {
+export interface IRecipe extends IIdDateBase {
   item: IAsset;
   ingredients: IAsset;
   exchangeStatus: ExchangeStatus;

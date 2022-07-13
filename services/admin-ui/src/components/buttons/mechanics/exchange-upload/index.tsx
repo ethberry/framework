@@ -5,13 +5,13 @@ import { Check, Close, CloudUpload } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { ExchangeStatus, IExchangeRule } from "@framework/types";
+import { ExchangeStatus, IRecipe } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 export interface IExchangeButtonProps {
-  rule: IExchangeRule;
+  rule: IRecipe;
 }
 
 export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
@@ -21,7 +21,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
 
   const { provider } = useWeb3React();
 
-  const metaLoadRecipe = useMetamask((exchange: IExchangeRule) => {
+  const metaLoadRecipe = useMetamask((exchange: IRecipe) => {
     if (exchange.exchangeStatus !== ExchangeStatus.NEW) {
       return Promise.reject(new Error(""));
     }
@@ -32,7 +32,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
     return contract.createRecipe(exchange.id, exchange.ingredients.components) as Promise<void>;
   });
 
-  const handleLoadRecipe = (recipe: IExchangeRule): (() => Promise<void>) => {
+  const handleLoadRecipe = (recipe: IRecipe): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaLoadRecipe(recipe).then(() => {
         // TODO reload
@@ -40,7 +40,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
     };
   };
 
-  const metaToggleRecipe = useMetamask((recipe: IExchangeRule) => {
+  const metaToggleRecipe = useMetamask((recipe: IRecipe) => {
     let exchangeStatus: boolean;
     if (recipe.exchangeStatus === ExchangeStatus.NEW) {
       // this should never happen
@@ -53,7 +53,7 @@ export const ExchangeUploadButton: FC<IExchangeButtonProps> = props => {
     return contract.updateRecipe(recipe.id, exchangeStatus) as Promise<void>;
   });
 
-  const handleToggleRecipe = (recipe: IExchangeRule): (() => Promise<void>) => {
+  const handleToggleRecipe = (recipe: IRecipe): (() => Promise<void>) => {
     return (): Promise<void> => {
       return metaToggleRecipe(recipe).then(() => {
         // TODO reload

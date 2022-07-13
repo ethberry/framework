@@ -1,6 +1,6 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { IExchangeRule } from "./exchange-rule";
+import { IRecipe } from "./exchange-rule";
 
 export enum ExchangeEventType {
   Transaction = "Transaction",
@@ -20,5 +20,5 @@ export interface IExchangeHistory extends IIdDateBase {
   eventType: ExchangeEventType;
   eventData: TExchangeEventData;
   exchangeId: number | null;
-  exchange?: IExchangeRule;
+  exchange?: IRecipe;
 }

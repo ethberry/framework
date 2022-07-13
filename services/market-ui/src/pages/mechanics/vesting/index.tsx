@@ -24,7 +24,7 @@ export const Vesting: FC = () => {
   const { fn, isLoading } = useApiCall(
     async api => {
       return api.fetchJson({
-        url: `/erc20-vesting/${account as string}`,
+        url: `/vesting/${account as string}`,
       });
     },
     { success: false, error: false },
@@ -77,5 +77,5 @@ export const Vesting: FC = () => {
     return <VestingReleaseButton vesting={vesting} />;
   }
 
-  return <FormattedMessage id="pages.erc20-vesting.sorry" />;
+  return <FormattedMessage id="pages.vesting.sorry" />;
 };

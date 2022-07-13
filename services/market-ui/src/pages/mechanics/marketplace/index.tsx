@@ -12,7 +12,7 @@ import { Erc721 } from "./erc721";
 import { Dropbox } from "./dropbox";
 
 export const Marketplace: FC = () => {
-  const { tab = MarketplaceTabs.erc998 } = useParams<{ tab: MarketplaceTabs }>();
+  const { tab = MarketplaceTabs.erc721 } = useParams<{ tab: MarketplaceTabs }>();
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ export const Marketplace: FC = () => {
 
   const handleChange = (_event: ChangeEvent<any>, newValue: MarketplaceTabs): void => {
     setValue(newValue);
-    navigate(`/marketplace/${newValue === MarketplaceTabs.erc1155 ? "" : newValue}`);
+    navigate(`/marketplace/${newValue === MarketplaceTabs.erc721 ? "" : newValue}`);
   };
 
   return (

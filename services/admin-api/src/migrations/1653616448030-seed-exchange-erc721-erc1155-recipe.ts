@@ -51,7 +51,7 @@ export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterf
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.exchange_rules (
+      INSERT INTO ${ns}.recipe (
         item_id,
         ingredients_id,
         exchange_status,
@@ -68,6 +68,6 @@ export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterf
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.exchange_rules RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.recipe RESTART IDENTITY CASCADE;`);
   }
 }

@@ -111,18 +111,14 @@
       "amount": "Amount",
       "collectionId": "Collection",
       "confirm": "Confirm",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "displayName": "Display name",
       "email": "Email",
       "endDate": "End date",
-      "contractId": "Contract",
-      "contractIds": "Contracts",
-      "tokenId": "Token",
-      "tokenIds": "Tokens",
-      "templateId": "Template",
-      "templateIds": "Templates",
       "externalId": "External ID",
       "imageUrl": "Avatar",
       "language": "Language",
@@ -135,7 +131,11 @@
       "stakingStatus": "Status",
       "startDate": "Start date",
       "status": "Status",
+      "templateId": "Template",
+      "templateIds": "Templates",
       "title": "Title",
+      "tokenId": "Token",
+      "tokenIds": "Tokens",
       "tokenType": "Type",
       "type": "Type",
       "updatedAt": "Updated"
@@ -143,21 +143,21 @@
     "placeholders": {
       "amount": "100",
       "confirm": "******",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
       "createdAt": "Registered",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
-      "contractId": "Contract",
-      "contractIds": "Contracts",
-      "tokenId": "Token",
-      "tokenIds": "Tokens",
-      "templateId": "Template",
-      "templateIds": "Templates",
       "maxAmount": "100",
       "minAmount": "0.01",
       "password": "******",
       "query": "Search...",
       "search": "Search...",
-      "token": "Token"
+      "templateId": "Template",
+      "templateIds": "Templates",
+      "token": "Token",
+      "tokenId": "Token",
+      "tokenIds": "Tokens"
     },
     "tips": {
       "add": "Add",
@@ -187,6 +187,10 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "airdrop": {
+      "sorry": "Sorry, maybe you will get lucky next time",
+      "title": "Airdrop"
+    },
     "assets": {
       "tabs": {
         "heroes": "Heroes",
@@ -210,8 +214,8 @@
       "erc1155": {
         "contracts": "ERC1155 Contracts",
         "recipes": "ERC1155 Recipes",
-        "title": "ERC1155",
-        "templates": "ERC1155 Templates"
+        "templates": "ERC1155 Templates",
+        "title": "ERC1155"
       },
       "erc721": {
         "airdrop": "ERC721 Airdrop",
@@ -228,6 +232,15 @@
         "templates": "ERC998 Templates",
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
+      },
+      "mechanics": {
+        "airdrop": "Airdrop",
+        "craft": "Craft",
+        "leaderboard": "Staking Leaderboard",
+        "reward": "Staking Reward",
+        "stake": "Staking Stake",
+        "title": "Mechanics",
+        "vesting": "Vesting"
       },
       "pages": {
         "about-us": "About us",
@@ -246,16 +259,11 @@
         "marketplace": "Primary marketplace",
         "title": "Sections"
       },
-      "mechanics": {
-        "leaderboard": "Staking Leaderboard",
-        "exchange": "Exchange",
-        "airdrop": "Airdrop",
-        "reward": "Staking Reward",
-        "stake": "Staking Stake",
-        "title": "Mechanics",
-        "vesting": "Vesting"
-      },
       "title": "Dashboard"
+    },
+    "dropbox": {
+      "price": "Price: {amount}",
+      "title": "Dropbox: {title}"
     },
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
@@ -270,7 +278,7 @@
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
-    "erc20-vesting": {
+    "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "ERC20 Vesting"
     },
@@ -283,13 +291,6 @@
     },
     "erc721-contracts": {
       "title": "ERC721 Contracts"
-    },
-    "dropbox": {
-      "price": "Price: {amount}",
-      "title": "Dropbox: {title}"
-    },
-    "exchanges": {
-      "title": "Exchanges"
     },
     "erc721-template": {
       "price": "Price: {amount}",
@@ -308,10 +309,6 @@
         "price": "Price"
       },
       "title": "ERC721 Tokens"
-    },
-    "airdrop": {
-      "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "Airdrop"
     },
     "erc998-contract": {
       "title": "ERC998 Contract: {title}"
@@ -337,6 +334,9 @@
       },
       "title": "ERC998 Tokens"
     },
+    "exchanges": {
+      "title": "Exchanges"
+    },
     "guest": {
       "login": "Login"
     },
@@ -347,23 +347,23 @@
       "popular": "Popular items"
     },
     "marketplace": {
-      "erc998": {
-        "title": "ERC998"
-      },
       "dropbox": {
         "title": "Dropbox"
-      },
-      "erc721": {
-        "title": "ERC721"
       },
       "erc1155": {
         "title": "ERC1155"
       },
+      "erc721": {
+        "title": "ERC721"
+      },
+      "erc998": {
+        "title": "ERC998"
+      },
       "tabs": {
-        "erc998": "ERC998",
         "dropbox": "Dropbox",
+        "erc1155": "ERC1155",
         "erc721": "ERC721",
-        "erc1155": "ERC1155"
+        "erc998": "ERC998"
       },
       "title": "Primary market"
     },
@@ -383,14 +383,6 @@
     },
     "staking": {
       "deposit": "Deposit",
-      "view": {
-        "address": "Address",
-        "beneficiary": "Beneficiary",
-        "contractTemplate": "Template",
-        "duration": "Duration",
-        "finish": "Finish",
-        "startTimestamp": "Start time"
-      },
       "leaderboard": {
         "address": "Address",
         "rank": "Rank",
@@ -403,7 +395,15 @@
       "stake": {
         "title": "Stake"
       },
-      "title": "Staking"
+      "title": "Staking",
+      "view": {
+        "address": "Address",
+        "beneficiary": "Beneficiary",
+        "contractTemplate": "Template",
+        "duration": "Duration",
+        "finish": "Finish",
+        "startTimestamp": "Start time"
+      }
     }
   },
   "snackbar": {

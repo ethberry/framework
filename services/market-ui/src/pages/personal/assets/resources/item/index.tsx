@@ -6,7 +6,7 @@ import { IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
-import { Erc1155TokenSellButton } from "../../../../../components/buttons";
+import { TokenSellButton } from "../../../../../components/buttons";
 
 interface IErc1155TokenProps {
   token: IToken;
@@ -36,7 +36,7 @@ export const Erc1155Token: FC<IErc1155TokenProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <Erc1155TokenSellButton token={token} />
+          <TokenSellButton token={token} />
         </Grid>
       </CardActions>
     </Card>

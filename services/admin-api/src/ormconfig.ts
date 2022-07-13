@@ -25,7 +25,7 @@ import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
 import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
 import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
-import { ExchangeRulesEntity } from "./mechanics/exchange/exchange-rules/exchange-rules.entity";
+import { CraftEntity } from "./mechanics/craft/craft.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
 import { PageEntity } from "./page/page.entity";
@@ -124,7 +124,7 @@ const config: PostgresConnectionOptions = {
     BalanceEntity,
     AirdropEntity,
     DropboxEntity,
-    ExchangeRulesEntity,
+    CraftEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,

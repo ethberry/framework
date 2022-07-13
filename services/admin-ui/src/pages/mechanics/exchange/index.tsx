@@ -16,7 +16,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ExchangeStatus, IExchangeRule, IExchangeSearchDto } from "@framework/types";
+import { ExchangeStatus, IRecipe, IExchangeSearchDto } from "@framework/types";
 
 import { ExchangeEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
@@ -43,7 +43,7 @@ export const Exchange: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IExchangeRule, IExchangeSearchDto>({
+  } = useCollection<IRecipe, IExchangeSearchDto>({
     baseUrl: "/exchange-rules",
     empty: {
       item: emptyPrice,
@@ -86,7 +86,7 @@ export const Exchange: FC = () => {
                 {recipe.item.components[0].token!.template!.contract?.title}
               </ListItemText>
               <ListItemSecondaryAction>
-                {/* <ExchangeUploadButton rule={recipe} />*/}
+                {/* <ExchangeUploadButton rule={recipe} /> */}
                 <IconButton onClick={handleEdit(recipe)}>
                   <Create />
                 </IconButton>

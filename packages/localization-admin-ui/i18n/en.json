@@ -203,9 +203,9 @@
       "cap": "Cap",
       "collection": "Collection",
       "collectionType": "Type",
-      "contract": "Contract",
       "comment": "Comment",
       "confirm": "Confirm",
+      "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "contractRole": "Role",
@@ -275,9 +275,9 @@
       "collection": "Collection",
       "collectionId": "Collection",
       "collectionIds": "Collection",
-      "contract": "Contract",
       "comment": "Fraud",
       "confirm": "******",
+      "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "createdAt": "now",
@@ -296,8 +296,8 @@
       "price": "1000",
       "priceCorrection": "0",
       "query": "Search...",
-      "recipient": "Recipient",
       "rarity": "Legendary",
+      "recipient": "Recipient",
       "royalty": "1",
       "search": "Search...",
       "slug": "terms-and-conditions",
@@ -381,13 +381,13 @@
         "tokens": "ERC998 Tokens"
       },
       "mechanics": {
-        "vesting": "Vesting",
         "airdrops": "Airdrops",
         "dropboxes": "Dropboxes",
         "exchange-rules": "Exchange Rules",
         "stakes": "Stakes",
         "staking-rules": "Staking Rules",
-        "title": "Mechanics"
+        "title": "Mechanics",
+        "vesting": "Vesting"
       },
       "title": "Dashboard"
     },
@@ -406,17 +406,6 @@
     "erc20-contracts": {
       "snapshot": "Make snapshot",
       "title": "ERC20 Contracts"
-    },
-    "vesting": {
-      "title": "Vesting",
-      "view": {
-        "address": "Address",
-        "beneficiary": "Beneficiary",
-        "contractTemplate": "Template",
-        "duration": "Duration",
-        "finish": "Finish",
-        "startTimestamp": "Start time"
-      }
     },
     "erc721-contracts": {
       "royalty": "Royalty",
@@ -480,6 +469,17 @@
     },
     "users": {
       "title": "Users"
+    },
+    "vesting": {
+      "title": "Vesting",
+      "view": {
+        "address": "Address",
+        "beneficiary": "Beneficiary",
+        "contractTemplate": "Template",
+        "duration": "Duration",
+        "finish": "Finish",
+        "startTimestamp": "Start time"
+      }
     }
   },
   "snackbar": {
@@ -510,13 +510,13 @@
     "registered": "Registration successful, please verify your email to proceed",
     "saved": "Successfully saved",
     "success": "Success",
+    "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
-    "templateNotFound": "Template not found",
     "userNotFound": "User not found",
     "walletIsNotConnected": "Wallet is not connected"
   }

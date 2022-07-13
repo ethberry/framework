@@ -1,18 +1,18 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-import { useApi } from "@gemunion/provider-api-firebase";
+// import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IExchangeRule } from "@framework/types";
+import { IRecipe } from "@framework/types";
 
 import ERC1155ERC998CraftSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 interface IExchangeCraftButtonProps {
-  rule: IExchangeRule;
+  rule: IRecipe;
 }
 
 export const ExchangeCraftButton: FC<IExchangeCraftButtonProps> = props => {
@@ -21,7 +21,7 @@ export const ExchangeCraftButton: FC<IExchangeCraftButtonProps> = props => {
 
   const { provider, isActive } = useWeb3React();
 
-  const api = useApi();
+  // const api = useApi();
 
   const meta = useMetamask(() => {
     const contract = new Contract(
@@ -47,19 +47,19 @@ export const ExchangeCraftButton: FC<IExchangeCraftButtonProps> = props => {
     );
   });
 
-  const getApprove = async (): Promise<void> => {
-    return api
-      .fetchJson({
-        url: `/erc1155-token-history/${rule.ingredients.components[0].contract!.address}/approve`,
-      })
-      .then((approve: boolean) => {
-        setIsApproved(approve);
-      });
-  };
-
-  useEffect(() => {
-    void getApprove();
-  }, []);
+  // const getApprove = async (): Promise<void> => {
+  //   return api
+  //     .fetchJson({
+  //       url: `/erc1155-token-history/${rule.ingredients.components[0].contract!.address}/approve`,
+  //     })
+  //     .then((approve: boolean) => {
+  //       setIsApproved(approve);
+  //     });
+  // };
+  //
+  // useEffect(() => {
+  //   void getApprove();
+  // }, []);
 
   return isApproved ? (
     <Button onClick={handleCraft} disabled={!isActive} data-testid="ExchangeCraftButton">
