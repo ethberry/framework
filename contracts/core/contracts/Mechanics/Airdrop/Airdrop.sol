@@ -17,6 +17,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "../Asset/Asset.sol";
 import "../Asset/interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 
 contract Airdrop is AssetHelper, EIP712, ERC721ACBCR, ERC721Pausable, ERC721BaseUrl {
@@ -29,6 +30,8 @@ contract Airdrop is AssetHelper, EIP712, ERC721ACBCR, ERC721Pausable, ERC721Base
   mapping(uint256 => Asset) internal _itemData;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+
+  bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
 
   bytes32 internal immutable PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset item)", ASSET_SIGNATURE));
@@ -93,18 +96,24 @@ contract Airdrop is AssetHelper, EIP712, ERC721ACBCR, ERC721Pausable, ERC721Base
     require(_isApprovedOrOwner(_msgSender(), tokenId), "Airdrop: caller is not token owner nor approved");
     Asset memory item = _itemData[tokenId];
 
-    emit UnpackAirdrop(_msgSender(), tokenId, item);
+    address account = _msgSender();
+
+    emit UnpackAirdrop(account, tokenId, item);
+
+    _burn(tokenId);
 
     if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
-      // TODO random
-      IERC721Simple(item.token).mintCommon(_msgSender(), item.tokenId);
+      bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM);
+      if (randomInterface) {
+        IERC721Random(item.token).mintRandom(account, item.tokenId, 0);
+      } else {
+        IERC721Simple(item.token).mintCommon(account, item.tokenId);
+      }
     } else if (item.tokenType == TokenType.ERC1155) {
       IERC1155Simple(item.token).mint(_msgSender(), item.tokenId, item.amount, "0x");
     } else {
       revert("Airdrop: unsupported token type");
     }
-
-    _burn(tokenId);
   }
 
   function _burn(uint256 tokenId) internal virtual override(ERC721, ERC721ACBCR) {

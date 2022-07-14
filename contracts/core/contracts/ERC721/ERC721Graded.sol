@@ -12,11 +12,10 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
-import "./interfaces/IERC721Simple.sol";
 import "./interfaces/IERC721Graded.sol";
 import "../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721Graded is IERC721Simple, IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection, MetaDataGetter {
+contract ERC721Graded is IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection, MetaDataGetter {
   using Counters for Counters.Counter;
 
   event LevelUp(address from, uint256 tokenId, uint256 grade);

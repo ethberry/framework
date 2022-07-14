@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { BigNumber, utils, Wallet } from "ethers";
 
@@ -43,7 +43,7 @@ export class MarketplaceService {
 
     const cap = BigNumber.from(templateEntity.cap);
     if (cap.gt(0) && cap.lte(templateEntity.amount)) {
-      throw new NotFoundException("limitExceeded");
+      throw new BadRequestException("limitExceeded");
     }
 
     const nonce = utils.randomBytes(32);

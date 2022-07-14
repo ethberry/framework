@@ -41,13 +41,13 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     _tokenIdTracker.increment();
   }
 
-  function levelUp(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
+  function levelUp(uint256) public view onlyRole(MINTER_ROLE) returns (bool) {
     return false;
   }
 
-  function mintCommon(address to, uint256 templateId) public onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  function mintCommon(address to, uint256 templateId) public onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
-    tokenId = _tokenIdTracker.current();
+    uint256 tokenId = _tokenIdTracker.current();
 
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     upsertRecordField(tokenId, RARITY, 1);

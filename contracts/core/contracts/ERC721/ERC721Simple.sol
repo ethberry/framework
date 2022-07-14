@@ -29,7 +29,6 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721BaseUrl {
 
   function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) {
     templateId;
-    uint256 tokenId = _tokenIdTracker.current();
     safeMint(to);
   }
 
