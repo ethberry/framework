@@ -6,12 +6,12 @@
 
 pragma solidity ^0.8.9;
 
-import "./IERC721Simple.sol";
+import "./IERC721Graded.sol";
 
-interface IERC721Random is IERC721Simple {
+interface IERC721Random is IERC721Graded {
   function mintRandom(
     address to,
     uint256 templateId,
     uint256 dropboxId
-  ) external returns (uint256);
+  ) external;
 }

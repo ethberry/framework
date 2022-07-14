@@ -7,5 +7,5 @@
 pragma solidity ^0.8.9;
 
 interface IERC721Simple {
-  function mintCommon(address to, uint256 templateId) external returns (uint256);
+  function mintCommon(address to, uint256 templateId) external;
 }

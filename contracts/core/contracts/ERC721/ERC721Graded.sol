@@ -14,8 +14,9 @@ import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
 import "./interfaces/IERC721Simple.sol";
 import "./interfaces/IERC721Graded.sol";
+import "../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721Graded is IERC721Simple, IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
+contract ERC721Graded is IERC721Simple, IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection, MetaDataGetter {
   using Counters for Counters.Counter;
 
   event LevelUp(address from, uint256 tokenId, uint256 grade);
@@ -33,9 +34,9 @@ contract ERC721Graded is IERC721Simple, IERC721Graded, ERC721ACBER, ERC721BaseUr
     _tokenIdTracker.increment();
   }
 
-  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Graded: wrong type");
-    tokenId = _tokenIdTracker.current();
+    uint256 tokenId = _tokenIdTracker.current();
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     upsertRecordField(tokenId, GRADE, 1);
     safeMint(to);

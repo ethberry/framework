@@ -97,10 +97,9 @@ contract Airdrop is AssetHelper, EIP712, ERC721ACBCR, ERC721Pausable, ERC721Base
 
     if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
       // TODO random
-      tokenId = IERC721Simple(item.token).mintCommon(_msgSender(), item.tokenId);
+      IERC721Simple(item.token).mintCommon(_msgSender(), item.tokenId);
     } else if (item.tokenType == TokenType.ERC1155) {
       IERC1155Simple(item.token).mint(_msgSender(), item.tokenId, item.amount, "0x");
-      tokenId = item.tokenId;
     } else {
       revert("Airdrop: unsupported token type");
     }

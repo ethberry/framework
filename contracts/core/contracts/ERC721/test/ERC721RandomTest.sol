@@ -41,7 +41,11 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     _tokenIdTracker.increment();
   }
 
-  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  function levelUp(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
+    return false;
+  }
+
+  function mintCommon(address to, uint256 templateId) public onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     require(templateId != 0, "ERC721Random: wrong type");
     tokenId = _tokenIdTracker.current();
 
@@ -55,9 +59,8 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     address to,
     uint256 templateId,
     uint256 dropboxId
-  ) external override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  ) external override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
-    tokenId = _tokenIdTracker.current();
     _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
   }
 

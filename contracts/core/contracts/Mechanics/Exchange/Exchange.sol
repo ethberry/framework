@@ -68,6 +68,7 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
     // TODO calculate what is most efficient
     uint256 totalAmount;
     for (uint256 i = 0; i < length1; i++) {
+      Asset memory ingredient = ingredients[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
         totalAmount = totalAmount + ingredient.amount;
       }

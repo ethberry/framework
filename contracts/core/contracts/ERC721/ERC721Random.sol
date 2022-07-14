@@ -14,8 +14,9 @@ import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
 
 import "./interfaces/IERC721Random.sol";
+import "../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
+contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection, MetaDataGetter {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -42,9 +43,9 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     _tokenIdTracker.increment();
   }
 
-  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  function mintCommon(address to, uint256 templateId) public onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
-    tokenId = _tokenIdTracker.current();
+    uint256 tokenId = _tokenIdTracker.current();
 
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     upsertRecordField(tokenId, GRADE, 1);
@@ -57,9 +58,8 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     address to,
     uint256 templateId,
     uint256 dropboxId
-  ) external override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
+  ) external override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
-    tokenId = _tokenIdTracker.current();
     _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
   }
 
