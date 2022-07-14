@@ -19,7 +19,7 @@ export * from "./blockchain/contract-history";
 export * from "./mechanics/airdrop";
 export * from "./mechanics/dropbox";
 export * from "./mechanics/exchange-history";
-export * from "./mechanics/exchange-rule";
+export * from "./mechanics/craft";
 export * from "./mechanics/marketplace-history";
 export * from "./mechanics/staking-history";
 export * from "./mechanics/staking-rule";

@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
-import { ExchangeStatus } from "@framework/types";
+import { CraftStatus } from "@framework/types";
 
 import { CraftEntity } from "./craft.entity";
 
@@ -39,7 +39,7 @@ export class CraftService {
     // queryBuilder.leftJoinAndSelect("ingredients_token.contract", "ingredients_token_contract");
 
     queryBuilder.where({
-      exchangeStatus: ExchangeStatus.ACTIVE,
+      craftStatus: CraftStatus.ACTIVE,
     });
 
     if (query) {

@@ -64,6 +64,8 @@ export class AirdropService {
   public async create(dto: IAirdropItem): Promise<AirdropEntity> {
     const { account } = dto;
 
+    // TODO disallow NATIVE and ERC20
+
     const assetEntity = await this.assetService.create({
       assetType: AssetType.AIRDROP,
       externalId: "0",

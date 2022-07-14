@@ -20,12 +20,13 @@ export interface IDropboxEditDialogProps {
 export const DropboxEditDialog: FC<IDropboxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, price, imageUrl, dropboxStatus, templateId, contractId } = initialValues;
+  const { id, title, description, item, price, imageUrl, dropboxStatus, templateId, contractId } = initialValues;
 
   const fixedValues = {
     id,
     title,
     description,
+    item,
     price,
     imageUrl,
     dropboxStatus,
@@ -45,6 +46,7 @@ export const DropboxEditDialog: FC<IDropboxEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} />
       <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       {id ? <SelectInput name="dropboxStatus" options={DropboxStatus} /> : null}
       <EntityInput name="templateId" controller="templates" data={{}} />

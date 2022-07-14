@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { AssetType, ExchangeStatus, IExchangeSearchDto } from "@framework/types";
+import { AssetType, CraftStatus, IExchangeSearchDto } from "@framework/types";
 
 import { CraftEntity } from "./craft.entity";
 import { IRecipeCreateDto, IRecipeUpdateDto } from "./interfaces";
@@ -17,7 +17,7 @@ export class CraftService {
   ) {}
 
   public search(dto: IExchangeSearchDto): Promise<[Array<CraftEntity>, number]> {
-    const { query, exchangeStatus, skip, take } = dto;
+    const { query, craftStatus, skip, take } = dto;
 
     const queryBuilder = this.recipeEntityRepository.createQueryBuilder("rule");
 
@@ -43,11 +43,11 @@ export class CraftService {
       );
     }
 
-    if (exchangeStatus) {
-      if (exchangeStatus.length === 1) {
-        queryBuilder.andWhere("rule.exchangeStatus = :exchangeStatus", { exchangeStatus: exchangeStatus[0] });
+    if (craftStatus) {
+      if (craftStatus.length === 1) {
+        queryBuilder.andWhere("rule.craftStatus = :craftStatus", { craftStatus: craftStatus[0] });
       } else {
-        queryBuilder.andWhere("rule.exchangeStatus IN(:...exchangeStatus)", { exchangeStatus });
+        queryBuilder.andWhere("rule.craftStatus IN(:...craftStatus)", { craftStatus });
       }
     }
 
@@ -123,10 +123,10 @@ export class CraftService {
       return;
     }
 
-    if (recipeEntity.exchangeStatus === ExchangeStatus.NEW) {
+    if (recipeEntity.craftStatus === CraftStatus.NEW) {
       await recipeEntity.remove();
     } else {
-      Object.assign(recipeEntity, { exchangeStatus: ExchangeStatus.INACTIVE });
+      Object.assign(recipeEntity, { craftStatus: CraftStatus.INACTIVE });
       await recipeEntity.save();
     }
   }

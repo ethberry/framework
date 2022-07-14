@@ -4,7 +4,7 @@ import { Protected } from "@gemunion/firebase-login";
 
 import { Airdrop } from "./airdrop";
 import { Dropbox } from "./dropbox";
-import { Exchange } from "./exchange";
+import { Craft } from "./craft";
 import { Staking } from "./staking-rules";
 import { Stakes } from "./staking-stakes";
 import { Vesting } from "./vesting";
@@ -27,11 +27,11 @@ export const mechanics: Array<RouteObject> = [
     ],
   },
   {
-    path: "/exchange-rules",
+    path: "/craft",
     element: <Protected />,
     children: [
-      { index: true, element: <Exchange /> },
-      { path: "/exchange-rules/:id", element: <Exchange /> },
+      { index: true, element: <Craft /> },
+      { path: "/craft/:id", element: <Craft /> },
     ],
   },
   {

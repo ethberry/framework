@@ -16,14 +16,13 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { ExchangeStatus, IRecipe, IExchangeSearchDto } from "@framework/types";
+import { CraftStatus, IRecipe, IExchangeSearchDto } from "@framework/types";
 
 import { ExchangeEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
-// import { ExchangeUploadButton } from "../../../components/buttons";
 import { emptyPrice } from "../../../components/inputs/empty-price";
 
-export const Exchange: FC = () => {
+export const Craft: FC = () => {
   const {
     rows,
     count,
@@ -44,14 +43,14 @@ export const Exchange: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IRecipe, IExchangeSearchDto>({
-    baseUrl: "/exchange-rules",
+    baseUrl: "/craft",
     empty: {
       item: emptyPrice,
       ingredients: emptyPrice,
     },
     search: {
       query: "",
-      exchangeStatus: [ExchangeStatus.ACTIVE, ExchangeStatus.NEW],
+      craftStatus: [CraftStatus.ACTIVE, CraftStatus.NEW],
     },
     filter: ({ item, ingredients }) => ({
       item,
@@ -61,9 +60,9 @@ export const Exchange: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "exchange-rules"]} />
+      <Breadcrumbs path={["dashboard", "craft"]} />
 
-      <PageHeader message="pages.exchange-rules.title">
+      <PageHeader message="pages.craft.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -86,11 +85,10 @@ export const Exchange: FC = () => {
                 {recipe.item.components[0].token!.template!.contract?.title}
               </ListItemText>
               <ListItemSecondaryAction>
-                {/* <ExchangeUploadButton rule={recipe} /> */}
                 <IconButton onClick={handleEdit(recipe)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(recipe)} disabled={recipe.exchangeStatus !== ExchangeStatus.NEW}>
+                <IconButton onClick={handleDelete(recipe)} disabled={recipe.craftStatus !== CraftStatus.NEW}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

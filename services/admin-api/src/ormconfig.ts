@@ -76,9 +76,9 @@ import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-see
 import { CreateDropbox1653616447910 } from "./migrations/1653616447910-create-dropbox";
 import { SeedDropboxErc721At1653616447920 } from "./migrations/1653616447920-seed-dropbox-erc721";
 
-import { CreateExchangeRules1653616448010 } from "./migrations/1653616448010-create-exchange";
-import { SeedExchangeErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-exchange-erc1155-erc1155";
-import { SeedExchangeErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-exchange-erc721-erc1155-recipe";
+import { CreateRecipe1653616448010 } from "./migrations/1653616448010-create-recipe";
+import { SeedRecipeErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-recipe-erc1155-erc1155";
+import { SeedRecipeErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-recipe-erc721-erc1155-recipe";
 import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-exchnage-history";
 
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
@@ -201,9 +201,9 @@ const config: PostgresConnectionOptions = {
     CreateDropbox1653616447910,
     SeedDropboxErc721At1653616447920,
 
-    CreateExchangeRules1653616448010,
-    SeedExchangeErc1155Erc1155At1653616448020,
-    SeedExchangeErc721Erc1155At1653616448030,
+    CreateRecipe1653616448010,
+    SeedRecipeErc1155Erc1155At1653616448020,
+    SeedRecipeErc721Erc1155At1653616448030,
     CreateExchangeHistory1653616448050,
 
     CreateStakingRules1654751224200,

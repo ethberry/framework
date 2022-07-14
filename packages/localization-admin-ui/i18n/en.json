@@ -76,7 +76,7 @@
     "emailType": {
       "DUMMY": "Test email"
     },
-    "exchangeStatus": {
+    "craftStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -192,6 +192,8 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "deposit": "Deposit",
+      "reward": "Reward",
       "DUMMY": "Dummy",
       "account": "Account",
       "address": "Address",
@@ -221,7 +223,7 @@
       "dropboxStatus": "Status",
       "duration": "Duration",
       "email": "Email",
-      "exchangeStatus": "Status",
+      "craftStatus": "Status",
       "imageUrl": "Avatar",
       "ingredients": "Ingredients",
       "item": "Item",
@@ -383,7 +385,7 @@
       "mechanics": {
         "airdrops": "Airdrops",
         "dropboxes": "Dropboxes",
-        "exchange-rules": "Exchange Rules",
+        "craft": "Craft",
         "stakes": "Stakes",
         "staking-rules": "Staking Rules",
         "title": "Mechanics",
@@ -439,10 +441,10 @@
         "title": "Title"
       }
     },
-    "exchange-rules": {
+    "craft": {
       "activate": "Activate rule",
       "deactivate": "Deactivate rule",
-      "title": "Exchange rules",
+      "title": "Craft recipes",
       "upload": "Upload rule"
     },
     "guest": {

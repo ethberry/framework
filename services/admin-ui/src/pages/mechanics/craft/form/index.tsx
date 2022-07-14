@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { ExchangeStatus, IExchangeSearchDto } from "@framework/types";
+import { CraftStatus, IExchangeSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -18,8 +18,8 @@ export const ExchangeSearchForm: FC<IExchangeSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, exchangeStatus } = initialValues;
-  const fixedValues = { query, exchangeStatus };
+  const { query, craftStatus } = initialValues;
+  const fixedValues = { query, craftStatus };
 
   return (
     <FormWrapper
@@ -38,7 +38,7 @@ export const ExchangeSearchForm: FC<IExchangeSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <SelectInput multiple name="exchangeStatus" options={ExchangeStatus} />
+            <SelectInput multiple name="craftStatus" options={CraftStatus} />
           </Grid>
         </Grid>
       </Collapse>

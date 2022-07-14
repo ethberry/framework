@@ -2,10 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateExchangeRules1653616448010 implements MigrationInterface {
+export class CreateRecipe1653616448010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.exchange_status_enum AS ENUM (
+      CREATE TYPE ${ns}.craft_status_enum AS ENUM (
         'NEW',
         'ACTIVE',
         'INACTIVE'
@@ -29,8 +29,8 @@ export class CreateExchangeRules1653616448010 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "exchange_status",
-          type: `${ns}.exchange_status_enum`,
+          name: "craft_status",
+          type: `${ns}.craft_status_enum`,
           default: "'NEW'",
         },
         {
@@ -62,7 +62,7 @@ export class CreateExchangeRules1653616448010 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.exchange`);
-    await queryRunner.query(`DROP TYPE ${ns}.exchange_status_enum;`);
+    await queryRunner.dropTable(`${ns}.recipe`);
+    await queryRunner.query(`DROP TYPE ${ns}.craft_status_enum;`);
   }
 }

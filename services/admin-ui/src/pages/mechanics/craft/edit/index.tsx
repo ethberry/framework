@@ -1,9 +1,9 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { IRecipe } from "@framework/types";
+import { IRecipe, TokenType } from "@framework/types";
 
-// import { validationSchema2 } from "./validation";
+import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../components/inputs/price";
 
 export interface IExchangeEditDialogProps {
@@ -26,13 +26,13 @@ export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {
   return (
     <FormDialog
       initialValues={fixedValues}
-      // validationSchema={validationSchema2}
-      message={"dialogs.edit"}
-      data-testid="ExchangeEditDialog"
+      validationSchema={validationSchema}
+      message="dialogs.edit"
+      data-testid="CraftEditDialog"
       {...rest}
     >
-      <PriceInput prefix="item" name="Item" />
-      <PriceInput prefix="ingredients" multiple name="Ingredients" />
+      <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput prefix="ingredients" multiple disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
     </FormDialog>
   );
 };

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { get, useFormContext, useWatch } from "react-hook-form";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
@@ -13,14 +13,13 @@ import { TokenInput } from "./token-input";
 import { AmountInput } from "./amount-input";
 
 export interface IPriceEditDialogProps {
-  name?: string;
   prefix: string;
   multiple?: boolean;
   disabledOptions?: Array<TokenType>;
 }
 
 export const PriceInput: FC<IPriceEditDialogProps> = props => {
-  const { name, prefix, multiple = false, disabledOptions } = props;
+  const { prefix = "price", multiple = false, disabledOptions } = props;
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
@@ -44,7 +43,9 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
 
   return (
     <Box mt={2}>
-      <Typography>{name || "Price"}</Typography>
+      <Typography>
+        <FormattedMessage id={`form.labels.${prefix}`} />
+      </Typography>
 
       {value?.map((o: IAssetComponent, i: number) => (
         <Box

@@ -20,7 +20,7 @@ import { CraftEntity } from "./craft.entity";
 import { Erc721RecipeSearchDto, Erc721RecipeUpdateDto, ExchangeCreateDto } from "./dto";
 
 @Public()
-@Controller("/exchange-rules")
+@Controller("/craft")
 export class CraftController {
   constructor(private readonly recipeService: CraftService) {}
 

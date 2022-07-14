@@ -35,7 +35,7 @@ export const AirdropEditDialog: FC<IAirdropEditDialogProps> = props => {
       data-testid="AirdropEditDialog"
     >
       <TextInput name="account" />
-      <PriceInput prefix="item" name="Item" disabledOptions={[TokenType.NATIVE]} />
+      <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20]} />
     </FormDialog>
   );
 };

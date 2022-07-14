@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterface {
+export class SeedRecipeErc721Erc1155At1653616448030 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -54,7 +54,7 @@ export class SeedExchangeErc721Erc1155At1653616448030 implements MigrationInterf
       INSERT INTO ${ns}.recipe (
         item_id,
         ingredients_id,
-        exchange_status,
+        craft_status,
         created_at,
         updated_at
       ) VALUES (

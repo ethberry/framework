@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
-import { ExchangeStatus, IRecipe } from "@framework/types";
+import { CraftStatus, IRecipe } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
@@ -18,7 +18,7 @@ export class CraftEntity extends IdDateBaseEntity implements IRecipe {
 
   @Column({
     type: "enum",
-    enum: ExchangeStatus,
+    enum: CraftStatus,
   })
-  public exchangeStatus: ExchangeStatus;
+  public craftStatus: CraftStatus;
 }
