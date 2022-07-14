@@ -23,11 +23,11 @@ export class LootService {
     const templateEntities = await this.templateService.findAll({});
 
     const nonce = utils.randomBytes(32);
-    const signature = await this.getSign(nonce, templateEntities, userEntity);
+    const signature = await this.getSignature(nonce, templateEntities, userEntity);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async getSign(
+  public async getSignature(
     nonce: Uint8Array,
     templateEntities: Array<TemplateEntity>,
     userEntity: UserEntity,

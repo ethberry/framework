@@ -2,26 +2,45 @@ import { BadRequestException, Inject, Injectable, NotFoundException } from "@nes
 import { ConfigService } from "@nestjs/config";
 import { constants, utils, Wallet } from "ethers";
 
-import { prepareEip712 } from "@gemunion/butils";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
+import { ContractTemplate, TokenType } from "@framework/types";
 
 import { ILevelUpDtoDto } from "./interfaces";
-import { Erc721TokenService } from "../../erc721/token/token.service";
-import { ContractTemplate } from "@framework/types";
+import { UserEntity } from "../../user/user.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+
+export interface IAsset {
+  tokenType: TokenType;
+  token: string;
+  tokenId: string;
+  amount: string;
+}
 
 @Injectable()
-export class Erc721GradeService {
+export class GradeService {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
-    private readonly erc721TokenService: Erc721TokenService,
+    private readonly tokenService: TokenService,
   ) {}
 
-  public async levelUp(dto: ILevelUpDtoDto): Promise<IServerSignature> {
-    const { collection, tokenId } = dto;
-    const tokenEntity = await this.erc721TokenService.getToken(collection, tokenId);
+  public async levelUp(dto: ILevelUpDtoDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { tokenId } = dto;
+    const tokenEntity = await this.tokenService.findOne(
+      { id: tokenId },
+      {
+        join: {
+          alias: "token",
+          leftJoinAndSelect: {
+            template: "token.template",
+            contract: "template.contract",
+          },
+        },
+      },
+    );
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -29,30 +48,64 @@ export class Erc721GradeService {
 
     const { contractTemplate } = tokenEntity.template.contract;
     if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
-      throw new BadRequestException("wrongTokenType");
+      throw new BadRequestException("incompatibleContractTemplate");
     }
 
-    const totalTokenPrice = constants.WeiPerEther;
-    const signData = {
-      nonce: utils.randomBytes(32),
-      collection,
-      tokenId,
-      price: totalTokenPrice,
+    // TODO extract to separate function
+    const assetEntity: IAsset = {
+      tokenType: TokenType.NATIVE,
+      token: constants.AddressZero,
+      tokenId: constants.Zero.toString(),
+      amount: constants.WeiPerEther.toString(),
     };
-    const signature = await Promise.resolve(this.getSign(signData));
-    return { nonce: utils.hexlify(signData.nonce), signature };
+
+    const nonce = utils.randomBytes(32);
+
+    const signature = await this.getSignature(nonce, tokenEntity, assetEntity, userEntity.wallet);
+    return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async getSign(data: Record<string, any>): Promise<string> {
+  public async getSignature(
+    nonce: Uint8Array,
+    tokenEntity: TokenEntity,
+    assetEntity: IAsset,
+    account: string,
+  ): Promise<string> {
     return this.signer._signTypedData(
+      // Domain
       {
         name: "MetaDataManipulator",
         version: "1.0.0",
         chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
         verifyingContract: this.configService.get<string>("METADATA_ADDR", ""),
       },
-      prepareEip712(data),
-      data,
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "account", type: "address" },
+          { name: "item", type: "Asset" },
+          { name: "price", type: "Asset" },
+        ],
+        Asset: [
+          { name: "tokenType", type: "uint256" },
+          { name: "token", type: "address" },
+          { name: "tokenId", type: "uint256" },
+          { name: "amount", type: "uint256" },
+        ],
+      },
+      // Value
+      {
+        nonce,
+        account,
+        item: {
+          tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
+          token: tokenEntity.template.contract.address,
+          tokenId: tokenEntity.id,
+          amount: 1,
+        },
+        price: assetEntity,
+      },
     );
   }
 }

@@ -21,7 +21,7 @@ contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   bytes32 internal immutable PERMIT_SIGNATURE =
-    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset item)", ASSET_SIGNATURE));
+    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset item,Asset price)", ASSET_SIGNATURE));
 
   constructor(string memory name) EIP712(name, "1.0.0") {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -32,6 +32,7 @@ contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
   function levelUp(
     bytes32 nonce,
     Asset memory item,
+    Asset memory price,
     address signer,
     bytes calldata signature
   ) external payable {
@@ -42,8 +43,18 @@ contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hash(nonce, account, item), signature);
+    bool isVerified = _verify(signer, _hash(nonce, account, item, price), signature);
     require(isVerified, "MetaDataManipulator: Invalid signature");
+
+    if (price.tokenType == TokenType.NATIVE) {
+      require(price.amount <= msg.value, "MetaDataManipulator: Wrong amount");
+    } else if (price.tokenType == TokenType.ERC20) {
+      IERC20(price.token).transferFrom(account, address(this), price.amount);
+    } else if (price.tokenType == TokenType.ERC1155) {
+      IERC1155(price.token).safeTransferFrom(account, address(this), price.tokenId, price.amount, "0x");
+    } else {
+      revert("MetaDataManipulator: unsupported token type");
+    }
 
     IERC721Graded(item.token).levelUp(item.tokenId);
   }
@@ -51,9 +62,10 @@ contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
   function _hash(
     bytes32 nonce,
     address account,
-    Asset memory item
+    Asset memory item,
+    Asset memory price
   ) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStruct(item))));
+    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStruct(item), hashAssetStruct(price))));
   }
 
   function _verify(

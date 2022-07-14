@@ -48,7 +48,7 @@ export class MarketplaceService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSign(nonce, templateEntity, account);
+    const signature = await this.getSignature(nonce, templateEntity, account);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
@@ -98,11 +98,11 @@ export class MarketplaceService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSign(nonce, templateEntity, account);
+    const signature = await this.getSignature(nonce, templateEntity, account);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async getSign(nonce: Uint8Array, templateEntity: ITemplate, account: string): Promise<string> {
+  public async getSignature(nonce: Uint8Array, templateEntity: ITemplate, account: string): Promise<string> {
     return this.signer._signTypedData(
       // Domain
       {

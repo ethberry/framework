@@ -38,7 +38,7 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
   bytes32 internal immutable PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items,Asset[] ingredients)", ASSET_SIGNATURE));
 
-  event Transaction(address from, Asset[] items, Asset[] ingredients, uint256[] ids);
+  event Transaction(address from, Asset[] items, Asset[] ingredients);
 
   constructor(string memory name) EIP712(name, "1.0.0") {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -64,13 +64,19 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
     require(isVerified, "Exchange: Invalid signature");
 
     uint256 length1 = ingredients.length;
+
+    // TODO calculate what is most efficient
     uint256 totalAmount;
     for (uint256 i = 0; i < length1; i++) {
-      Asset memory ingredient = ingredients[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
-          totalAmount = totalAmount + ingredient.amount;
-          require(totalAmount <= msg.value, "Marketplace: Wrong amount");
-      } else if (ingredient.tokenType == TokenType.ERC20) {
+        totalAmount = totalAmount + ingredient.amount;
+      }
+    }
+    require(totalAmount == msg.value, "Exchange: Wrong amount");
+
+    for (uint256 i = 0; i < length1; i++) {
+      Asset memory ingredient = ingredients[i];
+      if (ingredient.tokenType == TokenType.ERC20) {
         IERC20(ingredient.token).transferFrom(account, address(this), ingredient.amount);
       } else if (ingredient.tokenType == TokenType.ERC1155) {
         IERC1155(ingredient.token).safeTransferFrom(
@@ -85,33 +91,27 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
       }
     }
 
-    uint256[] memory ids = new uint256[](items.length);
     uint256 length2 = items.length;
+
     for (uint256 i = 0; i < length2; i++) {
       Asset memory item = items[i];
       if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM);
         bool dropboxInterface = IERC721(item.token).supportsInterface(IERC721_DROPBOX);
-        uint256 id;
         if (randomInterface) {
-         id = IERC721Random(item.token).mintRandom(account, item.tokenId, 0);
-          ids[i] = id;
+          IERC721Random(item.token).mintRandom(account, item.tokenId, 0);
         } else if (dropboxInterface) {
-          id = IDropbox(item.token).mintDropbox(account, item.tokenId);
-          ids[i] = id;
+          IDropbox(item.token).mintDropbox(account, item.tokenId);
         } else {
-          id = IERC721Simple(item.token).mintCommon(account, item.tokenId);
-          ids[i] = id;
+          IERC721Simple(item.token).mintCommon(account, item.tokenId);
         }
-
       } else if (item.tokenType == TokenType.ERC1155) {
         IERC1155Simple(item.token).mint(account, item.tokenId, item.amount, "0x");
-        ids[i] = item.tokenId;
       } else {
         revert("Exchange: unsupported token type");
       }
     }
-    emit Transaction(account, items, ingredients, ids);
+    emit Transaction(account, items, ingredients);
   }
 
   function _hash(
