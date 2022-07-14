@@ -20,7 +20,7 @@ export const NewErc998: FC = () => {
       return api.fetchJson({
         url: "/templates/new",
         data: {
-          tokenType: TokenType.ERC998,
+          contractType: TokenType.ERC998,
         },
       });
     },

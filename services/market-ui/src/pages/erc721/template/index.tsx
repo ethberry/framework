@@ -16,6 +16,7 @@ export const Erc721Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
     baseUrl: "/erc721-templates",
     empty: {
+      title: "",
       description: emptyStateString,
     },
   });

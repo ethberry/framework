@@ -19,7 +19,7 @@ export const DropboxItem: FC<IDropboxItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc721-dropboxes/${dropbox.id}`}>
+      <CardActionArea component={RouterLink} to={`/dropboxes/${dropbox.id}`}>
         <CardMedia className={classes.media} image={dropbox.imageUrl} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

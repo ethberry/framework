@@ -69,6 +69,11 @@ export class CreateContract1563804000110 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "decimals",
+          type: "int",
+          default: 0,
+        },
+        {
           name: "royalty",
           type: "int",
         },

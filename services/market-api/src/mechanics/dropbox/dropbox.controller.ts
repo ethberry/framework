@@ -21,6 +21,6 @@ export class DropboxController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<DropboxEntity | null> {
-    return this.dropboxService.findOne({ id });
+    return this.dropboxService.findOneWithPrice({ id });
   }
 }

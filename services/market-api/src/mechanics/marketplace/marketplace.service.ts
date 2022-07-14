@@ -57,7 +57,15 @@ export class MarketplaceService {
 
     const dropboxEntity = await this.dropboxService.findOne(
       { id: dropboxId },
-      { relations: { contract: true, item: true } },
+      {
+        join: {
+          alias: "dropbox",
+          leftJoinAndSelect: {
+            item: "dropbox.item",
+            item_components: "item.components",
+          },
+        },
+      },
     );
 
     if (!dropboxEntity) {
@@ -72,8 +80,8 @@ export class MarketplaceService {
           leftJoinAndSelect: {
             contract: "template.contract",
             price: "template.price",
-            components: "price.components",
-            components_contract: "components.contract",
+            price_components: "price.components",
+            price_contract: "price_components.contract",
           },
         },
       },

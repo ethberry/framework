@@ -25,44 +25,38 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const handleBuy = useMetamask(() => {
     return api
       .fetchJson({
-        url: `/templates/${template.id}`,
+        url: "/marketplace/template",
+        method: "POST",
+        data: {
+          templateId: template.id,
+          account,
+        },
       })
-      .then((template: ITemplate) => {
-        return api
-          .fetchJson({
-            url: "/marketplace/template",
-            method: "POST",
-            data: {
-              templateId: template.id,
-              account,
-            },
-          })
-          .then((sign: IServerSignature) => {
-            const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
+      .then((sign: IServerSignature) => {
+        const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
 
-            return contract.execute(
-              utils.arrayify(sign.nonce),
-              [
-                {
-                  tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
-                  token: template.contract?.address,
-                  tokenId: template.id,
-                  amount: 1,
-                },
-              ],
-              template.price?.components.map(component => ({
-                tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-                token: component.contract?.address,
-                tokenId: component.tokenId,
-                amount: component.amount,
-              })),
-              process.env.ACCOUNT,
-              sign.signature,
-              {
-                value: getEthPrice(template),
-              },
-            ) as Promise<void>;
-          });
+        return contract.execute(
+          utils.arrayify(sign.nonce),
+          [
+            {
+              tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
+              token: template.contract?.address,
+              tokenId: template.id,
+              amount: 1,
+            },
+          ],
+          template.price?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract?.address,
+            tokenId: component.tokenId,
+            amount: component.amount,
+          })),
+          process.env.ACCOUNT,
+          sign.signature,
+          {
+            value: getEthPrice(template),
+          },
+        ) as Promise<void>;
       });
   });
 

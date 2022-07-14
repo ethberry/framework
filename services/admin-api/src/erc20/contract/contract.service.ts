@@ -37,6 +37,7 @@ export class Erc20ContractService extends ContractService {
       .create({
         address,
         symbol,
+        decimals,
         royalty: 0,
         contractType: TokenType.ERC20,
         contractTemplate: contractTemplate as unknown as ContractTemplate,
@@ -50,7 +51,6 @@ export class Erc20ContractService extends ContractService {
 
     const templateEntity = await this.templateEntityRepository
       .create({
-        decimals,
         title,
         description,
         contract: contractEntity,

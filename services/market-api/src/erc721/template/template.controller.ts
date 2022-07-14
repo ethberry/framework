@@ -25,6 +25,6 @@ export class Erc721TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc721TemplateService.findOne({ id }, { relations: ["contract"] });
+    return this.erc721TemplateService.findOneWithPrice({ id });
   }
 }

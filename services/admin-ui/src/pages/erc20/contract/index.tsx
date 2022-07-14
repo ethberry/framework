@@ -57,9 +57,9 @@ export const Erc20Contract: FC = () => {
       title: "",
       description: emptyStateString,
       symbol: "",
+      decimals: 18,
       templates: [
         {
-          decimals: 18,
           cap: constants.WeiPerEther.toString(),
         } as ITemplate,
       ],

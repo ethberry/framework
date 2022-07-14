@@ -101,6 +101,7 @@ export class ContractManagerServiceEth {
       title: name,
       name,
       symbol,
+      decimals: 18,
       description: emptyStateString,
       imageUrl,
       royalty: 0, // todo default or nullable in entity?
@@ -116,7 +117,6 @@ export class ContractManagerServiceEth {
       imageUrl,
       attributes: "{}",
       cap,
-      decimals: 18,
       contractId: erc20ContractEntity.id,
     });
 

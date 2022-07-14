@@ -50,11 +50,6 @@ export class CreateTemplate1563804000210 implements MigrationInterface {
           default: 0,
         },
         {
-          name: "decimals",
-          type: "int",
-          default: 0,
-        },
-        {
           name: "contract_id",
           type: "int",
         },

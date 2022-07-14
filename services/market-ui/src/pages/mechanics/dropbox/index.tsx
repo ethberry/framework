@@ -14,7 +14,7 @@ import { useStyles } from "./styles";
 
 export const Dropbox: FC = () => {
   const { selected, isLoading } = useCollection<IDropbox>({
-    baseUrl: "/erc721-dropboxes",
+    baseUrl: "/dropboxes",
     empty: {
       description: emptyStateString,
     },
@@ -28,9 +28,9 @@ export const Dropbox: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-dropbox"]} data={[{}, selected]} />
+      <Breadcrumbs path={["dashboard", "dropboxes"]} data={[{}, selected]} />
 
-      <PageHeader message="pages.erc721-dropbox.title" data={selected} />
+      <PageHeader message="pages.dropboxes.title" data={selected} />
 
       <Grid container>
         <Grid item xs={9}>

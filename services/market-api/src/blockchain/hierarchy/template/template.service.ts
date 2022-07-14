@@ -4,7 +4,6 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 
 import { TemplateEntity } from "./template.entity";
 import { ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
-import { ITemplateNewDto } from "./interfaces";
 
 @Injectable()
 export class TemplateService {
@@ -13,15 +12,27 @@ export class TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
   ) {}
 
-  public async search(dto: ITemplateSearchDto, contractType: TokenType): Promise<[Array<TemplateEntity>, number]> {
+  public async search(
+    dto: Partial<ITemplateSearchDto>,
+    contractType?: TokenType,
+  ): Promise<[Array<TemplateEntity>, number]> {
     const { query, skip, take, contractIds /*, minPrice, maxPrice */ } = dto;
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    queryBuilder.andWhere("template.templateStatus = :templateStatus", { templateStatus: TemplateStatus.ACTIVE });
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("template.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
+
+    queryBuilder.andWhere("template.templateStatus = :templateStatus", {
+      templateStatus: TemplateStatus.ACTIVE,
+    });
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -82,39 +93,24 @@ export class TemplateService {
     });
   }
 
-  public async getNewTemplates(dto: ITemplateNewDto): Promise<[Array<TemplateEntity>, number]> {
-    const { tokenType } = dto;
-
-    const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
-
-    queryBuilder.select();
-
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-
-    if (tokenType) {
-      queryBuilder.andWhere("contract.contractType = :contractType", {
-        contractType: tokenType,
-      });
-    }
-
-    queryBuilder.andWhere("template.templateStatus = :templateStatus", {
-      templateStatus: TemplateStatus.ACTIVE,
-    });
-
-    queryBuilder.orderBy({
-      "template.createdAt": "DESC",
-    });
-
-    queryBuilder.skip(0);
-    queryBuilder.take(10);
-
-    return queryBuilder.getManyAndCount();
-  }
-
   public findOne(
     where: FindOptionsWhere<TemplateEntity>,
     options?: FindOneOptions<TemplateEntity>,
   ): Promise<TemplateEntity | null> {
     return this.templateEntityRepository.findOne({ where, ...options });
+  }
+
+  public findOneWithPrice(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "template",
+        leftJoinAndSelect: {
+          contract: "template.contract",
+          price: "template.price",
+          price_components: "price.components",
+          price_contract: "price_components.contract",
+        },
+      },
+    });
   }
 }

@@ -55,6 +55,7 @@ export interface IContract extends IDeployable, ISearchable {
   imageUrl: string;
   name: string;
   symbol: string;
+  decimals: number;
   royalty: number;
   baseTokenURI: string;
   contractStatus: ContractStatus;

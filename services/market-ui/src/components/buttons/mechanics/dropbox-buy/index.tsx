@@ -10,6 +10,7 @@ import { IDropbox, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+import { getEthPrice } from "../../../../utils/money";
 
 interface IDropboxBuyButtonProps {
   dropbox: IDropbox;
@@ -19,28 +20,41 @@ export const DropboxBuyButton: FC<IDropboxBuyButtonProps> = props => {
   const { dropbox } = props;
 
   const api = useApi();
-  const { provider } = useWeb3React();
+  const { provider, account } = useWeb3React();
 
   const handleBuy = useMetamask(() => {
     return api
       .fetchJson({
-        url: "/erc998-marketplace/sign-dropbox",
+        url: "/marketplace/dropbox",
         method: "POST",
-        data: { templateId: dropbox.id },
+        data: {
+          dropboxId: dropbox.id,
+          account,
+        },
       })
       .then((sign: IServerSignature) => {
         const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
-        const nonce = utils.arrayify(sign.nonce);
-        const commonDropboxPrice = utils.parseUnits(dropbox.price.components[0].amount, "wei");
 
-        return contract.buyDropbox(
-          nonce,
-          dropbox.contract?.address,
-          dropbox.templateId, // Dropbox content
+        return contract.execute(
+          utils.arrayify(sign.nonce),
+          [
+            {
+              tokenType: Object.keys(TokenType).indexOf(dropbox.contract!.contractType),
+              token: dropbox.contract?.address,
+              tokenId: dropbox.id,
+              amount: 1,
+            },
+          ],
+          dropbox.price?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract?.address,
+            tokenId: component.tokenId,
+            amount: component.amount,
+          })),
           process.env.ACCOUNT,
           sign.signature,
           {
-            value: dropbox.price.components[0].tokenType === TokenType.NATIVE ? commonDropboxPrice : 0,
+            value: getEthPrice(dropbox),
           },
         ) as Promise<void>;
       });

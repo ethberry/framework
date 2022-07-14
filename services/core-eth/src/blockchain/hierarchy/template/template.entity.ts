@@ -29,9 +29,6 @@ export class TemplateEntity extends SearchableEntity implements ITemplate {
   @Column({ type: "int" })
   public amount: string;
 
-  @Column({ type: "int" })
-  public decimals: number;
-
   @Column({
     type: "enum",
     enum: TemplateStatus,

@@ -14,25 +14,12 @@ export class TemplateController {
   @Get("/new")
   @UseInterceptors(PaginationInterceptor)
   public getNewTemplates(@Query() dto: TemplateNewDto): Promise<[Array<TemplateEntity>, number]> {
-    return this.templateService.getNewTemplates(dto);
+    return this.templateService.search({ take: 10 }, dto.contractType);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.templateService.findOne(
-      { id },
-      {
-        join: {
-          alias: "template",
-          leftJoinAndSelect: {
-            price: "template.price",
-            contract: "template.contract",
-            components: "price.components",
-            components_contract: "components.contract",
-          },
-        },
-      },
-    );
+    return this.templateService.findOneWithPrice({ id });
   }
 }

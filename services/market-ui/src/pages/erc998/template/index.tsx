@@ -16,6 +16,7 @@ export const Erc998Template: FC = () => {
   const { selected, isLoading } = useCollection<ITemplate>({
     baseUrl: "/erc998-templates",
     empty: {
+      title: "",
       description: emptyStateString,
     },
   });

@@ -13,5 +13,5 @@ export class TemplateNewDto implements ITemplateNewDto {
   @IsOptional()
   @Transform(({ value }) => value as TokenType)
   @IsEnum(TokenType, { message: "badInput" })
-  public tokenType: TokenType;
+  public contractType: TokenType;
 }
