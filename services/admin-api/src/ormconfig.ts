@@ -29,6 +29,7 @@ import { CraftEntity } from "./mechanics/craft/craft.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
 import { PageEntity } from "./page/page.entity";
+import { GradeEntity } from "./mechanics/grade/grade.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -76,10 +77,10 @@ import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-see
 import { CreateDropbox1653616447910 } from "./migrations/1653616447910-create-dropbox";
 import { SeedDropboxErc721At1653616447920 } from "./migrations/1653616447920-seed-dropbox-erc721";
 
-import { CreateRecipe1653616448010 } from "./migrations/1653616448010-create-recipe";
-import { SeedRecipeErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-recipe-erc1155-erc1155";
-import { SeedRecipeErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-recipe-erc721-erc1155-recipe";
-import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-exchnage-history";
+import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craft";
+import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
+import { SeedCraftErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-craft-erc721-erc1155-recipe";
+import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-craft-history";
 
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { CreateContractManagerHistory1652682493386 } from "./migrations/1652682493386-create-contract-manager-history";
@@ -97,6 +98,8 @@ import { CreateStakingHistory1654751224260 } from "./migrations/1654751224260-cr
 import { CreatePage1655626535100 } from "./migrations/1655626535100-create-page";
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
 import { CreateStakes1654751224255 } from "./migrations/1654751224255-create-stakes";
+import { CreateGrade1657846587000 } from "./migrations/1657846587000-create-grade";
+import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -125,6 +128,7 @@ const config: PostgresConnectionOptions = {
     AirdropEntity,
     DropboxEntity,
     CraftEntity,
+    GradeEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -201,9 +205,9 @@ const config: PostgresConnectionOptions = {
     CreateDropbox1653616447910,
     SeedDropboxErc721At1653616447920,
 
-    CreateRecipe1653616448010,
-    SeedRecipeErc1155Erc1155At1653616448020,
-    SeedRecipeErc721Erc1155At1653616448030,
+    CreateCraft1653616448010,
+    SeedCraftErc1155Erc1155At1653616448020,
+    SeedCraftErc721Erc1155At1653616448030,
     CreateExchangeHistory1653616448050,
 
     CreateStakingRules1654751224200,
@@ -213,6 +217,9 @@ const config: PostgresConnectionOptions = {
 
     CreatePage1655626535100,
     SeedPages1655626535110,
+
+    CreateGrade1657846587000,
+    SeedGrade1657846587010,
   ],
 };
 

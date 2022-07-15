@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedRecipeErc721Erc1155At1653616448030 implements MigrationInterface {
+export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -51,7 +51,7 @@ export class SeedRecipeErc721Erc1155At1653616448030 implements MigrationInterfac
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.recipe (
+      INSERT INTO ${ns}.craft (
         item_id,
         ingredients_id,
         craft_status,
@@ -68,6 +68,6 @@ export class SeedRecipeErc721Erc1155At1653616448030 implements MigrationInterfac
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.recipe RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.craft RESTART IDENTITY CASCADE;`);
   }
 }

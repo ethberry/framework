@@ -6,7 +6,6 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { ITemplateSearchDto, TokenType } from "@framework/types";
 // import { EthInput } from "@gemunion/mui-inputs-mask";
-
 import { useStyles } from "./styles";
 
 interface ITemplateSearchFormProps {

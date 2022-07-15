@@ -9,9 +9,9 @@ import {
   ContractType,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
-  IContractManagerVestingDeployed,
   IContractManagerERC721TokenDeployed,
   IContractManagerERC998TokenDeployed,
+  IContractManagerVestingDeployed,
 } from "@framework/types";
 
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { DateInput } from "@gemunion/mui-inputs-picker";
-import { VestingTemplate, IVesting, IVestingDeployDto } from "@framework/types";
+import { IVesting, IVestingDeployDto, VestingTemplate } from "@framework/types";
 
 import { validationSchema } from "./validation";
 

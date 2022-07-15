@@ -3,14 +3,14 @@ import { Grid, Pagination } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ISearchDto } from "@gemunion/types-collection";
-import { IRecipe } from "@framework/types";
+import { ICraft } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Recipe } from "./item";
 
 export const CraftList: FC = () => {
-  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<IRecipe, ISearchDto>({
+  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<ICraft, ISearchDto>({
     baseUrl: "/craft",
     search: {
       query: "",

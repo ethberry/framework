@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsEthereumAddress, IsInt, IsISO8601, IsString } from "class-validator";
 
-import { VestingTemplate, IVestingDeployDto } from "@framework/types";
+import { IVestingDeployDto, VestingTemplate } from "@framework/types";
 
 export class VestingDeployDto implements IVestingDeployDto {
   @ApiProperty({

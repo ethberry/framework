@@ -1,6 +1,6 @@
 import { IAssetDto } from "../../asset/interfaces";
 
-export interface IRecipeCreateDto {
+export interface ICraftCreateDto {
   item: IAssetDto;
   ingredients: IAssetDto;
 }

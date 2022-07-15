@@ -1,7 +1,7 @@
 import { CraftStatus } from "@framework/types";
 
-import { IRecipeCreateDto } from "./create";
+import { ICraftCreateDto } from "./create";
 
-export interface IRecipeUpdateDto extends IRecipeCreateDto {
+export interface ICraftUpdateDto extends ICraftCreateDto {
   craftStatus: CraftStatus;
 }

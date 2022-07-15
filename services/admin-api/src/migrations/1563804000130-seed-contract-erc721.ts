@@ -14,7 +14,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721CollectionRuneAddress = process.env.ERC721_RUNE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 1 - 721.AIR, 2 - 721.DB, 3 - ITEMS, 4 - SKILLS, 5 - RUNES
+    // 13 - ITEMS, 14 - SKILLS, 15 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,

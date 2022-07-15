@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, Min, ValidateIf, IsOptional } from "class-validator";
+import { IsEnum, IsInt, IsOptional, Min, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";

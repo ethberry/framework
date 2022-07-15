@@ -5,8 +5,8 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
-  ContractType,
   ContractEventType,
+  ContractType,
   IAccessControlRoleAdminChanged,
   IAccessControlRoleGranted,
   IAccessControlRoleRevoked,

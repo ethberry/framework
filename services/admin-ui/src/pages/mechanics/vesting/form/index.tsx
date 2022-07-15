@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { VestingTemplate, IVestingSearchDto } from "@framework/types";
+import { IVestingSearchDto, VestingTemplate } from "@framework/types";
 
 import { useStyles } from "./styles";
 

@@ -10,7 +10,8 @@ export class CreateAsset1563804000100 implements MigrationInterface {
         'AIRDROP',
         'DROPBOX',
         'EXCHANGE',
-        'STAKING'
+        'STAKING',
+        'GRADE'
       );
     `);
 

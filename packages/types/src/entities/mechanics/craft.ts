@@ -9,7 +9,7 @@ export enum CraftStatus {
   INACTIVE = "INACTIVE",
 }
 
-export interface IRecipe extends IIdDateBase {
+export interface ICraft extends IIdDateBase {
   item: IAsset;
   ingredients: IAsset;
   craftStatus: CraftStatus;

@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { VestingTemplate, IVestingSearchDto } from "@framework/types";
+import { IVestingSearchDto, VestingTemplate } from "@framework/types";
 
 export class VestingSearchDto extends SearchDto implements IVestingSearchDto {
   @ApiPropertyOptional({

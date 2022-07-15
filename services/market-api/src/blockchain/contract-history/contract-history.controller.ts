@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseInterceptors, Query } from "@nestjs/common";
+import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { AddressPipe, ApiAddress, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";

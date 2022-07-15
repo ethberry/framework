@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { TokenSellButton, LevelUpButton } from "../../../../components/buttons";
+import { LevelUpButton, TokenSellButton } from "../../../../components/buttons";
 import { RarityBadge } from "./badge";
 
 interface ITokenProps {

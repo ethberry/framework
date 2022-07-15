@@ -7,7 +7,7 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
     await queryRunner.query(`CREATE TYPE ${ns}.exchange_event_enum AS ENUM ('Transaction');`);
 
     const table = new Table({
-      name: `${ns}.exchange_history`,
+      name: `${ns}.craft_history`,
       columns: [
         {
           name: "id",
@@ -31,7 +31,7 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "exchange_id",
+          name: "craft_id",
           type: "int",
           isNullable: true,
         },
@@ -46,9 +46,9 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["exchange_id"],
+          columnNames: ["craft_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.recipe`,
+          referencedTableName: `${ns}.craft`,
           onDelete: "CASCADE",
         },
       ],

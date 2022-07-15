@@ -48,7 +48,7 @@ export const DropboxBuyButton: FC<IDropboxBuyButtonProps> = props => {
           dropbox.price?.components.map(component => ({
             tokenType: Object.keys(TokenType).indexOf(component.tokenType),
             token: component.contract?.address,
-            tokenId: component.tokenId,
+            tokenId: component.token?.tokenId,
             amount: component.amount,
           })),
           process.env.ACCOUNT,

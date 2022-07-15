@@ -7,13 +7,13 @@ import { IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
-interface IRecipeSearchFormProps {
+interface ICraftSearchFormProps {
   onSubmit: (values: IStakingSearchDto) => Promise<void>;
   initialValues: IStakingSearchDto;
   open: boolean;
 }
 
-export const StakingSearchForm: FC<IRecipeSearchFormProps> = props => {
+export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();

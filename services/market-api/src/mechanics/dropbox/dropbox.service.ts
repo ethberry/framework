@@ -23,12 +23,14 @@ export class DropboxService {
 
     queryBuilder.leftJoinAndSelect("dropbox.contract", "contract");
     queryBuilder.leftJoinAndSelect("dropbox.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
-    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
     queryBuilder.leftJoinAndSelect("dropbox.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.token", "price_token");
+
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
+    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -87,7 +89,7 @@ export class DropboxService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "dropbox.title": "ASC",
+      "contract.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -109,6 +111,7 @@ export class DropboxService {
           price: "dropbox.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
+          price_token: "price_components.token",
         },
       },
     });

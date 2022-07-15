@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IRecipeCreateDto } from "../interfaces";
+import { ICraftCreateDto } from "../interfaces";
 import { AssetDto } from "../../asset/dto";
 
-export class ExchangeCreateDto implements IRecipeCreateDto {
+export class ExchangeCreateDto implements ICraftCreateDto {
   @ApiProperty({
     type: AssetDto,
   })

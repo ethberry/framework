@@ -1,7 +1,7 @@
 import { Column, Entity } from "typeorm";
 
 import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { VestingTemplate, IVesting } from "@framework/types";
+import { IVesting, VestingTemplate } from "@framework/types";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "vesting" })

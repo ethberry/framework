@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { BigNumber, utils, Wallet } from "ethers";
 
@@ -30,8 +30,9 @@ export class MarketplaceService {
           leftJoinAndSelect: {
             contract: "template.contract",
             price: "template.price",
-            components: "price.components",
-            components_contract: "components.contract",
+            price_components: "price.components",
+            price_contract: "price_components.contract",
+            price_token: "price_components.token",
           },
         },
       },
@@ -82,6 +83,7 @@ export class MarketplaceService {
             price: "template.price",
             price_components: "price.components",
             price_contract: "price_components.contract",
+            price_token: "price_components.token",
           },
         },
       },
@@ -141,7 +143,7 @@ export class MarketplaceService {
         ingredients: templateEntity.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract?.address,
-          tokenId: component.tokenId,
+          tokenId: component.token?.tokenId,
           amount: component.amount,
         })),
       },

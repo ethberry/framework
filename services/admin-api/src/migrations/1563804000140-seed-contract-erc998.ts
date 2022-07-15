@@ -13,7 +13,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
 
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 1 - 998.AIR, 2 - 998.DB, 3 - HERO
+    // 23 - HERO
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,

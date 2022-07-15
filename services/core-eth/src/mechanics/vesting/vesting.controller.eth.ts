@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, VestingEventType, IVestingERC20Released, IVestingEtherReleased } from "@framework/types";
+import { ContractType, IVestingERC20Released, IVestingEtherReleased, VestingEventType } from "@framework/types";
 
 import { VestingServiceEth } from "./vesting.service.eth";
 

@@ -8,14 +8,14 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractEventType,
   IAirdropRedeem,
-  IDropboxUnpack,
   IDefaultRoyaltyInfo,
+  IDropboxUnpack,
   ITokenApprove,
   ITokenApprovedForAll,
   ITokenRoyaltyInfo,
   ITokenTransfer,
-  TokenStatus,
   TContractEventData,
+  TokenStatus,
 } from "@framework/types";
 
 import { delay } from "../../common/utils";

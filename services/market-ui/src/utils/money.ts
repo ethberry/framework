@@ -1,4 +1,4 @@
-import { utils, BigNumber } from "ethers";
+import { BigNumber, utils } from "ethers";
 import { IAsset, IDropbox, ITemplate, TokenType } from "@framework/types";
 
 export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): string => {

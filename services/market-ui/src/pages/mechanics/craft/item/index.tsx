@@ -12,17 +12,17 @@ import {
   Typography,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
-import { IRecipe } from "@framework/types";
+import { ICraft } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
 import { CraftButton } from "../../../../components/buttons";
 
-interface IRecipeItemProps {
-  recipe: IRecipe;
+interface ICraftItemProps {
+  recipe: ICraft;
 }
 
-export const Recipe: FC<IRecipeItemProps> = props => {
+export const Recipe: FC<ICraftItemProps> = props => {
   const { recipe } = props;
 
   const classes = useStyles();

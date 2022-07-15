@@ -1,6 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeleteResult, FindManyOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 
 import { IPageSearchDto, PageStatus } from "@framework/types";
 
@@ -51,13 +51,6 @@ export class PageService {
     });
 
     return queryBuilder.getManyAndCount();
-  }
-
-  public findAndCount(
-    where: FindOptionsWhere<PageEntity>,
-    options?: FindManyOptions<PageEntity>,
-  ): Promise<[Array<PageEntity>, number]> {
-    return this.pageEntityRepository.findAndCount({ where, ...options });
   }
 
   public findOne(where: FindOptionsWhere<PageEntity>): Promise<PageEntity | null> {

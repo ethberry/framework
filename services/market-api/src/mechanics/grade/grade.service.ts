@@ -1,12 +1,15 @@
 import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, utils, Wallet } from "ethers";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { BigNumber, utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
-import { ContractTemplate, TokenType } from "@framework/types";
+import { ContractTemplate, GradeStrategy, TokenType } from "@framework/types";
 
 import { ILevelUpDtoDto } from "./interfaces";
+import { GradeEntity } from "./grade.entity";
 import { UserEntity } from "../../user/user.entity";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
@@ -25,6 +28,8 @@ export class GradeService {
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
     private readonly tokenService: TokenService,
+    @InjectRepository(GradeEntity)
+    private readonly gradeEntityRepository: Repository<GradeEntity>,
   ) {}
 
   public async levelUp(dto: ILevelUpDtoDto, userEntity: UserEntity): Promise<IServerSignature> {
@@ -51,13 +56,7 @@ export class GradeService {
       throw new BadRequestException("incompatibleContractTemplate");
     }
 
-    // TODO extract to separate function
-    const assetEntity: IAsset = {
-      tokenType: TokenType.NATIVE,
-      token: constants.AddressZero,
-      tokenId: constants.Zero.toString(),
-      amount: constants.WeiPerEther.toString(),
-    };
+    const assetEntity = await this.calculatePrice(tokenEntity);
 
     const nonce = utils.randomBytes(32);
 
@@ -107,5 +106,45 @@ export class GradeService {
         price: assetEntity,
       },
     );
+  }
+
+  public async calculatePrice(tokenEntity: TokenEntity): Promise<IAsset> {
+    const gradeEntity = await this.findOne({ contractId: tokenEntity.template.contract.id });
+
+    if (!gradeEntity) {
+      throw new NotFoundException("gradeNotFound");
+    }
+
+    const { grade } = tokenEntity.attributes;
+
+    let amount;
+
+    switch (gradeEntity.gradeStrategy) {
+      case GradeStrategy.FLAT:
+        amount = BigNumber.from(gradeEntity.price.components[0].amount);
+        break;
+      case GradeStrategy.LINEAR:
+        amount = BigNumber.from(gradeEntity.price.components[0].amount).mul(grade);
+        break;
+      case GradeStrategy.EXPONENTIAL:
+        amount = BigNumber.from(gradeEntity.price.components[0].amount).mul((1 + gradeEntity.growthRate) ** grade);
+        break;
+      default:
+        throw new BadRequestException("unknownStrategy");
+    }
+
+    return {
+      tokenType: gradeEntity.price.components[0].tokenType,
+      token: gradeEntity.price.components[0].contract.address,
+      tokenId: gradeEntity.price.components[0].token.tokenId,
+      amount: amount.toString(),
+    };
+  }
+
+  public findOne(
+    where: FindOptionsWhere<GradeEntity>,
+    options?: FindOneOptions<GradeEntity>,
+  ): Promise<GradeEntity | null> {
+    return this.gradeEntityRepository.findOne({ where, ...options });
   }
 }

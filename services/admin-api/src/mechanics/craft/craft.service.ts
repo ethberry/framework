@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { AssetType, CraftStatus, IExchangeSearchDto } from "@framework/types";
 
 import { CraftEntity } from "./craft.entity";
-import { IRecipeCreateDto, IRecipeUpdateDto } from "./interfaces";
+import { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
 import { AssetService } from "../asset/asset.service";
 
 @Injectable()
@@ -64,7 +64,7 @@ export class CraftService {
     return this.recipeEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: IRecipeCreateDto): Promise<CraftEntity> {
+  public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
     const { ingredients, item } = dto;
 
     // add new ingredient
@@ -91,7 +91,7 @@ export class CraftService {
       .save();
   }
 
-  public async update(where: FindOptionsWhere<CraftEntity>, dto: Partial<IRecipeUpdateDto>): Promise<CraftEntity> {
+  public async update(where: FindOptionsWhere<CraftEntity>, dto: Partial<ICraftUpdateDto>): Promise<CraftEntity> {
     const { ingredients, ...rest } = dto;
 
     const exchangeEntity = await this.findOne(where, {

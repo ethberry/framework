@@ -26,9 +26,9 @@ import {
   ContractManagerSearchDto,
   Erc1155TokenDeployDto,
   Erc20TokenDeployDto,
-  VestingDeployDto,
   Erc721TokenDeployDto,
   Erc998TokenDeployDto,
+  VestingDeployDto,
 } from "./dto";
 import { IContractManagerUpdateDto } from "./interfaces";
 

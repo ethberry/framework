@@ -2,14 +2,14 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Contract, BigNumber } from "ethers";
+import { BigNumber, Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
-import { MintErc1155TokenDialog, IMintErc1155TokenDto } from "./edit";
+import { IMintErc1155TokenDto, MintErc1155TokenDialog } from "./edit";
 
 export interface IOzMintErc1155TokenMenuItemProps {
   address: string;

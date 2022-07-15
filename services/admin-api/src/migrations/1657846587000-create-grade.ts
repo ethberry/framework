@@ -2,18 +2,18 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateRecipe1653616448010 implements MigrationInterface {
+export class CreateGrade1657846587000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.craft_status_enum AS ENUM (
-        'NEW',
-        'ACTIVE',
-        'INACTIVE'
+      CREATE TYPE ${ns}.grade_strategy_enum AS ENUM (
+        'FLAT',
+        'LINEAR',
+        'EXPONENTIAL'
       );
     `);
 
     const table = new Table({
-      name: `${ns}.recipe`,
+      name: `${ns}.grade`,
       columns: [
         {
           name: "id",
@@ -21,17 +21,20 @@ export class CreateRecipe1653616448010 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "item_id",
+          name: "grade_strategy",
+          type: `${ns}.grade_strategy_enum`,
+        },
+        {
+          name: "price_id",
           type: "int",
         },
         {
-          name: "ingredients_id",
+          name: "contract_id",
           type: "int",
         },
         {
-          name: "craft_status",
-          type: `${ns}.craft_status_enum`,
-          default: "'NEW'",
+          name: "growth_rate",
+          type: "float",
         },
         {
           name: "created_at",
@@ -44,13 +47,13 @@ export class CreateRecipe1653616448010 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["item_id"],
+          columnNames: ["contract_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.asset`,
+          referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["ingredients_id"],
+          columnNames: ["price_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
@@ -62,7 +65,7 @@ export class CreateRecipe1653616448010 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.recipe`);
-    await queryRunner.query(`DROP TYPE ${ns}.craft_status_enum;`);
+    await queryRunner.dropTable(`${ns}.grade`);
+    await queryRunner.query(`DROP TYPE ${ns}.grade_strategy_enum;`);
   }
 }

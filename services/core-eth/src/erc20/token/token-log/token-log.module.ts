@@ -2,7 +2,7 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, AccessListEventType, ContractType, ContractEventType } from "@framework/types";
+import { AccessControlEventType, AccessListEventType, ContractEventType, ContractType } from "@framework/types";
 
 import { Erc20LogService } from "./token-log.service";
 

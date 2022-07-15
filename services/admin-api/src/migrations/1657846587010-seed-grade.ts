@@ -1,8 +1,9 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { constants } from "ethers";
 
 import { ns } from "@framework/constants";
 
-export class SeedRecipeErc1155Erc1155At1653616448020 implements MigrationInterface {
+export class SeedGrade1657846587010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -12,21 +13,17 @@ export class SeedRecipeErc1155Erc1155At1653616448020 implements MigrationInterfa
         external_id,
         asset_type
       ) VALUES (
-        70101,
-        70101,
-        'EXCHANGE'
+        90101,
+        90101,
+        'GRADE'
       ), (
-        70102,
-        70102,
-        'EXCHANGE'
+        90102,
+        90102,
+        'GRADE'
       ), (
-        70111,
-        70111,
-        'EXCHANGE'
-      ), (
-        70112,
-        70112,
-        'EXCHANGE'
+        90201,
+        90201,
+        'GRADE'
       );
     `);
 
@@ -38,49 +35,53 @@ export class SeedRecipeErc1155Erc1155At1653616448020 implements MigrationInterfa
         amount,
         asset_id
       ) VALUES (
-        'ERC1155',
-        31,
-        40102, -- wood
+        'NATIVE',
         1,
-        70101
+        10001, -- ETH
+        '${constants.WeiPerEther.toString()}',
+        90101
+      ), (
+        'ERC20',
+        2,
+        10002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        90102
       ), (
         'ERC1155',
         31,
-        40103, -- iron
-        10,
-        70111
-      ), (
-        'ERC1155',
-        31,
-        40104, -- wood log
-        1,
-        70102
-      ), (
-        'ERC1155',
-        31,
-        40105, -- iron ingot
-        10,
-        70112
+        40101, -- gold
+        '1000',
+        90201
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.recipe (
-        item_id,
-        ingredients_id,
-        craft_status,
+      INSERT INTO ${ns}.grade (
+        grade_strategy,
+        growth_rate,
+        price_id,
+        contract_id,
         created_at,
         updated_at
       ) VALUES (
-        70101,
-        70111,
-        'NEW',
+        'FLAT',
+        0,
+        90101,
+        13,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        70102,
-        70112,
-        'ACTIVE',
+        'LINEAR',
+        0,
+        90102,
+        14,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'EXPONENTIAL',
+        1,
+        90201,
+        23,
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -88,6 +89,6 @@ export class SeedRecipeErc1155Erc1155At1653616448020 implements MigrationInterfa
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.recipe RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.grade RESTART IDENTITY CASCADE;`);
   }
 }

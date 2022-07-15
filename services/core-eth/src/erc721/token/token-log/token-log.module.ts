@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractType, ContractEventType } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
 
 import { Erc721TokenLogService } from "./token-log.service";
 

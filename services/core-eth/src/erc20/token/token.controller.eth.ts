@@ -6,8 +6,8 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   AccessListEventType,
-  ContractType,
   ContractEventType,
+  ContractType,
   IAccessControlRoleAdminChanged,
   IAccessControlRoleGranted,
   IAccessControlRoleRevoked,

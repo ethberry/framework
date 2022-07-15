@@ -8,13 +8,13 @@ import {
   Erc1155ContractTemplate,
   Erc20ContractTemplate,
   Erc721ContractTemplate,
+  Erc998ContractTemplate,
   IContractDeployDto,
   IErc20TokenDeployDto,
-  IVestingDeployDto,
   IErc721ContractDeployDto,
-  VestingTemplate,
   IErc998ContractDeployDto,
-  Erc998ContractTemplate,
+  IVestingDeployDto,
+  VestingTemplate,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -22,16 +22,15 @@ import ERC20BlackList from "@framework/core-contracts/artifacts/contracts/ERC20/
 import LinearVesting from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
 import GradedVesting from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
 import CliffVesting from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
-import ERC721Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC721Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC721RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
 // import ERC721Random from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 // todo add actual 998 contracts!
+import ERC721Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC998Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC721Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 import ERC998Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
+import ERC721RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
 import ERC998RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
 // import ERC998Random from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
-
 import ERC1155Simple from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 @Injectable()

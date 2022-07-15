@@ -4,6 +4,7 @@ import { Mixin } from "ts-mixer";
 import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ContractRole, ContractStatus, ContractTemplate, IContract, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
+
 import { TemplateEntity } from "../template/template.entity";
 
 @Entity({ schema: ns, name: "contract" })

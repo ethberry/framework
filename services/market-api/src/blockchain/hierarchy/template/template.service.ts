@@ -25,6 +25,7 @@ export class TemplateService {
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.token", "price_token");
 
     queryBuilder.andWhere("contract.contractType = :contractType", {
       contractType,
@@ -76,7 +77,6 @@ export class TemplateService {
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
-    // TODO better sort
     queryBuilder.orderBy({
       "template.createdAt": "DESC",
     });
@@ -109,6 +109,7 @@ export class TemplateService {
           price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
+          price_token: "price_components.token",
         },
       },
     });

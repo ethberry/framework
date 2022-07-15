@@ -4,10 +4,10 @@ import { IsEnum, IsOptional } from "class-validator";
 
 import { CraftStatus } from "@framework/types";
 
-import { IRecipeUpdateDto } from "../interfaces";
+import { ICraftUpdateDto } from "../interfaces";
 import { ExchangeCreateDto } from "./index";
 
-export class Erc721RecipeUpdateDto extends ExchangeCreateDto implements IRecipeUpdateDto {
+export class Erc721RecipeUpdateDto extends ExchangeCreateDto implements ICraftUpdateDto {
   @ApiPropertyOptional({
     enum: CraftStatus,
   })
