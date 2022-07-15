@@ -23,12 +23,15 @@ contract ERC721Graded is IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedC
   bytes32 public constant TEMPLATE_ID = keccak256("templateId");
   bytes32 public constant GRADE = keccak256("grade");
 
+  bytes32 public constant METADATA_ADMIN_ROLE = keccak256("METADATA_ADMIN_ROLE");
+
   constructor(
     string memory name,
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
   ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
+    _setupRole(METADATA_ADMIN_ROLE, _msgSender());
     // should start from 1
     _tokenIdTracker.increment();
   }
@@ -55,6 +58,13 @@ contract ERC721Graded is IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedC
   function _baseURI() internal view virtual override returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
+
+    function setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) public override onlyRole(METADATA_ADMIN_ROLE){
+      uint256 arrSize = metadata.length;
+      for(uint8 i=0; i < arrSize; i++) {
+        upsertRecordField(tokenId, metadata[i].key, metadata[i].value);
+      }
+    }
 
   receive() external payable {
     revert();

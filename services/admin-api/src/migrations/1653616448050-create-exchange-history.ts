@@ -7,7 +7,7 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
     await queryRunner.query(`CREATE TYPE ${ns}.exchange_event_enum AS ENUM ('Transaction');`);
 
     const table = new Table({
-      name: `${ns}.craft_history`,
+      name: `${ns}.exchange_history`,
       columns: [
         {
           name: "id",
@@ -31,7 +31,7 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "craft_id",
+          name: "exchange_id",
           type: "int",
           isNullable: true,
         },

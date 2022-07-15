@@ -1,12 +1,13 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, constants } from "ethers";
+import { BigNumber, constants, ethers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ILogEvent, ETHERS_RPC } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
+  ContractTemplate,
   IAirdropRedeem,
   IDefaultRoyaltyInfo,
   IRandomRequest,
@@ -20,13 +21,14 @@ import {
   TokenStatus,
 } from "@framework/types";
 
-import { delay } from "../../common/utils";
+import { blockAwait, delay } from "../../common/utils";
 import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
+import { ERC721Abi } from "../../erc721/token/token-log/interfaces";
 
 @Injectable()
 export class Erc998TokenServiceEth {
@@ -36,6 +38,8 @@ export class Erc998TokenServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(ETHERS_RPC)
+    private readonly jsonRpcProvider: ethers.providers.JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
@@ -52,25 +56,65 @@ export class Erc998TokenServiceEth {
     const {
       args: { from, to, tokenId },
     } = event;
+    const { address } = context;
 
-    // Wait until Token will be created by Marketplace Redeem or Airdrop Redeem or MintRandom events
-    this.loggerService.log(
-      `Erc998Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
-      Erc998TokenServiceEth.name,
-    );
-    await delay(1618);
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    const contractTemplate = contractEntity.contractTemplate;
+
+    // if (contractTemplate !== ContractTemplate.SIMPLE) {
+    const contract = new ethers.Contract(address, ERC721Abi, this.jsonRpcProvider);
+
+    // await block
+    await blockAwait(1, this.jsonRpcProvider);
+
+    const tokenMetaData = await contract.getTokenMetadata(tokenId);
+
+    // todo interface to get by metadata key enum
+    const templateId = BigNumber.from(tokenMetaData[0].value).toNumber();
+
+    console.info("Got TokenMetaData:", tokenMetaData, templateId);
+
+    const templateEntity = await this.templateService.findOne({ id: templateId });
+
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
+
+    const attributes =
+      contractTemplate === ContractTemplate.RANDOM
+        ? Object.assign(templateEntity.attributes, {
+            rarity: Object.values(TokenRarity)[BigNumber.from(tokenMetaData[1].value).toNumber()],
+          })
+        : contractTemplate === ContractTemplate.GRADED
+        ? Object.assign(templateEntity.attributes, {
+            grade: Object.values(TokenRarity)[BigNumber.from(tokenMetaData[1].value).toNumber()],
+          })
+        : templateEntity.attributes;
+
+    const tokenEntity = await this.tokenService.create({
+      tokenId,
+      attributes,
+      royalty: contractEntity.royalty,
+      template: templateEntity,
+    });
+
+    await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
 
     const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
-
     await this.updateHistory(event, context, erc998TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc998TokenEntity.template.amount += 1;
-      // erc998TokenEntity.template
+      // tokenEntity.template
       //   ? (erc998TokenEntity.template.instanceCount += 1)
       //   : (erc998TokenEntity.erc998Dropbox.erc998Template.instanceCount += 1);
       erc998TokenEntity.tokenStatus = TokenStatus.MINTED;

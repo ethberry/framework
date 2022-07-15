@@ -31,6 +31,11 @@ async function main() {
   const stakingFactory = await ethers.getContractFactory("Staking");
   const stakingInstance = await stakingFactory.deploy(10);
   console.info(`STAKING_ADDR=${stakingInstance.address.toLowerCase()}`);
+
+  // Uni Mechanics contract
+  const metaFactory = await ethers.getContractFactory("MetaDataManipulator");
+  const metaInstance = await metaFactory.deploy("MetaDataManipulator");
+  console.info(`METADATA_ADDR=${metaInstance.address.toLowerCase()}`);
 }
 
 main()

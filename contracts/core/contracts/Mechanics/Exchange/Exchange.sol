@@ -73,11 +73,12 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
         totalAmount = totalAmount + ingredient.amount;
       }
     }
-    require(totalAmount == msg.value, "Exchange: Wrong amount");
 
     for (uint256 i = 0; i < length1; i++) {
       Asset memory ingredient = ingredients[i];
-      if (ingredient.tokenType == TokenType.ERC20) {
+      if (ingredient.tokenType == TokenType.NATIVE) {
+        require(totalAmount == msg.value, "Exchange: Wrong amount");
+      } else if (ingredient.tokenType == TokenType.ERC20) {
         IERC20(ingredient.token).transferFrom(account, address(this), ingredient.amount);
       } else if (ingredient.tokenType == TokenType.ERC1155) {
         IERC1155(ingredient.token).safeTransferFrom(

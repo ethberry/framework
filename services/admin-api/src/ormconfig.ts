@@ -80,7 +80,7 @@ import { SeedDropboxErc721At1653616447920 } from "./migrations/1653616447920-see
 import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craft";
 import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
 import { SeedCraftErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-craft-erc721-erc1155-recipe";
-import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-craft-history";
+import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-exchange-history";
 
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { CreateContractManagerHistory1652682493386 } from "./migrations/1652682493386-create-contract-manager-history";

@@ -1,6 +1,8 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
+
 
 import { ContractHistoryModule } from "../../blockchain/contract-history/contract-history.module";
 
@@ -28,7 +30,7 @@ import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module
     ContractModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, Erc998TokenServiceEth],
+  providers: [Logger, ethersRpcProvider, Erc998TokenServiceEth],
   controllers: [Erc998TokenControllerEth],
   exports: [Erc998TokenServiceEth],
 })

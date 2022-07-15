@@ -1,12 +1,12 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, constants } from "ethers";
+import { BigNumber, constants, ethers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
-
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ILogEvent, ETHERS_RPC } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
+  ContractTemplate,
   IAirdropRedeem,
   IDefaultRoyaltyInfo,
   IRandomRequest,
@@ -20,13 +20,14 @@ import {
   TokenStatus,
 } from "@framework/types";
 
-import { delay } from "../../common/utils";
+import { blockAwait, delay } from "../../common/utils";
 import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
+import { ERC721Abi } from "./token-log/interfaces";
 
 @Injectable()
 export class Erc721TokenServiceEth {
@@ -36,6 +37,8 @@ export class Erc721TokenServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(ETHERS_RPC)
+    private readonly jsonRpcProvider: ethers.providers.JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
@@ -52,47 +55,86 @@ export class Erc721TokenServiceEth {
     const {
       args: { from, to, tokenId },
     } = event;
+    const { address } = context;
 
-    console.log("transfer!event", event);
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
-    // Wait until Token will be created by Exchange
-    this.loggerService.log(
-      `Erc721Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
-      Erc721TokenServiceEth.name,
-    );
-    await delay(3141);
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
 
-    const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
-    console.log("Found-tokenEntity", tokenEntity);
-    if (!tokenEntity) {
+    const contractTemplate = contractEntity.contractTemplate;
+
+    // if (contractTemplate !== ContractTemplate.SIMPLE) {
+    const contract = new ethers.Contract(address, ERC721Abi, this.jsonRpcProvider);
+
+    // await block
+    await blockAwait(1, this.jsonRpcProvider);
+
+    const tokenMetaData = await contract.getTokenMetadata(tokenId);
+
+    // todo interface to get by metadata key enum
+    const templateId = BigNumber.from(tokenMetaData[0].value).toNumber();
+
+    console.info("Got TokenMetaData:", tokenMetaData, templateId);
+
+    const templateEntity = await this.templateService.findOne({ id: templateId });
+
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
+
+    const attributes =
+      contractTemplate === ContractTemplate.RANDOM
+        ? Object.assign(templateEntity.attributes, {
+            rarity: Object.values(TokenRarity)[BigNumber.from(tokenMetaData[1].value).toNumber()],
+          })
+        : contractTemplate === ContractTemplate.GRADED
+        ? Object.assign(templateEntity.attributes, {
+            grade: Object.values(TokenRarity)[BigNumber.from(tokenMetaData[1].value).toNumber()],
+          })
+        : templateEntity.attributes;
+
+    const tokenEntity = await this.tokenService.create({
+      tokenId,
+      attributes,
+      royalty: contractEntity.royalty,
+      template: templateEntity,
+    });
+
+    await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
+
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+
+    if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, tokenEntity.id);
+    await this.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      tokenEntity.template.amount += 1;
-      // tokenEntity.erc721Template
-      //   ? (tokenEntity.erc721Template.instanceCount += 1)
-      //   : (tokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
-      tokenEntity.tokenStatus = TokenStatus.MINTED;
+      erc721TokenEntity.template.amount += 1;
+      // erc721TokenEntity.erc721Template
+      //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
+      //   : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
+      erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
-      // tokenEntity.erc721Template.instanceCount -= 1;
-      tokenEntity.tokenStatus = TokenStatus.BURNED;
+      // erc721TokenEntity.erc721Template.instanceCount -= 1;
+      erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
       // change token's owner
-      tokenEntity.balance[0].account = to.toLowerCase();
+      erc721TokenEntity.balance[0].account = to.toLowerCase();
     }
 
-    await tokenEntity.save();
+    await erc721TokenEntity.save();
 
     // need to save updates in nested entities too
-    await tokenEntity.template.save();
-    await tokenEntity.balance[0].save();
-    // tokenEntity.erc721Template
+    await erc721TokenEntity.template.save();
+    await erc721TokenEntity.balance[0].save();
+    // erc721TokenEntity.erc721Template
 
-    //   ? await tokenEntity.erc721Template.save()
-    //   : await tokenEntity.erc721Dropbox.erc721Template.save();
+    //   ? await erc721TokenEntity.erc721Template.save()
+    //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {

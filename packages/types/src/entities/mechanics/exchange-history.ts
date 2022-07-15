@@ -10,7 +10,6 @@ export interface ITransaction {
   from: string;
   items: Array<[number, string, string, string]>;
   ingredients: Array<[number, string, string, string]>;
-  ids: Array<string>;
 }
 
 export type TExchangeEventData = ITransaction;
