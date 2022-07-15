@@ -16,12 +16,13 @@ import {
   ITokenMintRandom,
   ITokenRoyaltyInfo,
   ITokenTransfer,
+  MetadataRecord,
   TContractEventData,
   TokenRarity,
   TokenStatus,
 } from "@framework/types";
 
-import { blockAwait, delay } from "../../common/utils";
+import { blockAwait } from "../../common/utils";
 import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
@@ -74,12 +75,15 @@ export class Erc998TokenServiceEth {
 
     const tokenMetaData = await contract.getTokenMetadata(tokenId);
 
-    // todo interface to get by metadata key enum
-    const templateId = BigNumber.from(tokenMetaData[0].value).toNumber();
+    const metaData = tokenMetaData.reduce(
+      (memo: Record<string, string>, current: { key: string; value: string }) =>
+        Object.assign(memo, {
+          [MetadataRecord[current.key]]: current.value,
+        }),
+      {} as Record<string, string>,
+    );
 
-    console.info("Got TokenMetaData:", tokenMetaData, templateId);
-
-    const templateEntity = await this.templateService.findOne({ id: templateId });
+    const templateEntity = await this.templateService.findOne({ id: ~~metaData.TEMPLATE_ID });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
@@ -88,7 +92,7 @@ export class Erc998TokenServiceEth {
     const attributes =
       contractTemplate === ContractTemplate.RANDOM
         ? Object.assign(templateEntity.attributes, {
-            rarity: Object.values(TokenRarity)[BigNumber.from(tokenMetaData[1].value).toNumber()],
+            rarity: Object.values(TokenRarity)[~~metaData.RARITY],
           })
         : contractTemplate === ContractTemplate.GRADED
         ? Object.assign(templateEntity.attributes, {
