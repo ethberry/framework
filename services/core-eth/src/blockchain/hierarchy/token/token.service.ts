@@ -44,9 +44,9 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    // queryBuilder.leftJoinAndSelect("token.erc998Dropbox", "dropbox");
-    // queryBuilder.leftJoinAndSelect("dropbox.erc998Collection", "collectionDropbox");
-    // queryBuilder.leftJoinAndSelect("dropbox.erc998Template", "templateDropbox");
+    // queryBuilder.leftJoinAndSelect("token.erc998Lootbox", "lootbox");
+    // queryBuilder.leftJoinAndSelect("lootbox.erc998Collection", "collectionLootbox");
+    // queryBuilder.leftJoinAndSelect("lootbox.erc998Template", "templateLootbox");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {
       tokenId,

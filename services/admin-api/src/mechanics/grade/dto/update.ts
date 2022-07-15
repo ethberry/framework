@@ -4,10 +4,10 @@ import { Type } from "class-transformer";
 
 import { GradeStrategy } from "@framework/types";
 
-import { IDropboxUpdateDto } from "../interfaces";
+import { ILootboxUpdateDto } from "../interfaces";
 import { AssetDto } from "../../asset/dto";
 
-export class GradeUpdateDto implements IDropboxUpdateDto {
+export class GradeUpdateDto implements ILootboxUpdateDto {
   @ApiPropertyOptional({
     minimum: 1,
   })

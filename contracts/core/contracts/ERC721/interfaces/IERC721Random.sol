@@ -12,6 +12,6 @@ interface IERC721Random is IERC721Graded {
   function mintRandom(
     address to,
     uint256 templateId,
-    uint256 dropboxId
+    uint256 lootboxId
   ) external;
 }

@@ -3,7 +3,7 @@ import { IAsset } from "../blockchain/asset";
 
 export enum MarketplaceEventType {
   RedeemCommon = "RedeemCommon",
-  RedeemDropbox = "RedeemDropbox",
+  RedeemLootbox = "RedeemLootbox",
 }
 
 export interface IMarketplaceRedeemCommon {
@@ -12,13 +12,13 @@ export interface IMarketplaceRedeemCommon {
   price: IAsset;
 }
 
-export interface IMarketplaceRedeemDropbox {
+export interface IMarketplaceRedeemLootbox {
   from: string;
   item: IAsset;
   price: IAsset;
 }
 
-export type TMarketplaceEventData = IMarketplaceRedeemCommon | IMarketplaceRedeemDropbox;
+export type TMarketplaceEventData = IMarketplaceRedeemCommon | IMarketplaceRedeemLootbox;
 
 export interface IMarketplaceHistory extends IIdDateBase {
   address: string;

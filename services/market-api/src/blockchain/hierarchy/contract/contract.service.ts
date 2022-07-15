@@ -28,7 +28,7 @@ export class ContractService {
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", { contractStatus: ContractStatus.ACTIVE });
 
     queryBuilder.andWhere("contract.contractRole IN(:...contractRoles)", {
-      contractRoles: [ContractRole.TOKEN, ContractRole.DROPBOX],
+      contractRoles: [ContractRole.TOKEN, ContractRole.LOOTBOX],
     });
 
     if (query) {

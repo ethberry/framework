@@ -11,22 +11,22 @@ import { GradeUpdateDto } from "./dto";
 @ApiBearerAuth()
 @Controller("/grader")
 export class GradeController {
-  constructor(private readonly dropboxService: GradeService) {}
+  constructor(private readonly lootboxService: GradeService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: PaginationDto): Promise<[Array<GradeEntity>, number]> {
-    return this.dropboxService.search(dto);
+    return this.lootboxService.search(dto);
   }
 
   @Put("/:id")
   public update(@Param("id", ParseIntPipe) id: number, @Body() dto: GradeUpdateDto): Promise<GradeEntity> {
-    return this.dropboxService.update({ id }, dto);
+    return this.lootboxService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<GradeEntity | null> {
-    return this.dropboxService.findOne({ id });
+    return this.lootboxService.findOne({ id });
   }
 }

@@ -19,7 +19,7 @@ export class CreateErc721ContractHistory1563804040330 implements MigrationInterf
         'TokenRoyaltyInfo',
         'Transfer',
         'UnpackAirdrop',
-        'UnpackDropbox',
+        'UnpackLootbox',
         'Unpaused'
       );
     `);

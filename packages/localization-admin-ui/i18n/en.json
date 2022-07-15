@@ -51,7 +51,7 @@
     },
     "contractRole": {
       "AIRDROP": "Airdrop",
-      "DROPBOX": "Dropbox",
+      "LOOTBOX": "Lootbox",
       "TOKEN": "Token"
     },
     "contractStatus": {
@@ -69,7 +69,7 @@
       "RANDOM": "Random",
       "SIMPLE": "Simple"
     },
-    "dropboxStatus": {
+    "lootboxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -220,7 +220,7 @@
       "decimals": "Decimals",
       "description": "Description",
       "displayName": "Display name",
-      "dropboxStatus": "Status",
+      "lootboxStatus": "Status",
       "duration": "Duration",
       "email": "Email",
       "craftStatus": "Status",
@@ -384,7 +384,7 @@
       },
       "mechanics": {
         "airdrops": "Airdrops",
-        "dropboxes": "Dropboxes",
+        "lootboxes": "Lootboxes",
         "craft": "Craft",
         "stakes": "Stakes",
         "staking-rules": "Staking Rules",
@@ -393,8 +393,8 @@
       },
       "title": "Dashboard"
     },
-    "dropboxes": {
-      "title": "Dropboxes"
+    "lootboxes": {
+      "title": "Lootboxes"
     },
     "emails": {
       "title": "Emails"

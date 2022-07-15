@@ -9,7 +9,7 @@ import { MarketplaceTabs } from "./tabs";
 import { Erc1155 } from "./erc1155";
 import { Erc998 } from "./erc998";
 import { Erc721 } from "./erc721";
-import { Dropbox } from "./dropbox";
+import { Lootbox } from "./lootbox";
 
 export const Marketplace: FC = () => {
   const { tab = MarketplaceTabs.erc721 } = useParams<{ tab: MarketplaceTabs }>();
@@ -35,7 +35,7 @@ export const Marketplace: FC = () => {
       <br />
       <Erc998 value={value} />
       <Erc721 value={value} />
-      <Dropbox value={value} />
+      <Lootbox value={value} />
       <Erc1155 value={value} />
     </Fragment>
   );

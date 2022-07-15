@@ -4,7 +4,7 @@ import { Public } from "@gemunion/nest-js-utils";
 import { IServerSignature } from "@gemunion/types-collection";
 
 import { MarketplaceService } from "./marketplace.service";
-import { SignDropboxDto, SignTemplateDto } from "./dto";
+import { SignLootboxDto, SignTemplateDto } from "./dto";
 
 @Public()
 @Controller("/marketplace")
@@ -16,8 +16,8 @@ export class MarketplaceController {
     return this.marketplaceService.signTemplate(dto);
   }
 
-  @Post("/dropbox")
-  public signDropbox(@Body() dto: SignDropboxDto): Promise<IServerSignature> {
-    return this.marketplaceService.signDropbox(dto);
+  @Post("/lootbox")
+  public signLootbox(@Body() dto: SignLootboxDto): Promise<IServerSignature> {
+    return this.marketplaceService.signLootbox(dto);
   }
 }

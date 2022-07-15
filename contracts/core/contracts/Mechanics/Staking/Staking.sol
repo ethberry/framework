@@ -21,7 +21,7 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "./interfaces/IStaking.sol";
 import "../Asset/interfaces/IAsset.sol";
-import "../Dropbox/interfaces/IDropbox.sol";
+import "../Lootbox/interfaces/ILootbox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
@@ -39,7 +39,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
-  bytes4 private constant IERC721_DROPBOX = 0xe7728dc6;
+  bytes4 private constant IERC721_LOOTBOX = 0xe7728dc6;
 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
@@ -159,15 +159,15 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         SafeERC20.safeTransfer(IERC20(rewardItem.token), _msgSender(), rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
-        bool dropboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_DROPBOX);
+        bool lootboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
 
         if (randomInterface) {
           for (uint256 i = 0; i < multiplier; i++) {
             IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenId, 0);
           }
-        } else if (dropboxInterface) {
+        } else if (lootboxInterface) {
           for (uint256 i = 0; i < multiplier; i++) {
-            IDropbox(rewardItem.token).mintDropbox(_msgSender(), rewardTokenId);
+            ILootbox(rewardItem.token).mintLootbox(_msgSender(), rewardTokenId);
           }
         } else {
           for (uint256 i = 0; i < multiplier; i++) {

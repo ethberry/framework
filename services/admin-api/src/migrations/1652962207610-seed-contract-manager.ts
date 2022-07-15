@@ -8,7 +8,7 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
     const airdropAddr = process.env.AIRDROP_ADDR || wallet;
-    const dropboxAddr = process.env.DROPBOX_ADDR || wallet;
+    const lootboxAddr = process.env.LOOTBOX_ADDR || wallet;
     const exchangeAddr = process.env.EXCHANGE_ADDR || wallet;
     const stakingAddr = process.env.STAKING_ADDR || wallet;
 
@@ -34,8 +34,8 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-       '${dropboxAddr}',
-        'DROPBOX',
+       '${lootboxAddr}',
+        'LOOTBOX',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

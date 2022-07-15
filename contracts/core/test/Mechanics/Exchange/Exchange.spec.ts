@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, Dropbox } from "../../../typechain-types";
+import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, Lootbox } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -22,7 +22,7 @@ describe("Exchange", function () {
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
   let erc1155Instance: ERC1155Simple;
-  let dropboxInstance: Dropbox;
+  let lootboxInstance: Lootbox;
   let network: Network;
 
   beforeEach(async function () {
@@ -43,9 +43,9 @@ describe("Exchange", function () {
     erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
     await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
-    const dropboxFactory = await ethers.getContractFactory("Dropbox");
-    dropboxInstance = await dropboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await dropboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+    const lootboxFactory = await ethers.getContractFactory("Lootbox");
+    lootboxInstance = await lootboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+    await lootboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     network = await ethers.provider.getNetwork();
 
@@ -1475,7 +1475,7 @@ describe("Exchange", function () {
       });
     });
 
-    describe("NATIVE > DROPBOX", function () {
+    describe("NATIVE > LOOTBOX", function () {
       it("should execute", async function () {
         const signature = await this.owner._signTypedData(
           // Domain
@@ -1507,7 +1507,7 @@ describe("Exchange", function () {
             items: [
               {
                 tokenType: 2,
-                token: dropboxInstance.address,
+                token: lootboxInstance.address,
                 tokenId,
                 amount: 1,
               },
@@ -1528,7 +1528,7 @@ describe("Exchange", function () {
           [
             {
               tokenType: 2,
-              token: dropboxInstance.address,
+              token: lootboxInstance.address,
               tokenId,
               amount: 1,
             },
@@ -1556,7 +1556,7 @@ describe("Exchange", function () {
           //   [[2, erc721Instance.address, tokenId, 1]],
           //   [[0, ethers.constants.AddressZero, tokenId, amount]],
           // )
-          .to.emit(dropboxInstance, "Transfer")
+          .to.emit(lootboxInstance, "Transfer")
           .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
       });
     });

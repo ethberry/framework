@@ -17,7 +17,7 @@ export * from "./blockchain/asset-component";
 
 export * from "./blockchain/contract-history";
 export * from "./mechanics/airdrop";
-export * from "./mechanics/dropbox";
+export * from "./mechanics/lootbox";
 export * from "./mechanics/exchange-history";
 export * from "./mechanics/craft";
 export * from "./mechanics/grade";

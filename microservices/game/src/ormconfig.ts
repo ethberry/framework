@@ -9,7 +9,7 @@ import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity"
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
-import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
+import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -24,7 +24,7 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     BalanceEntity,
     AirdropEntity,
-    DropboxEntity,
+    LootboxEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

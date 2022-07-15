@@ -21,10 +21,10 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
   struct Request {
     address owner;
     uint256 templateId;
-    uint256 dropboxId;
+    uint256 lootboxId;
   }
 
-  event MintRandom(address to, uint256 tokenId, uint256 templateId, uint256 rarity, uint256 dropboxId);
+  event MintRandom(address to, uint256 tokenId, uint256 templateId, uint256 rarity, uint256 lootboxId);
 
   mapping(bytes32 => Request) internal _queue;
 
@@ -58,10 +58,10 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
   function mintRandom(
     address to,
     uint256 templateId,
-    uint256 dropboxId
+    uint256 lootboxId
   ) external override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
-    _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
+    _queue[getRandomNumber()] = Request(to, templateId, lootboxId);
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
@@ -72,7 +72,7 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     upsertRecordField(tokenId, RARITY, rarity);
 
-    emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.dropboxId);
+    emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.lootboxId);
 
     delete _queue[requestId];
     safeMint(request.owner);

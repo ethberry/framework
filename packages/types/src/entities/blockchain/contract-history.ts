@@ -15,7 +15,7 @@ export enum ContractEventType {
   TransferSingle = "TransferSingle",
   URI = "URI",
   UnpackAirdrop = "UnpackAirdrop",
-  UnpackDropbox = "UnpackDropbox",
+  UnpackLootbox = "UnpackLootbox",
   Unpaused = "Unpaused",
 }
 
@@ -35,7 +35,7 @@ export interface IErc20TokenSnapshot {
   id: string;
 }
 
-export interface IDropboxUnpack {
+export interface ILootboxUnpack {
   collection: string;
   tokenId: string;
   templateId: string;
@@ -72,7 +72,7 @@ export interface ITokenMintRandom {
   tokenId: string;
   templateId: string;
   rarity: string;
-  dropboxId: string;
+  lootboxId: string;
 }
 
 export interface ITokenApprove {
@@ -135,7 +135,7 @@ export type TContractEventData =
   | IAirdropRedeem
   | IAirdropUnpack
   | IDefaultRoyaltyInfo
-  | IDropboxUnpack
+  | ILootboxUnpack
   | IErc1155TokenApprovalForAll
   | IErc1155TokenTransferBatch
   | IErc1155TokenTransferSingle

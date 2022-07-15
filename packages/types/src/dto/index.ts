@@ -8,7 +8,7 @@ export * from "./blockchain/hierarchy/token/search";
 
 export * from "./mechanics/staking/search";
 export * from "./mechanics/airdrop/search";
-export * from "./mechanics/dropbox/search";
+export * from "./mechanics/lootbox/search";
 export * from "./mechanics/exchange/search";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";

@@ -19,7 +19,7 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "../Asset/Asset.sol";
 import "../Asset/interfaces/IAsset.sol";
-import "../Dropbox/interfaces/IDropbox.sol";
+import "../Lootbox/interfaces/ILootbox.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
@@ -33,7 +33,7 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
-  bytes4 private constant IERC721_DROPBOX = 0xe7728dc6;
+  bytes4 private constant IERC721_LOOTBOX = 0xe7728dc6;
 
   bytes32 internal immutable PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items,Asset[] ingredients)", ASSET_SIGNATURE));
@@ -99,11 +99,11 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
       Asset memory item = items[i];
       if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM);
-        bool dropboxInterface = IERC721(item.token).supportsInterface(IERC721_DROPBOX);
+        bool lootboxInterface = IERC721(item.token).supportsInterface(IERC721_LOOTBOX);
         if (randomInterface) {
           IERC721Random(item.token).mintRandom(account, item.tokenId, 0);
-        } else if (dropboxInterface) {
-          IDropbox(item.token).mintDropbox(account, item.tokenId);
+        } else if (lootboxInterface) {
+          ILootbox(item.token).mintLootbox(account, item.tokenId);
         } else {
           IERC721Simple(item.token).mintCommon(account, item.tokenId);
         }

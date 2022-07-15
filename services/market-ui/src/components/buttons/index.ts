@@ -5,5 +5,5 @@ export * from "./hierarchy/template-buy";
 
 export * from "./mechanics/staking-deposit";
 export * from "./mechanics/craft";
-export * from "./mechanics/dropbox-buy";
+export * from "./mechanics/lootbox-buy";
 export * from "./mechanics/level-up";

@@ -22,6 +22,6 @@ enum TokenType {
 struct Asset {
   TokenType tokenType;
   address token;
-  uint256 tokenId; // or templateId or dropboxId
+  uint256 tokenId; // or templateId or lootboxId
   uint256 amount;
 }

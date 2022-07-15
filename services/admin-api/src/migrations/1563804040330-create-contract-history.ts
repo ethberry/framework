@@ -20,7 +20,7 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
         'TransferSingle',
         'URI',
         'UnpackAirdrop',
-        'UnpackDropbox',
+        'UnpackLootbox',
         'Unpaused'
       );
     `);

@@ -29,9 +29,9 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    // queryBuilder.leftJoinAndSelect("token.erc721Dropbox", "dropbox");
-    // queryBuilder.leftJoinAndSelect("dropbox.erc721Collection", "collectionDropbox");
-    // queryBuilder.leftJoinAndSelect("dropbox.erc721Template", "dropboxTemplate");
+    // queryBuilder.leftJoinAndSelect("token.erc721Lootbox", "lootbox");
+    // queryBuilder.leftJoinAndSelect("lootbox.erc721Collection", "collectionLootbox");
+    // queryBuilder.leftJoinAndSelect("lootbox.erc721Template", "lootboxTemplate");
 
     queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet?.toLowerCase() });
@@ -51,7 +51,7 @@ export class TokenService {
             qb.where("template.contractId = :contractId", {
               contractId: contractIds[0],
             });
-            // qb.orWhere("dropbox.contractId = :contractId", {
+            // qb.orWhere("lootbox.contractId = :contractId", {
             //   contractId: contractIds[0],
             // });
           }),
@@ -60,7 +60,7 @@ export class TokenService {
         queryBuilder.andWhere(
           new Brackets(qb => {
             qb.where("template.contractId IN(:...contractIds)", { contractIds });
-            // qb.orWhere("dropbox.contractId IN(:...contractIds)", { contractIds });
+            // qb.orWhere("lootbox.contractId IN(:...contractIds)", { contractIds });
           }),
         );
       }

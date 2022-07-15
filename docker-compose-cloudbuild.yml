@@ -63,7 +63,7 @@ services:
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      DROPBOX_ADDR: "${DROPBOX_ADDR}"
+      LOOTBOX_ADDR: "${LOOTBOX_ADDR}"
       AIRDROP_ADDR: "${AIRDROP_ADDR}"
     ports:
       # admin-api
@@ -104,7 +104,7 @@ services:
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      DROPBOX_ADDR: "${DROPBOX_ADDR}"
+      LOOTBOX_ADDR: "${LOOTBOX_ADDR}"
       AIRDROP_ADDR: "${AIRDROP_ADDR}"
     ports:
       # market-api
@@ -141,7 +141,7 @@ services:
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      DROPBOX_ADDR: "${DROPBOX_ADDR}"
+      LOOTBOX_ADDR: "${LOOTBOX_ADDR}"
       AIRDROP_ADDR: "${AIRDROP_ADDR}"
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"

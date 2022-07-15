@@ -120,7 +120,7 @@ export class Erc721TokenServiceEth {
       erc721TokenEntity.template.amount += 1;
       // erc721TokenEntity.erc721Template
       //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
-      //   : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
+      //   : (erc721TokenEntity.erc721Lootbox.erc721Template.instanceCount += 1);
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
       // erc721TokenEntity.erc721Template.instanceCount -= 1;
@@ -138,7 +138,7 @@ export class Erc721TokenServiceEth {
     // erc721TokenEntity.erc721Template
 
     //   ? await erc721TokenEntity.erc721Template.save()
-    //   : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
+    //   : await erc721TokenEntity.erc721Lootbox.erc721Template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -212,7 +212,7 @@ export class Erc721TokenServiceEth {
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
-      args: { to, tokenId, templateId, rarity, dropboxId },
+      args: { to, tokenId, templateId, rarity, lootboxId },
     } = event;
 
     const templateEntity = await this.templateService.findOne({ id: ~~templateId });
@@ -221,12 +221,12 @@ export class Erc721TokenServiceEth {
       throw new NotFoundException("templateNotFound");
     }
 
-    let erc721DropboxEntity; // if minted as Mechanics reward
-    if (~~dropboxId !== 0) {
-      erc721DropboxEntity = await this.tokenService.findOne({ id: ~~dropboxId });
+    let erc721LootboxEntity; // if minted as Mechanics reward
+    if (~~lootboxId !== 0) {
+      erc721LootboxEntity = await this.tokenService.findOne({ id: ~~lootboxId });
 
-      if (!erc721DropboxEntity) {
-        throw new NotFoundException("dropboxNotFound");
+      if (!erc721LootboxEntity) {
+        throw new NotFoundException("lootboxNotFound");
       }
     }
 
@@ -237,7 +237,7 @@ export class Erc721TokenServiceEth {
       }),
       royalty: templateEntity.contract.royalty,
       template: templateEntity,
-      // erc721Token: erc721DropboxEntity,
+      // erc721Token: erc721LootboxEntity,
     });
 
     await this.balanceService.create({

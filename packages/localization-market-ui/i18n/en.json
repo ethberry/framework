@@ -196,9 +196,9 @@
     "assets": {
       "tabs": {
         "heroes": "Heroes",
-        "heroesdb": "Heroes Dropbox",
+        "heroesdb": "Heroes Lootbox",
         "items": "Items",
-        "itemsdb": "Items Dropbox",
+        "itemsdb": "Items Lootbox",
         "resources": "Resources",
         "skills": "Skills"
       },
@@ -238,7 +238,7 @@
       "mechanics": {
         "airdrop": "Airdrop",
         "craft": "Craft",
-        "dropboxes": "Dropboxes",
+        "lootboxes": "Lootboxes",
         "leaderboard": "Staking Leaderboard",
         "reward": "Staking Reward",
         "stake": "Staking Stake",
@@ -264,12 +264,12 @@
       },
       "title": "Dashboard"
     },
-    "dropboxes": {
-      "title": "Dropboxes"
+    "lootboxes": {
+      "title": "Lootboxes"
     },
-    "dropbox": {
+    "lootbox": {
       "price": "Price: {amount}",
-      "title": "Dropbox: {title}"
+      "title": "Lootbox: {title}"
     },
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
@@ -353,8 +353,8 @@
       "popular": "Popular items"
     },
     "marketplace": {
-      "dropbox": {
-        "title": "Dropbox"
+      "lootbox": {
+        "title": "Lootbox"
       },
       "erc1155": {
         "title": "ERC1155"
@@ -366,7 +366,7 @@
         "title": "ERC998"
       },
       "tabs": {
-        "dropbox": "Dropbox",
+        "lootbox": "Lootbox",
         "erc1155": "ERC1155",
         "erc721": "ERC721",
         "erc998": "ERC998"

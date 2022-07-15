@@ -8,7 +8,7 @@ export class CreateAsset1563804000100 implements MigrationInterface {
       CREATE TYPE ${ns}.asset_type_enum AS ENUM (
         'TEMPLATE',
         'AIRDROP',
-        'DROPBOX',
+        'LOOTBOX',
         'EXCHANGE',
         'STAKING',
         'GRADE'

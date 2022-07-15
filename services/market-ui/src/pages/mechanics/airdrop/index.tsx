@@ -36,7 +36,7 @@ export const Airdrop: FC = () => {
     { success: false, error: false },
   );
 
-  const fetchDropbox = async (): Promise<void> => {
+  const fetchLootbox = async (): Promise<void> => {
     if (!isActive) {
       return;
     }
@@ -74,7 +74,7 @@ export const Airdrop: FC = () => {
   };
 
   useEffect(() => {
-    void fetchDropbox();
+    void fetchLootbox();
   }, [isActive, account]);
 
   if (!isActive) {

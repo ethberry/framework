@@ -7,7 +7,7 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc998CollectionDropboxAddress = process.env.DROPBOX_ADDR || wallet;
+    const erc998CollectionLootboxAddress = process.env.LOOTBOX_ADDR || wallet;
     const erc998CollectionAirdropAddress = process.env.ERC998_AIRDROP_ADDR || wallet;
     const erc998CollectionHeroAddress = process.env.ERC998_HERO_ADDR || wallet;
 
@@ -51,18 +51,18 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         22,
-        '${erc998CollectionDropboxAddress}',
+        '${erc998CollectionLootboxAddress}',
         '${chainId}',
-        'DROPBOX_ERC998',
+        'LOOTBOX_ERC998',
         '${simpleFormatting}',
         '${imageUrl}',
-        'DROPBOX_ERC998',
+        'LOOTBOX_ERC998',
         'DROP998',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        'DROPBOX',
+        'LOOTBOX',
         'UNKNOWN',
         '${currentDateTime}',
         '${currentDateTime}'

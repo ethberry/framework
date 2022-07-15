@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { BigNumber, constants, ethers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent, ETHERS_RPC } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
@@ -120,7 +120,7 @@ export class Erc998TokenServiceEth {
       erc998TokenEntity.template.amount += 1;
       // tokenEntity.template
       //   ? (erc998TokenEntity.template.instanceCount += 1)
-      //   : (erc998TokenEntity.erc998Dropbox.erc998Template.instanceCount += 1);
+      //   : (erc998TokenEntity.erc998Lootbox.erc998Template.instanceCount += 1);
       erc998TokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
       // erc998TokenEntity.erc998Template.instanceCount -= 1;
@@ -138,7 +138,7 @@ export class Erc998TokenServiceEth {
 
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
-    //   : await erc998TokenEntity.erc998Dropbox.erc998Template.save();
+    //   : await erc998TokenEntity.erc998Lootbox.erc998Template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -212,7 +212,7 @@ export class Erc998TokenServiceEth {
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
-      args: { to, tokenId, templateId, rarity, dropboxId },
+      args: { to, tokenId, templateId, rarity, lootboxId },
     } = event;
 
     const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
@@ -221,12 +221,12 @@ export class Erc998TokenServiceEth {
       throw new NotFoundException("templateNotFound");
     }
 
-    let erc998DropboxEntity; // if minted as Mechanics reward
-    if (~~dropboxId !== 0) {
-      erc998DropboxEntity = await this.tokenService.findOne({ id: ~~dropboxId });
+    let erc998LootboxEntity; // if minted as Mechanics reward
+    if (~~lootboxId !== 0) {
+      erc998LootboxEntity = await this.tokenService.findOne({ id: ~~lootboxId });
 
-      if (!erc998DropboxEntity) {
-        throw new NotFoundException("dropboxNotFound");
+      if (!erc998LootboxEntity) {
+        throw new NotFoundException("lootboxNotFound");
       }
     }
 
@@ -237,7 +237,7 @@ export class Erc998TokenServiceEth {
       }),
       royalty: erc998TemplateEntity.contract.royalty,
       template: erc998TemplateEntity,
-      // token: erc998DropboxEntity,
+      // token: erc998LootboxEntity,
     });
 
     await this.balanceService.create({

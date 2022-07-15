@@ -1,2 +1,2 @@
 export * from "./template";
-export * from "./dropbox";
+export * from "./lootbox";

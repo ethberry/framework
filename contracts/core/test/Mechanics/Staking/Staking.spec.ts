@@ -8,7 +8,7 @@ import {
   ERC721Simple,
   // ERC721Random, hardhat random version contract
   ERC721RandomTest,
-  Dropbox,
+  Lootbox,
   ERC20Simple,
   ERC1155Simple,
   LinkErc20,
@@ -32,7 +32,7 @@ import { randomRequest } from "../../shared/AccessControl/randomRequest";
 describe("Staking", function () {
   let stakingInstance: Staking;
   let erc721RandomInstance: ERC721RandomTest;
-  let erc721DropboxInstance: Dropbox;
+  let erc721LootboxInstance: Lootbox;
   let erc721SimpleInstance: ERC721Simple;
   let erc20Instance: ERC20Simple;
   let erc1155Instance: ERC1155Simple;
@@ -90,9 +90,9 @@ describe("Staking", function () {
     // ERC721 Random
     const erc721randomFactory = await ethers.getContractFactory("ERC721RandomTest");
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", 100, "https://localhost");
-    // ERC721 Dropbox
-    const dropboxFactory = await ethers.getContractFactory("Dropbox");
-    erc721DropboxInstance = await dropboxFactory.deploy("ERC721Dropbox", "DBX", 100, "https://localhost");
+    // ERC721 Lootbox
+    const lootboxFactory = await ethers.getContractFactory("Lootbox");
+    erc721LootboxInstance = await lootboxFactory.deploy("ERC721Lootbox", "DBX", 100, "https://localhost");
     // ERC1155
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
     erc1155Instance = await erc1155Factory.deploy("https://localhost");
@@ -100,7 +100,7 @@ describe("Staking", function () {
     // Grant roles
     await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
     await erc721RandomInstance.grantRole(MINTER_ROLE, stakingInstance.address);
-    await erc721DropboxInstance.grantRole(MINTER_ROLE, stakingInstance.address);
+    await erc721LootboxInstance.grantRole(MINTER_ROLE, stakingInstance.address);
     await erc721SimpleInstance.grantRole(MINTER_ROLE, stakingInstance.address);
     await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
 
@@ -151,7 +151,7 @@ describe("Staking", function () {
 
     erc721RewardDbx = {
       tokenType: BigNumber.from(2), // ERC721
-      token: erc721DropboxInstance.address,
+      token: erc721LootboxInstance.address,
       tokenId: BigNumber.from(1),
       amount: BigNumber.from(0),
     };
@@ -707,7 +707,7 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
 
-    it("should stake NATIVE & receive ERC721 Dropbox", async function () {
+    it("should stake NATIVE & receive ERC721 Lootbox", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: nativeDeposit,
@@ -733,8 +733,8 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
-      const balance = await erc721DropboxInstance.balanceOf(this.owner.address);
+      await expect(tx2).to.emit(erc721LootboxInstance, "Transfer");
+      const balance = await erc721LootboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
@@ -921,7 +921,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc20Deposit.amount);
     });
 
-    it("should stake ERC20 & receive ERC721 Dropbox", async function () {
+    it("should stake ERC20 & receive ERC721 Lootbox", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc20Deposit,
@@ -951,8 +951,8 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
-      balance = await erc721DropboxInstance.balanceOf(this.owner.address);
+      await expect(tx2).to.emit(erc721LootboxInstance, "Transfer");
+      balance = await erc721LootboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
@@ -1147,7 +1147,7 @@ describe("Staking", function () {
       expect(balance).to.equal(1);
     });
 
-    it("should stake ERC721 & receive ERC721 Dropbox", async function () {
+    it("should stake ERC721 & receive ERC721 Lootbox", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc721Deposit,
@@ -1178,8 +1178,8 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
-      balance = await erc721DropboxInstance.balanceOf(this.owner.address);
+      await expect(tx2).to.emit(erc721LootboxInstance, "Transfer");
+      balance = await erc721LootboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
@@ -1371,7 +1371,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
-    it("should stake ERC1155 & receive ERC721 Dropbox", async function () {
+    it("should stake ERC1155 & receive ERC721 Lootbox", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: erc1155Deposit,
@@ -1401,8 +1401,8 @@ describe("Staking", function () {
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721DropboxInstance, "Transfer");
-      balance = await erc721DropboxInstance.balanceOf(this.owner.address);
+      await expect(tx2).to.emit(erc721LootboxInstance, "Transfer");
+      balance = await erc721LootboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);

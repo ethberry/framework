@@ -8,7 +8,7 @@ export class CreateContractManager1652962207600 implements MigrationInterface {
       CREATE TYPE ${ns}.contract_manager_type_enum AS ENUM (
         'CONTRACT_MANAGER',
         'AIRDROP',
-        'DROPBOX',
+        'LOOTBOX',
         'STAKING',
         'VESTING',
         'EXCHANGE',

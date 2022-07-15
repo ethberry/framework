@@ -42,7 +42,7 @@ import AirdropSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
               ContractEventType.RedeemAirdrop,
               ContractEventType.TokenRoyaltyInfo,
               ContractEventType.Transfer,
-              ContractEventType.UnpackDropbox,
+              ContractEventType.UnpackLootbox,
               ContractEventType.Unpaused,
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,

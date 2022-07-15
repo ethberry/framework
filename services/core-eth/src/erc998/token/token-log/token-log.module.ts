@@ -42,7 +42,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
               ContractEventType.TokenRoyaltyInfo,
               ContractEventType.Transfer,
               ContractEventType.UnpackAirdrop,
-              ContractEventType.UnpackDropbox,
+              ContractEventType.UnpackLootbox,
               ContractEventType.Unpaused,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,

@@ -13,7 +13,7 @@ export enum ContractStatus {
 
 export enum ContractRole {
   TOKEN = "TOKEN",
-  DROPBOX = "DROPBOX",
+  LOOTBOX = "LOOTBOX",
   AIRDROP = "AIRDROP",
 }
 

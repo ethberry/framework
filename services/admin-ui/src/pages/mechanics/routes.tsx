@@ -3,7 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/firebase-login";
 
 import { Airdrop } from "./airdrop";
-import { Dropbox } from "./dropbox";
+import { Lootbox } from "./lootbox";
 import { Craft } from "./craft";
 import { Staking } from "./staking-rules";
 import { Stakes } from "./staking-stakes";
@@ -19,11 +19,11 @@ export const mechanics: Array<RouteObject> = [
     ],
   },
   {
-    path: "/dropboxes",
+    path: "/lootboxes",
     element: <Protected />,
     children: [
-      { index: true, element: <Dropbox /> },
-      { path: "/dropboxes/:id", element: <Dropbox /> },
+      { index: true, element: <Lootbox /> },
+      { path: "/lootboxes/:id", element: <Lootbox /> },
     ],
   },
   {

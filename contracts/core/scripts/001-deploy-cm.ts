@@ -11,10 +11,10 @@ async function main() {
   const exchangeInstance = await exchangeFactory.deploy("Exchange");
   console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
 
-  // Dropbox
-  const dropFactory = await ethers.getContractFactory("Dropbox");
-  const dropInstance = await dropFactory.deploy("Dropbox", "DBX", 100, "https://fw-json-api.gemunion.io/");
-  console.info(`DROPBOX_ADDR=${dropInstance.address.toLowerCase()}`);
+  // Lootbox
+  const dropFactory = await ethers.getContractFactory("Lootbox");
+  const dropInstance = await dropFactory.deploy("Lootbox", "DBX", 100, "https://fw-json-api.gemunion.io/");
+  console.info(`LOOTBOX_ADDR=${dropInstance.address.toLowerCase()}`);
 
   // Airdrop contract
   const airdropFactory = await ethers.getContractFactory("Airdrop");

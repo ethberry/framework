@@ -6,8 +6,8 @@ import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
 import { ITemplate, TokenType } from "@framework/types";
 
-import { ISignDropboxDto, ISignTemplateDto } from "./interfaces";
-import { DropboxService } from "../dropbox/dropbox.service";
+import { ISignLootboxDto, ISignTemplateDto } from "./interfaces";
+import { LootboxService } from "../lootbox/lootbox.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 
 @Injectable()
@@ -17,7 +17,7 @@ export class MarketplaceService {
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
     private readonly templateService: TemplateService,
-    private readonly dropboxService: DropboxService,
+    private readonly lootboxService: LootboxService,
   ) {}
 
   public async signTemplate(dto: ISignTemplateDto): Promise<IServerSignature> {
@@ -53,28 +53,28 @@ export class MarketplaceService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async signDropbox(dto: ISignDropboxDto): Promise<IServerSignature> {
-    const { dropboxId, account } = dto;
+  public async signLootbox(dto: ISignLootboxDto): Promise<IServerSignature> {
+    const { lootboxId, account } = dto;
 
-    const dropboxEntity = await this.dropboxService.findOne(
-      { id: dropboxId },
+    const lootboxEntity = await this.lootboxService.findOne(
+      { id: lootboxId },
       {
         join: {
-          alias: "dropbox",
+          alias: "lootbox",
           leftJoinAndSelect: {
-            item: "dropbox.item",
+            item: "lootbox.item",
             item_components: "item.components",
           },
         },
       },
     );
 
-    if (!dropboxEntity) {
-      throw new NotFoundException("dropboxNotFound");
+    if (!lootboxEntity) {
+      throw new NotFoundException("lootboxNotFound");
     }
 
     const templateEntity = await this.templateService.findOne(
-      { id: dropboxEntity.item.components[0].tokenId },
+      { id: lootboxEntity.item.components[0].tokenId },
       {
         join: {
           alias: "template",

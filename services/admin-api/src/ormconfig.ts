@@ -23,7 +23,7 @@ import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
-import { DropboxEntity } from "./mechanics/dropbox/dropbox.entity";
+import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
 import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { CraftEntity } from "./mechanics/craft/craft.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
@@ -74,8 +74,8 @@ import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-cr
 import { CreateAirdropTable1563804040410 } from "./migrations/1653616447810-create-airdrop";
 import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-seed-airdrop-erc721";
 
-import { CreateDropbox1653616447910 } from "./migrations/1653616447910-create-dropbox";
-import { SeedDropboxErc721At1653616447920 } from "./migrations/1653616447920-seed-dropbox-erc721";
+import { CreateLootbox1653616447910 } from "./migrations/1653616447910-create-lootbox";
+import { SeedLootboxErc721At1653616447920 } from "./migrations/1653616447920-seed-lootbox-erc721";
 
 import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craft";
 import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
@@ -126,7 +126,7 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     BalanceEntity,
     AirdropEntity,
-    DropboxEntity,
+    LootboxEntity,
     CraftEntity,
     GradeEntity,
   ],
@@ -202,8 +202,8 @@ const config: PostgresConnectionOptions = {
     CreateAirdropTable1563804040410,
     SeedAirdropErc721At1563804040420,
 
-    CreateDropbox1653616447910,
-    SeedDropboxErc721At1653616447920,
+    CreateLootbox1653616447910,
+    SeedLootboxErc721At1653616447920,
 
     CreateCraft1653616448010,
     SeedCraftErc1155Erc1155At1653616448020,

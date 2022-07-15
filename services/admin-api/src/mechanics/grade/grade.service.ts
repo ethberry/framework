@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { IPaginationDto } from "@gemunion/types-collection";
 
 import { GradeEntity } from "./grade.entity";
-import { IDropboxUpdateDto } from "./interfaces";
+import { ILootboxUpdateDto } from "./interfaces";
 
 @Injectable()
 export class GradeService {
@@ -25,7 +25,7 @@ export class GradeService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "dropbox.title": "ASC",
+      "lootbox.title": "ASC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -38,7 +38,7 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(where: FindOptionsWhere<GradeEntity>, dto: Partial<IDropboxUpdateDto>): Promise<GradeEntity> {
+  public async update(where: FindOptionsWhere<GradeEntity>, dto: Partial<ILootboxUpdateDto>): Promise<GradeEntity> {
     const templateEntity = await this.findOne(where);
 
     if (!templateEntity) {

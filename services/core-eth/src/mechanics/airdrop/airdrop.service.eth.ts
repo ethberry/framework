@@ -79,7 +79,7 @@ export class AirdropServiceEth {
       tokenEntity.template.amount += 1;
       // tokenEntity.erc721Template
       //   ? (tokenEntity.erc721Template.instanceCount += 1)
-      //   : (tokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
+      //   : (tokenEntity.erc721Lootbox.erc721Template.instanceCount += 1);
       tokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
       // tokenEntity.erc721Template.instanceCount -= 1;
@@ -97,7 +97,7 @@ export class AirdropServiceEth {
 
     // tokenEntity.erc721Template
     //   ? await tokenEntity.erc721Template.save()
-    //   : await tokenEntity.erc721Dropbox.erc721Template.save();
+    //   : await tokenEntity.erc721Lootbox.erc721Template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {

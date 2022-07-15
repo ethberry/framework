@@ -15,7 +15,7 @@ export class CreateContract1563804000110 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_role_enum AS ENUM (
         'TOKEN',
-        'DROPBOX',
+        'LOOTBOX',
         'AIRDROP'
       );
     `);
