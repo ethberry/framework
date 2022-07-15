@@ -35,7 +35,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_role,
         contract_template,
         created_at,
         updated_at
@@ -53,7 +52,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'TOKEN',
         'NATIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -71,7 +69,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'TOKEN',
         'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -89,7 +86,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'INACTIVE',
         'ERC20',
-        'TOKEN',
         'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -107,7 +103,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'NEW',
         'ERC20',
-        'TOKEN',
         'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -125,7 +120,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'TOKEN',
         'BLACKLIST',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -143,7 +137,6 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'TOKEN',
         'EXTERNAL',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -49,11 +49,6 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
-    "contractRole": {
-      "AIRDROP": "Airdrop",
-      "LOOTBOX": "Lootbox",
-      "TOKEN": "Token"
-    },
     "contractStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
@@ -210,7 +205,6 @@
       "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
-      "contractRole": "Role",
       "contractStatus": "Status",
       "contractTemplate": "Template",
       "createdAt": "Created",

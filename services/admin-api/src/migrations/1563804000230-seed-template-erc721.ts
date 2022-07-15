@@ -108,7 +108,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         4,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -121,7 +121,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -134,7 +134,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -147,7 +147,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -160,7 +160,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -173,7 +173,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -186,7 +186,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -199,7 +199,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -212,7 +212,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -225,7 +225,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -238,7 +238,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -251,7 +251,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        14,
+        12,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -264,7 +264,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        14,
+        12,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -277,7 +277,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        14,
+        12,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -290,7 +290,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        15,
+        13,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -303,7 +303,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        15,
+        13,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -316,7 +316,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        15,
+        13,
         '${currentDateTime}',
         '${currentDateTime}'
       );

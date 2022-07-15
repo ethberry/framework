@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
-import { ContractRole, ContractStatus, IContractAutocompleteDto, TokenType } from "@framework/types";
+import { ContractStatus, IContractAutocompleteDto, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
@@ -26,10 +26,6 @@ export class ContractService {
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", { contractStatus: ContractStatus.ACTIVE });
-
-    queryBuilder.andWhere("contract.contractRole IN(:...contractRoles)", {
-      contractRoles: [ContractRole.TOKEN, ContractRole.LOOTBOX],
-    });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -56,19 +52,13 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractRole = [], contractStatus = [], contractTemplate = [], contractType = [] } = dto;
+    const { contractStatus = [], contractTemplate = [], contractType = [] } = dto;
 
     const where = {};
 
     if (contractType.length) {
       Object.assign(where, {
         contractType: In(contractType),
-      });
-    }
-
-    if (contractRole.length) {
-      Object.assign(where, {
-        contractRole: In(contractRole),
       });
     }
 

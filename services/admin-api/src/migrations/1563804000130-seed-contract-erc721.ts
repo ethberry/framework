@@ -7,14 +7,12 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721CollectionLootboxAddress = process.env.LOOTBOX_ADDR || wallet;
-    const erc721CollectionAirdropAddress = process.env.AIRDROP_ADDR || wallet;
     const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
     const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
     const erc721CollectionRuneAddress = process.env.ERC721_RUNE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 13 - ITEMS, 14 - SKILLS, 15 - RUNES
+    // 11 - ITEMS, 12 - SKILLS, 13 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -29,45 +27,10 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_role,
         contract_template,
         created_at,
         updated_at
-      ) VALUES  (
-        11,
-        '${erc721CollectionAirdropAddress}',
-        '${chainId}',
-        'AIRDROP_ERC721',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'AIRDROP_ERC721',
-        'AIR721',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC721',
-        'AIRDROP',
-        'UNKNOWN',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        12,
-        '${erc721CollectionLootboxAddress}',
-        '${chainId}',
-        'LOOTBOX_ERC721',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'LOOTBOX_ERC721',
-        'DROP721',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC721',
-        'LOOTBOX',
-        'UNKNOWN',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
+      ) VALUES (
         13,
         '${erc721CollectionItemsAddress}',
         '${chainId}',
@@ -80,7 +43,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'TOKEN',
         'RANDOM',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -97,7 +59,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'TOKEN',
         'GRADED',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -114,7 +75,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'TOKEN',
         'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'

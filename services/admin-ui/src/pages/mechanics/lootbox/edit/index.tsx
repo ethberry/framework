@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractRole, LootboxStatus, ILootbox, TokenType } from "@framework/types";
+import { LootboxStatus, ILootbox, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
@@ -50,7 +50,6 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
       <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       {id ? <SelectInput name="lootboxStatus" options={LootboxStatus} /> : null}
       <EntityInput name="templateId" controller="templates" data={{}} />
-      <EntityInput name="contract" controller="contracts" data={{ contractRole: [ContractRole.LOOTBOX] }} />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

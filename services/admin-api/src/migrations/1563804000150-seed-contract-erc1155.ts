@@ -27,7 +27,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_role,
         contract_template,
         created_at,
         updated_at
@@ -44,7 +43,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC1155',
-        'TOKEN',
         'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -61,7 +59,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC1155',
-        'TOKEN',
         'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -78,7 +75,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC1155',
-        'TOKEN',
         'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'

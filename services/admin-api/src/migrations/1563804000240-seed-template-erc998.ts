@@ -52,7 +52,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        23,
+        21,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -65,7 +65,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        23,
+        21,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -78,7 +78,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        23,
+        21,
         '${currentDateTime}',
         '${currentDateTime}'
       );

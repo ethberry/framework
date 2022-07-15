@@ -68,7 +68,6 @@ export const Erc20Contract: FC = () => {
       query: "",
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractTemplate: [],
-      contractRole: [],
     },
     filter: ({ title, description, contractStatus }) => ({ title, description, contractStatus }),
   });

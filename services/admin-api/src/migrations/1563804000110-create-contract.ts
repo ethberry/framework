@@ -13,14 +13,6 @@ export class CreateContract1563804000110 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.contract_role_enum AS ENUM (
-        'TOKEN',
-        'LOOTBOX',
-        'AIRDROP'
-      );
-    `);
-
-    await queryRunner.query(`
       CREATE TYPE ${ns}.contract_template_enum AS ENUM (
         'UNKNOWN',
         'SIMPLE',
@@ -93,11 +85,6 @@ export class CreateContract1563804000110 implements MigrationInterface {
           default: "'NATIVE'",
         },
         {
-          name: "contract_role",
-          type: `${ns}.contract_role_enum`,
-          default: "'TOKEN'",
-        },
-        {
           name: "contract_template",
           type: `${ns}.contract_template_enum`,
           default: "'UNKNOWN'",
@@ -119,7 +106,6 @@ export class CreateContract1563804000110 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.contract`);
     await queryRunner.query(`DROP TYPE ${ns}.contract_status_enum;`);
-    await queryRunner.query(`DROP TYPE ${ns}.contract_role_enum;`);
     await queryRunner.query(`DROP TYPE ${ns}.contract_template_enum;`);
   }
 }

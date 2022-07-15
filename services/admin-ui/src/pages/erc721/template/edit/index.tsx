@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractRole, ITemplate, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplate, TemplateStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
@@ -51,7 +51,6 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
         name="contractId"
         controller="contracts"
         data={{
-          contractRole: [ContractRole.TOKEN],
           contractType: [TokenType.ERC721],
         }}
         readOnly={!!id}

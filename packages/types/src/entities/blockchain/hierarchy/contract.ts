@@ -11,12 +11,6 @@ export enum ContractStatus {
   NEW = "NEW",
 }
 
-export enum ContractRole {
-  TOKEN = "TOKEN",
-  LOOTBOX = "LOOTBOX",
-  AIRDROP = "AIRDROP",
-}
-
 export enum Erc20ContractTemplate {
   "SIMPLE" = "SIMPLE", // ACBCS
   "BLACKLIST" = "BLACKLIST", // ACBCS + BLACKLIST
@@ -60,7 +54,6 @@ export interface IContract extends IDeployable, ISearchable {
   baseTokenURI: string;
   contractStatus: ContractStatus;
   contractType: TokenType;
-  contractRole: ContractRole;
   contractTemplate: ContractTemplate;
   templates: Array<ITemplate>;
   history?: Array<IContractHistory>;

@@ -5,7 +5,7 @@ import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-in
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { ContractRole, ITemplate, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplate, TemplateStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../components/inputs/price";
@@ -51,7 +51,6 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
         name="contractId"
         controller="contracts"
         data={{
-          contractRole: [ContractRole.TOKEN],
           contractType: [TokenType.ERC1155],
         }}
         readOnly={!!id}

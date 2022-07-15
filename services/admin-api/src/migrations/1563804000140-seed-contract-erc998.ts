@@ -7,13 +7,11 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc998At1563804000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc998CollectionLootboxAddress = process.env.LOOTBOX_ADDR || wallet;
-    const erc998CollectionAirdropAddress = process.env.ERC998_AIRDROP_ADDR || wallet;
     const erc998CollectionHeroAddress = process.env.ERC998_HERO_ADDR || wallet;
 
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 23 - HERO
+    // 21 - HERO
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -28,46 +26,11 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_role,
         contract_template,
         created_at,
         updated_at
-      ) VALUES  (
+      ) VALUES (
         21,
-        '${erc998CollectionAirdropAddress}',
-        '${chainId}',
-        'AIRDROP_ERC998',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'AIRDROP_ERC998',
-        'AIR998',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC998',
-        'AIRDROP',
-        'UNKNOWN',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        22,
-        '${erc998CollectionLootboxAddress}',
-        '${chainId}',
-        'LOOTBOX_ERC998',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'LOOTBOX_ERC998',
-        'DROP998',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC998',
-        'LOOTBOX',
-        'UNKNOWN',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        23,
         '${erc998CollectionHeroAddress}',
         '${chainId}',
         'HEROES',
@@ -79,14 +42,13 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        'TOKEN',
         'RANDOM',
         '${currentDateTime}',
         '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 23, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 21, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

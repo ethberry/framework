@@ -10,7 +10,6 @@ import { imageUrl } from "@framework/constants";
 
 import {
   ContractManagerEventType,
-  ContractRole,
   ContractTemplate,
   ContractType,
   IContractManagerERC1155TokenDeployed,
@@ -107,7 +106,6 @@ export class ContractManagerServiceEth {
       royalty: 0, // todo default or nullable in entity?
       contractTemplate,
       contractType: TokenType.ERC20,
-      contractRole: ContractRole.TOKEN,
       chainId: this.chainId,
     });
 
@@ -156,7 +154,6 @@ export class ContractManagerServiceEth {
       imageUrl,
       contractTemplate,
       contractType: TokenType.ERC721,
-      contractRole: ContractRole.TOKEN,
       chainId: this.chainId,
       royalty: ~~royalty,
       baseTokenURI,
@@ -191,7 +188,6 @@ export class ContractManagerServiceEth {
       imageUrl,
       contractTemplate,
       contractType: TokenType.ERC998,
-      contractRole: ContractRole.TOKEN,
       chainId: this.chainId,
       royalty: ~~royalty,
       baseTokenURI,
@@ -226,7 +222,6 @@ export class ContractManagerServiceEth {
       baseTokenURI,
       contractTemplate,
       contractType: TokenType.ERC1155,
-      contractRole: ContractRole.TOKEN,
       chainId: this.chainId,
     });
 

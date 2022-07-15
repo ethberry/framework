@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ContractRole, LootboxStatus, ILootboxSearchDto } from "@framework/types";
+import { LootboxStatus, ILootboxSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -39,12 +39,7 @@ export const Erc721LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{ contractRole: [ContractRole.LOOTBOX] }}
-            />
+            <EntityInput name="contractIds" controller="contracts" multiple data={{}} />
           </Grid>
           <Grid item xs={6}>
             <SelectInput multiple name="lootboxStatus" options={LootboxStatus} />

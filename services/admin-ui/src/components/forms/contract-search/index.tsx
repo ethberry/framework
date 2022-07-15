@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ContractRole, ContractStatus, IContractSearchDto } from "@framework/types";
+import { ContractStatus, IContractSearchDto } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { useStyles } from "./styles";
@@ -19,8 +19,8 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, contractStatus, contractTemplate, contractRole } = initialValues;
-  const fixedValues = { query, contractStatus, contractTemplate, contractRole };
+  const { query, contractStatus, contractTemplate } = initialValues;
+  const fixedValues = { query, contractStatus, contractTemplate };
 
   return (
     <FormWrapper
@@ -43,9 +43,6 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
           </Grid>
           <Grid item xs={6}>
             <SelectInput name="contractTemplate" options={contractTemplateOptions} multiple />
-          </Grid>
-          <Grid item xs={12}>
-            <SelectInput name="contractRole" options={ContractRole} multiple/>
           </Grid>
         </Grid>
       </Collapse>

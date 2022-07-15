@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractRole, ContractStatus, Erc20ContractTemplate, TokenType } from "@framework/types";
+import { ContractStatus, Erc20ContractTemplate, TokenType } from "@framework/types";
 
 export interface IContractInputProps {
   prefix: string;
@@ -49,7 +49,6 @@ export const ContractInput: FC<IContractInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="contracts"
           data={{
-            contractRole: [ContractRole.TOKEN],
             contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC721],
           }}
@@ -61,7 +60,6 @@ export const ContractInput: FC<IContractInputProps> = props => {
           name={`${prefix}.${name}`}
           controller="contracts"
           data={{
-            contractRole: [ContractRole.TOKEN],
             contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC998],
           }}

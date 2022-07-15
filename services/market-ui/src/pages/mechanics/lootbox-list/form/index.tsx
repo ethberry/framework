@@ -4,7 +4,7 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { ContractRole, ILootboxSearchDto } from "@framework/types";
+import { ILootboxSearchDto } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { useStyles } from "./styles";
@@ -49,12 +49,7 @@ export const LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
           </Grid>
           {!embedded ? (
             <Grid item xs={6}>
-              <EntityInput
-                name="contractIds"
-                controller="contracts"
-                multiple
-                data={{ contractRole: [ContractRole.LOOTBOX] }}
-              />
+              <EntityInput name="contractIds" controller="contracts" multiple data={{}} />
             </Grid>
           ) : null}
         </Grid>

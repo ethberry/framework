@@ -16,7 +16,7 @@ export class ContractService {
   ) {}
 
   public async search(dto: IContractSearchDto, contractType: TokenType): Promise<[Array<ContractEntity>, number]> {
-    const { query, contractStatus, contractTemplate, contractRole, skip, take } = dto;
+    const { query, contractStatus, contractTemplate, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
@@ -41,16 +41,6 @@ export class ContractService {
         });
       } else {
         queryBuilder.andWhere("contract.contractTemplate IN(:...contractTemplate)", { contractTemplate });
-      }
-    }
-
-    if (contractRole) {
-      if (contractRole.length === 1) {
-        queryBuilder.andWhere("contract.contractRole = :contractRole", {
-          contractRole: contractRole[0],
-        });
-      } else {
-        queryBuilder.andWhere("contract.contractRole IN(:...contractRole)", { contractRole });
       }
     }
 
@@ -79,19 +69,13 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractRole = [], contractStatus = [], contractTemplate = [], contractType = [] } = dto;
+    const { contractStatus = [], contractTemplate = [], contractType = [] } = dto;
 
     const where = {};
 
     if (contractType.length) {
       Object.assign(where, {
         contractType: In(contractType),
-      });
-    }
-
-    if (contractRole.length) {
-      Object.assign(where, {
-        contractRole: In(contractRole),
       });
     }
 

@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { ContractRole, ContractStatus, IContract } from "@framework/types";
+import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../components/popover";
@@ -19,26 +19,14 @@ export interface IErc721ContractEditDialogProps {
 export const Erc721CollectionEditDialog: FC<IErc721ContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const {
-    id,
-    title,
-    description,
-    baseTokenURI,
-    imageUrl,
-    contractStatus,
-    contractRole,
-    address,
-    symbol,
-    name,
-    royalty,
-  } = initialValues;
+  const { id, title, description, baseTokenURI, imageUrl, contractStatus, address, symbol, name, royalty } =
+    initialValues;
 
   const fixedValues = {
     id,
     title,
     description,
     contractStatus,
-    contractRole,
     imageUrl,
   };
 
@@ -62,7 +50,6 @@ export const Erc721CollectionEditDialog: FC<IErc721ContractEditDialogProps> = pr
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
-      <SelectInput name="contractRole" options={ContractRole} readOnly />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );
