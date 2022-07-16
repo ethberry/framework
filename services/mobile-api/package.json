@@ -22,7 +22,7 @@
     "@gemunion/nest-js-module-typeorm-logger": "1.2.41",
     "@gemunion/nest-js-module-winston-logdna": "2.0.2",
     "@gemunion/nest-js-utils": "2.0.2",
-    "@gemunion/nest-js-utils-ws": "1.0.34",
+    "@gemunion/nest-js-utils-ws": "2.0.2",
     "@gemunion/nest-js-validators": "2.0.2",
     "@gemunion/types-collection": "1.4.4",
     "@gemunion/types-jwt": "0.3.2",
