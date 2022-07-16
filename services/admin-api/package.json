@@ -17,7 +17,7 @@
     "@gemunion/draft-js-utils": "0.3.14",
     "@gemunion/nest-js-guards": "2.0.2",
     "@gemunion/nest-js-module-helmet": "3.0.2",
-    "@gemunion/nest-js-module-license": "1.0.29",
+    "@gemunion/nest-js-module-license": "2.0.2",
     "@gemunion/nest-js-module-passport": "2.0.2",
     "@gemunion/nest-js-module-request-logger": "2.0.2",
     "@gemunion/nest-js-module-throttler": "1.0.48",
