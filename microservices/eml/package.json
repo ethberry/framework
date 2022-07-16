@@ -5,7 +5,7 @@
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "@gemunion/nest-js-module-request-logger": "1.2.33",
+    "@gemunion/nest-js-module-request-logger": "2.0.2",
     "@gemunion/nest-js-module-winston-logdna": "2.0.2",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
