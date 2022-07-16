@@ -3,7 +3,6 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ILootbox, LootboxStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
@@ -49,7 +48,6 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
       <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} />
       <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       {id ? <SelectInput name="lootboxStatus" options={LootboxStatus} /> : null}
-      <EntityInput name="templateId" controller="templates" data={{}} />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

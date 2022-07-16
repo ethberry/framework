@@ -47,7 +47,7 @@ export const Lootbox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      templateId: 0,
+      item: emptyPrice,
       price: emptyPrice,
     },
     search: {
@@ -55,10 +55,10 @@ export const Lootbox: FC = () => {
       lootboxStatus: [LootboxStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ id, title, description, imageUrl, item, price, lootboxStatus, templateId, contractId }) =>
+    filter: ({ id, title, description, imageUrl, item, price, lootboxStatus, contractId }) =>
       id
-        ? { title, description, imageUrl, item, price, lootboxStatus, templateId, contractId }
-        : { title, description, imageUrl, item, price, templateId, contractId },
+        ? { title, description, imageUrl, item, price, lootboxStatus, contractId }
+        : { title, description, imageUrl, item, price, contractId },
   });
 
   return (
