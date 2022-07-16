@@ -16,7 +16,7 @@
     "@gemunion/nest-js-module-helmet": "2.1.43",
     "@gemunion/nest-js-module-license": "1.0.29",
     "@gemunion/nest-js-module-metamask": "0.1.17",
-    "@gemunion/nest-js-module-passport": "1.2.61",
+    "@gemunion/nest-js-module-passport": "2.0.2",
     "@gemunion/nest-js-module-request-logger": "1.2.33",
     "@gemunion/nest-js-module-throttler": "1.0.48",
     "@gemunion/nest-js-module-typeorm-debug": "2.0.2",
