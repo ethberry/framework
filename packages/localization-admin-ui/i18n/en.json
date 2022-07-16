@@ -342,7 +342,7 @@
   "pages": {
     "claims": {
       "defaultItemTitle": "Claim",
-      "title": "ERC721 Claim"
+      "title": "Claim"
     },
     "blockchain": {
       "title": "Blockchain Settings"

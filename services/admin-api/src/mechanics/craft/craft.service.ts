@@ -12,22 +12,22 @@ import { AssetService } from "../asset/asset.service";
 export class CraftService {
   constructor(
     @InjectRepository(CraftEntity)
-    private readonly recipeEntityRepository: Repository<CraftEntity>,
+    private readonly craftEntityRepository: Repository<CraftEntity>,
     private readonly assetService: AssetService,
   ) {}
 
   public search(dto: IExchangeSearchDto): Promise<[Array<CraftEntity>, number]> {
     const { query, craftStatus, skip, take } = dto;
 
-    const queryBuilder = this.recipeEntityRepository.createQueryBuilder("rule");
+    const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("rule.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "components");
-    queryBuilder.leftJoinAndSelect("components.token", "token");
-    queryBuilder.leftJoinAndSelect("token.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.leftJoinAndSelect("craft.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
+    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
+    // queryBuilder.leftJoinAndSelect("item_components.contract", "contract");
 
     if (query) {
       queryBuilder.leftJoin(
@@ -45,9 +45,9 @@ export class CraftService {
 
     if (craftStatus) {
       if (craftStatus.length === 1) {
-        queryBuilder.andWhere("rule.craftStatus = :craftStatus", { craftStatus: craftStatus[0] });
+        queryBuilder.andWhere("craft.craftStatus = :craftStatus", { craftStatus: craftStatus[0] });
       } else {
-        queryBuilder.andWhere("rule.craftStatus IN(:...craftStatus)", { craftStatus });
+        queryBuilder.andWhere("craft.craftStatus IN(:...craftStatus)", { craftStatus });
       }
     }
 
@@ -61,7 +61,7 @@ export class CraftService {
     where: FindOptionsWhere<CraftEntity>,
     options?: FindOneOptions<CraftEntity>,
   ): Promise<CraftEntity | null> {
-    return this.recipeEntityRepository.findOne({ where, ...options });
+    return this.craftEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
@@ -83,7 +83,7 @@ export class CraftService {
     });
     await this.assetService.update(itemEntity, item);
 
-    return this.recipeEntityRepository
+    return this.craftEntityRepository
       .create({
         ingredients: ingredientsEntity,
         item: itemEntity,
@@ -96,15 +96,15 @@ export class CraftService {
 
     const exchangeEntity = await this.findOne(where, {
       join: {
-        alias: "recipe",
+        alias: "craft",
         leftJoinAndSelect: {
-          ingredients: "recipe.ingredients",
+          ingredients: "craft.ingredients",
         },
       },
     });
 
     if (!exchangeEntity) {
-      throw new NotFoundException("exchangeRulesNotFound");
+      throw new NotFoundException("craftNotFound");
     }
 
     if (ingredients) {
@@ -117,17 +117,17 @@ export class CraftService {
   }
 
   public async delete(where: FindOptionsWhere<CraftEntity>): Promise<void> {
-    const recipeEntity = await this.findOne(where);
+    const craftEntity = await this.findOne(where);
 
-    if (!recipeEntity) {
+    if (!craftEntity) {
       return;
     }
 
-    if (recipeEntity.craftStatus === CraftStatus.NEW) {
-      await recipeEntity.remove();
+    if (craftEntity.craftStatus === CraftStatus.NEW) {
+      await craftEntity.remove();
     } else {
-      Object.assign(recipeEntity, { craftStatus: CraftStatus.INACTIVE });
-      await recipeEntity.save();
+      Object.assign(craftEntity, { craftStatus: CraftStatus.INACTIVE });
+      await craftEntity.save();
     }
   }
 }

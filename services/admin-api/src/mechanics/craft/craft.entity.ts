@@ -6,7 +6,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { AssetEntity } from "../asset/asset.entity";
 
-@Entity({ schema: ns, name: "recipe" })
+@Entity({ schema: ns, name: "craft" })
 export class CraftEntity extends IdDateBaseEntity implements ICraft {
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
