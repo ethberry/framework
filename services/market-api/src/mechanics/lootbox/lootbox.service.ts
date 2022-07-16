@@ -22,12 +22,13 @@ export class LootboxService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("lootbox.contract", "contract");
-    queryBuilder.leftJoinAndSelect("lootbox.item", "item");
+
     queryBuilder.leftJoinAndSelect("lootbox.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.token", "price_token");
 
+    queryBuilder.leftJoinAndSelect("lootbox.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
     queryBuilder.leftJoinAndSelect("item_token.template", "item_template");

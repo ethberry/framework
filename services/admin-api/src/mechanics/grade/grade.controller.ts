@@ -9,7 +9,7 @@ import { GradeEntity } from "./grade.entity";
 import { GradeUpdateDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/grader")
+@Controller("/grades")
 export class GradeController {
   constructor(private readonly lootboxService: GradeService) {}
 
@@ -27,6 +27,6 @@ export class GradeController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<GradeEntity | null> {
-    return this.lootboxService.findOne({ id });
+    return this.lootboxService.findOneWithPrice({ id });
   }
 }

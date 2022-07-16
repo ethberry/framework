@@ -8,6 +8,7 @@ export enum AssetType {
   "LOOTBOX" = "LOOTBOX",
   "EXCHANGE" = "EXCHANGE",
   "STAKING" = "STAKING",
+  "GRADE" = "GRADE",
 }
 
 export interface IAsset extends IIdBase {

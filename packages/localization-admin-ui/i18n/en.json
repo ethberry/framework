@@ -49,6 +49,11 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
+    "gradeStrategy": {
+      "FLAT": "Flat",
+      "LINEAR": "Linear",
+      "EXPONENTIAL": "Exponential"
+    },
     "contractStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
@@ -187,6 +192,8 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "gradeStrategy": "Grade strategy",
+      "growthRate": "Growth rate",
       "RARITY": "Rarity",
       "deposit": "Deposit",
       "reward": "Reward",
@@ -261,6 +268,7 @@
       "year": "Year"
     },
     "placeholders": {
+      "growthRate": "2",
       "DUMMY": "Dummy",
       "account": "0x...",
       "address": "0x...",
@@ -384,7 +392,8 @@
         "stakes": "Stakes",
         "staking-rules": "Staking Rules",
         "title": "Mechanics",
-        "vesting": "Vesting"
+        "vesting": "Vesting",
+        "grades": "Grades"
       },
       "title": "Dashboard"
     },
@@ -393,6 +402,9 @@
     },
     "emails": {
       "title": "Emails"
+    },
+    "grades": {
+      "title": "Grade Rules"
     },
     "erc1155-contracts": {
       "title": "ERC1155 Contracts"

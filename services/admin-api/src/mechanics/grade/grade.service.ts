@@ -5,13 +5,15 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { IPaginationDto } from "@gemunion/types-collection";
 
 import { GradeEntity } from "./grade.entity";
-import { ILootboxUpdateDto } from "./interfaces";
+import { IGradeUpdateDto } from "./interfaces";
+import { AssetService } from "../asset/asset.service";
 
 @Injectable()
 export class GradeService {
   constructor(
     @InjectRepository(GradeEntity)
     private readonly gradeEntityRepository: Repository<GradeEntity>,
+    protected readonly assetService: AssetService,
   ) {}
 
   public async search(dto: IPaginationDto): Promise<[Array<GradeEntity>, number]> {
@@ -19,13 +21,20 @@ export class GradeService {
 
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("grade");
 
+    queryBuilder.leftJoinAndSelect("grade.contract", "contract");
+
+    queryBuilder.leftJoinAndSelect("grade.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.token", "price_token");
+
     queryBuilder.select();
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "lootbox.title": "ASC",
+      "grade.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -38,15 +47,43 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async update(where: FindOptionsWhere<GradeEntity>, dto: Partial<ILootboxUpdateDto>): Promise<GradeEntity> {
-    const templateEntity = await this.findOne(where);
+  public async update(where: FindOptionsWhere<GradeEntity>, dto: Partial<IGradeUpdateDto>): Promise<GradeEntity> {
+    const { price, ...rest } = dto;
+    const templateEntity = await this.findOne(where, {
+      join: {
+        alias: "grade",
+        leftJoinAndSelect: {
+          price: "grade.price",
+          components: "price.components",
+        },
+      },
+    });
 
     if (!templateEntity) {
       throw new NotFoundException("gradeNotFound");
     }
 
-    Object.assign(templateEntity, dto);
+    if (price) {
+      await this.assetService.update(templateEntity.price, price);
+    }
+
+    Object.assign(templateEntity, rest);
 
     return templateEntity.save();
+  }
+
+  public findOneWithPrice(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "grade",
+        leftJoinAndSelect: {
+          contract: "grade.contract",
+          price: "grade.price",
+          price_components: "price.components",
+          price_contract: "price_components.contract",
+          price_token: "price_components.token",
+        },
+      },
+    });
   }
 }

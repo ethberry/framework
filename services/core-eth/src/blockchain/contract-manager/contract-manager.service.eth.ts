@@ -33,6 +33,7 @@ import { ContractManagerService } from "./contract-manager.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
+import { GradeService } from "../../mechanics/grade/grade.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -53,6 +54,7 @@ export class ContractManagerServiceEth {
     private readonly vestingLogService: VestingLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
+    private readonly gradeService: GradeService,
   ) {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
@@ -144,7 +146,7 @@ export class ContractManagerServiceEth {
         ? Object.values(ContractTemplate)[5] // Graded
         : Object.values(ContractTemplate)[6]; // Random
 
-    await this.contractService.create({
+    const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
       name,
@@ -157,6 +159,10 @@ export class ContractManagerServiceEth {
       royalty: ~~royalty,
       baseTokenURI,
     });
+
+    if (contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM) {
+      await this.gradeService.create({ contract: contractEntity });
+    }
 
     await this.erc721LogService.addListener({
       address: addr.toLowerCase(),
@@ -178,7 +184,7 @@ export class ContractManagerServiceEth {
         ? Object.values(ContractTemplate)[5] // Graded
         : Object.values(ContractTemplate)[6]; // Random
 
-    await this.contractService.create({
+    const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
       name,
@@ -191,6 +197,10 @@ export class ContractManagerServiceEth {
       royalty: ~~royalty,
       baseTokenURI,
     });
+
+    if (contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM) {
+      await this.gradeService.create({ contract: contractEntity });
+    }
 
     await this.erc998LogService.addListener({
       address: addr.toLowerCase(),

@@ -16,6 +16,7 @@ import { ContractManagerLogModule } from "./contract-manager-log/contract-manage
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
+import { GradeModule } from "../../mechanics/grade/grade.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { TokenModule } from "../hierarchy/token/token.module";
     ContractModule,
     TemplateModule,
     TokenModule,
+    GradeModule,
   ],
   providers: [Logger, ContractManagerServiceEth],
   controllers: [ContractManagerControllerEth],

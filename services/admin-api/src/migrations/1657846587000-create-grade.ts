@@ -35,6 +35,7 @@ export class CreateGrade1657846587000 implements MigrationInterface {
         {
           name: "growth_rate",
           type: "float",
+          default: 0,
         },
         {
           name: "created_at",

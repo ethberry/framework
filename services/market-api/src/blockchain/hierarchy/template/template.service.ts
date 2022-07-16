@@ -22,6 +22,7 @@ export class TemplateService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");

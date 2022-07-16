@@ -63,6 +63,14 @@ export const Mechanics: FC = () => {
             <FormattedMessage id="pages.dashboard.mechanics.stakes" />
           </ListItemText>
         </ListItem>
+        <ListItem button component={RouterLink} to="/grades">
+          <ListItemIcon>
+            <BarChart />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.mechanics.grade" />
+          </ListItemText>
+        </ListItem>
       </List>
     </Paper>
   );
