@@ -23,12 +23,12 @@ export const Mechanics: FC = () => {
             <FormattedMessage id="pages.dashboard.mechanics.vesting" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/airdrop">
+        <ListItem button component={RouterLink} to="/claim">
           <ListItemIcon>
             <Paragliding />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.airdrop" />
+            <FormattedMessage id="pages.dashboard.mechanics.claim" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/lootboxes">

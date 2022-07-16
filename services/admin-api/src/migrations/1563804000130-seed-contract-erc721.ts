@@ -31,7 +31,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        13,
+        11,
         '${erc721CollectionItemsAddress}',
         '${chainId}',
         'ITEMS',
@@ -47,7 +47,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        14,
+        12,
         '${erc721CollectionSkillAddress}',
         '${chainId}',
         'SKILLS',
@@ -63,7 +63,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        15,
+        13,
         '${erc721CollectionRuneAddress}',
         '${chainId}',
         'RUNES',

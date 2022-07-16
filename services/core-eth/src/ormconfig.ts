@@ -5,7 +5,7 @@ import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/cont
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
-import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
+import { ClaimEntity } from "./mechanics/claim/claim.entity";
 import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
@@ -35,7 +35,7 @@ const config: PostgresConnectionOptions = {
     StakingRulesEntity,
     StakingStakesEntity,
     StakingHistoryEntity,
-    AirdropEntity,
+    ClaimEntity,
     LootboxEntity,
     ExchangeEntity,
     ExchangeHistoryEntity,

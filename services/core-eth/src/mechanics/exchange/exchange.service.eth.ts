@@ -1,8 +1,8 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractTemplate, ExchangeEventType, ITransaction, TExchangeEventData, TokenType } from "@framework/types";
+import { ExchangeEventType, ITransaction, TExchangeEventData } from "@framework/types";
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
@@ -26,6 +26,9 @@ export class ExchangeServiceEth {
 
   public async transaction(event: ILogEvent<ITransaction>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
+
+    // TODO update claim status
+
     //
     // const {
     //   args: { from, items },

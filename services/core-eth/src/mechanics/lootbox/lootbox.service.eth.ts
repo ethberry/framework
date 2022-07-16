@@ -7,7 +7,7 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
-  IAirdropRedeem,
+  IClaimRedeem,
   IDefaultRoyaltyInfo,
   ILootboxUnpack,
   ITokenApprove,
@@ -29,7 +29,7 @@ import { BalanceService } from "../../blockchain/hierarchy/balance/balance.servi
 
 @Injectable()
 export class LootboxServiceEth {
-  private airdropAddr: string;
+  private claimAddr: string;
   private itemsAddr: string;
 
   constructor(
@@ -43,7 +43,7 @@ export class LootboxServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
+    this.claimAddr = configService.get<string>("CLAIM_PROXY_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
   }
 
@@ -52,7 +52,7 @@ export class LootboxServiceEth {
       args: { from, to, tokenId },
     } = event;
 
-    // Wait until IToken will be created by Marketplace Redeem or Airdrop Redeem or MintRandom events
+    // Wait until IToken will be created by Marketplace Redeem or Claim Redeem or MintRandom events
     this.loggerService.log(
       `Erc721Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
       LootboxServiceEth.name,
@@ -134,7 +134,7 @@ export class LootboxServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async redeem(event: ILogEvent<IAirdropRedeem>, context: Log): Promise<void> {
+  public async redeem(event: ILogEvent<IClaimRedeem>, context: Log): Promise<void> {
     const {
       args: { from, tokenId, templateId },
     } = event;

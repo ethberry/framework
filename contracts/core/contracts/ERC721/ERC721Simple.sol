@@ -19,7 +19,6 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
   using Counters for Counters.Counter;
 
   bytes32 public constant METADATA_ADMIN_ROLE = keccak256("METADATA_ADMIN_ROLE");
-  bytes32 public constant TEMPLATE_ID = keccak256("templateId");
 
   constructor(
     string memory name,
@@ -32,10 +31,10 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721BaseUrl, GeneralizedC
     _tokenIdTracker.increment();
   }
 
-  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Graded: wrong type");
+  function mintCommon(address to, Asset calldata item) public override onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Graded: wrong type");
     uint256 tokenId = _tokenIdTracker.current();
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    upsertRecordField(tokenId, TEMPLATE_ID, item.tokenId);
     safeMint(to);
   }
 

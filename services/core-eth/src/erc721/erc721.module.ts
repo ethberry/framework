@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 
 import { Erc721TokenModule } from "./token/token.module";
-import { AirdropModule } from "../mechanics/airdrop/airdrop.module";
+import { ClaimModule } from "../mechanics/claim/claim.module";
 
 @Module({
-  imports: [AirdropModule, Erc721TokenModule],
+  imports: [ClaimModule, Erc721TokenModule],
 })
 export class Erc721Module {}

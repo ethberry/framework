@@ -2,8 +2,8 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/firebase-login";
 
 import { CraftList } from "./craft";
-import { Airdrop } from "./airdrop";
-import { AirdropWrapper } from "./airdrop/wrapper";
+import { Claim } from "./claim";
+import { ClaimWrapper } from "./claim/wrapper";
 import { VestingWrapper } from "./vesting/wrapper";
 import { Vesting } from "./vesting";
 import { Stake } from "./staking/stake";
@@ -14,9 +14,9 @@ import { Lootbox } from "./lootbox";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   {
-    path: "/airdrop",
-    element: <AirdropWrapper />,
-    children: [{ index: true, element: <Airdrop /> }],
+    path: "/claim",
+    element: <ClaimWrapper />,
+    children: [{ index: true, element: <Claim /> }],
   },
   {
     path: "/lootboxes",

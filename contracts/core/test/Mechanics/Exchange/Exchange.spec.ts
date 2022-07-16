@@ -378,7 +378,7 @@ describe("Exchange", function () {
           },
         );
 
-        await expect(tx1).to.be.revertedWith(`Marketplace: Wrong amount`);
+        await expect(tx1).to.be.revertedWith(`Exchange: Wrong amount`);
       });
     });
 
@@ -1005,7 +1005,7 @@ describe("Exchange", function () {
           },
         );
 
-        await expect(tx1).to.be.revertedWith(`Marketplace: Wrong amount`);
+        await expect(tx1).to.be.revertedWith(`Exchange: Wrong amount`);
       });
     });
 

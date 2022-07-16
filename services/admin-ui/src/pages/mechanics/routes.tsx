@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/firebase-login";
 
-import { Airdrop } from "./airdrop";
+import { Claim } from "./claim";
 import { Lootbox } from "./lootbox";
 import { Craft } from "./craft";
 import { Staking } from "./staking-rules";
@@ -11,11 +11,11 @@ import { Vesting } from "./vesting";
 
 export const mechanics: Array<RouteObject> = [
   {
-    path: "/airdrops",
+    path: "/claims",
     element: <Protected />,
     children: [
-      { index: true, element: <Airdrop /> },
-      { path: "/airdrops/:id", element: <Airdrop /> },
+      { index: true, element: <Claim /> },
+      { path: "/claims/:id", element: <Claim /> },
     ],
   },
   {

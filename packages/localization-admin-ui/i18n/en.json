@@ -44,7 +44,7 @@
     "whitelist": "Add to whitelist"
   },
   "enums": {
-    "airdropStatus": {
+    "claimStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
@@ -192,7 +192,7 @@
       "DUMMY": "Dummy",
       "account": "Account",
       "address": "Address",
-      "airdropStatus": "Status",
+      "claimStatus": "Status",
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
@@ -340,9 +340,9 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
-    "airdrops": {
-      "defaultItemTitle": "Airdrop",
-      "title": "ERC721 Airdrop"
+    "claims": {
+      "defaultItemTitle": "Claim",
+      "title": "ERC721 Claim"
     },
     "blockchain": {
       "title": "Blockchain Settings"
@@ -377,7 +377,7 @@
         "tokens": "ERC998 Tokens"
       },
       "mechanics": {
-        "airdrops": "Airdrops",
+        "claims": "Claims",
         "lootboxes": "Lootboxes",
         "craft": "Craft",
         "stakes": "Stakes",

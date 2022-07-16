@@ -8,7 +8,7 @@ import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractEventType,
   ContractTemplate,
-  IAirdropRedeem,
+  IClaimRedeem,
   IDefaultRoyaltyInfo,
   IRandomRequest,
   ITokenApprove,
@@ -33,7 +33,7 @@ import { ERC721Abi } from "../../erc721/token/token-log/interfaces";
 
 @Injectable()
 export class Erc998TokenServiceEth {
-  private airdropAddr: string;
+  private claimAddr: string;
   private itemsAddr: string;
 
   constructor(
@@ -49,7 +49,7 @@ export class Erc998TokenServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.airdropAddr = configService.get<string>("AIRDROP_ADDR", "");
+    this.claimAddr = configService.get<string>("CLAIM_PROXY_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC998_ITEM_ADDR", "");
   }
 
@@ -183,7 +183,7 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async redeem(event: ILogEvent<IAirdropRedeem>, context: Log): Promise<void> {
+  public async redeem(event: ILogEvent<IClaimRedeem>, context: Log): Promise<void> {
     const {
       args: { from, tokenId, templateId },
     } = event;

@@ -189,9 +189,9 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
-    "airdrop": {
+    "claim": {
       "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "Airdrop"
+      "title": "Claim"
     },
     "assets": {
       "tabs": {
@@ -220,23 +220,19 @@
         "title": "ERC1155"
       },
       "erc721": {
-        "airdrop": "ERC721 Airdrop",
         "contracts": "ERC721 Contracts",
-        "recipes": "ERC721 Recipes",
         "templates": "ERC721 Templates",
         "title": "ERC721",
         "tokens": "ERC721 Tokens"
       },
       "erc998": {
-        "airdrop": "ERC998 Airdrop",
         "contracts": "ERC998 Contracts",
-        "recipes": "ERC998 Recipes",
         "templates": "ERC998 Templates",
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
       },
       "mechanics": {
-        "airdrop": "Airdrop",
+        "claim": "Claim",
         "craft": "Craft",
         "lootboxes": "Lootboxes",
         "leaderboard": "Staking Leaderboard",
@@ -287,10 +283,6 @@
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "ERC20 Vesting"
-    },
-    "erc721-airdrop": {
-      "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "ERC721 Airdrop"
     },
     "erc721-contract": {
       "title": "ERC721 Contract: {title}"

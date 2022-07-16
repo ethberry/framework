@@ -7,7 +7,7 @@ export class CreateAsset1563804000100 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.asset_type_enum AS ENUM (
         'TEMPLATE',
-        'AIRDROP',
+        'CLAIM',
         'LOOTBOX',
         'EXCHANGE',
         'STAKING',

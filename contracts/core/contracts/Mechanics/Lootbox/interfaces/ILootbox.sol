@@ -6,6 +6,8 @@
 
 pragma solidity ^0.8.9;
 
+import "../../Asset/interfaces/IAsset.sol";
+
 interface ILootbox {
-  function mintLootbox(address to, uint256 templateId) external returns (uint256);
+  function mintLootbox(address to, Asset calldata item) external;
 }

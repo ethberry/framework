@@ -7,6 +7,7 @@
 pragma solidity ^0.8.9;
 
 import "../Lootbox.sol";
+import "../../Asset/interfaces/IAsset.sol";
 
 contract LootboxTest is Lootbox {
   constructor(
@@ -16,8 +17,7 @@ contract LootboxTest is Lootbox {
     string memory baseTokenURI
   ) Lootbox(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 tokenId) public onlyRole(MINTER_ROLE) returns (uint256) {
-    _safeMint(to, tokenId);
-    return tokenId;
+  function mintCommon(address to, Asset calldata token) public onlyRole(MINTER_ROLE) {
+    _safeMint(to, token.tokenId);
   }
 }

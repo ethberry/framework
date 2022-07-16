@@ -12,13 +12,13 @@ export class CreateErc721ContractHistory1563804040330 implements MigrationInterf
         'MintRandom',
         'Paused',
         'RandomRequest',
-        'RedeemAirdrop',
+        'RedeemClaim',
         'RoleAdminChanged',
         'RoleGranted',
         'RoleRevoked',
         'TokenRoyaltyInfo',
         'Transfer',
-        'UnpackAirdrop',
+        'UnpackClaim',
         'UnpackLootbox',
         'Unpaused'
       );

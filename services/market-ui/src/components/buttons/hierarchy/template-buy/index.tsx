@@ -34,9 +34,6 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
       })
       .then((sign: IServerSignature) => {
         const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
-        console.log("template.price?.components", template.price?.components);
-        console.log("item.(TokenType)", Object.keys(TokenType).indexOf(template.contract!.contractType));
-        console.log("ingridient.(TokenType)", Object.keys(TokenType).indexOf(template.price!.components[0]!.tokenType!));
         return contract.execute(
           utils.arrayify(sign.nonce),
           [

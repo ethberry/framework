@@ -2,7 +2,7 @@ import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ContractType {
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
-  AIRDROP = "AIRDROP",
+  CLAIM = "CLAIM",
   LOOTBOX = "LOOTBOX",
   EXCHANGE = "EXCHANGE",
   STAKING = "STAKING",

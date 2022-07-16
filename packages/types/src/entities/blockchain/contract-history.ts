@@ -7,14 +7,14 @@ export enum ContractEventType {
   MintRandom = "MintRandom",
   Paused = "Paused",
   RandomRequest = "RandomRequest",
-  RedeemAirdrop = "RedeemAirdrop",
+  RedeemClaim = "RedeemClaim",
   Snapshot = "Snapshot",
   TokenRoyaltyInfo = "TokenRoyaltyInfo",
   Transfer = "Transfer",
   TransferBatch = "TransferBatch",
   TransferSingle = "TransferSingle",
   URI = "URI",
-  UnpackAirdrop = "UnpackAirdrop",
+  UnpackClaim = "UnpackClaim",
   UnpackLootbox = "UnpackLootbox",
   Unpaused = "Unpaused",
 }
@@ -41,14 +41,14 @@ export interface ILootboxUnpack {
   templateId: string;
 }
 
-export interface IAirdropUnpack {
+export interface IClaimUnpack {
   collection: string;
   tokenId: string;
   templateId: string;
-  airdropId: string;
+  claimId: string;
 }
 
-export interface IAirdropRedeem {
+export interface IClaimRedeem {
   from: string;
   collection: string;
   tokenId: string;
@@ -132,8 +132,8 @@ export interface IErc1155RoleGrant {
 }
 
 export type TContractEventData =
-  | IAirdropRedeem
-  | IAirdropUnpack
+  | IClaimRedeem
+  | IClaimUnpack
   | IDefaultRoyaltyInfo
   | ILootboxUnpack
   | IErc1155TokenApprovalForAll

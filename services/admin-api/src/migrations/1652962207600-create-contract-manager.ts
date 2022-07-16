@@ -7,7 +7,7 @@ export class CreateContractManager1652962207600 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_manager_type_enum AS ENUM (
         'CONTRACT_MANAGER',
-        'AIRDROP',
+        'CLAIM',
         'LOOTBOX',
         'STAKING',
         'VESTING',

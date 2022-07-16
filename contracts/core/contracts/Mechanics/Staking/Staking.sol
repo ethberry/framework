@@ -38,8 +38,8 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   mapping(uint256 => Stake) internal _stakes;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
-  bytes4 private constant IERC721_LOOTBOX = 0xe7728dc6;
+  bytes4 private constant IERC721_RANDOM = 0x82993c65;
+  bytes4 private constant IERC721_LOOTBOX = 0x503c3942;
 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
@@ -148,7 +148,6 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
       Asset storage rewardItem = rule.reward;
-      uint256 rewardTokenId = rule.reward.tokenId;
       uint256 rewardAmount;
 
       if (rewardItem.tokenType == TokenType.NATIVE) {
@@ -163,20 +162,20 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
 
         if (randomInterface) {
           for (uint256 i = 0; i < multiplier; i++) {
-            IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardTokenId, 0);
+            IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardItem);
           }
         } else if (lootboxInterface) {
           for (uint256 i = 0; i < multiplier; i++) {
-            ILootbox(rewardItem.token).mintLootbox(_msgSender(), rewardTokenId);
+            ILootbox(rewardItem.token).mintLootbox(_msgSender(), rewardItem);
           }
         } else {
           for (uint256 i = 0; i < multiplier; i++) {
-            IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardTokenId);
+            IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardItem);
           }
         }
       } else if (rewardItem.tokenType == TokenType.ERC1155) {
         rewardAmount = rewardItem.amount * multiplier;
-        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardTokenId, rewardAmount, "0x");
+        IERC1155Simple(rewardItem.token).mint(_msgSender(), rewardItem.tokenId, rewardAmount, "0x");
         // todo batch mint reward
       }
     }

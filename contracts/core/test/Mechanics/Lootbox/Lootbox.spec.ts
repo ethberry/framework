@@ -5,6 +5,7 @@ import { LootboxTest } from "../../../typechain-types";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
+  fakeAsset,
   MINTER_ROLE,
   royalty,
   tokenId,
@@ -33,7 +34,7 @@ describe("Lootbox", function () {
 
   describe("mint", function () {
     it("should mint", async function () {
-      const tx1 = lootboxInstance.mintLootbox(this.receiver.address, tokenId);
+      const tx1 = lootboxInstance.mintLootbox(this.receiver.address, fakeAsset);
 
       await expect(tx1)
         .to.emit(lootboxInstance, "Transfer")

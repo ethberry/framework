@@ -46,7 +46,7 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["craft_id"],
+          columnNames: ["exchange_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.craft`,
           onDelete: "CASCADE",

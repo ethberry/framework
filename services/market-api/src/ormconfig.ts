@@ -5,7 +5,7 @@ import { UserEntity } from "./user/user.entity";
 import { PageEntity } from "./page/page.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
-import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
+import { ClaimEntity } from "./mechanics/claim/claim.entity";
 import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
 import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
@@ -30,7 +30,7 @@ const config: PostgresConnectionOptions = {
     StakingRulesEntity,
     PageEntity,
     LootboxEntity,
-    AirdropEntity,
+    ClaimEntity,
     ContractEntity,
     TemplateEntity,
     TokenEntity,

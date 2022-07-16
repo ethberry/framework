@@ -7,7 +7,7 @@ export * from "./blockchain/hierarchy/token/autocomplete";
 export * from "./blockchain/hierarchy/token/search";
 
 export * from "./mechanics/staking/search";
-export * from "./mechanics/airdrop/search";
+export * from "./mechanics/claim/search";
 export * from "./mechanics/lootbox/search";
 export * from "./mechanics/exchange/search";
 export * from "./mechanics/vesting/deploy";

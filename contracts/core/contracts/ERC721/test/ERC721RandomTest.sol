@@ -14,22 +14,18 @@ import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
 import "../interfaces/IERC721Random.sol";
 import "../../MOCKS/ChainLink/ERC721ChainLinkHH.sol";
+import "../../Mechanics/Asset/interfaces/IAsset.sol";
+import "../../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
+contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
   using Counters for Counters.Counter;
 
   struct Request {
     address owner;
-    uint256 templateId;
-    uint256 lootboxId;
+    Asset item;
   }
 
-  event MintRandom(address to, uint256 tokenId, uint256 templateId, uint256 rarity, uint256 lootboxId);
-
   mapping(bytes32 => Request) internal _queue;
-
-  bytes32 public constant TEMPLATE_ID = keccak256("templateId");
-  bytes32 public constant RARITY = keccak256("rarity");
 
   constructor(
     string memory name,
@@ -45,23 +41,21 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     return false;
   }
 
-  function mintCommon(address to, uint256 templateId) public onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
+  function mintCommon(address to, Asset calldata item) public onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Random: wrong type");
     uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    upsertRecordField(tokenId, TEMPLATE_ID, item.tokenId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, 1);
 
-    safeMint(to);
+    _safeMint(to, tokenId);
   }
 
-  function mintRandom(
-    address to,
-    uint256 templateId,
-    uint256 lootboxId
-  ) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
-    _queue[getRandomNumber()] = Request(to, templateId, lootboxId);
+  function mintRandom(address to, Asset calldata item) external override onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Random: wrong type");
+    _queue[getRandomNumber()] = Request(to, item);
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
@@ -69,10 +63,8 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
-    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    upsertRecordField(tokenId, TEMPLATE_ID, request.item.tokenId);
     upsertRecordField(tokenId, RARITY, rarity);
-
-    emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.lootboxId);
 
     delete _queue[requestId];
     safeMint(request.owner);

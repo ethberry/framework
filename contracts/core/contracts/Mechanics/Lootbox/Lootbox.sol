@@ -11,19 +11,16 @@ import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./interfaces/ILootbox.sol";
+import "../Asset/interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 
 contract Lootbox is ILootbox, ERC721ACBER, ERC721BaseUrl {
   using Address for address;
   using Counters for Counters.Counter;
 
-  struct ItemData {
-    uint256 templateId;
-  }
+  mapping(uint256 => Asset) internal _itemData;
 
-  mapping(uint256 => ItemData) internal _itemData;
-
-  event UnpackLootbox(address collection, uint256 tokenId, uint256 templateId);
+  event UnpackLootbox(uint256 tokenId);
 
   constructor(
     string memory name,
@@ -37,25 +34,24 @@ contract Lootbox is ILootbox, ERC721ACBER, ERC721BaseUrl {
     _tokenIdTracker.increment();
   }
 
-  function mintLootbox(address to, uint256 templateId) public onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
-    tokenId = _tokenIdTracker.current();
-    _itemData[tokenId] = ItemData(templateId);
-    _safeMint(to, tokenId);
+  function mintLootbox(address to, Asset calldata item) public onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Graded: wrong type");
+    uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
+
+    _itemData[tokenId] = item;
+
+    _safeMint(to, tokenId);
   }
 
-  function unpack(
-    address collection,
-    uint256 tokenId,
-    uint256 lootboxId
-  ) public {
+  function unpack(uint256 tokenId) public {
     require(_isApprovedOrOwner(_msgSender(), tokenId), "Lootbox: unpack caller is not owner nor approved");
 
-    ItemData memory data = _itemData[tokenId];
-    emit UnpackLootbox(collection, tokenId, data.templateId);
+    Asset memory item = _itemData[tokenId];
+    emit UnpackLootbox(tokenId);
 
     _burn(tokenId);
-    IERC721Random(collection).mintRandom(_msgSender(), data.templateId, lootboxId);
+    IERC721Random(item.token).mintRandom(_msgSender(), item);
   }
 
   function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {

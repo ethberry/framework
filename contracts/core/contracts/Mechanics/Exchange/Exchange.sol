@@ -32,8 +32,8 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
-  bytes4 private constant IERC721_RANDOM = 0x0301b0bf;
-  bytes4 private constant IERC721_LOOTBOX = 0xe7728dc6;
+  bytes4 private constant IERC721_RANDOM = 0x82993c65;
+  bytes4 private constant IERC721_LOOTBOX = 0x503c3942;
 
   bytes32 internal immutable PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items,Asset[] ingredients)", ASSET_SIGNATURE));
@@ -101,11 +101,11 @@ contract Exchange is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder
         bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM);
         bool lootboxInterface = IERC721(item.token).supportsInterface(IERC721_LOOTBOX);
         if (randomInterface) {
-          IERC721Random(item.token).mintRandom(account, item.tokenId, 0);
+          IERC721Random(item.token).mintRandom(account, item);
         } else if (lootboxInterface) {
-          ILootbox(item.token).mintLootbox(account, item.tokenId);
+          ILootbox(item.token).mintLootbox(account, item);
         } else {
-          IERC721Simple(item.token).mintCommon(account, item.tokenId);
+          IERC721Simple(item.token).mintCommon(account, item);
         }
       } else if (item.tokenType == TokenType.ERC1155) {
         IERC1155Simple(item.token).mint(account, item.tokenId, item.amount, "0x");

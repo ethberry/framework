@@ -10,18 +10,14 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
-import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
 import "./interfaces/IERC721Graded.sol";
 import "../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721Graded is IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection, MetaDataGetter {
+contract ERC721Graded is IERC721Graded, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
   using Counters for Counters.Counter;
 
   event LevelUp(address from, uint256 tokenId, uint256 grade);
-
-  bytes32 public constant TEMPLATE_ID = keccak256("templateId");
-  bytes32 public constant GRADE = keccak256("grade");
 
   bytes32 public constant METADATA_ADMIN_ROLE = keccak256("METADATA_ADMIN_ROLE");
 
@@ -36,10 +32,10 @@ contract ERC721Graded is IERC721Graded, ERC721ACBER, ERC721BaseUrl, GeneralizedC
     _tokenIdTracker.increment();
   }
 
-  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Graded: wrong type");
+  function mintCommon(address to, Asset calldata item) public override onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Graded: wrong type");
     uint256 tokenId = _tokenIdTracker.current();
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    upsertRecordField(tokenId, TEMPLATE_ID, item.tokenId);
     upsertRecordField(tokenId, GRADE, 1);
     safeMint(to);
   }

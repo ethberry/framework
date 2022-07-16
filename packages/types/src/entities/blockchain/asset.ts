@@ -4,7 +4,7 @@ import { IAssetComponent } from "./asset-component";
 
 export enum AssetType {
   "TEMPLATE" = "TEMPLATE",
-  "AIRDROP" = "AIRDROP",
+  "CLAIM" = "CLAIM",
   "LOOTBOX" = "LOOTBOX",
   "EXCHANGE" = "EXCHANGE",
   "STAKING" = "STAKING",

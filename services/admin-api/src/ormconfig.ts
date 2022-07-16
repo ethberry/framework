@@ -22,7 +22,7 @@ import { AssetEntity } from "./mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
-import { AirdropEntity } from "./mechanics/airdrop/airdrop.entity";
+import { ClaimEntity } from "./mechanics/claim/claim.entity";
 import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
 import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
 import { CraftEntity } from "./mechanics/craft/craft.entity";
@@ -71,8 +71,8 @@ import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-ve
 import { SeedVesting1563804010220 } from "./migrations/1563804010220-seed-vesting";
 import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-create-vesting-history";
 
-import { CreateAirdropTable1563804040410 } from "./migrations/1653616447810-create-airdrop";
-import { SeedAirdropErc721At1563804040420 } from "./migrations/1653616447820-seed-airdrop-erc721";
+import { CreateClaimTable1563804040410 } from "./migrations/1653616447810-create-claim";
+import { SeedClaimErc721At1563804040420 } from "./migrations/1653616447820-seed-claim-erc721";
 
 import { CreateLootbox1653616447910 } from "./migrations/1653616447910-create-lootbox";
 import { SeedLootboxErc721At1653616447920 } from "./migrations/1653616447920-seed-lootbox-erc721";
@@ -125,7 +125,7 @@ const config: PostgresConnectionOptions = {
     TemplateEntity,
     TokenEntity,
     BalanceEntity,
-    AirdropEntity,
+    ClaimEntity,
     LootboxEntity,
     CraftEntity,
     GradeEntity,
@@ -199,8 +199,8 @@ const config: PostgresConnectionOptions = {
     CreateContractManager1652962207600,
     SeedContractManager1652962207610,
 
-    CreateAirdropTable1563804040410,
-    SeedAirdropErc721At1563804040420,
+    CreateClaimTable1563804040410,
+    SeedClaimErc721At1563804040420,
 
     CreateLootbox1653616447910,
     SeedLootboxErc721At1653616447920,

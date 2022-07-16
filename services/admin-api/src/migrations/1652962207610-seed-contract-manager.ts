@@ -7,7 +7,7 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
-    const airdropAddr = process.env.AIRDROP_ADDR || wallet;
+    const claimAddr = process.env.CLAIM_PROXY_ADDR || wallet;
     const lootboxAddr = process.env.LOOTBOX_ADDR || wallet;
     const exchangeAddr = process.env.EXCHANGE_ADDR || wallet;
     const stakingAddr = process.env.STAKING_ADDR || wallet;
@@ -28,8 +28,8 @@ export class SeedContractManager1652962207610 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${airdropAddr}',
-        'AIRDROP',
+        '${claimAddr}',
+        'CLAIM',
         '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

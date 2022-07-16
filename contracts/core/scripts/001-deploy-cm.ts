@@ -16,16 +16,10 @@ async function main() {
   const dropInstance = await dropFactory.deploy("Lootbox", "DBX", 100, "https://fw-json-api.gemunion.io/");
   console.info(`LOOTBOX_ADDR=${dropInstance.address.toLowerCase()}`);
 
-  // Airdrop contract
-  const airdropFactory = await ethers.getContractFactory("Airdrop");
-  const airdropInstance = await airdropFactory.deploy(
-    "Airdrop",
-    "AIRDROP",
-    10000,
-    100,
-    "https://fw-json-api.gemunion.io/",
-  );
-  console.info(`AIRDROP_ADDR=${airdropInstance.address.toLowerCase()}`);
+  // Claim contract
+  const claimFactory = await ethers.getContractFactory("ClaimProxy");
+  const claimInstance = await claimFactory.deploy();
+  console.info(`CLAIM_PROXY_ADDR=${claimInstance.address.toLowerCase()}`);
 
   // Uni Mechanics contract
   const stakingFactory = await ethers.getContractFactory("Staking");

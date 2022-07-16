@@ -1,11 +1,10 @@
 import { ethers } from "hardhat";
-import { ContractTransaction } from "ethers";
 
 import { blockAwait } from "@gemunion/utils-eth";
 
 async function main() {
   const rlNum = 100; // royaltyNumerator
-  const [owner] = await ethers.getSigners();
+  const [_owner] = await ethers.getSigners();
 
   // ERC721 contract - graded
   const itemFactory = await ethers.getContractFactory("ERC721Graded");

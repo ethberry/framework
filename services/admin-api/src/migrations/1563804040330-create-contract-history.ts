@@ -12,14 +12,14 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
         'MintRandom',
         'Paused',
         'RandomRequest',
-        'RedeemAirdrop',
+        'RedeemClaim',
         'Snapshot',
         'TokenRoyaltyInfo',
         'Transfer',
         'TransferBatch',
         'TransferSingle',
         'URI',
-        'UnpackAirdrop',
+        'UnpackClaim',
         'UnpackLootbox',
         'Unpaused'
       );
