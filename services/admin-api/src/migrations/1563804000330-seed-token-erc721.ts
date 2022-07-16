@@ -1,12 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { TokenAttributes, TokenRarity } from "@framework/types";
+import { TokenAttributes } from "@framework/types";
 
 export class SeedTokenErc721At1563804000330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
@@ -20,7 +19,10 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         updated_at
       ) VALUES (
         20101,
-        '${JSON.stringify({ [TokenAttributes.RARITY]: TokenRarity.RARE })}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "20101",
+          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+        })}',
         100,
         '1',
         'MINTED',
@@ -29,7 +31,10 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         20102,
-        '${JSON.stringify({ [TokenAttributes.RARITY]: TokenRarity.RARE })}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "20102",
+          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+        })}',
         100,
         '2',
         'MINTED',
@@ -38,7 +43,10 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         20103,
-        '${JSON.stringify({ [TokenAttributes.RARITY]: TokenRarity.LEGENDARY })}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "20103",
+          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
+        })}',
         100,
         '3',
         'MINTED',
@@ -47,7 +55,9 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         20201,
-        '${defaultJSON}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "20201",
+        })}',
         100,
         '1',
         'MINTED',
@@ -56,7 +66,9 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         20202,
-        '${defaultJSON}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "20202",
+        })}',
         100,
         '2',
         'MINTED',
@@ -65,7 +77,9 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         20203,
-        '${defaultJSON}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "20203",
+        })}',
         100,
         '3',
         'MINTED',

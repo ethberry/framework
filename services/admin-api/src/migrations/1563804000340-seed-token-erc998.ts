@@ -1,11 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
+import { TokenAttributes } from "@framework/types";
 
 export class SeedTokenErc998At1563804000340 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
@@ -19,7 +19,10 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         updated_at
       ) VALUES (
         30101,
-        '${defaultJSON}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "30101",
+          [TokenAttributes.RARITY]: "0", // TokenRarity.COMMON
+        })}',
         100,
         '1',
         'MINTED',
@@ -28,7 +31,10 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         30102,
-        '${defaultJSON}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "30101",
+          [TokenAttributes.RARITY]: "1", // TokenRarity.UNCOMMON
+        })}',
         100,
         '2',
         'MINTED',
@@ -37,7 +43,10 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         30103,
-        '${defaultJSON}',
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "30101",
+          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+        })}',
         100,
         '3',
         'BURNED',

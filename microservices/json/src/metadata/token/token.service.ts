@@ -3,9 +3,11 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 import { BigNumber } from "ethers";
-import { getPainText } from "@gemunion/draft-js-utils";
 
-import { IOpenSeaMetadata } from "../../common/interfaces";
+import { getPainText } from "@gemunion/draft-js-utils";
+import { TokenAttributes, TokenRarity } from "@framework/types";
+
+import { IOpenSeaMetadata, IOpenSeaMetadataAttribute } from "../../common/interfaces";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 
 @Injectable()
@@ -50,7 +52,31 @@ export class MetadataTokenService {
       external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.id}`,
       image: tokenEntity.template.imageUrl,
       name: tokenEntity.template.title,
-      attributes,
+      attributes: this.formatMetadata(attributes),
     };
+  }
+
+  public formatMetadata(attributes: Record<string, string>): Array<IOpenSeaMetadataAttribute> {
+    return Object.entries(attributes).reduce((memo, [key, value]) => {
+      switch (key) {
+        case TokenAttributes.RARITY:
+          memo.push({
+            trait_type: key,
+            value: Object.values(TokenRarity)[~~value],
+          });
+          break;
+        case TokenAttributes.GRADE:
+          memo.push({
+            trait_type: key,
+            value,
+          });
+          break;
+        case TokenAttributes.TEMPLATE_ID:
+        default:
+          break;
+      }
+
+      return memo;
+    }, [] as Array<IOpenSeaMetadataAttribute>);
   }
 }
