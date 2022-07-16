@@ -42,6 +42,7 @@ import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-see
 import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-contract-erc721";
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
+import { SeedContractLootboxAt1563804000151 } from "./migrations/1563804000151-seed-contract-lootbox";
 
 import { CreateTemplate1563804000210 } from "./migrations/1563804000210-create-template";
 import { SeedTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
@@ -162,6 +163,7 @@ const config: PostgresConnectionOptions = {
     SeedContractErc721At1563804000130,
     SeedContractErc998At1563804000140,
     SeedContractErc1155At1563804000150,
+    SeedContractLootboxAt1563804000151,
 
     CreateTemplate1563804000210,
     SeedTemplateErc20At1563804000220,

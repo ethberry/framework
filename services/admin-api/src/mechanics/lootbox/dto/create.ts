@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsJSON, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { ILootboxCreateDto } from "../interfaces";
@@ -19,24 +19,17 @@ export class LootboxCreateDto implements ILootboxCreateDto {
   })
   @ValidateNested()
   @Type(() => AssetDto)
+  public item: AssetDto;
+
+  @ApiProperty({
+    type: AssetDto,
+  })
+  @ValidateNested()
+  @Type(() => AssetDto)
   public price: AssetDto;
 
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })
   @IsString({ message: "typeMismatch" })
   public imageUrl: string;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public erc998CollectionId: number;
-
-  @ApiProperty({
-    minimum: 1,
-  })
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public erc998TemplateId: number;
 }

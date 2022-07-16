@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, Repository } from "typeorm";
+import { DeepPartial, Repository, FindOptionsWhere, FindOneOptions } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
 import { IAssetDto } from "./interfaces";
@@ -25,7 +25,8 @@ export class AssetService {
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<AssetEntity> {
     // TODO transactions?
-
+    console.log("asset", asset);
+    console.log("dto", dto);
     // patch NATIVE and ERC20 tokens
     for (const component of dto.components) {
       if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
@@ -45,6 +46,8 @@ export class AssetService {
         if (!templateEntity) {
           throw new NotFoundException("templateNotFound");
         }
+        console.log("templateEntity", templateEntity);
+        component.tokenId = templateEntity.id;
       } else if (component.tokenType === TokenType.ERC1155) {
         const templateEntity = await this.templateService.findOne(
           { id: component.tokenId },
@@ -99,5 +102,12 @@ export class AssetService {
     }
 
     return asset.save();
+  }
+
+  public findOne(
+    where: FindOptionsWhere<AssetEntity>,
+    options?: FindOneOptions<AssetEntity>,
+  ): Promise<AssetEntity | null> {
+    return this.assetEntityRepository.findOne({ where, ...options });
   }
 }

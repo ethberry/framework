@@ -3,8 +3,7 @@ import { IAssetDto } from "../../asset/interfaces";
 export interface ILootboxCreateDto {
   title: string;
   description: string;
+  item: IAssetDto;
   price: IAssetDto;
   imageUrl: string;
-  erc998CollectionId: number;
-  erc998TemplateId: number;
 }

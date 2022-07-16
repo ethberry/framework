@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository, DeepPartial } from "typeorm";
 
 import { AssetType, ITemplateAutocompleteDto, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
@@ -101,7 +101,7 @@ export class TemplateService {
     return this.templateEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: ITemplateCreateDto): Promise<TemplateEntity> {
+  public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
     const { price } = dto;
 
     const assetEntity = await this.assetService.create({
@@ -114,6 +114,10 @@ export class TemplateService {
 
     Object.assign(dto, { price: assetEntity });
 
+    return this.templateEntityRepository.create(dto).save();
+  }
+
+  public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {
     return this.templateEntityRepository.create(dto).save();
   }
 

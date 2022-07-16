@@ -13,6 +13,18 @@ export class CreateContract1563804000110 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
+      CREATE TYPE ${ns}.contract_type_enum AS ENUM (
+        'UNKNOWN',
+        'SYSTEM',
+        'AIRDROP',
+        'LOOTBOX',
+        'EXCHANGE',
+        'STAKING',
+        'METADATA'
+      );
+    `);
+
+    await queryRunner.query(`
       CREATE TYPE ${ns}.contract_template_enum AS ENUM (
         'UNKNOWN',
         'SIMPLE',
@@ -23,6 +35,8 @@ export class CreateContract1563804000110 implements MigrationInterface {
         'RANDOM'
       );
     `);
+
+    await queryRunner.query(`ALTER TYPE ${ns}.token_type_enum ADD VALUE 'LOOTBOX';`);
 
     const table = new Table({
       name: `${ns}.contract`,

@@ -8,7 +8,7 @@ export const validationSchema = Yup.object().shape({
   description: draftValidationSchema,
   item: assetValidationSchema,
   price: assetValidationSchema,
-  templateIds: Yup.mixed().defined("form.validations.valueMissing").required("form.validations.valueMissing"),
-  contractId: Yup.mixed().defined("form.validations.valueMissing").required("form.validations.valueMissing"),
+  // templateIds: Yup.mixed().defined("form.validations.valueMissing").required("form.validations.valueMissing"),
+  // contractId: Yup.mixed().defined("form.validations.valueMissing").required("form.validations.valueMissing"),
   imageUrl: Yup.string().required("form.validations.valueMissing"),
 });

@@ -22,8 +22,8 @@ export const LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, contractIds, templateContractIds, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, contractIds, templateContractIds, minPrice, maxPrice };
+  const { query, contractIds, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, contractIds, minPrice, maxPrice };
 
   return (
     <FormWrapper

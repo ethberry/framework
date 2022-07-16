@@ -55,10 +55,8 @@ export const Lootbox: FC = () => {
       lootboxStatus: [LootboxStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ id, title, description, imageUrl, item, price, lootboxStatus, contractId }) =>
-      id
-        ? { title, description, imageUrl, item, price, lootboxStatus, contractId }
-        : { title, description, imageUrl, item, price, contractId },
+    filter: ({ id, title, description, imageUrl, item, price, lootboxStatus }) =>
+      id ? { title, description, imageUrl, item, price, lootboxStatus } : { title, description, imageUrl, item, price },
   });
 
   return (

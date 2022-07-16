@@ -13,8 +13,11 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./interfaces/ILootbox.sol";
 import "../Asset/interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
+import "../MetaData/MetaDataGetter.sol";
 
-contract Lootbox is ILootbox, ERC721ACBER, ERC721BaseUrl {
+
+
+contract Lootbox is ILootbox, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -30,17 +33,17 @@ contract Lootbox is ILootbox, ERC721ACBER, ERC721BaseUrl {
   ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _setupRole(MINTER_ROLE, _msgSender());
-
+    // should start from 1
     _tokenIdTracker.increment();
   }
 
   function mintLootbox(address to, Asset calldata item) public onlyRole(MINTER_ROLE) {
-    require(item.tokenId != 0, "ERC721Graded: wrong type");
+    require(item.tokenId != 0, "Lootbox: wrong item");
     uint256 tokenId = _tokenIdTracker.current();
+    upsertRecordField(tokenId, TEMPLATE_ID, item.tokenId);
     _tokenIdTracker.increment();
 
     _itemData[tokenId] = item;
-
     _safeMint(to, tokenId);
   }
 

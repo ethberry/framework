@@ -1,9 +1,9 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, constants } from "ethers";
+import { BigNumber, constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
@@ -17,7 +17,7 @@ import {
   TokenStatus,
 } from "@framework/types";
 
-import { delay } from "../../common/utils";
+import { getMetadata } from "../../common/utils";
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
@@ -25,6 +25,7 @@ import { ContractService } from "../../blockchain/hierarchy/contract/contract.se
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
+import { ERC721Abi } from "../../erc721/token/token-log/interfaces";
 
 @Injectable()
 export class LootboxServiceEth {
@@ -34,6 +35,8 @@ export class LootboxServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(ETHERS_RPC)
+    private readonly jsonRpcProvider: providers.JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
@@ -50,45 +53,65 @@ export class LootboxServiceEth {
     const {
       args: { from, to, tokenId },
     } = event;
+    const { address } = context;
 
-    // Wait until IToken will be created by Marketplace Redeem or Claim Redeem or MintRandom events
-    this.loggerService.log(
-      `Erc721Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
-      LootboxServiceEth.name,
-    );
-    await delay(1618);
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
-    const TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
 
-    if (!TokenEntity) {
+    // Mint token create
+    if (from === constants.AddressZero) {
+      const attributes = await getMetadata(tokenId, address, ERC721Abi, this.jsonRpcProvider);
+
+      const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
+
+      if (!templateEntity) {
+        throw new NotFoundException("templateNotFound");
+      }
+
+      const tokenEntity = await this.tokenService.create({
+        tokenId,
+        attributes,
+        royalty: contractEntity.royalty,
+        template: templateEntity,
+      });
+
+      await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
+    }
+
+    const lootboxTokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+
+    if (!lootboxTokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, TokenEntity.id);
+    await this.updateHistory(event, context, lootboxTokenEntity.id);
 
     if (from === constants.AddressZero) {
-      TokenEntity.template.amount += 1;
-      // TokenEntity.erc721Template
-      //   ? (TokenEntity.erc721Template.instanceCount += 1)
-      //   : (TokenEntity.erc721Lootbox.erc721Template.instanceCount += 1);
-      TokenEntity.tokenStatus = TokenStatus.MINTED;
+      lootboxTokenEntity.template.amount += 1;
+      // lootboxTokenEntity.erc721Template
+      //   ? (lootboxTokenEntity.erc721Template.instanceCount += 1)
+      //   : (lootboxTokenEntity.erc721Lootbox.erc721Template.instanceCount += 1);
+      lootboxTokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
-      // TokenEntity.erc721Template.instanceCount -= 1;
-      TokenEntity.tokenStatus = TokenStatus.BURNED;
+      // lootboxTokenEntity.erc721Template.instanceCount -= 1;
+      lootboxTokenEntity.tokenStatus = TokenStatus.BURNED;
     } else {
       // change token's owner
-      TokenEntity.balance[0].account = to.toLowerCase();
+      lootboxTokenEntity.balance[0].account = to.toLowerCase();
     }
 
-    await TokenEntity.save();
+    await lootboxTokenEntity.save();
 
     // need to save updates in nested entities too
-    await TokenEntity.template.save();
-    await TokenEntity.balance[0].save();
+    await lootboxTokenEntity.template.save();
+    await lootboxTokenEntity.balance[0].save();
 
-    // TokenEntity.erc721Template
-    //   ? await TokenEntity.erc721Template.save()
-    //   : await TokenEntity.erc721Lootbox.erc721Template.save();
+    // lootboxTokenEntity.erc721Template
+    //   ? await lootboxTokenEntity.erc721Template.save()
+    //   : await lootboxTokenEntity.erc721Lootbox.erc721Template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -96,13 +119,13 @@ export class LootboxServiceEth {
       args: { tokenId },
     } = event;
 
-    const TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const lootboxTokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
-    if (!TokenEntity) {
+    if (!lootboxTokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, TokenEntity.id);
+    await this.updateHistory(event, context, lootboxTokenEntity.id);
   }
 
   public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {

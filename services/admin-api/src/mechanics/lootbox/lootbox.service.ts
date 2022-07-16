@@ -2,17 +2,31 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ILootboxSearchDto, LootboxStatus } from "@framework/types";
+import { AssetType, ILootboxSearchDto, LootboxStatus } from "@framework/types";
+
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { AssetService } from "../asset/asset.service";
 
 import { LootboxEntity } from "./lootbox.entity";
 import { ILootboxCreateDto, ILootboxUpdateDto } from "./interfaces";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 
 @Injectable()
 export class LootboxService {
   constructor(
     @InjectRepository(LootboxEntity)
     private readonly lootboxEntityRepository: Repository<LootboxEntity>,
+    private readonly templateService: TemplateService,
+    private readonly contractService: ContractService,
+    private readonly assetService: AssetService,
   ) {}
+
+  public findOne(
+    where: FindOptionsWhere<LootboxEntity>,
+    options?: FindOneOptions<LootboxEntity>,
+  ): Promise<LootboxEntity | null> {
+    return this.lootboxEntityRepository.findOne({ where, ...options });
+  }
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
     const { query, lootboxStatus, skip, take, contractIds } = dto;
@@ -72,13 +86,6 @@ export class LootboxService {
     });
   }
 
-  public findOne(
-    where: FindOptionsWhere<LootboxEntity>,
-    options?: FindOneOptions<LootboxEntity>,
-  ): Promise<LootboxEntity | null> {
-    return this.lootboxEntityRepository.findOne({ where, ...options });
-  }
-
   public async update(where: FindOptionsWhere<LootboxEntity>, dto: Partial<ILootboxUpdateDto>): Promise<LootboxEntity> {
     const templateEntity = await this.findOne(where);
 
@@ -92,6 +99,43 @@ export class LootboxService {
   }
 
   public async create(dto: ILootboxCreateDto): Promise<LootboxEntity> {
+    const { price, item } = dto;
+    console.log("item", item);
+
+    const priceEntity = await this.assetService.create({
+      assetType: AssetType.LOOTBOX,
+      externalId: "0",
+      components: [],
+    });
+
+    await this.assetService.update(priceEntity, price);
+
+    const itemEntity = await this.assetService.create({
+      assetType: AssetType.LOOTBOX,
+      externalId: "0",
+      components: [],
+    });
+    await this.assetService.update(itemEntity, item);
+
+    Object.assign(dto, { price: priceEntity, item: itemEntity });
+
+    const contractEntity = await this.contractService.findOne({ address: process.env.LOOTBOX_ADDR });
+
+    if (!contractEntity) {
+      throw new NotFoundException("lootboxContractNotFound");
+    }
+
+    const lootboxTemplate = {
+      title: dto.title,
+      description: dto.description,
+      price: priceEntity,
+      amount: "0",
+      imageUrl: dto.imageUrl,
+      contractId: contractEntity.id,
+    };
+
+    await this.templateService.create(lootboxTemplate);
+
     return this.lootboxEntityRepository.create(dto).save();
   }
 

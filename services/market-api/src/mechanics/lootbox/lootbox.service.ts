@@ -11,13 +11,13 @@ import { TemplateEntity } from "../../blockchain/hierarchy/template/template.ent
 export class LootboxService {
   constructor(
     @InjectRepository(LootboxEntity)
-    private readonly erc998LootboxEntityRepository: Repository<LootboxEntity>,
+    private readonly lootboxEntityRepository: Repository<LootboxEntity>,
   ) {}
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
-    const { query, lootboxStatus, skip, take, contractIds, templateContractIds } = dto;
+    const { query, lootboxStatus, skip, take, contractIds } = dto;
 
-    const queryBuilder = this.erc998LootboxEntityRepository.createQueryBuilder("lootbox");
+    const queryBuilder = this.lootboxEntityRepository.createQueryBuilder("lootbox");
 
     queryBuilder.select();
 
@@ -30,16 +30,17 @@ export class LootboxService {
 
     queryBuilder.leftJoinAndSelect("lootbox.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
     queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
 
     if (contractIds) {
       if (contractIds.length === 1) {
-        queryBuilder.andWhere("lootbox.contractId = :contractId", {
+        queryBuilder.andWhere("item_contract.id = :contractId", {
           contractId: contractIds[0],
         });
       } else {
-        queryBuilder.andWhere("lootbox.contractId IN(:...contractIds)", { contractIds });
+        queryBuilder.andWhere("item_contract.id IN(:...contractIds)", { contractIds });
       }
     }
 
@@ -74,23 +75,23 @@ export class LootboxService {
       );
     }
 
-    if (templateContractIds) {
-      if (templateContractIds.length === 1) {
-        queryBuilder.andWhere("template.contractId = :contractId", {
-          templateContractId: templateContractIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("template.contractId IN(:...templateContractIds)", {
-          templateContractIds,
-        });
-      }
-    }
+    // if (templateContractIds) {
+    //   if (templateContractIds.length === 1) {
+    //     queryBuilder.andWhere("template.contractId = :contractId", {
+    //       templateContractId: templateContractIds[0],
+    //     });
+    //   } else {
+    //     queryBuilder.andWhere("template.contractId IN(:...templateContractIds)", {
+    //       templateContractIds,
+    //     });
+    //   }
+    // }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "contract.createdAt": "DESC",
+      "lootbox.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -100,7 +101,7 @@ export class LootboxService {
     where: FindOptionsWhere<LootboxEntity>,
     options?: FindOneOptions<LootboxEntity>,
   ): Promise<LootboxEntity | null> {
-    return this.erc998LootboxEntityRepository.findOne({ where, ...options });
+    return this.lootboxEntityRepository.findOne({ where, ...options });
   }
 
   public findOneWithPrice(where: FindOptionsWhere<TemplateEntity>): Promise<LootboxEntity | null> {

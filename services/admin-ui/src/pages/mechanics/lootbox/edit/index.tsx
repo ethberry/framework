@@ -1,5 +1,5 @@
 import { FC } from "react";
-
+import { Grid } from "@mui/material";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -19,7 +19,7 @@ export interface ILootboxEditDialogProps {
 export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, item, price, imageUrl, lootboxStatus, templateId, contractId } = initialValues;
+  const { id, title, description, item, price, imageUrl, lootboxStatus } = initialValues;
 
   const fixedValues = {
     id,
@@ -29,8 +29,6 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
     price,
     imageUrl,
     lootboxStatus,
-    templateId,
-    contractId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -45,8 +43,17 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} />
-      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} />
+        </Grid>
+        <Grid item xs={6}>
+          <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
+        </Grid>
+      </Grid>
+
+      {/* <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} /> */}
+      {/* <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} /> */}
       {id ? <SelectInput name="lootboxStatus" options={LootboxStatus} /> : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>

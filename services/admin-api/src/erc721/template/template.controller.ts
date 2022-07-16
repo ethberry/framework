@@ -55,7 +55,7 @@ export class Erc721TemplateController {
 
   @Post("/")
   public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
-    return this.erc721TemplateService.create(dto);
+    return this.erc721TemplateService.createTemplate(dto);
   }
 
   @Delete("/:id")

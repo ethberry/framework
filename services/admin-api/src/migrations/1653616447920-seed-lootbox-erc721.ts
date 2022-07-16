@@ -74,8 +74,6 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         item_id,
         price_id,
         lootbox_status,
-        contract_id,
-        template_id,
         created_at,
         updated_at
       ) VALUES (
@@ -85,8 +83,6 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         60101,
         60102,
         'ACTIVE',
-        12,
-        20101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -96,8 +92,6 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         60201,
         60202,
         'ACTIVE',
-        12,
-        20101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

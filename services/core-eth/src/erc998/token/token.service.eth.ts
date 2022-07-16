@@ -1,6 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, constants, ethers } from "ethers";
+import { BigNumber, constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
@@ -14,13 +14,12 @@ import {
   ITokenMintRandom,
   ITokenRoyaltyInfo,
   ITokenTransfer,
-  MetadataHash,
   TContractEventData,
   TokenRarity,
   TokenStatus,
 } from "@framework/types";
 
-import { blockAwait } from "../../common/utils";
+import { getMetadata } from "../../common/utils";
 import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
@@ -38,7 +37,7 @@ export class Erc998TokenServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    private readonly jsonRpcProvider: ethers.providers.JsonRpcProvider,
+    private readonly jsonRpcProvider: providers.JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
@@ -63,41 +62,32 @@ export class Erc998TokenServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    const contract = new ethers.Contract(address, ERC721Abi, this.jsonRpcProvider);
+    // Mint token create
+    if (from === constants.AddressZero) {
+      const attributes = await getMetadata(tokenId, address, ERC721Abi, this.jsonRpcProvider);
 
-    // await block
-    await blockAwait(1, this.jsonRpcProvider);
+      const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
 
-    const tokenMetaData = await contract.getTokenMetadata(tokenId);
+      if (!templateEntity) {
+        throw new NotFoundException("templateNotFound");
+      }
 
-    const attributes = tokenMetaData.reduce(
-      (memo: Record<string, string>, current: { key: keyof typeof MetadataHash; value: string }) =>
-        Object.assign(memo, {
-          [MetadataHash[current.key]]: current.value,
-        }),
-      {} as Record<string, string>,
-    );
+      const tokenEntity = await this.tokenService.create({
+        tokenId,
+        attributes,
+        royalty: contractEntity.royalty,
+        template: templateEntity,
+      });
 
-    const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
-
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
+      await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
     }
-
-    const tokenEntity = await this.tokenService.create({
-      tokenId,
-      attributes,
-      royalty: contractEntity.royalty,
-      template: templateEntity,
-    });
-
-    await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
 
     const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
+
     await this.updateHistory(event, context, erc998TokenEntity.id);
 
     if (from === constants.AddressZero) {

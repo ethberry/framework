@@ -55,12 +55,12 @@ contract ERC721Graded is IERC721Graded, ERC721ACBER, ERC721BaseUrl, MetaDataGett
     return _baseURI(_baseTokenURI);
   }
 
-    function setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) public override onlyRole(METADATA_ADMIN_ROLE){
-      uint256 arrSize = metadata.length;
-      for(uint8 i=0; i < arrSize; i++) {
-        upsertRecordField(tokenId, metadata[i].key, metadata[i].value);
-      }
+  function setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) public override onlyRole(METADATA_ADMIN_ROLE){
+    uint256 arrSize = metadata.length;
+    for(uint8 i=0; i < arrSize; i++) {
+      upsertRecordField(tokenId, metadata[i].key, metadata[i].value);
     }
+  }
 
   receive() external payable {
     revert();

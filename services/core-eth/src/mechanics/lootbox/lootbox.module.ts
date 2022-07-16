@@ -1,6 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { LootboxEntity } from "./lootbox.entity";
 import { LootboxService } from "./lootbox.service";
@@ -28,7 +29,7 @@ import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module
     ContractModule,
     TypeOrmModule.forFeature([LootboxEntity]),
   ],
-  providers: [Logger, LootboxService, LootboxServiceEth],
+  providers: [Logger, LootboxService, LootboxServiceEth, ethersRpcProvider],
   controllers: [LootboxControllerEth],
   exports: [LootboxService, LootboxServiceEth],
 })
