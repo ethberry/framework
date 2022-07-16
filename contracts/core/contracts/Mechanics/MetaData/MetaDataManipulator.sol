@@ -10,16 +10,17 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "../Asset/Asset.sol";
 import "../Asset/interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Graded.sol";
 
-contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
+contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712, ERC1155Holder {
   mapping(bytes32 => bool) private _expired;
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
@@ -69,7 +70,10 @@ contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
     Asset memory item,
     Asset memory price
   ) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStruct(item), hashAssetStruct(price))));
+    return
+      _hashTypedDataV4(
+        keccak256(abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStruct(item), hashAssetStruct(price)))
+      );
   }
 
   function _verify(
@@ -78,5 +82,15 @@ contract MetaDataManipulator is AssetHelper, AccessControl, Pausable, EIP712 {
     bytes memory signature
   ) internal view returns (bool) {
     return SignatureChecker.isValidSignatureNow(signer, digest, signature);
+  }
+
+  function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    virtual
+    override(AccessControl, ERC1155Receiver)
+    returns (bool)
+  {
+    return super.supportsInterface(interfaceId);
   }
 }
