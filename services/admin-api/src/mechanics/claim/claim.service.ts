@@ -4,7 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { utils, Wallet } from "ethers";
 
-import { ClaimStatus, AssetType, IClaimSearchDto, TokenType } from "@framework/types";
+import { AssetType, ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { IClaimItem } from "./interfaces";

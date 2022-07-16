@@ -31,10 +31,6 @@ export class CreateTemplate1563804000210 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "attributes",
-          type: "json",
-        },
-        {
           name: "price_id",
           type: "int",
           isNullable: true,

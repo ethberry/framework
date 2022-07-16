@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
@@ -20,12 +20,11 @@ export interface IErc1155TemplateEditDialogProps {
 export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, attributes, price, amount, contractId, templateStatus, imageUrl } = initialValues;
+  const { id, title, description, price, amount, contractId, templateStatus, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
-    attributes,
     price,
     amount,
     contractId,
@@ -43,7 +42,6 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <JsonInput name="attributes" />
       <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]} />
       <NumberInput name="amount" />
       <SelectInput name="templateStatus" options={TemplateStatus} />

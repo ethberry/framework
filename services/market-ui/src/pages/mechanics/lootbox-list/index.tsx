@@ -6,7 +6,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { LootboxStatus, ILootbox, ILootboxSearchDto } from "@framework/types";
+import { ILootbox, ILootboxSearchDto, LootboxStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { LootboxItem } from "./item";

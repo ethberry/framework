@@ -2,7 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IErc721AssetSearchDto, ITokenAutocompleteDto, TokenStatus, TokenType } from "@framework/types";
+import {
+  IErc721AssetSearchDto,
+  ITokenAutocompleteDto,
+  TokenAttributes,
+  TokenStatus,
+  TokenType,
+} from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../user/user.entity";
@@ -38,9 +44,9 @@ export class TokenService {
 
     if (rarity) {
       if (rarity.length === 1) {
-        queryBuilder.andWhere("token.attributes->>'rarity' = :rarity", { rarity: rarity[0] });
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' = :rarity`, { rarity: rarity[0] });
       } else {
-        queryBuilder.andWhere("token.attributes->>'rarity' IN(:...rarity)", { rarity });
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' IN(:...rarity)`, { rarity });
       }
     }
 

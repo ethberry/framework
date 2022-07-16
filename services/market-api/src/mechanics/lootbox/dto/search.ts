@@ -5,7 +5,7 @@ import { Transform, Type } from "class-transformer";
 import { SearchDto } from "@gemunion/collection";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-import { LootboxStatus, ILootboxSearchDto } from "@framework/types";
+import { ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 export class LootboxSearchDto extends SearchDto implements ILootboxSearchDto {
   @ApiPropertyOptional({

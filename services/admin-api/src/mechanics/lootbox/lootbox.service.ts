@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { LootboxStatus, ILootboxSearchDto } from "@framework/types";
+import { ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 import { LootboxEntity } from "./lootbox.entity";
 import { ILootboxCreateDto, ILootboxUpdateDto } from "./interfaces";

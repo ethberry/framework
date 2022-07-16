@@ -6,7 +6,6 @@ import { imageUrl, ns } from "@framework/constants";
 export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
@@ -34,7 +33,6 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         title,
         description,
         image_url,
-        attributes,
         price_id,
         cap,
         amount,
@@ -47,7 +45,6 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         'Warrior',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         30101,
         0,
         1,
@@ -60,7 +57,6 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         'Rouge',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         30102,
         0,
         1,
@@ -73,7 +69,6 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         'Mage',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         30103,
         0,
         1,

@@ -6,7 +6,7 @@ import { BigNumber, utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
-import { ContractTemplate, GradeStrategy, TokenType } from "@framework/types";
+import { ContractTemplate, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
 
 import { ILevelUpDtoDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
@@ -115,7 +115,7 @@ export class GradeService {
       throw new NotFoundException("gradeNotFound");
     }
 
-    const { grade } = tokenEntity.attributes;
+    const grade = tokenEntity.attributes[TokenAttributes.GRADE];
 
     let amount;
 

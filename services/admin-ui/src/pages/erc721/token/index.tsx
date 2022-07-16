@@ -10,13 +10,13 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Create, FilterList } from "@mui/icons-material";
+import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, IToken, ITokenSearchDto, TokenStatus } from "@framework/types";
+import { ITemplate, IToken, ITokenSearchDto, TokenAttributes, TokenStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Erc721TokenEditDialog } from "./edit";
+import { Erc721TokenViewDialog } from "./view";
 import { Erc721TokenSearchForm } from "./form";
 
 export const Erc721Token: FC = () => {
@@ -27,28 +27,28 @@ export const Erc721Token: FC = () => {
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
+    isViewDialogOpen,
     handleToggleFilters,
-    handleEdit,
-    handleEditCancel,
-    handleEditConfirm,
+    handleView,
+    handleViewCancel,
+    handleViewConfirm,
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/erc721-tokens",
     empty: {
       template: {} as ITemplate,
+      attributes: "{}",
     },
     search: {
       query: "",
       tokenStatus: [TokenStatus.MINTED],
       attributes: {
-        rarity: [],
+        [TokenAttributes.RARITY]: [],
       },
       contractIds: [],
       tokenId: "",
     },
-    filter: ({ attributes }) => ({ attributes }),
   });
 
   return (
@@ -72,8 +72,8 @@ export const Erc721Token: FC = () => {
             <ListItem key={i}>
               <ListItemText>{token.template?.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(token)}>
-                  <Create />
+                <IconButton onClick={handleView(token)}>
+                  <Visibility />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -89,10 +89,10 @@ export const Erc721Token: FC = () => {
         onChange={handleChangePage}
       />
 
-      <Erc721TokenEditDialog
-        onCancel={handleEditCancel}
-        onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+      <Erc721TokenViewDialog
+        onCancel={handleViewCancel}
+        onConfirm={handleViewConfirm}
+        open={isViewDialogOpen}
         initialValues={selected}
       />
     </Grid>

@@ -1,11 +1,10 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, TokenType } from "@framework/types";
+import { ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
-import { ITokenUpdateDto } from "./interfaces";
 
 @Injectable()
 export class TokenService {
@@ -29,11 +28,16 @@ export class TokenService {
       queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
     }
 
-    if (attributes.rarity) {
-      if (attributes.rarity.length === 1) {
-        queryBuilder.andWhere("token.attributes->>'rarity' = :rarity", { rarity: attributes.rarity[0] });
+    const rarity = attributes[TokenAttributes.RARITY];
+    if (rarity) {
+      if (rarity.length === 1) {
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' = :rarity`, {
+          rarity: rarity[0],
+        });
       } else {
-        queryBuilder.andWhere("token.attributes->>'rarity' IN(:...rarity)", { rarity: attributes.rarity });
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' IN(:...rarity)`, {
+          rarity,
+        });
       }
     }
 
@@ -98,17 +102,5 @@ export class TokenService {
     options?: FindOneOptions<TokenEntity>,
   ): Promise<TokenEntity | null> {
     return this.tokenEntityRepository.findOne({ where, ...options });
-  }
-
-  public async update(where: FindOptionsWhere<TokenEntity>, dto: ITokenUpdateDto): Promise<TokenEntity> {
-    const tokenEntity = await this.findOne(where);
-
-    if (!tokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    Object.assign(tokenEntity, dto);
-
-    return tokenEntity.save();
   }
 }

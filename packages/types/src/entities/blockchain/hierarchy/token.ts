@@ -8,6 +8,12 @@ export enum TokenStatus {
   BURNED = "BURNED",
 }
 
+export enum TokenAttributes {
+  TEMPLATE_ID = "TEMPLATE_ID",
+  GRADE = "GRADE",
+  RARITY = "RARITY",
+}
+
 export interface IToken extends IIdDateBase {
   attributes: any;
   tokenId: string;

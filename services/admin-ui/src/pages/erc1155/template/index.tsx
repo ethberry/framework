@@ -48,7 +48,6 @@ export const Erc1155Template: FC = () => {
       title: "",
       description: emptyStateString,
       price: emptyPrice,
-      attributes: "{}",
       amount: "0",
     },
     search: {
@@ -56,10 +55,10 @@ export const Erc1155Template: FC = () => {
       contractIds: [],
       templateStatus: [TemplateStatus.ACTIVE],
     },
-    filter: ({ id, title, description, attributes, price, amount, imageUrl, contractId, templateStatus }) =>
+    filter: ({ id, title, description, price, amount, imageUrl, contractId, templateStatus }) =>
       id
-        ? { title, description, attributes, price, amount, imageUrl, templateStatus }
-        : { title, description, attributes, price, amount, imageUrl, contractId },
+        ? { title, description, price, amount, imageUrl, templateStatus }
+        : { title, description, price, amount, imageUrl, contractId },
   });
 
   return (

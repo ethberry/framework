@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { LootboxStatus, ILootbox } from "@framework/types";
+import { ILootbox, LootboxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";

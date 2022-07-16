@@ -13,9 +13,6 @@ export class TemplateEntity extends SearchableEntity implements ITemplate {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @Column({ type: "json" })
-  public attributes: any;
-
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
   public price: AssetEntity;

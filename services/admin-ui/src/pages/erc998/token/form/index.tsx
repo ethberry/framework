@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ITokenSearchDto, TokenRarity, TokenStatus, TokenType } from "@framework/types";
+import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenStatus, TokenType } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -53,7 +53,7 @@ export const Erc998TokenSearchForm: FC<IErc998TokenSearchFormProps> = props => {
             <SelectInput multiple name="tokenStatus" options={TokenStatus} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput name="attributes.rarity" options={TokenRarity} multiple />
+            <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
           </Grid>
         </Grid>
       </Collapse>

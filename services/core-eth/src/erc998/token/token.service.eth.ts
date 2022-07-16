@@ -7,8 +7,6 @@ import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
-  ContractTemplate,
-  IClaimRedeem,
   IDefaultRoyaltyInfo,
   IRandomRequest,
   ITokenApprove,
@@ -16,7 +14,7 @@ import {
   ITokenMintRandom,
   ITokenRoyaltyInfo,
   ITokenTransfer,
-  MetadataRecord,
+  MetadataHash,
   TContractEventData,
   TokenRarity,
   TokenStatus,
@@ -65,9 +63,6 @@ export class Erc998TokenServiceEth {
       throw new NotFoundException("contractNotFound");
     }
 
-    const contractTemplate = contractEntity.contractTemplate;
-
-    // if (contractTemplate !== ContractTemplate.SIMPLE) {
     const contract = new ethers.Contract(address, ERC721Abi, this.jsonRpcProvider);
 
     // await block
@@ -75,30 +70,19 @@ export class Erc998TokenServiceEth {
 
     const tokenMetaData = await contract.getTokenMetadata(tokenId);
 
-    const metaData = tokenMetaData.reduce(
-      (memo: Record<string, string>, current: { key: string; value: string }) =>
+    const attributes = tokenMetaData.reduce(
+      (memo: Record<string, string>, current: { key: keyof typeof MetadataHash; value: string }) =>
         Object.assign(memo, {
-          [MetadataRecord[current.key]]: current.value,
+          [MetadataHash[current.key]]: current.value,
         }),
       {} as Record<string, string>,
     );
 
-    const templateEntity = await this.templateService.findOne({ id: ~~metaData.TEMPLATE_ID });
+    const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }
-
-    const attributes =
-      contractTemplate === ContractTemplate.RANDOM
-        ? Object.assign(templateEntity.attributes, {
-            rarity: Object.values(TokenRarity)[~~metaData.RARITY],
-          })
-        : contractTemplate === ContractTemplate.GRADED
-        ? Object.assign(templateEntity.attributes, {
-            grade: Object.values(TokenRarity)[BigNumber.from(tokenMetaData[1].value).toNumber()],
-          })
-        : templateEntity.attributes;
 
     const tokenEntity = await this.tokenService.create({
       tokenId,
@@ -183,33 +167,6 @@ export class Erc998TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async redeem(event: ILogEvent<IClaimRedeem>, context: Log): Promise<void> {
-    const {
-      args: { from, tokenId, templateId },
-    } = event;
-
-    const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
-
-    if (!erc998TemplateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    const erc998TokenEntity = await this.tokenService.create({
-      tokenId,
-      attributes: erc998TemplateEntity.attributes,
-      royalty: erc998TemplateEntity.contract.royalty,
-      template: erc998TemplateEntity,
-    });
-
-    await this.balanceService.create({
-      account: from.toLowerCase(),
-      amount: "1",
-      tokenId: erc998TokenEntity.id,
-    });
-
-    await this.updateHistory(event, context, erc998TokenEntity.id);
-  }
-
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
       args: { to, tokenId, templateId, rarity, lootboxId },
@@ -232,9 +189,9 @@ export class Erc998TokenServiceEth {
 
     const erc998TokenEntity = await this.tokenService.create({
       tokenId,
-      attributes: Object.assign(erc998TemplateEntity.attributes, {
+      attributes: {
         rarity: Object.values(TokenRarity)[~~rarity],
-      }),
+      },
       royalty: erc998TemplateEntity.contract.royalty,
       template: erc998TemplateEntity,
       // token: erc998LootboxEntity,

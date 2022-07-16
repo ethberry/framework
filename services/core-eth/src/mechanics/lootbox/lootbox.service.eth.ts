@@ -7,7 +7,6 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
-  IClaimRedeem,
   IDefaultRoyaltyInfo,
   ILootboxUnpack,
   ITokenApprove,
@@ -132,33 +131,6 @@ export class LootboxServiceEth {
 
   public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfo>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-  }
-
-  public async redeem(event: ILogEvent<IClaimRedeem>, context: Log): Promise<void> {
-    const {
-      args: { from, tokenId, templateId },
-    } = event;
-
-    const templateEntity = await this.templateService.findOne({ id: ~~templateId });
-
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    const TokenEntity = await this.tokenService.create({
-      tokenId,
-      attributes: templateEntity.attributes,
-      royalty: templateEntity.contract.royalty,
-      template: templateEntity,
-    });
-
-    await this.balanceService.create({
-      account: from.toLowerCase(),
-      amount: "1",
-      tokenId: TokenEntity.id,
-    });
-
-    await this.updateHistory(event, context, TokenEntity.id);
   }
 
   public async unpack(event: ILogEvent<ILootboxUnpack>, context: Log): Promise<void> {

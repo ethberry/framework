@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { JsonColumn, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ITemplate, TemplateStatus } from "@framework/types";
 
 import { ContractEntity } from "../contract/contract.entity";
@@ -12,9 +12,6 @@ import { AssetEntity } from "../../asset/asset.entity";
 export class TemplateEntity extends SearchableEntity implements ITemplate {
   @Column({ type: "varchar" })
   public imageUrl: string;
-
-  @JsonColumn()
-  public attributes: any;
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)

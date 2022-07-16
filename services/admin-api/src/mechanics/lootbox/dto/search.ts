@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { LootboxStatus, ILootboxSearchDto } from "@framework/types";
+import { ILootboxSearchDto, LootboxStatus } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 export class LootboxSearchDto extends SearchDto implements ILootboxSearchDto {

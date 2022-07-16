@@ -7,7 +7,6 @@ import { imageUrl, ns } from "@framework/constants";
 export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -15,7 +14,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         title,
         description,
         image_url,
-        attributes,
         price_id,
         cap,
         amount,
@@ -28,7 +26,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         null,
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
@@ -41,7 +38,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         'Space Credits',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         null,
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
@@ -54,7 +50,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         'Inactive token',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         null,
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
@@ -67,7 +62,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         'New token',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         null,
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
@@ -80,7 +74,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         'Black list token',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         null,
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
@@ -93,7 +86,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         null,
         0,
         '100000000000',

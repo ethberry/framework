@@ -7,7 +7,6 @@ import { imageUrl, ns } from "@framework/constants";
 export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
@@ -55,7 +54,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         title,
         description,
         image_url,
-        attributes,
         price_id,
         cap,
         amount,
@@ -68,7 +66,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Gold',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40101,
         0,
         '${constants.WeiPerEther.toString()}',
@@ -81,7 +78,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Wood',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40102,
         0,
         '${constants.WeiPerEther.toString()}',
@@ -94,7 +90,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Iron',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40103,
         0,
         '${constants.WeiPerEther.toString()}',
@@ -107,7 +102,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Wood log',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40104,
         0,
        '0',
@@ -120,7 +114,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Iron ingot',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40105,
         0,
         '0',
@@ -133,7 +126,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Healing potion',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40201,
         0,
         '0',
@@ -146,7 +138,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Mana potion',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40202,
         0,
         '0',
@@ -159,7 +150,6 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         'Antidote',
         '${simpleFormatting}',
         '${imageUrl}',
-        '${defaultJSON}',
         40203,
         0,
         '0',

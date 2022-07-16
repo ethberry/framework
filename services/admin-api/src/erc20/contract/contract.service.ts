@@ -55,7 +55,6 @@ export class Erc20ContractService extends ContractService {
         description,
         contract: contractEntity,
         imageUrl: "",
-        attributes: "{}",
       })
       .save();
 

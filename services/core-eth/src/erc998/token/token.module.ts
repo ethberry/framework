@@ -3,7 +3,6 @@ import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
-
 import { ContractHistoryModule } from "../../blockchain/contract-history/contract-history.module";
 
 import { Erc998TokenControllerEth } from "./token.controller.eth";

@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { draftValidationSchema, jsonValidationSchema } from "@gemunion/yup-rules";
+import { draftValidationSchema } from "@gemunion/yup-rules";
 import { bigNumberValidationSchema } from "@gemunion/yup-rules-eth";
 
 import { assetValidationSchema } from "../../../../components/inputs/price-schema";
@@ -8,7 +8,6 @@ import { assetValidationSchema } from "../../../../components/inputs/price-schem
 export const validationSchema = Yup.object().shape({
   title: Yup.string().required("form.validations.valueMissing"),
   description: draftValidationSchema,
-  attributes: jsonValidationSchema,
   price: assetValidationSchema,
   amount: bigNumberValidationSchema,
   contractId: Yup.number()

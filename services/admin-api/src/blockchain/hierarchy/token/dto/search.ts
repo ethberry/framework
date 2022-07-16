@@ -3,7 +3,13 @@ import { IsArray, IsEnum, IsNumber, IsOptional, Min, ValidateNested } from "clas
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { ITokenAttributesSearchDto, ITokenSearchDto, TokenRarity, TokenStatus } from "@framework/types";
+import {
+  ITokenAttributesSearchDto,
+  ITokenSearchDto,
+  TokenAttributes,
+  TokenRarity,
+  TokenStatus,
+} from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
@@ -17,7 +23,7 @@ export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   @IsArray({ message: "typeMismatch" })
   @Transform(({ value }) => value as Array<TokenRarity>)
   @IsEnum(TokenRarity, { each: true, message: "badInput" })
-  public rarity: Array<TokenRarity>;
+  public [TokenAttributes.RARITY]: Array<TokenRarity>;
 }
 
 export class TokenSearchDto extends SearchDto implements ITokenSearchDto {

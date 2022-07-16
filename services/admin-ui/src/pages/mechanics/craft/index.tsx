@@ -16,7 +16,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { CraftStatus, IExchangeSearchDto, ICraft } from "@framework/types";
+import { CraftStatus, ICraft, IExchangeSearchDto } from "@framework/types";
 
 import { ExchangeEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";

@@ -1,9 +1,9 @@
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { TokenRarity, TokenStatus } from "../../../../entities";
+import { TokenAttributes, TokenRarity, TokenStatus } from "../../../../entities";
 
 export interface ITokenAttributesSearchDto {
-  rarity?: Array<TokenRarity>;
+  [TokenAttributes.RARITY]?: Array<TokenRarity>;
 }
 
 export interface ITokenSearchDto extends ISearchDto {

@@ -48,7 +48,6 @@ export const Erc721Template: FC = () => {
       title: "",
       description: emptyStateString,
       price: emptyPrice,
-      attributes: "{}",
       amount: "0",
       contractId: 3,
     },
@@ -57,12 +56,11 @@ export const Erc721Template: FC = () => {
       templateStatus: [TemplateStatus.ACTIVE],
       contractIds: [],
     },
-    filter: ({ id, title, description, attributes, price, amount, imageUrl, templateStatus, contractId }) =>
+    filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
       id
         ? {
             title,
             description,
-            attributes,
             price,
             amount,
             imageUrl,
@@ -71,7 +69,6 @@ export const Erc721Template: FC = () => {
         : {
             title,
             description,
-            attributes,
             price,
             amount,
             imageUrl,

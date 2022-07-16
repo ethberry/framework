@@ -19,11 +19,6 @@ export class TemplateUpdateDto implements ITemplateUpdateDto {
   @IsJSON({ message: "patternMismatch" })
   public description: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsJSON({ message: "patternMismatch" })
-  public attributes: string;
-
   @ApiPropertyOptional({
     type: AssetDto,
   })

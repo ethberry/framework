@@ -16,10 +16,6 @@ export class TemplateCreateDto implements ITemplateCreateDto {
   @IsJSON({ message: "patternMismatch" })
   public description: string;
 
-  @ApiProperty()
-  @IsJSON({ message: "patternMismatch" })
-  public attributes: string;
-
   @ApiProperty({
     type: AssetDto,
   })

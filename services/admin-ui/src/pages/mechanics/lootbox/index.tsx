@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { LootboxStatus, ILootbox, ILootboxSearchDto } from "@framework/types";
+import { ILootbox, ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 import { LootboxEditDialog } from "./edit";
 import { Erc721LootboxSearchForm } from "./form";

@@ -187,6 +187,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "RARITY": "Rarity",
       "deposit": "Deposit",
       "reward": "Reward",
       "DUMMY": "Dummy",

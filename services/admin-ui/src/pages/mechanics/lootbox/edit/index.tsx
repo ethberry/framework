@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { LootboxStatus, ILootbox, TokenType } from "@framework/types";
+import { ILootbox, LootboxStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
