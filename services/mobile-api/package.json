@@ -8,7 +8,7 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
-    "@gemunion/collection": "1.2.22",
+    "@gemunion/collection": "2.0.2",
     "@gemunion/constants": "0.8.4",
     "@gemunion/nest-js-guards": "2.0.2",
     "@gemunion/nest-js-guards-ws": "2.0.2",

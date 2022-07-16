@@ -12,7 +12,7 @@
     "@framework/core-contracts": "0.0.1",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/collection": "1.2.22",
+    "@gemunion/collection": "2.0.2",
     "@gemunion/constants": "0.8.4",
     "@gemunion/draft-js-utils": "0.3.14",
     "@gemunion/nest-js-guards": "2.0.2",
