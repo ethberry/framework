@@ -22,7 +22,7 @@ export class LootboxService {
   ) {}
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
-    const { query, lootboxStatus, skip, take, contractIds } = dto;
+    const { query, lootboxStatus, skip, take } = dto;
 
     const queryBuilder = this.lootboxEntityRepository.createQueryBuilder("lootbox");
 
@@ -50,21 +50,11 @@ export class LootboxService {
       }
     }
 
-    if (contractIds) {
-      if (contractIds.length === 1) {
-        queryBuilder.andWhere("lootbox.contractId = :contractId", {
-          contractId: contractIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("lootbox.contractId IN(:...contractIds)", { contractIds });
-      }
-    }
-
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "lootbox.title": "ASC",
+      "lootbox.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

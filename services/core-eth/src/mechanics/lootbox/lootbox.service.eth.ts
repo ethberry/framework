@@ -92,8 +92,8 @@ export class LootboxServiceEth {
     if (from === constants.AddressZero) {
       lootboxTokenEntity.template.amount += 1;
       // lootboxTokenEntity.erc721Template
-      //   ? (lootboxTokenEntity.erc721Template.instanceCount += 1)
-      //   : (lootboxTokenEntity.erc721Lootbox.erc721Template.instanceCount += 1);
+      //   ? (lootboxTokenEntity.template.instanceCount += 1)
+      //   : (lootboxTokenEntity.lootbox.template.instanceCount += 1);
       lootboxTokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
       // lootboxTokenEntity.erc721Template.instanceCount -= 1;
@@ -110,8 +110,8 @@ export class LootboxServiceEth {
     await lootboxTokenEntity.balance[0].save();
 
     // lootboxTokenEntity.erc721Template
-    //   ? await lootboxTokenEntity.erc721Template.save()
-    //   : await lootboxTokenEntity.erc721Lootbox.erc721Template.save();
+    //   ? await lootboxTokenEntity.template.save()
+    //   : await lootboxTokenEntity.lootbox.template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {

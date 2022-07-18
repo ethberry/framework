@@ -18,9 +18,6 @@ export const Lootbox: FC<ITabPanelProps> = props => {
 
   const { rows, count, search, isLoading, handleChangePage } = useCollection<ILootbox, ILootboxSearchDto>({
     baseUrl: "/lootboxes",
-    search: {
-      contractIds: [], // contractIds
-    },
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });
 

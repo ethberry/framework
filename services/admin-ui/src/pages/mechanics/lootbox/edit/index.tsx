@@ -51,9 +51,6 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
           <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
         </Grid>
       </Grid>
-
-      {/* <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} /> */}
-      {/* <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} /> */}
       {id ? <SelectInput name="lootboxStatus" options={LootboxStatus} /> : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>

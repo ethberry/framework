@@ -4,7 +4,6 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { ILootboxSearchDto, LootboxStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
@@ -14,13 +13,13 @@ interface ILootboxSearchFormProps {
   open: boolean;
 }
 
-export const Erc721LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
+export const LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
-  const { query, lootboxStatus, contractIds } = initialValues;
-  const fixedValues = { query, lootboxStatus, contractIds };
+  const { query, lootboxStatus } = initialValues;
+  const fixedValues = { query, lootboxStatus };
 
   return (
     <FormWrapper
@@ -29,7 +28,7 @@ export const Erc721LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="Erc721LootboxSearchForm"
+      data-testid="LootboxSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -38,10 +37,7 @@ export const Erc721LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={6}>
-            <EntityInput name="contractIds" controller="contracts" multiple data={{}} />
-          </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <SelectInput multiple name="lootboxStatus" options={LootboxStatus} />
           </Grid>
         </Grid>

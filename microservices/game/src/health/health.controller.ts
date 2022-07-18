@@ -8,7 +8,7 @@ import {
   TypeOrmHealthIndicator,
 } from "@nestjs/terminus";
 import { RedisManager } from "@liaoliaots/nestjs-redis";
-import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis/health";
+import { RedisHealthIndicator } from "@liaoliaots/nestjs-redis-health";
 import { ConfigService } from "@nestjs/config";
 
 import { Public } from "@gemunion/nest-js-utils";

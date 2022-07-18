@@ -19,7 +19,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ILootbox, ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 import { LootboxEditDialog } from "./edit";
-import { Erc721LootboxSearchForm } from "./form";
+import { LootboxSearchForm } from "./form";
 import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
 
@@ -54,7 +54,6 @@ export const Lootbox: FC = () => {
     search: {
       query: "",
       lootboxStatus: [LootboxStatus.ACTIVE],
-      contractIds: [],
     },
     filter: ({ id, title, description, imageUrl, item, price, lootboxStatus }) =>
       id
@@ -91,7 +90,7 @@ export const Lootbox: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721LootboxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <LootboxSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

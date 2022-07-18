@@ -104,8 +104,8 @@ export class Erc721TokenServiceEth {
     await erc721TokenEntity.balance[0].save();
     // erc721TokenEntity.erc721Template
 
-    //   ? await erc721TokenEntity.erc721Template.save()
-    //   : await erc721TokenEntity.erc721Lootbox.erc721Template.save();
+    //   ? await erc721TokenEntity.template.save()
+    //   : await erc721TokenEntity.lootbox.template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -161,11 +161,11 @@ export class Erc721TokenServiceEth {
       throw new NotFoundException("templateNotFound");
     }
 
-    let erc721LootboxEntity; // if minted as Mechanics reward
+    let lootboxEntity; // if minted as Mechanics reward
     if (~~lootboxId !== 0) {
-      erc721LootboxEntity = await this.tokenService.findOne({ id: ~~lootboxId });
+      lootboxEntity = await this.tokenService.findOne({ id: ~~lootboxId });
 
-      if (!erc721LootboxEntity) {
+      if (!lootboxEntity) {
         throw new NotFoundException("lootboxNotFound");
       }
     }
@@ -177,7 +177,7 @@ export class Erc721TokenServiceEth {
       },
       royalty: templateEntity.contract.royalty,
       template: templateEntity,
-      // erc721Token: erc721LootboxEntity,
+      // erc721Token: lootboxEntity,
     });
 
     await this.balanceService.create({

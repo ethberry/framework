@@ -29,35 +29,32 @@ export class LootboxControllerEth {
   ) {}
 
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.Transfer })
-  public transferLootbox(@Payload() event: ILogEvent<ITokenTransfer>, @Ctx() context: Log): Promise<void> {
+  public transfer(@Payload() event: ILogEvent<ITokenTransfer>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.transfer(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.Approval })
-  public approvalLootbox(@Payload() event: ILogEvent<ITokenApprove>, @Ctx() context: Log): Promise<void> {
+  public approval(@Payload() event: ILogEvent<ITokenApprove>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.approval(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.ApprovalForAll })
-  public approvalForAllLootbox(@Payload() event: ILogEvent<ITokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
+  public approvalForAll(@Payload() event: ILogEvent<ITokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.approvalForAll(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.DefaultRoyaltyInfo })
-  public defaultRoyaltyInfoLootbox(
-    @Payload() event: ILogEvent<IDefaultRoyaltyInfo>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.defaultRoyaltyInfo(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.TokenRoyaltyInfo })
-  public tokenRoyaltyInfoLootbox(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
+  public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.tokenRoyaltyInfo(event, context);
   }
 
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.UnpackLootbox })
-  public unpackItemLootbox(@Payload() event: ILogEvent<ILootboxUnpack>, @Ctx() context: Log): Promise<void> {
+  public unpackItem(@Payload() event: ILogEvent<ILootboxUnpack>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.unpack(event, context);
   }
 

@@ -35,10 +35,6 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    // queryBuilder.leftJoinAndSelect("token.erc721Lootbox", "lootbox");
-    // queryBuilder.leftJoinAndSelect("lootbox.erc721Collection", "collectionLootbox");
-    // queryBuilder.leftJoinAndSelect("lootbox.erc721Template", "lootboxTemplate");
-
     queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet?.toLowerCase() });
 

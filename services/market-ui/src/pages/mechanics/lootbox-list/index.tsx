@@ -1,7 +1,6 @@
 import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
-import { useParams } from "react-router";
 import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
@@ -19,15 +18,12 @@ export interface ILootboxListProps {
 export const LootboxList: FC<ILootboxListProps> = props => {
   const { embedded } = props;
 
-  const { id = "" } = useParams<{ id: string }>();
-
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<ILootbox, ILootboxSearchDto>({
       baseUrl: "/lootboxes",
       embedded,
       search: {
         query: "",
-        contractIds: id ? [~~id] : [],
         lootboxStatus: [LootboxStatus.ACTIVE],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
