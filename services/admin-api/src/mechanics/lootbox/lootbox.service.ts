@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { AssetType, ILootboxSearchDto, LootboxStatus } from "@framework/types";
+import { ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { AssetService } from "../asset/asset.service";
@@ -100,19 +100,14 @@ export class LootboxService {
 
   public async create(dto: ILootboxCreateDto): Promise<LootboxEntity> {
     const { price, item } = dto;
-    console.log("item", item);
 
     const priceEntity = await this.assetService.create({
-      assetType: AssetType.LOOTBOX,
-      externalId: "0",
       components: [],
     });
 
     await this.assetService.update(priceEntity, price);
 
     const itemEntity = await this.assetService.create({
-      assetType: AssetType.LOOTBOX,
-      externalId: "0",
       components: [],
     });
     await this.assetService.update(itemEntity, item);

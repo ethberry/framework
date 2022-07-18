@@ -53,7 +53,7 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     _queue[getRandomNumber()] = Request(to, item);
   }
 
-  function levelUp(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
+  function upgrade(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     upsertRecordField(tokenId, GRADE, grade + 1);
     return true;

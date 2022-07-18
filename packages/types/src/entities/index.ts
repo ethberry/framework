@@ -12,8 +12,8 @@ export * from "./blockchain/access-list-history";
 export * from "./blockchain/contract-manager";
 export * from "./blockchain/contract-manager-history";
 export * from "./blockchain/common";
-export * from "./blockchain/asset";
-export * from "./blockchain/asset-component";
+export * from "./mechanics/asset";
+export * from "./mechanics/asset-component";
 
 export * from "./blockchain/contract-history";
 export * from "./mechanics/claim";

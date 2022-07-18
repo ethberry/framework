@@ -1,5 +1,5 @@
 import { BigNumber, utils } from "ethers";
-import { IAsset, ILootbox, ITemplate, TokenType } from "@framework/types";
+import { IAsset, TokenType } from "@framework/types";
 
 export const formatEther = (amount = "0", decimals = 18, currency = "Ξ"): string => {
   return `${currency} ${utils.formatUnits(amount, decimals)}`;
@@ -15,8 +15,8 @@ export const formatPrice = (asset?: IAsset): string => {
     : "";
 };
 
-export const getEthPrice = (template: ITemplate | ILootbox) => {
-  return template.price?.components.reduce((memo, current) => {
+export const getEthPrice = (asset?: IAsset) => {
+  return asset?.components.reduce((memo, current) => {
     if (current.tokenType === TokenType.NATIVE) {
       return memo.add(current.amount);
     }

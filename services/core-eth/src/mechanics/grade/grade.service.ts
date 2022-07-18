@@ -5,7 +5,7 @@ import { constants } from "ethers";
 
 import { GradeEntity } from "./grade.entity";
 import { AssetService } from "../asset/asset.service";
-import { AssetType, GradeStrategy, TokenType } from "@framework/types";
+import { GradeStrategy, TokenType } from "@framework/types";
 
 @Injectable()
 export class GradeService {
@@ -24,8 +24,6 @@ export class GradeService {
 
   public async create(dto: DeepPartial<GradeEntity>): Promise<GradeEntity> {
     const assetEntity = await this.assetService.create({
-      assetType: AssetType.GRADE,
-      externalId: "0",
       components: [],
     });
 

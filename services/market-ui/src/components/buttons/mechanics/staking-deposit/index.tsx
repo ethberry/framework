@@ -33,7 +33,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
       override = { value: BigNumber.from(rule.deposit.components[0].amount) };
     }
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, provider?.getSigner());
-    return contract.deposit(rule.externalId, rule.deposit?.components[0].tokenId || 0, override) as Promise<void>;
+    return contract.deposit(rule.externalId, rule.deposit?.components[0].templateId || 0, override) as Promise<void>;
   });
 
   const handleDeposit = (rule: IStakingRule): (() => Promise<void>) => {

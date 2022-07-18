@@ -5,13 +5,13 @@ import { useIntl } from "react-intl";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { TemplateStatus, TokenType } from "@framework/types";
 
-export interface ITokenInputProps {
+export interface ITemplateInputProps {
   prefix: string;
   name?: string;
 }
 
-export const TokenInput: FC<ITokenInputProps> = props => {
-  const { prefix, name = "tokenId" } = props;
+export const TemplateInput: FC<ITemplateInputProps> = props => {
+  const { prefix, name = "templateId" } = props;
 
   const { formatMessage } = useIntl();
   const tokenType = useWatch({ name: `${prefix}.tokenType` });

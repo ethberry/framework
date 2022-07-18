@@ -14,7 +14,7 @@ export const GrowthRateInput: FC<IAddressInputProps> = props => {
   const gradeStrategy = useWatch({ name: "gradeStrategy" });
 
   if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
-    return <CurrencyInput name={name} symbol="" precision={0} />;
+    return <CurrencyInput name={name} symbol="" precision={2} />;
   }
 
   return null;

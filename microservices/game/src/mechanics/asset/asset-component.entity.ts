@@ -5,7 +5,7 @@ import { IAssetComponent, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
-import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { AssetEntity } from "./asset.entity";
 
 @Entity({ schema: ns, name: "asset_component" })
@@ -24,11 +24,11 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   public contract: ContractEntity;
 
   @Column({ type: "int" })
-  public tokenId: number;
+  public templateId: number;
 
   @JoinColumn()
-  @OneToOne(_type => TokenEntity)
-  public token: TokenEntity;
+  @OneToOne(_type => TemplateEntity)
+  public template: TemplateEntity;
 
   @Column({ type: "numeric" })
   public amount: string;

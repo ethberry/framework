@@ -4,6 +4,6 @@ export interface IAssetComponentDto {
   id?: number;
   tokenType: TokenType;
   contractId: number;
-  tokenId: number;
+  templateId: number;
   amount: string;
 }

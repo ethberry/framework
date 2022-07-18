@@ -1,17 +1,24 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { BigNumber, utils } from "ethers";
 
-import { ILootboxSearchDto } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
+import { ILootboxSearchDto, TokenType } from "@framework/types";
 
+import { ISignLootboxDto } from "./interfaces";
 import { LootboxEntity } from "./lootbox.entity";
+import { SignerService } from "../signer/signer.service";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 
 @Injectable()
 export class LootboxService {
   constructor(
     @InjectRepository(LootboxEntity)
     private readonly lootboxEntityRepository: Repository<LootboxEntity>,
+    private readonly templateService: TemplateService,
+    private readonly signerService: SignerService,
   ) {}
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
@@ -21,18 +28,18 @@ export class LootboxService {
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("lootbox.contract", "contract");
+    // queryBuilder.leftJoinAndSelect("lootbox.contract", "contract");
 
     queryBuilder.leftJoinAndSelect("lootbox.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-    queryBuilder.leftJoinAndSelect("price_components.token", "price_token");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
     queryBuilder.leftJoinAndSelect("lootbox.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
-    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -117,5 +124,78 @@ export class LootboxService {
         },
       },
     });
+  }
+
+  public async sign(dto: ISignLootboxDto): Promise<IServerSignature> {
+    const { lootboxId, account } = dto;
+
+    const lootboxEntity = await this.findOne(
+      { id: lootboxId },
+      {
+        join: {
+          alias: "lootbox",
+          leftJoinAndSelect: {
+            item: "lootbox.item",
+            item_components: "item.components",
+          },
+        },
+      },
+    );
+
+    if (!lootboxEntity) {
+      throw new NotFoundException("lootboxNotFound");
+    }
+
+    const templateEntity = await this.templateService.findOne(
+      { id: lootboxEntity.item.components[0].templateId },
+      {
+        join: {
+          alias: "template",
+          leftJoinAndSelect: {
+            contract: "template.contract",
+            price: "template.price",
+            price_components: "price.components",
+            price_template: "price_components.template",
+            price_contract: "price_components.contract",
+            price_tokens: "price_template.tokens",
+          },
+        },
+      },
+    );
+
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
+
+    const cap = BigNumber.from(templateEntity.cap);
+    if (cap.gt(0) && cap.lte(templateEntity.amount)) {
+      throw new NotFoundException("limitExceeded");
+    }
+
+    const nonce = utils.randomBytes(32);
+
+    const signature = await this.getSignature(nonce, account, templateEntity);
+    return { nonce: utils.hexlify(nonce), signature };
+  }
+
+  public async getSignature(nonce: Uint8Array, account: string, templateEntity: TemplateEntity): Promise<string> {
+    return this.signerService.getSignature(
+      nonce,
+      account,
+      [
+        {
+          tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
+          token: templateEntity.contract.address,
+          tokenId: templateEntity.id.toString(),
+          amount: "1",
+        },
+      ],
+      templateEntity.price.components.map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract.address,
+        tokenId: component.template.tokens[0].tokenId,
+        amount: component.amount,
+      })),
+    );
   }
 }

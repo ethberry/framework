@@ -9,7 +9,7 @@ export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterf
       INSERT INTO ${ns}.asset_component (
         token_type,
         contract_id,
-        token_id,
+        template_id,
         amount,
         asset_id
       ) VALUES (

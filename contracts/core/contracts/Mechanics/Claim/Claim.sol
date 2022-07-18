@@ -41,7 +41,7 @@ contract ClaimProxy is IERC721Random, AccessControl, Pausable {
     _factory.mintRandom(to, item);
   }
 
-  function levelUp(uint256) public pure returns (bool) {
+  function upgrade(uint256) public pure returns (bool) {
     return false;
   }
 

@@ -21,6 +21,7 @@ import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@frame
 import { Erc998TemplateEditDialog } from "./edit";
 import { emptyPrice } from "../../../components/inputs/empty-price";
 import { TemplateSearchForm } from "../../../components/forms/template-search";
+import { cleanUpAsset } from "../../../utils/money";
 
 export const Erc998Template: FC = () => {
   const {
@@ -61,7 +62,7 @@ export const Erc998Template: FC = () => {
         ? {
             title,
             description,
-            price,
+            price: cleanUpAsset(price),
             amount,
             imageUrl,
             templateStatus,
@@ -69,7 +70,7 @@ export const Erc998Template: FC = () => {
         : {
             title,
             description,
-            price,
+            price: cleanUpAsset(price),
             amount,
             imageUrl,
             contractId,

@@ -37,7 +37,7 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     _tokenIdTracker.increment();
   }
 
-  function levelUp(uint256) public view onlyRole(MINTER_ROLE) returns (bool) {
+  function upgrade(uint256) public view onlyRole(MINTER_ROLE) returns (bool) {
     return false;
   }
 

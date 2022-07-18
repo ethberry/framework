@@ -20,6 +20,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
 import { emptyItem } from "../../../components/inputs/empty-price";
+import { cleanUpAsset } from "../../../utils/money";
 
 export const Claim: FC = () => {
   const {
@@ -52,8 +53,8 @@ export const Claim: FC = () => {
       claimStatus: [],
       templateIds: [],
     },
-    filter: ({ id, owner, templateIds, item, list, account }: any) =>
-      id ? { owner, templateIds, item, account } : { list, item, account },
+    filter: ({ id, item, account }) =>
+      id ? { item: cleanUpAsset(item), account } : { item: cleanUpAsset(item), account },
   });
 
   const { formatMessage } = useIntl();
@@ -81,7 +82,7 @@ export const Claim: FC = () => {
           {rows.map((claim, i) => (
             <ListItem key={i}>
               <ListItemText>{claim.account}</ListItemText>
-              <ListItemText>{claim.item.components[0]?.token?.template?.title}</ListItemText>
+              <ListItemText>{claim.item.components[0]?.template?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>
                   <Create />

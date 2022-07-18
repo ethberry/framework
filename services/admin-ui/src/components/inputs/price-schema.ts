@@ -9,7 +9,7 @@ export const assetComponentValidationSchema = Yup.object().shape({
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(1, "form.validations.rangeUnderflow"),
-  tokenId: Yup.number() // optional, min 1
+  templateId: Yup.number() // optional, min 1
     .required("form.validations.valueMissing")
     .integer("form.validations.badInput")
     .min(0, "form.validations.rangeUnderflow"),

@@ -18,3 +18,14 @@ export const formatPrice = (asset?: IAsset): string => {
       )}}`
     : "";
 };
+
+export const cleanUpAsset = ({ components }: IAsset = { components: [], id: 0 }) => {
+  return {
+    components: components.map(({ tokenType, contractId, templateId, amount }) => ({
+      tokenType,
+      contractId,
+      templateId,
+      amount,
+    })),
+  };
+};

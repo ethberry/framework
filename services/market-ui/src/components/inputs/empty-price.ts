@@ -5,7 +5,7 @@ export const emptyPrice = {
     {
       tokenType: TokenType.NATIVE,
       contractId: 0,
-      tokenId: 0,
+      templateId: 0,
       amount: "0",
     } as IAssetComponent,
   ],

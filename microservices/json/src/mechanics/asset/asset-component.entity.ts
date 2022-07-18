@@ -1,11 +1,11 @@
-import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { IAssetComponent, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 
-import { ContractEntity } from "../hierarchy/contract/contract.entity";
-import { TokenEntity } from "../hierarchy/token/token.entity";
+import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { AssetEntity } from "./asset.entity";
 
 @Entity({ schema: ns, name: "asset_component" })
@@ -24,16 +24,16 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   public contract: ContractEntity;
 
   @Column({ type: "int" })
-  public tokenId: number;
+  public templateId: number;
 
   @JoinColumn()
-  @OneToOne(_type => TokenEntity)
-  public token: TokenEntity;
+  @OneToOne(_type => TemplateEntity)
+  public template: TemplateEntity;
 
   @Column({ type: "numeric" })
   public amount: string;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", select: false })
   public assetId: number;
 
   @JoinColumn()

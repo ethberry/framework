@@ -4,20 +4,15 @@ import { Public } from "@gemunion/nest-js-utils";
 import { IServerSignature } from "@gemunion/types-collection";
 
 import { MarketplaceService } from "./marketplace.service";
-import { SignLootboxDto, SignTemplateDto } from "./dto";
+import { SignTemplateDto } from "./dto";
 
 @Public()
 @Controller("/marketplace")
 export class MarketplaceController {
   constructor(private readonly marketplaceService: MarketplaceService) {}
 
-  @Post("/template")
+  @Post("/sign")
   public signTemplate(@Body() dto: SignTemplateDto): Promise<IServerSignature> {
-    return this.marketplaceService.signTemplate(dto);
-  }
-
-  @Post("/lootbox")
-  public signLootbox(@Body() dto: SignLootboxDto): Promise<IServerSignature> {
-    return this.marketplaceService.signLootbox(dto);
+    return this.marketplaceService.sign(dto);
   }
 }

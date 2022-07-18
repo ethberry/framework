@@ -1,73 +1,65 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { Contract } from "ethers";
+import { Contract, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-// import { useApi } from "@gemunion/provider-api-firebase";
+import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { ICraft } from "@framework/types";
+import { IServerSignature } from "@gemunion/types-collection";
+import { ICraft, TokenType } from "@framework/types";
 
-import ERC1155ERC998CraftSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
-import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+import { getEthPrice } from "../../../../utils/money";
 
 interface ICraftButtonProps {
-  rule: ICraft;
+  craft: ICraft;
 }
 
 export const CraftButton: FC<ICraftButtonProps> = props => {
-  const { rule } = props;
-  const [isApproved, setIsApproved] = useState(false);
+  const { craft } = props;
 
-  const { provider, isActive } = useWeb3React();
-
-  // const api = useApi();
-
-  const meta = useMetamask(() => {
-    const contract = new Contract(
-      rule.item.components[0].contract!.address,
-      ERC998SimpleSol.abi,
-      provider?.getSigner(),
-    );
-    return contract.setApprovalForAll(process.env.EXCHANGE_ADDR, true) as Promise<void>;
-  });
-
-  const handleApprove = () => {
-    return meta().then(() => {
-      setIsApproved(true);
-    });
-  };
+  const api = useApi();
+  const { provider, account } = useWeb3React();
 
   const handleCraft = useMetamask(() => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ERC1155ERC998CraftSol.abi, provider?.getSigner());
-    return (
-      contract
-        // TODO add item amounts - batch craft?
-        .craft(rule.item.components[0].tokenId, 1) as Promise<void>
-    );
+    return api
+      .fetchJson({
+        url: "/craft/sign",
+        method: "POST",
+        data: {
+          craftId: craft.id,
+          account,
+        },
+      })
+      .then((sign: IServerSignature) => {
+        const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
+        return contract.execute(
+          utils.arrayify(sign.nonce),
+          craft.item?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.template!.tokens![0].tokenId,
+            amount: component.amount,
+          })),
+          craft.ingredients?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.template!.tokens![0].tokenId,
+            amount: component.amount,
+          })),
+          process.env.ACCOUNT,
+          sign.signature,
+          {
+            value: getEthPrice(craft.ingredients),
+          },
+        ) as Promise<void>;
+      });
   });
 
-  // const getApprove = async (): Promise<void> => {
-  //   return api
-  //     .fetchJson({
-  //       url: `/erc1155-token-history/${rule.ingredients.components[0].contract!.address}/approve`,
-  //     })
-  //     .then((approve: boolean) => {
-  //       setIsApproved(approve);
-  //     });
-  // };
-  //
-  // useEffect(() => {
-  //   void getApprove();
-  // }, []);
-
-  return isApproved ? (
-    <Button onClick={handleCraft} disabled={!isActive} data-testid="ExchangeCraftButton">
+  return (
+    <Button onClick={handleCraft} data-testid="ExchangeCraftButton">
       <FormattedMessage id="form.buttons.craft" />
-    </Button>
-  ) : (
-    <Button onClick={handleApprove} disabled={!isActive} data-testid="ExchangeCraftButton">
-      <FormattedMessage id="form.buttons.approve" />
     </Button>
   );
 };

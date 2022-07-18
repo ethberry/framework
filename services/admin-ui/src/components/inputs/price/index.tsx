@@ -9,7 +9,7 @@ import { IAssetComponent, TokenType } from "@framework/types";
 import { emptyPrice } from "../empty-price";
 import { TokenTypeInput } from "./token-type-input";
 import { ContractInput } from "./contract-input";
-import { TokenInput } from "./token-input";
+import { TemplateInput } from "./template-input";
 import { AmountInput } from "./amount-input";
 
 export interface IPriceEditDialogProps {
@@ -49,7 +49,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
 
       {value?.map((o: IAssetComponent, i: number) => (
         <Box
-          key={`${o.contractId}_${o.tokenId}_${i}`}
+          key={`${o.contractId}_${o.templateId}_${i}`}
           mt={1}
           mb={1}
           display="flex"
@@ -60,7 +60,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
             <Paper sx={{ p: 2 }}>
               <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledOptions} />
               <ContractInput prefix={`${nestedPrefix}[${i}]`} />
-              <TokenInput prefix={`${nestedPrefix}[${i}]`} />
+              <TemplateInput prefix={`${nestedPrefix}[${i}]`} />
               <AmountInput prefix={`${nestedPrefix}[${i}]`} />
             </Paper>
           </Box>

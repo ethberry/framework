@@ -1,5 +1,5 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import { IconButton, Tooltip } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Tooltip } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -29,7 +29,8 @@ export const Claim: FC = () => {
       return api.fetchJson({
         url: `/claim`,
         data: {
-          query: account,
+          account,
+          claimStatus: [ClaimStatus.NEW],
         },
       });
     },
@@ -64,8 +65,8 @@ export const Claim: FC = () => {
       utils.arrayify(claim.nonce),
       claim.item?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-        token: component.contract?.address,
-        tokenId: component.token?.tokenId,
+        token: component.contract!.address,
+        tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,
       })),
       [],
@@ -104,15 +105,20 @@ export const Claim: FC = () => {
 
   if (claims.length) {
     return (
-      <Fragment>
-        {claims.map(claim => (
-          <Tooltip title={formatMessage({ id: "form.tips.redeem" })} enterDelay={300} key={claim.id}>
-            <IconButton color="inherit" onClick={handleClick(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>
-              <Redeem />
-            </IconButton>
-          </Tooltip>
+      <List>
+        {claims.map((claim, i) => (
+          <ListItem key={i}>
+            <ListItemText>{claim.item.components[0]?.template?.title}</ListItemText>
+            <ListItemSecondaryAction>
+              <Tooltip title={formatMessage({ id: "form.tips.redeem" })} enterDelay={300} key={claim.id}>
+                <IconButton onClick={handleClick(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>
+                  <Redeem />
+                </IconButton>
+              </Tooltip>
+            </ListItemSecondaryAction>
+          </ListItem>
         ))}
-      </Fragment>
+      </List>
     );
   }
 

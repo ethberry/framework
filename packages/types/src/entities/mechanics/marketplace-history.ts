@@ -1,5 +1,5 @@
 import { IIdDateBase } from "@gemunion/types-collection";
-import { IAsset } from "../blockchain/asset";
+import { IAsset } from "./asset";
 
 export enum MarketplaceEventType {
   RedeemCommon = "RedeemCommon",

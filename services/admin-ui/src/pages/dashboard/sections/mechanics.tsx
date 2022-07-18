@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { BarChart, Casino, Construction, Inventory, Paragliding, Savings } from "@mui/icons-material";
+import { BarChart, Casino, Construction, Inventory, Paragliding, Savings, Upgrade } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -65,7 +65,7 @@ export const Mechanics: FC = () => {
         </ListItem>
         <ListItem button component={RouterLink} to="/grades">
           <ListItemIcon>
-            <BarChart />
+            <Upgrade />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.mechanics.grade" />

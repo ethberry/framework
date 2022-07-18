@@ -4,7 +4,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { utils, Wallet } from "ethers";
 
-import { AssetType, ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
+import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
 import { IClaimItem } from "./interfaces";
@@ -34,9 +34,8 @@ export class ClaimService {
 
     queryBuilder.leftJoinAndSelect("claim.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
-    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
 
@@ -67,8 +66,6 @@ export class ClaimService {
     // TODO disallow NATIVE and ERC20
 
     const assetEntity = await this.assetService.create({
-      assetType: AssetType.CLAIM,
-      externalId: "0",
       components: [],
     });
 
@@ -87,7 +84,15 @@ export class ClaimService {
   public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItem): Promise<ClaimEntity> {
     const { account, item } = dto;
 
-    const claimEntity = await this.findOne(where);
+    const claimEntity = await this.findOne(where, {
+      join: {
+        alias: "claim",
+        leftJoinAndSelect: {
+          item: "claim.item",
+          components: "item.components",
+        },
+      },
+    });
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
@@ -101,7 +106,7 @@ export class ClaimService {
     await this.assetService.update(claimEntity.item, item);
 
     const templateEntity = await this.templateService.findOne(
-      { id: item.components[0].tokenId },
+      { id: item.components[0].templateId },
       { relations: { contract: true } },
     );
     if (!templateEntity) {

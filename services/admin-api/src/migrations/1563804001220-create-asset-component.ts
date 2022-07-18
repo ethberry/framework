@@ -22,7 +22,7 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "token_id",
+          name: "template_id",
           type: "int",
         },
         {
@@ -48,9 +48,9 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["token_id"],
+          columnNames: ["template_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.token`,
+          referencedTableName: `${ns}.template`,
           onDelete: "CASCADE",
         },
       ],

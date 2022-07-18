@@ -4,17 +4,6 @@ import { ns } from "@framework/constants";
 
 export class CreateAsset1563804000100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.asset_type_enum AS ENUM (
-        'TEMPLATE',
-        'CLAIM',
-        'LOOTBOX',
-        'EXCHANGE',
-        'STAKING',
-        'GRADE'
-      );
-    `);
-
     const table = new Table({
       name: `${ns}.asset`,
       columns: [
@@ -22,15 +11,6 @@ export class CreateAsset1563804000100 implements MigrationInterface {
           name: "id",
           type: "serial",
           isPrimary: true,
-        },
-        {
-          name: "asset_type",
-          type: `${ns}.asset_type_enum`,
-          default: "'TEMPLATE'",
-        },
-        {
-          name: "external_id",
-          type: "int",
         },
       ],
     });

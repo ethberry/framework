@@ -29,11 +29,6 @@ export class CreateClaimTable1563804040410 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "token_id",
-          type: "int",
-          isNullable: true,
-        },
-        {
           name: "claim_status",
           type: `${ns}.claim_status_enum`,
           default: "'NEW'",

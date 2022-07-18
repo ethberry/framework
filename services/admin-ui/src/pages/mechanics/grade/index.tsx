@@ -5,20 +5,11 @@ import { Create } from "@mui/icons-material";
 import { IPaginationDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IAsset, IContract, IGrade } from "@framework/types";
+import { IContract, IGrade } from "@framework/types";
 
 import { GradeEditDialog } from "./edit";
-
-const clenUpAsset = ({ components }: IAsset) => {
-  return {
-    components: components.map(({ tokenType, contractId, tokenId, amount }) => ({
-      tokenType,
-      contractId,
-      tokenId,
-      amount,
-    })),
-  };
-};
+import { cleanUpAsset } from "../../../utils/money";
+import { emptyPrice } from "../../../components/inputs/empty-price";
 
 export const Grade: FC = () => {
   const {
@@ -36,14 +27,15 @@ export const Grade: FC = () => {
     baseUrl: "/grades",
     empty: {
       growthRate: 0,
+      price: emptyPrice,
       contract: {
         title: "",
       } as IContract,
     },
-    filter: ({ gradeStrategy, growthRate, price }: any) => ({
+    filter: ({ gradeStrategy, growthRate, price }) => ({
       gradeStrategy,
       growthRate,
-      price: clenUpAsset(price),
+      price: cleanUpAsset(price),
     }),
   });
 

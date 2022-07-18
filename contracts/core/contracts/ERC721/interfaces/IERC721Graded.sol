@@ -9,5 +9,5 @@ pragma solidity ^0.8.9;
 import "./IERC721Simple.sol";
 
 interface IERC721Graded is IERC721Simple {
-  function levelUp(uint256 tokenId) external returns (bool);
+  function upgrade(uint256 tokenId) external returns (bool);
 }

@@ -1,13 +1,15 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { LootboxEntity } from "./lootbox.entity";
 import { LootboxService } from "./lootbox.service";
 import { LootboxController } from "./lootbox.controller";
+import { SignerModule } from "../signer/signer.module";
+import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LootboxEntity])],
-  providers: [LootboxService],
+  imports: [SignerModule, TemplateModule, TypeOrmModule.forFeature([LootboxEntity])],
+  providers: [Logger, LootboxService],
   controllers: [LootboxController],
   exports: [LootboxService],
 })

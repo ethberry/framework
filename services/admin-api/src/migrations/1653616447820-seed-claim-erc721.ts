@@ -18,25 +18,15 @@ export class SeedClaimErc721At1563804040420 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
-        id,
-        external_id,
-        asset_type
+        id
       ) VALUES (
-        50101,
-        50101,
-        'CLAIM'
+        50101
       ), (
-        50102,
-        50102,
-        'CLAIM'
+        50102
       ), (
-        50103,
-        50103,
-        'CLAIM'
+        50103
       ), (
-        50104,
-        50104,
-        'CLAIM'
+        50104
       );
     `);
 
@@ -44,24 +34,24 @@ export class SeedClaimErc721At1563804040420 implements MigrationInterface {
       INSERT INTO ${ns}.asset_component (
         token_type,
         contract_id,
-        token_id,
+        template_id,
         amount,
         asset_id
       ) VALUES (
         'ERC721',
-        13,
+        11,
         20101, -- sword
         '1',
         50101
       ), (
         'ERC721',
-        13,
+        11,
         20102, -- mace
         '1',
         50102
       ), (
         'ERC721',
-        13,
+        11,
         20103, -- axe
         '1',
         50103

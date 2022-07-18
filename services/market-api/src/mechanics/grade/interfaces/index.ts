@@ -1,1 +1,1 @@
-export * from "./level-up";
+export * from "./grade";

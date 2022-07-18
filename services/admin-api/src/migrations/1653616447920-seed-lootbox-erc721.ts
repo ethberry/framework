@@ -10,25 +10,15 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
-        id,
-        external_id,
-        asset_type
+        id
       ) VALUES (
-        60101,
-        60101,
-        'LOOTBOX'
+        60101
       ), (
-        60102,
-        60102,
-        'LOOTBOX'
+        60102
       ), (
-        60201,
-        60201,
-        'LOOTBOX'
+        60201
       ), (
-        60202,
-        60202,
-        'LOOTBOX'
+        60202
       );
     `);
 
@@ -36,7 +26,7 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
       INSERT INTO ${ns}.asset_component (
         token_type,
         contract_id,
-        token_id,
+        template_id,
         amount,
         asset_id
       ) VALUES (

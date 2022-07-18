@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { LevelUpButton, TokenSellButton } from "../../../../components/buttons";
+import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
 import { RarityBadge } from "./badge";
 
 interface ITokenProps {
@@ -36,7 +36,7 @@ export const Erc998Token: FC<ITokenProps> = props => {
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <TokenSellButton token={token} />
-            <LevelUpButton token={token} />
+            <UpgradeButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

@@ -1,6 +1,6 @@
 import { ISearchable } from "@gemunion/types-collection";
 
-import { IAsset } from "../asset";
+import { IAsset } from "../../mechanics/asset";
 import { IContract } from "./contract";
 import { IToken } from "./token";
 

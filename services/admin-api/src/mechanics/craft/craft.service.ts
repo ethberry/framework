@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { AssetType, CraftStatus, IExchangeSearchDto } from "@framework/types";
+import { CraftStatus, IExchangeSearchDto } from "@framework/types";
 
 import { CraftEntity } from "./craft.entity";
 import { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
@@ -25,9 +25,7 @@ export class CraftService {
 
     queryBuilder.leftJoinAndSelect("craft.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.token", "item_token");
-    queryBuilder.leftJoinAndSelect("item_token.template", "item_template");
-    // queryBuilder.leftJoinAndSelect("item_components.contract", "contract");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
 
     if (query) {
       queryBuilder.leftJoin(
@@ -69,16 +67,12 @@ export class CraftService {
 
     // add new ingredient
     const ingredientsEntity = await this.assetService.create({
-      assetType: AssetType.EXCHANGE,
-      externalId: "0",
       components: [],
     });
     await this.assetService.update(ingredientsEntity, ingredients);
 
     // add new item
     const itemEntity = await this.assetService.create({
-      assetType: AssetType.EXCHANGE,
-      externalId: "0",
       components: [],
     });
     await this.assetService.update(itemEntity, item);

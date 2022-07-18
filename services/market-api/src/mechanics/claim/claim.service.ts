@@ -22,11 +22,11 @@ export class ClaimService {
 
     queryBuilder.andWhere("claim.account = :account", { account });
 
-    queryBuilder.leftJoin("claim.token", "token");
-    queryBuilder.addSelect(["token.id", "token.tokenId"]);
-
-    queryBuilder.leftJoin("claim.template", "template");
-    queryBuilder.addSelect(["template.title", "template.imageUrl"]);
+    queryBuilder.leftJoinAndSelect("claim.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    queryBuilder.leftJoinAndSelect("item_template.tokens", "item_tokens");
 
     if (claimStatus) {
       if (claimStatus.length === 1) {
@@ -50,7 +50,7 @@ export class ClaimService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "claim.id": "ASC",
+      "claim.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

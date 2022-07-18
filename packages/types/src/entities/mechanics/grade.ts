@@ -1,7 +1,7 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
 import { IContract } from "../blockchain/hierarchy/contract";
-import { IAsset } from "../blockchain/asset";
+import { IAsset } from "./asset";
 
 export enum GradeStrategy {
   FLAT = "FLAT",

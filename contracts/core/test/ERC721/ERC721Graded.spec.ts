@@ -94,11 +94,11 @@ describe("ERC721Graded", function () {
     });
   });
 
-  describe("levelUp", function () {
+  describe("upgrade", function () {
     it("should level up", async function () {
       await this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
 
-      const tx1 = this.erc721Instance.levelUp(tokenId);
+      const tx1 = this.erc721Instance.upgrade(tokenId);
       await expect(tx1).to.not.be.reverted;
 
       const value2 = await this.erc721Instance.getRecordFieldValue(
@@ -111,7 +111,7 @@ describe("ERC721Graded", function () {
     it("should fail: insufficient permissions", async function () {
       await this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
 
-      const tx1 = this.erc721Instance.connect(this.receiver).levelUp(tokenId);
+      const tx1 = this.erc721Instance.connect(this.receiver).upgrade(tokenId);
       await expect(tx1).to.be.revertedWith(
         `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
       );

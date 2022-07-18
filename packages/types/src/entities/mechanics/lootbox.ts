@@ -1,6 +1,6 @@
 import { ISearchable } from "@gemunion/types-collection";
 
-import { IAsset } from "../blockchain/asset";
+import { IAsset } from "./asset";
 
 export enum LootboxStatus {
   ACTIVE = "ACTIVE",

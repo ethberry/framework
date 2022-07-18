@@ -20,7 +20,8 @@ import { ILootbox, ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 import { LootboxEditDialog } from "./edit";
 import { Erc721LootboxSearchForm } from "./form";
-import { emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
+import { cleanUpAsset } from "../../../utils/money";
 
 export const Lootbox: FC = () => {
   const {
@@ -47,7 +48,7 @@ export const Lootbox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      item: emptyPrice,
+      item: emptyItem,
       price: emptyPrice,
     },
     search: {
@@ -56,7 +57,22 @@ export const Lootbox: FC = () => {
       contractIds: [],
     },
     filter: ({ id, title, description, imageUrl, item, price, lootboxStatus }) =>
-      id ? { title, description, imageUrl, item, price, lootboxStatus } : { title, description, imageUrl, item, price },
+      id
+        ? {
+            title,
+            description,
+            imageUrl,
+            item: cleanUpAsset(item),
+            price: cleanUpAsset(price),
+            lootboxStatus,
+          }
+        : {
+            title,
+            description,
+            imageUrl,
+            item: cleanUpAsset(item),
+            price: cleanUpAsset(price),
+          },
   });
 
   return (

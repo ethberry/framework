@@ -1,8 +1,8 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository, DeepPartial } from "typeorm";
+import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { AssetType, ITemplateAutocompleteDto, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplateAutocompleteDto, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
 import { AssetService } from "../../../mechanics/asset/asset.service";
@@ -105,8 +105,6 @@ export class TemplateService {
     const { price } = dto;
 
     const assetEntity = await this.assetService.create({
-      assetType: AssetType.TEMPLATE,
-      externalId: "0",
       components: [],
     });
 
@@ -128,9 +126,9 @@ export class TemplateService {
     const { price, ...rest } = dto;
     const templateEntity = await this.findOne(where, {
       join: {
-        alias: "asset",
+        alias: "template",
         leftJoinAndSelect: {
-          price: "asset.price",
+          price: "template.price",
           components: "price.components",
         },
       },

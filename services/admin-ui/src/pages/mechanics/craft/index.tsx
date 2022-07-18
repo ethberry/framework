@@ -20,7 +20,8 @@ import { CraftStatus, ICraft, IExchangeSearchDto } from "@framework/types";
 
 import { ExchangeEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
-import { emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
+import { cleanUpAsset } from "../../../utils/money";
 
 export const Craft: FC = () => {
   const {
@@ -45,7 +46,7 @@ export const Craft: FC = () => {
   } = useCollection<ICraft, IExchangeSearchDto>({
     baseUrl: "/craft",
     empty: {
-      item: emptyPrice,
+      item: emptyItem,
       ingredients: emptyPrice,
     },
     search: {
@@ -53,8 +54,8 @@ export const Craft: FC = () => {
       craftStatus: [CraftStatus.ACTIVE, CraftStatus.NEW],
     },
     filter: ({ item, ingredients }) => ({
-      item,
-      ingredients,
+      item: cleanUpAsset(item),
+      ingredients: cleanUpAsset(ingredients),
     }),
   });
 
@@ -78,17 +79,17 @@ export const Craft: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((recipe, i) => (
+          {rows.map((craft, i) => (
             <ListItem key={i}>
-              <ListItemText>{recipe.item.components[0].token!.template!.title}</ListItemText>
+              <ListItemText>{craft.item.components[0].template!.title}</ListItemText>
               <ListItemText style={{ display: "flex", justifyContent: "space-around" }}>
-                {recipe.item.components[0].token!.template!.contract?.title}
+                {craft.item.components[0].template!.contract?.title}
               </ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(recipe)}>
+                <IconButton onClick={handleEdit(craft)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(recipe)} disabled={recipe.craftStatus !== CraftStatus.NEW}>
+                <IconButton onClick={handleDelete(craft)} disabled={craft.craftStatus !== CraftStatus.NEW}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -109,7 +110,7 @@ export const Craft: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: selected.item.components[0]?.token?.template?.title }}
+        initialValues={{ ...selected, title: selected.item.components[0]?.template?.title }}
       />
 
       <ExchangeEditDialog

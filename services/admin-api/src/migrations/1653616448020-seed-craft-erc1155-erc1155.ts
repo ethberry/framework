@@ -8,25 +8,15 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
-        id,
-        external_id,
-        asset_type
+        id
       ) VALUES (
-        70101,
-        70101,
-        'EXCHANGE'
+        70101
       ), (
-        70102,
-        70102,
-        'EXCHANGE'
+        70102
       ), (
-        70111,
-        70111,
-        'EXCHANGE'
+        70111
       ), (
-        70112,
-        70112,
-        'EXCHANGE'
+        70112
       );
     `);
 
@@ -34,7 +24,7 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
       INSERT INTO ${ns}.asset_component (
         token_type,
         contract_id,
-        token_id,
+        template_id,
         amount,
         asset_id
       ) VALUES (

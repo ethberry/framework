@@ -37,18 +37,16 @@ export class CraftController {
       { id },
       {
         join: {
-          alias: "rule",
+          alias: "craft",
           leftJoinAndSelect: {
-            item: "rule.item",
+            item: "craft.item",
             item_components: "item.components",
-            item_token: "item_components.token",
+            item_template: "item_components.template",
             item_contract: "item_components.contract",
-            item_template: "item_token.template",
-            ingredients: "rule.ingredients",
+            ingredients: "craft.ingredients",
             ingredients_components: "ingredients.components",
-            ingredients_token: "ingredients_components.token",
+            ingredients_template: "ingredients_components.template",
             ingredients_contract: "ingredients_components.contract",
-            ingredients_template: "ingredients_token.template",
           },
         },
       },

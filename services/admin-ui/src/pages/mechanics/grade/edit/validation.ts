@@ -4,6 +4,5 @@ import { assetValidationSchema } from "../../../../components/inputs/price-schem
 
 export const validationSchema = Yup.object().shape({
   growthRate: Yup.number().required("form.validations.valueMissing"),
-  item: assetValidationSchema,
   price: assetValidationSchema,
 });

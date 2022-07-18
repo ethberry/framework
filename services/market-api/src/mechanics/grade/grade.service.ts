@@ -1,38 +1,34 @@
-import { BadRequestException, Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { BigNumber, utils, Wallet } from "ethers";
-
-import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { BigNumber, utils } from "ethers";
 import { IServerSignature } from "@gemunion/types-collection";
 import { ContractTemplate, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
 
-import { ILevelUpDtoDto } from "./interfaces";
+import { IGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 import { UserEntity } from "../../user/user.entity";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
-
-export interface IAsset {
-  tokenType: TokenType;
-  token: string;
-  tokenId: string;
-  amount: string;
-}
+import { IAsset, SignerService } from "../signer/signer.service";
 
 @Injectable()
 export class GradeService {
   constructor(
-    @Inject(ETHERS_SIGNER)
-    private readonly signer: Wallet,
-    private readonly configService: ConfigService,
-    private readonly tokenService: TokenService,
     @InjectRepository(GradeEntity)
     private readonly gradeEntityRepository: Repository<GradeEntity>,
+    private readonly tokenService: TokenService,
+    private readonly signerService: SignerService,
   ) {}
 
-  public async levelUp(dto: ILevelUpDtoDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public findOne(
+    where: FindOptionsWhere<GradeEntity>,
+    options?: FindOneOptions<GradeEntity>,
+  ): Promise<GradeEntity | null> {
+    return this.gradeEntityRepository.findOne({ where, ...options });
+  }
+
+  public async sign(dto: IGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { tokenId } = dto;
     const tokenEntity = await this.tokenService.findOne(
       { id: tokenId },
@@ -60,56 +56,47 @@ export class GradeService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSignature(nonce, tokenEntity, assetEntity, userEntity.wallet);
+    const signature = await this.getSignature(nonce, userEntity.wallet, tokenEntity, assetEntity);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
   public async getSignature(
     nonce: Uint8Array,
+    account: string,
     tokenEntity: TokenEntity,
     assetEntity: IAsset,
-    account: string,
   ): Promise<string> {
-    return this.signer._signTypedData(
-      // Domain
-      {
-        name: "MetaDataManipulator",
-        version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
-        verifyingContract: this.configService.get<string>("METADATA_ADDR", ""),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "nonce", type: "bytes32" },
-          { name: "account", type: "address" },
-          { name: "item", type: "Asset" },
-          { name: "price", type: "Asset" },
-        ],
-        Asset: [
-          { name: "tokenType", type: "uint256" },
-          { name: "token", type: "address" },
-          { name: "tokenId", type: "uint256" },
-          { name: "amount", type: "uint256" },
-        ],
-      },
-      // Value
-      {
-        nonce,
-        account,
-        item: {
+    return this.signerService.getSignature(
+      nonce,
+      account,
+      [
+        {
           tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
           token: tokenEntity.template.contract.address,
-          tokenId: tokenEntity.id,
-          amount: 1,
+          tokenId: tokenEntity.tokenId.toString(),
+          amount: "1",
         },
-        price: assetEntity,
-      },
+      ],
+      [assetEntity],
     );
   }
 
   public async calculatePrice(tokenEntity: TokenEntity): Promise<IAsset> {
-    const gradeEntity = await this.findOne({ contractId: tokenEntity.template.contract.id });
+    const gradeEntity = await this.findOne(
+      { contractId: tokenEntity.template.contract.id },
+      {
+        join: {
+          alias: "grade",
+          leftJoinAndSelect: {
+            price: "grade.price",
+            price_components: "price.components",
+            price_contract: "price_components.contract",
+            price_template: "price_components.template",
+            price_tokens: "price_template.tokens",
+          },
+        },
+      },
+    );
 
     if (!gradeEntity) {
       throw new NotFoundException("gradeNotFound");
@@ -127,24 +114,19 @@ export class GradeService {
         amount = BigNumber.from(gradeEntity.price.components[0].amount).mul(grade);
         break;
       case GradeStrategy.EXPONENTIAL:
-        amount = BigNumber.from(gradeEntity.price.components[0].amount).mul((1 + gradeEntity.growthRate) ** grade);
+        amount = BigNumber.from(gradeEntity.price.components[0].amount).mul(
+          (1 + gradeEntity.growthRate / 100) ** grade,
+        );
         break;
       default:
         throw new BadRequestException("unknownStrategy");
     }
 
     return {
-      tokenType: gradeEntity.price.components[0].tokenType,
+      tokenType: Object.keys(TokenType).indexOf(gradeEntity.price.components[0].tokenType),
       token: gradeEntity.price.components[0].contract.address,
-      tokenId: gradeEntity.price.components[0].token.tokenId,
+      tokenId: gradeEntity.price.components[0].template.tokens[0].tokenId,
       amount: amount.toString(),
     };
-  }
-
-  public findOne(
-    where: FindOptionsWhere<GradeEntity>,
-    options?: FindOneOptions<GradeEntity>,
-  ): Promise<GradeEntity | null> {
-    return this.gradeEntityRepository.findOne({ where, ...options });
   }
 }

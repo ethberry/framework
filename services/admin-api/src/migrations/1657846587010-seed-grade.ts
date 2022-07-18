@@ -9,21 +9,13 @@ export class SeedGrade1657846587010 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
-        id,
-        external_id,
-        asset_type
+        id
       ) VALUES (
-        90101,
-        90101,
-        'GRADE'
+        90101
       ), (
-        90102,
-        90102,
-        'GRADE'
+        90102
       ), (
-        90201,
-        90201,
-        'GRADE'
+        90201
       );
     `);
 
@@ -31,7 +23,7 @@ export class SeedGrade1657846587010 implements MigrationInterface {
       INSERT INTO ${ns}.asset_component (
         token_type,
         contract_id,
-        token_id,
+        template_id,
         amount,
         asset_id
       ) VALUES (

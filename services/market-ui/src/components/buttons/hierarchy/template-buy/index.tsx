@@ -46,14 +46,14 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           ],
           template.price?.components.map(component => ({
             tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-            token: component.contract?.address,
-            tokenId: component.token?.tokenId,
+            token: component.contract!.address,
+            tokenId: component.template!.tokens![0].tokenId,
             amount: component.amount,
           })),
           process.env.ACCOUNT,
           sign.signature,
           {
-            value: getEthPrice(template),
+            value: getEthPrice(template.price),
           },
         ) as Promise<void>;
       });

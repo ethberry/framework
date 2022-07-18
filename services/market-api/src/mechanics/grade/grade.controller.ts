@@ -4,7 +4,7 @@ import { Public, User } from "@gemunion/nest-js-utils";
 import { IServerSignature } from "@gemunion/types-collection";
 
 import { GradeService } from "./grade.service";
-import { LevelUpDto } from "./dto";
+import { GradeDto } from "./dto";
 import { UserEntity } from "../../user/user.entity";
 
 @Public()
@@ -12,8 +12,8 @@ import { UserEntity } from "../../user/user.entity";
 export class GradeController {
   constructor(private readonly gradeService: GradeService) {}
 
-  @Post("/level-up")
-  public levelUp(@Body() dto: LevelUpDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.gradeService.levelUp(dto, userEntity);
+  @Post("/sign")
+  public sign(@Body() dto: GradeDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.gradeService.sign(dto, userEntity);
   }
 }

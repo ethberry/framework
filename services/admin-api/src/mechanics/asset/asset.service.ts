@@ -1,12 +1,10 @@
-import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, Repository, FindOptionsWhere, FindOneOptions } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
 import { IAssetDto } from "./interfaces";
 import { AssetComponentEntity } from "./asset-component.entity";
-import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { TokenType } from "@framework/types";
 
 @Injectable()
 export class AssetService {
@@ -15,8 +13,6 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
-    @Inject(forwardRef(() => TemplateService))
-    private readonly templateService: TemplateService,
   ) {}
 
   public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
@@ -25,40 +21,6 @@ export class AssetService {
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<AssetEntity> {
     // TODO transactions?
-    console.log("asset", asset);
-    console.log("dto", dto);
-    // patch NATIVE and ERC20 tokens
-    for (const component of dto.components) {
-      if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
-        const templateEntity = await this.templateService.findOne(
-          { contractId: component.contractId },
-          { relations: { tokens: true } },
-        );
-        if (!templateEntity) {
-          throw new NotFoundException("templateNotFound");
-        }
-        component.tokenId = templateEntity.tokens[0].id;
-      } else if (component.tokenType === TokenType.ERC721 || component.tokenType === TokenType.ERC998) {
-        const templateEntity = await this.templateService.findOne(
-          { id: component.tokenId },
-          { relations: { tokens: true } },
-        );
-        if (!templateEntity) {
-          throw new NotFoundException("templateNotFound");
-        }
-        console.log("templateEntity", templateEntity);
-        component.tokenId = templateEntity.id;
-      } else if (component.tokenType === TokenType.ERC1155) {
-        const templateEntity = await this.templateService.findOne(
-          { id: component.tokenId },
-          { relations: { tokens: true } },
-        );
-        if (!templateEntity) {
-          throw new NotFoundException("templateNotFound");
-        }
-        component.tokenId = templateEntity.tokens[0].id;
-      }
-    }
 
     if (dto.components.length) {
       // remove old

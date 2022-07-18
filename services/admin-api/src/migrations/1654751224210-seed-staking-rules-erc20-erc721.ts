@@ -10,17 +10,11 @@ export class SeedStakingRules1654751224210 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
-        id,
-        external_id,
-        asset_type
+        id
       ) VALUES (
-        80101,
-        80101,
-        'STAKING'
+        80101
       ), (
-        80102,
-        80102,
-        'STAKING'
+        80102
       );
     `);
 
@@ -28,7 +22,7 @@ export class SeedStakingRules1654751224210 implements MigrationInterface {
       INSERT INTO ${ns}.asset_component (
         token_type,
         contract_id,
-        token_id,
+        template_id,
         amount,
         asset_id
       ) VALUES (
@@ -39,8 +33,8 @@ export class SeedStakingRules1654751224210 implements MigrationInterface {
         80101
       ), (
         'ERC721',
-        13,
-        40101, -- sword
+        11,
+        20208, -- yellow pants
         1,
         80102
       );

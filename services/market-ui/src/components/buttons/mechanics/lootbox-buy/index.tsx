@@ -47,21 +47,21 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
           ],
           lootbox.price?.components.map(component => ({
             tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-            token: component.contract?.address,
-            tokenId: component.token?.tokenId,
+            token: component.contract!.address,
+            tokenId: component.template!.tokens![0].tokenId,
             amount: component.amount,
           })),
           process.env.ACCOUNT,
           sign.signature,
           {
-            value: getEthPrice(lootbox),
+            value: getEthPrice(lootbox.price),
           },
         ) as Promise<void>;
       });
   });
 
   return (
-    <Button onClick={handleBuy} data-testid="Erc998LootboxTemplateBuyButton">
+    <Button onClick={handleBuy} data-testid="LootboxTemplateBuyButton">
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

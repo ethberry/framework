@@ -11,7 +11,6 @@ declare global {
       EXCHANGE_ADDR: string;
       STAKING_ADDR: string;
       CHAIN_ID: string;
-      METADATA_ADDR: string;
     }
   }
 }

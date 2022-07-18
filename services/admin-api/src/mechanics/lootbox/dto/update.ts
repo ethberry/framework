@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { LootboxStatus } from "@framework/types";

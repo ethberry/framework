@@ -9,21 +9,13 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
-        id,
-        external_id,
-        asset_type
+        id
       ) VALUES (
-        30101,
-        30101,
-        'TEMPLATE'
+        30101
       ), (
-        30102,
-        30102,
-        'TEMPLATE'
+        30102
       ), (
-        30103,
-        30103,
-        'TEMPLATE'
+        30103
       );
     `);
 

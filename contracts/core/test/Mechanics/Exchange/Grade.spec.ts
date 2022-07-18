@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC20Simple, ERC721Graded, MetaDataManipulator } from "../../../typechain-types";
+import { ERC20Simple, ERC721Graded, Exchange } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -17,8 +17,8 @@ import {
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 
-describe("MetaData", function () {
-  let mdmInstance: MetaDataManipulator;
+describe("Exchange", function () {
+  let exchangeInstance: Exchange;
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Graded;
   let network: Network;
@@ -26,8 +26,8 @@ describe("MetaData", function () {
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const mdmFactory = await ethers.getContractFactory("MetaDataManipulator");
-    mdmInstance = await mdmFactory.deploy(tokenName);
+    const mdmFactory = await ethers.getContractFactory("Exchange");
+    exchangeInstance = await mdmFactory.deploy(tokenName);
 
     const erc20Factory = await ethers.getContractFactory("ERC20Simple");
     erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
@@ -35,16 +35,16 @@ describe("MetaData", function () {
 
     const erc721Factory = await ethers.getContractFactory("ERC721Graded");
     erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await erc721Instance.grantRole(MINTER_ROLE, mdmInstance.address);
+    await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     network = await ethers.provider.getNetwork();
 
-    this.contractInstance = mdmInstance;
+    this.contractInstance = exchangeInstance;
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  describe("levelUp", function () {
+  describe("upgrade", function () {
     it("should update metadata", async function () {
       const tx1 = erc721Instance.mintCommon(this.receiver.address, fakeAsset);
 
@@ -58,15 +58,15 @@ describe("MetaData", function () {
           name: tokenName,
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: mdmInstance.address,
+          verifyingContract: exchangeInstance.address,
         },
         // Types
         {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "item", type: "Asset" },
-            { name: "price", type: "Asset" },
+            { name: "items", type: "Asset[]" },
+            { name: "ingredients", type: "Asset[]" },
           ],
           Asset: [
             { name: "tokenType", type: "uint256" },
@@ -79,43 +79,51 @@ describe("MetaData", function () {
         {
           nonce,
           account: this.receiver.address,
-          item: {
+          items: [
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          ingredients: [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+        },
+      );
+
+      await erc20Instance.mint(this.receiver.address, amount);
+      await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+
+      const tx2 = exchangeInstance.connect(this.receiver).upgrade(
+        nonce,
+        [
+          {
             tokenType: 2,
             token: erc721Instance.address,
             tokenId,
             amount,
           },
-          price: {
+        ],
+        [
+          {
             tokenType: 1,
             token: erc20Instance.address,
             tokenId,
             amount,
           },
-        },
-      );
-
-      await erc20Instance.mint(this.receiver.address, amount);
-      await erc20Instance.connect(this.receiver).approve(mdmInstance.address, amount);
-
-      const tx2 = mdmInstance.connect(this.receiver).levelUp(
-        nonce,
-        {
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId,
-          amount,
-        },
-        {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
+        ],
         this.owner.address,
         signature,
       );
 
-      await expect(tx2).to.emit(erc721Instance, "LevelUp").withArgs(mdmInstance.address, tokenId, 2);
+      await expect(tx2).to.emit(erc721Instance, "LevelUp").withArgs(exchangeInstance.address, tokenId, 2);
     });
 
     it("should fail: insufficient allowance", async function () {
@@ -131,15 +139,15 @@ describe("MetaData", function () {
           name: tokenName,
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: mdmInstance.address,
+          verifyingContract: exchangeInstance.address,
         },
         // Types
         {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "item", type: "Asset" },
-            { name: "price", type: "Asset" },
+            { name: "items", type: "Asset[]" },
+            { name: "ingredients", type: "Asset[]" },
           ],
           Asset: [
             { name: "tokenType", type: "uint256" },
@@ -152,38 +160,46 @@ describe("MetaData", function () {
         {
           nonce,
           account: this.receiver.address,
-          item: {
+          items: [
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          ingredients: [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+        },
+      );
+
+      await erc20Instance.mint(this.receiver.address, amount);
+      // await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+
+      const tx2 = exchangeInstance.connect(this.receiver).upgrade(
+        nonce,
+        [
+          {
             tokenType: 2,
             token: erc721Instance.address,
             tokenId,
             amount,
           },
-          price: {
+        ],
+        [
+          {
             tokenType: 1,
             token: erc20Instance.address,
             tokenId,
             amount,
           },
-        },
-      );
-
-      await erc20Instance.mint(this.receiver.address, amount);
-      // await erc20Instance.connect(this.receiver).approve(mdmInstance.address, amount);
-
-      const tx2 = mdmInstance.connect(this.receiver).levelUp(
-        nonce,
-        {
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId,
-          amount,
-        },
-        {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
+        ],
         this.owner.address,
         signature,
       );
@@ -204,15 +220,15 @@ describe("MetaData", function () {
           name: tokenName,
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: mdmInstance.address,
+          verifyingContract: exchangeInstance.address,
         },
         // Types
         {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "item", type: "Asset" },
-            { name: "price", type: "Asset" },
+            { name: "items", type: "Asset[]" },
+            { name: "ingredients", type: "Asset[]" },
           ],
           Asset: [
             { name: "tokenType", type: "uint256" },
@@ -225,38 +241,46 @@ describe("MetaData", function () {
         {
           nonce,
           account: this.receiver.address,
-          item: {
+          items: [
+            {
+              tokenType: 2,
+              token: erc721Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          ingredients: [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+        },
+      );
+
+      // await erc20Instance.mint(this.receiver.address, amount);
+      await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+
+      const tx2 = exchangeInstance.connect(this.receiver).upgrade(
+        nonce,
+        [
+          {
             tokenType: 2,
             token: erc721Instance.address,
             tokenId,
             amount,
           },
-          price: {
+        ],
+        [
+          {
             tokenType: 1,
             token: erc20Instance.address,
             tokenId,
             amount,
           },
-        },
-      );
-
-      // await erc20Instance.mint(this.receiver.address, amount);
-      await erc20Instance.connect(this.receiver).approve(mdmInstance.address, amount);
-
-      const tx2 = mdmInstance.connect(this.receiver).levelUp(
-        nonce,
-        {
-          tokenType: 2,
-          token: erc721Instance.address,
-          tokenId,
-          amount,
-        },
-        {
-          tokenType: 1,
-          token: erc20Instance.address,
-          tokenId,
-          amount,
-        },
+        ],
         this.owner.address,
         signature,
       );

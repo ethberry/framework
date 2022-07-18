@@ -1,6 +1,5 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Delete,
   Get,
@@ -29,16 +28,14 @@ export class StakingRulesController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  @UseInterceptors(ClassSerializerInterceptor)
   public search(@Query() dto: StakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
     return this.stakingService.search(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  @UseInterceptors(ClassSerializerInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingRulesEntity | null> {
-    return this.stakingService.findOne({ id }, { relations: { deposit: true, reward: true } });
+    return this.stakingService.findOneWithPrice({ id });
   }
 
   @Put("/:id")
