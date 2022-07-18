@@ -31,7 +31,7 @@ export class LootboxController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<LootboxEntity | null> {
-    return this.lootboxService.findOne({ id });
+    return this.lootboxService.findOneWithPrice({ id });
   }
 
   @Post("/")

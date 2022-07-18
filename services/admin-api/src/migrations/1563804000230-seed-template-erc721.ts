@@ -11,39 +11,39 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        20101
+        13101
       ), (
-        20102
+        13102
       ), (
-        20103
+        13103
       ), (
-        20201
+        13201
       ), (
-        20202
+        13202
       ), (
-        20203
+        13203
       ), (
-        20204
+        13204
       ), (
-        20205
+        13205
       ), (
-        20206
+        13206
       ), (
-        20207
+        13207
       ), (
-        20208
+        13208
       ), (
-        20301
+        13301
       ), (
-        20302
+        13302
       ), (
-        20303
+        13303
       ), (
-        20401
+        13401
       ), (
-        20402
+        13402
       ), (
-        20403
+        13403
       );
     `);
 
@@ -61,11 +61,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        20101,
+        13101,
         'Sword',
         '${simpleFormatting}',
         '${imageUrl}',
-        20101,
+        13101,
         0,
         4,
         'ACTIVE',
@@ -73,11 +73,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20102,
+        13102,
         'Mace',
         '${simpleFormatting}',
         '${imageUrl}',
-        20102,
+        13102,
         0,
         1,
         'ACTIVE',
@@ -85,11 +85,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20103,
+        13103,
         'Axe',
         '${simpleFormatting}',
         '${imageUrl}',
-        20103,
+        13103,
         0,
         1,
         'ACTIVE',
@@ -97,11 +97,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20201,
+        13201,
         'Chain mail',
         '${simpleFormatting}',
         '${imageUrl}',
-        20201,
+        13201,
         0,
         1,
         'ACTIVE',
@@ -109,11 +109,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20202,
+        13202,
         'Helmet',
         '${simpleFormatting}',
         '${imageUrl}',
-        20202,
+        13202,
         0,
         1,
         'ACTIVE',
@@ -121,11 +121,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20203,
+        13203,
         'Gloves',
         '${simpleFormatting}',
         '${imageUrl}',
-        20203,
+        13203,
         0,
         1,
         'ACTIVE',
@@ -133,11 +133,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20204,
+        13204,
         'Boots',
         '${simpleFormatting}',
         '${imageUrl}',
-        20204,
+        13204,
         0,
         1,
         'ACTIVE',
@@ -145,11 +145,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20205,
+        13205,
         'Necklace',
         '${simpleFormatting}',
         '${imageUrl}',
-        20205,
+        13205,
         0,
         1,
         'ACTIVE',
@@ -157,11 +157,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20206,
+        13206,
         'Gold Ring',
         '${simpleFormatting}',
         '${imageUrl}',
-        20206,
+        13206,
         0,
         1,
         'ACTIVE',
@@ -169,11 +169,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20207,
+        13207,
         'Silver Ring',
         '${simpleFormatting}',
         '${imageUrl}',
-        20207,
+        13207,
         0,
         1,
         'ACTIVE',
@@ -181,11 +181,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20208,
+        13208,
         'Yellow pants',
         '${simpleFormatting}',
         '${imageUrl}',
-        20208,
+        13208,
         0,
         1,
         'ACTIVE',
@@ -193,11 +193,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20301,
+        13301,
         'Shield wall',
         '${simpleFormatting}',
         '${imageUrl}',
-        20301,
+        13301,
         0,
         1,
         'ACTIVE',
@@ -205,11 +205,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20302,
+        13302,
         'Back stub',
         '${simpleFormatting}',
         '${imageUrl}',
-        20302,
+        13302,
         0,
         1,
         'ACTIVE',
@@ -217,11 +217,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20303,
+        13303,
         'Fireball',
         '${simpleFormatting}',
         '${imageUrl}',
-        20303,
+        13303,
         0,
         1,
         'ACTIVE',
@@ -229,11 +229,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20401,
+        13401,
         'Physical resistance',
         '${simpleFormatting}',
         '${imageUrl}',
-        20401,
+        13401,
         0,
         1,
         'ACTIVE',
@@ -241,11 +241,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20402,
+        13402,
         'Magic resistance',
         '${simpleFormatting}',
         '${imageUrl}',
-        20402,
+        13402,
         0,
         1,
         'ACTIVE',
@@ -253,11 +253,11 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20403,
+        13403,
         'Ward save',
         '${simpleFormatting}',
         '${imageUrl}',
-        20403,
+        13403,
         0,
         1,
         'ACTIVE',

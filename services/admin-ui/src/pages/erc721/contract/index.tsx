@@ -16,9 +16,15 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ContractStatus, Erc721ContractTemplate, IContract, IContractSearchDto } from "@framework/types";
+import {
+  ContractStatus,
+  ContractTemplate,
+  Erc721ContractTemplate,
+  IContract,
+  IContractSearchDto,
+} from "@framework/types";
 
-import { Erc721CollectionEditDialog } from "./edit";
+import { Erc721ContractEditDialog } from "./edit";
 import { Erc721TokenDeployButton } from "../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 import { ContractSearchForm } from "../../../components/forms/contract-search";
@@ -93,7 +99,11 @@ export const Erc721Contract: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(contract)}
-                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    // MODULE:LOOTBOX
+                    contract.contractTemplate === ContractTemplate.LOOTBOX
+                  }
                 >
                   <Delete />
                 </IconButton>
@@ -119,7 +129,7 @@ export const Erc721Contract: FC = () => {
         initialValues={selected}
       />
 
-      <Erc721CollectionEditDialog
+      <Erc721ContractEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

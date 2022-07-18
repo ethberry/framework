@@ -57,12 +57,6 @@ export class CreateClaimTable1563804040410 implements MigrationInterface {
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
-        {
-          columnNames: ["token_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.token`,
-          onDelete: "CASCADE",
-        },
       ],
     });
 

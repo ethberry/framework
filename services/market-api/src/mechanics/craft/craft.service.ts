@@ -6,7 +6,7 @@ import { utils } from "ethers";
 import { ISearchDto, IServerSignature } from "@gemunion/types-collection";
 import { CraftStatus, TokenType } from "@framework/types";
 
-import { ICraftDto } from "./interfaces";
+import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
 import { SignerService } from "../signer/signer.service";
 import { UserEntity } from "../../user/user.entity";
@@ -67,7 +67,7 @@ export class CraftService {
     return this.craftEntityRepository.findOne({ where, ...options });
   }
 
-  public async sign(dto: ICraftDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: ISignCraftDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { craftId } = dto;
     const craftEntity = await this.findOne(
       { id: craftId },

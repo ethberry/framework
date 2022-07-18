@@ -28,13 +28,13 @@ export class SeedStakingRules1654751224210 implements MigrationInterface {
       ) VALUES (
         'ERC20',
         2,
-        10002, -- space credit
+        12002, -- space credit
         '${constants.WeiPerEther.toString()}',
         80101
       ), (
         'ERC721',
         11,
-        20208, -- yellow pants
+        13208, -- yellow pants
         1,
         80102
       );

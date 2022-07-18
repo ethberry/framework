@@ -12,7 +12,7 @@ export class MarketplaceController {
   constructor(private readonly marketplaceService: MarketplaceService) {}
 
   @Post("/sign")
-  public signTemplate(@Body() dto: SignTemplateDto): Promise<IServerSignature> {
+  public sign(@Body() dto: SignTemplateDto): Promise<IServerSignature> {
     return this.marketplaceService.sign(dto);
   }
 }

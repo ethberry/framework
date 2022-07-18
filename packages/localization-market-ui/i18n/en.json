@@ -89,7 +89,6 @@
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
-      "upgrade": "Upgrade",
       "login": "Login",
       "logout": "Logout",
       "next": "Next",
@@ -101,6 +100,7 @@
       "showFilters": "Show filters",
       "signup": "Sign up",
       "submit": "Submit",
+      "upgrade": "Upgrade",
       "upload": "Upload"
     },
     "hints": {
@@ -141,8 +141,6 @@
       "updatedAt": "Updated"
     },
     "placeholders": {
-      "maxPrice": "1",
-      "minPrice": "1",
       "amount": "100",
       "confirm": "******",
       "contractId": "Contract",
@@ -151,7 +149,9 @@
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
       "maxAmount": "100",
+      "maxPrice": "1",
       "minAmount": "0.01",
+      "minPrice": "1",
       "password": "******",
       "query": "Search...",
       "search": "Search...",
@@ -189,10 +189,6 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
-    "claim": {
-      "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "Claim"
-    },
     "assets": {
       "tabs": {
         "heroes": "Heroes",
@@ -203,6 +199,10 @@
         "skills": "Skills"
       },
       "title": "My assets"
+    },
+    "claim": {
+      "sorry": "Sorry, maybe you will get lucky next time",
+      "title": "Claim"
     },
     "craft": {
       "tabs": {
@@ -234,8 +234,8 @@
       "mechanics": {
         "claim": "Claim",
         "craft": "Craft",
-        "lootboxes": "Lootboxes",
         "leaderboard": "Staking Leaderboard",
+        "lootboxes": "Lootboxes",
         "reward": "Staking Reward",
         "stake": "Staking Stake",
         "title": "Mechanics",
@@ -260,13 +260,6 @@
       },
       "title": "Dashboard"
     },
-    "lootboxes": {
-      "title": "Lootboxes"
-    },
-    "lootbox": {
-      "price": "Price: {amount}",
-      "title": "Lootbox: {title}"
-    },
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
     },
@@ -279,10 +272,6 @@
     },
     "erc1155-tokens": {
       "title": "ERC1155 Tokens"
-    },
-    "vesting": {
-      "sorry": "Sorry, there is no vesting associated with this wallet.",
-      "title": "ERC20 Vesting"
     },
     "erc721-contract": {
       "title": "ERC721 Contract: {title}"
@@ -344,10 +333,14 @@
       "erc998-new": "New 998 Templates",
       "popular": "Popular items"
     },
+    "lootbox": {
+      "price": "Price: {amount}",
+      "title": "Lootbox: {title}"
+    },
+    "lootboxes": {
+      "title": "Lootboxes"
+    },
     "marketplace": {
-      "lootbox": {
-        "title": "Lootbox"
-      },
       "erc1155": {
         "title": "ERC1155"
       },
@@ -357,11 +350,14 @@
       "erc998": {
         "title": "ERC998"
       },
+      "lootbox": {
+        "title": "Lootbox"
+      },
       "tabs": {
-        "lootbox": "Lootbox",
         "erc1155": "ERC1155",
         "erc721": "ERC721",
-        "erc998": "ERC998"
+        "erc998": "ERC998",
+        "lootbox": "Lootbox"
       },
       "title": "Primary market"
     },
@@ -402,6 +398,10 @@
         "finish": "Finish",
         "startTimestamp": "Start time"
       }
+    },
+    "vesting": {
+      "sorry": "Sorry, there is no vesting associated with this wallet.",
+      "title": "ERC20 Vesting"
     }
   },
   "snackbar": {

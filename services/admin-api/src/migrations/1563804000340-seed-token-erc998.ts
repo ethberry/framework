@@ -18,45 +18,45 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        30101,
+        14101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "30101",
+          [TokenAttributes.TEMPLATE_ID]: "14101",
           [TokenAttributes.RARITY]: "0", // TokenRarity.COMMON
         })}',
         100,
         '1',
         'MINTED',
-        30101,
+        14101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        30102,
+        14102,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "30101",
+          [TokenAttributes.TEMPLATE_ID]: "14101",
           [TokenAttributes.RARITY]: "1", // TokenRarity.UNCOMMON
         })}',
         100,
         '2',
         'MINTED',
-        30101,
+        14101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        30103,
+        14103,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "30101",
+          [TokenAttributes.TEMPLATE_ID]: "14101",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '3',
         'BURNED',
-        30101,
+        14101,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 30103, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 14103, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

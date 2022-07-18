@@ -4,7 +4,7 @@ import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemun
 import { SearchDto } from "@gemunion/collection";
 import { IServerSignature } from "@gemunion/types-collection";
 
-import { CraftDto } from "./dto";
+import { SignCraftDto } from "./dto";
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
 import { UserEntity } from "../../user/user.entity";
@@ -21,7 +21,7 @@ export class CraftController {
   }
 
   @Post("/sign")
-  public sign(@Body() dto: CraftDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+  public sign(@Body() dto: SignCraftDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.craftService.sign(dto, userEntity);
   }
 

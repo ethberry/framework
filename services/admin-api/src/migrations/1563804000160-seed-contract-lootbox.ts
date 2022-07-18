@@ -2,9 +2,9 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns } from "@framework/constants";
+import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
-export class SeedContractLootboxAt1563804000151 implements MigrationInterface {
+export class SeedContractLootboxAt1563804000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const lootboxCollectionAddress = process.env.LOOTBOX_ADDR || wallet;
@@ -26,6 +26,7 @@ export class SeedContractLootboxAt1563804000151 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_template,
+        contract_module,
         created_at,
         updated_at
       ) VALUES (
@@ -35,13 +36,14 @@ export class SeedContractLootboxAt1563804000151 implements MigrationInterface {
         'LOOTBOX',
         '${simpleFormatting}',
         '${imageUrl}',
-        '',
-        '',
-        0,
-        '',
-        'ACTIVE',
         'LOOTBOX',
-        'UNKNOWN',
+        'LOOT721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        'LOOTBOX',
+        'LOOTBOX',
         '${currentDateTime}',
         '${currentDateTime}'
       )

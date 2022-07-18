@@ -1,2 +1,2 @@
-export * from "./lootbox";
+export * from "./sign";
 export * from "./search";

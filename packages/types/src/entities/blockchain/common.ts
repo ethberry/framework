@@ -19,3 +19,13 @@ export enum MetadataHash {
   "0x08e1ec9b1b54002f93fd04c8195a36be67f2b6b212f18cc951984bc2411b08ee" = "GRADE",
   "0x29daa7827568eaaa01af346b3b05934ea63f4e23858c064cc599d07420ce3a73" = "RARITY",
 }
+
+export enum ModuleType {
+  CORE = "CORE",
+  VESTING = "VESTING",
+  STAKING = "STAKING",
+  CLAIM = "CLAIM",
+  LOOTBOX = "LOOTBOX",
+  MARKETPLACE = "MARKETPLACE",
+  CRAFT = "CRAFT",
+}

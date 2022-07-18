@@ -12,21 +12,21 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        40101
+        15101
       ), (
-        40102
+        15102
       ), (
-        40103
+        15103
       ), (
-        40104
+        15104
       ), (
-        40105
+        15105
       ), (
-        40201
+        15201
       ), (
-        40202
+        15202
       ), (
-        40203
+        15203
       );
     `);
 
@@ -44,11 +44,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        40101,
+        15101,
         'Gold',
         '${simpleFormatting}',
         '${imageUrl}',
-        40101,
+        15101,
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
@@ -56,11 +56,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40102,
+        15102,
         'Wood',
         '${simpleFormatting}',
         '${imageUrl}',
-        40102,
+        15102,
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
@@ -68,11 +68,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40103,
+        15103,
         'Iron',
         '${simpleFormatting}',
         '${imageUrl}',
-        40103,
+        15103,
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
@@ -80,11 +80,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40104,
+        15104,
         'Wood log',
         '${simpleFormatting}',
         '${imageUrl}',
-        40104,
+        15104,
         0,
        '0',
         'ACTIVE',
@@ -92,11 +92,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40105,
+        15105,
         'Iron ingot',
         '${simpleFormatting}',
         '${imageUrl}',
-        40105,
+        15105,
         0,
         '0',
         'ACTIVE',
@@ -104,11 +104,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40201,
+        15201,
         'Healing potion',
         '${simpleFormatting}',
         '${imageUrl}',
-        40201,
+        15201,
         0,
         '0',
         'ACTIVE',
@@ -116,11 +116,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40202,
+        15202,
         'Mana potion',
         '${simpleFormatting}',
         '${imageUrl}',
-        40202,
+        15202,
         0,
         '0',
         'ACTIVE',
@@ -128,11 +128,11 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40203,
+        15203,
         'Antidote',
         '${simpleFormatting}',
         '${imageUrl}',
-        40203,
+        15203,
         0,
         '0',
         'ACTIVE',
@@ -142,7 +142,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 40203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 15203, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

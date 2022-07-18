@@ -18,78 +18,78 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        20101,
+        13101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "20101",
+          [TokenAttributes.TEMPLATE_ID]: "13101",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '1',
         'MINTED',
-        20101,
+        13101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20102,
+        13102,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "20102",
+          [TokenAttributes.TEMPLATE_ID]: "13102",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '2',
         'MINTED',
-        20102,
+        13102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20103,
+        13103,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "20103",
+          [TokenAttributes.TEMPLATE_ID]: "13103",
           [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
         100,
         '3',
         'MINTED',
-        20103,
+        13103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20201,
+        13201,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "20201",
+          [TokenAttributes.TEMPLATE_ID]: "13201",
         })}',
         100,
         '1',
         'MINTED',
-        20201,
+        13201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20202,
+        13202,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "20202",
+          [TokenAttributes.TEMPLATE_ID]: "13202",
         })}',
         100,
         '2',
         'MINTED',
-        20202,
+        13202,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        20203,
+        13203,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "20203",
+          [TokenAttributes.TEMPLATE_ID]: "13203",
         })}',
         100,
         '3',
         'MINTED',
-        20203,
+        13203,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 20203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 13203, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

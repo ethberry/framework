@@ -1,11 +1,10 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
-import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
 import { ILootbox, LootboxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { AssetEntity } from "../asset/asset.entity";
 
 @Entity({ schema: ns, name: "lootbox" })
@@ -13,7 +12,6 @@ export class LootboxEntity extends SearchableEntity implements ILootbox {
   @Column({ type: "varchar" })
   public imageUrl: string;
 
-  @Exclude()
   @Column({ type: "int" })
   public priceId: number;
 
@@ -31,6 +29,9 @@ export class LootboxEntity extends SearchableEntity implements ILootbox {
   })
   public lootboxStatus: LootboxStatus;
 
-  @OneToOne(_type => TokenEntity)
-  public token: TokenEntity;
+  @Column({ type: "int" })
+  public templateId: number;
+
+  @OneToOne(_type => TemplateEntity)
+  public template: TemplateEntity;
 }

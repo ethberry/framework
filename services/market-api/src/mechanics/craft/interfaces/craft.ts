@@ -1,3 +1,3 @@
-export interface ICraftDto {
+export interface ISignCraftDto {
   craftId: number;
 }

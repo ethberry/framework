@@ -22,7 +22,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        10001,
+        12001,
         'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -34,7 +34,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10002,
+        12002,
         'Space Credits',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -46,7 +46,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10003,
+        12003,
         'Inactive token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -58,7 +58,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10004,
+        12004,
         'New token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -70,7 +70,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10005,
+        12005,
         'Black list token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -82,7 +82,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        10006,
+        12006,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -96,7 +96,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 10006, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 12006, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

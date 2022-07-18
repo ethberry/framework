@@ -42,13 +42,14 @@ import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-see
 import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-contract-erc721";
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
-import { SeedContractLootboxAt1563804000151 } from "./migrations/1563804000151-seed-contract-lootbox";
+import { SeedContractLootboxAt1563804000160 } from "./migrations/1563804000160-seed-contract-lootbox";
 
 import { CreateTemplate1563804000210 } from "./migrations/1563804000210-create-template";
 import { SeedTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
 import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
 import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
+import { SeedTemplateLootboxAt1563804000230 } from "./migrations/1563804000260-seed-template-lootbox";
 
 import { CreateToken1563804000310 } from "./migrations/1563804000310-create-token";
 import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
@@ -163,13 +164,14 @@ const config: PostgresConnectionOptions = {
     SeedContractErc721At1563804000130,
     SeedContractErc998At1563804000140,
     SeedContractErc1155At1563804000150,
-    SeedContractLootboxAt1563804000151,
+    SeedContractLootboxAt1563804000160,
 
     CreateTemplate1563804000210,
     SeedTemplateErc20At1563804000220,
     SeedTemplateErc721At1563804000230,
     SeedTemplateErc998At1563804000240,
     SeedTemplateErc1155At1563804000250,
+    SeedTemplateLootboxAt1563804000230,
 
     CreateToken1563804000310,
     SeedTokenErc20At1563804000320,

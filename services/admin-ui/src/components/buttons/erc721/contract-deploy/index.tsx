@@ -15,7 +15,7 @@ import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC72
 import ERC721GradedSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 // import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
-import { Erc721CollectionDeployDialog } from "./deploy-dialog";
+import { Erc721ContractDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc721TokenTemplate(template: Erc721ContractTemplate) {
   switch (template) {
@@ -84,7 +84,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc721CollectionDeployDialog
+      <Erc721ContractDeployDialog
         onConfirm={handleDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}

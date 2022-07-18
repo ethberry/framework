@@ -18,81 +18,81 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        40101,
+        15101,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        40101,
+        15101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40102,
+        15102,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        40102,
+        15102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40103,
+        15103,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        40103,
+        15103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40104,
+        15104,
         '${defaultJSON}',
         100,
         '4',
         'MINTED',
-        40105,
+        15105,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40105,
+        15105,
         '${defaultJSON}',
         100,
         '5',
         'MINTED',
-        40105,
+        15105,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40201,
+        15201,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        40201,
+        15201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40202,
+        15202,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        40202,
+        15202,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        40203,
+        15203,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        40203,
+        15203,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 40203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 15203, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

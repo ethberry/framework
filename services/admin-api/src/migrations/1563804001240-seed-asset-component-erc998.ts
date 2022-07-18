@@ -15,21 +15,21 @@ export class SeedAssetComponentsErc998At1563804001240 implements MigrationInterf
       ) VALUES (
         'ERC20',
         2,
-        10002, -- space credit
+        12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        30101
+        14101
       ), (
         'ERC20',
         2,
-        10002, -- space credit
+        12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        30102
+        14102
       ), (
         'ERC20',
         2,
-        10002, -- space credit
+        12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        30103
+        14103
       );
     `);
   }

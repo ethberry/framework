@@ -39,6 +39,10 @@ export class CreateLootbox1653616447910 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "template_id",
+          type: "int",
+        },
+        {
           name: "lootbox_status",
           type: `${ns}.lootbox_status_enum`,
           default: "'ACTIVE'",
@@ -63,6 +67,12 @@ export class CreateLootbox1653616447910 implements MigrationInterface {
           columnNames: ["price_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["template_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.template`,
           onDelete: "CASCADE",
         },
       ],

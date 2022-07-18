@@ -29,19 +29,19 @@ export class SeedGrade1657846587010 implements MigrationInterface {
       ) VALUES (
         'NATIVE',
         1,
-        10001, -- ETH
+        12001, -- ETH
         '${constants.WeiPerEther.toString()}',
         90101
       ), (
         'ERC20',
         2,
-        10002, -- space credit
+        12002, -- space credit
         '${constants.WeiPerEther.toString()}',
         90102
       ), (
         'ERC1155',
         31,
-        40101, -- gold
+        15101, -- gold
         '1000',
         90201
       );

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { Erc721ContractTemplate, IContract, IErc721ContractDeployDto } from "@framework/types";
+import { ContractTemplate, Erc721ContractTemplate, IContract, IErc721ContractDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -13,7 +13,7 @@ export interface IErc721CollectionDeployDialogProps {
   onConfirm: (values: Partial<IContract>, form?: any) => Promise<void>;
 }
 
-export const Erc721CollectionDeployDialog: FC<IErc721CollectionDeployDialogProps> = props => {
+export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> = props => {
   const fixedValues: IErc721ContractDeployDto = {
     contractTemplate: Erc721ContractTemplate.SIMPLE,
     name: "",
@@ -30,7 +30,12 @@ export const Erc721CollectionDeployDialog: FC<IErc721CollectionDeployDialogProps
       data-testid="Erc721CollectionDeployDialog"
       {...props}
     >
-      <SelectInput name="contractTemplate" options={Erc721ContractTemplate} />
+      <SelectInput
+        name="contractTemplate"
+        options={Erc721ContractTemplate}
+        // MODULE:LOOTBOX
+        disabledOptions={[ContractTemplate.LOOTBOX]}
+      />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

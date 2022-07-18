@@ -5,7 +5,7 @@ import { BigNumber, utils } from "ethers";
 import { IServerSignature } from "@gemunion/types-collection";
 import { ContractTemplate, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
 
-import { IGradeDto } from "./interfaces";
+import { ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 import { UserEntity } from "../../user/user.entity";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
@@ -28,7 +28,7 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async sign(dto: IGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: ISignGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { tokenId } = dto;
     const tokenEntity = await this.tokenService.findOne(
       { id: tokenId },

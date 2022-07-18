@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ITemplateAutocompleteDto, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplateAutocompleteDto, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
 import { AssetService } from "../../../mechanics/asset/asset.service";
@@ -25,6 +25,11 @@ export class TemplateService {
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+
+    // MODULE:LOOTBOX
+    queryBuilder.andWhere("contract.contractModule != :contractModule", {
+      contractModule: ModuleType.LOOTBOX,
+    });
 
     if (templateStatus) {
       if (templateStatus.length === 1) {
@@ -62,7 +67,7 @@ export class TemplateService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "template.price": "DESC",
+      "template.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

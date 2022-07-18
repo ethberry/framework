@@ -49,11 +49,6 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
-    "gradeStrategy": {
-      "FLAT": "Flat",
-      "LINEAR": "Linear",
-      "EXPONENTIAL": "Exponential"
-    },
     "contractStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
@@ -65,26 +60,32 @@
       "EXTERNAL": "External",
       "GRADED": "Graded",
       "LINEAR": "Linear",
+      "LOOTBOX": "Lootbox",
       "NATIVE": "Native",
       "RANDOM": "Random",
       "SIMPLE": "Simple"
-    },
-    "lootboxStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
-    "emailType": {
-      "DUMMY": "Test email"
     },
     "craftStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
+    "emailType": {
+      "DUMMY": "Test email"
+    },
+    "gradeStrategy": {
+      "EXPONENTIAL": "Exponential",
+      "FLAT": "Flat",
+      "LINEAR": "Linear"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "lootboxStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "pageStatus": {
       "ACTIVE": "Active",
@@ -192,20 +193,16 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "gradeStrategy": "Grade strategy",
-      "growthRate": "Growth rate",
-      "RARITY": "Rarity",
-      "deposit": "Deposit",
-      "reward": "Reward",
       "DUMMY": "Dummy",
+      "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
-      "claimStatus": "Status",
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "beneficiary": "Beneficiary",
       "cap": "Cap",
+      "claimStatus": "Status",
       "collection": "Collection",
       "collectionType": "Type",
       "comment": "Comment",
@@ -215,22 +212,25 @@
       "contractIds": "Contracts",
       "contractStatus": "Status",
       "contractTemplate": "Template",
+      "craftStatus": "Status",
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "dateTime": "Date time",
       "decimals": "Decimals",
+      "deposit": "Deposit",
       "description": "Description",
       "displayName": "Display name",
-      "lootboxStatus": "Status",
       "duration": "Duration",
       "email": "Email",
-      "craftStatus": "Status",
+      "gradeStrategy": "Grade strategy",
+      "growthRate": "Growth rate",
       "imageUrl": "Avatar",
       "ingredients": "Ingredients",
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "lootboxStatus": "Status",
       "name": "Name",
       "owner": "Owner",
       "pageStatus": "Status",
@@ -241,6 +241,7 @@
       "rarity": "Rarity",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
+      "reward": "Reward",
       "role": "Role",
       "royalty": "Royalty",
       "slug": "Slug",
@@ -268,7 +269,6 @@
       "year": "Year"
     },
     "placeholders": {
-      "growthRate": "2",
       "DUMMY": "Dummy",
       "account": "0x...",
       "address": "0x...",
@@ -292,6 +292,7 @@
       "displayName": "Gordon Freeman",
       "duration": "30",
       "email": "me@google.com",
+      "growthRate": "2",
       "item": "Bottle of water",
       "name": "Pink dust",
       "number": "100500",
@@ -349,12 +350,18 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "blockchain": {
+      "title": "Blockchain Settings"
+    },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
     },
-    "blockchain": {
-      "title": "Blockchain Settings"
+    "craft": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Craft recipes",
+      "upload": "Upload rule"
     },
     "dashboard": {
       "admin": {
@@ -387,24 +394,18 @@
       },
       "mechanics": {
         "claims": "Claims",
-        "lootboxes": "Lootboxes",
         "craft": "Craft",
+        "grade": "Grade",
+        "lootboxes": "Lootboxes",
         "stakes": "Stakes",
         "staking-rules": "Staking Rules",
         "title": "Mechanics",
-        "vesting": "Vesting",
-        "grade": "Grade"
+        "vesting": "Vesting"
       },
       "title": "Dashboard"
     },
-    "lootboxes": {
-      "title": "Lootboxes"
-    },
     "emails": {
       "title": "Emails"
-    },
-    "grades": {
-      "title": "Grade Rules"
     },
     "erc1155-contracts": {
       "title": "ERC1155 Contracts"
@@ -448,15 +449,15 @@
         "title": "Title"
       }
     },
-    "craft": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Craft recipes",
-      "upload": "Upload rule"
+    "grades": {
+      "title": "Grade Rules"
     },
     "guest": {
       "forgotPassword": "Forgot password",
       "login": "Login"
+    },
+    "lootboxes": {
+      "title": "Lootboxes"
     },
     "pages": {
       "title": "Pages"

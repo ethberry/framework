@@ -8,11 +8,11 @@ import { ClaimSearchDto } from "./dto";
 @Public()
 @Controller("/claim")
 export class ClaimController {
-  constructor(private readonly erc998ClaimService: ClaimService) {}
+  constructor(private readonly claimService: ClaimService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: ClaimSearchDto): Promise<[Array<ClaimEntity>, number]> {
-    return this.erc998ClaimService.search(dto);
+    return this.claimService.search(dto);
   }
 }

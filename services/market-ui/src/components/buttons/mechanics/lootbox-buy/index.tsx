@@ -39,8 +39,8 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
           utils.arrayify(sign.nonce),
           [
             {
-              tokenType: Object.keys(TokenType).indexOf(lootbox.item.components[0].tokenType),
-              token: lootbox.item.components[0].contract?.address,
+              tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+              token: process.env.LOOTBOX_ADDR,
               tokenId: lootbox.id,
               amount: 1,
             },

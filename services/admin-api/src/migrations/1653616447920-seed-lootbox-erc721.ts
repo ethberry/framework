@@ -31,26 +31,26 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        2,
-        20101, -- sword
+        11,
+        13101, -- sword
         '1',
         60101
       ), (
         'ERC20',
         2,
-        10002, -- space credit
+        12002, -- space credit
         '${constants.WeiPerEther.toString()}',
         60102
       ), (
         'ERC998',
-        2,
-        30101, -- warrior
+        21,
+        14101, -- warrior
         '1',
         60201
       ), (
         'ERC20',
         2,
-        10002, -- space credit
+        12002, -- space credit
         '${constants.WeiPerEther.toString()}',
         60202
       );
@@ -63,6 +63,7 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         image_url,
         item_id,
         price_id,
+        template_id,
         lootbox_status,
         created_at,
         updated_at
@@ -72,6 +73,7 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         '${imageUrl}',
         60101,
         60102,
+        16101,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -81,6 +83,7 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         '${imageUrl}',
         60201,
         60202,
+        16102,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

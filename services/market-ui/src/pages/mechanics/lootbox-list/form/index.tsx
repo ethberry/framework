@@ -2,7 +2,6 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { ILootboxSearchDto } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
@@ -18,12 +17,12 @@ interface ILootboxSearchFormProps {
 }
 
 export const LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, embedded } = props;
+  const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
 
-  const { query, contractIds, minPrice, maxPrice } = initialValues;
-  const fixedValues = { query, contractIds, minPrice, maxPrice };
+  const { query, minPrice, maxPrice } = initialValues;
+  const fixedValues = { query, minPrice, maxPrice };
 
   return (
     <FormWrapper
@@ -47,11 +46,6 @@ export const LootboxSearchForm: FC<ILootboxSearchFormProps> = props => {
           <Grid item xs={6}>
             <EthInput name="maxPrice" />
           </Grid>
-          {!embedded ? (
-            <Grid item xs={6}>
-              <EntityInput name="contractIds" controller="contracts" multiple data={{}} />
-            </Grid>
-          ) : null}
         </Grid>
       </Collapse>
       <AutoSave onSubmit={onSubmit} />

@@ -22,7 +22,7 @@ export class LootboxService {
   ) {}
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
-    const { query, lootboxStatus, skip, take, contractIds } = dto;
+    const { query, lootboxStatus, skip, take } = dto;
 
     const queryBuilder = this.lootboxEntityRepository.createQueryBuilder("lootbox");
 
@@ -40,16 +40,6 @@ export class LootboxService {
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-
-    if (contractIds) {
-      if (contractIds.length === 1) {
-        queryBuilder.andWhere("item_contract.id = :contractId", {
-          contractId: contractIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("item_contract.id IN(:...contractIds)", { contractIds });
-      }
-    }
 
     if (lootboxStatus) {
       if (lootboxStatus.length === 1) {

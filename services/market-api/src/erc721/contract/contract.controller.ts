@@ -6,7 +6,7 @@ import { SearchDto } from "@gemunion/collection";
 
 import { Erc721ContractService } from "./contract.service";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
-import { ContractAutocompleteDto } from "../../blockchain/hierarchy/contract/dto/autocomplete";
+import { ContractAutocompleteDto } from "../../blockchain/hierarchy/contract/dto";
 
 @ApiBearerAuth()
 @Controller("/erc721-contracts")

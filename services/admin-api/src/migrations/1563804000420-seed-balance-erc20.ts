@@ -18,19 +18,19 @@ export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
       ) VALUES (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        10001,
+        12001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        10002,
+        12002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        10006,
+        12006,
         '${currentDateTime}',
         '${currentDateTime}'
       );

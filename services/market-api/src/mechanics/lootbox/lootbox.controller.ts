@@ -20,7 +20,7 @@ export class LootboxController {
   }
 
   @Post("/sign")
-  public signLootbox(@Body() dto: SignLootboxDto): Promise<IServerSignature> {
+  public sign(@Body() dto: SignLootboxDto): Promise<IServerSignature> {
     return this.lootboxService.sign(dto);
   }
 

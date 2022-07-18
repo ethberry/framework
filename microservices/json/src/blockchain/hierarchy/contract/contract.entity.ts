@@ -2,7 +2,7 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IContract, TokenType, ContractStatus, ContractTemplate } from "@framework/types";
+import { ContractStatus, ContractTemplate, IContract, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { TemplateEntity } from "../template/template.entity";
 
@@ -43,6 +43,12 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
     enum: ContractTemplate,
   })
   public contractTemplate: ContractTemplate;
+
+  @Column({
+    type: "enum",
+    enum: ModuleType,
+  })
+  public contractModule: ModuleType;
 
   @OneToMany(_type => TemplateEntity, template => template.contract)
   public templates: Array<TemplateEntity>;

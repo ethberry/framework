@@ -21,13 +21,6 @@ export class LootboxService {
     private readonly assetService: AssetService,
   ) {}
 
-  public findOne(
-    where: FindOptionsWhere<LootboxEntity>,
-    options?: FindOneOptions<LootboxEntity>,
-  ): Promise<LootboxEntity | null> {
-    return this.lootboxEntityRepository.findOne({ where, ...options });
-  }
-
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
     const { query, lootboxStatus, skip, take, contractIds } = dto;
 
@@ -86,16 +79,61 @@ export class LootboxService {
     });
   }
 
-  public async update(where: FindOptionsWhere<LootboxEntity>, dto: Partial<ILootboxUpdateDto>): Promise<LootboxEntity> {
-    const templateEntity = await this.findOne(where);
+  public findOne(
+    where: FindOptionsWhere<LootboxEntity>,
+    options?: FindOneOptions<LootboxEntity>,
+  ): Promise<LootboxEntity | null> {
+    return this.lootboxEntityRepository.findOne({ where, ...options });
+  }
 
-    if (!templateEntity) {
+  public findOneWithPrice(where: FindOptionsWhere<LootboxEntity>): Promise<LootboxEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "lootbox",
+        leftJoinAndSelect: {
+          item: "lootbox.item",
+          item_components: "item.components",
+          item_contract: "item_components.contract",
+          item_template: "item_components.template",
+          price: "lootbox.price",
+          price_components: "price.components",
+          price_contract: "price_components.contract",
+          price_template: "price_components.template",
+        },
+      },
+    });
+  }
+
+  public async update(where: FindOptionsWhere<LootboxEntity>, dto: Partial<ILootboxUpdateDto>): Promise<LootboxEntity> {
+    const { price, item, ...rest } = dto;
+
+    const lootboxEntity = await this.findOne(where, {
+      join: {
+        alias: "lootbox",
+        leftJoinAndSelect: {
+          price: "lootbox.price",
+          price_components: "price.components",
+          item: "lootbox.item",
+          item_components: "item.components",
+        },
+      },
+    });
+
+    if (!lootboxEntity) {
       throw new NotFoundException("lootboxNotFound");
     }
 
-    Object.assign(templateEntity, dto);
+    Object.assign(lootboxEntity, rest);
 
-    return templateEntity.save();
+    if (price) {
+      await this.assetService.update(lootboxEntity.price, price);
+    }
+
+    if (item) {
+      await this.assetService.update(lootboxEntity.item, item);
+    }
+
+    return lootboxEntity.save();
   }
 
   public async create(dto: ILootboxCreateDto): Promise<LootboxEntity> {
@@ -117,19 +155,17 @@ export class LootboxService {
     const contractEntity = await this.contractService.findOne({ address: process.env.LOOTBOX_ADDR });
 
     if (!contractEntity) {
-      throw new NotFoundException("lootboxContractNotFound");
+      throw new NotFoundException("lootboxNotFound");
     }
 
-    const lootboxTemplate = {
+    await this.templateService.create({
       title: dto.title,
       description: dto.description,
       price: priceEntity,
       amount: "0",
       imageUrl: dto.imageUrl,
       contractId: contractEntity.id,
-    };
-
-    await this.templateService.create(lootboxTemplate);
+    });
 
     return this.lootboxEntityRepository.create(dto).save();
   }

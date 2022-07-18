@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
+export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -11,11 +11,9 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        14101
+        16101
       ), (
-        14102
-      ), (
-        14103
+        16102
       );
     `);
 
@@ -33,45 +31,33 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        14101,
-        'Warrior',
+        16101,
+        'Sword Lootbox',
         '${simpleFormatting}',
         '${imageUrl}',
-        14101,
+        13101,
         0,
-        1,
+        4,
         'ACTIVE',
-        21,
+        41,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        14102,
-        'Rouge',
+        16102,
+        'Warrior Lootbox',
         '${simpleFormatting}',
         '${imageUrl}',
-        14102,
+        13102,
         0,
         1,
         'ACTIVE',
-        21,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        14103,
-        'Mage',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        14103,
-        0,
-        1,
-        'ACTIVE',
-        21,
+        41,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 14103, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 16102, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

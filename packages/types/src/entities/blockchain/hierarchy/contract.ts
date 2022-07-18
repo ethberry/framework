@@ -3,7 +3,7 @@ import { IDeployable, ISearchable } from "@gemunion/types-collection";
 import { IContractHistory } from "../contract-history";
 
 import { ITemplate } from "./template";
-import { TokenType } from "../common";
+import { ModuleType, TokenType } from "../common";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -22,6 +22,8 @@ export enum Erc721ContractTemplate {
   "SIMPLE" = "SIMPLE", // ACBER
   "GRADED" = "GRADED", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
+  // MODULE:LOOTBOX
+  "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack
 }
 
 export enum Erc998ContractTemplate {
@@ -43,6 +45,8 @@ export enum ContractTemplate {
   "NATIVE" = "NATIVE",
   "GRADED" = "GRADED",
   "RANDOM" = "RANDOM",
+  // MODULE:LOOTBOX
+  "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack
 }
 
 export interface IContract extends IDeployable, ISearchable {
@@ -55,6 +59,7 @@ export interface IContract extends IDeployable, ISearchable {
   contractStatus: ContractStatus;
   contractType: TokenType;
   contractTemplate: ContractTemplate;
+  contractModule: ModuleType;
   templates: Array<ITemplate>;
   history?: Array<IContractHistory>;
 }

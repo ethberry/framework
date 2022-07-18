@@ -13,16 +13,13 @@ export class CreateContract1563804000110 implements MigrationInterface {
     `);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.contract_type_enum AS ENUM (
-        'UNKNOWN',
-        'SYSTEM',
-        'AIRDROP',
-        'LOOTBOX',
-        'EXCHANGE',
-        'STAKING',
-        'METADATA'
+      CREATE TYPE ${ns}.contract_module_enum AS ENUM (
+        'CORE'
       );
     `);
+
+    // MODULE:LOOTBOX
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOOTBOX';`);
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_template_enum AS ENUM (
@@ -36,7 +33,8 @@ export class CreateContract1563804000110 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`ALTER TYPE ${ns}.token_type_enum ADD VALUE 'LOOTBOX';`);
+    // MODULE:LOOTBOX
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_template_enum ADD VALUE 'LOOTBOX';`);
 
     const table = new Table({
       name: `${ns}.contract`,
@@ -102,6 +100,11 @@ export class CreateContract1563804000110 implements MigrationInterface {
           name: "contract_template",
           type: `${ns}.contract_template_enum`,
           default: "'UNKNOWN'",
+        },
+        {
+          name: "contract_module",
+          type: `${ns}.contract_module_enum`,
+          default: "'CORE'",
         },
         {
           name: "created_at",

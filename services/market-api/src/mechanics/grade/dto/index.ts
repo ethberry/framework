@@ -1,1 +1,1 @@
-export * from "./grade";
+export * from "./sign";

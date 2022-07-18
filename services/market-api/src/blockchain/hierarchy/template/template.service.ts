@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { TemplateEntity } from "./template.entity";
-import { ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 @Injectable()
 export class TemplateService {
@@ -31,6 +31,11 @@ export class TemplateService {
 
     queryBuilder.andWhere("contract.contractType = :contractType", {
       contractType,
+    });
+
+    // MODULE:LOOTBOX
+    queryBuilder.andWhere("contract.contractModule != :contractModule", {
+      contractModule: ModuleType.LOOTBOX,
     });
 
     queryBuilder.andWhere("template.templateStatus = :templateStatus", {

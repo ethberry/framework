@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
-import { ContractStatus, IContractAutocompleteDto, TokenType } from "@framework/types";
+import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
@@ -24,6 +24,11 @@ export class ContractService {
     queryBuilder.select();
 
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+
+    // MODULE:LOOTBOX
+    queryBuilder.andWhere("contract.contractModule != :contractModule", {
+      contractModule: ModuleType.LOOTBOX,
+    });
 
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", { contractStatus: ContractStatus.ACTIVE });
 

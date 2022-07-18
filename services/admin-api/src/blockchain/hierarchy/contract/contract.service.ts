@@ -69,7 +69,7 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractTemplate = [], contractType = [] } = dto;
+    const { contractStatus = [], contractTemplate = [], contractType = [], contractModule = [] } = dto;
 
     const where = {};
 
@@ -88,6 +88,12 @@ export class ContractService {
     if (contractTemplate.length) {
       Object.assign(where, {
         contractTemplate: In(contractTemplate),
+      });
+    }
+
+    if (contractModule.length) {
+      Object.assign(where, {
+        contractModule: In(contractModule),
       });
     }
 
