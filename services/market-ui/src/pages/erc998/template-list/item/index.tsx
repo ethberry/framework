@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { ITemplate } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
@@ -20,11 +20,9 @@ export const Erc998TemplateItem: FC<ITemplateItemProps> = props => {
   return (
     <Card>
       <CardActionArea component={RouterLink} to={`/erc998-templates/${template.id}`}>
+        <CardHeader title={template.title} />
         <CardMedia className={classes.media} image={template.imageUrl} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {template.title}
-          </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={template.description} />
           </Typography>

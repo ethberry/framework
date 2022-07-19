@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { IContract } from "@framework/types";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
 
@@ -17,11 +18,12 @@ export const ContractItem: FC<ITokenItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/erc998-contract/${contract.id}`}>
+      <CardActionArea component={RouterLink} to={`/erc998-contracts/${contract.id}`}>
+        <CardHeader title={contract.title} />
         <CardMedia className={classes.media} image={contract.imageUrl} title={`${contract.title}`} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {contract.title}
+          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+            <RichTextDisplay data={contract.description} />
           </Typography>
         </CardContent>
       </CardActionArea>

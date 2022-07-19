@@ -25,7 +25,7 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
   const handleBuy = useMetamask(() => {
     return api
       .fetchJson({
-        url: "/marketplace/lootbox",
+        url: "/lootboxes/sign",
         method: "POST",
         data: {
           lootboxId: lootbox.id,

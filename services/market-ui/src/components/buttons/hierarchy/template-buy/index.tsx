@@ -25,7 +25,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const handleBuy = useMetamask(() => {
     return api
       .fetchJson({
-        url: "/marketplace/template",
+        url: "/marketplace/sign",
         method: "POST",
         data: {
           templateId: template.id,

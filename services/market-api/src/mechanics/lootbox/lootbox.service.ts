@@ -106,11 +106,11 @@ export class LootboxService {
       join: {
         alias: "lootbox",
         leftJoinAndSelect: {
-          contract: "lootbox.contract",
           price: "lootbox.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
-          price_token: "price_components.token",
+          price_template: "price_components.template",
+          price_tokens: "price_template.tokens",
         },
       },
     });

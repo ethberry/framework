@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { IToken, TokenAttributes } from "@framework/types";
+import { IToken, TokenAttributes, TokenRarity } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -12,9 +12,9 @@ interface IRarityBadgeProps {
 export const RarityBadge: FC<IRarityBadgeProps> = props => {
   const { token } = props;
 
-  const classes = useStyles(token);
+  const rarity = Object.values(TokenRarity)[token.attributes[TokenAttributes.RARITY]];
 
-  const rarity = token.attributes[TokenAttributes.RARITY];
+  const classes = useStyles({ rarity });
 
   if (!rarity) {
     return null;

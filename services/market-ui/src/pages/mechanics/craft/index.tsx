@@ -7,7 +7,7 @@ import { ICraft } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Recipe } from "./item";
+import { CraftItem } from "./item";
 
 export const CraftList: FC = () => {
   const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<ICraft, ISearchDto>({
@@ -29,7 +29,7 @@ export const CraftList: FC = () => {
         <Grid container spacing={2}>
           {rows.map(recipe => (
             <Grid item lg={4} sm={6} xs={12} key={recipe.id}>
-              <Recipe recipe={recipe} />
+              <CraftItem craft={recipe} />
             </Grid>
           ))}
         </Grid>

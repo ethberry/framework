@@ -7,7 +7,7 @@ export const useStyles = makeStyles<Theme>(
   () => ({
     root: {
       position: "absolute",
-      top: 10,
+      top: 70,
       left: 10,
       borderRadius: 4,
       paddingLeft: 5,

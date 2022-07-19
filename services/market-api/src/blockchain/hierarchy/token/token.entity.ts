@@ -6,6 +6,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
+import { ContractHistoryEntity } from "../../contract-history/contract-history.entity";
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
@@ -33,4 +34,7 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
 
   @OneToMany(_type => BalanceEntity, balance => balance.token)
   public balance: Array<BalanceEntity>;
+
+  @OneToMany(_type => ContractHistoryEntity, history => history.token)
+  public history: Array<ContractHistoryEntity>;
 }
