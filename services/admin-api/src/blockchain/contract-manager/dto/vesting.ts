@@ -1,14 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsEthereumAddress, IsInt, IsISO8601, IsString } from "class-validator";
 
-import { IVestingDeployDto, VestingTemplate } from "@framework/types";
+import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
 
 export class VestingDeployDto implements IVestingDeployDto {
   @ApiProperty({
-    enum: VestingTemplate,
+    enum: VestingContractTemplate,
   })
-  @IsEnum(VestingTemplate, { message: "badInput" })
-  public contractTemplate: VestingTemplate;
+  @IsEnum(VestingContractTemplate, { message: "badInput" })
+  public contractTemplate: VestingContractTemplate;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

@@ -37,7 +37,7 @@ export const AccessListUnBlacklistDialog: FC<IBlacklistRemoveDialogProps> = prop
 
   const metaUnBlacklist = useMetamask((values: IAccessList) => {
     const contract = new Contract(data.address, ERC20BlackListSol.abi, provider?.getSigner());
-    return contract.unBlacklist(values.address) as Promise<void>;
+    return contract.unBlacklist(values.account) as Promise<void>;
   });
 
   const handleUnBlacklist = (values: IAccessList): (() => Promise<void>) => {

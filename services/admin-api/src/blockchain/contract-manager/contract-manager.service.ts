@@ -74,14 +74,14 @@ export class ContractManagerService {
     where: FindOptionsWhere<ContractManagerEntity>,
     dto: Partial<IContractManagerCreateDto>,
   ): Promise<ContractManagerEntity> {
-    const ContractManagerEntity = await this.findOne(where);
+    const contractManagerEntity = await this.findOne(where);
 
-    if (!ContractManagerEntity) {
+    if (!contractManagerEntity) {
       throw new NotFoundException("entityNotFound");
     }
 
-    Object.assign(ContractManagerEntity, { dto });
+    Object.assign(contractManagerEntity, { dto });
 
-    return ContractManagerEntity.save();
+    return contractManagerEntity.save();
   }
 }

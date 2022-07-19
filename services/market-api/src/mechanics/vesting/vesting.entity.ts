@@ -1,7 +1,7 @@
 import { Column, Entity } from "typeorm";
 
 import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IVesting, VestingTemplate } from "@framework/types";
+import { IVesting, VestingContractTemplate } from "@framework/types";
 import { ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "vesting" })
@@ -20,7 +20,7 @@ export class VestingEntity extends DeployableEntity implements IVesting {
 
   @Column({
     type: "enum",
-    enum: VestingTemplate,
+    enum: VestingContractTemplate,
   })
-  public contractTemplate: VestingTemplate;
+  public contractTemplate: VestingContractTemplate;
 }

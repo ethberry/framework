@@ -24,13 +24,13 @@ import { ContractManagerService } from "./contract-manager.service";
 import {
   ContractManagerCreateDto,
   ContractManagerSearchDto,
-  Erc1155TokenDeployDto,
-  Erc20TokenDeployDto,
-  Erc721TokenDeployDto,
-  Erc998TokenDeployDto,
+  ContractManagerUpdateDto,
+  Erc1155ContractDeployDto,
+  Erc20ContractDeployDto,
+  Erc721ContractDeployDto,
+  Erc998ContractDeployDto,
   VestingDeployDto,
 } from "./dto";
-import { IContractManagerUpdateDto } from "./interfaces";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
@@ -54,7 +54,7 @@ export class ContractManagerController {
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() dto: IContractManagerUpdateDto,
+    @Body() dto: ContractManagerUpdateDto,
   ): Promise<ContractManagerEntity | null> {
     return this.contractManagerService.update({ id }, dto);
   }
@@ -73,22 +73,22 @@ export class ContractManagerController {
   }
 
   @Post("/erc20-token")
-  public erc20Token(@Body() dto: Erc20TokenDeployDto): Promise<IServerSignature> {
+  public erc20Token(@Body() dto: Erc20ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc20Token(dto);
   }
 
   @Post("/erc721-token")
-  public erc721Token(@Body() dto: Erc721TokenDeployDto): Promise<IServerSignature> {
+  public erc721Token(@Body() dto: Erc721ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc721Token(dto);
   }
 
   @Post("/erc998-token")
-  public erc998Token(@Body() dto: Erc998TokenDeployDto): Promise<IServerSignature> {
+  public erc998Token(@Body() dto: Erc998ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc998Token(dto);
   }
 
   @Post("/erc1155-token")
-  public erc1155Token(@Body() dto: Erc1155TokenDeployDto): Promise<IServerSignature> {
+  public erc1155Token(@Body() dto: Erc1155ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc1155Token(dto);
   }
 

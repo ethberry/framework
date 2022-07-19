@@ -87,15 +87,18 @@ export const Erc1155Template: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
+          {rows.map((template, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>{token.title}</ListItemText>
-              <ListItemText>{token.contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
+              <ListItemText>{template.contract?.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(token)}>
+                <IconButton onClick={handleEdit(template)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(token)} disabled={token.templateStatus === TemplateStatus.INACTIVE}>
+                <IconButton
+                  onClick={handleDelete(template)}
+                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                >
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>

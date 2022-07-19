@@ -19,7 +19,7 @@ import {
   IContractManagerVestingDeployed,
   TContractManagerEventData,
   TokenType,
-  VestingTemplate,
+  VestingContractTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
@@ -71,7 +71,7 @@ export class ContractManagerServiceEth {
       account: account.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
       duration: ~~duration * 1000, // msec
-      contractTemplate: Object.values(VestingTemplate)[~~templateId],
+      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
       chainId: this.chainId,
     });
 

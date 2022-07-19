@@ -6,17 +6,17 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 import { validationSchema } from "./validation";
 
 export interface IBlacklistDto {
-  address: string;
+  account: string;
 }
 
-export interface IAccessListBlacklistDialogProps {
+export interface IBlacklistAddDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: IBlacklistDto, form: any) => Promise<void>;
   initialValues: IBlacklistDto;
 }
 
-export const AccessListBlacklistDialog: FC<IAccessListBlacklistDialogProps> = props => {
+export const AccessListBlacklistDialog: FC<IBlacklistAddDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (
@@ -27,7 +27,7 @@ export const AccessListBlacklistDialog: FC<IAccessListBlacklistDialogProps> = pr
       data-testid="AccessListBlacklistDialog"
       {...rest}
     >
-      <TextInput name="address" />
+      <TextInput name="account" />
     </FormDialog>
   );
 };

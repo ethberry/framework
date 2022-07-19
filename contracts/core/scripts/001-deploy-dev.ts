@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 
 import { royalty, baseTokenURI } from "../test/constants";
-import { wallet } from "@gemunion/constants";
+import { wallet, wallets } from "@gemunion/constants";
 
 async function deploySystem() {
   const vestFactory = await ethers.getContractFactory("ContractManager");
@@ -26,9 +26,12 @@ async function deployERC20() {
   const coinNewInstance = await coinNewFactory.deploy("Inactive token", "OFF20", 1000000000);
   console.info(`ERC20_NEW_ADDR=${coinNewInstance.address.toLowerCase()}`);
 
-  const coinbFactory = await ethers.getContractFactory("ERC20BlackList");
-  const coinbInstance = await coinbFactory.deploy("Black list matters", "BLM20", 1000000000);
-  console.info(`ERC20_BLACKLIST_ADDR=${coinbInstance.address.toLowerCase()}`);
+  const coinBlackFactory = await ethers.getContractFactory("ERC20BlackList");
+  const coinBlackInstance = await coinBlackFactory.deploy("Black list matters", "BLM20", 1000000000);
+  console.info(`ERC20_BLACKLIST_ADDR=${coinBlackInstance.address.toLowerCase()}`);
+
+  await coinBlackInstance.blacklist(wallets[1]);
+  await coinBlackInstance.blacklist(wallets[2]);
 
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   const usdtInstance = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);

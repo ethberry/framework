@@ -1,7 +1,7 @@
-import { VestingTemplate } from "../../../entities";
+import { VestingContractTemplate } from "../../../entities";
 
 export interface IVestingDeployDto {
-  contractTemplate: VestingTemplate;
+  contractTemplate: VestingContractTemplate;
   account: string;
   startTimestamp: string;
   duration: number;

@@ -1,7 +1,7 @@
 import { ISearchDto } from "@gemunion/types-collection";
 
-import { VestingTemplate } from "../../../entities";
+import { VestingContractTemplate } from "../../../entities";
 
 export interface IVestingSearchDto extends ISearchDto {
-  contractTemplate: Array<VestingTemplate>;
+  contractTemplate: Array<VestingContractTemplate>;
 }

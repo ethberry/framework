@@ -91,7 +91,8 @@ import { SeedContractManager1652962207610 } from "./migrations/1652962207610-see
 import { CreateAccessControl1653616447230 } from "./migrations/1653616447230-create-access-control";
 import { CreateAccessControlHistory1653616447240 } from "./migrations/1653616447240-create-access-control-history";
 import { CreateAccessList1653616447330 } from "./migrations/1653616447330-create-access-list";
-import { CreateAccessListHistory1653616447340 } from "./migrations/1653616447340-create-access-list-history";
+import { SeedAccessList1653616447340 } from "./migrations/1653616447340-seed-access-list";
+import { CreateAccessListHistory1653616447350 } from "./migrations/1653616447350-create-access-list-history";
 import { CreateSettings1563804000010 } from "./migrations/1563804000010-create-settings";
 import { SeedSettings1563804000020 } from "./migrations/1563804000020-seed-settings";
 import { CreateStakingRules1654751224200 } from "./migrations/1654751224200-create-staking-rules";
@@ -199,7 +200,8 @@ const config: PostgresConnectionOptions = {
     CreateAccessControl1653616447230,
     CreateAccessControlHistory1653616447240,
     CreateAccessList1653616447330,
-    CreateAccessListHistory1653616447340,
+    SeedAccessList1653616447340,
+    CreateAccessListHistory1653616447350,
     CreateContractManager1652962207600,
     SeedContractManager1652962207610,
 

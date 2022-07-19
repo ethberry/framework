@@ -8,7 +8,7 @@ import { Contract, utils } from "ethers";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IVestingDeployDto, VestingTemplate } from "@framework/types";
+import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import LinearVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
@@ -17,13 +17,13 @@ import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mecha
 
 import { VestingDeployDialog } from "./deploy-dialog";
 
-function getBytecodeByVestingTemplate(template: VestingTemplate) {
+function getBytecodeByVestingContractTemplate(template: VestingContractTemplate) {
   switch (template) {
-    case VestingTemplate.LINEAR:
+    case VestingContractTemplate.LINEAR:
       return LinearVestingSol.bytecode;
-    case VestingTemplate.GRADED:
+    case VestingContractTemplate.GRADED:
       return GradedVestingSol.bytecode;
-    case VestingTemplate.CLIFF:
+    case VestingContractTemplate.CLIFF:
       return CliffVestingSol.bytecode;
     default:
       throw new Error("Unknown template");
@@ -59,11 +59,11 @@ export const VestingDeployButton: FC<IVestingButtonProps> = props => {
           );
           return contract.deployVesting(
             nonce,
-            getBytecodeByVestingTemplate(contractTemplate),
+            getBytecodeByVestingContractTemplate(contractTemplate),
             account,
             Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds,
             duration * 60 * 60 * 24, // days in seconds
-            Object.keys(VestingTemplate).indexOf(contractTemplate),
+            Object.keys(VestingContractTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,
             sign.signature,
           ) as Promise<void>;

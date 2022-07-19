@@ -141,7 +141,7 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "vestingTemplate": {
+    "vestingContractTemplate": {
       "CLIFF": "CLIFF",
       "GRADED": "GRADED",
       "LINEAR": "LINEAR"
@@ -264,7 +264,7 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "vestingTemplate": "Template",
+      "VestingContractTemplate": "Template",
       "year": "Year"
     },
     "placeholders": {

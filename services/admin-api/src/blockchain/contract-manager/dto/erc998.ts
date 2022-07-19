@@ -2,16 +2,15 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { Erc721ContractTemplate, IErc721ContractDeployDto } from "@framework/types";
+import { Erc998ContractTemplate, IErc998ContractDeployDto } from "@framework/types";
 
-export class Erc721TokenDeployDto implements IErc721ContractDeployDto {
+export class Erc998ContractDeployDto implements IErc998ContractDeployDto {
   @ApiProperty({
-    enum: Erc721ContractTemplate,
+    enum: Erc998ContractTemplate,
   })
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  @Transform(({ value }) => value as Erc721ContractTemplate)
-  @IsEnum(Erc721ContractTemplate, { message: "badInput" })
-  public contractTemplate: Erc721ContractTemplate;
+  @Transform(({ value }) => value as Erc998ContractTemplate)
+  @IsEnum(Erc998ContractTemplate, { message: "badInput" })
+  public contractTemplate: Erc998ContractTemplate;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

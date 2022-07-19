@@ -4,7 +4,7 @@ import { Transform } from "class-transformer";
 
 import { Erc1155ContractTemplate, IContractDeployDto } from "@framework/types";
 
-export class Erc1155TokenDeployDto implements IContractDeployDto {
+export class Erc1155ContractDeployDto implements IContractDeployDto {
   @ApiProperty({
     enum: Erc1155ContractTemplate,
   })

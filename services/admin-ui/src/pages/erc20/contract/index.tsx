@@ -96,26 +96,29 @@ export const Erc20Contract: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((token, i) => (
+          {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText>{token.title}</ListItemText>
+              <ListItemText>{contract.title}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleEdit(token)}>
+                <IconButton onClick={handleEdit(contract)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(token)} disabled={token.contractStatus === ContractStatus.INACTIVE}>
+                <IconButton
+                  onClick={handleDelete(contract)}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
+                >
                   <Delete />
                 </IconButton>
                 <ContractActionsMenu
-                  contract={token}
+                  contract={contract}
                   actions={[
                     ContractActions.SNAPSHOT,
-                    token.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
-                    token.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
                   ]}
                   disabled={
-                    token.contractTemplate === ContractTemplate.EXTERNAL ||
-                    token.contractTemplate === ContractTemplate.NATIVE
+                    contract.contractTemplate === ContractTemplate.EXTERNAL ||
+                    contract.contractTemplate === ContractTemplate.NATIVE
                   }
                 />
               </ListItemSecondaryAction>

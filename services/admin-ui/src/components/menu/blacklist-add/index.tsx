@@ -31,7 +31,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
 
   const meta = useMetamask((values: IBlacklistDto) => {
     const contract = new Contract(address, ERC20BlackListSol.abi, provider?.getSigner());
-    return contract.blacklist(values.address) as Promise<void>;
+    return contract.blacklist(values.account) as Promise<void>;
   });
 
   const handleBlacklistConfirmed = async (values: IBlacklistDto): Promise<void> => {
@@ -55,7 +55,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
         onConfirm={handleBlacklistConfirmed}
         open={isBlacklistDialogOpen}
         initialValues={{
-          address: "",
+          account: "",
         }}
       />
     </>

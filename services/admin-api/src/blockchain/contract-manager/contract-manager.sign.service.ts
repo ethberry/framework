@@ -14,7 +14,7 @@ import {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   IVestingDeployDto,
-  VestingTemplate,
+  VestingContractTemplate,
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -104,11 +104,11 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByVestingTemplate(contractTemplate),
+        bytecode: this.getBytecodeByVestingContractTemplate(contractTemplate),
         account,
         startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds
         duration: duration * 60 * 60 * 24, // in seconds
-        templateId: Object.keys(VestingTemplate).indexOf(contractTemplate),
+        templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
       },
     );
 
@@ -237,13 +237,13 @@ export class ContractManagerSignService {
     }
   }
 
-  public getBytecodeByVestingTemplate(contractTemplate: VestingTemplate) {
+  public getBytecodeByVestingContractTemplate(contractTemplate: VestingContractTemplate) {
     switch (contractTemplate) {
-      case VestingTemplate.LINEAR:
+      case VestingContractTemplate.LINEAR:
         return LinearVesting.bytecode;
-      case VestingTemplate.GRADED:
+      case VestingContractTemplate.GRADED:
         return GradedVesting.bytecode;
-      case VestingTemplate.CLIFF:
+      case VestingContractTemplate.CLIFF:
         return CliffVesting.bytecode;
       default:
         throw new Error("Unknown template");

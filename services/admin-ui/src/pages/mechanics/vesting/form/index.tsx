@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IVestingSearchDto, VestingTemplate } from "@framework/types";
+import { IVestingSearchDto, VestingContractTemplate } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -38,7 +38,7 @@ export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <SelectInput name="contractTemplate" options={VestingTemplate} multiple />
+            <SelectInput name="contractTemplate" options={VestingContractTemplate} multiple />
           </Grid>
         </Grid>
       </Collapse>
