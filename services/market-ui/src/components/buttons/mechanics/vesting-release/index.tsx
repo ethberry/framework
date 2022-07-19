@@ -21,7 +21,7 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
 
   const metaRelease = useMetamask((vesting: IVesting) => {
     const contract = new Contract(vesting.address, CliffVestingSol.abi, provider?.getSigner());
-    return contract.release(vesting.address) as Promise<void>;
+    return contract["release()"]() as Promise<void>;
   });
 
   const handleRelease = (vesting: IVesting) => {

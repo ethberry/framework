@@ -25,12 +25,12 @@ export class CreateVesting1563804010210 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "beneficiary",
+          name: "account",
           type: "varchar",
         },
         {
           name: "duration",
-          type: "bigint",
+          type: "real",
         },
         {
           name: "start_timestamp",

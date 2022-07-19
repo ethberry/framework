@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, Erc998ContractTemplate, IContract, IContractSearchDto } from "@framework/types";
 
-import { Erc998CollectionEditDialog } from "./edit";
+import { Erc998ContractEditDialog } from "./edit";
 import { Erc998TokenDeployButton } from "../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 import { ContractSearchForm } from "../../../components/forms/contract-search";
@@ -119,7 +119,7 @@ export const Erc998Contract: FC = () => {
         initialValues={selected}
       />
 
-      <Erc998CollectionEditDialog
+      <Erc998ContractEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

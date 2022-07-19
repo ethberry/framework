@@ -391,8 +391,8 @@
       },
       "title": "Staking",
       "view": {
+        "account": "Account",
         "address": "Address",
-        "beneficiary": "Beneficiary",
         "contractTemplate": "Template",
         "duration": "Duration",
         "finish": "Finish",
@@ -401,7 +401,7 @@
     },
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
-      "title": "ERC20 Vesting"
+      "title": "Vesting"
     }
   },
   "snackbar": {

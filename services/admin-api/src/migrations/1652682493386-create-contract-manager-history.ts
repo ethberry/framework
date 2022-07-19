@@ -6,7 +6,7 @@ export class CreateContractManagerHistory1652682493386 implements MigrationInter
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_manager_event_enum AS ENUM (
-        'ERC20VestingDeployed',
+        'VestingDeployed',
         'ERC20TokenDeployed',
         'ERC721TokenDeployed',
         'ERC998TokenDeployed',

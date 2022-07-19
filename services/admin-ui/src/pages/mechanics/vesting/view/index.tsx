@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Link } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { format, formatDistance, parseISO } from "date-fns";
+import { format, formatDistance, parseISO, formatDuration, intervalToDuration } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
+import { networks } from "@gemunion/provider-wallet";
 import { IVesting } from "@framework/types";
 
 export interface IVestingViewDialogProps {
@@ -17,7 +18,7 @@ export interface IVestingViewDialogProps {
 export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { id, beneficiary, address, duration, contractTemplate, startTimestamp } = initialValues;
+  const { id, account, address, duration, contractTemplate, startTimestamp } = initialValues;
 
   const dateStart = new Date(startTimestamp);
   const dateFinish = new Date(new Date(dateStart.getTime() + +duration));
@@ -37,15 +38,19 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="pages.vesting.view.address" />
               </TableCell>
-              {/* link to scanner */}
-              <TableCell align="right">{address}</TableCell>
+              <TableCell align="right">
+                <Link href={`${networks[process.env.CHAIN_ID].blockExplorerUrls[0]}address/${address}`}>{address}</Link>
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.vesting.view.beneficiary" />
+                <FormattedMessage id="pages.vesting.view.account" />
               </TableCell>
-              {/* link to scanner */}
-              <TableCell align="right">{beneficiary}</TableCell>
+              <TableCell align="right">
+                <Link href={`${networks[process.env.CHAIN_ID].blockExplorerUrls[0]}/address/${account}`}>
+                  {account}
+                </Link>
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
@@ -57,7 +62,17 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="pages.vesting.view.duration" />
               </TableCell>
-              <TableCell align="right">{formatDistance(new Date(+duration), 0, { addSuffix: true })}</TableCell>
+              <TableCell align="right">
+                {formatDuration(
+                  intervalToDuration({
+                    start: dateStart,
+                    end: dateFinish,
+                  }),
+                  {
+                    format: ["years", "months", "weeks", "days"],
+                  },
+                )}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

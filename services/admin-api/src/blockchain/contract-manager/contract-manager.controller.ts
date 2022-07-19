@@ -77,11 +77,6 @@ export class ContractManagerController {
     return this.contractManagerSignService.erc20Token(dto);
   }
 
-  @Post("/erc20-vesting")
-  public erc20Vesting(@Body() dto: VestingDeployDto): Promise<IServerSignature> {
-    return this.contractManagerSignService.erc20Vesting(dto);
-  }
-
   @Post("/erc721-token")
   public erc721Token(@Body() dto: Erc721TokenDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc721Token(dto);
@@ -95,5 +90,11 @@ export class ContractManagerController {
   @Post("/erc1155-token")
   public erc1155Token(@Body() dto: Erc1155TokenDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc1155Token(dto);
+  }
+
+  // MODULE:VESTING
+  @Post("/vesting")
+  public vsting(@Body() dto: VestingDeployDto): Promise<IServerSignature> {
+    return this.contractManagerSignService.vesting(dto);
   }
 }

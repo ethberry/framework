@@ -22,9 +22,9 @@ export class ContractManagerControllerEth {
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.ERC20VestingDeployed,
+    eventName: ContractManagerEventType.VestingDeployed,
   })
-  public erc20Vesting(@Payload() event: ILogEvent<IContractManagerVestingDeployed>, @Ctx() ctx: Log): Promise<void> {
+  public vesting(@Payload() event: ILogEvent<IContractManagerVestingDeployed>, @Ctx() ctx: Log): Promise<void> {
     return this.contractManagerServiceEth.vesting(event, ctx);
   }
 

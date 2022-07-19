@@ -30,11 +30,11 @@ function getBytecodeByVestingTemplate(template: VestingTemplate) {
   }
 }
 
-export interface IErc20VestingButtonProps {
+export interface IVestingButtonProps {
   className?: string;
 }
 
-export const VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
+export const VestingDeployButton: FC<IVestingButtonProps> = props => {
   const { className } = props;
 
   const { provider } = useWeb3React();
@@ -42,7 +42,7 @@ export const VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IVestingDeployDto) => {
-      const { contractTemplate, beneficiary, startTimestamp, duration } = values;
+      const { contractTemplate, account, startTimestamp, duration } = values;
 
       return api
         .fetchJson({
@@ -57,10 +57,10 @@ export const VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
             ContractManagerSol.abi,
             provider?.getSigner(),
           );
-          return contract.deployERC20Vesting(
+          return contract.deployVesting(
             nonce,
             getBytecodeByVestingTemplate(contractTemplate),
-            beneficiary,
+            account,
             Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds,
             duration * 60 * 60 * 24, // days in seconds
             Object.keys(VestingTemplate).indexOf(contractTemplate),
@@ -77,7 +77,7 @@ export const VestingDeployButton: FC<IErc20VestingButtonProps> = props => {
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="Erc20VestingDeployButton"
+        data-testid="VestingDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.deploy" />

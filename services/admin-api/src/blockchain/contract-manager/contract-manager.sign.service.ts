@@ -78,8 +78,9 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async erc20Vesting(dto: IVestingDeployDto): Promise<IServerSignature> {
-    const { contractTemplate, beneficiary, startTimestamp, duration } = dto;
+  // MODULE:VESTING
+  public async vesting(dto: IVestingDeployDto): Promise<IServerSignature> {
+    const { contractTemplate, account, startTimestamp, duration } = dto;
     const nonce = utils.randomBytes(32);
     const signature = await this.signer._signTypedData(
       // Domain
@@ -94,7 +95,7 @@ export class ContractManagerSignService {
         EIP712: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
-          { name: "beneficiary", type: "address" },
+          { name: "account", type: "address" },
           { name: "startTimestamp", type: "uint64" },
           { name: "duration", type: "uint64" },
           { name: "templateId", type: "uint256" },
@@ -103,8 +104,8 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc20VestingTemplate(contractTemplate),
-        beneficiary,
+        bytecode: this.getBytecodeByVestingTemplate(contractTemplate),
+        account,
         startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds
         duration: duration * 60 * 60 * 24, // in seconds
         templateId: Object.keys(VestingTemplate).indexOf(contractTemplate),
@@ -236,7 +237,7 @@ export class ContractManagerSignService {
     }
   }
 
-  public getBytecodeByErc20VestingTemplate(contractTemplate: VestingTemplate) {
+  public getBytecodeByVestingTemplate(contractTemplate: VestingTemplate) {
     switch (contractTemplate) {
       case VestingTemplate.LINEAR:
         return LinearVesting.bytecode;

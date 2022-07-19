@@ -1,6 +1,7 @@
 import { ethers } from "hardhat";
 
 import { royalty, baseTokenURI } from "../test/constants";
+import { wallet } from "@gemunion/constants";
 
 async function deploySystem() {
   const vestFactory = await ethers.getContractFactory("ContractManager");
@@ -68,11 +69,30 @@ async function deployERC1155() {
   console.info(`ERC1155_SHARDS_ADDR=${runeInstance.address.toLowerCase()}`);
 }
 
+// MODULE:VESTING
+async function deployVesting() {
+  const timestamp = Math.ceil(Date.now() / 1000);
+
+  const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
+  const linearVestingInstance = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+  console.info(`VESTING_LINEAR_ADDR=${linearVestingInstance.address.toLowerCase()}`);
+
+  const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
+  const gradedVestingInstance = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+  console.info(`VESTING_GRADED_ADDR=${gradedVestingInstance.address.toLowerCase()}`);
+
+  const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
+  const cliffVestingInstance = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+  console.info(`VESTING_CLIFF_ADDR=${cliffVestingInstance.address.toLowerCase()}`);
+}
+
 async function deployModules() {
+  await deployVesting();
+
   // MODULE:LOOTBOX
-  const dropFactory = await ethers.getContractFactory("ERC721Lootbox");
-  const dropInstance = await dropFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
-  console.info(`LOOTBOX_ADDR=${dropInstance.address.toLowerCase()}`);
+  const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
+  const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
+  console.info(`LOOTBOX_ADDR=${lootboxInstance.address.toLowerCase()}`);
 
   // MODULE:CLAIM
   const claimFactory = await ethers.getContractFactory("ClaimProxy");

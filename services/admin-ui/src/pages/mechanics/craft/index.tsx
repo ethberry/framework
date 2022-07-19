@@ -81,10 +81,8 @@ export const Craft: FC = () => {
         <List>
           {rows.map((craft, i) => (
             <ListItem key={i}>
-              <ListItemText>{craft.item.components[0].template!.title}</ListItemText>
-              <ListItemText style={{ display: "flex", justifyContent: "space-around" }}>
-                {craft.item.components[0].template!.contract?.title}
-              </ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{craft.item.components[0].template?.title}</ListItemText>
+              <ListItemText>{craft.item.components[0].contract?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(craft)}>
                   <Create />

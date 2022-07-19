@@ -10,13 +10,13 @@ import { VestingEntity } from "./vesting.entity";
 export class VestingService {
   constructor(
     @InjectRepository(VestingEntity)
-    private readonly erc20VestingEntityRepository: Repository<VestingEntity>,
+    private readonly vestingEntityRepository: Repository<VestingEntity>,
   ) {}
 
   public async search(dto: IVestingSearchDto): Promise<[Array<VestingEntity>, number]> {
     const { query, contractTemplate, skip, take } = dto;
 
-    const queryBuilder = this.erc20VestingEntityRepository.createQueryBuilder("vesting");
+    const queryBuilder = this.vestingEntityRepository.createQueryBuilder("vesting");
 
     queryBuilder.select();
 
@@ -31,7 +31,7 @@ export class VestingService {
     }
 
     if (query) {
-      queryBuilder.andWhere("vesting.beneficiary = :beneficiary", { beneficiary: query });
+      queryBuilder.andWhere("vesting.account = :account", { account: query });
     }
 
     queryBuilder.skip(skip);
@@ -48,6 +48,6 @@ export class VestingService {
     where: FindOptionsWhere<VestingEntity>,
     options?: FindOneOptions<VestingEntity>,
   ): Promise<VestingEntity | null> {
-    return this.erc20VestingEntityRepository.findOne({ where, ...options });
+    return this.vestingEntityRepository.findOne({ where, ...options });
   }
 }

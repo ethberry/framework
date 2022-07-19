@@ -7,7 +7,7 @@ import { ns } from "@framework/constants";
 @Entity({ schema: ns, name: "vesting" })
 export class VestingEntity extends DeployableEntity implements IVesting {
   @Column({ type: "varchar" })
-  public beneficiary: string;
+  public account: string;
 
   @Column({ type: "int" })
   public duration: number;

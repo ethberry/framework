@@ -1,7 +1,7 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ContractManagerEventType {
-  ERC20VestingDeployed = "ERC20VestingDeployed",
+  VestingDeployed = "VestingDeployed",
   ERC20TokenDeployed = "ERC20TokenDeployed",
   ERC721TokenDeployed = "ERC721TokenDeployed",
   ERC998TokenDeployed = "ERC998TokenDeployed",
@@ -10,7 +10,7 @@ export enum ContractManagerEventType {
 
 export interface IContractManagerVestingDeployed {
   addr: string;
-  beneficiary: string;
+  account: string;
   startTimestamp: string; // in seconds
   duration: string; // in seconds
   templateId: string;

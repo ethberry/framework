@@ -8,14 +8,14 @@ import { useWeb3React } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import IERC721RoyaltySol from "@framework/core-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
 
-import { Erc721CollectionRoyaltyEditDialog, IRoyaltyDto } from "./edit";
+import { Erc721ContractRoyaltyEditDialog, IRoyaltyDto } from "./edit";
 
 export interface IErc721CollectionRoyaltyMenuItemProps {
   address: string;
   royalty: number;
 }
 
-export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemProps> = props => {
+export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemProps> = props => {
   const { address, royalty } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
@@ -51,7 +51,7 @@ export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuIte
           <FormattedMessage id="form.buttons.royalty" />
         </Typography>
       </MenuItem>
-      <Erc721CollectionRoyaltyEditDialog
+      <Erc721ContractRoyaltyEditDialog
         onCancel={handleRoyaltyCancel}
         onConfirm={handleRoyaltyConfirmed}
         open={isRoyaltyDialogOpen}

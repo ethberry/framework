@@ -9,7 +9,7 @@ export enum VestingTemplate {
 }
 
 export interface IVesting extends IDeployable {
-  beneficiary: string;
+  account: string;
   duration: number;
   startTimestamp: string;
   contractTemplate: VestingTemplate;

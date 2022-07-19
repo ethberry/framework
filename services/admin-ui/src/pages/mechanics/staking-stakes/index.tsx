@@ -40,11 +40,6 @@ export const Stakes: FC = () => {
       query: "",
       stakeStatus: [],
     },
-    // empty: {
-    //   beneficiary: "",
-    //   duration: 0,
-    //   startTimestamp: new Date().toISOString(),
-    // },
   });
 
   return (

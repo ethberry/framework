@@ -7,9 +7,9 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721CollectionItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
-    const erc721CollectionSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
-    const erc721CollectionRuneAddress = process.env.ERC721_RUNE_ADDR || wallet;
+    const erc721ContractItemsAddress = process.env.ERC721_ITEM_ADDR || wallet;
+    const erc721ContractSkillAddress = process.env.ERC721_SKILL_ADDR || wallet;
+    const erc721ContractRuneAddress = process.env.ERC721_RUNE_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // 11 - ITEMS, 12 - SKILLS, 13 - RUNES
@@ -32,7 +32,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         updated_at
       ) VALUES (
         11,
-        '${erc721CollectionItemsAddress}',
+        '${erc721ContractItemsAddress}',
         '${chainId}',
         'ITEMS',
         '${simpleFormatting}',
@@ -48,7 +48,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         12,
-        '${erc721CollectionSkillAddress}',
+        '${erc721ContractSkillAddress}',
         '${chainId}',
         'SKILLS',
         '${simpleFormatting}',
@@ -64,7 +64,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         13,
-        '${erc721CollectionRuneAddress}',
+        '${erc721ContractRuneAddress}',
         '${chainId}',
         'RUNES',
         '${simpleFormatting}',

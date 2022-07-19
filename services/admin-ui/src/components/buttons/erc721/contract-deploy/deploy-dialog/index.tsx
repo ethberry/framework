@@ -27,7 +27,7 @@ export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> 
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid="Erc721CollectionDeployDialog"
+      data-testid="Erc721ContractDeployDialog"
       {...props}
     >
       <SelectInput

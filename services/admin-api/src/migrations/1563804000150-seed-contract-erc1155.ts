@@ -7,9 +7,9 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc1155CollectionResourcesAddress = process.env.ERC1155_RESOURCES_ADDR || wallet;
-    const erc1155CollectionPotionsAddress = process.env.ERC1155_POTIONS_ADDR || wallet;
-    const erc1155CollectionShardsAddress = process.env.ERC1155_SHARDS_ADDR || wallet;
+    const erc1155ContractResourcesAddress = process.env.ERC1155_RESOURCES_ADDR || wallet;
+    const erc1155ContractPotionsAddress = process.env.ERC1155_POTIONS_ADDR || wallet;
+    const erc1155ContractShardsAddress = process.env.ERC1155_SHARDS_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // 31 - ITEMS, 32 - SKILLS, 33 - RUNES
@@ -32,7 +32,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         updated_at
       ) VALUES (
         31,
-        '${erc1155CollectionResourcesAddress}',
+        '${erc1155ContractResourcesAddress}',
         '${chainId}',
         'RESOURCES',
         '${simpleFormatting}',
@@ -48,7 +48,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         32,
-        '${erc1155CollectionPotionsAddress}',
+        '${erc1155ContractPotionsAddress}',
         '${chainId}',
         'POTIONS',
         '${simpleFormatting}',
@@ -64,7 +64,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         33,
-        '${erc1155CollectionShardsAddress}',
+        '${erc1155ContractShardsAddress}',
         '${chainId}',
         'SHARDS',
         '${simpleFormatting}',

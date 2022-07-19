@@ -16,7 +16,7 @@ export interface IErc998ContractEditDialogProps {
   initialValues: IContract;
 }
 
-export const Erc998CollectionEditDialog: FC<IErc998ContractEditDialogProps> = props => {
+export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, baseTokenURI, imageUrl, contractStatus, address, symbol, name, royalty } =

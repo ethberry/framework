@@ -14,6 +14,6 @@ export class VestingController {
   @Get("/:wallet")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("wallet", AddressPipe) wallet: string): Promise<VestingEntity | null> {
-    return this.vestingService.findOne({ beneficiary: wallet.toLowerCase() });
+    return this.vestingService.findOne({ account: wallet.toLowerCase() });
   }
 }

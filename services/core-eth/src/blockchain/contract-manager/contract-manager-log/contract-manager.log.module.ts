@@ -34,7 +34,7 @@ import { ContractManagerService } from "../contract-manager.service";
             contractInterface: ContractManagerSol.abi,
             // prettier-ignore
             eventNames: [
-              ContractManagerEventType.ERC20VestingDeployed,
+              ContractManagerEventType.VestingDeployed,
               ContractManagerEventType.ERC20TokenDeployed,
               ContractManagerEventType.ERC721TokenDeployed,
               ContractManagerEventType.ERC998TokenDeployed,

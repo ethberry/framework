@@ -10,10 +10,10 @@ import "@openzeppelin/contracts/finance/VestingWallet.sol";
 
 contract LinearVesting is VestingWallet {
   constructor(
-    address beneficiary,
+    address account,
     uint64 startTimestamp,
     uint64 duration
-  ) VestingWallet(beneficiary, startTimestamp, duration) {}
+  ) VestingWallet(account, startTimestamp, duration) {}
 
   function _vestingSchedule(uint256 totalAllocation, uint64 timestamp) internal view override returns (uint256) {
     uint256 period = duration() / 4;

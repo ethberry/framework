@@ -10,7 +10,7 @@ export class VestingEntity extends DeployableEntity implements IVesting {
   public address: string;
 
   @Column({ type: "varchar" })
-  public beneficiary: string;
+  public account: string;
 
   @Column({ type: "int" })
   public duration: number;

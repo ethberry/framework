@@ -41,7 +41,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.erc20-vesting.view.beneficiary" />
+                <FormattedMessage id="pages.erc20-vesting.view.account" />
               </TableCell>
               {/* link to scanner */}
               <TableCell align="right">{account}</TableCell>

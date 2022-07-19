@@ -13,7 +13,7 @@ export class VestingDeployDto implements IVestingDeployDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
-  public beneficiary: string;
+  public account: string;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

@@ -61,14 +61,14 @@ export class ContractManagerServiceEth {
 
   public async vesting(event: ILogEvent<IContractManagerVestingDeployed>, ctx: Log): Promise<void> {
     const {
-      args: { addr, beneficiary, startTimestamp, duration, templateId },
+      args: { addr, account, startTimestamp, duration, templateId },
     } = event;
 
     await this.updateHistory(event, ctx);
 
     await this.vestingService.create({
       address: addr.toLowerCase(),
-      beneficiary: beneficiary.toLowerCase(),
+      account: account.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
       duration: ~~duration * 1000, // msec
       contractTemplate: Object.values(VestingTemplate)[~~templateId],
