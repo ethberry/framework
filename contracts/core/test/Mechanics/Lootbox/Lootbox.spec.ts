@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { LootboxTest } from "../../../typechain-types";
+import { ERC721LootboxTest } from "../../../typechain-types";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
@@ -16,13 +16,13 @@ import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 import { shouldGetTokenURI } from "../../ERC721/shared/tokenURI";
 import { shouldSetBaseURI } from "../../ERC721/shared/setBaseURI";
 
-describe("Lootbox", function () {
-  let lootboxInstance: LootboxTest;
+describe("ERC721Lootbox", function () {
+  let lootboxInstance: ERC721LootboxTest;
 
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const lootboxFactory = await ethers.getContractFactory("LootboxTest");
+    const lootboxFactory = await ethers.getContractFactory("ERC721LootboxTest");
     lootboxInstance = await lootboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     this.contractInstance = lootboxInstance;

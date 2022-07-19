@@ -1,30 +1,36 @@
 import { ethers } from "hardhat";
+import { baseTokenURI } from "../test/constants";
 
-async function main() {
-  // CONTRACT MANAGER
+async function deploySystem() {
   const vestFactory = await ethers.getContractFactory("ContractManager");
   const vestInstance = await vestFactory.deploy();
   console.info(`CONTRACT_MANAGER_ADDR=${vestInstance.address.toLowerCase()}`);
 
-  // Exchange
   const exchangeFactory = await ethers.getContractFactory("Exchange");
   const exchangeInstance = await exchangeFactory.deploy("Exchange");
   console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
+}
 
-  // Lootbox
-  const dropFactory = await ethers.getContractFactory("Lootbox");
-  const dropInstance = await dropFactory.deploy("Lootbox", "DBX", 100, "https://fw-json-api.gemunion.io/");
+async function deployModules() {
+  // MODULE:LOOTBOX
+  const dropFactory = await ethers.getContractFactory("ERC721Lootbox");
+  const dropInstance = await dropFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
   console.info(`LOOTBOX_ADDR=${dropInstance.address.toLowerCase()}`);
 
-  // Claim contract
+  // MODULE:CLAIM
   const claimFactory = await ethers.getContractFactory("ClaimProxy");
   const claimInstance = await claimFactory.deploy();
   console.info(`CLAIM_PROXY_ADDR=${claimInstance.address.toLowerCase()}`);
 
-  // Uni Mechanics contract
+  // MODULE:STAKING
   const stakingFactory = await ethers.getContractFactory("Staking");
   const stakingInstance = await stakingFactory.deploy(10);
   console.info(`STAKING_ADDR=${stakingInstance.address.toLowerCase()}`);
+}
+
+async function main() {
+  await deploySystem();
+  await deployModules();
 }
 
 main()

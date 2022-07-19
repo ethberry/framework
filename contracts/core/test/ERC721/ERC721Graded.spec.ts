@@ -1,6 +1,7 @@
 import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { expect } from "chai";
+
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
@@ -22,8 +23,10 @@ describe("ERC721Graded", function () {
 
     const erc721Factory = await ethers.getContractFactory("ERC721Graded");
     this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
     this.erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
+
     const erc721NonReceiverFactory = await ethers.getContractFactory("ERC721NonReceiverMock");
     this.erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
 

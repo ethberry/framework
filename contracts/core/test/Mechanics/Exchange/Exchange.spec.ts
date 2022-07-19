@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, Lootbox } from "../../../typechain-types";
+import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, ERC721Lootbox } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -22,7 +22,7 @@ describe("Exchange", function () {
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
   let erc1155Instance: ERC1155Simple;
-  let lootboxInstance: Lootbox;
+  let lootboxInstance: ERC721Lootbox;
   let network: Network;
 
   beforeEach(async function () {
@@ -43,7 +43,7 @@ describe("Exchange", function () {
     erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
     await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
-    const lootboxFactory = await ethers.getContractFactory("Lootbox");
+    const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
     lootboxInstance = await lootboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     await lootboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
 

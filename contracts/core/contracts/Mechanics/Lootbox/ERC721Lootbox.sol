@@ -10,12 +10,12 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./interfaces/ILootbox.sol";
+import "./interfaces/IERC721Lootbox.sol";
 import "../Asset/interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../MetaData/MetaDataGetter.sol";
 
-contract Lootbox is ILootbox, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
+contract ERC721Lootbox is IERC721Lootbox, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
   using Address for address;
   using Counters for Counters.Counter;
 
@@ -69,6 +69,6 @@ contract Lootbox is ILootbox, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return interfaceId == type(ILootbox).interfaceId || super.supportsInterface(interfaceId);
+    return interfaceId == type(IERC721Lootbox).interfaceId || super.supportsInterface(interfaceId);
   }
 }

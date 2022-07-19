@@ -8,7 +8,7 @@ import { LootboxLogService } from "./lootbox-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 // system contract
-import LootboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lootbox/Lootbox.sol/Lootbox.json";
+import LootboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lootbox/ERC721Lootbox.sol/ERC721Lootbox.json";
 
 @Module({
   imports: [

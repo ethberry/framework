@@ -12,12 +12,12 @@ import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
 import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
-import "../interfaces/IERC721Random.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../MOCKS/ChainLink/ERC721ChainLinkHH.sol";
 import "../../Mechanics/Asset/interfaces/IAsset.sol";
 import "../../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
+contract ERC998RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -42,7 +42,7 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
   }
 
   function mintCommon(address to, Asset calldata item) public onlyRole(MINTER_ROLE) {
-    require(item.tokenId != 0, "ERC721RandomTest: wrong type");
+    require(item.tokenId != 0, "ERC998RandomTest: wrong type");
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
@@ -54,7 +54,7 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
   }
 
   function mintRandom(address to, Asset calldata item) external override onlyRole(MINTER_ROLE) {
-    require(item.tokenId != 0, "ERC721RandomTest: wrong type");
+    require(item.tokenId != 0, "ERC998RandomTest: wrong type");
     _queue[getRandomNumber()] = Request(to, item);
   }
 

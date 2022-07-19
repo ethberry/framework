@@ -9,7 +9,7 @@ import {
   ERC721RandomTest,
   ERC721Simple,
   LinkErc20,
-  Lootbox,
+  ERC721Lootbox,
   Staking,
   VRFCoordinatorMock,
 } from "../../../typechain-types";
@@ -27,12 +27,12 @@ import {
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 import { IAsset, IRule } from "./interface/staking";
-import { randomRequest } from "../../shared/AccessControl/randomRequest";
+import { randomRequest } from "./shared/randomRequest";
 
 describe("Staking", function () {
   let stakingInstance: Staking;
   let erc721RandomInstance: ERC721RandomTest;
-  let lootboxInstance: Lootbox;
+  let lootboxInstance: ERC721Lootbox;
   let erc721SimpleInstance: ERC721Simple;
   let erc20Instance: ERC20Simple;
   let erc1155Instance: ERC1155Simple;
@@ -91,8 +91,8 @@ describe("Staking", function () {
     const erc721randomFactory = await ethers.getContractFactory("ERC721RandomTest");
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", 100, "https://localhost");
     // ERC721 Lootbox
-    const lootboxFactory = await ethers.getContractFactory("Lootbox");
-    lootboxInstance = await lootboxFactory.deploy("Lootbox", "DBX", 100, "https://localhost");
+    const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
+    lootboxInstance = await lootboxFactory.deploy("ERC721Lootbox", "LOOT", 100, "https://localhost");
     // ERC1155
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
     erc1155Instance = await erc1155Factory.deploy("https://localhost");
@@ -670,7 +670,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      randomRequest(erc721RandomInstance, vrfInstance, 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, 1);
       // DEPOSIT
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
@@ -878,7 +878,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      randomRequest(erc721RandomInstance, vrfInstance, stakeCycles);
+      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles);
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
     });
@@ -1106,7 +1106,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      randomRequest(erc721RandomInstance, vrfInstance, stakeCycles + 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles + 1);
     });
 
     it("should stake ERC721 & receive ERC721 Common", async function () {
@@ -1329,7 +1329,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      randomRequest(erc721RandomInstance, vrfInstance, 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, 1);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });

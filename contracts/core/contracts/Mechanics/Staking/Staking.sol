@@ -21,7 +21,7 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "./interfaces/IStaking.sol";
 import "../Asset/interfaces/IAsset.sol";
-import "../Lootbox/interfaces/ILootbox.sol";
+import "../Lootbox/interfaces/IERC721Lootbox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
@@ -166,7 +166,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
           }
         } else if (lootboxInterface) {
           for (uint256 i = 0; i < multiplier; i++) {
-            ILootbox(rewardItem.token).mintLootbox(_msgSender(), rewardItem);
+            IERC721Lootbox(rewardItem.token).mintLootbox(_msgSender(), rewardItem);
           }
         } else {
           for (uint256 i = 0; i < multiplier; i++) {

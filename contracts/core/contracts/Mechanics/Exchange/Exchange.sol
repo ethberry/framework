@@ -17,7 +17,7 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "./SignatureValidator.sol";
 import "../Asset/interfaces/IAsset.sol";
-import "../Lootbox/interfaces/ILootbox.sol";
+import "../Lootbox/interfaces/IERC721Lootbox.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
@@ -91,7 +91,7 @@ contract Exchange is SignatureValidator, AccessControl, Pausable, ERC1155Holder 
         if (randomInterface) {
           IERC721Random(item.token).mintRandom(account, item);
         } else if (lootboxInterface) {
-          ILootbox(item.token).mintLootbox(account, item);
+          IERC721Lootbox(item.token).mintLootbox(account, item);
         } else {
           IERC721Simple(item.token).mintCommon(account, item);
         }
