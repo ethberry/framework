@@ -28,6 +28,6 @@ export class Erc721TokenController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
-    return this.erc721TokenService.findOnePlus({ id });
+    return this.erc721TokenService.findOneWithRelationslus({ id });
   }
 }

@@ -1,7 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/firebase-login";
 
-import { CraftList } from "./craft";
 import { Claim } from "./claim";
 import { ClaimWrapper } from "./claim/wrapper";
 import { VestingWrapper } from "./vesting/wrapper";
@@ -11,6 +10,8 @@ import { Leaderboard } from "./staking/leaderboard";
 import { Reward } from "./staking/reward";
 import { LootboxList } from "./lootbox-list";
 import { Lootbox } from "./lootbox";
+import { CraftList } from "./craft-list";
+import { Craft } from "./craft";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   {
@@ -31,7 +32,7 @@ export const mechanicsRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [
       { index: true, element: <CraftList /> },
-      { path: "/craft/:tab", element: <CraftList /> },
+      { path: "/craft/:id", element: <Craft /> },
     ],
   },
   {

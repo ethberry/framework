@@ -1,47 +1,65 @@
 import { FC, Fragment } from "react";
-import { Grid, Pagination } from "@mui/material";
+import { Grid, List, ListItem, ListItemText, ListSubheader, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
 
-import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ISearchDto } from "@gemunion/types-collection";
+import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { ICraft } from "@framework/types";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
+import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { CraftItem } from "./item";
+import { useStyles } from "./styles";
+import { CraftButton } from "../../../components/buttons";
+import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
 
-export const CraftList: FC = () => {
-  const { rows, count, search, isLoading, handleSearch, handleChangePage } = useCollection<ICraft, ISearchDto>({
+export const Craft: FC = () => {
+  const { selected, isLoading } = useCollection<ICraft>({
     baseUrl: "/craft",
-    search: {
-      query: "",
+    empty: {
+      item: emptyItem,
+      ingredients: emptyPrice,
     },
   });
 
+  const classes = useStyles();
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "craft"]} />
+      <Breadcrumbs path={["dashboard", "craft"]} data={[{}, selected.item.components[0].template]} />
 
-      <PageHeader message="pages.craft.title" />
+      <PageHeader message="pages.craft.title" data={selected.item.components[0].template} />
 
-      <CommonSearchForm initialValues={search} onSubmit={handleSearch} />
-
-      <ProgressOverlay isLoading={isLoading}>
-        <Grid container spacing={2}>
-          {rows.map(recipe => (
-            <Grid item lg={4} sm={6} xs={12} key={recipe.id}>
-              <CraftItem craft={recipe} />
-            </Grid>
-          ))}
+      <Grid container>
+        <Grid item xs={9}>
+          <img src={selected.item.components[0].template!.imageUrl} />
+          <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
+            <RichTextDisplay data={selected.item.components[0].template!.description} />
+          </Typography>
         </Grid>
-      </ProgressOverlay>
-
-      <Pagination
-        sx={{ mt: 2 }}
-        shape="rounded"
-        page={search.skip / search.take + 1}
-        count={Math.ceil(count / search.take)}
-        onChange={handleChangePage}
-      />
+        <Grid item xs={3}>
+          <List
+            component="nav"
+            subheader={
+              <ListSubheader>
+                <FormattedMessage id="pages.craft.ingredients" />
+              </ListSubheader>
+            }
+          >
+            {selected.ingredients.components.map(component => (
+              <ListItem key={component.id} button component={RouterLink} to={`/erc1155-tokens/${component.templateId}`}>
+                <ListItemText>
+                  {component.template!.title} ({component.amount})
+                </ListItemText>
+              </ListItem>
+            ))}
+            <CraftButton craft={selected} />
+          </List>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };

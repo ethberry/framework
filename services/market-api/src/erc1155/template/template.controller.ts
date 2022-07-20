@@ -20,6 +20,6 @@ export class Erc1155TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc1155TokenService.findOneWithPrice({ id });
+    return this.erc1155TokenService.findOneWithRelations({ id });
   }
 }

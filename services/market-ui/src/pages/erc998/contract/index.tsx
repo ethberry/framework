@@ -29,9 +29,9 @@ export const Erc998Contract: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998-contracts", "erc998-contract"]} data={[{}, {}, selected]} />
+      <Breadcrumbs path={["dashboard", "erc998-contract-list", "erc998-contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.erc998-contracts.title" data={selected} />
+      <PageHeader message="pages.erc998-contract-list.title" data={selected} />
 
       <Box display="flex">
         <Box margin={1}>

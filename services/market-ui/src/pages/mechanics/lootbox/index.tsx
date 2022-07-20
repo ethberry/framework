@@ -28,9 +28,9 @@ export const Lootbox: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "lootboxes"]} data={[{}, selected]} />
+      <Breadcrumbs path={["dashboard", "lootbox"]} data={[{}, selected]} />
 
-      <PageHeader message="pages.lootboxes.title" data={selected} />
+      <PageHeader message="pages.lootbox.title" data={selected} />
 
       <Grid container>
         <Grid item xs={9}>

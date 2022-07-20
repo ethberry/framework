@@ -72,7 +72,7 @@ export class GradeService {
     return templateEntity.save();
   }
 
-  public findOneWithPrice(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
     return this.findOne(where, {
       join: {
         alias: "grade",

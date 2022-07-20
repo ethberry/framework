@@ -64,13 +64,13 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
       ) VALUES (
         70101,
         70111,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         70102,
         70112,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       );

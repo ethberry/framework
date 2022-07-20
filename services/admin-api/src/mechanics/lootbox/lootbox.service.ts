@@ -76,7 +76,7 @@ export class LootboxService {
     return this.lootboxEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithPrice(where: FindOptionsWhere<LootboxEntity>): Promise<LootboxEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<LootboxEntity>): Promise<LootboxEntity | null> {
     return this.findOne(where, {
       join: {
         alias: "lootbox",

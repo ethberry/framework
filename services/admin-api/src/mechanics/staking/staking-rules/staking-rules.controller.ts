@@ -35,7 +35,7 @@ export class StakingRulesController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingRulesEntity | null> {
-    return this.stakingService.findOneWithPrice({ id });
+    return this.stakingService.findOneWithRelations({ id });
   }
 
   @Put("/:id")

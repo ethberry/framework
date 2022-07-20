@@ -28,6 +28,6 @@ export class CraftController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<CraftEntity | null> {
-    return this.craftService.findOne({ id });
+    return this.craftService.findOneWithRelations({ id });
   }
 }

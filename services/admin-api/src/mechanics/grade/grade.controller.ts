@@ -27,6 +27,6 @@ export class GradeController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<GradeEntity | null> {
-    return this.lootboxService.findOneWithPrice({ id });
+    return this.lootboxService.findOneWithRelations({ id });
   }
 }

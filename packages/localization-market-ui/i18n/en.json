@@ -193,14 +193,6 @@
       "sorry": "Sorry, maybe you will get lucky next time",
       "title": "Claim"
     },
-    "craft": {
-      "tabs": {
-        "heroes": "Heroes",
-        "items": "Items",
-        "resources": "Resources"
-      },
-      "title": "Craft"
-    },
     "dashboard": {
       "erc1155": {
         "contracts": "ERC1155 Contracts",
@@ -252,34 +244,34 @@
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
     },
-    "erc1155-contracts": {
+    "erc1155-contract-list": {
       "title": "ERC1155 Contracts"
     },
     "erc1155-token": {
       "price": "Price: {amount}",
       "title": "ERC1155 Token: {title}"
     },
-    "erc1155-tokens": {
+    "erc1155-token-list": {
       "title": "ERC1155 Tokens"
     },
     "erc721-contract": {
       "title": "ERC721 Contract: {title}"
     },
-    "erc721-contracts": {
+    "erc721-contract-list": {
       "title": "ERC721 Contracts"
     },
     "erc721-template": {
       "price": "Price: {amount}",
       "title": "ERC721 Template: {title}"
     },
-    "erc721-templates": {
+    "erc721-template-list": {
       "title": "ERC721 Templates"
     },
     "erc721-token": {
       "price": "Price: {amount}",
       "title": "ERC721 Token: {title}"
     },
-    "erc721-tokens": {
+    "erc721-token-list": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
@@ -289,21 +281,21 @@
     "erc998-contract": {
       "title": "ERC998 Contract: {title}"
     },
-    "erc998-contracts": {
+    "erc998-contract-list": {
       "title": "ERC998 Contracts"
     },
     "erc998-template": {
       "price": "Price: {amount}",
       "title": "ERC998 Template: {title}"
     },
-    "erc998-templates": {
+    "erc998-template-list": {
       "title": "ERC998 Templates"
     },
     "erc998-token": {
       "price": "Price: {amount}",
       "title": "ERC998 Token: {title}"
     },
-    "erc998-tokens": {
+    "erc998-token-list": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
@@ -326,8 +318,20 @@
       "price": "Price: {amount}",
       "title": "Lootbox: {title}"
     },
-    "lootboxes": {
+    "lootbox-list": {
       "title": "Lootboxes"
+    },
+    "craft": {
+      "tabs": {
+        "erc998": "ERC998",
+        "erc721": "ERC721",
+        "erc1155": "ERC1155"
+      },
+      "ingredients": "Ingredients",
+      "title": "Craft recipe: {title}"
+    },
+    "craft-list": {
+      "title": "Craft recipes"
     },
     "marketplace": {
       "erc1155": {
@@ -349,9 +353,6 @@
         "lootbox": "Lootbox"
       },
       "title": "Primary market"
-    },
-    "my-auctions": {
-      "title": "My auctions"
     },
     "my-wallet": {
       "attach": "Attach",

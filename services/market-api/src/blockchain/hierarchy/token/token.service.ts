@@ -114,7 +114,7 @@ export class TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public findOnePlus(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
+  public findOneWithRelationslus(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();

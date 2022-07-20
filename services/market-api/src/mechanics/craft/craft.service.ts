@@ -67,6 +67,24 @@ export class CraftService {
     return this.craftEntityRepository.findOne({ where, ...options });
   }
 
+  public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "craft",
+        leftJoinAndSelect: {
+          item: "craft.item",
+          item_components: "item.components",
+          item_contract: "item_components.contract",
+          item_template: "item_components.template",
+          ingredients: "craft.ingredients",
+          ingredients_components: "ingredients.components",
+          ingredients_contract: "ingredients_components.contract",
+          ingredients_template: "ingredients_components.template",
+        },
+      },
+    });
+  }
+
   public async sign(dto: ISignCraftDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { craftId } = dto;
     const craftEntity = await this.findOne(

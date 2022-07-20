@@ -80,7 +80,7 @@ export class StakingRulesService {
     return this.stakingRuleEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithPrice(where: FindOptionsWhere<StakingRulesEntity>): Promise<StakingRulesEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<StakingRulesEntity>): Promise<StakingRulesEntity | null> {
     return this.findOne(where, {
       join: {
         alias: "rule",

@@ -32,9 +32,9 @@ export const LootboxList: FC<ILootboxListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "lootboxes"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "lootbox-list"]} isHidden={embedded} />
 
-      <PageHeader message="pages.lootboxes.title">
+      <PageHeader message="pages.lootbox-list.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

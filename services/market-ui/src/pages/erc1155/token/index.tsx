@@ -15,6 +15,7 @@ export const Erc1155Token: FC = () => {
     baseUrl: "/erc1155-tokens",
     empty: {
       template: {
+        title: "",
         description: emptyStateString,
       } as ITemplate,
     },

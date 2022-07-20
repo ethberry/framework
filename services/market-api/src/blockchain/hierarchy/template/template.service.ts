@@ -107,7 +107,7 @@ export class TemplateService {
     return this.templateEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithPrice(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
     return this.findOne(where, {
       join: {
         alias: "template",

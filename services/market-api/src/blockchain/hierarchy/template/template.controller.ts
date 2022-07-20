@@ -20,6 +20,6 @@ export class TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.templateService.findOneWithPrice({ id });
+    return this.templateService.findOneWithRelations({ id });
   }
 }
