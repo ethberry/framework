@@ -1,40 +1,44 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
-import { stringify } from "qs";
 
-import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { IToken, ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { IErc998AssetSearchDto, IToken, TokenType } from "@framework/types";
+import { Erc1155Token } from "./item";
+import { TokenSearchForm } from "../../../components/forms/token-search";
 
-import { AssetsTabs, ITabPanelProps } from "../tabs";
-import { Erc998Token } from "../../../erc998/token-list/item";
-import { TokenSearchForm } from "../../../../components/forms/token-search";
+export interface ITokenListProps {
+  embedded?: boolean;
+}
 
-export const Heroes: FC<ITabPanelProps> = props => {
-  const { value } = props;
-
-  if (value !== AssetsTabs.heroes) {
-    return null;
-  }
+export const Erc1155TokenList: FC<ITokenListProps> = props => {
+  const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IToken, IErc998AssetSearchDto>({
-      baseUrl: "/erc998-tokens",
+    useCollection<IToken, ITokenSearchDto>({
+      baseUrl: "/erc1155-tokens",
+      embedded,
       search: {
-        contractIds: [3],
-        rarity: [],
+        contractIds: [],
+        attributes: {
+          [TokenAttributes.RARITY]: [],
+        },
       },
-      redirect: (_baseUrl, search) => `/my-assets/${value}?${stringify(search)}`,
     });
 
   return (
-    <Grid>
-      <PageHeader message="pages.assets.title">
+    <Fragment>
+      <Breadcrumbs path={["dashboard", "erc1155-tokens"]} isHidden={embedded} />
+
+      <PageHeader message="pages.erc1155-tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
-          <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
         </Button>
       </PageHeader>
 
@@ -42,14 +46,14 @@ export const Heroes: FC<ITabPanelProps> = props => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractType={[TokenType.ERC998]}
+        contractType={[TokenType.ERC721]}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc998Token token={token} />
+              <Erc1155Token token={token} />
             </Grid>
           ))}
         </Grid>
@@ -62,6 +66,6 @@ export const Heroes: FC<ITabPanelProps> = props => {
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
       />
-    </Grid>
+    </Fragment>
   );
 };

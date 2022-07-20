@@ -9,7 +9,7 @@ import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 
 @Injectable()
-export class Erc998TokenService extends TokenService {
+export class Erc1155TokenService extends TokenService {
   constructor(
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
@@ -18,6 +18,6 @@ export class Erc998TokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC998);
+    return super.search(dto, userEntity, TokenType.ERC1155);
   }
 }

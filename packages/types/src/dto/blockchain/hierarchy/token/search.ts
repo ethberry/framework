@@ -11,4 +11,5 @@ export interface ITokenSearchDto extends ISearchDto {
   tokenId: string;
   attributes: ITokenAttributesSearchDto;
   contractIds: Array<number>;
+  account: string;
 }

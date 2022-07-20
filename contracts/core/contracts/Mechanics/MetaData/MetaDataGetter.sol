@@ -8,7 +8,7 @@ import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 pragma solidity ^0.8.9;
 
 abstract contract MetaDataGetter is GeneralizedCollection {
-  bytes32 public constant TEMPLATE_ID = keccak256("templateId");
+  bytes32 public constant TEMPLATE_ID = keccak256("template_id");
   bytes32 public constant GRADE = keccak256("grade");
   bytes32 public constant RARITY = keccak256("rarity");
 

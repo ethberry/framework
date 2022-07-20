@@ -3,9 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import {
-  IErc721AssetSearchDto,
   ITokenAutocompleteDto,
+  ITokenSearchDto,
   TokenAttributes,
+  TokenRarity,
   TokenStatus,
   TokenType,
 } from "@framework/types";
@@ -21,54 +22,64 @@ export class TokenService {
   ) {}
 
   public async search(
-    dto: IErc721AssetSearchDto,
+    dto: ITokenSearchDto,
     userEntity: UserEntity,
     contractType: TokenType,
   ): Promise<[Array<TokenEntity>, number]> {
-    const { skip, take, rarity, contractIds } = dto;
+    const { query, attributes = {}, contractIds, account = userEntity.wallet?.toLowerCase(), skip, take } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    queryBuilder.leftJoinAndSelect("token.balance", "balance");
-    queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet?.toLowerCase() });
-
-    if (rarity) {
-      if (rarity.length === 1) {
-        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' = :rarity`, { rarity: rarity[0] });
-      } else {
-        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' IN(:...rarity)`, { rarity });
-      }
+    if (account) {
+      queryBuilder.andWhere("balance.account = :account", { account });
     }
 
-    if (contractIds) {
-      if (contractIds.length === 1) {
-        queryBuilder.andWhere(
-          new Brackets(qb => {
-            qb.where("template.contractId = :contractId", {
-              contractId: contractIds[0],
-            });
-            // qb.orWhere("lootbox.contractId = :contractId", {
-            //   contractId: contractIds[0],
-            // });
-          }),
-        );
+    const rarity = attributes[TokenAttributes.RARITY];
+    if (rarity) {
+      if (rarity.length === 1) {
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' = :rarity`, {
+          rarity: Object.values(TokenRarity).findIndex(r => r === rarity[0]),
+        });
       } else {
-        queryBuilder.andWhere(
-          new Brackets(qb => {
-            qb.where("template.contractId IN(:...contractIds)", { contractIds });
-            // qb.orWhere("lootbox.contractId IN(:...contractIds)", { contractIds });
-          }),
-        );
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' IN(:...rarity)`, {
+          rarity: rarity.map(e => Object.values(TokenRarity).findIndex(r => r === e)),
+        });
       }
     }
 
     queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: TokenStatus.MINTED });
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(template.description->'blocks') blocks ON TRUE",
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

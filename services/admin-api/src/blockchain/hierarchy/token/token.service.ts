@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
+import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
 
@@ -14,15 +14,21 @@ export class TokenService {
   ) {}
 
   public async search(dto: ITokenSearchDto, contractType: TokenType): Promise<[Array<TokenEntity>, number]> {
-    const { query, tokenStatus, skip, take, tokenId, attributes = {}, contractIds } = dto;
+    const { query, tokenStatus, tokenId, attributes = {}, contractIds, account, skip, take } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
+
+    queryBuilder.select();
+
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    queryBuilder.select();
+    if (account) {
+      queryBuilder.leftJoinAndSelect("token.balance", "balance");
+      queryBuilder.andWhere("balance.account = :account", { account });
+    }
 
     if (tokenId) {
       queryBuilder.andWhere("token.tokenId = :tokenId", { tokenId });
@@ -32,11 +38,11 @@ export class TokenService {
     if (rarity) {
       if (rarity.length === 1) {
         queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' = :rarity`, {
-          rarity: rarity[0],
+          rarity: Object.values(TokenRarity).findIndex(r => r === rarity[0]),
         });
       } else {
         queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.RARITY}' IN(:...rarity)`, {
-          rarity,
+          rarity: rarity.map(e => Object.values(TokenRarity).findIndex(r => r === e)),
         });
       }
     }

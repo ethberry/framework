@@ -1,5 +1,14 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNumber, IsOptional, Min, ValidateNested } from "class-validator";
+import {
+  IsArray,
+  IsEnum,
+  IsEthereumAddress,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Min,
+  ValidateNested,
+} from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -65,4 +74,10 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   @IsOptional()
   @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  public account: string;
 }

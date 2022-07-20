@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Link } from "@mui/material";
+import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { format, formatDistance, parseISO, formatDuration, intervalToDuration } from "date-fns";
+import { format, formatDistance, formatDuration, intervalToDuration, parseISO } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";

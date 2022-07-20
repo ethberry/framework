@@ -31,6 +31,14 @@ export const Erc1155Section: FC = () => {
             <FormattedMessage id="pages.dashboard.erc1155.templates" />
           </ListItemText>
         </ListItem>
+        <ListItem button component={RouterLink} to="/erc1155-tokens">
+          <ListItemIcon>
+            <Storage />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.erc1155.tokens" />
+          </ListItemText>
+        </ListItem>
       </List>
     </Paper>
   );

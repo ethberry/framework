@@ -25,11 +25,9 @@ export * from "./erc20/contract/create";
 export * from "./erc20/contract/deploy";
 
 export * from "./erc721/contract/deploy";
-export * from "./erc721/token/asset";
 export * from "./erc721/token-history/search";
 
 export * from "./erc998/contract/deploy";
-export * from "./erc998/token/asset";
 export * from "./erc998/token-history/search";
 
 export * from "./erc1155/contract/deploy";

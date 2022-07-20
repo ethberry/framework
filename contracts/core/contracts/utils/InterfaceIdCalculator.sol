@@ -15,5 +15,9 @@ contract InterfaceIdCalculator {
   constructor() {
     console.logBytes4(type(IERC721Random).interfaceId);
     console.logBytes4(type(IERC721Lootbox).interfaceId);
+
+    console.logBytes32(keccak256("template_id"));
+    console.logBytes32(keccak256("grade"));
+    console.logBytes32(keccak256("rarity"));
   }
 }

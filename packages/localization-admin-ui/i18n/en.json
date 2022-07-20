@@ -194,7 +194,7 @@
     },
     "labels": {
       "DUMMY": "Dummy",
-      "RARITY": "Rarity",
+      "VestingContractTemplate": "Template",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -264,7 +264,6 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "VestingContractTemplate": "Template",
       "year": "Year"
     },
     "placeholders": {
@@ -481,8 +480,8 @@
     "vesting": {
       "title": "Vesting",
       "view": {
-        "address": "Address",
         "account": "Account",
+        "address": "Address",
         "contractTemplate": "Template",
         "duration": "Duration",
         "finish": "Finish",

@@ -16,7 +16,6 @@ import { erc1155Routes } from "./erc1155/routes";
 import { mechanicsRoutes } from "./mechanics/routes";
 
 import { Marketplace } from "./mechanics/marketplace";
-import { MyAssets } from "./personal/assets";
 import { MyWallet } from "./connect-wallet";
 import { Page } from "./page";
 
@@ -49,14 +48,6 @@ const routes: Array<RouteObject> = [
         children: [
           { index: true, element: <Marketplace /> },
           { path: "/marketplace/:tab", element: <Marketplace /> },
-        ],
-      },
-      {
-        path: "/my-assets",
-        element: <Protected />,
-        children: [
-          { index: true, element: <MyAssets /> },
-          { path: "/my-assets/:tab", element: <MyAssets /> },
         ],
       },
       {

@@ -7,7 +7,7 @@ import { Erc721TokenService } from "./token.service";
 import { UserEntity } from "../../user/user.entity";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { TokenAutocompleteDto } from "../../blockchain/hierarchy/token/dto/autocomplete";
-import { AssetSearchDto } from "../../blockchain/hierarchy/token/dto";
+import { TokenSearchDto } from "../../blockchain/hierarchy/token/dto";
 
 @ApiBearerAuth()
 @Controller("/erc721-tokens")
@@ -16,7 +16,7 @@ export class Erc721TokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: AssetSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+  public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
     return this.erc721TokenService.search(dto, userEntity);
   }
 

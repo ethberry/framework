@@ -1,11 +1,31 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
+import { IsArray, IsEnum, IsEthereumAddress, IsInt, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { PaginationDto } from "@gemunion/collection";
-import { IErc721AssetSearchDto, TokenRarity } from "@framework/types";
+import { SearchDto } from "@gemunion/collection";
+import {
+  ITokenAttributesSearchDto,
+  ITokenSearchDto,
+  TokenAttributes,
+  TokenRarity,
+  TokenStatus,
+} from "@framework/types";
 
-export class AssetSearchDto extends PaginationDto implements IErc721AssetSearchDto {
+export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
+  @ApiPropertyOptional({
+    enum: TokenRarity,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<TokenRarity>)
+  @IsEnum(TokenRarity, { each: true, message: "badInput" })
+  public [TokenAttributes.RARITY]: Array<TokenRarity>;
+}
+
+export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -19,14 +39,18 @@ export class AssetSearchDto extends PaginationDto implements IErc721AssetSearchD
   public contractIds: Array<number>;
 
   @ApiPropertyOptional({
-    enum: TokenRarity,
-    isArray: true,
-    // https://github.com/OAI/OpenAPI-Specification/issues/1706
-    // format: "deepObject"
+    type: TokenAttributesSearchDto,
   })
+  @ValidateNested()
+  @Type(() => TokenAttributesSearchDto)
+  public attributes: TokenAttributesSearchDto;
+
+  @ApiPropertyOptional()
   @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<TokenRarity>)
-  @IsEnum(TokenRarity, { each: true, message: "badInput" })
-  public rarity: Array<TokenRarity>;
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  public account: string;
+
+  public tokenStatus: Array<TokenStatus>;
+  public tokenId: string;
 }

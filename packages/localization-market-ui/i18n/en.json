@@ -189,17 +189,6 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
-    "assets": {
-      "tabs": {
-        "heroes": "Heroes",
-        "heroesdb": "Heroes Lootbox",
-        "items": "Items",
-        "itemsdb": "Items Lootbox",
-        "resources": "Resources",
-        "skills": "Skills"
-      },
-      "title": "My assets"
-    },
     "claim": {
       "sorry": "Sorry, maybe you will get lucky next time",
       "title": "Claim"
@@ -215,9 +204,9 @@
     "dashboard": {
       "erc1155": {
         "contracts": "ERC1155 Contracts",
-        "recipes": "ERC1155 Recipes",
         "templates": "ERC1155 Templates",
-        "title": "ERC1155"
+        "title": "ERC1155",
+        "tokens": "ERC1155 Tokens"
       },
       "erc721": {
         "contracts": "ERC721 Contracts",

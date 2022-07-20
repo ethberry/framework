@@ -2,15 +2,15 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IErc721AssetSearchDto, TokenRarity, TokenType } from "@framework/types";
+import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
 
 interface ITokenSearchFormProps {
-  onSubmit: (values: IErc721AssetSearchDto) => Promise<void>;
-  initialValues: IErc721AssetSearchDto;
+  onSubmit: (values: ITokenSearchDto) => Promise<void>;
+  initialValues: ITokenSearchDto;
   open: boolean;
   contractType: Array<TokenType>;
 }
@@ -20,8 +20,8 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { contractIds, rarity } = initialValues;
-  const fixedValues = { contractIds, rarity };
+  const { contractIds, attributes } = initialValues;
+  const fixedValues = { contractIds, attributes };
 
   return (
     <FormWrapper
@@ -38,7 +38,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
             <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput name="rarity" options={TokenRarity} multiple />
+            <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
           </Grid>
         </Grid>
       </Collapse>

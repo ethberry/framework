@@ -4,7 +4,7 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc721AssetSearchDto, IToken, TokenType } from "@framework/types";
+import { IToken, ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721Token } from "./item";
@@ -18,12 +18,14 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IToken, IErc721AssetSearchDto>({
+    useCollection<IToken, ITokenSearchDto>({
       baseUrl: "/erc721-tokens",
       embedded,
       search: {
         contractIds: [],
-        rarity: [],
+        attributes: {
+          [TokenAttributes.RARITY]: [],
+        },
       },
     });
 
