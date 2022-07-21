@@ -25,7 +25,7 @@ import { ContractService } from "../../blockchain/hierarchy/contract/contract.se
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
-import { ERC721Abi } from "../../erc721/token/token-log/interfaces";
+import { ABI } from "../../erc721/token/token-log/interfaces";
 
 @Injectable()
 export class LootboxServiceEth {
@@ -46,7 +46,7 @@ export class LootboxServiceEth {
     private readonly contractService: ContractService,
   ) {
     this.claimAddr = configService.get<string>("CLAIM_PROXY_ADDR", "");
-    this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
+    this.itemsAddr = configService.get<string>("ERC721_RANDOM_ADDR", "");
   }
 
   public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
@@ -63,7 +63,7 @@ export class LootboxServiceEth {
 
     // Mint token create
     if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ERC721Abi, this.jsonRpcProvider);
+      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
 
       const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
 

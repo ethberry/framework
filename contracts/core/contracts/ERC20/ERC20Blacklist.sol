@@ -6,19 +6,16 @@
 
 pragma solidity ^0.8.9;
 
-import "@gemunion/contracts/contracts/ERC20/preset/ERC20ACBCS.sol";
 import "@gemunion/contracts/contracts/AccessList/BlackList.sol";
 
-contract ERC20BlackList is ERC20ACBCS, BlackList {
+import "./ERC20Simple.sol";
+
+contract ERC20Blacklist is ERC20Simple, BlackList {
   constructor(
     string memory name,
     string memory symbol,
     uint256 cap
-  ) ERC20ACBCS(name, symbol, cap) {}
-
-  receive() external payable {
-    revert();
-  }
+  ) ERC20Simple(name, symbol, cap) {}
 
   function supportsInterface(bytes4 interfaceId)
     public
@@ -35,8 +32,8 @@ contract ERC20BlackList is ERC20ACBCS, BlackList {
     address to,
     uint256 amount
   ) internal override {
-    require(!this.isBlacklisted(from), "ERC20BlackList: sender is BlackListed");
-    require(!this.isBlacklisted(to), "ERC20BlackList: receiver is BlackListed");
+    require(!this.isBlacklisted(from), "ERC20Blacklist: sender is BlackListed");
+    require(!this.isBlacklisted(to), "ERC20Blacklist: receiver is BlackListed");
     super._beforeTokenTransfer(from, to, amount);
   }
 }

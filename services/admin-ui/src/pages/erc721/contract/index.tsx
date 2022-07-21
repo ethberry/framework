@@ -107,7 +107,14 @@ export const Erc721Contract: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu contract={contract} actions={[ContractActions.ROYALTY]} />
+                <ContractActionsMenu
+                  contract={contract}
+                  actions={[
+                    ContractActions.ROYALTY,
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
+                  ]}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

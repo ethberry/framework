@@ -4,9 +4,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, AccessListEventType, ContractEventType, ContractType } from "@framework/types";
 
+import { ABI } from "./interfaces";
 import { Erc20LogService } from "./token-log.service";
-
-import { Erc20abi } from "./interfaces";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 
@@ -26,7 +25,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.ERC20_TOKEN,
             contractAddress: erc20Contracts.address || [],
-            contractInterface: Erc20abi,
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
               ContractEventType.Approval,

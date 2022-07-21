@@ -7,7 +7,7 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractLootboxAt1563804000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const lootboxCollectionAddress = process.env.LOOTBOX_ADDR || wallet;
+    const lootboxAddress = process.env.LOOTBOX_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // 41 - LOOTBOX
@@ -31,7 +31,7 @@ export class SeedContractLootboxAt1563804000160 implements MigrationInterface {
         updated_at
       ) VALUES (
         41,
-        '${lootboxCollectionAddress}',
+        '${lootboxAddress}',
         '${chainId}',
         'LOOTBOX',
         '${simpleFormatting}',

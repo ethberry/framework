@@ -10,7 +10,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IAccessList } from "@framework/types";
-import ERC20BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
+import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
 export interface IBlacklistRemoveDialogProps {
   open: boolean;
@@ -36,7 +36,7 @@ export const AccessListUnBlacklistDialog: FC<IBlacklistRemoveDialogProps> = prop
   );
 
   const metaUnBlacklist = useMetamask((values: IAccessList) => {
-    const contract = new Contract(data.address, ERC20BlackListSol.abi, provider?.getSigner());
+    const contract = new Contract(data.address, ERC20BlacklistSol.abi, provider?.getSigner());
     return contract.unBlacklist(values.account) as Promise<void>;
   });
 

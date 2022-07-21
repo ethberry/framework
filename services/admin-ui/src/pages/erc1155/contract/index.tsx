@@ -16,11 +16,17 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ContractStatus, Erc1155ContractTemplate, IContract, IContractSearchDto } from "@framework/types";
+import {
+  ContractStatus,
+  ContractTemplate,
+  Erc1155ContractTemplate,
+  IContract,
+  IContractSearchDto,
+} from "@framework/types";
 
 import { Erc1155CollectionEditDialog } from "./edit";
 import { Erc1155TokenDeployButton } from "../../../components/buttons";
-import { ContractActionsMenu } from "../../../components/menu";
+import { ContractActions, ContractActionsMenu } from "../../../components/menu";
 import { ContractSearchForm } from "../../../components/forms/contract-search";
 
 export const Erc1155Contract: FC = () => {
@@ -97,7 +103,13 @@ export const Erc1155Contract: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu contract={contract} />
+                <ContractActionsMenu
+                  contract={contract}
+                  actions={[
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
+                  ]}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

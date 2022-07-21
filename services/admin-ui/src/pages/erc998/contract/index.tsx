@@ -16,7 +16,13 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { ContractStatus, Erc998ContractTemplate, IContract, IContractSearchDto } from "@framework/types";
+import {
+  ContractStatus,
+  ContractTemplate,
+  Erc998ContractTemplate,
+  IContract,
+  IContractSearchDto,
+} from "@framework/types";
 
 import { Erc998ContractEditDialog } from "./edit";
 import { Erc998TokenDeployButton } from "../../../components/buttons";
@@ -97,7 +103,14 @@ export const Erc998Contract: FC = () => {
                 >
                   <Delete />
                 </IconButton>
-                <ContractActionsMenu contract={contract} actions={[ContractActions.ROYALTY]} />
+                <ContractActionsMenu
+                  contract={contract}
+                  actions={[
+                    ContractActions.ROYALTY,
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
+                    contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
+                  ]}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

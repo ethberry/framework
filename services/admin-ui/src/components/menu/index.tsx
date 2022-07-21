@@ -61,14 +61,14 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
           <MintErc1155TokenMenuItem address={contract.address} contractId={contract.id} />
         ) : null}
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem address={contract.address} /> : null}
-        {actions.includes(ContractActions.BLACKLIST_ADD) ? <BlacklistAddMenuItem address={contract.address} /> : null}
-        {actions.includes(ContractActions.BLACKLIST_REMOVE) ? <UnBlacklistMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.ROYALTY) ? (
           <Erc721ContractRoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
         ) : null}
         <ContractGrantRoleMenuItem address={contract.address} />
         <ContractRevokeRoleMenuItem address={contract.address} />
         <ContractRenounceRoleMenuItem address={contract.address} />
+        {actions.includes(ContractActions.BLACKLIST_ADD) ? <BlacklistAddMenuItem address={contract.address} /> : null}
+        {actions.includes(ContractActions.BLACKLIST_REMOVE) ? <UnBlacklistMenuItem address={contract.address} /> : null}
       </Menu>
     </>
   );

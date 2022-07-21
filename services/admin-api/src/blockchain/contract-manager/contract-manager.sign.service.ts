@@ -18,20 +18,26 @@ import {
 } from "@framework/types";
 
 import ERC20Simple from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC20BlackList from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
+import ERC20Blacklist from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 import LinearVesting from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
 import GradedVesting from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
 import CliffVesting from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
-// import ERC721Random from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
-// todo add actual 998 contracts!
+
 import ERC721Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC998Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC721BlackList from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
 import ERC721Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC998Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
+// import ERC721Random from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 import ERC721RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
-import ERC998RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+
+// todo add actual 998 contracts!
+import ERC998Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC998BlackList from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
+import ERC998Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
 // import ERC998Random from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
+import ERC998RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+
 import ERC1155Simple from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC1155BlackList from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
 
 @Injectable()
 export class ContractManagerSignService {
@@ -231,7 +237,7 @@ export class ContractManagerSignService {
       case Erc20ContractTemplate.SIMPLE:
         return ERC20Simple.bytecode;
       case Erc20ContractTemplate.BLACKLIST:
-        return ERC20BlackList.bytecode;
+        return ERC20Blacklist.bytecode;
       default:
         throw new Error("Unknown template");
     }
@@ -254,6 +260,8 @@ export class ContractManagerSignService {
     switch (contractTemplate) {
       case Erc721ContractTemplate.SIMPLE:
         return ERC721Simple.bytecode;
+      case Erc721ContractTemplate.BLACKLIST:
+        return ERC721BlackList.bytecode;
       case Erc721ContractTemplate.GRADED:
         return ERC721Graded.bytecode;
       case Erc721ContractTemplate.RANDOM:
@@ -268,6 +276,8 @@ export class ContractManagerSignService {
     switch (contractTemplate) {
       case Erc998ContractTemplate.SIMPLE:
         return ERC998Simple.bytecode;
+      case Erc998ContractTemplate.BLACKLIST:
+        return ERC998BlackList.bytecode;
       case Erc998ContractTemplate.GRADED:
         return ERC998Graded.bytecode;
       case Erc998ContractTemplate.RANDOM:
@@ -281,6 +291,8 @@ export class ContractManagerSignService {
     switch (contractTemplate) {
       case Erc1155ContractTemplate.SIMPLE:
         return ERC1155Simple.bytecode;
+      case Erc1155ContractTemplate.BLACKLIST:
+        return ERC1155BlackList.bytecode;
       default:
         throw new Error("Unknown template");
     }

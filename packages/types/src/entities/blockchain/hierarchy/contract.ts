@@ -20,6 +20,7 @@ export enum Erc20ContractTemplate {
 
 export enum Erc721ContractTemplate {
   "SIMPLE" = "SIMPLE", // ACBER
+  "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
   "GRADED" = "GRADED", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
   // MODULE:LOOTBOX
@@ -28,12 +29,14 @@ export enum Erc721ContractTemplate {
 
 export enum Erc998ContractTemplate {
   "SIMPLE" = "SIMPLE", // ACBER
+  "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
   "GRADED" = "GRADED", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
 }
 
 export enum Erc1155ContractTemplate {
   "SIMPLE" = "SIMPLE", // ACBS
+  "BLACKLIST" = "BLACKLIST", // ACBS + BLACKLIST
 }
 
 // waiting for https://github.com/microsoft/TypeScript/issues/17592

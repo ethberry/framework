@@ -7,9 +7,9 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc1155At1563804000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc1155ContractResourcesAddress = process.env.ERC1155_RESOURCES_ADDR || wallet;
-    const erc1155ContractPotionsAddress = process.env.ERC1155_POTIONS_ADDR || wallet;
-    const erc1155ContractShardsAddress = process.env.ERC1155_SHARDS_ADDR || wallet;
+    const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
+    const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR || wallet;
+    const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // 31 - ITEMS, 32 - SKILLS, 33 - RUNES
@@ -32,7 +32,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         updated_at
       ) VALUES (
         31,
-        '${erc1155ContractResourcesAddress}',
+        '${erc1155ContractSimpleAddress}',
         '${chainId}',
         'RESOURCES',
         '${simpleFormatting}',
@@ -48,7 +48,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         32,
-        '${erc1155ContractPotionsAddress}',
+        '${erc1155ContractInactiveAddress}',
         '${chainId}',
         'POTIONS',
         '${simpleFormatting}',
@@ -64,7 +64,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         33,
-        '${erc1155ContractShardsAddress}',
+        '${erc1155ContractBlacklistAddress}',
         '${chainId}',
         'SHARDS',
         '${simpleFormatting}',
@@ -75,7 +75,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC1155',
-        'SIMPLE',
+        'BLACKLIST',
         '${currentDateTime}',
         '${currentDateTime}'
       )

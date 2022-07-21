@@ -26,7 +26,7 @@ import { ContractService } from "../../blockchain/hierarchy/contract/contract.se
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
-import { ERC721Abi } from "../../erc721/token/token-log/interfaces";
+import { ABI } from "../../erc721/token/token-log/interfaces";
 
 @Injectable()
 export class Erc998TokenServiceEth {
@@ -64,7 +64,7 @@ export class Erc998TokenServiceEth {
 
     // Mint token create
     if (from === constants.AddressZero) {
-      const attributes = await getMetadata(tokenId, address, ERC721Abi, this.jsonRpcProvider);
+      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
 
       const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
 

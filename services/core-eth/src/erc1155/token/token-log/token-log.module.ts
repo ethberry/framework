@@ -5,8 +5,7 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
 
 // custom contracts
-import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
-
+import { ABI } from "./interfaces";
 import { Erc1155LogService } from "./token-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
@@ -28,7 +27,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.ERC1155_TOKEN,
             contractAddress: erc1155Contracts.address || [],
-            contractInterface: ERC1155SimpleSol.abi,
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
               ContractEventType.TransferSingle,

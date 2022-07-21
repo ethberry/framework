@@ -12,7 +12,7 @@ import { Erc20ContractTemplate, IErc20TokenDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC20BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20BlackList.sol/ERC20BlackList.json";
+import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
 import { Erc20TokenDeployDialog } from "./deploy-dialog";
 
@@ -21,7 +21,7 @@ function getBytecodeByErc20TokenTemplate(template: Erc20ContractTemplate) {
     case Erc20ContractTemplate.SIMPLE:
       return ERC20SimpleSol.bytecode;
     case Erc20ContractTemplate.BLACKLIST:
-      return ERC20BlackListSol.bytecode;
+      return ERC20BlacklistSol.bytecode;
     default:
       throw new Error("Unknown template");
   }
