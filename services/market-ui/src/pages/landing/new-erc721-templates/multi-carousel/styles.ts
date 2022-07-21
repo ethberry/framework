@@ -4,6 +4,7 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles<Theme>(
   theme => ({
     container: {
+      height: 480,
       margin: theme.spacing(0, -1, 0, -1),
     },
     item: {
