@@ -74,12 +74,14 @@ export class CraftService {
         leftJoinAndSelect: {
           item: "craft.item",
           item_components: "item.components",
-          item_contract: "item_components.contract",
           item_template: "item_components.template",
+          item_contract: "item_components.contract",
+          item_tokens: "item_template.tokens",
           ingredients: "craft.ingredients",
           ingredients_components: "ingredients.components",
-          ingredients_contract: "ingredients_components.contract",
           ingredients_template: "ingredients_components.template",
+          ingredients_contract: "ingredients_components.contract",
+          ingredients_tokens: "ingredients_template.tokens",
         },
       },
     });
@@ -87,26 +89,7 @@ export class CraftService {
 
   public async sign(dto: ISignCraftDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { craftId } = dto;
-    const craftEntity = await this.findOne(
-      { id: craftId },
-      {
-        join: {
-          alias: "craft",
-          leftJoinAndSelect: {
-            item: "craft.item",
-            item_components: "item.components",
-            item_template: "item_components.template",
-            item_contract: "item_components.contract",
-            item_tokens: "item_template.tokens",
-            ingredients: "craft.ingredients",
-            ingredients_components: "ingredients.components",
-            ingredients_template: "ingredients_components.template",
-            ingredients_contract: "ingredients_components.contract",
-            ingredients_tokens: "ingredients_template.tokens",
-          },
-        },
-      },
-    );
+    const craftEntity = await this.findOneWithRelations({ id: craftId });
 
     if (!craftEntity) {
       throw new NotFoundException("craftNotFound");

@@ -8,8 +8,8 @@ import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IServerSignature } from "@gemunion/types-collection";
 import { ICraft, TokenType } from "@framework/types";
-
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+
 import { getEthPrice } from "../../../../utils/money";
 
 interface ICraftButtonProps {
@@ -20,7 +20,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
   const { craft } = props;
 
   const api = useApi();
-  const { provider, account } = useWeb3React();
+  const { provider } = useWeb3React();
 
   const handleCraft = useMetamask(() => {
     return api
@@ -29,7 +29,6 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         method: "POST",
         data: {
           craftId: craft.id,
-          account,
         },
       })
       .then((sign: IServerSignature) => {
