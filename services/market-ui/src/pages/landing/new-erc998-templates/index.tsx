@@ -7,8 +7,9 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
 import { ITemplate, TokenType } from "@framework/types";
 
-import { MultiCarousel } from "./multi-carousel";
 import { useStyles } from "./styles";
+import { MultiCarousel } from "../multi-carousel";
+import { Erc998TemplateItem } from "../../erc998/template-list/item";
 
 export const NewErc998: FC = () => {
   const classes = useStyles();
@@ -46,7 +47,7 @@ export const NewErc998: FC = () => {
       <Typography variant="h4" className={classes.title}>
         <FormattedMessage id="pages.landing.erc998-new" />
       </Typography>
-      <MultiCarousel template={templates} />
+      <MultiCarousel template={templates} component={Erc998TemplateItem} />
     </ProgressOverlay>
   );
 };

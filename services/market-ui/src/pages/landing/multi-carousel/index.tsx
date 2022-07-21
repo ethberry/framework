@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, createElement } from "react";
 import { Theme, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
@@ -6,11 +6,11 @@ import "react-multi-carousel/lib/styles.css";
 import { ITemplate } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { Erc721TemplateItem } from "../../../erc721/template-list/item";
 import { MultiCarouselButtonGroup } from "./button-group";
 
 declare interface IMultiCarouselProps {
   template: Array<ITemplate>;
+  component: FC<{ template: ITemplate }>;
 }
 
 export enum IResolutions {
@@ -20,7 +20,7 @@ export enum IResolutions {
 }
 
 export const MultiCarousel: FC<IMultiCarouselProps> = props => {
-  const { template } = props;
+  const { template, component } = props;
 
   const classes = useStyles();
   const there = useTheme();
@@ -65,9 +65,7 @@ export const MultiCarousel: FC<IMultiCarouselProps> = props => {
       customButtonGroup={<MultiCarouselButtonGroup />}
       infinite
     >
-      {template.map(template => (
-        <Erc721TemplateItem key={template.id} template={template} />
-      ))}
+      {template.map(template => createElement(component, { key: template.id, template }))}
     </Carousel>
   );
 };
