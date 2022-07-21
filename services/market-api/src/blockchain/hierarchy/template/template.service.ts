@@ -16,7 +16,7 @@ export class TemplateService {
     dto: Partial<ITemplateSearchDto>,
     contractType?: TokenType,
   ): Promise<[Array<TemplateEntity>, number]> {
-    const { query, skip, take, contractIds /*, minPrice, maxPrice */ } = dto;
+    const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
@@ -66,13 +66,13 @@ export class TemplateService {
       );
     }
 
-    // if (maxPrice) {
-    //   queryBuilder.andWhere("template.price <= :maxPrice", { maxPrice });
-    // }
-    //
-    // if (minPrice) {
-    //   queryBuilder.andWhere("template.price >= :minPrice", { minPrice });
-    // }
+    if (maxPrice) {
+      queryBuilder.andWhere("price_components.amount <= :maxPrice", { maxPrice });
+    }
+
+    if (minPrice) {
+      queryBuilder.andWhere("price_components.amount >= :minPrice", { minPrice });
+    }
 
     queryBuilder.andWhere(
       new Brackets(qb => {

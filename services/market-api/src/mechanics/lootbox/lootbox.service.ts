@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
@@ -19,15 +20,17 @@ export class LootboxService {
     private readonly lootboxEntityRepository: Repository<LootboxEntity>,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
-    const { query, lootboxStatus, skip, take } = dto;
+    const { query, lootboxStatus, skip, take, minPrice, maxPrice } = dto;
 
     const queryBuilder = this.lootboxEntityRepository.createQueryBuilder("lootbox");
 
     queryBuilder.select();
 
+    // this information is already known on UI
     // queryBuilder.leftJoinAndSelect("lootbox.contract", "contract");
 
     queryBuilder.leftJoinAndSelect("lootbox.price", "price");
@@ -49,14 +52,13 @@ export class LootboxService {
       }
     }
 
-    // TODO restore
-    // if (maxPrice) {
-    //   queryBuilder.andWhere("lootbox.price <= :maxPrice", { maxPrice });
-    // }
-    //
-    // if (minPrice) {
-    //   queryBuilder.andWhere("lootbox.price >= :minPrice", { minPrice });
-    // }
+    if (maxPrice) {
+      queryBuilder.andWhere("price_components.amount <= :maxPrice", { maxPrice });
+    }
+
+    if (minPrice) {
+      queryBuilder.andWhere("price_components.amount >= :minPrice", { minPrice });
+    }
 
     if (query) {
       queryBuilder.leftJoin(
@@ -71,18 +73,6 @@ export class LootboxService {
         }),
       );
     }
-
-    // if (templateContractIds) {
-    //   if (templateContractIds.length === 1) {
-    //     queryBuilder.andWhere("template.contractId = :contractId", {
-    //       templateContractId: templateContractIds[0],
-    //     });
-    //   } else {
-    //     queryBuilder.andWhere("template.contractId IN(:...templateContractIds)", {
-    //       templateContractIds,
-    //     });
-    //   }
-    // }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -164,23 +154,25 @@ export class LootboxService {
 
     const nonce = utils.randomBytes(32);
 
-    const signature = await this.getSignature(nonce, account, templateEntity);
+    const signature = await this.getSignature(nonce, account, lootboxEntity);
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async getSignature(nonce: Uint8Array, account: string, templateEntity: TemplateEntity): Promise<string> {
+  public async getSignature(nonce: Uint8Array, account: string, lootboxEntity: LootboxEntity): Promise<string> {
+    const lootboxAddr = this.configService.get<string>("LOOTBOX_ADDR", "");
     return this.signerService.getSignature(
       nonce,
       account,
       [
         {
-          tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
-          token: templateEntity.contract.address,
-          tokenId: templateEntity.id.toString(),
+          // TODO pass lootboxEntity.item.components[0].template.id, probably as amount
+          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+          token: lootboxAddr,
+          tokenId: lootboxEntity.id.toString(),
           amount: "1",
         },
       ],
-      templateEntity.price.components.map(component => ({
+      lootboxEntity.price.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,
