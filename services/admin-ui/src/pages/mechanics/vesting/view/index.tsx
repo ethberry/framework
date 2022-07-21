@@ -39,7 +39,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="pages.vesting.view.address" />
               </TableCell>
               <TableCell align="right">
-                <Link href={`${networks[process.env.CHAIN_ID].blockExplorerUrls[0]}address/${address}`}>{address}</Link>
+                <Link href={`${networks[~~process.env.CHAIN_ID].blockExplorerUrls[0]}address/${address}`}>{address}</Link>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -47,7 +47,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="pages.vesting.view.account" />
               </TableCell>
               <TableCell align="right">
-                <Link href={`${networks[process.env.CHAIN_ID].blockExplorerUrls[0]}/address/${account}`}>
+                <Link href={`${networks[~~process.env.CHAIN_ID].blockExplorerUrls[0]}/address/${account}`}>
                   {account}
                 </Link>
               </TableCell>
