@@ -15,12 +15,14 @@ import {
 } from "../../../typechain-types";
 import {
   _stakePeriod,
+  baseTokenURI,
   decimals,
   DEFAULT_ADMIN_ROLE,
   fakeAsset,
   LINK_ADDR,
   MINTER_ROLE,
   PAUSER_ROLE,
+  royalty,
   tokenName,
   tokenSymbol,
   VRF_ADDR,
@@ -86,16 +88,16 @@ describe("Staking", function () {
     erc20Instance = await erc20Factory.deploy("ERC20Simple", "SMP", 1000000000);
     // ERC721 Simple
     const simple721Factory = await ethers.getContractFactory("ERC721Simple");
-    erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", 100, "https://localhost");
+    erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", royalty, baseTokenURI);
     // ERC721 Random
     const erc721randomFactory = await ethers.getContractFactory("ERC721RandomTest");
-    erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", 100, "https://localhost");
+    erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
     // ERC721 Lootbox
     const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
-    lootboxInstance = await lootboxFactory.deploy("ERC721Lootbox", "LOOT", 100, "https://localhost");
+    lootboxInstance = await lootboxFactory.deploy("ERC721Lootbox", "LOOT", royalty, baseTokenURI);
     // ERC1155
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155Instance = await erc1155Factory.deploy("https://localhost");
+    erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
 
     // Grant roles
     await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);

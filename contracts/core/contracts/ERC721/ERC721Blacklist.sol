@@ -26,7 +26,7 @@ contract ERC721Blacklist is ERC721Simple, BlackList {
     public
     view
     virtual
-    override(AccessControl, ERC721ACBER)
+    override(AccessControl, ERC721Simple)
     returns (bool)
   {
     return super.supportsInterface(interfaceId);

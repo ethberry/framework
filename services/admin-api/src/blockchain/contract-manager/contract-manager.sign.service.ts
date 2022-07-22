@@ -9,7 +9,7 @@ import {
   Erc20ContractTemplate,
   Erc721ContractTemplate,
   Erc998ContractTemplate,
-  IContractDeployDto,
+  IErc1155ContractDeployDto,
   IErc20TokenDeployDto,
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
@@ -199,8 +199,8 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature };
   }
 
-  public async erc1155Token(dto: IContractDeployDto): Promise<IServerSignature> {
-    const { contractTemplate, baseTokenURI } = dto;
+  public async erc1155Token(dto: IErc1155ContractDeployDto): Promise<IServerSignature> {
+    const { contractTemplate, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
     const signature = await this.signer._signTypedData(
@@ -216,6 +216,7 @@ export class ContractManagerSignService {
         EIP712: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
           { name: "templateId", type: "uint256" },
         ],
@@ -224,6 +225,7 @@ export class ContractManagerSignService {
       {
         nonce,
         bytecode: this.getBytecodeByErc1155ContractTemplate(contractTemplate),
+        royalty,
         baseTokenURI,
         templateId: Object.keys(Erc1155ContractTemplate).indexOf(contractTemplate),
       },

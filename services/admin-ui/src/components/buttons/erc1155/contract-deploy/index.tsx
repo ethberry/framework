@@ -8,7 +8,7 @@ import { Contract, utils } from "ethers";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc1155ContractTemplate, IContractDeployDto } from "@framework/types";
+import { Erc1155ContractTemplate, IErc1155ContractDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
@@ -35,8 +35,8 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
   const api = useApi();
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IContractDeployDto) => {
-      const { contractTemplate, baseTokenURI } = values;
+    (values: IErc1155ContractDeployDto) => {
+      const { contractTemplate, royalty, baseTokenURI } = values;
 
       return api
         .fetchJson({
@@ -55,6 +55,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
           return contract.deployERC1155Token(
             nonce,
             getBytecodeByErc1155TokenTemplate(contractTemplate),
+            royalty,
             baseTokenURI,
             Object.keys(Erc1155ContractTemplate).indexOf(contractTemplate),
             process.env.ACCOUNT,

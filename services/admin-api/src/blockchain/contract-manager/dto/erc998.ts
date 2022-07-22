@@ -23,14 +23,14 @@ export class Erc998ContractDeployDto implements IErc998ContractDeployDto {
   public symbol: string;
 
   @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @MaxLength(128, { message: "rangeOverflow" })
-  @IsUrl({ require_tld: false }, { message: "patternMismatch" })
-  public baseTokenURI: string;
-
-  @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
   @Max(1000, { message: "rangeOverflow" })
   public royalty: number;
+
+  @ApiProperty()
+  @IsString({ message: "typeMismatch" })
+  @MaxLength(128, { message: "rangeOverflow" })
+  @IsUrl({ require_tld: false }, { message: "patternMismatch" })
+  public baseTokenURI: string;
 }

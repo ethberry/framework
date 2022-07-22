@@ -40,7 +40,7 @@ describe("Exchange", function () {
     await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
+    erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
     await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");

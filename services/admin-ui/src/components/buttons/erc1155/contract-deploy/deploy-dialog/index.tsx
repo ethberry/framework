@@ -2,7 +2,8 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
-import { Erc1155ContractTemplate, IContract, IContractDeployDto } from "@framework/types";
+import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { Erc1155ContractTemplate, IContract, IErc1155ContractDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
@@ -13,9 +14,10 @@ export interface IErc1155TokenDeployDialogProps {
 }
 
 export const Erc1155TokenDeployDialog: FC<IErc1155TokenDeployDialogProps> = props => {
-  const fixedValues: IContractDeployDto = {
+  const fixedValues: IErc1155ContractDeployDto = {
     contractTemplate: Erc1155ContractTemplate.SIMPLE,
     baseTokenURI: `${process.env.BE_URL}/metadata`,
+    royalty: 0,
   };
 
   return (
@@ -28,6 +30,7 @@ export const Erc1155TokenDeployDialog: FC<IErc1155TokenDeployDialogProps> = prop
     >
       <SelectInput name="contractTemplate" options={Erc1155ContractTemplate} />
       <TextInput name="baseTokenURI" />
+      <CurrencyInput name="royalty" symbol="%" />
     </FormDialog>
   );
 };

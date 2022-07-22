@@ -8,15 +8,13 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
-import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
 
+import "./ERC721Graded.sol";
 import "./interfaces/IERC721Random.sol";
-import "../Mechanics/MetaData/MetaDataGetter.sol";
 import "../Mechanics/Asset/interfaces/IAsset.sol";
 
-contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
+contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Graded {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -31,13 +29,15 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
-    // should start from 1
-    _tokenIdTracker.increment();
-  }
+  ) ERC721Graded(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, Asset calldata item) public onlyRole(MINTER_ROLE) {
+  function mintCommon(address to, Asset calldata item)
+    public
+    override(IERC721Simple, ERC721Graded)
+    onlyRole(MINTER_ROLE)
+  {
     require(item.tokenId != 0, "ERC721Random: wrong type");
+
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
@@ -51,12 +51,6 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
   function mintRandom(address to, Asset calldata item) external override onlyRole(MINTER_ROLE) {
     require(item.tokenId != 0, "ERC721Random: wrong type");
     _queue[getRandomNumber()] = Request(to, item);
-  }
-
-  function upgrade(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
-    uint256 grade = getRecordFieldValue(tokenId, GRADE);
-    upsertRecordField(tokenId, GRADE, grade + 1);
-    return true;
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
@@ -86,18 +80,6 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721ACBER, ERC
 
     // common
     return 1;
-  }
-
-  function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setBaseURI(baseTokenURI);
-  }
-
-  function _baseURI() internal view virtual override returns (string memory) {
-    return _baseURI(_baseTokenURI);
-  }
-
-  receive() external payable {
-    revert();
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {

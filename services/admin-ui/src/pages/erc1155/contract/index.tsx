@@ -106,6 +106,7 @@ export const Erc1155Contract: FC = () => {
                 <ContractActionsMenu
                   contract={contract}
                   actions={[
+                    ContractActions.ROYALTY,
                     contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
                     contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
                   ]}

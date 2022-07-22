@@ -64,15 +64,15 @@ async function deployERC998() {
 
 async function deployERC1155() {
   const itemFactory = await ethers.getContractFactory("ERC1155Simple");
-  const itemInstance = await itemFactory.deploy(baseTokenURI);
+  const itemInstance = await itemFactory.deploy(royalty, baseTokenURI);
   console.info(`ERC1155_SIMPLE_ADDR=${itemInstance.address.toLowerCase()}`);
 
   const skillFactory = await ethers.getContractFactory("ERC1155Simple");
-  const skillInstance = await skillFactory.deploy(baseTokenURI);
+  const skillInstance = await skillFactory.deploy(royalty, baseTokenURI);
   console.info(`ERC1155_INACTIVE_ADDR=${skillInstance.address.toLowerCase()}`);
 
   const runeFactory = await ethers.getContractFactory("ERC1155Blacklist");
-  const runeInstance = await runeFactory.deploy(baseTokenURI);
+  const runeInstance = await runeFactory.deploy(royalty, baseTokenURI);
   console.info(`ERC1155_BLACKLIST_ADDR=${runeInstance.address.toLowerCase()}`);
 }
 

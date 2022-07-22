@@ -6,18 +6,16 @@
 
 pragma solidity ^0.8.9;
 
-import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
-import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "./interfaces/IERC721Lootbox.sol";
-import "../Asset/interfaces/IAsset.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
-import "../MetaData/MetaDataGetter.sol";
+import "../../ERC721/ERC721Simple.sol";
 
-contract ERC721Lootbox is IERC721Lootbox, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
-  using Address for address;
+contract ERC721Lootbox is IERC721Lootbox, ERC721Simple {
   using Counters for Counters.Counter;
+
+  using Address for address;
 
   mapping(uint256 => Asset) internal _itemData;
 
@@ -28,10 +26,7 @@ contract ERC721Lootbox is IERC721Lootbox, ERC721ACBER, ERC721BaseUrl, MetaDataGe
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
-    // should start from 1
-    _tokenIdTracker.increment();
-  }
+  ) ERC721Simple(name, symbol, royalty, baseTokenURI) { }
 
   function mintLootbox(address to, Asset calldata item) public onlyRole(MINTER_ROLE) {
     require(item.tokenId != 0, "Lootbox: wrong item");
@@ -54,18 +49,6 @@ contract ERC721Lootbox is IERC721Lootbox, ERC721ACBER, ERC721BaseUrl, MetaDataGe
 
     _burn(tokenId);
     IERC721Random(item.token).mintRandom(_msgSender(), item);
-  }
-
-  function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setBaseURI(baseTokenURI);
-  }
-
-  function _baseURI() internal view virtual override returns (string memory) {
-    return _baseURI(_baseTokenURI);
-  }
-
-  receive() external payable {
-    revert();
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {

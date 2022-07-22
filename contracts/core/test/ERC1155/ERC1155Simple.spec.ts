@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { ERC1155Simple } from "../../typechain-types";
-import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, tokenId } from "../constants";
+import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenId } from "../constants";
 import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
 
 describe("ERC1155Simple", function () {
@@ -12,7 +12,7 @@ describe("ERC1155Simple", function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155Instance = await erc1155Factory.deploy(baseTokenURI);
+    erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
 
     this.contractInstance = erc1155Instance;
   });

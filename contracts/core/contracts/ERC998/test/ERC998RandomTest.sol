@@ -8,20 +8,16 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
-import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
-import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
-
-import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../MOCKS/ChainLink/ERC721ChainLinkHH.sol";
-import "../../Mechanics/Asset/interfaces/IAsset.sol";
-import "../../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC998RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC721BaseUrl, MetaDataGetter {
+import "../../ERC721/ERC721Graded.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
+
+contract ERC998RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721Graded {
   using Counters for Counters.Counter;
 
   struct Request {
-    address owner;
+    address account;
     Asset item;
   }
 
@@ -32,17 +28,12 @@ contract ERC998RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721ACBER(name, symbol, royalty) ERC721BaseUrl(baseTokenURI) {
-    // should start from 1
-    _tokenIdTracker.increment();
+  ) ERC721Graded(name, symbol, royalty, baseTokenURI) {
   }
 
-  function upgrade(uint256) public view onlyRole(MINTER_ROLE) returns (bool) {
-    return false;
-  }
+  function mintCommon(address to, Asset calldata item) public override(IERC721Simple, ERC721Graded) onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Random: wrong type");
 
-  function mintCommon(address to, Asset calldata item) public onlyRole(MINTER_ROLE) {
-    require(item.tokenId != 0, "ERC998RandomTest: wrong type");
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
@@ -54,7 +45,7 @@ contract ERC998RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
   }
 
   function mintRandom(address to, Asset calldata item) external override onlyRole(MINTER_ROLE) {
-    require(item.tokenId != 0, "ERC998RandomTest: wrong type");
+    require(item.tokenId != 0, "ERC721Random: wrong type");
     _queue[getRandomNumber()] = Request(to, item);
   }
 
@@ -64,10 +55,11 @@ contract ERC998RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     Request memory request = _queue[requestId];
 
     upsertRecordField(tokenId, TEMPLATE_ID, request.item.tokenId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
-    safeMint(request.owner);
+    safeMint(request.account);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {
@@ -86,19 +78,7 @@ contract ERC998RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     return 1;
   }
 
-  function setBaseURI(string memory baseTokenURI) external onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setBaseURI(baseTokenURI);
-  }
-
-  function _baseURI() internal view virtual override returns (string memory) {
-    return _baseURI(_baseTokenURI);
-  }
-
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
-  }
-
-  receive() external payable {
-    revert();
   }
 }

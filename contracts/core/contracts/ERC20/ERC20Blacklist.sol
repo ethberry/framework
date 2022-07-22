@@ -21,7 +21,7 @@ contract ERC20Blacklist is ERC20Simple, BlackList {
     public
     view
     virtual
-    override(AccessControl, ERC20ACBCS)
+    override(AccessControl, ERC20ACB)
     returns (bool)
   {
     return super.supportsInterface(interfaceId);

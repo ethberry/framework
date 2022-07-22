@@ -6,22 +6,18 @@
 
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-
 import "@gemunion/contracts/contracts/AccessList/BlackList.sol";
 
 import "./ERC1155Simple.sol";
 
 contract ERC1155Blacklist is ERC1155Simple, BlackList {
-  using Counters for Counters.Counter;
-
-  constructor(string memory baseTokenURI) ERC1155Simple(baseTokenURI) {}
+  constructor(uint96 royaltyNumerator, string memory baseTokenURI) ERC1155Simple(royaltyNumerator, baseTokenURI) {}
 
   function supportsInterface(bytes4 interfaceId)
     public
     view
     virtual
-    override(AccessControl, ERC1155ACBS)
+    override(AccessControl, ERC1155ACBSR)
     returns (bool)
   {
     return super.supportsInterface(interfaceId);

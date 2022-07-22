@@ -49,7 +49,7 @@ describe("ERC721Graded", function () {
 
       const value = await this.erc721Instance.getRecordFieldValue(
         tokenId,
-        utils.keccak256(ethers.utils.toUtf8Bytes("templateId")),
+        utils.keccak256(ethers.utils.toUtf8Bytes("template_id")),
       );
       expect(value).to.equal(templateId);
     });
