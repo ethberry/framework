@@ -5,9 +5,9 @@ import { TConnectors } from "../connectors";
 import { INetwork } from "../interfaces";
 
 export interface IWalletContext {
-  openConnectWalletDialog: () => () => Promise<any>;
+  openConnectWalletDialog: () => Promise<Web3ContextType>;
+  connectCallback: (fn: () => Promise<any>) => void;
   closeConnectWalletDialog: () => void;
-  onWalletConnect: (fn: () => (web3Context: Web3ContextType) => Promise<any>) => () => Promise<any>;
   activeConnector: TConnectors | null;
   setActiveConnector: (value: TConnectors | null) => void;
   setNetwork: (network: INetwork) => void;

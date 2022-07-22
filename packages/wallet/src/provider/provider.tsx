@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Web3ReactProvider, Web3ReactHooks, Web3ContextType } from "@web3-react/core";
 
 import { usePopup } from "@gemunion/provider-popup";
@@ -40,36 +40,23 @@ export const WalletProvider: FC<IWalletProviderProps> = props => {
     storedConnector ? (JSON.parse(storedConnector) as TConnectors) : null,
   );
 
-  const [callback, setCallback] = useState<((web3Context: Web3ContextType) => Promise<any>) | null>(null);
+  const [resolve, setResolve] = useState<((context: Web3ContextType) => void) | null>(null);
 
-  let resolve: (value?: any) => void = () => {};
-
-  const openConnectWalletDialog = (): (() => Promise<any>) => {
+  const openConnectWalletDialog = (): Promise<any> => {
     openPopup(WALLET_CONNECT_POPUP_TYPE);
 
-    return () => {
-      return new Promise(_resolve => {
-        resolve = _resolve;
-      });
-    };
+    return new Promise(_resolve => setResolve(() => {
+      return _resolve;
+    }));
   };
 
-  const onWalletConnect = useCallback((fn: () => (web3Context: Web3ContextType) => Promise<any>): (() => Promise<any>) => {
-    setCallback(fn);
-    if (!activeConnector) {
-      openConnectWalletDialog();
-    }
-
-    return () => {
-      return new Promise(_resolve => {
-        resolve = _resolve;
-      });
-    };
-  }, [activeConnector]);
+  const resetConnect = (): void => {
+    setResolve(null);
+  };
 
   const closeConnectWalletDialog = (): void => {
     closePopup();
-    setCallback(null);
+    resetConnect();
   };
 
   const setActiveConnectorHandle = (value: TConnectors | null) => {
@@ -77,11 +64,11 @@ export const WalletProvider: FC<IWalletProviderProps> = props => {
     localStorage.setItem(STORE_CONNECTOR, JSON.stringify(value));
   };
 
-  useEffect(() => {
-    if (activeConnector) {
-      resolve();
+  const connectCallback = useCallback(async (fn: () => Promise<any>) => {
+    if (resolve) {
+      await fn();
     }
-  }, [activeConnector]);
+  }, [resolve]);
 
   if (!license.isValid()) {
     return null;
@@ -94,17 +81,17 @@ export const WalletProvider: FC<IWalletProviderProps> = props => {
           activeConnector,
           setActiveConnector: setActiveConnectorHandle,
           openConnectWalletDialog,
-          onWalletConnect,
           closeConnectWalletDialog,
           network,
           setNetwork,
+          connectCallback,
         }}
       >
         <>
           {children}
           <Reconnect activeConnector={activeConnector} />
           <CheckNetwork />
-          <OnWalletConnect callback={callback} setCallback={setCallback} resolve={resolve} />
+          <OnWalletConnect resolveContext={resolve} resetConnect={resetConnect} />
         </>
       </WalletContext.Provider>
     </Web3ReactProvider>

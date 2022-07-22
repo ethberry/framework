@@ -1,22 +1,23 @@
 import { useState } from "react";
 import { useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
+import { Web3ContextType } from "@web3-react/core";
+
+import { IServerSignature } from "@gemunion/types-collection";
 
 import { useServerSignature } from "./use-server-signature";
 import { useMetamask } from "./use-metamask";
 
-export const useDeploy = (deploy: (data: any) => Promise<void>) => {
+export const useDeploy = (deploy: (data: any, web3Context: Web3ContextType, sign: IServerSignature) => Promise<void>) => {
   const [isDeployDialogOpen, setIsDeployDialogOpen] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
   const fnWithSignature = useServerSignature(deploy);
-  const deployFn = useMetamask((props: any) => {
-    const { data, thenHandler, catchHandler, web3Context } = props;
-
-    return fnWithSignature(data, web3Context, thenHandler, catchHandler);
-  })
+  const deployFn = useMetamask((data: any, web3Context: Web3ContextType) => {
+    return fnWithSignature(data, web3Context);
+  });
 
   const handleDeploy = (): void => {
     setIsDeployDialogOpen(true);
@@ -24,6 +25,10 @@ export const useDeploy = (deploy: (data: any) => Promise<void>) => {
 
   const handleDeployConfirm = async (data: any, form: any): Promise<any> => {
     const thenHandler = (result: any) => {
+      if (result === null) {
+        return;
+      }
+
       form?.reset(form?.getValues());
       setIsDeployDialogOpen(false);
       enqueueSnackbar(formatMessage({ id: "snackbar.success" }), { variant: "success" });
@@ -39,15 +44,10 @@ export const useDeploy = (deploy: (data: any) => Promise<void>) => {
         Object.keys(errors).forEach(key => {
           form?.setError(key, { type: "custom", message: errors[key] }, { shouldFocus: true });
         });
-      } else if (e.status) {
-        enqueueSnackbar(formatMessage({ id: `snackbar.${e.message as string}` }), { variant: "error" });
-      } else {
-        console.error(e);
-        enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
       }
     };
 
-    return deployFn({ data, thenHandler, catchHandler });
+    return deployFn(data).then(thenHandler).catch(catchHandler);
   };
 
   const handleDeployCancel = () => {

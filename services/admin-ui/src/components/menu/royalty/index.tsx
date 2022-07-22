@@ -28,17 +28,15 @@ export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemP
     setIsRoyaltyDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IRoyaltyDto & { web3Context: Web3ContextType }) => {
-    const { web3Context } = values;
-
+  const meta = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
     const contract = new Contract(address, IERC721RoyaltySol.abi, web3Context.provider?.getSigner());
-    return contract.setDefaultRoyalty(web3Context.account, values.royalty).finally(() => {
-      setIsRoyaltyDialogOpen(false);
-    }) as Promise<void>;
+    return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 
   const handleRoyaltyConfirmed = async (values: IRoyaltyDto): Promise<void> => {
-    await meta(values);
+    await meta(values).finally(() => {
+      setIsRoyaltyDialogOpen(false);
+    });
   };
 
   return (

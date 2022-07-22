@@ -2,9 +2,11 @@ import { FC } from "react";
 import { Button } from "@mui/material";
 import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
+import { Web3ContextType } from "@web3-react/core";
 
 import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+import { IServerSignature } from "@gemunion/types-collection";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 import { getEthPrice } from "../../../../utils/money";
@@ -16,9 +18,7 @@ interface ITemplatePurchaseButtonProps {
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
   const { template } = props;
 
-  const metaFnWithSignature = useServerSignature((props: any) => {
-    const { sign, web3Context } = props;
-
+  const metaFnWithSignature = useServerSignature((_values: any, web3Context: Web3ContextType, sign: IServerSignature) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
 
     return contract.execute(
@@ -45,8 +45,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
     ) as Promise<void>;
   });
 
-  const metaFnWithWallet = useMetamask((props: any) => {
-    const { web3Context } = props;
+  const metaFnWithWallet = useMetamask((_values: any, web3Context: Web3ContextType) => {
     const { account } = web3Context;
 
     return metaFnWithSignature({

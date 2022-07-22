@@ -1,4 +1,4 @@
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { useWeb3React } from "@web3-react/core";
 
 import { useWallet } from "@gemunion/provider-wallet";
 
@@ -7,24 +7,19 @@ import { useMetamaskValue } from "./use-metamask-value";
 export const useMetamask = (fn: (...args: Array<any>) => Promise<any>) => {
   const web3ContextGlobal = useWeb3React();
   const { isActive } = web3ContextGlobal;
-  const { onWalletConnect } = useWallet();
+  const { openConnectWalletDialog } = useWallet();
 
   const metaFn = useMetamaskValue(fn);
 
   return async (...args: Array<any>) => {
-    const params = args.length > 0 ? args[0] : {};
-    const {
-      thenHandler,
-      catchHandler,
-      web3Context: passedWeb3Context = web3ContextGlobal,
-    } = params;
+    const params = args[0];
 
-    if (!isActive && !passedWeb3Context?.isActive) {
-      return onWalletConnect(() => (web3Context: Web3ContextType) => {
-        return metaFn({ ...params, web3Context, thenHandler, catchHandler });
-      })();
+    let context = web3ContextGlobal;
+
+    if (!isActive) {
+      context = await openConnectWalletDialog();
     }
 
-    return metaFn({ ...params, web3Context: passedWeb3Context, thenHandler, catchHandler });
+    return metaFn({ ...params }, context);
   };
 };

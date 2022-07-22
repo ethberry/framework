@@ -23,25 +23,29 @@ export const WalletConnectButton: FC<IWalletConnectButtonProps> = props => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
   const { isActive, connector } = useWeb3React();
-  const { setActiveConnector, network } = useWallet();
+  const { setActiveConnector, network, connectCallback } = useWallet();
 
-  const handleClick = async () => {
-    await walletConnect
-      .activate(network.chainId)
-      .then(() => setActiveConnector(TConnectors.WALLETCONNECT))
-      .catch(e => {
-        // eslint-disable-next-line no-console
-        console.error("error", e);
+  const handleClick = () => {
+    connectCallback(() => {
+      return walletConnect
+        .activate(network.chainId)
+        .then(() => {
+          setActiveConnector(TConnectors.WALLETCONNECT);
+          onClick();
+        })
+        .catch(e => {
+          // eslint-disable-next-line no-console
+          console.error("error", e);
 
-        setActiveConnector(null);
+          setActiveConnector(null);
 
-        if (e && e.code === 4001) {
-          enqueueSnackbar(formatMessage({ id: "snackbar.rejectedByUser" }), { variant: "warning" });
-        } else {
-          enqueueSnackbar((e && e.message) || formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
-    onClick();
+          if (e && e.code === 4001) {
+            enqueueSnackbar(formatMessage({ id: "snackbar.rejectedByUser" }), { variant: "warning" });
+          } else {
+            enqueueSnackbar((e && e.message) || formatMessage({ id: "snackbar.error" }), { variant: "error" });
+          }
+        });
+    });
   };
 
   return (

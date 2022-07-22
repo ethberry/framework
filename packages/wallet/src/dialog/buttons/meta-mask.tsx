@@ -22,7 +22,7 @@ export const MetaMaskButton: FC<IMetaMaskButtonProps> = props => {
   const { isActive, connector } = useWeb3React();
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
-  const { setActiveConnector, network } = useWallet();
+  const { setActiveConnector, network, connectCallback } = useWallet();
 
   const notDetectedWeb3MessageConfig: OptionsObject = {
     variant: "warning",
@@ -37,30 +37,33 @@ export const MetaMaskButton: FC<IMetaMaskButtonProps> = props => {
     ),
   };
 
-  const handleClick = async () => {
-    if (!(window as any).ethereum) {
-      enqueueSnackbar(formatMessage({ id: "snackbar.web3-not-detected" }), notDetectedWeb3MessageConfig);
-    }
+  const handleClick = () => {
+    connectCallback(() => {
+      if (!(window as any).ethereum) {
+        enqueueSnackbar(formatMessage({ id: "snackbar.web3-not-detected" }), notDetectedWeb3MessageConfig);
+      }
 
-    await metaMask
-      .activate(network.chainId)
-      .then(() => setActiveConnector(TConnectors.METAMASK))
-      .catch(e => {
-        // eslint-disable-next-line no-console
-        console.error("error", e);
+      return metaMask
+        .activate(network.chainId)
+        .then(() => {
+          setActiveConnector(TConnectors.METAMASK);
+          onClick();
+        })
+        .catch(e => {
+          // eslint-disable-next-line no-console
+          console.error("error", e);
 
-        setActiveConnector(null);
+          setActiveConnector(null);
 
-        if (e && e.code === 4001) {
-          enqueueSnackbar(formatMessage({ id: "snackbar.rejectedByUser" }), { variant: "warning" });
-        } else if (e instanceof NoMetaMaskError) {
-          enqueueSnackbar(formatMessage({ id: "snackbar.web3-not-detected" }), notDetectedWeb3MessageConfig);
-        } else {
-          enqueueSnackbar((e && e.message) || formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
-
-    onClick();
+          if (e && e.code === 4001) {
+            enqueueSnackbar(formatMessage({ id: "snackbar.rejectedByUser" }), { variant: "warning" });
+          } else if (e instanceof NoMetaMaskError) {
+            enqueueSnackbar(formatMessage({ id: "snackbar.web3-not-detected" }), notDetectedWeb3MessageConfig);
+          } else {
+            enqueueSnackbar((e && e.message) || formatMessage({ id: "snackbar.error" }), { variant: "error" });
+          }
+        });
+    });
   };
 
   return (

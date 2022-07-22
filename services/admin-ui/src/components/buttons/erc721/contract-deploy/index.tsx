@@ -37,8 +37,8 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (props: IErc721ContractDeployDto & { sign: IServerSignature } & { web3Context: Web3ContextType }) => {
-      const { contractTemplate, name, symbol, royalty, baseTokenURI, sign, web3Context } = props;
+    (values: IErc721ContractDeployDto, web3Context: Web3ContextType, sign: IServerSignature) => {
+      const { contractTemplate, name, symbol, royalty, baseTokenURI } = values;
 
       const nonce = utils.arrayify(sign?.nonce);
 
