@@ -160,7 +160,7 @@ export class LootboxService {
 
   public async getSignature(nonce: Uint8Array, account: string, lootboxEntity: LootboxEntity): Promise<string> {
     const lootboxAddr = this.configService.get<string>("LOOTBOX_ADDR", "");
-    return this.signerService.getSignature(
+    return this.signerService.getManyToManySignature(
       nonce,
       account,
       [

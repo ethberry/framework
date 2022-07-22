@@ -14,27 +14,23 @@ import "./ExchangeUtils.sol";
 import "../Asset/interfaces/IAsset.sol";
 
 abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Upgrade(address from, Asset[] items, Asset[] ingredients);
+  event Upgrade(address from, Asset item, Asset[] ingredients);
 
   function upgrade(
     bytes32 nonce,
-    Asset[] memory items,
+    Asset memory item,
     Asset[] memory ingredients,
     address signer,
     bytes calldata signature
   ) external payable {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifySignature(nonce, items, ingredients, signer, signature);
-
-    require(items.length != 0, "Exchange: No item");
+    _verifyOneToManySignature(nonce, item, ingredients, signer, signature);
 
     address account = _msgSender();
 
     spend(ingredients);
 
-    emit Upgrade(account, items, ingredients);
-
-    Asset memory item = items[0];
+    emit Upgrade(account, item, ingredients);
 
     IERC721Graded(item.token).upgrade(item.tokenId);
   }

@@ -45,14 +45,12 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
         const nonce = utils.arrayify(sign.nonce);
         return contract.upgrade(
           nonce,
-          [
-            {
-              tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
-              token: token.template!.contract!.address,
-              tokenId: token.tokenId.toString(),
-              amount: "1",
-            },
-          ],
+          {
+            tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
+            token: token.template!.contract!.address,
+            tokenId: token.tokenId.toString(),
+            amount: "1",
+          },
           [
             {
               tokenType: Object.keys(TokenType).indexOf(grade.price.components[0].tokenType),

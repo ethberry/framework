@@ -20,12 +20,30 @@ contract SignatureValidator is EIP712, Context {
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
   bytes32 private constant ASSET_TYPEHASH = keccak256(abi.encodePacked(ASSET_SIGNATURE));
 
-  bytes32 private immutable PERMIT_SIGNATURE =
+  bytes32 private immutable ONE_TO_MANY_SIGNATURE =
+    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset item,Asset[] ingredients)", ASSET_SIGNATURE));
+  bytes32 private immutable MANY_TO_MANY_SIGNATURE =
     keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items,Asset[] ingredients)", ASSET_SIGNATURE));
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
 
-  function _verifySignature(
+  function _verifyOneToManySignature(
+    bytes32 nonce,
+    Asset memory item,
+    Asset[] memory ingredients,
+    address signer,
+    bytes calldata signature
+  ) internal {
+    require(!_expired[nonce], "Exchange: Expired signature");
+    _expired[nonce] = true;
+
+    address account = _msgSender();
+
+    bool isVerified = _verify(signer, _hashOneToMany(nonce, account, item, ingredients), signature);
+    require(isVerified, "Exchange: Invalid signature");
+  }
+
+  function _verifyManyToManySignature(
     bytes32 nonce,
     Asset[] memory items,
     Asset[] memory ingredients,
@@ -37,7 +55,7 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hash(nonce, account, items, ingredients), signature);
+    bool isVerified = _verify(signer, _hashManyToMany(nonce, account, items, ingredients), signature);
     require(isVerified, "Exchange: Invalid signature");
   }
 
@@ -49,7 +67,21 @@ contract SignatureValidator is EIP712, Context {
     return SignatureChecker.isValidSignatureNow(signer, digest, signature);
   }
 
-  function _hash(
+  function _hashOneToMany(
+    bytes32 nonce,
+    address account,
+    Asset memory item,
+    Asset[] memory ingredients
+  ) private view returns (bytes32) {
+    return
+      _hashTypedDataV4(
+        keccak256(
+          abi.encode(ONE_TO_MANY_SIGNATURE, nonce, account, _hashAssetStruct(item), _hashAssetStructArray(ingredients))
+        )
+      );
+  }
+
+  function _hashManyToMany(
     bytes32 nonce,
     address account,
     Asset[] memory items,
@@ -58,7 +90,13 @@ contract SignatureValidator is EIP712, Context {
     return
       _hashTypedDataV4(
         keccak256(
-          abi.encode(PERMIT_SIGNATURE, nonce, account, _hashAssetStructArray(items), _hashAssetStructArray(ingredients))
+          abi.encode(
+            MANY_TO_MANY_SIGNATURE,
+            nonce,
+            account,
+            _hashAssetStructArray(items),
+            _hashAssetStructArray(ingredients)
+          )
         )
       );
   }

@@ -65,7 +65,7 @@ describe("ExchangeGrade", function () {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "items", type: "Asset[]" },
+            { name: "item", type: "Asset" },
             { name: "ingredients", type: "Asset[]" },
           ],
           Asset: [
@@ -79,14 +79,12 @@ describe("ExchangeGrade", function () {
         {
           nonce,
           account: this.receiver.address,
-          items: [
-            {
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
           ingredients: [
             {
               tokenType: 1,
@@ -103,14 +101,12 @@ describe("ExchangeGrade", function () {
 
       const tx2 = exchangeInstance.connect(this.receiver).upgrade(
         nonce,
-        [
-          {
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId,
-            amount,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
         [
           {
             tokenType: 1,
@@ -146,7 +142,7 @@ describe("ExchangeGrade", function () {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "items", type: "Asset[]" },
+            { name: "item", type: "Asset" },
             { name: "ingredients", type: "Asset[]" },
           ],
           Asset: [
@@ -160,14 +156,12 @@ describe("ExchangeGrade", function () {
         {
           nonce,
           account: this.receiver.address,
-          items: [
-            {
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
           ingredients: [
             {
               tokenType: 1,
@@ -184,14 +178,12 @@ describe("ExchangeGrade", function () {
 
       const tx2 = exchangeInstance.connect(this.receiver).upgrade(
         nonce,
-        [
-          {
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId,
-            amount,
-          },
-        ],
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
         [
           {
             tokenType: 1,
@@ -227,7 +219,7 @@ describe("ExchangeGrade", function () {
           EIP712: [
             { name: "nonce", type: "bytes32" },
             { name: "account", type: "address" },
-            { name: "items", type: "Asset[]" },
+            { name: "item", type: "Asset" },
             { name: "ingredients", type: "Asset[]" },
           ],
           Asset: [
@@ -241,14 +233,12 @@ describe("ExchangeGrade", function () {
         {
           nonce,
           account: this.receiver.address,
-          items: [
-            {
-              tokenType: 2,
-              token: erc721Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
+          item: {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
           ingredients: [
             {
               tokenType: 1,
@@ -265,14 +255,14 @@ describe("ExchangeGrade", function () {
 
       const tx2 = exchangeInstance.connect(this.receiver).upgrade(
         nonce,
-        [
-          {
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId,
-            amount,
-          },
-        ],
+
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+
         [
           {
             tokenType: 1,

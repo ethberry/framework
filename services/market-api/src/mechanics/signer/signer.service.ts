@@ -19,7 +19,46 @@ export class SignerService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async getSignature(
+  public async getOneToManySignature(
+    nonce: Uint8Array,
+    account: string,
+    item: IAsset,
+    ingredients: Array<IAsset>,
+  ): Promise<string> {
+    return this.signer._signTypedData(
+      // Domain
+      {
+        name: "Exchange",
+        version: "1.0.0",
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "account", type: "address" },
+          { name: "item", type: "Asset" },
+          { name: "ingredients", type: "Asset[]" },
+        ],
+        Asset: [
+          { name: "tokenType", type: "uint256" },
+          { name: "token", type: "address" },
+          { name: "tokenId", type: "uint256" },
+          { name: "amount", type: "uint256" },
+        ],
+      },
+      // Value
+      {
+        nonce,
+        account,
+        item,
+        ingredients,
+      },
+    );
+  }
+
+  public async getManyToManySignature(
     nonce: Uint8Array,
     account: string,
     items: Array<IAsset>,

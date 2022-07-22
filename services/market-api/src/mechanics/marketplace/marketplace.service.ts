@@ -48,7 +48,7 @@ export class MarketplaceService {
   }
 
   public async getSignature(nonce: Uint8Array, account: string, templateEntity: TemplateEntity): Promise<string> {
-    return this.signerService.getSignature(
+    return this.signerService.getManyToManySignature(
       nonce,
       account,
       [

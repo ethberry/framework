@@ -102,7 +102,7 @@ export class CraftService {
   }
 
   public async getSignature(nonce: Uint8Array, account: string, craftEntity: CraftEntity): Promise<string> {
-    return this.signerService.getSignature(
+    return this.signerService.getManyToManySignature(
       nonce,
       account,
       craftEntity.item.components.map(component => ({

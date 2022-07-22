@@ -24,7 +24,7 @@ abstract contract ExchangeCraft is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifySignature(nonce, items, ingredients, signer, signature);
+    _verifyManyToManySignature(nonce, items, ingredients, signer, signature);
 
     address account = _msgSender();
 

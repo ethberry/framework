@@ -13,24 +13,25 @@ import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "../Asset/interfaces/IAsset.sol";
 
-abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Purchase(address from, Asset[] items, Asset[] ingredients);
+abstract contract ExchangeLootbox is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+  event Lootbox(address from, Asset item, Asset[] ingredients);
 
-  function purchase(
+  function lootbox(
     bytes32 nonce,
-    Asset[] memory items,
+    Asset memory item,
     Asset[] memory ingredients,
     address signer,
     bytes calldata signature
-  ) external payable whenNotPaused {
+  ) external payable {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyManyToManySignature(nonce, items, ingredients, signer, signature);
+    _verifyOneToManySignature(nonce, item, ingredients, signer, signature);
 
     address account = _msgSender();
 
     spend(ingredients);
-    acquire(items);
 
-    emit Purchase(account, items, ingredients);
+    emit Lootbox(account, item, ingredients);
+
+    IERC721Lootbox(item.token).mintLootbox(account, item);
   }
 }

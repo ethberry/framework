@@ -66,17 +66,15 @@ export class GradeService {
     tokenEntity: TokenEntity,
     assetEntity: IAsset,
   ): Promise<string> {
-    return this.signerService.getSignature(
+    return this.signerService.getOneToManySignature(
       nonce,
       account,
-      [
-        {
-          tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
-          token: tokenEntity.template.contract.address,
-          tokenId: tokenEntity.tokenId.toString(),
-          amount: "1",
-        },
-      ],
+      {
+        tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        token: tokenEntity.template.contract.address,
+        tokenId: tokenEntity.tokenId.toString(),
+        amount: "1",
+      },
       [assetEntity],
     );
   }
