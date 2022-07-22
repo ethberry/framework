@@ -63,13 +63,16 @@ export const Claim: FC = () => {
 
     return contract.purchase(
       utils.arrayify(claim.nonce),
+      {
+        externalId: claim.id,
+        expiresAt: claim.expiresAt,
+      },
       claim.item?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
         tokenId: component.template!.tokens![0].tokenId,
         amount: component.amount,
       })),
-      [],
       process.env.ACCOUNT,
       claim.signature,
     ) as Promise<void>;

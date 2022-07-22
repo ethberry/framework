@@ -42,23 +42,29 @@ export class MarketplaceService {
     }
 
     const nonce = utils.randomBytes(32);
+    const expiresAt = 0;
+    const signature = await this.getSignature(nonce, account, expiresAt, templateEntity);
 
-    const signature = await this.getSignature(nonce, account, templateEntity);
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(nonce: Uint8Array, account: string, templateEntity: TemplateEntity): Promise<string> {
-    return this.signerService.getManyToManySignature(
+  public async getSignature(
+    nonce: Uint8Array,
+    account: string,
+    expiresAt: number,
+    templateEntity: TemplateEntity,
+  ): Promise<string> {
+    return this.signerService.getOneToManySignature(
       nonce,
       account,
-      [
-        {
-          tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
-          token: templateEntity.contract.address,
-          tokenId: templateEntity.id.toString(),
-          amount: "1",
-        },
-      ],
+      templateEntity.id,
+      expiresAt,
+      {
+        tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
+        token: templateEntity.contract.address,
+        tokenId: templateEntity.id.toString(),
+        amount: "1",
+      },
       templateEntity.price.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

@@ -35,6 +35,10 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
         return contract.craft(
           utils.arrayify(sign.nonce),
+          {
+            externalId: craft.id,
+            expiresAt: sign.expiresAt,
+          },
           craft.item?.components.map(component => ({
             tokenType: Object.keys(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,

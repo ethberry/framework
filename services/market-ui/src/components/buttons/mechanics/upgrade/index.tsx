@@ -28,6 +28,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
 
   // TODO get GradeEntity from server
   const grade = {
+    id: 0,
     price: emptyPrice,
   };
 
@@ -46,23 +47,25 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
         return contract.upgrade(
           nonce,
           {
+            externalId: grade.id,
+            expiresAt: sign.expiresAt,
+          },
+          {
             tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
             token: token.template!.contract!.address,
             tokenId: token.tokenId.toString(),
             amount: "1",
           },
-          [
-            {
-              tokenType: Object.keys(TokenType).indexOf(grade.price.components[0].tokenType),
-              token: grade.price.components[0].contract!.address,
-              tokenId: grade.price.components[0].template!.tokens![0].tokenId,
-              amount: "0", // calculate actual amount
-            },
-          ],
+          grade.price?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.template!.tokens![0].tokenId,
+            amount: component.amount, // TODO calculate actual amount
+          })),
           process.env.ACCOUNT,
           sign.signature,
           {
-            value: 0, // calculate actual value
+            value: 0, // TODO calculate actual value
           },
         ) as Promise<void>;
       });

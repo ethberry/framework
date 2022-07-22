@@ -10,10 +10,12 @@ import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "./ExchangeCore.sol";
-// import "./ExchangeCraft.sol";
+import "./ExchangeCraft.sol";
 import "./ExchangeGrade.sol";
+import "./ExchangeLootbox.sol";
+import "./ExchangeClaim.sol";
 
-contract Exchange is ExchangeCore, ExchangeGrade, ERC1155Holder {
+contract Exchange is ExchangeCore, ExchangeCraft, ExchangeGrade, ExchangeLootbox, ExchangeClaim, ERC1155Holder {
   using Address for address;
 
   // bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");

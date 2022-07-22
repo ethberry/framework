@@ -9,6 +9,7 @@ import { TokenType } from "@framework/types";
 import { UserEntity } from "../../user/user.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import { SignerService } from "../signer/signer.service";
 
 @Injectable()
 export class LootService {
@@ -17,56 +18,36 @@ export class LootService {
     private readonly signer: Wallet,
     private readonly configService: ConfigService,
     private readonly templateService: TemplateService,
+    private readonly signerService: SignerService,
   ) {}
 
   public async signPostBattleLoot(userEntity: UserEntity): Promise<IServerSignature> {
     const templateEntities = await this.templateService.findAll({});
 
     const nonce = utils.randomBytes(32);
-    const signature = await this.getSignature(nonce, templateEntities, userEntity);
-    return { nonce: utils.hexlify(nonce), signature };
+    const expiresAt = 0;
+    const signature = await this.getSignature(nonce, userEntity.wallet, expiresAt, templateEntities);
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(
     nonce: Uint8Array,
+    account: string,
+    expiresAt: number,
     templateEntities: Array<TemplateEntity>,
-    userEntity: UserEntity,
   ): Promise<string> {
-    return this.signer._signTypedData(
-      // Domain
-      {
-        name: "Exchange",
-        version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
-        verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "nonce", type: "bytes32" },
-          { name: "account", type: "address" },
-          { name: "items", type: "Asset[]" },
-          { name: "ingredients", type: "Asset[]" },
-        ],
-        Asset: [
-          { name: "tokenType", type: "uint256" },
-          { name: "token", type: "address" },
-          { name: "tokenId", type: "uint256" },
-          { name: "amount", type: "uint256" },
-        ],
-      },
-      // Value
-      {
-        nonce,
-        account: userEntity.wallet,
-        items: templateEntities.map(templateEntity => ({
-          tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
-          token: templateEntity.contract.address,
-          tokenId: templateEntity.id,
-          amount: templateEntity.amount,
-        })),
-        ingredients: [],
-      },
+    return this.signerService.getManyToManySignature(
+      nonce,
+      account,
+      123, // TODO pass claimId
+      expiresAt,
+      templateEntities.map(templateEntity => ({
+        tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
+        token: templateEntity.contract.address,
+        tokenId: templateEntity.id.toString(),
+        amount: templateEntity.amount,
+      })),
+      [],
     );
   }
 }

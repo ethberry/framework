@@ -34,7 +34,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
             contractInterface: ExchangeSol.abi,
             // prettier-ignore
             eventNames: [
-              ExchangeEventType.Transaction,
+              ExchangeEventType.Purchase,
             ],
           },
           block: {

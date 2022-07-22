@@ -7,7 +7,6 @@
 pragma solidity ^0.8.9;
 
 import "../ERC721Lootbox.sol";
-import "../../Asset/interfaces/IAsset.sol";
 
 contract ERC721LootboxTest is ERC721Lootbox {
   constructor(

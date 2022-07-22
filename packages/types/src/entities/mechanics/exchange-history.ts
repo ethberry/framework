@@ -3,8 +3,10 @@ import { IIdDateBase } from "@gemunion/types-collection";
 import { ICraft } from "./craft";
 
 export enum ExchangeEventType {
-  Purchase = "Purchase",
+  Claim = "Claim",
   Craft = "Craft",
+  Lootbox = "Lootbox",
+  Purchase = "Purchase",
   Upgrade = "Upgrade",
 }
 

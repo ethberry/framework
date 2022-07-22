@@ -28,4 +28,7 @@ export class ClaimEntity extends IdDateBaseEntity implements IClaim {
 
   @Column({ type: "varchar" })
   public nonce: string;
+
+  @Column({ type: "int" })
+  public expiresAt: number;
 }

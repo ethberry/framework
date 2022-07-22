@@ -11,8 +11,8 @@ import { ExchangeServiceEth } from "./exchange.service.eth";
 export class ExchangeControllerEth {
   constructor(private readonly exchangeServiceEth: ExchangeServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Transaction })
-  public transaction(@Payload() event: ILogEvent<ITransaction>, @Ctx() context: Log): Promise<void> {
-    return this.exchangeServiceEth.transaction(event, context);
+  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase })
+  public purchase(@Payload() event: ILogEvent<ITransaction>, @Ctx() context: Log): Promise<void> {
+    return this.exchangeServiceEth.purchase(event, context);
   }
 }

@@ -153,25 +153,31 @@ export class LootboxService {
     }
 
     const nonce = utils.randomBytes(32);
+    const expiresAt = 0;
+    const signature = await this.getSignature(nonce, account, expiresAt, lootboxEntity);
 
-    const signature = await this.getSignature(nonce, account, lootboxEntity);
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(nonce: Uint8Array, account: string, lootboxEntity: LootboxEntity): Promise<string> {
+  public async getSignature(
+    nonce: Uint8Array,
+    account: string,
+    expiresAt: number,
+    lootboxEntity: LootboxEntity,
+  ): Promise<string> {
     const lootboxAddr = this.configService.get<string>("LOOTBOX_ADDR", "");
-    return this.signerService.getManyToManySignature(
+    return this.signerService.getOneToManySignature(
       nonce,
       account,
-      [
-        {
-          // TODO pass lootboxEntity.item.components[0].template.id, probably as amount
-          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-          token: lootboxAddr,
-          tokenId: lootboxEntity.id.toString(),
-          amount: "1",
-        },
-      ],
+      lootboxEntity.id,
+      expiresAt,
+      {
+        // TODO pass lootboxEntity.item.components[0].template.id, probably as amount
+        tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+        token: lootboxAddr,
+        tokenId: lootboxEntity.id.toString(),
+        amount: "1",
+      },
       lootboxEntity.price.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

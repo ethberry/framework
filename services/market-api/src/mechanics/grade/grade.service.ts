@@ -10,7 +10,7 @@ import { GradeEntity } from "./grade.entity";
 import { UserEntity } from "../../user/user.entity";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
-import { IAsset, SignerService } from "../signer/signer.service";
+import { SignerService } from "../signer/signer.service";
 
 @Injectable()
 export class GradeService {
@@ -47,39 +47,6 @@ export class GradeService {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const { contractTemplate } = tokenEntity.template.contract;
-    if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
-      throw new BadRequestException("incompatibleContractTemplate");
-    }
-
-    const assetEntity = await this.calculatePrice(tokenEntity);
-
-    const nonce = utils.randomBytes(32);
-
-    const signature = await this.getSignature(nonce, userEntity.wallet, tokenEntity, assetEntity);
-    return { nonce: utils.hexlify(nonce), signature };
-  }
-
-  public async getSignature(
-    nonce: Uint8Array,
-    account: string,
-    tokenEntity: TokenEntity,
-    assetEntity: IAsset,
-  ): Promise<string> {
-    return this.signerService.getOneToManySignature(
-      nonce,
-      account,
-      {
-        tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
-        token: tokenEntity.template.contract.address,
-        tokenId: tokenEntity.tokenId.toString(),
-        amount: "1",
-      },
-      [assetEntity],
-    );
-  }
-
-  public async calculatePrice(tokenEntity: TokenEntity): Promise<IAsset> {
     const gradeEntity = await this.findOne(
       { contractId: tokenEntity.template.contract.id },
       {
@@ -100,6 +67,25 @@ export class GradeService {
       throw new NotFoundException("gradeNotFound");
     }
 
+    const { contractTemplate } = tokenEntity.template.contract;
+    if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
+      throw new BadRequestException("incompatibleContractTemplate");
+    }
+
+    const nonce = utils.randomBytes(32);
+    const expiresAt = 0;
+    const signature = await this.getSignature(nonce, userEntity.wallet, expiresAt, tokenEntity, gradeEntity);
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+  }
+
+  public async getSignature(
+    nonce: Uint8Array,
+    account: string,
+    expiresAt: number,
+    tokenEntity: TokenEntity,
+    gradeEntity: GradeEntity,
+  ): Promise<string> {
     const grade = tokenEntity.attributes[TokenAttributes.GRADE];
 
     let amount;
@@ -120,11 +106,25 @@ export class GradeService {
         throw new BadRequestException("unknownStrategy");
     }
 
-    return {
-      tokenType: Object.keys(TokenType).indexOf(gradeEntity.price.components[0].tokenType),
-      token: gradeEntity.price.components[0].contract.address,
-      tokenId: gradeEntity.price.components[0].template.tokens[0].tokenId,
-      amount: amount.toString(),
-    };
+    return this.signerService.getOneToManySignature(
+      nonce,
+      account,
+      gradeEntity.id,
+      expiresAt,
+      {
+        tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
+        token: tokenEntity.template.contract.address,
+        tokenId: tokenEntity.tokenId.toString(),
+        amount: "1",
+      },
+      [
+        {
+          tokenType: Object.keys(TokenType).indexOf(gradeEntity.price.components[0].tokenType),
+          token: gradeEntity.price.components[0].contract.address,
+          tokenId: gradeEntity.price.components[0].template.tokens[0].tokenId,
+          amount: amount.toString(),
+        },
+      ],
+    );
   }
 }

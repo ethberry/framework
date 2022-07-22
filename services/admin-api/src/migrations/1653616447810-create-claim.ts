@@ -42,6 +42,11 @@ export class CreateClaimTable1563804040410 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "expires_at",
+          type: "int",
+          default: 0,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

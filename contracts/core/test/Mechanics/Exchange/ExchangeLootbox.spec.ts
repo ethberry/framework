@@ -26,7 +26,7 @@ const params = {
   expiresAt,
 };
 
-describe("ExchangeCore", function () {
+describe("ExchangeLootbox", function () {
   let exchangeInstance: Exchange;
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
@@ -97,146 +97,63 @@ describe("ExchangeCore", function () {
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
-  describe("purchase", function () {
-    describe("ERROR", function () {
-      it("should fail: duplicate mint", async function () {
+  describe("lootbox", function () {
+    describe("NATIVE > LOOTBOX", function () {
+      it("should lootbox", async function () {
         const signature = await generateSignature(this.owner, {
           nonce,
           account: this.receiver.address,
           params,
           item: {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: lootboxInstance.address,
             tokenId,
-            amount,
+            amount: 1,
           },
           ingredients: [
             {
-              tokenType: 1,
-              token: erc20Instance.address,
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
               tokenId,
               amount,
             },
           ],
         });
 
-        await erc20Instance.mint(this.receiver.address, amount);
-        await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
-
-        const tx1 = exchangeInstance.connect(this.receiver).purchase(
+        const tx1 = exchangeInstance.connect(this.receiver).lootbox(
           nonce,
           params,
           {
             tokenType: 2,
-            token: erc721Instance.address,
+            token: lootboxInstance.address,
             tokenId,
-            amount,
+            amount: 1,
           },
           [
             {
-              tokenType: 1,
-              token: erc20Instance.address,
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
               tokenId,
               amount,
             },
           ],
           this.owner.address,
           signature,
-        );
-
-        await expect(tx1).to.emit(exchangeInstance, "Purchase");
-
-        const tx2 = exchangeInstance.connect(this.receiver).purchase(
-          nonce,
-          params,
           {
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId,
-            amount,
+            value: amount,
           },
-          [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          this.owner.address,
-          signature,
-        );
-        await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
-      });
-
-      it("should fail for wrong signer role", async function () {
-        const signature = await generateSignature(this.owner, {
-          nonce,
-          account: this.receiver.address,
-          params,
-          item: {
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId,
-            amount,
-          },
-          ingredients: [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-        });
-
-        const tx1 = exchangeInstance.connect(this.receiver).purchase(
-          nonce,
-          params,
-          {
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId,
-            amount,
-          },
-          [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          this.receiver.address,
-          signature,
         );
 
-        await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
-      });
-
-      it("should fail for wrong signature", async function () {
-        const tx = exchangeInstance.purchase(
-          nonce,
-          params,
-          {
-            tokenType: 2,
-            token: erc721Instance.address,
-            tokenId,
-            amount,
-          },
-          [
-            {
-              tokenType: 1,
-              token: erc20Instance.address,
-              tokenId,
-              amount,
-            },
-          ],
-          this.owner.address,
-          ethers.utils.formatBytes32String("signature"),
-        );
-
-        await expect(tx).to.be.revertedWith(`Exchange: Invalid signature`);
+        await expect(tx1)
+          .to.changeEtherBalance(this.receiver, -amount)
+          .to.emit(exchangeInstance, "Craft")
+          // .withArgs(
+          //   this.receiver.address,
+          //   [[2, erc721Instance.address, tokenId, 1]],
+          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          // )
+          .to.emit(lootboxInstance, "Transfer")
+          .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
       });
     });
   });

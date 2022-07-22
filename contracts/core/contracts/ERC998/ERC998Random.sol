@@ -12,7 +12,6 @@ import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.so
 
 import "../ERC721/ERC721Graded.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
-import "../Mechanics/Asset/interfaces/IAsset.sol";
 
 contract ERC998Random is IERC721Random, ERC721ChainLinkBinance, ERC721Graded {
   using Counters for Counters.Counter;

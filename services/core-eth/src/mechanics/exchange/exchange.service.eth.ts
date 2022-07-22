@@ -24,7 +24,7 @@ export class ExchangeServiceEth {
     private readonly balanceService: BalanceService,
   ) {}
 
-  public async transaction(event: ILogEvent<ITransaction>, context: Log): Promise<void> {
+  public async purchase(event: ILogEvent<ITransaction>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     // TODO update claim status

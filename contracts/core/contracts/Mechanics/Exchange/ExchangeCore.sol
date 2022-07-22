@@ -11,26 +11,27 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
-import "../Asset/interfaces/IAsset.sol";
+import "./interfaces/IAsset.sol";
 
 abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Purchase(address from, Asset[] items, Asset[] ingredients);
+  event Purchase(address from, uint256 externalId, Asset item, Asset[] ingredients);
 
   function purchase(
     bytes32 nonce,
-    Asset[] memory items,
+    Params memory params,
+    Asset memory item,
     Asset[] memory ingredients,
     address signer,
     bytes calldata signature
   ) external payable whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyManyToManySignature(nonce, items, ingredients, signer, signature);
+    _verifyOneToManySignature(nonce, params, item, ingredients, signer, signature);
 
     address account = _msgSender();
 
-    spend(ingredients);
-    acquire(items);
+    spend(ingredients, account);
+    acquire(toArray(item), account);
 
-    emit Purchase(account, items, ingredients);
+    emit Purchase(account, params.externalId, item, ingredients);
   }
 }

@@ -11,26 +11,27 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
-import "../Asset/interfaces/IAsset.sol";
+import "./interfaces/IAsset.sol";
 
 abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Upgrade(address from, Asset item, Asset[] ingredients);
+  event Upgrade(address from, uint256 externalId, Asset item, Asset[] ingredients);
 
   function upgrade(
     bytes32 nonce,
+    Params memory params,
     Asset memory item,
     Asset[] memory ingredients,
     address signer,
     bytes calldata signature
   ) external payable {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToManySignature(nonce, item, ingredients, signer, signature);
+    _verifyOneToManySignature(nonce, params, item, ingredients, signer, signature);
 
     address account = _msgSender();
 
-    spend(ingredients);
+    spend(ingredients, account);
 
-    emit Upgrade(account, item, ingredients);
+    emit Upgrade(account, params.externalId, item, ingredients);
 
     IERC721Graded(item.token).upgrade(item.tokenId);
   }

@@ -11,27 +11,25 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
+import "./interfaces/IAsset.sol";
 
-abstract contract ExchangeLootbox is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Lootbox(address from, uint256 externalId, Asset item, Asset[] ingredients);
+abstract contract ExchangeClaim is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
+  event Claim(address from, uint256 externalId, Asset[] items);
 
-  function lootbox(
+  function claim(
     bytes32 nonce,
     Params memory params,
-    Asset memory item,
-    Asset[] memory ingredients,
+    Asset[] memory items,
     address signer,
     bytes calldata signature
-  ) external payable {
+  ) external payable whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToManySignature(nonce, params, item, ingredients, signer, signature);
+    _verifyManyToManySignature(nonce, params, items, new Asset[](0), signer, signature);
 
     address account = _msgSender();
 
-    spend(ingredients, account);
+    acquire(items, account);
 
-    emit Lootbox(account, params.externalId, item, ingredients);
-
-    IERC721Lootbox(item.token).mintLootbox(account, item);
+    emit Claim(account, params.externalId, items);
   }
 }

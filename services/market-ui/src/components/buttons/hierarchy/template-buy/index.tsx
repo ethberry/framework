@@ -36,14 +36,16 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
         return contract.purchase(
           utils.arrayify(sign.nonce),
-          [
-            {
-              tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
-              token: template.contract?.address,
-              tokenId: template.id,
-              amount: 1,
-            },
-          ],
+          {
+            externalId: template.id,
+            expiresAt: sign.expiresAt,
+          },
+          {
+            tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
+            token: template.contract?.address,
+            tokenId: template.id,
+            amount: 1,
+          },
           template.price?.components.map(component => ({
             tokenType: Object.keys(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,

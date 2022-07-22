@@ -10,25 +10,41 @@ import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
-import "../Asset/interfaces/IAsset.sol";
+import "./interfaces/IAsset.sol";
 
 contract SignatureValidator is EIP712, Context {
   using Address for address;
 
   mapping(bytes32 => bool) private _expired;
 
+  bytes private constant PARAMS_SIGNATURE = "Params(uint256 externalId,uint256 expiresAt)";
+  bytes32 private constant PARAMS_TYPEHASH = keccak256(abi.encodePacked(PARAMS_SIGNATURE));
+
   bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
   bytes32 private constant ASSET_TYPEHASH = keccak256(abi.encodePacked(ASSET_SIGNATURE));
 
   bytes32 private immutable ONE_TO_MANY_SIGNATURE =
-    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset item,Asset[] ingredients)", ASSET_SIGNATURE));
+    keccak256(
+      bytes.concat(
+        "EIP712(bytes32 nonce,address account,Params params,Asset item,Asset[] ingredients)",
+        ASSET_SIGNATURE,
+        PARAMS_SIGNATURE
+      )
+    );
   bytes32 private immutable MANY_TO_MANY_SIGNATURE =
-    keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items,Asset[] ingredients)", ASSET_SIGNATURE));
+    keccak256(
+      bytes.concat(
+        "EIP712(bytes32 nonce,address account,Params params,Asset[] items,Asset[] ingredients)",
+        ASSET_SIGNATURE,
+        PARAMS_SIGNATURE
+      )
+    );
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
 
   function _verifyOneToManySignature(
     bytes32 nonce,
+    Params memory params,
     Asset memory item,
     Asset[] memory ingredients,
     address signer,
@@ -39,12 +55,13 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hashOneToMany(nonce, account, item, ingredients), signature);
+    bool isVerified = _verify(signer, _hashOneToMany(nonce, account, params, item, ingredients), signature);
     require(isVerified, "Exchange: Invalid signature");
   }
 
   function _verifyManyToManySignature(
     bytes32 nonce,
+    Params memory params,
     Asset[] memory items,
     Asset[] memory ingredients,
     address signer,
@@ -53,9 +70,11 @@ contract SignatureValidator is EIP712, Context {
     require(!_expired[nonce], "Exchange: Expired signature");
     _expired[nonce] = true;
 
+    // TODO validate params.expiresAt
+
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hashManyToMany(nonce, account, items, ingredients), signature);
+    bool isVerified = _verify(signer, _hashManyToMany(nonce, account, params, items, ingredients), signature);
     require(isVerified, "Exchange: Invalid signature");
   }
 
@@ -70,13 +89,21 @@ contract SignatureValidator is EIP712, Context {
   function _hashOneToMany(
     bytes32 nonce,
     address account,
+    Params memory params,
     Asset memory item,
     Asset[] memory ingredients
   ) private view returns (bytes32) {
     return
       _hashTypedDataV4(
         keccak256(
-          abi.encode(ONE_TO_MANY_SIGNATURE, nonce, account, _hashAssetStruct(item), _hashAssetStructArray(ingredients))
+          abi.encode(
+            ONE_TO_MANY_SIGNATURE,
+            nonce,
+            account,
+            _hashParamsStruct(params),
+            _hashAssetStruct(item),
+            _hashAssetStructArray(ingredients)
+          )
         )
       );
   }
@@ -84,6 +111,7 @@ contract SignatureValidator is EIP712, Context {
   function _hashManyToMany(
     bytes32 nonce,
     address account,
+    Params memory params,
     Asset[] memory items,
     Asset[] memory ingredients
   ) private view returns (bytes32) {
@@ -94,11 +122,16 @@ contract SignatureValidator is EIP712, Context {
             MANY_TO_MANY_SIGNATURE,
             nonce,
             account,
+            _hashParamsStruct(params),
             _hashAssetStructArray(items),
             _hashAssetStructArray(ingredients)
           )
         )
       );
+  }
+
+  function _hashParamsStruct(Params memory params) private pure returns (bytes32) {
+    return keccak256(abi.encode(PARAMS_TYPEHASH, params.externalId, params.expiresAt));
   }
 
   function _hashAssetStruct(Asset memory item) private pure returns (bytes32) {
@@ -112,5 +145,11 @@ contract SignatureValidator is EIP712, Context {
       padded[i] = _hashAssetStruct(items[i]);
     }
     return keccak256(abi.encodePacked(padded));
+  }
+
+  function toArray(Asset memory item) public pure returns (Asset[] memory) {
+    Asset[] memory items = new Asset[](1);
+    items[0] = item;
+    return items;
   }
 }

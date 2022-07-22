@@ -25,3 +25,8 @@ struct Asset {
   uint256 tokenId; // or templateId or lootboxId
   uint256 amount;
 }
+
+struct Params {
+  uint256 externalId;
+  uint256 expiresAt;
+}

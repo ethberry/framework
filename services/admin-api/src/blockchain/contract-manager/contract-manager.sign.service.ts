@@ -81,7 +81,7 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
   }
 
   // MODULE:VESTING
@@ -118,7 +118,7 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
   }
 
   public async erc721Token(dto: IErc721ContractDeployDto): Promise<IServerSignature> {
@@ -157,7 +157,7 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
   }
 
   public async erc998Token(dto: IErc998ContractDeployDto): Promise<IServerSignature> {
@@ -196,7 +196,7 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
   }
 
   public async erc1155Token(dto: IErc1155ContractDeployDto): Promise<IServerSignature> {
@@ -231,7 +231,7 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
   }
 
   public getBytecodeByErc20ContractTemplate(contractTemplate: Erc20ContractTemplate) {

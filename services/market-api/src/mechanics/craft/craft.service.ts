@@ -96,15 +96,23 @@ export class CraftService {
     }
 
     const nonce = utils.randomBytes(32);
+    const expiresAt = 0;
+    const signature = await this.getSignature(nonce, userEntity.wallet, expiresAt, craftEntity);
 
-    const signature = await this.getSignature(nonce, userEntity.wallet, craftEntity);
-    return { nonce: utils.hexlify(nonce), signature };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(nonce: Uint8Array, account: string, craftEntity: CraftEntity): Promise<string> {
+  public async getSignature(
+    nonce: Uint8Array,
+    account: string,
+    expiresAt: number,
+    craftEntity: CraftEntity,
+  ): Promise<string> {
     return this.signerService.getManyToManySignature(
       nonce,
       account,
+      craftEntity.id,
+      expiresAt,
       craftEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
