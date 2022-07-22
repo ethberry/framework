@@ -61,7 +61,7 @@ export const Claim: FC = () => {
   const metaClick = useMetamask((claim: IClaim) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
 
-    return contract.execute(
+    return contract.purchase(
       utils.arrayify(claim.nonce),
       claim.item?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),

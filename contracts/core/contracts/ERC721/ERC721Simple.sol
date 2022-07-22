@@ -48,7 +48,7 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721ACBaseUrl, MetaDataGe
     return super.supportsInterface(interfaceId);
   }
 
-  function _baseURI() internal view virtual override returns (string memory) {
+  function _baseURI() internal view virtual override(ERC721, ERC721ACBaseUrl) returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 

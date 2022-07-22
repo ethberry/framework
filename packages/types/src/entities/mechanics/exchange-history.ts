@@ -3,7 +3,9 @@ import { IIdDateBase } from "@gemunion/types-collection";
 import { ICraft } from "./craft";
 
 export enum ExchangeEventType {
-  Transaction = "Transaction",
+  Purchase = "Purchase",
+  Craft = "Craft",
+  Upgrade = "Upgrade",
 }
 
 export interface ITransaction {

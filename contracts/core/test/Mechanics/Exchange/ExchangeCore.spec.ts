@@ -17,7 +17,7 @@ import {
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 
-describe("Exchange", function () {
+describe("ExchangeCore", function () {
   let exchangeInstance: Exchange;
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
@@ -54,7 +54,7 @@ describe("Exchange", function () {
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
-  describe("execute", function () {
+  describe("purchase", function () {
     describe("NULL > NULL", function () {
       it("NULL > NULL", async function () {
         const signature = await this.owner._signTypedData(
@@ -89,16 +89,16 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(nonce, [], [], this.owner.address, signature);
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(nonce, [], [], this.owner.address, signature);
 
-        await expect(tx1).to.emit(exchangeInstance, "Transaction");
+        await expect(tx1).to.emit(exchangeInstance, "Purchase");
         // https://github.com/TrueFiEng/Waffle/pull/751
         // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
     });
 
     describe("NULL > ERC721", function () {
-      it("should execute", async function () {
+      it("should purchase", async function () {
         const signature = await this.owner._signTypedData(
           // Domain
           {
@@ -138,7 +138,7 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -153,14 +153,14 @@ describe("Exchange", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Transaction");
+        await expect(tx1).to.emit(exchangeInstance, "Purchase");
         // https://github.com/TrueFiEng/Waffle/pull/751
         // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
     });
 
     describe("NULL > ERC1155", function () {
-      it("should execute", async function () {
+      it("should purchase", async function () {
         const signature = await this.owner._signTypedData(
           // Domain
           {
@@ -200,7 +200,7 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -215,14 +215,14 @@ describe("Exchange", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Transaction");
+        await expect(tx1).to.emit(exchangeInstance, "Purchase");
         // https://github.com/TrueFiEng/Waffle/pull/751
         // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
     });
 
     describe("NATIVE > ERC721", function () {
-      it("should execute", async function () {
+      it("should purchase", async function () {
         const signature = await this.owner._signTypedData(
           // Domain
           {
@@ -269,7 +269,7 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -296,7 +296,7 @@ describe("Exchange", function () {
 
         await expect(tx1)
           .to.changeEtherBalance(this.receiver, -amount)
-          .to.emit(exchangeInstance, "Transaction")
+          .to.emit(exchangeInstance, "Purchase")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721Instance.address, tokenId, 1]],
@@ -353,7 +353,7 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -433,7 +433,7 @@ describe("Exchange", function () {
         await erc20Instance.mint(this.receiver.address, amount);
         await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -456,7 +456,7 @@ describe("Exchange", function () {
         );
 
         await expect(tx1)
-          .to.emit(exchangeInstance, "Transaction")
+          .to.emit(exchangeInstance, "Purchase")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721Instance.address, tokenId, 1]],
@@ -518,7 +518,7 @@ describe("Exchange", function () {
         await erc20Instance.mint(this.receiver.address, amount);
         // await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -593,7 +593,7 @@ describe("Exchange", function () {
         // await erc20Instance.mint(this.receiver.address, amount);
         await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -620,7 +620,7 @@ describe("Exchange", function () {
     });
 
     describe("ERC1155 > ERC721", function () {
-      it("should execute", async function () {
+      it("should purchase", async function () {
         const signature = await this.owner._signTypedData(
           // Domain
           {
@@ -670,7 +670,7 @@ describe("Exchange", function () {
         await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
         await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -692,7 +692,7 @@ describe("Exchange", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Transaction");
+        await expect(tx1).to.emit(exchangeInstance, "Purchase");
         // https://github.com/TrueFiEng/Waffle/pull/751
         // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
@@ -747,7 +747,7 @@ describe("Exchange", function () {
         await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
         // await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -822,7 +822,7 @@ describe("Exchange", function () {
         // await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
         await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -896,7 +896,7 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -923,7 +923,7 @@ describe("Exchange", function () {
 
         await expect(tx1)
           .to.changeEtherBalance(this.receiver, -amount)
-          .to.emit(exchangeInstance, "Transaction")
+          .to.emit(exchangeInstance, "Purchase")
           // .withArgs(
           //   this.receiver.address,
           //   [[4, erc1155Instance.address, tokenId, amount]],
@@ -980,7 +980,7 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1060,7 +1060,7 @@ describe("Exchange", function () {
         await erc20Instance.mint(this.receiver.address, amount);
         await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1083,7 +1083,7 @@ describe("Exchange", function () {
         );
 
         await expect(tx1)
-          .to.emit(exchangeInstance, "Transaction")
+          .to.emit(exchangeInstance, "Purchase")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc1155Instance.address, tokenId, amount]],
@@ -1145,7 +1145,7 @@ describe("Exchange", function () {
         await erc20Instance.mint(this.receiver.address, amount);
         // await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1220,7 +1220,7 @@ describe("Exchange", function () {
         // await erc20Instance.mint(this.receiver.address, amount);
         await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1247,7 +1247,7 @@ describe("Exchange", function () {
     });
 
     describe("ERC1155 > ERC1155", function () {
-      it("should execute", async function () {
+      it("should purchase", async function () {
         const signature = await this.owner._signTypedData(
           // Domain
           {
@@ -1297,7 +1297,7 @@ describe("Exchange", function () {
         await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
         await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1319,7 +1319,7 @@ describe("Exchange", function () {
           signature,
         );
 
-        await expect(tx1).to.emit(exchangeInstance, "Transaction");
+        await expect(tx1).to.emit(exchangeInstance, "Purchase");
         // https://github.com/TrueFiEng/Waffle/pull/751
         // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
@@ -1374,7 +1374,7 @@ describe("Exchange", function () {
         await erc1155Instance.mint(this.receiver.address, 2, amount, "0x");
         // await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1449,7 +1449,7 @@ describe("Exchange", function () {
         // await erc1155Instance.mint(this.receiver.address, 2, amount, "0x");
         await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1476,7 +1476,7 @@ describe("Exchange", function () {
     });
 
     describe("NATIVE > LOOTBOX", function () {
-      it("should execute", async function () {
+      it("should purchase", async function () {
         const signature = await this.owner._signTypedData(
           // Domain
           {
@@ -1523,7 +1523,7 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
           nonce,
           [
             {
@@ -1550,7 +1550,7 @@ describe("Exchange", function () {
 
         await expect(tx1)
           .to.changeEtherBalance(this.receiver, -amount)
-          .to.emit(exchangeInstance, "Transaction")
+          .to.emit(exchangeInstance, "Purchase")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721Instance.address, tokenId, 1]],
@@ -1595,11 +1595,11 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(nonce, [], [], this.owner.address, signature);
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(nonce, [], [], this.owner.address, signature);
 
-        await expect(tx1).to.emit(exchangeInstance, "Transaction");
+        await expect(tx1).to.emit(exchangeInstance, "Purchase");
 
-        const tx2 = exchangeInstance.connect(this.receiver).execute(nonce, [], [], this.owner.address, signature);
+        const tx2 = exchangeInstance.connect(this.receiver).purchase(nonce, [], [], this.owner.address, signature);
         await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
       });
 
@@ -1636,13 +1636,13 @@ describe("Exchange", function () {
           },
         );
 
-        const tx1 = exchangeInstance.connect(this.receiver).execute(nonce, [], [], this.receiver.address, signature);
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(nonce, [], [], this.receiver.address, signature);
 
         await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
       });
 
       it("should fail for wrong signature", async function () {
-        const tx = exchangeInstance.execute(
+        const tx = exchangeInstance.purchase(
           nonce,
           [],
           [],

@@ -17,7 +17,7 @@ import {
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 
-describe("Exchange", function () {
+describe("ExchangeGrade", function () {
   let exchangeInstance: Exchange;
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Graded;

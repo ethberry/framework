@@ -35,7 +35,7 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
       .then((sign: IServerSignature) => {
         const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
 
-        return contract.execute(
+        return contract.purchase(
           utils.arrayify(sign.nonce),
           [
             {

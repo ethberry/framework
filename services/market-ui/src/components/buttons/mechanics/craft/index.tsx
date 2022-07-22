@@ -33,7 +33,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
       })
       .then((sign: IServerSignature) => {
         const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
-        return contract.execute(
+        return contract.craft(
           utils.arrayify(sign.nonce),
           craft.item?.components.map(component => ({
             tokenType: Object.keys(TokenType).indexOf(component.tokenType),
