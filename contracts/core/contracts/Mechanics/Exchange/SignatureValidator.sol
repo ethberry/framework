@@ -10,15 +10,17 @@ import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
-import "../Asset/Asset.sol";
 import "../Asset/interfaces/IAsset.sol";
 
-contract SignatureValidator is AssetHelper, EIP712, Context {
+contract SignatureValidator is EIP712, Context {
   using Address for address;
 
   mapping(bytes32 => bool) private _expired;
 
-  bytes32 internal immutable PERMIT_SIGNATURE =
+  bytes private constant ASSET_SIGNATURE = "Asset(uint256 tokenType,address token,uint256 tokenId,uint256 amount)";
+  bytes32 private constant ASSET_TYPEHASH = keccak256(abi.encodePacked(ASSET_SIGNATURE));
+
+  bytes32 private immutable PERMIT_SIGNATURE =
     keccak256(bytes.concat("EIP712(bytes32 nonce,address account,Asset[] items,Asset[] ingredients)", ASSET_SIGNATURE));
 
   constructor(string memory name) EIP712(name, "1.0.0") {}
@@ -39,25 +41,38 @@ contract SignatureValidator is AssetHelper, EIP712, Context {
     require(isVerified, "Exchange: Invalid signature");
   }
 
+  function _verify(
+    address signer,
+    bytes32 digest,
+    bytes memory signature
+  ) private view returns (bool) {
+    return SignatureChecker.isValidSignatureNow(signer, digest, signature);
+  }
+
   function _hash(
     bytes32 nonce,
     address account,
     Asset[] memory items,
     Asset[] memory ingredients
-  ) internal view returns (bytes32) {
+  ) private view returns (bytes32) {
     return
       _hashTypedDataV4(
         keccak256(
-          abi.encode(PERMIT_SIGNATURE, nonce, account, hashAssetStructArray(items), hashAssetStructArray(ingredients))
+          abi.encode(PERMIT_SIGNATURE, nonce, account, _hashAssetStructArray(items), _hashAssetStructArray(ingredients))
         )
       );
   }
 
-  function _verify(
-    address signer,
-    bytes32 digest,
-    bytes memory signature
-  ) internal view returns (bool) {
-    return SignatureChecker.isValidSignatureNow(signer, digest, signature);
+  function _hashAssetStruct(Asset memory item) private pure returns (bytes32) {
+    return keccak256(abi.encode(ASSET_TYPEHASH, item.tokenType, item.token, item.tokenId, item.amount));
+  }
+
+  function _hashAssetStructArray(Asset[] memory items) private pure returns (bytes32) {
+    uint256 length = items.length;
+    bytes32[] memory padded = new bytes32[](length);
+    for (uint256 i = 0; i < length; i++) {
+      padded[i] = _hashAssetStruct(items[i]);
+    }
+    return keccak256(abi.encodePacked(padded));
   }
 }
