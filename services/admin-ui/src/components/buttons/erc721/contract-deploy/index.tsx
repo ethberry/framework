@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
@@ -36,18 +36,16 @@ export interface IErc721TokenDeployButtonProps {
 export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props => {
   const { className } = props;
 
-  const { provider } = useWeb3React();
-
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc721ContractDeployDto & { sign: IServerSignature } & { web3Context?: Web3ContextType }) => {
-      const { contractTemplate, name, symbol, royalty, baseTokenURI, sign, web3Context } = values;
+    (props: IErc721ContractDeployDto & { sign: IServerSignature } & { web3Context: Web3ContextType }) => {
+      const { contractTemplate, name, symbol, royalty, baseTokenURI, sign, web3Context } = props;
 
       const nonce = utils.arrayify(sign?.nonce);
 
       const contract = new Contract(
         process.env.CONTRACT_MANAGER_ADDR,
         ContractManagerSol.abi,
-        (provider || web3Context?.provider)?.getSigner(),
+        web3Context.provider?.getSigner(),
       );
 
       return contract.deployERC721Token(

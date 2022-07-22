@@ -3,6 +3,7 @@ import { useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 
 import { useServerSignature } from "./use-server-signature";
+import { useMetamask } from "./use-metamask";
 
 export const useDeploy = (deploy: (data: any) => Promise<void>) => {
   const [isDeployDialogOpen, setIsDeployDialogOpen] = useState(false);
@@ -10,7 +11,12 @@ export const useDeploy = (deploy: (data: any) => Promise<void>) => {
   const { enqueueSnackbar } = useSnackbar();
   const { formatMessage } = useIntl();
 
-  const deployFn = useServerSignature(deploy);
+  const fnWithSignature = useServerSignature(deploy);
+  const deployFn = useMetamask((props: any) => {
+    const { data, thenHandler, catchHandler, web3Context } = props;
+
+    return fnWithSignature(data, web3Context, thenHandler, catchHandler);
+  })
 
   const handleDeploy = (): void => {
     setIsDeployDialogOpen(true);
@@ -41,7 +47,7 @@ export const useDeploy = (deploy: (data: any) => Promise<void>) => {
       }
     };
 
-    return deployFn(data, thenHandler, catchHandler).then(thenHandler).catch(catchHandler);
+    return deployFn({ data, thenHandler, catchHandler });
   };
 
   const handleDeployCancel = () => {

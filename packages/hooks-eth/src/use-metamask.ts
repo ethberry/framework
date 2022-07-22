@@ -13,20 +13,18 @@ export const useMetamask = (fn: (...args: Array<any>) => Promise<any>) => {
 
   return async (...args: Array<any>) => {
     const params = args.length > 0 ? args[0] : {};
-    const { thenHandler = () => {}, catchHandler = () => {}, web3Context = null } = params;
+    const {
+      thenHandler,
+      catchHandler,
+      web3Context: passedWeb3Context = web3ContextGlobal,
+    } = params;
 
-    if (!isActive && !web3Context?.isActive) {
+    if (!isActive && !passedWeb3Context?.isActive) {
       return onWalletConnect(() => (web3Context: Web3ContextType) => {
-        return metaFn({ ...params, web3Context })
-          .then((result: any) => {
-            thenHandler?.(result);
-          })
-          .catch((e: any) => {
-            catchHandler?.(e);
-          });
+        return metaFn({ ...params, web3Context, thenHandler, catchHandler });
       })();
     }
 
-    return metaFn({ ...params, web3Context: web3Context || web3ContextGlobal });
+    return metaFn({ ...params, web3Context: passedWeb3Context, thenHandler, catchHandler });
   };
 };

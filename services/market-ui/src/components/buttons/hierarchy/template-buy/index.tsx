@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
-import { useIntl } from "react-intl";
-import { useSnackbar } from "notistack";
 
 import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -19,15 +16,10 @@ interface ITemplatePurchaseButtonProps {
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
   const { template } = props;
 
-  const web3ContextGlobal = useWeb3React();
-  const { provider, account } = web3ContextGlobal;
-  const { enqueueSnackbar } = useSnackbar();
-  const { formatMessage } = useIntl();
-
   const metaFnWithSignature = useServerSignature((props: any) => {
     const { sign, web3Context } = props;
 
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, (web3Context?.provider || provider)?.getSigner());
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
 
     return contract.execute(
       utils.arrayify(sign.nonce),
@@ -55,35 +47,16 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   const metaFnWithWallet = useMetamask((props: any) => {
     const { web3Context } = props;
-
-    const thenHandler = (result: any) => {
-      enqueueSnackbar(formatMessage({ id: "snackbar.success" }), { variant: "success" });
-      return result;
-    };
-
-    const catchHandler = (e: any) => {
-      if (e.status === 400) {
-        const errors = e.getLocalizedValidationErrors ? e.getLocalizedValidationErrors() : [];
-
-        console.log("errors", errors);
-        enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-      } else if (e.status) {
-        enqueueSnackbar(formatMessage({ id: `snackbar.${e.message as string}` }), { variant: "error" });
-      } else {
-        console.error(e);
-        enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-      }
-    };
+    const { account } = web3Context;
 
     return metaFnWithSignature({
       url: "/marketplace/sign",
       method: "POST",
       data: {
         templateId: template.id,
-        account: account || web3Context?.account,
+        account,
       },
-      web3Context: web3Context || web3ContextGlobal,
-    }, thenHandler, catchHandler).then(thenHandler).catch(catchHandler);
+    }, web3Context);
   });
 
   const handleBuy = async () => {
