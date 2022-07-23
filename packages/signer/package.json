@@ -1,0 +1,40 @@
+{
+  "author": {
+    "email": "TrejGun@gmail.com",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/framework/issues"
+  },
+  "dependencies": {
+    "@gemunion/nestjs-ethers": "3.0.4",
+    "@nestjs/common": "9.0.5",
+    "@nestjs/config": "2.2.0",
+    "ethers": "5.6.9"
+  },
+  "engines": {
+    "node": ">=12.13"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@gemunion/nest-js-module-exchange-signer",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/framework"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist/",
+    "prepublish": "npm run build",
+    "test": "exit 0"
+  },
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}

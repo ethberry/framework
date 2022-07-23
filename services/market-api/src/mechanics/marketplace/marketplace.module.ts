@@ -1,8 +1,9 @@
 import { Logger, Module } from "@nestjs/common";
 
+import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
+
 import { MarketplaceService } from "./marketplace.service";
 import { MarketplaceController } from "./marketplace.controller";
-import { SignerModule } from "../signer/signer.module";
 import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 
 @Module({

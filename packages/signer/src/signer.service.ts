@@ -4,12 +4,7 @@ import { Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
-export interface IAsset {
-  tokenType: number;
-  token: string;
-  tokenId: string;
-  amount: string;
-}
+import { IAsset } from "./interfaces";
 
 @Injectable()
 export class SignerService {
@@ -59,7 +54,10 @@ export class SignerService {
       {
         nonce,
         account,
-        externalId,
+        params: {
+          externalId,
+          expiresAt,
+        },
         item,
         ingredients,
       },
