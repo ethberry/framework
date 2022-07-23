@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
-import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 
 import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, ERC721Lootbox } from "../../../typechain-types";
 import {
@@ -17,6 +16,7 @@ import {
   tokenSymbol,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { wrapOneToManySignature } from "./shared/utils";
 
 const externalId = 123;
 const expiresAt = 0;
@@ -33,6 +33,8 @@ describe("ExchangeCore", function () {
   let erc1155Instance: ERC1155Simple;
   let lootboxInstance: ERC721Lootbox;
   let network: Network;
+
+  let generateSignature: (values: Record<string, any>) => Promise<string>;
 
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
@@ -58,49 +60,17 @@ describe("ExchangeCore", function () {
 
     network = await ethers.provider.getNetwork();
 
+    generateSignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
+
     this.contractInstance = exchangeInstance;
   });
-
-  const generateSignature = (account: SignerWithAddress, values: Record<string, any>) => {
-    return account._signTypedData(
-      // Domain
-      {
-        name: tokenName,
-        version: "1.0.0",
-        chainId: network.chainId,
-        verifyingContract: exchangeInstance.address,
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "nonce", type: "bytes32" },
-          { name: "account", type: "address" },
-          { name: "params", type: "Params" },
-          { name: "item", type: "Asset" },
-          { name: "ingredients", type: "Asset[]" },
-        ],
-        Params: [
-          { name: "externalId", type: "uint256" },
-          { name: "expiresAt", type: "uint256" },
-        ],
-        Asset: [
-          { name: "tokenType", type: "uint256" },
-          { name: "token", type: "address" },
-          { name: "tokenId", type: "uint256" },
-          { name: "amount", type: "uint256" },
-        ],
-      },
-      // Value
-      values,
-    );
-  };
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("purchase", function () {
     describe("ERROR", function () {
       it("should fail: duplicate mint", async function () {
-        const signature = await generateSignature(this.owner, {
+        const signature = await generateSignature({
           nonce,
           account: this.receiver.address,
           params,
@@ -170,7 +140,7 @@ describe("ExchangeCore", function () {
       });
 
       it("should fail for wrong signer role", async function () {
-        const signature = await generateSignature(this.owner, {
+        const signature = await generateSignature({
           nonce,
           account: this.receiver.address,
           params,
