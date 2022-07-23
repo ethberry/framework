@@ -17,7 +17,7 @@ import { HealthModule } from "./health/health.module";
 import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
 import { SyncModule } from "./sync/sync.module";
-import { LootModule } from "./mechanics/loot/loot.module";
+import { ClaimModule } from "./mechanics/claim/claim.module";
 
 @Module({
   providers: [
@@ -63,7 +63,7 @@ import { LootModule } from "./mechanics/loot/loot.module";
     RequestLoggerModule,
     HealthModule,
     AuthModule,
-    LootModule,
+    ClaimModule,
     SyncModule,
   ],
   controllers: [AppController],

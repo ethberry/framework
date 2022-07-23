@@ -11,6 +11,13 @@ export class TemplateService {
     protected readonly templateEntityRepository: Repository<TemplateEntity>,
   ) {}
 
+  public findOne(
+    where: FindOptionsWhere<TemplateEntity>,
+    options?: FindOneOptions<TemplateEntity>,
+  ): Promise<TemplateEntity | null> {
+    return this.templateEntityRepository.findOne({ where, ...options });
+  }
+
   public findAll(
     where: FindOptionsWhere<TemplateEntity>,
     options?: FindOneOptions<TemplateEntity>,

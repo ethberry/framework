@@ -2,10 +2,10 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsEthereumAddress, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IClaimItem } from "../interfaces";
+import { IClaimItemCreateDto } from "../interfaces";
 import { AssetDto } from "../../asset/dto";
 
-export class ClaimItem implements IClaimItem {
+export class ClaimItemCreateDto implements IClaimItemCreateDto {
   @ApiProperty({
     type: AssetDto,
   })

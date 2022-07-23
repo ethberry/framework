@@ -1,58 +1,30 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { utils, Wallet } from "ethers";
 
-import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { ClaimStatus, TokenType } from "@framework/types";
 
-import { IClaimItemCreateDto } from "./interfaces";
-import { ClaimEntity } from "./claim.entity";
-import { AssetService } from "../asset/asset.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { SignerService } from "../signer/signer.service";
+import { ClaimEntity } from "./claim.entity";
+import { IClaimItemCreateDto } from "./interfaces";
+import { AssetService } from "../asset/asset.service";
 
 @Injectable()
 export class ClaimService {
   constructor(
     @Inject(ETHERS_SIGNER)
     private readonly signer: Wallet,
-    @Inject(Logger)
-    private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
+    private readonly templateService: TemplateService,
+    private readonly signerService: SignerService,
+    private readonly assetService: AssetService,
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
-    protected readonly assetService: AssetService,
-    protected readonly templateService: TemplateService,
-    private readonly signerService: SignerService,
   ) {}
-
-  public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
-    const { skip, take, account } = dto;
-
-    const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
-
-    queryBuilder.leftJoinAndSelect("claim.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
-
-    queryBuilder.select();
-
-    if (account) {
-      queryBuilder.andWhere("claim.account ILIKE '%' || :account || '%'", { account });
-    }
-
-    queryBuilder.skip(skip);
-    queryBuilder.take(take);
-
-    queryBuilder.orderBy({
-      "claim.createdAt": "ASC",
-    });
-
-    return queryBuilder.getManyAndCount();
-  }
 
   public findOne(
     where: FindOptionsWhere<ClaimEntity>,
@@ -121,10 +93,6 @@ export class ClaimService {
     Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, expiresAt });
 
     return claimEntity.save();
-  }
-
-  public async delete(where: FindOptionsWhere<ClaimEntity>): Promise<DeleteResult> {
-    return this.claimEntityRepository.delete(where);
   }
 
   public async getSignature(

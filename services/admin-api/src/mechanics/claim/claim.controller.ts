@@ -18,7 +18,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { ClaimService } from "./claim.service";
 import { ClaimEntity } from "./claim.entity";
-import { ClaimItem, ClaimItemUpdateDto, ClaimSearchDto } from "./dto";
+import { ClaimItemCreateDto, ClaimItemUpdateDto, ClaimSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/claims")
@@ -32,7 +32,7 @@ export class ClaimController {
   }
 
   @Post("/")
-  public create(@Body() dto: ClaimItem): Promise<ClaimEntity> {
+  public create(@Body() dto: ClaimItemCreateDto): Promise<ClaimEntity> {
     return this.claimService.create(dto);
   }
 
