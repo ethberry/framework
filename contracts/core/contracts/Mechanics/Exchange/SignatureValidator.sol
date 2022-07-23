@@ -12,6 +12,8 @@ import "@openzeppelin/contracts/utils/Context.sol";
 
 import "./interfaces/IAsset.sol";
 
+import "hardhat/console.sol";
+
 contract SignatureValidator is EIP712, Context {
   using Address for address;
 
@@ -53,6 +55,14 @@ contract SignatureValidator is EIP712, Context {
     require(!_expired[nonce], "Exchange: Expired signature");
     _expired[nonce] = true;
 
+    console.log("params.expiresAt", params.expiresAt);
+    console.log("block.timestamp ", block.timestamp);
+    console.log("condition", block.timestamp <= params.expiresAt);
+
+    if (params.expiresAt != 0) {
+      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+    }
+
     address account = _msgSender();
 
     bool isVerified = _verify(signer, _hashOneToMany(nonce, account, params, item, ingredients), signature);
@@ -70,7 +80,9 @@ contract SignatureValidator is EIP712, Context {
     require(!_expired[nonce], "Exchange: Expired signature");
     _expired[nonce] = true;
 
-    // TODO validate params.expiresAt
+    if (params.expiresAt != 0) {
+      require(block.timestamp <= params.expiresAt, "Exchange: Expired signature");
+    }
 
     address account = _msgSender();
 

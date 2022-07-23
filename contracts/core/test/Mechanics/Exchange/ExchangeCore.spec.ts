@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
+import { time } from "@openzeppelin/test-helpers";
 
 import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, ERC721Lootbox } from "../../../typechain-types";
 import {
@@ -139,7 +140,7 @@ describe("ExchangeCore", function () {
         await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
       });
 
-      it("should fail for wrong signer role", async function () {
+      it("should fail: wrong signer role", async function () {
         const signature = await generateSignature({
           nonce,
           account: this.receiver.address,
@@ -184,7 +185,7 @@ describe("ExchangeCore", function () {
         await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
       });
 
-      it("should fail for wrong signature", async function () {
+      it("should fail: wrong signature", async function () {
         const tx = exchangeInstance.purchase(
           nonce,
           params,
@@ -207,6 +208,59 @@ describe("ExchangeCore", function () {
         );
 
         await expect(tx).to.be.revertedWith(`Exchange: Invalid signature`);
+      });
+
+      it("should fail: expired signature", async function () {
+        const expiresAt = (await time.latest()).toString();
+
+        const signature = await generateSignature({
+          nonce,
+          account: this.receiver.address,
+          params: {
+            externalId,
+            expiresAt,
+          },
+          item: {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
+          ingredients: [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        const tx = exchangeInstance.connect(this.receiver).purchase(
+          nonce,
+          {
+            externalId,
+            expiresAt,
+          },
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx).to.be.revertedWith(`Exchange: Expired signature`);
       });
     });
   });
