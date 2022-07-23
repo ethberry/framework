@@ -26,6 +26,7 @@ export class CreateToken1563804000310 implements MigrationInterface {
         {
           name: "royalty",
           type: "int",
+          default: 0,
         },
         {
           name: "token_id",

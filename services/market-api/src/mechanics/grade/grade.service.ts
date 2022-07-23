@@ -28,40 +28,40 @@ export class GradeService {
     return this.gradeEntityRepository.findOne({ where, ...options });
   }
 
-  public async sign(dto: ISignGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
-    const { tokenId } = dto;
-    const tokenEntity = await this.tokenService.findOne(
-      { id: tokenId },
-      {
-        join: {
-          alias: "token",
-          leftJoinAndSelect: {
-            template: "token.template",
-            contract: "template.contract",
-          },
-        },
-      },
-    );
+  public async findOneByToken(where: FindOptionsWhere<TokenEntity>): Promise<GradeEntity | null> {
+    const tokenEntity = await this.tokenService.findOneWithRelations(where);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const gradeEntity = await this.findOne(
-      { contractId: tokenEntity.template.contract.id },
-      {
-        join: {
-          alias: "grade",
-          leftJoinAndSelect: {
-            price: "grade.price",
-            price_components: "price.components",
-            price_contract: "price_components.contract",
-            price_template: "price_components.template",
-            price_tokens: "price_template.tokens",
-          },
+    return this.findOneWithRelations({ contractId: tokenEntity.template.contract.id });
+  }
+
+  public async findOneWithRelations(where: FindOptionsWhere<GradeEntity>): Promise<GradeEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "grade",
+        leftJoinAndSelect: {
+          price: "grade.price",
+          price_components: "price.components",
+          price_contract: "price_components.contract",
+          price_template: "price_components.template",
+          price_tokens: "price_template.tokens",
         },
       },
-    );
+    });
+  }
+
+  public async sign(dto: ISignGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { tokenId } = dto;
+    const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
+
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    const gradeEntity = await this.findOneWithRelations({ contractId: tokenEntity.template.contract.id });
 
     if (!gradeEntity) {
       throw new NotFoundException("gradeNotFound");
@@ -86,25 +86,7 @@ export class GradeService {
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
-    const grade = tokenEntity.attributes[TokenAttributes.GRADE];
-
-    let amount;
-
-    switch (gradeEntity.gradeStrategy) {
-      case GradeStrategy.FLAT:
-        amount = BigNumber.from(gradeEntity.price.components[0].amount);
-        break;
-      case GradeStrategy.LINEAR:
-        amount = BigNumber.from(gradeEntity.price.components[0].amount).mul(grade);
-        break;
-      case GradeStrategy.EXPONENTIAL:
-        amount = BigNumber.from(gradeEntity.price.components[0].amount).mul(
-          (1 + gradeEntity.growthRate / 100) ** grade,
-        );
-        break;
-      default:
-        throw new BadRequestException("unknownStrategy");
-    }
+    const level = tokenEntity.attributes[TokenAttributes.GRADE];
 
     return this.signerService.getOneToManySignature(
       nonce,
@@ -117,14 +99,25 @@ export class GradeService {
         tokenId: tokenEntity.tokenId.toString(),
         amount: "1",
       },
-      [
-        {
-          tokenType: Object.keys(TokenType).indexOf(gradeEntity.price.components[0].tokenType),
-          token: gradeEntity.price.components[0].contract.address,
-          tokenId: gradeEntity.price.components[0].template.tokens[0].tokenId,
-          amount: amount.toString(),
-        },
-      ],
+      gradeEntity.price.components.map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract.address,
+        tokenId: component.template.tokens[0].tokenId,
+        amount: this.getMultiplier(level, component.amount, gradeEntity).toString(),
+      })),
     );
+  }
+
+  public getMultiplier(level: number, amount: string, gradeEntity: GradeEntity) {
+    switch (gradeEntity.gradeStrategy) {
+      case GradeStrategy.FLAT:
+        return BigNumber.from(amount);
+      case GradeStrategy.LINEAR:
+        return BigNumber.from(amount).mul(level);
+      case GradeStrategy.EXPONENTIAL:
+        return BigNumber.from(amount).mul((1 + gradeEntity.growthRate / 100) ** level);
+      default:
+        throw new BadRequestException("unknownStrategy");
+    }
   }
 }

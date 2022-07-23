@@ -105,7 +105,6 @@ export class ContractManagerServiceEth {
       decimals: 18,
       description: emptyStateString,
       imageUrl,
-      royalty: 0, // todo default or nullable in entity?
       contractTemplate,
       contractType: TokenType.ERC20,
       chainId: this.chainId,
@@ -223,11 +222,8 @@ export class ContractManagerServiceEth {
     await this.contractService.create({
       address: addr.toLowerCase(),
       title: "new 1155 contract",
-      name: "new 1155 contract",
       description: emptyStateString,
       imageUrl,
-      symbol: "ERC1155", // todo allow nulls?
-      royalty: 0, // todo default or nullable in entity?
       baseTokenURI,
       contractTemplate,
       contractType: TokenType.ERC1155,

@@ -114,35 +114,16 @@ export class TokenService {
     return this.tokenEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelationslus(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
-    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
-
-    queryBuilder.select();
-    queryBuilder.where(where);
-
-    queryBuilder.leftJoinAndSelect("token.history", "history");
-    queryBuilder.leftJoinAndSelect("token.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-
-    return queryBuilder.getOne();
-  }
-
-  public getToken(address: string, tokenId: string): Promise<TokenEntity | null> {
-    const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
-
-    queryBuilder.select();
-
-    queryBuilder.leftJoinAndSelect("token.template", "template");
-    queryBuilder.leftJoinAndSelect("template.contract", "contract");
-
-    queryBuilder.andWhere("contract.address = :address", {
-      address,
+  public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "token",
+        leftJoinAndSelect: {
+          history: "token.history",
+          template: "token.template",
+          contract: "template.contract",
+        },
+      },
     });
-
-    queryBuilder.andWhere("token.tokenId = :tokenId", {
-      tokenId,
-    });
-
-    return queryBuilder.getOne();
   }
 }

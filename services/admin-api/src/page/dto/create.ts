@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsJSON, IsString } from "class-validator";
+import { IsJSON, IsString, Matches } from "class-validator";
 
 import { IPageCreateDto } from "../interfaces";
 
 export class PageCreateDto implements IPageCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  // TODO validate /[a-z-]+/i
+  @Matches(/^[0-9A-Z_-]+$/i, { message: "patternMismatch" })
   public slug: string;
 
   @ApiProperty()

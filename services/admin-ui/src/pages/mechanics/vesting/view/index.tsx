@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { format, formatDistance, formatDuration, intervalToDuration, parseISO } from "date-fns";
 
@@ -18,7 +18,7 @@ export interface IVestingViewDialogProps {
 export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { id, account, address, duration, contractTemplate, startTimestamp } = initialValues;
+  const { account, address, duration, contractTemplate, startTimestamp } = initialValues;
 
   const dateStart = new Date(startTimestamp);
   const dateFinish = new Date(new Date(dateStart.getTime() + +duration));
@@ -29,8 +29,6 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
-      {/* TODO i18n */}
-      <Typography variant="h5">Vesting #{id}</Typography>
       <TableContainer component={Paper}>
         <Table aria-label="vesting table">
           <TableBody>

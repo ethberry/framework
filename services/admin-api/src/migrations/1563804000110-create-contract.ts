@@ -67,10 +67,12 @@ export class CreateContract1563804000110 implements MigrationInterface {
         {
           name: "name",
           type: "varchar",
+          default: "''",
         },
         {
           name: "symbol",
           type: "varchar",
+          default: "''",
         },
         {
           name: "decimals",
@@ -80,6 +82,7 @@ export class CreateContract1563804000110 implements MigrationInterface {
         {
           name: "royalty",
           type: "int",
+          default: 0,
         },
         {
           name: "base_token_uri",
