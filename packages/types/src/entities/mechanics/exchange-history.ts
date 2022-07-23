@@ -10,6 +10,8 @@ export enum ExchangeEventType {
   Upgrade = "Upgrade",
 }
 
+// TODO describe all events
+
 export interface ITransaction {
   from: string;
   items: Array<[number, string, string, string]>;
