@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { format, formatDistance, parseISO } from "date-fns";
 
@@ -16,7 +16,7 @@ export interface IStakesViewDialogProps {
 
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { id, account, stakeStatus, startTimestamp, stakingRule } = initialValues;
+  const { account, stakeStatus, startTimestamp, stakingRule } = initialValues;
 
   const dateStart = new Date(startTimestamp);
   const dateFinish = new Date(new Date(dateStart.getTime() + +stakingRule.duration));
@@ -27,8 +27,6 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
-      {/* TODO i18n */}
-      <Typography variant="h5">Vesting #{id}</Typography>
       <TableContainer component={Paper}>
         <Table aria-label="vesting table">
           <TableBody>

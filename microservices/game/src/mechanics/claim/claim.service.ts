@@ -6,9 +6,9 @@ import { utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { ClaimStatus, TokenType } from "@framework/types";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { SignerService } from "../signer/signer.service";
 import { ClaimEntity } from "./claim.entity";
 import { IClaimItemCreateDto } from "./interfaces";
 import { AssetService } from "../asset/asset.service";

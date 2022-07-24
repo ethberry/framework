@@ -2,15 +2,16 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
+
 import { IServerSignature } from "@gemunion/types-collection";
 import { ContractTemplate, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
 import { UserEntity } from "../../user/user.entity";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
-import { SignerService } from "../signer/signer.service";
 
 @Injectable()
 export class GradeService {

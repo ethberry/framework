@@ -6,10 +6,10 @@ import { BigNumber, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
 import { ILootboxSearchDto, TokenType } from "@framework/types";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignLootboxDto } from "./interfaces";
 import { LootboxEntity } from "./lootbox.entity";
-import { SignerService } from "../signer/signer.service";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 

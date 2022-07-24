@@ -5,10 +5,10 @@ import { utils } from "ethers";
 
 import { ISearchDto, IServerSignature } from "@gemunion/types-collection";
 import { CraftStatus, TokenType } from "@framework/types";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
-import { SignerService } from "../signer/signer.service";
 import { UserEntity } from "../../user/user.entity";
 
 @Injectable()

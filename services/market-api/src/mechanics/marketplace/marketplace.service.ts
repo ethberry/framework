@@ -3,9 +3,9 @@ import { BigNumber, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
 import { TokenType } from "@framework/types";
+import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignTemplateDto } from "./interfaces";
-import { SignerService } from "../signer/signer.service";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
 
