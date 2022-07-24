@@ -2,10 +2,10 @@ import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { Contract, utils, BigNumber } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api-firebase";
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractTemplate, GradeStrategy, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
 import { IServerSignature } from "@gemunion/types-collection";
 
@@ -40,59 +40,62 @@ interface IUpgradeButtonProps {
 export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
   const { token } = props;
 
-  const { provider } = useWeb3React();
-
   const api = useApi();
 
   const { contractTemplate } = token.template!.contract!;
 
-  const handleLevelUp = useMetamask(() => {
-    return api
-      .fetchJson({
-        url: `/grade/${token.id}`,
-      })
-      .then((grade: IGrade) => {
-        const level = token.attributes[TokenAttributes.GRADE];
+  const metaFnWithSign = useServerSignature(
+    (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
+      return api
+        .fetchJson({
+          url: `/grade/${token.id}`,
+        })
+        .then((grade: IGrade) => {
+          const level = token.attributes[TokenAttributes.GRADE];
 
-        const ingredients = grade.price?.components.map(component => ({
-          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
-          amount: getMultiplier(level, component.amount, grade),
-        }));
+          const ingredients = grade.price?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.template!.tokens![0].tokenId,
+            amount: getMultiplier(level, component.amount, grade),
+          }));
 
-        return api
-          .fetchJson({
-            url: "/grade/sign",
-            method: "POST",
-            data: {
-              tokenId: token.id,
+          const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+          return contract.upgrade(
+            {
+              nonce: utils.arrayify(sign.nonce),
+              externalId: grade.id,
+              expiresAt: sign.expiresAt,
             },
-          })
-          .then((sign: IServerSignature) => {
-            const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
-            return contract.upgrade(
-              {
-                nonce: utils.arrayify(sign.nonce),
-                externalId: grade.id,
-                expiresAt: sign.expiresAt,
-              },
-              {
-                tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
-                token: token.template!.contract!.address,
-                tokenId: token.tokenId.toString(),
-                amount: "1",
-              },
-              ingredients,
-              process.env.ACCOUNT,
-              sign.signature,
-              {
-                value: getEthPrice(ingredients),
-              },
-            ) as Promise<void>;
-          });
-      });
+            {
+              tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
+              token: token.template!.contract!.address,
+              tokenId: token.tokenId.toString(),
+              amount: "1",
+            },
+            ingredients,
+            process.env.ACCOUNT,
+            sign.signature,
+            {
+              value: getEthPrice(ingredients),
+            },
+          ) as Promise<void>;
+        });
+    });
+
+  const metaFn = useMetamask((web3Context: Web3ContextType) => {
+    return metaFnWithSign({
+      url: "/grade/sign",
+      method: "POST",
+      data: {
+        tokenId: token.id,
+      },
+    }, web3Context);
   });
+
+  const handleLevelUp = async () => {
+    await metaFn();
+  };
 
   if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
     return null;

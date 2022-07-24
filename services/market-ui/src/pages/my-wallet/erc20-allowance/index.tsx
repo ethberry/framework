@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -12,8 +12,6 @@ import { Erc20AllowanceDialog, IErc20AllowanceDto } from "./edit";
 export const Erc20AllowanceButton: FC = () => {
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
 
-  const { provider } = useWeb3React();
-
   const handleAllowance = (): void => {
     setIsAllowanceDialogOpen(true);
   };
@@ -22,8 +20,8 @@ export const Erc20AllowanceButton: FC = () => {
     setIsAllowanceDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IErc20AllowanceDto) => {
-    const contract = new Contract(values.address, ERC20SimpleSol.abi, provider?.getSigner());
+  const meta = useMetamask((values: IErc20AllowanceDto, web3Context: Web3ContextType) => {
+    const contract = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
     return contract.approve(process.env.EXCHANGE_ADDR, values.amount) as Promise<void>;
   });
 

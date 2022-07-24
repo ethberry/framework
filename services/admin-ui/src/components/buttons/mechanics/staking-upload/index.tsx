@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
 import { BigNumber, Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { IStakingRule, StakingStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -19,9 +19,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
 
   const { formatMessage } = useIntl();
 
-  const { provider } = useWeb3React();
-
-  const metaLoadRule = useMetamask((rule: IStakingRule) => {
+  const metaLoadRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     if (rule.stakingStatus !== StakingStatus.NEW) {
       return Promise.reject(new Error(""));
     }
@@ -36,7 +34,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       active: true, // todo add var in interface
     };
 
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
     return contract.setRules([stakingRule]) as Promise<void>;
   });
 
@@ -48,7 +46,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     };
   };
 
-  const metaToggleRule = useMetamask((rule: IStakingRule) => {
+  const metaToggleRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     let ruleStatus: boolean;
     if (rule.stakingStatus === StakingStatus.NEW) {
       // it should never happen
@@ -57,7 +55,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       ruleStatus = rule.stakingStatus !== StakingStatus.ACTIVE;
     }
 
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, provider?.getSigner());
+    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
     return contract.updateRule(rule.externalId, ruleStatus) as Promise<void>;
   });
 

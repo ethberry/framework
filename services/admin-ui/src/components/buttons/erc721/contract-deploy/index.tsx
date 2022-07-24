@@ -2,11 +2,8 @@ import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { useWeb3React } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
-import { useApi } from "@gemunion/provider-api-firebase";
-import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc721ContractTemplate, IErc721ContractDeployDto } from "@framework/types";
 
@@ -37,41 +34,38 @@ export interface IErc721TokenDeployButtonProps {
 export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props => {
   const { className } = props;
 
-  const { provider } = useWeb3React();
-  const api = useApi();
-
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc721ContractDeployDto) => {
+    (values: IErc721ContractDeployDto, web3Context, sign) => {
       const { contractTemplate, name, symbol, royalty, baseTokenURI } = values;
 
-      return api
-        .fetchJson({
-          url: "/contract-manager/erc721-token",
-          method: "POST",
-          data: values,
-        })
-        .then((sign: IServerSignature) => {
-          const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(
-            process.env.CONTRACT_MANAGER_ADDR,
-            ContractManagerSol.abi,
-            provider?.getSigner(),
-          );
+      const nonce = utils.arrayify(sign.nonce);
+      const contract = new Contract(
+        process.env.CONTRACT_MANAGER_ADDR,
+        ContractManagerSol.abi,
+        web3Context.provider?.getSigner(),
+      );
 
-          return contract.deployERC721Token(
-            nonce,
-            getBytecodeByErc721TokenTemplate(contractTemplate),
-            name,
-            symbol,
-            royalty,
-            baseTokenURI,
-            Object.keys(Erc721ContractTemplate).indexOf(contractTemplate),
-            process.env.ACCOUNT,
-            sign.signature,
-          ) as Promise<void>;
-        });
+      return contract.deployERC721Token(
+        nonce,
+        getBytecodeByErc721TokenTemplate(contractTemplate),
+        name,
+        symbol,
+        royalty,
+        baseTokenURI,
+        Object.keys(Erc721ContractTemplate).indexOf(contractTemplate),
+        process.env.ACCOUNT,
+        sign.signature,
+      ) as Promise<void>;
     },
   );
+
+  const onDeployConfirm = (values: Record<string, any>, form: any) => {
+    return handleDeployConfirm({
+      url: "/contract-manager/erc721-token",
+      method: "POST",
+      data: values,
+    }, form);
+  };
 
   return (
     <Fragment>
@@ -85,7 +79,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
       <Erc721ContractDeployDialog
-        onConfirm={handleDeployConfirm}
+        onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
       />

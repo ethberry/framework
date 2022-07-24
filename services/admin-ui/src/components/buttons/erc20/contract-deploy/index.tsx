@@ -2,11 +2,8 @@ import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { useWeb3React } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
-import { useApi } from "@gemunion/provider-api-firebase";
-import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc20ContractTemplate, IErc20TokenDeployDto } from "@framework/types";
 
@@ -34,39 +31,36 @@ export interface IErc20TokenDeployButtonProps {
 export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props => {
   const { className } = props;
 
-  const { provider } = useWeb3React();
-  const api = useApi();
-
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc20TokenDeployDto) => {
+    (values: IErc20TokenDeployDto, web3Context, sign) => {
       const { contractTemplate, name, symbol, cap } = values;
 
-      return api
-        .fetchJson({
-          url: "/contract-manager/erc20-token",
-          method: "POST",
-          data: values,
-        })
-        .then((sign: IServerSignature) => {
-          const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(
-            process.env.CONTRACT_MANAGER_ADDR,
-            ContractManagerSol.abi,
-            provider?.getSigner(),
-          );
-          return contract.deployERC20Token(
-            nonce,
-            getBytecodeByErc20TokenTemplate(contractTemplate),
-            name,
-            symbol,
-            cap,
-            Object.keys(Erc20ContractTemplate).indexOf(contractTemplate),
-            process.env.ACCOUNT,
-            sign.signature,
-          ) as Promise<void>;
-        });
+      const nonce = utils.arrayify(sign.nonce);
+      const contract = new Contract(
+        process.env.CONTRACT_MANAGER_ADDR,
+        ContractManagerSol.abi,
+        web3Context.provider?.getSigner(),
+      );
+      return contract.deployERC20Token(
+        nonce,
+        getBytecodeByErc20TokenTemplate(contractTemplate),
+        name,
+        symbol,
+        cap,
+        Object.keys(Erc20ContractTemplate).indexOf(contractTemplate),
+        process.env.ACCOUNT,
+        sign.signature,
+      ) as Promise<void>;
     },
   );
+
+  const onDeployConfirm = (values: Record<string, any>, form: any) => {
+    return handleDeployConfirm({
+      url: "/contract-manager/erc20-token",
+      method: "POST",
+      data: values,
+    }, form);
+  };
 
   return (
     <Fragment>
@@ -79,7 +73,7 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc20TokenDeployDialog onConfirm={handleDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <Erc20TokenDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );
 };

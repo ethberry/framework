@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -25,7 +25,6 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
-  const { provider } = useWeb3React();
   const user = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
@@ -37,8 +36,8 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
     { success: false },
   );
 
-  const metaRevokeRole = useMetamask((values: IAccessControl) => {
-    const contract = new Contract(data.address, IAccessControlSol.abi, provider?.getSigner());
+  const metaRevokeRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
+    const contract = new Contract(data.address, IAccessControlSol.abi, web3Context.provider?.getSigner());
     return contract.revokeRole(values.role, values.address) as Promise<void>;
   });
 

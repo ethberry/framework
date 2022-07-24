@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOn } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -19,8 +19,6 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
 
   const [isBlacklistDialogOpen, setIsBlacklistDialogOpen] = useState(false);
 
-  const { provider } = useWeb3React();
-
   const handleBlacklist = (): void => {
     setIsBlacklistDialogOpen(true);
   };
@@ -29,8 +27,8 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
     setIsBlacklistDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IBlacklistDto) => {
-    const contract = new Contract(address, ERC20BlacklistSol.abi, provider?.getSigner());
+  const meta = useMetamask((values: IBlacklistDto, web3Context: Web3ContextType) => {
+    const contract = new Contract(address, ERC20BlacklistSol.abi, web3Context.provider?.getSigner());
     return contract.blacklist(values.account) as Promise<void>;
   });
 
