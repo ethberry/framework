@@ -11,10 +11,7 @@ export class CreateExchangeHistory1657846607010 implements MigrationInterface {
         'Lootbox', 
         'Purchase', 
         'Paused',
-        'Unpaused',
-        'RoleAdminChanged',
-        'RoleGranted',
-        'RoleRevoked'
+        'Unpaused'
       );`,
     );
 
