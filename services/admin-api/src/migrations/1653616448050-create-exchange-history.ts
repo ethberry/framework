@@ -31,7 +31,27 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "exchange_id",
+          name: "template_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "claim_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "craft_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "grade_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
+          name: "lootbox_id",
           type: "int",
           isNullable: true,
         },
@@ -46,9 +66,33 @@ export class CreateExchangeHistory1653616448050 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["exchange_id"],
+          columnNames: ["template_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.claim`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["claim_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.claim`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["craft_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.craft`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["grade_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.grade`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["lootbox_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.grade`,
           onDelete: "CASCADE",
         },
       ],
