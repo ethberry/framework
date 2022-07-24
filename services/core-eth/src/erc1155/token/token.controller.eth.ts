@@ -4,12 +4,8 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  AccessControlEventType,
   ContractEventType,
   ContractType,
-  IAccessControlRoleAdminChanged,
-  IAccessControlRoleGranted,
-  IAccessControlRoleRevoked,
   IErc1155TokenApprovalForAll,
   IErc1155TokenTransferBatch,
   IErc1155TokenTransferSingle,
@@ -44,20 +40,5 @@ export class Erc1155TokenControllerEth {
   @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.URI })
   public uri(@Payload() event: ILogEvent<IErc1155TokenUri>, @Ctx() context: Log): Promise<void> {
     return this.erc1155ServiceEth.uri(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleGranted })
-  public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGranted>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleGranted(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleRevoked })
-  public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevoked>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleRevoked(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleAdminChanged })
-  public roleAdmin(@Payload() event: ILogEvent<IAccessControlRoleAdminChanged>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleAdminChanged(event, context);
   }
 }

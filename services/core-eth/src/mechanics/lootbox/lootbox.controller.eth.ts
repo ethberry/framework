@@ -4,12 +4,8 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  AccessControlEventType,
   ContractEventType,
   ContractType,
-  IAccessControlRoleAdminChanged,
-  IAccessControlRoleGranted,
-  IAccessControlRoleRevoked,
   IDefaultRoyaltyInfo,
   ILootboxUnpack,
   ITokenApprove,
@@ -56,20 +52,5 @@ export class LootboxControllerEth {
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.UnpackLootbox })
   public unpackItem(@Payload() event: ILogEvent<ILootboxUnpack>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.unpack(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.LOOTBOX, eventName: AccessControlEventType.RoleGranted })
-  public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGranted>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleGranted(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.LOOTBOX, eventName: AccessControlEventType.RoleRevoked })
-  public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevoked>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleRevoked(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.LOOTBOX, eventName: AccessControlEventType.RoleAdminChanged })
-  public roleAdmin(@Payload() event: ILogEvent<IAccessControlRoleAdminChanged>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleAdminChanged(event, context);
   }
 }
