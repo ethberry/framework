@@ -26,7 +26,7 @@ export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> =
 
   return (
     <MenuItem onClick={handleSnapshot}>
-      <ListItemIcon>handleSnapshot
+      <ListItemIcon>
         <PhotoCamera fontSize="small" />
       </ListItemIcon>
       <Typography variant="inherit">

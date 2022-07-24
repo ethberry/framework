@@ -11,12 +11,12 @@ import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1
 
 import { IErc1155MintDto, Erc1155MintDialog } from "./edit";
 
-export interface IOzMintErc1155TokenMenuItemProps {
+export interface IErc1155MintMenuItemProps {
   address: string;
   contractId: number;
 }
 
-export const Erc1155MintMenuItem: FC<IOzMintErc1155TokenMenuItemProps> = props => {
+export const Erc1155MintMenuItem: FC<IErc1155MintMenuItemProps> = props => {
   const { address, contractId } = props;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);

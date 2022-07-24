@@ -11,12 +11,12 @@ import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/
 
 import { IMintErc20TokenDto, MintErc20TokenDialog } from "./edit";
 
-export interface IOzMintTokenMenuItemProps {
+export interface IErc20MintMenuItemProps {
   address: string;
   contractId: number;
 }
 
-export const Erc20MintMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
+export const Erc20MintMenuItem: FC<IErc20MintMenuItemProps> = props => {
   const { address, contractId } = props;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);

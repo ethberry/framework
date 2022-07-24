@@ -5,7 +5,17 @@ import { ns } from "@framework/constants";
 export class CreateExchangeHistory1657846607010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
-      `CREATE TYPE ${ns}.exchange_event_enum AS ENUM ('Claim', 'Craft', 'Lootbox', 'Purchase', 'Paused');`,
+      `CREATE TYPE ${ns}.exchange_event_enum AS ENUM (
+        'Claim', 
+        'Craft', 
+        'Lootbox', 
+        'Purchase', 
+        'Paused',
+        'Unpaused',
+        'RoleAdminChanged',
+        'RoleGranted',
+        'RoleRevoked'
+      );`,
     );
 
     const table = new Table({

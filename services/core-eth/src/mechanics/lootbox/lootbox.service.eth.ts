@@ -14,6 +14,7 @@ import {
   ITokenRoyaltyInfo,
   ITokenTransfer,
   TContractEventData,
+  TokenAttributes,
   TokenStatus,
 } from "@framework/types";
 
@@ -64,8 +65,8 @@ export class LootboxServiceEth {
     // Mint token create
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-
-      const templateEntity = await this.templateService.findOne({ id: ~~attributes.templateId });
+      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+      const templateEntity = await this.templateService.findOne({ id: templateId });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");

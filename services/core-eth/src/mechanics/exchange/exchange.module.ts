@@ -8,15 +8,9 @@ import { ExchangeControllerEth } from "./exchange.controller.eth";
 import { ContractManagerModule } from "../../blockchain/contract-manager/contract-manager.module";
 import { ExchangeLogModule } from "./exchange-log/exchange-log.module";
 import { ExchangeHistoryModule } from "./exchange-history/exchange-history.module";
-import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
-import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
-import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module";
 
 @Module({
   imports: [
-    TemplateModule,
-    TokenModule,
-    BalanceModule,
     ContractManagerModule,
     ExchangeHistoryModule,
     ExchangeLogModule,

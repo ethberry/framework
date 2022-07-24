@@ -15,6 +15,7 @@ import {
   ITokenRoyaltyInfo,
   ITokenTransfer,
   TContractEventData,
+  TokenAttributes,
   TokenRarity,
   TokenStatus,
 } from "@framework/types";
@@ -65,8 +66,8 @@ export class Erc998TokenServiceEth {
     // Mint token create
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-
-      const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
+      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+      const templateEntity = await this.templateService.findOne({ id: templateId });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");

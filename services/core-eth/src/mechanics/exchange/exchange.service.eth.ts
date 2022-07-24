@@ -13,11 +13,8 @@ import {
 } from "@framework/types";
 
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
-import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 import { ExchangeHistoryService } from "./exchange-history/exchange-history.service";
 import { ExchangeService } from "./exchange.service";
-import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 
 @Injectable()
 export class ExchangeServiceEth {
@@ -27,17 +24,10 @@ export class ExchangeServiceEth {
     private readonly contractManagerService: ContractManagerService,
     private readonly exchangeService: ExchangeService,
     private readonly exchangeHistoryService: ExchangeHistoryService,
-    private readonly templateService: TemplateService,
-    private readonly tokenService: TokenService,
-    private readonly balanceService: BalanceService,
   ) {}
 
-  public async purchase(event: ILogEvent<IExchangePurchase>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  public async dummy(
-    event: ILogEvent<IExchangeClaim | IExchangeCraft | IExchangeGrade | IExchangeLootbox>,
+  public async log(
+    event: ILogEvent<IExchangePurchase | IExchangeClaim | IExchangeCraft | IExchangeGrade | IExchangeLootbox>,
     context: Log,
   ): Promise<void> {
     await this.updateHistory(event, context);
