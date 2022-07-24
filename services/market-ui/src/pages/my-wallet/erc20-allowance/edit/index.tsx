@@ -28,7 +28,7 @@ export const Erc20AllowanceDialog: FC<IErc20AllowanceDialogProps> = props => {
       data-testid="Erc20AllowanceDialog"
       {...props}
     >
-      <ContractInput name="address" />
+      <ContractInput name="contractId" related="address" />
       <EthInput name="amount" symbol="" />
     </FormDialog>
   );

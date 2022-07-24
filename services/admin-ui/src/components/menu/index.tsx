@@ -9,8 +9,8 @@ import { ContractRevokeRoleMenuItem } from "./revoke-role";
 import { ContractRenounceRoleMenuItem } from "./renounce-role";
 import { BlacklistAddMenuItem } from "./blacklist-add";
 import { UnBlacklistMenuItem } from "./blacklist-remove";
-import { MintErc20TokenMenuItem } from "./mint/mint-erc20";
-import { MintErc1155TokenMenuItem } from "./mint/mint-erc1155";
+import { Erc20MintMenuItem } from "./mint/erc20";
+import { Erc1155MintMenuItem } from "./mint/erc1155";
 import { TokenType } from "@framework/types";
 
 export enum ContractActions {
@@ -56,9 +56,11 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {contract.contractType === TokenType.ERC20 ? <MintErc20TokenMenuItem address={contract.address} /> : null}
+        {contract.contractType === TokenType.ERC20 ? (
+          <Erc20MintMenuItem address={contract.address} contractId={contract.id} />
+        ) : null}
         {contract.contractType === TokenType.ERC1155 ? (
-          <MintErc1155TokenMenuItem address={contract.address} contractId={contract.id} />
+          <Erc1155MintMenuItem address={contract.address} contractId={contract.id} />
         ) : null}
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.ROYALTY) ? (

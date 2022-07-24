@@ -102,6 +102,7 @@ export class ContractService {
       select: {
         id: true,
         title: true,
+        address: true,
         contractType: true,
       },
     });

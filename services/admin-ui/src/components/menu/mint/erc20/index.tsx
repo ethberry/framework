@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { BigNumber, Contract } from "ethers";
+import { Contract } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -13,10 +13,11 @@ import { IMintErc20TokenDto, MintErc20TokenDialog } from "./edit";
 
 export interface IOzMintTokenMenuItemProps {
   address: string;
+  contractId: number;
 }
 
-export const MintErc20TokenMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
-  const { address } = props;
+export const Erc20MintMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
+  const { address, contractId } = props;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -32,7 +33,7 @@ export const MintErc20TokenMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
 
   const meta = useMetamask((values: IMintErc20TokenDto) => {
     const contract = new Contract(address, ERC20SimpleSol.abi, provider?.getSigner());
-    return contract.mint(values.recipient, BigNumber.from(values.amount)) as Promise<void>;
+    return contract.mint(values.account, values.amount) as Promise<void>;
   });
 
   const handleMintTokenConfirmed = async (values: IMintErc20TokenDto): Promise<void> => {
@@ -57,8 +58,9 @@ export const MintErc20TokenMenuItem: FC<IOzMintTokenMenuItemProps> = props => {
         open={isMintTokenDialogOpen}
         initialValues={{
           address,
-          recipient: process.env.ACCOUNT,
-          amount: "",
+          contractId,
+          amount: "0",
+          account: process.env.ACCOUNT,
         }}
       />
     </>

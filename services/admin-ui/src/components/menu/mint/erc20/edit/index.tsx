@@ -2,13 +2,16 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
+import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
+import { ContractInput } from "./contract-input";
 
 export interface IMintErc20TokenDto {
   address: string;
-  recipient?: string;
+  contractId: number;
   amount: string;
+  account: string;
 }
 
 export interface IMintErc20TokenDialogProps {
@@ -26,12 +29,12 @@ export const MintErc20TokenDialog: FC<IMintErc20TokenDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"
-      data-testid="MintErc20TokenDialog"
+      data-testid="Erc20MintDialog"
       {...rest}
     >
-      <TextInput name="address" />
-      <TextInput name="recipient" />
-      <TextInput name="amount" />
+      <ContractInput name="contractId" related="address" />
+      <EthInput name="amount" symbol="" />
+      <TextInput name="account" />
     </FormDialog>
   );
 };
