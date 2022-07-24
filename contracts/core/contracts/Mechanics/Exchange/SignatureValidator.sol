@@ -146,10 +146,4 @@ contract SignatureValidator is EIP712, Context {
     }
     return keccak256(abi.encodePacked(padded));
   }
-
-  function toArray(Asset memory item) public pure returns (Asset[] memory) {
-    Asset[] memory items = new Asset[](1);
-    items[0] = item;
-    return items;
-  }
 }

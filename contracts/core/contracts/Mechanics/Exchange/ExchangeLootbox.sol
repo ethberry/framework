@@ -9,6 +9,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
+import "../Lootbox/interfaces/IERC721Lootbox.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 

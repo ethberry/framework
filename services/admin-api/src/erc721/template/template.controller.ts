@@ -26,18 +26,7 @@ export class Erc721TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc721TemplateService.findOne(
-      { id },
-      {
-        join: {
-          alias: "template",
-          leftJoinAndSelect: {
-            price: "template.price",
-            components: "price.components",
-          },
-        },
-      },
-    );
+    return this.erc721TemplateService.findOneWithRelations({ id });
   }
 
   @Post("/")

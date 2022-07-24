@@ -2,11 +2,11 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc20ContractTemplate, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 export interface IContractInputProps {
   name: string;
-  related: string;
+  related?: string;
 }
 
 export const ContractInput: FC<IContractInputProps> = props => {
@@ -19,12 +19,8 @@ export const ContractInput: FC<IContractInputProps> = props => {
       name={name}
       controller="contracts"
       data={{
-        contractType: [TokenType.ERC20],
-        contractTemplate: [
-          Erc20ContractTemplate.SIMPLE,
-          Erc20ContractTemplate.BLACKLIST,
-          Erc20ContractTemplate.EXTERNAL,
-        ],
+        contractType: [TokenType.ERC1155],
+        // contractStatus: [ContractStatus.ACTIVE],
       }}
       onChange={(_event: ChangeEvent<unknown>, option: any | null): void => {
         if (option) {

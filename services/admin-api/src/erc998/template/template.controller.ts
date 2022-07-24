@@ -26,7 +26,7 @@ export class Erc998TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc998TemplateService.findOne({ id });
+    return this.erc998TemplateService.findOneWithRelations({ id });
   }
 
   @Post("/")
