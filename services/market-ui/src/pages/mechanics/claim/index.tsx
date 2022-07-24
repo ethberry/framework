@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Tooltip } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
@@ -19,7 +19,7 @@ import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics
 export const Claim: FC = () => {
   const [claims, setClaims] = useState<Array<IClaim>>([]);
 
-  const { provider, isActive, account } = useWeb3React();
+  const { isActive, account } = useWeb3React();
   const { formatMessage } = useIntl();
   const { enqueueSnackbar } = useSnackbar();
   const { openConnectWalletDialog } = useWallet();
@@ -58,8 +58,8 @@ export const Claim: FC = () => {
       });
   };
 
-  const metaClick = useMetamask((claim: IClaim) => {
-    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
+  const metaClick = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
     return contract.claim(
       {
         nonce: utils.arrayify(claim.nonce),

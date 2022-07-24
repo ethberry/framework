@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -24,8 +24,6 @@ export const AccessListUnBlacklistDialog: FC<IBlacklistRemoveDialogProps> = prop
 
   const [rows, setRows] = useState<Array<IAccessList>>([]);
 
-  const { provider } = useWeb3React();
-
   const { fn, isLoading } = useApiCall(
     async api => {
       return api.fetchJson({
@@ -35,8 +33,8 @@ export const AccessListUnBlacklistDialog: FC<IBlacklistRemoveDialogProps> = prop
     { success: false },
   );
 
-  const metaUnBlacklist = useMetamask((values: IAccessList) => {
-    const contract = new Contract(data.address, ERC20BlacklistSol.abi, provider?.getSigner());
+  const metaUnBlacklist = useMetamask((values: IAccessList, web3Context: Web3ContextType) => {
+    const contract = new Contract(data.address, ERC20BlacklistSol.abi, web3Context.provider?.getSigner());
     return contract.unBlacklist(values.account) as Promise<void>;
   });
 

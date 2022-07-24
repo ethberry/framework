@@ -2,11 +2,8 @@ import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { useWeb3React } from "@web3-react/core";
 import { Contract, utils } from "ethers";
 
-import { useApi } from "@gemunion/provider-api-firebase";
-import { IServerSignature } from "@gemunion/types-collection";
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc1155ContractTemplate, IErc1155ContractDeployDto } from "@framework/types";
 
@@ -31,39 +28,36 @@ export interface IErc1155TokenDeployButtonProps {
 export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
   const { className } = props;
 
-  const { provider } = useWeb3React();
-  const api = useApi();
-
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc1155ContractDeployDto) => {
+    (values: IErc1155ContractDeployDto, web3Context, sign) => {
       const { contractTemplate, royalty, baseTokenURI } = values;
 
-      return api
-        .fetchJson({
-          url: "/contract-manager/erc1155-token",
-          method: "POST",
-          data: values,
-        })
-        .then((sign: IServerSignature) => {
-          const nonce = utils.arrayify(sign.nonce);
-          const contract = new Contract(
-            process.env.CONTRACT_MANAGER_ADDR,
-            ContractManagerSol.abi,
-            provider?.getSigner(),
-          );
+      const nonce = utils.arrayify(sign.nonce);
+      const contract = new Contract(
+        process.env.CONTRACT_MANAGER_ADDR,
+        ContractManagerSol.abi,
+        web3Context.provider?.getSigner(),
+      );
 
-          return contract.deployERC1155Token(
-            nonce,
-            getBytecodeByErc1155TokenTemplate(contractTemplate),
-            royalty,
-            baseTokenURI,
-            Object.keys(Erc1155ContractTemplate).indexOf(contractTemplate),
-            process.env.ACCOUNT,
-            sign.signature,
-          ) as Promise<void>;
-        });
+      return contract.deployERC1155Token(
+        nonce,
+        getBytecodeByErc1155TokenTemplate(contractTemplate),
+        royalty,
+        baseTokenURI,
+        Object.keys(Erc1155ContractTemplate).indexOf(contractTemplate),
+        process.env.ACCOUNT,
+        sign.signature,
+      ) as Promise<void>;
     },
   );
+
+  const onDeployConfirm = (values: Record<string, any>, form: any) => {
+    return handleDeployConfirm({
+      url: "/contract-manager/erc1155-token",
+      method: "POST",
+      data: values,
+    }, form);
+  };
 
   return (
     <Fragment>
@@ -77,7 +71,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
       <Erc1155TokenDeployDialog
-        onConfirm={handleDeployConfirm}
+        onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
       />

@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
@@ -21,8 +21,6 @@ export const Erc1155MintMenuItem: FC<IOzMintErc1155TokenMenuItemProps> = props =
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
-  const { provider } = useWeb3React();
-
   const handleMintToken = (): void => {
     setIsMintTokenDialogOpen(true);
   };
@@ -31,8 +29,8 @@ export const Erc1155MintMenuItem: FC<IOzMintErc1155TokenMenuItemProps> = props =
     setIsMintTokenDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IErc1155MintDto) => {
-    const contract = new Contract(address, ERC1155SimpleSol.abi, provider?.getSigner());
+  const meta = useMetamask((values: IErc1155MintDto, web3Context: Web3ContextType) => {
+    const contract = new Contract(address, ERC1155SimpleSol.abi, web3Context.provider?.getSigner());
     return contract.mint(values.account, values.templateId, values.amount, "0x") as Promise<void>;
   });
 

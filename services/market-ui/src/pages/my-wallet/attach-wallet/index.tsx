@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
+import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { v4 } from "uuid";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -14,7 +14,7 @@ import { IUser } from "@framework/types";
 export const AttachWalletButton: FC = () => {
   const [data, setData] = useState<IMetamaskDto>({ nonce: "", signature: "", wallet: "" });
 
-  const { account, provider } = useWeb3React();
+  const { account } = useWeb3React();
 
   const user = useUser<IUser>();
 
@@ -33,15 +33,19 @@ export const AttachWalletButton: FC = () => {
     { success: false },
   );
 
-  const handleAttach = useMetamask(() => {
-    return provider
+  const metaAttachFn = useMetamask((web3Context: Web3ContextType) => {
+    return web3Context.provider
       ?.getSigner()
       .signMessage(`${phrase}${data.nonce}`)
       .then((signature: string) => {
-        setData({ ...data, signature });
-        return attachCall.fn(void 0, { ...data, signature });
+        setData({ ...data, wallet: web3Context.account!, signature });
+        return attachCall.fn(void 0, { ...data, wallet: web3Context.account!, signature });
       }) as Promise<void>;
   });
+
+  const handleAttach = async () => {
+    await metaAttachFn();
+  };
 
   const detachCall = useApiCall(async api => {
     return api.fetchJson({

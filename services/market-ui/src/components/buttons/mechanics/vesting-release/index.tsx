@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { IconButton, Tooltip } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Redeem } from "@mui/icons-material";
 import { useIntl } from "react-intl";
 import { Contract } from "ethers";
@@ -16,11 +16,10 @@ export interface IVestingReleaseButtonProps {
 export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
   const { vesting } = props;
 
-  const { provider } = useWeb3React();
   const { formatMessage } = useIntl();
 
-  const metaRelease = useMetamask((vesting: IVesting) => {
-    const contract = new Contract(vesting.address, CliffVestingSol.abi, provider?.getSigner());
+  const metaRelease = useMetamask((vesting: IVesting, web3Context: Web3ContextType) => {
+    const contract = new Contract(vesting.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
     return contract["release()"]() as Promise<void>;
   });
 

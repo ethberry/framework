@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import IERC721RoyaltySol from "@framework/core-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
@@ -20,8 +20,6 @@ export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemP
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
 
-  const { provider, account } = useWeb3React();
-
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);
   };
@@ -30,9 +28,9 @@ export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemP
     setIsRoyaltyDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IRoyaltyDto) => {
-    const contract = new Contract(address, IERC721RoyaltySol.abi, provider?.getSigner());
-    return contract.setDefaultRoyalty(account, values.royalty) as Promise<void>;
+  const meta = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
+    const contract = new Contract(address, IERC721RoyaltySol.abi, web3Context.provider?.getSigner());
+    return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 
   const handleRoyaltyConfirmed = async (values: IRoyaltyDto): Promise<void> => {
