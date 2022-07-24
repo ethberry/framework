@@ -1,10 +1,12 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject, forwardRef, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
 import { IAssetDto } from "./interfaces";
 import { AssetComponentEntity } from "./asset-component.entity";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TokenType } from "@framework/types";
 
 @Injectable()
 export class AssetService {
@@ -13,6 +15,8 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
+    @Inject(forwardRef(() => TemplateService))
+    private readonly templateService: TemplateService,
   ) {}
 
   public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
@@ -21,6 +25,17 @@ export class AssetService {
 
   public async update(asset: AssetEntity, dto: IAssetDto): Promise<AssetEntity> {
     // TODO transactions?
+
+    // patch NATIVE and ERC20 tokens
+    for (const component of dto.components) {
+      if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
+        const templateEntity = await this.templateService.findOne({ contractId: component.contractId });
+        if (!templateEntity) {
+          throw new NotFoundException("templateNotFound");
+        }
+        component.templateId = templateEntity.id;
+      }
+    }
 
     if (dto.components.length) {
       // remove old

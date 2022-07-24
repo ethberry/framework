@@ -106,18 +106,31 @@ export class TemplateService {
     return this.templateEntityRepository.findOne({ where, ...options });
   }
 
-  public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
-    const { price } = dto;
+  public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "template",
+        leftJoinAndSelect: {
+          price: "template.price",
+          price_components: "price.components",
+        },
+      },
+    });
+  }
 
+  public async createTemplate(dto: ITemplateCreateDto): Promise<TemplateEntity> {
     const assetEntity = await this.assetService.create({
       components: [],
     });
 
-    await this.assetService.update(assetEntity, price);
+    const templateEntity = await this.templateEntityRepository
+      .create({
+        ...dto,
+        price: assetEntity,
+      })
+      .save();
 
-    Object.assign(dto, { price: assetEntity });
-
-    return this.templateEntityRepository.create(dto).save();
+    return this.update({ id: templateEntity.id }, dto);
   }
 
   public async create(dto: DeepPartial<TemplateEntity>): Promise<TemplateEntity> {

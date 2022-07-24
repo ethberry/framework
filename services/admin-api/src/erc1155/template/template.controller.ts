@@ -44,18 +44,7 @@ export class Erc1155TemplateController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
-    return this.erc1155TemplateService.findOne(
-      { id },
-      {
-        join: {
-          alias: "asset",
-          leftJoinAndSelect: {
-            price: "asset.price",
-            components: "price.components",
-          },
-        },
-      },
-    );
+    return this.erc1155TemplateService.findOneWithRelations({ id });
   }
 
   @Delete("/:id")
