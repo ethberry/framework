@@ -17,7 +17,6 @@ abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessContr
   event Purchase(address from, uint256 externalId, Asset item, Asset[] ingredients);
 
   function purchase(
-    bytes32 nonce,
     Params memory params,
     Asset memory item,
     Asset[] memory ingredients,
@@ -25,7 +24,7 @@ abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessContr
     bytes calldata signature
   ) external payable whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToManySignature(nonce, params, item, ingredients, signer, signature);
+    _verifyOneToManySignature(params, item, ingredients, signer, signature);
 
     address account = _msgSender();
 

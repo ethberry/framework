@@ -16,7 +16,6 @@ abstract contract ExchangeLootbox is SignatureValidator, ExchangeUtils, AccessCo
   event Lootbox(address from, uint256 externalId, Asset item, Asset[] ingredients);
 
   function lootbox(
-    bytes32 nonce,
     Params memory params,
     Asset memory item,
     Asset[] memory ingredients,
@@ -24,7 +23,7 @@ abstract contract ExchangeLootbox is SignatureValidator, ExchangeUtils, AccessCo
     bytes calldata signature
   ) external payable {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToManySignature(nonce, params, item, ingredients, signer, signature);
+    _verifyOneToManySignature(params, item, ingredients, signer, signature);
 
     address account = _msgSender();
 

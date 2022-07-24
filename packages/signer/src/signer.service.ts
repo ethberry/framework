@@ -4,7 +4,7 @@ import { Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 
-import { IAsset } from "./interfaces";
+import { IAsset, IParams } from "./interfaces";
 
 @Injectable()
 export class SignerService {
@@ -15,10 +15,8 @@ export class SignerService {
   ) {}
 
   public async getOneToManySignature(
-    nonce: Uint8Array,
     account: string,
-    externalId: number,
-    expiresAt: number,
+    params: IParams,
     item: IAsset,
     ingredients: Array<IAsset>,
   ): Promise<string> {
@@ -33,13 +31,13 @@ export class SignerService {
       // Types
       {
         EIP712: [
-          { name: "nonce", type: "bytes32" },
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "item", type: "Asset" },
           { name: "ingredients", type: "Asset[]" },
         ],
         Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
         ],
@@ -52,12 +50,8 @@ export class SignerService {
       },
       // Value
       {
-        nonce,
         account,
-        params: {
-          externalId,
-          expiresAt,
-        },
+        params,
         item,
         ingredients,
       },
@@ -65,10 +59,8 @@ export class SignerService {
   }
 
   public async getManyToManySignature(
-    nonce: Uint8Array,
     account: string,
-    externalId: number,
-    expiresAt: number,
+    params: IParams,
     items: Array<IAsset>,
     ingredients: Array<IAsset>,
   ): Promise<string> {
@@ -83,13 +75,13 @@ export class SignerService {
       // Types
       {
         EIP712: [
-          { name: "nonce", type: "bytes32" },
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "items", type: "Asset[]" },
           { name: "ingredients", type: "Asset[]" },
         ],
         Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
         ],
@@ -102,12 +94,8 @@ export class SignerService {
       },
       // Value
       {
-        nonce,
         account,
-        params: {
-          externalId,
-          expiresAt,
-        },
+        params,
         items,
         ingredients,
       },

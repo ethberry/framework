@@ -17,13 +17,13 @@ export const wrapOneToManySignature = (network: Network, contract: Contract, acc
       // Types
       {
         EIP712: [
-          { name: "nonce", type: "bytes32" },
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "item", type: "Asset" },
           { name: "ingredients", type: "Asset[]" },
         ],
         Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
         ],
@@ -53,13 +53,13 @@ export const wrapManyToManySignature = (network: Network, contract: Contract, ac
       // Types
       {
         EIP712: [
-          { name: "nonce", type: "bytes32" },
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "items", type: "Asset[]" },
           { name: "ingredients", type: "Asset[]" },
         ],
         Params: [
+          { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
         ],

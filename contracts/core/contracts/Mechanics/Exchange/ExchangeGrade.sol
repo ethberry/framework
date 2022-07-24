@@ -17,7 +17,6 @@ abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessCont
   event Upgrade(address from, uint256 externalId, Asset item, Asset[] ingredients);
 
   function upgrade(
-    bytes32 nonce,
     Params memory params,
     Asset memory item,
     Asset[] memory ingredients,
@@ -25,7 +24,7 @@ abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToManySignature(nonce, params, item, ingredients, signer, signature);
+    _verifyOneToManySignature(params, item, ingredients, signer, signature);
 
     address account = _msgSender();
 

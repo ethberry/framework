@@ -33,3 +33,12 @@ export const fakeAsset = {
   tokenId,
   amount,
 };
+
+export const externalId = 123;
+export const expiresAt = 0;
+
+export const params = {
+  nonce,
+  externalId,
+  expiresAt,
+};

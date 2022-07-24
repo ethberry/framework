@@ -17,14 +17,13 @@ abstract contract ExchangeClaim is SignatureValidator, ExchangeUtils, AccessCont
   event Claim(address from, uint256 externalId, Asset[] items);
 
   function claim(
-    bytes32 nonce,
     Params memory params,
     Asset[] memory items,
     address signer,
     bytes calldata signature
   ) external payable whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyManyToManySignature(nonce, params, items, new Asset[](0), signer, signature);
+    _verifyManyToManySignature(params, items, new Asset[](0), signer, signature);
 
     address account = _msgSender();
 

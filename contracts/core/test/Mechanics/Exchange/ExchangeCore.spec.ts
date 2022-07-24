@@ -3,13 +3,15 @@ import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 import { time } from "@openzeppelin/test-helpers";
 
-import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange, ERC721Lootbox } from "../../../typechain-types";
+import { ERC1155Simple, ERC20Simple, ERC721Lootbox, ERC721Simple, Exchange } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
+  externalId,
   MINTER_ROLE,
   nonce,
+  params,
   PAUSER_ROLE,
   royalty,
   tokenId,
@@ -18,14 +20,6 @@ import {
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 import { wrapOneToManySignature } from "./shared/utils";
-
-const externalId = 123;
-const expiresAt = 0;
-
-const params = {
-  externalId,
-  expiresAt,
-};
 
 describe("ExchangeCore", function () {
   let exchangeInstance: Exchange;
@@ -72,7 +66,6 @@ describe("ExchangeCore", function () {
     describe("ERROR", function () {
       it("should fail: duplicate mint", async function () {
         const signature = await generateSignature({
-          nonce,
           account: this.receiver.address,
           params,
           item: {
@@ -95,7 +88,6 @@ describe("ExchangeCore", function () {
         await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
         const tx1 = exchangeInstance.connect(this.receiver).purchase(
-          nonce,
           params,
           {
             tokenType: 2,
@@ -118,7 +110,6 @@ describe("ExchangeCore", function () {
         await expect(tx1).to.emit(exchangeInstance, "Purchase");
 
         const tx2 = exchangeInstance.connect(this.receiver).purchase(
-          nonce,
           params,
           {
             tokenType: 2,
@@ -142,7 +133,6 @@ describe("ExchangeCore", function () {
 
       it("should fail: wrong signer role", async function () {
         const signature = await generateSignature({
-          nonce,
           account: this.receiver.address,
           params,
           item: {
@@ -162,7 +152,6 @@ describe("ExchangeCore", function () {
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).purchase(
-          nonce,
           params,
           {
             tokenType: 2,
@@ -187,7 +176,6 @@ describe("ExchangeCore", function () {
 
       it("should fail: wrong signature", async function () {
         const tx = exchangeInstance.purchase(
-          nonce,
           params,
           {
             tokenType: 2,
@@ -214,9 +202,9 @@ describe("ExchangeCore", function () {
         const expiresAt = (await time.latest()).toString();
 
         const signature = await generateSignature({
-          nonce,
           account: this.receiver.address,
           params: {
+            nonce,
             externalId,
             expiresAt,
           },
@@ -237,8 +225,8 @@ describe("ExchangeCore", function () {
         });
 
         const tx = exchangeInstance.connect(this.receiver).purchase(
-          nonce,
           {
+            nonce,
             externalId,
             expiresAt,
           },

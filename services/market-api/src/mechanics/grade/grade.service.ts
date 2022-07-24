@@ -90,10 +90,12 @@ export class GradeService {
     const level = tokenEntity.attributes[TokenAttributes.GRADE];
 
     return this.signerService.getOneToManySignature(
-      nonce,
       account,
-      gradeEntity.id,
-      expiresAt,
+      {
+        nonce,
+        externalId: gradeEntity.id,
+        expiresAt,
+      },
       {
         tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
         token: tokenEntity.template.contract.address,

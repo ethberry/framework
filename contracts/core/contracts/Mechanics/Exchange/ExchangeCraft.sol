@@ -17,7 +17,6 @@ abstract contract ExchangeCraft is SignatureValidator, ExchangeUtils, AccessCont
   event Craft(address from, uint256 externalId, Asset[] items, Asset[] ingredients);
 
   function craft(
-    bytes32 nonce,
     Params memory params,
     Asset[] memory items,
     Asset[] memory ingredients,
@@ -25,7 +24,7 @@ abstract contract ExchangeCraft is SignatureValidator, ExchangeUtils, AccessCont
     bytes calldata signature
   ) external payable whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyManyToManySignature(nonce, params, items, ingredients, signer, signature);
+    _verifyManyToManySignature(params, items, ingredients, signer, signature);
 
     address account = _msgSender();
 

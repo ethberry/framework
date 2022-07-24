@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { constants } from "ethers";
 
 import { GradeEntity } from "./grade.entity";
 import { AssetService } from "../asset/asset.service";
+import { GradeStrategy, TokenType } from "@framework/types";
 
 @Injectable()
 export class GradeService {
@@ -18,5 +20,30 @@ export class GradeService {
     options?: FindOneOptions<GradeEntity>,
   ): Promise<GradeEntity | null> {
     return this.gradeEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: DeepPartial<GradeEntity>): Promise<GradeEntity> {
+    const assetEntity = await this.assetService.create({
+      components: [],
+    });
+
+    await this.assetService.update(assetEntity, {
+      components: [
+        {
+          tokenType: TokenType.NATIVE,
+          contractId: 1,
+          tokenId: 0,
+          amount: constants.WeiPerEther.toString(),
+        },
+      ],
+    });
+
+    Object.assign(dto, {
+      gradeStrategy: GradeStrategy.FLAT,
+      growthRate: 0,
+      price: assetEntity,
+    });
+
+    return this.gradeEntityRepository.create(dto).save();
   }
 }

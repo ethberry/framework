@@ -19,7 +19,6 @@ contract ExchangeUtils {
   bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
   bytes4 private constant IERC721_RANDOM = 0x82993c65;
-  bytes4 private constant IERC721_LOOTBOX = 0x503c3942;
 
   function spend(Asset[] memory ingredients, address account) internal {
     uint256 length = ingredients.length;

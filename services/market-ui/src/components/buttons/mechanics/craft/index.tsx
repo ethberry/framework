@@ -34,8 +34,8 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
       .then((sign: IServerSignature) => {
         const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
         return contract.craft(
-          utils.arrayify(sign.nonce),
           {
+            nonce: utils.arrayify(sign.nonce),
             externalId: craft.id,
             expiresAt: sign.expiresAt,
           },

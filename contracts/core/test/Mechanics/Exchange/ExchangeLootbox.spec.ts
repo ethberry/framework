@@ -8,7 +8,7 @@ import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
   MINTER_ROLE,
-  nonce,
+  params,
   PAUSER_ROLE,
   royalty,
   tokenId,
@@ -17,14 +17,6 @@ import {
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 import { wrapOneToManySignature } from "./shared/utils";
-
-const externalId = 123;
-const expiresAt = 0;
-
-const params = {
-  externalId,
-  expiresAt,
-};
 
 describe("ExchangeLootbox", function () {
   let exchangeInstance: Exchange;
@@ -71,7 +63,6 @@ describe("ExchangeLootbox", function () {
     describe("NATIVE > LOOTBOX", function () {
       it("should lootbox", async function () {
         const signature = await generateSignature({
-          nonce,
           account: this.receiver.address,
           params,
           item: {
@@ -91,7 +82,6 @@ describe("ExchangeLootbox", function () {
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).lootbox(
-          nonce,
           params,
           {
             tokenType: 2,

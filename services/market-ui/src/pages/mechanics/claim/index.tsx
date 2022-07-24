@@ -60,10 +60,9 @@ export const Claim: FC = () => {
 
   const metaClick = useMetamask((claim: IClaim) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
-
     return contract.claim(
-      utils.arrayify(claim.nonce),
       {
+        nonce: utils.arrayify(claim.nonce),
         externalId: claim.id,
         expiresAt: claim.expiresAt,
       },

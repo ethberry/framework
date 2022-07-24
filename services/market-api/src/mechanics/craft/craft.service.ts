@@ -109,10 +109,12 @@ export class CraftService {
     craftEntity: CraftEntity,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(
-      nonce,
       account,
-      craftEntity.id,
-      expiresAt,
+      {
+        nonce,
+        externalId: craftEntity.id,
+        expiresAt,
+      },
       craftEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

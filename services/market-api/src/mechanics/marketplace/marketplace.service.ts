@@ -55,10 +55,12 @@ export class MarketplaceService {
     templateEntity: TemplateEntity,
   ): Promise<string> {
     return this.signerService.getOneToManySignature(
-      nonce,
       account,
-      templateEntity.id,
-      expiresAt,
+      {
+        nonce,
+        externalId: templateEntity.id,
+        expiresAt,
+      },
       {
         tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
         token: templateEntity.contract.address,

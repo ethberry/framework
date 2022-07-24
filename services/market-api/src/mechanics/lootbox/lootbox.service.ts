@@ -167,10 +167,12 @@ export class LootboxService {
   ): Promise<string> {
     const lootboxAddr = this.configService.get<string>("LOOTBOX_ADDR", "");
     return this.signerService.getOneToManySignature(
-      nonce,
       account,
-      lootboxEntity.id,
-      expiresAt,
+      {
+        nonce,
+        externalId: lootboxEntity.id,
+        expiresAt,
+      },
       {
         // TODO pass lootboxEntity.item.components[0].template.id, probably as amount
         tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),

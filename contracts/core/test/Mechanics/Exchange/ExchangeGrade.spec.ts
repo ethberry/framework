@@ -9,7 +9,7 @@ import {
   DEFAULT_ADMIN_ROLE,
   fakeAsset,
   MINTER_ROLE,
-  nonce,
+  params,
   royalty,
   tokenId,
   tokenName,
@@ -17,14 +17,6 @@ import {
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 import { wrapOneToManySignature } from "./shared/utils";
-
-const externalId = 123;
-const expiresAt = 0;
-
-const params = {
-  externalId,
-  expiresAt,
-};
 
 describe("ExchangeGrade", function () {
   let exchangeInstance: Exchange;
@@ -66,7 +58,6 @@ describe("ExchangeGrade", function () {
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
 
       const signature = await generateSignature({
-        nonce,
         account: this.receiver.address,
         params,
         item: {
@@ -89,7 +80,6 @@ describe("ExchangeGrade", function () {
       await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
       const tx2 = exchangeInstance.connect(this.receiver).upgrade(
-        nonce,
         params,
         {
           tokenType: 2,
@@ -129,7 +119,6 @@ describe("ExchangeGrade", function () {
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
 
       const signature = await generateSignature({
-        nonce,
         account: this.receiver.address,
         params,
         item: {
@@ -152,7 +141,6 @@ describe("ExchangeGrade", function () {
       // await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
       const tx2 = exchangeInstance.connect(this.receiver).upgrade(
-        nonce,
         params,
         {
           tokenType: 2,
@@ -183,7 +171,6 @@ describe("ExchangeGrade", function () {
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
 
       const signature = await generateSignature({
-        nonce,
         account: this.receiver.address,
         params,
         item: {
@@ -206,7 +193,6 @@ describe("ExchangeGrade", function () {
       await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
       const tx2 = exchangeInstance.connect(this.receiver).upgrade(
-        nonce,
         params,
         {
           tokenType: 2,

@@ -71,10 +71,9 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
           })
           .then((sign: IServerSignature) => {
             const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, provider?.getSigner());
-            const nonce = utils.arrayify(sign.nonce);
             return contract.upgrade(
-              nonce,
               {
+                nonce: utils.arrayify(sign.nonce),
                 externalId: grade.id,
                 expiresAt: sign.expiresAt,
               },

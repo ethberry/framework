@@ -145,10 +145,12 @@ export class ClaimService {
     claimEntity: ClaimEntity,
   ): Promise<string> {
     return this.signerService.getManyToManySignature(
-      nonce,
       account,
-      claimEntity.id,
-      expiresAt,
+      {
+        nonce,
+        externalId: claimEntity.id,
+        expiresAt,
+      },
       claimEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
