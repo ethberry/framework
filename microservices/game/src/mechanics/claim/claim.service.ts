@@ -1,29 +1,24 @@
-import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { utils, Wallet } from "ethers";
+import { utils } from "ethers";
 
-import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { ClaimStatus, TokenType } from "@framework/types";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
-import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { ClaimEntity } from "./claim.entity";
 import { IClaimItemCreateDto } from "./interfaces";
+import { ClaimEntity } from "./claim.entity";
 import { AssetService } from "../asset/asset.service";
 
 @Injectable()
 export class ClaimService {
   constructor(
-    @Inject(ETHERS_SIGNER)
-    private readonly signer: Wallet,
-    private readonly configService: ConfigService,
-    private readonly templateService: TemplateService,
-    private readonly signerService: SignerService,
-    private readonly assetService: AssetService,
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
     @InjectRepository(ClaimEntity)
     private readonly claimEntityRepository: Repository<ClaimEntity>,
+    protected readonly assetService: AssetService,
+    private readonly signerService: SignerService,
   ) {}
 
   public findOne(
@@ -57,12 +52,12 @@ export class ClaimService {
   public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemCreateDto): Promise<ClaimEntity> {
     const { account, item } = dto;
 
-    const claimEntity = await this.findOne(where, {
+    let claimEntity = await this.findOne(where, {
       join: {
         alias: "claim",
         leftJoinAndSelect: {
           item: "claim.item",
-          components: "item.components",
+          item_components: "item.components",
         },
       },
     });
@@ -78,12 +73,20 @@ export class ClaimService {
 
     await this.assetService.update(claimEntity.item, item);
 
-    const templateEntity = await this.templateService.findOne(
-      { id: item.components[0].templateId },
-      { relations: { contract: true } },
-    );
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
+    claimEntity = await this.findOne(where, {
+      join: {
+        alias: "claim",
+        leftJoinAndSelect: {
+          item: "claim.item",
+          item_components: "item.components",
+          item_template: "item_components.template",
+          item_contract: "item_components.contract",
+        },
+      },
+    });
+
+    if (!claimEntity) {
+      throw new NotFoundException("claimNotFound");
     }
 
     const nonce = utils.randomBytes(32);
@@ -109,7 +112,7 @@ export class ClaimService {
       claimEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
+        tokenId: component.template.id.toString(),
         amount: component.amount,
       })),
       [],

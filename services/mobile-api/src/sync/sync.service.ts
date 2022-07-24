@@ -19,12 +19,12 @@ export class SyncService {
       "http://localhost:3011",
     );
 
-    const gameApiKey = this.configService.get<string>("GAME_MICROSERVICE_API_KEY", "");
+    const jsonApiKey = this.configService.get<string>("GAME_MICROSERVICE_API_KEY", "");
 
     return this.httpService
       .get<Record<string, any>>(`${jsonMicroserviceAddress}/sync/${sub}/profile`, {
         headers: {
-          Authorization: `Bearer ${gameApiKey}`,
+          Authorization: `Bearer ${jsonApiKey}`,
         },
       })
       .pipe(map(({ data }) => data))
@@ -37,12 +37,12 @@ export class SyncService {
       "http://localhost:3011",
     );
 
-    const gameApiKey = this.configService.get<string>("GAME_MICROSERVICE_API_KEY", "");
+    const jsonApiKey = this.configService.get<string>("GAME_MICROSERVICE_API_KEY", "");
 
     return this.httpService
       .get<Array<IBalance>>(`${jsonMicroserviceAddress}/sync/${sub}/balance`, {
         headers: {
-          Authorization: `Bearer ${gameApiKey}`,
+          Authorization: `Bearer ${jsonApiKey}`,
         },
       })
       .pipe(map(({ data }) => data))

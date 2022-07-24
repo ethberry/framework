@@ -82,7 +82,9 @@ export const Claim: FC = () => {
           {rows.map((claim, i) => (
             <ListItem key={i}>
               <ListItemText>{claim.account}</ListItemText>
-              <ListItemText>{claim.item.components[0]?.template?.title}</ListItemText>
+              <ListItemText>
+                {claim.item.components.map(component => component.template?.title).join(", ")}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>
                   <Create />

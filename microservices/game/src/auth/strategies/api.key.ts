@@ -16,9 +16,9 @@ export class ApiKeyStrategy extends PassportStrategy(Strategy, "api-key") {
   }
 
   public validate(apiKey: string): Record<string, string> {
-    const gameApiKey = this.configService.get<string>("GAME_MICROSERVICE_API_KEY", "");
+    const jsonApiKey = this.configService.get<string>("GAME_MICROSERVICE_API_KEY", "");
 
-    if (apiKey !== gameApiKey) {
+    if (apiKey !== jsonApiKey) {
       throw new UnauthorizedException("invalidKey");
     }
 
