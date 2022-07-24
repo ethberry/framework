@@ -15,14 +15,18 @@ export interface IErc20TokenSnapshotMenuItemProps {
 export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = props => {
   const { address } = props;
 
-  const handleSnapshot = useMetamask((web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
     return contract.snapshot() as Promise<void>;
   });
 
+  const handleSnapshot = async () => {
+    await metaFn();
+  };
+
   return (
-    <MenuItem onClick={() => handleSnapshot()}>
-      <ListItemIcon>
+    <MenuItem onClick={handleSnapshot}>
+      <ListItemIcon>handleSnapshot
         <PhotoCamera fontSize="small" />
       </ListItemIcon>
       <Typography variant="inherit">
