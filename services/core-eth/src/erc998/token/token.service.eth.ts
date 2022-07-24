@@ -74,7 +74,7 @@ export class Erc998TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes,
+        attributes: JSON.stringify(attributes),
         royalty: contractEntity.royalty,
         template: templateEntity,
       });
@@ -179,9 +179,9 @@ export class Erc998TokenServiceEth {
 
     const erc998TokenEntity = await this.tokenService.create({
       tokenId,
-      attributes: {
+      attributes: JSON.stringify({
         rarity: Object.values(TokenRarity)[~~rarity],
-      },
+      }),
       royalty: erc998TemplateEntity.contract.royalty,
       template: erc998TemplateEntity,
       // token: erc998LootboxEntity,

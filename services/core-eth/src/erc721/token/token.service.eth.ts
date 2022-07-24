@@ -54,12 +54,10 @@ export class Erc721TokenServiceEth {
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
-
     // Mint token create
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
-
-      const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
+      const templateEntity = await this.templateService.findOne({ id: ~~attributes.template_id });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
@@ -67,9 +65,9 @@ export class Erc721TokenServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes,
+        attributes: JSON.stringify(attributes),
         royalty: contractEntity.royalty,
-        template: templateEntity,
+        templateId: templateEntity.id,
       });
 
       await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
@@ -172,9 +170,9 @@ export class Erc721TokenServiceEth {
 
     const tokenEntity = await this.tokenService.create({
       tokenId,
-      attributes: {
+      attributes: JSON.stringify({
         rarity: Object.values(TokenRarity)[~~rarity],
-      },
+      }),
       royalty: templateEntity.contract.royalty,
       template: templateEntity,
       // erc721Token: lootboxEntity,

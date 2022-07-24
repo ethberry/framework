@@ -65,7 +65,7 @@ export class LootboxServiceEth {
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
 
-      const templateEntity = await this.templateService.findOne({ id: ~~attributes.TEMPLATE_ID });
+      const templateEntity = await this.templateService.findOne({ id: ~~attributes.templateId });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");

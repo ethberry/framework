@@ -21,7 +21,7 @@ type IExchangeItem = [number, string, string, string];
 export interface IExchangePurchase {
   from: string;
   externalId: string;
-  items: IExchangeItem;
+  item: IExchangeItem;
   ingredients: Array<IExchangeItem>;
 }
 

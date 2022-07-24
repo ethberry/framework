@@ -21,6 +21,7 @@ import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity"
 import { AssetEntity } from "./mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
+import { GradeEntity } from "./mechanics/grade/grade.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -38,6 +39,7 @@ const config: PostgresConnectionOptions = {
     StakingHistoryEntity,
     ClaimEntity,
     CraftEntity,
+    GradeEntity,
     LootboxEntity,
     ExchangeEntity,
     ExchangeHistoryEntity,

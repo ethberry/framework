@@ -34,44 +34,6 @@ export class ExchangeServiceEth {
 
   public async purchase(event: ILogEvent<IExchangePurchase>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-
-    // TODO update claim status
-
-    //
-    // const {
-    //   args: { from, items },
-    // } = event;
-    //
-    // // Array<IAsset>
-    // items.map(async (item: [number, string, string, string]) => {
-    //   const itemTokenId = item[2];
-    //   const itemTokenAmount = item[3];
-    //   console.log("transaction!item", item);
-    //
-    //   const templateEntity = await this.templateService.findOne(
-    //     { id: ~~itemTokenId },
-    //     { relations: { contract: true } },
-    //   );
-    //
-    //   if (!templateEntity) {
-    //     throw new NotFoundException("templateNotFound");
-    //   }
-    //
-    //   // Create simple ERC721 or ERC998 tokens without template metadata
-    //   if (
-    //     (templateEntity.contract.contractType === TokenType.ERC721 ||
-    //       templateEntity.contract.contractType === TokenType.ERC998) &&
-    //     templateEntity.contract.contractTemplate === ContractTemplate.SIMPLE
-    //   ) {
-    //     const tokenEntity = await this.tokenService.create({
-    //       tokenId: itemTokenId,
-    //       attributes: templateEntity.attributes,
-    //       royalty: templateEntity.contract.royalty,
-    //       template: templateEntity,
-    //     });
-    //     await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), itemTokenAmount);
-    //   }
-    // });
   }
 
   public async dummy(
