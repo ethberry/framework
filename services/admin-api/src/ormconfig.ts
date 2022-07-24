@@ -82,7 +82,6 @@ import { SeedLootboxErc721At1653616447920 } from "./migrations/1653616447920-see
 import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craft";
 import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
 import { SeedCraftErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-craft-erc721-erc1155-recipe";
-import { CreateExchangeHistory1653616448050 } from "./migrations/1653616448050-create-exchange-history";
 
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { CreateContractManagerHistory1652682493386 } from "./migrations/1652682493386-create-contract-manager-history";
@@ -103,6 +102,8 @@ import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
 import { CreateStakes1654751224255 } from "./migrations/1654751224255-create-stakes";
 import { CreateGrade1657846587000 } from "./migrations/1657846587000-create-grade";
 import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
+
+import { CreateExchangeHistory1657846607010 } from "./migrations/1657846607010-create-exchange-history";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -214,7 +215,6 @@ const config: PostgresConnectionOptions = {
     CreateCraft1653616448010,
     SeedCraftErc1155Erc1155At1653616448020,
     SeedCraftErc721Erc1155At1653616448030,
-    CreateExchangeHistory1653616448050,
 
     CreateStakingRules1654751224200,
     SeedStakingRules1654751224210,
@@ -226,6 +226,7 @@ const config: PostgresConnectionOptions = {
 
     CreateGrade1657846587000,
     SeedGrade1657846587010,
+    CreateExchangeHistory1657846607010,
   ],
 };
 
