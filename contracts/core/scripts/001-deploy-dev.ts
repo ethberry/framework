@@ -3,6 +3,8 @@ import { ethers } from "hardhat";
 import { royalty, baseTokenURI } from "../test/constants";
 import { wallet, wallets } from "@gemunion/constants";
 
+let exchangeAddr = "";
+
 async function deploySystem() {
   const vestFactory = await ethers.getContractFactory("ContractManager");
   const vestInstance = await vestFactory.deploy();
@@ -10,28 +12,33 @@ async function deploySystem() {
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");
   const exchangeInstance = await exchangeFactory.deploy("Exchange");
+  exchangeAddr = exchangeInstance.address.toLowerCase();
   console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
 }
 
 async function deployERC20() {
+  const [owner] = await ethers.getSigners();
+  const amount = ethers.constants.WeiPerEther.mul(1e6);
+
   const coinActiveFactory = await ethers.getContractFactory("ERC20Simple");
-  const coinActiveInstance = await coinActiveFactory.deploy("Space Credits", "GEM20", 1000000000);
+  const coinActiveInstance = await coinActiveFactory.deploy("Space Credits", "GEM20", amount);
+  await coinActiveInstance.mint(owner.address, amount);
+  await coinActiveInstance.approve(exchangeAddr, amount);
   console.info(`ERC20_ACTIVE_ADDR=${coinActiveInstance.address.toLowerCase()}`);
 
   const coinInactiveFactory = await ethers.getContractFactory("ERC20Simple");
-  const coinInactiveInstance = await coinInactiveFactory.deploy("Inactive token", "OFF20", 1000000000);
+  const coinInactiveInstance = await coinInactiveFactory.deploy("Inactive token", "OFF20", amount);
   console.info(`ERC20_INACTIVE_ADDR=${coinInactiveInstance.address.toLowerCase()}`);
 
   const coinNewFactory = await ethers.getContractFactory("ERC20Simple");
-  const coinNewInstance = await coinNewFactory.deploy("Inactive token", "OFF20", 1000000000);
+  const coinNewInstance = await coinNewFactory.deploy("Inactive token", "OFF20", amount);
   console.info(`ERC20_NEW_ADDR=${coinNewInstance.address.toLowerCase()}`);
 
   const coinBlackFactory = await ethers.getContractFactory("ERC20Blacklist");
-  const coinBlackInstance = await coinBlackFactory.deploy("Black list matters", "BLM20", 1000000000);
-  console.info(`ERC20_BLACKLIST_ADDR=${coinBlackInstance.address.toLowerCase()}`);
-
+  const coinBlackInstance = await coinBlackFactory.deploy("Black list matters", "BLM20", amount);
   await coinBlackInstance.blacklist(wallets[1]);
   await coinBlackInstance.blacklist(wallets[2]);
+  console.info(`ERC20_BLACKLIST_ADDR=${coinBlackInstance.address.toLowerCase()}`);
 
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   const usdtInstance = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
