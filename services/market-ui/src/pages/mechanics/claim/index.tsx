@@ -5,6 +5,7 @@ import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { Contract, utils } from "ethers";
+import { useDebouncedCallback } from "use-debounce";
 
 import { ApiError } from "@gemunion/provider-api-firebase";
 import { useApiCall } from "@gemunion/react-hooks";
@@ -17,9 +18,9 @@ import { ClaimStatus, IClaim, TokenType } from "@framework/types";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 export const Claim: FC = () => {
-  const [claims, setClaims] = useState<Array<IClaim>>([]);
+  const [claims, setClaims] = useState<Array<IClaim> | null>(null);
 
-  const { isActive, account } = useWeb3React();
+  const { isActivating, isActive, account } = useWeb3React();
   const { formatMessage } = useIntl();
   const { enqueueSnackbar } = useSnackbar();
   const { openConnectWalletDialog } = useWallet();
@@ -37,14 +38,14 @@ export const Claim: FC = () => {
     { success: false, error: false },
   );
 
-  const fetchClaim = useMetamask(async (web3Context: Web3ContextType): Promise<void> => {
+  const metaFetchClaim = useMetamask(async (web3Context: Web3ContextType): Promise<void> => {
     return fn(undefined, web3Context)
       .then((json: IPaginationResult<IClaim>) => {
         setClaims(json.rows);
       })
       .catch((e: ApiError) => {
         if (e.status === 404) {
-          setClaims([]);
+          setClaims(null);
         } else if (e.status) {
           enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
         } else {
@@ -53,6 +54,10 @@ export const Claim: FC = () => {
         }
       });
   });
+
+  const fetchClaim = useDebouncedCallback(() => {
+    void metaFetchClaim();
+  }, 500);
 
   const metaClick = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -80,10 +85,10 @@ export const Claim: FC = () => {
   };
 
   useEffect(() => {
-    if (isActive) {
+    if (isActive || (!isActive && !isActivating)) {
       void fetchClaim();
     }
-  }, [isActive, account]);
+  }, [isActivating, isActive, account]);
 
   if (!isActive) {
     return (
@@ -103,7 +108,7 @@ export const Claim: FC = () => {
     return <Spinner />;
   }
 
-  if (claims.length) {
+  if (claims?.length) {
     return (
       <List>
         {claims.map((claim, i) => (
@@ -122,5 +127,9 @@ export const Claim: FC = () => {
     );
   }
 
-  return <FormattedMessage id="pages.claim.sorry" />;
+  if (claims !== null) {
+    return <FormattedMessage id="pages.claim.sorry" />;
+  }
+
+  return null;
 };
