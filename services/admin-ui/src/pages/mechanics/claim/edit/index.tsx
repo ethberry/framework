@@ -35,7 +35,7 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
       data-testid="ClaimEditDialog"
     >
       <TextInput name="account" />
-      <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
     </FormDialog>
   );
 };

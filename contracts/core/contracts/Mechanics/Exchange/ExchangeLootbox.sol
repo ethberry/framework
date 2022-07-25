@@ -14,24 +14,29 @@ import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 
 abstract contract ExchangeLootbox is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Lootbox(address from, uint256 externalId, Asset item, Asset[] ingredients);
+  event Lootbox(address from, uint256 externalId, Asset[] items, Asset[] ingredients);
 
   function lootbox(
     Params memory params,
-    Asset memory item,
+    Asset[] memory items,
     Asset[] memory ingredients,
     address signer,
     bytes calldata signature
   ) external payable {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToManySignature(params, item, ingredients, signer, signature);
+    _verifyManyToManySignature(params, items, ingredients, signer, signature);
+
+    require(items.length > 1, "Exchange: Wrong items count");
 
     address account = _msgSender();
 
     spend(ingredients, account);
 
-    emit Lootbox(account, params.externalId, item, ingredients);
+    emit Lootbox(account, params.externalId, items, ingredients);
 
-    IERC721Lootbox(item.token).mintLootbox(account, item);
+    Asset memory box = items[items.length - 1];
+    delete items[items.length - 1];
+
+    IERC721Lootbox(box.token).mintLootbox(account, box.tokenId, items);
   }
 }

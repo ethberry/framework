@@ -5,7 +5,6 @@ import { expect } from "chai";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
-  fakeAsset,
   MINTER_ROLE,
   royalty,
   templateId,
@@ -39,7 +38,7 @@ describe("ERC721Graded", function () {
 
   describe("mintCommon", function () {
     it("should mint to wallet", async function () {
-      const tx = this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx = this.erc721Instance.mintCommon(this.receiver.address, templateId);
       await expect(tx)
         .to.emit(this.erc721Instance, "Transfer")
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
@@ -55,7 +54,7 @@ describe("ERC721Graded", function () {
     });
 
     it("should mint to receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, fakeAsset);
+      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, templateId);
       await expect(tx)
         .to.emit(this.erc721Instance, "Transfer")
         .withArgs(ethers.constants.AddressZero, this.erc721ReceiverInstance.address, tokenId);
@@ -65,21 +64,21 @@ describe("ERC721Graded", function () {
     });
 
     it("should fail: wrong role", async function () {
-      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, fakeAsset);
+      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, templateId);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
       );
     });
 
     it("should fail: to mint to non receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, fakeAsset);
+      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, templateId);
       await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
     });
   });
 
   describe("getRecordFieldValue", function () {
     it("should get record field value", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
       const value = await this.erc721Instance.getRecordFieldValue(
         tokenId,
         utils.keccak256(ethers.utils.toUtf8Bytes("grade")),
@@ -88,7 +87,7 @@ describe("ERC721Graded", function () {
     });
 
     it("should fail: field not found", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
       const value = this.erc721Instance.getRecordFieldValue(
         tokenId,
         utils.keccak256(ethers.utils.toUtf8Bytes("non-existing-field")),
@@ -99,7 +98,7 @@ describe("ERC721Graded", function () {
 
   describe("upgrade", function () {
     it("should level up", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
 
       const tx1 = this.erc721Instance.upgrade(tokenId);
       await expect(tx1).to.not.be.reverted;
@@ -112,7 +111,7 @@ describe("ERC721Graded", function () {
     });
 
     it("should fail: insufficient permissions", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
 
       const tx1 = this.erc721Instance.connect(this.receiver).upgrade(tokenId);
       await expect(tx1).to.be.revertedWith(

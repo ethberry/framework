@@ -5,7 +5,7 @@ import { ERC721LootboxTest } from "../../../typechain-types";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
-  fakeAsset,
+  templateId,
   MINTER_ROLE,
   royalty,
   tokenId,
@@ -16,7 +16,7 @@ import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
 import { shouldGetTokenURI } from "../../ERC721/shared/tokenURI";
 import { shouldSetBaseURI } from "../../ERC721/shared/setBaseURI";
 
-describe("ERC721Lootbox", function () {
+describe("Lootbox", function () {
   let lootboxInstance: ERC721LootboxTest;
 
   beforeEach(async function () {
@@ -34,13 +34,11 @@ describe("ERC721Lootbox", function () {
 
   describe("mint", function () {
     it("should mint", async function () {
-      const tx1 = lootboxInstance.mintLootbox(this.receiver.address, fakeAsset);
+      const tx1 = lootboxInstance.mintLootbox(this.receiver.address, templateId, []);
 
       await expect(tx1)
         .to.emit(lootboxInstance, "Transfer")
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
     });
   });
-
-  // TODO unpack
 });

@@ -18,7 +18,7 @@ import {
   baseTokenURI,
   decimals,
   DEFAULT_ADMIN_ROLE,
-  fakeAsset,
+  templateId,
   LINK_ADDR,
   MINTER_ROLE,
   PAUSER_ROLE,
@@ -418,7 +418,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1014,7 +1014,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1051,7 +1051,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1089,7 +1089,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1126,7 +1126,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1164,7 +1164,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1202,7 +1202,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);

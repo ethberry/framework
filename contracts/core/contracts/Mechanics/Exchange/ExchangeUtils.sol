@@ -15,8 +15,6 @@ import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 
 contract ExchangeUtils {
-  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-
   bytes4 private constant IERC721_RANDOM = 0x82993c65;
 
   function spend(Asset[] memory ingredients, address account) internal {
@@ -62,9 +60,9 @@ contract ExchangeUtils {
       if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM);
         if (randomInterface) {
-          IERC721Random(item.token).mintRandom(account, item);
+          IERC721Random(item.token).mintRandom(account, item.tokenId);
         } else {
-          IERC721Simple(item.token).mintCommon(account, item);
+          IERC721Simple(item.token).mintCommon(account, item.tokenId);
         }
       } else if (item.tokenType == TokenType.ERC1155) {
         IERC1155Simple(item.token).mint(account, item.tokenId, item.amount, "0x");

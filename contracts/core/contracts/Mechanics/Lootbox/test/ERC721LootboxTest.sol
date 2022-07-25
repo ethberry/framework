@@ -16,7 +16,7 @@ contract ERC721LootboxTest is ERC721Lootbox {
     string memory baseTokenURI
   ) ERC721Lootbox(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, Asset calldata token) public override onlyRole(MINTER_ROLE) {
-    _safeMint(to, token.tokenId);
+  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) {
+    _safeMint(to, templateId);
   }
 }
