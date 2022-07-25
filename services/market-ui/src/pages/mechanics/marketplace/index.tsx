@@ -6,9 +6,9 @@ import { useNavigate, useParams } from "react-router";
 import { Breadcrumbs } from "@gemunion/mui-page-layout";
 
 import { MarketplaceTabs } from "./tabs";
-import { Erc1155 } from "./erc1155";
-import { Erc998 } from "./erc998";
 import { Erc721 } from "./erc721";
+import { Erc998 } from "./erc998";
+import { Erc1155 } from "./erc1155";
 import { Lootbox } from "./lootbox";
 
 export const Marketplace: FC = () => {
@@ -33,10 +33,10 @@ export const Marketplace: FC = () => {
         ))}
       </Tabs>
       <br />
-      <Erc998 value={value} />
       <Erc721 value={value} />
-      <Lootbox value={value} />
+      <Erc998 value={value} />
       <Erc1155 value={value} />
+      <Lootbox value={value} />
     </Fragment>
   );
 };
