@@ -16,12 +16,12 @@ import {
   tokenSymbol,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
-import { wrapOneToManySignature } from "./shared/utils";
+import { wrapManyToManySignature } from "./shared/utils";
 
 describe("ExchangeLootbox", function () {
   let exchangeInstance: Exchange;
   let erc20Instance: ERC20Simple;
-  let erc721Instance: ERC721Simple;
+  let erc721SimpleInstance: ERC721Simple;
   let erc1155Instance: ERC1155Simple;
   let lootboxInstance: ERC721Lootbox;
   let network: Network;
@@ -39,8 +39,8 @@ describe("ExchangeLootbox", function () {
     await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     const erc721Factory = await ethers.getContractFactory("ERC721Simple");
-    erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
+    erc721SimpleInstance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+    await erc721SimpleInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
     erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
@@ -52,7 +52,7 @@ describe("ExchangeLootbox", function () {
 
     network = await ethers.provider.getNetwork();
 
-    generateSignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
+    generateSignature = wrapManyToManySignature(network, exchangeInstance, this.owner);
 
     this.contractInstance = exchangeInstance;
   });
@@ -60,17 +60,25 @@ describe("ExchangeLootbox", function () {
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("lootbox", function () {
-    describe("NATIVE > LOOTBOX", function () {
+    describe("NATIVE > LOOTBOX (ERC721)", function () {
       it("should lootbox", async function () {
         const signature = await generateSignature({
           account: this.receiver.address,
           params,
-          item: {
-            tokenType: 2,
-            token: lootboxInstance.address,
-            tokenId,
-            amount: 1,
-          },
+          items: [
+            {
+              tokenType: 2,
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 1,
+            },
+            {
+              tokenType: 2,
+              token: lootboxInstance.address,
+              tokenId,
+              amount: 1,
+            },
+          ],
           ingredients: [
             {
               tokenType: 0,
@@ -83,12 +91,20 @@ describe("ExchangeLootbox", function () {
 
         const tx1 = exchangeInstance.connect(this.receiver).lootbox(
           params,
-          {
-            tokenType: 2,
-            token: lootboxInstance.address,
-            tokenId,
-            amount: 1,
-          },
+          [
+            {
+              tokenType: 2,
+              token: erc721SimpleInstance.address,
+              tokenId,
+              amount: 1,
+            },
+            {
+              tokenType: 2,
+              token: lootboxInstance.address,
+              tokenId,
+              amount: 1,
+            },
+          ],
           [
             {
               tokenType: 0,
@@ -109,7 +125,80 @@ describe("ExchangeLootbox", function () {
           .to.emit(exchangeInstance, "Craft")
           // .withArgs(
           //   this.receiver.address,
-          //   [[2, erc721Instance.address, tokenId, 1]],
+          //   [[2, erc721SimpleInstance.address, tokenId, 1]],
+          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          // )
+          .to.emit(lootboxInstance, "Transfer")
+          .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+      });
+    });
+
+    describe("NATIVE > LOOTBOX (ERC1155)", function () {
+      it("should lootbox", async function () {
+        const signature = await generateSignature({
+          account: this.receiver.address,
+          params,
+          items: [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount: 1,
+            },
+            {
+              tokenType: 2,
+              token: lootboxInstance.address,
+              tokenId,
+              amount: 1,
+            },
+          ],
+          ingredients: [
+            {
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        const tx1 = exchangeInstance.connect(this.receiver).lootbox(
+          params,
+          [
+            {
+              tokenType: 4,
+              token: erc1155Instance.address,
+              tokenId,
+              amount: 1,
+            },
+            {
+              tokenType: 2,
+              token: lootboxInstance.address,
+              tokenId,
+              amount: 1,
+            },
+          ],
+          [
+            {
+              tokenType: 0,
+              token: ethers.constants.AddressZero,
+              tokenId,
+              amount,
+            },
+          ],
+          this.owner.address,
+          signature,
+          {
+            value: amount,
+          },
+        );
+
+        await expect(tx1)
+          .to.changeEtherBalance(this.receiver, -amount)
+          .to.emit(exchangeInstance, "Craft")
+          // .withArgs(
+          //   this.receiver.address,
+          //   [[2, erc721SimpleInstance.address, tokenId, 1]],
           //   [[0, ethers.constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(lootboxInstance, "Transfer")

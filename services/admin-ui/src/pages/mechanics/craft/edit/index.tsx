@@ -31,8 +31,8 @@ export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {
       data-testid="CraftEditDialog"
       {...rest}
     >
-      <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20]} />
-      <PriceInput prefix="ingredients" multiple disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
+      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput prefix="ingredients" multiple disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
     </FormDialog>
   );
 };

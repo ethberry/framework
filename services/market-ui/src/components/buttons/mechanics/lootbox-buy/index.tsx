@@ -27,13 +27,20 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
           externalId: lootbox.id,
           expiresAt: sign.expiresAt,
         },
-        {
-          // TODO pass lootbox.item.components[0].template.id, probably as amount
-          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-          token: process.env.LOOTBOX_ADDR,
-          tokenId: lootbox.id,
-          amount: 1,
-        },
+        ([] as Array<any>).concat(
+          lootbox.item?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.template!.id.toString(),
+            amount: component.amount,
+          })),
+          {
+            tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+            token: lootbox.template!.contract!.address,
+            tokenId: lootbox.id.toString(),
+            amount: "1",
+          },
+        ),
         lootbox.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
@@ -46,19 +53,23 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
           value: getEthPrice(lootbox.price),
         },
       ) as Promise<void>;
-    });
+    },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
 
-    return metaFnWithSign({
-      url: "/lootboxes/sign",
-      method: "POST",
-      data: {
-        lootboxId: lootbox.id,
-        account,
+    return metaFnWithSign(
+      {
+        url: "/lootboxes/sign",
+        method: "POST",
+        data: {
+          lootboxId: lootbox.id,
+          account,
+        },
       },
-    }, web3Context);
+      web3Context,
+    );
   });
 
   const handleBuy = async () => {

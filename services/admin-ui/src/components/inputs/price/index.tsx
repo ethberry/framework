@@ -15,11 +15,11 @@ import { AmountInput } from "./amount-input";
 export interface IPriceEditDialogProps {
   prefix: string;
   multiple?: boolean;
-  disabledOptions?: Array<TokenType>;
+  disabledTokenTypes?: Array<TokenType>;
 }
 
 export const PriceInput: FC<IPriceEditDialogProps> = props => {
-  const { prefix = "price", multiple = false, disabledOptions } = props;
+  const { prefix = "price", multiple = false, disabledTokenTypes } = props;
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
@@ -58,7 +58,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
         >
           <Box flex={1}>
             <Paper sx={{ p: 2 }}>
-              <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledOptions} />
+              <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledTokenTypes} />
               <ContractInput prefix={`${nestedPrefix}[${i}]`} />
               <TemplateInput prefix={`${nestedPrefix}[${i}]`} />
               <AmountInput prefix={`${nestedPrefix}[${i}]`} />

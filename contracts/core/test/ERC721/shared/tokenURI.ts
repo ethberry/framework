@@ -1,11 +1,11 @@
 import { expect } from "chai";
 
-import { baseTokenURI, fakeAsset, tokenId } from "../../constants";
+import { baseTokenURI, templateId, tokenId } from "../../constants";
 
 export function shouldGetTokenURI() {
   describe("tokenURI", function () {
     it("should get token uri", async function () {
-      await this.contractInstance.mintCommon(this.owner.address, fakeAsset);
+      await this.contractInstance.mintCommon(this.owner.address, templateId);
       const uri = await this.contractInstance.tokenURI(tokenId);
       expect(uri).to.equal(`${baseTokenURI}/${this.contractInstance.address.toLowerCase()}/${tokenId}`);
     });

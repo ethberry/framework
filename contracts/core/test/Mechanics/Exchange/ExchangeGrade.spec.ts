@@ -7,7 +7,7 @@ import {
   amount,
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
-  fakeAsset,
+  templateId,
   MINTER_ROLE,
   params,
   royalty,
@@ -51,7 +51,7 @@ describe("ExchangeGrade", function () {
 
   describe("upgrade", function () {
     it("should update metadata", async function () {
-      const tx1 = erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx1 = erc721Instance.mintCommon(this.receiver.address, templateId);
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
@@ -112,7 +112,7 @@ describe("ExchangeGrade", function () {
     });
 
     it("should fail: insufficient allowance", async function () {
-      const tx1 = erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx1 = erc721Instance.mintCommon(this.receiver.address, templateId);
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
@@ -164,7 +164,7 @@ describe("ExchangeGrade", function () {
     });
 
     it("should fail: transfer amount exceeds balance", async function () {
-      const tx1 = erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx1 = erc721Instance.mintCommon(this.receiver.address, templateId);
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")

@@ -41,7 +41,7 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       <EntityInput name="contractId" controller="contracts" readOnly data={{}} />
       <SelectInput name="gradeStrategy" options={GradeStrategy} />
       <GrowthRateInput />
-      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
+      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
     </FormDialog>
   );
 };

@@ -1,12 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
 import { ILootboxSearchDto, TokenType } from "@framework/types";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerService, IAsset } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignLootboxDto } from "./interfaces";
 import { LootboxEntity } from "./lootbox.entity";
@@ -20,7 +19,6 @@ export class LootboxService {
     private readonly lootboxEntityRepository: Repository<LootboxEntity>,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
-    private readonly configService: ConfigService,
   ) {}
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
@@ -30,8 +28,8 @@ export class LootboxService {
 
     queryBuilder.select();
 
-    // this information is already known on UI
-    // queryBuilder.leftJoinAndSelect("lootbox.contract", "contract");
+    queryBuilder.leftJoinAndSelect("lootbox.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.leftJoinAndSelect("lootbox.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
@@ -96,6 +94,12 @@ export class LootboxService {
       join: {
         alias: "lootbox",
         leftJoinAndSelect: {
+          template: "lootbox.template",
+          contract: "template.contract",
+          item: "lootbox.item",
+          item_components: "item.components",
+          item_contract: "item_components.contract",
+          item_template: "item_components.template",
           price: "lootbox.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
@@ -109,39 +113,13 @@ export class LootboxService {
   public async sign(dto: ISignLootboxDto): Promise<IServerSignature> {
     const { lootboxId, account } = dto;
 
-    const lootboxEntity = await this.findOne(
-      { id: lootboxId },
-      {
-        join: {
-          alias: "lootbox",
-          leftJoinAndSelect: {
-            item: "lootbox.item",
-            item_components: "item.components",
-          },
-        },
-      },
-    );
+    const lootboxEntity = await this.findOneWithRelations({ id: lootboxId });
 
     if (!lootboxEntity) {
       throw new NotFoundException("lootboxNotFound");
     }
 
-    const templateEntity = await this.templateService.findOne(
-      { id: lootboxEntity.item.components[0].templateId },
-      {
-        join: {
-          alias: "template",
-          leftJoinAndSelect: {
-            contract: "template.contract",
-            price: "template.price",
-            price_components: "price.components",
-            price_template: "price_components.template",
-            price_contract: "price_components.contract",
-            price_tokens: "price_template.tokens",
-          },
-        },
-      },
-    );
+    const templateEntity = await this.templateService.findOne({ id: lootboxEntity.item.components[0].templateId });
 
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
@@ -165,21 +143,27 @@ export class LootboxService {
     expiresAt: number,
     lootboxEntity: LootboxEntity,
   ): Promise<string> {
-    const lootboxAddr = this.configService.get<string>("LOOTBOX_ADDR", "");
-    return this.signerService.getOneToManySignature(
+    return this.signerService.getManyToManySignature(
       account,
       {
         nonce,
         externalId: lootboxEntity.id,
         expiresAt,
       },
-      {
-        // TODO pass lootboxEntity.item.components[0].template.id, probably as amount
-        tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-        token: lootboxAddr,
-        tokenId: lootboxEntity.id.toString(),
-        amount: "1",
-      },
+      ([] as Array<IAsset>).concat(
+        lootboxEntity.item.components.map(component => ({
+          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+          token: component.contract.address,
+          tokenId: component.template.id.toString(),
+          amount: component.amount,
+        })),
+        {
+          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+          token: lootboxEntity.template.contract.address,
+          tokenId: lootboxEntity.id.toString(),
+          amount: "1",
+        },
+      ),
       lootboxEntity.price.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

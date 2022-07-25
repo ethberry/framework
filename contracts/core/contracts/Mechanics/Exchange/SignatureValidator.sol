@@ -15,6 +15,8 @@ import "./interfaces/IAsset.sol";
 contract SignatureValidator is EIP712, Context {
   using Address for address;
 
+  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
   mapping(bytes32 => bool) private _expired;
 
   bytes private constant PARAMS_SIGNATURE = "Params(bytes32 nonce,uint256 externalId,uint256 expiresAt)";

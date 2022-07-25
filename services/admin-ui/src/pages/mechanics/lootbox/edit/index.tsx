@@ -45,10 +45,10 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
       <RichTextEditor name="description" />
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} />
+          <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} />
         </Grid>
         <Grid item xs={6}>
-          <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
+          <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
         </Grid>
       </Grid>
       {id ? <SelectInput name="lootboxStatus" options={LootboxStatus} /> : null}

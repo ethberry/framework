@@ -25,17 +25,17 @@ contract ERC721Graded is IERC721Graded, ERC721Simple {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, Asset calldata item)
+  function mintCommon(address to, uint256 templateId)
     public virtual
     override(IERC721Simple, ERC721Simple)
     onlyRole(MINTER_ROLE)
   {
-    require(item.tokenId != 0, "ERC721Graded: wrong type");
+    require(templateId != 0, "ERC721Graded: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, item.tokenId);
+    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     upsertRecordField(tokenId, GRADE, 1);
 
     _safeMint(to, tokenId);

@@ -42,7 +42,7 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]} />
+      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155]} />
       <NumberInput name="amount" />
       <SelectInput name="templateStatus" options={TemplateStatus} />
       <EntityInput

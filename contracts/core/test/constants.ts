@@ -1,4 +1,4 @@
-import { BigNumber, constants, utils } from "ethers";
+import { BigNumber, utils } from "ethers";
 
 export const baseTokenURI = "http://localhost:3011/metadata"; // no trailing slash
 export const tokenSymbol = "SYMBOL";
@@ -26,13 +26,6 @@ export const VRF_ADDR = "0xa722bdA6968F50778B973Ae2701e90200C564B49";
 // VRF_ADDR=0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
 // LINK_ADDR=0x8D81A3DCd17030cD5F23Ac7370e4Efb10D2b3cA4
 // VRF_ADDR=0xa722bdA6968F50778B973Ae2701e90200C564B49
-
-export const fakeAsset = {
-  tokenType: 2, // ERC721
-  token: constants.AddressZero,
-  tokenId,
-  amount,
-};
 
 export const externalId = 123;
 export const expiresAt = 0;
