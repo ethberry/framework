@@ -4,35 +4,37 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc998AssetSearchDto, IErc998Token } from "@framework/types";
+import { IToken, ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998Token } from "./item";
-import { Erc998TokenSearchForm } from "./form";
+import { TokenSearchForm } from "../../../components/forms/token-search";
 
-export interface IErc998TokenListProps {
+export interface ITokenListProps {
   embedded?: boolean;
 }
 
-export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
+export const Erc998TokenList: FC<ITokenListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc998Token, IErc998AssetSearchDto>({
+    useCollection<IToken, ITokenSearchDto>({
       baseUrl: "/erc998-tokens",
       embedded,
       search: {
-        erc998CollectionIds: [],
-        rarity: [],
+        contractIds: [],
+        attributes: {
+          [TokenAttributes.RARITY]: [],
+        },
       },
     });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998-tokens"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc998-token-list"]} isHidden={embedded} />
 
-      <PageHeader message="pages.erc998-tokens.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+      <PageHeader message="pages.erc998-token-list.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
@@ -40,7 +42,12 @@ export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc998TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <TokenSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

@@ -10,7 +10,6 @@ import { Landing } from "./landing";
 import { Dashboard } from "./dashboard";
 import { Profile } from "./profile";
 import { User } from "./user";
-import { Seaport } from "./seaport";
 
 import { erc20Routes } from "./erc20/routes";
 import { erc721Routes } from "./erc721/routes";
@@ -18,7 +17,8 @@ import { erc998Routes } from "./erc998/routes";
 import { erc1155Routes } from "./erc1155/routes";
 import { Settings } from "./settings";
 import { Email } from "./email";
-import { Staking } from "./staking";
+import { Page } from "./page";
+import { mechanics } from "./mechanics/routes";
 
 const routes: Array<RouteObject> = [
   {
@@ -49,6 +49,14 @@ const routes: Array<RouteObject> = [
         ],
       },
       {
+        path: "/pages",
+        element: <Protected />,
+        children: [
+          { index: true, element: <Page /> },
+          { path: "/pages/:id", element: <Page /> },
+        ],
+      },
+      {
         path: "/settings",
         element: <Protected />,
         children: [{ index: true, element: <Settings /> }],
@@ -58,23 +66,11 @@ const routes: Array<RouteObject> = [
         element: <Protected />,
         children: [{ index: true, element: <Email /> }],
       },
-      {
-        path: "/seaport",
-        element: <Protected />,
-        children: [{ index: true, element: <Seaport /> }],
-      },
-      {
-        path: "/staking",
-        element: <Protected />,
-        children: [
-          { index: true, element: <Staking /> },
-          { path: "/staking/:id", element: <Staking /> },
-        ],
-      },
       ...erc20Routes,
       ...erc721Routes,
       ...erc998Routes,
       ...erc1155Routes,
+      ...mechanics,
       {
         path: "/error/:error",
         element: <Error />,

@@ -21,6 +21,7 @@
   },
   "dialogs": {
     "add": "Add",
+    "allowance": "Allowance",
     "auction": "Sell `{title}` on auction",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
@@ -100,6 +101,7 @@
       "showFilters": "Show filters",
       "signup": "Sign up",
       "submit": "Submit",
+      "upgrade": "Upgrade",
       "upload": "Upload"
     },
     "hints": {
@@ -107,34 +109,23 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "address": "Address",
       "amount": "Amount",
       "collectionId": "Collection",
       "confirm": "Confirm",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "displayName": "Display name",
       "email": "Email",
       "endDate": "End date",
-      "erc1155CollectionId": "Collections",
-      "erc1155CollectionIds": "Collections",
-      "erc1155TokenId": "Token",
-      "erc1155TokenIds": "Token",
-      "erc20Token": "Token",
-      "erc20TokenId": "Token",
-      "erc721CollectionId": "Collections",
-      "erc721CollectionIds": "Collections",
-      "erc721TokenId": "Token",
-      "erc721TokenIds": "Token",
-      "erc998CollectionId": "Collections",
-      "erc998CollectionIds": "Collections",
-      "erc998TokenId": "Token",
-      "erc998TokenIds": "Token",
       "externalId": "External ID",
       "imageUrl": "Avatar",
       "language": "Language",
-      "maxAmount": "Max. price",
-      "minAmount": "Min. price",
+      "maxPrice": "Max. price",
+      "minPrice": "Min. price",
       "password": "Password",
       "rarity": "Rarity",
       "roles": "Roles",
@@ -142,37 +133,36 @@
       "stakingStatus": "Status",
       "startDate": "Start date",
       "status": "Status",
+      "templateId": "Template",
+      "templateIds": "Templates",
       "title": "Title",
+      "tokenId": "Token",
+      "tokenIds": "Tokens",
       "tokenType": "Type",
       "type": "Type",
       "updatedAt": "Updated"
     },
     "placeholders": {
+      "address": "0x...",
       "amount": "100",
       "confirm": "******",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
       "createdAt": "Registered",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
-      "erc1155CollectionId": "Collections",
-      "erc1155CollectionIds": "Collections",
-      "erc1155TokenId": "Token",
-      "erc1155TokenIds": "Token",
-      "erc20Token": "Token",
-      "erc20TokenId": "Token",
-      "erc721CollectionId": "Collections",
-      "erc721CollectionIds": "Collections",
-      "erc721TokenId": "Token",
-      "erc721TokenIds": "Token",
-      "erc998CollectionId": "Collections",
-      "erc998CollectionIds": "Collections",
-      "erc998TokenId": "Token",
-      "erc998TokenIds": "Token",
       "maxAmount": "100",
+      "maxPrice": "1",
       "minAmount": "0.01",
+      "minPrice": "1",
       "password": "******",
       "query": "Search...",
       "search": "Search...",
-      "token": "Token"
+      "templateId": "Template",
+      "templateIds": "Templates",
+      "token": "Token",
+      "tokenId": "Token",
+      "tokenIds": "Tokens"
     },
     "tips": {
       "add": "Add",
@@ -202,60 +192,62 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
-    "assets": {
-      "tabs": {
-        "heroes": "Heroes",
-        "heroesdb": "Heroes Dropbox",
-        "items": "Items",
-        "itemsdb": "Items Dropbox",
-        "resources": "Resources",
-        "skills": "Skills"
-      },
-      "title": "My assets"
-    },
-    "auctions": {
-      "title": "Secondary marketplace"
+    "claim": {
+      "sorry": "Sorry, maybe you will get lucky next time",
+      "title": "Claim",
+      "connect": "Please connect your wallet first"
     },
     "craft": {
+      "ingredients": "Ingredients",
       "tabs": {
-        "heroes": "Heroes",
-        "items": "Items",
-        "resources": "Resources"
+        "erc1155": "ERC1155",
+        "erc721": "ERC721",
+        "erc998": "ERC998"
       },
-      "title": "Craft"
+      "title": "Craft recipe: {title}"
+    },
+    "craft-list": {
+      "title": "Craft recipes"
     },
     "dashboard": {
       "erc1155": {
-        "collections": "ERC1155 Collections",
-        "recipes": "ERC1155 Recipes",
+        "contracts": "ERC1155 Contracts",
+        "templates": "ERC1155 Templates",
         "title": "ERC1155",
         "tokens": "ERC1155 Tokens"
       },
-      "erc20": {
-        "title": "ERC20",
-        "vesting": "ERC20 Vesting"
-      },
       "erc721": {
-        "airdrop": "ERC721 Airdrop",
-        "collections": "ERC721 Collections",
-        "recipes": "ERC721 Recipes",
+        "contracts": "ERC721 Contracts",
         "templates": "ERC721 Templates",
         "title": "ERC721",
         "tokens": "ERC721 Tokens"
       },
       "erc998": {
-        "airdrop": "ERC998 Airdrop",
-        "collections": "ERC998 Collections",
-        "recipes": "ERC998 Recipes",
+        "contracts": "ERC998 Contracts",
         "templates": "ERC998 Templates",
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
       },
+      "mechanics": {
+        "claim": "Claim",
+        "craft": "Craft",
+        "leaderboard": "Staking Leaderboard",
+        "lootboxes": "Lootboxes",
+        "reward": "Staking Reward",
+        "stake": "Staking Stake",
+        "title": "Mechanics",
+        "vesting": "Vesting"
+      },
+      "pages": {
+        "about-us": "About us",
+        "faq": "FAQ",
+        "title": "Pages"
+      },
       "personal": {
         "assets": "My assets",
         "auctions": "My auctions",
-        "wallet": "My wallet",
-        "title": "My stash"
+        "title": "My stash",
+        "wallet": "My wallet"
       },
       "sections": {
         "auctions": "Secondary marketplace",
@@ -263,161 +255,123 @@
         "marketplace": "Primary marketplace",
         "title": "Sections"
       },
-      "staking": {
-        "leaderboard": "Leaderboard",
-        "reward": "Reward",
-        "stake": "Stake",
-        "title": "Staking"
-      },
       "title": "Dashboard"
     },
-    "erc1155-collection": {
-      "title": "ERC1155 Collection: {title}"
+    "erc1155-contract": {
+      "title": "ERC1155 Contract: {title}"
     },
-    "erc1155-collections": {
-      "title": "ERC1155 Collections"
-    },
-    "erc1155-recipes": {
-      "title": "ERC1155 Recipes"
+    "erc1155-contract-list": {
+      "title": "ERC1155 Contracts"
     },
     "erc1155-token": {
       "price": "Price: {amount}",
       "title": "ERC1155 Token: {title}"
     },
-    "erc1155-tokens": {
+    "erc1155-token-list": {
       "title": "ERC1155 Tokens"
     },
-    "erc20-vesting": {
-      "sorry": "Sorry, there is no vesting associated with this wallet.",
-      "title": "ERC20 Vesting"
+    "erc721-contract": {
+      "title": "ERC721 Contract: {title}"
     },
-    "erc721-airdrop": {
-      "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "ERC721 Airdrop"
-    },
-    "erc721-collection": {
-      "title": "ERC721 Collection: {title}"
-    },
-    "erc721-collections": {
-      "title": "ERC721 Collections"
-    },
-    "erc721-dropbox": {
-      "price": "Price: {amount}",
-      "title": "ERC721 Dropbox: {title}"
-    },
-    "erc721-dropboxes": {
-      "title": "ERC721 Dropboxes"
-    },
-    "erc721-recipes": {
-      "title": "ERC721 Recipes"
+    "erc721-contract-list": {
+      "title": "ERC721 Contracts"
     },
     "erc721-template": {
       "price": "Price: {amount}",
       "title": "ERC721 Template: {title}"
     },
-    "erc721-templates": {
+    "erc721-template-list": {
       "title": "ERC721 Templates"
     },
     "erc721-token": {
       "price": "Price: {amount}",
       "title": "ERC721 Token: {title}"
     },
-    "erc721-tokens": {
+    "erc721-token-list": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
       },
       "title": "ERC721 Tokens"
     },
-    "erc998-airdrop": {
-      "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "ERC998 Airdrop"
+    "erc998-contract": {
+      "title": "ERC998 Contract: {title}"
     },
-    "erc998-collection": {
-      "title": "ERC998 Collection: {title}"
-    },
-    "erc998-collections": {
-      "title": "ERC998 Collections"
-    },
-    "erc998-dropbox": {
-      "price": "Price: {amount}",
-      "title": "ERC998 Dropbox: {title}"
-    },
-    "erc998-dropboxes": {
-      "title": "ERC998 Dropboxes"
-    },
-    "erc998-recipes": {
-      "title": "ERC998 Recipes"
+    "erc998-contract-list": {
+      "title": "ERC998 Contracts"
     },
     "erc998-template": {
       "price": "Price: {amount}",
       "title": "ERC998 Template: {title}"
     },
-    "erc998-templates": {
+    "erc998-template-list": {
       "title": "ERC998 Templates"
     },
     "erc998-token": {
       "price": "Price: {amount}",
       "title": "ERC998 Token: {title}"
     },
-    "erc998-tokens": {
+    "erc998-token-list": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
       },
       "title": "ERC998 Tokens"
     },
+    "exchanges": {
+      "title": "Exchanges"
+    },
     "guest": {
       "login": "Login"
     },
     "landing": {
-      "erc1155-new": "New 1155 Tokens",
+      "erc1155-new": "New 1155 Templates",
       "erc721-new": "New 721 Templates",
       "erc998-new": "New 998 Templates",
       "popular": "Popular items"
     },
+    "lootbox": {
+      "price": "Price: {amount}",
+      "title": "Lootbox: {title}"
+    },
+    "lootbox-list": {
+      "title": "Lootboxes"
+    },
     "marketplace": {
-      "heroes": {
-        "title": "Heroes"
+      "erc1155": {
+        "title": "ERC1155"
       },
-      "heroesdb": {
-        "title": "Heroes Dropbox"
+      "erc721": {
+        "title": "ERC721"
       },
-      "items": {
-        "title": "Items"
+      "erc998": {
+        "title": "ERC998"
       },
-      "itemsdb": {
-        "title": "Items Dropbox"
-      },
-      "resources": {
-        "title": "Resources"
-      },
-      "skills": {
-        "title": "Items"
+      "lootbox": {
+        "title": "Lootbox"
       },
       "tabs": {
-        "heroes": "Heroes",
-        "heroesdb": "Heroes Dropbox",
-        "items": "Items",
-        "itemsdb": "Items Dropbox",
-        "resources": "Resources",
-        "skills": "Skills"
+        "erc1155": "ERC1155",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "lootbox": "Lootbox"
       },
       "title": "Primary market"
     },
-    "my-auctions": {
-      "title": "My auctions"
-    },
     "my-wallet": {
-      "title": "My wallet",
+      "allowance": "Allowance",
       "attach": "Attach",
       "detach": "Detach",
-      "attach": "Attach"
+      "title": "My wallet"
+    },
+    "page": {
+      "title": "{title}"
     },
     "profile": {
       "title": "Profile"
     },
     "staking": {
+      "deposit": "Deposit",
       "leaderboard": {
         "address": "Address",
         "rank": "Rank",
@@ -430,10 +384,23 @@
       "stake": {
         "title": "Stake"
       },
-      "title": "Staking"
+      "title": "Staking",
+      "view": {
+        "account": "Account",
+        "address": "Address",
+        "contractTemplate": "Template",
+        "duration": "Duration",
+        "finish": "Finish",
+        "startTimestamp": "Start time"
+      }
+    },
+    "vesting": {
+      "sorry": "Sorry, there is no vesting associated with this wallet.",
+      "title": "Vesting"
     }
   },
   "snackbar": {
+    "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "denied": "Denied by user",
@@ -445,6 +412,7 @@
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
-    "userHasWrongRole": "Insufficient permissions"
+    "userHasWrongRole": "Insufficient permissions",
+    "walletIsNotConnected": "Wallet is not connected"
   }
 }

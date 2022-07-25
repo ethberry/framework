@@ -2,42 +2,39 @@ import { FC, Fragment } from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
-import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc1155Token, IErc1155TokenSearchDto } from "@framework/types";
+import { IToken, ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Token } from "./item";
-import { Erc1155TokenSearchForm } from "./form";
-import { useParams } from "react-router";
+import { TokenSearchForm } from "../../../components/forms/token-search";
 
-export interface IErc1155TokenListProps {
+export interface ITokenListProps {
   embedded?: boolean;
 }
 
-export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
+export const Erc1155TokenList: FC<ITokenListProps> = props => {
   const { embedded } = props;
-  const { id } = useParams<{ id: string }>();
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc1155Token, IErc1155TokenSearchDto>({
+    useCollection<IToken, ITokenSearchDto>({
       baseUrl: "/erc1155-tokens",
       embedded,
       search: {
-        query: "",
-        erc1155CollectionIds: [~~id!],
-        minPrice: constants.Zero.toString(),
-        maxPrice: constants.WeiPerEther.toString(),
+        contractIds: [],
+        attributes: {
+          [TokenAttributes.RARITY]: [],
+        },
       },
     });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "marketplace"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc1155-token-list"]} isHidden={embedded} />
 
-      <PageHeader message="pages.erc1155-tokens.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+      <PageHeader message="pages.erc1155-token-list.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
@@ -45,7 +42,12 @@ export const Erc1155TokenList: FC<IErc1155TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc1155TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <TokenSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

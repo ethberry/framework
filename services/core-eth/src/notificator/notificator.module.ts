@@ -4,7 +4,6 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { RmqProviderType } from "@framework/types";
 
-import { NotificatorController } from "./notificator.controller";
 import { NotificatorService } from "./notificator.service";
 
 @Module({
@@ -35,6 +34,5 @@ import { NotificatorService } from "./notificator.service";
     ]),
   ],
   providers: [NotificatorService],
-  controllers: [NotificatorController],
 })
 export class NotificatorModule {}

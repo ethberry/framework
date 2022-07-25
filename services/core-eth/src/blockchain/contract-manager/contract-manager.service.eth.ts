@@ -3,35 +3,34 @@ import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-
 import { emptyStateString } from "@gemunion/draft-js-utils";
-
 import { imageUrl } from "@framework/constants";
-
 import {
   ContractManagerEventType,
+  ContractTemplate,
   ContractType,
-  Erc1155TokenTemplate,
-  Erc20TokenTemplate,
-  Erc20VestingTemplate,
-  Erc721TokenTemplate,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
-  IContractManagerERC20VestingDeployed,
   IContractManagerERC721TokenDeployed,
+  IContractManagerERC998TokenDeployed,
+  IContractManagerVestingDeployed,
   TContractManagerEventData,
+  TokenType,
+  VestingContractTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
-import { Erc20TokenService } from "../../erc20/token/token.service";
-import { Erc20VestingService } from "../../vesting/vesting/vesting.service";
-import { Erc721CollectionService } from "../../erc721/collection/collection.service";
-import { Erc1155CollectionService } from "../../erc1155/collection/collection.service";
+import { VestingService } from "../../mechanics/vesting/vesting.service";
 import { Erc20LogService } from "../../erc20/token/token-log/token-log.service";
 import { Erc721TokenLogService } from "../../erc721/token/token-log/token-log.service";
+import { Erc998TokenLogService } from "../../erc998/token/token-log/token-log.service";
 import { Erc1155LogService } from "../../erc1155/token/token-log/token-log.service";
-import { VestingLogService } from "../../vesting/vesting-log/vesting.log.service";
+import { VestingLogService } from "../../mechanics/vesting/vesting-log/vesting.log.service";
 import { ContractManagerService } from "./contract-manager.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
+import { TemplateService } from "../hierarchy/template/template.service";
+import { TokenService } from "../hierarchy/token/token.service";
+import { GradeService } from "../../mechanics/grade/grade.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -43,31 +42,33 @@ export class ContractManagerServiceEth {
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
-    private readonly erc20VestingService: Erc20VestingService,
-    private readonly erc20TokenService: Erc20TokenService,
-    private readonly erc721CollectionService: Erc721CollectionService,
-    private readonly erc1155CollectionService: Erc1155CollectionService,
+    private readonly vestingService: VestingService,
+    private readonly contractService: ContractService,
     private readonly erc20LogService: Erc20LogService,
     private readonly erc721LogService: Erc721TokenLogService,
+    private readonly erc998LogService: Erc998TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
+    private readonly templateService: TemplateService,
+    private readonly tokenService: TokenService,
+    private readonly gradeService: GradeService,
   ) {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
 
-  public async erc20Vesting(event: ILogEvent<IContractManagerERC20VestingDeployed>, ctx: Log): Promise<void> {
+  public async vesting(event: ILogEvent<IContractManagerVestingDeployed>, ctx: Log): Promise<void> {
     const {
-      args: { addr, beneficiary, startTimestamp, duration, templateId },
+      args: { addr, account, startTimestamp, duration, templateId },
     } = event;
 
     await this.updateHistory(event, ctx);
 
-    await this.erc20VestingService.create({
+    await this.vestingService.create({
       address: addr.toLowerCase(),
-      beneficiary: beneficiary.toLowerCase(),
+      account: account.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
       duration: ~~duration * 1000, // msec
-      contractTemplate: Object.values(Erc20VestingTemplate)[~~templateId],
+      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
       chainId: this.chainId,
     });
 
@@ -84,15 +85,41 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.erc20TokenService.create({
+    const contractTemplate =
+      ~~templateId === 0 // SIMPLE
+        ? Object.values(ContractTemplate)[1]
+        : ~~templateId === 1 // BLACKLIST
+        ? Object.values(ContractTemplate)[2]
+        : ~~templateId === 2 // EXTERNAL
+        ? Object.values(ContractTemplate)[3]
+        : Object.values(ContractTemplate)[4]; // NATIVE
+
+    const erc20ContractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
       name,
       symbol,
-      amount: cap,
+      decimals: 18,
       description: emptyStateString,
-      contractTemplate: Object.values(Erc20TokenTemplate)[~~templateId],
+      imageUrl,
+      contractTemplate,
+      contractType: TokenType.ERC20,
       chainId: this.chainId,
+    });
+
+    const templateEntity = await this.templateService.create({
+      title: name,
+      description: emptyStateString,
+      imageUrl,
+      cap,
+      contractId: erc20ContractEntity.id,
+    });
+
+    await this.tokenService.create({
+      attributes: "{}",
+      tokenId: "0",
+      royalty: 0,
+      template: templateEntity,
     });
 
     await this.erc20LogService.addListener({
@@ -108,20 +135,70 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.erc721CollectionService.create({
+    const contractTemplate =
+      ~~templateId === 0
+        ? Object.values(ContractTemplate)[1] // Simple
+        : ~~templateId === 1
+        ? Object.values(ContractTemplate)[5] // Graded
+        : Object.values(ContractTemplate)[6]; // Random
+
+    const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
       title: name,
       name,
       symbol,
-      royalty: ~~royalty,
       description: emptyStateString,
       imageUrl,
+      contractTemplate,
+      contractType: TokenType.ERC721,
       chainId: this.chainId,
+      royalty: ~~royalty,
       baseTokenURI,
-      contractTemplate: Object.values(Erc721TokenTemplate)[~~templateId],
     });
 
+    if (contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM) {
+      await this.gradeService.create({ contract: contractEntity });
+    }
+
     await this.erc721LogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployed>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, name, symbol, royalty, baseTokenURI, templateId },
+    } = event;
+
+    await this.updateHistory(event, ctx);
+
+    const contractTemplate =
+      ~~templateId === 0
+        ? Object.values(ContractTemplate)[1] // Simple
+        : ~~templateId === 1
+        ? Object.values(ContractTemplate)[5] // Graded
+        : Object.values(ContractTemplate)[6]; // Random
+
+    const contractEntity = await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: name,
+      name,
+      symbol,
+      description: emptyStateString,
+      imageUrl,
+      contractTemplate,
+      contractType: TokenType.ERC998,
+      chainId: this.chainId,
+      royalty: ~~royalty,
+      baseTokenURI,
+    });
+
+    if (contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM) {
+      await this.gradeService.create({ contract: contractEntity });
+    }
+
+    await this.erc998LogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -134,14 +211,20 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.erc1155CollectionService.create({
+    const contractTemplate =
+      ~~templateId === 0 // SIMPLE
+        ? Object.values(ContractTemplate)[1]
+        : Object.values(ContractTemplate)[0]; // UNKNOWN todo trow err?
+
+    await this.contractService.create({
       address: addr.toLowerCase(),
-      title: "new 1155 collection",
+      title: "new 1155 contract",
       description: emptyStateString,
       imageUrl,
-      chainId: this.chainId,
       baseTokenURI,
-      contractTemplate: Object.values(Erc1155TokenTemplate)[~~templateId],
+      contractTemplate,
+      contractType: TokenType.ERC1155,
+      chainId: this.chainId,
     });
 
     await this.erc1155LogService.addListener({
@@ -153,14 +236,15 @@ export class ContractManagerServiceEth {
   private async updateHistory(event: ILogEvent<TContractManagerEventData>, ctx: Log) {
     this.loggerService.log(
       JSON.stringify(
-        Object.assign(
-          { name: event.name, signature: event.signature, topic: event.topic, args: event.args },
-          {
-            address: ctx.address,
-            transactionHash: ctx.transactionHash,
-            blockNumber: ctx.blockNumber,
-          },
-        ),
+        Object.assign({
+          name: event.name,
+          signature: event.signature,
+          topic: event.topic,
+          args: event.args,
+          address: ctx.address,
+          transactionHash: ctx.transactionHash,
+          blockNumber: ctx.blockNumber,
+        }),
         null,
         "\t",
       ),

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -25,7 +25,6 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   const [rows, setRows] = useState<Array<IAccessControl>>([]);
 
-  const { library } = useWeb3React();
   const user = useUser<IUser>();
 
   const { fn, isLoading } = useApiCall(
@@ -37,8 +36,8 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
     { success: false },
   );
 
-  const metaRenounceRole = useMetamask((values: IAccessControl) => {
-    const contract = new Contract(data.address, IAccessControlSol.abi, library.getSigner());
+  const metaRenounceRole = useMetamask((values: IAccessControl, web3Context: Web3ContextType) => {
+    const contract = new Contract(data.address, IAccessControlSol.abi, web3Context.provider?.getSigner());
     return contract.renounceRole(values.role, values.address) as Promise<void>;
   });
 
@@ -50,19 +49,19 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
 
   useEffect(() => {
     void fn().then((rows: Array<IAccessControl>) => {
-      setRows(rows.filter(row => row.wallet === user.profile.wallet));
+      setRows(rows.filter(row => row.account === user.profile.wallet));
     });
   }, []);
 
   return (
-    <ConfirmationDialog message="dialogs.renounce" data-testid="AccessControlRenounceRoleDialog" {...rest}>
+    <ConfirmationDialog message="dialogs.renounceRole" data-testid="AccessControlRenounceRoleDialog" {...rest}>
       <ProgressOverlay isLoading={isLoading}>
         {rows.length ? (
           <List>
             {rows.map((access, i) => (
               <ListItem key={i}>
                 <ListItemText>
-                  {access.wallet} ({access.role})
+                  {access.account} ({access.role})
                 </ListItemText>
                 <ListItemSecondaryAction>
                   <IconButton onClick={handleRenounce(access)}>

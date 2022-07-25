@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 
-import { StakingModule } from "./staking/staking.module";
+import { HierarchyModule } from "./hierarchy/hierarchy.module";
 
 @Module({
-  imports: [StakingModule],
+  imports: [HierarchyModule],
 })
 export class BlockchainModule {}

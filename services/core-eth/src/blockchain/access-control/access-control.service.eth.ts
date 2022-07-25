@@ -34,7 +34,7 @@ export class AccessControlServiceEth {
 
     await this.accessControlService.create({
       address: context.address.toLowerCase(),
-      wallet: account.toLowerCase(),
+      account: account.toLowerCase(),
       role: Object.keys(AccessControlRoleHash)[
         Object.values(AccessControlRoleHash).indexOf(role as AccessControlRoleHash)
       ] as AccessControlRoleHash,
@@ -50,7 +50,7 @@ export class AccessControlServiceEth {
 
     await this.accessControlService.create({
       address: context.address.toLowerCase(),
-      wallet: account.toLowerCase(),
+      account: account.toLowerCase(),
       role: Object.keys(AccessControlRoleHash)[
         Object.values(AccessControlRoleHash).indexOf(role as AccessControlRoleHash)
       ] as AccessControlRoleHash,
@@ -66,7 +66,7 @@ export class AccessControlServiceEth {
 
     await this.accessControlService.create({
       address: context.address.toLowerCase(),
-      wallet: newAdminRole.toLowerCase(),
+      account: newAdminRole.toLowerCase(),
       role: Object.keys(AccessControlRoleHash)[
         Object.values(AccessControlRoleHash).indexOf(role as AccessControlRoleHash)
       ] as AccessControlRoleHash,

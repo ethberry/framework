@@ -27,6 +27,7 @@ const config: Configuration = {
     fallback: {
       path: require.resolve("path-browserify"),
     },
+    symlinks: false,
   },
   module: {
     rules: [

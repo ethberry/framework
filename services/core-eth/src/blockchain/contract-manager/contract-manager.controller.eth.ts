@@ -9,8 +9,9 @@ import {
   ContractType,
   IContractManagerERC1155TokenDeployed,
   IContractManagerERC20TokenDeployed,
-  IContractManagerERC20VestingDeployed,
   IContractManagerERC721TokenDeployed,
+  IContractManagerERC998TokenDeployed,
+  IContractManagerVestingDeployed,
 } from "@framework/types";
 
 import { ContractManagerServiceEth } from "./contract-manager.service.eth";
@@ -21,13 +22,10 @@ export class ContractManagerControllerEth {
 
   @EventPattern({
     contractType: ContractType.CONTRACT_MANAGER,
-    eventName: ContractManagerEventType.ERC20VestingDeployed,
+    eventName: ContractManagerEventType.VestingDeployed,
   })
-  public erc20Vesting(
-    @Payload() event: ILogEvent<IContractManagerERC20VestingDeployed>,
-    @Ctx() ctx: Log,
-  ): Promise<void> {
-    return this.contractManagerServiceEth.erc20Vesting(event, ctx);
+  public vesting(@Payload() event: ILogEvent<IContractManagerVestingDeployed>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.vesting(event, ctx);
   }
 
   @EventPattern({
@@ -44,6 +42,14 @@ export class ContractManagerControllerEth {
   })
   public erc721Token(@Payload() event: ILogEvent<IContractManagerERC721TokenDeployed>, @Ctx() ctx: Log): Promise<void> {
     return this.contractManagerServiceEth.erc721Token(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.ERC998TokenDeployed,
+  })
+  public erc998Token(@Payload() event: ILogEvent<IContractManagerERC998TokenDeployed>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.erc998Token(event, ctx);
   }
 
   @EventPattern({

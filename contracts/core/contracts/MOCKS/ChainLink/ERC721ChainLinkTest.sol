@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity >=0.8.13;
+pragma solidity ^0.8.9;
 
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
@@ -25,9 +25,9 @@ abstract contract ERC721ChainLinkTest is VRFConsumerBase {
   event RandomRequest(bytes32 requestId);
 
   function getRandomNumber() internal virtual returns (bytes32 requestId) {
-      require(LINK.balanceOf(address(this)) >= _fee, "ERC721ChainLink: Not enough LINK");
-      requestId = VRFConsumerBase.requestRandomness(_keyHash, _fee);
-      emit RandomRequest(requestId);
-      return requestId;
-        }
+    require(LINK.balanceOf(address(this)) >= _fee, "ERC721ChainLink: Not enough LINK");
+    requestId = VRFConsumerBase.requestRandomness(_keyHash, _fee);
+    emit RandomRequest(requestId);
+    return requestId;
+  }
 }

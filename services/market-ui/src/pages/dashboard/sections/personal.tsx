@@ -15,22 +15,6 @@ export const Personal: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/my-assets">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.personal.assets" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/my-auctions">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.personal.auctions" />
-          </ListItemText>
-        </ListItem>
         <ListItem button component={RouterLink} to="/my-wallet">
           <ListItemIcon>
             <Storefront />

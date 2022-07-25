@@ -1,36 +1,34 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc721CollectionType, Erc721TemplateStatus, IErc721Template } from "@framework/types";
+import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
+import { PriceInput } from "../../../../components/inputs/price";
 
 export interface IErc721TemplateEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc721Template>, form: any) => Promise<void>;
-  initialValues: IErc721Template;
+  onConfirm: (values: Partial<ITemplate>, form: any) => Promise<void>;
+  initialValues: ITemplate;
 }
 
 export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, attributes, price, amount, templateStatus, erc721CollectionId, imageUrl } =
-    initialValues;
+  const { id, title, description, price, amount, templateStatus, contractId, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
-    attributes,
     price,
     amount,
     templateStatus,
-    erc721CollectionId,
+    contractId,
     imageUrl,
   };
 
@@ -44,16 +42,17 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <JsonInput name="attributes" />
-      <EthInput name="price" />
+      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       <NumberInput name="amount" />
-      {id ? <SelectInput name="templateStatus" options={Erc721TemplateStatus} /> : null}
+      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
-        name="erc721CollectionId"
-        controller="erc721-collections"
+        name="contractId"
+        controller="contracts"
         data={{
-          collectionType: [Erc721CollectionType.TOKEN],
+          contractType: [TokenType.ERC721],
+          contractModule: [ModuleType.CORE],
         }}
+        readOnly={!!id}
       />
       <AvatarInput name="imageUrl" />
     </FormDialog>

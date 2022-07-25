@@ -3,12 +3,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractType, Erc20TokenEventType } from "@framework/types";
-
-import { Erc721TokenLogService } from "./token-log.service";
+import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
 
 // custom contracts
-import { ERC721Abi } from "./interfaces";
+import { ABI } from "./interfaces";
+import { Erc721TokenLogService } from "./token-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 
@@ -29,12 +28,21 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.ERC721_TOKEN,
             contractAddress: erc721Contracts.address || [],
-            contractInterface: ERC721Abi,
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
-              Erc20TokenEventType.Approval,
-              Erc20TokenEventType.Snapshot,
-              Erc20TokenEventType.Transfer,
+              ContractEventType.Approval,
+              ContractEventType.ApprovalForAll,
+              ContractEventType.DefaultRoyaltyInfo,
+              ContractEventType.MintRandom,
+              ContractEventType.Paused,
+              ContractEventType.RandomRequest,
+              ContractEventType.RedeemClaim,
+              ContractEventType.TokenRoyaltyInfo,
+              ContractEventType.Transfer,
+              ContractEventType.UnpackClaim,
+              ContractEventType.UnpackLootbox,
+              ContractEventType.Unpaused,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged

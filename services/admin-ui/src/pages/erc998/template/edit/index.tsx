@@ -1,36 +1,34 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { JsonInput, NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { Erc998CollectionType, Erc998TemplateStatus, IErc998Template } from "@framework/types";
+import { ITemplate, TemplateStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
+import { PriceInput } from "../../../../components/inputs/price";
 
-export interface IErc998TemplateEditDialogProps {
+export interface ITemplateEditDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: Partial<IErc998Template>, form: any) => Promise<void>;
-  initialValues: IErc998Template;
+  onConfirm: (values: Partial<ITemplate>, form: any) => Promise<void>;
+  initialValues: ITemplate;
 }
 
-export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = props => {
+export const Erc998TemplateEditDialog: FC<ITemplateEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, attributes, price, amount, templateStatus, erc998CollectionId, imageUrl } =
-    initialValues;
+  const { id, title, description, price, amount, templateStatus, contractId, imageUrl } = initialValues;
   const fixedValues = {
     id,
     title,
     description,
-    attributes,
     price,
     amount,
     templateStatus,
-    erc998CollectionId,
+    contractId,
     imageUrl,
   };
 
@@ -44,16 +42,16 @@ export const Erc998TemplateEditDialog: FC<IErc998TemplateEditDialogProps> = prop
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <JsonInput name="attributes" />
-      <EthInput name="price" />
+      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
       <NumberInput name="amount" />
-      {id ? <SelectInput name="templateStatus" options={Erc998TemplateStatus} /> : null}
+      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
-        name="erc998CollectionId"
-        controller="erc998-collections"
+        name="contractId"
+        controller="contract"
         data={{
-          collectionType: [Erc998CollectionType.TOKEN],
+          tokenType: [TokenType.ERC998],
         }}
+        readOnly={!!id}
       />
       <AvatarInput name="imageUrl" />
     </FormDialog>

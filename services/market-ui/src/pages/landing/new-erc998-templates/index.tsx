@@ -5,20 +5,24 @@ import { Typography } from "@mui/material";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IPaginationResult } from "@gemunion/types-collection";
-import { IErc998Template } from "@framework/types";
+import { ITemplate, TokenType } from "@framework/types";
 
-import { MultiCarousel } from "./multi-carousel";
 import { useStyles } from "./styles";
+import { MultiCarousel } from "../multi-carousel";
+import { Erc998TemplateItem } from "../../erc998/template-list/item";
 
 export const NewErc998: FC = () => {
   const classes = useStyles();
 
-  const [templates, setTemplates] = useState<Array<IErc998Template>>([]);
+  const [templates, setTemplates] = useState<Array<ITemplate>>([]);
 
   const { fn, isLoading } = useApiCall(
     async api => {
       return api.fetchJson({
-        url: "/erc998-templates/new",
+        url: "/templates/new",
+        data: {
+          contractType: TokenType.ERC998,
+        },
       });
     },
     { success: false, error: false },
@@ -26,7 +30,7 @@ export const NewErc998: FC = () => {
 
   const fetchTokens = async (): Promise<void> => {
     return fn()
-      .then((json: IPaginationResult<IErc998Template>) => {
+      .then((json: IPaginationResult<ITemplate>) => {
         setTemplates(json.rows);
       })
       .catch(e => {
@@ -43,7 +47,7 @@ export const NewErc998: FC = () => {
       <Typography variant="h4" className={classes.title}>
         <FormattedMessage id="pages.landing.erc998-new" />
       </Typography>
-      <MultiCarousel template={templates} />
+      <MultiCarousel template={templates} component={Erc998TemplateItem} />
     </ProgressOverlay>
   );
 };

@@ -4,64 +4,49 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity >=0.8.13;
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
-import "@gemunion/contracts/contracts/ERC721/ERC721BaseUrl.sol";
-import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
-
-import "../interfaces/IERC721Random.sol";
 import "../../MOCKS/ChainLink/ERC721ChainLinkHH.sol";
 
-contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC721BaseUrl, GeneralizedCollection {
+import "../interfaces/IERC721Random.sol";
+import "../ERC721Graded.sol";
+
+contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721Graded {
   using Counters for Counters.Counter;
 
   struct Request {
-    address owner;
-    uint256 templateId;
-    uint256 dropboxId;
+    address account;
+    Asset item;
   }
 
-  event MintRandom(address to, uint256 tokenId, uint256 templateId, uint256 rarity, uint256 dropboxId);
-
   mapping(bytes32 => Request) internal _queue;
-
-  uint256 private _maxTemplateId = 0;
-
-  bytes32 public constant TEMPLATE_ID = keccak256("templateId");
-  bytes32 public constant RARITY = keccak256("rarity");
 
   constructor(
     string memory name,
     string memory symbol,
-    string memory baseTokenURI,
-    uint96 royalty
-  ) ERC721ACBER(name, symbol, baseTokenURI, royalty) {
-    // should start from 1
-    _tokenIdTracker.increment();
+    uint96 royalty,
+    string memory baseTokenURI
+  ) ERC721Graded(name, symbol, royalty, baseTokenURI) {
   }
 
-  function mintCommon(address to, uint256 templateId) public override onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
-    require(templateId != 0, "ERC721Random: wrong type");
-    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
-    tokenId = _tokenIdTracker.current();
+  function mintCommon(address to, Asset calldata item) public override(IERC721Simple, ERC721Graded) onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Random: wrong type");
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
+
+    upsertRecordField(tokenId, TEMPLATE_ID, item.tokenId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, 1);
 
-    safeMint(to);
+    _safeMint(to, tokenId);
   }
 
-  function mintRandom(
-    address to,
-    uint256 templateId,
-    uint256 dropboxId
-  ) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
-    require(templateId <= _maxTemplateId, "ERC721Random: wrong type");
-    _queue[getRandomNumber()] = Request(to, templateId, dropboxId);
+  function mintRandom(address to, Asset calldata item) external override onlyRole(MINTER_ROLE) {
+    require(item.tokenId != 0, "ERC721Random: wrong type");
+    _queue[getRandomNumber()] = Request(to, item);
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
@@ -69,13 +54,12 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
-    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    upsertRecordField(tokenId, TEMPLATE_ID, request.item.tokenId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, rarity);
 
-    emit MintRandom(request.owner, tokenId, request.templateId, rarity, request.dropboxId);
-
     delete _queue[requestId];
-    safeMint(request.owner);
+    safeMint(request.account);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {
@@ -94,21 +78,7 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721ACBER, ERC7
     return 1;
   }
 
-  function setMaxTemplateId(uint256 maxTemplateId) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _maxTemplateId = maxTemplateId;
-  }
-
-  function _baseURI() internal view virtual override(ERC721ACBER) returns (string memory) {
-    return _baseURI(_baseTokenURI);
-  }
-
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return
-    interfaceId == type(IERC721Random).interfaceId ||
-    super.supportsInterface(interfaceId);
-  }
-
-  receive() external payable {
-    revert();
+    return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }
 }

@@ -1,6 +1,6 @@
-import { utils, BigNumber } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
-export const baseTokenURI = "http://localhost/";
+export const baseTokenURI = "http://localhost:3011/metadata"; // no trailing slash
 export const tokenSymbol = "SYMBOL";
 export const tokenName = "Lorem ipsum...";
 export const tokenId = 1;
@@ -24,5 +24,21 @@ export const LINK_ADDR = "0x8D81A3DCd17030cD5F23Ac7370e4Efb10D2b3cA4";
 export const VRF_ADDR = "0xa722bdA6968F50778B973Ae2701e90200C564B49";
 // LINK_ADDR=0x5FbDB2315678afecb367f032d93F642f64180aa3
 // VRF_ADDR=0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0
-//LINK_ADDR=0x8D81A3DCd17030cD5F23Ac7370e4Efb10D2b3cA4
-//VRF_ADDR=0xa722bdA6968F50778B973Ae2701e90200C564B49
+// LINK_ADDR=0x8D81A3DCd17030cD5F23Ac7370e4Efb10D2b3cA4
+// VRF_ADDR=0xa722bdA6968F50778B973Ae2701e90200C564B49
+
+export const fakeAsset = {
+  tokenType: 2, // ERC721
+  token: constants.AddressZero,
+  tokenId,
+  amount,
+};
+
+export const externalId = 123;
+export const expiresAt = 0;
+
+export const params = {
+  nonce,
+  externalId,
+  expiresAt,
+};

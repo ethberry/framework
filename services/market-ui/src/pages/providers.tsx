@@ -12,7 +12,6 @@ import { WalletProvider } from "@gemunion/provider-wallet";
 import { PickerProvider } from "@gemunion/provider-picker";
 import { i18n } from "@framework/localization-market-ui";
 import { EnabledLanguages, ns } from "@framework/constants";
-import { SeaportProvider } from "../components/providers/seaport";
 
 export const Providers: FC = props => {
   const { children } = props;
@@ -26,9 +25,7 @@ export const Providers: FC = props => {
                 <SnackbarProvider>
                   <PopupProvider>
                     <WalletProvider>
-                      <SeaportProvider contractAddress={process.env.SEAPORT_ADDR}>
-                        <PickerProvider>{children}</PickerProvider>
-                      </SeaportProvider>
+                      <PickerProvider>{children}</PickerProvider>
                     </WalletProvider>
                   </PopupProvider>
                 </SnackbarProvider>

@@ -4,14 +4,10 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity >=0.8.13;
+pragma solidity ^0.8.9;
 
-import "./IERC721Simple.sol";
+import "./IERC721Graded.sol";
 
-interface IERC721Random is IERC721Simple {
-  function mintRandom(
-    address to,
-    uint256 templateId,
-    uint256 dropboxId
-  ) external;
+interface IERC721Random is IERC721Graded {
+  function mintRandom(address to, Asset calldata item) external;
 }

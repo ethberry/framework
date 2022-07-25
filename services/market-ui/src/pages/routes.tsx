@@ -10,18 +10,14 @@ import { Landing } from "./landing";
 import { Dashboard } from "./dashboard";
 import { Profile } from "./profile";
 
-import { erc20Routes } from "./erc20/routes";
 import { erc721Routes } from "./erc721/routes";
 import { erc998Routes } from "./erc998/routes";
 import { erc1155Routes } from "./erc1155/routes";
-import { stakingRoutes } from "./staking/routes";
+import { mechanicsRoutes } from "./mechanics/routes";
 
-import { Marketplace } from "./marketplace";
-import { Auctions } from "./auction";
-import { Craft } from "./craft";
-import { MyAssets } from "./personal/assets";
-import { MyAuctions } from "./personal/auction";
-import { MyWallet } from "./connect-wallet";
+import { Marketplace } from "./mechanics/marketplace";
+import { MyWallet } from "./my-wallet";
+import { Page } from "./page";
 
 const routes: Array<RouteObject> = [
   {
@@ -43,11 +39,10 @@ const routes: Array<RouteObject> = [
           { path: "/profile/:tab", element: <Profile /> },
         ],
       },
-      ...erc20Routes,
       ...erc721Routes,
       ...erc998Routes,
       ...erc1155Routes,
-      ...stakingRoutes,
+      ...mechanicsRoutes,
       {
         path: "/marketplace",
         children: [
@@ -56,37 +51,13 @@ const routes: Array<RouteObject> = [
         ],
       },
       {
-        path: "/auctions",
-        children: [
-          { index: true, element: <Auctions /> },
-          { path: "/auctions/:tab", element: <Auctions /> },
-        ],
-      },
-      {
-        path: "/my-assets",
-        element: <Protected />,
-        children: [
-          { index: true, element: <MyAssets /> },
-          { path: "/my-assets/:tab", element: <MyAssets /> },
-        ],
-      },
-      {
-        path: "/my-auctions",
-        element: <Protected />,
-        children: [{ index: true, element: <MyAuctions /> }],
-      },
-      {
         path: "/my-wallet",
         element: <Protected />,
         children: [{ index: true, element: <MyWallet /> }],
       },
       {
-        path: "/craft",
-        element: <Protected />,
-        children: [
-          { index: true, element: <Craft /> },
-          { path: "/craft/:tab", element: <Craft /> },
-        ],
+        path: "/pages/:slug",
+        element: <Page />,
       },
       {
         path: "/error/:error",

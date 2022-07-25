@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Savings, Storage } from "@mui/icons-material";
+import { Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,20 +15,12 @@ export const Erc20Sections: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc20-tokens">
+        <ListItem button component={RouterLink} to="/erc20-contracts">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc20.tokens" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/erc20-vesting">
-          <ListItemIcon>
-            <Savings />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc20.vesting" />
+            <FormattedMessage id="pages.dashboard.erc20.contracts" />
           </ListItemText>
         </ListItem>
       </List>

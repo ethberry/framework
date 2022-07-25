@@ -1,17 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-  Query,
-  UseInterceptors,
-} from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -24,12 +11,13 @@ import { ContractManagerService } from "./contract-manager.service";
 import {
   ContractManagerCreateDto,
   ContractManagerSearchDto,
-  Erc1155TokenDeployDto,
-  Erc20TokenDeployDto,
-  Erc20VestingDeployDto,
-  Erc721TokenDeployDto,
+  ContractManagerUpdateDto,
+  Erc1155ContractDeployDto,
+  Erc20ContractDeployDto,
+  Erc721ContractDeployDto,
+  Erc998ContractDeployDto,
+  VestingDeployDto,
 } from "./dto";
-import { IContractManagerUpdateDto } from "./interfaces";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
@@ -53,7 +41,7 @@ export class ContractManagerController {
   @Put("/:id")
   public update(
     @Param("id", ParseIntPipe) id: number,
-    @Body() dto: IContractManagerUpdateDto,
+    @Body() dto: ContractManagerUpdateDto,
   ): Promise<ContractManagerEntity | null> {
     return this.contractManagerService.update({ id }, dto);
   }
@@ -64,30 +52,29 @@ export class ContractManagerController {
     return this.contractManagerService.findOne({ id });
   }
 
-  // todo probably remove it
-  @Delete("/:id")
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.contractManagerService.delete({ id });
-  }
-
   @Post("/erc20-token")
-  public erc20Token(@Body() dto: Erc20TokenDeployDto): Promise<IServerSignature> {
+  public erc20Token(@Body() dto: Erc20ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc20Token(dto);
   }
 
-  @Post("/erc20-vesting")
-  public erc20Vesting(@Body() dto: Erc20VestingDeployDto): Promise<IServerSignature> {
-    return this.contractManagerSignService.erc20Vesting(dto);
-  }
-
   @Post("/erc721-token")
-  public erc721Token(@Body() dto: Erc721TokenDeployDto): Promise<IServerSignature> {
+  public erc721Token(@Body() dto: Erc721ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc721Token(dto);
   }
 
+  @Post("/erc998-token")
+  public erc998Token(@Body() dto: Erc998ContractDeployDto): Promise<IServerSignature> {
+    return this.contractManagerSignService.erc998Token(dto);
+  }
+
   @Post("/erc1155-token")
-  public erc1155Token(@Body() dto: Erc1155TokenDeployDto): Promise<IServerSignature> {
+  public erc1155Token(@Body() dto: Erc1155ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc1155Token(dto);
+  }
+
+  // MODULE:VESTING
+  @Post("/vesting")
+  public vsting(@Body() dto: VestingDeployDto): Promise<IServerSignature> {
+    return this.contractManagerSignService.vesting(dto);
   }
 }

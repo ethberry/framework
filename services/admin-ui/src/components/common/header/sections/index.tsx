@@ -55,6 +55,7 @@ export const Sections: FC = () => {
       <IconButton
         aria-owns={anchor ? "material-appbar" : undefined}
         aria-haspopup="true"
+        data-testid="OpenSiteMenuButton"
         onClick={handleMenuOpen}
         color="inherit"
       >

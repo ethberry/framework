@@ -1,15 +1,16 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ContractManagerEventType {
-  ERC20VestingDeployed = "ERC20VestingDeployed",
+  VestingDeployed = "VestingDeployed",
   ERC20TokenDeployed = "ERC20TokenDeployed",
   ERC721TokenDeployed = "ERC721TokenDeployed",
+  ERC998TokenDeployed = "ERC998TokenDeployed",
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
 }
 
-export interface IContractManagerERC20VestingDeployed {
+export interface IContractManagerVestingDeployed {
   addr: string;
-  beneficiary: string;
+  account: string;
   startTimestamp: string; // in seconds
   duration: string; // in seconds
   templateId: string;
@@ -32,6 +33,15 @@ export interface IContractManagerERC721TokenDeployed {
   templateId: string;
 }
 
+export interface IContractManagerERC998TokenDeployed {
+  addr: string;
+  name: string;
+  symbol: string;
+  baseTokenURI: string;
+  royalty: string;
+  templateId: string;
+}
+
 export interface IContractManagerERC1155TokenDeployed {
   addr: string;
   baseTokenURI: string;
@@ -39,9 +49,10 @@ export interface IContractManagerERC1155TokenDeployed {
 }
 
 export type TContractManagerEventData =
-  | IContractManagerERC20VestingDeployed
+  | IContractManagerVestingDeployed
   | IContractManagerERC20TokenDeployed
   | IContractManagerERC721TokenDeployed
+  | IContractManagerERC998TokenDeployed
   | IContractManagerERC1155TokenDeployed;
 
 export interface IContractManagerHistory extends IIdDateBase {

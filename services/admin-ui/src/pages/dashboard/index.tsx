@@ -8,8 +8,8 @@ import { Erc20Sections } from "./sections/erc20";
 import { Erc1155Section } from "./sections/erc1155";
 import { Erc721Section } from "./sections/erc721";
 import { Erc998Section } from "./sections/erc998";
-import { Seaport } from "./sections/seaport";
 import { Admin } from "./sections/admin";
+import { Mechanics } from "./sections/mechanics";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -26,7 +26,7 @@ export const Dashboard: FC = () => {
           <Erc1155Section />
         </Grid>
         <Grid item xs={6}>
-          <Seaport />
+          <Mechanics />
           <Admin />
         </Grid>
       </Grid>

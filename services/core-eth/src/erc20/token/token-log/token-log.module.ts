@@ -2,11 +2,10 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractType, Erc20TokenEventType } from "@framework/types";
+import { AccessControlEventType, AccessListEventType, ContractEventType, ContractType } from "@framework/types";
 
+import { ABI } from "./interfaces";
 import { Erc20LogService } from "./token-log.service";
-
-import { Erc20abi } from "./interfaces";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
 
@@ -26,12 +25,16 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.ERC20_TOKEN,
             contractAddress: erc20Contracts.address || [],
-            contractInterface: Erc20abi,
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
-              Erc20TokenEventType.Approval,
-              Erc20TokenEventType.Snapshot,
-              Erc20TokenEventType.Transfer,
+              ContractEventType.Approval,
+              ContractEventType.Snapshot,
+              ContractEventType.Transfer,
+              AccessListEventType.Blacklisted,
+              AccessListEventType.UnBlacklisted,
+              // AccessListEventType.Whitelisted,
+              // AccessListEventType.UnWhitelisted,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
               AccessControlEventType.RoleAdminChanged
@@ -53,6 +56,6 @@ export class Erc20TokenLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc20LogService.updateBlock();
+    return this.erc20LogService.updateBlock();
   }
 }

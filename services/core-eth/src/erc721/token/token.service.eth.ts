@@ -1,64 +1,81 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, constants } from "ethers";
+import { BigNumber, constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
-
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
-  Erc721TokenEventType,
-  Erc721TokenStatus,
-  IErc721AirdropRedeem,
-  IErc721DefaultRoyaltyInfo,
-  IErc721RandomRequest,
-  IErc721TokenApprove,
-  IErc721TokenApprovedForAll,
-  IErc721TokenMintRandom,
-  IErc721TokenRoyaltyInfo,
-  IErc721TokenTransfer,
-  TErc721TokenEventData,
+  ContractEventType,
+  IDefaultRoyaltyInfo,
+  IRandomRequest,
+  ITokenApprove,
+  ITokenApprovedForAll,
+  ITokenMintRandom,
+  ITokenRoyaltyInfo,
+  ITokenTransfer,
+  TContractEventData,
+  TokenAttributes,
   TokenRarity,
+  TokenStatus,
 } from "@framework/types";
 
-import { delay } from "../../common/utils";
-import { Erc721TemplateService } from "../template/template.service";
-import { Erc721CollectionService } from "../collection/collection.service";
-import { Erc721TokenHistoryService } from "./token-history/token-history.service";
-import { Erc721TokenService } from "./token.service";
+import { getMetadata } from "../../common/utils";
+import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
+import { ABI } from "./token-log/interfaces";
 
 @Injectable()
 export class Erc721TokenServiceEth {
-  private airdropAddr: string;
-  private itemsAddr: string;
-
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    @Inject(ETHERS_RPC)
+    private readonly jsonRpcProvider: providers.JsonRpcProvider,
     private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly erc721TokenService: Erc721TokenService,
-    private readonly erc721TemplateService: Erc721TemplateService,
-    private readonly erc721TokenHistoryService: Erc721TokenHistoryService,
-    private readonly erc721CollectionService: Erc721CollectionService,
-  ) {
-    this.airdropAddr = configService.get<string>("ERC721_AIRDROP_ADDR", "");
-    this.itemsAddr = configService.get<string>("ERC721_ITEM_ADDR", "");
-  }
+    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
+    private readonly balanceService: BalanceService,
+    private readonly contractHistoryService: ContractHistoryService,
+    private readonly contractService: ContractService,
+  ) {}
 
-  public async transfer(event: ILogEvent<IErc721TokenTransfer>, context: Log): Promise<void> {
+  public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
     const {
       args: { from, to, tokenId },
     } = event;
+    const { address } = context;
 
-    // Wait until Token will be created by Marketplace Redeem or Airdrop Redeem or MintRandom events
-    this.loggerService.log(
-      `Erc721Transfer@${context.address.toLowerCase()}: awaiting tokenId ${tokenId}`,
-      Erc721TokenServiceEth.name,
-    );
-    await delay(1618);
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
-    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+    // Mint token create
+    if (from === constants.AddressZero) {
+      const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
+      const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
+      const templateEntity = await this.templateService.findOne({ id: templateId });
+
+      if (!templateEntity) {
+        throw new NotFoundException("templateNotFound");
+      }
+
+      const tokenEntity = await this.tokenService.create({
+        tokenId,
+        attributes: JSON.stringify(attributes),
+        royalty: contractEntity.royalty,
+        templateId: templateEntity.id,
+      });
+
+      await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
+    }
+
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -67,140 +84,128 @@ export class Erc721TokenServiceEth {
     await this.updateHistory(event, context, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
-      erc721TokenEntity.erc721Template
-        ? (erc721TokenEntity.erc721Template.instanceCount += 1)
-        : (erc721TokenEntity.erc721Dropbox.erc721Template.instanceCount += 1);
-      erc721TokenEntity.tokenStatus = Erc721TokenStatus.MINTED;
-    }
-
-    if (to === constants.AddressZero) {
+      erc721TokenEntity.template.amount += 1;
+      // erc721TokenEntity.erc721Template
+      //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
+      //   : (erc721TokenEntity.erc721Lootbox.erc721Template.instanceCount += 1);
+      erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
+    } else if (to === constants.AddressZero) {
       // erc721TokenEntity.erc721Template.instanceCount -= 1;
-      erc721TokenEntity.tokenStatus = Erc721TokenStatus.BURNED;
+      erc721TokenEntity.tokenStatus = TokenStatus.BURNED;
+    } else {
+      // change token's owner
+      erc721TokenEntity.balance[0].account = to.toLowerCase();
     }
-
-    erc721TokenEntity.owner = to;
 
     await erc721TokenEntity.save();
 
     // need to save updates in nested entities too
-    erc721TokenEntity.erc721Template
-      ? await erc721TokenEntity.erc721Template.save()
-      : await erc721TokenEntity.erc721Dropbox.erc721Template.save();
+    await erc721TokenEntity.template.save();
+    await erc721TokenEntity.balance[0].save();
+    // erc721TokenEntity.erc721Template
+
+    //   ? await erc721TokenEntity.template.save()
+    //   : await erc721TokenEntity.lootbox.template.save();
   }
 
-  public async approval(event: ILogEvent<IErc721TokenApprove>, context: Log): Promise<void> {
+  public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
     const {
       args: { tokenId },
     } = event;
 
-    const erc721TokenEntity = await this.erc721TokenService.getToken(tokenId, context.address.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
 
-    if (!erc721TokenEntity) {
+    if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, tokenEntity.id);
   }
 
-  public async approvalForAll(event: ILogEvent<IErc721TokenApprovedForAll>, context: Log): Promise<void> {
+  public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async defaultRoyaltyInfo(event: ILogEvent<IErc721DefaultRoyaltyInfo>, context: Log): Promise<void> {
+  public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfo>, context: Log): Promise<void> {
     const {
       args: { royaltyNumerator },
     } = event;
 
-    const erc721CollectionEntity = await this.erc721CollectionService.findOne({
+    const contractEntity = await this.contractService.findOne({
       address: context.address.toLowerCase(),
     });
 
-    if (!erc721CollectionEntity) {
-      throw new NotFoundException("collectionNotFound");
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
     }
 
-    erc721CollectionEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
+    contractEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
 
-    await erc721CollectionEntity.save();
+    await contractEntity.save();
 
     await this.updateHistory(event, context);
   }
 
-  public async tokenRoyaltyInfo(event: ILogEvent<IErc721TokenRoyaltyInfo>, context: Log): Promise<void> {
+  public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfo>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async redeem(event: ILogEvent<IErc721AirdropRedeem>, context: Log): Promise<void> {
+  public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
-      args: { from, tokenId, templateId },
+      args: { to, tokenId, templateId, rarity, lootboxId },
     } = event;
 
-    const erc721TemplateEntity = await this.erc721TemplateService.findOne({ id: ~~templateId });
+    const templateEntity = await this.templateService.findOne({ id: ~~templateId });
 
-    if (!erc721TemplateEntity) {
+    if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }
 
-    const erc721TokenEntity = await this.erc721TokenService.create({
-      tokenId,
-      attributes: erc721TemplateEntity.attributes,
-      owner: from.toLowerCase(),
-      rarity: TokenRarity.UNKNOWN,
-      erc721Template: erc721TemplateEntity,
-    });
+    let lootboxEntity; // if minted as Mechanics reward
+    if (~~lootboxId !== 0) {
+      lootboxEntity = await this.tokenService.findOne({ id: ~~lootboxId });
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
-  }
-
-  public async mintRandom(event: ILogEvent<IErc721TokenMintRandom>, context: Log): Promise<void> {
-    const {
-      args: { to, tokenId, templateId, rarity, dropboxId },
-    } = event;
-
-    const erc721TemplateEntity = await this.erc721TemplateService.findOne({ id: ~~templateId });
-
-    if (!erc721TemplateEntity) {
-      throw new NotFoundException("templateNotFound");
-    }
-
-    let erc721DropboxEntity; // if minted as Staking reward
-    if (~~dropboxId !== 0) {
-      erc721DropboxEntity = await this.erc721TokenService.findOne({ id: ~~dropboxId });
-
-      if (!erc721DropboxEntity) {
-        throw new NotFoundException("dropboxNotFound");
+      if (!lootboxEntity) {
+        throw new NotFoundException("lootboxNotFound");
       }
     }
 
-    const erc721TokenEntity = await this.erc721TokenService.create({
+    const tokenEntity = await this.tokenService.create({
       tokenId,
-      attributes: erc721TemplateEntity.attributes,
-      owner: to.toLowerCase(),
-      erc721Template: erc721TemplateEntity,
-      erc721Token: erc721DropboxEntity,
-      rarity: Object.values(TokenRarity)[~~rarity],
+      attributes: JSON.stringify({
+        rarity: Object.values(TokenRarity)[~~rarity],
+      }),
+      royalty: templateEntity.contract.royalty,
+      template: templateEntity,
+      // erc721Token: lootboxEntity,
     });
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.balanceService.create({
+      account: to.toLowerCase(),
+      amount: "1",
+      tokenId: tokenEntity.id,
+    });
+
+    await this.updateHistory(event, context, tokenEntity.id);
   }
 
-  public async randomRequest(event: ILogEvent<IErc721RandomRequest>, context: Log): Promise<void> {
+  public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  private async updateHistory(event: ILogEvent<TErc721TokenEventData>, context: Log, erc721TokenId?: number) {
+  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log, erc721TokenId?: number) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc721TokenServiceEth.name);
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    await this.erc721TokenHistoryService.create({
+    await this.contractHistoryService.create({
       address: address.toLowerCase(),
       transactionHash: transactionHash.toLowerCase(),
-      eventType: name as Erc721TokenEventType,
+      eventType: name as ContractEventType,
       eventData: args,
       // ApprovedForAll has no tokenId
-      erc721TokenId: erc721TokenId || null,
+      tokenId: erc721TokenId || null,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

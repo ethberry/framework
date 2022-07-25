@@ -4,13 +4,8 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { Erc998TemplateService } from "./template.service";
-import { Erc998TemplateEntity } from "./template.entity";
-import {
-  Erc998TemplateAutocompleteDto,
-  Erc998TemplateCreateDto,
-  Erc998TemplateSearchDto,
-  Erc998TemplateUpdateDto,
-} from "./dto";
+import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import { TemplateCreateDto, TemplateSearchDto, TemplateUpdateDto } from "../../blockchain/hierarchy/template/dto";
 
 @ApiBearerAuth()
 @Controller("/erc998-templates")
@@ -19,36 +14,28 @@ export class Erc998TemplateController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc998TemplateSearchDto): Promise<[Array<Erc998TemplateEntity>, number]> {
+  public search(@Query() dto: TemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
     return this.erc998TemplateService.search(dto);
   }
 
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc998TemplateAutocompleteDto): Promise<Array<Erc998TemplateEntity>> {
-    return this.erc998TemplateService.autocomplete(dto);
-  }
-
   @Put("/:id")
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() dto: Erc998TemplateUpdateDto,
-  ): Promise<Erc998TemplateEntity> {
+  public update(@Param("id", ParseIntPipe) id: number, @Body() dto: TemplateUpdateDto): Promise<TemplateEntity> {
     return this.erc998TemplateService.update({ id }, dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<Erc998TemplateEntity | null> {
-    return this.erc998TemplateService.findOne({ id });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {
+    return this.erc998TemplateService.findOneWithRelations({ id });
   }
 
   @Post("/")
-  public create(@Body() dto: Erc998TemplateCreateDto): Promise<Erc998TemplateEntity> {
-    return this.erc998TemplateService.create(dto);
+  public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
+    return this.erc998TemplateService.createTemplate(dto);
   }
 
   @Delete("/:id")
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<Erc998TemplateEntity> {
+  public async delete(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity> {
     return this.erc998TemplateService.delete({ id });
   }
 }

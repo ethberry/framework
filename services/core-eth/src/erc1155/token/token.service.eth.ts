@@ -4,18 +4,18 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  Erc1155TokenEventType,
+  ContractEventType,
   IErc1155TokenApprovalForAll,
   IErc1155TokenTransferBatch,
   IErc1155TokenTransferSingle,
   IErc1155TokenUri,
-  TErc1155TokenEventData,
+  TContractEventData,
 } from "@framework/types";
 
-import { Erc1155TokenHistoryService } from "./token-history/token-history.service";
-import { Erc1155BalanceService } from "../balance/balance.service";
-import { Erc1155TokenService } from "./token.service";
+import { ContractHistoryService } from "../../blockchain/contract-history/contract-history.service";
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
+import { TokenService } from "../../blockchain/hierarchy/token/token.service";
+import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth {
@@ -23,9 +23,9 @@ export class Erc1155TokenServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly contractManagerService: ContractManagerService,
-    private readonly erc1155TokenHistoryService: Erc1155TokenHistoryService,
-    private readonly erc1155BalanceService: Erc1155BalanceService,
-    private readonly erc1155TokenService: Erc1155TokenService,
+    private readonly contractHistoryService: ContractHistoryService,
+    private readonly balanceService: BalanceService,
+    private readonly tokenService: TokenService,
   ) {}
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingle>, context: Log): Promise<void> {
@@ -35,7 +35,7 @@ export class Erc1155TokenServiceEth {
 
     await this.updateHistory(event, context);
 
-    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), id, ~~value);
+    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), id, value);
   }
 
   public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatch>, context: Log): Promise<void> {
@@ -52,7 +52,7 @@ export class Erc1155TokenServiceEth {
           to.toLowerCase(),
           context.address.toLowerCase(),
           tokenId.toString(),
-          ~~values[i],
+          values[i],
         ),
       ),
     );
@@ -66,34 +66,34 @@ export class Erc1155TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: number) {
-    const erc1155TokenEntity = await this.erc1155TokenService.getToken(tokenId, address);
+  private async updateBalances(from: string, to: string, address: string, tokenId: string, amount: string) {
+    const erc1155TokenEntity = await this.tokenService.getToken(tokenId, address);
 
     if (!erc1155TokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
     if (from !== constants.AddressZero) {
-      erc1155TokenEntity.instanceCount += amount;
-      await this.erc1155BalanceService.decrement(erc1155TokenEntity.id, from, amount);
+      erc1155TokenEntity.template.amount += ~~amount;
+      await this.balanceService.decrement(erc1155TokenEntity.id, from, amount);
     }
 
     if (to !== constants.AddressZero) {
-      // erc1155TokenEntity.instanceCount -= amount;
-      await this.erc1155BalanceService.increment(erc1155TokenEntity.id, to, amount);
+      // erc1155TokenEntity.instanceCount -= ~~amount;
+      await this.balanceService.increment(erc1155TokenEntity.id, to, amount);
     }
   }
 
-  private async updateHistory(event: ILogEvent<TErc1155TokenEventData>, context: Log) {
+  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), Erc1155TokenServiceEth.name);
 
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
-    await this.erc1155TokenHistoryService.create({
+    await this.contractHistoryService.create({
       address: address.toLowerCase(),
       transactionHash: transactionHash.toLowerCase(),
-      eventType: name as Erc1155TokenEventType,
+      eventType: name as ContractEventType,
       eventData: args,
     });
 

@@ -28,30 +28,31 @@
     }
   },
   "dialogs": {
+    "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
     "create": "Create",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
-    "renounce": "Renounce role",
-    "revoke": "Revoke role",
-    "view": "View"
+    "grantRole": "Grant role",
+    "mintToken": "Mint tokens",
+    "renounceRole": "Renounce role",
+    "revokeRole": "Revoke role",
+    "unBlacklist": "Remove from blacklist",
+    "unWhitelist": "Remove from whitelist",
+    "view": "View",
+    "whitelist": "Add to whitelist"
   },
   "enums": {
-    "airdropStatus": {
+    "claimStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
-    "collectionStatus": {
+    "contractStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
-    },
-    "collectionType": {
-      "AIRDROP": "Airdrop",
-      "DROPBOX": "Dropbox",
-      "TOKEN": "Token"
     },
     "contractTemplate": {
       "BLACKLIST": "Blacklist",
@@ -59,21 +60,36 @@
       "EXTERNAL": "External",
       "GRADED": "Graded",
       "LINEAR": "Linear",
+      "LOOTBOX": "Lootbox",
       "NATIVE": "Native",
       "RANDOM": "Random",
       "SIMPLE": "Simple"
     },
-    "dropboxStatus": {
+    "craftStatus": {
       "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
+      "INACTIVE": "Inactive",
+      "NEW": "New"
     },
     "emailType": {
       "DUMMY": "Test email"
+    },
+    "gradeStrategy": {
+      "EXPONENTIAL": "Exponential",
+      "FLAT": "Flat",
+      "LINEAR": "Linear"
     },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "lootboxStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "pageStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
     },
     "rarity": {
       "COMMON": "Common",
@@ -82,11 +98,6 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon",
       "UNKNOWN": "Unknown"
-    },
-    "recipeStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -117,7 +128,9 @@
       "ERC1155": "ERC1155",
       "ERC20": "ERC20",
       "ERC721": "ERC721",
+      "ERC721D": "ERC721D",
       "ERC998": "ERC998",
+      "ERC998D": "ERC998D",
       "NATIVE": "Native"
     },
     "userRoles": {
@@ -128,7 +141,7 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
-    "vestingTemplate": {
+    "vestingContractTemplate": {
       "CLIFF": "CLIFF",
       "GRADED": "GRADED",
       "LINEAR": "LINEAR"
@@ -145,6 +158,7 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
+      "blacklist": "Blacklist",
       "cancel": "Cancel",
       "create": "Create",
       "delete": "Delete",
@@ -159,6 +173,7 @@
       "login": "Login",
       "logout": "Logout",
       "mint": "Mint",
+      "mintToken": "Mint Tokens",
       "ok": "Ok",
       "reject": "Reject",
       "renounceRole": "Renounce Role",
@@ -170,6 +185,7 @@
       "signup": "Sign up",
       "snapshot": "Snapshot",
       "submit": "Submit",
+      "unblacklist": "Un blacklist",
       "upload": "Upload"
     },
     "hints": {
@@ -178,64 +194,67 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "VestingContractTemplate": "Template",
+      "account": "Account",
       "address": "Address",
-      "airdropStatus": "Status",
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
-      "beneficiary": "Beneficiary",
       "cap": "Cap",
+      "claimStatus": "Status",
       "collection": "Collection",
-      "collectionStatus": "Status",
       "collectionType": "Type",
       "comment": "Comment",
       "confirm": "Confirm",
+      "contract": "Contract",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
+      "contractStatus": "Status",
       "contractTemplate": "Template",
+      "craftStatus": "Status",
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "dateTime": "Date time",
+      "decimals": "Decimals",
+      "deposit": "Deposit",
       "description": "Description",
       "displayName": "Display name",
-      "dropboxStatus": "Status",
       "duration": "Duration",
       "email": "Email",
-      "erc1155CollectionId": "Collections",
-      "erc1155CollectionIds": "Collections",
-      "erc1155TokenId": "Token",
-      "erc1155TokenIds": "Token",
-      "erc20TokenId": "Token",
-      "erc20TokenIds": "Token",
-      "erc721CollectionId": "Collections",
-      "erc721CollectionIds": "Collections",
-      "erc721DropboxId": "Dropbox",
-      "erc721TemplateId": "Template",
-      "erc721TemplateIds": "Template",
-      "erc721TokenId": "Token",
-      "erc721TokenIds": "Token",
+      "gradeStrategy": "Grade strategy",
+      "growthRate": "Growth rate",
       "imageUrl": "Avatar",
       "ingredients": "Ingredients",
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "lootboxStatus": "Status",
       "name": "Name",
       "owner": "Owner",
+      "pageStatus": "Status",
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
       "random": "Random",
       "rarity": "Rarity",
-      "recipeStatus": "Status",
+      "recipient": "Recipient",
       "recurrent": "Is recurrent?",
+      "reward": "Reward",
       "role": "Role",
       "royalty": "Royalty",
+      "slug": "Slug",
+      "stakeStatus": "Status",
       "stakingStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
+      "templateId": "Template",
+      "templateIds": "Templates",
       "templateStatus": "Status",
       "title": "Title",
       "token": "Token",
       "tokenId": "Token",
+      "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
       "type": "Type",
@@ -245,48 +264,32 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "vestingTemplate": "Template",
       "year": "Year"
     },
     "placeholders": {
       "DUMMY": "Dummy",
+      "account": "0x...",
       "address": "0x...",
       "amount": "10",
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
-      "beneficiary": "0x...",
       "cap": "10",
       "collection": "Collection",
       "collectionId": "Collection",
       "collectionIds": "Collection",
       "comment": "Fraud",
       "confirm": "******",
+      "contract": "Contract",
+      "contractId": "Contract",
+      "contractIds": "Contracts",
       "createdAt": "now",
+      "decimals": "18",
       "definition": "10",
       "description": "Description",
       "displayName": "Gordon Freeman",
       "duration": "30",
       "email": "me@google.com",
-      "erc1155CollectionId": "Collections",
-      "erc1155CollectionIds": "Collections",
-      "erc1155TokenId": "Token",
-      "erc1155TokenIds": "Token",
-      "erc20TokenId": "Token",
-      "erc20TokenIds": "Token",
-      "erc721CollectionId": "Collections",
-      "erc721CollectionIds": "Collections",
-      "erc721DropboxId": "Dropbox",
-      "erc721TemplateId": "Template",
-      "erc721TemplateIds": "Template",
-      "erc721TokenId": "Token",
-      "erc721TokenIds": "Token",
-      "erc998CollectionId": "Collections",
-      "erc998CollectionIds": "Collections",
-      "erc998DropboxId": "Dropbox",
-      "erc998TemplateId": "Template",
-      "erc998TemplateIds": "Template",
-      "erc998TokenId": "Token",
-      "erc998TokenIds": "Token",
+      "growthRate": "2",
       "item": "Bottle of water",
       "name": "Pink dust",
       "number": "100500",
@@ -297,13 +300,19 @@
       "priceCorrection": "0",
       "query": "Search...",
       "rarity": "Legendary",
+      "recipient": "Recipient",
       "royalty": "1",
       "search": "Search...",
+      "slug": "terms-and-conditions",
+      "stakingStatus": "Status",
       "symbol": "XXX",
+      "templateId": "Template",
+      "templateIds": "Template",
       "text": "qwerty",
       "title": "Title",
       "token": "Bottle of water",
-      "tokenId": "Bottle of water",
+      "tokenId": "Token",
+      "tokenIds": "Token",
       "tokenStatus": "Status",
       "url": "https://youtube.com",
       "userId": "Gordon Freeman",
@@ -341,95 +350,73 @@
     "blockchain": {
       "title": "Blockchain Settings"
     },
+    "claims": {
+      "defaultItemTitle": "Claim",
+      "title": "Claim"
+    },
+    "craft": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Craft recipes",
+      "upload": "Upload rule"
+    },
     "dashboard": {
       "admin": {
         "emails": "Emails",
+        "pages": "Pages",
         "settings": "Settings",
         "title": "Admin",
         "users": "Users"
       },
-      "blockchain": {
-        "seaport": "Seaport settings",
-        "staking": "Staking",
-        "title": "Blockchain"
-      },
       "erc1155": {
-        "collections": "ERC1155 Collections",
-        "recipes": "ERC1155 Recipes",
-        "title": "ERC1155",
-        "tokens": "ERC1155 Tokens"
+        "contracts": "ERC1155 Contracts",
+        "templates": "ERC1155 Templates",
+        "title": "ERC1155"
       },
       "erc20": {
-        "title": "ERC20",
-        "tokens": "ERC20 Tokens",
-        "vesting": "ERC20 Vesting"
+        "contracts": "ERC20 Contracts",
+        "title": "ERC20"
       },
       "erc721": {
-        "airdrop": "ERC721 Airdrop",
-        "collections": "ERC721 Collections",
-        "dropbox": "ERC721 Dropbox",
-        "recipes": "ERC721 Recipes",
+        "contracts": "ERC721 Contracts",
         "templates": "ERC721 Templates",
         "title": "ERC721",
         "tokens": "ERC721 Tokens"
       },
       "erc998": {
-        "airdrop": "ERC998 Airdrop",
-        "collections": "ERC998 Collections",
-        "dropbox": "ERC998 Dropbox",
-        "recipes": "ERC998 Recipes",
+        "contracts": "ERC998 Contracts",
         "templates": "ERC998 Templates",
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
+      },
+      "mechanics": {
+        "claims": "Claims",
+        "craft": "Craft",
+        "grade": "Grade",
+        "lootboxes": "Lootboxes",
+        "stakes": "Stakes",
+        "staking-rules": "Staking Rules",
+        "title": "Mechanics",
+        "vesting": "Vesting"
       },
       "title": "Dashboard"
     },
     "emails": {
       "title": "Emails"
     },
-    "erc1155-collections": {
-      "title": "ERC1155 Collections"
+    "erc1155-contracts": {
+      "title": "ERC1155 Contracts"
     },
-    "erc1155-recipes": {
-      "activate": "Activate recipe",
-      "deactivate": "Deactivate recipes",
-      "title": "ERC1155 Recipes",
-      "upload": "Upload recipe"
+    "erc1155-templates": {
+      "title": "ERC1155 Templates"
     },
-    "erc1155-tokens": {
-      "title": "ERC1155 Tokens"
-    },
-    "erc20-tokens": {
+    "erc20-contracts": {
       "snapshot": "Make snapshot",
-      "title": "ERC20 Tokens"
+      "title": "ERC20 Contracts"
     },
-    "erc20-vesting": {
-      "title": "ERC20 Vesting",
-      "view": {
-        "address": "Address",
-        "beneficiary": "Beneficiary",
-        "contractTemplate": "Template",
-        "duration": "Duration",
-        "finish": "Finish",
-        "startTimestamp": "Start time"
-      }
-    },
-    "erc721-airdrops": {
-      "defaultItemTitle": "Airdrop",
-      "title": "ERC721 Airdrop"
-    },
-    "erc721-collections": {
+    "erc721-contracts": {
       "royalty": "Royalty",
-      "title": "ERC721 Collections"
-    },
-    "erc721-dropboxes": {
-      "title": "ERC721 Dropbox"
-    },
-    "erc721-recipes": {
-      "activate": "Activate recipe",
-      "deactivate": "Deactivate recipes",
-      "title": "ERC721 Recipes",
-      "upload": "Upload recipe"
+      "title": "ERC721 Contracts"
     },
     "erc721-templates": {
       "title": "ERC721 Templates"
@@ -443,22 +430,9 @@
         "title": "Title"
       }
     },
-    "erc998-airdrops": {
-      "defaultItemTitle": "Airdrop",
-      "title": "ERC998 Airdrop"
-    },
-    "erc998-collections": {
+    "erc998-contracts": {
       "royalty": "Royalty",
-      "title": "ERC998 Collections"
-    },
-    "erc998-dropboxes": {
-      "title": "ERC998 Dropbox"
-    },
-    "erc998-recipes": {
-      "activate": "Activate recipe",
-      "deactivate": "Deactivate recipes",
-      "title": "ERC998 Recipes",
-      "upload": "Upload recipe"
+      "title": "ERC998 Contracts"
     },
     "erc998-templates": {
       "title": "ERC998 Templates"
@@ -472,18 +446,21 @@
         "title": "Title"
       }
     },
+    "grades": {
+      "title": "Grade Rules"
+    },
     "guest": {
       "forgotPassword": "Forgot password",
       "login": "Login"
     },
+    "lootboxes": {
+      "title": "Lootboxes"
+    },
+    "pages": {
+      "title": "Pages"
+    },
     "profile": {
       "title": "Profile"
-    },
-    "recipes": {
-      "title": "Craft"
-    },
-    "seaport": {
-      "title": "Seaport"
     },
     "settings": {
       "title": "Settings"
@@ -491,14 +468,32 @@
     "staking": {
       "title": "Staking"
     },
+    "staking-rules": {
+      "activate": "Activate rule",
+      "deactivate": "Deactivate rule",
+      "title": "Staking Rules",
+      "upload": "Upload Rule"
+    },
     "users": {
       "title": "Users"
+    },
+    "vesting": {
+      "title": "Vesting",
+      "view": {
+        "account": "Account",
+        "address": "Address",
+        "contractTemplate": "Template",
+        "duration": "Duration",
+        "finish": "Finish",
+        "startTimestamp": "Start time"
+      }
     }
   },
   "snackbar": {
     "active": "Successfully activated",
     "approved": "Successfully approved",
-    "collectionNotFound": "Collection not found",
+    "blockchainError": "Blockchain error",
+    "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",
     "deleted": "Successfully deleted",
@@ -523,6 +518,7 @@
     "registered": "Registration successful, please verify your email to proceed",
     "saved": "Successfully saved",
     "success": "Success",
+    "templateNotFound": "Template not found",
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",

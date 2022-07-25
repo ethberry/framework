@@ -10,7 +10,6 @@ cp -rf $PWD/services/mobile-api/.env.sample $PWD/services/mobile-api/.env.test
 cp -rf $PWD/services/market-api/.env.sample $PWD/services/market-api/.env.test
 cp -rf $PWD/services/market-ui/.env.sample $PWD/services/market-ui/.env.test
 cp -rf $PWD/services/core-eth/.env.sample $PWD/services/core-eth/.env.test
-cp -rf $PWD/services/seaport-eth/.env.sample $PWD/services/seaport-eth/.env.test
 cp -rf $PWD/microservices/eml/.env.sample $PWD/microservices/eml/.env.test
 cp -rf $PWD/microservices/game/.env.sample $PWD/microservices/game/.env.test
 cp -rf $PWD/microservices/json/.env.sample $PWD/microservices/json/.env.test

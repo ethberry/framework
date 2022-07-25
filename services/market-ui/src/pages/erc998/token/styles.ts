@@ -7,5 +7,5 @@ export const useStyles = makeStyles<Theme>(
       padding: theme.spacing(2),
     },
   }),
-  { name: "Token" },
+  { name: "Erc998Token" },
 );

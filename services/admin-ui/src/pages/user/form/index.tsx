@@ -36,7 +36,7 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
         </Grid>
       </Grid>
       <Collapse in={open}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <SelectInput multiple name="userStatus" options={UserStatus} />
           </Grid>

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -15,12 +15,14 @@ export interface IErc20TokenSnapshotMenuItemProps {
 export const IErc20TokenSnapshotMenuItem: FC<IErc20TokenSnapshotMenuItemProps> = props => {
   const { address } = props;
 
-  const { library } = useWeb3React();
-
-  const handleSnapshot = useMetamask(() => {
-    const contract = new Contract(address, ERC20SimpleSol.abi, library.getSigner());
+  const metaFn = useMetamask((web3Context: Web3ContextType) => {
+    const contract = new Contract(address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
     return contract.snapshot() as Promise<void>;
   });
+
+  const handleSnapshot = async () => {
+    await metaFn();
+  };
 
   return (
     <MenuItem onClick={handleSnapshot}>

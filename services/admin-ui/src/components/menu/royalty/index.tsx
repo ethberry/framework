@@ -3,24 +3,22 @@ import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { useWeb3React } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import IERC721RoyaltySol from "@framework/core-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
 
-import { Erc721CollectionRoyaltyEditDialog, IRoyaltyDto } from "./edit";
+import { Erc721ContractRoyaltyEditDialog, IRoyaltyDto } from "./edit";
 
 export interface IErc721CollectionRoyaltyMenuItemProps {
   address: string;
   royalty: number;
 }
 
-export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemProps> = props => {
+export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemProps> = props => {
   const { address, royalty } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
-
-  const { library, account } = useWeb3React();
 
   const handleRoyalty = (): void => {
     setIsRoyaltyDialogOpen(true);
@@ -30,9 +28,9 @@ export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuIte
     setIsRoyaltyDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IRoyaltyDto) => {
-    const contract = new Contract(address, IERC721RoyaltySol.abi, library.getSigner());
-    return contract.setDefaultRoyalty(account, values.royalty) as Promise<void>;
+  const meta = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
+    const contract = new Contract(address, IERC721RoyaltySol.abi, web3Context.provider?.getSigner());
+    return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 
   const handleRoyaltyConfirmed = async (values: IRoyaltyDto): Promise<void> => {
@@ -51,7 +49,7 @@ export const Erc721CollectionRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuIte
           <FormattedMessage id="form.buttons.royalty" />
         </Typography>
       </MenuItem>
-      <Erc721CollectionRoyaltyEditDialog
+      <Erc721ContractRoyaltyEditDialog
         onCancel={handleRoyaltyCancel}
         onConfirm={handleRoyaltyConfirmed}
         open={isRoyaltyDialogOpen}

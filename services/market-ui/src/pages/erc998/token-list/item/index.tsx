@@ -1,19 +1,19 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { IErc998Token } from "@framework/types";
+import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { Erc998TokenAuctionButton } from "../../../../components/buttons";
-import { RarityBadge } from "./badge";
+import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
+import { RarityBadge } from "../../../../components/common/badge";
 
-interface IErc998TokenProps {
-  token: IErc998Token;
+interface ITokenProps {
+  token: IToken;
 }
 
-export const Erc998Token: FC<IErc998TokenProps> = props => {
+export const Erc998Token: FC<ITokenProps> = props => {
   const { token } = props;
 
   const classes = useStyles(token);
@@ -22,20 +22,19 @@ export const Erc998Token: FC<IErc998TokenProps> = props => {
     <Card>
       <CardActionArea component={RouterLink} to={`/erc998-tokens/${token.id}`}>
         <RarityBadge token={token} />
-        <CardMedia className={classes.media} image={token.erc998Template!.imageUrl} />
+        <CardHeader title={token.template!.title} />
+        <CardMedia className={classes.media} image={token.template!.imageUrl} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {token.erc998Template!.title} #{token.tokenId}
-          </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={token.erc998Template!.description} />
+            <RichTextDisplay data={token.template!.description} />
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <Erc998TokenAuctionButton token={token} />
+            <TokenSellButton token={token} />
+            <UpgradeButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

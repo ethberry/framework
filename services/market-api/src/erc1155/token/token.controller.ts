@@ -1,31 +1,33 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { Erc1155TokenService } from "./token.service";
-import { Erc1155TokenEntity } from "./token.entity";
-import { Erc1155TokenSearchDto } from "./dto";
+import { UserEntity } from "../../user/user.entity";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TokenAutocompleteDto } from "../../blockchain/hierarchy/token/dto/autocomplete";
+import { TokenSearchDto } from "../../blockchain/hierarchy/token/dto";
 
-@Public()
+@ApiBearerAuth()
 @Controller("/erc1155-tokens")
 export class Erc1155TokenController {
   constructor(private readonly erc1155TokenService: Erc1155TokenService) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: Erc1155TokenSearchDto): Promise<[Array<Erc1155TokenEntity>, number]> {
-    return this.erc1155TokenService.search(dto);
+  public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+    return this.erc1155TokenService.search(dto, userEntity);
   }
 
-  @Get("/new")
-  @UseInterceptors(PaginationInterceptor)
-  public getNewTemplates(): Promise<[Array<Erc1155TokenEntity>, number]> {
-    return this.erc1155TokenService.getNewTokens();
+  @Get("/autocomplete")
+  public autocomplete(@Query() dto: TokenAutocompleteDto): Promise<Array<TokenEntity>> {
+    return this.erc1155TokenService.autocomplete(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<Erc1155TokenEntity | null> {
-    return this.erc1155TokenService.findOne({ id });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
+    return this.erc1155TokenService.findOneWithRelations({ id });
   }
 }

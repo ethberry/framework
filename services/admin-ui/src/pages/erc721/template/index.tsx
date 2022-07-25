@@ -11,16 +11,17 @@ import {
   Pagination,
 } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
-import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { Erc721TemplateStatus, IErc721Template, IErc721TemplateSearchDto } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
-import { Erc721TemplateSearchForm } from "./form";
+import { emptyPrice } from "../../../components/inputs/empty-price";
+import { TemplateSearchForm } from "../../../components/forms/template-search";
+import { cleanUpAsset } from "../../../utils/money";
 
 export const Erc721Template: FC = () => {
   const {
@@ -42,31 +43,38 @@ export const Erc721Template: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IErc721Template, IErc721TemplateSearchDto>({
+  } = useCollection<ITemplate, ITemplateSearchDto>({
     baseUrl: "/erc721-templates",
     empty: {
       title: "",
       description: emptyStateString,
-      price: constants.WeiPerEther.toString(),
-      attributes: "{}",
-      amount: 0,
-      erc721CollectionId: 3,
+      price: emptyPrice,
+      amount: "0",
+      contractId: 3,
     },
     search: {
       query: "",
-      templateStatus: [Erc721TemplateStatus.ACTIVE],
-      erc721CollectionIds: [],
+      templateStatus: [TemplateStatus.ACTIVE],
+      contractIds: [],
     },
-    filter: ({ title, description, attributes, price, amount, imageUrl, templateStatus, erc721CollectionId }) => ({
-      title,
-      description,
-      attributes,
-      price,
-      amount,
-      imageUrl,
-      templateStatus,
-      erc721CollectionId,
-    }),
+    filter: ({ id, title, description, price, amount, imageUrl, templateStatus, contractId }) =>
+      id
+        ? {
+            title,
+            description,
+            price: cleanUpAsset(price),
+            amount,
+            imageUrl,
+            templateStatus,
+          }
+        : {
+            title,
+            description,
+            price: cleanUpAsset(price),
+            amount,
+            imageUrl,
+            contractId,
+          },
   });
 
   return (
@@ -74,7 +82,7 @@ export const Erc721Template: FC = () => {
       <Breadcrumbs path={["dashboard", "erc721-templates"]} />
 
       <PageHeader message="pages.erc721-templates.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
@@ -85,20 +93,26 @@ export const Erc721Template: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc721TemplateSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <TemplateSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((template, i) => (
             <ListItem key={i}>
-              <ListItemText>{template.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{template.title}</ListItemText>
+              <ListItemText>{template.contract?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(template)}>
                   <Create />
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(template)}
-                  disabled={template.templateStatus === Erc721TemplateStatus.INACTIVE}
+                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>

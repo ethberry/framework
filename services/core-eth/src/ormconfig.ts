@@ -3,30 +3,25 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
-import { Erc20TokenHistoryEntity } from "./erc20/token/token-history/token-history.entity";
-import { Erc20TokenEntity } from "./erc20/token/token.entity";
-import { Erc20VestingEntity } from "./vesting/vesting/vesting.entity";
-import { StakingModule } from "./blockchain/staking/staking.module";
-import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
-import { Erc721TokenEntity } from "./erc721/token/token.entity";
-import { Erc721TokenHistoryEntity } from "./erc721/token/token-history/token-history.entity";
-import { Erc721MarketplaceHistoryEntity } from "./erc721/marketplace/marketplace-history/marketplace-history.entity";
-import { Erc721TemplateEntity } from "./erc721/template/template.entity";
-import { Erc721AirdropEntity } from "./erc721/airdrop/airdrop.entity";
-import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
-import { Erc721RecipeEntity } from "./erc721/recipe/recipe.entity";
-import { Erc721RecipeHistoryEntity } from "./erc721/recipe/recipe-history/recipe-history.entity";
-import { Erc721IngredientEntity } from "./erc721/ingredient/ingredient.entity";
-import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
-import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
-import { Erc1155TokenHistoryEntity } from "./erc1155/token/token-history/token-history.entity";
-import { Erc1155MarketplaceHistoryEntity } from "./erc1155/marketplace/marketplace-history/marketplace-history.entity";
-import { Erc1155RecipeEntity } from "./erc1155/recipe/recipe.entity";
-import { Erc1155RecipeHistoryEntity } from "./erc1155/recipe/recipe-history/recipe-history.entity";
-import { Erc1155IngredientEntity } from "./erc1155/ingredient/ingredient.entity";
-import { Erc1155BalanceEntity } from "./erc1155/balance/balance.entity";
+import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
+import { VestingEntity } from "./mechanics/vesting/vesting.entity";
+import { ClaimEntity } from "./mechanics/claim/claim.entity";
+import { CraftEntity } from "./mechanics/craft/craft.entity";
+import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
+import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
+import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
+import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
+import { ExchangeHistoryEntity } from "./mechanics/exchange/exchange-history/exchange-history.entity";
+import { ExchangeEntity } from "./mechanics/exchange/exchange.entity";
+import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
+import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
+import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
+import { AssetEntity } from "./mechanics/asset/asset.entity";
+import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
+import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
+import { GradeEntity } from "./mechanics/grade/grade.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -37,28 +32,23 @@ const config: PostgresConnectionOptions = {
     ContractManagerHistoryEntity,
     AccessControlEntity,
     AccessControlHistoryEntity,
-    Erc20TokenHistoryEntity,
-    Erc20TokenEntity,
-    Erc20VestingEntity,
-    StakingModule,
-    Erc721CollectionEntity,
-    Erc721TemplateEntity,
-    Erc721TokenEntity,
-    Erc721TokenHistoryEntity,
-    Erc721MarketplaceHistoryEntity,
-    Erc721AirdropEntity,
-    Erc721DropboxEntity,
-    Erc721RecipeEntity,
-    Erc721RecipeHistoryEntity,
-    Erc721IngredientEntity,
-    Erc1155CollectionEntity,
-    Erc1155TokenEntity,
-    Erc1155RecipeEntity,
-    Erc1155RecipeHistoryEntity,
-    Erc1155IngredientEntity,
-    Erc1155TokenHistoryEntity,
-    Erc1155MarketplaceHistoryEntity,
-    Erc1155BalanceEntity,
+    ContractHistoryEntity,
+    VestingEntity,
+    StakingRulesEntity,
+    StakingStakesEntity,
+    StakingHistoryEntity,
+    ClaimEntity,
+    CraftEntity,
+    GradeEntity,
+    LootboxEntity,
+    ExchangeEntity,
+    ExchangeHistoryEntity,
+    ContractEntity,
+    TemplateEntity,
+    BalanceEntity,
+    TokenEntity,
+    AssetEntity,
+    AssetComponentEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

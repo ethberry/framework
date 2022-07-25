@@ -2,11 +2,10 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { ContractType, Erc1155TokenEventType } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
 
 // custom contracts
-import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
-
+import { ABI } from "./interfaces";
 import { Erc1155LogService } from "./token-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
@@ -28,15 +27,16 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
           contract: {
             contractType: ContractType.ERC1155_TOKEN,
             contractAddress: erc1155Contracts.address || [],
-            contractInterface: ERC1155SimpleSol.abi,
+            contractInterface: ABI,
             // prettier-ignore
             eventNames: [
-              Erc1155TokenEventType.TransferSingle,
-              Erc1155TokenEventType.TransferBatch,
-              Erc1155TokenEventType.URI,
-              Erc1155TokenEventType.ApprovalForAll,
-              Erc1155TokenEventType.RoleGranted,
-              Erc1155TokenEventType.RoleRevoked
+              ContractEventType.TransferSingle,
+              ContractEventType.TransferBatch,
+              ContractEventType.URI,
+              ContractEventType.ApprovalForAll,
+              AccessControlEventType.RoleGranted,
+              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleAdminChanged,
             ],
           },
           block: {
@@ -55,6 +55,6 @@ export class Erc1155TokenLogModule implements OnModuleDestroy {
 
   // save last block on SIGTERM
   public async onModuleDestroy(): Promise<number> {
-    return await this.erc1155LogService.updateBlock();
+    return this.erc1155LogService.updateBlock();
   }
 }

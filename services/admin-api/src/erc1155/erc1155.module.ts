@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 
-import { Erc1155CollectionModule } from "./collection/collection.module";
+import { Erc1155ContractModule } from "./contract/contract.module";
+import { Erc1155TemplateModule } from "./template/template.module";
 import { Erc1155TokenModule } from "./token/token.module";
-import { Erc1155RecipeModule } from "./recipe/recipe.module";
 
 @Module({
-  imports: [Erc1155CollectionModule, Erc1155TokenModule, Erc1155RecipeModule],
+  imports: [Erc1155ContractModule, Erc1155TemplateModule, Erc1155TokenModule],
 })
 export class Erc1155Module {}

@@ -2,33 +2,24 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/firebase-login";
 
-import { Erc1155Token } from "./token";
-import { Erc1155Collection } from "./collection";
-import { Erc1155Recipes } from "./recipe";
+import { Erc1155Template } from "./template";
+import { Erc1155Contract } from "./contract";
 
 export const erc1155Routes: Array<RouteObject> = [
   {
-    path: "/erc1155-collections",
+    path: "/erc1155-contracts",
     element: <Protected />,
     children: [
-      { index: true, element: <Erc1155Collection /> },
-      { path: "/erc1155-collections/:id", element: <Erc1155Collection /> },
+      { index: true, element: <Erc1155Contract /> },
+      { path: "/erc1155-contracts/:id", element: <Erc1155Contract /> },
     ],
   },
   {
-    path: "/erc1155-tokens",
+    path: "/erc1155-templates",
     element: <Protected />,
     children: [
-      { index: true, element: <Erc1155Token /> },
-      { path: "/erc1155-tokens/:id", element: <Erc1155Token /> },
-    ],
-  },
-  {
-    path: "/erc1155-recipes",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Erc1155Recipes /> },
-      { path: "/erc1155-recipes/:id", element: <Erc1155Recipes /> },
+      { index: true, element: <Erc1155Template /> },
+      { path: "/erc1155-templates/:id", element: <Erc1155Template /> },
     ],
   },
 ];

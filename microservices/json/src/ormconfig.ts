@@ -1,27 +1,17 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { UserEntity } from "./user/user.entity";
-import { Erc721CollectionEntity } from "./erc721/collection/collection.entity";
-import { Erc721TemplateEntity } from "./erc721/template/template.entity";
-import { Erc721TokenEntity } from "./erc721/token/token.entity";
-import { Erc721DropboxEntity } from "./erc721/dropbox/dropbox.entity";
-import { Erc1155CollectionEntity } from "./erc1155/collection/collection.entity";
-import { Erc1155TokenEntity } from "./erc1155/token/token.entity";
+import { AssetEntity } from "./mechanics/asset/asset.entity";
+import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
+import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
+import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
+import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
-  entities: [
-    UserEntity,
-    Erc721CollectionEntity,
-    Erc721TokenEntity,
-    Erc721DropboxEntity,
-    Erc721TemplateEntity,
-    Erc1155CollectionEntity,
-    Erc1155TokenEntity,
-  ],
+  entities: [AssetEntity, AssetComponentEntity, ContractEntity, TemplateEntity, TokenEntity],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
   logging: process.env.NODE_ENV === "development",

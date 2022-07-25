@@ -4,10 +4,10 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { Erc998TokenService } from "./token.service";
-import { Erc998TokenEntity } from "./token.entity";
-import { Erc998AssetSearchDto } from "./dto";
 import { UserEntity } from "../../user/user.entity";
-import { Erc998TokenAutocompleteDto } from "./dto/autocomplete";
+import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
+import { TokenAutocompleteDto } from "../../blockchain/hierarchy/token/dto/autocomplete";
+import { TokenSearchDto } from "../../blockchain/hierarchy/token/dto";
 
 @ApiBearerAuth()
 @Controller("/erc998-tokens")
@@ -16,21 +16,18 @@ export class Erc998TokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(
-    @Query() dto: Erc998AssetSearchDto,
-    @User() userEntity: UserEntity,
-  ): Promise<[Array<Erc998TokenEntity>, number]> {
+  public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
     return this.erc998TokenService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: Erc998TokenAutocompleteDto): Promise<Array<Erc998TokenEntity>> {
+  public autocomplete(@Query() dto: TokenAutocompleteDto): Promise<Array<TokenEntity>> {
     return this.erc998TokenService.autocomplete(dto);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<Erc998TokenEntity | null> {
-    return this.erc998TokenService.findOnePlus({ id });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {
+    return this.erc998TokenService.findOneWithRelations({ id });
   }
 }

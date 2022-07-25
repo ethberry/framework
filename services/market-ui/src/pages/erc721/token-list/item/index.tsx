@@ -1,16 +1,16 @@
 import { FC } from "react";
-import { Card, CardActionArea, CardActions, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Card, CardActionArea, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { IErc721Token } from "@framework/types";
+import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { Erc721TokenAuctionButton } from "../../../../components/buttons";
-import { RarityBadge } from "./badge";
+import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
+import { RarityBadge } from "../../../../components/common/badge";
 
 interface IErc721TokenProps {
-  token: IErc721Token;
+  token: IToken;
 }
 
 export const Erc721Token: FC<IErc721TokenProps> = props => {
@@ -22,20 +22,19 @@ export const Erc721Token: FC<IErc721TokenProps> = props => {
     <Card>
       <CardActionArea component={RouterLink} to={`/erc721-tokens/${token.id}`}>
         <RarityBadge token={token} />
-        <CardMedia className={classes.media} image={token.erc721Template!.imageUrl} />
+        <CardHeader title={token.template!.title} />
+        <CardMedia className={classes.media} image={token.template!.imageUrl} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {token.erc721Template!.title} #{token.tokenId}
-          </Typography>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={token.erc721Template!.description} />
+            <RichTextDisplay data={token.template!.description} />
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
           <Grid item xs={12}>
-            <Erc721TokenAuctionButton token={token} />
+            <TokenSellButton token={token} />
+            <UpgradeButton token={token} />
           </Grid>
         </Grid>
       </CardActions>

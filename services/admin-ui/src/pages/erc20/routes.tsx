@@ -2,24 +2,15 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/firebase-login";
 
-import { Erc20Token } from "./token";
-import { Erc20Vesting } from "./vesting";
+import { Erc20Contract } from "./contract";
 
 export const erc20Routes: Array<RouteObject> = [
   {
-    path: "/erc20-tokens",
+    path: "/erc20-contracts",
     element: <Protected />,
     children: [
-      { index: true, element: <Erc20Token /> },
-      { path: "/erc20-tokens/:id", element: <Erc20Token /> },
-    ],
-  },
-  {
-    path: "/erc20-vesting",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Erc20Vesting /> },
-      { path: "/erc20-vesting/:id", element: <Erc20Vesting /> },
+      { index: true, element: <Erc20Contract /> },
+      { path: "/erc20-contracts/:id", element: <Erc20Contract /> },
     ],
   },
 ];

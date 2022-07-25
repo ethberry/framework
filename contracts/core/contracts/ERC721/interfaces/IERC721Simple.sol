@@ -4,8 +4,10 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity >=0.8.13;
+pragma solidity ^0.8.9;
+
+import "../../Mechanics/Exchange/interfaces/IAsset.sol";
 
 interface IERC721Simple {
-  function mintCommon(address to, uint256 templateId) external returns (uint256);
+  function mintCommon(address to, Asset calldata item) external;
 }

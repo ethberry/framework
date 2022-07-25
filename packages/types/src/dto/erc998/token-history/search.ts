@@ -1,7 +1,6 @@
 import { IPaginationDto } from "@gemunion/types-collection";
 
-export interface IErc998TokenHistorySearchDto extends IPaginationDto {
-  erc998TokenId: number;
-  collection: string;
+export interface ITokenHistorySearchDto extends IPaginationDto {
+  token: string;
   tokenId: string;
 }

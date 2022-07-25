@@ -4,19 +4,15 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  AccessControlEventType,
+  ContractEventType,
   ContractType,
-  Erc721TokenEventType,
-  IAccessControlRoleAdminChanged,
-  IAccessControlRoleGranted,
-  IAccessControlRoleRevoked,
-  IErc721DefaultRoyaltyInfo,
-  IErc721RandomRequest,
-  IErc721TokenApprove,
-  IErc721TokenApprovedForAll,
-  IErc721TokenMintRandom,
-  IErc721TokenRoyaltyInfo,
-  IErc721TokenTransfer,
+  IDefaultRoyaltyInfo,
+  IRandomRequest,
+  ITokenApprove,
+  ITokenApprovedForAll,
+  ITokenMintRandom,
+  ITokenRoyaltyInfo,
+  ITokenTransfer,
 } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
@@ -29,63 +25,39 @@ export class Erc721TokenControllerEth {
     private readonly accessControlServiceEth: AccessControlServiceEth,
   ) {}
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.Transfer })
-  public transferItem(@Payload() event: ILogEvent<IErc721TokenTransfer>, @Ctx() context: Log): Promise<void> {
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Transfer })
+  public transfer(@Payload() event: ILogEvent<ITokenTransfer>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.transfer(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.Approval })
-  public approvalItem(@Payload() event: ILogEvent<IErc721TokenApprove>, @Ctx() context: Log): Promise<void> {
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Approval })
+  public approval(@Payload() event: ILogEvent<ITokenApprove>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.approval(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.ApprovalForAll })
-  public approvalForAllItem(
-    @Payload() event: ILogEvent<IErc721TokenApprovedForAll>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.ApprovalForAll })
+  public approvalForAll(@Payload() event: ILogEvent<ITokenApprovedForAll>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.DefaultRoyaltyInfo })
-  public defaultRoyaltyInfoItem(
-    @Payload() event: ILogEvent<IErc721DefaultRoyaltyInfo>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.DefaultRoyaltyInfo })
+  public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.defaultRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.TokenRoyaltyInfo })
-  public tokenRoyaltyInfoItem(
-    @Payload() event: ILogEvent<IErc721TokenRoyaltyInfo>,
-    @Ctx() context: Log,
-  ): Promise<void> {
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.TokenRoyaltyInfo })
+  public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.tokenRoyaltyInfo(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: Erc721TokenEventType.MintRandom })
-  public mintRandomItem(@Payload() event: ILogEvent<IErc721TokenMintRandom>, @Ctx() context: Log): Promise<void> {
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.MintRandom })
+  public mintRandom(@Payload() event: ILogEvent<ITokenMintRandom>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.mintRandom(event, context);
   }
 
   // dev test - random request
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: "RandomRequest" })
-  public randomRequest(@Payload() event: ILogEvent<IErc721RandomRequest>, @Ctx() context: Log): Promise<void> {
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: "IRandomRequest" })
+  public randomRequest(@Payload() event: ILogEvent<IRandomRequest>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.randomRequest(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleGranted })
-  public roleGrant(@Payload() event: ILogEvent<IAccessControlRoleGranted>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleGranted(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleRevoked })
-  public roleRevoke(@Payload() event: ILogEvent<IAccessControlRoleRevoked>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleRevoked(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: AccessControlEventType.RoleAdminChanged })
-  public roleAdmin(@Payload() event: ILogEvent<IAccessControlRoleAdminChanged>, @Ctx() context: Log): Promise<void> {
-    return this.accessControlServiceEth.roleAdminChanged(event, context);
   }
 }

@@ -10,7 +10,7 @@ sudo docker run -v /home/app:/home/app \
 sudo -H -u app docker-credential-gcr configure-docker
 sudo sleep 30s
 sudo -H -u app docker pull gcr.io/halogen-framing-335807/framework-img:latest
-sudo sleep 10s
+sudo sleep 100s
 sudo -H -u app docker pull gcr.io/halogen-framing-335807/framework-img:latest
 
 sudo -H -u app docker run --rm \

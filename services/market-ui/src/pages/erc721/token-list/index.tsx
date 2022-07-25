@@ -4,11 +4,11 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IErc721AssetSearchDto, IErc721Token } from "@framework/types";
+import { IToken, ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721Token } from "./item";
-import { Erc721TokenSearchForm } from "./form";
+import { TokenSearchForm } from "../../../components/forms/token-search";
 
 export interface IErc721TokenListProps {
   embedded?: boolean;
@@ -18,21 +18,23 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IErc721Token, IErc721AssetSearchDto>({
+    useCollection<IToken, ITokenSearchDto>({
       baseUrl: "/erc721-tokens",
       embedded,
       search: {
-        erc721CollectionIds: [],
-        rarity: [],
+        contractIds: [],
+        attributes: {
+          [TokenAttributes.RARITY]: [],
+        },
       },
     });
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-tokens"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc721-token-list"]} isHidden={embedded} />
 
-      <PageHeader message="pages.erc721-tokens.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+      <PageHeader message="pages.erc721-token-list.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
@@ -40,7 +42,12 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
         </Button>
       </PageHeader>
 
-      <Erc721TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} embedded={embedded} />
+      <TokenSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>
