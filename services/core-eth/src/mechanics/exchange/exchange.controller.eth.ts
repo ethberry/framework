@@ -24,7 +24,7 @@ export class ExchangeControllerEth {
   @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft })
   @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade })
   @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Lootbox })
-  public purchase(
+  public exchange(
     @Payload()
     event: ILogEvent<IExchangePurchase | IExchangeClaim | IExchangeCraft | IExchangeGrade | IExchangeLootbox>,
     @Ctx() context: Log,
