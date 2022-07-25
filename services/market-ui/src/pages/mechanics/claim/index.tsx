@@ -25,11 +25,11 @@ export const Claim: FC = () => {
   const { openConnectWalletDialog } = useWallet();
 
   const { fn, isLoading } = useApiCall(
-    async api => {
+    async (api, web3Context: Web3ContextType) => {
       return api.fetchJson({
         url: `/claim`,
         data: {
-          account,
+          account: web3Context.account!,
           claimStatus: [ClaimStatus.NEW],
         },
       });
@@ -37,12 +37,8 @@ export const Claim: FC = () => {
     { success: false, error: false },
   );
 
-  const fetchClaim = async (): Promise<void> => {
-    if (!isActive) {
-      return;
-    }
-
-    return fn()
+  const fetchClaim = useMetamask(async (web3Context: Web3ContextType): Promise<void> => {
+    return fn(undefined, web3Context)
       .then((json: IPaginationResult<IClaim>) => {
         setClaims(json.rows);
       })
@@ -56,7 +52,7 @@ export const Claim: FC = () => {
           enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
-  };
+  });
 
   const metaClick = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -83,21 +79,23 @@ export const Claim: FC = () => {
     };
   };
 
-  const handleOpenConnectWalletDialog = () => {
-    openConnectWalletDialog();
-  };
-
   useEffect(() => {
-    void fetchClaim();
+    if (isActive) {
+      void fetchClaim();
+    }
   }, [isActive, account]);
 
   if (!isActive) {
     return (
-      <Tooltip title={formatMessage({ id: "components.header.wallet.connect" })} enterDelay={300}>
-        <IconButton color="inherit" onClick={handleOpenConnectWalletDialog}>
-          <AccountBalanceWallet />
-        </IconButton>
-      </Tooltip>
+      <>
+        <Tooltip title={formatMessage({ id: "components.header.wallet.connect" })} enterDelay={300}>
+          <IconButton color="inherit" onClick={openConnectWalletDialog}>
+            <AccountBalanceWallet />
+          </IconButton>
+        </Tooltip>
+
+        <FormattedMessage id="pages.claim.connect" />
+      </>
     );
   }
 

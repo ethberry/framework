@@ -194,7 +194,8 @@
   "pages": {
     "claim": {
       "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "Claim"
+      "title": "Claim",
+      "connect": "Please connect your wallet first"
     },
     "craft": {
       "ingredients": "Ingredients",
@@ -399,6 +400,7 @@
     }
   },
   "snackbar": {
+    "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "denied": "Denied by user",
