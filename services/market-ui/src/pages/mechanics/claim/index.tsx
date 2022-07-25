@@ -101,7 +101,7 @@ export const Claim: FC = () => {
     return <Spinner />;
   }
 
-  if (claims?.length) {
+  if (claims.length) {
     return (
       <List>
         {claims.map((claim, i) => (
