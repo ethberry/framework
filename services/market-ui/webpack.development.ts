@@ -28,6 +28,7 @@ const config: Configuration = {
       path: require.resolve("path-browserify"),
       buffer: require.resolve("buffer/"),
     },
+    symlinks: false,
   },
   module: {
     rules: [
