@@ -4,9 +4,9 @@ import { expect } from "chai";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
-  templateId,
   MINTER_ROLE,
   royalty,
+  templateId,
   tokenId,
   tokenName,
   tokenSymbol,

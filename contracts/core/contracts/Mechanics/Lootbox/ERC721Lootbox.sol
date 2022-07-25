@@ -36,6 +36,7 @@ contract ERC721Lootbox is IERC721Lootbox, ERC721Simple, ExchangeUtils {
     Asset[] memory items
   ) public onlyRole(MINTER_ROLE) {
     require(templateId != 0, "Lootbox: wrong item");
+    require(items.length > 0, "Lootbox: no content");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();

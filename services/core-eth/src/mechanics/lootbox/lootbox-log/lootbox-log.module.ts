@@ -41,7 +41,7 @@ import LootboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
               ContractEventType.UnpackLootbox,
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked,
+              AccessControlEventType.RoleRevoked
             ],
           },
           block: {

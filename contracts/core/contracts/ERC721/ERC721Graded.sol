@@ -26,7 +26,8 @@ contract ERC721Graded is IERC721Graded, ERC721Simple {
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address to, uint256 templateId)
-    public virtual
+    public
+    virtual
     override(IERC721Simple, ERC721Simple)
     onlyRole(MINTER_ROLE)
   {

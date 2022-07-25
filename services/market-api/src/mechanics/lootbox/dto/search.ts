@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { IsArray, IsInt, IsOptional, Min } from "class-validator";
+import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
@@ -8,16 +8,6 @@ import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 export class LootboxSearchDto extends SearchDto implements ILootboxSearchDto {
-  @ApiPropertyOptional({
-    enum: LootboxStatus,
-    isArray: true,
-    // https://github.com/OAI/OpenAPI-Specification/issues/1706
-    // format: "deepObject"
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<LootboxStatus>)
-  @IsEnum(LootboxStatus, { each: true, message: "badInput" })
   public lootboxStatus: Array<LootboxStatus>;
 
   @ApiPropertyOptional({

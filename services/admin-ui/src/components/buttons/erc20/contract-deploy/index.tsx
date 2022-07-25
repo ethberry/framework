@@ -55,11 +55,14 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
   );
 
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
-    return handleDeployConfirm({
-      url: "/contract-manager/erc20-token",
-      method: "POST",
-      data: values,
-    }, form);
+    return handleDeployConfirm(
+      {
+        url: "/contract-manager/erc20-token",
+        method: "POST",
+        data: values,
+      },
+      form,
+    );
   };
 
   return (

@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { Grid } from "@mui/material";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -43,14 +42,8 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155]} />
-        </Grid>
-        <Grid item xs={6}>
-          <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
-        </Grid>
-      </Grid>
+      <PriceInput prefix="item" multiple disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
       {id ? <SelectInput name="lootboxStatus" options={LootboxStatus} /> : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>

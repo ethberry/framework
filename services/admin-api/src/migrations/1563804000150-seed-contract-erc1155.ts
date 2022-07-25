@@ -9,6 +9,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
     const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR || wallet;
+    const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR || wallet;
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
@@ -76,6 +77,22 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'NEW',
         'ERC1155',
         'BLACKLIST',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        34,
+        '${erc1155ContractNewAddress}',
+        '${chainId}',
+        'NEW',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '',
+        '',
+        100,
+        '${baseTokenURI}',
+        'NEW',
+        'ERC1155',
+        'SIMPLE',
         '${currentDateTime}',
         '${currentDateTime}'
       )

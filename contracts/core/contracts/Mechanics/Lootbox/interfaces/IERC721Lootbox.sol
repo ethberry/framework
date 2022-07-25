@@ -9,5 +9,9 @@ pragma solidity ^0.8.9;
 import "../../Exchange/interfaces/IAsset.sol";
 
 interface IERC721Lootbox {
-  function mintLootbox(address to, uint256 templateId, Asset[] memory items) external;
+  function mintLootbox(
+    address to,
+    uint256 templateId,
+    Asset[] memory items
+  ) external;
 }

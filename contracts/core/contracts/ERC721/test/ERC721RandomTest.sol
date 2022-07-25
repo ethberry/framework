@@ -28,10 +28,13 @@ contract ERC721RandomTest is IERC721Random, ERC721ChainLinkHH, ERC721Graded {
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721Graded(name, symbol, royalty, baseTokenURI) {
-  }
+  ) ERC721Graded(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 templateId) public override(IERC721Simple, ERC721Graded) onlyRole(MINTER_ROLE) {
+  function mintCommon(address to, uint256 templateId)
+    public
+    override(IERC721Simple, ERC721Graded)
+    onlyRole(MINTER_ROLE)
+  {
     require(templateId != 0, "ERC721Random: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();

@@ -17,13 +17,7 @@ contract ERC20Blacklist is ERC20Simple, BlackList {
     uint256 cap
   ) ERC20Simple(name, symbol, cap) {}
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(AccessControl, ERC20ACB)
-    returns (bool)
-  {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC20ACB) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 

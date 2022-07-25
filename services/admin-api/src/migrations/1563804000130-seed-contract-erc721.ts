@@ -7,13 +7,15 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc721ContractGradedAddress = process.env.ERC721_GRADED_ADDR || wallet;
     const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
+    const erc721ContractGradedAddress = process.env.ERC721_GRADED_ADDR || wallet;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
+    const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR || wallet;
+    const erc721ContractNewAddress = process.env.ERC721_NEW_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 11 - ITEMS, 12 - SKILLS, 13 - RUNES
+    // 11 - RANDOM, 12 - GRADED, 13 - SIMPLE, 14 - BLACKLIST, 15 - INACTIVE, 16 - NEW
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -83,11 +85,11 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         14,
         '${erc721ContractBlacklistAddress}',
         '${chainId}',
-        'SKULLS',
+        'BLACKLIST',
         '${simpleFormatting}',
         '${imageUrl}',
-        'SKULLS',
-        'SKULL721',
+        'BLACKLIST',
+        'BLACKLIST721',
         100,
         '${baseTokenURI}',
         'ACTIVE',
@@ -95,10 +97,42 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'BLACKLIST',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        15,
+        '${erc721ContractInactiveAddress}',
+        '${chainId}',
+        'INACTIVE',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'INACTIVE',
+        'INACTIVE721',
+        100,
+        '${baseTokenURI}',
+        'INACTIVE',
+        'ERC721',
+        'SIMPLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        16,
+        '${erc721ContractNewAddress}',
+        '${chainId}',
+        'NEW',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'NEW',
+        'NEW721',
+        100,
+        '${baseTokenURI}',
+        'NEW',
+        'ERC721',
+        'SIMPLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 14, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 16, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

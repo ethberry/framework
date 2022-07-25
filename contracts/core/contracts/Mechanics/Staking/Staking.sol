@@ -156,13 +156,13 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
-//        bool lootboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
+        //        bool lootboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
 
         for (uint256 i = 0; i < multiplier; i++) {
           if (randomInterface) {
             IERC721Random(rewardItem.token).mintRandom(receiver, rewardItem.tokenId);
-//          } else if (lootboxInterface) {
-//            IERC721Lootbox(rewardItem.token).mintLootbox(receiver, rewardItem.tokenId);
+            //          } else if (lootboxInterface) {
+            //            IERC721Lootbox(rewardItem.token).mintLootbox(receiver, rewardItem.tokenId);
           } else {
             IERC721Simple(rewardItem.token).mintCommon(receiver, rewardItem.tokenId);
           }

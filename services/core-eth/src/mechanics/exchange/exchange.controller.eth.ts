@@ -6,11 +6,11 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
   ExchangeEventType,
-  IExchangePurchase,
   IExchangeClaim,
   IExchangeCraft,
   IExchangeGrade,
   IExchangeLootbox,
+  IExchangePurchase,
 } from "@framework/types";
 
 import { ExchangeServiceEth } from "./exchange.service.eth";

@@ -38,7 +38,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
               StakingEventType.RuleUpdated,
               StakingEventType.StakingStart,
               StakingEventType.StakingWithdraw,
-              StakingEventType.StakingFinish,
+              StakingEventType.StakingFinish
             ],
           },
           block: {

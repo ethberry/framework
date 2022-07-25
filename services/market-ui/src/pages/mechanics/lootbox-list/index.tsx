@@ -5,7 +5,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ILootbox, ILootboxSearchDto, LootboxStatus } from "@framework/types";
+import { ILootbox, ILootboxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { LootboxItem } from "./item";
@@ -24,7 +24,6 @@ export const LootboxList: FC<ILootboxListProps> = props => {
       embedded,
       search: {
         query: "",
-        lootboxStatus: [LootboxStatus.ACTIVE],
         minPrice: constants.Zero.toString(),
         maxPrice: constants.WeiPerEther.toString(),
       },

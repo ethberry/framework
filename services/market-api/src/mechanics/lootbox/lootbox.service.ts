@@ -4,8 +4,8 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { BigNumber, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
-import { ILootboxSearchDto, TokenType } from "@framework/types";
-import { SignerService, IAsset } from "@gemunion/nest-js-module-exchange-signer";
+import { ILootboxSearchDto, LootboxStatus, TokenType } from "@framework/types";
+import { IAsset, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignLootboxDto } from "./interfaces";
 import { LootboxEntity } from "./lootbox.entity";
@@ -22,7 +22,7 @@ export class LootboxService {
   ) {}
 
   public async search(dto: ILootboxSearchDto): Promise<[Array<LootboxEntity>, number]> {
-    const { query, lootboxStatus, skip, take, minPrice, maxPrice } = dto;
+    const { query, skip, take, minPrice, maxPrice } = dto;
 
     const queryBuilder = this.lootboxEntityRepository.createQueryBuilder("lootbox");
 
@@ -42,13 +42,7 @@ export class LootboxService {
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
 
-    if (lootboxStatus) {
-      if (lootboxStatus.length === 1) {
-        queryBuilder.andWhere("lootbox.lootboxStatus = :lootboxStatus", { lootboxStatus: lootboxStatus[0] });
-      } else {
-        queryBuilder.andWhere("lootbox.lootboxStatus IN(:...lootboxStatus)", { lootboxStatus });
-      }
-    }
+    queryBuilder.andWhere("lootbox.lootboxStatus = :lootboxStatus", { lootboxStatus: LootboxStatus.ACTIVE });
 
     if (maxPrice) {
       queryBuilder.andWhere("price_components.amount <= :maxPrice", { maxPrice });

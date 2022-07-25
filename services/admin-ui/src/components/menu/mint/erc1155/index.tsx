@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
-import { IErc1155MintDto, Erc1155MintDialog } from "./edit";
+import { Erc1155MintDialog, IErc1155MintDto } from "./edit";
 
 export interface IErc1155MintMenuItemProps {
   address: string;

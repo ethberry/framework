@@ -45,19 +45,23 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           value: getEthPrice(template.price),
         },
       ) as Promise<void>;
-    });
+    },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
 
-    return metaFnWithSign({
-      url: "/marketplace/sign",
-      method: "POST",
-      data: {
-        templateId: template.id,
-        account,
+    return metaFnWithSign(
+      {
+        url: "/marketplace/sign",
+        method: "POST",
+        data: {
+          templateId: template.id,
+          account,
+        },
       },
-    }, web3Context);
+      web3Context,
+    );
   });
 
   const handleBuy = async () => {

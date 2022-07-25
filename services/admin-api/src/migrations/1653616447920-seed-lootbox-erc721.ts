@@ -19,6 +19,18 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         60201
       ), (
         60202
+      ), (
+        60301
+      ), (
+        60302
+      ), (
+        60401
+      ), (
+        60402
+      ), (
+        60501
+      ), (
+        60502
       );
     `);
 
@@ -53,6 +65,54 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
         60202
+      ), (
+        'ERC1155',
+        31,
+        15101, -- gold
+        '1000',
+        60301
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        60302
+      ), (
+        'ERC721',
+        11,
+        13101, -- sword
+        '1',
+        60401
+      ), (
+        'ERC998',
+        21,
+        14101, -- warrior
+        '1',
+        60401
+      ), (
+        'ERC1155',
+        31,
+        15101, -- gold
+        '1000',
+        60401
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        60402
+      ), (
+        'ERC721',
+        11,
+        13101, -- sword
+        '1',
+        60501
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        60502
       );
     `);
 
@@ -85,6 +145,36 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         60202,
         16102,
         'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Gold Lootbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        60301,
+        60302,
+        16103,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Mixed Lootbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        60401,
+        60402,
+        16104,
+        'ACTIVE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'Inactive Lootbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        60501,
+        60502,
+        16105,
+        'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

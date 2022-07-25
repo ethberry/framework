@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api-firebase";
@@ -81,16 +81,20 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
             },
           ) as Promise<void>;
         });
-    });
+    },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    return metaFnWithSign({
-      url: "/grade/sign",
-      method: "POST",
-      data: {
-        tokenId: token.id,
+    return metaFnWithSign(
+      {
+        url: "/grade/sign",
+        method: "POST",
+        data: {
+          tokenId: token.id,
+        },
       },
-    }, web3Context);
+      web3Context,
+    );
   });
 
   const handleLevelUp = async () => {

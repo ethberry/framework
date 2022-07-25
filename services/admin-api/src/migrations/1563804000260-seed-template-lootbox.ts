@@ -14,6 +14,12 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
         16101
       ), (
         16102
+      ), (
+        16103
+      ), (
+        16104
+      ), (
+        16105
       );
     `);
 
@@ -35,7 +41,7 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
         'Sword Lootbox',
         '${simpleFormatting}',
         '${imageUrl}',
-        13101,
+        16101,
         0,
         4,
         'ACTIVE',
@@ -47,10 +53,46 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
         'Warrior Lootbox',
         '${simpleFormatting}',
         '${imageUrl}',
-        13102,
+        16102,
         0,
         1,
         'ACTIVE',
+        41,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        16103,
+        'Gold Lootbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        16103,
+        0,
+        1,
+        'ACTIVE',
+        41,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        16104,
+        'Mixed Lootbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        16104,
+        0,
+        1,
+        'ACTIVE',
+        41,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        16105,
+        'Inactive Lootbox',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        16105,
+        0,
+        1,
+        'INACTIVE',
         41,
         '${currentDateTime}',
         '${currentDateTime}'

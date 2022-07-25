@@ -1,86 +1,82 @@
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
-import { royalty, baseTokenURI } from "../test/constants";
+import { baseTokenURI, MINTER_ROLE, royalty } from "../test/constants";
 import { wallet, wallets } from "@gemunion/constants";
 
-let exchangeAddr = "";
+const contracts: Record<string, Contract> = {};
 
 async function deploySystem() {
   const vestFactory = await ethers.getContractFactory("ContractManager");
-  const vestInstance = await vestFactory.deploy();
-  console.info(`CONTRACT_MANAGER_ADDR=${vestInstance.address.toLowerCase()}`);
+  contracts.contractManager = await vestFactory.deploy();
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");
-  const exchangeInstance = await exchangeFactory.deploy("Exchange");
-  exchangeAddr = exchangeInstance.address.toLowerCase();
-  console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
+  contracts.exchange = await exchangeFactory.deploy("Exchange");
 }
 
 async function deployERC20() {
   const [owner] = await ethers.getSigners();
   const amount = ethers.constants.WeiPerEther.mul(1e6);
 
-  const coinActiveFactory = await ethers.getContractFactory("ERC20Simple");
-  const coinActiveInstance = await coinActiveFactory.deploy("Space Credits", "GEM20", amount);
-  await coinActiveInstance.mint(owner.address, amount);
-  await coinActiveInstance.approve(exchangeAddr, amount);
-  console.info(`ERC20_ACTIVE_ADDR=${coinActiveInstance.address.toLowerCase()}`);
+  const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
+  const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);
+  await erc20SimpleInstance.mint(owner.address, amount);
+  await erc20SimpleInstance.approve(contracts.exchange.address.toLowerCase(), amount);
+  contracts.erc20Active = erc20SimpleInstance;
 
-  const coinInactiveFactory = await ethers.getContractFactory("ERC20Simple");
-  const coinInactiveInstance = await coinInactiveFactory.deploy("Inactive token", "OFF20", amount);
-  console.info(`ERC20_INACTIVE_ADDR=${coinInactiveInstance.address.toLowerCase()}`);
+  const erc20InactiveFactory = await ethers.getContractFactory("ERC20Simple");
+  contracts.erc20Inactive = await erc20InactiveFactory.deploy("Inactive token", "OFF20", amount);
 
-  const coinNewFactory = await ethers.getContractFactory("ERC20Simple");
-  const coinNewInstance = await coinNewFactory.deploy("Inactive token", "OFF20", amount);
-  console.info(`ERC20_NEW_ADDR=${coinNewInstance.address.toLowerCase()}`);
+  const erc20NewFactory = await ethers.getContractFactory("ERC20Simple");
+  contracts.erc20New = await erc20NewFactory.deploy("Inactive token", "OFF20", amount);
 
-  const coinBlackFactory = await ethers.getContractFactory("ERC20Blacklist");
-  const coinBlackInstance = await coinBlackFactory.deploy("Black list matters", "BLM20", amount);
-  await coinBlackInstance.blacklist(wallets[1]);
-  await coinBlackInstance.blacklist(wallets[2]);
-  console.info(`ERC20_BLACKLIST_ADDR=${coinBlackInstance.address.toLowerCase()}`);
+  const erc20BlacklistFactory = await ethers.getContractFactory("ERC20Blacklist");
+  const erc20BlacklistInstance = await erc20BlacklistFactory.deploy("Black list matters", "BLM20", amount);
+  await erc20BlacklistInstance.blacklist(wallets[1]);
+  await erc20BlacklistInstance.blacklist(wallets[2]);
+  contracts.erc20Blacklist = erc20BlacklistInstance;
 
-  const usdtFactory = await ethers.getContractFactory("TetherToken");
-  const usdtInstance = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
-  console.info(`ERC20_USDT_ADDR=${usdtInstance.address.toLowerCase()}`);
+  const erc20usdtFactory = await ethers.getContractFactory("TetherToken");
+  contracts.erc20Usdt = await erc20usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
 }
 
 async function deployERC721() {
-  const runeFactory = await ethers.getContractFactory("ERC721Simple");
-  const runeInstance = await runeFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
-  console.info(`ERC721_SIMPLE_ADDR=${runeInstance.address.toLowerCase()}`);
+  const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
+  contracts.erc721Simple = await erc721SimpleFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
 
-  const skullsFactory = await ethers.getContractFactory("ERC721Blacklist");
-  const skullsInstance = await skullsFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
-  console.info(`ERC721_BLACKLIST_ADDR=${skullsInstance.address.toLowerCase()}`);
+  const erc721InactiveFactory = await ethers.getContractFactory("ERC721Simple");
+  contracts.erc721Inactive = await erc721InactiveFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
 
-  const skillFactory = await ethers.getContractFactory("ERC721Graded");
-  const skillInstance = await skillFactory.deploy("Skill", "SKILL", royalty, baseTokenURI);
-  console.info(`ERC721_GRADED_ADDR=${skillInstance.address.toLowerCase()}`);
+  const erc721NewFactory = await ethers.getContractFactory("ERC721Simple");
+  contracts.erc721Simple = await erc721NewFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
 
-  const itemFactory = await ethers.getContractFactory("ERC721RandomTest");
-  const itemInstance = await itemFactory.deploy("Item", "ITEM", royalty, baseTokenURI);
-  console.info(`ERC721_RANDOM_ADDR=${itemInstance.address.toLowerCase()}`);
+  const erc721BlacklistFactory = await ethers.getContractFactory("ERC721Blacklist");
+  contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
+
+  const erc721GradedFactory = await ethers.getContractFactory("ERC721Graded");
+  contracts.erc721Graded = await erc721GradedFactory.deploy("Skill", "SKILL", royalty, baseTokenURI);
+
+  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomTest");
+  contracts.erc721Random = await erc721RandomFactory.deploy("Item", "ITEM", royalty, baseTokenURI);
 }
 
 async function deployERC998() {
-  const itemFactory = await ethers.getContractFactory("ERC998RandomTest");
-  const itemInstance = await itemFactory.deploy("Hero", "HERO", royalty, baseTokenURI);
-  console.info(`ERC998_RANDOM_ADDR=${itemInstance.address.toLowerCase()}`);
+  const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomTest");
+  contracts.erc998Random = await erc998RandomFactory.deploy("Hero", "HERO", royalty, baseTokenURI);
 }
 
 async function deployERC1155() {
-  const itemFactory = await ethers.getContractFactory("ERC1155Simple");
-  const itemInstance = await itemFactory.deploy(royalty, baseTokenURI);
-  console.info(`ERC1155_SIMPLE_ADDR=${itemInstance.address.toLowerCase()}`);
+  const erc1155SimpleFactory = await ethers.getContractFactory("ERC1155Simple");
+  contracts.erc1155Simple = await erc1155SimpleFactory.deploy(royalty, baseTokenURI);
 
-  const skillFactory = await ethers.getContractFactory("ERC1155Simple");
-  const skillInstance = await skillFactory.deploy(royalty, baseTokenURI);
-  console.info(`ERC1155_INACTIVE_ADDR=${skillInstance.address.toLowerCase()}`);
+  const erc1155InactiveFactory = await ethers.getContractFactory("ERC1155Simple");
+  contracts.erc1155Inactive = await erc1155InactiveFactory.deploy(royalty, baseTokenURI);
 
-  const runeFactory = await ethers.getContractFactory("ERC1155Blacklist");
-  const runeInstance = await runeFactory.deploy(royalty, baseTokenURI);
-  console.info(`ERC1155_BLACKLIST_ADDR=${runeInstance.address.toLowerCase()}`);
+  const erc1155NewFactory = await ethers.getContractFactory("ERC1155Simple");
+  contracts.erc1155New = await erc1155NewFactory.deploy(royalty, baseTokenURI);
+
+  const erc1155BlacklistFactory = await ethers.getContractFactory("ERC1155Blacklist");
+  contracts.erc1155Blacklist = await erc1155BlacklistFactory.deploy(royalty, baseTokenURI);
 }
 
 // MODULE:VESTING
@@ -88,35 +84,38 @@ async function deployVesting() {
   const timestamp = Math.ceil(Date.now() / 1000);
 
   const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
-  const linearVestingInstance = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  console.info(`VESTING_LINEAR_ADDR=${linearVestingInstance.address.toLowerCase()}`);
+  contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
 
   const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
-  const gradedVestingInstance = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  console.info(`VESTING_GRADED_ADDR=${gradedVestingInstance.address.toLowerCase()}`);
+  contracts.vestingGraded = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
 
   const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
-  const cliffVestingInstance = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  console.info(`VESTING_CLIFF_ADDR=${cliffVestingInstance.address.toLowerCase()}`);
+  contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+}
+
+// MODULE:LOOTBOX
+async function deployLootbox() {
+  const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
+  const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
+  contracts.lootbox = lootboxInstance;
+
+  await contracts.erc721Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
+  await contracts.erc721Random.grantRole(MINTER_ROLE, lootboxInstance.address);
+  await contracts.erc998Random.grantRole(MINTER_ROLE, lootboxInstance.address);
+  await contracts.erc1155Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
 }
 
 async function deployModules() {
   await deployVesting();
-
-  // MODULE:LOOTBOX
-  const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
-  const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
-  console.info(`LOOTBOX_ADDR=${lootboxInstance.address.toLowerCase()}`);
+  await deployLootbox();
 
   // MODULE:CLAIM
   const claimFactory = await ethers.getContractFactory("ClaimProxy");
-  const claimInstance = await claimFactory.deploy();
-  console.info(`CLAIM_PROXY_ADDR=${claimInstance.address.toLowerCase()}`);
+  contracts.claimProxy = await claimFactory.deploy();
 
   // MODULE:STAKING
   const stakingFactory = await ethers.getContractFactory("Staking");
-  const stakingInstance = await stakingFactory.deploy(10);
-  console.info(`STAKING_ADDR=${stakingInstance.address.toLowerCase()}`);
+  contracts.staking = await stakingFactory.deploy(10);
 }
 
 async function main() {
@@ -128,8 +127,15 @@ async function main() {
   await deployModules();
 }
 
+const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
+
 main()
-  .then(() => process.exit(0))
+  .then(() => {
+    Object.entries(contracts).map(([key, value]) =>
+      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.address.toLowerCase()}`),
+    );
+    process.exit(0);
+  })
   .catch(error => {
     console.error(error);
     process.exit(1);

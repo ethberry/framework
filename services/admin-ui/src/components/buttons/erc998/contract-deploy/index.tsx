@@ -61,11 +61,14 @@ export const Erc998TokenDeployButton: FC<ITokenDeployButtonProps> = props => {
   );
 
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
-    return handleDeployConfirm({
-      url: "/contract-manager/erc998-token",
-      method: "POST",
-      data: values,
-    }, form);
+    return handleDeployConfirm(
+      {
+        url: "/contract-manager/erc998-token",
+        method: "POST",
+        data: values,
+      },
+      form,
+    );
   };
 
   return (
@@ -79,11 +82,7 @@ export const Erc998TokenDeployButton: FC<ITokenDeployButtonProps> = props => {
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc998ContractDeployDialog
-        onConfirm={onDeployConfirm}
-        onCancel={handleDeployCancel}
-        open={isDeployDialogOpen}
-      />
+      <Erc998ContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );
 };

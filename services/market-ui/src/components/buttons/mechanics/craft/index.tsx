@@ -46,16 +46,20 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           value: getEthPrice(craft.ingredients),
         },
       ) as Promise<void>;
-    });
+    },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    return metaFnWithSign({
-      url: "/craft/sign",
-      method: "POST",
-      data: {
-        craftId: craft.id,
+    return metaFnWithSign(
+      {
+        url: "/craft/sign",
+        method: "POST",
+        data: {
+          craftId: craft.id,
+        },
       },
-    }, web3Context);
+      web3Context,
+    );
   });
 
   const handleCraft = async () => {

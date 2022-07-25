@@ -58,11 +58,14 @@ export const VestingDeployButton: FC<IVestingButtonProps> = props => {
   );
 
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
-    return handleDeployConfirm({
-      url: "/contract-manager/erc20-vesting",
-      method: "POST",
-      data: values,
-    }, form);
+    return handleDeployConfirm(
+      {
+        url: "/contract-manager/erc20-vesting",
+        method: "POST",
+        data: values,
+      },
+      form,
+    );
   };
 
   return (

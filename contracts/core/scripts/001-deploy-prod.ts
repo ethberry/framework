@@ -1,31 +1,56 @@
 import { ethers } from "hardhat";
-import { baseTokenURI } from "../test/constants";
+import { Contract } from "ethers";
+
+import { baseTokenURI, MINTER_ROLE } from "../test/constants";
+import { wallet } from "@gemunion/constants";
+
+const contracts: Record<string, Contract> = {};
 
 async function deploySystem() {
   const vestFactory = await ethers.getContractFactory("ContractManager");
-  const vestInstance = await vestFactory.deploy();
-  console.info(`CONTRACT_MANAGER_ADDR=${vestInstance.address.toLowerCase()}`);
+  contracts.contractManager = await vestFactory.deploy();
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");
-  const exchangeInstance = await exchangeFactory.deploy("Exchange");
-  console.info(`EXCHANGE_ADDR=${exchangeInstance.address.toLowerCase()}`);
+  contracts.exchange = await exchangeFactory.deploy("Exchange");
+}
+
+// MODULE:VESTING
+async function deployVesting() {
+  const timestamp = Math.ceil(Date.now() / 1000);
+
+  const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
+  contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+
+  const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
+  contracts.vestingGraded = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+
+  const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
+  contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
+}
+
+// MODULE:LOOTBOX
+async function deployLootbox() {
+  const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
+  const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
+  contracts.lootbox = lootboxInstance;
+
+  await contracts.erc721Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
+  await contracts.erc721Random.grantRole(MINTER_ROLE, lootboxInstance.address);
+  await contracts.erc998Random.grantRole(MINTER_ROLE, lootboxInstance.address);
+  await contracts.erc1155Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
 }
 
 async function deployModules() {
-  // MODULE:LOOTBOX
-  const dropFactory = await ethers.getContractFactory("ERC721Lootbox");
-  const dropInstance = await dropFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
-  console.info(`LOOTBOX_ADDR=${dropInstance.address.toLowerCase()}`);
+  await deployVesting();
+  await deployLootbox();
 
   // MODULE:CLAIM
   const claimFactory = await ethers.getContractFactory("ClaimProxy");
-  const claimInstance = await claimFactory.deploy();
-  console.info(`CLAIM_PROXY_ADDR=${claimInstance.address.toLowerCase()}`);
+  contracts.claimProxy = await claimFactory.deploy();
 
   // MODULE:STAKING
   const stakingFactory = await ethers.getContractFactory("Staking");
-  const stakingInstance = await stakingFactory.deploy(10);
-  console.info(`STAKING_ADDR=${stakingInstance.address.toLowerCase()}`);
+  contracts.staking = await stakingFactory.deploy(10);
 }
 
 async function main() {
@@ -33,8 +58,15 @@ async function main() {
   await deployModules();
 }
 
+const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
+
 main()
-  .then(() => process.exit(0))
+  .then(() => {
+    Object.entries(contracts).map(([key, value]) =>
+      console.info(`${camelToSnakeCase(key).toUpperCase()}_ADDR=${value.address.toLowerCase()}`),
+    );
+    process.exit(0);
+  })
   .catch(error => {
     console.error(error);
     process.exit(1);
