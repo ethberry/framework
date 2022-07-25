@@ -1,20 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
-import { utils } from "ethers";
 
 import { ns } from "@framework/constants";
 
 export class SeedClaimErc721At1563804040420 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const signDbItem1 =
-      "0x87e254d38d2f19e6a216784e00932742de8451d05b9e673e4dae501f10fcfa1636311099711b9c096a1e7f7533922131fac49de1af4a20e1766ce1b37745e68d1c";
-    const signDbItem2 =
-      "0x82995ce55e5d9a39fc285eb6a89f4a0348f222267c8d56037cbdc3af583b763d5311fc17db1371bb93fe3f62dda5d9a90428ed3559d088505586c2c1464e57ee1b";
-    const signDbItem3 =
-      "0x1dba5f2c6fd65879a8fc6b15246fd4739f8b8569a54f6eb12c65ce733963dd144315e3ef61a108f48f20efd74e33669b6c7f5aafc89123fbbcfe5bd0e0fa6f9a1b";
-    const signDbItem4 =
-      "0x385e0d108f82a9c44a168e7a86815ba90380c61b07100086f4fecebe6d84611534295b17ffec9af85dd76f5e1096421eabe79915a0fde321f85aabc48709aaa71b";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
@@ -77,32 +68,32 @@ export class SeedClaimErc721At1563804040420 implements MigrationInterface {
         '${wallet}',
         50101,
         'NEW',
-        '${signDbItem1}',
-        '${utils.hexlify(utils.randomBytes(32))}',
+        '0x8e1cac3e218c3c6a12d399b3434fd1da5dc8e4dfd5bc07219c6ec8a03bcacfee321d30b8b815e86d3e1dabb6e7447e87264cb405281e5b4362222aecdf45c2371c',
+        '0xb91cc05c34bdb5bc9317945a42976dc510471c7ee718206fda51daadfff24985',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         50102,
         'NEW',
-        '${signDbItem2}',
-        '${utils.hexlify(utils.randomBytes(32))}',
+        '0x77f024f8579388ae73244ea7396c09cd33e4a5d36e4a7e2735ffbdf56a50f997580f9299c7f2208a4aaed8321dea9ba8260b09d75da3e966d8e25efb06dbe98d1c',
+        '0x252f7476d08fb6d5727f0639dc08c5c65abc8a62deaefc92f5afaedd8e0bda67',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         50103,
         'UNPACKED',
-        '${signDbItem3}',
-        '${utils.hexlify(utils.randomBytes(32))}',
+        '0x837f66dcb96a7ae3664b0e34a23b5db75ed3f8278ab9e4374ce92a8c53ac938439ca6ffff8dbcc676bf520150d6306559fb4b4f0ef3fe80bb873e9df58aff0ac1b',
+        '0xa07e288f20c97f9a853782001c9851f451b0729c494759a091c140c1019a6158',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         50104,
         'REDEEMED',
-        '${signDbItem4}',
-        '${utils.hexlify(utils.randomBytes(32))}',
+        '0x4848640f61c4bb0b0edab8bab540184a1b16a210e3e65e921c8053a9dde71c7c0022e73e63bb60c3b53907fecf6d11eb83ea58d39e351654ccedf3fd3498ae6e1b',
+        '0x17fdcea410c1f8ee61a2bbc06f80a5bdf84611c935f0ed859d6acb475619d5f0',
         '${currentDateTime}',
         '${currentDateTime}'
       )
