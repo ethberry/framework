@@ -492,6 +492,7 @@
   "snackbar": {
     "active": "Successfully activated",
     "approved": "Successfully approved",
+    "blockchainError": "Blockchain error",
     "contractNotFound": "Contract not found",
     "created": "Successfully created",
     "declined": "Declined!",
