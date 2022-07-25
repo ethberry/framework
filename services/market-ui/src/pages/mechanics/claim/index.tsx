@@ -80,9 +80,7 @@ export const Claim: FC = () => {
   };
 
   useEffect(() => {
-    if (isActive) {
-      void fetchClaim();
-    }
+    void fetchClaim();
   }, [isActive, account]);
 
   if (!isActive) {
