@@ -11,11 +11,13 @@ import {
   Pagination,
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
+import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IPaginationDto } from "@gemunion/types-collection";
 
 import { StakingDepositButton } from "../../../../components/buttons";
 import { StakingSearchForm } from "./form";
@@ -34,7 +36,9 @@ export const Stake: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IStakingRule, IStakingSearchDto>({
-    baseUrl: "/staking-rules",
+    baseUrl: "/staking/rules",
+    redirect: <S extends IPaginationDto>(baseUrl: string, search: Omit<S, "skip" | "take">, id?: number) =>
+      id ? `/staking/${id}` : `/staking?${stringify(search)}`,
     empty: {
       title: "",
       description: emptyStateString,
@@ -59,9 +63,9 @@ export const Stake: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking-rules", "staking-rules.stake"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
-      <PageHeader message="pages.staking.title">
+      <PageHeader message="pages.staking.rules.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

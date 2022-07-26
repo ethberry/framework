@@ -8,7 +8,7 @@ import { StakingStakesService } from "./staking-stakes.service";
 import { StakingStakesSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/staking-stakes")
+@Controller("/staking/stakes")
 export class StakingStakesController {
   constructor(private readonly stakesService: StakingStakesService) {}
 

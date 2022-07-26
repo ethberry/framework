@@ -58,12 +58,12 @@
       "BLACKLIST": "Blacklist",
       "CLIFF": "Cliff",
       "EXTERNAL": "External",
-      "UPGRADEABLE": "Upgradeable",
       "LINEAR": "Linear",
       "LOOTBOX": "Lootbox",
       "NATIVE": "Native",
       "RANDOM": "Random",
-      "SIMPLE": "Simple"
+      "SIMPLE": "Simple",
+      "UPGRADEABLE": "Upgradeable"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -394,10 +394,13 @@
         "craft": "Craft",
         "grade": "Grade",
         "lootboxes": "Lootboxes",
-        "stakes": "Stakes",
-        "staking-rules": "Staking Rules",
         "title": "Mechanics",
         "vesting": "Vesting"
+      },
+      "staking": {
+        "stakes": "Stakes",
+        "staking-rules": "Staking Rules",
+        "title": "Staking"
       },
       "title": "Dashboard"
     },

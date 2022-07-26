@@ -5,13 +5,11 @@ import { Claim } from "./claim";
 import { ClaimWrapper } from "./claim/wrapper";
 import { VestingWrapper } from "./vesting/wrapper";
 import { Vesting } from "./vesting";
-import { Stake } from "./staking/stake";
-import { Leaderboard } from "./staking/leaderboard";
-import { Reward } from "./staking/reward";
 import { LootboxList } from "./lootbox-list";
 import { Lootbox } from "./lootbox";
 import { CraftList } from "./craft-list";
 import { Craft } from "./craft";
+import { stakingRoutes } from "./staking/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   {
@@ -36,16 +34,9 @@ export const mechanicsRoutes: Array<RouteObject> = [
     ],
   },
   {
-    path: "/staking",
-    children: [
-      { index: true, element: <Stake /> },
-      { path: "/staking/leaderboard", element: <Leaderboard /> },
-      { path: "/staking/reward", element: <Reward /> },
-    ],
-  },
-  {
     path: "/vesting",
     element: <VestingWrapper />,
     children: [{ index: true, element: <Vesting /> }],
   },
+  ...stakingRoutes,
 ];

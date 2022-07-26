@@ -19,8 +19,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
-import { StakingUploadButton } from "../../../components/buttons";
-import { emptyPrice } from "../../../components/inputs/empty-price";
+import { StakingUploadButton } from "../../../../components/buttons";
+import { emptyPrice } from "../../../../components/inputs/empty-price";
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
 
@@ -45,7 +45,7 @@ export const Staking: FC = () => {
     handleChangePage,
     handleDeleteConfirm,
   } = useCollection<IStakingRule, IStakingSearchDto>({
-    baseUrl: "/staking-rules",
+    baseUrl: "/staking/rules",
     empty: {
       title: "",
       description: emptyStateString,

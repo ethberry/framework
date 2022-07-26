@@ -3,16 +3,20 @@ import { useIntl } from "react-intl";
 import { Grid, Typography } from "@mui/material";
 import { Filter1, Filter2, Filter3, Filter4 } from "@mui/icons-material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
+import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
+import { IPaginationDto } from "@gemunion/types-collection";
 
 export const Leaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
     useCollection<ILeaderboard>({
-      baseUrl: "/staking-rules/leaderboard",
+      baseUrl: "/staking/rules/leaderboard",
+      redirect: <S extends IPaginationDto>(baseUrl: string, search: Omit<S, "skip" | "take">, id?: number) =>
+        id ? `/staking/leaderboard/${id}` : `/staking/leaderboard?${stringify(search)}`,
       empty: {
         wallet: "",
       },
@@ -24,7 +28,7 @@ export const Leaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.rank" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
       sortable: false,
       flex: 1,
       renderCell: (cell: GridCellParams) => {
@@ -44,19 +48,19 @@ export const Leaderboard: FC = () => {
     },
     {
       field: "secureWallet",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.address" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.address" }),
       sortable: false,
       flex: 1
     },
     {
       field: "score",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.score" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.score" }),
       sortable: false,
       flex: 1
     },
     {
       field: "rank",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.rank" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
       sortable: false,
       flex: 1
     }
@@ -64,7 +68,7 @@ export const Leaderboard: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking-rules", "staking-rules.leaderboard"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
       <PageHeader message="pages.staking.leaderboard.title" />
 

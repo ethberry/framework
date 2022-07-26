@@ -193,9 +193,9 @@
   },
   "pages": {
     "claim": {
+      "connect": "Please connect your wallet first",
       "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "Claim",
-      "connect": "Please connect your wallet first"
+      "title": "Claim"
     },
     "craft": {
       "ingredients": "Ingredients",
@@ -231,10 +231,7 @@
       "mechanics": {
         "claim": "Claim",
         "craft": "Craft",
-        "leaderboard": "Staking Leaderboard",
         "lootboxes": "Lootboxes",
-        "reward": "Staking Reward",
-        "stake": "Staking Stake",
         "title": "Mechanics",
         "vesting": "Vesting"
       },
@@ -254,6 +251,12 @@
         "craft": "Craft",
         "marketplace": "Primary marketplace",
         "title": "Sections"
+      },
+      "staking": {
+        "leaderboard": "Staking Leaderboard",
+        "reward": "Staking Reward",
+        "stake": "Staking Stake",
+        "title": "Staking"
       },
       "title": "Dashboard"
     },
@@ -383,6 +386,9 @@
       },
       "stake": {
         "title": "Stake"
+      },
+      "rules": {
+        "title": "Staking rules"
       },
       "title": "Staking",
       "view": {

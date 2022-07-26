@@ -39,7 +39,13 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       {...rest}
       data-testid={testIdPrefix}
     >
-      <EntityInput name="contractId" controller="contracts" readOnly data-testid={`${testIdPrefix}-contractId`} />
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        readOnly
+        data-testid={`${testIdPrefix}-contractId`}
+        data={{}}
+      />
       <SelectInput name="gradeStrategy" options={GradeStrategy} data-testid={`${testIdPrefix}-gradeStrategy`} />
       <GrowthRateInput />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />

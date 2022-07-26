@@ -8,7 +8,7 @@ import { StakingRulesEntity } from "./staking-rules.entity";
 import { StakingSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/staking-rules")
+@Controller("/staking/rules")
 export class StakingRulesController {
   constructor(private readonly stakingService: StakingRulesService) {}
 

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { AccountBalance, Construction, Inventory, Paragliding, Storefront } from "@mui/icons-material";
+import { AccountBalance, Construction, Inventory, Paragliding } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -45,30 +45,6 @@ export const Mechanics: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.mechanics.craft" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/staking">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.stake" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/staking/leaderboard">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.leaderboard" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/staking/reward">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.reward" />
           </ListItemText>
         </ListItem>
       </List>

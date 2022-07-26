@@ -9,7 +9,7 @@ import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { IStakingRule } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { PriceInput } from "../../../../components/inputs/price";
+import { PriceInput } from "../../../../../components/inputs/price";
 
 export interface IStakingEditDialogProps {
   open: boolean;
