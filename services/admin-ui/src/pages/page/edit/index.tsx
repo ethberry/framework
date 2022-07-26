@@ -14,7 +14,7 @@ export interface IEditPageDialogProps {
   initialValues: IPage;
 }
 
-export const EditPageDialog: FC<IEditPageDialogProps> = props => {
+export const PageEditDialog: FC<IEditPageDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, slug, pageStatus } = initialValues;
@@ -27,13 +27,20 @@ export const EditPageDialog: FC<IEditPageDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
+  const testIdPrefix = "PageEditForm";
 
   return (
-    <FormDialog initialValues={fixedValues} validationSchema={validationSchema} message={message} {...rest}>
-      <TextInput name="slug" />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
-      {id ? <SelectInput name="pageStatus" options={PageStatus} /> : null}
+    <FormDialog
+      initialValues={fixedValues}
+      validationSchema={validationSchema}
+      message={message}
+      data-testid={testIdPrefix}
+      {...rest}
+    >
+      <TextInput name="slug" data-testid={`${testIdPrefix}-slug`} />
+      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
+      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      {id ? <SelectInput name="pageStatus" options={PageStatus} data-testid={`${testIdPrefix}-pageStatus`} /> : null}
     </FormDialog>
   );
 };

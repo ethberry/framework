@@ -20,16 +20,18 @@ export interface IErc20AllowanceDialogProps {
 export const Erc20AllowanceDialog: FC<IErc20AllowanceDialogProps> = props => {
   const initialValues = {};
 
+  const testIdPrefix = "Erc20AllowanceForm";
+
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.allowance"
-      data-testid="Erc20AllowanceDialog"
+      data-testid={testIdPrefix}
       {...props}
     >
-      <ContractInput name="contractId" related="address" />
-      <EthInput name="amount" symbol="" />
+      <ContractInput name="contractId" related="address" data-testid={`${testIdPrefix}-contractId`} />
+      <EthInput name="amount" symbol="" data-testid={`${testIdPrefix}-amount`} />
     </FormDialog>
   );
 };

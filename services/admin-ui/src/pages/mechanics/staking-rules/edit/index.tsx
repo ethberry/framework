@@ -34,23 +34,20 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     stakingStatus,
   };
 
+  const message = id ? "dialogs.edit" : "dialogs.create";
+  const testIdPrefix = "StakingEditForm";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
-      message={"dialogs.edit"}
-      data-testid="StakingEditDialog"
+      message={message}
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <TextInput name="title" />
-        </Grid>
-        <Grid item xs={6}>
-          <TextInput name="stakingStatus" readOnly={true} />
-        </Grid>
-      </Grid>
-      <RichTextEditor name="description" />
+      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
+      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <TextInput name="stakingStatus" readOnly={true} data-testid={`${testIdPrefix}-stakingStatus`} />
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <PriceInput prefix="deposit" />
@@ -68,6 +65,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
             </InputAdornment>
           ),
         }}
+        data-testid={`${testIdPrefix}-duration`}
       />
       <CurrencyInput
         name="penalty"
@@ -75,8 +73,9 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
         InputProps={{
           endAdornment: <InputAdornment position="start">%</InputAdornment>,
         }}
+        data-testid={`${testIdPrefix}-penalty`}
       />
-      <CheckboxInput name="recurrent" />
+      <CheckboxInput name="recurrent" data-testid={`${testIdPrefix}-recurrent`} />
     </FormDialog>
   );
 };

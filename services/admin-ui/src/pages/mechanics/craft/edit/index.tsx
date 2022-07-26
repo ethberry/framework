@@ -13,7 +13,7 @@ export interface IExchangeEditDialogProps {
   initialValues: ICraft;
 }
 
-export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {
+export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, item, ingredients } = initialValues;
@@ -22,13 +22,14 @@ export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {
     item,
     ingredients,
   };
+  const testIdPrefix = "CraftEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="CraftEditDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />

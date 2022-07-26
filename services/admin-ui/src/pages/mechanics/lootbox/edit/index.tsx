@@ -31,21 +31,24 @@ export const LootboxEditDialog: FC<ILootboxEditDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
+  const testIdPrefix = "LootboxEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid="LootboxEditDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
+      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
+      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
       <PriceInput prefix="item" multiple disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
-      {id ? <SelectInput name="lootboxStatus" options={LootboxStatus} /> : null}
-      <AvatarInput name="imageUrl" />
+      {id ? (
+        <SelectInput name="lootboxStatus" options={LootboxStatus} data-testid={`${testIdPrefix}-lootboxStatus`} />
+      ) : null}
+      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
     </FormDialog>
   );
 };

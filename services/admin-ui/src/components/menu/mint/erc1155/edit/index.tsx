@@ -25,18 +25,20 @@ export interface IErc1155MintDialogProps {
 export const Erc1155MintDialog: FC<IErc1155MintDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const testIdPrefix = "Erc1155MintForm";
+
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"
-      data-testid="Erc1155MintDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <ContractInput name="contractId" related="address" />
-      <TemplateInput name="templateId" />
-      <TextInput name="amount" />
-      <TextInput name="account" />
+      <ContractInput name="contractId" related="address" data-testid={`${testIdPrefix}-contractId`} />
+      <TemplateInput name="templateId" data-testid={`${testIdPrefix}-templateId`} />
+      <TextInput name="amount" data-testid={`${testIdPrefix}-amount`} />
+      <TextInput name="account" data-testid={`${testIdPrefix}-account`} />
     </FormDialog>
   );
 };

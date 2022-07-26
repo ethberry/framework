@@ -18,7 +18,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { CraftStatus, ICraft, IExchangeSearchDto } from "@framework/types";
 
-import { ExchangeEditDialog } from "./edit";
+import { CraftEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
 import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
@@ -111,7 +111,7 @@ export const Craft: FC = () => {
         initialValues={{ ...selected, title: selected.item.components[0]?.template?.title }}
       />
 
-      <ExchangeEditDialog
+      <CraftEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

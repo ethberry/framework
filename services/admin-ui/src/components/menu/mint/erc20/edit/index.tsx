@@ -24,17 +24,19 @@ export interface IMintErc20TokenDialogProps {
 export const MintErc20TokenDialog: FC<IMintErc20TokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const testIdPrefix = "Erc1155MintForm";
+
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"
-      data-testid="Erc20MintDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <ContractInput name="contractId" related="address" />
-      <EthInput name="amount" symbol="" />
-      <TextInput name="account" />
+      <ContractInput name="contractId" related="address" data-testid={`${testIdPrefix}-contractId`} />
+      <EthInput name="amount" symbol="" data-testid={`${testIdPrefix}-amount`} />
+      <TextInput name="account" data-testid={`${testIdPrefix}-account`} />
     </FormDialog>
   );
 };

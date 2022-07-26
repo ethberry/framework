@@ -19,15 +19,17 @@ export interface IErc721ContractRoyaltyEditDialogProps {
 export const Erc721ContractRoyaltyEditDialog: FC<IErc721ContractRoyaltyEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const testIdPrefix = "RoyaltyEditForm";
+
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="Erc721CollectionRoyaltyEditDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <CurrencyInput name="royalty" symbol="%" />
+      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-account`} />
     </FormDialog>
   );
 };
