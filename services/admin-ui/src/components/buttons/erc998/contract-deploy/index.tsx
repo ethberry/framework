@@ -8,11 +8,9 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc998ContractTemplate, IErc998ContractDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-// todo add actual 998 contracts!
-import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC998GradedSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
-// import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
+import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
+import ERC998UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
+import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
 import { Erc998ContractDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc998TokenTemplate(template: Erc998ContractTemplate) {
@@ -20,7 +18,7 @@ function getBytecodeByErc998TokenTemplate(template: Erc998ContractTemplate) {
     case Erc998ContractTemplate.SIMPLE:
       return ERC998SimpleSol.bytecode;
     case Erc998ContractTemplate.GRADED:
-      return ERC998GradedSol.bytecode;
+      return ERC998UpgradeableSol.bytecode;
     case Erc998ContractTemplate.RANDOM:
       return ERC998RandomSol.bytecode;
     default:

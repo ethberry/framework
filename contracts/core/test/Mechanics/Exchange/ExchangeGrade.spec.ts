@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC20Simple, ERC721Graded, Exchange } from "../../../typechain-types";
+import { ERC20Simple, ERC721Upgradeable, Exchange } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -21,7 +21,7 @@ import { wrapOneToManySignature } from "./shared/utils";
 describe("ExchangeGrade", function () {
   let exchangeInstance: Exchange;
   let erc20Instance: ERC20Simple;
-  let erc721Instance: ERC721Graded;
+  let erc721Instance: ERC721Upgradeable;
   let network: Network;
 
   let generateSignature: (values: Record<string, any>) => Promise<string>;
@@ -36,7 +36,7 @@ describe("ExchangeGrade", function () {
     erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
     // await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Graded");
+    const erc721Factory = await ethers.getContractFactory("ERC721Upgradeable");
     erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 

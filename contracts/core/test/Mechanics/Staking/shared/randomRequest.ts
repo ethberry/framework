@@ -2,10 +2,10 @@ import { ethers } from "hardhat";
 import { BigNumber } from "ethers";
 import { expect } from "chai";
 
-import { ERC721RandomTest, VRFCoordinatorMock } from "../../../../typechain-types";
+import { ERC721RandomHardhat, VRFCoordinatorMock } from "../../../../typechain-types";
 
 export async function randomRequest(
-  rndInstance: ERC721RandomTest,
+  rndInstance: ERC721RandomHardhat,
   vrfInstance: VRFCoordinatorMock,
   finalBalance: number,
 ) {

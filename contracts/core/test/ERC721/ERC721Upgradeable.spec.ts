@@ -16,11 +16,11 @@ import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
 import { shouldGetTokenURI } from "./shared/tokenURI";
 import { shouldSetBaseURI } from "./shared/setBaseURI";
 
-describe("ERC721Graded", function () {
+describe("ERC721Upgradeable", function () {
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Graded");
+    const erc721Factory = await ethers.getContractFactory("ERC721Upgradeable");
     this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");

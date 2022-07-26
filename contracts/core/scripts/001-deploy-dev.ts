@@ -53,10 +53,10 @@ async function deployERC721() {
   const erc721BlacklistFactory = await ethers.getContractFactory("ERC721Blacklist");
   contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
 
-  const erc721GradedFactory = await ethers.getContractFactory("ERC721Graded");
-  contracts.erc721Graded = await erc721GradedFactory.deploy("Skill", "SKILL", royalty, baseTokenURI);
+  const ERC721UpgradeableFactory = await ethers.getContractFactory("ERC721Upgradeable");
+  contracts.ERC721Upgradeable = await ERC721UpgradeableFactory.deploy("Skill", "SKILL", royalty, baseTokenURI);
 
-  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomTest");
+  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
   contracts.erc721Random = await erc721RandomFactory.deploy("Item", "ITEM", royalty, baseTokenURI);
 }
 

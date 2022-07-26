@@ -8,12 +8,11 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
+import "../ERC721Upgradeable.sol";
+import "../interfaces/IERC721Random.sol";
+import "../../MOCKS/ChainLink/ERC721ChainLinkBesu.sol";
 
-import "./ERC721Upgradeable.sol";
-import "./interfaces/IERC721Random.sol";
-
-contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeable {
+contract ERC721RandomBesu is IERC721Random, ERC721ChainLinkBesu, ERC721Upgradeable {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -35,7 +34,7 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeabl
     override(IERC721Simple, ERC721Upgradeable)
     onlyRole(MINTER_ROLE)
   {
-    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId != 0, "ERC721RandomHardhat: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();

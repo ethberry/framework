@@ -6,8 +6,8 @@
 
 pragma solidity ^0.8.9;
 
-import "./IERC721Graded.sol";
+import "./IERC721Upgradeable.sol";
 
-interface IERC721Random is IERC721Graded {
+interface IERC721Random is IERC721Upgradeable {
   function mintRandom(address to, uint256 templateId) external;
 }

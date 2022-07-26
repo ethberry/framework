@@ -7,7 +7,7 @@ import {
   ERC1155Simple,
   ERC20Simple,
   ERC721Lootbox,
-  ERC721RandomTest,
+  ERC721RandomHardhat,
   ERC721Simple,
   LinkErc20,
   Staking,
@@ -33,7 +33,7 @@ import { randomRequest } from "./shared/randomRequest";
 
 describe("Staking", function () {
   let stakingInstance: Staking;
-  let erc721RandomInstance: ERC721RandomTest;
+  let erc721RandomInstance: ERC721RandomHardhat;
   let lootboxInstance: ERC721Lootbox;
   let erc721SimpleInstance: ERC721Simple;
   let erc20Instance: ERC20Simple;
@@ -90,7 +90,7 @@ describe("Staking", function () {
     const simple721Factory = await ethers.getContractFactory("ERC721Simple");
     erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", royalty, baseTokenURI);
     // ERC721 Random
-    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomTest");
+    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomBesu");
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
     // ERC721 Lootbox
     const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");

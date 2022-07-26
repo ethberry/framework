@@ -7,7 +7,7 @@ async function main() {
   const [_owner] = await ethers.getSigners();
 
   // ERC721 contract - graded
-  const itemFactory = await ethers.getContractFactory("ERC721Graded");
+  const itemFactory = await ethers.getContractFactory("ERC721Upgradeable");
   const itemInstance = await itemFactory.deploy("ITEMG", "ITEMG", rlNum, "http://localhost:3011/erc721/1/");
   console.info(`ERC721_G_ADDR=${itemInstance.address.toLowerCase()}`);
 

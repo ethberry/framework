@@ -32,6 +32,6 @@ abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessCont
 
     emit Upgrade(account, params.externalId, item, ingredients);
 
-    IERC721Graded(item.token).upgrade(item.tokenId);
+    IERC721Upgradeable(item.token).upgrade(item.tokenId);
   }
 }

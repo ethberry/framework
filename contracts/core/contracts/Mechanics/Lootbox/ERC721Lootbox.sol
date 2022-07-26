@@ -34,7 +34,7 @@ contract ERC721Lootbox is IERC721Lootbox, ERC721Simple, ExchangeUtils {
     address to,
     uint256 templateId,
     Asset[] memory items
-  ) public onlyRole(MINTER_ROLE) {
+  ) external onlyRole(MINTER_ROLE) {
     require(templateId != 0, "Lootbox: wrong item");
     require(items.length > 0, "Lootbox: no content");
 

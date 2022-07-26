@@ -10,10 +10,10 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
 
-import "../ERC721/ERC721Graded.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
+import "./ERC998Upgradeable.sol";
 
-contract ERC998Random is IERC721Random, ERC721ChainLinkBinance, ERC721Graded {
+contract ERC998Random is IERC721Random, ERC721ChainLinkBinance, ERC998Upgradeable {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -28,14 +28,14 @@ contract ERC998Random is IERC721Random, ERC721ChainLinkBinance, ERC721Graded {
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721Graded(name, symbol, royalty, baseTokenURI) {}
+  ) ERC998Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address to, uint256 templateId)
-    public
-    override(IERC721Simple, ERC721Graded)
+  external
+    override(IERC721Simple, ERC998Upgradeable)
     onlyRole(MINTER_ROLE)
   {
-    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId != 0, "ERC998Random: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();

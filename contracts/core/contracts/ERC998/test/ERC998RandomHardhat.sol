@@ -8,12 +8,11 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
+import "../ERC998Upgradeable.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
+import "../../MOCKS/ChainLink/ERC721ChainLinkHardhat.sol";
 
-import "./ERC721Upgradeable.sol";
-import "./interfaces/IERC721Random.sol";
-
-contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeable {
+contract ERC998RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC998Upgradeable {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -28,14 +27,14 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeabl
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721Upgradeable(name, symbol, royalty, baseTokenURI) {}
+  ) ERC998Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address to, uint256 templateId)
-    public
-    override(IERC721Simple, ERC721Upgradeable)
+  external
+    override(IERC721Simple, ERC998Upgradeable)
     onlyRole(MINTER_ROLE)
   {
-    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId != 0, "ERC998RandomHardhat: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
