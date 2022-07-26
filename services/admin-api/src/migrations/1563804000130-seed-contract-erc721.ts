@@ -8,14 +8,13 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
-    const erc721ContractGradedAddress = process.env.ERC721_GRADED_ADDR || wallet;
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
     const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR || wallet;
     const erc721ContractNewAddress = process.env.ERC721_NEW_ADDR || wallet;
+    const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
+    const erc721ContractUpgradeableAddress = process.env.ERC721_UPGRADEABLE_ADDR || wallet;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 11 - RANDOM, 12 - GRADED, 13 - SIMPLE, 14 - BLACKLIST, 15 - INACTIVE, 16 - NEW
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -35,38 +34,6 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         updated_at
       ) VALUES (
         11,
-        '${erc721ContractRandomAddress}',
-        '${chainId}',
-        'ITEMS',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'ITEMS',
-        'ITEM721',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC721',
-        'RANDOM',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        12,
-        '${erc721ContractGradedAddress}',
-        '${chainId}',
-        'SKILLS',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'SKILLS',
-        'SKIL721',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC721',
-        'GRADED',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13,
         '${erc721ContractSimpleAddress}',
         '${chainId}',
         'RUNES',
@@ -77,6 +44,38 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         100,
         '${baseTokenURI}',
         'ACTIVE',
+        'ERC721',
+        'SIMPLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        12,
+        '${erc721ContractInactiveAddress}',
+        '${chainId}',
+        'INACTIVE',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'INACTIVE',
+        'INACTIVE721',
+        100,
+        '${baseTokenURI}',
+        'INACTIVE',
+        'ERC721',
+        'SIMPLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13,
+        '${erc721ContractNewAddress}',
+        '${chainId}',
+        'NEW',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'NEW',
+        'NEW721',
+        100,
+        '${baseTokenURI}',
+        'NEW',
         'ERC721',
         'SIMPLE',
         '${currentDateTime}',
@@ -99,34 +98,34 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         15,
-        '${erc721ContractInactiveAddress}',
+        '${erc721ContractUpgradeableAddress}',
         '${chainId}',
-        'INACTIVE',
+        'SKILLS',
         '${simpleFormatting}',
         '${imageUrl}',
-        'INACTIVE',
-        'INACTIVE721',
+        'SKILLS',
+        'SKIL721',
         100,
         '${baseTokenURI}',
-        'INACTIVE',
+        'ACTIVE',
         'ERC721',
-        'SIMPLE',
+        'UPGRADEABLE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         16,
-        '${erc721ContractNewAddress}',
+        '${erc721ContractRandomAddress}',
         '${chainId}',
-        'NEW',
+        'ITEMS',
         '${simpleFormatting}',
         '${imageUrl}',
-        'NEW',
-        'NEW721',
+        'ITEMS',
+        'ITEM721',
         100,
         '${baseTokenURI}',
-        'NEW',
+        'ACTIVE',
         'ERC721',
-        'SIMPLE',
+        'RANDOM',
         '${currentDateTime}',
         '${currentDateTime}'
       )

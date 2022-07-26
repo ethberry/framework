@@ -33,7 +33,7 @@ export class SeedStakingRules1654751224210 implements MigrationInterface {
         80101
       ), (
         'ERC721',
-        11,
+        16,
         13208, -- yellow pants
         1,
         80102

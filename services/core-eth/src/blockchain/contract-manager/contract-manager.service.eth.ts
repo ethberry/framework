@@ -139,7 +139,7 @@ export class ContractManagerServiceEth {
       ~~templateId === 0
         ? Object.values(ContractTemplate)[1] // Simple
         : ~~templateId === 1
-        ? Object.values(ContractTemplate)[5] // Graded
+        ? Object.values(ContractTemplate)[5] // Upgradeable
         : Object.values(ContractTemplate)[6]; // Random
 
     const contractEntity = await this.contractService.create({
@@ -156,7 +156,7 @@ export class ContractManagerServiceEth {
       baseTokenURI,
     });
 
-    if (contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM) {
+    if (contractTemplate === ContractTemplate.UPGRADEABLE || contractTemplate === ContractTemplate.RANDOM) {
       await this.gradeService.create({ contract: contractEntity });
     }
 
@@ -194,7 +194,7 @@ export class ContractManagerServiceEth {
       baseTokenURI,
     });
 
-    if (contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM) {
+    if (contractTemplate === ContractTemplate.UPGRADEABLE || contractTemplate === ContractTemplate.RANDOM) {
       await this.gradeService.create({ contract: contractEntity });
     }
 

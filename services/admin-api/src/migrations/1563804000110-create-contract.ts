@@ -28,7 +28,7 @@ export class CreateContract1563804000110 implements MigrationInterface {
         'BLACKLIST',
         'EXTERNAL',
         'NATIVE',
-        'GRADED',
+        'UPGRADEABLE',
         'RANDOM'
       );
     `);

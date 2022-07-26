@@ -261,7 +261,7 @@ export class ContractManagerSignService {
         return ERC721Simple.bytecode;
       case Erc721ContractTemplate.BLACKLIST:
         return ERC721BlackList.bytecode;
-      case Erc721ContractTemplate.GRADED:
+      case Erc721ContractTemplate.UPGRADEABLE:
         return ERC721Upgradeable.bytecode;
       case Erc721ContractTemplate.RANDOM:
         return ERC721Random.bytecode;
@@ -277,7 +277,7 @@ export class ContractManagerSignService {
         return ERC998Simple.bytecode;
       case Erc998ContractTemplate.BLACKLIST:
         return ERC998BlackList.bytecode;
-      case Erc998ContractTemplate.GRADED:
+      case Erc998ContractTemplate.UPGRADEABLE:
         return ERC998Upgradeable.bytecode;
       case Erc998ContractTemplate.RANDOM:
         return ERC998Random.bytecode;

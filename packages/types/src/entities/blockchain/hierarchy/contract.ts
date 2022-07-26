@@ -21,7 +21,7 @@ export enum Erc20ContractTemplate {
 export enum Erc721ContractTemplate {
   "SIMPLE" = "SIMPLE", // ACBER
   "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
-  "GRADED" = "GRADED", // ACBER + METADATA
+  "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
   // MODULE:LOOTBOX
   "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack
@@ -30,7 +30,7 @@ export enum Erc721ContractTemplate {
 export enum Erc998ContractTemplate {
   "SIMPLE" = "SIMPLE", // ACBER
   "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
-  "GRADED" = "GRADED", // ACBER + METADATA
+  "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
 }
 
@@ -46,7 +46,7 @@ export enum ContractTemplate {
   "BLACKLIST" = "BLACKLIST",
   "EXTERNAL" = "EXTERNAL",
   "NATIVE" = "NATIVE",
-  "GRADED" = "GRADED",
+  "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
   // MODULE:LOOTBOX
   "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack

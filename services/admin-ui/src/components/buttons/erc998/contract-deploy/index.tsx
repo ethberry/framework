@@ -17,7 +17,7 @@ function getBytecodeByErc998TokenTemplate(template: Erc998ContractTemplate) {
   switch (template) {
     case Erc998ContractTemplate.SIMPLE:
       return ERC998SimpleSol.bytecode;
-    case Erc998ContractTemplate.GRADED:
+    case Erc998ContractTemplate.UPGRADEABLE:
       return ERC998UpgradeableSol.bytecode;
     case Erc998ContractTemplate.RANDOM:
       return ERC998RandomSol.bytecode;

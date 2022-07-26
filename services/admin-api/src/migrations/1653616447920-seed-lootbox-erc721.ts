@@ -43,7 +43,7 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        11,
+        16,
         13101, -- sword
         '1',
         60101
@@ -55,7 +55,7 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         60102
       ), (
         'ERC998',
-        21,
+        26,
         14101, -- warrior
         '1',
         60201
@@ -79,13 +79,13 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         60302
       ), (
         'ERC721',
-        11,
+        16,
         13101, -- sword
         '1',
         60401
       ), (
         'ERC998',
-        21,
+        26,
         14101, -- warrior
         '1',
         60401
@@ -103,7 +103,7 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
         60402
       ), (
         'ERC721',
-        11,
+        16,
         13101, -- sword
         '1',
         60501

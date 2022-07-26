@@ -101,7 +101,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
     await metaFn();
   };
 
-  if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
+  if (!(contractTemplate === ContractTemplate.UPGRADEABLE || contractTemplate === ContractTemplate.RANDOM)) {
     return null;
   }
 

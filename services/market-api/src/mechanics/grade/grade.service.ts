@@ -69,7 +69,7 @@ export class GradeService {
     }
 
     const { contractTemplate } = tokenEntity.template.contract;
-    if (!(contractTemplate === ContractTemplate.GRADED || contractTemplate === ContractTemplate.RANDOM)) {
+    if (!(contractTemplate === ContractTemplate.UPGRADEABLE || contractTemplate === ContractTemplate.RANDOM)) {
       throw new BadRequestException("incompatibleContractTemplate");
     }
 

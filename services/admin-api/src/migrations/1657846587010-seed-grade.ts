@@ -16,6 +16,8 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         90102
       ), (
         90201
+      ), (
+        90202
       );
     `);
 
@@ -44,6 +46,12 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         15101, -- gold
         '1000',
         90201
+      ), (
+        'ERC1155',
+        31,
+        15101, -- gold
+        '1000',
+        90202
       );
     `);
 
@@ -59,21 +67,28 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         'FLAT',
         0,
         90101,
-        11,
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'EXPONENTIAL',
+        0,
+        90102,
+        16,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'LINEAR',
-        0,
-        90102,
-        12,
+        1,
+        90201,
+        25,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
         1,
-        90201,
-        21,
+        90202,
+        26, -- hero
         '${currentDateTime}',
         '${currentDateTime}'
       );
