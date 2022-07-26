@@ -32,11 +32,13 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
     imageUrl,
   };
 
+  const message = id ? "dialogs.edit" : "dialogs.create";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
-      message={"dialogs.edit"}
+      message={message}
       data-testid="Erc1155TokenEditDialog"
       {...rest}
     >

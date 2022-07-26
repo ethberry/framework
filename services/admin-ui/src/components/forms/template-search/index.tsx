@@ -23,6 +23,8 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
   const { query, templateStatus, contractIds } = initialValues;
   const fixedValues = { query, templateStatus, contractIds };
 
+  const testIdPrefix = "TemplateSearchForm";
+
   return (
     <FormWrapper
       initialValues={fixedValues}
@@ -30,20 +32,31 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="TemplateSearchForm"
+      data-testid={testIdPrefix}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="query" data-testid={`${testIdPrefix}-query`} />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
+            <EntityInput
+              name="contractIds"
+              controller="contracts"
+              multiple
+              data={{ contractType }}
+              data-testid={`${testIdPrefix}-contractIds`}
+            />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="templateStatus" options={TemplateStatus} />
+            <SelectInput
+              multiple
+              name="templateStatus"
+              options={TemplateStatus}
+              data-testid={`${testIdPrefix}-templateStatus`}
+            />
           </Grid>
         </Grid>
       </Collapse>

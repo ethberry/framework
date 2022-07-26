@@ -10,7 +10,7 @@ import { Erc1155ContractTemplate, IErc1155ContractDeployDto } from "@framework/t
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
-import { Erc1155TokenDeployDialog } from "./deploy-dialog";
+import { Erc1155ContractDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc1155TokenTemplate(template: Erc1155ContractTemplate) {
   switch (template) {
@@ -73,7 +73,11 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc1155TokenDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <Erc1155ContractDeployDialog
+        onConfirm={onDeployConfirm}
+        onCancel={handleDeployCancel}
+        open={isDeployDialogOpen}
+      />
     </Fragment>
   );
 };

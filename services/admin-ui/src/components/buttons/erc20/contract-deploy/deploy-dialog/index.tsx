@@ -14,7 +14,7 @@ export interface IErc20TokenDeployDialogProps {
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
 }
 
-export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props => {
+export const Erc20ContractDeployDialog: FC<IErc20TokenDeployDialogProps> = props => {
   const fixedValues: IErc20TokenDeployDto = {
     contractTemplate: Erc20ContractTemplate.SIMPLE,
     name: "",
@@ -22,22 +22,25 @@ export const Erc20TokenDeployDialog: FC<IErc20TokenDeployDialogProps> = props =>
     cap: constants.WeiPerEther.mul(1e6).toString(),
   };
 
+  const testIdPrefix = "Erc20ContractDeployForm";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid="Erc20TokenDeployDialog"
+      data-testid={testIdPrefix}
       {...props}
     >
       <SelectInput
         name="contractTemplate"
         options={Erc20ContractTemplate}
         disabledOptions={[Erc20ContractTemplate.EXTERNAL, Erc20ContractTemplate.NATIVE]}
+        data-testid={`${testIdPrefix}-contractTemplate`}
       />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <EthInput name="cap" />
+      <TextInput name="name" data-testid={`${testIdPrefix}-name`} />
+      <TextInput name="symbol" data-testid={`${testIdPrefix}-symbol`} />
+      <EthInput name="cap" data-testid={`${testIdPrefix}-cap`} />
     </FormDialog>
   );
 };

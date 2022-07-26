@@ -11,7 +11,7 @@ import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/Co
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
-import { Erc20TokenDeployDialog } from "./deploy-dialog";
+import { Erc20ContractDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc20TokenTemplate(template: Erc20ContractTemplate) {
   switch (template) {
@@ -76,7 +76,7 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc20TokenDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <Erc20ContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );
 };

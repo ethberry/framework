@@ -22,6 +22,8 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
   const { query, contractStatus, contractTemplate } = initialValues;
   const fixedValues = { query, contractStatus, contractTemplate };
 
+  const testIdPrefix = "ContractSearchForm";
+
   return (
     <FormWrapper
       initialValues={fixedValues}
@@ -29,20 +31,30 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="ContractSearchForm"
+      data-testid={testIdPrefix}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="query" data-testid={`${testIdPrefix}-query`} />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <SelectInput name="contractStatus" options={ContractStatus} multiple />
+            <SelectInput
+              name="contractStatus"
+              options={ContractStatus}
+              multiple
+              data-testid={`${testIdPrefix}-contractStatus`}
+            />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput name="contractTemplate" options={contractTemplateOptions} multiple />
+            <SelectInput
+              name="contractTemplate"
+              options={contractTemplateOptions}
+              multiple
+              data-testid={`${testIdPrefix}-contractTemplate`}
+            />
           </Grid>
         </Grid>
       </Collapse>

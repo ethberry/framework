@@ -13,24 +13,30 @@ export interface IErc1155TokenDeployDialogProps {
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
 }
 
-export const Erc1155TokenDeployDialog: FC<IErc1155TokenDeployDialogProps> = props => {
+export const Erc1155ContractDeployDialog: FC<IErc1155TokenDeployDialogProps> = props => {
   const fixedValues: IErc1155ContractDeployDto = {
     contractTemplate: Erc1155ContractTemplate.SIMPLE,
     baseTokenURI: `${process.env.BE_URL}/metadata`,
     royalty: 0,
   };
 
+  const testIdPrefix = "Erc1155ContractDeployForm";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid="Erc1155TokenDeployDialog"
+      data-testid={testIdPrefix}
       {...props}
     >
-      <SelectInput name="contractTemplate" options={Erc1155ContractTemplate} />
-      <TextInput name="baseTokenURI" />
-      <CurrencyInput name="royalty" symbol="%" />
+      <SelectInput
+        name="contractTemplate"
+        options={Erc1155ContractTemplate}
+        data-testid={`${testIdPrefix}-contractTemplate`}
+      />
+      <TextInput name="baseTokenURI" data-testid={`${testIdPrefix}-baseTokenURI`} />
+      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-royalty`} />
     </FormDialog>
   );
 };
