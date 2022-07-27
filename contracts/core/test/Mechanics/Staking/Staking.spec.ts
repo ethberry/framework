@@ -23,8 +23,6 @@ import {
   PAUSER_ROLE,
   royalty,
   templateId,
-  tokenName,
-  tokenSymbol,
   VRF_ADDR,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
