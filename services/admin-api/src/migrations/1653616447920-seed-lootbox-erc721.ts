@@ -34,6 +34,8 @@ export class SeedLootboxErc721At1653616447920 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 60502, true);`);
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

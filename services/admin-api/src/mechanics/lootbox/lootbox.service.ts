@@ -145,10 +145,10 @@ export class LootboxService {
     const contractEntity = await this.contractService.findOne({ address: process.env.LOOTBOX_ADDR });
 
     if (!contractEntity) {
-      throw new NotFoundException("lootboxNotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
-    await this.templateService.create({
+    const templateEntity = await this.templateService.create({
       title: dto.title,
       description: dto.description,
       price: priceEntity,
@@ -157,7 +157,7 @@ export class LootboxService {
       contractId: contractEntity.id,
     });
 
-    return this.lootboxEntityRepository.create(dto).save();
+    return this.lootboxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
   public async delete(where: FindOptionsWhere<LootboxEntity>): Promise<LootboxEntity> {

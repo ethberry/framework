@@ -21,6 +21,8 @@ export class SeedGrade1657846587010 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 90202, true);`);
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

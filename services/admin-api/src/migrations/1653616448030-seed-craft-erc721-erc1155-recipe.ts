@@ -16,6 +16,8 @@ export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface
       );
     `);
 
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 70202, true);`);
+
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
         token_type,

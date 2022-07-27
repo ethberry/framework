@@ -23,6 +23,8 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 16105, true);`);
+
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,
@@ -99,7 +101,7 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 16102, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 16105, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

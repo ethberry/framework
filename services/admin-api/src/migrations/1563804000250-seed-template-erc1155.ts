@@ -30,6 +30,8 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 15203, true);`);
+
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,

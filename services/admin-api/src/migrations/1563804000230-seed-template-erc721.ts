@@ -47,6 +47,8 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 13403, true);`);
+
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,
@@ -267,7 +269,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 20403, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 13208, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
