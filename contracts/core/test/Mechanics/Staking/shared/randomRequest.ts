@@ -13,19 +13,20 @@ export async function randomRequest(
   const events = await rndInstance.queryFilter(eventFilter);
   let requestId: string;
   const [owner] = await ethers.getSigners();
+  const oldBalance = await rndInstance.balanceOf(owner.address);
   if (events && events.length) {
     events.map(async (event, indx) => {
       if (events[indx].args) {
         requestId = events[indx]!.args[0]!;
         expect(requestId);
-        const txrnd = vrfInstance.callBackWithRandomness(
+        const txrnd = await vrfInstance.callBackWithRandomness(
           requestId,
           BigNumber.from(ethers.utils.randomBytes(32)),
           rndInstance.address,
         );
         await expect(txrnd).to.emit(rndInstance, "Transfer");
         const balance = await rndInstance.balanceOf(owner.address);
-        expect(balance).to.equal(finalBalance + indx);
+        expect(balance.sub(oldBalance)).to.equal(finalBalance);
       }
     });
   }

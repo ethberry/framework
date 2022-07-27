@@ -71,4 +71,8 @@ contract ERC721Lootbox is IERC721Lootbox, ERC721Simple, ExchangeUtils {
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Lootbox).interfaceId || super.supportsInterface(interfaceId);
   }
+
+  function getInterface() public view returns (bytes4) {
+    return type(IERC721Lootbox).interfaceId;
+  }
 }

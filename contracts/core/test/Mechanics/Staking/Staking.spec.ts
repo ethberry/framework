@@ -1,6 +1,6 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
-import { ethers, waffle, web3 } from "hardhat";
+import { ethers, waffle, web3, network } from "hardhat";
 import { BigNumber } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
@@ -62,15 +62,17 @@ describe("Staking", function () {
 
   async function deployLinkVrfFixture() {
     const [owner] = await ethers.getSigners();
-
+    await network.provider.send("hardhat_reset");
     // Deploy Chainlink & Vrf contracts
     const link = await ethers.getContractFactory("LinkErc20");
     const linkInstance = await link.deploy(tokenName, tokenSymbol);
+    await linkInstance.deployed();
     console.info(`LINK_ADDR=${linkInstance.address}`);
     const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
     await linkInstance.mint(owner.address, linkAmountInWei);
     const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
     const vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    await vrfInstance.deployed();
     console.info(`VRF_ADDR=${vrfInstance.address}`);
     return { linkInstance, vrfInstance };
   }
@@ -651,7 +653,7 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
 
-    it("should stake NATIVE & receive ERC721 Random", async function () {
+    it.only("should stake NATIVE & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
         deposit: nativeDeposit,
@@ -680,7 +682,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, 2);
       // DEPOSIT
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
