@@ -61,7 +61,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/erc721-token",
+        url: "/contract-manager/erc721",
         method: "POST",
         data: values,
       },
