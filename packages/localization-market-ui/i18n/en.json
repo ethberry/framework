@@ -52,6 +52,11 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
+    "stakeStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
+    },
     "tokenType": {
       "ERC1155": "ERC1155",
       "ERC20": "ERC20",
@@ -111,6 +116,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "account": "Account",
       "address": "Address",
       "amount": "Amount",
       "collectionId": "Collection",
@@ -137,6 +143,7 @@
       "reward": "Reward",
       "roles": "Roles",
       "sort": "Sort by",
+      "stakeStatus": "Status",
       "stakingStatus": "Status",
       "startDate": "Start date",
       "status": "Status",
@@ -261,8 +268,8 @@
       },
       "staking": {
         "leaderboard": "Staking leaderboard",
-        "reward": "Staking reward",
         "rules": "Staking rules",
+        "stakes": "My stakes",
         "title": "Staking"
       },
       "title": "Dashboard"
@@ -389,12 +396,12 @@
         "score": "Score",
         "title": "Leaderboard"
       },
-      "reward": {
-        "title": "Reward"
-      },
       "rules": {
         "deposit": "Deposit",
         "title": "Staking rules"
+      },
+      "stakes": {
+        "title": "My Stakes"
       },
       "title": "Staking"
     },

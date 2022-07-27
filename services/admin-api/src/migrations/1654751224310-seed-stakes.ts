@@ -28,6 +28,76 @@ export class SeedStakes1654751224310 implements MigrationInterface {
         1,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        '${wallet}',
+        'ACTIVE',
+        2,
+        '${currentDateTime}',
+        '${currentDateTime}',
+        1, -- NATIVE > NATIVE
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        'ACTIVE',
+        3,
+        '${currentDateTime}',
+        '${currentDateTime}',
+        1, -- NATIVE > NATIVE
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        'CANCELED',
+        4,
+        '${currentDateTime}',
+        '${currentDateTime}',
+        1, -- NATIVE > NATIVE
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        'COMPLETE',
+        5,
+        '${currentDateTime}',
+        '${currentDateTime}',
+        1, -- NATIVE > NATIVE
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        'ACTIVE',
+        6,
+        '${currentDateTime}',
+        '${currentDateTime}',
+        8, -- ERC20 > ERC721
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        'ACTIVE',
+        7,
+        '${currentDateTime}',
+        '${currentDateTime}',
+        9, -- ERC20 > ERC998
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        'ACTIVE',
+        8,
+        '${currentDateTime}',
+        '${currentDateTime}',
+        10, -- ERC20 > ERC1155
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

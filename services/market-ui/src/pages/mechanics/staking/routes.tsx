@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { StakingRules } from "./rules";
 import { Leaderboard } from "./leaderboard";
-import { Reward } from "./reward";
+import { Stakes } from "./stakes";
 
 export const stakingRoutes: Array<RouteObject> = [
   {
@@ -17,7 +17,13 @@ export const stakingRoutes: Array<RouteObject> = [
         ],
       },
       { path: "/staking/leaderboard", element: <Leaderboard /> },
-      { path: "/staking/reward", element: <Reward /> },
+      {
+        path: "/staking/stakes",
+        children: [
+          { index: true, element: <Stakes /> },
+          { path: "/staking/stakes/:id", element: <Stakes /> },
+        ],
+      },
     ],
   },
 ];

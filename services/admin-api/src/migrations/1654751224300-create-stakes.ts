@@ -7,7 +7,8 @@ export class CreateStakes1654751224300 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.stake_status_enum AS ENUM (
         'ACTIVE',
-        'FINISH'
+        'CANCELED',
+        'COMPLETE'
       );
     `);
 

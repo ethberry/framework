@@ -35,6 +35,7 @@ export class StakingStakesService {
     const { stakeStatus, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
+    queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
 
     queryBuilder.select();
 
@@ -72,5 +73,24 @@ export class StakingStakesService {
     queryBuilder.orderBy("stake.createdAt", "DESC");
 
     return queryBuilder.getManyAndCount();
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<StakingStakesEntity>): Promise<StakingStakesEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "stake",
+        leftJoinAndSelect: {
+          rule: "stake.stakingRule",
+          deposit: "rule.deposit",
+          deposit_components: "deposit.components",
+          deposit_contract: "deposit_components.contract",
+          deposit_template: "deposit_components.template",
+          reward: "rule.reward",
+          reward_components: "reward.components",
+          reward_contract: "reward_components.contract",
+          reward_template: "reward_components.template",
+        },
+      },
+    });
   }
 }

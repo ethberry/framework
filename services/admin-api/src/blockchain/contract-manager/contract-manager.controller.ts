@@ -7,7 +7,6 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { ContractManagerSignService } from "./contract-manager.sign.service";
 import { ContractManagerEntity } from "./contract-manager.entity";
 import { ContractManagerService } from "./contract-manager.service";
-
 import {
   ContractManagerCreateDto,
   ContractManagerSearchDto,

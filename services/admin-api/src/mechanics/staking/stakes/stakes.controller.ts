@@ -21,6 +21,6 @@ export class StakingStakesController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingStakesEntity | null> {
-    return this.stakesService.findOne({ id });
+    return this.stakesService.findOneWithRelations({ id });
   }
 }

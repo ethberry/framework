@@ -30,24 +30,43 @@ export class StakingStakesService {
   public async search(dto: IStakingStakesSearchDto): Promise<[Array<StakingStakesEntity>, number]> {
     const { stakeStatus, skip, take } = dto;
 
-    const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stakes");
-    queryBuilder.leftJoinAndSelect("stakes.stakingRule", "rule");
+    const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
+    queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
 
     queryBuilder.select();
 
     if (stakeStatus) {
       if (stakeStatus.length === 1) {
-        queryBuilder.andWhere("stakes.stakeStatus = :stakeStatus", { stakeStatus: stakeStatus[0] });
+        queryBuilder.andWhere("stake.stakeStatus = :stakeStatus", { stakeStatus: stakeStatus[0] });
       } else {
-        queryBuilder.andWhere("stakes.stakeStatus IN(:...stakeStatus)", { stakeStatus });
+        queryBuilder.andWhere("stake.stakeStatus IN(:...stakeStatus)", { stakeStatus });
       }
     }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
-    queryBuilder.orderBy("stakes.createdAt", "DESC");
+    queryBuilder.orderBy("stake.createdAt", "DESC");
 
     return queryBuilder.getManyAndCount();
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<StakingStakesEntity>): Promise<StakingStakesEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "stake",
+        leftJoinAndSelect: {
+          rule: "stake.stakingRule",
+          deposit: "rule.deposit",
+          deposit_components: "deposit.components",
+          deposit_contract: "deposit_components.contract",
+          deposit_template: "deposit_components.template",
+          reward: "rule.reward",
+          reward_components: "reward.components",
+          reward_contract: "reward_components.contract",
+          reward_template: "reward_components.template",
+        },
+      },
+    });
   }
 }

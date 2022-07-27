@@ -23,12 +23,12 @@ export const Staking: FC = () => {
             <FormattedMessage id="pages.dashboard.staking.rules" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/staking/reward">
+        <ListItem button component={RouterLink} to="/staking/stakes">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.staking.reward" />
+            <FormattedMessage id="pages.dashboard.staking.stakes" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking/leaderboard">

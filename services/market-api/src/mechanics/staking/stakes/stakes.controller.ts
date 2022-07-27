@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { AddressPipe, ApiAddress, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { StakingStakesEntity } from "./stakes.entity";
 import { StakingStakesService } from "./stakes.service";
@@ -22,9 +22,12 @@ export class StakingStakesController {
     return this.stakesService.search(dto, userEntity);
   }
 
-  @ApiAddress("address")
-  @Get("/:address")
-  public findOne(@Param("address", AddressPipe) account: string): Promise<Array<StakingStakesEntity>> {
-    return this.stakesService.findAll({ account });
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(
+    @Param("id", ParseIntPipe) id: number,
+    @User() userEntity: UserEntity,
+  ): Promise<StakingStakesEntity | null> {
+    return this.stakesService.findOneWithRelations({ id, account: userEntity.wallet });
   }
 }

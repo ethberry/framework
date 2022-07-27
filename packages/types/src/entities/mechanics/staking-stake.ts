@@ -3,7 +3,8 @@ import { IStakingRule } from "./staking-rule";
 
 export enum StakeStatus {
   ACTIVE = "ACTIVE",
-  INACTIVE = "FINISH",
+  CANCELED = "CANCELED",
+  COMPLETE = "COMPLETE",
 }
 
 export interface IStakingStake extends IIdDateBase {
@@ -14,5 +15,5 @@ export interface IStakingStake extends IIdDateBase {
   withdrawTimestamp: string;
   multiplier: number;
   stakingRuleId: number;
-  stakingRule: IStakingRule;
+  stakingRule?: IStakingRule;
 }
