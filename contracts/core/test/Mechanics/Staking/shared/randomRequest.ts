@@ -24,7 +24,6 @@ export async function randomRequest(
           rndInstance.address,
         );
         await expect(txrnd).to.emit(rndInstance, "Transfer");
-        await expect(txrnd).to.emit(rndInstance, "MintRandom");
         const balance = await rndInstance.balanceOf(owner.address);
         expect(balance).to.equal(finalBalance + indx);
       }

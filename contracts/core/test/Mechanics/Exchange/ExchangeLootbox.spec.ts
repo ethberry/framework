@@ -15,7 +15,7 @@ import {
   tokenName,
   tokenSymbol,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { wrapManyToManySignature } from "./shared/utils";
 
 describe("ExchangeLootbox", function () {

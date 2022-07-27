@@ -1,7 +1,9 @@
-import { expect } from "chai";
+import { expect, use } from "chai";
+import { solidity } from "ethereum-waffle";
 import { ethers, waffle, web3 } from "hardhat";
 import { BigNumber } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import {
   ERC1155Simple,
@@ -23,11 +25,15 @@ import {
   PAUSER_ROLE,
   royalty,
   templateId,
+  tokenName,
+  tokenSymbol,
   VRF_ADDR,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { IAsset, IRule } from "./interface/staking";
 import { randomRequest } from "./shared/randomRequest";
+
+use(solidity);
 
 describe("Staking", function () {
   let stakingInstance: Staking;
@@ -54,26 +60,28 @@ describe("Staking", function () {
   let linkInstance: LinkErc20;
   let vrfInstance: VRFCoordinatorMock;
 
-  before(async function () {
+  async function deployLinkVrfFixture() {
     const [owner] = await ethers.getSigners();
 
     // Deploy Chainlink & Vrf contracts
     const link = await ethers.getContractFactory("LinkErc20");
-    // linkInstance = await link.deploy(tokenName, tokenSymbol);
-    linkInstance = link.attach(LINK_ADDR);
+    const linkInstance = await link.deploy(tokenName, tokenSymbol);
     console.info(`LINK_ADDR=${linkInstance.address}`);
     const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
     await linkInstance.mint(owner.address, linkAmountInWei);
     const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    // vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    vrfInstance = vrfFactory.attach(VRF_ADDR);
+    const vrfInstance = await vrfFactory.deploy(linkInstance.address);
     console.info(`VRF_ADDR=${vrfInstance.address}`);
-    if (
-      linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-      vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-    ) {
-      console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-    }
+    return { linkInstance, vrfInstance };
+  }
+
+  before(async function () {
+    const linkVrf = await loadFixture(deployLinkVrfFixture);
+    linkInstance = linkVrf.linkInstance;
+    vrfInstance = linkVrf.vrfInstance;
+
+    expect(linkInstance.address).equal(LINK_ADDR);
+    expect(vrfInstance.address).equal(VRF_ADDR);
   });
 
   beforeEach(async function () {
@@ -90,7 +98,7 @@ describe("Staking", function () {
     const simple721Factory = await ethers.getContractFactory("ERC721Simple");
     erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", royalty, baseTokenURI);
     // ERC721 Random
-    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomHardhat"); // for test only
+    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomHardhat");
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
     // ERC721 Lootbox
     const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
@@ -223,7 +231,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.updateRule(2, false);
-      await expect(tx1).to.be.revertedWith(`Staking: rule does not exist`);
+      await expect(tx1).to.be.revertedWith("Staking: rule does not exist");
     });
 
     it("should set one Rule", async function () {
@@ -301,7 +309,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(2, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: rule doesn't exist'`);
+      await expect(tx1).to.be.revertedWith("Staking: rule doesn't exist");
     });
 
     it("should fail for not active rule", async function () {
@@ -319,7 +327,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: rule doesn't active'`);
+      await expect(tx1).to.be.revertedWith("Staking: rule doesn't active");
     });
 
     it("should fail for wrong pay amount", async function () {
@@ -337,7 +345,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: wrong amount'`);
+      await expect(tx1).to.be.revertedWith("Staking: wrong amount");
     });
 
     it("should fail for limit exceed", async function () {
@@ -357,7 +365,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: stake limit exceeded'`);
+      await expect(tx1).to.be.revertedWith("Staking: stake limit exceeded");
     });
 
     it("should stake NATIVE", async function () {
@@ -506,7 +514,7 @@ describe("Staking", function () {
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
       const tx2 = stakingInstance.connect(this.receiver).receiveReward(2, true, true);
-      await expect(tx2).to.be.revertedWith(`Staking: wrong staking id`);
+      await expect(tx2).to.be.revertedWith("Staking: wrong staking id");
     });
 
     it("should fail for not an owner", async function () {
@@ -536,7 +544,7 @@ describe("Staking", function () {
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
       const tx2 = stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.be.revertedWith(`Staking: not an owner`);
+      await expect(tx2).to.be.revertedWith("Staking: not an owner");
     });
 
     it("should fail for withdrawn already", async function () {
@@ -571,7 +579,7 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalance(this.receiver, nativeReward.amount.mul(2).add(nativeReward.amount));
 
       const tx3 = stakingInstance.connect(this.receiver).receiveReward(1, true, true);
-      await expect(tx3).to.be.revertedWith(`Staking: deposit withdrawn already`);
+      await expect(tx3).to.be.revertedWith("Staking: deposit withdrawn already");
     });
 
     it("should stake NATIVE & receive NATIVE", async function () {

@@ -18,7 +18,7 @@ import {
   tokenName,
   tokenSymbol,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { wrapOneToManySignature } from "./shared/utils";
 
 describe("ExchangeCore", function () {
