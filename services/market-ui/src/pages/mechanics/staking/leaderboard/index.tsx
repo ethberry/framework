@@ -43,8 +43,8 @@ export const Leaderboard: FC = () => {
       }
     },
     {
-      field: "secureWallet",
-      headerName: formatMessage({ id: "pages.staking.leaderboard.address" }),
+      field: "account",
+      headerName: formatMessage({ id: "pages.staking.leaderboard.account" }),
       sortable: false,
       flex: 1
     },

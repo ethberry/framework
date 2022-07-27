@@ -125,17 +125,44 @@ async function deployLootbox() {
   await contracts.erc1155Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
 }
 
+// MODULE:STAKING
+async function deployStaking() {
+  const stakingFactory = await ethers.getContractFactory("Staking");
+  const stakingInstance = await stakingFactory.deploy(10);
+
+  await stakingInstance.setRules([
+    {
+      externalId: 23,
+      deposit: {
+        tokenType: 1,
+        token: contracts.erc20Simple.address,
+        tokenId: 0,
+        amount: ethers.constants.WeiPerEther,
+      },
+      reward: {
+        tokenType: 2,
+        token: contracts.erc721Random.address,
+        tokenId: 13101,
+        amount: 1,
+      },
+      period: 30 * 84600,
+      penalty: 1,
+      recurrent: false,
+      active: true,
+    },
+  ]);
+
+  contracts.staking = stakingInstance;
+}
+
 async function deployModules() {
   await deployVesting();
   await deployLootbox();
+  await deployStaking();
 
   // MODULE:CLAIM
   const claimFactory = await ethers.getContractFactory("ClaimProxy");
   contracts.claimProxy = await claimFactory.deploy();
-
-  // MODULE:STAKING
-  const stakingFactory = await ethers.getContractFactory("Staking");
-  contracts.staking = await stakingFactory.deploy(10);
 }
 
 async function main() {

@@ -16,7 +16,7 @@ export class BalanceService {
     const queryBuilder = this.balanceEntityRepository.createQueryBuilder("balance");
     queryBuilder.select(["balance.amount"]);
 
-    queryBuilder.where({ account: userEntity.wallet });
+    queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
 
     queryBuilder.leftJoin("balance.token", "token");
     queryBuilder.addSelect(["token.attributes", "token.tokenId"]);

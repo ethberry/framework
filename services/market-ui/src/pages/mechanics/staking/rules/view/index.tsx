@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingRule } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
+import { formatPrice } from "../../../../../utils/money";
 
 export interface IStakingViewDialogProps {
   open: boolean;
@@ -16,11 +17,13 @@ export interface IStakingViewDialogProps {
 export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { title, description } = initialValues;
+  const { title, description, deposit, reward, duration, recurrent } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
   };
+
+  // TODO i18n
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
@@ -29,17 +32,41 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.staking.view.title" />
+                <FormattedMessage id="form.labels.title" />
               </TableCell>
               <TableCell align="right">{title}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.staking.view.description" />
+                <FormattedMessage id="form.labels.description" />
               </TableCell>
               <TableCell align="right">
                 <RichTextDisplay data={description} />
               </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.deposit" />
+              </TableCell>
+              <TableCell align="right">{formatPrice(deposit)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.reward" />
+              </TableCell>
+              <TableCell align="right">{formatPrice(reward)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.duration" />
+              </TableCell>
+              <TableCell align="right">{duration} days</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.recurrent" />
+              </TableCell>
+              <TableCell align="right">{recurrent ? "yes" : "no"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

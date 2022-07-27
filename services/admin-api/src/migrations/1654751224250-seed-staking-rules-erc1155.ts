@@ -128,7 +128,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80511,
         80512,
         51,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -140,7 +140,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80521,
         80522,
         52,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -149,10 +149,10 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         30,
         1,
         false,
-        80521,
-        80522,
+        80531,
+        80532,
         53,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -164,7 +164,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80541,
         80542,
         54,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -176,7 +176,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         80551,
         80552,
         55,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       );

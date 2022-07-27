@@ -120,7 +120,10 @@
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
+      "deposit": "Deposit",
+      "description": "Description",
       "displayName": "Display name",
+      "duration": "Duration",
       "email": "Email",
       "endDate": "End date",
       "externalId": "External ID",
@@ -130,6 +133,8 @@
       "minPrice": "Min. price",
       "password": "Password",
       "rarity": "Rarity",
+      "recurrent": "Is recurrent?",
+      "reward": "Reward",
       "roles": "Roles",
       "sort": "Sort by",
       "stakingStatus": "Status",
@@ -379,7 +384,7 @@
     "staking": {
       "deposit": "Deposit",
       "leaderboard": {
-        "address": "Address",
+        "account": "Account",
         "rank": "Rank",
         "score": "Score",
         "title": "Leaderboard"
@@ -391,11 +396,7 @@
         "deposit": "Deposit",
         "title": "Staking rules"
       },
-      "title": "Staking",
-      "view": {
-        "description": "Description",
-        "title": "Title"
-      }
+      "title": "Staking"
     },
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",

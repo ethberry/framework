@@ -128,7 +128,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80111,
         80112,
         11,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -140,7 +140,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80121,
         80122,
         12,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -149,10 +149,10 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         30,
         1,
         false,
-        80121,
-        80122,
+        80131,
+        80132,
         13,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -164,7 +164,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80141,
         80142,
         14,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -176,7 +176,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80151,
         80152,
         15,
-        'ACTIVE',
+        'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -24,10 +24,9 @@ import { AccessControlEntity } from "./blockchain/access-control/access-control.
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./mechanics/claim/claim.entity";
 import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
-import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
+import { StakingStakesEntity } from "./mechanics/staking/stakes/stakes.entity";
 import { CraftEntity } from "./mechanics/craft/craft.entity";
-import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
-import { StakingHistoryEntity } from "./mechanics/staking/staking-history/staking-history.entity";
+import { StakingRulesEntity } from "./mechanics/staking/rules/rules.entity";
 import { PageEntity } from "./page/page.entity";
 import { GradeEntity } from "./mechanics/grade/grade.entity";
 
@@ -129,7 +128,6 @@ const config: PostgresConnectionOptions = {
     TemplateEntity,
     StakingRulesEntity,
     StakingStakesEntity,
-    StakingHistoryEntity,
     PageEntity,
     AssetEntity,
     AssetComponentEntity,
