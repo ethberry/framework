@@ -2,13 +2,13 @@ import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
-import { StakingHistoryModule } from "../staking-history/staking-history.module";
-import { StakingStakesModule } from "../staking-stakes/staking-stakes.module";
-import { StakingRulesControllerEth } from "./staking-rules.controller.eth";
-import { StakingLogModule } from "../staking-log/staking.log.module";
-import { StakingRulesServiceEth } from "./staking-rules.service.eth";
-import { StakingRulesEntity } from "./staking-rules.entity";
-import { StakingRulesService } from "./staking-rules.service";
+import { StakingHistoryModule } from "../history/history.module";
+import { StakingStakesModule } from "../staking-stakes/stakes.module";
+import { StakingRulesControllerEth } from "./rules.controller.eth";
+import { StakingLogModule } from "../log/log.module";
+import { StakingRulesServiceEth } from "./rules.service.eth";
+import { StakingRulesEntity } from "./rules.entity";
+import { StakingRulesService } from "./rules.service";
 
 @Module({
   imports: [

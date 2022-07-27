@@ -402,6 +402,7 @@
       "staking": {
         "rules": "Rules",
         "stakes": "Stakes",
+        "statistics": "Statistics",
         "title": "Staking"
       },
       "title": "Dashboard"
@@ -480,6 +481,9 @@
       },
       "stakes": {
         "title": "Staking stakes"
+      },
+      "statistics": {
+        "title": "Staking statistics"
       },
       "title": "Staking"
     },

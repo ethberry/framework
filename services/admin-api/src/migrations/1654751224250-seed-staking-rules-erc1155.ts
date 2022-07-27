@@ -47,7 +47,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         'ERC1155',
         16,
         15101, -- gold
-        1,
+        1000,
         80511
       ), (
         'ERC20',
@@ -59,7 +59,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         'ERC1155',
         16,
         15101, -- gold
-        1,
+        1000,
         80521
       ), (
         'ERC20',
@@ -71,7 +71,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         'ERC1155',
         16,
         15101, -- gold
-        1,
+        1000,
         80531
       ), (
         'ERC721',
@@ -83,7 +83,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         'ERC1155',
         16,
         15101, -- gold
-        1,
+        1000,
         80541
       ), (
         'ERC998',
@@ -95,13 +95,13 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         'ERC1155',
         16,
         15101, -- gold
-        1,
+        1000,
         80551
       ), (
         'ERC1155',
         31,
         15101, -- gold
-        1,
+        10,
         80552
       );
     `);

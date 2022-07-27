@@ -13,7 +13,7 @@ import {
   StakingEventType,
 } from "@framework/types";
 
-import { StakingRulesServiceEth } from "./staking-rules.service.eth";
+import { StakingRulesServiceEth } from "./rules.service.eth";
 
 @Controller()
 export class StakingRulesControllerEth {

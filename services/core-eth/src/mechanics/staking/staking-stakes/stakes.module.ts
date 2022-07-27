@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { StakingStakesService } from "./staking-stakes.service";
-import { StakingStakesEntity } from "./staking-stakes.entity";
+import { StakingStakesService } from "./stakes.service";
+import { StakingStakesEntity } from "./stakes.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([StakingStakesEntity])],

@@ -101,7 +101,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
         'ERC1155',
         31,
         15101, -- gold
-        1,
+        10,
         80252
       );
     `);

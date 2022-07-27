@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, Repository } from "typeorm";
 
-import { StakingHistoryEntity } from "./staking-history.entity";
+import { StakingHistoryEntity } from "./history.entity";
 
 @Injectable()
 export class StakingHistoryService {

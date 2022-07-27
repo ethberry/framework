@@ -47,15 +47,15 @@
       "createdAt": "Date",
       "price": "Price"
     },
-    "stakingStatus": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive",
-      "NEW": "New"
-    },
     "stakeStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
+    },
+    "stakingStatus": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "NEW": "New"
     },
     "tokenType": {
       "ERC1155": "ERC1155",
@@ -267,8 +267,8 @@
         "title": "Sections"
       },
       "staking": {
-        "leaderboard": "Staking leaderboard",
-        "rules": "Staking rules",
+        "leaderboard": "Leaderboard",
+        "rules": "Rules",
         "stakes": "My stakes",
         "title": "Staking"
       },

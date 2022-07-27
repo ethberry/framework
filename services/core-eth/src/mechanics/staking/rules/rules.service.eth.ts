@@ -14,9 +14,9 @@ import {
 } from "@framework/types";
 
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";
-import { StakingHistoryService } from "../staking-history/staking-history.service";
-import { StakingRulesService } from "./staking-rules.service";
-import { StakingStakesService } from "../staking-stakes/staking-stakes.service";
+import { StakingHistoryService } from "../history/history.service";
+import { StakingRulesService } from "./rules.service";
+import { StakingStakesService } from "../staking-stakes/stakes.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
