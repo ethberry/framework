@@ -1,8 +1,10 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { baseTokenURI, MINTER_ROLE } from "../test/constants";
+import { baseTokenURI } from "../test/constants";
 import { wallet } from "@gemunion/constants";
+import { ContractManager } from "../typechain-types";
+import { blockAwait } from "./utils/blockAwait";
 
 const contracts: Record<string, Contract> = {};
 
@@ -33,11 +35,6 @@ async function deployLootbox() {
   const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
   const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
   contracts.lootbox = lootboxInstance;
-
-  await contracts.erc721Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
-  await contracts.erc721Random.grantRole(MINTER_ROLE, lootboxInstance.address);
-  await contracts.erc998Random.grantRole(MINTER_ROLE, lootboxInstance.address);
-  await contracts.erc1155Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
 }
 
 async function deployModules() {
@@ -53,9 +50,34 @@ async function deployModules() {
   contracts.staking = await stakingFactory.deploy(10);
 }
 
+async function setFactories() {
+  await deployModules();
+  await blockAwait();
+  // MODULE:CM
+  const vestFactory = await ethers.getContractFactory("ContractManager");
+  const cM: ContractManager = vestFactory.attach(contracts.contractManager.address);
+  const minters = [
+    contracts.exchange.address,
+    contracts.lootbox.address,
+    contracts.staking.address,
+    contracts.claimProxy.address,
+  ];
+  const metadata = [contracts.contractManager.address];
+  console.log("minters", minters);
+  console.log("metadata", metadata);
+  const tx = await cM.setFactories(
+    // minters
+    minters,
+    // metadata editors
+    metadata,
+  );
+  console.info("Factories set, tx:", tx.hash);
+}
+
 async function main() {
   await deploySystem();
   await deployModules();
+  await setFactories();
 }
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);

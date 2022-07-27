@@ -41,6 +41,7 @@ export const Erc20TokenDeployButton: FC<IErc20TokenDeployButtonProps> = props =>
         ContractManagerSol.abi,
         web3Context.provider?.getSigner(),
       );
+
       return contract.deployERC20Token(
         nonce,
         getBytecodeByErc20TokenTemplate(contractTemplate),
