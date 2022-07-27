@@ -33,12 +33,12 @@ export class CreateUser1563804000030 implements MigrationInterface {
         {
           name: "display_name",
           type: "varchar",
-          isNullable: true,
+          default: "''",
         },
         {
           name: "email",
           type: "varchar",
-          isNullable: true,
+          default: "''",
         },
         {
           name: "image_url",
