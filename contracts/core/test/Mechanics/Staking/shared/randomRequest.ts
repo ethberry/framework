@@ -8,12 +8,12 @@ export async function randomRequest(
   rndInstance: ERC721RandomHardhat,
   vrfInstance: VRFCoordinatorMock,
   finalBalance: number,
+  account: string,
 ) {
   const eventFilter = rndInstance.filters.RandomRequest();
   const events = await rndInstance.queryFilter(eventFilter);
   let requestId: string;
-  const [owner] = await ethers.getSigners();
-  const oldBalance = await rndInstance.balanceOf(owner.address);
+  const oldBalance = await rndInstance.balanceOf(account);
   if (events && events.length) {
     events.map(async (event, indx) => {
       if (events[indx].args) {
@@ -25,9 +25,9 @@ export async function randomRequest(
           rndInstance.address,
         );
         await expect(txrnd).to.emit(rndInstance, "Transfer");
-        const balance = await rndInstance.balanceOf(owner.address);
-        expect(balance.sub(oldBalance)).to.equal(finalBalance);
       }
     });
+    const balance = await rndInstance.balanceOf(account);
+    expect(balance.sub(oldBalance)).to.equal(finalBalance);
   }
 }

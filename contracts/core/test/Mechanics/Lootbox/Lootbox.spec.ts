@@ -1,6 +1,7 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import { BigNumber } from "ethers";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import {
   ERC1155Simple,
@@ -38,26 +39,34 @@ describe("ERC721Lootbox", function () {
   let linkInstance: LinkErc20;
   let vrfInstance: VRFCoordinatorMock;
 
-  before(async function () {
+  async function deployLinkVrfFixture() {
     const [owner] = await ethers.getSigners();
-
     // Deploy Chainlink & Vrf contracts
     const link = await ethers.getContractFactory("LinkErc20");
-    // linkInstance = link.attach(LINK_ADDR);
-    linkInstance = await link.deploy(tokenName, tokenSymbol);
+    const linkInstance = await link.deploy(tokenName, tokenSymbol);
+    await linkInstance.deployed();
     console.info(`LINK_ADDR=${linkInstance.address}`);
     const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
     await linkInstance.mint(owner.address, linkAmountInWei);
     const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    // vrfInstance = vrfFactory.attach(VRF_ADDR);
+    const vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    await vrfInstance.deployed();
     console.info(`VRF_ADDR=${vrfInstance.address}`);
-    if (
-      linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-      vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-    ) {
-      console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-    }
+    return { linkInstance, vrfInstance };
+  }
+
+  before(async function () {
+    await network.provider.send("hardhat_reset");
+    const linkVrf = await loadFixture(deployLinkVrfFixture);
+    linkInstance = linkVrf.linkInstance;
+    vrfInstance = linkVrf.vrfInstance;
+
+    expect(linkInstance.address).equal(LINK_ADDR);
+    expect(vrfInstance.address).equal(VRF_ADDR);
+  });
+
+  after(async function () {
+    await network.provider.send("hardhat_reset");
   });
 
   beforeEach(async function () {
@@ -174,14 +183,11 @@ describe("ERC721Lootbox", function () {
       const tx2 = lootboxInstance.connect(this.receiver).unpack(tokenId);
       await expect(tx2)
         .to.emit(lootboxInstance, "Transfer")
-        .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId)
-        .to.emit(erc721RandomInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId)
-        .to.emit(erc721RandomInstance, "RandomRequest")
-        .to.emit(linkInstance, "Transfer");
-
+        .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId);
+      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
+      await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, 1, this.receiver.address);
     });
 
     it("should mint (multiple)", async function () {

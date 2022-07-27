@@ -122,7 +122,7 @@ describe("ExchangeLootbox", function () {
 
         await expect(tx1)
           .to.changeEtherBalance(this.receiver, -amount)
-          .to.emit(exchangeInstance, "Craft")
+          .to.emit(exchangeInstance, "Lootbox")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721SimpleInstance.address, tokenId, 1]],
@@ -195,7 +195,7 @@ describe("ExchangeLootbox", function () {
 
         await expect(tx1)
           .to.changeEtherBalance(this.receiver, -amount)
-          .to.emit(exchangeInstance, "Craft")
+          .to.emit(exchangeInstance, "Lootbox")
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721SimpleInstance.address, tokenId, 1]],
