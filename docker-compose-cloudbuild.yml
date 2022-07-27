@@ -65,6 +65,7 @@ services:
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       LOOTBOX_ADDR: "${LOOTBOX_ADDR}"
       CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
+      STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       # admin-api
       - "${PORT_ADMIN_API}:${PORT_ADMIN_API}"
@@ -106,6 +107,7 @@ services:
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       LOOTBOX_ADDR: "${LOOTBOX_ADDR}"
       CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
+      STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       # market-api
       - "${PORT_MARKET_API}:${PORT_MARKET_API}"
@@ -143,6 +145,7 @@ services:
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       LOOTBOX_ADDR: "${LOOTBOX_ADDR}"
       CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
+      STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
 
