@@ -15,7 +15,7 @@ import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 
 contract ExchangeUtils {
-  bytes4 private constant IERC721_RANDOM = 0x82993c65;
+  bytes4 private constant IERC721_RANDOM = 0x32034d27;
 
   function spend(Asset[] memory ingredients, address account) internal {
     uint256 length = ingredients.length;

@@ -46,7 +46,6 @@ export class ContractManagerSignService {
 
   public async erc20Token(dto: IErc20TokenDeployDto): Promise<IServerSignature> {
     const { contractTemplate, name, symbol, cap } = dto;
-
     const nonce = utils.randomBytes(32);
     const signature = await this.signer._signTypedData(
       // Domain
@@ -85,6 +84,12 @@ export class ContractManagerSignService {
   public async vesting(dto: IVestingDeployDto): Promise<IServerSignature> {
     const { contractTemplate, account, startTimestamp, duration } = dto;
     const nonce = utils.randomBytes(32);
+    console.log("erc20Token-sign-dto", dto);
+    console.log("nonce", nonce);
+    const chain = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    console.log("chain", chain);
+    const cma = this.configService.get<string>("CONTRACT_MANAGER_ADDR", "");
+    console.log("cma", cma);
     const signature = await this.signer._signTypedData(
       // Domain
       {

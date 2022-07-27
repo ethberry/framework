@@ -27,7 +27,7 @@ import {
   tokenSymbol,
   VRF_ADDR,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { IAsset, IRule } from "./interface/staking";
 import { randomRequest } from "./shared/randomRequest";
 
@@ -61,12 +61,14 @@ describe("Staking", function () {
 
     // Deploy Chainlink & Vrf contracts
     const link = await ethers.getContractFactory("LinkErc20");
-    linkInstance = await link.deploy(tokenName, tokenSymbol);
+    // linkInstance = await link.deploy(tokenName, tokenSymbol);
+    linkInstance = link.attach(LINK_ADDR);
     console.info(`LINK_ADDR=${linkInstance.address}`);
     const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
     await linkInstance.mint(owner.address, linkAmountInWei);
     const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    // vrfInstance = await vrfFactory.deploy(linkInstance.address);
+    vrfInstance = vrfFactory.attach(VRF_ADDR);
     console.info(`VRF_ADDR=${vrfInstance.address}`);
     if (
       linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
@@ -90,7 +92,7 @@ describe("Staking", function () {
     const simple721Factory = await ethers.getContractFactory("ERC721Simple");
     erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", royalty, baseTokenURI);
     // ERC721 Random
-    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomBesu");
+    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomHardhat"); // for test only
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
     // ERC721 Lootbox
     const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
