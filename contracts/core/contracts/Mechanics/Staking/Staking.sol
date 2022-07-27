@@ -84,6 +84,8 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
 
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
 
+    // TODO for ERC721 and ERC998 we have to get metadata and check template_id
+
     if (depositItem.tokenType == TokenType.NATIVE) {
       require(msg.value == depositItem.amount, "Staking: wrong amount");
     } else if (depositItem.tokenType == TokenType.ERC20) {

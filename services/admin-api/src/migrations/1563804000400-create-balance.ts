@@ -2,20 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateStakingHistory1654751224260 implements MigrationInterface {
+export class CreateBalanceTable1563804000400 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.staking_event_enum AS ENUM (
-        'RuleCreated',
-        'RuleUpdated',
-        'StakingStart',
-        'StakingWithdraw',
-        'StakingFinish'
-      );
-    `);
-
     const table = new Table({
-      name: `${ns}.staking_history`,
+      name: `${ns}.balance`,
       columns: [
         {
           name: "id",
@@ -23,20 +13,16 @@ export class CreateStakingHistory1654751224260 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "address",
+          name: "account",
           type: "varchar",
         },
         {
-          name: "transaction_hash",
-          type: "varchar",
+          name: "amount",
+          type: "uint256",
         },
         {
-          name: "event_type",
-          type: `${ns}.staking_event_enum`,
-        },
-        {
-          name: "event_data",
-          type: "json",
+          name: "token_id",
+          type: "int",
         },
         {
           name: "created_at",
@@ -47,13 +33,20 @@ export class CreateStakingHistory1654751224260 implements MigrationInterface {
           type: "timestamptz",
         },
       ],
+      foreignKeys: [
+        {
+          columnNames: ["token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.token`,
+          onDelete: "CASCADE",
+        },
+      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.staking_event_enum;`);
+    await queryRunner.dropTable(`${ns}.erc1155_balance`);
   }
 }

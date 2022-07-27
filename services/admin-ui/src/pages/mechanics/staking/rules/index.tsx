@@ -10,35 +10,42 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { FilterList, Visibility } from "@mui/icons-material";
-import { stringify } from "qs";
+
+import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
-import { IPaginationDto } from "@gemunion/types-collection";
 
-import { StakingDepositButton } from "../../../../components/buttons";
-import { StakingSearchForm } from "./form";
+import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/empty-price";
-// import { StakingViewDialog } from "./view";
+import { StakingEditDialog } from "./edit";
+import { StakingSearchForm } from "./form";
 
-export const Stake: FC = () => {
+export const Staking: FC = () => {
   const {
     rows,
     count,
     search,
+    selected,
     isLoading,
     isFiltersOpen,
-    handleView,
+    isEditDialogOpen,
+    isDeleteDialogOpen,
+    handleCreate,
     handleToggleFilters,
+    handleEdit,
+    handleEditCancel,
+    handleEditConfirm,
+    handleDelete,
+    handleDeleteCancel,
     handleSearch,
     handleChangePage,
+    handleDeleteConfirm,
   } = useCollection<IStakingRule, IStakingSearchDto>({
     baseUrl: "/staking/rules",
-    redirect: <S extends IPaginationDto>(baseUrl: string, search: Omit<S, "skip" | "take">, id?: number) =>
-      id ? `/staking/${id}` : `/staking?${stringify(search)}`,
     empty: {
       title: "",
       description: emptyStateString,
@@ -50,7 +57,7 @@ export const Stake: FC = () => {
     },
     search: {
       query: "",
-      stakingStatus: [StakingStatus.ACTIVE],
+      stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
       },
@@ -58,19 +65,21 @@ export const Stake: FC = () => {
         tokenType: [] as Array<TokenType>,
       },
     },
-    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
+      <Breadcrumbs path={["dashboard", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
+        </Button>
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="StakingCreateButton">
+          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
@@ -79,12 +88,15 @@ export const Stake: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((rule, i) => (
-            <ListItem key={i}>
+            <ListItem key={i} disableGutters>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingDepositButton rule={rule} />
-                <IconButton onClick={handleView(rule)}>
-                  <Visibility />
+                <StakingUploadButton rule={rule} />
+                <IconButton onClick={handleEdit(rule)}>
+                  <Create />
+                </IconButton>
+                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingStatus !== StakingStatus.NEW}>
+                  <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -100,12 +112,19 @@ export const Stake: FC = () => {
         onChange={handleChangePage}
       />
 
-      {/* <StakingViewDialog */}
-      {/*  onCancel={handleViewCancel} */}
-      {/*  onConfirm={handleViewConfirm} */}
-      {/*  open={isViewDialogOpen} */}
-      {/*  initialValues={selected} */}
-      {/* /> */}
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={isDeleteDialogOpen}
+        initialValues={{ ...selected, title: `${selected.title}` }}
+      />
+
+      <StakingEditDialog
+        onCancel={handleEditCancel}
+        onConfirm={handleEditConfirm}
+        open={isEditDialogOpen}
+        initialValues={selected}
+      />
     </Grid>
   );
 };

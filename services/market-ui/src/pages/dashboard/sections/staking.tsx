@@ -15,12 +15,12 @@ export const Staking: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/staking">
+        <ListItem button component={RouterLink} to="/staking/rules">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.staking.stake" />
+            <FormattedMessage id="pages.dashboard.staking.rules" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking/leaderboard">

@@ -7,7 +7,7 @@ import { StakingHistoryService } from "./staking-history.service";
 import { LeaderboardSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/staking/rules")
+@Controller("/staking")
 export class StakingHistoryController {
   constructor(private readonly stakingHistoryService: StakingHistoryService) {}
 

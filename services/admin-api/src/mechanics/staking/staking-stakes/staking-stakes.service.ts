@@ -31,22 +31,22 @@ export class StakingStakesService {
     const { stakeStatus, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stakes");
-    queryBuilder.leftJoinAndSelect("staking-stakes.stakingRule", "stakingRule");
+    queryBuilder.leftJoinAndSelect("stakes.stakingRule", "rule");
 
     queryBuilder.select();
 
     if (stakeStatus) {
       if (stakeStatus.length === 1) {
-        queryBuilder.andWhere("staking-stakes.stakeStatus = :stakeStatus", { stakeStatus: stakeStatus[0] });
+        queryBuilder.andWhere("stakes.stakeStatus = :stakeStatus", { stakeStatus: stakeStatus[0] });
       } else {
-        queryBuilder.andWhere("staking-stakes.stakeStatus IN(:...stakeStatus)", { stakeStatus });
+        queryBuilder.andWhere("stakes.stakeStatus IN(:...stakeStatus)", { stakeStatus });
       }
     }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
-    queryBuilder.orderBy("staking-stakes.createdAt", "DESC");
+    queryBuilder.orderBy("stakes.createdAt", "DESC");
 
     return queryBuilder.getManyAndCount();
   }

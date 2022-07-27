@@ -10,21 +10,19 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-
-import { Add, Create, Delete, FilterList } from "@mui/icons-material";
+import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
-import { StakingUploadButton } from "../../../../components/buttons";
-import { emptyPrice } from "../../../../components/inputs/empty-price";
-import { StakingEditDialog } from "./edit";
+import { StakingDepositButton } from "../../../../components/buttons";
 import { StakingSearchForm } from "./form";
+import { emptyPrice } from "../../../../components/inputs/empty-price";
+import { StakingViewDialog } from "./view";
 
-export const Staking: FC = () => {
+export const StakingRules: FC = () => {
   const {
     rows,
     count,
@@ -32,18 +30,13 @@ export const Staking: FC = () => {
     selected,
     isLoading,
     isFiltersOpen,
-    isEditDialogOpen,
-    isDeleteDialogOpen,
-    handleCreate,
+    isViewDialogOpen,
+    handleView,
+    handleViewCancel,
+    handleViewConfirm,
     handleToggleFilters,
-    handleEdit,
-    handleEditCancel,
-    handleEditConfirm,
-    handleDelete,
-    handleDeleteCancel,
     handleSearch,
     handleChangePage,
-    handleDeleteConfirm,
   } = useCollection<IStakingRule, IStakingSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
@@ -57,7 +50,7 @@ export const Staking: FC = () => {
     },
     search: {
       query: "",
-      stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
+      stakingStatus: [StakingStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
       },
@@ -65,21 +58,19 @@ export const Staking: FC = () => {
         tokenType: [] as Array<TokenType>,
       },
     },
+    filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking-rules"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
-      <PageHeader message="pages.staking-rules.title">
-        <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
+      <PageHeader message="pages.staking.rules.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
             data-testid="ToggleFiltersButton"
           />
-        </Button>
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="StakingCreateButton">
-          <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
 
@@ -88,15 +79,12 @@ export const Staking: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((rule, i) => (
-            <ListItem key={i} disableGutters>
+            <ListItem key={i}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
-                <StakingUploadButton rule={rule} />
-                <IconButton onClick={handleEdit(rule)}>
-                  <Create />
-                </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingStatus !== StakingStatus.NEW}>
-                  <Delete />
+                <StakingDepositButton rule={rule} />
+                <IconButton onClick={handleView(rule)}>
+                  <Visibility />
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
@@ -112,17 +100,10 @@ export const Staking: FC = () => {
         onChange={handleChangePage}
       />
 
-      <DeleteDialog
-        onCancel={handleDeleteCancel}
-        onConfirm={handleDeleteConfirm}
-        open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: `${selected.title}` }}
-      />
-
-      <StakingEditDialog
-        onCancel={handleEditCancel}
-        onConfirm={handleEditConfirm}
-        open={isEditDialogOpen}
+      <StakingViewDialog
+        onCancel={handleViewCancel}
+        onConfirm={handleViewConfirm}
+        open={isViewDialogOpen}
         initialValues={selected}
       />
     </Grid>

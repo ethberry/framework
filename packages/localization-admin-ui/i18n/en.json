@@ -223,6 +223,7 @@
       "displayName": "Display name",
       "duration": "Duration",
       "email": "Email",
+      "endTimestamp": "End date",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "imageUrl": "Avatar",
@@ -399,8 +400,8 @@
         "vesting": "Vesting"
       },
       "staking": {
+        "rules": "Rules",
         "stakes": "Stakes",
-        "staking-rules": "Staking Rules",
         "title": "Staking"
       },
       "title": "Dashboard"
@@ -471,27 +472,22 @@
       "title": "Settings"
     },
     "staking": {
+      "rules": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Staking rules",
+        "upload": "Upload rule"
+      },
+      "stakes": {
+        "title": "Staking stakes"
+      },
       "title": "Staking"
-    },
-    "staking-rules": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Staking Rules",
-      "upload": "Upload Rule"
     },
     "users": {
       "title": "Users"
     },
     "vesting": {
-      "title": "Vesting",
-      "view": {
-        "account": "Account",
-        "address": "Address",
-        "contractTemplate": "Template",
-        "duration": "Duration",
-        "finish": "Finish",
-        "startTimestamp": "Start time"
-      }
+      "title": "Vesting"
     }
   },
   "snackbar": {

@@ -44,7 +44,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
 
   if (rule.stakingStatus === StakingStatus.ACTIVE) {
     return (
-      <Tooltip title={formatMessage({ id: "pages.staking-rules.deposit" })}>
+      <Tooltip title={formatMessage({ id: "pages.staking.rules.deposit" })}>
         <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositButton">
           <Casino />
         </IconButton>

@@ -20,7 +20,7 @@ export const Staking: FC = () => {
             <Casino />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.staking.staking-rules" />
+            <FormattedMessage id="pages.dashboard.staking.rules" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking/stakes">

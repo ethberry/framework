@@ -35,7 +35,7 @@ export const Stakes: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IStakingStake, IStakingStakesSearchDto>({
-    baseUrl: "/staking-stakes",
+    baseUrl: "/staking/stakes",
     search: {
       query: "",
       stakeStatus: [],
@@ -44,9 +44,9 @@ export const Stakes: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc20-vesting"]} />
+      <Breadcrumbs path={["dashboard", "staking.stakes"]} />
 
-      <PageHeader message="pages.erc20-vesting.title">
+      <PageHeader message="pages.staking.stakes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>

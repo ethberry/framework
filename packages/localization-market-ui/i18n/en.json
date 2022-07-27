@@ -26,7 +26,8 @@
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
-    "edit": "Edit"
+    "edit": "Edit",
+    "view": "View"
   },
   "enums": {
     "language": {
@@ -254,9 +255,9 @@
         "title": "Sections"
       },
       "staking": {
-        "leaderboard": "Staking Leaderboard",
-        "reward": "Staking Reward",
-        "stake": "Staking Stake",
+        "leaderboard": "Staking leaderboard",
+        "reward": "Staking reward",
+        "rules": "Staking rules",
         "title": "Staking"
       },
       "title": "Dashboard"
@@ -386,20 +387,14 @@
       "reward": {
         "title": "Reward"
       },
-      "stake": {
-        "title": "Stake"
-      },
       "rules": {
+        "deposit": "Deposit",
         "title": "Staking rules"
       },
       "title": "Staking",
       "view": {
-        "account": "Account",
-        "address": "Address",
-        "contractTemplate": "Template",
-        "duration": "Duration",
-        "finish": "Finish",
-        "startTimestamp": "Start time"
+        "description": "Description",
+        "title": "Title"
       }
     },
     "vesting": {

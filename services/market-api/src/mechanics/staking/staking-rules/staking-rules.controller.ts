@@ -1,7 +1,15 @@
-import { ClassSerializerInterceptor, Controller, Get, Query, UseInterceptors } from "@nestjs/common";
+import {
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Query,
+  UseInterceptors,
+} from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { StakingRulesService } from "./staking-rules.service";
 import { StakingRulesEntity } from "./staking-rules.entity";
@@ -17,5 +25,11 @@ export class StakingRulesController {
   @UseInterceptors(ClassSerializerInterceptor)
   public search(@Query() dto: StakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
     return this.stakingService.search(dto);
+  }
+
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<StakingRulesEntity | null> {
+    return this.stakingService.findOneWithRelations({ id });
   }
 }

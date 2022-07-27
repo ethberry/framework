@@ -37,27 +37,27 @@ import { CreateOtp1563804000060 } from "./migrations/1563804000060-create-otp";
 
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
-import { CreateContract1563804000110 } from "./migrations/1563804000110-create-contract";
+import { CreateContract1563804000100 } from "./migrations/1563804000100-create-contract";
 import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-seed-contract-erc20";
 import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-contract-erc721";
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
 import { SeedContractLootboxAt1563804000160 } from "./migrations/1563804000160-seed-contract-lootbox";
 
-import { CreateTemplate1563804000210 } from "./migrations/1563804000210-create-template";
+import { CreateTemplate1563804000200 } from "./migrations/1563804000200-create-template";
 import { SeedTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
 import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
 import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
 import { SeedTemplateLootboxAt1563804000230 } from "./migrations/1563804000260-seed-template-lootbox";
 
-import { CreateToken1563804000310 } from "./migrations/1563804000310-create-token";
+import { CreateToken1563804000300 } from "./migrations/1563804000300-create-token";
 import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
 import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
 import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
 import { SeedTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
 
-import { CreateBalanceTable1563804000410 } from "./migrations/1563804000410-create-balance";
+import { CreateBalanceTable1563804000400 } from "./migrations/1563804000400-create-balance";
 import { SeedBalanceErc20At1563804020420 } from "./migrations/1563804000420-seed-balance-erc20";
 import { SeedBalanceErc721At1563804020430 } from "./migrations/1563804000430-seed-balance-erc721";
 import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-seed-balance-erc998";
@@ -94,12 +94,20 @@ import { SeedAccessList1653616447340 } from "./migrations/1653616447340-seed-acc
 import { CreateAccessListHistory1653616447350 } from "./migrations/1653616447350-create-access-list-history";
 import { CreateSettings1563804000010 } from "./migrations/1563804000010-create-settings";
 import { SeedSettings1563804000020 } from "./migrations/1563804000020-seed-settings";
+
 import { CreateStakingRules1654751224200 } from "./migrations/1654751224200-create-staking-rules";
-import { SeedStakingRules1654751224210 } from "./migrations/1654751224210-seed-staking-rules-erc20-erc721";
-import { CreateStakingHistory1654751224260 } from "./migrations/1654751224260-create-staking-history";
+import { SeedStakingRulesErc721At1654751224230 } from "./migrations/1654751224230-seed-staking-rules-erc721";
+import { SeedStakingRulesNativeAt1654751224210 } from "./migrations/1654751224210-seed-staking-rules-native";
+import { SeedStakingRulesErc20At1654751224220 } from "./migrations/1654751224220-seed-staking-rules-erc20";
+import { SeedStakingRulesErc998At1654751224240 } from "./migrations/1654751224240-seed-staking-rules-erc998";
+import { SeedStakingRulesErc1155At1654751224250 } from "./migrations/1654751224250-seed-staking-rules-erc1155";
+
+import { CreateStakes1654751224300 } from "./migrations/1654751224300-create-stakes";
+import { SeedStakes1654751224310 } from "./migrations/1654751224310-seed-stakes";
+import { CreateStakingHistory1654751224400 } from "./migrations/1654751224400-create-staking-history";
+
 import { CreatePage1655626535100 } from "./migrations/1655626535100-create-page";
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
-import { CreateStakes1654751224255 } from "./migrations/1654751224255-create-stakes";
 import { CreateGrade1657846587000 } from "./migrations/1657846587000-create-grade";
 import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
 
@@ -161,27 +169,27 @@ const config: PostgresConnectionOptions = {
 
     CreateAsset1563804000100,
 
-    CreateContract1563804000110,
+    CreateContract1563804000100,
     SeedContractErc20At1563804000120,
     SeedContractErc721At1563804000130,
     SeedContractErc998At1563804000140,
     SeedContractErc1155At1563804000150,
     SeedContractLootboxAt1563804000160,
 
-    CreateTemplate1563804000210,
+    CreateTemplate1563804000200,
     SeedTemplateErc20At1563804000220,
     SeedTemplateErc721At1563804000230,
     SeedTemplateErc998At1563804000240,
     SeedTemplateErc1155At1563804000250,
     SeedTemplateLootboxAt1563804000230,
 
-    CreateToken1563804000310,
+    CreateToken1563804000300,
     SeedTokenErc20At1563804000320,
     SeedTokenErc721At1563804000330,
     SeedTokenErc998At1563804000340,
     SeedTokenErc1155At1563804000350,
 
-    CreateBalanceTable1563804000410,
+    CreateBalanceTable1563804000400,
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
@@ -217,9 +225,15 @@ const config: PostgresConnectionOptions = {
     SeedCraftErc721Erc1155At1653616448030,
 
     CreateStakingRules1654751224200,
-    SeedStakingRules1654751224210,
-    CreateStakes1654751224255,
-    CreateStakingHistory1654751224260,
+    SeedStakingRulesNativeAt1654751224210,
+    SeedStakingRulesErc20At1654751224220,
+    SeedStakingRulesErc721At1654751224230,
+    SeedStakingRulesErc998At1654751224240,
+    SeedStakingRulesErc1155At1654751224250,
+
+    CreateStakes1654751224300,
+    SeedStakes1654751224310,
+    CreateStakingHistory1654751224400,
 
     CreatePage1655626535100,
     SeedPages1655626535110,

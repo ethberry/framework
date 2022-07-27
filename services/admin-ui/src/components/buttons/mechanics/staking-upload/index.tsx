@@ -92,8 +92,8 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       title={formatMessage({
         id:
           rule.stakingStatus === StakingStatus.ACTIVE
-            ? "pages.staking-rules.deactivate"
-            : "pages.staking-rules.activate",
+            ? "pages.staking.rules.deactivate"
+            : "pages.staking.rules.activate",
       })}
     >
       <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">

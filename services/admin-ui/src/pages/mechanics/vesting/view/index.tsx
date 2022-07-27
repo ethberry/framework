@@ -34,17 +34,17 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.vesting.view.address" />
+                <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
-                <Link href={`${networks[~~process.env.CHAIN_ID].blockExplorerUrls[0]}address/${address}`}>
+                <Link href={`${networks[~~process.env.CHAIN_ID].blockExplorerUrls[0]}/address/${address}`}>
                   {address}
                 </Link>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.vesting.view.account" />
+                <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
                 <Link href={`${networks[~~process.env.CHAIN_ID].blockExplorerUrls[0]}/address/${account}`}>
@@ -54,13 +54,13 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.vesting.view.startTimestamp" />
+                <FormattedMessage id="form.labels.startTimestamp" />
               </TableCell>
               <TableCell align="right">{format(parseISO(startTimestamp), humanReadableDateTimeFormat)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.vesting.view.duration" />
+                <FormattedMessage id="form.labels.duration" />
               </TableCell>
               <TableCell align="right">
                 {formatDuration(
@@ -76,13 +76,13 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.vesting.view.finish" />
+                <FormattedMessage id="form.labels.endTimestamp" />
               </TableCell>
               <TableCell align="right">{formatDistance(dateFinish, Date.now(), { addSuffix: true })}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="pages.vesting.view.contractTemplate" />
+                <FormattedMessage id="form.labels.contractTemplate" />
               </TableCell>
               <TableCell align="right">{contractTemplate}</TableCell>
             </TableRow>
