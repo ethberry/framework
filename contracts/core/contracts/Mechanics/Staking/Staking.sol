@@ -37,8 +37,8 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   mapping(uint256 => Stake) internal _stakes;
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes4 private constant IERC721_RANDOM = 0x32034d27;
-  bytes4 private constant IERC721_LOOTBOX = 0x45f4bf97;
+  bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
+  bytes4 private constant IERC721_LOOTBOX = type(IERC721Lootbox).interfaceId;
 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
