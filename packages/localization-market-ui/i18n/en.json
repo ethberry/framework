@@ -92,6 +92,7 @@
       "hideFilters": "Hide filters",
       "login": "Login",
       "logout": "Logout",
+      "mainPage": "Main Page",
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
@@ -325,6 +326,7 @@
       "title": "Exchanges"
     },
     "guest": {
+      "confirmation": "Please check your inbox to verify your email.",
       "login": "Login"
     },
     "landing": {

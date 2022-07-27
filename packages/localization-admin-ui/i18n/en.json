@@ -172,6 +172,7 @@
       "loaded": "Done",
       "login": "Login",
       "logout": "Logout",
+      "mainPage": "Main Page",
       "mint": "Mint",
       "mintToken": "Mint Tokens",
       "ok": "Ok",
@@ -453,6 +454,7 @@
       "title": "Grade Rules"
     },
     "guest": {
+      "confirmation": "Please check your inbox to verify your email.",
       "forgotPassword": "Forgot password",
       "login": "Login"
     },
