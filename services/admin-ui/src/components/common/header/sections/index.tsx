@@ -59,7 +59,7 @@ export const Sections: FC = () => {
         onClick={handleMenuOpen}
         color="inherit"
       >
-        <Avatar alt={user.profile.displayName} src={user.profile.imageUrl}>
+        <Avatar alt={user.profile.displayName || ""} src={user.profile.imageUrl}>
           {user.profile.displayName?.substr(0, 1)}
         </Avatar>
       </IconButton>
