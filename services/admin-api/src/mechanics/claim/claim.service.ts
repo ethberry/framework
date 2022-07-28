@@ -26,10 +26,10 @@ export class ClaimService {
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
-    queryBuilder.leftJoinAndSelect("claim.item", "item");
-    queryBuilder.leftJoinAndSelect("item.components", "item_components");
-    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
-    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+    // queryBuilder.leftJoinAndSelect("claim.item", "item");
+    // queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    // queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    // queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
 
