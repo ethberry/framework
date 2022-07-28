@@ -31,7 +31,6 @@ import { ContractSearchForm } from "../../../components/forms/contract-search";
 
 export const Erc721Contract: FC = () => {
   const {
-    fetch,
     rows,
     count,
     search,
@@ -80,7 +79,7 @@ export const Erc721Contract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Erc721TokenDeployButton onSuccess={fetch} />
+        <Erc721TokenDeployButton />
       </PageHeader>
 
       <ContractSearchForm

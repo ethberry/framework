@@ -28,11 +28,10 @@ function getBytecodeByErc721TokenTemplate(template: Erc721ContractTemplate) {
 
 export interface IErc721TokenDeployButtonProps {
   className?: string;
-  onSuccess?: (value?: any) => Promise<void>;
 }
 
 export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props => {
-  const { className, onSuccess } = props;
+  const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
     (values: IErc721ContractDeployDto, web3Context, sign) => {
@@ -67,9 +66,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
         data: values,
       },
       form,
-    ).then((result: any) => {
-      return (onSuccess && result !== null) ? onSuccess() : void 0;
-    });
+    );
   };
 
   return (
