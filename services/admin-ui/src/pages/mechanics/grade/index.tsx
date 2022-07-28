@@ -9,7 +9,7 @@ import { IContract, IGrade } from "@framework/types";
 
 import { GradeEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../utils/money";
-import { emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyPrice } from "../../../components/inputs/price/empty-price";
 
 export const Grade: FC = () => {
   const {

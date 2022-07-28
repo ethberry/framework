@@ -2,15 +2,19 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { TokenType } from "@framework/types";
+import { ContractStatus, TokenType } from "@framework/types";
 
 export interface IContractInputProps {
   name: string;
   related?: string;
+  data?: {
+    contractType?: Array<TokenType>;
+    contractStatus?: Array<ContractStatus>;
+  };
 }
 
 export const ContractInput: FC<IContractInputProps> = props => {
-  const { name, related = "address" } = props;
+  const { name, related = "address", data = {} } = props;
 
   const form = useFormContext<any>();
 
@@ -18,10 +22,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
     <EntityInput
       name={name}
       controller="contracts"
-      data={{
-        contractType: [TokenType.ERC1155],
-        // contractStatus: [ContractStatus.ACTIVE],
-      }}
+      data={data}
       onChange={(_event: ChangeEvent<unknown>, option: any | null): void => {
         if (option) {
           form.setValue(name, option.id);

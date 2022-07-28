@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Button,
   Grid,
@@ -9,15 +9,21 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Add, FilterList, Visibility } from "@mui/icons-material";
+import { Add, Delete, FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
+import { Web3ContextType } from "@web3-react/core";
+import { Contract } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { IComposition, ICompositionSearchDto } from "@framework/types";
 
+import { useMetamask } from "@gemunion/react-hooks-eth";
+import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
+
 import { Erc998CompositionViewDialog } from "./view";
 import { Erc998CompositionSearchForm } from "./form";
+import { Erc998CompositionCreateDialog, IErc998CompositionCreateDto } from "./create";
 
 export const Erc998Composition: FC = () => {
   const {
@@ -29,7 +35,6 @@ export const Erc998Composition: FC = () => {
     isFiltersOpen,
     isViewDialogOpen,
     handleToggleFilters,
-    handleCreate,
     handleView,
     handleViewCancel,
     handleViewConfirm,
@@ -45,6 +50,36 @@ export const Erc998Composition: FC = () => {
       childIds: [],
     },
   });
+
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+
+  const metaFn1 = useMetamask((composition: IComposition, web3Context: Web3ContextType) => {
+    const contract = new Contract(composition.parent!.address, ERC998SimpleSol.abi, web3Context.provider?.getSigner());
+    return contract.unWhitelistChild(composition.child!.address) as Promise<void>;
+  });
+
+  const handleDelete = (composition: IComposition) => {
+    return () => {
+      return metaFn1(composition);
+    };
+  };
+
+  const handleCreate = () => {
+    setIsCreateDialogOpen(true);
+  };
+
+  const metaFn2 = useMetamask((composition: IErc998CompositionCreateDto, web3Context: Web3ContextType) => {
+    const contract = new Contract(composition.parent, ERC998SimpleSol.abi, web3Context.provider?.getSigner());
+    return contract.whiteListChild(composition.child, composition.amount) as Promise<void>;
+  });
+
+  const handleCreateConfirm = (data: IErc998CompositionCreateDto) => {
+    return metaFn2(data);
+  };
+
+  const handleCreateCancel = () => {
+    return setIsCreateDialogOpen(false);
+  };
 
   return (
     <Grid>
@@ -80,6 +115,9 @@ export const Erc998Composition: FC = () => {
                 <IconButton onClick={handleView(composition)}>
                   <Visibility />
                 </IconButton>
+                <IconButton onClick={handleDelete(composition)}>
+                  <Delete />
+                </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -92,6 +130,12 @@ export const Erc998Composition: FC = () => {
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
+      />
+
+      <Erc998CompositionCreateDialog
+        onCancel={handleCreateCancel}
+        onConfirm={handleCreateConfirm}
+        open={isCreateDialogOpen}
       />
 
       <Erc998CompositionViewDialog

@@ -20,7 +20,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingUploadButton } from "../../../../components/buttons";
-import { emptyPrice } from "../../../../components/inputs/empty-price";
+import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
 

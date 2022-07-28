@@ -35,7 +35,7 @@ export const Erc998CompositionViewDialog: FC<IErc998CompositionViewDialogProps> 
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.parent" />
+                <FormattedMessage id="form.labels.child" />
               </TableCell>
               <TableCell align="right">{child?.title}</TableCell>
             </TableRow>

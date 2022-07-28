@@ -20,7 +20,7 @@ import { CraftStatus, ICraft, IExchangeSearchDto } from "@framework/types";
 
 import { CraftEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
-import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyItem, emptyPrice } from "../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const Craft: FC = () => {

@@ -4,8 +4,9 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
-import { ContractInput } from "./contract-input";
+import { ContractInput } from "../../../../inputs/contract";
 import { TemplateInput } from "./template-input";
+import { TokenType } from "@framework/types";
 
 export interface IErc1155MintDto {
   address: string;
@@ -35,7 +36,14 @@ export const Erc1155MintDialog: FC<IErc1155MintDialogProps> = props => {
       data-testid={testIdPrefix}
       {...rest}
     >
-      <ContractInput name="contractId" related="address" data-testid={`${testIdPrefix}-contractId`} />
+      <ContractInput
+        name="contractId"
+        related="address"
+        data-testid={`${testIdPrefix}-contractId`}
+        data={{
+          contractType: [TokenType.ERC1155],
+        }}
+      />
       <TemplateInput name="templateId" data-testid={`${testIdPrefix}-templateId`} />
       <TextInput name="amount" data-testid={`${testIdPrefix}-amount`} />
       <TextInput name="account" data-testid={`${testIdPrefix}-account`} />

@@ -84,7 +84,7 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }
 
-  function getInterface() public view returns (bytes4) {
+  function getInterface() public pure returns (bytes4) {
     return type(IERC721Random).interfaceId;
   }
 }

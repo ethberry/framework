@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
-import { emptyItem } from "../../../components/inputs/empty-price";
+import { emptyItem } from "../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const Claim: FC = () => {
