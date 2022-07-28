@@ -28,13 +28,13 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       deposit: rule.deposit?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId: component.template!.tokens![0].tokenId,
+        tokenId: component.templateId,
         amount: component.amount,
       }))[0],
       reward: rule.reward?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId: component.template!.tokens![0].tokenId,
+        tokenId: component.templateId,
         amount: component.amount,
       }))[0],
       period: rule.duration || 0, // todo fix same name
@@ -78,7 +78,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
 
   if (rule.stakingStatus === StakingStatus.NEW) {
     return (
-      <Tooltip title={formatMessage({ id: "pages.staking-rules.upload" })}>
+      <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
         <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
           <CloudUpload />
         </IconButton>

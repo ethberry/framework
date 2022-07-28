@@ -21,7 +21,14 @@ export class StakingRulesService {
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
+    queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
+    // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
+    queryBuilder.leftJoinAndSelect("deposit_components.contract", "deposit_contract");
+
     queryBuilder.leftJoinAndSelect("rule.reward", "reward");
+    queryBuilder.leftJoinAndSelect("reward.components", "reward_components");
+    // queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
+    queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
 
     queryBuilder.select();
 
