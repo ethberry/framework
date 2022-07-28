@@ -10,7 +10,6 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
         'ApprovalForAll',
         'DefaultRoyaltyInfo',
         'MintRandom',
-        'Paused',
         'RandomRequest',
         'RedeemClaim',
         'Snapshot',
@@ -21,6 +20,7 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
         'URI',
         'UnpackClaim',
         'UnpackLootbox',
+        'Paused'
         'Unpaused'
       );
     `);
