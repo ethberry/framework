@@ -53,6 +53,7 @@ export const Erc721Contract: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      contractStatus: ContractStatus.NEW,
     },
     search: {
       query: "",
