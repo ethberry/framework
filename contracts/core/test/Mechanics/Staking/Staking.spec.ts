@@ -25,13 +25,12 @@ import {
   PAUSER_ROLE,
   royalty,
   templateId,
-  tokenName,
-  tokenSymbol,
   VRF_ADDR,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { IAsset, IRule } from "./interface/staking";
 import { randomRequest } from "./shared/randomRequest";
+import { deployLinkVrfFixture } from "../../shared/link";
 
 use(solidity);
 
@@ -60,27 +59,13 @@ describe("Staking", function () {
   let linkInstance: LinkErc20;
   let vrfInstance: VRFCoordinatorMock;
 
-  async function deployLinkVrfFixture() {
-    const [owner] = await ethers.getSigners();
-    // Deploy Chainlink & Vrf contracts
-    const link = await ethers.getContractFactory("LinkErc20");
-    const linkInstance = await link.deploy(tokenName, tokenSymbol);
-    await linkInstance.deployed();
-    console.info(`LINK_ADDR=${linkInstance.address}`);
-    const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
-    await linkInstance.mint(owner.address, linkAmountInWei);
-    const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    const vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    await vrfInstance.deployed();
-    console.info(`VRF_ADDR=${vrfInstance.address}`);
-    return { linkInstance, vrfInstance };
-  }
-
   before(async function () {
     await network.provider.send("hardhat_reset");
-    const linkVrf = await loadFixture(deployLinkVrfFixture);
-    linkInstance = linkVrf.linkInstance;
-    vrfInstance = linkVrf.vrfInstance;
+
+    // https://github.com/NomicFoundation/hardhat/issues/2980
+    ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
+      return deployLinkVrfFixture();
+    }));
 
     expect(linkInstance.address).equal(LINK_ADDR);
     expect(vrfInstance.address).equal(VRF_ADDR);

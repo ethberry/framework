@@ -12,7 +12,7 @@ import {
   tokenName,
   tokenSymbol,
 } from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 import { shouldGetTokenURI } from "./shared/tokenURI";
 import { shouldSetBaseURI } from "./shared/setBaseURI";
 
