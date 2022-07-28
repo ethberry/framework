@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { baseTokenURI } from "../test/constants";
+import { baseTokenURI, MINTER_ROLE } from "../test/constants";
 import { wallet } from "@gemunion/constants";
 import { ContractManager } from "../typechain-types";
 import { blockAwait } from "./utils/blockAwait";
@@ -63,8 +63,6 @@ async function setFactories() {
     contracts.claimProxy.address,
   ];
   const metadata = [contracts.contractManager.address];
-  console.log("minters", minters);
-  console.log("metadata", metadata);
   const tx = await cM.setFactories(
     // minters
     minters,
@@ -74,10 +72,23 @@ async function setFactories() {
   console.info("Factories set, tx:", tx.hash);
 }
 
+async function grantRoles() {
+  await setFactories();
+  await blockAwait();
+  // MODULE:lootbox-market
+  const tx1 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.staking.address);
+  console.info(`MINTER_ROLE granted for staking in LBX:`, tx1.hash);
+  const tx2 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.exchange.address);
+  console.info(`MINTER_ROLE granted for exchange in LBX:`, tx2.hash);
+  const tx3 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.claimProxy.address);
+  console.info(`MINTER_ROLE granted for exchange in LBX:`, tx3.hash);
+}
+
 async function main() {
   await deploySystem();
   await deployModules();
   await setFactories();
+  await grantRoles();
 }
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);

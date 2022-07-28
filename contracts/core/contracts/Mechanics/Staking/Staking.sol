@@ -12,8 +12,6 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
@@ -24,6 +22,7 @@ import "../Lootbox/interfaces/IERC721Lootbox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
+import "../../ERC721/interfaces/IERC721Metadata.sol";
 
 contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
   using Address for address;
@@ -36,9 +35,17 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
-  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
   bytes4 private constant IERC721_LOOTBOX = type(IERC721Lootbox).interfaceId;
+  bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+  bytes32 public constant TEMPLATE_ID = keccak256("template_id");
+
+  struct Metadata {
+    bytes32 key;
+    uint256 value;
+  }
+
+  Metadata[] _meta;
 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
@@ -91,7 +98,9 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     } else if (depositItem.tokenType == TokenType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
     } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-      IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
+      uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
+      require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
+      IERC721Metadata(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
     } else if (depositItem.tokenType == TokenType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
     }
@@ -136,7 +145,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
       } else if (depositItem.tokenType == TokenType.ERC20) {
         SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, stakeAmount);
       } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-        IERC721(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId);
+        IERC721Metadata(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId);
       } else if (depositItem.tokenType == TokenType.ERC1155) {
         IERC1155(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId, stakeAmount, "0x");
       }
@@ -157,8 +166,8 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         rewardAmount = rewardItem.amount * multiplier;
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
-        bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
-        //        bool lootboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
+        bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM);
+        //        bool lootboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
 
         for (uint256 i = 0; i < multiplier; i++) {
           if (randomInterface) {

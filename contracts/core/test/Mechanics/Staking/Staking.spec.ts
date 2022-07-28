@@ -54,6 +54,7 @@ describe("Staking", function () {
   let erc721Deposit: IAsset;
   let erc1155Reward: IAsset;
   let erc1155Deposit: IAsset;
+  const templateKey = "0x9319bf1fd23873eaf43c06bb91a1db3e678411d693e959f1512879196908f12c";
   this.timeout(142000);
 
   let linkInstance: LinkErc20;
@@ -551,6 +552,37 @@ describe("Staking", function () {
 
       const tx3 = stakingInstance.connect(this.receiver).receiveReward(1, true, true);
       await expect(tx3).to.be.revertedWith("Staking: deposit withdrawn already");
+    });
+
+    it("should fail deposit for wrong tokenId", async function () {
+      const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
+        deposit: erc721Deposit,
+        reward: erc721RewardRnd,
+        period: BigNumber.from(stakePeriod),
+        penalty: BigNumber.from(stakePenalty),
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+      // STAKE
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId + 1);
+      const balance = await erc721RandomInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(2);
+      expect(await erc721RandomInstance.getRecordFieldValue(erc721Deposit.tokenId, templateKey)).to.equal(templateId);
+      expect(await erc721RandomInstance.getRecordFieldValue(erc721Deposit.tokenId.add(1), templateKey)).to.equal(
+        templateId + 1,
+      );
+      // APPROVE
+      await erc721RandomInstance.approve(stakingInstance.address, 1);
+      await erc721RandomInstance.approve(stakingInstance.address, 2);
+      // DEPOSIT
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId.add(1));
+      await expect(tx1).to.be.revertedWith("Staking: wrong deposit token templateID");
     });
 
     it("should stake NATIVE & receive NATIVE", async function () {
