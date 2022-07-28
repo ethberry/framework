@@ -3,7 +3,7 @@ import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import { IErc20TokenSnapshotMenuItem } from "./snapshot";
-import { Erc721ContractRoyaltyMenuItem } from "./royalty";
+import { RoyaltyMenuItem } from "./royalty";
 import { ContractGrantRoleMenuItem } from "./grant-role";
 import { ContractRevokeRoleMenuItem } from "./revoke-role";
 import { ContractRenounceRoleMenuItem } from "./renounce-role";
@@ -64,7 +64,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         ) : null}
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.ROYALTY) ? (
-          <Erc721ContractRoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
+          <RoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
         ) : null}
         <ContractGrantRoleMenuItem address={contract.address} />
         <ContractRevokeRoleMenuItem address={contract.address} />

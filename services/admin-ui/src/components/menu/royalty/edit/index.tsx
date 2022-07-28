@@ -9,14 +9,14 @@ export interface IRoyaltyDto {
   royalty: number;
 }
 
-export interface IErc721ContractRoyaltyEditDialogProps {
+export interface IRoyaltyEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: IRoyaltyDto, form: any) => Promise<void>;
   initialValues: IRoyaltyDto;
 }
 
-export const Erc721ContractRoyaltyEditDialog: FC<IErc721ContractRoyaltyEditDialogProps> = props => {
+export const RoyaltyEditDialog: FC<IRoyaltyEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const testIdPrefix = "RoyaltyEditForm";
