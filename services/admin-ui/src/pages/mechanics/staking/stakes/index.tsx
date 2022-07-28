@@ -13,8 +13,9 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IStakingStake, IStakingStakesSearchDto, StakeStatus } from "@framework/types";
+import { IStakingRule, IStakingStake, IStakingStakesSearchDto, StakeStatus } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { StakesSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
@@ -36,6 +37,11 @@ export const Stakes: FC = () => {
     handleChangePage,
   } = useCollection<IStakingStake, IStakingStakesSearchDto>({
     baseUrl: "/staking/stakes",
+    empty: {
+      stakingRule: {
+        description: emptyStateString,
+      } as IStakingRule,
+    },
     search: {
       query: "",
       stakeStatus: [StakeStatus.ACTIVE],

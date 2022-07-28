@@ -49,6 +49,11 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
+    "stakeStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
+    },
     "contractStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
