@@ -58,7 +58,6 @@ export const Claim: FC = () => {
   });
 
   const { formatMessage } = useIntl();
-
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "claims"]} />

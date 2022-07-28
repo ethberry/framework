@@ -491,6 +491,9 @@
       },
       "title": "Staking"
     },
+    "staking-rules": {
+      "upload": "Upload rule"
+    },
     "users": {
       "title": "Users"
     },

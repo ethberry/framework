@@ -65,7 +65,7 @@ export class ClaimService {
 
     const claimEntity = await this.claimEntityRepository
       .create({
-        account,
+        account: account.toLowerCase(),
         item: assetEntity,
         signature: "0x",
         nonce: "",

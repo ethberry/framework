@@ -148,6 +148,8 @@ services:
       STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"
+    depends_on:
+      - admin-api
 
   json-api:
     container_name: json-api

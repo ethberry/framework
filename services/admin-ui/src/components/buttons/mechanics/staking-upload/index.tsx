@@ -16,7 +16,6 @@ export interface IStakingUploadButtonProps {
 
 export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
   const { rule } = props;
-
   const { formatMessage } = useIntl();
 
   const metaLoadRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
