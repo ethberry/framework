@@ -20,9 +20,12 @@ export const Erc20AllowanceButton: FC = () => {
     setIsAllowanceDialogOpen(false);
   };
 
+  // todo wait until both allowances happen
   const meta = useMetamask((values: IErc20AllowanceDto, web3Context: Web3ContextType) => {
     const contract = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-    return contract.approve(process.env.EXCHANGE_ADDR, values.amount) as Promise<void>;
+    return contract.approve(process.env.EXCHANGE_ADDR, values.amount).then(() => {
+      contract.approve(process.env.STAKING_ADDR, values.amount);
+    }) as Promise<void>;
   });
 
   const handleAllowanceConfirm = async (values: IErc20AllowanceDto): Promise<void> => {

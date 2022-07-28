@@ -42,7 +42,7 @@ export class StakingRulesServiceEth {
     }
 
     Object.assign(stakingEntity, {
-      ruleId,
+      externalId: ruleId,
       stakingStatus: StakingStatus.ACTIVE,
     });
 
