@@ -202,6 +202,8 @@
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "cap": "Cap",
+      "child": "Child",
+      "childIds": "Child",
       "claimStatus": "Status",
       "collection": "Collection",
       "collectionType": "Type",
@@ -235,6 +237,8 @@
       "name": "Name",
       "owner": "Owner",
       "pageStatus": "Status",
+      "parent": "Parent",
+      "parentIds": "Parent",
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
@@ -276,9 +280,7 @@
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
-      "collection": "Collection",
-      "collectionId": "Collection",
-      "collectionIds": "Collection",
+      "childIds": "Contract",
       "comment": "Fraud",
       "confirm": "******",
       "contract": "Contract",
@@ -296,6 +298,7 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parentIds": "Contract",
       "password": "******",
       "penalty": "1",
       "price": "1000",
@@ -386,6 +389,7 @@
         "tokens": "ERC721 Tokens"
       },
       "erc998": {
+        "composition": "ERC998 Composition",
         "contracts": "ERC998 Contracts",
         "templates": "ERC998 Templates",
         "title": "ERC998",
@@ -428,13 +432,10 @@
       "title": "ERC721 Templates"
     },
     "erc721-tokens": {
-      "title": "Tokens",
-      "view": {
-        "attributes": "Attributes",
-        "description": "Description",
-        "imageUrl": "Image",
-        "title": "Title"
-      }
+      "title": "ERC721 Tokens"
+    },
+    "erc998-composition": {
+      "title": "ERC998 Composition"
     },
     "erc998-contracts": {
       "royalty": "Royalty",
@@ -444,13 +445,7 @@
       "title": "ERC998 Templates"
     },
     "erc998-tokens": {
-      "title": "Tokens",
-      "view": {
-        "attributes": "Attributes",
-        "description": "Description",
-        "imageUrl": "Image",
-        "title": "Title"
-      }
+      "title": "ERC998 Tokens"
     },
     "grades": {
       "title": "Grade Rules"

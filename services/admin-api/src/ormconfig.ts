@@ -112,6 +112,10 @@ import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
 
 import { CreateExchangeHistory1657846607010 } from "./migrations/1657846607010-create-exchange-history";
 
+import { CreateComposition1658980520000 } from "./migrations/1658980520000-create-composition";
+import { SeedComposition1658980520000 } from "./migrations/1658980520010-seed-composition";
+import { CompositionEntity } from "./erc998/composition/composition.entity";
+
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
@@ -139,6 +143,7 @@ const config: PostgresConnectionOptions = {
     LootboxEntity,
     CraftEntity,
     GradeEntity,
+    CompositionEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -238,7 +243,11 @@ const config: PostgresConnectionOptions = {
 
     CreateGrade1657846587000,
     SeedGrade1657846587010,
+
     CreateExchangeHistory1657846607010,
+
+    CreateComposition1658980520000,
+    SeedComposition1658980520000,
   ],
 };
 

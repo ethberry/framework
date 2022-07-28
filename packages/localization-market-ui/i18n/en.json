@@ -165,7 +165,6 @@
       "createdAt": "Registered",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
-      "maxAmount": "100",
       "maxPrice": "1",
       "minAmount": "0.01",
       "minPrice": "1",
