@@ -405,8 +405,9 @@
       },
       "mechanics": {
         "claims": "Claims",
+        "drops": "Drops",
         "craft": "Craft",
-        "grade": "Grade",
+        "grades": "Grades",
         "lootboxes": "Lootboxes",
         "title": "Mechanics",
         "vesting": "Vesting"
@@ -421,6 +422,9 @@
     },
     "emails": {
       "title": "Emails"
+    },
+    "drops": {
+      "title": "Drops"
     },
     "erc1155-contracts": {
       "title": "ERC1155 Contracts"

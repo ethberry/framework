@@ -50,5 +50,13 @@ export const mechanics: Array<RouteObject> = [
       { path: "/grades/:id", element: <Grade /> },
     ],
   },
+  {
+    path: "/drops",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Grade /> },
+      { path: "/grades/:id", element: <Grade /> },
+    ],
+  },
   ...stakingRoutes,
 ];

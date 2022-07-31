@@ -19,6 +19,7 @@ export * from "./mechanics/asset-component";
 export * from "./mechanics/claim";
 export * from "./mechanics/composition";
 export * from "./mechanics/craft";
+export * from "./mechanics/drop";
 export * from "./mechanics/exchange-history";
 export * from "./mechanics/grade";
 export * from "./mechanics/lootbox";

@@ -6,6 +6,7 @@ export class CreateTemplate1563804000200 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.template_status_enum AS ENUM (
         'ACTIVE',
+        'HIDDEN',
         'INACTIVE'
       );
     `);
