@@ -53,8 +53,7 @@ export const Claim: FC = () => {
       claimStatus: [],
       templateIds: [],
     },
-    filter: ({ id, item, account }) =>
-      id ? { item: cleanUpAsset(item), account } : { item: cleanUpAsset(item), account },
+    filter: ({ item, account }) => ({ item: cleanUpAsset(item), account }),
   });
 
   const { formatMessage } = useIntl();

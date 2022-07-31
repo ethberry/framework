@@ -9,7 +9,7 @@ import { DropEntity } from "./drop.entity";
 import { DropCreateDto, DropUpdateDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/drop")
+@Controller("/drops")
 export class DropController {
   constructor(private readonly dropService: DropService) {}
 
@@ -32,6 +32,6 @@ export class DropController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<DropEntity | null> {
-    return this.dropService.findOne({ id });
+    return this.dropService.findOneWithRelations({ id });
   }
 }

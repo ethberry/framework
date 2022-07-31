@@ -1,22 +1,25 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { constants } from "ethers";
+import { addMonths, subMonths } from "date-fns";
 
 import { ns } from "@framework/constants";
 
-export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface {
+export class SeedDropErcLootboxAt1658980521050 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const now = new Date();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        40201
+        66101
       ), (
-        40202
+        66111
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 70202, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 60502, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -27,43 +30,39 @@ export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface
         asset_id
       ) VALUES (
         'ERC721',
-        16,
-        13101, -- sword
-        1,
-        40201
+        41,
+        17601,
+        '1',
+        66101
       ), (
-        'ERC1155',
-        31,
-        15102, -- wood
-        10,
-        40202
-      ), (
-        'ERC1155',
-        31,
-        15103, -- iron
-        10,
-        40202
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        66111
       );
     `);
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.craft (
+      INSERT INTO ${ns}.drop (
         item_id,
-        ingredients_id,
-        craft_status,
+        price_id,
+        start_timestamp,
+        end_timestamp,
         created_at,
         updated_at
       ) VALUES (
-        40201,
-        40202,
-        'ACTIVE',
+        66101,
+        66111,
+        '${subMonths(now, 1).toISOString()}',
+        '${addMonths(now, 1).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
-      )
+      );
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.craft RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.drop RESTART IDENTITY CASCADE;`);
   }
 }

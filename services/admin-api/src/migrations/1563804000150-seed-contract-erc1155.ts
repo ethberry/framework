@@ -13,7 +13,6 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 31 - ITEMS, 32 - SKILLS, 33 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,

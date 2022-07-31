@@ -21,7 +21,10 @@ export class DropService {
 
     const queryBuilder = this.gradeEntityRepository.createQueryBuilder("drop");
 
-    queryBuilder.leftJoinAndSelect("drop.template", "template");
+    queryBuilder.leftJoinAndSelect("drop.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
 
@@ -56,5 +59,23 @@ export class DropService {
 
   public create(dto: Partial<IDropCreateDto>): Promise<DropEntity> {
     return this.gradeEntityRepository.create(dto).save();
+  }
+
+  public findOneWithRelations(where: FindOptionsWhere<DropEntity>): Promise<DropEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "drop",
+        leftJoinAndSelect: {
+          item: "drop.item",
+          item_components: "item.components",
+          item_contract: "item_components.contract",
+          item_template: "item_components.template",
+          price: "drop.price",
+          price_components: "price.components",
+          price_contract: "price_components.contract",
+          price_template: "price_components.template",
+        },
+      },
+    });
   }
 }

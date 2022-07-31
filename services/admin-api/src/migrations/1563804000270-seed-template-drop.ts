@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedTemplateLootboxAt1563804000260 implements MigrationInterface {
+export class SeedTemplateDropAt1563804000270 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -11,19 +11,17 @@ export class SeedTemplateLootboxAt1563804000260 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        16101
+        17301
       ), (
-        16102
+        17401
       ), (
-        16103
+        17501
       ), (
-        16104
-      ), (
-        16105
+        17601
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 16105, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 17604, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -39,69 +37,57 @@ export class SeedTemplateLootboxAt1563804000260 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        16101,
-        'Sword Lootbox',
+        17301,
+        'Item Drop',
         '${simpleFormatting}',
         '${imageUrl}',
-        16101,
+        17301,
         0,
         4,
-        'ACTIVE',
-        41,
+        'HIDDEN',
+        16,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16102,
-        'Sword Lootbox Inactive',
+        17401,
+        'Hero Drop',
         '${simpleFormatting}',
         '${imageUrl}',
-        16105,
+        17401,
         0,
         1,
-        'INACTIVE',
-        41,
+        'HIDDEN',
+        26,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16103,
-        'Warrior Lootbox',
+        17501,
+        'Resource Drop',
         '${simpleFormatting}',
         '${imageUrl}',
-        16102,
+        17501,
         0,
         1,
-        'ACTIVE',
-        41,
+        'HIDDEN',
+        31,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16104,
-        'Gold Lootbox',
+        17601,
+        'Lootbox Drop',
         '${simpleFormatting}',
         '${imageUrl}',
-        16103,
+        17601,
         0,
         1,
-        'ACTIVE',
-        41,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        16105,
-        'Mixed Lootbox',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        16104,
-        0,
-        1,
-        'ACTIVE',
+        'HIDDEN',
         41,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 16105, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 17601, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

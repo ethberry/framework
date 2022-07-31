@@ -10,7 +10,6 @@ export class SeedContractLootboxAt1563804000160 implements MigrationInterface {
     const lootboxAddress = process.env.LOOTBOX_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 41 - LOOTBOX
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,

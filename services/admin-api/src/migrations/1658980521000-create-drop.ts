@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateDrop1658980520000 implements MigrationInterface {
+export class CreateDrop1658980521000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
       name: `${ns}.drop`,
@@ -13,7 +13,11 @@ export class CreateDrop1658980520000 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "template_id",
+          name: "item_id",
+          type: "int",
+        },
+        {
+          name: "price_id",
           type: "int",
         },
         {
@@ -35,9 +39,15 @@ export class CreateDrop1658980520000 implements MigrationInterface {
       ],
       foreignKeys: [
         {
-          columnNames: ["template_id"],
+          columnNames: ["item_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.template`,
+          referencedTableName: `${ns}.asset`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["price_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",
         },
       ],

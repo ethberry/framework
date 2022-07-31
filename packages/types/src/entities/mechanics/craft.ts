@@ -10,8 +10,8 @@ export enum CraftStatus {
 }
 
 export interface ICraft extends IIdDateBase {
-  item: IAsset;
-  ingredients: IAsset;
+  item?: IAsset;
+  ingredients?: IAsset;
   craftStatus: CraftStatus;
   history?: Array<IExchangeHistory>;
 }

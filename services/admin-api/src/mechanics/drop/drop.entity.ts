@@ -4,16 +4,17 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 import { ns } from "@framework/constants";
 import { IDrop } from "@framework/types";
 
-import { TemplateEntity } from "../../blockchain/hierarchy/template/template.entity";
+import { AssetEntity } from "../asset/asset.entity";
 
 @Entity({ schema: ns, name: "drop" })
 export class DropEntity extends IdDateBaseEntity implements IDrop {
-  @Column({ type: "int" })
-  public templateId: number;
+  @JoinColumn()
+  @OneToOne(_type => AssetEntity)
+  public item: AssetEntity;
 
   @JoinColumn()
-  @OneToOne(_type => TemplateEntity)
-  public template: TemplateEntity;
+  @OneToOne(_type => AssetEntity)
+  public price: AssetEntity;
 
   @Column({ type: "timestamptz" })
   public startTimestamp: string;

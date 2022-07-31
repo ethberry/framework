@@ -81,8 +81,8 @@ export const Craft: FC = () => {
         <List>
           {rows.map((craft, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>{craft.item.components[0].template?.title}</ListItemText>
-              <ListItemText>{craft.item.components[0].contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{craft.item?.components[0].template?.title}</ListItemText>
+              <ListItemText>{craft.item?.components[0].contract?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(craft)}>
                   <Create />
@@ -108,7 +108,7 @@ export const Craft: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: selected.item.components[0]?.template?.title }}
+        initialValues={{ ...selected, title: selected.item?.components[0]?.template?.title }}
       />
 
       <CraftEditDialog

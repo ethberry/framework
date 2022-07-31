@@ -9,6 +9,8 @@ import { useCollection } from "@gemunion/react-hooks";
 import { IDrop } from "@framework/types";
 
 import { DropEditDialog } from "./edit";
+import { emptyItem } from "../../../components/inputs/price/empty-price";
+import { cleanUpAsset } from "../../../utils/money";
 
 export const Drop: FC = () => {
   const now = new Date();
@@ -26,9 +28,17 @@ export const Drop: FC = () => {
   } = useCollection<IDrop, IPaginationDto>({
     baseUrl: "/drops",
     empty: {
+      item: emptyItem,
+      price: emptyItem,
       startTimestamp: addMonths(now, 0).toISOString(),
       endTimestamp: addMonths(now, 1).toISOString(),
     },
+    filter: ({ item, price, startTimestamp, endTimestamp }) => ({
+      item: cleanUpAsset(item),
+      price: cleanUpAsset(price),
+      startTimestamp,
+      endTimestamp,
+    }),
   });
 
   return (
@@ -41,7 +51,7 @@ export const Drop: FC = () => {
         <List>
           {rows.map((drop, i) => (
             <ListItem key={i}>
-              <ListItemText>{drop.template?.title}</ListItemText>
+              <ListItemText>{drop.item?.components[0].template?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(drop)}>
                   <Create />

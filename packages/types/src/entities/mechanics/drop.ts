@@ -1,10 +1,10 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { ITemplate } from "../blockchain/hierarchy/template";
+import { IAsset } from "./asset";
 
 export interface IDrop extends IIdDateBase {
-  templateId: number;
-  template: ITemplate;
+  price?: IAsset;
+  item?: IAsset;
   startTimestamp: string;
   endTimestamp: string;
 }

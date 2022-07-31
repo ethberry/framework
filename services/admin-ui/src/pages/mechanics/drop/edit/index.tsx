@@ -1,11 +1,11 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateInput } from "@gemunion/mui-inputs-picker";
-import { IDrop, TemplateStatus } from "@framework/types";
+import { IDrop, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
+import { PriceInput } from "../../../../components/inputs/price";
 
 export interface IDropEditDialogProps {
   open: boolean;
@@ -17,12 +17,13 @@ export interface IDropEditDialogProps {
 export const DropEditDialog: FC<IDropEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, startTimestamp, endTimestamp, templateId } = initialValues;
+  const { id, item, price, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = {
     id,
+    item,
+    price,
     startTimestamp,
     endTimestamp,
-    templateId,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -36,13 +37,8 @@ export const DropEditDialog: FC<IDropEditDialogProps> = props => {
       {...rest}
       data-testid={testIdPrefix}
     >
-      <EntityInput
-        name="templateId"
-        controller="templates"
-        data={{
-          templateStatus: [TemplateStatus.HIDDEN],
-        }}
-      />
+      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
       <DateInput name="startTimestamp" data-testid={`${testIdPrefix}-startTimestamp`} />
       <DateInput name="endTimestamp" data-testid={`${testIdPrefix}-endTimestamp`} />
     </FormDialog>

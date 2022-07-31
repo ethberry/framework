@@ -10,13 +10,13 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        70101
+        40101
       ), (
-        70102
+        40102
       ), (
-        70111
+        40111
       ), (
-        70112
+        40112
       );
     `);
 
@@ -34,25 +34,25 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
         31,
         15102, -- wood
         1,
-        70101
+        40101
       ), (
         'ERC1155',
         31,
         15103, -- iron
         10,
-        70111
+        40111
       ), (
         'ERC1155',
         31,
         15104, -- wood log
         1,
-        70102
+        40102
       ), (
         'ERC1155',
         31,
         15105, -- iron ingot
         10,
-        70112
+        40112
       );
     `);
 
@@ -64,14 +64,14 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
         created_at,
         updated_at
       ) VALUES (
-        70101,
-        70111,
+        40101,
+        40111,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        70102,
-        70112,
+        40102,
+        40112,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'
