@@ -9,6 +9,7 @@ import { Erc721ContractTemplate, IErc721ContractDeployDto } from "@framework/typ
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC721BlackList from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
 import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 import { Erc721ContractDeployDialog } from "./deploy-dialog";
@@ -17,6 +18,8 @@ function getBytecodeByErc721TokenTemplate(template: Erc721ContractTemplate) {
   switch (template) {
     case Erc721ContractTemplate.SIMPLE:
       return ERC721SimpleSol.bytecode;
+    case Erc721ContractTemplate.BLACKLIST:
+      return ERC721BlackList.bytecode;
     case Erc721ContractTemplate.UPGRADEABLE:
       return ERC721UpgradeableSol.bytecode;
     case Erc721ContractTemplate.RANDOM:

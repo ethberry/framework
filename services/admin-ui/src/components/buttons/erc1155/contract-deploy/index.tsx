@@ -9,6 +9,7 @@ import { Erc1155ContractTemplate, IErc1155ContractDeployDto } from "@framework/t
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC1155BlackList from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
 
 import { Erc1155ContractDeployDialog } from "./deploy-dialog";
 
@@ -16,6 +17,8 @@ function getBytecodeByErc1155TokenTemplate(template: Erc1155ContractTemplate) {
   switch (template) {
     case Erc1155ContractTemplate.SIMPLE:
       return ERC1155SimpleSol.bytecode;
+    case Erc1155ContractTemplate.BLACKLIST:
+      return ERC1155BlackList.bytecode;
     default:
       throw new Error("Unknown template");
   }

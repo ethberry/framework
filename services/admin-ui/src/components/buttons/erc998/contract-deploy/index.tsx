@@ -9,6 +9,7 @@ import { Erc998ContractTemplate, IErc998ContractDeployDto } from "@framework/typ
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
+import ERC998BlackList from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
 import ERC998UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
 import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
 import { Erc998ContractDeployDialog } from "./deploy-dialog";
@@ -17,6 +18,8 @@ function getBytecodeByErc998TokenTemplate(template: Erc998ContractTemplate) {
   switch (template) {
     case Erc998ContractTemplate.SIMPLE:
       return ERC998SimpleSol.bytecode;
+    case Erc998ContractTemplate.BLACKLIST:
+      return ERC998BlackList.bytecode;
     case Erc998ContractTemplate.UPGRADEABLE:
       return ERC998UpgradeableSol.bytecode;
     case Erc998ContractTemplate.RANDOM:
