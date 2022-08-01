@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IComposition } from "@framework/types";
 import { ns } from "@framework/constants";

@@ -2,13 +2,13 @@ import { FC, Fragment } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ITemplate, IToken } from "@framework/types";
+import { ContractTemplate, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../components/buttons";
+import { TokenSellButton, UpgradeButton } from "../../../components/buttons";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -44,6 +44,13 @@ export const Erc721Token: FC = () => {
           <Paper className={classes.paper}>
             <TokenSellButton token={selected} />
           </Paper>
+
+          {selected.template?.contract?.contractTemplate === ContractTemplate.UPGRADEABLE ||
+          selected.template?.contract?.contractTemplate === ContractTemplate.RANDOM ? (
+            <Paper className={classes.paper}>
+              <UpgradeButton token={selected} />
+            </Paper>
+          ) : null}
         </Grid>
       </Grid>
     </Fragment>

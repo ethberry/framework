@@ -116,7 +116,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         26,
         '${erc998ContractRandomAddress}',
         '${chainId}',
-        'HERO',
+        'HERO (RANDOM)',
         '${simpleFormatting}',
         '${imageUrl}',
         'RANDOM',
@@ -131,7 +131,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 27, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 26, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

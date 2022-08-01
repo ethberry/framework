@@ -76,7 +76,7 @@ export class SeedStakingRulesErc20At1654751224220 implements MigrationInterface 
       ), (
         'ERC721',
         16,
-        13101, -- sword
+        13501, -- sword
         1,
         80232
       ), (

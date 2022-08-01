@@ -28,7 +28,7 @@ export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface
       ) VALUES (
         'ERC721',
         16,
-        13101, -- sword
+        13501, -- sword
         1,
         40201
       ), (

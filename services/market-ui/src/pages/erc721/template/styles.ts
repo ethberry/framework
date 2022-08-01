@@ -5,6 +5,7 @@ export const useStyles = makeStyles<Theme>(
   theme => ({
     paper: {
       padding: theme.spacing(2),
+      marginBottom: theme.spacing(2),
     },
   }),
   { name: "Token" },

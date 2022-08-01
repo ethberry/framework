@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ITemplate } from "@framework/types";
+import { ITemplate, TemplateStatus } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -41,12 +41,14 @@ export const Erc998Template: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          <Paper className={classes.paper}>
-            <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc998-template.price" values={{ amount: formatPrice(selected.price) }} />
-            </Typography>
-            <TemplatePurchaseButton template={selected} />
-          </Paper>
+          {selected.templateStatus === TemplateStatus.ACTIVE ? (
+            <Paper className={classes.paper}>
+              <Typography variant="body2" color="textSecondary" component="p">
+                <FormattedMessage id="pages.erc998-template.price" values={{ amount: formatPrice(selected.price) }} />
+              </Typography>
+              <TemplatePurchaseButton template={selected} />
+            </Paper>
+          ) : null}
         </Grid>
       </Grid>
     </Fragment>

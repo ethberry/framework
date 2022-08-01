@@ -21,7 +21,6 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         13101,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "13101",
-          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '1',
@@ -33,10 +32,9 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         13102,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "13102",
-          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
-        '2',
+        '1',
         'MINTED',
         13102,
         '${currentDateTime}',
@@ -45,51 +43,86 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         13103,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "13103",
-          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
         100,
-        '3',
+        '1',
         'MINTED',
         13103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13201,
+        13501,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13201",
+          [TokenAttributes.TEMPLATE_ID]: "13501",
         })}',
         100,
         '1',
         'MINTED',
-        13201,
+        13501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13202,
+        13502,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13202",
+          [TokenAttributes.TEMPLATE_ID]: "13502",
         })}',
         100,
         '2',
         'MINTED',
-        13202,
+        13502,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13203,
+        13503,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13203",
+          [TokenAttributes.TEMPLATE_ID]: "13503",
         })}',
         100,
         '3',
         'MINTED',
-        13203,
+        13503,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13601,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "13601",
+          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+        })}',
+        100,
+        '1',
+        'MINTED',
+        13601,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13602,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "13602",
+          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+        })}',
+        100,
+        '2',
+        'MINTED',
+        13602,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13603,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "13603",
+          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
+        })}',
+        100,
+        '3',
+        'MINTED',
+        13603,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 13203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 13603, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

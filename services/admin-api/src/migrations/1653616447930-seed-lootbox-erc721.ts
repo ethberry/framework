@@ -34,7 +34,7 @@ export class SeedLootboxErc721At1653616447930 implements MigrationInterface {
       ) VALUES (
         'ERC721',
         16,
-        13101, -- sword
+        13501, -- sword
         '1',
         33101
       ), (
@@ -46,7 +46,7 @@ export class SeedLootboxErc721At1653616447930 implements MigrationInterface {
       ), (
         'ERC721',
         16,
-        13101, -- sword
+        13501, -- sword
         '1',
         33201
       ), (

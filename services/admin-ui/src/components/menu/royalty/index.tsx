@@ -8,7 +8,7 @@ import { Web3ContextType } from "@web3-react/core";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
-import { RoyaltyEditDialog, IRoyaltyDto } from "./edit";
+import { IRoyaltyDto, RoyaltyEditDialog } from "./edit";
 
 export interface IRoyaltyMenuItemProps {
   address: string;

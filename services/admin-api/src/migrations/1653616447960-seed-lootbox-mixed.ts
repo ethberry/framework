@@ -36,7 +36,7 @@ export class SeedLootboxMixedAt1653616447960 implements MigrationInterface {
       ), (
         'ERC721',
         16,
-        13101, -- sword
+        13501, -- sword
         '1',
         36101
       ), (
