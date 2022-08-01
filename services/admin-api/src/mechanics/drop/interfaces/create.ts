@@ -1,5 +1,8 @@
+import { IAssetDto } from "../../asset/interfaces";
+
 export interface IDropCreateDto {
-  templateId: number;
+  item: IAssetDto;
+  price: IAssetDto;
   startTimestamp: string;
   endTimestamp: string;
 }

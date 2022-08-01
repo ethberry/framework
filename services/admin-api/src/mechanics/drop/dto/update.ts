@@ -1,21 +1,33 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsInt, IsISO8601, IsOptional, IsString, Min } from "class-validator";
+import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
 import { IDropUpdateDto } from "../interfaces";
+import { IsBeforeDate } from "./is-before-date";
+import { AssetDto } from "../../asset/dto";
 
 export class DropUpdateDto implements IDropUpdateDto {
   @ApiPropertyOptional({
-    minimum: 1,
+    type: AssetDto,
   })
   @IsOptional()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public templateId: number;
+  @ValidateNested()
+  @Type(() => AssetDto)
+  public item: AssetDto;
+
+  @ApiPropertyOptional({
+    type: AssetDto,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => AssetDto)
+  public price: AssetDto;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsISO8601({ message: "patternMismatch" })
+  @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
   public startTimestamp: string;
 
   @ApiPropertyOptional()

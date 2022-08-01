@@ -66,7 +66,7 @@ export class CraftService {
   public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
     const { price, item } = dto;
 
-    // add new ingredient
+    // add new price
     const priceEntity = await this.assetService.create({
       components: [],
     });

@@ -19,7 +19,11 @@ export const DropItem: FC<IDropItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/drops/${drop.id}`}>
+      <CardActionArea
+        component={RouterLink}
+        // prettier-ignore
+        to={`/${drop.item!.components[0].contract!.contractType.toLowerCase()}-templates/${drop.item!.components[0].templateId}`}
+      >
         <CardHeader title={drop.item?.components[0]?.template?.title} />
         <CardMedia className={classes.media} image={drop.item?.components[0]?.template?.imageUrl} />
         <CardContent>

@@ -57,8 +57,26 @@ export class DropService {
     return dropEntity.save();
   }
 
-  public create(dto: Partial<IDropCreateDto>): Promise<DropEntity> {
-    return this.dropEntityRepository.create(dto).save();
+  public async create(dto: IDropCreateDto): Promise<DropEntity> {
+    const { price, item, ...rest } = dto;
+
+    const priceEntity = await this.assetService.create({
+      components: [],
+    });
+    await this.assetService.update(priceEntity, price);
+
+    const itemEntity = await this.assetService.create({
+      components: [],
+    });
+    await this.assetService.update(itemEntity, item);
+
+    return this.dropEntityRepository
+      .create({
+        ...rest,
+        price: priceEntity,
+        item: itemEntity,
+      })
+      .save();
   }
 
   public findOneWithRelations(where: FindOptionsWhere<DropEntity>): Promise<DropEntity | null> {

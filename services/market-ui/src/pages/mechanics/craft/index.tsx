@@ -50,7 +50,12 @@ export const Craft: FC = () => {
             }
           >
             {selected.price?.components.map(component => (
-              <ListItem key={component.id} button component={RouterLink} to={`/erc1155-tokens/${component.templateId}`}>
+              <ListItem
+                key={component.id}
+                button
+                component={RouterLink}
+                to={`/${component.contract!.contractType.toLowerCase()}-templates/${component.templateId}`}
+              >
                 <ListItemText>
                   {component.template!.title} ({component.amount})
                 </ListItemText>

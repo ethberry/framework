@@ -274,6 +274,9 @@
       },
       "title": "Dashboard"
     },
+    "drop-list": {
+      "title": "Drops"
+    },
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
     },
@@ -355,9 +358,6 @@
     "lootbox-list": {
       "title": "Lootboxes"
     },
-    "drop-list": {
-      "title": "Drops"
-    },
     "marketplace": {
       "erc1155": {
         "title": "ERC1155"
@@ -417,11 +417,11 @@
     "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
-    "denied": "Denied by user",
     "error": "Unknown Error",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
+    "rejectedByUser": "Rejected by user",
     "success": "Success",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",

@@ -1,6 +1,16 @@
 import { FC } from "react";
-import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
-import { Create } from "@mui/icons-material";
+import {
+  Grid,
+  IconButton,
+  List,
+  Button,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Pagination,
+} from "@mui/material";
+import { Create, Add } from "@mui/icons-material";
+import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
 
 import { IPaginationDto } from "@gemunion/types-collection";
@@ -9,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { IDrop } from "@framework/types";
 
 import { DropEditDialog } from "./edit";
-import { emptyItem } from "../../../components/inputs/price/empty-price";
+import { emptyItem, emptyPrice } from "../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const Drop: FC = () => {
@@ -21,6 +31,7 @@ export const Drop: FC = () => {
     selected,
     isLoading,
     isEditDialogOpen,
+    handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
@@ -29,7 +40,7 @@ export const Drop: FC = () => {
     baseUrl: "/drops",
     empty: {
       item: emptyItem,
-      price: emptyItem,
+      price: emptyPrice,
       startTimestamp: addMonths(now, 0).toISOString(),
       endTimestamp: addMonths(now, 1).toISOString(),
     },
@@ -45,7 +56,11 @@ export const Drop: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "drops"]} />
 
-      <PageHeader message="pages.drops.title" />
+      <PageHeader message="pages.drops.title">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="LootboxCreateButton">
+          <FormattedMessage id="form.buttons.create" />
+        </Button>
+      </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

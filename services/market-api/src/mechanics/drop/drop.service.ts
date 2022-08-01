@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
@@ -23,6 +23,7 @@ export class DropService {
 
   public async search(dto: IPaginationDto): Promise<[Array<DropEntity>, number]> {
     const { skip, take } = dto;
+    const now = new Date();
 
     const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
 
@@ -38,6 +39,9 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
     queryBuilder.select();
+
+    queryBuilder.andWhere("drop.startTimestamp < :startTimestamp", { startTimestamp: now });
+    queryBuilder.andWhere("drop.endTimestamp > :endTimestamp", { endTimestamp: now });
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -84,6 +88,14 @@ export class DropService {
       throw new NotFoundException("dropNotFound");
     }
 
+    const now = Date.now();
+    if (new Date(dropEntity.startTimestamp).getTime() > now) {
+      throw new BadRequestException("dropNotYetStarted");
+    }
+    if (new Date(dropEntity.endTimestamp).getTime() < now) {
+      throw new BadRequestException("dropAlreadyEnded");
+    }
+
     const templateEntity = await this.templateService.findOne({ id: dropEntity.item.components[0].templateId });
 
     if (!templateEntity) {
@@ -92,7 +104,7 @@ export class DropService {
 
     const cap = BigNumber.from(templateEntity.cap);
     if (cap.gt(0) && cap.lte(templateEntity.amount)) {
-      throw new NotFoundException("limitExceeded");
+      throw new BadRequestException("limitExceeded");
     }
 
     const nonce = utils.randomBytes(32);

@@ -33,7 +33,7 @@ export class TemplateService {
       contractType,
     });
 
-    queryBuilder.andWhere("contract.contractModule == :contractModule", {
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule: ModuleType.CORE,
     });
 

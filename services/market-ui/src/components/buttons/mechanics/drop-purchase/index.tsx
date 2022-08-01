@@ -54,7 +54,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/drop/sign",
+        url: "/drops/sign",
         method: "POST",
         data: {
           dropId: drop.id,
