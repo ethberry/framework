@@ -16,11 +16,11 @@ export interface IExchangeEditDialogProps {
 export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, ingredients } = initialValues;
+  const { id, item, price } = initialValues;
   const fixedValues = {
     id,
     item,
-    ingredients,
+    price,
   };
   const testIdPrefix = "CraftEditForm";
 
@@ -33,7 +33,7 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
       {...rest}
     >
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
-      <PriceInput prefix="ingredients" multiple disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
+      <PriceInput prefix="price" multiple disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
     </FormDialog>
   );
 };

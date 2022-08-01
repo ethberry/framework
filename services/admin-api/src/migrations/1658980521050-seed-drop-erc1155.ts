@@ -31,7 +31,7 @@ export class SeedDropErc1155At1658980521050 implements MigrationInterface {
       ) VALUES (
         'ERC1155',
         31,
-        17501,
+        15101,
         '1',
         65101
       ), (

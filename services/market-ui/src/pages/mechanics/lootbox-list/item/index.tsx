@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { ILootbox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { LootboxBuyButton } from "../../../../components/buttons";
+import { LootboxPurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { useStyles } from "./styles";
 
@@ -33,7 +33,7 @@ export const LootboxItem: FC<ILootboxItemProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <LootboxBuyButton lootbox={lootbox} />
+          <LootboxPurchaseButton lootbox={lootbox} />
         </Grid>
       </CardActions>
     </Card>

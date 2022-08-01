@@ -25,7 +25,7 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "ingredients_id",
+          name: "price_id",
           type: "int",
         },
         {
@@ -50,7 +50,7 @@ export class CreateCraft1653616448010 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["ingredients_id"],
+          columnNames: ["price_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",

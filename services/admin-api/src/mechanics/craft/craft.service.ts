@@ -64,13 +64,13 @@ export class CraftService {
   }
 
   public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
-    const { ingredients, item } = dto;
+    const { price, item } = dto;
 
     // add new ingredient
-    const ingredientsEntity = await this.assetService.create({
+    const priceEntity = await this.assetService.create({
       components: [],
     });
-    await this.assetService.update(ingredientsEntity, ingredients);
+    await this.assetService.update(priceEntity, price);
 
     // add new item
     const itemEntity = await this.assetService.create({
@@ -80,20 +80,20 @@ export class CraftService {
 
     return this.craftEntityRepository
       .create({
-        ingredients: ingredientsEntity,
+        price: priceEntity,
         item: itemEntity,
       })
       .save();
   }
 
   public async update(where: FindOptionsWhere<CraftEntity>, dto: Partial<ICraftUpdateDto>): Promise<CraftEntity> {
-    const { ingredients, ...rest } = dto;
+    const { price, ...rest } = dto;
 
     const exchangeEntity = await this.findOne(where, {
       join: {
         alias: "craft",
         leftJoinAndSelect: {
-          ingredients: "craft.ingredients",
+          price: "craft.price",
         },
       },
     });
@@ -102,8 +102,8 @@ export class CraftService {
       throw new NotFoundException("craftNotFound");
     }
 
-    if (ingredients) {
-      await this.assetService.update(exchangeEntity.ingredients, ingredients);
+    if (price) {
+      await this.assetService.update(exchangeEntity.price, price);
     }
 
     Object.assign(exchangeEntity, rest);

@@ -79,7 +79,7 @@ describe("ExchangeLootbox", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 0,
               token: ethers.constants.AddressZero,
@@ -152,7 +152,7 @@ describe("ExchangeLootbox", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 0,
               token: ethers.constants.AddressZero,

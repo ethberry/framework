@@ -211,7 +211,7 @@
       "title": "Claim"
     },
     "craft": {
-      "ingredients": "Ingredients",
+      "price": "price",
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
@@ -244,6 +244,7 @@
       "mechanics": {
         "claim": "Claim",
         "craft": "Craft",
+        "drop": "Drop",
         "lootboxes": "Lootboxes",
         "title": "Mechanics",
         "vesting": "Vesting"
@@ -353,6 +354,9 @@
     },
     "lootbox-list": {
       "title": "Lootboxes"
+    },
+    "drop-list": {
+      "title": "Drops"
     },
     "marketplace": {
       "erc1155": {

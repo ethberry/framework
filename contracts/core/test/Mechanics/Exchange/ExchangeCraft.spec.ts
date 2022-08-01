@@ -66,7 +66,7 @@ describe("ExchangeCore", function () {
           account: this.receiver.address,
           params,
           items: [],
-          ingredients: [],
+          price: [],
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).craft(params, [], [], this.owner.address, signature);
@@ -90,7 +90,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [],
+          price: [],
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).craft(
@@ -127,7 +127,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [],
+          price: [],
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).craft(
@@ -164,7 +164,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 0,
               token: ethers.constants.AddressZero,
@@ -223,7 +223,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 0,
               token: ethers.constants.AddressZero,
@@ -275,7 +275,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -335,7 +335,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -385,7 +385,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -437,7 +437,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 4,
               token: erc1155Instance.address,
@@ -489,7 +489,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 4,
               token: erc1155Instance.address,
@@ -539,7 +539,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 4,
               token: erc1155Instance.address,
@@ -591,7 +591,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 0,
               token: ethers.constants.AddressZero,
@@ -650,7 +650,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 0,
               token: ethers.constants.AddressZero,
@@ -702,7 +702,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -762,7 +762,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -812,7 +812,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -864,7 +864,7 @@ describe("ExchangeCore", function () {
               amount: 1,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 4,
               token: erc1155Instance.address,
@@ -916,7 +916,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 4,
               token: erc1155Instance.address,
@@ -966,7 +966,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          ingredients: [
+          price: [
             {
               tokenType: 4,
               token: erc1155Instance.address,
@@ -1012,7 +1012,7 @@ describe("ExchangeCore", function () {
         account: this.receiver.address,
         params,
         items: [],
-        ingredients: [],
+        price: [],
       });
 
       const tx1 = exchangeInstance.connect(this.receiver).craft(params, [], [], this.owner.address, signature);
@@ -1028,7 +1028,7 @@ describe("ExchangeCore", function () {
         account: this.receiver.address,
         params,
         items: [],
-        ingredients: [],
+        price: [],
       });
 
       const tx1 = exchangeInstance.connect(this.receiver).craft(params, [], [], this.receiver.address, signature);

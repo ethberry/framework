@@ -16,6 +16,7 @@ import { CraftEntity } from "./mechanics/craft/craft.entity";
 import { AssetEntity } from "./mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
+import { DropEntity } from "./mechanics/drop/drop.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -37,6 +38,7 @@ const config: PostgresConnectionOptions = {
     BalanceEntity,
     AssetEntity,
     AssetComponentEntity,
+    DropEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

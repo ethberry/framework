@@ -5,43 +5,36 @@ import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { IServerSignature } from "@gemunion/types-collection";
-import { ILootbox, TokenType } from "@framework/types";
+import { IDrop, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
+
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 import { getEthPrice } from "../../../../utils/money";
 
-interface ILootboxBuyButtonProps {
-  lootbox: ILootbox;
+interface IDropPurchaseButtonProps {
+  drop: IDrop;
 }
 
-export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
-  const { lootbox } = props;
+export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
+  const { drop } = props;
 
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
-      return contract.lootbox(
+      return contract.purchase(
         {
           nonce: utils.arrayify(sign.nonce),
-          externalId: lootbox.id,
+          externalId: drop.id,
           expiresAt: sign.expiresAt,
         },
-        ([] as Array<any>).concat(
-          lootbox.item?.components.map(component => ({
-            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-            token: component.contract!.address,
-            tokenId: component.template!.id.toString(),
-            amount: component.amount,
-          })),
-          {
-            tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-            token: lootbox.template!.contract!.address,
-            tokenId: lootbox.id.toString(),
-            amount: "1",
-          },
-        ),
-        lootbox.price?.components.map(component => ({
+        drop.item?.components.map(component => ({
+          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+          token: component.contract!.address,
+          tokenId: component.templateId,
+          amount: component.amount,
+        }))[0],
+        drop.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -50,7 +43,7 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
         process.env.ACCOUNT,
         sign.signature,
         {
-          value: getEthPrice(lootbox.price),
+          value: getEthPrice(drop.price),
         },
       ) as Promise<void>;
     },
@@ -61,10 +54,10 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/lootboxes/sign",
+        url: "/drop/sign",
         method: "POST",
         data: {
-          lootboxId: lootbox.id,
+          dropId: drop.id,
           account,
         },
       },
@@ -77,7 +70,7 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleBuy} data-testid="LootboxTemplateBuyButton">
+    <Button onClick={handleBuy} data-testid="DropPurchaseButton">
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

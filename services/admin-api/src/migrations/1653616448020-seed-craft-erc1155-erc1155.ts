@@ -59,7 +59,7 @@ export class SeedCraftErc1155Erc1155At1653616448020 implements MigrationInterfac
     await queryRunner.query(`
       INSERT INTO ${ns}.craft (
         item_id,
-        ingredients_id,
+        price_id,
         craft_status,
         created_at,
         updated_at

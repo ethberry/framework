@@ -31,6 +31,7 @@ import { PageEntity } from "./page/page.entity";
 import { GradeEntity } from "./mechanics/grade/grade.entity";
 import { CompositionEntity } from "./erc998/composition/composition.entity";
 import { DropEntity } from "./mechanics/drop/drop.entity";
+import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -51,7 +52,6 @@ import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-se
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
 import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
 import { SeedTemplateLootboxAt1563804000260 } from "./migrations/1563804000260-seed-template-lootbox";
-import { SeedTemplateDropAt1563804000270 } from "./migrations/1563804000270-seed-template-drop";
 
 import { CreateToken1563804000300 } from "./migrations/1563804000300-create-token";
 import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
@@ -75,8 +75,9 @@ import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-ve
 import { SeedVesting1563804010220 } from "./migrations/1563804010220-seed-vesting";
 import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-create-vesting-history";
 
-import { CreateClaimTable1563804040410 } from "./migrations/1653616447810-create-claim";
-import { SeedClaimErc721At1563804040420 } from "./migrations/1653616447820-seed-claim-erc721";
+import { CreateClaimTable1653616447810 } from "./migrations/1653616447810-create-claim";
+import { SeedClaimErc721At1653616447830 } from "./migrations/1653616447830-seed-claim-erc721";
+import { SeedClaimErc1155At1653616447850 } from "./migrations/1653616447850-seed-claim-erc1155";
 
 import { CreateLootbox1653616447910 } from "./migrations/1653616447910-create-lootbox";
 import { SeedLootboxErc721At1653616447930 } from "./migrations/1653616447930-seed-lootbox-erc721";
@@ -88,7 +89,6 @@ import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craf
 import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
 import { SeedCraftErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-craft-erc721-erc1155-recipe";
 
-import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { CreateContractManagerHistory1652682493386 } from "./migrations/1652682493386-create-contract-manager-history";
 import { CreateContractManager1652962207600 } from "./migrations/1652962207600-create-contract-manager";
 import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager";
@@ -197,7 +197,6 @@ const config: PostgresConnectionOptions = {
     SeedTemplateErc998At1563804000240,
     SeedTemplateErc1155At1563804000250,
     SeedTemplateLootboxAt1563804000260,
-    SeedTemplateDropAt1563804000270,
 
     CreateToken1563804000300,
     SeedTokenErc20At1563804000320,
@@ -230,8 +229,9 @@ const config: PostgresConnectionOptions = {
     CreateContractManager1652962207600,
     SeedContractManager1652962207610,
 
-    CreateClaimTable1563804040410,
-    SeedClaimErc721At1563804040420,
+    CreateClaimTable1653616447810,
+    SeedClaimErc721At1653616447830,
+    SeedClaimErc1155At1653616447850,
 
     CreateLootbox1653616447910,
     SeedLootboxErc721At1653616447930,

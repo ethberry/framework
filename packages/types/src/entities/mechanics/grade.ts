@@ -14,5 +14,5 @@ export interface IGrade extends IIdDateBase {
   contract?: IContract;
   gradeStrategy: GradeStrategy;
   growthRate: number;
-  price: IAsset;
+  price?: IAsset;
 }

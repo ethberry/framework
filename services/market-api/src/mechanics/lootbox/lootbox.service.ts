@@ -148,7 +148,7 @@ export class LootboxService {
         lootboxEntity.item.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract.address,
-          tokenId: component.template.id.toString(),
+          tokenId: component.templateId.toString(),
           amount: component.amount,
         })),
         {

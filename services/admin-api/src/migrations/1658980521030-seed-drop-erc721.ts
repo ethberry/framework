@@ -31,7 +31,7 @@ export class SeedDropErc721At1658980521030 implements MigrationInterface {
       ) VALUES (
         'ERC721',
         16,
-        17301,
+        13101,
         '1',
         63101
       ), (

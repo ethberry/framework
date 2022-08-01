@@ -3,7 +3,7 @@ import { wallet } from "@gemunion/constants";
 
 import { ns } from "@framework/constants";
 
-export class SeedClaimErc721At1563804040420 implements MigrationInterface {
+export class SeedClaimErc721At1653616447830 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -16,12 +16,10 @@ export class SeedClaimErc721At1563804040420 implements MigrationInterface {
         23102
       ), (
         23103
-      ), (
-        23104
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 50104, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 23103, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -48,12 +46,6 @@ export class SeedClaimErc721At1563804040420 implements MigrationInterface {
         13103, -- axe
         '1',
         23103
-      ), (
-        'ERC1155',
-        31,
-        15101, -- gold
-        '1000',
-        23104
       );
     `);
 
@@ -90,19 +82,11 @@ export class SeedClaimErc721At1563804040420 implements MigrationInterface {
         '0xa07e288f20c97f9a853782001c9851f451b0729c494759a091c140c1019a6158',
         '${currentDateTime}',
         '${currentDateTime}'
-      ), (
-        '${wallet}',
-        23104,
-        'REDEEMED',
-        '0x4848640f61c4bb0b0edab8bab540184a1b16a210e3e65e921c8053a9dde71c7c0022e73e63bb60c3b53907fecf6d11eb83ea58d39e351654ccedf3fd3498ae6e1b',
-        '0x17fdcea410c1f8ee61a2bbc06f80a5bdf84611c935f0ed859d6acb475619d5f0',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      )
+      );
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.air_drop RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.claim RESTART IDENTITY CASCADE;`);
   }
 }

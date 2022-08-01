@@ -47,15 +47,15 @@ export const Craft: FC = () => {
     baseUrl: "/craft",
     empty: {
       item: emptyItem,
-      ingredients: emptyPrice,
+      price: emptyPrice,
     },
     search: {
       query: "",
       craftStatus: [CraftStatus.ACTIVE, CraftStatus.NEW],
     },
-    filter: ({ item, ingredients }) => ({
+    filter: ({ item, price }) => ({
       item: cleanUpAsset(item),
-      ingredients: cleanUpAsset(ingredients),
+      price: cleanUpAsset(price),
     }),
   });
 

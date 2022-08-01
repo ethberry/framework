@@ -17,7 +17,7 @@ export const Craft: FC = () => {
     baseUrl: "/craft",
     empty: {
       item: emptyItem,
-      ingredients: emptyPrice,
+      price: emptyPrice,
     },
   });
 
@@ -29,15 +29,15 @@ export const Craft: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "craft"]} data={[{}, selected.item.components[0].template]} />
+      <Breadcrumbs path={["dashboard", "craft"]} data={[{}, selected.item?.components[0].template]} />
 
-      <PageHeader message="pages.craft.title" data={selected.item.components[0].template} />
+      <PageHeader message="pages.craft.title" data={selected.item?.components[0].template} />
 
       <Grid container>
         <Grid item xs={9}>
-          <img src={selected.item.components[0].template!.imageUrl} />
+          <img src={selected.item?.components[0].template!.imageUrl} />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
-            <RichTextDisplay data={selected.item.components[0].template!.description} />
+            <RichTextDisplay data={selected.item?.components[0].template!.description} />
           </Typography>
         </Grid>
         <Grid item xs={3}>
@@ -45,11 +45,11 @@ export const Craft: FC = () => {
             component="nav"
             subheader={
               <ListSubheader>
-                <FormattedMessage id="pages.craft.ingredients" />
+                <FormattedMessage id="pages.craft.price" />
               </ListSubheader>
             }
           >
-            {selected.ingredients.components.map(component => (
+            {selected.price?.components.map(component => (
               <ListItem key={component.id} button component={RouterLink} to={`/erc1155-tokens/${component.templateId}`}>
                 <ListItemText>
                   {component.template!.title} ({component.amount})

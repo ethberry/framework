@@ -65,7 +65,7 @@ export const Claim: FC = () => {
       claim.item?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId: component.template!.id,
+        tokenId: component.templateId,
         amount: component.amount,
       })),
       process.env.ACCOUNT,

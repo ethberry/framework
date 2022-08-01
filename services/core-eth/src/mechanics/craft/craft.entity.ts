@@ -14,7 +14,7 @@ export class CraftEntity extends IdDateBaseEntity implements ICraft {
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public ingredients: AssetEntity;
+  public price: AssetEntity;
 
   @Column({
     type: "enum",

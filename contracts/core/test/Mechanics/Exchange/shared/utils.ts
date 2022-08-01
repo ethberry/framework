@@ -20,7 +20,7 @@ export const wrapOneToManySignature = (network: Network, contract: Contract, acc
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "item", type: "Asset" },
-          { name: "ingredients", type: "Asset[]" },
+          { name: "price", type: "Asset[]" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
@@ -56,7 +56,7 @@ export const wrapManyToManySignature = (network: Network, contract: Contract, ac
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "items", type: "Asset[]" },
-          { name: "ingredients", type: "Asset[]" },
+          { name: "price", type: "Asset[]" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },

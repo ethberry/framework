@@ -12,14 +12,14 @@ import { AssetService } from "../asset/asset.service";
 export class DropService {
   constructor(
     @InjectRepository(DropEntity)
-    private readonly gradeEntityRepository: Repository<DropEntity>,
+    private readonly dropEntityRepository: Repository<DropEntity>,
     protected readonly assetService: AssetService,
   ) {}
 
   public async search(dto: IPaginationDto): Promise<[Array<DropEntity>, number]> {
     const { skip, take } = dto;
 
-    const queryBuilder = this.gradeEntityRepository.createQueryBuilder("drop");
+    const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
 
     queryBuilder.leftJoinAndSelect("drop.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
@@ -42,7 +42,7 @@ export class DropService {
     where: FindOptionsWhere<DropEntity>,
     options?: FindOneOptions<DropEntity>,
   ): Promise<DropEntity | null> {
-    return this.gradeEntityRepository.findOne({ where, ...options });
+    return this.dropEntityRepository.findOne({ where, ...options });
   }
 
   public async update(where: FindOptionsWhere<DropEntity>, dto: Partial<IDropUpdateDto>): Promise<DropEntity> {
@@ -58,7 +58,7 @@ export class DropService {
   }
 
   public create(dto: Partial<IDropCreateDto>): Promise<DropEntity> {
-    return this.gradeEntityRepository.create(dto).save();
+    return this.dropEntityRepository.create(dto).save();
   }
 
   public findOneWithRelations(where: FindOptionsWhere<DropEntity>): Promise<DropEntity | null> {

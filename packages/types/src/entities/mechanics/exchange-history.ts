@@ -14,22 +14,20 @@ export enum ExchangeEventType {
   Upgrade = "Upgrade",
 }
 
-// TODO describe all events
-
 type IExchangeItem = [number, string, string, string];
 
 export interface IExchangePurchase {
   from: string;
   externalId: string;
   item: IExchangeItem;
-  ingredients: Array<IExchangeItem>;
+  price: Array<IExchangeItem>;
 }
 
 // MODULE:CLAIM
 export interface IExchangeClaim {
   from: string;
   externalId: string;
-  items: IExchangeItem;
+  items: IExchangeItem; // TODO array
 }
 
 // MODULE:CRAFT
@@ -37,7 +35,7 @@ export interface IExchangeCraft {
   from: string;
   externalId: string;
   items: Array<IExchangeItem>;
-  ingredients: Array<IExchangeItem>;
+  price: Array<IExchangeItem>;
 }
 
 // MODULE:GRADE
@@ -45,15 +43,15 @@ export interface IExchangeGrade {
   from: string;
   externalId: string;
   items: IExchangeItem;
-  ingredients: Array<IExchangeItem>;
+  price: Array<IExchangeItem>;
 }
 
 // MODULE:LOOTBOX
 export interface IExchangeLootbox {
   from: string;
   externalId: string;
-  items: IExchangeItem;
-  ingredients: Array<IExchangeItem>;
+  items: IExchangeItem; // TODO array
+  price: Array<IExchangeItem>;
 }
 
 export type TExchangeEventData =
