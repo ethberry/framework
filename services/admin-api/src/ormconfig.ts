@@ -77,13 +77,16 @@ import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-cr
 
 import { CreateClaimTable1653616447810 } from "./migrations/1653616447810-create-claim";
 import { SeedClaimErc721At1653616447830 } from "./migrations/1653616447830-seed-claim-erc721";
+import { SeedClaimErc998At1653616447840 } from "./migrations/1653616447840-seed-claim-erc998";
 import { SeedClaimErc1155At1653616447850 } from "./migrations/1653616447850-seed-claim-erc1155";
+import { SeedClaimLootboxAt1653616447860 } from "./migrations/1653616447860-seed-claim-lootbox";
+import { SeedClaimMixedAt1653616447870 } from "./migrations/1653616447870-seed-claim-mixed";
 
 import { CreateLootbox1653616447910 } from "./migrations/1653616447910-create-lootbox";
 import { SeedLootboxErc721At1653616447930 } from "./migrations/1653616447930-seed-lootbox-erc721";
 import { SeedLootboxErc998At1653616447940 } from "./migrations/1653616447940-seed-lootbox-erc998";
 import { SeedLootboxErc1155At1653616447950 } from "./migrations/1653616447950-seed-lootbox-erc1155";
-import { SeedLootboxMixedAt1653616447960 } from "./migrations/1653616447960-seed-lootbox-mixed";
+import { SeedLootboxMixedAt1653616447970 } from "./migrations/1653616447970-seed-lootbox-mixed";
 
 import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craft";
 import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
@@ -231,13 +234,16 @@ const config: PostgresConnectionOptions = {
 
     CreateClaimTable1653616447810,
     SeedClaimErc721At1653616447830,
+    SeedClaimErc998At1653616447840,
     SeedClaimErc1155At1653616447850,
+    SeedClaimLootboxAt1653616447860,
+    SeedClaimMixedAt1653616447870,
 
     CreateLootbox1653616447910,
     SeedLootboxErc721At1653616447930,
     SeedLootboxErc998At1653616447940,
     SeedLootboxErc1155At1653616447950,
-    SeedLootboxMixedAt1653616447960,
+    SeedLootboxMixedAt1653616447970,
 
     CreateCraft1653616448010,
     SeedCraftErc1155Erc1155At1653616448020,

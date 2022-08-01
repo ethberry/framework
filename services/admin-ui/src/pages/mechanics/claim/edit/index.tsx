@@ -36,7 +36,7 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
       data-testid={testIdPrefix}
     >
       <TextInput name="account" data-testid={`${testIdPrefix}-account`} />
-      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} multiple />
     </FormDialog>
   );
 };

@@ -3,7 +3,7 @@ import { wallet } from "@gemunion/constants";
 
 import { ns } from "@framework/constants";
 
-export class SeedClaimErc721At1653616447830 implements MigrationInterface {
+export class SeedClaimErc998At1653616447840 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -11,15 +11,15 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        23101
+        24101
       ), (
-        23102
+        24102
       ), (
-        23103
+        24103
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 23103, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 24103, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -29,23 +29,23 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         amount,
         asset_id
       ) VALUES (
-        'ERC721',
-        16,
-        13501, -- sword
+        'ERC998',
+        26,
+        14101, -- warrior
         '1',
-        23101
+        24101
       ), (
-        'ERC721',
-        16,
-        13502, -- mace
+        'ERC998',
+        26,
+        14102, -- rouge
         '1',
-        23102
+        24102
       ), (
-        'ERC721',
-        16,
-        13503, -- axe
+        'ERC998',
+        26,
+        14103, -- mage
         '1',
-        23103
+        24103
       );
     `);
 
@@ -60,26 +60,26 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        23101,
+        24101,
         'NEW',
-        '0x8e1cac3e218c3c6a12d399b3434fd1da5dc8e4dfd5bc07219c6ec8a03bcacfee321d30b8b815e86d3e1dabb6e7447e87264cb405281e5b4362222aecdf45c2371c',
-        '0xb91cc05c34bdb5bc9317945a42976dc510471c7ee718206fda51daadfff24985',
+        '0x05850f2dc237733540c8ff2ff663d1394d3bc7e91b13177360ddf07fdc28cfce15bcb2f8de7dd2d603169fdcc61e4d208073549d7cb2d281183301ab89e2e04a1b',
+        '0x82782c83a825d1ef9828e810da3cee0c0023f9201747333f37ebc4051ccd21cb',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        23102,
+        24102,
         'NEW',
-        '0x77f024f8579388ae73244ea7396c09cd33e4a5d36e4a7e2735ffbdf56a50f997580f9299c7f2208a4aaed8321dea9ba8260b09d75da3e966d8e25efb06dbe98d1c',
-        '0x252f7476d08fb6d5727f0639dc08c5c65abc8a62deaefc92f5afaedd8e0bda67',
+        '0x1afec0b4b077d338708d1e690d58477dac12233d4c9343bedbf980691f798ac6011aea94371796850b5331f287a3221e956e2754d69d269d3472470caace48a71b',
+        '0xe41ee3a01e3adfb706dbbfe754b3f29a093da2bb175749af236f76f510b8069b',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        23103,
-        'UNPACKED',
-        '0x837f66dcb96a7ae3664b0e34a23b5db75ed3f8278ab9e4374ce92a8c53ac938439ca6ffff8dbcc676bf520150d6306559fb4b4f0ef3fe80bb873e9df58aff0ac1b',
-        '0xa07e288f20c97f9a853782001c9851f451b0729c494759a091c140c1019a6158',
+        24103,
+        'NEW',
+        '0x33cb0a47f4854cc4accce2442d3d7845c43dee7e2066647b480a7995db96bb70121140ef2a1cf37a496e09099e293f9aa6d8a42079a1af723f2cb96b888e18fb1b',
+        '0x1cd75a797ed5b045e56749d3d3c64b8788bb21bf88f31901eac324f93b9c97ed',
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -3,7 +3,7 @@ import { wallet } from "@gemunion/constants";
 
 import { ns } from "@framework/constants";
 
-export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
+export class SeedClaimLootboxAt1653616447860 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -11,13 +11,11 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        25101
-      ), (
-        25102
+        26101
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 25102, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 26101, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -27,17 +25,11 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         amount,
         asset_id
       ) VALUES (
-        'ERC1155',
-        31,
-        15101, -- gold
-        '1000',
-        25101
-      ), (
-        'ERC1155',
-        31,
-        15101, -- gold
-        '100',
-        25102
+        'ERC721',
+        41,
+        16101, -- sword lootbox
+        '1',
+        26101
       );
     `);
 
@@ -52,18 +44,10 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        25101,
+        26101,
         'NEW',
-        '0x4848640f61c4bb0b0edab8bab540184a1b16a210e3e65e921c8053a9dde71c7c0022e73e63bb60c3b53907fecf6d11eb83ea58d39e351654ccedf3fd3498ae6e1b',
-        '0x17fdcea410c1f8ee61a2bbc06f80a5bdf84611c935f0ed859d6acb475619d5f0',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        '${wallet}',
-        25101,
-        'REDEEMED',
-        '0xb3bdebe040a7832102b556fe3cdf0f9e7bfa1349b2793a8d6afadb00559d2a26017ebc9ca7cc6cc3207d526aec71df13d6c8dc4449c1d21f10b291a2439f36b21c',
-        '0x5f3b61b7da793b35cb2b07ae382c5182a1a38d52031d7cb6a00f887df32d7db8',
+        '0x5f431eece513290b629c03efb5bc3e7b5fc2cafd2be09eb0fa5080abec0d900350effd79066101d34ca3c80338c108abcdef83a9f817af168e128e3c31817c7d1b',
+        '0x6a4762354ea8b2dfe16a2acbf7b81210963eaedb24967b40e2cfdaf918918610',
         '${currentDateTime}',
         '${currentDateTime}'
       )

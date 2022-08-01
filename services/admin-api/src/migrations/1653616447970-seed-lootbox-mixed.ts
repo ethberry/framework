@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedLootboxMixedAt1653616447960 implements MigrationInterface {
+export class SeedLootboxMixedAt1653616447970 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
