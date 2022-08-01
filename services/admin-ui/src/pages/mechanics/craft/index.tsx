@@ -53,7 +53,8 @@ export const Craft: FC = () => {
       query: "",
       craftStatus: [CraftStatus.ACTIVE, CraftStatus.NEW],
     },
-    filter: ({ item, price }) => ({
+    filter: ({ item, price, craftStatus }) => ({
+      craftStatus,
       item: cleanUpAsset(item),
       price: cleanUpAsset(price),
     }),

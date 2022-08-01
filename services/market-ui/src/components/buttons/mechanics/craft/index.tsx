@@ -31,7 +31,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         craft.item?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
+          tokenId: component.templateId.toString(),
           amount: component.amount,
         })),
         craft.price?.components.map(component => ({

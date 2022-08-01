@@ -89,26 +89,29 @@ export class CraftService {
   public async update(where: FindOptionsWhere<CraftEntity>, dto: Partial<ICraftUpdateDto>): Promise<CraftEntity> {
     const { price, ...rest } = dto;
 
-    const exchangeEntity = await this.findOne(where, {
+    const craftEntity = await this.findOne(where, {
       join: {
         alias: "craft",
         leftJoinAndSelect: {
           price: "craft.price",
+          price_components: "price.components",
+          price_template: "price_components.template",
+          price_contract: "price_components.contract",
         },
       },
     });
 
-    if (!exchangeEntity) {
+    if (!craftEntity) {
       throw new NotFoundException("craftNotFound");
     }
 
     if (price) {
-      await this.assetService.update(exchangeEntity.price, price);
+      await this.assetService.update(craftEntity.price, price);
     }
 
-    Object.assign(exchangeEntity, rest);
+    Object.assign(craftEntity, rest);
 
-    return exchangeEntity.save();
+    return craftEntity.save();
   }
 
   public async delete(where: FindOptionsWhere<CraftEntity>): Promise<void> {

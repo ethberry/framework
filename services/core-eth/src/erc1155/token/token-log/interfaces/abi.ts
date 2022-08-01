@@ -1,9 +1,5 @@
 import { FormatTypes, Interface } from "@ethersproject/abi";
 
-import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC1155BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
+import ERC1155Blacklist from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
 
-const iface1 = new Interface(ERC1155SimpleSol.abi).format(FormatTypes.full) as Array<any>;
-const iface2 = new Interface(ERC1155BlacklistSol.abi).format(FormatTypes.full) as Array<any>;
-
-export const ABI = [...new Set(([] as Array<any>).concat(iface1, iface2))];
+export const ABI = new Interface(ERC1155Blacklist.abi).format(FormatTypes.full) as Array<any>;

@@ -35,6 +35,7 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
@@ -118,7 +119,7 @@ export class CraftService {
       craftEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
-        tokenId: component.template.tokens[0].tokenId,
+        tokenId: component.template.id.toString(),
         amount: component.amount,
       })),
       craftEntity.price.components.map(component => ({

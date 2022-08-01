@@ -55,6 +55,7 @@ export class Erc721TokenServiceEth {
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
+
     // Mint token create
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);

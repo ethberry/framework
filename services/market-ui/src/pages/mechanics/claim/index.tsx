@@ -30,7 +30,7 @@ export const Claim: FC = () => {
         url: `/claim`,
         data: {
           account: web3Context.account!,
-          claimStatus: [ClaimStatus.NEW],
+          claimStatus: [],
         },
       });
     },
@@ -107,6 +107,8 @@ export const Claim: FC = () => {
         {claims.map((claim, i) => (
           <ListItem key={i}>
             <ListItemText>{claim.item.components[0]?.template?.title}</ListItemText>
+            <ListItemText>{claim.item.components[0]?.amount}</ListItemText>
+            <ListItemText>{claim.claimStatus}</ListItemText>
             <ListItemSecondaryAction>
               <Tooltip title={formatMessage({ id: "form.tips.redeem" })} enterDelay={300} key={claim.id}>
                 <IconButton onClick={handleClick(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>

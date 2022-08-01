@@ -13,14 +13,10 @@ import {
 } from "@framework/types";
 
 import { Erc1155TokenServiceEth } from "./token.service.eth";
-import { AccessControlServiceEth } from "../../blockchain/access-control/access-control.service.eth";
 
 @Controller()
 export class Erc1155TokenControllerEth {
-  constructor(
-    private readonly erc1155ServiceEth: Erc1155TokenServiceEth,
-    private readonly accessControlServiceEth: AccessControlServiceEth,
-  ) {}
+  constructor(private readonly erc1155ServiceEth: Erc1155TokenServiceEth) {}
 
   @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.TransferSingle })
   public transferSingle(@Payload() event: ILogEvent<IErc1155TokenTransferSingle>, @Ctx() context: Log): Promise<void> {
