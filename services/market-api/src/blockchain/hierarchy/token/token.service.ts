@@ -122,6 +122,10 @@ export class TokenService {
           history: "token.history",
           template: "token.template",
           contract: "template.contract",
+          price: "template.price",
+          price_components: "price.components",
+          price_contract: "price_components.contract",
+          price_template: "price_components.template",
         },
       },
     });

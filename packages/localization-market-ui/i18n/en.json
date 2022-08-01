@@ -284,7 +284,7 @@
       "title": "ERC1155 Contracts"
     },
     "erc1155-token": {
-      "price": "Price: {amount}",
+      "price": "Base price: {amount}",
       "title": "ERC1155 Token: {title}"
     },
     "erc1155-token-list": {
@@ -304,7 +304,8 @@
       "title": "ERC721 Templates"
     },
     "erc721-token": {
-      "price": "Price: {amount}",
+      "level": "Level: {grade}",
+      "price": "Base price: {amount}",
       "title": "ERC721 Token: {title}"
     },
     "erc721-token-list": {
@@ -328,7 +329,8 @@
       "title": "ERC998 Templates"
     },
     "erc998-token": {
-      "price": "Price: {amount}",
+      "level": "Level: {grade}",
+      "price": "Base price: {amount}",
       "title": "ERC998 Token: {title}"
     },
     "erc998-token-list": {
