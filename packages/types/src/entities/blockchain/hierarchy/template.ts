@@ -6,6 +6,7 @@ import { IToken } from "./token";
 
 export enum TemplateStatus {
   ACTIVE = "ACTIVE",
+  HIDDEN = "HIDDEN",
   INACTIVE = "INACTIVE",
 }
 

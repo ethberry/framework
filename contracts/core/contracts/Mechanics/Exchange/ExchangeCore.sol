@@ -14,23 +14,23 @@ import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
 
 abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
-  event Purchase(address from, uint256 externalId, Asset item, Asset[] ingredients);
+  event Purchase(address from, uint256 externalId, Asset item, Asset[] price);
 
   function purchase(
     Params memory params,
     Asset memory item,
-    Asset[] memory ingredients,
+    Asset[] memory price,
     address signer,
     bytes calldata signature
   ) external payable whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Exchange: Wrong signer");
-    _verifyOneToManySignature(params, item, ingredients, signer, signature);
+    _verifyOneToManySignature(params, item, price, signer, signature);
 
     address account = _msgSender();
 
-    spend(ingredients, account);
+    spend(price, account);
     acquire(toArray(item), account);
 
-    emit Purchase(account, params.externalId, item, ingredients);
+    emit Purchase(account, params.externalId, item, price);
   }
 }

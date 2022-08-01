@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { LootboxBuyButton } from "../../../components/buttons";
+import { LootboxPurchaseButton } from "../../../components/buttons";
 import { formatPrice } from "../../../utils/money";
 import { useStyles } from "./styles";
 
@@ -44,7 +44,7 @@ export const Lootbox: FC = () => {
             <Typography variant="body2" color="textSecondary" component="p">
               <FormattedMessage id="pages.lootbox.price" values={{ amount: formatPrice(selected.price) }} />
             </Typography>
-            <LootboxBuyButton lootbox={selected} />
+            <LootboxPurchaseButton lootbox={selected} />
           </Paper>
         </Grid>
       </Grid>

@@ -132,7 +132,6 @@ export class LootboxService {
     const priceEntity = await this.assetService.create({
       components: [],
     });
-
     await this.assetService.update(priceEntity, price);
 
     const itemEntity = await this.assetService.create({

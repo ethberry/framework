@@ -9,6 +9,7 @@ import { LootboxList } from "./lootbox-list";
 import { Lootbox } from "./lootbox";
 import { CraftList } from "./craft-list";
 import { Craft } from "./craft";
+import { DropList } from "./drop-list";
 import { stakingRoutes } from "./staking/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
@@ -16,6 +17,10 @@ export const mechanicsRoutes: Array<RouteObject> = [
     path: "/claim",
     element: <ClaimWrapper />,
     children: [{ index: true, element: <Claim /> }],
+  },
+  {
+    path: "/drops",
+    element: <DropList />,
   },
   {
     path: "/lootboxes",

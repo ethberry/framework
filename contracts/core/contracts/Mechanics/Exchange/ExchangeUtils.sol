@@ -17,14 +17,14 @@ import "../../ERC721/interfaces/IERC721Random.sol";
 contract ExchangeUtils {
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
-  function spend(Asset[] memory ingredients, address account) internal {
-    uint256 length = ingredients.length;
+  function spend(Asset[] memory price, address account) internal {
+    uint256 length = price.length;
 
     // TODO calculate what is most efficient to pre-calculate here
     // TODO or calculate in next loop and validate at the end
     uint256 totalAmount;
     for (uint256 i = 0; i < length; i++) {
-      Asset memory ingredient = ingredients[i];
+      Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
         totalAmount = totalAmount + ingredient.amount;
       }
@@ -38,7 +38,7 @@ contract ExchangeUtils {
     // TODO PaymentSplitter address should be set by ContractManager
     address receiver = address(this);
     for (uint256 i = 0; i < length; i++) {
-      Asset memory ingredient = ingredients[i];
+      Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
         require(totalAmount == msg.value, "Exchange: Wrong amount");
       } else if (ingredient.tokenType == TokenType.ERC20) {

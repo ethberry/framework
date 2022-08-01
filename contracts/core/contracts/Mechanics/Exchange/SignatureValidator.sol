@@ -28,7 +28,7 @@ contract SignatureValidator is EIP712, Context {
   bytes32 private immutable ONE_TO_MANY_SIGNATURE =
     keccak256(
       bytes.concat(
-        "EIP712(address account,Params params,Asset item,Asset[] ingredients)",
+        "EIP712(address account,Params params,Asset item,Asset[] price)",
         ASSET_SIGNATURE,
         PARAMS_SIGNATURE
       )
@@ -36,7 +36,7 @@ contract SignatureValidator is EIP712, Context {
   bytes32 private immutable MANY_TO_MANY_SIGNATURE =
     keccak256(
       bytes.concat(
-        "EIP712(address account,Params params,Asset[] items,Asset[] ingredients)",
+        "EIP712(address account,Params params,Asset[] items,Asset[] price)",
         ASSET_SIGNATURE,
         PARAMS_SIGNATURE
       )
@@ -47,7 +47,7 @@ contract SignatureValidator is EIP712, Context {
   function _verifyOneToManySignature(
     Params memory params,
     Asset memory item,
-    Asset[] memory ingredients,
+    Asset[] memory price,
     address signer,
     bytes calldata signature
   ) internal {
@@ -60,14 +60,14 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hashOneToMany(account, params, item, ingredients), signature);
+    bool isVerified = _verify(signer, _hashOneToMany(account, params, item, price), signature);
     require(isVerified, "Exchange: Invalid signature");
   }
 
   function _verifyManyToManySignature(
     Params memory params,
     Asset[] memory items,
-    Asset[] memory ingredients,
+    Asset[] memory price,
     address signer,
     bytes calldata signature
   ) internal {
@@ -80,7 +80,7 @@ contract SignatureValidator is EIP712, Context {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hashManyToMany(account, params, items, ingredients), signature);
+    bool isVerified = _verify(signer, _hashManyToMany(account, params, items, price), signature);
     require(isVerified, "Exchange: Invalid signature");
   }
 
@@ -96,7 +96,7 @@ contract SignatureValidator is EIP712, Context {
     address account,
     Params memory params,
     Asset memory item,
-    Asset[] memory ingredients
+    Asset[] memory price
   ) private view returns (bytes32) {
     return
       _hashTypedDataV4(
@@ -106,7 +106,7 @@ contract SignatureValidator is EIP712, Context {
             account,
             _hashParamsStruct(params),
             _hashAssetStruct(item),
-            _hashAssetStructArray(ingredients)
+            _hashAssetStructArray(price)
           )
         )
       );
@@ -116,7 +116,7 @@ contract SignatureValidator is EIP712, Context {
     address account,
     Params memory params,
     Asset[] memory items,
-    Asset[] memory ingredients
+    Asset[] memory price
   ) private view returns (bytes32) {
     return
       _hashTypedDataV4(
@@ -126,7 +126,7 @@ contract SignatureValidator is EIP712, Context {
             account,
             _hashParamsStruct(params),
             _hashAssetStructArray(items),
-            _hashAssetStructArray(ingredients)
+            _hashAssetStructArray(price)
           )
         )
       );

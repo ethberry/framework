@@ -31,10 +31,10 @@ export class CraftService {
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
-    queryBuilder.leftJoinAndSelect("craft.ingredients", "ingredients");
-    queryBuilder.leftJoinAndSelect("ingredients.components", "ingredients_components");
-    queryBuilder.leftJoinAndSelect("ingredients_components.template", "ingredients_template");
-    queryBuilder.leftJoinAndSelect("ingredients_components.contract", "ingredients_contract");
+    queryBuilder.leftJoinAndSelect("craft.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
 
     queryBuilder.where({
       craftStatus: CraftStatus.ACTIVE,
@@ -77,11 +77,11 @@ export class CraftService {
           item_template: "item_components.template",
           item_contract: "item_components.contract",
           item_tokens: "item_template.tokens",
-          ingredients: "craft.ingredients",
-          ingredients_components: "ingredients.components",
-          ingredients_template: "ingredients_components.template",
-          ingredients_contract: "ingredients_components.contract",
-          ingredients_tokens: "ingredients_template.tokens",
+          price: "craft.price",
+          price_components: "price.components",
+          price_template: "price_components.template",
+          price_contract: "price_components.contract",
+          price_tokens: "price_template.tokens",
         },
       },
     });
@@ -121,7 +121,7 @@ export class CraftService {
         tokenId: component.template.tokens[0].tokenId,
         amount: component.amount,
       })),
-      craftEntity.ingredients.components.map(component => ({
+      craftEntity.price.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,
         tokenId: component.template.tokens[0].tokenId,

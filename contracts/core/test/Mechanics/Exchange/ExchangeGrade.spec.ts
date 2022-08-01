@@ -66,7 +66,7 @@ describe("ExchangeGrade", function () {
           tokenId,
           amount,
         },
-        ingredients: [
+        price: [
           {
             tokenType: 1,
             token: erc20Instance.address,
@@ -127,7 +127,7 @@ describe("ExchangeGrade", function () {
           tokenId,
           amount,
         },
-        ingredients: [
+        price: [
           {
             tokenType: 1,
             token: erc20Instance.address,
@@ -179,7 +179,7 @@ describe("ExchangeGrade", function () {
           tokenId,
           amount,
         },
-        ingredients: [
+        price: [
           {
             tokenType: 1,
             token: erc20Instance.address,

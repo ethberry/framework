@@ -28,7 +28,7 @@ export const CraftIngredients: FC<ICraftIngredientsProps> = props => {
   return (
     <Fragment>
       <IconButton
-        aria-owns={anchor ? "material-appbar" : undefined}
+        aria-owns={anchor ? "craft-ingredients" : undefined}
         aria-haspopup="true"
         data-testid="CraftIngredients"
         onClick={handleMenuOpen}
@@ -36,8 +36,9 @@ export const CraftIngredients: FC<ICraftIngredientsProps> = props => {
       >
         <Help />
       </IconButton>
-      <Menu id="material-appbar" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
-        {craft.ingredients.components.map(component => (
+      <Menu id="craft-ingredients" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
+        {craft.price?.components.map(component => (
+          // TODO fix link
           <MenuItem key={component.id} component={RouterLink} to={`/erc1155-tokens/${component.template!.id}`}>
             <ListItemText>
               {component.template!.title} ({component.amount})

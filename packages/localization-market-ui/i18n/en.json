@@ -211,7 +211,7 @@
       "title": "Claim"
     },
     "craft": {
-      "ingredients": "Ingredients",
+      "price": "price",
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
@@ -244,6 +244,7 @@
       "mechanics": {
         "claim": "Claim",
         "craft": "Craft",
+        "drop": "Drop",
         "lootboxes": "Lootboxes",
         "title": "Mechanics",
         "vesting": "Vesting"
@@ -272,6 +273,9 @@
         "title": "Staking"
       },
       "title": "Dashboard"
+    },
+    "drop-list": {
+      "title": "Drops"
     },
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
@@ -413,11 +417,11 @@
     "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
-    "denied": "Denied by user",
     "error": "Unknown Error",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
+    "rejectedByUser": "Rejected by user",
     "success": "Success",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",

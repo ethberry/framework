@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
@@ -121,7 +121,7 @@ export class LootboxService {
 
     const cap = BigNumber.from(templateEntity.cap);
     if (cap.gt(0) && cap.lte(templateEntity.amount)) {
-      throw new NotFoundException("limitExceeded");
+      throw new BadRequestException("limitExceeded");
     }
 
     const nonce = utils.randomBytes(32);
@@ -148,7 +148,7 @@ export class LootboxService {
         lootboxEntity.item.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract.address,
-          tokenId: component.template.id.toString(),
+          tokenId: component.templateId.toString(),
           amount: component.amount,
         })),
         {

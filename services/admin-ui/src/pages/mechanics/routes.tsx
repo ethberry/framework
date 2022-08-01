@@ -8,6 +8,7 @@ import { Craft } from "./craft";
 import { Vesting } from "./vesting";
 import { Grade } from "./grade";
 import { stakingRoutes } from "./staking/routes";
+import { Drop } from "./drop";
 
 export const mechanics: Array<RouteObject> = [
   {
@@ -48,6 +49,14 @@ export const mechanics: Array<RouteObject> = [
     children: [
       { index: true, element: <Grade /> },
       { path: "/grades/:id", element: <Grade /> },
+    ],
+  },
+  {
+    path: "/drops",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Drop /> },
+      { path: "/drops/:id", element: <Drop /> },
     ],
   },
   ...stakingRoutes,

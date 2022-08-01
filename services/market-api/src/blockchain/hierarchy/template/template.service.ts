@@ -33,9 +33,8 @@ export class TemplateService {
       contractType,
     });
 
-    // MODULE:LOOTBOX
-    queryBuilder.andWhere("contract.contractModule != :contractModule", {
-      contractModule: ModuleType.LOOTBOX,
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule: ModuleType.CORE,
     });
 
     queryBuilder.andWhere("template.templateStatus = :templateStatus", {

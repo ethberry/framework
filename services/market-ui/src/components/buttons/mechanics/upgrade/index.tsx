@@ -24,8 +24,8 @@ const getMultiplier = (level: number, amount: string, grade: IGrade) => {
   }
 };
 
-export const getEthPrice = (ingredients: Array<{ tokenType: number; amount: BigNumber }>) => {
-  return ingredients.reduce((memo, current) => {
+export const getEthPrice = (price: Array<{ tokenType: number; amount: BigNumber }>) => {
+  return price.reduce((memo, current) => {
     if (current.tokenType === 0) {
       return memo.add(current.amount);
     }
@@ -53,12 +53,13 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
         .then((grade: IGrade) => {
           const level = token.attributes[TokenAttributes.GRADE];
 
-          const ingredients = grade.price?.components.map(component => ({
-            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-            token: component.contract!.address,
-            tokenId: component.template!.tokens![0].tokenId,
-            amount: getMultiplier(level, component.amount, grade),
-          }));
+          const price =
+            grade.price?.components.map(component => ({
+              tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+              token: component.contract!.address,
+              tokenId: component.template!.tokens![0].tokenId,
+              amount: getMultiplier(level, component.amount, grade),
+            })) || [];
 
           const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
           return contract.upgrade(
@@ -73,11 +74,11 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
               tokenId: token.tokenId.toString(),
               amount: "1",
             },
-            ingredients,
+            price,
             process.env.ACCOUNT,
             sign.signature,
             {
-              value: getEthPrice(ingredients),
+              value: getEthPrice(price),
             },
           ) as Promise<void>;
         });

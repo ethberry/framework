@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
+export class SeedTemplateLootboxAt1563804000260 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -52,6 +52,18 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         16102,
+        'Sword Lootbox Inactive',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        16105,
+        0,
+        1,
+        'INACTIVE',
+        41,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        16103,
         'Warrior Lootbox',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -63,7 +75,7 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16103,
+        16104,
         'Gold Lootbox',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -75,7 +87,7 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16104,
+        16105,
         'Mixed Lootbox',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -83,18 +95,6 @@ export class SeedTemplateLootboxAt1563804000230 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        41,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        16105,
-        'Inactive Lootbox',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        16105,
-        0,
-        1,
-        'INACTIVE',
         41,
         '${currentDateTime}',
         '${currentDateTime}'

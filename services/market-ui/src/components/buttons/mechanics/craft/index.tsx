@@ -34,7 +34,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           tokenId: component.template!.tokens![0].tokenId,
           amount: component.amount,
         })),
-        craft.ingredients?.components.map(component => ({
+        craft.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -43,7 +43,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         process.env.ACCOUNT,
         sign.signature,
         {
-          value: getEthPrice(craft.ingredients),
+          value: getEthPrice(craft.price),
         },
       ) as Promise<void>;
     },

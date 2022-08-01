@@ -15,7 +15,7 @@ interface ILootboxBuyButtonProps {
   lootbox: ILootbox;
 }
 
-export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
+export const LootboxPurchaseButton: FC<ILootboxBuyButtonProps> = props => {
   const { lootbox } = props;
 
   const metaFnWithSign = useServerSignature(
@@ -31,7 +31,7 @@ export const LootboxBuyButton: FC<ILootboxBuyButtonProps> = props => {
           lootbox.item?.components.map(component => ({
             tokenType: Object.keys(TokenType).indexOf(component.tokenType),
             token: component.contract!.address,
-            tokenId: component.template!.id.toString(),
+            tokenId: component.templateId,
             amount: component.amount,
           })),
           {

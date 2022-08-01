@@ -73,7 +73,7 @@ describe("ExchangeClaim", function () {
               amount: 1,
             },
           ],
-          ingredients: [],
+          price: [],
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).claim(
@@ -113,7 +113,7 @@ describe("ExchangeClaim", function () {
               amount: 1,
             },
           ],
-          ingredients: [],
+          price: [],
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).claim(
@@ -154,7 +154,7 @@ describe("ExchangeClaim", function () {
               amount,
             },
           ],
-          ingredients: [],
+          price: [],
         });
 
         const tx1 = exchangeInstance.connect(this.receiver).claim(
