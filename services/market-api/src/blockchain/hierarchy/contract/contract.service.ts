@@ -88,6 +88,7 @@ export class ContractService {
         title: true,
         address: true,
         contractType: true,
+        decimals: true,
       },
     });
   }
