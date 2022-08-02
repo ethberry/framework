@@ -63,6 +63,24 @@ export class CraftService {
     return this.craftEntityRepository.findOne({ where, ...options });
   }
 
+  public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "craft",
+        leftJoinAndSelect: {
+          item: "craft.item",
+          item_components: "item.components",
+          item_template: "item_components.template",
+          item_contract: "item_components.contract",
+          price: "craft.price",
+          price_components: "price.components",
+          price_template: "price_components.template",
+          price_contract: "price_components.contract",
+        },
+      },
+    });
+  }
+
   public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
     const { price, item } = dto;
 
@@ -89,17 +107,7 @@ export class CraftService {
   public async update(where: FindOptionsWhere<CraftEntity>, dto: Partial<ICraftUpdateDto>): Promise<CraftEntity> {
     const { price, ...rest } = dto;
 
-    const craftEntity = await this.findOne(where, {
-      join: {
-        alias: "craft",
-        leftJoinAndSelect: {
-          price: "craft.price",
-          price_components: "price.components",
-          price_template: "price_components.template",
-          price_contract: "price_components.contract",
-        },
-      },
-    });
+    const craftEntity = await this.findOneWithRelations(where);
 
     if (!craftEntity) {
       throw new NotFoundException("craftNotFound");

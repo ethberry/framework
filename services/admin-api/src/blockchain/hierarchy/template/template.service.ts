@@ -113,6 +113,7 @@ export class TemplateService {
         leftJoinAndSelect: {
           price: "template.price",
           price_components: "price.components",
+          price_contract: "price_components.contract",
         },
       },
     });

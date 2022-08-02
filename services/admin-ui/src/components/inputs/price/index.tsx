@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { get, useFormContext, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
@@ -25,7 +25,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
   const form = useFormContext<any>();
   const nestedPrefix = `${prefix}.components`;
 
-  const value = get(useWatch(), nestedPrefix);
+  const values = get(useWatch(), nestedPrefix);
 
   const handleOptionAdd = (): (() => void) => (): void => {
     const newValue = get(form.getValues(), nestedPrefix);
@@ -41,13 +41,22 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
       form.setValue(nestedPrefix, newValue);
     };
 
+  useEffect(() => {
+    if (!values) {
+      return;
+    }
+    values.forEach((value: IAssetComponent, i: number) => {
+      form.setValue(`${nestedPrefix}[${i}].decimals`, value.contract?.decimals);
+    });
+  }, [values]);
+
   return (
     <Box mt={2}>
       <Typography>
         <FormattedMessage id={`form.labels.${prefix}`} />
       </Typography>
 
-      {value?.map((o: IAssetComponent, i: number) => (
+      {values?.map((o: IAssetComponent, i: number) => (
         <Box
           key={`${o.contractId}_${o.templateId}_${i}`}
           mt={1}

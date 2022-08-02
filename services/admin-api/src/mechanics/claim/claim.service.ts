@@ -54,6 +54,20 @@ export class ClaimService {
     return this.claimEntityRepository.findOne({ where, ...options });
   }
 
+  public findOneWithRelations(where: FindOptionsWhere<ClaimEntity>): Promise<ClaimEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "claim",
+        leftJoinAndSelect: {
+          item: "claim.item",
+          item_components: "item.components",
+          item_template: "item_components.template",
+          item_contract: "item_components.contract",
+        },
+      },
+    });
+  }
+
   public async create(dto: IClaimItemCreateDto): Promise<ClaimEntity> {
     const { account } = dto;
 
@@ -78,15 +92,7 @@ export class ClaimService {
   public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemCreateDto): Promise<ClaimEntity> {
     const { account, item } = dto;
 
-    let claimEntity = await this.findOne(where, {
-      join: {
-        alias: "claim",
-        leftJoinAndSelect: {
-          item: "claim.item",
-          item_components: "item.components",
-        },
-      },
-    });
+    let claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
@@ -99,17 +105,7 @@ export class ClaimService {
 
     await this.assetService.update(claimEntity.item, item);
 
-    claimEntity = await this.findOne(where, {
-      join: {
-        alias: "claim",
-        leftJoinAndSelect: {
-          item: "claim.item",
-          item_components: "item.components",
-          item_template: "item_components.template",
-          item_contract: "item_components.contract",
-        },
-      },
-    });
+    claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
