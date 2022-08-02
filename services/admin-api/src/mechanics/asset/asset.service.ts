@@ -3,10 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
-import { IAssetDto } from "./interfaces";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { TokenType } from "@framework/types";
+import { TokenType, IAssetDto } from "@framework/types";
 
 @Injectable()
 export class AssetService {

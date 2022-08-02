@@ -6,6 +6,8 @@ export * from "./blockchain/hierarchy/template/search";
 export * from "./blockchain/hierarchy/token/autocomplete";
 export * from "./blockchain/hierarchy/token/search";
 
+export * from "./mechanics/asset/asset";
+export * from "./mechanics/asset/components";
 export * from "./mechanics/staking/search";
 export * from "./mechanics/claim/search";
 export * from "./mechanics/lootbox/search";

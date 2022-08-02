@@ -3,7 +3,7 @@ import { IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IClaimItemUpdateDto } from "../interfaces";
-import { IAssetDto } from "../../asset/interfaces";
+import { IAssetDto } from "@framework/types";
 import { AssetDto } from "../../asset/dto";
 
 export class ClaimItemUpdateDto implements IClaimItemUpdateDto {

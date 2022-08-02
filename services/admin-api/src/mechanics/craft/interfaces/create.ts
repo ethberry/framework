@@ -1,4 +1,4 @@
-import { IAssetDto } from "../../asset/interfaces";
+import { IAssetDto } from "@framework/types";
 
 export interface ICraftCreateDto {
   item: IAssetDto;

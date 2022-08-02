@@ -32,7 +32,7 @@ export class GradeService {
         {
           tokenType: TokenType.NATIVE,
           contractId: 1,
-          tokenId: 0,
+          templateId: 12001,
           amount: constants.WeiPerEther.toString(),
         },
       ],

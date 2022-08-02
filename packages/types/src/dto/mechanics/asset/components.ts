@@ -1,9 +1,9 @@
-import { TokenType } from "@framework/types";
+import { TokenType } from "../../../entities";
 
 export interface IAssetComponentDto {
   id?: number;
   tokenType: TokenType;
   contractId: number;
-  tokenId: number;
+  templateId: number;
   amount: string;
 }

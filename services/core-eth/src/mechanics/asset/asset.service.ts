@@ -3,10 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
-import { IAssetDto } from "./interfaces";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { TokenType } from "@framework/types";
+import { TokenType, IAssetDto } from "@framework/types";
 
 @Injectable()
 export class AssetService {
@@ -29,31 +28,11 @@ export class AssetService {
     // patch NATIVE and ERC20 tokens
     for (const component of dto.components) {
       if (component.tokenType === TokenType.NATIVE || component.tokenType === TokenType.ERC20) {
-        const templateEntity = await this.templateService.findOne(
-          { contractId: component.contractId },
-          { relations: { tokens: true } },
-        );
+        const templateEntity = await this.templateService.findOne({ contractId: component.contractId });
         if (!templateEntity) {
           throw new NotFoundException("templateNotFound");
         }
-        component.tokenId = templateEntity.tokens[0].id;
-      } else if (component.tokenType === TokenType.ERC721 || component.tokenType === TokenType.ERC998) {
-        const templateEntity = await this.templateService.findOne(
-          { id: component.tokenId },
-          { relations: { tokens: true } },
-        );
-        if (!templateEntity) {
-          throw new NotFoundException("templateNotFound");
-        }
-      } else if (component.tokenType === TokenType.ERC1155) {
-        const templateEntity = await this.templateService.findOne(
-          { id: component.tokenId },
-          { relations: { tokens: true } },
-        );
-        if (!templateEntity) {
-          throw new NotFoundException("templateNotFound");
-        }
-        component.tokenId = templateEntity.tokens[0].id;
+        component.templateId = templateEntity.id;
       }
     }
 

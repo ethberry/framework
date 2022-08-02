@@ -39,16 +39,6 @@ export class LootboxControllerEth {
     return this.tokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.DefaultRoyaltyInfo })
-  public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
-    return this.tokenServiceEth.defaultRoyaltyInfo(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.TokenRoyaltyInfo })
-  public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
-    return this.tokenServiceEth.tokenRoyaltyInfo(event, context);
-  }
-
   @EventPattern({ contractType: ContractType.LOOTBOX, eventName: ContractEventType.UnpackLootbox })
   public unpackItem(@Payload() event: ILogEvent<ILootboxUnpack>, @Ctx() context: Log): Promise<void> {
     return this.tokenServiceEth.unpack(event, context);
