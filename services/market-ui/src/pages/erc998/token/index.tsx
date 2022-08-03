@@ -1,14 +1,16 @@
 import { FC, Fragment } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ITemplate, IToken } from "@framework/types";
+import { ContractTemplate, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../components/buttons";
+import { TokenSellButton, UpgradeButton } from "../../../components/buttons";
+import { formatPrice } from "../../../utils/money";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -42,8 +44,24 @@ export const Erc998Token: FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
+            <Typography>
+              <FormattedMessage
+                id="pages.erc721-token.price"
+                values={{ amount: formatPrice(selected.template?.price) }}
+              />
+            </Typography>
             <TokenSellButton token={selected} />
           </Paper>
+
+          {selected.template?.contract?.contractTemplate === ContractTemplate.UPGRADEABLE ||
+          selected.template?.contract?.contractTemplate === ContractTemplate.RANDOM ? (
+            <Paper className={classes.paper}>
+              <Typography>
+                <FormattedMessage id="pages.erc721-token.level" values={selected.attributes} />
+              </Typography>
+              <UpgradeButton token={selected} />
+            </Paper>
+          ) : null}
         </Grid>
       </Grid>
     </Fragment>

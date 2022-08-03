@@ -12,8 +12,6 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
@@ -24,6 +22,7 @@ import "../Lootbox/interfaces/IERC721Lootbox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
+import "../../ERC721/interfaces/IERC721Metadata.sol";
 
 contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
   using Address for address;
@@ -36,9 +35,17 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   mapping(uint256 => Rule) internal _rules;
   mapping(uint256 => Stake) internal _stakes;
 
+  bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
+  bytes4 private constant IERC721_LOOTBOX = type(IERC721Lootbox).interfaceId;
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes4 private constant IERC721_RANDOM = 0x82993c65;
-  bytes4 private constant IERC721_LOOTBOX = 0x503c3942;
+  bytes32 public constant TEMPLATE_ID = keccak256("template_id");
+
+  struct Metadata {
+    bytes32 key;
+    uint256 value;
+  }
+
+  Metadata[] _meta;
 
   uint256 private _maxStake = 0;
   mapping(address => uint256) internal _stakeCounter;
@@ -84,12 +91,16 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
 
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
 
+    // TODO for ERC721 and ERC998 we have to get metadata and check template_id
+
     if (depositItem.tokenType == TokenType.NATIVE) {
       require(msg.value == depositItem.amount, "Staking: wrong amount");
     } else if (depositItem.tokenType == TokenType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
     } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-      IERC721(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
+      uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
+      require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
+      IERC721Metadata(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
     } else if (depositItem.tokenType == TokenType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
     }
@@ -103,7 +114,6 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     Stake storage stake = _stakes[stakeId];
     Rule storage rule = _rules[stake.ruleId];
     Asset storage depositItem = _stakes[stakeId].deposit;
-    uint256 depositTokenId = depositItem.tokenId;
 
     require(stake.owner != address(0), "Staking: wrong staking id");
     require(stake.owner == _msgSender(), "Staking: not an owner");
@@ -133,11 +143,11 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
       if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), stakeAmount);
       } else if (depositItem.tokenType == TokenType.ERC20) {
-        SafeERC20.safeTransfer(IERC20(depositItem.token), _msgSender(), stakeAmount);
+        SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, stakeAmount);
       } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-        IERC721(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenId);
+        IERC721Metadata(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId);
       } else if (depositItem.tokenType == TokenType.ERC1155) {
-        IERC1155(depositItem.token).safeTransferFrom(address(this), _msgSender(), depositTokenId, stakeAmount, "0x");
+        IERC1155(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId, stakeAmount, "0x");
       }
     } else {
       stake.startTimestamp = block.timestamp;
@@ -154,22 +164,18 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         Address.sendValue(payable(receiver), rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC20) {
         rewardAmount = rewardItem.amount * multiplier;
-        SafeERC20.safeTransfer(IERC20(rewardItem.token), _msgSender(), rewardAmount);
+        SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
-        bool randomInterface = IERC721(rewardItem.token).supportsInterface(IERC721_RANDOM);
-        bool lootboxInterface = IERC721(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
+        bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM);
+        //        bool lootboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
 
-        if (randomInterface) {
-          for (uint256 i = 0; i < multiplier; i++) {
-            IERC721Random(rewardItem.token).mintRandom(_msgSender(), rewardItem);
-          }
-        } else if (lootboxInterface) {
-          for (uint256 i = 0; i < multiplier; i++) {
-            IERC721Lootbox(rewardItem.token).mintLootbox(_msgSender(), rewardItem);
-          }
-        } else {
-          for (uint256 i = 0; i < multiplier; i++) {
-            IERC721Simple(rewardItem.token).mintCommon(_msgSender(), rewardItem);
+        for (uint256 i = 0; i < multiplier; i++) {
+          if (randomInterface) {
+            IERC721Random(rewardItem.token).mintRandom(receiver, rewardItem.tokenId);
+            //          } else if (lootboxInterface) {
+            //            IERC721Lootbox(rewardItem.token).mintLootbox(receiver, rewardItem.tokenId);
+          } else {
+            IERC721Simple(rewardItem.token).mintCommon(receiver, rewardItem.tokenId);
           }
         }
       } else if (rewardItem.tokenType == TokenType.ERC1155) {

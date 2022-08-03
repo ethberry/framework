@@ -3,6 +3,7 @@
 // Author: TrejGun
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
+
 import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
 
 pragma solidity ^0.8.9;
@@ -11,6 +12,8 @@ abstract contract MetaDataGetter is GeneralizedCollection {
   bytes32 public constant TEMPLATE_ID = keccak256("template_id");
   bytes32 public constant GRADE = keccak256("grade");
   bytes32 public constant RARITY = keccak256("rarity");
+
+  bytes32 public constant METADATA_ADMIN_ROLE = keccak256("METADATA_ADMIN_ROLE");
 
   struct Metadata {
     bytes32 key;
@@ -27,7 +30,7 @@ abstract contract MetaDataGetter is GeneralizedCollection {
     return tokenMetadata;
   }
 
-  function setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) public virtual {
+  function _setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) internal virtual {
     uint256 arrSize = metadata.length;
     for (uint8 i = 0; i < arrSize; i++) {
       upsertRecordField(tokenId, metadata[i].key, metadata[i].value);

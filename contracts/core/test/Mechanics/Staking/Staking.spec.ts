@@ -1,15 +1,17 @@
-import { expect } from "chai";
-import { ethers, waffle, web3 } from "hardhat";
+import { expect, use } from "chai";
+import { solidity } from "ethereum-waffle";
+import { ethers, waffle, web3, network } from "hardhat";
 import { BigNumber } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import {
   ERC1155Simple,
   ERC20Simple,
-  ERC721RandomTest,
+  ERC721Lootbox,
+  ERC721RandomHardhat,
   ERC721Simple,
   LinkErc20,
-  ERC721Lootbox,
   Staking,
   VRFCoordinatorMock,
 } from "../../../typechain-types";
@@ -18,22 +20,23 @@ import {
   baseTokenURI,
   decimals,
   DEFAULT_ADMIN_ROLE,
-  fakeAsset,
   LINK_ADDR,
   MINTER_ROLE,
   PAUSER_ROLE,
   royalty,
-  tokenName,
-  tokenSymbol,
+  templateId,
   VRF_ADDR,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { IAsset, IRule } from "./interface/staking";
 import { randomRequest } from "./shared/randomRequest";
+import { deployLinkVrfFixture } from "../../shared/link";
+
+use(solidity);
 
 describe("Staking", function () {
   let stakingInstance: Staking;
-  let erc721RandomInstance: ERC721RandomTest;
+  let erc721RandomInstance: ERC721RandomHardhat;
   let lootboxInstance: ERC721Lootbox;
   let erc721SimpleInstance: ERC721Simple;
   let erc20Instance: ERC20Simple;
@@ -51,29 +54,26 @@ describe("Staking", function () {
   let erc721Deposit: IAsset;
   let erc1155Reward: IAsset;
   let erc1155Deposit: IAsset;
+  const templateKey = "0x9319bf1fd23873eaf43c06bb91a1db3e678411d693e959f1512879196908f12c";
   this.timeout(142000);
 
   let linkInstance: LinkErc20;
   let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
-    const [owner] = await ethers.getSigners();
+    await network.provider.send("hardhat_reset");
 
-    // Deploy Chainlink & Vrf contracts
-    const link = await ethers.getContractFactory("LinkErc20");
-    linkInstance = await link.deploy(tokenName, tokenSymbol);
-    console.info(`LINK_ADDR=${linkInstance.address}`);
-    const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
-    await linkInstance.mint(owner.address, linkAmountInWei);
-    const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    console.info(`VRF_ADDR=${vrfInstance.address}`);
-    if (
-      linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-      vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-    ) {
-      console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-    }
+    // https://github.com/NomicFoundation/hardhat/issues/2980
+    ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
+      return deployLinkVrfFixture();
+    }));
+
+    expect(linkInstance.address).equal(LINK_ADDR);
+    expect(vrfInstance.address).equal(VRF_ADDR);
+  });
+
+  after(async function () {
+    await network.provider.send("hardhat_reset");
   });
 
   beforeEach(async function () {
@@ -90,7 +90,7 @@ describe("Staking", function () {
     const simple721Factory = await ethers.getContractFactory("ERC721Simple");
     erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", royalty, baseTokenURI);
     // ERC721 Random
-    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomTest");
+    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomHardhat");
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
     // ERC721 Lootbox
     const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
@@ -223,7 +223,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.updateRule(2, false);
-      await expect(tx1).to.be.revertedWith(`Staking: rule does not exist`);
+      await expect(tx1).to.be.revertedWith("Staking: rule does not exist");
     });
 
     it("should set one Rule", async function () {
@@ -301,7 +301,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(2, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: rule doesn't exist'`);
+      await expect(tx1).to.be.revertedWith("Staking: rule doesn't exist");
     });
 
     it("should fail for not active rule", async function () {
@@ -319,7 +319,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: rule doesn't active'`);
+      await expect(tx1).to.be.revertedWith("Staking: rule doesn't active");
     });
 
     it("should fail for wrong pay amount", async function () {
@@ -337,7 +337,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: wrong amount'`);
+      await expect(tx1).to.be.revertedWith("Staking: wrong amount");
     });
 
     it("should fail for limit exceed", async function () {
@@ -357,7 +357,7 @@ describe("Staking", function () {
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
       const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
-      await expect(tx1).to.be.revertedWith(`Staking: stake limit exceeded'`);
+      await expect(tx1).to.be.revertedWith("Staking: stake limit exceeded");
     });
 
     it("should stake NATIVE", async function () {
@@ -418,7 +418,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -458,26 +458,6 @@ describe("Staking", function () {
   });
 
   describe("Reward", function () {
-    // before(async function () {
-    //   const [owner] = await ethers.getSigners();
-    //
-    //   // Deploy Chainlink & Vrf contracts
-    //   const link = await ethers.getContractFactory("LinkErc20");
-    //   linkInstance = await link.deploy(tokenName, tokenSymbol);
-    //   console.info(`LINK_ADDR=${linkInstance.address}`);
-    //   const linkAmountInWei = BigNumber.from("100000").mul(decimals);
-    //   await linkInstance.mint(owner.address, linkAmountInWei);
-    //   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-    //   vrfInstance = await vrfFactory.deploy(linkInstance.address);
-    //   console.info(`VRF_ADDR=${vrfInstance.address}`);
-    //   if (
-    //     linkInstance.address.toLowerCase() !== LINK_ADDR.toLowerCase() ||
-    //     vrfInstance.address.toLowerCase() !== VRF_ADDR.toLowerCase()
-    //   ) {
-    //     console.info(`please change LINK_ADDR or VRF_ADDR in ERC721ChainLinkHH`);
-    //   }
-    // });
-
     it("should fail for wrong staking id", async function () {
       const stakeRule: IRule = {
         externalId: BigNumber.from(1),
@@ -506,7 +486,7 @@ describe("Staking", function () {
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
       const tx2 = stakingInstance.connect(this.receiver).receiveReward(2, true, true);
-      await expect(tx2).to.be.revertedWith(`Staking: wrong staking id`);
+      await expect(tx2).to.be.revertedWith("Staking: wrong staking id");
     });
 
     it("should fail for not an owner", async function () {
@@ -536,7 +516,7 @@ describe("Staking", function () {
       // REWARD
       await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
       const tx2 = stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.be.revertedWith(`Staking: not an owner`);
+      await expect(tx2).to.be.revertedWith("Staking: not an owner");
     });
 
     it("should fail for withdrawn already", async function () {
@@ -571,7 +551,38 @@ describe("Staking", function () {
       await expect(tx2).to.changeEtherBalance(this.receiver, nativeReward.amount.mul(2).add(nativeReward.amount));
 
       const tx3 = stakingInstance.connect(this.receiver).receiveReward(1, true, true);
-      await expect(tx3).to.be.revertedWith(`Staking: deposit withdrawn already`);
+      await expect(tx3).to.be.revertedWith("Staking: deposit withdrawn already");
+    });
+
+    it("should fail deposit for wrong tokenId", async function () {
+      const stakeRule: IRule = {
+        externalId: BigNumber.from(1),
+        deposit: erc721Deposit,
+        reward: erc721RewardRnd,
+        period: BigNumber.from(stakePeriod),
+        penalty: BigNumber.from(stakePenalty),
+        recurrent: false,
+        active: true,
+      };
+
+      // SET RULE
+      const tx = stakingInstance.setRules([stakeRule]);
+      await expect(tx).to.emit(stakingInstance, "RuleCreated");
+      // STAKE
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId + 1);
+      const balance = await erc721RandomInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(2);
+      expect(await erc721RandomInstance.getRecordFieldValue(erc721Deposit.tokenId, templateKey)).to.equal(templateId);
+      expect(await erc721RandomInstance.getRecordFieldValue(erc721Deposit.tokenId.add(1), templateKey)).to.equal(
+        templateId + 1,
+      );
+      // APPROVE
+      await erc721RandomInstance.approve(stakingInstance.address, 1);
+      await erc721RandomInstance.approve(stakingInstance.address, 2);
+      // DEPOSIT
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId.add(1));
+      await expect(tx1).to.be.revertedWith("Staking: wrong deposit token templateID");
     });
 
     it("should stake NATIVE & receive NATIVE", async function () {
@@ -672,7 +683,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, 2, this.owner.address);
       // DEPOSIT
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
@@ -880,7 +891,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles);
+      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles, this.owner.address);
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
     });
@@ -1014,7 +1025,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1051,7 +1062,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1089,7 +1100,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1108,7 +1119,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles + 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles, this.owner.address);
     });
 
     it("should stake ERC721 & receive ERC721 Common", async function () {
@@ -1126,7 +1137,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1164,7 +1175,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1202,7 +1213,7 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      await erc721RandomInstance.mintCommon(this.owner.address, fakeAsset);
+      await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
@@ -1331,7 +1342,7 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, 1);
+      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles, this.owner.address);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });

@@ -17,35 +17,31 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         13103
       ), (
-        13201
+        13501
       ), (
-        13202
+        13502
       ), (
-        13203
+        13503
       ), (
-        13204
+        13601
       ), (
-        13205
+        13602
       ), (
-        13206
+        13603
       ), (
-        13207
+        13604
       ), (
-        13208
+        13605
       ), (
-        13301
+        13606
       ), (
-        13302
+        13607
       ), (
-        13303
-      ), (
-        13401
-      ), (
-        13402
-      ), (
-        13403
+        13608
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 13608, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -62,212 +58,176 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         updated_at
       ) VALUES (
         13101,
-        'Sword',
+        'Physical resistance',
         '${simpleFormatting}',
         '${imageUrl}',
         13101,
         0,
-        4,
+        1,
         'ACTIVE',
         11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         13102,
-        'Mace',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13102,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13103,
-        'Axe',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13103,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13201,
-        'Chain mail',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13201,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13202,
-        'Helmet',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13202,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13203,
-        'Gloves',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13203,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13204,
-        'Boots',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13204,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13205,
-        'Necklace',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13205,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13206,
-        'Gold Ring',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13206,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13207,
-        'Silver Ring',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13207,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13208,
-        'Yellow pants',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13208,
-        0,
-        1,
-        'ACTIVE',
-        11,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13301,
-        'Shield wall',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13301,
-        0,
-        1,
-        'ACTIVE',
-        12,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13302,
-        'Back stub',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13302,
-        0,
-        1,
-        'ACTIVE',
-        12,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13303,
-        'Fireball',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13303,
-        0,
-        1,
-        'ACTIVE',
-        12,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13401,
-        'Physical resistance',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13401,
-        0,
-        1,
-        'ACTIVE',
-        13,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13402,
         'Magic resistance',
         '${simpleFormatting}',
         '${imageUrl}',
-        13402,
+        13102,
         0,
         1,
         'ACTIVE',
-        13,
+        11,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13403,
+        13103,
         'Ward save',
         '${simpleFormatting}',
         '${imageUrl}',
-        13403,
+        13103,
         0,
         1,
         'ACTIVE',
-        13,
+        11,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13501,
+        'Sword',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13501,
+        0,
+        4,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13502,
+        'Mace',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13502,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13503,
+        'Axe',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13503,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13601,
+        'Chain mail',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13601,
+        0,
+        1,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13602,
+        'Helmet',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13602,
+        0,
+        1,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13603,
+        'Gloves',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13603,
+        0,
+        1,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13604,
+        'Boots',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13604,
+        0,
+        1,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13605,
+        'Necklace',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13605,
+        0,
+        1,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13606,
+        'Gold Ring',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13606,
+        0,
+        1,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13607,
+        'Silver Ring',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13607,
+        0,
+        1,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13608,
+        'Yellow pants',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13608,
+        0,
+        1,
+        'ACTIVE',
+        16,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 20403, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 13608, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

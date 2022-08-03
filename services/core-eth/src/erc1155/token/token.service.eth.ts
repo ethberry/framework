@@ -16,6 +16,8 @@ import { ContractHistoryService } from "../../blockchain/contract-history/contra
 import { ContractManagerService } from "../../blockchain/contract-manager/contract-manager.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
+import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
+import { ContractService } from "../../blockchain/hierarchy/contract/contract.service";
 
 @Injectable()
 export class Erc1155TokenServiceEth {
@@ -25,13 +27,40 @@ export class Erc1155TokenServiceEth {
     private readonly contractManagerService: ContractManagerService,
     private readonly contractHistoryService: ContractHistoryService,
     private readonly balanceService: BalanceService,
+    private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
   ) {}
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingle>, context: Log): Promise<void> {
     const {
       args: { from, to, id, value },
     } = event;
+    const { address } = context;
+
+    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    if (from === constants.AddressZero || from.toLowerCase() === address.toLowerCase()) {
+      const templateEntity = await this.templateService.findOne({ id: ~~id });
+
+      if (!templateEntity) {
+        throw new NotFoundException("templateNotFound");
+      }
+
+      await this.tokenService.create({
+        tokenId: id,
+        attributes: "{}",
+        royalty: contractEntity.royalty,
+        templateId: templateEntity.id,
+      });
+
+      // todo single balance management
+      // await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), value);
+    }
 
     await this.updateHistory(event, context);
 

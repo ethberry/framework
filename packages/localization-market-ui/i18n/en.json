@@ -26,7 +26,8 @@
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
-    "edit": "Edit"
+    "edit": "Edit",
+    "view": "View"
   },
   "enums": {
     "language": {
@@ -45,6 +46,11 @@
     "sort": {
       "createdAt": "Date",
       "price": "Price"
+    },
+    "stakeStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
     },
     "stakingStatus": {
       "ACTIVE": "Active",
@@ -92,6 +98,7 @@
       "hideFilters": "Hide filters",
       "login": "Login",
       "logout": "Logout",
+      "mainPage": "Main Page",
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
@@ -109,6 +116,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "account": "Account",
       "address": "Address",
       "amount": "Amount",
       "collectionId": "Collection",
@@ -118,7 +126,10 @@
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
+      "deposit": "Deposit",
+      "description": "Description",
       "displayName": "Display name",
+      "duration": "Duration",
       "email": "Email",
       "endDate": "End date",
       "externalId": "External ID",
@@ -128,8 +139,11 @@
       "minPrice": "Min. price",
       "password": "Password",
       "rarity": "Rarity",
+      "recurrent": "Is recurrent?",
+      "reward": "Reward",
       "roles": "Roles",
       "sort": "Sort by",
+      "stakeStatus": "Status",
       "stakingStatus": "Status",
       "startDate": "Start date",
       "status": "Status",
@@ -151,7 +165,6 @@
       "createdAt": "Registered",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
-      "maxAmount": "100",
       "maxPrice": "1",
       "minAmount": "0.01",
       "minPrice": "1",
@@ -193,12 +206,12 @@
   },
   "pages": {
     "claim": {
+      "connect": "Please connect your wallet first",
       "sorry": "Sorry, maybe you will get lucky next time",
-      "title": "Claim",
-      "connect": "Please connect your wallet first"
+      "title": "Claim"
     },
     "craft": {
-      "ingredients": "Ingredients",
+      "price": "price",
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
@@ -231,10 +244,8 @@
       "mechanics": {
         "claim": "Claim",
         "craft": "Craft",
-        "leaderboard": "Staking Leaderboard",
+        "drop": "Drop",
         "lootboxes": "Lootboxes",
-        "reward": "Staking Reward",
-        "stake": "Staking Stake",
         "title": "Mechanics",
         "vesting": "Vesting"
       },
@@ -255,7 +266,16 @@
         "marketplace": "Primary marketplace",
         "title": "Sections"
       },
+      "staking": {
+        "leaderboard": "Leaderboard",
+        "rules": "Rules",
+        "stakes": "My stakes",
+        "title": "Staking"
+      },
       "title": "Dashboard"
+    },
+    "drop-list": {
+      "title": "Drops"
     },
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
@@ -264,7 +284,7 @@
       "title": "ERC1155 Contracts"
     },
     "erc1155-token": {
-      "price": "Price: {amount}",
+      "price": "Base price: {amount}",
       "title": "ERC1155 Token: {title}"
     },
     "erc1155-token-list": {
@@ -284,7 +304,8 @@
       "title": "ERC721 Templates"
     },
     "erc721-token": {
-      "price": "Price: {amount}",
+      "level": "Level: {grade}",
+      "price": "Base price: {amount}",
       "title": "ERC721 Token: {title}"
     },
     "erc721-token-list": {
@@ -308,7 +329,8 @@
       "title": "ERC998 Templates"
     },
     "erc998-token": {
-      "price": "Price: {amount}",
+      "level": "Level: {grade}",
+      "price": "Base price: {amount}",
       "title": "ERC998 Token: {title}"
     },
     "erc998-token-list": {
@@ -322,6 +344,7 @@
       "title": "Exchanges"
     },
     "guest": {
+      "confirmation": "Please check your inbox to verify your email.",
       "login": "Login"
     },
     "landing": {
@@ -373,26 +396,19 @@
     "staking": {
       "deposit": "Deposit",
       "leaderboard": {
-        "address": "Address",
+        "account": "Account",
         "rank": "Rank",
         "score": "Score",
         "title": "Leaderboard"
       },
-      "reward": {
-        "title": "Reward"
+      "rules": {
+        "deposit": "Deposit",
+        "title": "Staking rules"
       },
-      "stake": {
-        "title": "Stake"
+      "stakes": {
+        "title": "My Stakes"
       },
-      "title": "Staking",
-      "view": {
-        "account": "Account",
-        "address": "Address",
-        "contractTemplate": "Template",
-        "duration": "Duration",
-        "finish": "Finish",
-        "startTimestamp": "Start time"
-      }
+      "title": "Staking"
     },
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
@@ -403,11 +419,11 @@
     "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
-    "denied": "Denied by user",
     "error": "Unknown Error",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
+    "rejectedByUser": "Rejected by user",
     "success": "Success",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",

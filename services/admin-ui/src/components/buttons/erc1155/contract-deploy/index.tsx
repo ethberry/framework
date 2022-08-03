@@ -9,13 +9,16 @@ import { Erc1155ContractTemplate, IErc1155ContractDeployDto } from "@framework/t
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC1155BlackList from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
 
-import { Erc1155TokenDeployDialog } from "./deploy-dialog";
+import { Erc1155ContractDeployDialog } from "./deploy-dialog";
 
 function getBytecodeByErc1155TokenTemplate(template: Erc1155ContractTemplate) {
   switch (template) {
     case Erc1155ContractTemplate.SIMPLE:
       return ERC1155SimpleSol.bytecode;
+    case Erc1155ContractTemplate.BLACKLIST:
+      return ERC1155BlackList.bytecode;
     default:
       throw new Error("Unknown template");
   }
@@ -52,11 +55,14 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
   );
 
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
-    return handleDeployConfirm({
-      url: "/contract-manager/erc1155-token",
-      method: "POST",
-      data: values,
-    }, form);
+    return handleDeployConfirm(
+      {
+        url: "/contract-manager/erc1155",
+        method: "POST",
+        data: values,
+      },
+      form,
+    );
   };
 
   return (
@@ -70,7 +76,7 @@ export const Erc1155TokenDeployButton: FC<IErc1155TokenDeployButtonProps> = prop
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc1155TokenDeployDialog
+      <Erc1155ContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}

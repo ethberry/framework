@@ -58,12 +58,12 @@
       "BLACKLIST": "Blacklist",
       "CLIFF": "Cliff",
       "EXTERNAL": "External",
-      "GRADED": "Graded",
       "LINEAR": "Linear",
       "LOOTBOX": "Lootbox",
       "NATIVE": "Native",
       "RANDOM": "Random",
-      "SIMPLE": "Simple"
+      "SIMPLE": "Simple",
+      "UPGRADEABLE": "Upgradeable"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -106,6 +106,11 @@
       "PAUSER_ROLE": "PAUSER_ROLE",
       "PREDICATE_ROLE": "PREDICATE_ROLE",
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
+    },
+    "stakeStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
     },
     "stakingStatus": {
       "ACTIVE": "Active",
@@ -172,6 +177,7 @@
       "loaded": "Done",
       "login": "Login",
       "logout": "Logout",
+      "mainPage": "Main Page",
       "mint": "Mint",
       "mintToken": "Mint Tokens",
       "ok": "Ok",
@@ -201,6 +207,9 @@
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "cap": "Cap",
+      "child": "Child",
+      "childId": "Child",
+      "childIds": "Child",
       "claimStatus": "Status",
       "collection": "Collection",
       "collectionType": "Type",
@@ -222,10 +231,10 @@
       "displayName": "Display name",
       "duration": "Duration",
       "email": "Email",
+      "endTimestamp": "End date",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "imageUrl": "Avatar",
-      "ingredients": "Ingredients",
       "item": "Item",
       "items": "Items",
       "language": "Language",
@@ -233,8 +242,12 @@
       "name": "Name",
       "owner": "Owner",
       "pageStatus": "Status",
+      "parent": "Parent",
+      "parentId": "Parent",
+      "parentIds": "Parent",
       "password": "Password",
       "penalty": "Penalty",
+      "price": "price",
       "price": "Price",
       "random": "Random",
       "rarity": "Rarity",
@@ -274,9 +287,8 @@
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
-      "collection": "Collection",
-      "collectionId": "Collection",
-      "collectionIds": "Collection",
+      "childId": "Contract",
+      "childIds": "Contract",
       "comment": "Fraud",
       "confirm": "******",
       "contract": "Contract",
@@ -294,6 +306,8 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "parentId": "Contract",
+      "parentIds": "Contract",
       "password": "******",
       "penalty": "1",
       "price": "1000",
@@ -357,8 +371,7 @@
     "craft": {
       "activate": "Activate rule",
       "deactivate": "Deactivate rule",
-      "title": "Craft recipes",
-      "upload": "Upload rule"
+      "title": "Craft recipes"
     },
     "dashboard": {
       "admin": {
@@ -384,6 +397,7 @@
         "tokens": "ERC721 Tokens"
       },
       "erc998": {
+        "composition": "ERC998 Composition",
         "contracts": "ERC998 Contracts",
         "templates": "ERC998 Templates",
         "title": "ERC998",
@@ -392,14 +406,22 @@
       "mechanics": {
         "claims": "Claims",
         "craft": "Craft",
-        "grade": "Grade",
+        "drops": "Drops",
+        "grades": "Grades",
         "lootboxes": "Lootboxes",
-        "stakes": "Stakes",
-        "staking-rules": "Staking Rules",
         "title": "Mechanics",
         "vesting": "Vesting"
       },
+      "staking": {
+        "rules": "Rules",
+        "stakes": "Stakes",
+        "statistics": "Statistics",
+        "title": "Staking"
+      },
       "title": "Dashboard"
+    },
+    "drops": {
+      "title": "Drops"
     },
     "emails": {
       "title": "Emails"
@@ -422,13 +444,10 @@
       "title": "ERC721 Templates"
     },
     "erc721-tokens": {
-      "title": "Tokens",
-      "view": {
-        "attributes": "Attributes",
-        "description": "Description",
-        "imageUrl": "Image",
-        "title": "Title"
-      }
+      "title": "ERC721 Tokens"
+    },
+    "erc998-composition": {
+      "title": "ERC998 Composition"
     },
     "erc998-contracts": {
       "royalty": "Royalty",
@@ -438,18 +457,13 @@
       "title": "ERC998 Templates"
     },
     "erc998-tokens": {
-      "title": "Tokens",
-      "view": {
-        "attributes": "Attributes",
-        "description": "Description",
-        "imageUrl": "Image",
-        "title": "Title"
-      }
+      "title": "ERC998 Tokens"
     },
     "grades": {
       "title": "Grade Rules"
     },
     "guest": {
+      "confirmation": "Please check your inbox to verify your email.",
       "forgotPassword": "Forgot password",
       "login": "Login"
     },
@@ -466,27 +480,28 @@
       "title": "Settings"
     },
     "staking": {
+      "rules": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Staking rules",
+        "upload": "Upload rule"
+      },
+      "stakes": {
+        "title": "Staking stakes"
+      },
+      "statistics": {
+        "title": "Staking statistics"
+      },
       "title": "Staking"
     },
     "staking-rules": {
-      "activate": "Activate rule",
-      "deactivate": "Deactivate rule",
-      "title": "Staking Rules",
-      "upload": "Upload Rule"
+      "upload": "Upload rule"
     },
     "users": {
       "title": "Users"
     },
     "vesting": {
-      "title": "Vesting",
-      "view": {
-        "account": "Account",
-        "address": "Address",
-        "contractTemplate": "Template",
-        "duration": "Duration",
-        "finish": "Finish",
-        "startTimestamp": "Start time"
-      }
+      "title": "Vesting"
     }
   },
   "snackbar": {
@@ -497,7 +512,6 @@
     "created": "Successfully created",
     "declined": "Declined!",
     "deleted": "Successfully deleted",
-    "denied": "Denied by user",
     "deployed": "Successfully deployed",
     "duplicateEmail": "User with this email already registered",
     "email": "Email successfully sent.",
@@ -516,6 +530,7 @@
     "recaptchaMissingInputSecret": "The secret parameter is missing.",
     "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
     "registered": "Registration successful, please verify your email to proceed",
+    "rejectedByUser": "Rejected by user",
     "saved": "Successfully saved",
     "success": "Success",
     "templateNotFound": "Template not found",

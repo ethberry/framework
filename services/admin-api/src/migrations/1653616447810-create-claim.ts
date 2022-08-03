@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateClaimTable1563804040410 implements MigrationInterface {
+export class CreateClaimTable1653616447810 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.claim_status_enum AS ENUM (
@@ -42,9 +42,8 @@ export class CreateClaimTable1563804040410 implements MigrationInterface {
           type: "varchar",
         },
         {
-          name: "expires_at",
-          type: "int",
-          default: 0,
+          name: "end_timestamp",
+          type: "timestamptz",
         },
         {
           name: "created_at",

@@ -35,6 +35,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
             // prettier-ignore
             eventNames: [
               ExchangeEventType.Purchase,
+              ExchangeEventType.Claim,
             ],
           },
           block: {

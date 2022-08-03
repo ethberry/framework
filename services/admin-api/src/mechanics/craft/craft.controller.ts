@@ -33,24 +33,7 @@ export class CraftController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<CraftEntity | null> {
-    return this.recipeService.findOne(
-      { id },
-      {
-        join: {
-          alias: "craft",
-          leftJoinAndSelect: {
-            item: "craft.item",
-            item_components: "item.components",
-            item_template: "item_components.template",
-            item_contract: "item_components.contract",
-            ingredients: "craft.ingredients",
-            ingredients_components: "ingredients.components",
-            ingredients_template: "ingredients_components.template",
-            ingredients_contract: "ingredients_components.contract",
-          },
-        },
-      },
-    );
+    return this.recipeService.findOneWithRelations({ id });
   }
 
   @Post("/")

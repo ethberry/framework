@@ -1,12 +1,13 @@
-import { ISearchable } from "@gemunion/types-collection";
+import { IIdDateBase } from "@gemunion/types-collection";
 import { IStakingRule } from "./staking-rule";
 
 export enum StakeStatus {
   ACTIVE = "ACTIVE",
-  INACTIVE = "FINISH",
+  CANCELED = "CANCELED",
+  COMPLETE = "COMPLETE",
 }
 
-export interface IStakingStake extends ISearchable {
+export interface IStakingStake extends IIdDateBase {
   account: string;
   externalId: string;
   stakeStatus: StakeStatus;
@@ -14,5 +15,5 @@ export interface IStakingStake extends ISearchable {
   withdrawTimestamp: string;
   multiplier: number;
   stakingRuleId: number;
-  stakingRule: IStakingRule;
+  stakingRule?: IStakingRule;
 }

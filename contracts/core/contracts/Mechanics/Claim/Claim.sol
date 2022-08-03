@@ -33,12 +33,12 @@ contract ClaimProxy is IERC721Random, AccessControl, Pausable {
     _factory = IERC721Random(factory);
   }
 
-  function mintRandom(address to, Asset calldata item) external whenNotPaused onlyRole(MINTER_ROLE) {
-    _factory.mintRandom(to, item);
+  function mintRandom(address to, uint256 templateId) external whenNotPaused onlyRole(MINTER_ROLE) {
+    _factory.mintRandom(to, templateId);
   }
 
-  function mintCommon(address to, Asset calldata item) external whenNotPaused onlyRole(MINTER_ROLE) {
-    _factory.mintRandom(to, item);
+  function mintCommon(address to, uint256 templateId) external whenNotPaused onlyRole(MINTER_ROLE) {
+    _factory.mintRandom(to, templateId);
   }
 
   function upgrade(uint256) public pure returns (bool) {

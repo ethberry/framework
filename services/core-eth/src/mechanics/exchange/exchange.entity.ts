@@ -13,7 +13,7 @@ export class ExchangeEntity extends IdDateBaseEntity implements ICraft {
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)
-  public ingredients: AssetEntity;
+  public price: AssetEntity;
 
   @Column({
     type: "enum",

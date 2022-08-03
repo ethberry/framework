@@ -9,25 +9,27 @@ export interface IRoyaltyDto {
   royalty: number;
 }
 
-export interface IErc721ContractRoyaltyEditDialogProps {
+export interface IRoyaltyEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: IRoyaltyDto, form: any) => Promise<void>;
   initialValues: IRoyaltyDto;
 }
 
-export const Erc721ContractRoyaltyEditDialog: FC<IErc721ContractRoyaltyEditDialogProps> = props => {
+export const RoyaltyEditDialog: FC<IRoyaltyEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
+
+  const testIdPrefix = "RoyaltyEditForm";
 
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="Erc721CollectionRoyaltyEditDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <CurrencyInput name="royalty" symbol="%" />
+      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-account`} />
     </FormDialog>
   );
 };

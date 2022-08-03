@@ -21,6 +21,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         14101,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "14101",
+          [TokenAttributes.GRADE]: "1",
           [TokenAttributes.RARITY]: "0", // TokenRarity.COMMON
         })}',
         100,
@@ -33,6 +34,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         14102,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "14101",
+          [TokenAttributes.GRADE]: "5",
           [TokenAttributes.RARITY]: "1", // TokenRarity.UNCOMMON
         })}',
         100,
@@ -45,6 +47,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         14103,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "14101",
+          [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,

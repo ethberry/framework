@@ -1,6 +1,4 @@
-import { GradeStrategy } from "@framework/types";
-
-import { IAssetDto } from "../../asset/interfaces";
+import { GradeStrategy, IAssetDto } from "@framework/types";
 
 export interface IGradeUpdateDto {
   contractId: number;

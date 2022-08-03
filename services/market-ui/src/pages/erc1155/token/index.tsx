@@ -1,5 +1,6 @@
 import { FC, Fragment } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
 import { ITemplate, IToken } from "@framework/types";
@@ -9,6 +10,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../components/buttons";
+import { formatPrice } from "../../../utils/money";
 
 export const Erc1155Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -42,6 +44,10 @@ export const Erc1155Token: FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
+            <FormattedMessage
+              id="pages.erc1155-token.price"
+              values={{ amount: formatPrice(selected.template?.price) }}
+            />
             <TokenSellButton token={selected} />
           </Paper>
         </Grid>

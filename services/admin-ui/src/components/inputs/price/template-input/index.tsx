@@ -31,7 +31,7 @@ export const TemplateInput: FC<ITemplateInputProps> = props => {
           placeholder={formatMessage({ id: "form.placeholders.templateIds" })}
           data={{
             contractIds: [contractId],
-            templateStatus: [TemplateStatus.ACTIVE],
+            templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
           }}
         />
       );
@@ -44,7 +44,7 @@ export const TemplateInput: FC<ITemplateInputProps> = props => {
           placeholder={formatMessage({ id: "form.placeholders.templateIds" })}
           data={{
             contractIds: [contractId],
-            templateStatus: [TemplateStatus.ACTIVE],
+            templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
           }}
         />
       );
@@ -57,7 +57,7 @@ export const TemplateInput: FC<ITemplateInputProps> = props => {
           placeholder={formatMessage({ id: "form.placeholders.templateIds" })}
           data={{
             contractIds: [contractId],
-            templateStatus: [TemplateStatus.ACTIVE],
+            templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
           }}
         />
       );

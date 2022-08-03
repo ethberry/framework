@@ -25,16 +25,13 @@ import CliffVesting from "@framework/core-contracts/artifacts/contracts/Mechanic
 
 import ERC721Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721BlackList from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
-import ERC721Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-// import ERC721Random from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
-import ERC721RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+import ERC721Upgradeable from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
+import ERC721Random from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 
-// todo add actual 998 contracts!
-import ERC998Simple from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC998BlackList from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
-import ERC998Graded from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Graded.sol/ERC721Graded.json";
-// import ERC998Random from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
-import ERC998RandomTest from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomTest.sol/ERC721RandomTest.json";
+import ERC998Simple from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
+import ERC998BlackList from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
+import ERC998Upgradeable from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
+import ERC998Random from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
 
 import ERC1155Simple from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 import ERC1155BlackList from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
@@ -49,7 +46,6 @@ export class ContractManagerSignService {
 
   public async erc20Token(dto: IErc20TokenDeployDto): Promise<IServerSignature> {
     const { contractTemplate, name, symbol, cap } = dto;
-
     const nonce = utils.randomBytes(32);
     const signature = await this.signer._signTypedData(
       // Domain
@@ -112,7 +108,7 @@ export class ContractManagerSignService {
         nonce,
         bytecode: this.getBytecodeByVestingContractTemplate(contractTemplate),
         account,
-        startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds
+        startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
         duration: duration * 60 * 60 * 24, // in seconds
         templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
       },
@@ -264,10 +260,10 @@ export class ContractManagerSignService {
         return ERC721Simple.bytecode;
       case Erc721ContractTemplate.BLACKLIST:
         return ERC721BlackList.bytecode;
-      case Erc721ContractTemplate.GRADED:
-        return ERC721Graded.bytecode;
+      case Erc721ContractTemplate.UPGRADEABLE:
+        return ERC721Upgradeable.bytecode;
       case Erc721ContractTemplate.RANDOM:
-        return ERC721RandomTest.bytecode;
+        return ERC721Random.bytecode;
       // return ERC721Random.bytecode;
       default:
         throw new Error("Unknown template");
@@ -280,10 +276,10 @@ export class ContractManagerSignService {
         return ERC998Simple.bytecode;
       case Erc998ContractTemplate.BLACKLIST:
         return ERC998BlackList.bytecode;
-      case Erc998ContractTemplate.GRADED:
-        return ERC998Graded.bytecode;
+      case Erc998ContractTemplate.UPGRADEABLE:
+        return ERC998Upgradeable.bytecode;
       case Erc998ContractTemplate.RANDOM:
-        return ERC998RandomTest.bytecode;
+        return ERC998Random.bytecode;
       default:
         throw new Error("Unknown template");
     }

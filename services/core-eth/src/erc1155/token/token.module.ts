@@ -11,6 +11,7 @@ import { TemplateEntity } from "../../blockchain/hierarchy/template/template.ent
 import { ContractModule } from "../../blockchain/hierarchy/contract/contract.module";
 import { TokenModule } from "../../blockchain/hierarchy/token/token.module";
 import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module";
+import { TemplateModule } from "../../blockchain/hierarchy/template/template.module";
 
 @Module({
   imports: [
@@ -20,6 +21,8 @@ import { BalanceModule } from "../../blockchain/hierarchy/balance/balance.module
     Erc1155TokenModule,
     ContractModule,
     TokenModule,
+    TemplateModule,
+    ContractModule,
     BalanceModule,
     AccessControlModule,
     TypeOrmModule.forFeature([TemplateEntity]),

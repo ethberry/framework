@@ -47,6 +47,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
 
       userEntity = await this.userService.import({
         displayName: firebaseUser?.displayName,
+        email: firebaseUser?.email,
         language: EnabledLanguages.EN,
         imageUrl: firebaseUser?.photoURL,
         userRoles: [UserRole.USER],

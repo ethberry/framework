@@ -6,8 +6,9 @@ import { CraftModule } from "./craft/craft.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
 import { GradeModule } from "./grade/grade.module";
+import { DropModule } from "./drop/drop.module";
 
 @Module({
-  imports: [ClaimModule, LootboxModule, CraftModule, StakingModule, VestingModule, GradeModule],
+  imports: [ClaimModule, LootboxModule, CraftModule, StakingModule, VestingModule, GradeModule, DropModule],
 })
 export class MechanicsModule {}

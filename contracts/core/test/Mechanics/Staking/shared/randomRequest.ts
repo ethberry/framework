@@ -2,32 +2,32 @@ import { ethers } from "hardhat";
 import { BigNumber } from "ethers";
 import { expect } from "chai";
 
-import { ERC721RandomTest, VRFCoordinatorMock } from "../../../../typechain-types";
+import { ERC721RandomHardhat, VRFCoordinatorMock } from "../../../../typechain-types";
 
 export async function randomRequest(
-  rndInstance: ERC721RandomTest,
+  rndInstance: ERC721RandomHardhat,
   vrfInstance: VRFCoordinatorMock,
   finalBalance: number,
+  account: string,
 ) {
   const eventFilter = rndInstance.filters.RandomRequest();
   const events = await rndInstance.queryFilter(eventFilter);
   let requestId: string;
-  const [owner] = await ethers.getSigners();
+  const oldBalance = await rndInstance.balanceOf(account);
   if (events && events.length) {
     events.map(async (event, indx) => {
       if (events[indx].args) {
         requestId = events[indx]!.args[0]!;
         expect(requestId);
-        const txrnd = vrfInstance.callBackWithRandomness(
+        const txrnd = await vrfInstance.callBackWithRandomness(
           requestId,
           BigNumber.from(ethers.utils.randomBytes(32)),
           rndInstance.address,
         );
         await expect(txrnd).to.emit(rndInstance, "Transfer");
-        await expect(txrnd).to.emit(rndInstance, "MintRandom");
-        const balance = await rndInstance.balanceOf(owner.address);
-        expect(balance).to.equal(finalBalance + indx);
       }
     });
+    const balance = await rndInstance.balanceOf(account);
+    expect(balance.sub(oldBalance)).to.equal(finalBalance);
   }
 }

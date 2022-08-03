@@ -1,17 +1,15 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { BigNumber, constants, providers } from "ethers";
+import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
-  IDefaultRoyaltyInfo,
   IRandomRequest,
   ITokenApprove,
   ITokenApprovedForAll,
   ITokenMintRandom,
-  ITokenRoyaltyInfo,
   ITokenTransfer,
   TContractEventData,
   TokenAttributes,
@@ -55,6 +53,7 @@ export class Erc721TokenServiceEth {
     if (!contractEntity) {
       throw new NotFoundException("contractNotFound");
     }
+
     // Mint token create
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
@@ -123,30 +122,6 @@ export class Erc721TokenServiceEth {
   }
 
   public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfo>, context: Log): Promise<void> {
-    const {
-      args: { royaltyNumerator },
-    } = event;
-
-    const contractEntity = await this.contractService.findOne({
-      address: context.address.toLowerCase(),
-    });
-
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    contractEntity.royalty = BigNumber.from(royaltyNumerator).toNumber();
-
-    await contractEntity.save();
-
-    await this.updateHistory(event, context);
-  }
-
-  public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfo>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

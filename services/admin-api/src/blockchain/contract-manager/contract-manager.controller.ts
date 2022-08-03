@@ -7,7 +7,6 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { ContractManagerSignService } from "./contract-manager.sign.service";
 import { ContractManagerEntity } from "./contract-manager.entity";
 import { ContractManagerService } from "./contract-manager.service";
-
 import {
   ContractManagerCreateDto,
   ContractManagerSearchDto,
@@ -52,22 +51,22 @@ export class ContractManagerController {
     return this.contractManagerService.findOne({ id });
   }
 
-  @Post("/erc20-token")
+  @Post("/erc20")
   public erc20Token(@Body() dto: Erc20ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc20Token(dto);
   }
 
-  @Post("/erc721-token")
+  @Post("/erc721")
   public erc721Token(@Body() dto: Erc721ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc721Token(dto);
   }
 
-  @Post("/erc998-token")
+  @Post("/erc998")
   public erc998Token(@Body() dto: Erc998ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc998Token(dto);
   }
 
-  @Post("/erc1155-token")
+  @Post("/erc1155")
   public erc1155Token(@Body() dto: Erc1155ContractDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.erc1155Token(dto);
   }

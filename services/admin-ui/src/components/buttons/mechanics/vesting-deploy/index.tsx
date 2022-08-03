@@ -48,7 +48,7 @@ export const VestingDeployButton: FC<IVestingButtonProps> = props => {
         nonce,
         getBytecodeByVestingContractTemplate(contractTemplate),
         account,
-        Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds,
+        Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
         duration * 60 * 60 * 24, // days in seconds
         Object.keys(VestingContractTemplate).indexOf(contractTemplate),
         process.env.ACCOUNT,
@@ -58,11 +58,14 @@ export const VestingDeployButton: FC<IVestingButtonProps> = props => {
   );
 
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
-    return handleDeployConfirm({
-      url: "/contract-manager/erc20-vesting",
-      method: "POST",
-      data: values,
-    }, form);
+    return handleDeployConfirm(
+      {
+        url: "/contract-manager/vesting",
+        method: "POST",
+        data: values,
+      },
+      form,
+    );
   };
 
   return (

@@ -15,18 +15,16 @@ import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 
 contract ExchangeUtils {
-  bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+  bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
-  bytes4 private constant IERC721_RANDOM = 0x82993c65;
-
-  function spend(Asset[] memory ingredients, address account) internal {
-    uint256 length = ingredients.length;
+  function spend(Asset[] memory price, address account) internal {
+    uint256 length = price.length;
 
     // TODO calculate what is most efficient to pre-calculate here
     // TODO or calculate in next loop and validate at the end
     uint256 totalAmount;
     for (uint256 i = 0; i < length; i++) {
-      Asset memory ingredient = ingredients[i];
+      Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
         totalAmount = totalAmount + ingredient.amount;
       }
@@ -40,7 +38,7 @@ contract ExchangeUtils {
     // TODO PaymentSplitter address should be set by ContractManager
     address receiver = address(this);
     for (uint256 i = 0; i < length; i++) {
-      Asset memory ingredient = ingredients[i];
+      Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
         require(totalAmount == msg.value, "Exchange: Wrong amount");
       } else if (ingredient.tokenType == TokenType.ERC20) {
@@ -62,9 +60,9 @@ contract ExchangeUtils {
       if (item.tokenType == TokenType.ERC721 || item.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721(item.token).supportsInterface(IERC721_RANDOM);
         if (randomInterface) {
-          IERC721Random(item.token).mintRandom(account, item);
+          IERC721Random(item.token).mintRandom(account, item.tokenId);
         } else {
-          IERC721Simple(item.token).mintCommon(account, item);
+          IERC721Simple(item.token).mintCommon(account, item.tokenId);
         }
       } else if (item.tokenType == TokenType.ERC1155) {
         IERC1155Simple(item.token).mint(account, item.tokenId, item.amount, "0x");

@@ -4,14 +4,14 @@ import { expect } from "chai";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
-  fakeAsset,
   MINTER_ROLE,
   royalty,
+  templateId,
   tokenId,
   tokenName,
   tokenSymbol,
 } from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 import { shouldGetTokenURI } from "./shared/tokenURI";
 import { shouldSetBaseURI } from "./shared/setBaseURI";
 
@@ -35,7 +35,7 @@ describe("ERC721Simple", function () {
 
   describe("mintCommon", function () {
     it("should mint to wallet", async function () {
-      const tx = this.erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx = this.erc721Instance.mintCommon(this.receiver.address, templateId);
       await expect(tx)
         .to.emit(this.erc721Instance, "Transfer")
         .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
@@ -45,7 +45,7 @@ describe("ERC721Simple", function () {
     });
 
     it("should mint to receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, fakeAsset);
+      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, templateId);
       await expect(tx)
         .to.emit(this.erc721Instance, "Transfer")
         .withArgs(ethers.constants.AddressZero, this.erc721ReceiverInstance.address, tokenId);
@@ -55,14 +55,14 @@ describe("ERC721Simple", function () {
     });
 
     it("should fail: wrong role", async function () {
-      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, fakeAsset);
+      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, templateId);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
       );
     });
 
     it("should fail: to mint to non receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, fakeAsset);
+      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, templateId);
       await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
     });
   });

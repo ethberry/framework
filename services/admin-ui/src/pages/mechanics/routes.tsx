@@ -5,10 +5,10 @@ import { Protected } from "@gemunion/firebase-login";
 import { Claim } from "./claim";
 import { Lootbox } from "./lootbox";
 import { Craft } from "./craft";
-import { Staking } from "./staking-rules";
-import { Stakes } from "./staking-stakes";
 import { Vesting } from "./vesting";
 import { Grade } from "./grade";
+import { stakingRoutes } from "./staking/routes";
+import { Drop } from "./drop";
 
 export const mechanics: Array<RouteObject> = [
   {
@@ -36,22 +36,6 @@ export const mechanics: Array<RouteObject> = [
     ],
   },
   {
-    path: "/staking-rules",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Staking /> },
-      { path: "/staking-rules/:id", element: <Staking /> },
-    ],
-  },
-  {
-    path: "/staking-stakes",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Stakes /> },
-      { path: "/staking-stakes/:id", element: <Stakes /> },
-    ],
-  },
-  {
     path: "/vesting",
     element: <Protected />,
     children: [
@@ -67,4 +51,13 @@ export const mechanics: Array<RouteObject> = [
       { path: "/grades/:id", element: <Grade /> },
     ],
   },
+  {
+    path: "/drops",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Drop /> },
+      { path: "/drops/:id", element: <Drop /> },
+    ],
+  },
+  ...stakingRoutes,
 ];

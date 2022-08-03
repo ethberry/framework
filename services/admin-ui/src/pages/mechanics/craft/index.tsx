@@ -18,9 +18,9 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { CraftStatus, ICraft, IExchangeSearchDto } from "@framework/types";
 
-import { ExchangeEditDialog } from "./edit";
+import { CraftEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
-import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyItem, emptyPrice } from "../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const Craft: FC = () => {
@@ -47,15 +47,16 @@ export const Craft: FC = () => {
     baseUrl: "/craft",
     empty: {
       item: emptyItem,
-      ingredients: emptyPrice,
+      price: emptyPrice,
     },
     search: {
       query: "",
       craftStatus: [CraftStatus.ACTIVE, CraftStatus.NEW],
     },
-    filter: ({ item, ingredients }) => ({
+    filter: ({ item, price, craftStatus }) => ({
+      craftStatus,
       item: cleanUpAsset(item),
-      ingredients: cleanUpAsset(ingredients),
+      price: cleanUpAsset(price),
     }),
   });
 
@@ -81,8 +82,8 @@ export const Craft: FC = () => {
         <List>
           {rows.map((craft, i) => (
             <ListItem key={i}>
-              <ListItemText sx={{ width: 0.6 }}>{craft.item.components[0].template?.title}</ListItemText>
-              <ListItemText>{craft.item.components[0].contract?.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{craft.item?.components[0].template?.title}</ListItemText>
+              <ListItemText>{craft.item?.components[0].contract?.title}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(craft)}>
                   <Create />
@@ -108,10 +109,10 @@ export const Craft: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: selected.item.components[0]?.template?.title }}
+        initialValues={{ ...selected, title: selected.item?.components[0]?.template?.title }}
       />
 
-      <ExchangeEditDialog
+      <CraftEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

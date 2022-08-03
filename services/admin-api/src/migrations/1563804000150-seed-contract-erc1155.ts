@@ -9,10 +9,10 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const erc1155ContractSimpleAddress = process.env.ERC1155_SIMPLE_ADDR || wallet;
     const erc1155ContractInactiveAddress = process.env.ERC1155_INACTIVE_ADDR || wallet;
+    const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR || wallet;
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 31 - ITEMS, 32 - SKILLS, 33 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -50,7 +50,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         32,
         '${erc1155ContractInactiveAddress}',
         '${chainId}',
-        'POTIONS',
+        'INACTIVE',
         '${simpleFormatting}',
         '${imageUrl}',
         '',
@@ -64,9 +64,25 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         33,
+        '${erc1155ContractNewAddress}',
+        '${chainId}',
+        'NEW',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '',
+        '',
+        100,
+        '${baseTokenURI}',
+        'NEW',
+        'ERC1155',
+        'SIMPLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        34,
         '${erc1155ContractBlacklistAddress}',
         '${chainId}',
-        'SHARDS',
+        'POTIONS',
         '${simpleFormatting}',
         '${imageUrl}',
         '',
@@ -81,7 +97,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 33, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 34, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -23,10 +23,10 @@ export class GradeService {
 
     queryBuilder.leftJoinAndSelect("grade.contract", "contract");
 
-    queryBuilder.leftJoinAndSelect("grade.price", "price");
-    queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    // queryBuilder.leftJoinAndSelect("grade.price", "price");
+    // queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    // queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    // queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
 
     queryBuilder.select();
 

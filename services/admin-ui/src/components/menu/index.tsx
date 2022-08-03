@@ -3,15 +3,14 @@ import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
 import { IErc20TokenSnapshotMenuItem } from "./snapshot";
-import { Erc721ContractRoyaltyMenuItem } from "./royalty";
+import { RoyaltyMenuItem } from "./royalty";
 import { ContractGrantRoleMenuItem } from "./grant-role";
 import { ContractRevokeRoleMenuItem } from "./revoke-role";
 import { ContractRenounceRoleMenuItem } from "./renounce-role";
 import { BlacklistAddMenuItem } from "./blacklist-add";
 import { UnBlacklistMenuItem } from "./blacklist-remove";
-import { Erc20MintMenuItem } from "./mint/erc20";
-import { Erc1155MintMenuItem } from "./mint/erc1155";
-import { TokenType } from "@framework/types";
+import { MintMenuItem } from "./mint";
+import { Erc20ContractTemplate, TokenType } from "@framework/types";
 
 export enum ContractActions {
   MINT = "MINT",
@@ -56,15 +55,16 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {contract.contractType === TokenType.ERC20 ? (
-          <Erc20MintMenuItem address={contract.address} contractId={contract.id} />
-        ) : null}
-        {contract.contractType === TokenType.ERC1155 ? (
-          <Erc1155MintMenuItem address={contract.address} contractId={contract.id} />
+        {!(
+          contract.contractType === TokenType.ERC20 &&
+          (contract.contractTemplate === Erc20ContractTemplate.NATIVE ||
+            contract.contractTemplate === Erc20ContractTemplate.EXTERNAL)
+        ) ? (
+          <MintMenuItem address={contract.address} contractId={contract.id} tokenType={contract.contractType} />
         ) : null}
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.ROYALTY) ? (
-          <Erc721ContractRoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
+          <RoyaltyMenuItem address={contract.address} royalty={contract.royalty} />
         ) : null}
         <ContractGrantRoleMenuItem address={contract.address} />
         <ContractRevokeRoleMenuItem address={contract.address} />

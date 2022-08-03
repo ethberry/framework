@@ -8,11 +8,13 @@ pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
+import "../ERC721/interfaces/IERC721Upgradeable.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
 import "../Mechanics/Lootbox/interfaces/IERC721Lootbox.sol";
 
 contract InterfaceIdCalculator {
   constructor() {
+    console.logBytes4(type(IERC721Upgradeable).interfaceId);
     console.logBytes4(type(IERC721Random).interfaceId);
     console.logBytes4(type(IERC721Lootbox).interfaceId);
 

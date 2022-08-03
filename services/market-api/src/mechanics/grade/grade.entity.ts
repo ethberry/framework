@@ -3,13 +3,13 @@ import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
 import { GradeStrategy, IGrade } from "@framework/types";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
 import { AssetEntity } from "../asset/asset.entity";
 
 @Entity({ schema: ns, name: "grade" })
-export class GradeEntity extends SearchableEntity implements IGrade {
+export class GradeEntity extends IdDateBaseEntity implements IGrade {
   @Exclude()
   @Column({ type: "int" })
   public priceId: number;

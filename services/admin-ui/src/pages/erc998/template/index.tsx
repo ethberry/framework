@@ -19,7 +19,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 
 import { Erc998TemplateEditDialog } from "./edit";
-import { emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyPrice } from "../../../components/inputs/price/empty-price";
 import { TemplateSearchForm } from "../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../utils/money";
 

@@ -3,9 +3,7 @@ import { IsEnum, IsInt, IsOptional, Min, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { TokenType } from "@framework/types";
-
-import { IAssetComponentDto } from "../interfaces";
+import { TokenType, IAssetComponentDto } from "@framework/types";
 
 export class AssetComponentDto implements IAssetComponentDto {
   @ApiPropertyOptional()

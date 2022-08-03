@@ -18,7 +18,7 @@ export class SignerService {
     account: string,
     params: IParams,
     item: IAsset,
-    ingredients: Array<IAsset>,
+    price: Array<IAsset>,
   ): Promise<string> {
     return this.signer._signTypedData(
       // Domain
@@ -34,7 +34,7 @@ export class SignerService {
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "item", type: "Asset" },
-          { name: "ingredients", type: "Asset[]" },
+          { name: "price", type: "Asset[]" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
@@ -53,7 +53,7 @@ export class SignerService {
         account,
         params,
         item,
-        ingredients,
+        price,
       },
     );
   }
@@ -62,7 +62,7 @@ export class SignerService {
     account: string,
     params: IParams,
     items: Array<IAsset>,
-    ingredients: Array<IAsset>,
+    price: Array<IAsset>,
   ): Promise<string> {
     return this.signer._signTypedData(
       // Domain
@@ -78,7 +78,7 @@ export class SignerService {
           { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "items", type: "Asset[]" },
-          { name: "ingredients", type: "Asset[]" },
+          { name: "price", type: "Asset[]" },
         ],
         Params: [
           { name: "nonce", type: "bytes32" },
@@ -97,7 +97,7 @@ export class SignerService {
         account,
         params,
         items,
-        ingredients,
+        price,
       },
     );
   }

@@ -32,6 +32,7 @@ export class LootboxEntity extends SearchableEntity implements ILootbox {
   @Column({ type: "int" })
   public templateId: number;
 
+  @JoinColumn()
   @OneToOne(_type => TemplateEntity)
   public template: TemplateEntity;
 }

@@ -6,16 +6,16 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import IERC721RoyaltySol from "@framework/core-contracts/artifacts/contracts/ERC721/interfaces/IERC721Royalty.sol/IERC721Royalty.json";
+import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
-import { Erc721ContractRoyaltyEditDialog, IRoyaltyDto } from "./edit";
+import { IRoyaltyDto, RoyaltyEditDialog } from "./edit";
 
-export interface IErc721CollectionRoyaltyMenuItemProps {
+export interface IRoyaltyMenuItemProps {
   address: string;
   royalty: number;
 }
 
-export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemProps> = props => {
+export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   const { address, royalty } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
@@ -29,7 +29,7 @@ export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemP
   };
 
   const meta = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(address, IERC721RoyaltySol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
     return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 
@@ -49,7 +49,7 @@ export const Erc721ContractRoyaltyMenuItem: FC<IErc721CollectionRoyaltyMenuItemP
           <FormattedMessage id="form.buttons.royalty" />
         </Typography>
       </MenuItem>
-      <Erc721ContractRoyaltyEditDialog
+      <RoyaltyEditDialog
         onCancel={handleRoyaltyCancel}
         onConfirm={handleRoyaltyConfirmed}
         open={isRoyaltyDialogOpen}

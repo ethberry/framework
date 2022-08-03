@@ -63,14 +63,32 @@ export class CraftService {
     return this.craftEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
-    const { ingredients, item } = dto;
+  public findOneWithRelations(where: FindOptionsWhere<CraftEntity>): Promise<CraftEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "craft",
+        leftJoinAndSelect: {
+          item: "craft.item",
+          item_components: "item.components",
+          item_template: "item_components.template",
+          item_contract: "item_components.contract",
+          price: "craft.price",
+          price_components: "price.components",
+          price_template: "price_components.template",
+          price_contract: "price_components.contract",
+        },
+      },
+    });
+  }
 
-    // add new ingredient
-    const ingredientsEntity = await this.assetService.create({
+  public async create(dto: ICraftCreateDto): Promise<CraftEntity> {
+    const { price, item } = dto;
+
+    // add new price
+    const priceEntity = await this.assetService.create({
       components: [],
     });
-    await this.assetService.update(ingredientsEntity, ingredients);
+    await this.assetService.update(priceEntity, price);
 
     // add new item
     const itemEntity = await this.assetService.create({
@@ -80,35 +98,28 @@ export class CraftService {
 
     return this.craftEntityRepository
       .create({
-        ingredients: ingredientsEntity,
+        price: priceEntity,
         item: itemEntity,
       })
       .save();
   }
 
   public async update(where: FindOptionsWhere<CraftEntity>, dto: Partial<ICraftUpdateDto>): Promise<CraftEntity> {
-    const { ingredients, ...rest } = dto;
+    const { price, ...rest } = dto;
 
-    const exchangeEntity = await this.findOne(where, {
-      join: {
-        alias: "craft",
-        leftJoinAndSelect: {
-          ingredients: "craft.ingredients",
-        },
-      },
-    });
+    const craftEntity = await this.findOneWithRelations(where);
 
-    if (!exchangeEntity) {
+    if (!craftEntity) {
       throw new NotFoundException("craftNotFound");
     }
 
-    if (ingredients) {
-      await this.assetService.update(exchangeEntity.ingredients, ingredients);
+    if (price) {
+      await this.assetService.update(craftEntity.price, price);
     }
 
-    Object.assign(exchangeEntity, rest);
+    Object.assign(craftEntity, rest);
 
-    return exchangeEntity.save();
+    return craftEntity.save();
   }
 
   public async delete(where: FindOptionsWhere<CraftEntity>): Promise<void> {

@@ -18,7 +18,7 @@ import { IPage, IPageSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import { EditPageDialog } from "./edit";
+import { PageEditDialog } from "./edit";
 
 export const Page: FC = () => {
   const {
@@ -93,7 +93,7 @@ export const Page: FC = () => {
         initialValues={selected}
       />
 
-      <EditPageDialog
+      <PageEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

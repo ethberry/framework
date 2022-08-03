@@ -1,12 +1,11 @@
-import { Injectable, Inject, forwardRef, NotFoundException } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
-import { IAssetDto } from "./interfaces";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
-import { TokenType } from "@framework/types";
+import { TokenType, IAssetDto } from "@framework/types";
 
 @Injectable()
 export class AssetService {
@@ -53,6 +52,8 @@ export class AssetService {
             Object.assign(
               oldItem,
               dto.components.find(newItem => newItem.id === oldItem.id),
+              // this prevents typeorm to override ids using existing relations
+              { template: void 0, contract: void 0 },
             );
             return oldItem.save();
           }),

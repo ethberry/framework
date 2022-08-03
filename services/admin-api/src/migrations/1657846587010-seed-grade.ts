@@ -11,13 +11,17 @@ export class SeedGrade1657846587010 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        90101
+        50101
       ), (
-        90102
+        50102
       ), (
-        90201
+        50201
+      ), (
+        50202
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 50202, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -31,19 +35,25 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         1,
         12001, -- ETH
         '${constants.WeiPerEther.toString()}',
-        90101
+        50101
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        90102
+        50102
       ), (
         'ERC1155',
         31,
         15101, -- gold
         '1000',
-        90201
+        50201
+      ), (
+        'ERC1155',
+        31,
+        15101, -- gold
+        '1000',
+        50202
       );
     `);
 
@@ -58,22 +68,29 @@ export class SeedGrade1657846587010 implements MigrationInterface {
       ) VALUES (
         'FLAT',
         0,
-        90101,
-        11,
+        50101,
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        'EXPONENTIAL',
+        0,
+        50102,
+        16,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'LINEAR',
-        0,
-        90102,
-        12,
+        1,
+        50201,
+        25,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
         1,
-        90201,
-        21,
+        50202,
+        26, -- hero
         '${currentDateTime}',
         '${currentDateTime}'
       );

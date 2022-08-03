@@ -7,13 +7,14 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractErc721At1563804000130 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc721ContractGradedAddress = process.env.ERC721_GRADED_ADDR || wallet;
     const erc721ContractSimpleAddress = process.env.ERC721_SIMPLE_ADDR || wallet;
+    const erc721ContractInactiveAddress = process.env.ERC721_INACTIVE_ADDR || wallet;
+    const erc721ContractNewAddress = process.env.ERC721_NEW_ADDR || wallet;
     const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
+    const erc721ContractUpgradeableAddress = process.env.ERC721_UPGRADEABLE_ADDR || wallet;
+    const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // 11 - ITEMS, 12 - SKILLS, 13 - RUNES
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -33,41 +34,9 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         updated_at
       ) VALUES (
         11,
-        '${erc721ContractRandomAddress}',
-        '${chainId}',
-        'ITEMS',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'ITEMS',
-        'ITEM721',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC721',
-        'RANDOM',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        12,
-        '${erc721ContractGradedAddress}',
-        '${chainId}',
-        'SKILLS',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'SKILLS',
-        'SKIL721',
-        100,
-        '${baseTokenURI}',
-        'ACTIVE',
-        'ERC721',
-        'GRADED',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13,
         '${erc721ContractSimpleAddress}',
         '${chainId}',
-        'RUNES',
+        'RUNES (SIMPLE)',
         '${simpleFormatting}',
         '${imageUrl}',
         'RUNES',
@@ -80,14 +49,46 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        12,
+        '${erc721ContractInactiveAddress}',
+        '${chainId}',
+        'INACTIVE',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'INACTIVE',
+        'INACTIVE721',
+        100,
+        '${baseTokenURI}',
+        'INACTIVE',
+        'ERC721',
+        'SIMPLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13,
+        '${erc721ContractNewAddress}',
+        '${chainId}',
+        'NEW',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'NEW',
+        'NEW721',
+        100,
+        '${baseTokenURI}',
+        'NEW',
+        'ERC721',
+        'SIMPLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         14,
         '${erc721ContractBlacklistAddress}',
         '${chainId}',
-        'SKULLS',
+        'BLACKLIST',
         '${simpleFormatting}',
         '${imageUrl}',
-        'SKULLS',
-        'SKULL721',
+        'BLACKLIST',
+        'BLACKLIST721',
         100,
         '${baseTokenURI}',
         'ACTIVE',
@@ -95,10 +96,42 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'BLACKLIST',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        15,
+        '${erc721ContractUpgradeableAddress}',
+        '${chainId}',
+        'WEAPON (UPGRADEABLE)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'WEAPON',
+        'WEAPON721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        'UPGRADEABLE',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        16,
+        '${erc721ContractRandomAddress}',
+        '${chainId}',
+        'ARMOUR (RANDOM)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'ARMOUR',
+        'ARMOUR721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        'RANDOM',
+        '${currentDateTime}',
+        '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 14, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 16, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -18,7 +18,7 @@ import {
   tokenName,
   tokenSymbol,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { wrapOneToManySignature } from "./shared/utils";
 
 describe("ExchangeCore", function () {
@@ -74,7 +74,7 @@ describe("ExchangeCore", function () {
             tokenId,
             amount,
           },
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -141,7 +141,7 @@ describe("ExchangeCore", function () {
             tokenId,
             amount,
           },
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,
@@ -214,7 +214,7 @@ describe("ExchangeCore", function () {
             tokenId,
             amount,
           },
-          ingredients: [
+          price: [
             {
               tokenType: 1,
               token: erc20Instance.address,

@@ -2,26 +2,26 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC20Simple, ERC721Graded, Exchange } from "../../../typechain-types";
+import { ERC20Simple, ERC721Upgradeable, Exchange } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
-  fakeAsset,
   MINTER_ROLE,
   params,
   royalty,
+  templateId,
   tokenId,
   tokenName,
   tokenSymbol,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { wrapOneToManySignature } from "./shared/utils";
 
 describe("ExchangeGrade", function () {
   let exchangeInstance: Exchange;
   let erc20Instance: ERC20Simple;
-  let erc721Instance: ERC721Graded;
+  let erc721Instance: ERC721Upgradeable;
   let network: Network;
 
   let generateSignature: (values: Record<string, any>) => Promise<string>;
@@ -36,7 +36,7 @@ describe("ExchangeGrade", function () {
     erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
     // await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Graded");
+    const erc721Factory = await ethers.getContractFactory("ERC721Upgradeable");
     erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
@@ -51,7 +51,7 @@ describe("ExchangeGrade", function () {
 
   describe("upgrade", function () {
     it("should update metadata", async function () {
-      const tx1 = erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx1 = erc721Instance.mintCommon(this.receiver.address, templateId);
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
@@ -66,7 +66,7 @@ describe("ExchangeGrade", function () {
           tokenId,
           amount,
         },
-        ingredients: [
+        price: [
           {
             tokenType: 1,
             token: erc20Instance.address,
@@ -112,7 +112,7 @@ describe("ExchangeGrade", function () {
     });
 
     it("should fail: insufficient allowance", async function () {
-      const tx1 = erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx1 = erc721Instance.mintCommon(this.receiver.address, templateId);
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
@@ -127,7 +127,7 @@ describe("ExchangeGrade", function () {
           tokenId,
           amount,
         },
-        ingredients: [
+        price: [
           {
             tokenType: 1,
             token: erc20Instance.address,
@@ -164,7 +164,7 @@ describe("ExchangeGrade", function () {
     });
 
     it("should fail: transfer amount exceeds balance", async function () {
-      const tx1 = erc721Instance.mintCommon(this.receiver.address, fakeAsset);
+      const tx1 = erc721Instance.mintCommon(this.receiver.address, templateId);
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
@@ -179,7 +179,7 @@ describe("ExchangeGrade", function () {
           tokenId,
           amount,
         },
-        ingredients: [
+        price: [
           {
             tokenType: 1,
             token: erc20Instance.address,

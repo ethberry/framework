@@ -2,12 +2,16 @@
 
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 
 contract Plunderer is AccessControl {
+  using Address for address;
+
   /// @notice A structure to define ERC721 transfer contents
   struct WithdrawERC721 {
     IERC721 token;
@@ -56,8 +60,7 @@ contract Plunderer is AccessControl {
   /// @param to The account to transfer Ether to
   /// @param amount The amount of Ether to transfer
   function _transferEther(address payable to, uint256 amount) internal {
-    to.transfer(amount);
-
+    Address.sendValue(payable(to), amount);
     emit TransferredEther(to, amount);
   }
 

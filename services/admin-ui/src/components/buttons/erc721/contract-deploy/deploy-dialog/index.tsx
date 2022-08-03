@@ -22,12 +22,14 @@ export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> 
     royalty: 0,
   };
 
+  const testIdPrefix = "Erc721ContractDeployForm";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid="Erc721ContractDeployDialog"
+      data-testid={testIdPrefix}
       {...props}
     >
       <SelectInput
@@ -35,11 +37,12 @@ export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> 
         options={Erc721ContractTemplate}
         // MODULE:LOOTBOX
         disabledOptions={[ContractTemplate.LOOTBOX]}
+        data-testid={`${testIdPrefix}-contractTemplate`}
       />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <TextInput name="baseTokenURI" />
-      <CurrencyInput name="royalty" symbol="%" />
+      <TextInput name="name" data-testid={`${testIdPrefix}-name`} />
+      <TextInput name="symbol" data-testid={`${testIdPrefix}-symbol`} />
+      <TextInput name="baseTokenURI" data-testid={`${testIdPrefix}-baseTokenURI`} />
+      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-royalty`} />
     </FormDialog>
   );
 };

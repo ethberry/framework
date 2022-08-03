@@ -12,7 +12,7 @@ import { ILeaderboard, LeaderboardRank } from "@framework/types";
 export const Leaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
     useCollection<ILeaderboard>({
-      baseUrl: "/staking-rules/leaderboard",
+      baseUrl: "/staking/leaderboard",
       empty: {
         wallet: "",
       },
@@ -24,7 +24,7 @@ export const Leaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.rank" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
       sortable: false,
       flex: 1,
       renderCell: (cell: GridCellParams) => {
@@ -43,20 +43,20 @@ export const Leaderboard: FC = () => {
       }
     },
     {
-      field: "secureWallet",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.address" }),
+      field: "account",
+      headerName: formatMessage({ id: "pages.staking.leaderboard.account" }),
       sortable: false,
       flex: 1
     },
     {
       field: "score",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.score" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.score" }),
       sortable: false,
       flex: 1
     },
     {
       field: "rank",
-      headerName: formatMessage({ id: "pages.staking-rules.leaderboard.rank" }),
+      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
       sortable: false,
       flex: 1
     }
@@ -64,7 +64,7 @@ export const Leaderboard: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking-rules", "staking-rules.leaderboard"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
       <PageHeader message="pages.staking.leaderboard.title" />
 

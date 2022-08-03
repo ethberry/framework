@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
-import { emptyItem } from "../../../components/inputs/empty-price";
+import { emptyItem } from "../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const Claim: FC = () => {
@@ -47,18 +47,16 @@ export const Claim: FC = () => {
     empty: {
       account: "",
       item: emptyItem,
+      endTimestamp: new Date(0).toISOString(),
     },
     search: {
       account: "",
       claimStatus: [],
-      templateIds: [],
     },
-    filter: ({ id, item, account }) =>
-      id ? { item: cleanUpAsset(item), account } : { item: cleanUpAsset(item), account },
+    filter: ({ item, account, endTimestamp }) => ({ item: cleanUpAsset(item), account, endTimestamp }),
   });
 
   const { formatMessage } = useIntl();
-
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "claims"]} />

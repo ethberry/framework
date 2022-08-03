@@ -22,19 +22,25 @@ export const Erc998ContractDeployDialog: FC<IErc998CollectionDeployDialogProps> 
     royalty: 0,
   };
 
+  const testIdPrefix = "Erc998ContractDeployForm";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid="Erc998CollectionDeployDialog"
+      data-testid={testIdPrefix}
       {...props}
     >
-      <SelectInput name="contractTemplate" options={Erc998ContractTemplate} />
-      <TextInput name="name" />
-      <TextInput name="symbol" />
-      <TextInput name="baseTokenURI" />
-      <CurrencyInput name="royalty" symbol="%" />
+      <SelectInput
+        name="contractTemplate"
+        options={Erc998ContractTemplate}
+        data-testid={`${testIdPrefix}-contractTemplate`}
+      />
+      <TextInput name="name" data-testid={`${testIdPrefix}-name`} />
+      <TextInput name="symbol" data-testid={`${testIdPrefix}-symbol`} />
+      <TextInput name="baseTokenURI" data-testid={`${testIdPrefix}-baseTokenURI`} />
+      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-royalty`} />
     </FormDialog>
   );
 };

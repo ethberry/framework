@@ -9,6 +9,4 @@ pragma solidity ^0.8.9;
 import "@gemunion/contracts/contracts/AccessList/interfaces/IBlackList.sol";
 import "@gemunion/contracts/contracts/AccessList/interfaces/IWhiteList.sol";
 
-interface IAccessList is IBlackList, IWhiteList {
-
-}
+interface IAccessList is IBlackList, IWhiteList {}

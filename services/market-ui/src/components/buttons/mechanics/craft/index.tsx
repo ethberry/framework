@@ -31,10 +31,10 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         craft.item?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
+          tokenId: component.templateId.toString(),
           amount: component.amount,
         })),
-        craft.ingredients?.components.map(component => ({
+        craft.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -43,19 +43,23 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
         process.env.ACCOUNT,
         sign.signature,
         {
-          value: getEthPrice(craft.ingredients),
+          value: getEthPrice(craft.price),
         },
       ) as Promise<void>;
-    });
+    },
+  );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    return metaFnWithSign({
-      url: "/craft/sign",
-      method: "POST",
-      data: {
-        craftId: craft.id,
+    return metaFnWithSign(
+      {
+        url: "/craft/sign",
+        method: "POST",
+        data: {
+          craftId: craft.id,
+        },
       },
-    }, web3Context);
+      web3Context,
+    );
   });
 
   const handleCraft = async () => {

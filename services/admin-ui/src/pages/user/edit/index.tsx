@@ -42,26 +42,32 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
     comment,
   };
 
+  const testIdPrefix = "UserEditForm";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="UserEditDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <TextInput name="email" autoComplete="username" onClick={onClick} />
-      <TextInput name="displayName" />
-      <SelectInput name="language" options={EnabledLanguages} />
-      <AvatarInput name="imageUrl" />
+      <TextInput name="email" autoComplete="username" onClick={onClick} data-testid={`${testIdPrefix}-email`} />
+      <TextInput name="displayName" data-testid={`${testIdPrefix}-displayName`} />
+      <SelectInput name="language" options={EnabledLanguages} data-testid={`${testIdPrefix}-language`} />
+      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
       <br />
       <br />
       <Divider />
       <br />
-      <SelectInput multiple name="userRoles" options={UserRole} />
-      <SelectInput name="userStatus" options={UserStatus} />
-      <TextInput name="comment" multiline />
-      <StaticInput name="createdAt" value={format(parseISO(createdAt), "yyyy MMM dd hh:mm")} />
+      <SelectInput multiple name="userRoles" options={UserRole} data-testid={`${testIdPrefix}-userRoles`} />
+      <SelectInput name="userStatus" options={UserStatus} data-testid={`${testIdPrefix}-userStatus`} />
+      <TextInput name="comment" multiline data-testid={`${testIdPrefix}-comment`} />
+      <StaticInput
+        name="createdAt"
+        value={format(parseISO(createdAt), "yyyy MMM dd hh:mm")}
+        data-testid={`${testIdPrefix}-createdAt`}
+      />
     </FormDialog>
   );
 };

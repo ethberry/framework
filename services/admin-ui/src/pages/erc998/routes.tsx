@@ -5,6 +5,7 @@ import { Protected } from "@gemunion/firebase-login";
 import { Erc998Contract } from "./contract";
 import { Erc998Template } from "./template";
 import { Erc998Token } from "./token";
+import { Erc998Composition } from "./composition";
 
 export const erc998Routes: Array<RouteObject> = [
   {
@@ -29,6 +30,14 @@ export const erc998Routes: Array<RouteObject> = [
     children: [
       { index: true, element: <Erc998Token /> },
       { path: "/erc998-tokens/:id", element: <Erc998Token /> },
+    ],
+  },
+  {
+    path: "/erc998-composition",
+    element: <Protected />,
+    children: [
+      { index: true, element: <Erc998Composition /> },
+      { path: "/erc998-composition/:id", element: <Erc998Composition /> },
     ],
   },
 ];

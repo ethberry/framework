@@ -13,5 +13,4 @@ import "@gemunion/contracts/contracts/ContractManager/ERC998Factory.sol";
 import "@gemunion/contracts/contracts/ContractManager/ERC1155Factory.sol";
 
 contract ContractManager is VestingFactory, ERC20Factory, ERC721Factory, ERC998Factory, ERC1155Factory {
-
 }

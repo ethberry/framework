@@ -1,0 +1,22 @@
+// SPDX-License-Identifier: UNLICENSED
+
+// Author: TrejGun
+// Email: trejgun+gemunion@gmail.com
+// Website: https://gemunion.io/
+
+pragma solidity ^0.8.9;
+
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "../../Mechanics/Exchange/interfaces/IAsset.sol";
+
+interface IERC721Metadata is IERC721 {
+
+  struct Metadata {
+    bytes32 key;
+    uint256 value;
+  }
+
+  function getTokenMetadata(uint256 tokenId) external returns (Metadata[] calldata);
+
+  function getRecordFieldValue(uint256 pk, bytes32 fieldKey) external view returns (uint256);
+}

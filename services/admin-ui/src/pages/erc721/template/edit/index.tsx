@@ -32,19 +32,24 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     imageUrl,
   };
 
+  const message = id ? "dialogs.edit" : "dialogs.create";
+  const testIdPrefix = "Erc721TemplateEditForm";
+
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
-      message={"dialogs.edit"}
-      data-testid="Erc721TemplateEditDialog"
+      message={message}
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
-      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
-      <NumberInput name="amount" />
-      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
+      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
+      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
+      <NumberInput name="amount" data-testid={`${testIdPrefix}-amount`} />
+      {id ? (
+        <SelectInput name="templateStatus" options={TemplateStatus} data-testid={`${testIdPrefix}-templateStatus`} />
+      ) : null}
       <EntityInput
         name="contractId"
         controller="contracts"
@@ -53,8 +58,9 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
           contractModule: [ModuleType.CORE],
         }}
         readOnly={!!id}
+        data-testid={`${testIdPrefix}-contractId`}
       />
-      <AvatarInput name="imageUrl" />
+      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
     </FormDialog>
   );
 };

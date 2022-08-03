@@ -19,6 +19,8 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 14103, true);`);
+
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
         id,
@@ -41,7 +43,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        21,
+        26,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -53,7 +55,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        21,
+        26,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -65,7 +67,7 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         0,
         1,
         'ACTIVE',
-        21,
+        26,
         '${currentDateTime}',
         '${currentDateTime}'
       );

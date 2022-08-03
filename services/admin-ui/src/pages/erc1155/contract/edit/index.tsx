@@ -29,20 +29,26 @@ export const Erc1155CollectionEditDialog: FC<IErc1155ContractEditDialogProps> = 
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
+  const testIdPrefix = "Erc1155ContractEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid="Erc1155ContractEditDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
       <BlockchainInfoPopover address={address} baseTokenURI={baseTokenURI} />
-      <TextInput name="title" />
-      <RichTextEditor name="description" />
-      <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
-      <AvatarInput name="imageUrl" />
+      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
+      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <SelectInput
+        name="contractStatus"
+        options={ContractStatus}
+        disabledOptions={[ContractStatus.NEW]}
+        data-testid={`${testIdPrefix}-contractStatus`}
+      />
+      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
     </FormDialog>
   );
 };

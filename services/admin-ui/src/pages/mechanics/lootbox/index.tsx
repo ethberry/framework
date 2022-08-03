@@ -20,7 +20,7 @@ import { ILootbox, ILootboxSearchDto, LootboxStatus } from "@framework/types";
 
 import { LootboxEditDialog } from "./edit";
 import { LootboxSearchForm } from "./form";
-import { emptyItem, emptyPrice } from "../../../components/inputs/empty-price";
+import { emptyItem, emptyPrice } from "../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../utils/money";
 
 export const Lootbox: FC = () => {

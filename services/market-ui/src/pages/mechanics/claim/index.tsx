@@ -30,7 +30,7 @@ export const Claim: FC = () => {
         url: `/claim`,
         data: {
           account: web3Context.account!,
-          claimStatus: [ClaimStatus.NEW],
+          claimStatus: [],
         },
       });
     },
@@ -60,12 +60,12 @@ export const Claim: FC = () => {
       {
         nonce: utils.arrayify(claim.nonce),
         externalId: claim.id,
-        expiresAt: claim.expiresAt,
+        expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
       },
       claim.item?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId: component.template!.id,
+        tokenId: component.templateId,
         amount: component.amount,
       })),
       process.env.ACCOUNT,
@@ -107,6 +107,8 @@ export const Claim: FC = () => {
         {claims.map((claim, i) => (
           <ListItem key={i}>
             <ListItemText>{claim.item.components[0]?.template?.title}</ListItemText>
+            <ListItemText>{claim.item.components[0]?.amount}</ListItemText>
+            <ListItemText>{claim.claimStatus}</ListItemText>
             <ListItemSecondaryAction>
               <Tooltip title={formatMessage({ id: "form.tips.redeem" })} enterDelay={300} key={claim.id}>
                 <IconButton onClick={handleClick(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>

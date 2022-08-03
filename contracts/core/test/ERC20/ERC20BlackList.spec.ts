@@ -3,7 +3,7 @@ import { ethers } from "hardhat";
 
 import { ERC20Blacklist } from "../../typechain-types";
 import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE, tokenName, tokenSymbol } from "../constants";
-import { shouldHaveRole } from "../shared/AccessControl/hasRoles";
+import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 
 describe("ERC20Blacklist", function () {
   let erc20Instance: ERC20Blacklist;

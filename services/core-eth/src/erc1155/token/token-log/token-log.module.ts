@@ -36,7 +36,7 @@ import { ContractManagerService } from "../../../blockchain/contract-manager/con
               ContractEventType.ApprovalForAll,
               AccessControlEventType.RoleGranted,
               AccessControlEventType.RoleRevoked,
-              AccessControlEventType.RoleAdminChanged,
+              AccessControlEventType.RoleAdminChanged
             ],
           },
           block: {

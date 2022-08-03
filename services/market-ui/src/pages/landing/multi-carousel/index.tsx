@@ -1,4 +1,4 @@
-import { FC, createElement } from "react";
+import { createElement, FC } from "react";
 import { Theme, useMediaQuery, useTheme } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";

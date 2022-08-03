@@ -18,5 +18,5 @@ export class ExchangeCreateDto implements ICraftCreateDto {
   })
   @ValidateNested()
   @Type(() => AssetDto)
-  public ingredients: AssetDto;
+  public price: AssetDto;
 }

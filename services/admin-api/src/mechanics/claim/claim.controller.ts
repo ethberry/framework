@@ -44,18 +44,7 @@ export class ClaimController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<ClaimEntity | null> {
-    return this.claimService.findOne(
-      { id },
-      {
-        join: {
-          alias: "asset",
-          leftJoinAndSelect: {
-            price: "asset.item",
-            components: "price.components",
-          },
-        },
-      },
-    );
+    return this.claimService.findOneWithRelations({ id });
   }
 
   @Delete("/:id")

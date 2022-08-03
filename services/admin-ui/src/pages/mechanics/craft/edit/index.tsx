@@ -1,7 +1,9 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ICraft, TokenType } from "@framework/types";
+import { SelectInput } from "@gemunion/mui-inputs-core";
+
+import { CraftStatus, ICraft, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../components/inputs/price";
@@ -13,26 +15,30 @@ export interface IExchangeEditDialogProps {
   initialValues: ICraft;
 }
 
-export const ExchangeEditDialog: FC<IExchangeEditDialogProps> = props => {
+export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, ingredients } = initialValues;
+  const { id, item, price, craftStatus } = initialValues;
+
   const fixedValues = {
+    craftStatus,
     id,
     item,
-    ingredients,
+    price,
   };
+  const testIdPrefix = "CraftEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid="CraftEditDialog"
+      data-testid={testIdPrefix}
       {...rest}
     >
-      <PriceInput prefix="item" disabledOptions={[TokenType.NATIVE, TokenType.ERC20]} />
-      <PriceInput prefix="ingredients" multiple disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
+      {id ? <SelectInput name="craftStatus" options={CraftStatus} disabledOptions={[CraftStatus.NEW]} /> : null}
+      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput prefix="price" multiple disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
     </FormDialog>
   );
 };

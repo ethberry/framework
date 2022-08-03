@@ -6,8 +6,8 @@ import { PageEntity } from "./page/page.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
 import { ClaimEntity } from "./mechanics/claim/claim.entity";
-import { StakingRulesEntity } from "./mechanics/staking/staking-rules/staking-rules.entity";
-import { StakingStakesEntity } from "./mechanics/staking/staking-stakes/staking-stakes.entity";
+import { StakingRulesEntity } from "./mechanics/staking/rules/rules.entity";
+import { StakingStakesEntity } from "./mechanics/staking/stakes/stakes.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
@@ -16,6 +16,8 @@ import { CraftEntity } from "./mechanics/craft/craft.entity";
 import { AssetEntity } from "./mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
+import { DropEntity } from "./mechanics/drop/drop.entity";
+import { GradeEntity } from "./mechanics/grade/grade.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -37,6 +39,8 @@ const config: PostgresConnectionOptions = {
     BalanceEntity,
     AssetEntity,
     AssetComponentEntity,
+    DropEntity,
+    GradeEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

@@ -35,85 +35,67 @@ export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterf
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13201
+        13501
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13202
+        13502
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13203
+        13503
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13204
+        13601
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13205
+        13602
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13206
+        13603
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13207
+        13604
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13208
+        13605
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13301
+        13606
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13302
+        13607
       ), (
         'ERC20',
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
-        13303
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13401
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13402
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13403
+        13608
       );
     `);
   }

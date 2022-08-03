@@ -29,6 +29,7 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
+  const testIdPrefix = "GradeEditForm";
 
   return (
     <FormDialog
@@ -36,12 +37,18 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       validationSchema={validationSchema}
       message={message}
       {...rest}
-      data-testid="GradeEditDialog"
+      data-testid={testIdPrefix}
     >
-      <EntityInput name="contractId" controller="contracts" readOnly data={{}} />
-      <SelectInput name="gradeStrategy" options={GradeStrategy} />
+      <EntityInput
+        name="contractId"
+        controller="contracts"
+        readOnly
+        data-testid={`${testIdPrefix}-contractId`}
+        data={{}}
+      />
+      <SelectInput name="gradeStrategy" options={GradeStrategy} data-testid={`${testIdPrefix}-gradeStrategy`} />
       <GrowthRateInput />
-      <PriceInput prefix="price" disabledOptions={[TokenType.ERC721, TokenType.ERC998]} />
+      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
     </FormDialog>
   );
 };

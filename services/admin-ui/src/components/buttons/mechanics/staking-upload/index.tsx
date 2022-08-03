@@ -2,10 +2,10 @@ import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Close, CloudUpload } from "@mui/icons-material";
-import { BigNumber, Contract } from "ethers";
+import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { IStakingRule, StakingStatus } from "@framework/types";
+import { IStakingRule, StakingStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
@@ -16,7 +16,6 @@ export interface IStakingUploadButtonProps {
 
 export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
   const { rule } = props;
-
   const { formatMessage } = useIntl();
 
   const metaLoadRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
@@ -25,11 +24,21 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     }
 
     const stakingRule = {
-      externalId: BigNumber.from(rule.id),
-      deposit: rule.deposit,
-      reward: rule.reward,
-      period: BigNumber.from(rule.duration || 0), // todo fix same name
-      penalty: BigNumber.from(rule.penalty || 0),
+      externalId: rule.id,
+      deposit: rule.deposit?.components.map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract!.address,
+        tokenId: component.templateId,
+        amount: component.amount,
+      }))[0],
+      reward: rule.reward?.components.map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract!.address,
+        tokenId: component.templateId,
+        amount: component.amount,
+      }))[0],
+      period: rule.duration || 0, // todo fix same name
+      penalty: rule.penalty || 0,
       recurrent: rule.recurrent,
       active: true, // todo add var in interface
     };
@@ -69,7 +78,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
 
   if (rule.stakingStatus === StakingStatus.NEW) {
     return (
-      <Tooltip title={formatMessage({ id: "pages.staking-rules.upload" })}>
+      <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
         <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
           <CloudUpload />
         </IconButton>
@@ -82,8 +91,8 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       title={formatMessage({
         id:
           rule.stakingStatus === StakingStatus.ACTIVE
-            ? "pages.staking-rules.deactivate"
-            : "pages.staking-rules.activate",
+            ? "pages.staking.rules.deactivate"
+            : "pages.staking.rules.activate",
       })}
     >
       <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">

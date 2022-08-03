@@ -13,8 +13,7 @@ export const AmountInput: FC<ITokenInputProps> = props => {
   const { prefix, name = "amount" } = props;
 
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
-
-  const decimals = tokenType === TokenType.ERC1155 ? 0 : 18; // get decimals from contract
+  const decimals = useWatch({ name: `${prefix}.decimals` });
 
   switch (tokenType) {
     case TokenType.NATIVE:

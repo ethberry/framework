@@ -6,6 +6,8 @@ export * from "./blockchain/hierarchy/template/search";
 export * from "./blockchain/hierarchy/token/autocomplete";
 export * from "./blockchain/hierarchy/token/search";
 
+export * from "./mechanics/asset/asset";
+export * from "./mechanics/asset/components";
 export * from "./mechanics/staking/search";
 export * from "./mechanics/claim/search";
 export * from "./mechanics/lootbox/search";
@@ -27,6 +29,7 @@ export * from "./erc20/contract/deploy";
 export * from "./erc721/contract/deploy";
 export * from "./erc721/token-history/search";
 
+export * from "./erc998/composition/search";
 export * from "./erc998/contract/deploy";
 export * from "./erc998/token-history/search";
 

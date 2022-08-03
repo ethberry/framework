@@ -53,6 +53,7 @@ export const Erc721Contract: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
+      contractStatus: ContractStatus.NEW,
     },
     search: {
       query: "",
@@ -109,6 +110,7 @@ export const Erc721Contract: FC = () => {
                 </IconButton>
                 <ContractActionsMenu
                   contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
                   actions={[
                     ContractActions.ROYALTY,
                     contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
