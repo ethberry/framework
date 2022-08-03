@@ -34,10 +34,10 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
+      testId={testIdPrefix}
       {...rest}
-      data-testid={testIdPrefix}
     >
-      <TextInput name="account" data-testid={`${testIdPrefix}-account`} />
+      <TextInput name="account" />
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} multiple />
       <DateTimeInput name="endTimestamp" />
     </FormDialog>

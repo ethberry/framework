@@ -44,7 +44,7 @@ export const Profile: FC = () => {
         initialValues={fixedValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        data-testid="Profile"
+        testId="Profile"
       >
         <TextInput name="email" autoComplete="username" onClick={onClick} />
         <TextInput name="displayName" />

@@ -42,12 +42,12 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
-      <TextInput name="stakingStatus" readOnly={true} data-testid={`${testIdPrefix}-stakingStatus`} />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
+      <TextInput name="stakingStatus" readOnly={true} />
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <PriceInput prefix="deposit" />
@@ -65,7 +65,6 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
             </InputAdornment>
           ),
         }}
-        data-testid={`${testIdPrefix}-duration`}
       />
       <CurrencyInput
         name="penalty"
@@ -73,9 +72,8 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
         InputProps={{
           endAdornment: <InputAdornment position="start">%</InputAdornment>,
         }}
-        data-testid={`${testIdPrefix}-penalty`}
       />
-      <CheckboxInput name="recurrent" data-testid={`${testIdPrefix}-recurrent`} />
+      <CheckboxInput name="recurrent" />
     </FormDialog>
   );
 };

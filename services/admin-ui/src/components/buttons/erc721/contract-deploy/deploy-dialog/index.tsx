@@ -29,7 +29,7 @@ export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> 
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...props}
     >
       <SelectInput
@@ -37,12 +37,11 @@ export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> 
         options={Erc721ContractTemplate}
         // MODULE:MYSTERYBOX
         disabledOptions={[ContractTemplate.MYSTERYBOX]}
-        data-testid={`${testIdPrefix}-contractTemplate`}
       />
-      <TextInput name="name" data-testid={`${testIdPrefix}-name`} />
-      <TextInput name="symbol" data-testid={`${testIdPrefix}-symbol`} />
-      <TextInput name="baseTokenURI" data-testid={`${testIdPrefix}-baseTokenURI`} />
-      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-royalty`} />
+      <TextInput name="name" />
+      <TextInput name="symbol" />
+      <TextInput name="baseTokenURI" />
+      <CurrencyInput name="royalty" symbol="%" />
     </FormDialog>
   );
 };

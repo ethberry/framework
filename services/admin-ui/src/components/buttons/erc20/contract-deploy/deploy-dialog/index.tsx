@@ -29,18 +29,17 @@ export const Erc20ContractDeployDialog: FC<IErc20TokenDeployDialogProps> = props
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...props}
     >
       <SelectInput
         name="contractTemplate"
         options={Erc20ContractTemplate}
         disabledOptions={[Erc20ContractTemplate.EXTERNAL, Erc20ContractTemplate.NATIVE]}
-        data-testid={`${testIdPrefix}-contractTemplate`}
       />
-      <TextInput name="name" data-testid={`${testIdPrefix}-name`} />
-      <TextInput name="symbol" data-testid={`${testIdPrefix}-symbol`} />
-      <EthInput name="cap" data-testid={`${testIdPrefix}-cap`} />
+      <TextInput name="name" />
+      <TextInput name="symbol" />
+      <EthInput name="cap" />
     </FormDialog>
   );
 };

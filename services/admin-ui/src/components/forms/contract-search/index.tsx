@@ -31,11 +31,11 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" data-testid={`${testIdPrefix}-query`} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
@@ -45,7 +45,6 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
               name="contractStatus"
               options={ContractStatus}
               multiple
-              data-testid={`${testIdPrefix}-contractStatus`}
             />
           </Grid>
           <Grid item xs={6}>
@@ -53,7 +52,6 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
               name="contractTemplate"
               options={contractTemplateOptions}
               multiple
-              data-testid={`${testIdPrefix}-contractTemplate`}
             />
           </Grid>
         </Grid>

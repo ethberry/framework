@@ -34,13 +34,13 @@ export const PageEditDialog: FC<IEditPageDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
-      <TextInput name="slug" data-testid={`${testIdPrefix}-slug`} />
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
-      {id ? <SelectInput name="pageStatus" options={PageStatus} data-testid={`${testIdPrefix}-pageStatus`} /> : null}
+      <TextInput name="slug" />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
+      {id ? <SelectInput name="pageStatus" options={PageStatus} /> : null}
     </FormDialog>
   );
 };

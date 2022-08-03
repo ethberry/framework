@@ -28,7 +28,7 @@ export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="MysteryboxSearchForm"
+      testId="MysteryboxSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

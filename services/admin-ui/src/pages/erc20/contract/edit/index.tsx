@@ -38,7 +38,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         initialValues={fixedValues}
         validationSchema={validationSchema}
         message={message}
-        data-testid="Erc20TokenEditDialog"
+        testId="Erc20TokenEditDialog"
         {...rest}
       >
         <BlockchainInfoPopover

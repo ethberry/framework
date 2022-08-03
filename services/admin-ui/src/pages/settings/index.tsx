@@ -56,7 +56,7 @@ export const Settings: FC = () => {
       <PageHeader message="pages.settings.title" />
 
       <ProgressOverlay isLoading={call1.isLoading || call2.isLoading}>
-        <FormWrapper initialValues={settings} onSubmit={onSubmit}>
+        <FormWrapper initialValues={settings} onSubmit={onSubmit} testId="Settings">
           <TextInput name={SettingsKeys.DUMMY} />
         </FormWrapper>
       </ProgressOverlay>

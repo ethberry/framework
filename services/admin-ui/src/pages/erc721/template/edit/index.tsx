@@ -40,15 +40,15 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
-      <NumberInput name="amount" data-testid={`${testIdPrefix}-amount`} />
+      <NumberInput name="amount" />
       {id ? (
-        <SelectInput name="templateStatus" options={TemplateStatus} data-testid={`${testIdPrefix}-templateStatus`} />
+        <SelectInput name="templateStatus" options={TemplateStatus} />
       ) : null}
       <EntityInput
         name="contractId"
@@ -58,9 +58,8 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
           contractModule: [ModuleType.CORE],
         }}
         readOnly={!!id}
-        data-testid={`${testIdPrefix}-contractId`}
       />
-      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
+      <AvatarInput name="imageUrl" />
     </FormDialog>
   );
 };

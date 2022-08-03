@@ -32,19 +32,18 @@ export const Erc20ContractCreateDialog: FC<IErc20TokenDeployDialogProps> = props
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.create"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...props}
     >
       <SelectInput
         name="contractTemplate"
         options={Erc20ContractTemplate}
         disabledOptions={[Erc20ContractTemplate.SIMPLE, Erc20ContractTemplate.BLACKLIST]}
-        data-testid={`${testIdPrefix}-contractTemplate`}
       />
-      <TextInput name="symbol" data-testid={`${testIdPrefix}-symbol`} />
-      <NumberInput name="decimals" data-testid={`${testIdPrefix}-decimals`} />
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <TextInput name="symbol" />
+      <NumberInput name="decimals" />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
       <AddressInput />
     </FormDialog>
   );

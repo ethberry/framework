@@ -33,7 +33,7 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
       {id ? <SelectInput name="craftStatus" options={CraftStatus} disabledOptions={[CraftStatus.NEW]} /> : null}

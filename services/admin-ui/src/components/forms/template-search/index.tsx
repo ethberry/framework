@@ -32,11 +32,11 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" data-testid={`${testIdPrefix}-query`} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
@@ -47,7 +47,6 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
               controller="contracts"
               multiple
               data={{ contractType }}
-              data-testid={`${testIdPrefix}-contractIds`}
             />
           </Grid>
           <Grid item xs={6}>
@@ -55,7 +54,6 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
               multiple
               name="templateStatus"
               options={TemplateStatus}
-              data-testid={`${testIdPrefix}-templateStatus`}
             />
           </Grid>
         </Grid>

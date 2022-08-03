@@ -35,13 +35,12 @@ export const Erc998CompositionCreateDialog: FC<IErc998CompositionCreateDialogPro
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={"dialogs.create"}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
       <ContractInput
         name="parentId"
         related="parent"
-        data-testid={`${testIdPrefix}-parent`}
         data={{
           contractType: [TokenType.ERC998],
         }}
@@ -49,12 +48,11 @@ export const Erc998CompositionCreateDialog: FC<IErc998CompositionCreateDialogPro
       <ContractInput
         name="childId"
         related="child"
-        data-testid={`${testIdPrefix}-child`}
         data={{
           contractType: [TokenType.ERC721, TokenType.ERC998],
         }}
       />
-      <NumberInput name="amount" data-testid={`${testIdPrefix}-amount`} />
+      <NumberInput name="amount" />
     </FormDialog>
   );
 };

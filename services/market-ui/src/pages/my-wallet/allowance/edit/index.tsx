@@ -36,7 +36,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.allowance"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...props}
     >
       <TokenTypeInput />

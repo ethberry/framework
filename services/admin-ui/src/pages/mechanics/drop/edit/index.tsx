@@ -34,13 +34,13 @@ export const DropEditDialog: FC<IDropEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
+      testId={testIdPrefix}
       {...rest}
-      data-testid={testIdPrefix}
     >
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
-      <DateInput name="startTimestamp" data-testid={`${testIdPrefix}-startTimestamp`} />
-      <DateInput name="endTimestamp" data-testid={`${testIdPrefix}-endTimestamp`} />
+      <DateInput name="startTimestamp" />
+      <DateInput name="endTimestamp" />
     </FormDialog>
   );
 };
