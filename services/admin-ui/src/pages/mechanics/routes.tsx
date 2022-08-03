@@ -3,7 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/firebase-login";
 
 import { Claim } from "./claim";
-import { Lootbox } from "./lootbox";
+import { Mysterybox } from "./mysterybox";
 import { Craft } from "./craft";
 import { Vesting } from "./vesting";
 import { Grade } from "./grade";
@@ -20,11 +20,11 @@ export const mechanics: Array<RouteObject> = [
     ],
   },
   {
-    path: "/lootboxes",
+    path: "/mysteryboxes",
     element: <Protected />,
     children: [
-      { index: true, element: <Lootbox /> },
-      { path: "/lootboxes/:id", element: <Lootbox /> },
+      { index: true, element: <Mysterybox /> },
+      { path: "/mysteryboxes/:id", element: <Mysterybox /> },
     ],
   },
   {

@@ -93,7 +93,7 @@ export class Erc998TokenServiceEth {
       erc998TokenEntity.template.amount += 1;
       // tokenEntity.template
       //   ? (erc998TokenEntity.template.instanceCount += 1)
-      //   : (erc998TokenEntity.erc998Lootbox.erc998Template.instanceCount += 1);
+      //   : (erc998TokenEntity.erc998Mysterybox.erc998Template.instanceCount += 1);
       erc998TokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
       // erc998TokenEntity.erc998Template.instanceCount -= 1;
@@ -111,7 +111,7 @@ export class Erc998TokenServiceEth {
 
     // erc998TokenEntity.erc998Template
     //   ? await erc998TokenEntity.erc998Template.save()
-    //   : await erc998TokenEntity.erc998Lootbox.erc998Template.save();
+    //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -134,7 +134,7 @@ export class Erc998TokenServiceEth {
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
-      args: { to, tokenId, templateId, rarity, lootboxId },
+      args: { to, tokenId, templateId, rarity, mysteryboxId },
     } = event;
 
     const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
@@ -143,12 +143,12 @@ export class Erc998TokenServiceEth {
       throw new NotFoundException("templateNotFound");
     }
 
-    let erc998LootboxEntity; // if minted as Mechanics reward
-    if (~~lootboxId !== 0) {
-      erc998LootboxEntity = await this.tokenService.findOne({ id: ~~lootboxId });
+    let erc998MysteryboxEntity; // if minted as Mechanics reward
+    if (~~mysteryboxId !== 0) {
+      erc998MysteryboxEntity = await this.tokenService.findOne({ id: ~~mysteryboxId });
 
-      if (!erc998LootboxEntity) {
-        throw new NotFoundException("lootboxNotFound");
+      if (!erc998MysteryboxEntity) {
+        throw new NotFoundException("mysteryboxNotFound");
       }
     }
 
@@ -159,7 +159,7 @@ export class Erc998TokenServiceEth {
       }),
       royalty: erc998TemplateEntity.contract.royalty,
       template: erc998TemplateEntity,
-      // token: erc998LootboxEntity,
+      // token: erc998MysteryboxEntity,
     });
 
     await this.balanceService.create({

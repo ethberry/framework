@@ -25,9 +25,9 @@ export class ContractService {
 
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    // MODULE:LOOTBOX
+    // MODULE:MYSTERYBOX
     queryBuilder.andWhere("contract.contractModule != :contractModule", {
-      contractModule: ModuleType.LOOTBOX,
+      contractModule: ModuleType.MYSTERYBOX,
     });
 
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", { contractStatus: ContractStatus.ACTIVE });

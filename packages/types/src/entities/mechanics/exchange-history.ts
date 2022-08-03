@@ -4,12 +4,12 @@ import { ICraft } from "./craft";
 import { ITemplate } from "../blockchain/hierarchy/template";
 import { IClaim } from "./claim";
 import { IGrade } from "./grade";
-import { ILootbox } from "./lootbox";
+import { IMysterybox } from "./mysterybox";
 
 export enum ExchangeEventType {
   Claim = "Claim",
   Craft = "Craft",
-  Lootbox = "Lootbox",
+  Mysterybox = "Mysterybox",
   Purchase = "Purchase",
   Upgrade = "Upgrade",
 }
@@ -46,8 +46,8 @@ export interface IExchangeGrade {
   price: Array<IExchangeItem>;
 }
 
-// MODULE:LOOTBOX
-export interface IExchangeLootbox {
+// MODULE:MYSTERYBOX
+export interface IExchangeMysterybox {
   from: string;
   externalId: string;
   items: IExchangeItem; // TODO array
@@ -59,7 +59,7 @@ export type TExchangeEventData =
   | IExchangeClaim
   | IExchangeCraft
   | IExchangeGrade
-  | IExchangeLootbox;
+  | IExchangeMysterybox;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;
@@ -74,6 +74,6 @@ export interface IExchangeHistory extends IIdDateBase {
   craft?: ICraft;
   gradeId: number | null;
   grade?: IGrade;
-  lootboxId: number | null;
-  lootbox?: ILootbox;
+  mysteryboxId: number | null;
+  mysterybox?: IMysterybox;
 }

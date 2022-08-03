@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Network } from "@ethersproject/networks";
 
-import { ERC1155Simple, ERC20Simple, ERC721Lootbox, ERC721Simple, Exchange } from "../../../typechain-types";
+import { ERC1155Simple, ERC20Simple, ERC721Mysterybox, ERC721Simple, Exchange } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -23,7 +23,7 @@ describe("ExchangeCore", function () {
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
   let erc1155Instance: ERC1155Simple;
-  let lootboxInstance: ERC721Lootbox;
+  let mysteryboxInstance: ERC721Mysterybox;
   let network: Network;
 
   let generateSignature: (values: Record<string, any>) => Promise<string>;
@@ -46,9 +46,9 @@ describe("ExchangeCore", function () {
     erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
     await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
-    const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
-    lootboxInstance = await lootboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await lootboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+    const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
+    mysteryboxInstance = await mysteryboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+    await mysteryboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     network = await ethers.provider.getNetwork();
 

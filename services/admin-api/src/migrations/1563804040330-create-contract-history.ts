@@ -19,7 +19,7 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
         'TransferSingle',
         'URI',
         'UnpackClaim',
-        'UnpackLootbox',
+        'UnpackMysterybox',
         'Paused'
         'Unpaused'
       );

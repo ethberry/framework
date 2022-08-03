@@ -86,7 +86,7 @@ export class Erc721TokenServiceEth {
       erc721TokenEntity.template.amount += 1;
       // erc721TokenEntity.erc721Template
       //   ? (erc721TokenEntity.erc721Template.instanceCount += 1)
-      //   : (erc721TokenEntity.erc721Lootbox.erc721Template.instanceCount += 1);
+      //   : (erc721TokenEntity.erc721Mysterybox.erc721Template.instanceCount += 1);
       erc721TokenEntity.tokenStatus = TokenStatus.MINTED;
     } else if (to === constants.AddressZero) {
       // erc721TokenEntity.erc721Template.instanceCount -= 1;
@@ -104,7 +104,7 @@ export class Erc721TokenServiceEth {
     // erc721TokenEntity.erc721Template
 
     //   ? await erc721TokenEntity.template.save()
-    //   : await erc721TokenEntity.lootbox.template.save();
+    //   : await erc721TokenEntity.mysterybox.template.save();
   }
 
   public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
@@ -127,7 +127,7 @@ export class Erc721TokenServiceEth {
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
-      args: { to, tokenId, templateId, rarity, lootboxId },
+      args: { to, tokenId, templateId, rarity, mysteryboxId },
     } = event;
 
     const templateEntity = await this.templateService.findOne({ id: ~~templateId });
@@ -136,12 +136,12 @@ export class Erc721TokenServiceEth {
       throw new NotFoundException("templateNotFound");
     }
 
-    let lootboxEntity; // if minted as Mechanics reward
-    if (~~lootboxId !== 0) {
-      lootboxEntity = await this.tokenService.findOne({ id: ~~lootboxId });
+    let mysteryboxEntity; // if minted as Mechanics reward
+    if (~~mysteryboxId !== 0) {
+      mysteryboxEntity = await this.tokenService.findOne({ id: ~~mysteryboxId });
 
-      if (!lootboxEntity) {
-        throw new NotFoundException("lootboxNotFound");
+      if (!mysteryboxEntity) {
+        throw new NotFoundException("mysteryboxNotFound");
       }
     }
 
@@ -152,7 +152,7 @@ export class Erc721TokenServiceEth {
       }),
       royalty: templateEntity.contract.royalty,
       template: templateEntity,
-      // erc721Token: lootboxEntity,
+      // erc721Token: mysteryboxEntity,
     });
 
     await this.balanceService.create({

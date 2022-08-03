@@ -245,7 +245,7 @@
         "claim": "Claim",
         "craft": "Craft",
         "drop": "Drop",
-        "lootboxes": "Lootboxes",
+        "mysteryboxes": "Mysteryboxes",
         "title": "Mechanics",
         "vesting": "Vesting"
       },
@@ -353,12 +353,12 @@
       "erc998-new": "New 998 Templates",
       "popular": "Popular items"
     },
-    "lootbox": {
+    "mysterybox": {
       "price": "Price: {amount}",
-      "title": "Lootbox: {title}"
+      "title": "Mysterybox: {title}"
     },
-    "lootbox-list": {
-      "title": "Lootboxes"
+    "mysterybox-list": {
+      "title": "Mysteryboxes"
     },
     "marketplace": {
       "erc1155": {
@@ -370,14 +370,14 @@
       "erc998": {
         "title": "ERC998"
       },
-      "lootbox": {
-        "title": "Lootbox"
+      "mysterybox": {
+        "title": "Mysterybox"
       },
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
         "erc998": "ERC998",
-        "lootbox": "Lootbox"
+        "mysterybox": "Mysterybox"
       },
       "title": "Primary market"
     },

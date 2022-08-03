@@ -20,7 +20,7 @@ export class RoyaltyControllerEth {
       contractType: ContractType.ERC721_TOKEN,
       eventName: ContractEventType.DefaultRoyaltyInfo,
     },
-    { contractType: ContractType.LOOTBOX, eventName: ContractEventType.DefaultRoyaltyInfo },
+    { contractType: ContractType.MYSTERYBOX, eventName: ContractEventType.DefaultRoyaltyInfo },
   ])
   public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.defaultRoyaltyInfo(event, context);
@@ -35,7 +35,7 @@ export class RoyaltyControllerEth {
       contractType: ContractType.ERC721_TOKEN,
       eventName: ContractEventType.TokenRoyaltyInfo,
     },
-    { contractType: ContractType.LOOTBOX, eventName: ContractEventType.TokenRoyaltyInfo },
+    { contractType: ContractType.MYSTERYBOX, eventName: ContractEventType.TokenRoyaltyInfo },
   ])
   public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.tokenRoyaltyInfo(event, context);

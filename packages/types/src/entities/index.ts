@@ -22,7 +22,7 @@ export * from "./mechanics/craft";
 export * from "./mechanics/drop";
 export * from "./mechanics/exchange-history";
 export * from "./mechanics/grade";
-export * from "./mechanics/lootbox";
+export * from "./mechanics/mysterybox";
 export * from "./mechanics/marketplace-history";
 export * from "./mechanics/staking-history";
 export * from "./mechanics/staking-rule";

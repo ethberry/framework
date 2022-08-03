@@ -59,7 +59,7 @@
       "CLIFF": "Cliff",
       "EXTERNAL": "External",
       "LINEAR": "Linear",
-      "LOOTBOX": "Lootbox",
+      "MYSTERYBOX": "Mysterybox",
       "NATIVE": "Native",
       "RANDOM": "Random",
       "SIMPLE": "Simple",
@@ -83,7 +83,7 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
-    "lootboxStatus": {
+    "mysteryboxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
@@ -238,7 +238,7 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
-      "lootboxStatus": "Status",
+      "mysteryboxStatus": "Status",
       "name": "Name",
       "owner": "Owner",
       "pageStatus": "Status",
@@ -408,7 +408,7 @@
         "craft": "Craft",
         "drops": "Drops",
         "grades": "Grades",
-        "lootboxes": "Lootboxes",
+        "mysteryboxes": "Mysteryboxes",
         "title": "Mechanics",
         "vesting": "Vesting"
       },
@@ -467,8 +467,8 @@
       "forgotPassword": "Forgot password",
       "login": "Login"
     },
-    "lootboxes": {
-      "title": "Lootboxes"
+    "mysteryboxes": {
+      "title": "Mysteryboxes"
     },
     "pages": {
       "title": "Pages"

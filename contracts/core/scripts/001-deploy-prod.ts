@@ -30,16 +30,16 @@ async function deployVesting() {
   contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
 }
 
-// MODULE:LOOTBOX
-async function deployLootbox() {
-  const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
-  const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
-  contracts.lootbox = lootboxInstance;
+// MODULE:MYSTERYBOX
+async function deployMysterybox() {
+  const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
+  const mysteryboxInstance = await mysteryboxFactory.deploy("Mysterybox", "LOOT", 100, baseTokenURI);
+  contracts.mysterybox = mysteryboxInstance;
 }
 
 async function deployModules() {
   await deployVesting();
-  await deployLootbox();
+  await deployMysterybox();
 
   // MODULE:CLAIM
   const claimFactory = await ethers.getContractFactory("ClaimProxy");
@@ -58,7 +58,7 @@ async function setFactories() {
   const cM: ContractManager = vestFactory.attach(contracts.contractManager.address);
   const minters = [
     contracts.exchange.address,
-    contracts.lootbox.address,
+    contracts.mysterybox.address,
     contracts.staking.address,
     contracts.claimProxy.address,
   ];
@@ -75,12 +75,12 @@ async function setFactories() {
 async function grantRoles() {
   await setFactories();
   await blockAwait();
-  // MODULE:lootbox-market
-  const tx1 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.staking.address);
+  // MODULE:mysterybox-market
+  const tx1 = await contracts.mysterybox.grantRole(MINTER_ROLE, contracts.staking.address);
   console.info(`MINTER_ROLE granted for staking in LBX:`, tx1.hash);
-  const tx2 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.exchange.address);
+  const tx2 = await contracts.mysterybox.grantRole(MINTER_ROLE, contracts.exchange.address);
   console.info(`MINTER_ROLE granted for exchange in LBX:`, tx2.hash);
-  const tx3 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.claimProxy.address);
+  const tx3 = await contracts.mysterybox.grantRole(MINTER_ROLE, contracts.claimProxy.address);
   console.info(`MINTER_ROLE granted for exchange in LBX:`, tx3.hash);
 }
 

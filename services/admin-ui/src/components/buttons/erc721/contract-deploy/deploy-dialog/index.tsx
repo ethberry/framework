@@ -35,8 +35,8 @@ export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> 
       <SelectInput
         name="contractTemplate"
         options={Erc721ContractTemplate}
-        // MODULE:LOOTBOX
-        disabledOptions={[ContractTemplate.LOOTBOX]}
+        // MODULE:MYSTERYBOX
+        disabledOptions={[ContractTemplate.MYSTERYBOX]}
         data-testid={`${testIdPrefix}-contractTemplate`}
       />
       <TextInput name="name" data-testid={`${testIdPrefix}-name`} />

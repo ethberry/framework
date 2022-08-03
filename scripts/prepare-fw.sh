@@ -42,7 +42,7 @@ fi
   echo "preparing contracts via hardhat..";
 
   # Grep output to -> .env.tmp
-  npm run prepare:contracts:$BLOCKCHAIN | grep 'CONTRACT_MANAGER_ADDR\|EXCHANGE_ADDR\|LOOTBOX_ADDR\|CLAIM_PROXY_ADDR'>> .env.tmp
+  npm run prepare:contracts:$BLOCKCHAIN | grep 'CONTRACT_MANAGER_ADDR\|EXCHANGE_ADDR\|MYSTERYBOX_ADDR\|CLAIM_PROXY_ADDR'>> .env.tmp
 
   # Substitutions + fixes -> to .env.tmp2
   cat .env.tmp | sed -e '/^#/d;/^\s*$/d' -e "s/'/'\\\''/g" -e "s/=\(.*\)/='\1'/g" >.env.tmp2
@@ -62,7 +62,7 @@ fi
 
   echo "CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR"
   echo "EXCHANGE_ADDR=$EXCHANGE_ADDR"
-  echo "LOOTBOX_ADDR=$LOOTBOX_ADDR"
+  echo "MYSTERYBOX_ADDR=$MYSTERYBOX_ADDR"
   echo "CLAIM_PROXY_ADDR=$CLAIM_PROXY_ADDR"
   echo "STAKING_ADDR=$STAKING_ADDR"
   echo ""
@@ -86,7 +86,7 @@ fi
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
-  sed -i -e "s/LOOTBOX_ADDR=.*/LOOTBOX_ADDR=$LOOTBOX_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
+  sed -i -e "s/MYSTERYBOX_ADDR=.*/MYSTERYBOX_ADDR=$MYSTERYBOX_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/CLAIM_PROXY_ADDR=.*/CLAIM_PROXY_ADDR=$CLAIM_PROXY_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   rm $CURDIR/services/admin-ui/.env.$BASE_MODE-e
@@ -105,7 +105,7 @@ fi
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
-  sed -i -e "s/LOOTBOX_ADDR=.*/LOOTBOX_ADDR=$LOOTBOX_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
+  sed -i -e "s/MYSTERYBOX_ADDR=.*/MYSTERYBOX_ADDR=$MYSTERYBOX_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/CLAIM_PROXY_ADDR=.*/CLAIM_PROXY_ADDR=$CLAIM_PROXY_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   rm $CURDIR/services/market-ui/.env.$BASE_MODE-e
@@ -122,7 +122,7 @@ fi
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
-  sed -i -e "s/LOOTBOX_ADDR=.*/LOOTBOX_ADDR=$LOOTBOX_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
+  sed -i -e "s/MYSTERYBOX_ADDR=.*/MYSTERYBOX_ADDR=$MYSTERYBOX_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/CLAIM_PROXY_ADDR=.*/CLAIM_PROXY_ADDR=$CLAIM_PROXY_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
@@ -145,7 +145,7 @@ fi
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
-  sed -i -e "s/LOOTBOX_ADDR=.*/LOOTBOX_ADDR=$LOOTBOX_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
+  sed -i -e "s/MYSTERYBOX_ADDR=.*/MYSTERYBOX_ADDR=$MYSTERYBOX_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/CLAIM_PROXY_ADDR=.*/CLAIM_PROXY_ADDR=$CLAIM_PROXY_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
@@ -167,7 +167,7 @@ fi
 
   sed -i -e "s/CONTRACT_MANAGER_ADDR=.*/CONTRACT_MANAGER_ADDR=$CONTRACT_MANAGER_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
-  sed -i -e "s/LOOTBOX_ADDR=.*/LOOTBOX_ADDR=$LOOTBOX_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
+  sed -i -e "s/MYSTERYBOX_ADDR=.*/MYSTERYBOX_ADDR=$MYSTERYBOX_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/CLAIM_PROXY_ADDR=.*/CLAIM_PROXY_ADDR=$CLAIM_PROXY_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/EXCHANGE_ADDR=.*/EXCHANGE_ADDR=$EXCHANGE_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/STAKING_ADDR=.*/STAKING_ADDR=$STAKING_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE

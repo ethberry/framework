@@ -25,7 +25,7 @@ contract ClaimProxy is IERC721Random, AccessControl, Pausable {
     _setupRole(MINTER_ROLE, _msgSender());
     _setupRole(PAUSER_ROLE, _msgSender());
 
-    // TODO setup MINTER_ROLE for Lootbox
+    // TODO setup MINTER_ROLE for Mysterybox
   }
 
   function setFactory(address factory) external onlyRole(DEFAULT_ADMIN_ROLE) {

@@ -102,8 +102,8 @@ export const Erc721Contract: FC = () => {
                   onClick={handleDelete(contract)}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
-                    // MODULE:LOOTBOX
-                    contract.contractTemplate === ContractTemplate.LOOTBOX
+                    // MODULE:MYSTERYBOX
+                    contract.contractTemplate === ContractTemplate.MYSTERYBOX
                   }
                 >
                   <Delete />

@@ -10,7 +10,7 @@ export * from "./mechanics/asset/asset";
 export * from "./mechanics/asset/components";
 export * from "./mechanics/staking/search";
 export * from "./mechanics/claim/search";
-export * from "./mechanics/lootbox/search";
+export * from "./mechanics/mysterybox/search";
 export * from "./mechanics/exchange/search";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";

@@ -26,9 +26,9 @@ export class TemplateService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
 
-    // MODULE:LOOTBOX
+    // MODULE:MYSTERYBOX
     queryBuilder.andWhere("contract.contractModule != :contractModule", {
-      contractModule: ModuleType.LOOTBOX,
+      contractModule: ModuleType.MYSTERYBOX,
     });
 
     if (templateStatus) {
