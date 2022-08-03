@@ -110,6 +110,7 @@ export const Erc721Contract: FC = () => {
                 </IconButton>
                 <ContractActionsMenu
                   contract={contract}
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
                   actions={[
                     ContractActions.ROYALTY,
                     contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,

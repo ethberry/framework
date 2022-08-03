@@ -111,15 +111,16 @@ export const Erc20Contract: FC = () => {
                 </IconButton>
                 <ContractActionsMenu
                   contract={contract}
+                  disabled={
+                    contract.contractStatus === ContractStatus.INACTIVE ||
+                    contract.contractTemplate === ContractTemplate.EXTERNAL ||
+                    contract.contractTemplate === ContractTemplate.NATIVE
+                  }
                   actions={[
                     ContractActions.SNAPSHOT,
                     contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_ADD : null,
                     contract.contractTemplate === ContractTemplate.BLACKLIST ? ContractActions.BLACKLIST_REMOVE : null,
                   ]}
-                  disabled={
-                    contract.contractTemplate === ContractTemplate.EXTERNAL ||
-                    contract.contractTemplate === ContractTemplate.NATIVE
-                  }
                 />
               </ListItemSecondaryAction>
             </ListItem>

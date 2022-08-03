@@ -2,29 +2,34 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { ContractInput } from "./contract-input";
+import { TemplateInput } from "./template-input";
+import { AmountInput } from "./amount-input";
 
-export interface IMintErc20TokenDto {
+export interface IMintTokenDto {
+  tokenType: TokenType;
   address: string;
   contractId: number;
+  templateId: number;
   amount: string;
   account: string;
+  decimals: number;
 }
 
-export interface IMintErc20TokenDialogProps {
+export interface IMintTokenDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IMintErc20TokenDto, form: any) => Promise<void>;
-  initialValues: IMintErc20TokenDto;
+  onConfirm: (values: IMintTokenDto, form: any) => Promise<void>;
+  initialValues: IMintTokenDto;
 }
 
-export const MintErc20TokenDialog: FC<IMintErc20TokenDialogProps> = props => {
+export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const testIdPrefix = "Erc1155MintForm";
+  const testIdPrefix = "MintForm";
 
   return (
     <FormDialog
@@ -34,9 +39,10 @@ export const MintErc20TokenDialog: FC<IMintErc20TokenDialogProps> = props => {
       data-testid={testIdPrefix}
       {...rest}
     >
-      <ContractInput name="contractId" related="address" data-testid={`${testIdPrefix}-contractId`} />
-      <EthInput name="amount" symbol="" data-testid={`${testIdPrefix}-amount`} />
-      <TextInput name="account" data-testid={`${testIdPrefix}-account`} />
+      <ContractInput />
+      <TemplateInput />
+      <AmountInput />
+      <TextInput name="account" />
     </FormDialog>
   );
 };
