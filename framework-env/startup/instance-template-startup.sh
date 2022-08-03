@@ -8,9 +8,14 @@ sudo docker run -v /home/app:/home/app \
   cp -r gs://framework-env/app/* /home/app/
 
 sudo -H -u app docker-credential-gcr configure-docker
-sudo sleep 30s
-sudo -H -u app docker pull gcr.io/halogen-framing-335807/framework-img:latest
-sudo sleep 100s
+
+image_time=$((($(date -d "now" +%s) - $(date --date=$(docker inspect --format='{{.Created}}' gcr.io/halogen-framing-335807/framework-img:latest) +%s)) / (60)))
+
+if ((image_time > 15)); then
+  echo 'awaiting docker Image to be pushed';
+  sudo sleep 75;
+fi
+
 sudo -H -u app docker pull gcr.io/halogen-framing-335807/framework-img:latest
 
 sudo -H -u app docker run --rm \
