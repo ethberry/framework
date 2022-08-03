@@ -48,7 +48,7 @@ export const VestingDeployButton: FC<IVestingButtonProps> = props => {
         nonce,
         getBytecodeByVestingContractTemplate(contractTemplate),
         account,
-        Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds,
+        Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
         duration * 60 * 60 * 24, // days in seconds
         Object.keys(VestingContractTemplate).indexOf(contractTemplate),
         process.env.ACCOUNT,

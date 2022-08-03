@@ -108,7 +108,7 @@ export class ContractManagerSignService {
         nonce,
         bytecode: this.getBytecodeByVestingContractTemplate(contractTemplate),
         account,
-        startTimestamp: Math.floor(new Date(startTimestamp).getTime() / 1000), // in seconds
+        startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
         duration: duration * 60 * 60 * 24, // in seconds
         templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
       },

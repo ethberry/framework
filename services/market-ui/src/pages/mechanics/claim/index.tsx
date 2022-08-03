@@ -60,7 +60,7 @@ export const Claim: FC = () => {
       {
         nonce: utils.arrayify(claim.nonce),
         externalId: claim.id,
-        expiresAt: claim.expiresAt,
+        expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
       },
       claim.item?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),

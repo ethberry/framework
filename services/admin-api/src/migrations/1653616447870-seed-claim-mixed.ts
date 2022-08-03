@@ -6,6 +6,7 @@ import { ns } from "@framework/constants";
 export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const zeroDateTime = new Date(0).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
@@ -52,6 +53,7 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
         claim_status,
         signature,
         nonce,
+        end_timestamp,
         created_at,
         updated_at
       ) VALUES (
@@ -60,6 +62,7 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
         'NEW',
         '0x4204557726050cba3b2b57ff13de21b9dd37df2a223f01bc236d09864ea78660463d6264686d856b214dfeeaed249533630168d77702e3ae8d462e97cc40db7a1b',
         '0x8e42ff64a8d5cc3ca1b29eb027b5b8d9c1a883be264bd2db14f796dadbc39642',
+        '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

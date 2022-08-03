@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { utils } from "ethers";
@@ -22,7 +22,7 @@ export class ClaimService {
   ) {}
 
   public async search(dto: Partial<IClaimSearchDto>): Promise<[Array<ClaimEntity>, number]> {
-    const { skip, take, account } = dto;
+    const { skip, take, account, claimStatus } = dto;
 
     const queryBuilder = this.claimEntityRepository.createQueryBuilder("claim");
 
@@ -35,6 +35,14 @@ export class ClaimService {
 
     if (account) {
       queryBuilder.andWhere("claim.account ILIKE '%' || :account || '%'", { account });
+    }
+
+    if (claimStatus) {
+      if (claimStatus.length === 1) {
+        queryBuilder.andWhere("claim.claimStatus = :claimStatus", { claimStatus: claimStatus[0] });
+      } else {
+        queryBuilder.andWhere("claim.claimStatus IN(:...claimStatus)", { claimStatus });
+      }
     }
 
     queryBuilder.skip(skip);
@@ -90,7 +98,7 @@ export class ClaimService {
   }
 
   public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemCreateDto): Promise<ClaimEntity> {
-    const { account, item } = dto;
+    const { account, item, endTimestamp } = dto;
 
     let claimEntity = await this.findOneWithRelations(where);
 
@@ -100,7 +108,7 @@ export class ClaimService {
 
     // Update only NEW Claims
     if (claimEntity.claimStatus !== ClaimStatus.NEW) {
-      throw new NotFoundException("claimRedeemed");
+      throw new BadRequestException("claimRedeemed");
     }
 
     await this.assetService.update(claimEntity.item, item);
@@ -112,11 +120,10 @@ export class ClaimService {
     }
 
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(nonce, account, expiresAt, claimEntity);
 
-    Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, expiresAt });
-
+    Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, account, endTimestamp });
     return claimEntity.save();
   }
 

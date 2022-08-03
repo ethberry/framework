@@ -47,13 +47,13 @@ export const Claim: FC = () => {
     empty: {
       account: "",
       item: emptyItem,
+      endTimestamp: new Date(0).toISOString(),
     },
     search: {
       account: "",
       claimStatus: [],
-      templateIds: [],
     },
-    filter: ({ item, account }) => ({ item: cleanUpAsset(item), account }),
+    filter: ({ item, account, endTimestamp }) => ({ item: cleanUpAsset(item), account, endTimestamp }),
   });
 
   const { formatMessage } = useIntl();

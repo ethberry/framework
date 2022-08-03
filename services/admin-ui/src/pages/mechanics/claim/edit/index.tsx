@@ -3,6 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { IClaim, TokenType } from "@framework/types";
+import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../components/inputs/price";
@@ -17,11 +18,12 @@ export interface IClaimEditDialogProps {
 export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, item, account } = initialValues;
+  const { id, item, account, endTimestamp } = initialValues;
   const fixedValues = {
     id,
     item,
     account,
+    endTimestamp,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -37,6 +39,7 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
     >
       <TextInput name="account" data-testid={`${testIdPrefix}-account`} />
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} multiple />
+      <DateTimeInput name="endTimestamp" />
     </FormDialog>
   );
 };

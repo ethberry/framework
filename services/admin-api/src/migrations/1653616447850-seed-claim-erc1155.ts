@@ -6,6 +6,7 @@ import { ns } from "@framework/constants";
 export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const zeroDateTime = new Date(0).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset (
@@ -48,6 +49,7 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         claim_status,
         signature,
         nonce,
+        end_timestamp,
         created_at,
         updated_at
       ) VALUES (
@@ -56,6 +58,7 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         'NEW',
         '0x4848640f61c4bb0b0edab8bab540184a1b16a210e3e65e921c8053a9dde71c7c0022e73e63bb60c3b53907fecf6d11eb83ea58d39e351654ccedf3fd3498ae6e1b',
         '0x17fdcea410c1f8ee61a2bbc06f80a5bdf84611c935f0ed859d6acb475619d5f0',
+        '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -64,6 +67,7 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         'REDEEMED',
         '0xb3bdebe040a7832102b556fe3cdf0f9e7bfa1349b2793a8d6afadb00559d2a26017ebc9ca7cc6cc3207d526aec71df13d6c8dc4449c1d21f10b291a2439f36b21c',
         '0x5f3b61b7da793b35cb2b07ae382c5182a1a38d52031d7cb6a00f887df32d7db8',
+        '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

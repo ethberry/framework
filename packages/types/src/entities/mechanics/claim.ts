@@ -14,5 +14,5 @@ export interface IClaim extends IIdDateBase {
   claimStatus: ClaimStatus;
   nonce: string;
   signature: string;
-  expiresAt: number;
+  endTimestamp: string;
 }

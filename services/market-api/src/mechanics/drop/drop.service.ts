@@ -108,7 +108,7 @@ export class DropService {
     }
 
     const nonce = utils.randomBytes(32);
-    const expiresAt = Math.floor(new Date(dropEntity.endTimestamp).getTime() / 1000);
+    const expiresAt = Math.ceil(new Date(dropEntity.endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(nonce, account, expiresAt, dropEntity);
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt };

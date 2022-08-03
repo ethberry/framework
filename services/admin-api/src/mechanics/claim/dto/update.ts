@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsOptional, IsString, ValidateNested } from "class-validator";
+import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IClaimItemUpdateDto } from "../interfaces";
@@ -19,4 +19,10 @@ export class ClaimItemUpdateDto implements IClaimItemUpdateDto {
   @ValidateNested()
   @Type(() => AssetDto)
   public item: IAssetDto;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @IsISO8601({ message: "patternMismatch" })
+  public endTimestamp: string;
 }

@@ -52,6 +52,8 @@ export class AssetService {
             Object.assign(
               oldItem,
               dto.components.find(newItem => newItem.id === oldItem.id),
+              // this prevents typeorm to override ids using existing relations
+              { template: void 0, contract: void 0 },
             );
             return oldItem.save();
           }),
