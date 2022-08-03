@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEthereumAddress, IsInt, IsString, Min } from "class-validator";
+import { Transform } from "class-transformer";
 
 import { ISignTemplateDto } from "../interfaces";
 
@@ -14,5 +15,6 @@ export class SignTemplateDto implements ISignTemplateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public account: string;
 }

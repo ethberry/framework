@@ -9,6 +9,7 @@ export class ContractManagerCreateDto implements IContractManagerCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public address: string;
 
   @ApiProperty({

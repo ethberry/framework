@@ -32,19 +32,19 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
       ) VALUES (
         'ERC721',
         15,
-        13501, -- sword
+        13601, -- sword
         '1',
         23101
       ), (
         'ERC721',
         15,
-        13502, -- mace
+        13602, -- mace
         '1',
         23102
       ), (
         'ERC721',
         15,
-        13503, -- axe
+        13603, -- axe
         '1',
         23103
       );
@@ -64,8 +64,8 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         '${wallet}',
         23101,
         'NEW',
-        '0x8e1cac3e218c3c6a12d399b3434fd1da5dc8e4dfd5bc07219c6ec8a03bcacfee321d30b8b815e86d3e1dabb6e7447e87264cb405281e5b4362222aecdf45c2371c',
-        '0xb91cc05c34bdb5bc9317945a42976dc510471c7ee718206fda51daadfff24985',
+        '0x189f5940e334cd4037a2b00e4f381fd457465065bc917a095d64e402a429cd020df8be7631ef6306a34c1931e206a2972ba206f651fc2d550d6f059a073ac5ea1b',
+        '0xd145bd1283e38b8c089f17fbd60487b2cb5e73f8bd0a357b1d72dee44c421f9e',
         '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -73,8 +73,8 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         '${wallet}',
         23102,
         'NEW',
-        '0x77f024f8579388ae73244ea7396c09cd33e4a5d36e4a7e2735ffbdf56a50f997580f9299c7f2208a4aaed8321dea9ba8260b09d75da3e966d8e25efb06dbe98d1c',
-        '0x252f7476d08fb6d5727f0639dc08c5c65abc8a62deaefc92f5afaedd8e0bda67',
+        '0x53aead30f3b57f52c6ea7d23a71f47d3d03811dae35a71fdcee396b70ba8169b073a7c566c978c327db9ded895edd761173708e9ab1e567554b1acdadf11a7df1b',
+        '0xc4784e41b015c3476ab061982cd1ac4407b2123b50a5b6dd5b2ce09c81468fed',
         '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -82,8 +82,8 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         '${wallet}',
         23103,
         'UNPACKED',
-        '0x837f66dcb96a7ae3664b0e34a23b5db75ed3f8278ab9e4374ce92a8c53ac938439ca6ffff8dbcc676bf520150d6306559fb4b4f0ef3fe80bb873e9df58aff0ac1b',
-        '0xa07e288f20c97f9a853782001c9851f451b0729c494759a091c140c1019a6158',
+        '0xa5eb1c7f0edf69c9bdc89ef28773ecbeb44f0960d7c2d2b13741faee14f6f96931f5cc38d539de4ea48f55c78f4decc39f8d30df0ab21fc4100153c46010747b1c',
+        '0x151aa8477d5770833002170e74834ce285adc242b33ffde12ad87d2a500cf369',
         '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'

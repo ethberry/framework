@@ -48,8 +48,8 @@ export class SeedClaimLootboxAt1653616447860 implements MigrationInterface {
         '${wallet}',
         26101,
         'NEW',
-        '0x5f431eece513290b629c03efb5bc3e7b5fc2cafd2be09eb0fa5080abec0d900350effd79066101d34ca3c80338c108abcdef83a9f817af168e128e3c31817c7d1b',
-        '0x6a4762354ea8b2dfe16a2acbf7b81210963eaedb24967b40e2cfdaf918918610',
+        '0x8ec31888371c5ecad6c93ac7c6e4f2519f2bea53231ed5b48be3a5bcd346d6b75a9abaf173dc703b4e3b628d5a8b6e9cd75eebace06b25cf7402bde23af7526e1b',
+        '0xb7a84a4d540ad682fe1f3da89b7255586ddbc299be8e04f7576b1ad985dde16b',
         '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -53,7 +53,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
       ), (
         13501,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13501",
+          [TokenAttributes.TEMPLATE_ID]: "13601",
           [TokenAttributes.GRADE]: "1",
         })}',
         100,

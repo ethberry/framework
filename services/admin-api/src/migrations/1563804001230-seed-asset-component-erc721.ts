@@ -53,6 +53,36 @@ export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterf
         2,
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
+        13504
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        13505
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        13506
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        13507
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        13508
+      ), (
+        'ERC20',
+        2,
+        12002, -- space credit
+        '${constants.WeiPerEther.toString()}',
         13601
       ), (
         'ERC20',
@@ -66,36 +96,6 @@ export class SeedAssetComponentsErc721At1563804001230 implements MigrationInterf
         12002, -- space credit
         '${constants.WeiPerEther.toString()}',
         13603
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13604
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13605
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13606
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13607
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        13608
       );
     `);
   }

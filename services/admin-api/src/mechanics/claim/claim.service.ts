@@ -77,7 +77,7 @@ export class ClaimService {
   }
 
   public async create(dto: IClaimItemCreateDto): Promise<ClaimEntity> {
-    const { account } = dto;
+    const { account, endTimestamp } = dto;
 
     // TODO disallow NATIVE and ERC20
 
@@ -87,10 +87,11 @@ export class ClaimService {
 
     const claimEntity = await this.claimEntityRepository
       .create({
-        account: account.toLowerCase(),
+        account,
         item: assetEntity,
         signature: "0x",
         nonce: "",
+        endTimestamp,
       })
       .save();
 

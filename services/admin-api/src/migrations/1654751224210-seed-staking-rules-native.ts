@@ -76,7 +76,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
       ), (
         'ERC721',
         16,
-        13501, -- sword
+        13601, -- sword
         1,
         80132
       ), (

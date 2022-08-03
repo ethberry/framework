@@ -46,7 +46,7 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       ) VALUES (
         'ERC721',
         16,
-        13501, -- sword
+        13601, -- sword
         1,
         80311
       ), (
@@ -58,7 +58,7 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       ), (
         'ERC721',
         16,
-        13501, -- sword
+        13601, -- sword
         1,
         80321
       ), (
@@ -70,19 +70,19 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       ), (
         'ERC721',
         16,
-        13501, -- sword
+        13601, -- sword
         1,
         80331
       ), (
         'ERC721',
         16,
-        13501, -- sword
+        13601, -- sword
         1,
         80332
       ), (
         'ERC721',
         16,
-        13501, -- sword
+        13601, -- sword
         1,
         80341
       ), (
@@ -94,7 +94,7 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
       ), (
         'ERC721',
         16,
-        13501, -- sword
+        13601, -- sword
         1,
         80351
       ), (

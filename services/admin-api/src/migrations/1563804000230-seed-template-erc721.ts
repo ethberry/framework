@@ -23,25 +23,25 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         13503
       ), (
+        13504
+      ), (
+        13505
+      ), (
+        13506
+      ), (
+        13507
+      ), (
+        13508
+      ), (
         13601
       ), (
         13602
       ), (
         13603
-      ), (
-        13604
-      ), (
-        13605
-      ), (
-        13606
-      ), (
-        13607
-      ), (
-        13608
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 13608, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 13508, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -94,57 +94,117 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         13501,
-        'Sword',
+        'Chain mail',
         '${simpleFormatting}',
         '${imageUrl}',
         13501,
         0,
-        4,
+        1,
         'ACTIVE',
         15,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         13502,
-        'Mace',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13502,
-        0,
-        1,
-        'ACTIVE',
-        15,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13503,
-        'Axe',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13503,
-        0,
-        1,
-        'ACTIVE',
-        15,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13601,
-        'Chain mail',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13601,
-        0,
-        1,
-        'ACTIVE',
-        16,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13602,
         'Helmet',
         '${simpleFormatting}',
         '${imageUrl}',
+        13502,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13503,
+        'Gloves',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13503,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13504,
+        'Boots',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13504,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13505,
+        'Necklace',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13505,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13506,
+        'Gold Ring',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13506,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13507,
+        'Silver Ring',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13507,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13508,
+        'Yellow pants',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13508,
+        0,
+        1,
+        'ACTIVE',
+        15,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13601,
+        'Sword',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13601,
+        0,
+        4,
+        'ACTIVE',
+        16,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13602,
+        'Mace',
+        '${simpleFormatting}',
+        '${imageUrl}',
         13602,
         0,
         1,
@@ -154,70 +214,10 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         13603,
-        'Gloves',
+        'Axe',
         '${simpleFormatting}',
         '${imageUrl}',
         13603,
-        0,
-        1,
-        'ACTIVE',
-        16,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13604,
-        'Boots',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13604,
-        0,
-        1,
-        'ACTIVE',
-        16,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13605,
-        'Necklace',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13605,
-        0,
-        1,
-        'ACTIVE',
-        16,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13606,
-        'Gold Ring',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13606,
-        0,
-        1,
-        'ACTIVE',
-        16,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13607,
-        'Silver Ring',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13607,
-        0,
-        1,
-        'ACTIVE',
-        16,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        13608,
-        'Yellow pants',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        13608,
         0,
         1,
         'ACTIVE',
@@ -227,7 +227,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 13608, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 13508, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
