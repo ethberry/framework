@@ -38,21 +38,20 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
       <PriceInput prefix="item" multiple disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
       {id ? (
         <SelectInput
           name="mysteryboxStatus"
           options={MysteryboxStatus}
-          data-testid={`${testIdPrefix}-mysteryboxStatus`}
         />
       ) : null}
-      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
+      <AvatarInput name="imageUrl" />
     </FormDialog>
   );
 };

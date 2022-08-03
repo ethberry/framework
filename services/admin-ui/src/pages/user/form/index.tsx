@@ -28,7 +28,7 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="UserSearchForm"
+      testId="UserSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

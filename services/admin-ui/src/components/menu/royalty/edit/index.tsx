@@ -26,10 +26,10 @@ export const RoyaltyEditDialog: FC<IRoyaltyEditDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
-      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-account`} />
+      <CurrencyInput name="royalty" symbol="%" />
     </FormDialog>
   );
 };

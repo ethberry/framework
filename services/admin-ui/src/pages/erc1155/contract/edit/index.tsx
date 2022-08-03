@@ -36,19 +36,18 @@ export const Erc1155CollectionEditDialog: FC<IErc1155ContractEditDialogProps> = 
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
       <BlockchainInfoPopover address={address} baseTokenURI={baseTokenURI} />
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
       <SelectInput
         name="contractStatus"
         options={ContractStatus}
         disabledOptions={[ContractStatus.NEW]}
-        data-testid={`${testIdPrefix}-contractStatus`}
       />
-      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
+      <AvatarInput name="imageUrl" />
     </FormDialog>
   );
 };

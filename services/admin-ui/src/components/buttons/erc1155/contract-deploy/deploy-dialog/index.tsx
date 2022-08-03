@@ -27,16 +27,15 @@ export const Erc1155ContractDeployDialog: FC<IErc1155TokenDeployDialogProps> = p
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...props}
     >
       <SelectInput
         name="contractTemplate"
         options={Erc1155ContractTemplate}
-        data-testid={`${testIdPrefix}-contractTemplate`}
       />
-      <TextInput name="baseTokenURI" data-testid={`${testIdPrefix}-baseTokenURI`} />
-      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-royalty`} />
+      <TextInput name="baseTokenURI" />
+      <CurrencyInput name="royalty" symbol="%" />
     </FormDialog>
   );
 };

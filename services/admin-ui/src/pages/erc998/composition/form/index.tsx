@@ -31,7 +31,7 @@ export const Erc998CompositionSearchForm: FC<IErc998CompositionSearchFormProps> 
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="Erc998TokenSearchForm"
+      testId="Erc998TokenSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

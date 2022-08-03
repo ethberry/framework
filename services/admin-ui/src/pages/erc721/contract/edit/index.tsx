@@ -38,8 +38,8 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
+      testId={testIdPrefix}
       {...rest}
-      data-testid={testIdPrefix}
     >
       <BlockchainInfoPopover
         name={name}
@@ -48,15 +48,14 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
         baseTokenURI={baseTokenURI}
         royalty={`%${royalty / 100}`}
       />
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
       <SelectInput
         name="contractStatus"
         options={ContractStatus}
         disabledOptions={[ContractStatus.NEW]}
-        data-testid={`${testIdPrefix}-contractStatus`}
       />
-      <AvatarInput name="imageUrl" data-testid={`${testIdPrefix}-imageUrl`} />
+      <AvatarInput name="imageUrl" />
     </FormDialog>
   );
 };

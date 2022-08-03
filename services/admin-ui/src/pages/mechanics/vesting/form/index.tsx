@@ -28,7 +28,7 @@ export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="VestingSearchForm"
+      testId="VestingSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

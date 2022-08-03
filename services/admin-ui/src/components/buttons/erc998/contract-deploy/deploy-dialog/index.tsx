@@ -29,18 +29,17 @@ export const Erc998ContractDeployDialog: FC<IErc998CollectionDeployDialogProps> 
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...props}
     >
       <SelectInput
         name="contractTemplate"
         options={Erc998ContractTemplate}
-        data-testid={`${testIdPrefix}-contractTemplate`}
       />
-      <TextInput name="name" data-testid={`${testIdPrefix}-name`} />
-      <TextInput name="symbol" data-testid={`${testIdPrefix}-symbol`} />
-      <TextInput name="baseTokenURI" data-testid={`${testIdPrefix}-baseTokenURI`} />
-      <CurrencyInput name="royalty" symbol="%" data-testid={`${testIdPrefix}-royalty`} />
+      <TextInput name="name" />
+      <TextInput name="symbol" />
+      <TextInput name="baseTokenURI" />
+      <CurrencyInput name="royalty" symbol="%" />
     </FormDialog>
   );
 };

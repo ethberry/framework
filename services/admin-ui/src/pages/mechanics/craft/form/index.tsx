@@ -28,7 +28,7 @@ export const ExchangeSearchForm: FC<IExchangeSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="ExchangeSearchForm"
+      testId="ExchangeSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

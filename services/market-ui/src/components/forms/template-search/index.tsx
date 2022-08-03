@@ -31,7 +31,7 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="TemplateSearchForm"
+      testId="TemplateSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

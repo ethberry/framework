@@ -28,7 +28,7 @@ export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="ClaimSearchForm"
+      testId="ClaimSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

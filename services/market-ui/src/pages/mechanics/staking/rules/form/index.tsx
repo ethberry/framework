@@ -30,7 +30,7 @@ export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="StakingSearchForm"
+      testId="StakingSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

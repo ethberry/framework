@@ -28,7 +28,7 @@ export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="StakesSearchForm"
+      testId="StakesSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

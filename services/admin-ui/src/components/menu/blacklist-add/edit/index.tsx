@@ -26,10 +26,10 @@ export const AccessListBlacklistDialog: FC<IBlacklistAddDialogProps> = props => 
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.blacklist"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
-      <TextInput name="account" data-testid={`${testIdPrefix}-account`} />
+      <TextInput name="account" />
     </FormDialog>
   );
 };

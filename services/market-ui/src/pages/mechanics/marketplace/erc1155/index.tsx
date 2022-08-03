@@ -33,7 +33,7 @@ export const Erc1155: FC<ITabPanelProps> = props => {
       onSubmit={Promise.resolve}
       showButtons={false}
       showPrompt={false}
-      data-testid="Resources"
+      testId="Resources"
     >
       <PageHeader message="pages.marketplace.erc1155.title" />
 

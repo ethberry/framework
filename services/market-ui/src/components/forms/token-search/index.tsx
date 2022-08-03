@@ -30,7 +30,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="TokenSearchForm"
+      testId="TokenSearchForm"
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">

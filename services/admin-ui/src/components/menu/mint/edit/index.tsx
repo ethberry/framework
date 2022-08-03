@@ -36,7 +36,7 @@ export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
       <ContractInput />

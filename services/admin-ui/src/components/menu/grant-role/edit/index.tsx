@@ -28,11 +28,11 @@ export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.grantRole"
-      data-testid={testIdPrefix}
+      testId={testIdPrefix}
       {...rest}
     >
-      <SelectInput name="role" options={AccessControlRoleType} data-testid={`${testIdPrefix}-role`} />
-      <TextInput name="address" data-testid={`${testIdPrefix}-address`} />
+      <SelectInput name="role" options={AccessControlRoleType} />
+      <TextInput name="address" />
     </FormDialog>
   );
 };
