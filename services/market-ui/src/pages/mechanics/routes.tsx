@@ -5,8 +5,8 @@ import { Claim } from "./claim";
 import { ClaimWrapper } from "./claim/wrapper";
 import { VestingWrapper } from "./vesting/wrapper";
 import { Vesting } from "./vesting";
-import { LootboxList } from "./lootbox-list";
-import { Lootbox } from "./lootbox";
+import { MysteryboxList } from "./mysterybox-list";
+import { Mysterybox } from "./mysterybox";
 import { CraftList } from "./craft-list";
 import { Craft } from "./craft";
 import { DropList } from "./drop-list";
@@ -23,11 +23,11 @@ export const mechanicsRoutes: Array<RouteObject> = [
     element: <DropList />,
   },
   {
-    path: "/lootboxes",
+    path: "/mysteryboxes",
     element: <Protected />,
     children: [
-      { index: true, element: <LootboxList /> },
-      { path: "/lootboxes/:id", element: <Lootbox /> },
+      { index: true, element: <MysteryboxList /> },
+      { path: "/mysteryboxes/:id", element: <Mysterybox /> },
     ],
   },
   {

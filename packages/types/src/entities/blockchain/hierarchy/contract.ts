@@ -23,8 +23,8 @@ export enum Erc721ContractTemplate {
   "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
   "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
-  // MODULE:LOOTBOX
-  "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack
+  // MODULE:MYSTERYBOX
+  "MYSTERYBOX" = "MYSTERYBOX", // ACBER + METADATA + Unpack
 }
 
 export enum Erc998ContractTemplate {
@@ -48,8 +48,8 @@ export enum ContractTemplate {
   "NATIVE" = "NATIVE",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
-  // MODULE:LOOTBOX
-  "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack
+  // MODULE:MYSTERYBOX
+  "MYSTERYBOX" = "MYSTERYBOX", // ACBER + METADATA + Unpack
 }
 
 export interface IContract extends IDeployable, ISearchable {

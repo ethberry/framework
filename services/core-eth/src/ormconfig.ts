@@ -7,7 +7,7 @@ import { ContractHistoryEntity } from "./blockchain/contract-history/contract-hi
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 import { ClaimEntity } from "./mechanics/claim/claim.entity";
 import { CraftEntity } from "./mechanics/craft/craft.entity";
-import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
+import { MysteryboxEntity } from "./mechanics/mysterybox/mysterybox.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
 import { StakingHistoryEntity } from "./mechanics/staking/history/history.entity";
@@ -40,7 +40,7 @@ const config: PostgresConnectionOptions = {
     ClaimEntity,
     CraftEntity,
     GradeEntity,
-    LootboxEntity,
+    MysteryboxEntity,
     ExchangeEntity,
     ExchangeHistoryEntity,
     ContractEntity,

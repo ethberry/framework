@@ -4,7 +4,7 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { UserEntity } from "./user/user.entity";
 import { PageEntity } from "./page/page.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
-import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
+import { MysteryboxEntity } from "./mechanics/mysterybox/mysterybox.entity";
 import { ClaimEntity } from "./mechanics/claim/claim.entity";
 import { StakingRulesEntity } from "./mechanics/staking/rules/rules.entity";
 import { StakingStakesEntity } from "./mechanics/staking/stakes/stakes.entity";
@@ -31,7 +31,7 @@ const config: PostgresConnectionOptions = {
     StakingStakesEntity,
     StakingRulesEntity,
     PageEntity,
-    LootboxEntity,
+    MysteryboxEntity,
     ClaimEntity,
     ContractEntity,
     TemplateEntity,

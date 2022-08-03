@@ -8,7 +8,7 @@ import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity"
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
-import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
+import { MysteryboxEntity } from "./mechanics/mysterybox/mysterybox.entity";
 import { ClaimEntity } from "./mechanics/claim/claim.entity";
 
 // Check typeORM documentation for more information.
@@ -23,7 +23,7 @@ const config: PostgresConnectionOptions = {
     TemplateEntity,
     TokenEntity,
     BalanceEntity,
-    LootboxEntity,
+    MysteryboxEntity,
     ClaimEntity,
   ],
   synchronize: false,

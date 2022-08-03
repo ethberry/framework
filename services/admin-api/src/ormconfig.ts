@@ -23,7 +23,7 @@ import { AssetComponentEntity } from "./mechanics/asset/asset-component.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./mechanics/claim/claim.entity";
-import { LootboxEntity } from "./mechanics/lootbox/lootbox.entity";
+import { MysteryboxEntity } from "./mechanics/mysterybox/mysterybox.entity";
 import { StakingStakesEntity } from "./mechanics/staking/stakes/stakes.entity";
 import { CraftEntity } from "./mechanics/craft/craft.entity";
 import { StakingRulesEntity } from "./mechanics/staking/rules/rules.entity";
@@ -44,14 +44,14 @@ import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-see
 import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-contract-erc721";
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
-import { SeedContractLootboxAt1563804000160 } from "./migrations/1563804000160-seed-contract-lootbox";
+import { SeedContractMysteryboxAt1563804000160 } from "./migrations/1563804000160-seed-contract-mysterybox";
 
 import { CreateTemplate1563804000200 } from "./migrations/1563804000200-create-template";
 import { SeedTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
 import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
 import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
-import { SeedTemplateLootboxAt1563804000260 } from "./migrations/1563804000260-seed-template-lootbox";
+import { SeedTemplateMysteryboxAt1563804000260 } from "./migrations/1563804000260-seed-template-mysterybox";
 
 import { CreateToken1563804000300 } from "./migrations/1563804000300-create-token";
 import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
@@ -79,14 +79,14 @@ import { CreateClaimTable1653616447810 } from "./migrations/1653616447810-create
 import { SeedClaimErc721At1653616447830 } from "./migrations/1653616447830-seed-claim-erc721";
 import { SeedClaimErc998At1653616447840 } from "./migrations/1653616447840-seed-claim-erc998";
 import { SeedClaimErc1155At1653616447850 } from "./migrations/1653616447850-seed-claim-erc1155";
-import { SeedClaimLootboxAt1653616447860 } from "./migrations/1653616447860-seed-claim-lootbox";
+import { SeedClaimMysteryboxAt1653616447860 } from "./migrations/1653616447860-seed-claim-mysterybox";
 import { SeedClaimMixedAt1653616447870 } from "./migrations/1653616447870-seed-claim-mixed";
 
-import { CreateLootbox1653616447910 } from "./migrations/1653616447910-create-lootbox";
-import { SeedLootboxErc721At1653616447930 } from "./migrations/1653616447930-seed-lootbox-erc721";
-import { SeedLootboxErc998At1653616447940 } from "./migrations/1653616447940-seed-lootbox-erc998";
-import { SeedLootboxErc1155At1653616447950 } from "./migrations/1653616447950-seed-lootbox-erc1155";
-import { SeedLootboxMixedAt1653616447970 } from "./migrations/1653616447970-seed-lootbox-mixed";
+import { CreateMysterybox1653616447910 } from "./migrations/1653616447910-create-mysterybox";
+import { SeedMysteryboxErc721At1653616447930 } from "./migrations/1653616447930-seed-mysterybox-erc721";
+import { SeedMysteryboxErc998At1653616447940 } from "./migrations/1653616447940-seed-mysterybox-erc998";
+import { SeedMysteryboxErc1155At1653616447950 } from "./migrations/1653616447950-seed-mysterybox-erc1155";
+import { SeedMysteryboxMixedAt1653616447970 } from "./migrations/1653616447970-seed-mysterybox-mixed";
 
 import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craft";
 import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
@@ -128,7 +128,7 @@ import { CreateDrop1658980521000 } from "./migrations/1658980521000-create-drop"
 import { SeedDropErc721At1658980521030 } from "./migrations/1658980521030-seed-drop-erc721";
 import { SeedDropErc998At1658980521040 } from "./migrations/1658980521040-seed-drop-erc998";
 import { SeedDropErc1155At1658980521050 } from "./migrations/1658980521050-seed-drop-erc1155";
-import { SeedDropErcLootboxAt1658980521050 } from "./migrations/1658980521060-seed-drop-lootbox";
+import { SeedDropErcMysteryboxAt1658980521050 } from "./migrations/1658980521060-seed-drop-mysterybox";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -154,7 +154,7 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     BalanceEntity,
     ClaimEntity,
-    LootboxEntity,
+    MysteryboxEntity,
     CraftEntity,
     GradeEntity,
     CompositionEntity,
@@ -192,14 +192,14 @@ const config: PostgresConnectionOptions = {
     SeedContractErc721At1563804000130,
     SeedContractErc998At1563804000140,
     SeedContractErc1155At1563804000150,
-    SeedContractLootboxAt1563804000160,
+    SeedContractMysteryboxAt1563804000160,
 
     CreateTemplate1563804000200,
     SeedTemplateErc20At1563804000220,
     SeedTemplateErc721At1563804000230,
     SeedTemplateErc998At1563804000240,
     SeedTemplateErc1155At1563804000250,
-    SeedTemplateLootboxAt1563804000260,
+    SeedTemplateMysteryboxAt1563804000260,
 
     CreateToken1563804000300,
     SeedTokenErc20At1563804000320,
@@ -236,14 +236,14 @@ const config: PostgresConnectionOptions = {
     SeedClaimErc721At1653616447830,
     SeedClaimErc998At1653616447840,
     SeedClaimErc1155At1653616447850,
-    SeedClaimLootboxAt1653616447860,
+    SeedClaimMysteryboxAt1653616447860,
     SeedClaimMixedAt1653616447870,
 
-    CreateLootbox1653616447910,
-    SeedLootboxErc721At1653616447930,
-    SeedLootboxErc998At1653616447940,
-    SeedLootboxErc1155At1653616447950,
-    SeedLootboxMixedAt1653616447970,
+    CreateMysterybox1653616447910,
+    SeedMysteryboxErc721At1653616447930,
+    SeedMysteryboxErc998At1653616447940,
+    SeedMysteryboxErc1155At1653616447950,
+    SeedMysteryboxMixedAt1653616447970,
 
     CreateCraft1653616448010,
     SeedCraftErc1155Erc1155At1653616448020,
@@ -275,7 +275,7 @@ const config: PostgresConnectionOptions = {
     SeedDropErc721At1658980521030,
     SeedDropErc998At1658980521040,
     SeedDropErc1155At1658980521050,
-    SeedDropErcLootboxAt1658980521050,
+    SeedDropErcMysteryboxAt1658980521050,
   ],
 };
 

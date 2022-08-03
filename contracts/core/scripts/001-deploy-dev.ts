@@ -113,16 +113,16 @@ async function deployVesting() {
   contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
 }
 
-// MODULE:LOOTBOX
-async function deployLootbox() {
-  const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
-  const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
-  contracts.lootbox = lootboxInstance;
+// MODULE:MYSTERYBOX
+async function deployMysterybox() {
+  const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
+  const mysteryboxInstance = await mysteryboxFactory.deploy("Mysterybox", "LOOT", 100, baseTokenURI);
+  contracts.mysterybox = mysteryboxInstance;
 
-  await contracts.erc721Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
-  await contracts.erc721Random.grantRole(MINTER_ROLE, lootboxInstance.address);
-  await contracts.erc998Random.grantRole(MINTER_ROLE, lootboxInstance.address);
-  await contracts.erc1155Simple.grantRole(MINTER_ROLE, lootboxInstance.address);
+  await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+  await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+  await contracts.erc998Random.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+  await contracts.erc1155Simple.grantRole(MINTER_ROLE, mysteryboxInstance.address);
 }
 
 // MODULE:STAKING
@@ -157,7 +157,7 @@ async function deployStaking() {
 
 async function deployModules() {
   await deployVesting();
-  await deployLootbox();
+  await deployMysterybox();
   await deployStaking();
 
   // MODULE:CLAIM

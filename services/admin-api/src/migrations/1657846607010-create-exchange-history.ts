@@ -6,10 +6,10 @@ export class CreateExchangeHistory1657846607010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
       `CREATE TYPE ${ns}.exchange_event_enum AS ENUM (
-        'Claim', 
-        'Craft', 
-        'Lootbox', 
-        'Purchase', 
+        'Claim',
+        'Craft',
+        'Mysterybox',
+        'Purchase',
         'Paused',
         'Unpaused'
       );`,
@@ -60,7 +60,7 @@ export class CreateExchangeHistory1657846607010 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "lootbox_id",
+          name: "mysterybox_id",
           type: "int",
           isNullable: true,
         },
@@ -99,7 +99,7 @@ export class CreateExchangeHistory1657846607010 implements MigrationInterface {
           onDelete: "CASCADE",
         },
         {
-          columnNames: ["lootbox_id"],
+          columnNames: ["mysterybox_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.grade`,
           onDelete: "CASCADE",

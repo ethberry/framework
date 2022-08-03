@@ -18,8 +18,8 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
-    // MODULE:LOOTBOX
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOOTBOX';`);
+    // MODULE:MYSTERYBOX
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_template_enum AS ENUM (
@@ -33,8 +33,8 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
-    // MODULE:LOOTBOX
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_template_enum ADD VALUE 'LOOTBOX';`);
+    // MODULE:MYSTERYBOX
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_template_enum ADD VALUE 'MYSTERYBOX';`);
 
     const table = new Table({
       name: `${ns}.contract`,

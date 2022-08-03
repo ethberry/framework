@@ -8,7 +8,7 @@ import { TemplateEntity } from "../../../blockchain/hierarchy/template/template.
 import { ClaimEntity } from "../../claim/claim.entity";
 import { CraftEntity } from "../../craft/craft.entity";
 import { GradeEntity } from "../../grade/grade.entity";
-import { LootboxEntity } from "../../lootbox/lootbox.entity";
+import { MysteryboxEntity } from "../../mysterybox/mysterybox.entity";
 
 @Entity({ schema: ns, name: "exchange_history" })
 export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchangeHistory {
@@ -58,11 +58,11 @@ export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchange
   @ManyToOne(_type => GradeEntity)
   public grade?: GradeEntity;
 
-  // MODULE:LOOTBOX
+  // MODULE:MYSTERYBOX
   @Column({ type: "int", nullable: true })
-  public lootboxId: number | null;
+  public mysteryboxId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => LootboxEntity)
-  public lootbox?: LootboxEntity;
+  @ManyToOne(_type => MysteryboxEntity)
+  public mysterybox?: MysteryboxEntity;
 }

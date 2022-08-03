@@ -9,7 +9,7 @@ import {
   IExchangeClaim,
   IExchangeCraft,
   IExchangeGrade,
-  IExchangeLootbox,
+  IExchangeMysterybox,
   IExchangePurchase,
 } from "@framework/types";
 
@@ -23,10 +23,10 @@ export class ExchangeControllerEth {
   // @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Claim })
   @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft })
   @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade })
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Lootbox })
+  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox })
   public exchange(
     @Payload()
-    event: ILogEvent<IExchangePurchase | IExchangeCraft | IExchangeGrade | IExchangeLootbox>,
+    event: ILogEvent<IExchangePurchase | IExchangeCraft | IExchangeGrade | IExchangeMysterybox>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.log(event, context);

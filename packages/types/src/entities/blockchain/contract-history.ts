@@ -15,7 +15,7 @@ export enum ContractEventType {
   TransferSingle = "TransferSingle",
   URI = "URI",
   UnpackClaim = "UnpackClaim",
-  UnpackLootbox = "UnpackLootbox",
+  UnpackMysterybox = "UnpackMysterybox",
   Unpaused = "Unpaused",
 }
 
@@ -35,7 +35,7 @@ export interface IErc20TokenSnapshot {
   id: string;
 }
 
-export interface ILootboxUnpack {
+export interface IMysteryboxUnpack {
   collection: string;
   tokenId: string;
   templateId: string;
@@ -72,7 +72,7 @@ export interface ITokenMintRandom {
   tokenId: string;
   templateId: string;
   rarity: string;
-  lootboxId: string;
+  mysteryboxId: string;
 }
 
 export interface ITokenApprove {
@@ -135,7 +135,7 @@ export type TContractEventData =
   | IClaimRedeem
   | IClaimUnpack
   | IDefaultRoyaltyInfo
-  | ILootboxUnpack
+  | IMysteryboxUnpack
   | IErc1155TokenApprovalForAll
   | IErc1155TokenTransferBatch
   | IErc1155TokenTransferSingle

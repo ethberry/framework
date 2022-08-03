@@ -8,7 +8,7 @@ import {
   IExchangeClaim,
   IExchangeCraft,
   IExchangeGrade,
-  IExchangeLootbox,
+  IExchangeMysterybox,
   IExchangePurchase,
   TExchangeEventData,
 } from "@framework/types";
@@ -30,7 +30,7 @@ export class ExchangeServiceEth {
   ) {}
 
   public async log(
-    event: ILogEvent<IExchangePurchase | IExchangeClaim | IExchangeCraft | IExchangeGrade | IExchangeLootbox>,
+    event: ILogEvent<IExchangePurchase | IExchangeClaim | IExchangeCraft | IExchangeGrade | IExchangeMysterybox>,
     context: Log,
   ): Promise<void> {
     await this.updateHistory(event, context);
