@@ -25,13 +25,13 @@ async function deployERC20() {
   contracts.erc20Simple = erc20SimpleInstance;
 
   const erc20InactiveFactory = await ethers.getContractFactory("ERC20Simple");
-  contracts.erc20Inactive = await erc20InactiveFactory.deploy("Inactive token", "OFF20", amount);
+  contracts.erc20Inactive = await erc20InactiveFactory.deploy("ERC20 INACTIVE", "OFF20", amount);
 
   const erc20NewFactory = await ethers.getContractFactory("ERC20Simple");
-  contracts.erc20New = await erc20NewFactory.deploy("Inactive token", "OFF20", amount);
+  contracts.erc20New = await erc20NewFactory.deploy("ERC20 NEW", "NEW20", amount);
 
   const erc20BlacklistFactory = await ethers.getContractFactory("ERC20Blacklist");
-  const erc20BlacklistInstance = await erc20BlacklistFactory.deploy("Black list matters", "BLM20", amount);
+  const erc20BlacklistInstance = await erc20BlacklistFactory.deploy("ERC20 BLACKLIST", "BL20", amount);
   await erc20BlacklistInstance.blacklist(wallets[1]);
   await erc20BlacklistInstance.blacklist(wallets[2]);
   contracts.erc20Blacklist = erc20BlacklistInstance;
@@ -42,47 +42,49 @@ async function deployERC20() {
 
 async function deployERC721() {
   const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721Simple = await erc721SimpleFactory.deploy("Rune", "RUNE", royalty, baseTokenURI);
+  contracts.erc721Simple = await erc721SimpleFactory.deploy("RUNE", "GEM721", royalty, baseTokenURI);
 
   const erc721InactiveFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721Inactive = await erc721InactiveFactory.deploy("INACTIVE", "INACTIVE721", royalty, baseTokenURI);
+  contracts.erc721Inactive = await erc721InactiveFactory.deploy("ERC721 INACTIVE", "OFF721", royalty, baseTokenURI);
 
   const erc721NewFactory = await ethers.getContractFactory("ERC721Simple");
-  contracts.erc721New = await erc721NewFactory.deploy("NEW", "NEW721", royalty, baseTokenURI);
+  contracts.erc721New = await erc721NewFactory.deploy("ERC721 NEW", "NEW721", royalty, baseTokenURI);
 
   const erc721BlacklistFactory = await ethers.getContractFactory("ERC721Blacklist");
-  contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("BLACKLIST", "BLM721", royalty, baseTokenURI);
+  contracts.erc721Blacklist = await erc721BlacklistFactory.deploy("ERC721 BLACKLIST", "BL721", royalty, baseTokenURI);
 
   const ERC721UpgradeableFactory = await ethers.getContractFactory("ERC721Upgradeable");
-  contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("Skill", "SKILL", royalty, baseTokenURI);
+  contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
 
   const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
-  contracts.erc721Random = await erc721RandomFactory.deploy("Item", "ITEM", royalty, baseTokenURI);
+  contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
 }
 
 async function deployERC998() {
   const erc998SimpleFactory = await ethers.getContractFactory("ERC998Simple");
-  contracts.erc998Simple = await erc998SimpleFactory.deploy("SIMPLE", "SIMPLE998", royalty, baseTokenURI);
+  contracts.erc998Simple = await erc998SimpleFactory.deploy("ERC998 SIMPLE", "GEM998", royalty, baseTokenURI);
 
   const erc998InactiveFactory = await ethers.getContractFactory("ERC998Simple");
-  contracts.erc998Inactive = await erc998InactiveFactory.deploy("INACTIVE", "INACTIVE998", royalty, baseTokenURI);
+  contracts.erc998Inactive = await erc998InactiveFactory.deploy("ERC998 INACTIVE", "OFF998", royalty, baseTokenURI);
 
   const erc998NewFactory = await ethers.getContractFactory("ERC998Simple");
-  contracts.erc998New = await erc998NewFactory.deploy("NEW", "NEW998", royalty, baseTokenURI);
+  contracts.erc998New = await erc998NewFactory.deploy("ERC998 NEW", "NEW998", royalty, baseTokenURI);
 
   const erc998BlacklistFactory = await ethers.getContractFactory("ERC998Blacklist");
-  contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("BLACKLIST", "BLM998", royalty, baseTokenURI);
+  contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("ERC998 BLACKLIST", "BL998", royalty, baseTokenURI);
 
   const ERC998UpgradeableFactory = await ethers.getContractFactory("ERC998Upgradeable");
   contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy(
-    "UPGRADEABLE",
-    "UPGRADEABLE998",
+    "ERC998 UPGRADEABLE",
+    "LVL998",
     royalty,
     baseTokenURI,
   );
 
   const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
-  contracts.erc998Random = await erc998RandomFactory.deploy("Hero", "HERO", royalty, baseTokenURI);
+  const erc20BlacklistInstance = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
+  await erc20BlacklistInstance.whiteListChild(contracts.erc721Random.child, 5);
+  contracts.erc998Random = erc20BlacklistInstance;
 }
 
 async function deployERC1155() {
