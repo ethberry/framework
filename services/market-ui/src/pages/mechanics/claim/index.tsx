@@ -106,8 +106,7 @@ export const Claim: FC = () => {
       <List>
         {claims.map((claim, i) => (
           <ListItem key={i}>
-            <ListItemText>{claim.item.components[0]?.template?.title}</ListItemText>
-            <ListItemText>{claim.item.components[0]?.amount}</ListItemText>
+            <ListItemText sx={{ width: 0.6 }}>{claim.item.components[0]?.template?.title}</ListItemText>
             <ListItemText>{claim.claimStatus}</ListItemText>
             <ListItemSecondaryAction>
               <Tooltip title={formatMessage({ id: "form.tips.redeem" })} enterDelay={300} key={claim.id}>
