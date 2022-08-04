@@ -21,7 +21,7 @@ async function deployERC20() {
   const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
   const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);
   await erc20SimpleInstance.mint(owner.address, amount);
-  await erc20SimpleInstance.approve(contracts.exchange.address.toLowerCase(), amount);
+  await erc20SimpleInstance.approve(contracts.exchange.address, amount);
   contracts.erc20Simple = erc20SimpleInstance;
 
   const erc20InactiveFactory = await ethers.getContractFactory("ERC20Simple");
@@ -83,7 +83,7 @@ async function deployERC998() {
 
   const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
   const erc20BlacklistInstance = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
-  await erc20BlacklistInstance.whiteListChild(contracts.erc721Random.child, 5);
+  await erc20BlacklistInstance.whiteListChild(contracts.erc721Random.address, 5);
   contracts.erc998Random = erc20BlacklistInstance;
 }
 
