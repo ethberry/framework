@@ -52,7 +52,7 @@ export const Claim: FC = () => {
           enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
         }
       });
-  });
+  }, { success: false });
 
   const metaClick = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
