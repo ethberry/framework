@@ -94,5 +94,5 @@
     "test": "exit 0"
   },
   "title": "Core ETH service",
-  "version": "0.0.1"
+  "version": "2.0.0"
 }
