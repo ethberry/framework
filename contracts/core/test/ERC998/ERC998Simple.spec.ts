@@ -12,14 +12,14 @@ import {
   tokenSymbol,
 } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "./shared/tokenURI";
-import { shouldSetBaseURI } from "./shared/setBaseURI";
+import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
+import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
 
-describe("ERC721Simple", function () {
+describe("ERC998Simple", function () {
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Simple");
+    const erc721Factory = await ethers.getContractFactory("ERC998Simple");
     this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
