@@ -22,20 +22,15 @@ export const Erc998ContractDeployDialog: FC<IErc998CollectionDeployDialogProps> 
     royalty: 0,
   };
 
-  const testIdPrefix = "Erc998ContractDeployForm";
-
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      testId={testIdPrefix}
+      testId="Erc998ContractDeployForm"
       {...props}
     >
-      <SelectInput
-        name="contractTemplate"
-        options={Erc998ContractTemplate}
-      />
+      <SelectInput name="contractTemplate" options={Erc998ContractTemplate} />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

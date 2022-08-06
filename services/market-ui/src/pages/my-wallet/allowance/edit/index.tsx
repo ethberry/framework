@@ -29,14 +29,12 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
     amount: 0,
   };
 
-  const testIdPrefix = "AllowanceForm";
-
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.allowance"
-      testId={testIdPrefix}
+      testId="AllowanceForm"
       {...props}
     >
       <TokenTypeInput />

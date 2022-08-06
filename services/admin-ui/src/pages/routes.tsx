@@ -19,6 +19,7 @@ import { Settings } from "./settings";
 import { Email } from "./email";
 import { Page } from "./page";
 import { mechanics } from "./mechanics/routes";
+import { integrations } from "./integrations/routes";
 
 const routes: Array<RouteObject> = [
   {
@@ -71,6 +72,7 @@ const routes: Array<RouteObject> = [
       ...erc998Routes,
       ...erc1155Routes,
       ...mechanics,
+      ...integrations,
       {
         path: "/error/:error",
         element: <Error />,

@@ -27,14 +27,13 @@ export const PageEditDialog: FC<IEditPageDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "PageEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="PageEditForm"
       {...rest}
     >
       <TextInput name="slug" />

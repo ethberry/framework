@@ -21,16 +21,18 @@ export const Dashboard: FC = () => {
       <PageHeader message="pages.dashboard.title" />
 
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
         </Grid>
-        <Grid item xs={6}>
-          <Personal />
-          <Sections />
+        <Grid item xs={4}>
           <Mechanics />
           <Staking />
+        </Grid>
+        <Grid item xs={4}>
+          <Personal />
+          <Sections />
           <Pages />
         </Grid>
       </Grid>

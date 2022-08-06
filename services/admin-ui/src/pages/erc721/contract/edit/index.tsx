@@ -31,14 +31,13 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "Erc721ContractEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="Erc721ContractEditForm"
       {...rest}
     >
       <BlockchainInfoPopover
@@ -50,11 +49,7 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <SelectInput
-        name="contractStatus"
-        options={ContractStatus}
-        disabledOptions={[ContractStatus.NEW]}
-      />
+      <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

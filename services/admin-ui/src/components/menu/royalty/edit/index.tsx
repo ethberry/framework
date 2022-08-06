@@ -19,14 +19,12 @@ export interface IRoyaltyEditDialogProps {
 export const RoyaltyEditDialog: FC<IRoyaltyEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const testIdPrefix = "RoyaltyEditForm";
-
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      testId={testIdPrefix}
+      testId="RoyaltyEditForm"
       {...rest}
     >
       <CurrencyInput name="royalty" symbol="%" />

@@ -33,14 +33,13 @@ export const Erc1155TemplateEditDialog: FC<IErc1155TemplateEditDialogProps> = pr
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "Erc1155TemplateEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="Erc1155TemplateEditForm"
       {...rest}
     >
       <TextInput name="title" />

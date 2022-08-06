@@ -22,14 +22,12 @@ export const Erc721ContractDeployDialog: FC<IErc721CollectionDeployDialogProps> 
     royalty: 0,
   };
 
-  const testIdPrefix = "Erc721ContractDeployForm";
-
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      testId={testIdPrefix}
+      testId="Erc721ContractDeployForm"
       {...props}
     >
       <SelectInput

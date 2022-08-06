@@ -21,20 +21,15 @@ export const VestingDeployDialog: FC<IVestingDeployDialogProps> = props => {
     duration: 30,
   };
 
-  const testIdPrefix = "VestingDeployForm";
-
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      testId={testIdPrefix}
+      testId="VestingDeployForm"
       {...props}
     >
-      <SelectInput
-        name="contractTemplate"
-        options={VestingContractTemplate}
-      />
+      <SelectInput name="contractTemplate" options={VestingContractTemplate} />
       <TextInput name="account" />
       <DateInput name="startTimestamp" />
       <NumberInput name="duration" />

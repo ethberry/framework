@@ -11,6 +11,7 @@ import { Erc998Section } from "./sections/erc998";
 import { Admin } from "./sections/admin";
 import { Mechanics } from "./sections/mechanics";
 import { Staking } from "./sections/staking";
+import { ChainLink } from "./sections/chain-link";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -20,15 +21,18 @@ export const Dashboard: FC = () => {
       <PageHeader message="pages.dashboard.title" />
 
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Erc20Sections />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <Mechanics />
           <Staking />
+        </Grid>
+        <Grid item xs={4}>
+          <ChainLink />
           <Admin />
         </Grid>
       </Grid>

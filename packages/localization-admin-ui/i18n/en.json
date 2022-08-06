@@ -34,6 +34,7 @@
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
+    "fund": "Fund",
     "grantRole": "Grant role",
     "mintToken": "Mint tokens",
     "renounceRole": "Renounce role",
@@ -171,6 +172,7 @@
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
       "forgot": "Forgot password?",
+      "fund": "Fund",
       "grantRole": "Grant Role",
       "hideFilters": "Hide filters",
       "load": "Load",
@@ -247,7 +249,6 @@
       "parentIds": "Parent",
       "password": "Password",
       "penalty": "Penalty",
-      "price": "price",
       "price": "Price",
       "random": "Random",
       "rarity": "Rarity",
@@ -364,6 +365,9 @@
     "blockchain": {
       "title": "Blockchain Settings"
     },
+    "chain-link": {
+      "title": "ChainLink"
+    },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
@@ -380,6 +384,10 @@
         "settings": "Settings",
         "title": "Admin",
         "users": "Users"
+      },
+      "chain-link": {
+        "fund": "Fund",
+        "title": "ChainLink"
       },
       "erc1155": {
         "contracts": "ERC1155 Contracts",

@@ -26,14 +26,13 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
     item,
     price,
   };
-  const testIdPrefix = "CraftEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      testId={testIdPrefix}
+      testId="CraftEditForm"
       {...rest}
     >
       {id ? <SelectInput name="craftStatus" options={CraftStatus} disabledOptions={[CraftStatus.NEW]} /> : null}

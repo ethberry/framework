@@ -31,26 +31,20 @@ export const MysteryboxEditDialog: FC<IMysteryboxEditDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "MysteryboxEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="MysteryboxEditForm"
       {...rest}
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <PriceInput prefix="item" multiple disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
-      {id ? (
-        <SelectInput
-          name="mysteryboxStatus"
-          options={MysteryboxStatus}
-        />
-      ) : null}
+      {id ? <SelectInput name="mysteryboxStatus" options={MysteryboxStatus} /> : null}
       <AvatarInput name="imageUrl" />
     </FormDialog>
   );

@@ -28,14 +28,12 @@ export const Erc998CompositionCreateDialog: FC<IErc998CompositionCreateDialogPro
     amount: 1,
   };
 
-  const testIdPrefix = "Erc998CompositionCreateForm";
-
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={"dialogs.create"}
-      testId={testIdPrefix}
+      testId="Erc998CompositionCreateForm"
       {...rest}
     >
       <ContractInput

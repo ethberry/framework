@@ -27,14 +27,13 @@ export const DropEditDialog: FC<IDropEditDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "DropEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="DropEditForm"
       {...rest}
     >
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />

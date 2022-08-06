@@ -22,14 +22,12 @@ export const Erc20ContractDeployDialog: FC<IErc20TokenDeployDialogProps> = props
     cap: constants.WeiPerEther.mul(1e6).toString(),
   };
 
-  const testIdPrefix = "Erc20ContractDeployForm";
-
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      testId={testIdPrefix}
+      testId="Erc20ContractDeployForm"
       {...props}
     >
       <SelectInput

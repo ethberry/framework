@@ -19,14 +19,12 @@ export interface IBlacklistAddDialogProps {
 export const AccessListBlacklistDialog: FC<IBlacklistAddDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const testIdPrefix = "AccessListBlacklistForm";
-
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.blacklist"
-      testId={testIdPrefix}
+      testId="AccessListBlacklistForm"
       {...rest}
     >
       <TextInput name="account" />

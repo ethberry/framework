@@ -42,14 +42,12 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
     comment,
   };
 
-  const testIdPrefix = "UserEditForm";
-
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.edit"
-      testId={testIdPrefix}
+      testId="UserEditForm"
       {...rest}
     >
       <TextInput name="email" autoComplete="username" onClick={onClick} />
@@ -63,10 +61,7 @@ export const UserEditDialog: FC<IUserEditDialogProps> = props => {
       <SelectInput multiple name="userRoles" options={UserRole} />
       <SelectInput name="userStatus" options={UserStatus} />
       <TextInput name="comment" multiline />
-      <StaticInput
-        name="createdAt"
-        value={format(parseISO(createdAt), "yyyy MMM dd hh:mm")}
-      />
+      <StaticInput name="createdAt" value={format(parseISO(createdAt), "yyyy MMM dd hh:mm")} />
     </FormDialog>
   );
 };

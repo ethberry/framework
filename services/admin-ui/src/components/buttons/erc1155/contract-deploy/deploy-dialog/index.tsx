@@ -20,20 +20,15 @@ export const Erc1155ContractDeployDialog: FC<IErc1155TokenDeployDialogProps> = p
     royalty: 0,
   };
 
-  const testIdPrefix = "Erc1155ContractDeployForm";
-
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      testId={testIdPrefix}
+      testId="Erc1155ContractDeployForm"
       {...props}
     >
-      <SelectInput
-        name="contractTemplate"
-        options={Erc1155ContractTemplate}
-      />
+      <SelectInput name="contractTemplate" options={Erc1155ContractTemplate} />
       <TextInput name="baseTokenURI" />
       <CurrencyInput name="royalty" symbol="%" />
     </FormDialog>

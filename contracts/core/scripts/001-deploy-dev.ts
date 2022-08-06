@@ -36,8 +36,11 @@ async function deployERC20() {
   await erc20BlacklistInstance.blacklist(wallets[2]);
   contracts.erc20Blacklist = erc20BlacklistInstance;
 
-  const erc20usdtFactory = await ethers.getContractFactory("TetherToken");
-  contracts.erc20Usdt = await erc20usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
+  const erc20UsdtFactory = await ethers.getContractFactory("TetherToken");
+  contracts.erc20Usdt = await erc20UsdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
+
+  const erc20LinkFactory = await ethers.getContractFactory("LinkToken");
+  contracts.erc20Link = await erc20LinkFactory.deploy();
 }
 
 async function deployERC721() {

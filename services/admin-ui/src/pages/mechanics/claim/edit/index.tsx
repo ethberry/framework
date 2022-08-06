@@ -27,14 +27,13 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "ClaimEditDialog";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="ClaimEditDialog"
       {...rest}
     >
       <TextInput name="account" />

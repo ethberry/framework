@@ -33,23 +33,20 @@ export const Erc998TemplateEditDialog: FC<ITemplateEditDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "Erc998TemplateEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="Erc998TemplateEditForm"
       {...rest}
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
       <NumberInput name="amount" />
-      {id ? (
-        <SelectInput name="templateStatus" options={TemplateStatus} />
-      ) : null}
+      {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
         name="contractId"
         controller="contract"

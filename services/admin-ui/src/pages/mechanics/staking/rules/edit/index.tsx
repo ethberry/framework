@@ -35,14 +35,13 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "StakingEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId={testIdPrefix}
+      testId="StakingEditForm"
       {...rest}
     >
       <TextInput name="title" />
