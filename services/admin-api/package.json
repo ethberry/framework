@@ -125,6 +125,6 @@
     "test": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles",
     "typeorm": "cross-env NODE_ENV=${NODE_ENV:=development} ts-node ./node_modules/.bin/typeorm --config src/ormconfig.ts"
   },
-  "title": "Gemunion Framework 2.0 - Admin API",
+  "title": "Gemunion Framework - Admin API",
   "version": "2.0.0"
 }

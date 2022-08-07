@@ -137,6 +137,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "exit 0"
   },
-  "title": "Gemunion Framework 2.0 - Admin UI",
+  "title": "Gemunion Framework - Admin UI",
   "version": "2.0.0"
 }

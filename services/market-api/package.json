@@ -117,6 +117,6 @@
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
     "test": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests"
   },
-  "title": "Gemunion Framework 2.0 - Public API",
+  "title": "Gemunion Framework - Public API",
   "version": "2.0.0"
 }

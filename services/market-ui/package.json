@@ -139,6 +139,6 @@
     "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
     "test": "exit 0"
   },
-  "title": "Gemunion Framework 2.0 - Market UI",
+  "title": "Gemunion Framework - Market UI",
   "version": "2.0.0"
 }
