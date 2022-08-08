@@ -118,7 +118,11 @@ export class GradeService {
       case GradeStrategy.LINEAR:
         return BigNumber.from(amount).mul(level);
       case GradeStrategy.EXPONENTIAL:
-        return BigNumber.from(amount).mul((1 + gradeEntity.growthRate / 100) ** level);
+        // eslint-disable-next-line no-case-declarations
+        const exp = (1 + gradeEntity.growthRate / 100) ** level;
+        // eslint-disable-next-line no-case-declarations
+        const [whole = "", decimals = ""] = exp.toString().split(".");
+        return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
       default:
         throw new BadRequestException("unknownStrategy");
     }
