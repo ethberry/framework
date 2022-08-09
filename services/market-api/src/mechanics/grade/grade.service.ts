@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
-import { ContractTemplate, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
+import { ContractFeatures, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
 import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignGradeDto } from "./interfaces";
@@ -68,9 +68,9 @@ export class GradeService {
       throw new NotFoundException("gradeNotFound");
     }
 
-    const { contractTemplate } = tokenEntity.template.contract;
-    if (!(contractTemplate === ContractTemplate.UPGRADEABLE || contractTemplate === ContractTemplate.RANDOM)) {
-      throw new BadRequestException("incompatibleContractTemplate");
+    const { contractFeatures } = tokenEntity.template.contract;
+    if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
+      throw new BadRequestException("featureIsNotSupported");
     }
 
     const nonce = utils.randomBytes(32);
@@ -111,20 +111,17 @@ export class GradeService {
     );
   }
 
-  public getMultiplier(level: number, amount: string, gradeEntity: GradeEntity) {
-    switch (gradeEntity.gradeStrategy) {
-      case GradeStrategy.FLAT:
-        return BigNumber.from(amount);
-      case GradeStrategy.LINEAR:
-        return BigNumber.from(amount).mul(level);
-      case GradeStrategy.EXPONENTIAL:
-        // eslint-disable-next-line no-case-declarations
-        const exp = (1 + gradeEntity.growthRate / 100) ** level;
-        // eslint-disable-next-line no-case-declarations
-        const [whole = "", decimals = ""] = exp.toString().split(".");
-        return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
-      default:
-        throw new BadRequestException("unknownStrategy");
+  public getMultiplier(level: number, amount: string, { gradeStrategy, growthRate }: GradeEntity) {
+    if (gradeStrategy === GradeStrategy.FLAT) {
+      return BigNumber.from(amount);
+    } else if (gradeStrategy === GradeStrategy.LINEAR) {
+      return BigNumber.from(amount).mul(level);
+    } else if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
+      const exp = (1 + growthRate / 100) ** level;
+      const [whole = "", decimals = ""] = exp.toString().split(".");
+      return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
+    } else {
+      throw new BadRequestException("unknownStrategy");
     }
   }
 }

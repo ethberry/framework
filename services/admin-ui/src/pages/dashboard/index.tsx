@@ -12,6 +12,7 @@ import { Admin } from "./sections/admin";
 import { Mechanics } from "./sections/mechanics";
 import { Staking } from "./sections/staking";
 import { ChainLink } from "./sections/chain-link";
+import { NativeSections } from "./sections/native";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -22,6 +23,7 @@ export const Dashboard: FC = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={4}>
+          <NativeSections />
           <Erc20Sections />
           <Erc721Section />
           <Erc998Section />

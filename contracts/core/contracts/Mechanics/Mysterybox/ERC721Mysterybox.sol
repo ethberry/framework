@@ -71,8 +71,4 @@ contract ERC721Mysterybox is IERC721Mysterybox, ERC721Simple, ExchangeUtils {
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Mysterybox).interfaceId || super.supportsInterface(interfaceId);
   }
-
-  function getInterface() public pure returns (bytes4) {
-    return type(IERC721Mysterybox).interfaceId;
-  }
 }

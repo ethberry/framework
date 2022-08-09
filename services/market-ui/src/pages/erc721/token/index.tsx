@@ -3,7 +3,7 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ContractTemplate, ITemplate, IToken } from "@framework/types";
+import { ContractFeatures, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -53,8 +53,7 @@ export const Erc721Token: FC = () => {
             <TokenSellButton token={selected} />
           </Paper>
 
-          {selected.template?.contract?.contractTemplate === ContractTemplate.UPGRADEABLE ||
-          selected.template?.contract?.contractTemplate === ContractTemplate.RANDOM ? (
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <Paper className={classes.paper}>
               <Typography>
                 <FormattedMessage id="pages.erc721-token.level" values={selected.attributes} />

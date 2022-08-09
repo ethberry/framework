@@ -31,7 +31,7 @@ contract ERC998RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC998Upg
 
   function mintCommon(address to, uint256 templateId)
   external
-    override(IERC721Simple, ERC998Upgradeable)
+    override(ERC998Upgradeable)
     onlyRole(MINTER_ROLE)
   {
     require(templateId != 0, "ERC998RandomHardhat: wrong type");

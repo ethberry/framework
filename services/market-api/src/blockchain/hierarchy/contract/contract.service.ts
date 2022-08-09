@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
 import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
@@ -57,7 +57,7 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractTemplate = [], contractType = [] } = dto;
+    const { contractStatus = [], contractFeatures = [], contractType = [] } = dto;
 
     const where = {
       contractStatus: ContractStatus.ACTIVE,
@@ -75,9 +75,10 @@ export class ContractService {
       });
     }
 
-    if (contractTemplate.length) {
+    if (contractFeatures.length) {
       Object.assign(where, {
-        contractTemplate: In(contractTemplate),
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: ArrayOverlap(contractFeatures),
       });
     }
 

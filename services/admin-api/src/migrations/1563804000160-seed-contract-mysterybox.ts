@@ -24,7 +24,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         base_token_uri,
         contract_status,
         contract_type,
-        contract_template,
+        contract_features,
         contract_module,
         created_at,
         updated_at
@@ -41,7 +41,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'MYSTERYBOX',
+        '{MYSTERYBOX}',
         'MYSTERYBOX',
         '${currentDateTime}',
         '${currentDateTime}'

@@ -37,8 +37,8 @@ contract ERC721Blacklist is ERC721Simple, BlackList {
     address to,
     uint256 amount
   ) internal override {
-    require(!this.isBlacklisted(from), "ERC721BlackList: sender is BlackListed");
-    require(!this.isBlacklisted(to), "ERC721BlackList: receiver is BlackListed");
+    require(!this.isBlacklisted(from), "ERC721: sender is blacklisted");
+    require(!this.isBlacklisted(to), "ERC721: receiver is blacklisted");
     super._beforeTokenTransfer(from, to, amount);
   }
 }

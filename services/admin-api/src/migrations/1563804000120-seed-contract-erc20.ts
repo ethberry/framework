@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
@@ -35,27 +34,10 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_template,
+        contract_features,
         created_at,
         updated_at
       ) VALUES (
-        1,
-        '${constants.AddressZero}',
-        '${chainId}',
-        'Native token (ETH)',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'Ethereum',
-        'ETH',
-        18,
-        0,
-        '',
-        'ACTIVE',
-        'ERC20',
-        'NATIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         2,
         '${erc20TokenSimpleAddress}',
         '${chainId}',
@@ -69,7 +51,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -86,7 +68,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'INACTIVE',
         'ERC20',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -103,7 +85,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'NEW',
         'ERC20',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -120,7 +102,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'BLACKLIST',
+        '{BLACKLIST}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -137,7 +119,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'EXTERNAL',
+        '{EXTERNAL}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

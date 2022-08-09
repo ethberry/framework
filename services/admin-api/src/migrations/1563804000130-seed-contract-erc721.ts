@@ -29,7 +29,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_template,
+        contract_features,
         created_at,
         updated_at
       ) VALUES (
@@ -45,7 +45,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -61,7 +61,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC721',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -77,7 +77,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC721',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -93,7 +93,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'BLACKLIST',
+        '{BLACKLIST}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -109,7 +109,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'UPGRADEABLE',
+        '{UPGRADEABLE}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -125,7 +125,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        'RANDOM',
+        '{UPGRADEABLE,RANDOM}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

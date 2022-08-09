@@ -22,9 +22,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
 
     await queryRunner.query(`
-      CREATE TYPE ${ns}.contract_template_enum AS ENUM (
-        'UNKNOWN',
-        'SIMPLE',
+      CREATE TYPE ${ns}.contract_features_enum AS ENUM (
         'BLACKLIST',
         'EXTERNAL',
         'NATIVE',
@@ -34,7 +32,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
     `);
 
     // MODULE:MYSTERYBOX
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_template_enum ADD VALUE 'MYSTERYBOX';`);
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'MYSTERYBOX';`);
 
     const table = new Table({
       name: `${ns}.contract`,
@@ -100,9 +98,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
           default: "'NATIVE'",
         },
         {
-          name: "contract_template",
-          type: `${ns}.contract_template_enum`,
-          default: "'UNKNOWN'",
+          name: "contract_features",
+          type: `${ns}.contract_features_enum`,
+          isArray: true,
         },
         {
           name: "contract_module",
@@ -126,6 +124,6 @@ export class CreateContract1563804000100 implements MigrationInterface {
   public async down(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.dropTable(`${ns}.contract`);
     await queryRunner.query(`DROP TYPE ${ns}.contract_status_enum;`);
-    await queryRunner.query(`DROP TYPE ${ns}.contract_template_enum;`);
+    await queryRunner.query(`DROP TYPE ${ns}.contract_features_enum;`);
   }
 }

@@ -11,15 +11,16 @@ export enum ContractStatus {
   NEW = "NEW",
 }
 
-export enum Erc20ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBCS
-  "BLACKLIST" = "BLACKLIST", // ACBCS + BLACKLIST
-  "EXTERNAL" = "EXTERNAL", // any 3rd party token
-  "NATIVE" = "NATIVE", // ETH
+export enum NativeContractFeatures {
+  "NATIVE" = "NATIVE",
 }
 
-export enum Erc721ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBER
+export enum Erc20ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "EXTERNAL" = "EXTERNAL",
+}
+
+export enum Erc721ContractFeatures {
   "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
   "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
@@ -27,25 +28,21 @@ export enum Erc721ContractTemplate {
   "MYSTERYBOX" = "MYSTERYBOX", // ACBER + METADATA + Unpack
 }
 
-export enum Erc998ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBER
+export enum Erc998ContractFeatures {
   "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
   "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
   "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
 }
 
-export enum Erc1155ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBS
-  "BLACKLIST" = "BLACKLIST", // ACBS + BLACKLIST
+export enum Erc1155ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
 }
 
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
-export enum ContractTemplate {
-  "UNKNOWN" = "UNKNOWN",
-  "SIMPLE" = "SIMPLE",
-  "BLACKLIST" = "BLACKLIST",
-  "EXTERNAL" = "EXTERNAL",
+export enum ContractFeatures {
   "NATIVE" = "NATIVE",
+  "EXTERNAL" = "EXTERNAL",
+  "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
   // MODULE:MYSTERYBOX
@@ -61,7 +58,7 @@ export interface IContract extends IDeployable, ISearchable {
   baseTokenURI: string;
   contractStatus: ContractStatus;
   contractType: TokenType;
-  contractTemplate: ContractTemplate;
+  contractFeatures: Array<ContractFeatures>;
   contractModule: ModuleType;
   templates: Array<ITemplate>;
   history?: Array<IContractHistory>;

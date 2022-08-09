@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { ContractStatus, ContractTemplate, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
 
 export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @ApiPropertyOptional({
@@ -30,14 +30,14 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   public contractType: Array<TokenType>;
 
   @ApiPropertyOptional({
-    enum: ContractTemplate,
+    enum: ContractFeatures,
     isArray: true,
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<ContractTemplate>)
-  @IsEnum(ContractTemplate, { each: true, message: "badInput" })
-  public contractTemplate: Array<ContractTemplate>;
+  @Transform(({ value }) => value as Array<ContractFeatures>)
+  @IsEnum(ContractFeatures, { each: true, message: "badInput" })
+  public contractFeatures: Array<ContractFeatures>;
 
   @ApiPropertyOptional({
     enum: ModuleType,

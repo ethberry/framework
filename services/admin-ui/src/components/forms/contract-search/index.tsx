@@ -11,16 +11,16 @@ interface IContractSearchFormProps {
   onSubmit: (values: IContractSearchDto) => Promise<void>;
   initialValues: IContractSearchDto;
   open: boolean;
-  contractTemplateOptions: Record<string, string>;
+  contractFeaturesOptions: Record<string, string>;
 }
 
 export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractTemplateOptions } = props;
+  const { onSubmit, initialValues, open, contractFeaturesOptions } = props;
 
   const classes = useStyles();
 
-  const { query, contractStatus, contractTemplate } = initialValues;
-  const fixedValues = { query, contractStatus, contractTemplate };
+  const { query, contractStatus, contractFeatures } = initialValues;
+  const fixedValues = { query, contractStatus, contractFeatures };
 
   return (
     <FormWrapper
@@ -42,7 +42,7 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
             <SelectInput name="contractStatus" options={ContractStatus} multiple />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput name="contractTemplate" options={contractTemplateOptions} multiple />
+            <SelectInput name="contractFeatures" options={contractFeaturesOptions} multiple />
           </Grid>
         </Grid>
       </Collapse>

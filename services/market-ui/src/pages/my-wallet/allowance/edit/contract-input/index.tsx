@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, Erc20ContractTemplate, TokenType } from "@framework/types";
+import { ContractStatus, TokenType } from "@framework/types";
 
 export const ContractInput: FC = () => {
   const tokenType = useWatch({ name: "tokenType" });
@@ -21,11 +21,6 @@ export const ContractInput: FC = () => {
           name="contractId"
           controller="contracts"
           data={{
-            contractTemplate: [
-              Erc20ContractTemplate.EXTERNAL,
-              Erc20ContractTemplate.BLACKLIST,
-              Erc20ContractTemplate.SIMPLE,
-            ],
             contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC20],
           }}

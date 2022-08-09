@@ -29,7 +29,7 @@ import { CraftEntity } from "./mechanics/craft/craft.entity";
 import { StakingRulesEntity } from "./mechanics/staking/rules/rules.entity";
 import { PageEntity } from "./page/page.entity";
 import { GradeEntity } from "./mechanics/grade/grade.entity";
-import { CompositionEntity } from "./erc998/composition/composition.entity";
+import { CompositionEntity } from "./tokens/erc998/composition/composition.entity";
 import { DropEntity } from "./mechanics/drop/drop.entity";
 import { VestingEntity } from "./mechanics/vesting/vesting.entity";
 
@@ -40,6 +40,7 @@ import { CreateOtp1563804000060 } from "./migrations/1563804000060-create-otp";
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
 import { CreateContract1563804000100 } from "./migrations/1563804000100-create-contract";
+import { SeedContractNativeAt1563804000110 } from "./migrations/1563804000110-seed-contract-native";
 import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-seed-contract-erc20";
 import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-contract-erc721";
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
@@ -188,6 +189,7 @@ const config: PostgresConnectionOptions = {
     CreateAsset1563804000100,
 
     CreateContract1563804000100,
+    SeedContractNativeAt1563804000110,
     SeedContractErc20At1563804000120,
     SeedContractErc721At1563804000130,
     SeedContractErc998At1563804000140,

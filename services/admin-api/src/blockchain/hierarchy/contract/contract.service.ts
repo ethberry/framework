@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, In, ArrayOverlap, Repository } from "typeorm";
 
 import { ContractStatus, IContractAutocompleteDto, IContractSearchDto, TokenType } from "@framework/types";
 
@@ -16,7 +16,7 @@ export class ContractService {
   ) {}
 
   public async search(dto: IContractSearchDto, contractType: TokenType): Promise<[Array<ContractEntity>, number]> {
-    const { query, contractStatus, contractTemplate, skip, take } = dto;
+    const { query, contractStatus, contractFeatures, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
@@ -34,13 +34,13 @@ export class ContractService {
       }
     }
 
-    if (contractTemplate) {
-      if (contractTemplate.length === 1) {
-        queryBuilder.andWhere("contract.contractTemplate = :contractTemplate", {
-          contractTemplate: contractTemplate[0],
+    if (contractFeatures) {
+      if (contractFeatures.length === 1) {
+        queryBuilder.andWhere(":contractFeature = ANY(contract.contractFeatures)", {
+          contractFeature: contractFeatures[0],
         });
       } else {
-        queryBuilder.andWhere("contract.contractTemplate IN(:...contractTemplate)", { contractTemplate });
+        queryBuilder.andWhere("contract.contractFeatures && :contractFeatures", { contractFeatures });
       }
     }
 
@@ -69,7 +69,7 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractTemplate = [], contractType = [], contractModule = [] } = dto;
+    const { contractStatus = [], contractFeatures = [], contractType = [], contractModule = [] } = dto;
 
     const where = {};
 
@@ -85,9 +85,10 @@ export class ContractService {
       });
     }
 
-    if (contractTemplate.length) {
+    if (contractFeatures.length) {
       Object.assign(where, {
-        contractTemplate: In(contractTemplate),
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: ArrayOverlap(contractFeatures),
       });
     }
 

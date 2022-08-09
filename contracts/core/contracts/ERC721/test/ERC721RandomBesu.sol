@@ -31,7 +31,7 @@ contract ERC721RandomBesu is IERC721Random, ERC721ChainLinkBesu, ERC721Upgradeab
 
   function mintCommon(address to, uint256 templateId)
     public
-    override(IERC721Simple, ERC721Upgradeable)
+    override(ERC721Upgradeable)
     onlyRole(MINTER_ROLE)
   {
     require(templateId != 0, "ERC721RandomHardhat: wrong type");

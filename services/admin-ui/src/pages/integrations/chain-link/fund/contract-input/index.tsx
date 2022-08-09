@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, Erc721ContractTemplate, TokenType } from "@framework/types";
+import { ContractStatus, Erc721ContractFeatures, TokenType } from "@framework/types";
 
 export const ContractInput: FC = () => {
   const form = useFormContext<any>();
@@ -13,7 +13,7 @@ export const ContractInput: FC = () => {
       controller="contracts"
       data={{
         contractType: [TokenType.ERC721, TokenType.ERC998],
-        contractTemplate: [Erc721ContractTemplate.RANDOM],
+        contractFeatures: [Erc721ContractFeatures.RANDOM],
         contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       }}
       onChange={(_event: ChangeEvent<unknown>, option: any | null): void => {

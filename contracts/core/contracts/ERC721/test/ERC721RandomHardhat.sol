@@ -31,7 +31,7 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
 
   function mintCommon(address to, uint256 templateId)
     public
-    override(IERC721Simple, ERC721Upgradeable)
+    override(ERC721Upgradeable)
     onlyRole(MINTER_ROLE)
   {
     require(templateId != 0, "ERC721RandomHardhat: wrong type");
@@ -82,9 +82,5 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
-  }
-
-  function getInterface() public pure returns (bytes4) {
-    return type(IERC721Random).interfaceId;
   }
 }

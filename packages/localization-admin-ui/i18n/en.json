@@ -55,16 +55,17 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
-    "contractTemplate": {
-      "BLACKLIST": "Blacklist",
-      "CLIFF": "Cliff",
-      "EXTERNAL": "External",
-      "LINEAR": "Linear",
-      "MYSTERYBOX": "Mysterybox",
+    "contractFeatures": {
       "NATIVE": "Native",
-      "RANDOM": "Random",
-      "SIMPLE": "Simple",
+      "BLACKLIST": "Blacklist",
+      "EXTERNAL": "External",
+      "MYSTERYBOX": "Mysterybox",
       "UPGRADEABLE": "Upgradeable"
+    },
+    "contractTemplate": {
+      "CLIFF": "Cliff",
+      "LINEAR": "Linear",
+      "GRADED": "Graded"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -146,11 +147,6 @@
     "userStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
-    },
-    "vestingContractTemplate": {
-      "CLIFF": "CLIFF",
-      "GRADED": "GRADED",
-      "LINEAR": "LINEAR"
     }
   },
   "errors": {
@@ -201,8 +197,8 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "contractFeatures": "Features",
       "DUMMY": "Dummy",
-      "VestingContractTemplate": "Template",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -398,6 +394,10 @@
         "contracts": "ERC20 Contracts",
         "title": "ERC20"
       },
+      "native": {
+        "contracts": "Native Tokens",
+        "title": "NATIVE"
+      },
       "erc721": {
         "contracts": "ERC721 Contracts",
         "templates": "ERC721 Templates",
@@ -443,6 +443,9 @@
     "erc20-contracts": {
       "snapshot": "Make snapshot",
       "title": "ERC20 Contracts"
+    },
+    "native-contracts": {
+      "title": "Native Tokens"
     },
     "erc721-contracts": {
       "royalty": "Royalty",
