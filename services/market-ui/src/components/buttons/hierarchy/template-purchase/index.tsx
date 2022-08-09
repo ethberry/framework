@@ -1,14 +1,15 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
+import { useSearchParams } from "react-router-dom";
 
 import { IServerSignature } from "@gemunion/types-collection";
 import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+
 import { getEthPrice } from "../../../../utils/money";
 
 interface ITemplatePurchaseButtonProps {
@@ -18,6 +19,8 @@ interface ITemplatePurchaseButtonProps {
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
   const { template } = props;
 
+  const [searchParams] = useSearchParams();
+
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -26,6 +29,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           nonce: utils.arrayify(sign.nonce),
           externalId: template.id,
           expiresAt: sign.expiresAt,
+          referral: searchParams.get("referral") ?? constants.AddressZero,
         },
         {
           tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
@@ -58,6 +62,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         data: {
           templateId: template.id,
           account,
+          referral: searchParams.get("referral") ?? constants.AddressZero,
         },
       },
       web3Context,

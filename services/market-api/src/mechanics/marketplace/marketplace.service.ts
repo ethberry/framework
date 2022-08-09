@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { BigNumber, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
 import { TokenType } from "@framework/types";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignTemplateDto } from "./interfaces";
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
@@ -14,7 +14,7 @@ export class MarketplaceService {
   constructor(private readonly templateService: TemplateService, private readonly signerService: SignerService) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
-    const { templateId, account } = dto;
+    const { templateId, account, referral = constants.AddressZero } = dto;
     const templateEntity = await this.templateService.findOne(
       { id: templateId },
       {
@@ -43,24 +43,24 @@ export class MarketplaceService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
-    const signature = await this.getSignature(nonce, account, expiresAt, templateEntity);
-
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
-  }
-
-  public async getSignature(
-    nonce: Uint8Array,
-    account: string,
-    expiresAt: number,
-    templateEntity: TemplateEntity,
-  ): Promise<string> {
-    return this.signerService.getOneToManySignature(
+    const signature = await this.getSignature(
       account,
       {
         nonce,
         externalId: templateEntity.id,
         expiresAt,
+        referral,
       },
+      templateEntity,
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+  }
+
+  public async getSignature(account: string, params: IParams, templateEntity: TemplateEntity): Promise<string> {
+    return this.signerService.getOneToManySignature(
+      account,
+      params,
       {
         tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
         token: templateEntity.contract.address,

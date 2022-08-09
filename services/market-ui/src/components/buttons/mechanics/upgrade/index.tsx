@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api-firebase";
@@ -68,6 +68,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
               nonce: utils.arrayify(sign.nonce),
               externalId: grade.id,
               expiresAt: sign.expiresAt,
+              referral: constants.AddressZero,
             },
             {
               tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),

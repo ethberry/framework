@@ -4,7 +4,7 @@ import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import { ApiError } from "@gemunion/provider-api-firebase";
 import { useApiCall } from "@gemunion/react-hooks";
@@ -13,7 +13,6 @@ import { IPaginationResult } from "@gemunion/types-collection";
 import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ClaimStatus, IClaim, TokenType } from "@framework/types";
-
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 export const Claim: FC = () => {
@@ -37,22 +36,25 @@ export const Claim: FC = () => {
     { success: false, error: false },
   );
 
-  const fetchClaim = useMetamask(async (web3Context: Web3ContextType): Promise<void> => {
-    return fn(undefined, web3Context)
-      .then((json: IPaginationResult<IClaim>) => {
-        setClaims(json.rows);
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 404) {
-          setClaims([]);
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
-  }, { success: false });
+  const fetchClaim = useMetamask(
+    async (web3Context: Web3ContextType): Promise<void> => {
+      return fn(undefined, web3Context)
+        .then((json: IPaginationResult<IClaim>) => {
+          setClaims(json.rows);
+        })
+        .catch((e: ApiError) => {
+          if (e.status === 404) {
+            setClaims([]);
+          } else if (e.status) {
+            enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
+          } else {
+            console.error(e);
+            enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
+          }
+        });
+    },
+    { success: false },
+  );
 
   const metaClick = useMetamask((claim: IClaim, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -61,6 +63,7 @@ export const Claim: FC = () => {
         nonce: utils.arrayify(claim.nonce),
         externalId: claim.id,
         expiresAt: Math.ceil(new Date(claim.endTimestamp).getTime() / 1000),
+        referral: constants.AddressZero,
       },
       claim.item?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),

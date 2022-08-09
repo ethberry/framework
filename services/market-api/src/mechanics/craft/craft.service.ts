@@ -1,11 +1,11 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { utils } from "ethers";
+import { constants, utils } from "ethers";
 
 import { ISearchDto, IServerSignature } from "@gemunion/types-collection";
 import { CraftStatus, TokenType } from "@framework/types";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";
@@ -98,24 +98,24 @@ export class CraftService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
-    const signature = await this.getSignature(nonce, userEntity.wallet, expiresAt, craftEntity);
-
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
-  }
-
-  public async getSignature(
-    nonce: Uint8Array,
-    account: string,
-    expiresAt: number,
-    craftEntity: CraftEntity,
-  ): Promise<string> {
-    return this.signerService.getManyToManySignature(
-      account,
+    const signature = await this.getSignature(
+      userEntity.wallet,
       {
         nonce,
         externalId: craftEntity.id,
         expiresAt,
+        referral: constants.AddressZero,
       },
+      craftEntity,
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+  }
+
+  public async getSignature(account: string, params: IParams, craftEntity: CraftEntity): Promise<string> {
+    return this.signerService.getManyToManySignature(
+      account,
+      params,
       craftEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

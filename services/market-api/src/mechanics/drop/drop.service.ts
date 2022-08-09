@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
 
 import { IPaginationDto, IServerSignature } from "@gemunion/types-collection";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
 
 import { ISignDropDto } from "./interfaces";
@@ -80,7 +80,7 @@ export class DropService {
   }
 
   public async sign(dto: ISignDropDto): Promise<IServerSignature> {
-    const { dropId, account } = dto;
+    const { dropId, account, referral } = dto;
 
     const dropEntity = await this.findOneWithRelations({ id: dropId });
 
@@ -109,24 +109,24 @@ export class DropService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = Math.ceil(new Date(dropEntity.endTimestamp).getTime() / 1000);
-    const signature = await this.getSignature(nonce, account, expiresAt, dropEntity);
-
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
-  }
-
-  public async getSignature(
-    nonce: Uint8Array,
-    account: string,
-    expiresAt: number,
-    dropEntity: DropEntity,
-  ): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    const signature = await this.getSignature(
       account,
       {
         nonce,
         externalId: dropEntity.id,
         expiresAt,
+        referral,
       },
+      dropEntity,
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+  }
+
+  public async getSignature(account: string, params: IParams, dropEntity: DropEntity): Promise<string> {
+    return this.signerService.getManyToManySignature(
+      account,
+      params,
       dropEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

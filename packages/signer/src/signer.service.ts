@@ -40,6 +40,7 @@ export class SignerService {
           { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
+          { name: "referral", type: "address" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },
@@ -84,6 +85,7 @@ export class SignerService {
           { name: "nonce", type: "bytes32" },
           { name: "externalId", type: "uint256" },
           { name: "expiresAt", type: "uint256" },
+          { name: "referral", type: "address" },
         ],
         Asset: [
           { name: "tokenType", type: "uint256" },

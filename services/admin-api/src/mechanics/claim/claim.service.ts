@@ -1,10 +1,10 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { utils } from "ethers";
+import { constants, utils } from "ethers";
 
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { IClaimItemCreateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
@@ -122,7 +122,17 @@ export class ClaimService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
-    const signature = await this.getSignature(nonce, account, expiresAt, claimEntity);
+    const signature = await this.getSignature(
+      account,
+      {
+        nonce,
+        externalId: claimEntity.id,
+        expiresAt,
+        referral: constants.AddressZero,
+      },
+
+      claimEntity,
+    );
 
     Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, account, endTimestamp });
     return claimEntity.save();
@@ -142,19 +152,10 @@ export class ClaimService {
     return this.claimEntityRepository.delete(where);
   }
 
-  public async getSignature(
-    nonce: Uint8Array,
-    account: string,
-    expiresAt: number,
-    claimEntity: ClaimEntity,
-  ): Promise<string> {
+  public async getSignature(account: string, params: IParams, claimEntity: ClaimEntity): Promise<string> {
     return this.signerService.getManyToManySignature(
       account,
-      {
-        nonce,
-        externalId: claimEntity.id,
-        expiresAt,
-      },
+      params,
       claimEntity.item.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract.address,

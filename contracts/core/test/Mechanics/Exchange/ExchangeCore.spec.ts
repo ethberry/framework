@@ -63,6 +63,54 @@ describe("ExchangeCore", function () {
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("purchase", function () {
+    describe("SUCCESS", function () {
+      it("should purchase", async function () {
+        const signature = await generateSignature({
+          account: this.receiver.address,
+          params,
+          item: {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
+          price: [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+        });
+
+        await erc20Instance.mint(this.receiver.address, amount);
+        await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+
+        const tx1 = exchangeInstance.connect(this.receiver).purchase(
+          params,
+          {
+            tokenType: 2,
+            token: erc721Instance.address,
+            tokenId,
+            amount,
+          },
+          [
+            {
+              tokenType: 1,
+              token: erc20Instance.address,
+              tokenId,
+              amount,
+            },
+          ],
+          this.owner.address,
+          signature,
+        );
+
+        await expect(tx1).to.emit(exchangeInstance, "Purchase");
+      });
+    });
+
     describe("ERROR", function () {
       it("should fail: duplicate mint", async function () {
         const signature = await generateSignature({
@@ -207,6 +255,7 @@ describe("ExchangeCore", function () {
             nonce,
             externalId,
             expiresAt,
+            referral: ethers.constants.AddressZero,
           },
           item: {
             tokenType: 2,
@@ -229,6 +278,7 @@ describe("ExchangeCore", function () {
             nonce,
             externalId,
             expiresAt,
+            referral: ethers.constants.AddressZero,
           },
           {
             tokenType: 2,

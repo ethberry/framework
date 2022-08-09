@@ -23,8 +23,8 @@ contract ERC998Full is ERC998UpgradeableRandom, BlackList {
     address to,
     uint256 amount
   ) internal override {
-    require(!this.isBlacklisted(from), "ERC998: sender is blacklisted");
-    require(!this.isBlacklisted(to), "ERC998: receiver is blacklisted");
+    require(!this.isBlacklisted(from), "Blacklist: sender is blacklisted");
+    require(!this.isBlacklisted(to), "Blacklist: receiver is blacklisted");
     super._beforeTokenTransfer(from, to, amount);
   }
 

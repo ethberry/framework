@@ -4,9 +4,8 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
 import { ContractType, ExchangeEventType } from "@framework/types";
-
-// system contract
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+
 import { ExchangeLogService } from "./exchange-log.service";
 import { ContractManagerModule } from "../../../blockchain/contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../blockchain/contract-manager/contract-manager.service";

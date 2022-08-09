@@ -5,7 +5,7 @@ import { BigNumber, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
 import { IMysteryboxSearchDto, MysteryboxStatus, TokenType } from "@framework/types";
-import { IAsset, SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IAsset, IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignMysteryboxDto } from "./interfaces";
 import { MysteryboxEntity } from "./mysterybox.entity";
@@ -107,7 +107,7 @@ export class MysteryboxService {
   }
 
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
-    const { mysteryboxId, account } = dto;
+    const { mysteryboxId, account, referral } = dto;
 
     const mysteryboxEntity = await this.findOneWithRelations({ id: mysteryboxId });
 
@@ -128,24 +128,24 @@ export class MysteryboxService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
-    const signature = await this.getSignature(nonce, account, expiresAt, mysteryboxEntity);
-
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
-  }
-
-  public async getSignature(
-    nonce: Uint8Array,
-    account: string,
-    expiresAt: number,
-    mysteryboxEntity: MysteryboxEntity,
-  ): Promise<string> {
-    return this.signerService.getManyToManySignature(
+    const signature = await this.getSignature(
       account,
       {
         nonce,
         externalId: mysteryboxEntity.id,
         expiresAt,
+        referral,
       },
+      mysteryboxEntity,
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+  }
+
+  public async getSignature(account: string, params: IParams, mysteryboxEntity: MysteryboxEntity): Promise<string> {
+    return this.signerService.getManyToManySignature(
+      account,
+      params,
       ([] as Array<IAsset>).concat(
         mysteryboxEntity.item.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),

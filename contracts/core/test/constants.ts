@@ -1,4 +1,4 @@
-import { BigNumber, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 export const baseTokenURI = "http://localhost:3011/metadata"; // no trailing slash
 export const tokenSymbol = "SYMBOL";
@@ -40,4 +40,5 @@ export const params = {
   nonce,
   externalId,
   expiresAt,
+  referral: constants.AddressZero,
 };

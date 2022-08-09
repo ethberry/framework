@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { BigNumber, utils } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import { IServerSignature } from "@gemunion/types-collection";
 import { ContractFeatures, GradeStrategy, TokenAttributes, TokenType } from "@framework/types";
-import { SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignGradeDto } from "./interfaces";
 import { GradeEntity } from "./grade.entity";
@@ -75,15 +75,24 @@ export class GradeService {
 
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
-    const signature = await this.getSignature(nonce, userEntity.wallet, expiresAt, tokenEntity, gradeEntity);
+    const signature = await this.getSignature(
+      userEntity.wallet,
+      {
+        nonce,
+        externalId: gradeEntity.id,
+        expiresAt,
+        referral: constants.AddressZero,
+      },
+      tokenEntity,
+      gradeEntity,
+    );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
   public async getSignature(
-    nonce: Uint8Array,
     account: string,
-    expiresAt: number,
+    params: IParams,
     tokenEntity: TokenEntity,
     gradeEntity: GradeEntity,
   ): Promise<string> {
@@ -91,11 +100,7 @@ export class GradeService {
 
     return this.signerService.getOneToManySignature(
       account,
-      {
-        nonce,
-        externalId: gradeEntity.id,
-        expiresAt,
-      },
+      params,
       {
         tokenType: Object.keys(TokenType).indexOf(tokenEntity.template.contract.contractType),
         token: tokenEntity.template.contract.address,

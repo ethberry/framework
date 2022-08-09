@@ -7,7 +7,7 @@ import { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { Erc721TemplateItem } from "../../../erc721/template-list/item";
+import { Erc721TemplateItem } from "../../../tokens/erc721/template-list/item";
 
 export const Erc998: FC<ITabPanelProps> = props => {
   const { value } = props;

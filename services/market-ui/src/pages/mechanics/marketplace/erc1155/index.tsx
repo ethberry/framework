@@ -8,7 +8,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { Erc1155Template } from "../../../erc1155/template-list/item";
+import { Erc1155Template } from "../../../tokens/erc1155/template-list/item";
 
 export const Erc1155: FC<ITabPanelProps> = props => {
   const { value } = props;

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
 import { IServerSignature } from "@gemunion/types-collection";
@@ -26,6 +26,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           nonce: utils.arrayify(sign.nonce),
           externalId: mysterybox.id,
           expiresAt: sign.expiresAt,
+          referral: constants.AddressZero,
         },
         ([] as Array<any>).concat(
           mysterybox.item?.components.map(component => ({
@@ -66,6 +67,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         data: {
           mysteryboxId: mysterybox.id,
           account,
+          referral: constants.AddressZero,
         },
       },
       web3Context,
