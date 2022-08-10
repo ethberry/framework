@@ -21,8 +21,6 @@ export class Erc1155LogService {
       contractType: ContractType.ERC1155_TOKEN,
       fromBlock: dto.fromBlock,
     });
-
-    await this.contractManagerService.updateLastBlockByType(ContractType.CONTRACT_MANAGER, dto.fromBlock + 1);
   }
 
   public async updateBlock(): Promise<number> {
