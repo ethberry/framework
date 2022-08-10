@@ -8,12 +8,18 @@ import { blockAwait } from "./utils/blockAwait";
 
 const contracts: Record<string, Contract> = {};
 
+const delay = (milliseconds: number) => {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+};
+
 async function deploySystem() {
   const vestFactory = await ethers.getContractFactory("ContractManager");
   contracts.contractManager = await vestFactory.deploy();
+  await delay(15000).then(() => console.info("delay 5000 done"));
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");
   contracts.exchange = await exchangeFactory.deploy("Exchange");
+  await delay(15000).then(() => console.info("delay 5000 done"));
 }
 
 // MODULE:VESTING
@@ -32,27 +38,30 @@ async function deployVesting() {
 
 // MODULE:LOOTBOX
 async function deployLootbox() {
+  await delay(15000).then(() => console.info("delay 5000 done"));
   const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
-  const lootboxInstance = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
-  contracts.lootbox = lootboxInstance;
+  contracts.lootbox = await lootboxFactory.deploy("Lootbox", "LOOT", 100, baseTokenURI);
+  await delay(15000).then(() => console.info("delay 5000 done"));
 }
 
 async function deployModules() {
-  await deployVesting();
+  // await deployVesting();
   await deployLootbox();
+  await delay(15000).then(() => console.info("delay 5000 done"));
 
   // MODULE:CLAIM
   const claimFactory = await ethers.getContractFactory("ClaimProxy");
   contracts.claimProxy = await claimFactory.deploy();
-
+  await delay(15000).then(() => console.info("delay 5000 done"));
   // MODULE:STAKING
   const stakingFactory = await ethers.getContractFactory("Staking");
   contracts.staking = await stakingFactory.deploy(10);
+  await delay(15000).then(() => console.info("delay 5000 done"));
 }
 
 async function setFactories() {
   await deployModules();
-  await blockAwait();
+  await delay(15000).then(() => console.info("delay 5000 done"));
   // MODULE:CM
   const vestFactory = await ethers.getContractFactory("ContractManager");
   const cM: ContractManager = vestFactory.attach(contracts.contractManager.address);
@@ -74,12 +83,14 @@ async function setFactories() {
 
 async function grantRoles() {
   await setFactories();
-  await blockAwait();
+  await delay(15000).then(() => console.info("delay 5000 done"));
   // MODULE:lootbox-market
   const tx1 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.staking.address);
   console.info(`MINTER_ROLE granted for staking in LBX:`, tx1.hash);
+  await delay(15000).then(() => console.info("delay 5000 done"));
   const tx2 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.exchange.address);
   console.info(`MINTER_ROLE granted for exchange in LBX:`, tx2.hash);
+  await delay(15000).then(() => console.info("delay 5000 done"));
   const tx3 = await contracts.lootbox.grantRole(MINTER_ROLE, contracts.claimProxy.address);
   console.info(`MINTER_ROLE granted for exchange in LBX:`, tx3.hash);
 }

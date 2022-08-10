@@ -31,11 +31,17 @@ export default {
       gas: 2100000,
       gasPrice: 8000000000,
       timeout: 142000,
-      accounts: [process.env.MM_PRIVATEKEY],
+      accounts: [process.env.PRIVATE_KEY],
       // accounts: {
       //   mnemonic: process.env.MM_MNEMONIC,
       // },
       saveDeployments: true,
+    },
+    goerli: {
+      chainId: 5,
+      // url: `https://www.ethercluster.com/goerli`,
+      url: `https://eth-goerli.g.alchemy.com/v2/EQ2GoNoVdLEhtc9dTtoEku8I7q_elsta`,
+      accounts: [process.env.PRIVATE_KEY],
     },
   },
   solidity: {
