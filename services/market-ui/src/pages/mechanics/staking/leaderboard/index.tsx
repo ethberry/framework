@@ -9,7 +9,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard, LeaderboardRank } from "@framework/types";
 
-export const Leaderboard: FC = () => {
+export const StakingLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
     useCollection<ILeaderboard>({
       baseUrl: "/staking/leaderboard",

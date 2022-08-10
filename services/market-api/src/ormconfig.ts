@@ -18,6 +18,7 @@ import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-compone
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
+import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -41,6 +42,7 @@ const config: PostgresConnectionOptions = {
     AssetComponentEntity,
     DropEntity,
     GradeEntity,
+    ReferralRewardEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

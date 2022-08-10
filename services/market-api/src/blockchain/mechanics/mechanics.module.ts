@@ -8,6 +8,7 @@ import { CraftModule } from "./craft/craft.module";
 import { MarketplaceModule } from "./marketplace/marketplace.module";
 import { GradeModule } from "./grade/grade.module";
 import { DropModule } from "./drop/drop.module";
+import { ReferralModule } from "./referral/referral.module";
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { DropModule } from "./drop/drop.module";
     MarketplaceModule,
     GradeModule,
     DropModule,
+    ReferralModule,
   ],
 })
 export class MechanicsModule {}

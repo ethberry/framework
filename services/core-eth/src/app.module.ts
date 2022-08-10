@@ -14,7 +14,6 @@ import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { NotificatorModule } from "./notificator/notificator.module";
-import { MechanicsModule } from "./mechanics/mechanics.module";
 
 @Module({
   providers: [
@@ -42,7 +41,6 @@ import { MechanicsModule } from "./mechanics/mechanics.module";
     }),
     RequestLoggerModule,
     HealthModule,
-    MechanicsModule,
     BlockchainModule,
     NotificatorModule,
   ],

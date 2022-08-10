@@ -260,11 +260,12 @@
         "title": "My stash",
         "wallet": "My wallet"
       },
-      "sections": {
-        "auctions": "Secondary marketplace",
-        "craft": "Craft",
-        "marketplace": "Primary marketplace",
-        "title": "Sections"
+      "marketplace": {
+        "primary": "Primary marketplace",
+        "link": "Referral program",
+        "leaderboard": "Referral leaderboard",
+        "reward": "Referral rewards",
+        "title": "Marketplace"
       },
       "staking": {
         "leaderboard": "Leaderboard",
@@ -273,6 +274,22 @@
         "title": "Staking"
       },
       "title": "Dashboard"
+    },
+    "referral": {
+      "title": "Referral program",
+      "link": {
+        "title": "Your referral link"
+      },
+      "leaderboard": {
+        "title": "Referral program leaderboard",
+        "id": "ID",
+        "account": "Account",
+        "rank": "Rank",
+        "score": "Score"
+      },
+      "reward": {
+        "title": "Referral rewards"
+      }
     },
     "drop-list": {
       "title": "Drops"

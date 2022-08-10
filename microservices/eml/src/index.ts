@@ -29,7 +29,7 @@ async function bootstrap(): Promise<void> {
     .then(() => console.info(`Email service is subscribed to ${rmqUrl}/${rmqQueueEmail}`));
 
   const host = configService.get<string>("HOST", "localhost");
-  const port = configService.get<number>("PORT", 3004);
+  const port = configService.get<number>("PORT", 3010);
 
   await app.listen(port, host, () => {
     console.info(`Email service health check is running on http://${host}:${port}/health`);

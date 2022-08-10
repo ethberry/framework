@@ -16,12 +16,12 @@ async function bootstrap(): Promise<void> {
 
   const configService = app.get(ConfigService);
 
-  const baseUrl = configService.get<string>("MARKET_FE_URL", "http://localhost:3004");
+  const baseUrl = configService.get<string>("MARKET_FE_URL", "http://localhost:3006");
 
   app.enableCors({
     origin:
       process.env.NODE_ENV === "development"
-        ? ["http://localhost:3004", "http://127.0.0.1:3004", "http://0.0.0.0:3004"]
+        ? ["http://localhost:3006", "http://127.0.0.1:3006", "http://0.0.0.0:3006"]
         : [baseUrl],
     credentials: true,
     exposedHeaders: ["Content-Disposition"],

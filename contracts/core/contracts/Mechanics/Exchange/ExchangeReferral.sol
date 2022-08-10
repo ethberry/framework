@@ -18,7 +18,7 @@ import "hardhat/console.sol";
 abstract contract ExchangeReferral is Context {
   using EnumerableSet for EnumerableSet.AddressSet;
 
-  event ReferralReward(address from, address referrer, uint8 level, uint256 amount);
+  event Reward(address from, address referrer, uint8 level, uint256 amount);
 
   mapping(address => EnumerableSet.AddressSet) private _forward;
   mapping(address => address) private _backward;
@@ -41,7 +41,7 @@ abstract contract ExchangeReferral is Context {
     uint8 level = 0;
     do {
       _balance[referrer] += reward;
-      emit ReferralReward(account, referrer, level, reward);
+      emit Reward(account, referrer, level, reward);
       reward /= 10**++level;
       referrer = _backward[referrer];
     } while (referrer != address(0));

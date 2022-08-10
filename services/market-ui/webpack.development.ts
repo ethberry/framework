@@ -101,7 +101,7 @@ const config: Configuration = {
       directory: path.join(__dirname, "static"),
     },
     compress: true,
-    port: 3004,
+    port: 3006,
     historyApiFallback: {
       index: "index.html",
     },

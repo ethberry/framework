@@ -11,6 +11,7 @@ import { CraftList } from "./craft-list";
 import { Craft } from "./craft";
 import { DropList } from "./drop-list";
 import { stakingRoutes } from "./staking/routes";
+import { referralRoutes } from "./referral/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   {
@@ -44,4 +45,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
     children: [{ index: true, element: <Vesting /> }],
   },
   ...stakingRoutes,
+  ...referralRoutes,
 ];

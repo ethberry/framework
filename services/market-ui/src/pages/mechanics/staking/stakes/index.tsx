@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { StakesSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
 
-export const Stakes: FC = () => {
+export const StakingStakes: FC = () => {
   const {
     rows,
     count,

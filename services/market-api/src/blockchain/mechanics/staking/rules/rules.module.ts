@@ -4,10 +4,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { StakingRulesService } from "./rules.service";
 import { StakingRulesController } from "./rules.controller";
 import { StakingRulesEntity } from "./rules.entity";
-import { StakingLeaderboardModule } from "../leaderboard/leaderboard.module";
 
 @Module({
-  imports: [StakingLeaderboardModule, TypeOrmModule.forFeature([StakingRulesEntity])],
+  imports: [TypeOrmModule.forFeature([StakingRulesEntity])],
   providers: [StakingRulesService],
   controllers: [StakingRulesController],
   exports: [StakingRulesService],

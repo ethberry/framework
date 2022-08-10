@@ -6,6 +6,7 @@ import { AccessControlModule } from "./access-control/access-control.module";
 import { ContractHistoryModule } from "./contract-history/contract-history.module";
 import { RoyaltyModule } from "./rolyalty/royalty.module";
 import { TokensModule } from "./tokens/tokens.module";
+import { MechanicsModule } from "./mechanics/mechanics.module";
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { TokensModule } from "./tokens/tokens.module";
     AccessControlModule,
     RoyaltyModule,
     TokensModule,
+    MechanicsModule,
   ],
 })
 export class BlockchainModule {}

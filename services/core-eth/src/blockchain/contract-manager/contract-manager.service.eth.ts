@@ -24,17 +24,17 @@ import {
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
-import { VestingService } from "../../mechanics/vesting/vesting.service";
+import { VestingService } from "../mechanics/vesting/vesting.service";
 import { Erc20LogService } from "../tokens/erc20/token/token-log/token-log.service";
 import { Erc721TokenLogService } from "../tokens/erc721/token/token-log/token-log.service";
 import { Erc998TokenLogService } from "../tokens/erc998/token/token-log/token-log.service";
 import { Erc1155LogService } from "../tokens/erc1155/token/token-log/token-log.service";
-import { VestingLogService } from "../../mechanics/vesting/vesting-log/vesting.log.service";
+import { VestingLogService } from "../mechanics/vesting/vesting-log/vesting.log.service";
 import { ContractManagerService } from "./contract-manager.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
-import { GradeService } from "../../mechanics/grade/grade.service";
+import { GradeService } from "../mechanics/grade/grade.service";
 
 @Injectable()
 export class ContractManagerServiceEth {

@@ -52,7 +52,7 @@ export const Vesting: FC = () => {
   };
 
   const handleOpenConnectWalletDialog = () => {
-    openConnectWalletDialog();
+    void openConnectWalletDialog();
   };
 
   useEffect(() => {
