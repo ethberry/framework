@@ -48,6 +48,7 @@ import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-s
 import { SeedContractMysteryboxAt1563804000160 } from "./migrations/1563804000160-seed-contract-mysterybox";
 
 import { CreateTemplate1563804000200 } from "./migrations/1563804000200-create-template";
+import { SeedTemplateNativeAt1563804000210 } from "./migrations/1563804000210-seed-template-native";
 import { SeedTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
 import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
@@ -55,6 +56,7 @@ import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-s
 import { SeedTemplateMysteryboxAt1563804000260 } from "./migrations/1563804000260-seed-template-mysterybox";
 
 import { CreateToken1563804000300 } from "./migrations/1563804000300-create-token";
+import { SeedTokenNativeAt1563804000310 } from "./migrations/1563804000310-seed-token-native";
 import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
 import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
 import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
@@ -197,6 +199,7 @@ const config: PostgresConnectionOptions = {
     SeedContractMysteryboxAt1563804000160,
 
     CreateTemplate1563804000200,
+    SeedTemplateNativeAt1563804000210,
     SeedTemplateErc20At1563804000220,
     SeedTemplateErc721At1563804000230,
     SeedTemplateErc998At1563804000240,
@@ -204,6 +207,7 @@ const config: PostgresConnectionOptions = {
     SeedTemplateMysteryboxAt1563804000260,
 
     CreateToken1563804000300,
+    SeedTokenNativeAt1563804000310,
     SeedTokenErc20At1563804000320,
     SeedTokenErc721At1563804000330,
     SeedTokenErc998At1563804000340,

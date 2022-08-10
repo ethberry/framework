@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedTokenErc20At1563804000320 implements MigrationInterface {
+export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const defaultJSON = JSON.stringify({});
@@ -18,7 +18,7 @@ export class SeedTokenErc20At1563804000320 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        12001,
+        11001,
         '${defaultJSON}',
         0,
         '0',
@@ -27,7 +27,7 @@ export class SeedTokenErc20At1563804000320 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12002,
+        11002,
         '${defaultJSON}',
         0,
         '0',
@@ -36,7 +36,7 @@ export class SeedTokenErc20At1563804000320 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12003,
+        11003,
         '${defaultJSON}',
         0,
         '0',
@@ -45,27 +45,18 @@ export class SeedTokenErc20At1563804000320 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12004,
+        11004,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
         12004,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        12005,
-        '${defaultJSON}',
-        0,
-        '0',
-        'MINTED',
-        12005,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 12005, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 11004, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -33,26 +33,26 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        16,
+        36,
         13601, -- sword
         '1',
         33101
       ), (
         'ERC20',
-        2,
-        12002, -- space credit
+        21,
+        12001, -- space credit
         '${constants.WeiPerEther.toString()}',
         33111
       ), (
         'ERC721',
-        16,
+        36,
         13601, -- sword
         '1',
         33201
       ), (
         'ERC20',
-        2,
-        12002, -- space credit
+        21,
+        12001, -- space credit
         '${constants.WeiPerEther.toString()}',
         33211
       );

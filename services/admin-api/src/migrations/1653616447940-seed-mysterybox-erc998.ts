@@ -29,14 +29,14 @@ export class SeedMysteryboxErc998At1653616447940 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC998',
-        26,
+        46,
         14101, -- warrior
         '1',
         34101
       ), (
         'ERC20',
-        2,
-        12002, -- space credit
+        21,
+        12001, -- space credit
         '${constants.WeiPerEther.toString()}',
         34111
       );

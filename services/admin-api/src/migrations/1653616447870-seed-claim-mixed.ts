@@ -27,19 +27,19 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        16,
+        36,
         13601, -- sword
         '1',
         27101
       ), (
         'ERC998',
-        26,
+        46,
         14101, -- warrior
         '1',
         27101
       ), (
         'ERC1155',
-        31,
+        51,
         15101, -- gold
         '1000',
         27101

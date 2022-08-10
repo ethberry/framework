@@ -47,7 +47,7 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
         0,
         4,
         'ACTIVE',
-        41,
+        61,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -59,7 +59,7 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
         0,
         1,
         'INACTIVE',
-        41,
+        61,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -71,7 +71,7 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
         0,
         1,
         'ACTIVE',
-        41,
+        61,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -83,7 +83,7 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
         0,
         1,
         'ACTIVE',
-        41,
+        61,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -95,7 +95,7 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
         0,
         1,
         'ACTIVE',
-        41,
+        61,
         '${currentDateTime}',
         '${currentDateTime}'
       );

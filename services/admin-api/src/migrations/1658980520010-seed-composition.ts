@@ -14,8 +14,8 @@ export class SeedComposition1658980520010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        26, -- hero
-        16, -- item
+        46, -- hero
+        36, -- weapon
         5,
         '${currentDateTime}',
         '${currentDateTime}'

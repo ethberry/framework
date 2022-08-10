@@ -33,7 +33,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        21,
+        41,
         '${erc998ContractSimpleAddress}',
         '${chainId}',
         'ERC998 (simple)',
@@ -49,7 +49,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        22,
+        42,
         '${erc998ContractInactiveAddress}',
         '${chainId}',
         'ERC998 (inactive)',
@@ -65,7 +65,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        23,
+        43,
         '${erc998ContractNewAddress}',
         '${chainId}',
         'ERC998 (new)',
@@ -81,7 +81,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        24,
+        44,
         '${erc998ContractBlacklistAddress}',
         '${chainId}',
         'ERC998 (blacklist)',
@@ -97,7 +97,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        25,
+        45,
         '${erc998ContractUpgradeableAddress}',
         '${chainId}',
         'ERC998 (upgradeable)',
@@ -113,7 +113,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        26,
+        46,
         '${erc998ContractRandomAddress}',
         '${chainId}',
         'HERO (random)',
@@ -131,7 +131,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 26, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 46, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

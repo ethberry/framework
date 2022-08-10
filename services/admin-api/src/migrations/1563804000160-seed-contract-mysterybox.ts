@@ -29,7 +29,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        41,
+        61,
         '${mysteryboxAddress}',
         '${chainId}',
         'MYSTERYBOX',
@@ -48,7 +48,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 41, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 61, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

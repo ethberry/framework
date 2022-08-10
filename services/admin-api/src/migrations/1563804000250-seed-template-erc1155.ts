@@ -54,7 +54,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
-        31,
+        51,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -66,7 +66,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
-        31,
+        51,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -78,7 +78,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
-        31,
+        51,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -90,7 +90,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
        '0',
         'ACTIVE',
-        31,
+        51,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -102,7 +102,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '0',
         'ACTIVE',
-        31,
+        51,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -114,7 +114,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '0',
         'ACTIVE',
-        34,
+        54,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -126,7 +126,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '0',
         'ACTIVE',
-        34,
+        54,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -138,7 +138,7 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         0,
         '0',
         'ACTIVE',
-        34,
+        54,
         '${currentDateTime}',
         '${currentDateTime}'
       );

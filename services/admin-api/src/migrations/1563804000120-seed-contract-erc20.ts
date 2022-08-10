@@ -38,7 +38,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        2,
+        21,
         '${erc20TokenSimpleAddress}',
         '${chainId}',
         'Space Credits',
@@ -55,7 +55,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
+        22,
         '${erc20TokenInactiveAddress}',
         '${chainId}',
         'ERC20 (inactive)',
@@ -72,7 +72,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4,
+        23,
         '${erc20TokenNewAddress}',
         '${chainId}',
         'ERC20 (new)',
@@ -89,7 +89,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        5,
+        24,
         '${erc20TokenBlackListAddress}',
         '${chainId}',
         'ERC20 (blacklist)',
@@ -106,7 +106,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        6,
+        25,
         '${usdt[chainId]}',
         '${chainId}',
         'USDT',
@@ -125,7 +125,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 6, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 25, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

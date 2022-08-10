@@ -28,7 +28,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1,
+        11,
         '${constants.AddressZero}',
         '${chainId}',
         'Native token (ETH)',
@@ -44,10 +44,61 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '{NATIVE}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        12,
+        '${constants.AddressZero}',
+        '${chainId}',
+        'Inactive token (ETH)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Ethereum',
+        'ETH',
+        18,
+        0,
+        '',
+        'INACTIVE',
+        'NATIVE',
+        '{NATIVE}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13,
+        '${constants.AddressZero}',
+        '56',
+        'Native token (BNB)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Binance',
+        'BNB',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'NATIVE',
+        '{NATIVE}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        14,
+        '${constants.AddressZero}',
+        '137',
+        'Native token (MATIC)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Matic',
+        'MATIC',
+        18,
+        0,
+        '',
+        'INACTIVE',
+        'NATIVE',
+        '{NATIVE}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 6, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 14, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
