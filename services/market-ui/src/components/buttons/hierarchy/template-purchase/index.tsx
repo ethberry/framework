@@ -29,7 +29,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           nonce: utils.arrayify(sign.nonce),
           externalId: template.id,
           expiresAt: sign.expiresAt,
-          referral: searchParams.get("referral") ?? constants.AddressZero,
+          referral: searchParams.get("referrer") ?? constants.AddressZero,
         },
         {
           tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
@@ -62,7 +62,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         data: {
           templateId: template.id,
           account,
-          referral: searchParams.get("referral") ?? constants.AddressZero,
+          referral: searchParams.get("referrer") ?? constants.AddressZero,
         },
       },
       web3Context,

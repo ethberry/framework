@@ -26,7 +26,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           nonce: utils.arrayify(sign.nonce),
           externalId: mysterybox.id,
           expiresAt: sign.expiresAt,
-          referral: constants.AddressZero,
+          referrer: constants.AddressZero,
         },
         ([] as Array<any>).concat(
           mysterybox.item?.components.map(component => ({
@@ -67,7 +67,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         data: {
           mysteryboxId: mysterybox.id,
           account,
-          referral: constants.AddressZero,
+          referrer: constants.AddressZero,
         },
       },
       web3Context,

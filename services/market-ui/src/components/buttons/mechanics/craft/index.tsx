@@ -27,7 +27,7 @@ export const CraftButton: FC<ICraftButtonProps> = props => {
           nonce: utils.arrayify(sign.nonce),
           externalId: craft.id,
           expiresAt: sign.expiresAt,
-          referral: constants.AddressZero,
+          referrer: constants.AddressZero,
         },
         craft.item?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),

@@ -104,7 +104,7 @@ export class CraftService {
         nonce,
         externalId: craftEntity.id,
         expiresAt,
-        referral: constants.AddressZero,
+        referrer: constants.AddressZero,
       },
       craftEntity,
     );

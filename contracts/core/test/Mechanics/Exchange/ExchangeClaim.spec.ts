@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ERC1155Simple, ERC20Simple, ERC721Simple, Exchange } from "../../../typechain-types";
@@ -95,7 +96,7 @@ describe("ExchangeClaim", function () {
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721SimpleInstance.address, tokenId, 1]],
-          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc721SimpleInstance, "Transfer")
           .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
@@ -135,7 +136,7 @@ describe("ExchangeClaim", function () {
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721SimpleInstance.address, tokenId, 1]],
-          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.not.emit(erc721RandomInstance, "Transfer");
       });
@@ -176,10 +177,10 @@ describe("ExchangeClaim", function () {
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721SimpleInstance.address, tokenId, 1]],
-          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, ethers.constants.AddressZero, this.receiver.address, tokenId, amount);
+          .withArgs(exchangeInstance.address, constants.AddressZero, this.receiver.address, tokenId, amount);
       });
     });
   });

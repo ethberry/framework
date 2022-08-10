@@ -40,5 +40,5 @@ export const params = {
   nonce,
   externalId,
   expiresAt,
-  referral: constants.AddressZero,
+  referrer: constants.AddressZero,
 };

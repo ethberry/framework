@@ -14,7 +14,7 @@ export class MarketplaceService {
   constructor(private readonly templateService: TemplateService, private readonly signerService: SignerService) {}
 
   public async sign(dto: ISignTemplateDto): Promise<IServerSignature> {
-    const { templateId, account, referral = constants.AddressZero } = dto;
+    const { templateId, account, referrer = constants.AddressZero } = dto;
     const templateEntity = await this.templateService.findOne(
       { id: templateId },
       {
@@ -49,7 +49,7 @@ export class MarketplaceService {
         nonce,
         externalId: templateEntity.id,
         expiresAt,
-        referral,
+        referrer,
       },
       templateEntity,
     );

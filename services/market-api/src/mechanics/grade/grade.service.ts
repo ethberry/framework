@@ -81,7 +81,7 @@ export class GradeService {
         nonce,
         externalId: gradeEntity.id,
         expiresAt,
-        referral: constants.AddressZero,
+        referrer: constants.AddressZero,
       },
       tokenEntity,
       gradeEntity,

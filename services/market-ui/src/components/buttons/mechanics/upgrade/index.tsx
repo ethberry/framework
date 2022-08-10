@@ -68,7 +68,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
               nonce: utils.arrayify(sign.nonce),
               externalId: grade.id,
               expiresAt: sign.expiresAt,
-              referral: constants.AddressZero,
+              referrer: constants.AddressZero,
             },
             {
               tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),

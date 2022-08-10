@@ -29,7 +29,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
           nonce: utils.arrayify(sign.nonce),
           externalId: drop.id,
           expiresAt: sign.expiresAt,
-          referral: searchParams.get("referral") ?? constants.AddressZero,
+          referrer: searchParams.get("referrer") ?? constants.AddressZero,
         },
         drop.item?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
@@ -62,7 +62,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         data: {
           dropId: drop.id,
           account,
-          referral: searchParams.get("referral") ?? constants.AddressZero,
+          referrer: searchParams.get("referrer") ?? constants.AddressZero,
         },
       },
       web3Context,

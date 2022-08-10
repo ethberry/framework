@@ -107,7 +107,7 @@ export class MysteryboxService {
   }
 
   public async sign(dto: ISignMysteryboxDto): Promise<IServerSignature> {
-    const { mysteryboxId, account, referral } = dto;
+    const { mysteryboxId, account, referrer } = dto;
 
     const mysteryboxEntity = await this.findOneWithRelations({ id: mysteryboxId });
 
@@ -134,7 +134,7 @@ export class MysteryboxService {
         nonce,
         externalId: mysteryboxEntity.id,
         expiresAt,
-        referral,
+        referrer,
       },
       mysteryboxEntity,
     );

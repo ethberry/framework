@@ -128,7 +128,7 @@ export class ClaimService {
         nonce,
         externalId: claimEntity.id,
         expiresAt,
-        referral: constants.AddressZero,
+        referrer: constants.AddressZero,
       },
 
       claimEntity,

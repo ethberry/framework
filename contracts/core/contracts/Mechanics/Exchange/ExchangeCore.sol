@@ -33,28 +33,9 @@ abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessContr
     acquire(toArray(item), account);
 
     emit Purchase(account, params.externalId, item, price);
+
+    _afterPurchase(params);
   }
 
-  using EnumerableSet for EnumerableSet.AddressSet;
-
-  mapping(address => EnumerableSet.AddressSet) private _forward;
-  mapping(address => address) private _backward;
-  mapping(address => uint256) private _balance;
-
-  function updateReferral(address referral) public {
-    if (referral == address(0)) {
-      return;
-    }
-
-    address account = _msgSender();
-    _forward[referral].add(account);
-    _backward[account] = referral;
-
-    uint256 award = 1 ether;
-    do {
-      _balance[referral] += award;
-      award /= 10;
-      referral = _backward[referral];
-    } while (referral != address(0));
-  }
+  function _afterPurchase(Params memory params) internal virtual;
 }

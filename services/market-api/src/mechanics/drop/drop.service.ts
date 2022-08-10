@@ -80,7 +80,7 @@ export class DropService {
   }
 
   public async sign(dto: ISignDropDto): Promise<IServerSignature> {
-    const { dropId, account, referral } = dto;
+    const { dropId, account, referrer } = dto;
 
     const dropEntity = await this.findOneWithRelations({ id: dropId });
 
@@ -115,7 +115,7 @@ export class DropService {
         nonce,
         externalId: dropEntity.id,
         expiresAt,
-        referral,
+        referrer,
       },
       dropEntity,
     );

@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ERC20Simple, ERC721Upgradeable, Exchange } from "../../../typechain-types";
@@ -55,7 +56,7 @@ describe("ExchangeGrade", function () {
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, this.receiver.address, tokenId);
 
       const signature = await generateSignature({
         account: this.receiver.address,
@@ -116,7 +117,7 @@ describe("ExchangeGrade", function () {
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, this.receiver.address, tokenId);
 
       const signature = await generateSignature({
         account: this.receiver.address,
@@ -168,7 +169,7 @@ describe("ExchangeGrade", function () {
 
       await expect(tx1)
         .to.emit(erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, this.receiver.address, tokenId);
 
       const signature = await generateSignature({
         account: this.receiver.address,

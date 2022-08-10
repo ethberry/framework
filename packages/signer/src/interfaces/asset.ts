@@ -9,5 +9,5 @@ export interface IParams {
   nonce: Uint8Array;
   externalId: number;
   expiresAt: number;
-  referral: string;
+  referrer: string;
 }
