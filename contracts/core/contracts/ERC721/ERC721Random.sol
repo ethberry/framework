@@ -53,6 +53,7 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Simple {
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
@@ -60,7 +61,7 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Simple {
     upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
-    safeMint(request.account);
+    _safeMint(request.account, tokenId);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {

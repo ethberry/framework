@@ -53,6 +53,7 @@ contract ERC721RandomBesu is IERC721Random, ERC721ChainLinkBesu, ERC721Upgradeab
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 

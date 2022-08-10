@@ -170,6 +170,7 @@ describe("ERC721Mysterybox", function () {
       await expect(tx2)
         .to.emit(mysteryboxInstance, "Transfer")
         .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId);
+      await expect(tx2).to.emit(mysteryboxInstance, "UnpackMysterybox");
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
