@@ -47,7 +47,7 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
   }
 
   function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId != 0, "ERC721: wrong type");
     _queue[getRandomNumber()] = Request(to, templateId);
   }
 

@@ -33,8 +33,7 @@ async function deployVesting() {
 // MODULE:MYSTERYBOX
 async function deployMysterybox() {
   const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
-  const mysteryboxInstance = await mysteryboxFactory.deploy("Mysterybox", "LOOT", 100, baseTokenURI);
-  contracts.mysterybox = mysteryboxInstance;
+  contracts.mysterybox = await mysteryboxFactory.deploy("Mysterybox", "LOOT", 100, baseTokenURI);
 }
 
 async function deployModules() {
