@@ -58,6 +58,7 @@
     "contractFeatures": {
       "NATIVE": "Native",
       "BLACKLIST": "Blacklist",
+      "RANDOM": "Random",
       "EXTERNAL": "External",
       "MYSTERYBOX": "Mysterybox",
       "UPGRADEABLE": "Upgradeable"

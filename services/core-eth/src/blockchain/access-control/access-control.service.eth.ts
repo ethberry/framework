@@ -48,7 +48,8 @@ export class AccessControlServiceEth {
 
     await this.updateHistory(event, context);
 
-    await this.accessControlService.create({
+    // TODO probably add role status: active\revoked?
+    await this.accessControlService.delete({
       address: context.address.toLowerCase(),
       account: account.toLowerCase(),
       role: Object.keys(AccessControlRoleHash)[

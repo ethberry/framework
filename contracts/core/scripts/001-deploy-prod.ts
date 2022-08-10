@@ -29,7 +29,6 @@ async function deployVesting() {
   const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
   contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
 }
-
 // MODULE:MYSTERYBOX
 async function deployMysterybox() {
   const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
