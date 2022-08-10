@@ -20,11 +20,9 @@ import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
-import { MechanicsModule } from "./mechanics/mechanics.module";
 import { SettingsModule } from "./settings/settings.module";
 import { PageModule } from "./page/page.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
-import { TokensModule } from "./tokens/tokens.module";
 
 @Module({
   providers: [
@@ -85,13 +83,11 @@ import { TokensModule } from "./tokens/tokens.module";
     AuthModule,
     EmailModule,
     HealthModule,
-    MechanicsModule,
     ProfileModule,
     UserModule,
     SettingsModule,
     PageModule,
     BlockchainModule,
-    TokensModule,
   ],
   controllers: [AppController],
 })

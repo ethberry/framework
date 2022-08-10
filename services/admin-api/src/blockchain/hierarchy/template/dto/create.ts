@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 import { ITemplateCreateDto } from "../interfaces";
-import { AssetDto } from "../../../../mechanics/asset/dto";
+import { AssetDto } from "../../../mechanics/asset/dto";
 
 export class TemplateCreateDto implements ITemplateCreateDto {
   @ApiProperty()

@@ -24,7 +24,7 @@ import { ContractService } from "../../blockchain/hierarchy/contract/contract.se
 import { TemplateService } from "../../blockchain/hierarchy/template/template.service";
 import { TokenService } from "../../blockchain/hierarchy/token/token.service";
 import { BalanceService } from "../../blockchain/hierarchy/balance/balance.service";
-import { ABI } from "../../erc721/token/token-log/interfaces";
+import { ABI } from "../../blockchain/tokens/erc721/token/token-log/interfaces";
 
 @Injectable()
 export class MysteryboxServiceEth {
