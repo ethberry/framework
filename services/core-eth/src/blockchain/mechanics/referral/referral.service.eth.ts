@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IReward, ReferralProgramEventType, TReferralEventData } from "@framework/types";
+import { IReward, IWithdraw, ReferralProgramEventType, TReferralEventData } from "@framework/types";
 
 import { ContractManagerService } from "../../contract-manager/contract-manager.service";
 import { ReferralHistoryService } from "./history/ref-history.service";
@@ -24,6 +24,10 @@ export class ReferralServiceEth {
     const { args } = event;
 
     await this.referralService.create(args);
+  }
+
+  public async withdraw(event: ILogEvent<IWithdraw>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
   }
 
   private async updateHistory(event: ILogEvent<TReferralEventData>, context: Log) {

@@ -18,8 +18,8 @@ import "hardhat/console.sol";
 abstract contract ExchangeReferral is Context {
   using EnumerableSet for EnumerableSet.AddressSet;
 
-  event Reward(address indexed from, address indexed referrer, uint8 level, uint256 amount);
-  event Withdraw(address indexed account, uint256 amount);
+  event ReferralReward(address indexed from, address indexed referrer, uint8 level, uint256 amount);
+  event ReferralWithdraw(address indexed account, uint256 amount);
 
   mapping(address => EnumerableSet.AddressSet) private _forward;
   mapping(address => address) private _backward;
@@ -41,7 +41,7 @@ abstract contract ExchangeReferral is Context {
     uint256 reward = 1 ether;
     uint8 level = 0;
     do {
-      emit Reward(account, referrer, level, reward);
+      emit ReferralReward(account, referrer, level, reward);
       _balance[referrer] += reward;
       reward /= 10**++level;
       referrer = _backward[referrer];
@@ -51,9 +51,14 @@ abstract contract ExchangeReferral is Context {
   function withdraw() public returns (bool success) {
     address account = _msgSender();
     uint256 amount = _balance[account];
+    require(amount > 0, "ExchangeReferral: Zero balance");
     _balance[account] = 0;
-    emit Withdraw(account, amount);
+    emit ReferralWithdraw(account, amount);
     Address.sendValue(payable(account), amount);
     return true;
+  }
+
+  function getBalance(address referral) public view returns (uint256 amount) {
+    return _balance[referral];
   }
 }
