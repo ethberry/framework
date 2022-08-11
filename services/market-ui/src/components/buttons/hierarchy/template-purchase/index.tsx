@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { constants, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
-import { useSearchParams } from "react-router-dom";
 
+import { useSettings } from "@gemunion/provider-settings";
 import { IServerSignature } from "@gemunion/types-collection";
 import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -19,7 +19,7 @@ interface ITemplatePurchaseButtonProps {
 export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props => {
   const { template } = props;
 
-  const [searchParams] = useSearchParams();
+  const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
@@ -29,7 +29,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           nonce: utils.arrayify(sign.nonce),
           externalId: template.id,
           expiresAt: sign.expiresAt,
-          referral: searchParams.get("referrer") ?? constants.AddressZero,
+          referrer: settings.getReferrer(),
         },
         {
           tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
@@ -62,7 +62,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         data: {
           templateId: template.id,
           account,
-          referral: searchParams.get("referrer") ?? constants.AddressZero,
+          referrer: settings.getReferrer(),
         },
       },
       web3Context,

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { constants, Contract, utils } from "ethers";
+import { Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
-import { useSearchParams } from "react-router-dom";
 
+import { useSettings } from "@gemunion/provider-settings";
 import { IServerSignature } from "@gemunion/types-collection";
 import { IDrop, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -19,7 +19,7 @@ interface IDropPurchaseButtonProps {
 export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
   const { drop } = props;
 
-  const [searchParams] = useSearchParams();
+  const settings = useSettings();
 
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
@@ -29,7 +29,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
           nonce: utils.arrayify(sign.nonce),
           externalId: drop.id,
           expiresAt: sign.expiresAt,
-          referrer: searchParams.get("referrer") ?? constants.AddressZero,
+          referrer: settings.getReferrer(),
         },
         drop.item?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
@@ -62,7 +62,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         data: {
           dropId: drop.id,
           account,
-          referrer: searchParams.get("referrer") ?? constants.AddressZero,
+          referrer: settings.getReferrer(),
         },
       },
       web3Context,
