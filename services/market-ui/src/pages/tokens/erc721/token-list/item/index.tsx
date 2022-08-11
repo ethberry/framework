@@ -32,7 +32,14 @@ export const Erc721Token: FC<IErc721TokenProps> = props => {
       </CardActionArea>
       <CardActions>
         <Grid container alignItems="center">
-          <Grid item xs={12}>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              // MODULE:SOULBOUND
+              height: 37,
+            }}
+          >
             <TokenSellButton token={token} />
             <UpgradeButton token={token} />
           </Grid>

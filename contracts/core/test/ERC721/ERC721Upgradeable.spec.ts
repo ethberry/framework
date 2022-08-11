@@ -15,6 +15,9 @@ import {
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 import { shouldGetTokenURI } from "./shared/tokenURI";
 import { shouldSetBaseURI } from "./shared/setBaseURI";
+import { shouldMintCommon } from "./shared/mintCommon";
+import { shouldMint } from "./shared/mint";
+import { shouldSafeMint } from "./shared/safeMint";
 
 describe("ERC721Upgradeable", function () {
   beforeEach(async function () {
@@ -36,45 +39,9 @@ describe("ERC721Upgradeable", function () {
   shouldGetTokenURI();
   shouldSetBaseURI();
 
-  describe("mintCommon", function () {
-    it("should mint to wallet", async function () {
-      const tx = this.erc721Instance.mintCommon(this.receiver.address, templateId);
-      await expect(tx)
-        .to.emit(this.erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
-
-      const balance = await this.erc721Instance.balanceOf(this.receiver.address);
-      expect(balance).to.equal(1);
-
-      const value = await this.erc721Instance.getRecordFieldValue(
-        tokenId,
-        utils.keccak256(ethers.utils.toUtf8Bytes("template_id")),
-      );
-      expect(value).to.equal(templateId);
-    });
-
-    it("should mint to receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, templateId);
-      await expect(tx)
-        .to.emit(this.erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.erc721ReceiverInstance.address, tokenId);
-
-      const balance = await this.erc721Instance.balanceOf(this.erc721ReceiverInstance.address);
-      expect(balance).to.equal(1);
-    });
-
-    it("should fail: wrong role", async function () {
-      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, templateId);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
-    });
-
-    it("should fail: to mint to non receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, templateId);
-      await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
-    });
-  });
+  shouldMintCommon();
+  shouldMint();
+  shouldSafeMint();
 
   describe("getRecordFieldValue", function () {
     it("should get record field value", async function () {

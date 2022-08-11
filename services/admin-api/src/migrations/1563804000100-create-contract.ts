@@ -27,7 +27,8 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'EXTERNAL',
         'NATIVE',
         'UPGRADEABLE',
-        'RANDOM'
+        'RANDOM',
+        'SOULBOUND'
       );
     `);
 

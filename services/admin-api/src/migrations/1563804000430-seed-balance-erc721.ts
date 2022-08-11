@@ -68,6 +68,12 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
         13603,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        13701,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

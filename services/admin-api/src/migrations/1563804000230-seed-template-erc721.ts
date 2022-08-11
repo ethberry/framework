@@ -38,6 +38,8 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         13602
       ), (
         13603
+      ), (
+        13701
       );
     `);
 
@@ -222,6 +224,18 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         1,
         'ACTIVE',
         36,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        13701,
+        'Medal',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        13701,
+        0,
+        1,
+        'ACTIVE',
+        37,
         '${currentDateTime}',
         '${currentDateTime}'
       );

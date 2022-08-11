@@ -21,27 +21,29 @@ function getBytecodeByErc998ContractFeatures(contractFeatures: Array<Erc998Contr
     return ERC998SimpleSol.bytecode;
   }
 
-  if (
-    contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
-    contractFeatures.includes(Erc998ContractFeatures.RANDOM) &&
-    contractFeatures.includes(Erc998ContractFeatures.BLACKLIST)
-  ) {
-    return ERC998FullSol.bytecode;
-  }
+  if (contractFeatures.length === 3) {
+    if (
+      contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
+      contractFeatures.includes(Erc998ContractFeatures.RANDOM) &&
+      contractFeatures.includes(Erc998ContractFeatures.BLACKLIST)
+    ) {
+      return ERC998FullSol.bytecode;
+    }
+  } else if (contractFeatures.length === 2) {
+    if (
+      contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
+      contractFeatures.includes(Erc998ContractFeatures.RANDOM)
+    ) {
+      return ERC998UpgradeableRandomSol.bytecode;
+    }
+  } else if (contractFeatures.length === 1) {
+    if (contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE)) {
+      return ERC998UpgradeableSol.bytecode;
+    }
 
-  if (
-    contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
-    contractFeatures.includes(Erc998ContractFeatures.RANDOM)
-  ) {
-    return ERC998UpgradeableRandomSol.bytecode;
-  }
-
-  if (contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE)) {
-    return ERC998UpgradeableSol.bytecode;
-  }
-
-  if (contractFeatures.includes(Erc998ContractFeatures.BLACKLIST)) {
-    return ERC998BlackListSol.bytecode;
+    if (contractFeatures.includes(Erc998ContractFeatures.BLACKLIST)) {
+      return ERC998BlackListSol.bytecode;
+    }
   }
 
   throw new Error("Unsupported features combination");

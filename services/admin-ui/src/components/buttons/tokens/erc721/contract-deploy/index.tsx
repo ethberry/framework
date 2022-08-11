@@ -13,6 +13,7 @@ import ERC721FullSol from "@framework/core-contracts/artifacts/contracts/ERC721/
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721RandomBlacklist.sol/ERC721RandomBlacklist.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
 import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
 import ERC721UpgradeableBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableBlacklist.sol/ERC721UpgradeableBlacklist.json";
 import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableRandom.sol/ERC721UpgradeableRandom.json";
@@ -24,45 +25,51 @@ function getBytecodeByErc721ContractFeatures(contractFeatures: Array<Erc721Contr
     return ERC721SimpleSol.bytecode;
   }
 
-  if (
-    contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
-    contractFeatures.includes(Erc721ContractFeatures.RANDOM) &&
-    contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)
-  ) {
-    return ERC721FullSol.bytecode;
-  }
+  if (contractFeatures.length === 3) {
+    if (
+      contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
+      contractFeatures.includes(Erc721ContractFeatures.RANDOM) &&
+      contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)
+    ) {
+      return ERC721FullSol.bytecode;
+    }
+  } else if (contractFeatures.length === 2) {
+    if (
+      contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
+      contractFeatures.includes(Erc721ContractFeatures.RANDOM)
+    ) {
+      return ERC721UpgradeableRandomSol.bytecode;
+    }
 
-  if (
-    contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
-    contractFeatures.includes(Erc721ContractFeatures.RANDOM)
-  ) {
-    return ERC721UpgradeableRandomSol.bytecode;
-  }
+    if (
+      contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
+      contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)
+    ) {
+      return ERC721UpgradeableBlacklistSol.bytecode;
+    }
 
-  if (
-    contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
-    contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)
-  ) {
-    return ERC721UpgradeableBlacklistSol.bytecode;
-  }
+    if (
+      contractFeatures.includes(Erc721ContractFeatures.RANDOM) &&
+      contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)
+    ) {
+      return ERC721RandomBlacklistSol.bytecode;
+    }
+  } else if (contractFeatures.length === 1) {
+    if (contractFeatures.includes(Erc721ContractFeatures.RANDOM)) {
+      return ERC721RandomSol.bytecode;
+    }
 
-  if (
-    contractFeatures.includes(Erc721ContractFeatures.RANDOM) &&
-    contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)
-  ) {
-    return ERC721RandomBlacklistSol.bytecode;
-  }
+    if (contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE)) {
+      return ERC721UpgradeableSol.bytecode;
+    }
 
-  if (contractFeatures.includes(Erc721ContractFeatures.RANDOM)) {
-    return ERC721RandomSol.bytecode;
-  }
+    if (contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)) {
+      return ERC721BlackListSol.bytecode;
+    }
 
-  if (contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE)) {
-    return ERC721UpgradeableSol.bytecode;
-  }
-
-  if (contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)) {
-    return ERC721BlackListSol.bytecode;
+    if (contractFeatures.includes(Erc721ContractFeatures.SOULBOUND)) {
+      return ERC721SoulboundSol.bytecode;
+    }
   }
 
   throw new Error("Unsupported features combination");

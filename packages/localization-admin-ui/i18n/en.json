@@ -51,6 +51,7 @@
       "UNPACKED": "Unpacked"
     },
     "contractFeatures": {
+      "SOULBOUND": "SoulBound",
       "BLACKLIST": "Blacklist",
       "EXTERNAL": "External",
       "MYSTERYBOX": "Mysterybox",
@@ -553,6 +554,7 @@
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
     "userNotFound": "User not found",
-    "walletIsNotConnected": "Wallet is not connected"
+    "walletIsNotConnected": "Wallet is not connected",
+    "unsupportedCombination": "Unsupported feature combination"
   }
 }

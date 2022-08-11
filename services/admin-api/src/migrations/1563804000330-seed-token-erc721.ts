@@ -125,6 +125,17 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         13603,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        13701,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "13701",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        13701,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
 

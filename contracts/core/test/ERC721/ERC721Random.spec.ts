@@ -4,6 +4,9 @@ import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, toke
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 import { shouldGetTokenURI } from "./shared/tokenURI";
 import { shouldSetBaseURI } from "./shared/setBaseURI";
+import { shouldMintCommon } from "./shared/mintCommon";
+import { shouldMint } from "./shared/mint";
+import { shouldSafeMint } from "./shared/safeMint";
 
 describe("ERC721Random", function () {
   beforeEach(async function () {
@@ -24,4 +27,8 @@ describe("ERC721Random", function () {
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldGetTokenURI();
   shouldSetBaseURI();
+
+  shouldMintCommon();
+  shouldMint();
+  shouldSafeMint();
 });
