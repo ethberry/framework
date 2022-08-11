@@ -88,6 +88,7 @@
       "back": "Back",
       "buy": "Buy now!",
       "cancel": "Cancel",
+      "copy": "Copy",
       "craft": "Craft",
       "create": "Create",
       "delete": "Delete",
@@ -109,15 +110,14 @@
       "signup": "Sign up",
       "submit": "Submit",
       "upgrade": "Upgrade",
-      "upload": "Upload"
+      "upload": "Upload",
+      "withdraw": "Withdraw"
     },
     "hints": {
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "referrer": "Referrer",
-      "level": "Level",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -137,11 +137,13 @@
       "externalId": "External ID",
       "imageUrl": "Avatar",
       "language": "Language",
+      "level": "Level",
       "maxPrice": "Max. price",
       "minPrice": "Min. price",
       "password": "Password",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
+      "referrer": "Referrer",
       "reward": "Reward",
       "roles": "Roles",
       "sort": "Sort by",
@@ -243,6 +245,13 @@
         "title": "ERC998",
         "tokens": "ERC998 Tokens"
       },
+      "marketplace": {
+        "leaderboard": "Referral leaderboard",
+        "link": "Referral program",
+        "primary": "Primary marketplace",
+        "reward": "Referral rewards",
+        "title": "Marketplace"
+      },
       "mechanics": {
         "claim": "Claim",
         "craft": "Craft",
@@ -262,13 +271,6 @@
         "title": "My stash",
         "wallet": "My wallet"
       },
-      "marketplace": {
-        "primary": "Primary marketplace",
-        "link": "Referral program",
-        "leaderboard": "Referral leaderboard",
-        "reward": "Referral rewards",
-        "title": "Marketplace"
-      },
       "staking": {
         "leaderboard": "Leaderboard",
         "rules": "Rules",
@@ -276,21 +278,6 @@
         "title": "Staking"
       },
       "title": "Dashboard"
-    },
-    "referral": {
-      "title": "Referral program",
-      "link": {
-        "title": "Your referral link"
-      },
-      "leaderboard": {
-        "title": "Referral program leaderboard",
-        "id": "ID",
-        "account": "Account",
-        "amount": "Amount"
-      },
-      "reward": {
-        "title": "Referral rewards"
-      }
     },
     "drop-list": {
       "title": "Drops"
@@ -371,13 +358,6 @@
       "erc998-new": "New 998 Templates",
       "popular": "Popular items"
     },
-    "mysterybox": {
-      "price": "Price: {amount}",
-      "title": "Mysterybox: {title}"
-    },
-    "mysterybox-list": {
-      "title": "Mysteryboxes"
-    },
     "marketplace": {
       "erc1155": {
         "title": "ERC1155"
@@ -405,11 +385,33 @@
       "detach": "Detach",
       "title": "My wallet"
     },
+    "mysterybox": {
+      "price": "Price: {amount}",
+      "title": "Mysterybox: {title}"
+    },
+    "mysterybox-list": {
+      "title": "Mysteryboxes"
+    },
     "page": {
       "title": "{title}"
     },
     "profile": {
       "title": "Profile"
+    },
+    "referral": {
+      "leaderboard": {
+        "account": "Account",
+        "amount": "Amount",
+        "id": "ID",
+        "title": "Referral program leaderboard"
+      },
+      "link": {
+        "title": "Your referral link"
+      },
+      "reward": {
+        "title": "Referral rewards"
+      },
+      "title": "Referral program"
     },
     "staking": {
       "deposit": "Deposit",

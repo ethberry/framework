@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { CraftStatus, IExchangeSearchDto } from "@framework/types";
+import { CraftStatus, ICraftSearchDto } from "@framework/types";
 
 import { CraftEntity } from "./craft.entity";
 import { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
@@ -16,7 +16,7 @@ export class CraftService {
     private readonly assetService: AssetService,
   ) {}
 
-  public search(dto: IExchangeSearchDto): Promise<[Array<CraftEntity>, number]> {
+  public search(dto: ICraftSearchDto): Promise<[Array<CraftEntity>, number]> {
     const { query, craftStatus, skip, take } = dto;
 
     const queryBuilder = this.craftEntityRepository.createQueryBuilder("craft");

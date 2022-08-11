@@ -6,15 +6,16 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { ILeaderboard } from "@framework/types";
+import { IReferralLeaderboard } from "@framework/types";
+
 import { formatEther } from "../../../../utils/money";
 
 export const ReferralLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
-    useCollection<ILeaderboard>({
+    useCollection<IReferralLeaderboard>({
       baseUrl: "/referral/leaderboard",
       empty: {
-        wallet: "",
+        account: "",
       },
     });
 
@@ -25,8 +26,8 @@ export const ReferralLeaderboard: FC = () => {
     {
       field: "id",
       headerName: formatMessage({id: "pages.referral.leaderboard.id"}),
-      sortable: false,
-      flex: 1,
+      sortable: true,
+      flex: 0,
     },
     {
       field: "account",
@@ -37,7 +38,7 @@ export const ReferralLeaderboard: FC = () => {
     {
       field: "amount",
       headerName: formatMessage({id: "pages.referral.leaderboard.amount"}),
-      sortable: false,
+      sortable: true,
       valueFormatter: ({value}: { value: string }) => formatEther(value),
       flex: 1
     },

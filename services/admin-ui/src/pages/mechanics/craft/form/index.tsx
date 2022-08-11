@@ -3,13 +3,13 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { CraftStatus, IExchangeSearchDto } from "@framework/types";
+import { CraftStatus, ICraftSearchDto } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface IExchangeSearchFormProps {
-  onSubmit: (values: IExchangeSearchDto) => Promise<void>;
-  initialValues: IExchangeSearchDto;
+  onSubmit: (values: ICraftSearchDto) => Promise<void>;
+  initialValues: ICraftSearchDto;
   open: boolean;
 }
 

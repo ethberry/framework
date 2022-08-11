@@ -67,6 +67,7 @@
     "react-multi-carousel": "2.8.2",
     "react-router": "6.3.0",
     "react-router-dom": "6.3.0",
+    "use-clipboard-copy": "0.2.0",
     "use-deep-compare-effect": "1.8.1",
     "uuid": "8.3.2",
     "yup": "0.32.11"

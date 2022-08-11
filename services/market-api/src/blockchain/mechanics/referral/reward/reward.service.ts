@@ -4,10 +4,10 @@ import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typ
 
 import { ISearchDto } from "@gemunion/types-collection";
 import { ns } from "@framework/constants";
+import { IReferralLeaderboard, IReferralLeaderboardSearchDto } from "@framework/types";
 
 import { ReferralRewardEntity } from "./reward.entity";
 import { UserEntity } from "../../../../user/user.entity";
-import { ILeaderboardSearchDto, IReferralLeaderboard } from "../leaderboard/interfaces";
 
 @Injectable()
 export class ReferralRewardService {
@@ -34,7 +34,7 @@ export class ReferralRewardService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async leaderboard(dto: ILeaderboardSearchDto): Promise<[Array<IReferralLeaderboard>, number]> {
+  public async leaderboard(dto: IReferralLeaderboardSearchDto): Promise<[Array<IReferralLeaderboard>, number]> {
     const { skip, take } = dto;
 
     const queryString = `

@@ -50,23 +50,23 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
+    "contractFeatures": {
+      "BLACKLIST": "Blacklist",
+      "EXTERNAL": "External",
+      "MYSTERYBOX": "Mysterybox",
+      "NATIVE": "Native",
+      "RANDOM": "Random",
+      "UPGRADEABLE": "Upgradeable"
+    },
     "contractStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
-    "contractFeatures": {
-      "NATIVE": "Native",
-      "BLACKLIST": "Blacklist",
-      "RANDOM": "Random",
-      "EXTERNAL": "External",
-      "MYSTERYBOX": "Mysterybox",
-      "UPGRADEABLE": "Upgradeable"
-    },
     "contractTemplate": {
       "CLIFF": "Cliff",
-      "LINEAR": "Linear",
-      "GRADED": "Graded"
+      "GRADED": "Graded",
+      "LINEAR": "Linear"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -198,7 +198,6 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "contractFeatures": "Features",
       "DUMMY": "Dummy",
       "account": "Account",
       "address": "Address",
@@ -215,6 +214,7 @@
       "comment": "Comment",
       "confirm": "Confirm",
       "contract": "Contract",
+      "contractFeatures": "Features",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "contractStatus": "Status",
@@ -395,10 +395,6 @@
         "contracts": "ERC20 Contracts",
         "title": "ERC20"
       },
-      "native": {
-        "contracts": "Native Tokens",
-        "title": "NATIVE"
-      },
       "erc721": {
         "contracts": "ERC721 Contracts",
         "templates": "ERC721 Templates",
@@ -420,6 +416,10 @@
         "mysteryboxes": "Mysteryboxes",
         "title": "Mechanics",
         "vesting": "Vesting"
+      },
+      "native": {
+        "contracts": "Native Tokens",
+        "title": "NATIVE"
       },
       "staking": {
         "rules": "Rules",
@@ -444,9 +444,6 @@
     "erc20-contracts": {
       "snapshot": "Make snapshot",
       "title": "ERC20 Contracts"
-    },
-    "native-contracts": {
-      "title": "Native Tokens"
     },
     "erc721-contracts": {
       "royalty": "Royalty",
@@ -481,6 +478,9 @@
     },
     "mysteryboxes": {
       "title": "Mysteryboxes"
+    },
+    "native-contracts": {
+      "title": "Native Tokens"
     },
     "pages": {
       "title": "Pages"

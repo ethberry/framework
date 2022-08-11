@@ -1,5 +1,5 @@
 import { IPaginationDto } from "@gemunion/types-collection";
 
-export interface ILeaderboardSearchDto extends IPaginationDto {
+export interface IReferralLeaderboardSearchDto extends IPaginationDto {
   account: string;
 }

@@ -5,6 +5,7 @@ declare global {
       PORT: number;
       HOST: string;
       BE_URL: string;
+      MARKET_FE_URL: string;
       GEMUNION_API_KEY: string;
       ACCOUNT: string;
       CLAIM_PROXY_ADDR: string;

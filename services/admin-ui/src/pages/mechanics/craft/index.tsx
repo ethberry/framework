@@ -16,7 +16,7 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { CraftStatus, ICraft, IExchangeSearchDto } from "@framework/types";
+import { CraftStatus, ICraft, ICraftSearchDto } from "@framework/types";
 
 import { CraftEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
@@ -43,7 +43,7 @@ export const Craft: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<ICraft, IExchangeSearchDto>({
+  } = useCollection<ICraft, ICraftSearchDto>({
     baseUrl: "/craft",
     empty: {
       item: emptyItem,

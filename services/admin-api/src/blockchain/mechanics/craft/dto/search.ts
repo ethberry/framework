@@ -3,9 +3,9 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { CraftStatus, IExchangeSearchDto } from "@framework/types";
+import { CraftStatus, ICraftSearchDto } from "@framework/types";
 
-export class Erc721RecipeSearchDto extends SearchDto implements IExchangeSearchDto {
+export class Erc721RecipeSearchDto extends SearchDto implements ICraftSearchDto {
   @ApiPropertyOptional({
     enum: CraftStatus,
     isArray: true,

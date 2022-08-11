@@ -25,6 +25,7 @@ export * from "./blockchain/mechanics/grade";
 export * from "./blockchain/mechanics/marketplace-history";
 export * from "./blockchain/mechanics/mysterybox";
 export * from "./blockchain/mechanics/referral-history";
+export * from "./blockchain/mechanics/referral-leaderboard";
 export * from "./blockchain/mechanics/referral-reward";
 export * from "./blockchain/mechanics/staking-history";
 export * from "./blockchain/mechanics/staking-rule";
