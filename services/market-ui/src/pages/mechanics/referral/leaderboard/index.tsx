@@ -7,6 +7,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { ILeaderboard } from "@framework/types";
+import { formatEther } from "../../../../utils/money";
 
 export const ReferralLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
@@ -23,28 +24,23 @@ export const ReferralLeaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.referral.leaderboard.id" }),
+      headerName: formatMessage({id: "pages.referral.leaderboard.id"}),
       sortable: false,
       flex: 1,
     },
     {
       field: "account",
-      headerName: formatMessage({ id: "pages.referral.leaderboard.account" }),
+      headerName: formatMessage({id: "pages.referral.leaderboard.account"}),
       sortable: false,
       flex: 1
     },
     {
-      field: "score",
-      headerName: formatMessage({ id: "pages.referral.leaderboard.score" }),
+      field: "amount",
+      headerName: formatMessage({id: "pages.referral.leaderboard.amount"}),
       sortable: false,
+      valueFormatter: ({value}: { value: string }) => formatEther(value),
       flex: 1
     },
-    {
-      field: "rank",
-      headerName: formatMessage({ id: "pages.referral.leaderboard.rank" }),
-      sortable: false,
-      flex: 1
-    }
   ];
 
   return (

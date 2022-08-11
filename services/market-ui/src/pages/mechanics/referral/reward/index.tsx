@@ -26,6 +26,9 @@ export const ReferralHistory: FC = () => {
     handleChangePage,
   } = useCollection<IReferralReward, ISearchDto>({
     baseUrl: "/referral/reward",
+    empty: {
+      createdAt: new Date().toISOString(),
+    },
     search: {
       query: "",
     },
@@ -33,7 +36,7 @@ export const ReferralHistory: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "referral.reward"]} />
+      <Breadcrumbs path={["dashboard", "referral", "referral.reward"]} />
 
       <PageHeader message="pages.referral.reward.title" />
 

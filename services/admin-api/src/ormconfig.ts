@@ -134,6 +134,7 @@ import { SeedDropErc1155At1658980521050 } from "./migrations/1658980521050-seed-
 import { SeedDropErcMysteryboxAt1658980521050 } from "./migrations/1658980521060-seed-drop-mysterybox";
 
 import { CreateReferralReward1660103709900 } from "./migrations/1660103709900-create-referral-reward";
+import { SeedReferralRewardAt1660103709910 } from "./migrations/1660103709910-seed-referral-reward";
 import { CreateReferralHistory1660103709950 } from "./migrations/1660103709950-create-referral-history";
 
 // Check typeORM documentation for more information.
@@ -287,6 +288,7 @@ const config: PostgresConnectionOptions = {
     SeedDropErcMysteryboxAt1658980521050,
 
     CreateReferralReward1660103709900,
+    SeedReferralRewardAt1660103709910,
     CreateReferralHistory1660103709950,
   ],
 };

@@ -116,6 +116,8 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "referrer": "Referrer",
+      "level": "Level",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -284,8 +286,7 @@
         "title": "Referral program leaderboard",
         "id": "ID",
         "account": "Account",
-        "rank": "Rank",
-        "score": "Score"
+        "amount": "Amount"
       },
       "reward": {
         "title": "Referral rewards"

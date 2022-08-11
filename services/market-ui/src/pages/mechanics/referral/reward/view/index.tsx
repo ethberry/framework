@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+import { format, parseISO } from "date-fns";
 
-import { RichTextDisplay } from "@gemunion/mui-rte";
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IReferralReward } from "@framework/types";
 
@@ -17,7 +18,7 @@ export interface IReferralRewardViewDialogProps {
 
 export const ReferralRewardViewDialog: FC<IReferralRewardViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { referrer, amount, level } = initialValues;
+  const { referrer, amount, level, createdAt } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -38,15 +39,19 @@ export const ReferralRewardViewDialog: FC<IReferralRewardViewDialogProps> = prop
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.amount" />
               </TableCell>
-              <TableCell align="right">
-                <RichTextDisplay data={formatEther(amount)} />
-              </TableCell>
+              <TableCell align="right">{formatEther(amount)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.level" />
               </TableCell>
               <TableCell align="right">{level}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.createdAt" />
+              </TableCell>
+              <TableCell align="right">{format(parseISO(createdAt), humanReadableDateTimeFormat)}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

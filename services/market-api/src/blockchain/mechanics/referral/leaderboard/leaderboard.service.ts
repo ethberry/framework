@@ -1,14 +1,13 @@
 import { Injectable } from "@nestjs/common";
 
-import { ILeaderboardSearchDto } from "./interfaces/search";
+import { ILeaderboardSearchDto, IReferralLeaderboard } from "./interfaces";
 import { ReferralRewardService } from "../reward/reward.service";
-import { ReferralRewardEntity } from "../reward/reward.entity";
 
 @Injectable()
 export class ReferralLeaderboardService {
   constructor(private readonly referralRewardService: ReferralRewardService) {}
 
-  public async leaderboard(dto: ILeaderboardSearchDto): Promise<[Array<ReferralRewardEntity>, number]> {
+  public async leaderboard(dto: ILeaderboardSearchDto): Promise<[Array<IReferralLeaderboard>, number]> {
     return this.referralRewardService.leaderboard(dto);
   }
 }

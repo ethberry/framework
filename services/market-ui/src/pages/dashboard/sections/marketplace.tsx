@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Storefront, RecordVoiceOver } from "@mui/icons-material";
+import { Storefront, RecordVoiceOver, Leaderboard, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Sections: FC = () => {
+export const Marketplace: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
@@ -33,7 +33,7 @@ export const Sections: FC = () => {
         </ListItem>
         <ListItem button component={RouterLink} to="/referral/leaderboard">
           <ListItemIcon>
-            <RecordVoiceOver />
+            <Leaderboard />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.marketplace.leaderboard" />
@@ -41,7 +41,7 @@ export const Sections: FC = () => {
         </ListItem>
         <ListItem button component={RouterLink} to="/referral/reward">
           <ListItemIcon>
-            <RecordVoiceOver />
+            <Timeline />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.marketplace.reward" />
