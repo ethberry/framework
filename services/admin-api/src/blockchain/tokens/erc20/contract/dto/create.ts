@@ -6,7 +6,7 @@ import { IErc20ContractCreateDto } from "@framework/types";
 export class Erc20ContractCreateDto implements IErc20ContractCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(5, { message: "rangeOverflow" })
+  @MaxLength(32, { message: "rangeOverflow" })
   public symbol: string;
 
   @ApiProperty()

@@ -25,6 +25,7 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
   const fixedValues = {
     id,
     title,
+    address,
     description,
     contractStatus,
     imageUrl,
@@ -49,6 +50,7 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
       />
       <TextInput name="title" />
       <RichTextEditor name="description" />
+      <TextInput name="address" disabled={true} />
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
       <AvatarInput name="imageUrl" />
     </FormDialog>

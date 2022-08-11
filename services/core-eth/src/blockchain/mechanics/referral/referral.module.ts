@@ -1,8 +1,18 @@
-import { Module } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ReferralHistoryModule } from "./hystory/hystory.module";
+import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
+
+import { ReferralHistoryModule } from "./history/ref-history.module";
+import { ReferralControllerEth } from "./referral.controller.eth";
+import { ReferralServiceEth } from "./referral.service.eth";
+import { ReferralService } from "./referral.service";
+import { ReferralEntity } from "./referral.entity";
 
 @Module({
-  imports: [ReferralHistoryModule],
+  imports: [ContractManagerModule, TypeOrmModule.forFeature([ReferralEntity]), ReferralHistoryModule],
+  providers: [Logger, ReferralService, ReferralServiceEth],
+  controllers: [ReferralControllerEth],
+  exports: [ReferralService, ReferralServiceEth],
 })
 export class ReferralModule {}

@@ -22,7 +22,7 @@ export class Erc20ContractDeployDto implements IErc20TokenDeployDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(5, { message: "rangeOverflow" })
+  @MaxLength(32, { message: "rangeOverflow" })
   public symbol: string;
 
   @ApiProperty({

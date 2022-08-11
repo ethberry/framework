@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ReferralHistoryEntity } from "./hystory.entity";
+import { ReferralHistoryEntity } from "./ref-history.entity";
 
 @Injectable()
 export class ReferralHistoryService {
@@ -16,5 +16,9 @@ export class ReferralHistoryService {
     options?: FindOneOptions<ReferralHistoryEntity>,
   ): Promise<ReferralHistoryEntity | null> {
     return this.referralHistoryEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: DeepPartial<ReferralHistoryEntity>): Promise<ReferralHistoryEntity> {
+    return this.referralHistoryEntityRepository.create(dto).save();
   }
 }

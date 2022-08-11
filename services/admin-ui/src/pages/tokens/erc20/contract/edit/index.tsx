@@ -26,6 +26,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const fixedValues = {
     id,
     title,
+    address,
     description,
     contractStatus,
   };
@@ -51,6 +52,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         <TextInput name="title" />
         <RichTextEditor name="description" />
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+        <TextInput name="address" disabled={true} />
       </FormDialog>
     </>
   );

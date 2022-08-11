@@ -21,7 +21,7 @@ export class Erc721ContractDeployDto implements IErc721ContractDeployDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(5, { message: "rangeOverflow" })
+  @MaxLength(32, { message: "rangeOverflow" })
   public symbol: string;
 
   @ApiProperty()

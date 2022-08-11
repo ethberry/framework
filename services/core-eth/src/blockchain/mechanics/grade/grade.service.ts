@@ -24,15 +24,11 @@ export class GradeService {
 
   public async create(dto: DeepPartial<GradeEntity>): Promise<GradeEntity> {
     const assetEntity = await this.assetService.create({
-      components: [],
-    });
-
-    await this.assetService.update(assetEntity, {
       components: [
         {
           tokenType: TokenType.NATIVE,
           contractId: 1,
-          templateId: 12001,
+          templateId: 11001,
           amount: constants.WeiPerEther.toString(),
         },
       ],

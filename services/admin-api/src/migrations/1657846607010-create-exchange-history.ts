@@ -11,7 +11,8 @@ export class CreateExchangeHistory1657846607010 implements MigrationInterface {
         'Mysterybox',
         'Purchase',
         'Paused',
-        'Unpaused'
+        'Unpaused',
+        'Reward'
       );`,
     );
 

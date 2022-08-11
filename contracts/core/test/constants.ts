@@ -8,10 +8,10 @@ export const templateId = 1;
 export const royalty = 100;
 
 export const DEFAULT_ADMIN_ROLE = "0x0000000000000000000000000000000000000000000000000000000000000000";
+export const METADATA_ADMIN_ROLE = utils.id("METADATA_ADMIN_ROLE");
 export const MINTER_ROLE = utils.id("MINTER_ROLE");
 export const PAUSER_ROLE = utils.id("PAUSER_ROLE");
 export const SNAPSHOT_ROLE = utils.id("SNAPSHOT_ROLE");
-export const METADATA_ADMIN_ROLE = utils.id("METADATA_ADMIN_ROLE");
 
 export const decimals = BigNumber.from(10).pow(18);
 export const amount = 10000;

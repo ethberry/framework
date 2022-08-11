@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractType, ExchangeEventType } from "@framework/types";
+import { ContractType, ExchangeEventType, ReferralProgramEventType } from "@framework/types";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 import { ExchangeLogService } from "./exchange-log.service";
@@ -35,6 +35,7 @@ import { ContractManagerService } from "../../../contract-manager/contract-manag
             eventNames: [
               ExchangeEventType.Purchase,
               ExchangeEventType.Claim,
+              ReferralProgramEventType.Reward,
             ],
           },
           block: {
