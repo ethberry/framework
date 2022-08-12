@@ -1,4 +1,5 @@
 import { BigNumber, constants, utils } from "ethers";
+import { getNumbers } from "./utils";
 
 export const baseTokenURI = "http://localhost:3011/metadata"; // no trailing slash
 export const tokenSymbol = "SYMBOL";
@@ -19,6 +20,8 @@ export const period = 60 * 60 * 24 * 365; // a year in seconds
 export const _stakePeriod = 300; // 5 minutes in seconds
 
 export const nonce = utils.formatBytes32String("nonce");
+export const defaultNumbers = getNumbers();
+export const lotteryBalance = utils.parseEther("10000");
 
 // INTERFACES
 export const accessControlInterfaceId = "0x7965db0b";

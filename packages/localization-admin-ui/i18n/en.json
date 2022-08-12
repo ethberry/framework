@@ -160,6 +160,8 @@
       "percent": "%"
     },
     "buttons": {
+      "startRound": "Start round",
+      "finishRound": "Finish round",
       "accept": "Accept",
       "add": "Add",
       "blacklist": "Blacklist",
@@ -418,6 +420,10 @@
         "title": "Mechanics",
         "vesting": "Vesting"
       },
+      "lottery": {
+        "rounds": "Rounds",
+        "title": "Lottery"
+      },
       "native": {
         "contracts": "Native Tokens",
         "title": "NATIVE"
@@ -482,6 +488,12 @@
     },
     "native-contracts": {
       "title": "Native Tokens"
+    },
+    "lottery": {
+      "title": "Lottery",
+      "rounds": {
+        "title": "Rounds"
+      }
     },
     "pages": {
       "title": "Pages"

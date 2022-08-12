@@ -1,0 +1,26 @@
+// SPDX-License-Identifier: UNLICENSED
+
+// Author: TrejGun
+// Email: trejgun+gemunion@gmail.com
+// Website: https://gemunion.io/
+
+pragma solidity ^0.8.9;
+
+struct Ticket {
+  uint8 ticketType;
+  uint256 round;
+  bool[40] numbers;
+}
+
+interface IERC721Ticket {
+  function mintTicket(
+    address account,
+    uint8 ticketType,
+    uint256 round,
+    bool[40] calldata numbers
+  ) external returns (uint256);
+
+  function burn(uint256 tokenId) external;
+
+  function getTicketData(uint256 tokenId) external view returns (Ticket memory);
+}

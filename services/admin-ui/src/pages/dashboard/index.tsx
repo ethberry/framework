@@ -13,6 +13,7 @@ import { Mechanics } from "./sections/mechanics";
 import { Staking } from "./sections/staking";
 import { ChainLink } from "./sections/chain-link";
 import { NativeSections } from "./sections/native";
+import { Lottery } from "./sections/lottery";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -32,6 +33,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={4}>
           <Mechanics />
           <Staking />
+          <Lottery />
         </Grid>
         <Grid item xs={4}>
           <ChainLink />

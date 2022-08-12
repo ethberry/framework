@@ -7,8 +7,9 @@ import { Mysterybox } from "./mysterybox";
 import { Craft } from "./craft";
 import { Vesting } from "./vesting";
 import { Grade } from "./grade";
-import { stakingRoutes } from "./staking/routes";
 import { Drop } from "./drop";
+import { stakingRoutes } from "./staking/routes";
+import { lotteryRoutes } from "./lottery/routes";
 
 export const mechanics: Array<RouteObject> = [
   {
@@ -60,4 +61,5 @@ export const mechanics: Array<RouteObject> = [
     ],
   },
   ...stakingRoutes,
+  ...lotteryRoutes,
 ];

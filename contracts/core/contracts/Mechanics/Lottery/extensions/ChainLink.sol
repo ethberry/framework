@@ -8,7 +8,7 @@ pragma solidity ^0.8.9;
 
 import "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol";
 
-abstract contract ERC721ChainLinkTest is VRFConsumerBase {
+abstract contract ChainLink is VRFConsumerBase {
   bytes32 internal _keyHash;
   uint256 internal _fee;
 
@@ -22,12 +22,9 @@ abstract contract ERC721ChainLinkTest is VRFConsumerBase {
     _keyHash = keyHash;
   }
 
-  event RandomRequest(bytes32 requestId);
-
   function getRandomNumber() internal virtual returns (bytes32 requestId) {
     require(LINK.balanceOf(address(this)) >= _fee, "ERC721ChainLink: Not enough LINK");
     requestId = VRFConsumerBase.requestRandomness(_keyHash, _fee);
-    emit RandomRequest(requestId);
     return requestId;
   }
 }
