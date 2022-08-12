@@ -54,7 +54,7 @@ describe.only("Factory Exchange Referral", function () {
     this.contractInstance = factoryInstance;
   });
 
-  describe("Deploy, Purchase, Referral", function () {
+  describe("Deploy and Purchase", function () {
     it("should deploy ERC721 and Purchase at Exchange (one ref)", async function () {
       const signature = await this.owner._signTypedData(
         // Domain
