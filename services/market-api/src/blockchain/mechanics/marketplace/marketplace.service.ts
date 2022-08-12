@@ -49,7 +49,7 @@ export class MarketplaceService {
         nonce,
         externalId: templateEntity.id,
         expiresAt,
-        referrer: referrer.toLowerCase(),
+        referrer,
       },
       templateEntity,
     );

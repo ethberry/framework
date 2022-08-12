@@ -6,7 +6,7 @@ export enum ReferralProgramEventType {
 }
 
 export interface IReward {
-  from: string;
+  account: string;
   referrer: string;
   level: number;
   amount: string;

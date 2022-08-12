@@ -29,7 +29,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           nonce: utils.arrayify(sign.nonce),
           externalId: template.id,
           expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer().toLowerCase(),
+          referrer: settings.getReferrer(),
         },
         {
           tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),

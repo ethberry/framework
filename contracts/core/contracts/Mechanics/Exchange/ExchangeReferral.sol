@@ -15,7 +15,7 @@ import "./interfaces/IAsset.sol";
 import "hardhat/console.sol";
 
 abstract contract ExchangeReferral is Context {
-  event ReferralReward(address indexed from, address indexed referrer, uint8 level, uint256 amount);
+  event ReferralReward(address indexed account, address indexed referrer, uint8 level, uint256 amount);
   event ReferralWithdraw(address indexed account, uint256 amount);
 
   mapping(address => address) private _chain;
