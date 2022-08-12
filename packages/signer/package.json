@@ -8,8 +8,8 @@
     "url": "https://github.com/gemunion/framework/issues"
   },
   "dependencies": {
-    "@gemunion/nestjs-ethers": "3.0.6",
-    "@nestjs/common": "9.0.8",
+    "@gemunion/nestjs-ethers": "3.0.8",
+    "@nestjs/common": "9.0.9",
     "@nestjs/config": "2.2.0",
     "ethers": "5.6.9"
   },
