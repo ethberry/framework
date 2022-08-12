@@ -163,7 +163,6 @@ export class ContractManagerSignService {
         featureIds: contractFeatures.map(feature => Object.keys(Erc721ContractFeatures).indexOf(feature)),
       },
     );
-
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 

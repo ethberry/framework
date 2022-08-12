@@ -19,11 +19,12 @@ import { ExchangeServiceEth } from "./exchange.service.eth";
 export class ExchangeControllerEth {
   constructor(private readonly exchangeServiceEth: ExchangeServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase })
-  // @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Claim })
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft })
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade })
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox })
+  @EventPattern([
+    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase },
+    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft },
+    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade },
+    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox },
+  ])
   public exchange(
     @Payload()
     event: ILogEvent<IExchangePurchase | IExchangeCraft | IExchangeGrade | IExchangeMysterybox>,
@@ -32,7 +33,7 @@ export class ExchangeControllerEth {
     return this.exchangeServiceEth.log(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Claim })
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Claim }])
   public claim(
     @Payload()
     event: ILogEvent<IExchangeClaim>,

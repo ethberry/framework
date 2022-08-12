@@ -28,7 +28,6 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
         ContractManagerSol.abi,
         web3Context.provider?.getSigner(),
       );
-
       return contract.deployERC721Token(
         nonce,
         // @ts-ignore

@@ -35,7 +35,8 @@ import { ContractManagerService } from "../../../contract-manager/contract-manag
             eventNames: [
               ExchangeEventType.Purchase,
               ExchangeEventType.Claim,
-              ReferralProgramEventType.Reward,
+              ReferralProgramEventType.ReferralWithdraw,
+              ReferralProgramEventType.ReferralReward,
             ],
           },
           block: {

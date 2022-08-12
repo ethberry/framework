@@ -15,7 +15,6 @@ export class Erc998TokenLogService {
 
   public async addListener(dto: ICreateListenerPayload): Promise<void> {
     this.ethersContractService.updateListener([dto.address], dto.fromBlock);
-    console.log("addListener", dto);
     await this.contractManagerService.create({
       address: dto.address.toLowerCase(),
       contractType: ContractType.ERC998_TOKEN,

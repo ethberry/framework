@@ -11,7 +11,7 @@ import { ReferralServiceEth } from "./referral.service.eth";
 export class ReferralControllerEth {
   constructor(private readonly referralServiceEth: ReferralServiceEth) {}
 
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ReferralProgramEventType.ReferralReward })
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ReferralProgramEventType.ReferralReward }])
   public reward(
     @Payload()
     event: ILogEvent<IReward>,
@@ -20,7 +20,7 @@ export class ReferralControllerEth {
     return this.referralServiceEth.reward(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.EXCHANGE, eventName: ReferralProgramEventType.ReferralWithdraw })
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ReferralProgramEventType.ReferralWithdraw }])
   public withdraw(
     @Payload()
     event: ILogEvent<IWithdraw>,

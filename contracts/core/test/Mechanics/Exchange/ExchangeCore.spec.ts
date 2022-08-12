@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { utils, constants } from "ethers";
+import { utils, constants, BigNumber } from "ethers";
 import { Network } from "@ethersproject/networks";
 import { time } from "@openzeppelin/test-helpers";
 
@@ -64,7 +64,7 @@ describe("ExchangeCore", function () {
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("purchase", function () {
-    it("should purchase", async function () {
+    it("should purchase, spend ERC20", async function () {
       const signature = await generateSignature({
         account: this.receiver.address,
         params,
@@ -105,6 +105,50 @@ describe("ExchangeCore", function () {
         ],
         this.owner.address,
         signature,
+      );
+
+      await expect(tx1).to.emit(exchangeInstance, "Purchase");
+    });
+
+    it("should purchase, spend ETH", async function () {
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            amount: "123000000000000000",
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            amount: "123000000000000000",
+            token: "0x0000000000000000000000000000000000000000",
+            tokenId: "0",
+            tokenType: 0,
+          },
+        ],
+        this.owner.address,
+        signature,
+        { value: BigNumber.from("123000000000000000") },
       );
 
       await expect(tx1).to.emit(exchangeInstance, "Purchase");

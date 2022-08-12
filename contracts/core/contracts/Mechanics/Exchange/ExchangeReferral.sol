@@ -21,6 +21,8 @@ abstract contract ExchangeReferral is Context {
   mapping(address => address) private _chain;
   mapping(address => uint256) private _balance;
 
+  uint8 _maxRef = 10; // Max referrals chain length
+
   function _afterPurchase(Params memory params) internal virtual {
     updateReferrers(params.referrer);
   }
@@ -34,13 +36,23 @@ abstract contract ExchangeReferral is Context {
     _chain[account] = referrer;
 
     uint256 reward = 1 ether;
-    uint8 level = 0;
-    do {
+
+    for (uint8 level = 0; level < _maxRef; level++) {
       emit ReferralReward(account, referrer, level, reward);
       _balance[referrer] += reward;
       reward /= 10**++level;
-      referrer = _chain[referrer];
-    } while (referrer != address(0));
+
+      address nxt = _chain[referrer];
+
+      if (_chain[referrer] == address(0)) {
+        level = _maxRef;
+      }
+
+      if (_chain[referrer] == account) {
+        level = _maxRef;
+      }
+      referrer = nxt;
+    }
   }
 
   function withdraw() public returns (bool success) {

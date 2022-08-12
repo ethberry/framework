@@ -69,6 +69,7 @@ export class StakingRulesServiceEth {
   }
 
   public async start(_event: ILogEvent<IStakingDeposit>, _context: Log): Promise<void> {
+    // TODO fix it!
     // await this.updateHistory(event, context);
     // const {
     //   args: { stakingId, externalId, owner, startTimestamp },
