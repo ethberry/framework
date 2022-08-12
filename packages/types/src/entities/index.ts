@@ -17,7 +17,6 @@ export * from "./blockchain/contract-manager-history";
 export * from "./blockchain/mechanics/asset";
 export * from "./blockchain/mechanics/asset-component";
 export * from "./blockchain/mechanics/claim";
-export * from "./blockchain/mechanics/composition";
 export * from "./blockchain/mechanics/craft";
 export * from "./blockchain/mechanics/drop";
 export * from "./blockchain/mechanics/exchange-history";
@@ -33,7 +32,8 @@ export * from "./blockchain/mechanics/staking-stake";
 export * from "./blockchain/mechanics/vesting";
 export * from "./blockchain/mechanics/vesting-history";
 
-export * from "./blockchain/hierarchy/balance";
 export * from "./blockchain/hierarchy/contract";
 export * from "./blockchain/hierarchy/template";
 export * from "./blockchain/hierarchy/token";
+export * from "./blockchain/hierarchy/balance";
+export * from "./blockchain/hierarchy/composition";

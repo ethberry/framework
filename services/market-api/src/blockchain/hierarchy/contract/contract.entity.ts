@@ -5,6 +5,7 @@ import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typ
 import { ContractFeatures, ContractStatus, IContract, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { TemplateEntity } from "../template/template.entity";
+import { CompositionEntity } from "../../tokens/erc998/composition/composition.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
@@ -53,4 +54,7 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
 
   @OneToMany(_type => TemplateEntity, template => template.contract)
   public templates: Array<TemplateEntity>;
+
+  @OneToMany(_type => CompositionEntity, composition => composition.parent)
+  public children: Array<CompositionEntity>;
 }

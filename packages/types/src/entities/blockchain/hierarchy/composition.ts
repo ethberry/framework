@@ -1,6 +1,6 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { IContract } from "../hierarchy/contract";
+import { IContract } from "./contract";
 
 export interface IComposition extends IIdDateBase {
   parentId: number;

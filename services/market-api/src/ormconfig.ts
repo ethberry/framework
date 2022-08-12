@@ -12,6 +12,7 @@ import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity"
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
+import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
 import { AssetEntity } from "./blockchain/mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-component.entity";
@@ -38,6 +39,7 @@ const config: PostgresConnectionOptions = {
     TemplateEntity,
     TokenEntity,
     BalanceEntity,
+    CompositionEntity,
     AssetEntity,
     AssetComponentEntity,
     DropEntity,

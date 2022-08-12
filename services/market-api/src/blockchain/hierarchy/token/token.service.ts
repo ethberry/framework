@@ -97,14 +97,30 @@ export class TokenService {
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto): Promise<Array<TokenEntity>> {
-    const { account } = dto;
+    const { account, contractIds } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
-    queryBuilder.select(["id", "tokenId"]);
-    queryBuilder.andWhere("token.account = :account", { account });
+    queryBuilder.select(["token.id", "token.tokenId"]);
+
+    if (account) {
+      queryBuilder.andWhere("token.account = :account", { account });
+    }
 
     queryBuilder.leftJoin("token.template", "template");
     queryBuilder.addSelect(["template.title"]);
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    queryBuilder.leftJoin("template.contract", "contract");
+    queryBuilder.addSelect(["contract.address"]);
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",

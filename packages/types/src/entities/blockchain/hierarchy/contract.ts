@@ -4,6 +4,7 @@ import { IContractHistory } from "../contract-history";
 
 import { ITemplate } from "./template";
 import { ModuleType, TokenType } from "../common";
+import { IComposition } from "./composition";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -64,4 +65,5 @@ export interface IContract extends IDeployable, ISearchable {
   contractModule: ModuleType;
   templates: Array<ITemplate>;
   history?: Array<IContractHistory>;
+  children?: Array<IComposition>;
 }
