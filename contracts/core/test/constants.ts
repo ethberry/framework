@@ -15,6 +15,9 @@ export const SNAPSHOT_ROLE = utils.id("SNAPSHOT_ROLE");
 
 export const decimals = BigNumber.from(10).pow(18);
 export const amount = 10000;
+export const amountWei = "10000000000000000";
+export const amountWeiEth = BigNumber.from("10000000000000000");
+export const tokenZero = "0x0000000000000000000000000000000000000000";
 export const period = 60 * 60 * 24 * 365; // a year in seconds
 export const _stakePeriod = 300; // 5 minutes in seconds
 

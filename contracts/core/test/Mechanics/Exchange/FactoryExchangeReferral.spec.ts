@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers } from "hardhat";
-import { ContractFactory, BigNumber } from "ethers";
+import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ContractManager, Exchange } from "../../../typechain-types";
@@ -13,14 +13,14 @@ import {
   featureIds,
   tokenName,
   tokenSymbol,
-  MINTER_ROLE,
+  MINTER_ROLE, amountWei, amountWeiEth, tokenZero, tokenId, templateId
 } from "../../constants";
 import { wrapOneToManySignature } from "./shared/utils";
 import { blockAwait } from "../../../scripts/utils/blockAwait";
 
 use(solidity);
 
-describe.only("ExchangeFactoryReferralTest", function () {
+describe.only("Factory Exchange Referral", function () {
   let erc721: ContractFactory;
   let factory: ContractFactory;
   let factoryInstance: ContractManager;
@@ -34,12 +34,11 @@ describe.only("ExchangeFactoryReferralTest", function () {
 
     factory = await ethers.getContractFactory("ContractManager");
     factoryInstance = (await factory.deploy()) as ContractManager;
-    this.contractInstance = factoryInstance;
     await factoryInstance.deployed();
 
     const exchangeFactory = await ethers.getContractFactory("Exchange");
     exchangeInstance = await exchangeFactory.deploy(tokenName);
-    await blockAwait();
+    if (network.chainId === 1337) await blockAwait();
     generateSignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
 
     const minters = [exchangeInstance.address];
@@ -52,10 +51,11 @@ describe.only("ExchangeFactoryReferralTest", function () {
     );
 
     erc721 = await ethers.getContractFactory("ERC721Simple");
+    this.contractInstance = factoryInstance;
   });
 
-  describe("deployERC721Token Purchase 721 at Exchange", function () {
-    it("should deploy erc721, set minter role and purchase 721 at exchange", async function () {
+  describe("Deploy, Purchase, Referral", function () {
+    it("should deploy ERC721 and Purchase at Exchange (one ref)", async function () {
       const signature = await this.owner._signTypedData(
         // Domain
         {
@@ -87,8 +87,7 @@ describe.only("ExchangeFactoryReferralTest", function () {
           featureIds,
         },
       );
-      await blockAwait();
-
+      if (network.chainId === 1337) await blockAwait();
       const tx = await factoryInstance.deployERC721Token(
         nonce,
         erc721.bytecode,
@@ -100,8 +99,7 @@ describe.only("ExchangeFactoryReferralTest", function () {
         this.owner.address,
         signature,
       );
-
-      await blockAwait();
+      if (network.chainId === 1337) await blockAwait();
 
       const [address] = await factoryInstance.allERC721Tokens();
 
@@ -109,7 +107,6 @@ describe.only("ExchangeFactoryReferralTest", function () {
         .to.emit(factoryInstance, "ERC721TokenDeployed")
         .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
 
-      // const erc721Instance = erc721.attach("0xf66e26833168dad47f72784af997c0a2170dbc56");
       const erc721Instance = erc721.attach(address);
 
       const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, factoryInstance.address);
@@ -125,20 +122,20 @@ describe.only("ExchangeFactoryReferralTest", function () {
         account: this.owner.address,
         params: {
           nonce,
-          externalId: 601009,
-          expiresAt: 0,
-          referrer: "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+          externalId: templateId,
+          expiresAt: 0, // never
+          referrer: this.owner.address,
         },
         item: {
           tokenType: 2,
           token: erc721Instance.address,
-          tokenId: 601009,
+          tokenId: templateId,
           amount: 1,
         },
         price: [
           {
-            amount: "10000000000000000",
-            token: "0x0000000000000000000000000000000000000000",
+            amount: amountWei,
+            token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
@@ -148,30 +145,32 @@ describe.only("ExchangeFactoryReferralTest", function () {
       const tx1 = exchangeInstance.connect(this.owner).purchase(
         {
           nonce,
-          externalId: 601009,
+          externalId: templateId,
           expiresAt: 0,
-          referrer: "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+          referrer: this.owner.address,
         },
         {
+          // ERC721
           tokenType: 2,
           token: erc721Instance.address,
-          tokenId: 601009,
+          tokenId: templateId,
           amount: 1,
         },
         [
+          // ETH
           {
-            amount: "10000000000000000",
-            token: "0x0000000000000000000000000000000000000000",
+            amount: amountWei,
+            token: tokenZero,
             tokenId: "0",
             tokenType: 0,
           },
         ],
         this.owner.address,
         signature1,
-        { value: BigNumber.from("10000000000000000") },
+        { value: amountWeiEth },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
-      await blockAwait();
+      if (network.chainId === 1337) await blockAwait();
       await expect(tx1).to.emit(erc721Instance, "Transfer");
       await expect(tx1).to.emit(exchangeInstance, "ReferralReward");
 
@@ -182,5 +181,6 @@ describe.only("ExchangeFactoryReferralTest", function () {
       const balance = await erc721Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
     });
+    // TODO add multi-ref test
   });
 });
