@@ -29,14 +29,14 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         asset_id
       ) VALUES (
         'ERC1155',
-        51,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
         35101
       ), (
         'ERC20',
-        21,
-        12001, -- space credit
+        201,
+        201001, -- space credit
         '${constants.WeiPerEther.toString()}',
         35111
       );
@@ -59,7 +59,7 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         '${imageUrl}',
         35101,
         35111,
-        16104,
+        601004,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

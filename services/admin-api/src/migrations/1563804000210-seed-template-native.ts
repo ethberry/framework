@@ -22,7 +22,7 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        11001,
+        101001,
         'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -30,11 +30,11 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        11,
+        101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        11002,
+        102001,
         'Inactive token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -42,11 +42,11 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        12,
+        102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        11003,
+        111001,
         'Native token (BNB)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -54,11 +54,11 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        13,
+        111,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        11004,
+        121001,
         'Native token (MATIC)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -66,13 +66,13 @@ export class SeedTemplateNativeAt1563804000210 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        14,
+        121,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 11004, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 121001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

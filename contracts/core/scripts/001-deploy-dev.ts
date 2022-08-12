@@ -150,7 +150,7 @@ async function deployStaking() {
       reward: {
         tokenType: 2,
         token: contracts.erc721Random.address,
-        tokenId: 13101,
+        tokenId: 306001,
         amount: 1,
       },
       period: 30 * 84600,

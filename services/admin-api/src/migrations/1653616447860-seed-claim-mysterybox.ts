@@ -12,7 +12,7 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        26101
+        2601001
       );
     `);
 
@@ -27,10 +27,10 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        61,
-        16101, -- sword mysterybox
+        601,
+        601001, -- sword mysterybox
         '1',
-        26101
+        2601001
       );
     `);
 
@@ -46,7 +46,7 @@ export class SeedClaimMysteryboxAt1653616447860 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        26101,
+        2601001,
         'NEW',
         '0x8ec31888371c5ecad6c93ac7c6e4f2519f2bea53231ed5b48be3a5bcd346d6b75a9abaf173dc703b4e3b628d5a8b6e9cd75eebace06b25cf7402bde23af7526e1b',
         '0xb7a84a4d540ad682fe1f3da89b7255586ddbc299be8e04f7576b1ad985dde16b',

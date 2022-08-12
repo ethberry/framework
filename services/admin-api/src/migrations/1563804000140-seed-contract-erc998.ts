@@ -33,7 +33,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        41,
+        401,
         '${erc998ContractSimpleAddress}',
         '${chainId}',
         'ERC998 (simple)',
@@ -49,7 +49,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        42,
+        402,
         '${erc998ContractInactiveAddress}',
         '${chainId}',
         'ERC998 (inactive)',
@@ -65,7 +65,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        43,
+        403,
         '${erc998ContractNewAddress}',
         '${chainId}',
         'ERC998 (new)',
@@ -81,7 +81,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        44,
+        404,
         '${erc998ContractBlacklistAddress}',
         '${chainId}',
         'ERC998 (blacklist)',
@@ -97,7 +97,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        45,
+        405,
         '${erc998ContractUpgradeableAddress}',
         '${chainId}',
         'ERC998 (upgradeable)',
@@ -113,7 +113,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        46,
+        406,
         '${erc998ContractRandomAddress}',
         '${chainId}',
         'HERO (random)',
@@ -128,10 +128,26 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '{UPGRADEABLE,RANDOM}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        411,
+        '${wallet}',
+        '56',
+        'BEP (binance)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'BEP',
+        'BEP998',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 46, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 411, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

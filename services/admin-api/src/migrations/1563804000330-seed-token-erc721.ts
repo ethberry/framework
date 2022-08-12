@@ -18,122 +18,133 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        13101,
+        301001,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13101",
+          [TokenAttributes.TEMPLATE_ID]: "301001",
         })}',
         100,
         '1',
         'MINTED',
-        13101,
+        301001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13102,
+        301002,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13102",
+          [TokenAttributes.TEMPLATE_ID]: "301002",
         })}',
         100,
         '1',
         'MINTED',
-        13102,
+        301002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13103,
+        301003,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13103",
+          [TokenAttributes.TEMPLATE_ID]: "301003",
         })}',
         100,
         '1',
         'MINTED',
-        13103,
+        301003,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13501,
+        305001,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13601",
+          [TokenAttributes.TEMPLATE_ID]: "305001",
           [TokenAttributes.GRADE]: "1",
         })}',
         100,
         '1',
         'MINTED',
-        13501,
+        305001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13502,
+        305002,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13502",
+          [TokenAttributes.TEMPLATE_ID]: "305002",
           [TokenAttributes.GRADE]: "5",
         })}',
         100,
         '2',
         'MINTED',
-        13502,
+        305002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13503,
+        305003,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13503",
+          [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
         100,
         '3',
         'MINTED',
-        13503,
+        305003,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13601,
+        306001,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13601",
+          [TokenAttributes.TEMPLATE_ID]: "306001",
           [TokenAttributes.GRADE]: "1",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '1',
         'MINTED',
-        13601,
+        306001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13602,
+        306002,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13602",
+          [TokenAttributes.TEMPLATE_ID]: "306002",
           [TokenAttributes.GRADE]: "5",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '2',
         'MINTED',
-        13602,
+        306002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13603,
+        306003,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13603",
+          [TokenAttributes.TEMPLATE_ID]: "306003",
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
         100,
         '3',
         'MINTED',
-        13603,
+        306003,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13701,
+        307001,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13701",
+          [TokenAttributes.TEMPLATE_ID]: "307001",
         })}',
         100,
         '1',
         'MINTED',
-        13701,
+        307001,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        311001,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "311001",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        311001,
         '${currentDateTime}',
         '${currentDateTime}'
       );

@@ -21,4 +21,5 @@ export interface IUser extends IIdDateBase {
   userRoles: Array<UserRole>;
   comment: string;
   wallet: string;
+  chainId: number;
 }

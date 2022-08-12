@@ -1,12 +1,13 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 import { SearchDto } from "@gemunion/collection";
 
 import { Erc1155ContractService } from "./contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractAutocompleteDto } from "../../../hierarchy/contract/dto";
+import { UserEntity } from "../../../../user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/erc1155-contracts")
@@ -15,8 +16,8 @@ export class Erc1155ContractController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() query: SearchDto): Promise<[Array<ContractEntity>, number]> {
-    return this.erc1155ContractService.search(query);
+  public search(@Query() query: SearchDto, @User() userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return this.erc1155ContractService.search(query, userEntity);
   }
 
   @Get("/autocomplete")

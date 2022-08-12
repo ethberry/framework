@@ -102,7 +102,7 @@ describe("ExchangeReferral", function () {
         signature1,
       );
 
-      await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "Reward");
+      await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "ReferralReward");
 
       const params2 = {
         nonce: utils.randomBytes(32),
@@ -155,7 +155,7 @@ describe("ExchangeReferral", function () {
 
       await expect(tx2)
         .to.emit(exchangeInstance, "Purchase")
-        .to.emit(exchangeInstance, "Reward")
+        .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(this.receiver.address, this.owner.address, 0, constants.WeiPerEther);
 
       const params3 = {
@@ -209,9 +209,9 @@ describe("ExchangeReferral", function () {
 
       await expect(tx3)
         .to.emit(exchangeInstance, "Purchase")
-        .to.emit(exchangeInstance, "Reward")
+        .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(this.stranger.address, this.owner.address, 1, constants.WeiPerEther.div(10))
-        .to.emit(exchangeInstance, "Reward")
+        .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(this.stranger.address, this.receiver.address, 0, constants.WeiPerEther);
     });
   });

@@ -28,7 +28,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        11,
+        101,
         '${constants.AddressZero}',
         '${chainId}',
         'Native token (ETH)',
@@ -45,7 +45,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12,
+        102,
         '${constants.AddressZero}',
         '${chainId}',
         'Inactive token (ETH)',
@@ -62,7 +62,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        13,
+        111,
         '${constants.AddressZero}',
         '56',
         'Native token (BNB)',
@@ -79,7 +79,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        14,
+        121,
         '${constants.AddressZero}',
         '137',
         'Native token (MATIC)',
@@ -98,7 +98,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 14, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 121, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

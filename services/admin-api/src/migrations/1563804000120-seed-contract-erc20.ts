@@ -38,7 +38,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        21,
+        201,
         '${erc20TokenSimpleAddress}',
         '${chainId}',
         'Space Credits',
@@ -55,7 +55,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        22,
+        202,
         '${erc20TokenInactiveAddress}',
         '${chainId}',
         'ERC20 (inactive)',
@@ -72,7 +72,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        23,
+        203,
         '${erc20TokenNewAddress}',
         '${chainId}',
         'ERC20 (new)',
@@ -89,7 +89,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        24,
+        204,
         '${erc20TokenBlackListAddress}',
         '${chainId}',
         'ERC20 (blacklist)',
@@ -106,7 +106,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        25,
+        205,
         '${usdt[chainId]}',
         '${chainId}',
         'USDT',
@@ -122,10 +122,27 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '{EXTERNAL}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        211,
+        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        '56',
+        'BUSD',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Biance USD',
+        'BUSD',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 25, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 211, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

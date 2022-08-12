@@ -31,7 +31,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        51,
+        501,
         '${erc1155ContractSimpleAddress}',
         '${chainId}',
         'RESOURCES (simple)',
@@ -47,7 +47,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        52,
+        502,
         '${erc1155ContractInactiveAddress}',
         '${chainId}',
         'ERC1155 (inactive)',
@@ -63,7 +63,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        53,
+        503,
         '${erc1155ContractNewAddress}',
         '${chainId}',
         'ERC1155 (new)',
@@ -79,7 +79,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        54,
+        504,
         '${erc1155ContractBlacklistAddress}',
         '${chainId}',
         'POTIONS (blacklist)',
@@ -94,10 +94,26 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '{BLACKLIST}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        511,
+        '${wallet}',
+        '56',
+        'BEP (binance)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '',
+        '',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC1155',
+        '{}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 54, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 511, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

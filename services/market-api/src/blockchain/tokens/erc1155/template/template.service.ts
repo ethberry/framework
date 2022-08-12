@@ -6,6 +6,7 @@ import { ITemplateSearchDto, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class Erc1155TemplateService extends TemplateService {
@@ -16,7 +17,7 @@ export class Erc1155TemplateService extends TemplateService {
     super(templateEntityRepository);
   }
 
-  public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, TokenType.ERC1155);
+  public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
+    return super.search(dto, userEntity, TokenType.ERC1155);
   }
 }

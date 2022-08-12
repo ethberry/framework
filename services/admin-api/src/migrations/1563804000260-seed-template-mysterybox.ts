@@ -11,19 +11,19 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        16101
+        1601001
       ), (
-        16102
+        1601002
       ), (
-        16103
+        1601003
       ), (
-        16104
+        1601004
       ), (
-        16105
+        1601005
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 16105, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 601005, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -39,69 +39,69 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        16101,
+        601001,
         'Sword Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        16101,
+        1601001,
         0,
         4,
         'ACTIVE',
-        61,
+        601,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16102,
+        601002,
         'Sword Mysterybox Inactive',
         '${simpleFormatting}',
         '${imageUrl}',
-        16105,
+        1601002,
         0,
         1,
         'INACTIVE',
-        61,
+        601,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16103,
+        601003,
         'Warrior Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        16102,
+        1601003,
         0,
         1,
         'ACTIVE',
-        61,
+        601,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16104,
+        601004,
         'Gold Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        16103,
+        1601004,
         0,
         1,
         'ACTIVE',
-        61,
+        601,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        16105,
+        601005,
         'Mixed Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        16104,
+        1601005,
         0,
         1,
         'ACTIVE',
-        61,
+        601,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 16105, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 601005, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -8,6 +8,7 @@ import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from 
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
 import { IContractUpdateDto } from "./interfaces";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class ContractService {
@@ -16,21 +17,29 @@ export class ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: ISearchDto, contractType: TokenType): Promise<[Array<ContractEntity>, number]> {
+  public async search(
+    dto: ISearchDto,
+    userEntity: UserEntity,
+    contractType: TokenType,
+  ): Promise<[Array<ContractEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
 
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
-
-    // MODULE:MYSTERYBOX
-    queryBuilder.andWhere("contract.contractModule != :contractModule", {
-      contractModule: ModuleType.MYSTERYBOX,
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
     });
-
-    queryBuilder.andWhere("contract.contractStatus = :contractStatus", { contractStatus: ContractStatus.ACTIVE });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule: ModuleType.CORE,
+    });
+    queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
+      contractStatus: ContractStatus.ACTIVE,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(

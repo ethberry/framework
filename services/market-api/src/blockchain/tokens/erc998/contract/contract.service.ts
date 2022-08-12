@@ -7,6 +7,7 @@ import { TokenType } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class Erc998ContractService extends ContractService {
@@ -17,7 +18,7 @@ export class Erc998ContractService extends ContractService {
     super(contractEntityRepository);
   }
 
-  public search(dto: ISearchDto): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, TokenType.ERC998);
+  public search(dto: ISearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, TokenType.ERC998);
   }
 }
