@@ -11,6 +11,7 @@ declare global {
       CLAIM_PROXY_ADDR: string;
       EXCHANGE_ADDR: string;
       STAKING_ADDR: string;
+      LOTTERY_ADDR: string;
       CHAIN_ID: string;
     }
   }

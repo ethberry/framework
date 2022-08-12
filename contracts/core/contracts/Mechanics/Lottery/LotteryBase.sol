@@ -31,7 +31,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   uint8 private comm = 30; // commission 30%
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
-  event Purchase(address account, uint8 ticketType, uint256 round, bool[40] numbers);
+  event Purchase(address account, uint256 round, bool[40] numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address addr, uint256 ticketId, uint256 amount);
 
@@ -170,7 +170,6 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
   function purchase(
     bytes32 nonce,
-    uint8 ticketType,
     bool[40] calldata numbers,
     uint256 price,
     address signer,
@@ -191,50 +190,16 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hash(nonce, ticketType, numbers, price), signature);
+    bool isVerified = _verify(signer, _hash(nonce, numbers, price), signature);
     require(isVerified, "Lottery: Invalid signature");
 
     currentRound.balance += price;
     currentRound.total += price;
 
-    emit Purchase(account, ticketType, roundNumber, numbers);
+    emit Purchase(account, roundNumber, numbers);
 
     SafeERC20.safeTransferFrom(IERC20(_acceptedToken), _msgSender(), address(this), price);
-    IERC721Ticket(_ticketFactory).mintTicket(account, ticketType, roundNumber, numbers);
-  }
-
-  function exchange(uint256 tokenId) external whenNotPaused {
-    IERC721Ticket ticketFactory = IERC721Ticket(_ticketFactory);
-
-    Ticket memory data = ticketFactory.getTicketData(tokenId);
-    require(data.ticketType != 0 && data.ticketType != 3, "Lottery: this ticket is ot eligible for exchange");
-
-    Round memory prevRound = _rounds[data.round];
-
-    require(prevRound.endTimestamp != 0, "Lottery: previous round is not yet finished");
-
-    uint8 result = 0;
-    for (uint8 j = 0; j < 7; j++) {
-      if (data.numbers[prevRound.values[j]]) {
-        result++;
-      }
-    }
-
-    require(result == 0, "Lottery: this ticket is ot eligible for exchange");
-
-    ticketFactory.burn(tokenId);
-
-    uint256 roundNumber = _rounds.length - 1;
-
-    uint256 len = data.numbers.length;
-    for (uint8 i = 0; i < len; i++) {
-      if (data.numbers[i]) {
-        data.numbers[i] = false;
-        break;
-      }
-    }
-
-    ticketFactory.mintTicket(_msgSender(), data.ticketType - 1, roundNumber, data.numbers);
+    IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
   }
 
   function getPrize(uint256 tokenId) external {

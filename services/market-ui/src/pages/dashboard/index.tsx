@@ -12,6 +12,7 @@ import { Marketplace } from "./sections/marketplace";
 import { Mechanics } from "./sections/mechanics";
 import { Pages } from "./sections/pages";
 import { Staking } from "./sections/staking";
+import { Lottery } from "./sections/lottery";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -29,6 +30,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={4}>
           <Mechanics />
           <Staking />
+          <Lottery />
         </Grid>
         <Grid item xs={4}>
           <Personal />

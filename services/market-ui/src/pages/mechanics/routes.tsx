@@ -12,6 +12,7 @@ import { Craft } from "./craft";
 import { DropList } from "./drop-list";
 import { stakingRoutes } from "./staking/routes";
 import { referralRoutes } from "./referral/routes";
+import { lotteryRoutes } from "./lottery/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   {
@@ -46,4 +47,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   },
   ...stakingRoutes,
   ...referralRoutes,
+  ...lotteryRoutes,
 ];

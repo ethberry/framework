@@ -277,7 +277,18 @@
         "stakes": "My stakes",
         "title": "Staking"
       },
+      "lottery": {
+        "leaderboard": "Leaderboard",
+        "ticket": "Buy a ticket",
+        "title": "Lottery"
+      },
       "title": "Dashboard"
+    },
+    "lottery": {
+      "title": "Lottery",
+      "ticket": {
+        "title": "Buy a ticket"
+      }
     },
     "drop-list": {
       "title": "Drops"

@@ -1,0 +1,12 @@
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+
+import { LotteryTicketService } from "./ticket.service";
+import { LotteryTicketEntity } from "./ticket.entity";
+
+@Module({
+  imports: [TypeOrmModule.forFeature([LotteryTicketEntity])],
+  providers: [LotteryTicketService],
+  exports: [LotteryTicketService],
+})
+export class LotteryTicketModule {}
