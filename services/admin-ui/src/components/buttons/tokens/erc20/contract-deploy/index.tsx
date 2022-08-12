@@ -8,22 +8,8 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc20ContractFeatures, IErc20TokenDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
-import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
 import { Erc20ContractDeployDialog } from "./deploy-dialog";
-
-function getBytecodeByErc20ContractFeatures(contractFeatures: Array<Erc20ContractFeatures>) {
-  if (!contractFeatures.length) {
-    return ERC20SimpleSol.bytecode;
-  }
-
-  if (contractFeatures.includes(Erc20ContractFeatures.BLACKLIST)) {
-    return ERC20BlacklistSol.bytecode;
-  }
-
-  throw new Error("Unsupported features combination");
-}
 
 export interface IErc20ContractDeployButtonProps {
   className?: string;
@@ -45,7 +31,8 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
 
       return contract.deployERC20Token(
         nonce,
-        getBytecodeByErc20ContractFeatures(contractFeatures),
+        // @ts-ignore
+        sign.bytecode,
         name,
         symbol,
         cap,

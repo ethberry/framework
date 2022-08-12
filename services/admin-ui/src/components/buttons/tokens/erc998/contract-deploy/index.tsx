@@ -8,46 +8,8 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc998ContractFeatures, IErc998ContractDeployDto } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Full.sol/ERC998Full.json";
-import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
-import ERC998BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
-import ERC998UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
-import ERC998UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998UpgradeableRandom.sol/ERC998UpgradeableRandom.json";
 
 import { Erc998ContractDeployDialog } from "./deploy-dialog";
-
-function getBytecodeByErc998ContractFeatures(contractFeatures: Array<Erc998ContractFeatures>) {
-  if (!contractFeatures.length) {
-    return ERC998SimpleSol.bytecode;
-  }
-
-  if (contractFeatures.length === 3) {
-    if (
-      contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
-      contractFeatures.includes(Erc998ContractFeatures.RANDOM) &&
-      contractFeatures.includes(Erc998ContractFeatures.BLACKLIST)
-    ) {
-      return ERC998FullSol.bytecode;
-    }
-  } else if (contractFeatures.length === 2) {
-    if (
-      contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
-      contractFeatures.includes(Erc998ContractFeatures.RANDOM)
-    ) {
-      return ERC998UpgradeableRandomSol.bytecode;
-    }
-  } else if (contractFeatures.length === 1) {
-    if (contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE)) {
-      return ERC998UpgradeableSol.bytecode;
-    }
-
-    if (contractFeatures.includes(Erc998ContractFeatures.BLACKLIST)) {
-      return ERC998BlackListSol.bytecode;
-    }
-  }
-
-  throw new Error("Unsupported features combination");
-}
 
 export interface IErc998ContractDeployButtonProps {
   className?: string;
@@ -69,7 +31,8 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
 
       return contract.deployERC998Token(
         nonce,
-        getBytecodeByErc998ContractFeatures(contractFeatures),
+        // @ts-ignore
+        sign.bytecode,
         name,
         symbol,
         royalty,

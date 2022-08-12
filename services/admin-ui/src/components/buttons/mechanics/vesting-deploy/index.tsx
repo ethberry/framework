@@ -8,24 +8,8 @@ import { useDeploy } from "@gemunion/react-hooks-eth";
 import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
-import LinearVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/LinearVesting.sol/LinearVesting.json";
-import GradedVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/GradedVesting.sol/GradedVesting.json";
-import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 
 import { VestingDeployDialog } from "./deploy-dialog";
-
-function getBytecodeByVestingContractTemplate(template: VestingContractTemplate) {
-  switch (template) {
-    case VestingContractTemplate.LINEAR:
-      return LinearVestingSol.bytecode;
-    case VestingContractTemplate.GRADED:
-      return GradedVestingSol.bytecode;
-    case VestingContractTemplate.CLIFF:
-      return CliffVestingSol.bytecode;
-    default:
-      throw new Error("Unknown template");
-  }
-}
 
 export interface IVestingButtonProps {
   className?: string;
@@ -46,7 +30,7 @@ export const VestingDeployButton: FC<IVestingButtonProps> = props => {
       );
       return contract.deployVesting(
         nonce,
-        getBytecodeByVestingContractTemplate(contractTemplate),
+        sign.bytecode,
         account,
         Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds,
         duration * 60 * 60 * 24, // days in seconds

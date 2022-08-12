@@ -52,7 +52,9 @@ export class ContractManagerSignService {
 
   public async erc20Token(dto: IErc20TokenDeployDto): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, cap } = dto;
+
     const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByErc20ContractFeatures(contractFeatures);
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -75,7 +77,7 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc20ContractFeatures(contractFeatures),
+        bytecode,
         name,
         symbol,
         cap,
@@ -83,13 +85,15 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   // MODULE:VESTING
   public async vesting(dto: IVestingDeployDto): Promise<IServerSignature> {
     const { contractTemplate, account, startTimestamp, duration } = dto;
+
     const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByVestingContractTemplate(contractTemplate);
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -112,7 +116,7 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByVestingContractTemplate(contractTemplate),
+        bytecode,
         account,
         startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
         duration: duration * 60 * 60 * 24, // in seconds
@@ -120,13 +124,14 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public async erc721Token(dto: IErc721ContractDeployDto): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByErc721ContractFeatures(contractFeatures);
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -150,7 +155,7 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc721ContractFeatures(contractFeatures),
+        bytecode,
         name,
         symbol,
         baseTokenURI,
@@ -159,13 +164,14 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public async erc998Token(dto: IErc998ContractDeployDto): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByErc998ContractFeatures(contractFeatures);
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -189,7 +195,7 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc998ContractFeatures(contractFeatures),
+        bytecode,
         name,
         symbol,
         baseTokenURI,
@@ -198,13 +204,14 @@ export class ContractManagerSignService {
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public async erc1155Token(dto: IErc1155ContractDeployDto): Promise<IServerSignature> {
     const { contractFeatures, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByErc1155ContractFeatures(contractFeatures);
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -226,14 +233,14 @@ export class ContractManagerSignService {
       // Value
       {
         nonce,
-        bytecode: this.getBytecodeByErc1155ContractFeatures(contractFeatures),
+        bytecode,
         royalty,
         baseTokenURI,
         featureIds: contractFeatures.map(feature => Object.keys(Erc1155ContractFeatures).indexOf(feature)),
       },
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0 };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
   public getBytecodeByErc20ContractFeatures(contractFeatures: Array<Erc20ContractFeatures>) {
