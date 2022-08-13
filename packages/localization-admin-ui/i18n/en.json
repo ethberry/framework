@@ -368,6 +368,9 @@
     "chain-link": {
       "title": "ChainLink"
     },
+    "coin-gecko": {
+      "title": "CoinGecko"
+    },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
@@ -417,6 +420,10 @@
         "chain-link": {
           "fund": "Fund",
           "title": "ChainLink"
+        },
+        "coin-gecko": {
+          "rates": "Rates",
+          "title": "CoinGecko"
         }
       },
       "mechanics": {
