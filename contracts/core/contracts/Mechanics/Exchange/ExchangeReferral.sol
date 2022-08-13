@@ -22,6 +22,7 @@ abstract contract ExchangeReferral is Context {
   mapping(address => uint256) private _balance;
 
   uint8 _maxRef = 10; // Max referrals chain length
+  uint256 _refReward = 1 ether; // Ref reward 1 token
 
   function _afterPurchase(Params memory params) internal virtual {
     updateReferrers(params.referrer);
@@ -35,12 +36,17 @@ abstract contract ExchangeReferral is Context {
     address account = _msgSender();
     _chain[account] = referrer;
 
-    uint256 reward = 1 ether;
+    if (referrer == account) {
+      return;
+    }
+
+    uint256 reward = _refReward;
 
     for (uint8 level = 0; level < _maxRef; level++) {
       emit ReferralReward(account, referrer, level, reward);
       _balance[referrer] += reward;
-      reward /= 10**++level;
+
+      reward = reward / 10**(level+1);
 
       address nxt = _chain[referrer];
 
@@ -59,6 +65,7 @@ abstract contract ExchangeReferral is Context {
     address account = _msgSender();
     uint256 amount = _balance[account];
     require(amount > 0, "ExchangeReferral: Zero balance");
+    require(address(this).balance > amount, "ExchangeReferral: Insufficient balance");
     _balance[account] = 0;
     emit ReferralWithdraw(account, amount);
     Address.sendValue(payable(account), amount);
@@ -68,4 +75,6 @@ abstract contract ExchangeReferral is Context {
   function getBalance(address referral) public view returns (uint256 amount) {
     return _balance[referral];
   }
+
+  receive() external payable {}
 }
