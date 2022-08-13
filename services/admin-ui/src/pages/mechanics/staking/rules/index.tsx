@@ -57,7 +57,7 @@ export const Staking: FC = () => {
     },
     search: {
       query: "",
-      stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
+      stakingStatus: [StakingStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
       },
@@ -69,7 +69,7 @@ export const Staking: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking.rules"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

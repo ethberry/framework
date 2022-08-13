@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { Contract, constants } from "ethers";
 
 import { baseTokenURI, MINTER_ROLE, royalty } from "../test/constants";
 import { wallet, wallets } from "@gemunion/constants";
@@ -16,7 +16,7 @@ async function deploySystem() {
 
 async function deployERC20() {
   const [owner] = await ethers.getSigners();
-  const amount = ethers.constants.WeiPerEther.mul(1e6);
+  const amount = constants.WeiPerEther.mul(1e6);
 
   const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
   const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);
@@ -129,12 +129,34 @@ async function deployStaking() {
 
   await stakingInstance.setRules([
     {
-      externalId: 23,
+      externalId: 11, // NATIVE > NATIVE
+      deposit: {
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount: constants.WeiPerEther,
+      },
+      reward: {
+        tokenType: 0,
+        token: constants.AddressZero,
+        tokenId: 0,
+        amount: constants.WeiPerEther.div(100).mul(5), // 5%
+      },
+      period: 30 * 84600,
+      penalty: 1,
+      recurrent: false,
+      active: true,
+    },
+  ]);
+
+  await stakingInstance.setRules([
+    {
+      externalId: 23, // ERC20 > ERC721
       deposit: {
         tokenType: 1,
         token: contracts.erc20Simple.address,
         tokenId: 0,
-        amount: ethers.constants.WeiPerEther,
+        amount: constants.WeiPerEther,
       },
       reward: {
         tokenType: 2,
@@ -151,7 +173,7 @@ async function deployStaking() {
 
   await stakingInstance.setRules([
     {
-      externalId: 45,
+      externalId: 45, // ERC998 > ERC1155
       deposit: {
         tokenType: 3,
         token: contracts.erc998Random.address,
