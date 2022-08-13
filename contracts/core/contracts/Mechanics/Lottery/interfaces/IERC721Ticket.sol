@@ -7,7 +7,6 @@
 pragma solidity ^0.8.9;
 
 struct Ticket {
-  uint8 ticketType;
   uint256 round;
   bool[36] numbers;
 }
@@ -15,7 +14,6 @@ struct Ticket {
 interface IERC721Ticket {
   function mintTicket(
     address account,
-    uint8 ticketType,
     uint256 round,
     bool[36] calldata numbers
   ) external returns (uint256);

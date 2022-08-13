@@ -31,14 +31,13 @@ contract ERC721Ticket is IERC721Ticket, ERC721ACBER, ERC721ACBaseUrl {
 
   function mintTicket(
     address account,
-    uint8 ticketType,
     uint256 round,
     bool[36] calldata numbers
   ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    _data[tokenId] = Ticket(ticketType, round, numbers);
+    _data[tokenId] = Ticket(round, numbers);
 
     _safeMint(account, tokenId);
   }

@@ -35,12 +35,6 @@ async function deployERC20() {
   await erc20BlacklistInstance.blacklist(wallets[1]);
   await erc20BlacklistInstance.blacklist(wallets[2]);
   contracts.erc20Blacklist = erc20BlacklistInstance;
-
-  const erc20UsdtFactory = await ethers.getContractFactory("TetherToken");
-  contracts.erc20Usdt = await erc20UsdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
-
-  const erc20LinkFactory = await ethers.getContractFactory("LinkToken");
-  contracts.erc20Link = await erc20LinkFactory.deploy();
 }
 
 async function deployERC721() {
@@ -80,12 +74,7 @@ async function deployERC998() {
   contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("ERC998 BLACKLIST", "BL998", royalty, baseTokenURI);
 
   const ERC998UpgradeableFactory = await ethers.getContractFactory("ERC998Upgradeable");
-  contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy(
-    "ERC998 UPGRADEABLE",
-    "LVL998",
-    royalty,
-    baseTokenURI,
-  );
+  contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
 
   const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
   const erc20BlacklistInstance = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
@@ -160,10 +149,32 @@ async function deployStaking() {
     },
   ]);
 
+  await stakingInstance.setRules([
+    {
+      externalId: 45,
+      deposit: {
+        tokenType: 3,
+        token: contracts.erc998Random.address,
+        tokenId: 0,
+        amount: 1,
+      },
+      reward: {
+        tokenType: 4,
+        token: contracts.erc1155Simple.address,
+        tokenId: 501001,
+        amount: 1000,
+      },
+      period: 1 * 84600,
+      penalty: 0,
+      recurrent: true,
+      active: true,
+    },
+  ]);
+
   contracts.staking = stakingInstance;
 }
 
-async function deployModules() {
+async function deployMechanics() {
   await deployVesting();
   await deployMysterybox();
   await deployStaking();
@@ -173,13 +184,24 @@ async function deployModules() {
   contracts.claimProxy = await claimFactory.deploy();
 }
 
+async function deployIntegrations() {
+  // INTEGRATION:CHAINLINK
+  const linkFactory = await ethers.getContractFactory("LinkToken");
+  contracts.link = await linkFactory.deploy();
+
+  // INTEGRATION:USDT
+  const usdtFactory = await ethers.getContractFactory("TetherToken");
+  contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
+}
+
 async function main() {
   await deploySystem();
   await deployERC20();
   await deployERC721();
   await deployERC998();
   await deployERC1155();
-  await deployModules();
+  await deployMechanics();
+  await deployIntegrations();
 }
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);

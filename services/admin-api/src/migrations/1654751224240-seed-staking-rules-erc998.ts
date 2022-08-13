@@ -101,7 +101,7 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         'ERC1155',
         501,
         501001, -- gold
-        1,
+        1000,
         80452
       );
     `);
@@ -170,13 +170,13 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998 > ERC1155',
         '${simpleFormatting}',
-        30,
         1,
-        false,
+        1,
+        true,
         80451,
         80452,
         45,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

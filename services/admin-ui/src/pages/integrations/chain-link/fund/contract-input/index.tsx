@@ -10,7 +10,7 @@ export const ContractInput: FC = () => {
   return (
     <EntityInput
       name="contractId"
-      controller="contracts"
+      controller="chain-link"
       data={{
         contractType: [TokenType.ERC721, TokenType.ERC998],
         contractFeatures: [Erc721ContractFeatures.RANDOM],

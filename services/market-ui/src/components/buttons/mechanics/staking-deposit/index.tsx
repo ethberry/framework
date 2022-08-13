@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
-import { Casino } from "@mui/icons-material";
+import { Savings } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -41,7 +41,7 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
     return (
       <Tooltip title={formatMessage({ id: "pages.staking.rules.deposit" })}>
         <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositButton">
-          <Casino />
+          <Savings />
         </IconButton>
       </Tooltip>
     );
