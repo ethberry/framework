@@ -67,6 +67,7 @@ export const Staking: FC = () => {
     },
   });
 
+  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />

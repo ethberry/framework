@@ -68,26 +68,25 @@ export class StakingRulesServiceEth {
     await stakingEntity.save();
   }
 
-  public async start(_event: ILogEvent<IStakingDeposit>, _context: Log): Promise<void> {
-    // TODO fix it!
-    // await this.updateHistory(event, context);
-    // const {
-    //   args: { stakingId, externalId, owner, startTimestamp },
-    // } = event;
-    //
-    // const stakingEntity = await this.stakingRulesService.findOne({ ruleId });
-    //
-    // if (!stakingEntity) {
-    //   throw new NotFoundException("stakingRuleNotFound");
-    // }
-    // console.log("args", owner, stakingId, startTimestamp, stakingEntity.id);
-    // console.log("args", owner, stakingId, startTimestamp);
-    // await this.stakingStakesService.create({
-    //   owner,
-    //   stakeId: stakingId,
-    //   startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-    //   stakingRuleId: stakingEntity.id,
-    // });
+  public async start(event: ILogEvent<IStakingDeposit>, context: Log): Promise<void> {
+    // TODO fix it!    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
+    await this.updateHistory(event, context);
+    const {
+      args: { stakingId, ruleId, owner, startTimestamp },
+    } = event;
+
+    const stakingRuleEntity = await this.stakingRulesService.findOne({ externalId: ruleId });
+
+    if (!stakingRuleEntity) {
+      throw new NotFoundException("stakingRuleNotFound");
+    }
+
+    await this.stakingStakesService.create({
+      account: owner.toLowerCase(),
+      externalId: stakingId,
+      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      stakingRuleId: stakingRuleEntity.id,
+    });
   }
 
   public async withdraw(event: ILogEvent<IStakingWithdraw>, context: Log): Promise<void> {

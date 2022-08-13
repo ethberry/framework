@@ -8,6 +8,12 @@ import { AssetDto } from "../../../asset/dto";
 export class StakingUpdateDto implements IStakingUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  public id?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsString({ message: "typeMismatch" })
   public title: string;
 

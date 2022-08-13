@@ -444,6 +444,7 @@
       "title": "Referral program"
     },
     "staking": {
+      "reward": "Reward",
       "deposit": "Deposit",
       "leaderboard": {
         "account": "Account",

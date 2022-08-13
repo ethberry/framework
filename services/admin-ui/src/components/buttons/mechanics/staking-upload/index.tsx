@@ -37,7 +37,8 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
         tokenId: component.templateId,
         amount: component.amount,
       }))[0],
-      period: rule.duration || 0, // todo fix same name
+      // period: rule.duration * 86400 || 0, // todo fix same name // seconds in days
+      period: rule.duration * 60 || 0, // todo fix same name // seconds in minutes !!!DEV!!!
       penalty: rule.penalty || 0,
       recurrent: rule.recurrent,
       active: true, // todo add var in interface

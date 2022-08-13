@@ -18,6 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { StakesSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
+import { StakingRewardButton } from "../../../../components/buttons/mechanics/staking-reward";
 
 export const StakingStakes: FC = () => {
   const {
@@ -60,6 +61,7 @@ export const StakingStakes: FC = () => {
             <ListItem key={i}>
               <ListItemText>{stake.stakingRule?.title}</ListItemText>
               <ListItemSecondaryAction>
+                <StakingRewardButton stake={stake} />
                 <IconButton onClick={handleView(stake)}>
                   <Visibility />
                 </IconButton>

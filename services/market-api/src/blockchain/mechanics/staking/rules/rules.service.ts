@@ -71,7 +71,7 @@ export class StakingRulesService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "rule.id": "ASC",
+      "rule.id": "DESC",
     });
 
     return queryBuilder.getManyAndCount();

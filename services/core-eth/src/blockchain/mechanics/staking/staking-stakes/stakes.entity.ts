@@ -2,12 +2,12 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IStakingStake, StakeStatus } from "@framework/types";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
 import { StakingRulesEntity } from "../rules/rules.entity";
 
 @Entity({ schema: ns, name: "staking_stakes" })
-export class StakingStakesEntity extends SearchableEntity implements IStakingStake {
+export class StakingStakesEntity extends IdDateBaseEntity implements IStakingStake {
   @Column({ type: "varchar" })
   public account: string;
 
