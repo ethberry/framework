@@ -114,7 +114,9 @@ import { SeedStakingRulesErc998At1654751224240 } from "./migrations/165475122424
 import { SeedStakingRulesErc1155At1654751224250 } from "./migrations/1654751224250-seed-staking-rules-erc1155";
 
 import { CreateStakes1654751224300 } from "./migrations/1654751224300-create-stakes";
-import { SeedStakes1654751224310 } from "./migrations/1654751224310-seed-stakes";
+import { SeedStakesNativeAt1654751224310 } from "./migrations/1654751224310-seed-stakes-native";
+import { SeedStakesErc20At1654751224320 } from "./migrations/1654751224320-seed-stakes-erc20";
+import { SeedStakesErc998At1654751224340 } from "./migrations/1654751224340-seed-stakes-erc998";
 import { CreateStakingHistory1654751224400 } from "./migrations/1654751224400-create-staking-history";
 
 import { CreatePage1655626535100 } from "./migrations/1655626535100-create-page";
@@ -267,7 +269,9 @@ const config: PostgresConnectionOptions = {
     SeedStakingRulesErc1155At1654751224250,
 
     CreateStakes1654751224300,
-    SeedStakes1654751224310,
+    SeedStakesNativeAt1654751224310,
+    SeedStakesErc20At1654751224320,
+    SeedStakesErc998At1654751224340,
     CreateStakingHistory1654751224400,
 
     CreatePage1655626535100,

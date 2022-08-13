@@ -46,6 +46,7 @@
     "@gemunion/react-hooks": "1.0.14",
     "@gemunion/react-hooks-eth": "1.0.17",
     "@gemunion/types-collection": "1.5.0",
+    "@gemunion/provider-coingecko": "0.2.0",
     "@gemunion/yup-rules": "2.0.7",
     "@gemunion/yup-rules-eth": "1.0.5",
     "@mui/icons-material": "5.8.4",

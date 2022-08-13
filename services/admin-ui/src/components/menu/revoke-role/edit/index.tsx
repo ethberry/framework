@@ -61,7 +61,9 @@ export const AccessControlRevokeRoleDialog: FC<IAccessControlRevokeRoleDialogPro
             {rows.map((access, i) => (
               <ListItem key={i}>
                 <ListItemText>
-                  {access.account} ({access.role})
+                  {access.account}
+                  <br />
+                  {access.role}
                 </ListItemText>
                 <ListItemSecondaryAction>
                   <IconButton onClick={handleRevoke(access)}>

@@ -42,8 +42,10 @@ export class ReferralRewardService {
         row_number() OVER (ORDER BY account)::INTEGER id,
         SUM(amount) AS amount,
         account
-      FROM ${ns}.referral_reward
-      GROUP BY account
+      FROM
+        ${ns}.referral_reward as reward
+      GROUP BY
+        account
     `;
 
     return Promise.all([

@@ -10,9 +10,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../ERC998Upgradeable.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
-import "../../MOCKS/ChainLink/ERC721ChainLinkBesu.sol";
+import "../../MOCKS/ChainLink/ChainLinkBesu.sol";
 
-contract ERC998RandomBesu is IERC721Random, ERC721ChainLinkBesu, ERC998Upgradeable {
+contract ERC998RandomBesu is IERC721Random, ChainLinkBesu, ERC998Upgradeable {
   using Counters for Counters.Counter;
 
   struct Request {

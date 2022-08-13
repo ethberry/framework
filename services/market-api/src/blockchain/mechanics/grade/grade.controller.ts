@@ -18,9 +18,9 @@ export class GradeController {
     return this.gradeService.sign(dto, userEntity);
   }
 
-  @Get("/:tokenId")
+  @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("tokenId", ParseIntPipe) tokenId: number): Promise<GradeEntity | null> {
-    return this.gradeService.findOneByToken({ id: tokenId });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<GradeEntity | null> {
+    return this.gradeService.findOneByToken({ id });
   }
 }

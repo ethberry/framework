@@ -7,7 +7,7 @@ import { imageUrl, ns } from "@framework/constants";
 const usdt: Record<string, string> = {
   "1": "0xdac17f958d2ee523a2206206994597c13d831ec7",
   "56": "0x55d398326f99059ff775485246999027b3197955",
-  "1337": process.env.ERC20_USDT_ADDR || wallet,
+  "1337": process.env.USDT_ADDR || wallet,
 };
 
 export class SeedContractErc20At1563804000120 implements MigrationInterface {

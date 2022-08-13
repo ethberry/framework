@@ -227,55 +227,79 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "erc1155": {
-        "contracts": "ERC1155 Contracts",
-        "templates": "ERC1155 Templates",
-        "title": "ERC1155",
-        "tokens": "ERC1155 Tokens"
+      "hierarchy": {
+        "erc1155": {
+          "contracts": "ERC1155 Contracts",
+          "templates": "ERC1155 Templates",
+          "title": "ERC1155",
+          "tokens": "ERC1155 Tokens"
+        },
+        "erc721": {
+          "contracts": "ERC721 Contracts",
+          "templates": "ERC721 Templates",
+          "title": "ERC721",
+          "tokens": "ERC721 Tokens"
+        },
+        "erc998": {
+          "contracts": "ERC998 Contracts",
+          "templates": "ERC998 Templates",
+          "title": "ERC998",
+          "tokens": "ERC998 Tokens"
+        }
       },
-      "erc721": {
-        "contracts": "ERC721 Contracts",
-        "templates": "ERC721 Templates",
-        "title": "ERC721",
-        "tokens": "ERC721 Tokens"
-      },
-      "erc998": {
-        "contracts": "ERC998 Contracts",
-        "templates": "ERC998 Templates",
-        "title": "ERC998",
-        "tokens": "ERC998 Tokens"
-      },
-      "marketplace": {
-        "leaderboard": "Referral leaderboard",
-        "link": "Referral program",
-        "primary": "Primary marketplace",
-        "reward": "Referral rewards",
-        "title": "Marketplace"
+      "integrations": {
+        "marketplace": {
+          "main": "Primary marketplace",
+          "title": "Marketplace"
+        },
+        "pages": {
+          "about-us": "About us",
+          "faq": "FAQ",
+          "title": "Pages"
+        },
+        "personal": {
+          "title": "My stash",
+          "wallet": "My wallet"
+        },
+        "referral": {
+          "leaderboard": "Leaderboard",
+          "link": "Cabinet",
+          "reward": "Rewards history",
+          "title": "Referral program"
+        }
       },
       "mechanics": {
-        "claim": "Claim",
-        "craft": "Craft",
-        "drop": "Drop",
-        "mysteryboxes": "Mysteryboxes",
-        "title": "Mechanics",
-        "vesting": "Vesting"
-      },
-      "pages": {
-        "about-us": "About us",
-        "faq": "FAQ",
-        "title": "Pages"
-      },
-      "personal": {
-        "assets": "My assets",
-        "auctions": "My auctions",
-        "title": "My stash",
-        "wallet": "My wallet"
-      },
-      "staking": {
-        "leaderboard": "Leaderboard",
-        "rules": "Rules",
-        "stakes": "My stakes",
-        "title": "Staking"
+        "claim": {
+          "main": "Claim",
+          "title": "Claim"
+        },
+        "craft": {
+          "main": "Craft",
+          "title": "Craft"
+        },
+        "drop": {
+          "main": "Drop",
+          "title": "Drop"
+        },
+        "lottery": {
+          "leaderboard": "Leaderboard",
+          "ticket": "Buy a ticket",
+          "title": "Lottery"
+        },
+        "mysterybox": {
+          "main": "Mystery box",
+          "title": "Mystery box"
+        },
+        "staking": {
+          "leaderboard": "Leaderboard",
+          "rules": "Rules",
+          "stakes": "My stakes",
+          "title": "Staking"
+        },
+        "vesting": {
+          "main": "Vesting",
+          "title": "Vesting"
+        }
       },
       "title": "Dashboard"
     },
@@ -357,6 +381,12 @@
       "erc721-new": "New 721 Templates",
       "erc998-new": "New 998 Templates",
       "popular": "Popular items"
+    },
+    "lottery": {
+      "ticket": {
+        "title": "Buy a ticket"
+      },
+      "title": "Lottery"
     },
     "marketplace": {
       "erc1155": {
@@ -440,11 +470,14 @@
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "error": "Unknown Error",
+    "featureIsNotSupported": "Feature is not supported",
+    "gradeNotFound": "Grade not found",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "success": "Success",
+    "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",

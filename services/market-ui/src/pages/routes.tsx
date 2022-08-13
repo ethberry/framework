@@ -13,7 +13,7 @@ import { Profile } from "./profile";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { tokenRoutes } from "./tokens/routes";
 
-import { Marketplace } from "./mechanics/marketplace";
+import { Marketplace } from "./marketplace";
 import { MyWallet } from "./my-wallet";
 import { Page } from "./page";
 

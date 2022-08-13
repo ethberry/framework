@@ -128,7 +128,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80111,
         80112,
         11,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

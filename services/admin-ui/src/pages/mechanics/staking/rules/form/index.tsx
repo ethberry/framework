@@ -36,7 +36,7 @@ export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
         </Grid>
       </Grid>
       <Collapse in={open}>
-        <Grid container spacing={2} alignItems="flex-end">
+        <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SelectInput multiple name="stakingStatus" options={StakingStatus} />
           </Grid>

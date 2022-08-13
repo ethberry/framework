@@ -51,12 +51,12 @@
       "UNPACKED": "Unpacked"
     },
     "contractFeatures": {
-      "SOULBOUND": "SoulBound",
       "BLACKLIST": "Blacklist",
       "EXTERNAL": "External",
       "MYSTERYBOX": "Mysterybox",
       "NATIVE": "Native",
       "RANDOM": "Random",
+      "SOULBOUND": "SoulBound",
       "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
@@ -169,6 +169,7 @@
       "deploy": "Deploy",
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
+      "finishRound": "Finish round",
       "forgot": "Forgot password?",
       "fund": "Fund",
       "grantRole": "Grant Role",
@@ -190,6 +191,7 @@
       "showFilters": "Show filters",
       "signup": "Sign up",
       "snapshot": "Snapshot",
+      "startRound": "Start round",
       "submit": "Submit",
       "unblacklist": "Un blacklist",
       "upload": "Upload"
@@ -366,6 +368,9 @@
     "chain-link": {
       "title": "ChainLink"
     },
+    "coin-gecko": {
+      "title": "CoinGecko"
+    },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
@@ -376,57 +381,87 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "admin": {
-        "emails": "Emails",
-        "pages": "Pages",
-        "settings": "Settings",
-        "title": "Admin",
-        "users": "Users"
+      "hierarchy": {
+        "erc1155": {
+          "contracts": "ERC1155 Contracts",
+          "templates": "ERC1155 Templates",
+          "title": "ERC1155"
+        },
+        "erc20": {
+          "contracts": "ERC20 Contracts",
+          "title": "ERC20"
+        },
+        "erc721": {
+          "contracts": "ERC721 Contracts",
+          "templates": "ERC721 Templates",
+          "title": "ERC721",
+          "tokens": "ERC721 Tokens"
+        },
+        "erc998": {
+          "composition": "ERC998 Composition",
+          "contracts": "ERC998 Contracts",
+          "templates": "ERC998 Templates",
+          "title": "ERC998",
+          "tokens": "ERC998 Tokens"
+        },
+        "native": {
+          "contracts": "Native Tokens",
+          "title": "NATIVE"
+        }
       },
-      "chain-link": {
-        "fund": "Fund",
-        "title": "ChainLink"
-      },
-      "erc1155": {
-        "contracts": "ERC1155 Contracts",
-        "templates": "ERC1155 Templates",
-        "title": "ERC1155"
-      },
-      "erc20": {
-        "contracts": "ERC20 Contracts",
-        "title": "ERC20"
-      },
-      "erc721": {
-        "contracts": "ERC721 Contracts",
-        "templates": "ERC721 Templates",
-        "title": "ERC721",
-        "tokens": "ERC721 Tokens"
-      },
-      "erc998": {
-        "composition": "ERC998 Composition",
-        "contracts": "ERC998 Contracts",
-        "templates": "ERC998 Templates",
-        "title": "ERC998",
-        "tokens": "ERC998 Tokens"
+      "integrations": {
+        "admin": {
+          "emails": "Emails",
+          "pages": "Pages",
+          "settings": "Settings",
+          "title": "Admin",
+          "users": "Users"
+        },
+        "chain-link": {
+          "fund": "Fund",
+          "title": "ChainLink"
+        },
+        "coin-gecko": {
+          "rates": "Rates",
+          "title": "CoinGecko"
+        }
       },
       "mechanics": {
-        "claims": "Claims",
-        "craft": "Craft",
-        "drops": "Drops",
-        "grades": "Grades",
-        "mysteryboxes": "Mysteryboxes",
+        "claim": {
+          "main": "Claim",
+          "title": "Claim"
+        },
+        "craft": {
+          "main": "Craft",
+          "title": "Craft"
+        },
+        "drop": {
+          "main": "Drop",
+          "title": "Drop"
+        },
+        "grade": {
+          "main": "Grade",
+          "title": "Grade"
+        },
+        "lottery": {
+          "rounds": "Rounds",
+          "title": "Lottery"
+        },
+        "mysterybox": {
+          "main": "Mystery box",
+          "title": "Mystery box"
+        },
+        "staking": {
+          "rules": "Rules",
+          "stakes": "Stakes",
+          "statistics": "Statistics",
+          "title": "Staking"
+        },
         "title": "Mechanics",
-        "vesting": "Vesting"
-      },
-      "native": {
-        "contracts": "Native Tokens",
-        "title": "NATIVE"
-      },
-      "staking": {
-        "rules": "Rules",
-        "stakes": "Stakes",
-        "statistics": "Statistics",
-        "title": "Staking"
+        "vesting": {
+          "main": "Vesting",
+          "title": "Vesting"
+        }
       },
       "title": "Dashboard"
     },
@@ -476,6 +511,12 @@
       "confirmation": "Please check your inbox to verify your email.",
       "forgotPassword": "Forgot password",
       "login": "Login"
+    },
+    "lottery": {
+      "rounds": {
+        "title": "Rounds"
+      },
+      "title": "Lottery"
     },
     "mysteryboxes": {
       "title": "Mysteryboxes"
@@ -550,11 +591,11 @@
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
+    "unsupportedCombination": "Unsupported feature combination",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
     "userNotFound": "User not found",
-    "walletIsNotConnected": "Wallet is not connected",
-    "unsupportedCombination": "Unsupported feature combination"
+    "walletIsNotConnected": "Wallet is not connected"
   }
 }

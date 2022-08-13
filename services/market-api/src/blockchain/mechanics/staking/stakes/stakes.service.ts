@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
+import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+
+import { ns } from "@framework/constants";
+import { IStakingLeaderboard, IStakingStakesSearchDto, StakeStatus } from "@framework/types";
 
 import { StakingStakesEntity } from "./stakes.entity";
-import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
 import { UserEntity } from "../../../../user/user.entity";
 import { ILeaderboardSearchDto } from "../leaderboard/interfaces/search";
 
@@ -12,6 +14,8 @@ export class StakingStakesService {
   constructor(
     @InjectRepository(StakingStakesEntity)
     private readonly stakesEntityRepository: Repository<StakingStakesEntity>,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
   public findOne(
@@ -57,22 +61,25 @@ export class StakingStakesService {
     return queryBuilder.getManyAndCount();
   }
 
-  // TODO make some kind of aggregation
-  public async leaderboard(dto: Partial<ILeaderboardSearchDto>): Promise<[Array<StakingStakesEntity>, number]> {
+  public async leaderboard(dto: Partial<ILeaderboardSearchDto>): Promise<[Array<IStakingLeaderboard>, number]> {
     const { skip, take } = dto;
 
-    const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
+    const queryString = `
+      SELECT
+        row_number() OVER (ORDER BY account)::INTEGER id,
+        0 AS amount,
+        account
+      FROM
+        ${ns}.staking_stakes as stake
+      WHERE
+        stake.stake_status = '${StakeStatus.ACTIVE}'
+      GROUP BY account
+    `;
 
-    queryBuilder.select();
-
-    queryBuilder.andWhere("stake.stakeStatus = :stakeStatus", { stakeStatus: StakeStatus.ACTIVE });
-
-    queryBuilder.skip(skip);
-    queryBuilder.take(take);
-
-    queryBuilder.orderBy("stake.createdAt", "DESC");
-
-    return queryBuilder.getManyAndCount();
+    return Promise.all([
+      this.entityManager.query(`${queryString} ORDER BY amount DESC OFFSET $1 LIMIT $2`, [skip, take]),
+      this.entityManager.query(`SELECT COUNT(DISTINCT(id))::INTEGER as count FROM (${queryString}) as l`),
+    ]).then(([list, [{ count }]]) => [list, count]);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<StakingStakesEntity>): Promise<StakingStakesEntity | null> {

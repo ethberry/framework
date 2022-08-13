@@ -6,7 +6,7 @@ import { Add, Delete } from "@mui/icons-material";
 
 import { IAssetComponent, TokenType } from "@framework/types";
 
-import { emptyPrice, emptyItem } from "./empty-price";
+import { emptyItem, emptyPrice } from "./empty-price";
 import { TokenTypeInput } from "./token-type-input";
 import { ContractInput } from "./contract-input";
 import { TemplateInput } from "./template-input";

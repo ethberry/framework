@@ -14,7 +14,7 @@ import { User } from "./user";
 import { Settings } from "./settings";
 import { Email } from "./email";
 import { Page } from "./page";
-import { mechanics } from "./mechanics/routes";
+import { mechanicsRoutes } from "./mechanics/routes";
 import { integrations } from "./integrations/routes";
 import { tokenRoutes } from "./tokens/routes";
 
@@ -65,7 +65,7 @@ const routes: Array<RouteObject> = [
         children: [{ index: true, element: <Email /> }],
       },
       ...tokenRoutes,
-      ...mechanics,
+      ...mechanicsRoutes,
       ...integrations,
       {
         path: "/error/:error",

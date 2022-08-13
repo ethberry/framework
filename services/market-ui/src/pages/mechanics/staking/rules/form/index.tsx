@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingSearchDto, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -20,8 +20,8 @@ export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
   const { formatMessage } = useIntl();
   const classes = useStyles();
 
-  const { query, stakingStatus, deposit, reward } = initialValues;
-  const fixedValues = { query, stakingStatus, deposit, reward };
+  const { query, deposit, reward } = initialValues;
+  const fixedValues = { query, deposit, reward };
 
   return (
     <FormWrapper
@@ -38,10 +38,7 @@ export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
         </Grid>
       </Grid>
       <Collapse in={open}>
-        <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
-            <SelectInput multiple name="stakingStatus" options={StakingStatus} />
-          </Grid>
+        <Grid container columnSpacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <SelectInput
               multiple

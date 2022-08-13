@@ -9,6 +9,7 @@ import { MarketplaceModule } from "./marketplace/marketplace.module";
 import { GradeModule } from "./grade/grade.module";
 import { DropModule } from "./drop/drop.module";
 import { ReferralModule } from "./referral/referral.module";
+import { LotteryModule } from "./lottery/lottery.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ReferralModule } from "./referral/referral.module";
     GradeModule,
     DropModule,
     ReferralModule,
+    LotteryModule,
   ],
 })
 export class MechanicsModule {}

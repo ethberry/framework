@@ -1,10 +1,10 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { ICraft } from "./craft";
+import { ICraft } from "./craft/craft";
 import { ITemplate } from "../hierarchy/template";
-import { IClaim } from "./claim";
-import { IGrade } from "./grade";
-import { IMysterybox } from "./mysterybox";
+import { IClaim } from "./claim/claim";
+import { IGrade } from "./grade/grade";
+import { IMysterybox } from "./mysterybox/mysterybox";
 
 export enum ExchangeEventType {
   Claim = "Claim",

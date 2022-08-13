@@ -20,16 +20,7 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
 }
 
 export class StakingSearchDto extends SearchDto implements IStakingSearchDto {
-  @ApiPropertyOptional({
-    enum: StakingStatus,
-    isArray: true,
-    // https://github.com/OAI/OpenAPI-Specification/issues/1706
-    // format: "deepObject"
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<StakingStatus>)
-  @IsEnum(StakingStatus, { each: true, message: "badInput" })
+  // search by status is disabled for marketplace
   public stakingStatus: Array<StakingStatus>;
 
   @ApiPropertyOptional({
