@@ -75,7 +75,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
           templateId: 0,
           amount: "0",
           account: process.env.ACCOUNT,
-          decimals: 0,
+          decimals: tokenType === TokenType.ERC20 ? 18 : 0,
         }}
       />
     </>
