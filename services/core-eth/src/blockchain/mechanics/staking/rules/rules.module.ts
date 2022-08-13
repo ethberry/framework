@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
 import { StakingHistoryModule } from "../history/history.module";
-import { StakingStakesModule } from "../staking-stakes/stakes.module";
+import { StakingStakesModule } from "../stakes/stakes.module";
 import { StakingRulesControllerEth } from "./rules.controller.eth";
 import { StakingLogModule } from "../log/log.module";
 import { StakingRulesServiceEth } from "./rules.service.eth";

@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { IStakingRule, StakingStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { StakingStakesEntity } from "../staking-stakes/stakes.entity";
+import { StakingStakesEntity } from "../stakes/stakes.entity";
 import { AssetEntity } from "../../asset/asset.entity";
 
 @Entity({ schema: ns, name: "staking_rules" })

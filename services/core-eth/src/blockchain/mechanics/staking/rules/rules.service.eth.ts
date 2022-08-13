@@ -16,7 +16,7 @@ import {
 import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 import { StakingHistoryService } from "../history/history.service";
 import { StakingRulesService } from "./rules.service";
-import { StakingStakesService } from "../staking-stakes/stakes.service";
+import { StakingStakesService } from "../stakes/stakes.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
