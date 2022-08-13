@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Grid, Typography, Button } from "@mui/material";
-import { PlayCircleFilled, CheckCircle } from "@mui/icons-material";
+import { Button, Grid, Typography } from "@mui/material";
+import { CheckCircle, PlayCircleFilled } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";

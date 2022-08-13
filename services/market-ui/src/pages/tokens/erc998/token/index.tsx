@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, Fragment } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { Contract, utils, BigNumber } from "ethers";
+import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";

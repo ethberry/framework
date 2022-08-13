@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Button, Grid, Paper, IconButton } from "@mui/material";
+import { Button, Grid, IconButton, Paper } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { Contract, constants, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useWallet } from "@gemunion/provider-wallet";
@@ -11,18 +11,6 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { IServerSignature } from "@gemunion/types-collection";
 import { useSettings } from "@gemunion/provider-settings";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
-
-export enum LotteryTicketType {
-  BRONZE = "BRONZE",
-  SILVER = "SILVER",
-  GOLD = "GOLD",
-}
-
-const ticketPrice = {
-  [LotteryTicketType.BRONZE]: constants.WeiPerEther.mul(1),
-  [LotteryTicketType.SILVER]: constants.WeiPerEther.mul(2),
-  [LotteryTicketType.GOLD]: constants.WeiPerEther.mul(3),
-};
 
 export const LotteryTicket: FC = () => {
   const { isActive } = useWeb3React();
@@ -34,7 +22,6 @@ export const LotteryTicket: FC = () => {
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.LOTTERY_ADDR, LotterySol.abi, web3Context.provider?.getSigner());
-
       return contract.purchase(
         {
           nonce: utils.arrayify(sign.nonce),
@@ -43,11 +30,10 @@ export const LotteryTicket: FC = () => {
           referrer: settings.getReferrer(),
         },
         ticketNumbers,
-        ticketPrice,
         process.env.ACCOUNT,
         sign.signature,
         {
-          value: ticketPrice,
+          value: constants.WeiPerEther,
         },
       ) as Promise<void>;
     },
@@ -66,7 +52,7 @@ export const LotteryTicket: FC = () => {
     );
   });
 
-  const handleBuy = () => {
+  const handlePurchase = () => {
     return metaFn();
   };
 
@@ -94,7 +80,7 @@ export const LotteryTicket: FC = () => {
       <Breadcrumbs path={["dashboard", "lottery", "lottery.ticket"]} />
 
       <PageHeader message="pages.lottery.ticket.title">
-        <Button startIcon={<Casino />} onClick={handleBuy} data-testid="LotteryBuyTicket">
+        <Button startIcon={<Casino />} onClick={handlePurchase} data-testid="LotteryBuyTicket">
           <FormattedMessage id="form.buttons.buy" />
         </Button>
       </PageHeader>

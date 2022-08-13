@@ -1,26 +1,26 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Storefront } from "@mui/icons-material";
+import { AccessTime } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Personal: FC = () => {
+export const Drop: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.personal.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.drop.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/my-wallet">
+        <ListItem button component={RouterLink} to="/drops">
           <ListItemIcon>
-            <Storefront />
+            <AccessTime />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.personal.wallet" />
+            <FormattedMessage id="pages.dashboard.mechanics.drop.main" />
           </ListItemText>
         </ListItem>
       </List>

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { AutoAwesomeMotion, Collections, Storage } from "@mui/icons-material";
+import { Filter, Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -11,24 +11,24 @@ export const Erc721Section: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.erc721.title" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc721.title" />
           </ListSubheader>
         }
       >
         <ListItem button component={RouterLink} to="/erc721-contracts">
           <ListItemIcon>
-            <Collections />
+            <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.contracts" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc721.contracts" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-templates">
           <ListItemIcon>
-            <AutoAwesomeMotion />
+            <Filter />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.templates" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc721.templates" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-tokens">
@@ -36,7 +36,7 @@ export const Erc721Section: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.tokens" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc721.tokens" />
           </ListItemText>
         </ListItem>
       </List>

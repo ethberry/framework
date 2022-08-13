@@ -1,26 +1,26 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Paid } from "@mui/icons-material";
+import { AccountBalance } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const ChainLink: FC = () => {
+export const Vesting: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.chain-link.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.vesting.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/chain-link">
+        <ListItem button component={RouterLink} to="/vesting">
           <ListItemIcon>
-            <Paid />
+            <AccountBalance />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.chain-link.fund" />
+            <FormattedMessage id="pages.dashboard.mechanics.vesting.main" />
           </ListItemText>
         </ListItem>
       </List>

@@ -1,34 +1,34 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Collections, Storage } from "@mui/icons-material";
+import { Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Erc1155Section: FC = () => {
+export const Pages: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.erc1155.title" />
+            <FormattedMessage id="pages.dashboard.integrations.pages.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc1155-contracts">
+        <ListItem button component={RouterLink} to="/pages/about-us">
           <ListItemIcon>
-            <Collections />
+            <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc1155.contracts" />
+            <FormattedMessage id="pages.dashboard.integrations.pages.about-us" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc1155-templates">
+        <ListItem button component={RouterLink} to="/pages/faq">
           <ListItemIcon>
-            <Storage />
+            <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc1155.templates" />
+            <FormattedMessage id="pages.dashboard.integrations.pages.faq" />
           </ListItemText>
         </ListItem>
       </List>

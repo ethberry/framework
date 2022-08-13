@@ -1,42 +1,42 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { BarChart, Casino, Savings } from "@mui/icons-material";
+import { Filter, Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Staking: FC = () => {
+export const Erc998Section: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.staking.title" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc998.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/staking/rules">
+        <ListItem button component={RouterLink} to="/erc998-contracts">
           <ListItemIcon>
-            <Casino />
+            <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.staking.rules" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc998.contracts" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/staking/stakes">
+        <ListItem button component={RouterLink} to="/erc998-templates">
           <ListItemIcon>
-            <Savings />
+            <Filter />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.staking.stakes" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc998.templates" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/staking/leaderboard">
+        <ListItem button component={RouterLink} to="/erc998-tokens">
           <ListItemIcon>
-            <BarChart />
+            <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.staking.leaderboard" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc998.tokens" />
           </ListItemText>
         </ListItem>
       </List>

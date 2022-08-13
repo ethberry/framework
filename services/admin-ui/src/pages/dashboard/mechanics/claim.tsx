@@ -1,26 +1,26 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Storage } from "@mui/icons-material";
+import { Paragliding } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Erc20Sections: FC = () => {
+export const Claim: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.erc20.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.claim.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc20-contracts">
+        <ListItem button component={RouterLink} to="/claims">
           <ListItemIcon>
-            <Storage />
+            <Paragliding />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc20.contracts" />
+            <FormattedMessage id="pages.dashboard.mechanics.claim.main" />
           </ListItemText>
         </ListItem>
       </List>

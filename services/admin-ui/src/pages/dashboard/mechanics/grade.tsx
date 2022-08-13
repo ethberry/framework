@@ -1,26 +1,26 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Savings } from "@mui/icons-material";
+import { Upgrade } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Lottery: FC = () => {
+export const Grade: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.lottery.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.grade.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/lottery/rounds">
+        <ListItem button component={RouterLink} to="/grades">
           <ListItemIcon>
-            <Savings />
+            <Upgrade />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.lottery.rounds" />
+            <FormattedMessage id="pages.dashboard.mechanics.grade.main" />
           </ListItemText>
         </ListItem>
       </List>

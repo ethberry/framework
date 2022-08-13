@@ -1,42 +1,42 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Filter, Storage, Storefront } from "@mui/icons-material";
+import { Leaderboard, RecordVoiceOver, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
-export const Erc721Section: FC = () => {
+export const Referral: FC = () => {
   return (
     <Paper sx={{ mb: 2 }}>
       <List
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.erc721.title" />
+            <FormattedMessage id="pages.dashboard.integrations.referral.title" />
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/erc721-contracts">
+        <ListItem button component={RouterLink} to="/referral/link">
           <ListItemIcon>
-            <Storefront />
+            <RecordVoiceOver />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.contracts" />
+            <FormattedMessage id="pages.dashboard.integrations.referral.link" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc721-templates">
+        <ListItem button component={RouterLink} to="/referral/leaderboard">
           <ListItemIcon>
-            <Filter />
+            <Leaderboard />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.templates" />
+            <FormattedMessage id="pages.dashboard.integrations.referral.leaderboard" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/erc721-tokens">
+        <ListItem button component={RouterLink} to="/referral/reward">
           <ListItemIcon>
-            <Storage />
+            <Timeline />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.erc721.tokens" />
+            <FormattedMessage id="pages.dashboard.integrations.referral.reward" />
           </ListItemText>
         </ListItem>
       </List>
