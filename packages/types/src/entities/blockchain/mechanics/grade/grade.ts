@@ -1,7 +1,7 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { IContract } from "../hierarchy/contract";
-import { IAsset } from "./asset";
+import { IContract } from "../../hierarchy/contract";
+import { IAsset } from "../asset";
 
 export enum GradeStrategy {
   FLAT = "FLAT",

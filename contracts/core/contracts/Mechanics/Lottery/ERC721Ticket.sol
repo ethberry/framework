@@ -33,7 +33,7 @@ contract ERC721Ticket is IERC721Ticket, ERC721ACBER, ERC721ACBaseUrl {
     address account,
     uint8 ticketType,
     uint256 round,
-    bool[40] calldata numbers
+    bool[36] calldata numbers
   ) external onlyRole(MINTER_ROLE) returns (uint256 tokenId) {
     tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();

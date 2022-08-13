@@ -1,6 +1,6 @@
 import { IIdDateBase } from "@gemunion/types-collection";
 
-import { IAsset } from "./asset";
+import { IAsset } from "../asset";
 
 export interface IDrop extends IIdDateBase {
   item?: IAsset;

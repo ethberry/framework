@@ -9,7 +9,7 @@ pragma solidity ^0.8.9;
 struct Ticket {
   uint8 ticketType;
   uint256 round;
-  bool[40] numbers;
+  bool[36] numbers;
 }
 
 interface IERC721Ticket {
@@ -17,7 +17,7 @@ interface IERC721Ticket {
     address account,
     uint8 ticketType,
     uint256 round,
-    bool[40] calldata numbers
+    bool[36] calldata numbers
   ) external returns (uint256);
 
   function burn(uint256 tokenId) external;

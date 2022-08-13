@@ -1,14 +1,20 @@
-import { Injectable } from "@nestjs/common";
-import { utils } from "ethers";
+import { Inject, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { constants, utils, Wallet } from "ethers";
 
+import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams } from "@gemunion/nest-js-module-exchange-signer";
 
 import { ISignLotteryDto } from "./interfaces";
 
 @Injectable()
 export class LotterySignService {
-  constructor(private readonly signerService: SignerService) {}
+  constructor(
+    @Inject(ETHERS_SIGNER)
+    private readonly signer: Wallet,
+    private readonly configService: ConfigService,
+  ) {}
 
   public async sign(dto: ISignLotteryDto): Promise<IServerSignature> {
     const { ticketNumbers, account, referrer } = dto;
@@ -30,7 +36,34 @@ export class LotterySignService {
   }
 
   public async getSignature(account: string, params: IParams, ticketNumbers: Array<boolean>): Promise<string> {
-    void [account, params, ticketNumbers];
-    return Promise.resolve("");
+    return this.signer._signTypedData(
+      // Domain
+      {
+        name: "Lottery",
+        version: "1.0.0",
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        verifyingContract: this.configService.get<string>("LOTTERY_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "numbers", type: "bool[40]" },
+          { name: "price", type: "uint256" },
+        ],
+        Params: [
+          { name: "nonce", type: "bytes32" },
+          { name: "externalId", type: "uint256" },
+          { name: "expiresAt", type: "uint256" },
+          { name: "referrer", type: "address" },
+        ],
+      },
+      // Value
+      {
+        params,
+        numbers: ticketNumbers,
+        price: constants.WeiPerEther,
+      },
+    );
   }
 }

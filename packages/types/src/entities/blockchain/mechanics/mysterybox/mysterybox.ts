@@ -1,8 +1,8 @@
 import { ISearchable } from "@gemunion/types-collection";
 
-import { IAsset } from "./asset";
-import { ITemplate } from "../hierarchy/template";
-import { IToken } from "../hierarchy/token";
+import { IAsset } from "../asset";
+import { ITemplate } from "../../hierarchy/template";
+import { IToken } from "../../hierarchy/token";
 
 export enum MysteryboxStatus {
   ACTIVE = "ACTIVE",

@@ -31,7 +31,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   uint8 private comm = 30; // commission 30%
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
-  event Purchase(address account, uint256 round, bool[40] numbers);
+  event Purchase(address account, uint256 round, bool[36] numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address addr, uint256 ticketId, uint256 amount);
 
@@ -139,11 +139,11 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     Round storage currentRound = _rounds[_rounds.length - 1];
 
     // calculate wining numbers
-    bool[40] memory tmp1;
+    bool[36] memory tmp1;
     uint8 i = 0;
     while (i < 7) {
-      uint256 number = randomness % 40;
-      randomness = randomness / 40;
+      uint256 number = randomness % 36;
+      randomness = randomness / 36;
       if (!tmp1[number]) {
         currentRound.values[i] = uint8(number);
         tmp1[number] = true;
@@ -170,7 +170,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
   function purchase(
     bytes32 nonce,
-    bool[40] calldata numbers,
+    bool[36] calldata numbers,
     uint256 price,
     address signer,
     bytes calldata signature
