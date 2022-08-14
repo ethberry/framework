@@ -46,7 +46,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <TextInput name="stakingStatus" readOnly={true} />
+      {id ? <TextInput name="stakingStatus" readOnly={true} /> : null}
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <PriceInput prefix="deposit" />

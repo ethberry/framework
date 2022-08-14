@@ -21,6 +21,7 @@ import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@fram
 
 import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
+import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
 
@@ -55,6 +56,11 @@ export const Staking: FC = () => {
       penalty: 100,
       recurrent: false,
     },
+    filter: ({ deposit, reward, ...rest }) => ({
+      ...rest,
+      deposit: cleanUpAsset(deposit),
+      reward: cleanUpAsset(reward),
+    }),
     search: {
       query: "",
       stakingStatus: [StakingStatus.ACTIVE],
