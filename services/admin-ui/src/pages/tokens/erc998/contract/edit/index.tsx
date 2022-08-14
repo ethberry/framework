@@ -39,15 +39,17 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
       validationSchema={validationSchema}
       message={message}
       testId="Erc998ContractEditForm"
+      headActions={(
+        <BlockchainInfoPopover
+          name={name}
+          symbol={symbol}
+          address={address}
+          baseTokenURI={baseTokenURI}
+          royalty={royalty}
+        />
+      )}
       {...rest}
     >
-      <BlockchainInfoPopover
-        name={name}
-        symbol={symbol}
-        address={address}
-        baseTokenURI={baseTokenURI}
-        royalty={royalty}
-      />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <TextInput name="address" disabled={true} />

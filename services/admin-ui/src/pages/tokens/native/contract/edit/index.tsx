@@ -36,9 +36,9 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         validationSchema={validationSchema}
         message={message}
         testId="Erc20TokenEditDialog"
+        headActions={<BlockchainInfoPopover symbol={symbol} address={address} decimals={decimals} />}
         {...rest}
       >
-        <BlockchainInfoPopover symbol={symbol} address={address} decimals={decimals} />
         <TextInput name="symbol" />
         <TextInput name="title" />
         <RichTextEditor name="description" />

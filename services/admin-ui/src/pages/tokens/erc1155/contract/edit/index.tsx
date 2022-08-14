@@ -36,9 +36,9 @@ export const Erc1155CollectionEditDialog: FC<IErc1155ContractEditDialogProps> = 
       validationSchema={validationSchema}
       message={message}
       testId="Erc1155ContractEditForm"
+      headActions={<BlockchainInfoPopover address={address} baseTokenURI={baseTokenURI} />}
       {...rest}
     >
-      <BlockchainInfoPopover address={address} baseTokenURI={baseTokenURI} />
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />

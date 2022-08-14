@@ -40,15 +40,17 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
         validationSchema={validationSchema}
         message={message}
         testId="Erc20TokenEditDialog"
+        headActions={(
+          <BlockchainInfoPopover
+            name={name}
+            symbol={symbol}
+            address={address}
+            decimals={decimals}
+            cap={formatEther(template.amount, decimals, "")}
+          />
+        )}
         {...rest}
       >
-        <BlockchainInfoPopover
-          name={name}
-          symbol={symbol}
-          address={address}
-          decimals={decimals}
-          cap={formatEther(template.amount, decimals, "")}
-        />
         <TextInput name="title" />
         <RichTextEditor name="description" />
         <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
