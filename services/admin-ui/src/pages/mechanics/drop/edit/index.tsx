@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { DateInput } from "@gemunion/mui-inputs-picker";
+import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { IDrop, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -38,8 +38,8 @@ export const DropEditDialog: FC<IDropEditDialogProps> = props => {
     >
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
       <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
-      <DateInput name="startTimestamp" />
-      <DateInput name="endTimestamp" />
+      <DateTimeInput name="startTimestamp" />
+      <DateTimeInput name="endTimestamp" />
     </FormDialog>
   );
 };
