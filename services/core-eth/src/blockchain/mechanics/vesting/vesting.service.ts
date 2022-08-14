@@ -8,24 +8,24 @@ import { VestingEntity } from "./vesting.entity";
 export class VestingService {
   constructor(
     @InjectRepository(VestingEntity)
-    private readonly VestingEntityRepository: Repository<VestingEntity>,
+    private readonly vestingEntityRepository: Repository<VestingEntity>,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<VestingEntity>,
     options?: FindOneOptions<VestingEntity>,
   ): Promise<VestingEntity | null> {
-    return this.VestingEntityRepository.findOne({ where, ...options });
+    return this.vestingEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
     where: FindOptionsWhere<VestingEntity>,
     options?: FindOneOptions<VestingEntity>,
   ): Promise<Array<VestingEntity>> {
-    return this.VestingEntityRepository.find({ where, ...options });
+    return this.vestingEntityRepository.find({ where, ...options });
   }
 
   public async create(dto: DeepPartial<VestingEntity>): Promise<VestingEntity> {
-    return this.VestingEntityRepository.create(dto).save();
+    return this.vestingEntityRepository.create(dto).save();
   }
 }

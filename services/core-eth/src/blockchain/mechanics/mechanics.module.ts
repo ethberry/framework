@@ -6,8 +6,9 @@ import { ExchangeModule } from "./exchange/exchange.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
 import { ReferralModule } from "./referral/referral.module";
+import { LotteryModule } from "./lottery/lottery.module";
 
 @Module({
-  imports: [ClaimModule, MysteryboxModule, ExchangeModule, StakingModule, VestingModule, ReferralModule],
+  imports: [ClaimModule, MysteryboxModule, ExchangeModule, StakingModule, VestingModule, ReferralModule, LotteryModule],
 })
 export class MechanicsModule {}

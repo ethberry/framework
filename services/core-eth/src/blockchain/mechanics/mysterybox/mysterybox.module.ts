@@ -5,7 +5,7 @@ import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { MysteryboxEntity } from "./mysterybox.entity";
 import { MysteryboxService } from "./mysterybox.service";
-import { MysteryboxLogModule } from "./mysterybox-log/mysterybox-log.module";
+import { MysteryboxLogModule } from "./log/mysterybox-log.module";
 import { MysteryboxControllerEth } from "./mysterybox.controller.eth";
 import { MysteryboxServiceEth } from "./mysterybox.service.eth";
 import { AccessControlModule } from "../../access-control/access-control.module";

@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { VestingServiceEth } from "./vesting.service.eth";
 import { VestingEntity } from "./vesting.entity";
 import { VestingControllerEth } from "./vesting.controller.eth";
-import { VestingHistoryModule } from "./vesting-history/vesting-history.module";
+import { VestingHistoryModule } from "./history/vesting-history.module";
 import { VestingService } from "./vesting.service";
 import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
 
