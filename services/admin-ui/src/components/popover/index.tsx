@@ -1,6 +1,6 @@
 import { FC, MouseEvent, useState } from "react";
 
-import { IconButton, Popover, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { Box, IconButton, Popover, Table, TableBody, TableCell, TableRow } from "@mui/material";
 import { QuestionMark } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
@@ -19,7 +19,7 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
   const id = open ? "contract-info" : undefined;
 
   return (
-    <>
+    <Box position="absolute" right={16} top={16} zIndex="1000">
       <IconButton aria-describedby={id} onClick={handleClick}>
         <QuestionMark />
       </IconButton>
@@ -50,6 +50,6 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
           </TableBody>
         </Table>
       </Popover>
-    </>
+    </Box>
   );
 };
