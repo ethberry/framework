@@ -26,9 +26,9 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   address private _ticketFactory;
   address private _acceptedToken;
 
-  uint8 private _maxTicket = 1; // TODO change for 5000 in production
+  uint8 private _maxTicket = 2; // TODO change for 5000 in production
   uint256 private _timeLag = 2592; // TODO change in production: release after 2592000 seconds = 30 days
-  uint8 private comm = 30; // commission 30%
+  uint8 internal comm = 30; // commission 30%
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event Purchase(address account, uint256 round, bool[36] numbers);
@@ -51,7 +51,6 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     Round memory rootRound;
     rootRound.startTimestamp = block.timestamp;
     rootRound.endTimestamp = block.timestamp;
-    rootRound.jackpot = 10000 ether;
     _rounds.push(rootRound);
   }
 
@@ -72,14 +71,13 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 endTimestamp;
     uint256 balance; // left after get prize
     uint256 total; // max money before
-    uint256 jackpot;
     bool[][] tickets; // all round tickets
-    uint8[7] values; // prize numbers
-    uint8[8] aggregation; // prize counts
+    uint8[6] values; // prize numbers
+    uint8[7] aggregation; // prize counts
     bytes32 requestId;
   }
 
-  Round[] private _rounds;
+  Round[] internal _rounds;
 
   function startRound() public onlyRole(DEFAULT_ADMIN_ROLE) {
     Round memory prevRound = _rounds[_rounds.length - 1];
@@ -92,7 +90,6 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
     Round storage currentRound = _rounds[roundNumber];
     currentRound.startTimestamp = block.timestamp;
-    currentRound.jackpot = prevRound.aggregation[7] > 0 ? 10000 ether : prevRound.jackpot + (prevRound.total / 10);
 
     emit RoundStarted(roundNumber, block.timestamp);
   }
@@ -141,7 +138,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     // calculate wining numbers
     bool[36] memory tmp1;
     uint8 i = 0;
-    while (i < 7) {
+    while (i < 6) {
       uint256 number = randomness % 36;
       randomness = randomness / 36;
       if (!tmp1[number]) {
@@ -155,30 +152,25 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 len = currentRound.tickets.length;
     for (uint8 l = 0; l < len; l++) {
       uint8 tmp2 = 0;
-      for (uint8 j = 0; j <= 7; j++) {
+      for (uint8 j = 0; j <= 6; j++) {
         if (currentRound.tickets[l][currentRound.values[j]]) {
           tmp2++;
         }
       }
       currentRound.aggregation[tmp2]++;
     }
-    // sum 7 numbers jackpot into 6 numbers
-    currentRound.aggregation[6] = currentRound.aggregation[6] + currentRound.aggregation[7];
   }
 
   // MARKETPLACE
 
   function purchase(
-    bytes32 nonce,
+    Params memory params,
     bool[36] calldata numbers,
     uint256 price,
     address signer,
     bytes calldata signature
   ) external whenNotPaused {
     require(hasRole(MINTER_ROLE, signer), "Lottery: Wrong signer");
-
-    require(!_expired[nonce], "Lottery: Expired signature");
-    _expired[nonce] = true;
 
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
@@ -190,8 +182,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
     address account = _msgSender();
 
-    bool isVerified = _verify(signer, _hash(nonce, numbers, price), signature);
-    require(isVerified, "Lottery: Invalid signature");
+    _verifySignature(params, numbers, price, signer, signature);
 
     currentRound.balance += price;
     currentRound.total += price;
@@ -221,7 +212,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
 
-    uint8[8] memory aggregation = currentRound.aggregation;
+    uint8[7] memory aggregation = currentRound.aggregation;
 
     uint256 sumc;
     for (uint8 l = 0; l < 7; l++) {
@@ -233,19 +224,15 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 point = currentRound.total / sumc;
 
     uint8 result = 0;
-    for (uint8 j = 0; j < 7; j++) {
+    for (uint8 j = 0; j < 6; j++) {
       if (data.numbers[currentRound.values[j]]) {
         result++;
       }
     }
 
-    uint256 amount = point * coefficient[result == 7 ? 6 : result];
+    uint256 amount = point * coefficient[result];
 
     currentRound.balance -= amount;
-
-    if (result == 7) {
-      amount += currentRound.jackpot / aggregation[7];
-    }
 
     SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), amount);
     emit Prize(_msgSender(), tokenId, amount);
@@ -265,38 +252,5 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
   receive() external payable {
     revert();
-  }
-
-  // todo !DEV ONLY! delete in production
-  function setDummyRound(
-    bool[] calldata ticket,
-    uint8[7] calldata values,
-    uint8[8] calldata aggregation,
-    bytes32 requestId
-  ) external {
-
-    Round memory dummyRound;
-    _rounds.push(dummyRound);
-
-    uint256 roundNumber = _rounds.length - 1;
-    Round storage currentRound = _rounds[roundNumber];
-
-    currentRound.startTimestamp = block.timestamp;
-    currentRound.endTimestamp = block.timestamp + 1;
-    currentRound.balance = 10000 ether;
-    currentRound.total = 10000 ether;
-    currentRound.total -= (currentRound.total * comm) / 100;
-    currentRound.jackpot = 10000 ether;
-    currentRound.tickets.push(ticket);
-    currentRound.values = values; // prize numbers
-    currentRound.aggregation = aggregation;
-    currentRound.requestId = requestId;
-  }
-  // todo !DEV ONLY! delete in production
-
-  function setDummyTicket(bool[] calldata ticket) external {
-    uint256 roundNumber = _rounds.length - 1;
-    Round storage currentRound = _rounds[roundNumber];
-    currentRound.tickets.push(ticket);
   }
 }

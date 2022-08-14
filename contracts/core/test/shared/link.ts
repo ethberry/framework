@@ -9,12 +9,12 @@ export async function deployLinkVrfFixture() {
   const link = await ethers.getContractFactory("LinkErc20");
   const linkInstance = await link.deploy(tokenName, tokenSymbol);
   await linkInstance.deployed();
-  console.info(`LINK_ADDR=${linkInstance.address}`);
+  // console.info(`LINK_ADDR=${linkInstance.address}`);
   const linkAmountInWei = BigNumber.from("10000000000000").mul(decimals);
   await linkInstance.mint(owner.address, linkAmountInWei);
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
   const vrfInstance = await vrfFactory.deploy(linkInstance.address);
   await vrfInstance.deployed();
-  console.info(`VRF_ADDR=${vrfInstance.address}`);
+  // console.info(`VRF_ADDR=${vrfInstance.address}`);
   return { linkInstance, vrfInstance };
 }

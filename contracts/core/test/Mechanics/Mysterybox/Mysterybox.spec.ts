@@ -27,7 +27,7 @@ import {
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { shouldGetTokenURI } from "../../ERC721/shared/tokenURI";
 import { shouldSetBaseURI } from "../../ERC721/shared/setBaseURI";
-import { randomRequest } from "../Staking/shared/randomRequest";
+import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 
 describe("ERC721Mysterybox", function () {
@@ -174,7 +174,9 @@ describe("ERC721Mysterybox", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, 1, this.receiver.address);
+      await randomRequest(erc721RandomInstance, vrfInstance);
+      const balance = await erc721RandomInstance.balanceOf(this.receiver.address);
+      expect(balance).to.equal(1);
     });
 
     it("should mint (multiple)", async function () {

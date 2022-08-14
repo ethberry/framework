@@ -1,6 +1,7 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers, network, web3 } from "hardhat";
+import { utils, BigNumber, constants } from "ethers";
 import { Network } from "@ethersproject/networks";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
@@ -11,10 +12,12 @@ import {
   decimals,
   DEFAULT_ADMIN_ROLE,
   defaultNumbers,
+  expiresAt,
+  externalId,
   LINK_ADDR,
-  lotteryBalance,
   MINTER_ROLE,
   nonce,
+  params,
   PAUSER_ROLE,
   royalty,
   tokenName,
@@ -30,7 +33,9 @@ import { shouldRenounceRole } from "../../shared/accessControl/renounceRole";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { shouldGetRoleAdmin } from "../../shared/accessControl/getRoleAdmin";
 import { shouldGrantRole } from "../../shared/accessControl/grantRole";
-import { randomRequest } from "./randomRequest";
+import { randomRequest } from "../../shared/randomRequest";
+import { getContractName } from "../../utils";
+import { wrapSignature } from "./utils";
 
 const delay = (milliseconds: number) => {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
@@ -43,6 +48,8 @@ describe("Lottery", function () {
   let linkInstance: LinkErc20;
   let vrfInstance: VRFCoordinatorMock;
   this.timeout(999999);
+
+  let generateSignature: (values: Record<string, any>) => Promise<string>;
 
   before(async function () {
     if (network.name === "hardhat") {
@@ -62,7 +69,7 @@ describe("Lottery", function () {
     [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
 
     const erc20Factory = await ethers.getContractFactory("ERC20Simple");
-    this.erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, ethers.utils.parseEther("2000000"));
+    this.erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, utils.parseEther("2000000"));
 
     await this.erc20Instance.deployed();
 
@@ -71,13 +78,7 @@ describe("Lottery", function () {
 
     await this.erc721TicketInstance.deployed();
 
-    // const lotteryFactory = await ethers.getContractFactory("Lottery");
-    const lotteryFactory =
-      network.name === "hardhat"
-        ? await ethers.getContractFactory("LotteryRandomTestHardhat")
-        : network.name === "besu"
-        ? await ethers.getContractFactory("LotteryRandomTestBesu")
-        : await ethers.getContractFactory("Lottery");
+    const lotteryFactory = await ethers.getContractFactory(getContractName("LotteryRandom", network.name));
 
     this.lotteryInstance = await lotteryFactory.deploy(
       tokenName,
@@ -92,11 +93,13 @@ describe("Lottery", function () {
 
     etherNetwork = await ethers.provider.getNetwork();
 
+    generateSignature = wrapSignature(etherNetwork, this.lotteryInstance, this.owner);
+
     this.contractInstance = this.lotteryInstance;
 
     // Fund LINK to Lottery contract
     if (network.name === "hardhat") {
-      await linkInstance.transfer(this.lotteryInstance.address, ethers.BigNumber.from("1000").mul(decimals));
+      await linkInstance.transfer(this.lotteryInstance.address, BigNumber.from("1000").mul(decimals));
     }
   });
 
@@ -126,7 +129,7 @@ describe("Lottery", function () {
     });
 
     it("should fail: the factory must be a deployed contract", async function () {
-      const tx = this.lotteryInstance.setTicketFactory(ethers.constants.AddressZero);
+      const tx = this.lotteryInstance.setTicketFactory(constants.AddressZero);
       await expect(tx).to.be.revertedWith("Lottery: the factory must be a deployed contract");
     });
   });
@@ -134,7 +137,7 @@ describe("Lottery", function () {
   describe("setAcceptedToken", function () {
     beforeEach(async function () {
       const newCoinFactory = await ethers.getContractFactory("ERC20Simple");
-      this.newCoinInstance = await newCoinFactory.deploy(tokenName, tokenSymbol, ethers.utils.parseEther("2000000"));
+      this.newCoinInstance = await newCoinFactory.deploy(tokenName, tokenSymbol, utils.parseEther("2000000"));
     });
 
     it("should set factory", async function () {
@@ -150,7 +153,7 @@ describe("Lottery", function () {
     });
 
     it("should fail: the factory must be a deployed contract", async function () {
-      const tx = this.lotteryInstance.setAcceptedToken(ethers.constants.AddressZero);
+      const tx = this.lotteryInstance.setAcceptedToken(constants.AddressZero);
       await expect(tx).to.be.revertedWith("Lottery: the factory must be a deployed contract");
     });
   });
@@ -207,75 +210,37 @@ describe("Lottery", function () {
       await this.erc20Instance.mint(this.stranger.address, amount);
       await this.erc20Instance.connect(this.stranger).approve(this.lotteryInstance.address, amount);
 
-      await this.erc20Instance.mint(this.lotteryInstance.address, ethers.utils.parseEther("20000"));
+      await this.erc20Instance.mint(this.lotteryInstance.address, utils.parseEther("20000"));
     });
 
     it("should purchase", async function () {
       await this.lotteryInstance.startRound();
-      const signature = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.owner.address, signature);
-      await expect(tx).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 0, 1, defaultNumbers);
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
+      await expect(tx).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 1, defaultNumbers);
     });
 
     it("should release", async function () {
       await this.lotteryInstance.startRound();
-      const signature = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.owner.address, signature);
-      await expect(tx).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 0, 1, defaultNumbers);
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
+      await expect(tx).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 1, defaultNumbers);
 
       await this.lotteryInstance.endRound();
       // TIME
@@ -288,37 +253,17 @@ describe("Lottery", function () {
 
     it("should fail: is not releasable yet", async function () {
       await this.lotteryInstance.startRound();
-
-      const signature = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.owner.address, signature);
-      await expect(tx).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 0, 1, defaultNumbers);
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
+      await expect(tx).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 1, defaultNumbers);
       await this.lotteryInstance.endRound();
 
       // TIME
@@ -331,230 +276,139 @@ describe("Lottery", function () {
 
     it("should fail: wrong signer", async function () {
       await this.lotteryInstance.startRound();
-      const signature = await this.stranger._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+      generateSignature = wrapSignature(etherNetwork, this.lotteryInstance, this.stranger);
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.stranger.address, signature);
+        .purchase(params, defaultNumbers, amount, this.stranger.address, signature);
       await expect(tx).to.be.revertedWith("Lottery: Wrong signer");
     });
 
     it("should fail: wrong signature", async function () {
       await this.lotteryInstance.startRound();
-
-      const signature = ethers.utils.formatBytes32String("signature");
+      const signature = utils.formatBytes32String("signature");
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.owner.address, signature);
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
       await expect(tx).to.be.revertedWith("Lottery: Invalid signature");
     });
 
     it("should fail: expired signature", async function () {
       await this.lotteryInstance.startRound();
-
-      const signature = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx1 = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.owner.address, signature);
-      await expect(tx1).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 0, 1, defaultNumbers);
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
+      await expect(tx1).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 1, defaultNumbers);
 
       const tx2 = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.owner.address, signature);
-
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
       await expect(tx2).to.be.revertedWith("Lottery: Expired signature");
     });
 
     it("should fail: insufficient allowance", async function () {
       await this.lotteryInstance.startRound();
-
-      const signature = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount * 2,
-        },
-      );
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount * 2,
+      });
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount * 2, this.owner.address, signature);
-
+        .purchase(params, defaultNumbers, amount * 2, this.owner.address, signature);
       await expect(tx).to.be.revertedWith("ERC20: insufficient allowance");
     });
 
     it("should fail: transfer amount exceeds balance", async function () {
       await this.lotteryInstance.startRound();
-
-      const signature = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount * 2,
-        },
-      );
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount * 2,
+      });
 
       await this.erc20Instance.connect(this.receiver).approve(this.lotteryInstance.address, amount * 2);
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount * 2, this.owner.address, signature);
+        .purchase(params, defaultNumbers, amount * 2, this.owner.address, signature);
 
       await expect(tx).to.be.revertedWith("ERC20: transfer amount exceeds balance");
     });
 
     it("should fail: no more tickets available", async function () {
       await this.lotteryInstance.startRound();
-      const nonce1 = ethers.utils.randomBytes(32);
-      const signature1 = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce: nonce1,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+
+      const params1 = {
+        nonce: utils.randomBytes(32),
+        externalId,
+        expiresAt,
+        referrer: constants.AddressZero,
+      };
+      const signature1 = await generateSignature({
+        account: this.receiver.address,
+        params: params1,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx1 = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce1, 0, defaultNumbers, amount, this.owner.address, signature1);
-      await expect(tx1).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 0, 1, defaultNumbers);
+        .purchase(params1, defaultNumbers, amount, this.owner.address, signature1);
+      await expect(tx1).to.emit(this.lotteryInstance, "Purchase").withArgs(this.receiver.address, 1, defaultNumbers);
 
-      const nonce2 = ethers.utils.randomBytes(32);
-      const signature2 = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce: nonce2,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+      const params2 = {
+        nonce: utils.randomBytes(32),
+        externalId,
+        expiresAt,
+        referrer: constants.AddressZero,
+      };
+      const signature2 = await generateSignature({
+        account: this.stranger.address,
+        params: params2,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx2 = this.lotteryInstance
         .connect(this.stranger)
-        .purchase(nonce2, 0, defaultNumbers, amount, this.owner.address, signature2);
+        .purchase(params2, defaultNumbers, amount, this.owner.address, signature2);
+      await expect(tx2).to.emit(this.lotteryInstance, "Purchase").withArgs(this.stranger.address, 1, defaultNumbers);
 
-      await expect(tx2).to.be.revertedWith("Lottery: no more tickets available");
+      const params3 = {
+        nonce: utils.randomBytes(32),
+        externalId,
+        expiresAt,
+        referrer: constants.AddressZero,
+      };
+      const signature3 = await generateSignature({
+        account: this.stranger.address,
+        params: params3,
+        numbers: defaultNumbers,
+        price: amount,
+      });
+
+      const tx3 = this.lotteryInstance
+        .connect(this.stranger)
+        .purchase(params3, defaultNumbers, amount, this.owner.address, signature3);
+      await expect(tx3).to.be.revertedWith("Lottery: no more tickets available");
     });
 
     it("should fail: current round is finished", async function () {
@@ -564,75 +418,49 @@ describe("Lottery", function () {
       const current: number = (await time.latest()).toNumber();
       await expect(tx0).to.emit(this.lotteryInstance, "RoundEnded").withArgs(1, current);
 
-      const signature = await this.owner._signTypedData(
-        // Domain
-        {
-          name: tokenName,
-          version: "1.0.0",
-          chainId: etherNetwork.chainId,
-          verifyingContract: this.lotteryInstance.address,
-        },
-        // Types
-        {
-          Purchase: [
-            { name: "nonce", type: "bytes32" },
-            { name: "ticketType", type: "uint8" },
-            { name: "numbers", type: "bool[40]" },
-            { name: "price", type: "uint256" },
-          ],
-        },
-        // Value
-        {
-          nonce,
-          ticketType: 0,
-          numbers: defaultNumbers,
-          price: amount,
-        },
-      );
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount,
+      });
 
       const tx = this.lotteryInstance
         .connect(this.receiver)
-        .purchase(nonce, 0, defaultNumbers, amount, this.owner.address, signature);
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
       await expect(tx).to.be.revertedWith("Lottery: current round is finished");
     });
   });
 
   describe("get prize", function () {
     beforeEach(async function () {
-      await this.erc721TicketInstance.mintTicket(this.receiver.address, 1, 1, defaultNumbers);
+      await this.erc721TicketInstance.mintTicket(this.receiver.address, 1, defaultNumbers);
       await this.erc721TicketInstance.connect(this.receiver).approve(this.lotteryInstance.address, 1);
-      await this.erc20Instance.mint(this.lotteryInstance.address, ethers.utils.parseEther("20000"));
+      await this.erc20Instance.mint(this.lotteryInstance.address, utils.parseEther("20000"));
     });
 
     it("should get prize: Jackpot 1 ticket", async function () {
-      const values = [0, 1, 2, 3, 5, 8, 13];
-      const aggregation = [0, 0, 0, 0, 0, 0, 1, 1];
+      const values = [0, 1, 2, 3, 5, 8];
+      const aggregation = [0, 0, 0, 0, 0, 0, 1];
 
       await this.lotteryInstance.setDummyRound(defaultNumbers, values, aggregation, nonce);
 
       await this.erc721TicketInstance.connect(this.receiver).approve(this.lotteryInstance.address, 1);
 
-      const prizeAmount = lotteryBalance // initial balance
-        .sub(lotteryBalance.div(100).mul(30)) // Sub commission
-        .add(lotteryBalance) // add Jackpot
-        .sub(180); // rounding error
+      const prizeAmount = constants.WeiPerEther.mul(7000).sub(180); // rounding error
 
       const tx = this.lotteryInstance.connect(this.receiver).getPrize(1);
       await expect(tx).to.emit(this.lotteryInstance, "Prize").withArgs(this.receiver.address, 1, prizeAmount);
     });
 
     it("should get prize: Jackpot 2 tickets", async function () {
-      const values = [0, 1, 2, 3, 5, 8, 13];
-      const aggregation = [0, 0, 0, 0, 0, 0, 2, 2];
+      const values = [0, 1, 2, 3, 5, 8];
+      const aggregation = [0, 0, 0, 0, 0, 0, 2];
 
       await this.lotteryInstance.setDummyRound(defaultNumbers, values, aggregation, nonce);
       // await this.lotteryInstance.setDummyTicket(defaultNumbers);
 
-      const prizeAmount = lotteryBalance // initial balance
-        .sub(lotteryBalance.div(100).mul(30)) // Sub commission
-        .div(220 * 2) // lottery round constant
-        .mul(220) // coefficient
-        .add(lotteryBalance.div(2)); // add shared Jackpot
+      const prizeAmount = constants.WeiPerEther.mul(3500).sub(200); // rounding error
 
       const tx = this.lotteryInstance.connect(this.receiver).getPrize(1);
       await expect(tx).to.emit(this.lotteryInstance, "Prize").withArgs(this.receiver.address, 1, prizeAmount);

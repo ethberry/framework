@@ -33,7 +33,7 @@ describe("ExchangeCore", function () {
   let generateSignature: (values: Record<string, any>) => Promise<string>;
 
   beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
+    [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
 
     const exchangeFactory = await ethers.getContractFactory("Exchange");
     exchangeInstance = await exchangeFactory.deploy(tokenName);
@@ -221,6 +221,50 @@ describe("ExchangeCore", function () {
       await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
     });
 
+    it("should fail: wrong signer", async function () {
+      generateSignature = wrapOneToManySignature(network, exchangeInstance, this.stranger);
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        item: {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        price: [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+      });
+
+      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+        params,
+        {
+          tokenType: 2,
+          token: erc721Instance.address,
+          tokenId,
+          amount,
+        },
+        [
+          {
+            tokenType: 1,
+            token: erc20Instance.address,
+            tokenId,
+            amount,
+          },
+        ],
+        this.stranger.address,
+        signature,
+      );
+
+      await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
+    });
+
     it("should fail: wrong signer role", async function () {
       const signature = await generateSignature({
         account: this.receiver.address,
@@ -290,15 +334,15 @@ describe("ExchangeCore", function () {
 
     it("should fail: expired signature", async function () {
       const expiresAt = (await time.latest()).toString();
-
+      const params = {
+        nonce,
+        externalId,
+        expiresAt,
+        referrer: constants.AddressZero,
+      };
       const signature = await generateSignature({
         account: this.receiver.address,
-        params: {
-          nonce,
-          externalId,
-          expiresAt,
-          referrer: constants.AddressZero,
-        },
+        params,
         item: {
           tokenType: 2,
           token: erc721Instance.address,
@@ -316,12 +360,7 @@ describe("ExchangeCore", function () {
       });
 
       const tx = exchangeInstance.connect(this.receiver).purchase(
-        {
-          nonce,
-          externalId,
-          expiresAt,
-          referrer: constants.AddressZero,
-        },
+        params,
         {
           tokenType: 2,
           token: erc721Instance.address,

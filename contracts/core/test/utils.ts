@@ -5,3 +5,14 @@ export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
   });
   return numbers;
 };
+
+export const getContractName = (base: string, network: string) => {
+  switch (network) {
+    case "hardhat":
+      return `${base}TestHardhat`;
+    case "besu":
+      return `${base}TestBesu`;
+    default:
+      return base;
+  }
+};
