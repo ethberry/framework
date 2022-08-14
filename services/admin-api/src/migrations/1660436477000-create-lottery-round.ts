@@ -2,17 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateReferralHistoryAt1660103709950 implements MigrationInterface {
+export class CreateLotteryRoundAt1660436477000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.referral_event_enum AS ENUM (
-        'ReferralReward',
-        'ReferralWithdraw'
-      );
-    `);
-
     const table = new Table({
-      name: `${ns}.referral_history`,
+      name: `${ns}.lottery_round`,
       columns: [
         {
           name: "id",
@@ -20,20 +13,17 @@ export class CreateReferralHistoryAt1660103709950 implements MigrationInterface 
           isPrimary: true,
         },
         {
-          name: "address",
-          type: "varchar",
+          name: "numbers",
+          type: "boolean",
+          isArray: true,
         },
         {
-          name: "transaction_hash",
-          type: "varchar",
+          name: "start_timestamp",
+          type: "timestamptz",
         },
         {
-          name: "event_type",
-          type: `${ns}.referral_event_enum`,
-        },
-        {
-          name: "event_data",
-          type: "json",
+          name: "end_timestamp",
+          type: "timestamptz",
         },
         {
           name: "created_at",
@@ -50,7 +40,6 @@ export class CreateReferralHistoryAt1660103709950 implements MigrationInterface 
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.referral_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.referral_event_enum;`);
+    await queryRunner.dropTable(`${ns}.lottery_round`);
   }
 }

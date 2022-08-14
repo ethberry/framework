@@ -383,6 +383,13 @@
       "popular": "Popular items"
     },
     "lottery": {
+      "leaderboard": {
+        "account": "Account",
+        "amount": "Amount",
+        "count": "Count",
+        "id": "ID",
+        "title": "Leaderboard"
+      },
       "ticket": {
         "title": "Buy a ticket"
       },
@@ -433,7 +440,7 @@
         "account": "Account",
         "amount": "Amount",
         "id": "ID",
-        "title": "Referral program leaderboard"
+        "title": "Leaderboard"
       },
       "link": {
         "title": "Your referral link"
@@ -444,7 +451,6 @@
       "title": "Referral program"
     },
     "staking": {
-      "reward": "Reward",
       "deposit": "Deposit",
       "leaderboard": {
         "account": "Account",
@@ -452,6 +458,7 @@
         "score": "Score",
         "title": "Leaderboard"
       },
+      "reward": "Reward",
       "rules": {
         "deposit": "Deposit",
         "title": "Staking rules"

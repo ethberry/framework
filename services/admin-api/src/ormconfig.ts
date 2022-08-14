@@ -126,18 +126,23 @@ import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
 
 import { CreateExchangeHistory1657846607010 } from "./migrations/1657846607010-create-exchange-history";
 
-import { CreateComposition1658980520000 } from "./migrations/1658980520000-create-composition";
-import { SeedComposition1658980520010 } from "./migrations/1658980520010-seed-composition";
+import { CreateCompositionAt1658980520000 } from "./migrations/1658980520000-create-composition";
+import { SeedCompositionAt1658980520010 } from "./migrations/1658980520010-seed-composition";
 
-import { CreateDrop1658980521000 } from "./migrations/1658980521000-create-drop";
+import { CreateDropAt1658980521000 } from "./migrations/1658980521000-create-drop";
 import { SeedDropErc721At1658980521030 } from "./migrations/1658980521030-seed-drop-erc721";
 import { SeedDropErc998At1658980521040 } from "./migrations/1658980521040-seed-drop-erc998";
 import { SeedDropErc1155At1658980521050 } from "./migrations/1658980521050-seed-drop-erc1155";
 import { SeedDropErcMysteryboxAt1658980521050 } from "./migrations/1658980521060-seed-drop-mysterybox";
 
-import { CreateReferralReward1660103709900 } from "./migrations/1660103709900-create-referral-reward";
+import { CreateReferralRewardAt1660103709900 } from "./migrations/1660103709900-create-referral-reward";
 import { SeedReferralRewardAt1660103709910 } from "./migrations/1660103709910-seed-referral-reward";
-import { CreateReferralHistory1660103709950 } from "./migrations/1660103709950-create-referral-history";
+import { CreateReferralHistoryAt1660103709950 } from "./migrations/1660103709950-create-referral-history";
+
+import { CreateLotteryRoundAt1660436477000 } from "./migrations/1660436477000-create-lottery-round";
+import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed-lottery-round";
+import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
+import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -282,18 +287,23 @@ const config: PostgresConnectionOptions = {
 
     CreateExchangeHistory1657846607010,
 
-    CreateComposition1658980520000,
-    SeedComposition1658980520010,
+    CreateCompositionAt1658980520000,
+    SeedCompositionAt1658980520010,
 
-    CreateDrop1658980521000,
+    CreateDropAt1658980521000,
     SeedDropErc721At1658980521030,
     SeedDropErc998At1658980521040,
     SeedDropErc1155At1658980521050,
     SeedDropErcMysteryboxAt1658980521050,
 
-    CreateReferralReward1660103709900,
+    CreateReferralRewardAt1660103709900,
     SeedReferralRewardAt1660103709910,
-    CreateReferralHistory1660103709950,
+    CreateReferralHistoryAt1660103709950,
+
+    CreateLotteryRoundAt1660436477000,
+    SeedLotteryRoundAt1660436477010,
+    CreateLotteryTicketAt1660436477020,
+    SeedLotteryTicketsAt1660436477030,
   ],
 };
 

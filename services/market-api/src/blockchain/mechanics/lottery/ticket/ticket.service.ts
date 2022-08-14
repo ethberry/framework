@@ -17,7 +17,6 @@ export class LotteryTicketService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  // TODO make some kind of aggregation
   public async leaderboard(dto: Partial<ILotteryLeaderboardSearchDto>): Promise<[Array<ILotteryLeaderboard>, number]> {
     const { skip, take } = dto;
 
@@ -25,9 +24,12 @@ export class LotteryTicketService {
       SELECT
         row_number() OVER (ORDER BY account)::INTEGER id,
         SUM(amount) AS amount,
+        COUNT(amount) AS count,
         account
-      FROM ${ns}.lottery_tickets
-      GROUP BY account
+      FROM
+        ${ns}.lottery_ticket
+      GROUP BY
+        account
     `;
 
     return Promise.all([

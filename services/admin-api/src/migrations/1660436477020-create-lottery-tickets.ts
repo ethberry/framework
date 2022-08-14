@@ -2,17 +2,10 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateReferralHistoryAt1660103709950 implements MigrationInterface {
+export class CreateLotteryTicketAt1660436477020 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.referral_event_enum AS ENUM (
-        'ReferralReward',
-        'ReferralWithdraw'
-      );
-    `);
-
     const table = new Table({
-      name: `${ns}.referral_history`,
+      name: `${ns}.lottery_ticket`,
       columns: [
         {
           name: "id",
@@ -20,20 +13,21 @@ export class CreateReferralHistoryAt1660103709950 implements MigrationInterface 
           isPrimary: true,
         },
         {
-          name: "address",
+          name: "account",
           type: "varchar",
         },
         {
-          name: "transaction_hash",
-          type: "varchar",
+          name: "numbers",
+          type: "boolean",
+          isArray: true,
         },
         {
-          name: "event_type",
-          type: `${ns}.referral_event_enum`,
+          name: "round_id",
+          type: "int",
         },
         {
-          name: "event_data",
-          type: "json",
+          name: "amount",
+          type: "uint256",
         },
         {
           name: "created_at",
@@ -44,13 +38,20 @@ export class CreateReferralHistoryAt1660103709950 implements MigrationInterface 
           type: "timestamptz",
         },
       ],
+      foreignKeys: [
+        {
+          columnNames: ["round_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.lottery_round`,
+          onDelete: "CASCADE",
+        },
+      ],
     });
 
     await queryRunner.createTable(table, true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.referral_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.referral_event_enum;`);
+    await queryRunner.dropTable(`${ns}.lottery_ticket`);
   }
 }

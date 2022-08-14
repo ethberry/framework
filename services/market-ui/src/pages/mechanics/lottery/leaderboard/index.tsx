@@ -6,14 +6,14 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { IReferralLeaderboard } from "@framework/types";
+import { ILotteryLeaderboard } from "@framework/types";
 
 import { formatEther } from "../../../../utils/money";
 
 export const LotteryLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
-    useCollection<IReferralLeaderboard>({
-      baseUrl: "/referral/leaderboard",
+    useCollection<ILotteryLeaderboard>({
+      baseUrl: "/lottery/leaderboard",
       empty: {
         account: "",
       },
@@ -25,19 +25,25 @@ export const LotteryLeaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({id: "pages.referral.leaderboard.id"}),
+      headerName: formatMessage({id: "pages.lottery.leaderboard.id"}),
       sortable: true,
       flex: 0,
     },
     {
       field: "account",
-      headerName: formatMessage({id: "pages.referral.leaderboard.account"}),
+      headerName: formatMessage({id: "pages.lottery.leaderboard.account"}),
       sortable: false,
       flex: 1
     },
     {
+      field: "count",
+      headerName: formatMessage({id: "pages.lottery.leaderboard.count"}),
+      sortable: true,
+      flex: 1
+    },
+    {
       field: "amount",
-      headerName: formatMessage({id: "pages.referral.leaderboard.amount"}),
+      headerName: formatMessage({id: "pages.lottery.leaderboard.amount"}),
       sortable: true,
       valueFormatter: ({value}: { value: string }) => formatEther(value),
       flex: 1
@@ -46,9 +52,9 @@ export const LotteryLeaderboard: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "referral", "referral.leaderboard"]} />
+      <Breadcrumbs path={["dashboard", "lottery", "lottery.leaderboard"]} />
 
-      <PageHeader message="pages.referral.leaderboard.title" />
+      <PageHeader message="pages.lottery.leaderboard.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 
