@@ -283,7 +283,8 @@
         },
         "lottery": {
           "leaderboard": "Leaderboard",
-          "ticket": "Buy a ticket",
+          "tickets": "My tickets",
+          "purchase": "Buy a ticket",
           "title": "Lottery"
         },
         "mysterybox": {
@@ -390,7 +391,10 @@
         "id": "ID",
         "title": "Leaderboard"
       },
-      "ticket": {
+      "tickets": {
+        "title": "My tickets"
+      },
+      "purchase": {
         "title": "Buy a ticket"
       },
       "title": "Lottery"

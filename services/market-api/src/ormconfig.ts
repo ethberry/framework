@@ -20,6 +20,8 @@ import { ContractHistoryEntity } from "./blockchain/contract-history/contract-hi
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
+import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -45,6 +47,8 @@ const config: PostgresConnectionOptions = {
     DropEntity,
     GradeEntity,
     ReferralRewardEntity,
+    LotteryRoundEntity,
+    LotteryTicketEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

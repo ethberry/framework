@@ -12,7 +12,7 @@ import { IServerSignature } from "@gemunion/types-collection";
 import { useSettings } from "@gemunion/provider-settings";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
 
-export const LotteryTicket: FC = () => {
+export const LotteryPurchase: FC = () => {
   const { isActive } = useWeb3React();
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(new Array(36).fill(false));
@@ -77,9 +77,9 @@ export const LotteryTicket: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "lottery", "lottery.ticket"]} />
+      <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
 
-      <PageHeader message="pages.lottery.ticket.title">
+      <PageHeader message="pages.lottery.purchase.title">
         <Button startIcon={<Casino />} onClick={handlePurchase} data-testid="LotteryBuyTicket">
           <FormattedMessage id="form.buttons.buy" />
         </Button>

@@ -1,6 +1,6 @@
 import { IDeployable } from "@gemunion/types-collection";
 
-import { IVestingHistory } from "./vesting-history";
+import { IVestingHistory } from "./history";
 
 export enum VestingContractTemplate {
   "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100

@@ -1,5 +1,6 @@
 import { IIdDateBase } from "@gemunion/types-collection";
-import { IStakingRule } from "./staking-rule";
+
+import { IStakingRule } from "./rule";
 
 export enum StakeStatus {
   ACTIVE = "ACTIVE",

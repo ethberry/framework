@@ -2,11 +2,12 @@ import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { EntityManager, Repository } from "typeorm";
 
-import { ILotteryLeaderboard } from "@framework/types";
+import { ILotteryLeaderboard, ILotteryTicketSearchDto } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { LotteryTicketEntity } from "./ticket.entity";
 import { ILotteryLeaderboardSearchDto } from "../leaderboard/interfaces/search";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class LotteryTicketService {
@@ -16,6 +17,37 @@ export class LotteryTicketService {
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
+
+  public async search(
+    dto: Partial<ILotteryTicketSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<LotteryTicketEntity>, number]> {
+    const { roundIds, skip, take } = dto;
+
+    const queryBuilder = this.ticketEntityRepository.createQueryBuilder("ticket");
+    queryBuilder.leftJoinAndSelect("ticket.round", "round");
+
+    queryBuilder.select();
+
+    queryBuilder.andWhere("ticket.account = :account", { account: userEntity.wallet });
+
+    if (roundIds) {
+      if (roundIds.length === 1) {
+        queryBuilder.andWhere("ticket.roundId = :roundId", {
+          roundId: roundIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("ticket.roundId IN(:...roundIds)", { roundIds });
+      }
+    }
+
+    queryBuilder.skip(skip);
+    queryBuilder.take(take);
+
+    queryBuilder.orderBy("ticket.createdAt", "DESC");
+
+    return queryBuilder.getManyAndCount();
+  }
 
   public async leaderboard(dto: Partial<ILotteryLeaderboardSearchDto>): Promise<[Array<ILotteryLeaderboard>, number]> {
     const { skip, take } = dto;
