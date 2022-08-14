@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsInt, IsOptional, Min, IsArray } from "class-validator";
+import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";

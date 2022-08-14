@@ -5,7 +5,7 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeo
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
-import { TokenType, IAssetDto } from "@framework/types";
+import { IAssetDto, TokenType } from "@framework/types";
 
 @Injectable()
 export class AssetService {

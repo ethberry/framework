@@ -140,12 +140,14 @@
       "level": "Level",
       "maxPrice": "Max. price",
       "minPrice": "Min. price",
+      "numbers": "Numbers",
       "password": "Password",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
       "referrer": "Referrer",
       "reward": "Reward",
       "roles": "Roles",
+      "roundId": "Round",
       "sort": "Sort by",
       "stakeStatus": "Status",
       "stakingStatus": "Status",
@@ -283,8 +285,8 @@
         },
         "lottery": {
           "leaderboard": "Leaderboard",
-          "tickets": "My tickets",
           "purchase": "Buy a ticket",
+          "tickets": "My tickets",
           "title": "Lottery"
         },
         "mysterybox": {
@@ -391,11 +393,11 @@
         "id": "ID",
         "title": "Leaderboard"
       },
-      "tickets": {
-        "title": "My tickets"
-      },
       "purchase": {
         "title": "Buy a ticket"
+      },
+      "tickets": {
+        "title": "My tickets"
       },
       "title": "Lottery"
     },

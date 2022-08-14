@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, Repository } from "typeorm";
+import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ILotteryLeaderboard, ILotteryTicketSearchDto } from "@framework/types";
 import { ns } from "@framework/constants";
@@ -47,6 +47,13 @@ export class LotteryTicketService {
     queryBuilder.orderBy("ticket.createdAt", "DESC");
 
     return queryBuilder.getManyAndCount();
+  }
+
+  public findOne(
+    where: FindOptionsWhere<LotteryTicketEntity>,
+    options?: FindOneOptions<LotteryTicketEntity>,
+  ): Promise<LotteryTicketEntity | null> {
+    return this.ticketEntityRepository.findOne({ where, ...options });
   }
 
   public async leaderboard(dto: Partial<ILotteryLeaderboardSearchDto>): Promise<[Array<ILotteryLeaderboard>, number]> {

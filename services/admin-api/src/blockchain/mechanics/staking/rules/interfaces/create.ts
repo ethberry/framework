@@ -1,4 +1,4 @@
-import { TokenType, IAssetDto } from "@framework/types";
+import { IAssetDto, TokenType } from "@framework/types";
 
 export interface IStakingItemCreateDto {
   tokenType: TokenType;

@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEthereumAddress, IsArray, IsOptional, IsString, IsBoolean } from "class-validator";
+import { IsArray, IsBoolean, IsEthereumAddress, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { ISignLotteryDto } from "../interfaces";

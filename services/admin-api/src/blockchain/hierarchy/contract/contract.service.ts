@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, ArrayOverlap, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ContractStatus, IContractAutocompleteDto, IContractSearchDto, TokenType } from "@framework/types";
 

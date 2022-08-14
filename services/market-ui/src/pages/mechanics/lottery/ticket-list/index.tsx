@@ -18,6 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { LotteryTicketSearchForm } from "./form";
 import { LotteryTicketViewDialog } from "./view";
+import { getNumbers } from "./utils";
 
 export const LotteryTicketList: FC = () => {
   const {
@@ -60,7 +61,9 @@ export const LotteryTicketList: FC = () => {
         <List>
           {rows.map((ticket, i) => (
             <ListItem key={i}>
-              <ListItemText>{ticket.id}</ListItemText>
+              <ListItemText>
+                {ticket.roundId} - {getNumbers(ticket)}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(ticket)}>
                   <Visibility />

@@ -1,7 +1,7 @@
-import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { LotteryTicketSearchDto } from "./dto";
 import { LotteryTicketService } from "./ticket.service";
@@ -20,5 +20,11 @@ export class LotteryTicketController {
     @User() userEntity: UserEntity,
   ): Promise<[Array<LotteryTicketEntity>, number]> {
     return this.lotteryTicketService.search(dto, userEntity);
+  }
+
+  @Get("/:id")
+  @UseInterceptors(NotFoundInterceptor)
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<LotteryTicketEntity | null> {
+    return this.lotteryTicketService.findOne({ id });
   }
 }

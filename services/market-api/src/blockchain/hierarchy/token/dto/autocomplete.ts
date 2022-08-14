@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEthereumAddress, IsString, IsOptional, Min, IsArray, IsInt } from "class-validator";
+import { IsArray, IsEthereumAddress, IsInt, IsOptional, IsString, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { ITokenAutocompleteDto } from "@framework/types";

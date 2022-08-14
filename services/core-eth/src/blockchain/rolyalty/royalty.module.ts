@@ -1,4 +1,4 @@
-import { Module, Logger } from "@nestjs/common";
+import { Logger, Module } from "@nestjs/common";
 
 import { RoyaltyControllerEth } from "./royalty.controller.eth";
 import { RoyaltyServiceEth } from "./royalty.service.eth";

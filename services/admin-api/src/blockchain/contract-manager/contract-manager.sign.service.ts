@@ -1,4 +1,4 @@
-import { Inject, Injectable, BadRequestException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { utils, Wallet } from "ethers";
 
