@@ -5,7 +5,7 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IReward, IWithdraw, ReferralProgramEventType, TReferralEventData } from "@framework/types";
 
 import { ContractManagerService } from "../../contract-manager/contract-manager.service";
-import { ReferralHistoryService } from "./history/ref-history.service";
+import { ReferralHistoryService } from "./history/history.service";
 import { ReferralService } from "./referral.service";
 
 @Injectable()

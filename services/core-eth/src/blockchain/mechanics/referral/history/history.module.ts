@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ReferralHistoryEntity } from "./ref-history.entity";
-import { ReferralHistoryService } from "./ref-history.service";
+import { ReferralHistoryEntity } from "./history.entity";
+import { ReferralHistoryService } from "./history.service";
 
 @Module({
   imports: [TypeOrmModule.forFeature([ReferralHistoryEntity])],

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ReferralHistoryEntity } from "./ref-history.entity";
+import { ReferralHistoryEntity } from "./history.entity";
 
 @Injectable()
 export class ReferralHistoryService {

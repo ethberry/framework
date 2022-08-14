@@ -24,6 +24,7 @@ export * from "./blockchain/mechanics/drop/drop";
 export * from "./blockchain/mechanics/grade/grade";
 export * from "./blockchain/mechanics/lottery/leaderboard";
 export * from "./blockchain/mechanics/lottery/round";
+export * from "./blockchain/mechanics/lottery/history";
 export * from "./blockchain/mechanics/lottery/ticket";
 export * from "./blockchain/mechanics/mysterybox/mysterybox";
 export * from "./blockchain/mechanics/referral/history";

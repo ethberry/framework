@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
 
-import { ReferralHistoryModule } from "./history/ref-history.module";
+import { ReferralHistoryModule } from "./history/history.module";
 import { ReferralControllerEth } from "./referral.controller.eth";
 import { ReferralServiceEth } from "./referral.service.eth";
 import { ReferralService } from "./referral.service";

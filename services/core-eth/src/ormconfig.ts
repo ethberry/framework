@@ -22,6 +22,9 @@ import { AssetEntity } from "./blockchain/mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-component.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
+import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
+import { LotteryHistoryEntity } from "./blockchain/mechanics/lottery/history/history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -49,6 +52,9 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     AssetEntity,
     AssetComponentEntity,
+    LotteryRoundEntity,
+    LotteryTicketEntity,
+    LotteryHistoryEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
