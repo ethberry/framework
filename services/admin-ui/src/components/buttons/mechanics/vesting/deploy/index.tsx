@@ -9,7 +9,7 @@ import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
-import { VestingDeployDialog } from "./deploy-dialog";
+import { VestingDeployDialog } from "./dialog";
 
 export interface IVestingDeployButtonProps {
   className?: string;

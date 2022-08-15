@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { constants } from "ethers";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
@@ -9,7 +8,7 @@ import { validationSchema } from "./validation";
 import { AmountInput } from "./amount-input";
 import { ContractInput } from "./contract-input";
 
-export interface IVestingTopUpDto {
+export interface IVestingFundDto {
   tokenType: TokenType;
   amount: string;
   address: string;
@@ -17,28 +16,23 @@ export interface IVestingTopUpDto {
   decimals: number;
 }
 
-export interface IVestingTopUpDialogProps {
+export interface IVestingFundDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IVestingTopUpDto, form: any) => Promise<void>;
+  onConfirm: (values: IVestingFundDto, form: any) => Promise<void>;
+  initialValues: IVestingFundDto;
 }
 
-export const VestingTopUpDialog: FC<IVestingTopUpDialogProps> = props => {
-  const fixedValues: IVestingTopUpDto = {
-    tokenType: TokenType.NATIVE,
-    amount: "0",
-    address: constants.AddressZero,
-    contractId: 0,
-    decimals: 0,
-  };
+export const VestingFundDialog: FC<IVestingFundDialogProps> = props => {
+  const { initialValues, ...rest } = props;
 
   return (
     <FormDialog
-      initialValues={fixedValues}
+      initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.deploy"
+      message="dialogs.top-up"
       testId="VestingTopUpForm"
-      {...props}
+      {...rest}
     >
       <SelectInput
         name="tokenType"

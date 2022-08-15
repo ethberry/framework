@@ -28,6 +28,7 @@
     }
   },
   "dialogs": {
+    "top-up": "Top up",
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
     "create": "Create",

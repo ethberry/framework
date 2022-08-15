@@ -2,6 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { ContractStatus } from "@framework/types";
 
 export const ContractInput: FC = () => {
   const tokenType = useWatch({ name: "tokenType" });
@@ -19,6 +20,7 @@ export const ContractInput: FC = () => {
       controller="contracts"
       data={{
         contractType: [tokenType],
+        contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       }}
       onChange={handleChange}
     />

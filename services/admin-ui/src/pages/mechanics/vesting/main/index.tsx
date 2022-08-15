@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
-import { VestingTopUpButton } from "../../../../components/buttons/mechanics/vesting-topup";
+import { VestingFundButton } from "../../../../components/buttons/mechanics/vesting/fund";
 
 export const Vesting: FC = () => {
   const {
@@ -69,7 +69,7 @@ export const Vesting: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{vesting.account}</ListItemText>
               <ListItemText>{vesting.contractTemplate}</ListItemText>
               <ListItemSecondaryAction>
-                <VestingTopUpButton vesting={vesting} />
+                <VestingFundButton vesting={vesting} />
                 <IconButton onClick={handleView(vesting)}>
                   <Visibility />
                 </IconButton>

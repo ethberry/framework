@@ -6,20 +6,20 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { validationSchema } from "./validation";
 import { ContractInput } from "./contract-input";
 
-export interface IFundLinkDto {
+export interface IChainLinkFundDto {
   contractId: number;
   address: string;
   amount: string;
 }
 
-export interface IFundLinkDialogProps {
+export interface IChainLinkFundDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IFundLinkDto, form: any) => Promise<void>;
-  initialValues: IFundLinkDto;
+  onConfirm: (values: IChainLinkFundDto, form: any) => Promise<void>;
+  initialValues: IChainLinkFundDto;
 }
 
-export const FundLinkDialog: FC<IFundLinkDialogProps> = props => {
+export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (

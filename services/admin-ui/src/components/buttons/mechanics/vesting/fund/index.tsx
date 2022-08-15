@@ -8,18 +8,18 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IVesting, TokenType } from "@framework/types";
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
-import { IVestingTopUpDto, VestingTopUpDialog } from "./topup-dialog";
+import { IVestingFundDto, VestingFundDialog } from "./dialog";
 
 export interface IVestingButtonProps {
   vesting: IVesting;
 }
 
-export const VestingTopUpButton: FC<IVestingButtonProps> = props => {
+export const VestingFundButton: FC<IVestingButtonProps> = props => {
   const { vesting } = props;
 
-  const [isTopUpDialogOpen, setIsTopUpDialogOpen] = useState(false);
+  const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
 
-  const metaFn = useMetamask((values: IVestingTopUpDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.NATIVE) {
       return web3Context.provider?.getSigner().sendTransaction({
         to: vesting.address,
@@ -33,25 +33,36 @@ export const VestingTopUpButton: FC<IVestingButtonProps> = props => {
     }
   });
 
-  const handleTopUp = () => {
-    setIsTopUpDialogOpen(true);
+  const handleFund = () => {
+    setIsFundDialogOpen(true);
   };
 
-  const onTopUpConfirm = async (values: IVestingTopUpDto) => {
+  const handleFundConfirm = async (values: IVestingFundDto) => {
     await metaFn(values);
-    setIsTopUpDialogOpen(false);
+    setIsFundDialogOpen(false);
   };
 
-  const handleTopUpCancel = () => {
-    setIsTopUpDialogOpen(false);
+  const handleFundCancel = () => {
+    setIsFundDialogOpen(false);
   };
 
   return (
     <Fragment>
-      <IconButton onClick={handleTopUp}>
+      <IconButton onClick={handleFund} data-testid="VestingFundButton">
         <Savings />
       </IconButton>
-      <VestingTopUpDialog onConfirm={onTopUpConfirm} onCancel={handleTopUpCancel} open={isTopUpDialogOpen} />
+      <VestingFundDialog
+        onConfirm={handleFundConfirm}
+        onCancel={handleFundCancel}
+        open={isFundDialogOpen}
+        initialValues={{
+          tokenType: TokenType.NATIVE,
+          amount: "0",
+          address: "",
+          contractId: 0,
+          decimals: 0,
+        }}
+      />
     </Fragment>
   );
 };
