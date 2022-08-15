@@ -11,11 +11,11 @@ import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/Co
 
 import { VestingDeployDialog } from "./deploy-dialog";
 
-export interface IVestingButtonProps {
+export interface IVestingDeployButtonProps {
   className?: string;
 }
 
-export const VestingDeployButton: FC<IVestingButtonProps> = props => {
+export const VestingDeployButton: FC<IVestingDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
