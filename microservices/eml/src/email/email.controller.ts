@@ -20,4 +20,17 @@ export class EmailController {
       },
     });
   }
+
+  // INTEGRATION:CHAIN-LINK
+  @EventPattern(EmailType.LINK_TOKEN)
+  async linkToken(@Payload() payload: IPayload): Promise<IEmailResult> {
+    return this.mailjetService.sendTemplate({
+      template: 12345,
+      to: [payload.user.email],
+      data: {
+        title: payload.contract.title,
+        address: payload.contract.address,
+      },
+    });
+  }
 }

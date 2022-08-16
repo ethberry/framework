@@ -11,15 +11,15 @@ export class ChainLinkService {
   constructor(private readonly contractService: ContractService, private readonly configService: ConfigService) {}
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const results = await this.contractService.autocomplete(dto);
+    const contractEntities = await this.contractService.autocomplete(dto);
 
     // MODULE:LOTTERY
     const lottery = new ContractEntity();
     lottery.id = 12345;
     lottery.title = "Lottery";
     lottery.address = this.configService.get<string>("LOTTERY_ADDR", "0x");
-    results.push(lottery);
+    contractEntities.push(lottery);
 
-    return results;
+    return contractEntities;
   }
 }
