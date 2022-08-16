@@ -1,6 +1,7 @@
 import { APP_FILTER } from "@nestjs/core";
 import { Logger, Module, OnApplicationShutdown } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ScheduleModule } from "@nestjs/schedule";
 import { WinstonModule } from "nest-winston";
 
 import { HttpExceptionFilter } from "@gemunion/nest-js-utils";
@@ -39,6 +40,7 @@ import { NotificatorModule } from "./notificator/notificator.module";
         return configService.get<string>("GEMUNION_API_KEY", "");
       },
     }),
+    ScheduleModule.forRoot(),
     RequestLoggerModule,
     HealthModule,
     BlockchainModule,

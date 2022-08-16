@@ -1,6 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
+
 import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { MysteryboxEntity } from "./mysterybox.entity";

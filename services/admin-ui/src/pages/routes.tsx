@@ -16,7 +16,7 @@ import { Email } from "./email";
 import { Page } from "./page";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrations } from "./integrations/routes";
-import { tokenRoutes } from "./hierarchy/routes";
+import { tokenRoutes } from "./tokens/routes";
 
 const routes: Array<RouteObject> = [
   {
