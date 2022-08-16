@@ -25,8 +25,8 @@ async function deployHierarchy(contracts: Record<string, Contract>) {
 async function deployMechanics(contracts: Record<string, Contract>) {
   await deployVesting(contracts);
   await deployClaim(contracts);
-  await deployMysterybox(contracts);
   await deployStaking(contracts);
+  await deployMysterybox(contracts);
   await deployLottery(contracts);
 }
 

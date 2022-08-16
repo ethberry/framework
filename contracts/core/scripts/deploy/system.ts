@@ -6,5 +6,9 @@ export async function deploySystem(contracts: Record<string, Contract>) {
   contracts.contractManager = await vestFactory.deploy();
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");
-  contracts.exchange = await exchangeFactory.deploy("Exchange");
+  const exchangeInstance = await exchangeFactory.deploy("Exchange");
+
+  await contracts.contractManager.setFactories([exchangeInstance.address], [contracts.contractManager.address]);
+
+  contracts.exchange = exchangeInstance;
 }
