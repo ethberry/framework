@@ -394,7 +394,8 @@
         "title": "Leaderboard"
       },
       "purchase": {
-        "title": "Buy a ticket"
+        "title": "Buy a ticket",
+        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players."
       },
       "tickets": {
         "title": "My tickets"

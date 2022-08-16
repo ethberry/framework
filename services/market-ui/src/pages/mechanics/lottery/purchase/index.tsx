@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Button, Grid, IconButton, Paper } from "@mui/material";
+import { Button, Grid, IconButton, Paper, Typography } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
@@ -85,7 +85,7 @@ export const LotteryPurchase: FC = () => {
         </Button>
       </PageHeader>
 
-      <Paper sx={{ width: "34em", textAlign: "center", margin: "0 auto" }}>
+      <Paper sx={{ width: "34em", textAlign: "center", margin: "0 auto", padding: 2 }}>
         {new Array(36).fill(null).map((e, i) => (
           <IconButton
             size="large"
@@ -98,6 +98,12 @@ export const LotteryPurchase: FC = () => {
           </IconButton>
         ))}
       </Paper>
+
+      <br />
+
+      <Typography>
+        <FormattedMessage id="pages.lottery.purchase.rules" />
+      </Typography>
     </Grid>
   );
 };
