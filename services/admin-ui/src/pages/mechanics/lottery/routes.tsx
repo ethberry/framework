@@ -10,11 +10,11 @@ export const lotteryRoutes: Array<RouteObject> = [
     element: <Navigate to="/lottery/rounds" />,
   },
   {
-    path: "/lottery/rounds",
+    path: "/lottery/round",
     element: <Protected />,
     children: [
       { index: true, element: <LotteryRounds /> },
-      { path: "/lottery/rounds/:id", element: <LotteryRounds /> },
+      { path: "/lottery/round/:id", element: <LotteryRounds /> },
     ],
   },
 ];

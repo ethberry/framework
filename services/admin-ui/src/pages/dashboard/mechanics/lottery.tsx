@@ -15,7 +15,7 @@ export const Lottery: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/lottery/rounds">
+        <ListItem button component={RouterLink} to="/lottery/round">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>

@@ -32,6 +32,8 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
+import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
+import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -178,6 +180,8 @@ const config: PostgresConnectionOptions = {
     GradeEntity,
     CompositionEntity,
     DropEntity,
+    LotteryRoundEntity,
+    LotteryTicketEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,

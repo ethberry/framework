@@ -7,8 +7,18 @@ import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
 import { GradeModule } from "./grade/grade.module";
 import { DropModule } from "./drop/drop.module";
+import { LotteryModule } from "./lottery/lottery.module";
 
 @Module({
-  imports: [ClaimModule, MysteryboxModule, CraftModule, StakingModule, VestingModule, GradeModule, DropModule],
+  imports: [
+    ClaimModule,
+    MysteryboxModule,
+    CraftModule,
+    StakingModule,
+    VestingModule,
+    GradeModule,
+    DropModule,
+    LotteryModule,
+  ],
 })
 export class MechanicsModule {}

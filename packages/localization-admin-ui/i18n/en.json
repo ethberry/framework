@@ -28,7 +28,6 @@
     }
   },
   "dialogs": {
-    "top-up": "Top up",
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -40,6 +39,7 @@
     "mintToken": "Mint tokens",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
+    "top-up": "Top up",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
     "view": "View",
@@ -244,6 +244,7 @@
       "language": "Language",
       "mysteryboxStatus": "Status",
       "name": "Name",
+      "numbers": "Numbers",
       "owner": "Owner",
       "pageStatus": "Status",
       "parent": "Parent",
@@ -258,6 +259,7 @@
       "recurrent": "Is recurrent?",
       "reward": "Reward",
       "role": "Role",
+      "roundId": "Round",
       "royalty": "Royalty",
       "slug": "Slug",
       "stakeStatus": "Status",
@@ -370,12 +372,12 @@
     "chain-link": {
       "title": "ChainLink"
     },
-    "coin-gecko": {
-      "title": "CoinGecko"
-    },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
+    },
+    "coin-gecko": {
+      "title": "CoinGecko"
     },
     "craft": {
       "activate": "Activate rule",
