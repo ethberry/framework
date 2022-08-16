@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, Logger } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 
@@ -10,7 +10,7 @@ import { LotteryRoundServiceCron } from "./round.service.cron";
 
 @Module({
   imports: [ConfigModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
-  providers: [ethersRpcProvider, ethersSignerProvider, LotteryRoundService, LotteryRoundServiceCron],
+  providers: [Logger, ethersRpcProvider, ethersSignerProvider, LotteryRoundService, LotteryRoundServiceCron],
   exports: [LotteryRoundService],
 })
 export class LotteryRoundModule {}
