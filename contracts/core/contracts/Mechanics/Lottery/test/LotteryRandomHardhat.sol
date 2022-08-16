@@ -7,10 +7,9 @@
 pragma solidity ^0.8.9;
 
 import "../LotteryBase.sol";
-import "../../../MOCKS/ChainLink/ChainLinkBesu.sol";
+import "../../../MOCKS/ChainLink/ChainLinkHardhat.sol";
 
-contract LotteryRandomTestBesu is LotteryBase, ChainLinkBesu {
-
+contract LotteryRandomHardhat is LotteryBase, ChainLinkHardhat {
   constructor(
     string memory name,
     address ticketFactory,

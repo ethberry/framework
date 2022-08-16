@@ -1,0 +1,26 @@
+import { ethers } from "hardhat";
+import { Contract } from "ethers";
+
+import { baseTokenURI, royalty } from "../../../test/constants";
+
+export async function deployERC998(contracts: Record<string, Contract>) {
+  const erc998SimpleFactory = await ethers.getContractFactory("ERC998Simple");
+  contracts.erc998Simple = await erc998SimpleFactory.deploy("ERC998 SIMPLE", "GEM998", royalty, baseTokenURI);
+
+  const erc998InactiveFactory = await ethers.getContractFactory("ERC998Simple");
+  contracts.erc998Inactive = await erc998InactiveFactory.deploy("ERC998 INACTIVE", "OFF998", royalty, baseTokenURI);
+
+  const erc998NewFactory = await ethers.getContractFactory("ERC998Simple");
+  contracts.erc998New = await erc998NewFactory.deploy("ERC998 NEW", "NEW998", royalty, baseTokenURI);
+
+  const erc998BlacklistFactory = await ethers.getContractFactory("ERC998Blacklist");
+  contracts.erc998Blacklist = await erc998BlacklistFactory.deploy("ERC998 BLACKLIST", "BL998", royalty, baseTokenURI);
+
+  const ERC998UpgradeableFactory = await ethers.getContractFactory("ERC998Upgradeable");
+  contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
+
+  const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
+  const erc20BlacklistInstance = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
+  await erc20BlacklistInstance.whiteListChild(contracts.erc721Random.address, 5);
+  contracts.erc998Random = erc20BlacklistInstance;
+}

@@ -1,55 +1,25 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { baseTokenURI, MINTER_ROLE } from "../test/constants";
-import { wallet } from "@gemunion/constants";
+import { MINTER_ROLE } from "../test/constants";
 import { ContractManager } from "../typechain-types";
 import { blockAwait } from "./utils/blockAwait";
+import { deployStaking } from "./deploy/mechanics/staking";
+import { deployClaim } from "./deploy/mechanics/claim";
+import { deployMysterybox } from "./deploy/mechanics/mysterybox";
+import { deployVesting } from "./deploy/mechanics/vesting";
+import { deploySystem } from "./deploy/system";
 
 const contracts: Record<string, Contract> = {};
 
-async function deploySystem() {
-  const vestFactory = await ethers.getContractFactory("ContractManager");
-  contracts.contractManager = await vestFactory.deploy();
-
-  const exchangeFactory = await ethers.getContractFactory("Exchange");
-  contracts.exchange = await exchangeFactory.deploy("Exchange");
-}
-
-// MODULE:VESTING
-async function deployVesting() {
-  const timestamp = Math.ceil(Date.now() / 1000);
-
-  const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
-  contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-
-  const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
-  contracts.vestingGraded = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-
-  const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
-  contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-}
-// MODULE:MYSTERYBOX
-async function deployMysterybox() {
-  const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
-  contracts.mysterybox = await mysteryboxFactory.deploy("Mysterybox", "LOOT", 100, baseTokenURI);
-}
-
-async function deployModules() {
-  await deployVesting();
-  await deployMysterybox();
-
-  // MODULE:CLAIM
-  const claimFactory = await ethers.getContractFactory("ClaimProxy");
-  contracts.claimProxy = await claimFactory.deploy();
-
-  // MODULE:STAKING
-  const stakingFactory = await ethers.getContractFactory("Staking");
-  contracts.staking = await stakingFactory.deploy(10);
+async function deployMechanics(contracts: Record<string, Contract>) {
+  await deployVesting(contracts);
+  await deployMysterybox(contracts);
+  await deployStaking(contracts);
+  await deployClaim(contracts);
 }
 
 async function setFactories() {
-  await deployModules();
   await blockAwait();
   // MODULE:CM
   const vestFactory = await ethers.getContractFactory("ContractManager");
@@ -71,7 +41,6 @@ async function setFactories() {
 }
 
 async function grantRoles() {
-  await setFactories();
   await blockAwait();
   // MODULE:mysterybox-market
   const tx1 = await contracts.mysterybox.grantRole(MINTER_ROLE, contracts.staking.address);
@@ -83,8 +52,8 @@ async function grantRoles() {
 }
 
 async function main() {
-  await deploySystem();
-  await deployModules();
+  await deploySystem(contracts);
+  await deployMechanics(contracts);
   await setFactories();
   await grantRoles();
 }

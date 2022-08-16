@@ -9,9 +9,9 @@ export const getNumbers = (selected = [0, 1, 2, 3, 5, 8]) => {
 export const getContractName = (base: string, network: string) => {
   switch (network) {
     case "hardhat":
-      return `${base}TestHardhat`;
+      return `${base}Hardhat`;
     case "besu":
-      return `${base}TestBesu`;
+      return `${base}Besu`;
     default:
       return base;
   }
