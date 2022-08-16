@@ -4,13 +4,13 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 
-export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface {
+export class SeedContractLotteryAt1563804000170 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const mysteryboxAddress = process.env.MYSTERYBOX_ADDR || wallet;
+    const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
-    // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
+    // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -31,26 +31,26 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         created_at,
         updated_at
       ) VALUES (
-        601,
-        '${mysteryboxAddress}',
+        701,
+        '${erc721ContractLotteryAddress}',
         '${chainId}',
-        'MYSTERYBOX',
+        'LOTTERY TICKET',
         '${simpleFormatting}',
         '${imageUrl}',
-        'MYSTERYBOX',
-        'LOOT721',
+        'LOTT',
+        'LOTT721',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{MYSTERYBOX}',
-        'MYSTERYBOX',
+        '{}',
+        'LOTTERY',
         '${currentDateTime}',
         '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 601, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 701, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

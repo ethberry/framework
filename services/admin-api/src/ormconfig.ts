@@ -46,6 +46,7 @@ import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-se
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
 import { SeedContractMysteryboxAt1563804000160 } from "./migrations/1563804000160-seed-contract-mysterybox";
+import { SeedContractLotteryAt1563804000170 } from "./migrations/1563804000170-seed-contract-lottery";
 
 import { CreateTemplate1563804000200 } from "./migrations/1563804000200-create-template";
 import { SeedTemplateNativeAt1563804000210 } from "./migrations/1563804000210-seed-template-native";
@@ -54,6 +55,7 @@ import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-se
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
 import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
 import { SeedTemplateMysteryboxAt1563804000260 } from "./migrations/1563804000260-seed-template-mysterybox";
+import { SeedTemplateLotteryAt1563804000270 } from "./migrations/1563804000270-seed-template-lottery";
 
 import { CreateToken1563804000300 } from "./migrations/1563804000300-create-token";
 import { SeedTokenNativeAt1563804000310 } from "./migrations/1563804000310-seed-token-native";
@@ -61,12 +63,14 @@ import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-t
 import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
 import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
 import { SeedTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
+import { SeedTokenLotteryAt1563804000370 } from "./migrations/1563804000370-seed-token-lottery";
 
 import { CreateBalanceTable1563804000400 } from "./migrations/1563804000400-create-balance";
 import { SeedBalanceErc20At1563804020420 } from "./migrations/1563804000420-seed-balance-erc20";
 import { SeedBalanceErc721At1563804020430 } from "./migrations/1563804000430-seed-balance-erc721";
 import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-seed-balance-erc998";
 import { SeedBalanceErc1155At1563804020450 } from "./migrations/1563804000450-seed-balance-erc1155";
+import { SeedBalanceLotteryAt1563804020470 } from "./migrations/1563804000470-seed-balance-lottery";
 
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
 import { SeedAssetComponentsErc721At1563804001230 } from "./migrations/1563804001230-seed-asset-component-erc721";
@@ -209,6 +213,7 @@ const config: PostgresConnectionOptions = {
     SeedContractErc998At1563804000140,
     SeedContractErc1155At1563804000150,
     SeedContractMysteryboxAt1563804000160,
+    SeedContractLotteryAt1563804000170,
 
     CreateTemplate1563804000200,
     SeedTemplateNativeAt1563804000210,
@@ -217,6 +222,7 @@ const config: PostgresConnectionOptions = {
     SeedTemplateErc998At1563804000240,
     SeedTemplateErc1155At1563804000250,
     SeedTemplateMysteryboxAt1563804000260,
+    SeedTemplateLotteryAt1563804000270,
 
     CreateToken1563804000300,
     SeedTokenNativeAt1563804000310,
@@ -224,12 +230,14 @@ const config: PostgresConnectionOptions = {
     SeedTokenErc721At1563804000330,
     SeedTokenErc998At1563804000340,
     SeedTokenErc1155At1563804000350,
+    SeedTokenLotteryAt1563804000370,
 
     CreateBalanceTable1563804000400,
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
     SeedBalanceErc1155At1563804020450,
+    SeedBalanceLotteryAt1563804020470,
 
     CreateAssetComponent1563804001220,
     SeedAssetComponentsErc721At1563804001230,

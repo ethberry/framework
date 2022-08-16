@@ -26,6 +26,10 @@ export class CreateLotteryTicketAt1660436477020 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "token_id",
+          type: "int",
+        },
+        {
           name: "amount",
           type: "uint256",
         },
@@ -43,6 +47,12 @@ export class CreateLotteryTicketAt1660436477020 implements MigrationInterface {
           columnNames: ["round_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.lottery_round`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["token_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.token`,
           onDelete: "CASCADE",
         },
       ],

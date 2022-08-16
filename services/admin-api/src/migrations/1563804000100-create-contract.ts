@@ -21,6 +21,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:MYSTERYBOX
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
 
+    // MODULE:LOTTERY
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
+
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (
         'BLACKLIST',

@@ -27,6 +27,7 @@ export enum ModuleType {
   STAKING = "STAKING",
   CLAIM = "CLAIM",
   MYSTERYBOX = "MYSTERYBOX",
+  LOTTERY = "LOTTERY",
   MARKETPLACE = "MARKETPLACE",
   CRAFT = "CRAFT",
 }

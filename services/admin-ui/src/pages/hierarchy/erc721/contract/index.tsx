@@ -22,6 +22,7 @@ import {
   Erc721ContractFeatures,
   IContract,
   IContractSearchDto,
+  ModuleType,
 } from "@framework/types";
 
 import { Erc721ContractEditDialog } from "./edit";
@@ -101,9 +102,7 @@ export const Erc721Contract: FC = () => {
                 <IconButton
                   onClick={handleDelete(contract)}
                   disabled={
-                    contract.contractStatus === ContractStatus.INACTIVE ||
-                    // MODULE:MYSTERYBOX
-                    contract.contractFeatures.includes(ContractFeatures.MYSTERYBOX)
+                    contract.contractStatus === ContractStatus.INACTIVE || contract.contractModule !== ModuleType.CORE
                   }
                 >
                   <Delete />

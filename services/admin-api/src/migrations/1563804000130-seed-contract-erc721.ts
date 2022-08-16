@@ -13,7 +13,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721ContractBlacklistAddress = process.env.ERC721_BLACKLIST_ADDR || wallet;
     const erc721ContractUpgradeableAddress = process.env.ERC721_UPGRADEABLE_ADDR || wallet;
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
-    const erc721ContractSoluboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
+    const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     await queryRunner.query(`
@@ -131,7 +131,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         307,
-        '${erc721ContractSoluboundAddress}',
+        '${erc721ContractSoulboundAddress}',
         '${chainId}',
         'MEDAL (soulbound)',
         '${simpleFormatting}',
