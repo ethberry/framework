@@ -24,7 +24,7 @@ import {
   IContractSearchDto,
 } from "@framework/types";
 
-import { Erc1155CollectionEditDialog } from "./edit";
+import { Erc1155ContractEditDialog } from "./edit";
 import { Erc1155ContractDeployButton } from "../../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../../components/menu";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
@@ -138,7 +138,7 @@ export const Erc1155Contract: FC = () => {
         initialValues={selected}
       />
 
-      <Erc1155CollectionEditDialog
+      <Erc1155ContractEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

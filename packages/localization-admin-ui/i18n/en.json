@@ -124,6 +124,7 @@
     },
     "templateStatus": {
       "ACTIVE": "Active",
+      "HIDDEN": "Hidden",
       "INACTIVE": "Inactive"
     },
     "tokenStatus": {
