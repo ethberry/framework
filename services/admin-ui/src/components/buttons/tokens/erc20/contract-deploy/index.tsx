@@ -2,7 +2,7 @@ import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
 import { Erc20ContractFeatures, IErc20TokenDeployDto } from "@framework/types";
@@ -65,7 +65,17 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc20ContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <Erc20ContractDeployDialog
+        onConfirm={onDeployConfirm}
+        onCancel={handleDeployCancel}
+        open={isDeployDialogOpen}
+        initialValues={{
+          contractFeatures: [],
+          name: "",
+          symbol: "",
+          cap: constants.WeiPerEther.mul(1e6).toString(),
+        }}
+      />
     </Fragment>
   );
 };

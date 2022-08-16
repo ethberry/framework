@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { Erc20ContractCreateDialog } from "./create-dialog";
@@ -55,6 +56,13 @@ export const Erc20ContractCreateButton: FC<IErc20TokenCreateButtonProps> = props
         onConfirm={handleCreateConfirm}
         onCancel={handleCreateCancel}
         open={isCreateDialogOpen}
+        initialValues={{
+          symbol: "",
+          decimals: 18,
+          title: "",
+          description: emptyStateString,
+          address: "",
+        }}
       />
     </Fragment>
   );

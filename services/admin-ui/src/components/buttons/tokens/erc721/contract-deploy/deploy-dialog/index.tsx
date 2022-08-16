@@ -11,24 +11,19 @@ export interface IErc721CotractDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form?: any) => Promise<void>;
+  initialValues: IErc721ContractDeployDto;
 }
 
 export const Erc721ContractDeployDialog: FC<IErc721CotractDeployDialogProps> = props => {
-  const fixedValues: IErc721ContractDeployDto = {
-    contractFeatures: [],
-    name: "",
-    symbol: "",
-    baseTokenURI: `${process.env.BE_URL}/metadata`,
-    royalty: 0,
-  };
+  const { initialValues, ...rest } = props;
 
   return (
     <FormDialog
-      initialValues={fixedValues}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
       testId="Erc721ContractDeployForm"
-      {...props}
+      {...rest}
     >
       <SelectInput
         name="contractFeatures"

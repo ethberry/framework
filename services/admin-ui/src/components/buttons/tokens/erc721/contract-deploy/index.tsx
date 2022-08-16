@@ -65,7 +65,18 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc721ContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <Erc721ContractDeployDialog
+        onConfirm={onDeployConfirm}
+        onCancel={handleDeployCancel}
+        open={isDeployDialogOpen}
+        initialValues={{
+          contractFeatures: [],
+          name: "",
+          symbol: "",
+          baseTokenURI: `${process.env.BE_URL}/metadata`,
+          royalty: 0,
+        }}
+      />
     </Fragment>
   );
 };

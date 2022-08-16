@@ -68,6 +68,11 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}
+        initialValues={{
+          contractFeatures: [],
+          baseTokenURI: `${process.env.BE_URL}/metadata`,
+          royalty: 0,
+        }}
       />
     </Fragment>
   );

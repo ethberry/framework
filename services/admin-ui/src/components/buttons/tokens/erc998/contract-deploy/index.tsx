@@ -66,7 +66,18 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc998ContractDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
+      <Erc998ContractDeployDialog
+        onConfirm={onDeployConfirm}
+        onCancel={handleDeployCancel}
+        open={isDeployDialogOpen}
+        initialValues={{
+          contractFeatures: [],
+          name: "",
+          symbol: "",
+          baseTokenURI: `${process.env.BE_URL}/metadata`,
+          royalty: 0,
+        }}
+      />
     </Fragment>
   );
 };

@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { constants } from "ethers";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -12,23 +11,19 @@ export interface IErc20ContractDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
+  initialValues: IErc20TokenDeployDto;
 }
 
 export const Erc20ContractDeployDialog: FC<IErc20ContractDeployDialogProps> = props => {
-  const fixedValues: IErc20TokenDeployDto = {
-    contractFeatures: [],
-    name: "",
-    symbol: "",
-    cap: constants.WeiPerEther.mul(1e6).toString(),
-  };
+  const { initialValues, ...rest } = props;
 
   return (
     <FormDialog
-      initialValues={fixedValues}
+      initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
       testId="Erc20ContractDeployForm"
-      {...props}
+      {...rest}
     >
       <SelectInput
         name="contractFeatures"
