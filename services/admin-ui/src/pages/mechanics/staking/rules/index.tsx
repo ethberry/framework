@@ -63,7 +63,7 @@ export const Staking: FC = () => {
     }),
     search: {
       query: "",
-      stakingStatus: [StakingStatus.ACTIVE],
+      stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
       },

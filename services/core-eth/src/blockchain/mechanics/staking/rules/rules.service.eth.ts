@@ -121,8 +121,7 @@ export class StakingRulesServiceEth {
       address,
       transactionHash,
       eventType: name as StakingEventType,
-      // eventData: args,
-      eventData: {},
+      eventData: event.args,
     });
 
     await this.contractManagerService.updateLastBlockByAddr(

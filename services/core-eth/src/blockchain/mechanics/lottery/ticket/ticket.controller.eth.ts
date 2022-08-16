@@ -1,3 +1,4 @@
+import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
@@ -6,6 +7,7 @@ import { ContractType, IVestingERC20Released, VestingEventType } from "@framewor
 
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
 
+@Controller()
 export class LotteryTicketControllerEth {
   constructor(private readonly ticketServiceEth: LotteryTicketServiceEth) {}
 

@@ -219,7 +219,7 @@
       "comment": "Comment",
       "confirm": "Confirm",
       "contract": "Contract",
-      "contractFeatures": "Features",
+      "contractFeatures": "Features (optional)",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "contractStatus": "Status",

@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ITemplate, TemplateStatus, TokenType } from "@framework/types";
+import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 
 import { validationSchema } from "./validation";
@@ -49,9 +49,10 @@ export const Erc998TemplateEditDialog: FC<ITemplateEditDialogProps> = props => {
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput
         name="contractId"
-        controller="contract"
+        controller="contracts"
         data={{
-          tokenType: [TokenType.ERC998],
+          contractType: [TokenType.ERC998],
+          contractModule: [ModuleType.CORE],
         }}
         readOnly={!!id}
       />

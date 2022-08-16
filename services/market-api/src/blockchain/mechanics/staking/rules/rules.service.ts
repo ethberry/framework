@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingSearchDto } from "@framework/types";
+import { IStakingSearchDto, StakingStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./rules.entity";
 
@@ -14,7 +14,7 @@ export class StakingRulesService {
   ) {}
 
   public search(dto: IStakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
-    const { query, deposit, reward, stakingStatus, skip, take } = dto;
+    const { query, deposit, reward, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
 
@@ -43,13 +43,14 @@ export class StakingRulesService {
       );
     }
 
-    if (stakingStatus) {
-      if (stakingStatus.length === 1) {
-        queryBuilder.andWhere("rule.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
-      } else {
-        queryBuilder.andWhere("rule.stakingStatus IN(:...stakingStatus)", { stakingStatus });
-      }
-    }
+    // if (stakingStatus) {
+    //   if (stakingStatus.length === 1) {
+    //     queryBuilder.andWhere("rule.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
+    //   } else {
+    //     queryBuilder.andWhere("rule.stakingStatus IN(:...stakingStatus)", { stakingStatus });
+    //   }
+    // }
+    queryBuilder.andWhere("rule.stakingStatus = :stakingStatus", { stakingStatus: StakingStatus.ACTIVE });
 
     if (deposit && deposit.tokenType) {
       if (deposit.tokenType.length === 1) {

@@ -70,7 +70,6 @@ export class ContractService {
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
     const { contractStatus = [], contractFeatures = [], contractType = [], contractModule = [] } = dto;
-
     const where = {};
 
     if (contractType.length) {
