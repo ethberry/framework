@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ContractFeatures, IContractSearchDto, IErc20ContractCreateDto, TokenType } from "@framework/types";
+import { ContractFeatures, IContractSearchDto, IErc20ContractCreateDto, ModuleType, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -26,7 +26,7 @@ export class Erc20ContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, TokenType.ERC20);
+    return super.search(dto, TokenType.ERC20, ModuleType.CORE);
   }
 
   public async create(dto: IErc20ContractCreateDto): Promise<ContractEntity> {

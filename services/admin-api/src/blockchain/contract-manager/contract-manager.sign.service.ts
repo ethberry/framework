@@ -13,7 +13,9 @@ import {
   IErc20TokenDeployDto,
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
+  IMysteryboxContractDeployDto,
   IVestingDeployDto,
+  MysteryboxContractFeatures,
   VestingContractTemplate,
 } from "@framework/types";
 
@@ -41,6 +43,11 @@ import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/
 
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 import ERC1155BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Blacklist.sol/ERC1155Blacklist.json";
+
+import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol/ERC721MysteryboxSimple.json";
+import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
+import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
+import MysteryboxFullSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
 
 @Injectable()
 export class ContractManagerSignService {
@@ -242,6 +249,42 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
+  public async mysterybox(dto: IMysteryboxContractDeployDto): Promise<IServerSignature> {
+    const { contractFeatures, royalty, baseTokenURI } = dto;
+
+    const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByMysteryboxContractFeatures(contractFeatures);
+    const signature = await this.signer._signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "royalty", type: "uint96" },
+          { name: "baseTokenURI", type: "string" },
+          { name: "featureIds", type: "uint8[]" },
+        ],
+      },
+      // Value
+      {
+        nonce,
+        bytecode,
+        royalty,
+        baseTokenURI,
+        featureIds: contractFeatures.map(feature => Object.keys(MysteryboxContractFeatures).indexOf(feature)),
+      },
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
   public getBytecodeByErc20ContractFeatures(contractFeatures: Array<Erc20ContractFeatures>) {
     if (!contractFeatures.length) {
       return ERC20SimpleSol.bytecode;
@@ -273,13 +316,7 @@ export class ContractManagerSignService {
     }
 
     if (contractFeatures.length === 3) {
-      if (
-        contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
-        contractFeatures.includes(Erc721ContractFeatures.RANDOM) &&
-        contractFeatures.includes(Erc721ContractFeatures.BLACKLIST)
-      ) {
-        return ERC721FullSol.bytecode;
-      }
+      return ERC721FullSol.bytecode;
     } else if (contractFeatures.length === 2) {
       if (
         contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE) &&
@@ -328,13 +365,7 @@ export class ContractManagerSignService {
     }
 
     if (contractFeatures.length === 3) {
-      if (
-        contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
-        contractFeatures.includes(Erc998ContractFeatures.RANDOM) &&
-        contractFeatures.includes(Erc998ContractFeatures.BLACKLIST)
-      ) {
-        return ERC998FullSol.bytecode;
-      }
+      return ERC998FullSol.bytecode;
     } else if (contractFeatures.length === 2) {
       if (
         contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE) &&
@@ -362,6 +393,26 @@ export class ContractManagerSignService {
 
     if (contractFeatures.includes(Erc1155ContractFeatures.BLACKLIST)) {
       return ERC1155BlackListSol.bytecode;
+    }
+
+    throw new BadRequestException("unsupportedCombination");
+  }
+
+  public getBytecodeByMysteryboxContractFeatures(contractFeatures: Array<MysteryboxContractFeatures>) {
+    if (!contractFeatures.length) {
+      return MysteryboxSimpleSol.bytecode;
+    }
+
+    if (contractFeatures.length === 2) {
+      return MysteryboxFullSol.bytecode;
+    } else if (contractFeatures.length === 1) {
+      if (contractFeatures.includes(MysteryboxContractFeatures.BLACKLIST)) {
+        return MysteryboxBlacklistSol.bytecode;
+      }
+
+      if (contractFeatures.includes(MysteryboxContractFeatures.PAUSABLE)) {
+        return MysteryboxPausableSol.bytecode;
+      }
     }
 
     throw new BadRequestException("unsupportedCombination");

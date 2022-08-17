@@ -31,12 +31,12 @@ export const Dashboard: FC = () => {
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
+          <Mysterybox />
         </Grid>
         <Grid item xs={4}>
           <Vesting />
           <Claim />
           <Drop />
-          <Mysterybox />
           <Craft />
           <Lottery />
           <Staking />

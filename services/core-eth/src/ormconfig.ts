@@ -13,7 +13,7 @@ import { AccessControlHistoryEntity } from "./blockchain/access-control/access-c
 import { StakingHistoryEntity } from "./blockchain/mechanics/staking/history/history.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
-import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/exchange-history/exchange-history.entity";
+import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 import { ExchangeEntity } from "./blockchain/mechanics/exchange/exchange.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";

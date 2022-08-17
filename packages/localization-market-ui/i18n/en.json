@@ -290,8 +290,10 @@
           "title": "Lottery"
         },
         "mysterybox": {
-          "main": "Mystery box",
-          "title": "Mystery box"
+          "contracts": "Mysterybox Contracts",
+          "templates": "Mysterybox Templates",
+          "title": "Mysterybox",
+          "tokens": "Mysterybox Tokens"
         },
         "staking": {
           "leaderboard": "Leaderboard",
@@ -346,6 +348,31 @@
         "price": "Price"
       },
       "title": "ERC721 Tokens"
+    },
+    "mysterybox-contract": {
+      "title": "Mysterybox Contract: {title}"
+    },
+    "mysterybox-contract-list": {
+      "title": "Mysterybox Contracts"
+    },
+    "mysterybox-template": {
+      "price": "Price: {amount}",
+      "title": "Mysterybox Template: {title}"
+    },
+    "mysterybox-template-list": {
+      "title": "Mysterybox Templates"
+    },
+    "mysterybox-token": {
+      "level": "Level: {grade}",
+      "price": "Base price: {amount}",
+      "title": "Mysterybox Token: {title}"
+    },
+    "mysterybox-token-list": {
+      "sort": {
+        "createdAt": "Date",
+        "price": "Price"
+      },
+      "title": "Mysterybox Tokens"
     },
     "erc998-contract": {
       "title": "ERC998 Contract: {title}"
@@ -428,13 +455,6 @@
       "attach": "Attach",
       "detach": "Detach",
       "title": "My wallet"
-    },
-    "mysterybox": {
-      "price": "Price: {amount}",
-      "title": "Mysterybox: {title}"
-    },
-    "mysterybox-list": {
-      "title": "Mysteryboxes"
     },
     "page": {
       "title": "{title}"

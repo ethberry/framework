@@ -15,11 +15,11 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
       ), (
         1601002
       ), (
-        1601003
+        1604001
       ), (
-        1601004
+        1605001
       ), (
-        1601005
+        1606001
       );
     `);
 
@@ -63,45 +63,45 @@ export class SeedTemplateMysteryboxAt1563804000260 implements MigrationInterface
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        601003,
+        604001,
         'Warrior Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        1601003,
+        1604001,
         0,
         1,
         'ACTIVE',
-        601,
+        604,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        601004,
+        605001,
         'Gold Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        1601004,
+        1605001,
         0,
         1,
         'ACTIVE',
-        601,
+        605,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        601005,
+        606001,
         'Mixed Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        1601005,
+        1606001,
         0,
         1,
         'ACTIVE',
-        601,
+        606,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 601005, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 1605001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

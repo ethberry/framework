@@ -4,20 +4,13 @@ import { ns } from "@framework/constants";
 import { IMysterybox, MysteryboxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { TemplateEntity } from "../../hierarchy/template/template.entity";
 import { AssetEntity } from "../asset/asset.entity";
+import { TemplateEntity } from "../../hierarchy/template/template.entity";
 
 @Entity({ schema: ns, name: "mysterybox" })
 export class MysteryboxEntity extends SearchableEntity implements IMysterybox {
   @Column({ type: "varchar" })
   public imageUrl: string;
-
-  @Column({ type: "int" })
-  public priceId: number;
-
-  @JoinColumn()
-  @OneToOne(_type => AssetEntity)
-  public price: AssetEntity;
 
   @JoinColumn()
   @OneToOne(_type => AssetEntity)

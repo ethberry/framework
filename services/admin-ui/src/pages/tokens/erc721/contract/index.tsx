@@ -22,11 +22,10 @@ import {
   Erc721ContractFeatures,
   IContract,
   IContractSearchDto,
-  ModuleType,
 } from "@framework/types";
 
 import { Erc721ContractEditDialog } from "./edit";
-import { Erc721TokenDeployButton } from "../../../../components/buttons";
+import { Erc721ContractDeployButton } from "../../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../../components/menu";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
@@ -80,7 +79,7 @@ export const Erc721Contract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <Erc721TokenDeployButton />
+        <Erc721ContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm
@@ -101,9 +100,7 @@ export const Erc721Contract: FC = () => {
                 </IconButton>
                 <IconButton
                   onClick={handleDelete(contract)}
-                  disabled={
-                    contract.contractStatus === ContractStatus.INACTIVE || contract.contractModule !== ModuleType.CORE
-                  }
+                  disabled={contract.contractStatus === ContractStatus.INACTIVE}
                 >
                   <Delete />
                 </IconButton>

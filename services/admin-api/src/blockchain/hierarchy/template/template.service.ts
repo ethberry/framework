@@ -16,7 +16,11 @@ export class TemplateService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: ITemplateSearchDto, contractType: TokenType): Promise<[Array<TemplateEntity>, number]> {
+  public async search(
+    dto: ITemplateSearchDto,
+    contractType: TokenType,
+    contractModule: ModuleType,
+  ): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, contractIds, skip, take } = dto;
 
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
@@ -24,10 +28,11 @@ export class TemplateService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
-
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule: ModuleType.CORE,
+      contractModule,
     });
 
     if (templateStatus) {

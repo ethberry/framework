@@ -7,14 +7,14 @@ import { Erc998ContractFeatures, IErc998ContractDeployDto, IToken } from "@frame
 
 import { validationSchema } from "./validation";
 
-export interface IErc998CollectionDeployDialogProps {
+export interface IErc998ContractDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IToken>, form?: any) => Promise<void>;
   initialValues: IErc998ContractDeployDto;
 }
 
-export const Erc998ContractDeployDialog: FC<IErc998CollectionDeployDialogProps> = props => {
+export const Erc998ContractDeployDialog: FC<IErc998ContractDeployDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (

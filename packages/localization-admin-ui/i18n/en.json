@@ -56,6 +56,7 @@
       "EXTERNAL": "External",
       "MYSTERYBOX": "Mysterybox",
       "NATIVE": "Native",
+      "PAUSABLE": "Pausable",
       "RANDOM": "Random",
       "SOULBOUND": "SoulBound",
       "UPGRADEABLE": "Upgradeable"
@@ -452,7 +453,8 @@
           "title": "Lottery"
         },
         "mysterybox": {
-          "main": "Mystery box",
+          "boxes": "Mysterybox Boxes",
+          "contracts": "Mysterybox Contracts",
           "title": "Mystery box"
         },
         "staking": {
@@ -522,8 +524,11 @@
       },
       "title": "Lottery"
     },
-    "mysteryboxes": {
-      "title": "Mysteryboxes"
+    "mysterybox-boxes": {
+      "title": "Mysterybox Boxes"
+    },
+    "mysterybox-contracts": {
+      "title": "Mysterybox Contracts"
     },
     "native-contracts": {
       "title": "Native Tokens"

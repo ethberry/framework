@@ -23,7 +23,7 @@ import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-compone
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/mysterybox.entity";
+import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/box/mysterybox.entity";
 import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
@@ -78,6 +78,7 @@ import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-cr
 import { SeedAssetComponentsErc721At1563804001230 } from "./migrations/1563804001230-seed-asset-component-erc721";
 import { SeedAssetComponentsErc998At1563804001240 } from "./migrations/1563804001240-seed-asset-component-erc998";
 import { SeedAssetComponentsErc1155At1563804001250 } from "./migrations/1563804001250-seed-asset-component-erc1155";
+import { SeedAssetComponentsMysteryboxAt1563804001260 } from "./migrations/1563804001260-seed-asset-component-mysterybox";
 
 import { CreateContractHistory1563804040330 } from "./migrations/1563804040330-create-contract-history";
 import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-vesting";
@@ -247,6 +248,7 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsErc721At1563804001230,
     SeedAssetComponentsErc998At1563804001240,
     SeedAssetComponentsErc1155At1563804001250,
+    SeedAssetComponentsMysteryboxAt1563804001260,
 
     CreateContractHistory1563804040330,
     CreateVesting1563804010210,

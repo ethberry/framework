@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, TokenType } from "@framework/types";
+import { ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import { UserEntity } from "../../../../user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -18,7 +18,7 @@ export class Erc998TokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC998);
+    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.CORE);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {

@@ -12,7 +12,6 @@ export enum MysteryboxStatus {
 export interface IMysterybox extends ISearchable {
   imageUrl: string;
   item?: IAsset;
-  price?: IAsset;
   templateId: number;
   template?: ITemplate;
   tokens?: Array<IToken>;

@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { ContractStatus, IContractAutocompleteDto, IContractSearchDto, TokenType } from "@framework/types";
+import { ContractStatus, IContractAutocompleteDto, IContractSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
@@ -15,7 +15,11 @@ export class ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: IContractSearchDto, contractType: TokenType): Promise<[Array<ContractEntity>, number]> {
+  public async search(
+    dto: IContractSearchDto,
+    contractType: TokenType,
+    contractModule: ModuleType,
+  ): Promise<[Array<ContractEntity>, number]> {
     const { query, contractStatus, contractFeatures, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
@@ -24,7 +28,12 @@ export class ContractService {
 
     queryBuilder.leftJoinAndSelect("contract.templates", "templates");
 
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule,
+    });
 
     if (contractStatus) {
       if (contractStatus.length === 1) {

@@ -11,11 +11,11 @@ import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/Co
 
 import { Erc721ContractDeployDialog } from "./deploy-dialog";
 
-export interface IErc721TokenDeployButtonProps {
+export interface IErc721ContractDeployButtonProps {
   className?: string;
 }
 
-export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props => {
+export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
@@ -73,7 +73,7 @@ export const Erc721TokenDeployButton: FC<IErc721TokenDeployButtonProps> = props 
           contractFeatures: [],
           name: "",
           symbol: "",
-          baseTokenURI: `${process.env.BE_URL}/metadata`,
+          baseTokenURI: `${process.env.JSON_URL}/metadata`,
           royalty: 0,
         }}
       />

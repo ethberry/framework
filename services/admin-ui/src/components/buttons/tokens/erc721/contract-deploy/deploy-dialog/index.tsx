@@ -3,18 +3,18 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { ContractFeatures, Erc721ContractFeatures, IContract, IErc721ContractDeployDto } from "@framework/types";
+import { Erc721ContractFeatures, IContract, IErc721ContractDeployDto } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IErc721CotractDeployDialogProps {
+export interface IErc721ContractDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form?: any) => Promise<void>;
   initialValues: IErc721ContractDeployDto;
 }
 
-export const Erc721ContractDeployDialog: FC<IErc721CotractDeployDialogProps> = props => {
+export const Erc721ContractDeployDialog: FC<IErc721ContractDeployDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (
@@ -25,13 +25,7 @@ export const Erc721ContractDeployDialog: FC<IErc721CotractDeployDialogProps> = p
       testId="Erc721ContractDeployForm"
       {...rest}
     >
-      <SelectInput
-        name="contractFeatures"
-        options={Erc721ContractFeatures}
-        // MODULE:MYSTERYBOX
-        disabledOptions={[ContractFeatures.MYSTERYBOX]}
-        multiple
-      />
+      <SelectInput name="contractFeatures" options={Erc721ContractFeatures} multiple />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

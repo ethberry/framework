@@ -5,6 +5,7 @@ declare global {
       PORT: number;
       HOST: string;
       BE_URL: string;
+      JSON_URL: string;
       GEMUNION_API_KEY: string;
       ACCOUNT: string;
       CONTRACT_MANAGER_ADDR: string;

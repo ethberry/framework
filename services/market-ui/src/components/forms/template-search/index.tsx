@@ -4,7 +4,7 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { ITemplateSearchDto, TokenType } from "@framework/types";
+import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 import { useStyles } from "./styles";
 
@@ -13,11 +13,12 @@ interface ITemplateSearchFormProps {
   initialValues: ITemplateSearchDto;
   open: boolean;
   contractType: Array<TokenType>;
+  contractModule: Array<ModuleType>;
   embedded?: boolean;
 }
 
 export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractType, embedded } = props;
+  const { onSubmit, initialValues, open, contractType, contractModule, embedded } = props;
 
   const classes = useStyles();
 
@@ -48,7 +49,7 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
           </Grid>
           {!embedded ? (
             <Grid item xs={12}>
-              <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
+              <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
             </Grid>
           ) : null}
         </Grid>

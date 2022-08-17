@@ -29,7 +29,6 @@ import { ABI } from "../../erc721/token/token-log/interfaces";
 
 @Injectable()
 export class Erc998TokenServiceEth {
-  private claimAddr: string;
   private itemsAddr: string;
 
   constructor(
@@ -45,7 +44,6 @@ export class Erc998TokenServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.claimAddr = configService.get<string>("CLAIM_PROXY_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC998_ITEM_ADDR", "");
   }
 

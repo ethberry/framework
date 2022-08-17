@@ -4,7 +4,7 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IToken, ITokenSearchDto, TokenAttributes, TokenType } from "@framework/types";
+import { IToken, ITokenSearchDto, ModuleType, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155Token } from "./item";
@@ -47,6 +47,7 @@ export const Erc1155TokenList: FC<ITokenListProps> = props => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
+        contractModule={[ModuleType.CORE]}
       />
 
       <ProgressOverlay isLoading={isLoading}>
