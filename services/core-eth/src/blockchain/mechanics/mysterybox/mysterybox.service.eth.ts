@@ -25,6 +25,7 @@ import { TemplateService } from "../../hierarchy/template/template.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
 import { ABI } from "../../tokens/erc721/token/token-log/interfaces";
+import { MysteryboxService } from "./mysterybox.service";
 
 @Injectable()
 export class MysteryboxServiceEth {
@@ -42,6 +43,7 @@ export class MysteryboxServiceEth {
     private readonly balanceService: BalanceService,
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
+    private readonly mysteryboxService: MysteryboxService,
   ) {
     this.itemsAddr = configService.get<string>("ERC721_RANDOM_ADDR", "");
   }
@@ -62,7 +64,13 @@ export class MysteryboxServiceEth {
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
-      const templateEntity = await this.templateService.findOne({ id: templateId });
+      const mysteryboxEntity = await this.mysteryboxService.findOne({ id: templateId });
+
+      if (!mysteryboxEntity) {
+        throw new NotFoundException("mysteryboxNotFound");
+      }
+
+      const templateEntity = await this.templateService.findOne({ id: mysteryboxEntity.templateId });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
@@ -70,7 +78,7 @@ export class MysteryboxServiceEth {
 
       const tokenEntity = await this.tokenService.create({
         tokenId,
-        attributes,
+        attributes: JSON.stringify(attributes),
         royalty: contractEntity.royalty,
         template: templateEntity,
       });

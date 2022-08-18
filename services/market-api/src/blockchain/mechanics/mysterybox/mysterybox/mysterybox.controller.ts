@@ -9,7 +9,7 @@ import { UserEntity } from "../../../../user/user.entity";
 import { TemplateNewDto } from "../../../hierarchy/template/dto/new";
 
 @Public()
-@Controller("/mysterybox-boxes")
+@Controller("/mysteryboxes")
 export class MysteryboxBoxController {
   constructor(private readonly mysteryboxBoxService: MysteryboxBoxService) {}
 
