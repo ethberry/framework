@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
 
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
@@ -13,8 +12,6 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         id
       ) VALUES (
         35101
-      ), (
-        35111
       );
     `);
 
@@ -33,12 +30,6 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         501001, -- gold
         '1000',
         35101
-      ), (
-        'ERC20',
-        201,
-        201001, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        35111
       );
     `);
 
@@ -48,7 +39,6 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         description,
         image_url,
         item_id,
-        price_id,
         template_id,
         mysterybox_status,
         created_at,
@@ -58,8 +48,7 @@ export class SeedMysteryboxErc1155At1653616447950 implements MigrationInterface 
         '${simpleFormatting}',
         '${imageUrl}',
         35101,
-        35111,
-        601004,
+        605001,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

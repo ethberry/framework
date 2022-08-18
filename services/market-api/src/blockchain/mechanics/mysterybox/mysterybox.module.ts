@@ -1,17 +1,11 @@
-import { Logger, Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { Module } from "@nestjs/common";
 
-import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
-
-import { MysteryboxEntity } from "./mysterybox.entity";
-import { MysteryboxService } from "./mysterybox.service";
-import { MysteryboxController } from "./mysterybox.controller";
-import { TemplateModule } from "../../hierarchy/template/template.module";
+import { MysteryboxContractModule } from "./contract/contract.module";
+import { MysteryboxTokenModule } from "./token/token.module";
+import { MysteryboxBoxModule } from "./mysterybox/mysterybox.module";
+import { MysteryboxSignModule } from "./sign/sign.module";
 
 @Module({
-  imports: [SignerModule, TemplateModule, TypeOrmModule.forFeature([MysteryboxEntity])],
-  providers: [Logger, MysteryboxService],
-  controllers: [MysteryboxController],
-  exports: [MysteryboxService],
+  imports: [MysteryboxContractModule, MysteryboxBoxModule, MysteryboxTokenModule, MysteryboxSignModule],
 })
 export class MysteryboxModule {}

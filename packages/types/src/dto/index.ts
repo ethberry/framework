@@ -34,3 +34,4 @@ export * from "./tokens/erc998/composition/search";
 export * from "./tokens/erc998/contract/deploy";
 export * from "./tokens/erc998/token-history/search";
 export * from "./tokens/erc1155/contract/deploy";
+export * from "./tokens/mysterybox/contract/deploy";

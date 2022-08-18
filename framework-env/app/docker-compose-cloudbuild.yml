@@ -63,8 +63,6 @@ services:
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      MYSTERYBOX_ADDR: "${MYSTERYBOX_ADDR}"
-      CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
       STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       # admin-api
@@ -105,8 +103,6 @@ services:
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      MYSTERYBOX_ADDR: "${MYSTERYBOX_ADDR}"
-      CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
       STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       # market-api
@@ -143,8 +139,6 @@ services:
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
-      MYSTERYBOX_ADDR: "${MYSTERYBOX_ADDR}"
-      CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
       STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       - "${PORT_RPC_API}:${PORT_RPC_API}"

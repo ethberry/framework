@@ -4,7 +4,6 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 import { UserEntity } from "./user/user.entity";
 import { PageEntity } from "./page/page.entity";
 import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
-import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/mysterybox.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
@@ -22,6 +21,7 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
+import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/mysterybox/mysterybox.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -35,7 +35,6 @@ const config: PostgresConnectionOptions = {
     StakingStakesEntity,
     StakingRulesEntity,
     PageEntity,
-    MysteryboxEntity,
     ClaimEntity,
     ContractEntity,
     TemplateEntity,
@@ -49,6 +48,7 @@ const config: PostgresConnectionOptions = {
     ReferralRewardEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
+    MysteryboxEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

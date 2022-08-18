@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
-import { TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -19,6 +19,6 @@ export class Erc1155ContractService extends ContractService {
   }
 
   public search(dto: ISearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC1155);
+    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.CORE);
   }
 }

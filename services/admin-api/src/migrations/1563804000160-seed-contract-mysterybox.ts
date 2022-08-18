@@ -7,7 +7,7 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const mysteryboxAddress = process.env.MYSTERYBOX_ADDR || wallet;
+    const erc721ContractMysteryboxAddress = process.env.ERC721_MYSTERYBOX_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
@@ -32,25 +32,110 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         updated_at
       ) VALUES (
         601,
-        '${mysteryboxAddress}',
+        '${erc721ContractMysteryboxAddress}',
         '${chainId}',
-        'MYSTERYBOX',
+        'MYSTERYBOX (weapon)',
         '${simpleFormatting}',
         '${imageUrl}',
         'MYSTERYBOX',
-        'LOOT721',
+        'MB721',
         100,
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{MYSTERYBOX}',
+        '{}',
+        'MYSTERYBOX',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        602,
+        '${erc721ContractMysteryboxAddress}',
+        '${chainId}',
+        'MYSTERYBOX (inactive)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'MYSTERYBOX',
+        'MB-OFF721',
+        100,
+        '${baseTokenURI}',
+        'INACTIVE',
+        'ERC721',
+        '{}',
+        'MYSTERYBOX',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        603,
+        '${erc721ContractMysteryboxAddress}',
+        '${chainId}',
+        'MYSTERYBOX (new)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'MYSTERYBOX',
+        'MB-NEW721',
+        100,
+        '${baseTokenURI}',
+        'NEW',
+        'ERC721',
+        '{}',
+        'MYSTERYBOX',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        604,
+        '${erc721ContractMysteryboxAddress}',
+        '${chainId}',
+        'MYSTERYBOX (hero)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'MYSTERYBOX',
+        'MB-P721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        '{PAUSABLE}',
+        'MYSTERYBOX',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        605,
+        '${erc721ContractMysteryboxAddress}',
+        '${chainId}',
+        'MYSTERYBOX (blacklist)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'MYSTERYBOX',
+        'MB-BL721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        '{BLACKLIST}',
+        'MYSTERYBOX',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        606,
+        '${erc721ContractMysteryboxAddress}',
+        '${chainId}',
+        'MYSTERYBOX (mixed)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'MYSTERYBOX',
+        'MB-MIX721',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC721',
+        '{}',
         'MYSTERYBOX',
         '${currentDateTime}',
         '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 601, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 605, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

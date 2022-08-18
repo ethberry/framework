@@ -40,6 +40,11 @@ export enum Erc1155ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
 }
 
+export enum MysteryboxContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "PAUSABLE" = "PAUSABLE",
+}
+
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
 export enum ContractFeatures {
   "NATIVE" = "NATIVE",
@@ -49,7 +54,7 @@ export enum ContractFeatures {
   "RANDOM" = "RANDOM",
   "SOULBOUND" = "SOULBOUND",
   // MODULE:MYSTERYBOX
-  "MYSTERYBOX" = "MYSTERYBOX", // ACBER + METADATA + Unpack
+  "PAUSABLE" = "PAUSABLE",
 }
 
 export interface IContract extends IDeployable, ISearchable {

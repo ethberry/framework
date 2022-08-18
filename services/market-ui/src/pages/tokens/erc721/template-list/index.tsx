@@ -6,7 +6,7 @@ import { constants } from "ethers";
 import { useParams } from "react-router";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, ITemplateSearchDto, TokenType } from "@framework/types";
+import { ITemplate, ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc721TemplateItem } from "./item";
@@ -51,6 +51,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
+        contractModule={[ModuleType.CORE]}
         embedded={embedded}
       />
 

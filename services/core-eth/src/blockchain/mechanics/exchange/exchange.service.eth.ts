@@ -14,7 +14,7 @@ import {
 } from "@framework/types";
 
 import { ContractManagerService } from "../../contract-manager/contract-manager.service";
-import { ExchangeHistoryService } from "./exchange-history/exchange-history.service";
+import { ExchangeHistoryService } from "./history/exchange-history.service";
 import { ExchangeService } from "./exchange.service";
 import { ClaimService } from "../claim/claim.service";
 

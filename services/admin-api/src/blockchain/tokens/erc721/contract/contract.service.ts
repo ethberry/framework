@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { IContractSearchDto, TokenType } from "@framework/types";
+import { IContractSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -17,6 +17,6 @@ export class Erc721ContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, TokenType.ERC721);
+    return super.search(dto, TokenType.ERC721, ModuleType.CORE);
   }
 }

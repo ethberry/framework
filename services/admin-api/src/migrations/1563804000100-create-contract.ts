@@ -36,7 +36,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
     `);
 
     // MODULE:MYSTERYBOX
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'MYSTERYBOX';`);
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'PAUSABLE';`);
 
     const table = new Table({
       name: `${ns}.contract`,

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Inventory } from "@mui/icons-material";
+import { Filter, Storage, Storefront } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,12 +15,28 @@ export const Mysterybox: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/mysteryboxes">
+        <ListItem button component={RouterLink} to="/mysterybox-contracts">
           <ListItemIcon>
-            <Inventory />
+            <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.main" />
+            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.contracts" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/mysterybox-boxes">
+          <ListItemIcon>
+            <Filter />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.boxes" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/mysterybox-tokens">
+          <ListItemIcon>
+            <Storage />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.tokens" />
           </ListItemText>
         </ListItem>
       </List>

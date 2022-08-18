@@ -21,6 +21,7 @@ export class ContractService {
     dto: ISearchDto,
     userEntity: UserEntity,
     contractType: TokenType,
+    contractModule: ModuleType,
   ): Promise<[Array<ContractEntity>, number]> {
     const { query, skip, take } = dto;
 
@@ -32,8 +33,9 @@ export class ContractService {
       contractType,
     });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule: ModuleType.CORE,
+      contractModule,
     });
+
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });

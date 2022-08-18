@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { ITemplateSearchDto, TokenType } from "@framework/types";
+import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -23,7 +23,7 @@ export class Erc1155TemplateService extends TemplateService {
   }
 
   public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, TokenType.ERC1155);
+    return super.search(dto, TokenType.ERC1155, ModuleType.CORE);
   }
 
   public async getMaxTokenIdForTemplate(templateId: number): Promise<number> {

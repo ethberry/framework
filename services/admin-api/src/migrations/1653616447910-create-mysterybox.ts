@@ -35,10 +35,6 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "price_id",
-          type: "int",
-        },
-        {
           name: "template_id",
           type: "int",
         },
@@ -59,12 +55,6 @@ export class CreateMysterybox1653616447910 implements MigrationInterface {
       foreignKeys: [
         {
           columnNames: ["item_id"],
-          referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.asset`,
-          onDelete: "CASCADE",
-        },
-        {
-          columnNames: ["price_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.asset`,
           onDelete: "CASCADE",

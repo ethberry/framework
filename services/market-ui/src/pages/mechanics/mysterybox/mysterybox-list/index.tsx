@@ -15,12 +15,12 @@ export interface IMysteryboxListProps {
   embedded?: boolean;
 }
 
-export const MysteryboxList: FC<IMysteryboxListProps> = props => {
+export const MysteryboxBoxList: FC<IMysteryboxListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
     useCollection<IMysterybox, IMysteryboxSearchDto>({
-      baseUrl: "/mysteryboxes",
+      baseUrl: "/mysterybox-boxes",
       embedded,
       search: {
         query: "",
@@ -31,9 +31,9 @@ export const MysteryboxList: FC<IMysteryboxListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mysterybox-list"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "mysterybox-boxes"]} isHidden={embedded} />
 
-      <PageHeader message="pages.mysterybox-list.title">
+      <PageHeader message="pages.mysterybox-boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

@@ -16,7 +16,8 @@ export class TemplateService {
   public async search(
     dto: Partial<ITemplateSearchDto>,
     userEntity: UserEntity,
-    contractType?: TokenType,
+    contractType: TokenType,
+    contractModule: ModuleType,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
@@ -35,8 +36,9 @@ export class TemplateService {
       contractType,
     });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
-      contractModule: ModuleType.CORE,
+      contractModule,
     });
+
     queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
       contractStatus: ContractStatus.ACTIVE,
     });

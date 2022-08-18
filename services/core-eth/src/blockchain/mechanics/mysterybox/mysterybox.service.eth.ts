@@ -28,7 +28,6 @@ import { ABI } from "../../tokens/erc721/token/token-log/interfaces";
 
 @Injectable()
 export class MysteryboxServiceEth {
-  private claimAddr: string;
   private itemsAddr: string;
 
   constructor(
@@ -44,7 +43,6 @@ export class MysteryboxServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.claimAddr = configService.get<string>("CLAIM_PROXY_ADDR", "");
     this.itemsAddr = configService.get<string>("ERC721_RANDOM_ADDR", "");
   }
 

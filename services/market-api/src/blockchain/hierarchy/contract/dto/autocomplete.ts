@@ -39,5 +39,13 @@ export class ContractAutocompleteDto implements IContractAutocompleteDto {
   @IsEnum(ContractFeatures, { each: true, message: "badInput" })
   public contractFeatures: Array<ContractFeatures>;
 
+  @ApiPropertyOptional({
+    enum: ModuleType,
+    isArray: true,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<ModuleType>)
+  @IsEnum(ModuleType, { each: true, message: "badInput" })
   public contractModule: Array<ModuleType>;
 }

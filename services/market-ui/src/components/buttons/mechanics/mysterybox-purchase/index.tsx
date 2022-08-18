@@ -42,7 +42,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
             amount: "1",
           },
         ),
-        mysterybox.price?.components.map(component => ({
+        mysterybox.template?.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -51,7 +51,7 @@ export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
         process.env.ACCOUNT,
         sign.signature,
         {
-          value: getEthPrice(mysterybox.price),
+          value: getEthPrice(mysterybox.template?.price),
         },
       ) as Promise<void>;
     },

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, IsString, IsUrl, ValidateNested } from "class-validator";
+import { IsInt, IsJSON, IsString, IsUrl, ValidateNested, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
@@ -38,5 +38,6 @@ export class TemplateCreateDto implements ITemplateCreateDto {
     minimum: 1,
   })
   @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
 }

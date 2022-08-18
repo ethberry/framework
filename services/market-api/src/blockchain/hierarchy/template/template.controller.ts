@@ -6,6 +6,7 @@ import { TemplateService } from "./template.service";
 import { TemplateEntity } from "./template.entity";
 import { TemplateNewDto } from "./dto/new";
 import { UserEntity } from "../../../user/user.entity";
+import { ModuleType } from "@framework/types";
 
 @Public()
 @Controller("/templates")
@@ -18,7 +19,7 @@ export class TemplateController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    return this.templateService.search({ take: 10 }, userEntity, dto.contractType);
+    return this.templateService.search({ take: 10 }, userEntity, dto.contractType, ModuleType.CORE);
   }
 
   @Get("/:id")

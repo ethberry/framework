@@ -74,7 +74,7 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
           contractFeatures: [],
           name: "",
           symbol: "",
-          baseTokenURI: `${process.env.BE_URL}/metadata`,
+          baseTokenURI: `${process.env.JSON_URL}/metadata`,
           royalty: 0,
         }}
       />

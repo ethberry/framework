@@ -5,6 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import {
   ITokenAutocompleteDto,
   ITokenSearchDto,
+  ModuleType,
   TokenAttributes,
   TokenRarity,
   TokenStatus,
@@ -25,6 +26,7 @@ export class TokenService {
     dto: ITokenSearchDto,
     userEntity: UserEntity,
     contractType: TokenType,
+    contractModule: ModuleType,
   ): Promise<[Array<TokenEntity>, number]> {
     const { query, attributes = {}, contractIds, account = userEntity.wallet?.toLowerCase(), skip, take } = dto;
 
@@ -38,6 +40,9 @@ export class TokenService {
 
     queryBuilder.andWhere("contract.contractType = :contractType", {
       contractType,
+    });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
