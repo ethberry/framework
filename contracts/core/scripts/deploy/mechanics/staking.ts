@@ -1,5 +1,6 @@
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
+import { MINTER_ROLE } from "../../../test/constants";
 
 export async function deployStaking(contracts: Record<string, Contract>) {
   const stakingFactory = await ethers.getContractFactory("Staking");
@@ -71,7 +72,8 @@ export async function deployStaking(contracts: Record<string, Contract>) {
     },
   ]);
 
-  await contracts.contractManager.setFactories([stakingInstance.address], [contracts.contractManager.address]);
+  // await contracts.contractManager.setFactories([stakingInstance.address], [contracts.contractManager.address]);
+  await contracts.contractManager.addFactory(stakingInstance.address, MINTER_ROLE);
 
   contracts.staking = stakingInstance;
 }

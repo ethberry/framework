@@ -7,7 +7,7 @@ import { AccessControlEventType, ContractEventType, ContractType } from "@framew
 import { MysteryboxLogService } from "./log.service";
 import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
-// system contract
+// dynamic contract
 import MysteryboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol/ERC721MysteryboxSimple.json";
 
 @Module({

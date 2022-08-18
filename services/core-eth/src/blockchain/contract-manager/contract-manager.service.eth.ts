@@ -17,7 +17,10 @@ import {
   IContractManagerERC20TokenDeployed,
   IContractManagerERC721TokenDeployed,
   IContractManagerERC998TokenDeployed,
+  IContractManagerMysteryboxDeployed,
   IContractManagerVestingDeployed,
+  ModuleType,
+  MysteryboxContractFeatures,
   TContractManagerEventData,
   TokenType,
   VestingContractTemplate,
@@ -35,6 +38,7 @@ import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
 import { GradeService } from "../mechanics/grade/grade.service";
+import { MysteryboxLogService } from "../mechanics/mysterybox/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -53,6 +57,7 @@ export class ContractManagerServiceEth {
     private readonly erc998LogService: Erc998TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
+    private readonly mysteryboxLogService: MysteryboxLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
@@ -216,6 +221,37 @@ export class ContractManagerServiceEth {
     });
 
     await this.erc1155LogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async mysterybox(event: ILogEvent<IContractManagerMysteryboxDeployed>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, name, symbol, baseTokenURI, royalty, featureIds },
+    } = event;
+
+    await this.updateHistory(event, ctx);
+
+    const availableFeatures = Object.values(MysteryboxContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: name,
+      name,
+      symbol,
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractType: TokenType.ERC721,
+      contractModule: ModuleType.MYSTERYBOX,
+      chainId: this.chainId,
+      royalty: ~~royalty,
+      baseTokenURI,
+    });
+
+    await this.mysteryboxLogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

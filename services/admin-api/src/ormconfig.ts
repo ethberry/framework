@@ -153,6 +153,7 @@ import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed
 import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
+import { SeedContractManager1660436477050 } from "./migrations/1660436477050-seed-contract-manager";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -324,6 +325,7 @@ const config: PostgresConnectionOptions = {
     CreateLotteryTicketAt1660436477020,
     SeedLotteryTicketsAt1660436477030,
     CreateLotteryHistoryAt1660436477040,
+    SeedContractManager1660436477050,
   ],
 };
 

@@ -6,6 +6,7 @@ export enum ContractManagerEventType {
   ERC721TokenDeployed = "ERC721TokenDeployed",
   ERC998TokenDeployed = "ERC998TokenDeployed",
   ERC1155TokenDeployed = "ERC1155TokenDeployed",
+  MysteryboxDeployed = "MysteryboxDeployed",
 }
 
 export interface IContractManagerVestingDeployed {
@@ -42,6 +43,15 @@ export interface IContractManagerERC998TokenDeployed {
   featureIds: Array<number>;
 }
 
+export interface IContractManagerMysteryboxDeployed {
+  addr: string;
+  name: string;
+  symbol: string;
+  baseTokenURI: string;
+  royalty: string;
+  featureIds: Array<number>;
+}
+
 export interface IContractManagerERC1155TokenDeployed {
   addr: string;
   baseTokenURI: string;
@@ -53,7 +63,8 @@ export type TContractManagerEventData =
   | IContractManagerERC20TokenDeployed
   | IContractManagerERC721TokenDeployed
   | IContractManagerERC998TokenDeployed
-  | IContractManagerERC1155TokenDeployed;
+  | IContractManagerERC1155TokenDeployed
+  | IContractManagerMysteryboxDeployed;
 
 export interface IContractManagerHistory extends IIdDateBase {
   address: string;

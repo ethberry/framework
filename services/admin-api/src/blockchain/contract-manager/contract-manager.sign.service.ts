@@ -250,8 +250,7 @@ export class ContractManagerSignService {
   }
 
   public async mysterybox(dto: IMysteryboxContractDeployDto): Promise<IServerSignature> {
-    const { contractFeatures, royalty, baseTokenURI } = dto;
-
+    const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByMysteryboxContractFeatures(contractFeatures);
     const signature = await this.signer._signTypedData(
@@ -267,6 +266,8 @@ export class ContractManagerSignService {
         EIP712: [
           { name: "nonce", type: "bytes32" },
           { name: "bytecode", type: "bytes" },
+          { name: "name", type: "string" },
+          { name: "symbol", type: "string" },
           { name: "royalty", type: "uint96" },
           { name: "baseTokenURI", type: "string" },
           { name: "featureIds", type: "uint8[]" },
@@ -276,8 +277,10 @@ export class ContractManagerSignService {
       {
         nonce,
         bytecode,
-        royalty,
+        name,
+        symbol,
         baseTokenURI,
+        royalty,
         featureIds: contractFeatures.map(feature => Object.keys(MysteryboxContractFeatures).indexOf(feature)),
       },
     );

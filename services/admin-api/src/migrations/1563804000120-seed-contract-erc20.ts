@@ -16,8 +16,8 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR || wallet;
     const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR || wallet;
-    const erc20TokenBlackListAddress = process.env.BLACKLIST_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || "1337";
+    const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR || wallet;
+    const chainId = (process.env.CHAIN_ID as string) || "1337";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
