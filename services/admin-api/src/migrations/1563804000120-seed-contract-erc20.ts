@@ -4,14 +4,13 @@ import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-const usdt: Record<string, string> = {
-  "1": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-  "56": "0x55d398326f99059ff775485246999027b3197955",
-  "1337": process.env.USDT_ADDR || wallet,
-};
-
 export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    const usdt: Record<string, string> = {
+      "1": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "56": "0x55d398326f99059ff775485246999027b3197955",
+      "1337": process.env.USDT_ADDR || wallet,
+    };
     const currentDateTime = new Date().toISOString();
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR || wallet;
