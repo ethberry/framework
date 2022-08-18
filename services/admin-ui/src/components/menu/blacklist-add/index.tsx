@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOn } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -39,7 +39,7 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleBlacklist}>
         <ListItemIcon>
           <DoNotDisturbOn fontSize="small" />
@@ -56,6 +56,6 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
           account: "",
         }}
       />
-    </>
+    </Fragment>
   );
 };

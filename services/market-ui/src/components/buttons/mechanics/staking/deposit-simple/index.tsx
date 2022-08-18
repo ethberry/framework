@@ -9,13 +9,13 @@ import { IStakingRule, StakingStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
-import { getEthPrice } from "../../../../utils/money";
+import { getEthPrice } from "../../../../../utils/money";
 
-export interface IStakingDepositButtonProps {
+export interface IStakingDepositSimpleButtonProps {
   rule: IStakingRule;
 }
 
-export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
+export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = props => {
   const { rule } = props;
 
   const { formatMessage } = useIntl();
@@ -38,15 +38,15 @@ export const StakingDepositButton: FC<IStakingDepositButtonProps> = props => {
     };
   };
 
-  if (rule.stakingStatus === StakingStatus.ACTIVE) {
-    return (
-      <Tooltip title={formatMessage({ id: "pages.staking.rules.deposit" })}>
-        <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositButton">
-          <Savings />
-        </IconButton>
-      </Tooltip>
-    );
-  } else {
+  if (rule.stakingStatus !== StakingStatus.ACTIVE) {
     return null;
   }
+
+  return (
+    <Tooltip title={formatMessage({ id: "pages.staking.rules.deposit" })}>
+      <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositSimpleButton">
+        <Savings />
+      </IconButton>
+    </Tooltip>
+  );
 };

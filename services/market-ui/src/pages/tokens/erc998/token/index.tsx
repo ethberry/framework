@@ -82,7 +82,7 @@ export const Erc998Token: FC = () => {
                 <EntityInput
                   key={i}
                   name="tokenId"
-                  controller="erc721-tokens"
+                  controller="tokens"
                   data={{
                     contractIds: [child.child?.id],
                   }}

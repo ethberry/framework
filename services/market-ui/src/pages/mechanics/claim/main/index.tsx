@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Tooltip } from "@mui/material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { AccountBalanceWallet, Redeem } from "@mui/icons-material";
@@ -88,7 +88,7 @@ export const Claim: FC = () => {
 
   if (!isActive) {
     return (
-      <>
+      <Fragment>
         <Tooltip title={formatMessage({ id: "components.header.wallet.connect" })} enterDelay={300}>
           <IconButton color="inherit" onClick={openConnectWalletDialog}>
             <AccountBalanceWallet />
@@ -96,7 +96,7 @@ export const Claim: FC = () => {
         </Tooltip>
 
         <FormattedMessage id="pages.claim.connect" />
-      </>
+      </Fragment>
     );
   }
 

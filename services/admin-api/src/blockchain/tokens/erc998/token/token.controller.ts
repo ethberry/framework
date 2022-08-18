@@ -18,11 +18,6 @@ export class Erc998TokenController {
     return this.erc998TokenService.search(dto);
   }
 
-  @Get("/autocomplete")
-  public autocomplete(): Promise<Array<TokenEntity>> {
-    return this.erc998TokenService.autocomplete();
-  }
-
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TokenEntity | null> {

@@ -14,7 +14,7 @@ export class TokenService {
   ) {}
 
   public async search(dto: ITokenSearchDto, contractType: TokenType): Promise<[Array<TokenEntity>, number]> {
-    const { query, tokenStatus, tokenId, attributes = {}, contractIds, account, skip, take } = dto;
+    const { query, tokenStatus, tokenId, attributes = {}, contractIds, templateIds, account, skip, take } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
@@ -62,6 +62,16 @@ export class TokenService {
         });
       } else {
         queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("template.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.templateId IN(:...templateIds)", { templateIds });
       }
     }
 

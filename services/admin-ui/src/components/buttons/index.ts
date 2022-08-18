@@ -7,4 +7,4 @@ export * from "./tokens/erc1155/contract-deploy";
 
 export * from "./mechanics/staking/upload";
 export * from "./mechanics/vesting/deploy";
-export * from "./mechanics/mysterybox/contract-deploy";
+export * from "./mechanics/mysterybox/deploy";

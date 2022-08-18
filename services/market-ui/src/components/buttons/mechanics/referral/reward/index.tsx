@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
@@ -41,7 +41,7 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleGrantRole}>
         <ListItemIcon>
           <AccountCircle fontSize="small" />
@@ -59,6 +59,6 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
           address: "",
         }}
       />
-    </>
+    </Fragment>
   );
 };

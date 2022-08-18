@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { Link } from "@mui/icons-material";
 import { constants } from "ethers";
@@ -20,12 +20,10 @@ export const Referrer: FC = () => {
   }
 
   return (
-    <Fragment>
-      <Tooltip title={referrer} enterDelay={300}>
-        <IconButton color="inherit" onClick={handleRemoveReferrer} data-testid="RemoveReferrerButton">
-          <Link />
-        </IconButton>
-      </Tooltip>
-    </Fragment>
+    <Tooltip title={referrer} enterDelay={300}>
+      <IconButton color="inherit" onClick={handleRemoveReferrer} data-testid="RemoveReferrerButton">
+        <Link />
+      </IconButton>
+    </Tooltip>
   );
 };

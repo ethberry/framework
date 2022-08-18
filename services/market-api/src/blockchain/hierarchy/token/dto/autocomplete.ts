@@ -23,4 +23,16 @@ export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public contractIds: Array<number>;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public templateIds: Array<number>;
 }

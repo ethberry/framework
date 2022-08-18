@@ -7,7 +7,7 @@ import { useClipboard } from "use-clipboard-copy";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useWallet } from "@gemunion/provider-wallet";
 
-import { ReferralRewardButton } from "../../../../components/buttons/mechanics/referral-reward";
+import { ReferralRewardButton } from "../../../../components/buttons/mechanics/referral/reward";
 
 export const ReferralLink: FC = () => {
   const { isActive, account = "" } = useWeb3React();

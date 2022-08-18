@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { LotteryTicketSearchForm } from "./form";
 import { LotteryTicketViewDialog } from "./view";
 import { getNumbers } from "./utils";
-import { LotteryRewardButton } from "../../../../components/buttons/mechanics/lottery-reward";
+import { LotteryRewardButton } from "../../../../components/buttons/mechanics/lottery/reward";
 
 export const LotteryTicketList: FC = () => {
   const {

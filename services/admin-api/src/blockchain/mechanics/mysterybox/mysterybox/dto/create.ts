@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsJSON, IsString, IsUrl, ValidateNested, IsInt, Min } from "class-validator";
+import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IMysteryboxCreateDto } from "../interfaces";

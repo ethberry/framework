@@ -26,6 +26,7 @@
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
+    "deposit": "Deposit",
     "edit": "Edit",
     "view": "View"
   },

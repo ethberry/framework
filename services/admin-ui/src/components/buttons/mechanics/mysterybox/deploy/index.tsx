@@ -5,11 +5,11 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { MysteryboxContractFeatures, IMysteryboxContractDeployDto } from "@framework/types";
+import { IMysteryboxContractDeployDto, MysteryboxContractFeatures } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
-import { MysteryboxContractDeployDialog } from "./deploy-dialog";
+import { MysteryboxContractDeployDialog } from "./dialog";
 
 export interface IMysteryboxContractDeployButtonProps {
   className?: string;

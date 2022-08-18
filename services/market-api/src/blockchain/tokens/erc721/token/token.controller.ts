@@ -6,7 +6,6 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { Erc721TokenService } from "./token.service";
 import { UserEntity } from "../../../../user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
-import { TokenAutocompleteDto } from "../../../hierarchy/token/dto/autocomplete";
 import { TokenSearchDto } from "../../../hierarchy/token/dto";
 
 @ApiBearerAuth()
@@ -18,11 +17,6 @@ export class Erc721TokenController {
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: TokenSearchDto, @User() userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
     return this.erc721TokenService.search(dto, userEntity);
-  }
-
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: TokenAutocompleteDto): Promise<Array<TokenEntity>> {
-    return this.erc721TokenService.autocomplete(dto);
   }
 
   @Get("/:id")

@@ -73,8 +73,8 @@ export const Erc998Composition: FC = () => {
     return contract.whiteListChild(composition.child, composition.amount) as Promise<void>;
   });
 
-  const handleCreateConfirm = (data: IErc998CompositionCreateDto) => {
-    return metaFn2(data);
+  const handleCreateConfirm = (values: IErc998CompositionCreateDto) => {
+    return metaFn2(values);
   };
 
   const handleCreateCancel = () => {

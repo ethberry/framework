@@ -28,7 +28,15 @@ export class TokenService {
     contractType: TokenType,
     contractModule: ModuleType,
   ): Promise<[Array<TokenEntity>, number]> {
-    const { query, attributes = {}, contractIds, account = userEntity.wallet?.toLowerCase(), skip, take } = dto;
+    const {
+      query,
+      attributes = {},
+      contractIds,
+      templateIds,
+      account = userEntity.wallet?.toLowerCase(),
+      skip,
+      take,
+    } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
@@ -77,6 +85,16 @@ export class TokenService {
       }
     }
 
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
     if (query) {
       queryBuilder.leftJoin(
         "(SELECT 1)",
@@ -102,7 +120,7 @@ export class TokenService {
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto): Promise<Array<TokenEntity>> {
-    const { account, contractIds } = dto;
+    const { account, contractIds, templateIds } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["token.id", "token.tokenId"]);
@@ -121,6 +139,16 @@ export class TokenService {
         });
       } else {
         queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
       }
     }
 

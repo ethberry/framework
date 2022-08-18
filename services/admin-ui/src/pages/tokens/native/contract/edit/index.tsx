@@ -30,20 +30,18 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const message = id ? "dialogs.edit" : "dialogs.create";
 
   return (
-    <>
-      <FormDialog
-        initialValues={fixedValues}
-        validationSchema={validationSchema}
-        message={message}
-        testId="Erc20TokenEditDialog"
-        headActions={<BlockchainInfoPopover symbol={symbol} address={address} decimals={decimals} />}
-        {...rest}
-      >
-        <TextInput name="symbol" />
-        <TextInput name="title" />
-        <RichTextEditor name="description" />
-        <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
-      </FormDialog>
-    </>
+    <FormDialog
+      initialValues={fixedValues}
+      validationSchema={validationSchema}
+      message={message}
+      testId="Erc20TokenEditDialog"
+      headActions={<BlockchainInfoPopover symbol={symbol} address={address} decimals={decimals} />}
+      {...rest}
+    >
+      <TextInput name="symbol" />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
+      <SelectInput name="contractStatus" options={ContractStatus} disabledOptions={[ContractStatus.NEW]} />
+    </FormDialog>
   );
 };

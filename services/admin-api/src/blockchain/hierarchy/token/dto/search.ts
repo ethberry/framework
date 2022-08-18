@@ -52,6 +52,18 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   public contractIds: Array<number>;
 
   @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public templateIds: Array<number>;
+
+  @ApiPropertyOptional({
     type: TokenAttributesSearchDto,
   })
   @ValidateNested()

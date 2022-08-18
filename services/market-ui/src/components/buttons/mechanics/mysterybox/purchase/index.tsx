@@ -1,43 +1,48 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, utils } from "ethers";
+import { constants, Contract, utils } from "ethers";
 import { FormattedMessage } from "react-intl";
 
-import { useSettings } from "@gemunion/provider-settings";
 import { IServerSignature } from "@gemunion/types-collection";
-import { IDrop, TokenType } from "@framework/types";
+import { IMysterybox, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
-import { getEthPrice } from "../../../../utils/money";
+import { getEthPrice } from "../../../../../utils/money";
 
-interface IDropPurchaseButtonProps {
-  drop: IDrop;
+interface IMysteryboxBuyButtonProps {
+  mysterybox: IMysterybox;
 }
 
-export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
-  const { drop } = props;
-
-  const settings = useSettings();
+export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => {
+  const { mysterybox } = props;
 
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
-      return contract.purchase(
+      return contract.mysterybox(
         {
           nonce: utils.arrayify(sign.nonce),
-          externalId: drop.id,
+          externalId: mysterybox.id,
           expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
+          referrer: constants.AddressZero,
         },
-        drop.item?.components.map(component => ({
-          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          tokenId: component.templateId,
-          amount: component.amount,
-        }))[0],
-        drop.price?.components.map(component => ({
+        ([] as Array<any>).concat(
+          mysterybox.item?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.templateId,
+            amount: component.amount,
+          })),
+          {
+            tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+            token: mysterybox.template!.contract!.address,
+            tokenId: mysterybox.id.toString(),
+            amount: "1",
+          },
+        ),
+        mysterybox.template?.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
           tokenId: component.template!.tokens![0].tokenId,
@@ -46,7 +51,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
         process.env.ACCOUNT,
         sign.signature,
         {
-          value: getEthPrice(drop.price),
+          value: getEthPrice(mysterybox.template?.price),
         },
       ) as Promise<void>;
     },
@@ -57,12 +62,12 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
 
     return metaFnWithSign(
       {
-        url: "/drops/sign",
+        url: "/mysteryboxes/sign",
         method: "POST",
         data: {
-          dropId: drop.id,
+          mysteryboxId: mysterybox.id,
           account,
-          referrer: settings.getReferrer(),
+          referrer: constants.AddressZero,
         },
       },
       web3Context,
@@ -74,7 +79,7 @@ export const DropPurchaseButton: FC<IDropPurchaseButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleBuy} data-testid="DropPurchaseButton">
+    <Button onClick={handleBuy} data-testid="MysteryboxTemplateBuyButton">
       <FormattedMessage id="form.buttons.buy" />
     </Button>
   );

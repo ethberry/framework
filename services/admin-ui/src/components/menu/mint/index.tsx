@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -55,7 +55,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleMintToken}>
         <ListItemIcon>
           <AddCircleOutlineIcon />
@@ -78,6 +78,6 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
           decimals: tokenType === TokenType.ERC20 ? 18 : 0,
         }}
       />
-    </>
+    </Fragment>
   );
 };

@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
@@ -41,7 +41,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
   };
 
   return (
-    <>
+    <Fragment>
       <IconButton
         aria-label="more"
         id="contract-menu-button"
@@ -68,6 +68,6 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {actions.includes(ContractActions.BLACKLIST_ADD) ? <BlacklistAddMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.BLACKLIST_REMOVE) ? <UnBlacklistMenuItem address={contract.address} /> : null}
       </Menu>
-    </>
+    </Fragment>
   );
 };

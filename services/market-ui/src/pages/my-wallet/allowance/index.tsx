@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
@@ -48,7 +48,7 @@ export const AllowanceButton: FC = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <Button onClick={handleAllowance}>
         <FormattedMessage id="pages.my-wallet.allowance" />
       </Button>
@@ -57,6 +57,6 @@ export const AllowanceButton: FC = () => {
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
       />
-    </>
+    </Fragment>
   );
 };

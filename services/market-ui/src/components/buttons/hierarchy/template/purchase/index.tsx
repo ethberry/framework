@@ -10,7 +10,7 @@ import { ITemplate, TokenType } from "@framework/types";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
-import { getEthPrice } from "../../../../utils/money";
+import { getEthPrice } from "../../../../../utils/money";
 
 interface ITemplatePurchaseButtonProps {
   template: ITemplate;
