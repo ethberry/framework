@@ -3,20 +3,19 @@ import { FormattedMessage } from "react-intl";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ITemplate, TemplateStatus } from "@framework/types";
+import { IMysterybox } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
+import { MysteryboxPurchaseButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { useStyles } from "./styles";
-import { TemplatePurchaseButton } from "../../../../components/buttons";
 
-export const MysteryboxTemplate: FC = () => {
-  const { selected, isLoading } = useCollection<ITemplate>({
-    baseUrl: "/mysterybox-templates",
+export const MysteryboxBox: FC = () => {
+  const { selected, isLoading } = useCollection<IMysterybox>({
+    baseUrl: "/mysterybox-boxes",
     empty: {
-      title: "",
       description: emptyStateString,
     },
   });
@@ -29,9 +28,9 @@ export const MysteryboxTemplate: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mysterybox-template"]} data={[{}, selected]} />
+      <Breadcrumbs path={["dashboard", "mysterybox-boxes", "mysterybox-box"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.mysterybox-template.title" data={selected} />
+      <PageHeader message="pages.mysterybox-box.title" data={selected} />
 
       <Grid container>
         <Grid item xs={9}>
@@ -41,17 +40,15 @@ export const MysteryboxTemplate: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          {selected.templateStatus === TemplateStatus.ACTIVE ? (
-            <Paper className={classes.paper}>
-              <Typography variant="body2" color="textSecondary" component="p">
-                <FormattedMessage
-                  id="pages.mysterybox-template.price"
-                  values={{ amount: formatPrice(selected.price) }}
-                />
-              </Typography>
-              <TemplatePurchaseButton template={selected} />
-            </Paper>
-          ) : null}
+          <Paper className={classes.paper}>
+            <Typography variant="body2" color="textSecondary" component="p">
+              <FormattedMessage
+                id="pages.mysterybox.price"
+                values={{ amount: formatPrice(selected.template?.price) }}
+              />
+            </Typography>
+            <MysteryboxPurchaseButton mysterybox={selected} />
+          </Paper>
         </Grid>
       </Grid>
     </Fragment>

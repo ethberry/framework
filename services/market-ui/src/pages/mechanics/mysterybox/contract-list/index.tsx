@@ -15,9 +15,9 @@ export const MysteryboxContractList: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mysterybox-contract-list"]} />
+      <Breadcrumbs path={["dashboard", "mysterybox-contracts"]} />
 
-      <PageHeader message="pages.mysterybox-contract-list.title" />
+      <PageHeader message="pages.mysterybox-contracts.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

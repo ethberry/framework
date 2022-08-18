@@ -23,7 +23,7 @@ import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-compone
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/box/mysterybox.entity";
+import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/mysterybox/mysterybox.entity";
 import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
@@ -65,6 +65,7 @@ import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-t
 import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
 import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
 import { SeedTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
+import { SeedTokenMysteryboxAt1563804000360 } from "./migrations/1563804000360-seed-token-mysterybox";
 import { SeedTokenLotteryAt1563804000370 } from "./migrations/1563804000370-seed-token-lottery";
 
 import { CreateBalanceTable1563804000400 } from "./migrations/1563804000400-create-balance";
@@ -72,6 +73,7 @@ import { SeedBalanceErc20At1563804020420 } from "./migrations/1563804000420-seed
 import { SeedBalanceErc721At1563804020430 } from "./migrations/1563804000430-seed-balance-erc721";
 import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-seed-balance-erc998";
 import { SeedBalanceErc1155At1563804020450 } from "./migrations/1563804000450-seed-balance-erc1155";
+import { SeedBalanceErcMysteryboxAt1563804020460 } from "./migrations/1563804000460-seed-balance-mysterybox";
 import { SeedBalanceLotteryAt1563804020470 } from "./migrations/1563804000470-seed-balance-lottery";
 
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
@@ -235,6 +237,7 @@ const config: PostgresConnectionOptions = {
     SeedTokenErc721At1563804000330,
     SeedTokenErc998At1563804000340,
     SeedTokenErc1155At1563804000350,
+    SeedTokenMysteryboxAt1563804000360,
     SeedTokenLotteryAt1563804000370,
 
     CreateBalanceTable1563804000400,
@@ -242,6 +245,7 @@ const config: PostgresConnectionOptions = {
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
     SeedBalanceErc1155At1563804020450,
+    SeedBalanceErcMysteryboxAt1563804020460,
     SeedBalanceLotteryAt1563804020470,
 
     CreateAssetComponent1563804001220,

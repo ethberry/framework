@@ -88,7 +88,7 @@ export class MysteryboxService {
           item_components: "item.components",
           item_contract: "item_components.contract",
           item_template: "item_components.template",
-          price: "mysterybox.price",
+          price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
           price_template: "price_components.template",
@@ -108,10 +108,10 @@ export class MysteryboxService {
         alias: "mysterybox",
         leftJoinAndSelect: {
           template: "mysterybox.template",
-          template_price: "template.price",
-          template_price_components: "template.price.components",
           item: "mysterybox.item",
           item_components: "item.components",
+          price: "template.price",
+          price_components: "price.components",
         },
       },
     });

@@ -23,12 +23,12 @@ export const Mysterybox: FC = () => {
             <FormattedMessage id="pages.dashboard.mechanics.mysterybox.contracts" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/mysterybox-templates">
+        <ListItem button component={RouterLink} to="/mysterybox-boxes">
           <ListItemIcon>
             <Filter />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.templates" />
+            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.boxes" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/mysterybox-tokens">

@@ -21,6 +21,7 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
+import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/mysterybox/mysterybox.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -47,6 +48,7 @@ const config: PostgresConnectionOptions = {
     ReferralRewardEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
+    MysteryboxEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

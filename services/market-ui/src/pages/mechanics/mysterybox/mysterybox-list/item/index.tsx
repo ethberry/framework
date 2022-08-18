@@ -19,7 +19,7 @@ export const MysteryboxItem: FC<IMysteryboxItemProps> = props => {
 
   return (
     <Card>
-      <CardActionArea component={RouterLink} to={`/mysteryboxes/${mysterybox.id}`}>
+      <CardActionArea component={RouterLink} to={`/mysterybox-boxes/${mysterybox.id}`}>
         <CardHeader title={mysterybox.title} />
         <CardMedia className={classes.media} image={mysterybox.imageUrl} />
         <CardContent>
@@ -27,7 +27,7 @@ export const MysteryboxItem: FC<IMysteryboxItemProps> = props => {
             <RichTextDisplay data={mysterybox.description} />
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {formatPrice(mysterybox.price)}
+            {formatPrice(mysterybox.template?.price)}
           </Typography>
         </CardContent>
       </CardActionArea>

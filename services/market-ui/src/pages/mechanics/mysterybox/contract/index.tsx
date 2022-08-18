@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { MysteryboxTemplateList } from "../template-list";
+import { MysteryboxBoxList } from "../mysterybox-list";
 import { useStyles } from "./styles";
 
 export const MysteryboxContract: FC = () => {
@@ -29,7 +29,7 @@ export const MysteryboxContract: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mysterybox-contract-list", "mysterybox-contract"]} data={[{}, {}, selected]} />
+      <Breadcrumbs path={["dashboard", "mysterybox-contracts", "mysterybox-contract"]} data={[{}, {}, selected]} />
 
       <PageHeader message="pages.mysterybox-contract.title" data={selected} />
 
@@ -56,7 +56,7 @@ export const MysteryboxContract: FC = () => {
         </Box>
       </Box>
 
-      <MysteryboxTemplateList embedded />
+      <MysteryboxBoxList embedded />
     </Fragment>
   );
 };

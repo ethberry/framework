@@ -291,7 +291,7 @@
         },
         "mysterybox": {
           "contracts": "Mysterybox Contracts",
-          "templates": "Mysterybox Templates",
+          "boxes": "Mysterybox Boxes",
           "title": "Mysterybox",
           "tokens": "Mysterybox Tokens"
         },
@@ -352,22 +352,22 @@
     "mysterybox-contract": {
       "title": "Mysterybox Contract: {title}"
     },
-    "mysterybox-contract-list": {
+    "mysterybox-contracts": {
       "title": "Mysterybox Contracts"
     },
-    "mysterybox-template": {
+    "mysterybox-box": {
       "price": "Price: {amount}",
-      "title": "Mysterybox Template: {title}"
+      "title": "Mysterybox Box: {title}"
     },
-    "mysterybox-template-list": {
-      "title": "Mysterybox Templates"
+    "mysterybox-boxes": {
+      "title": "Mysterybox Boxes"
     },
     "mysterybox-token": {
       "level": "Level: {grade}",
       "price": "Base price: {amount}",
       "title": "Mysterybox Token: {title}"
     },
-    "mysterybox-token-list": {
+    "mysterybox-tokens": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
