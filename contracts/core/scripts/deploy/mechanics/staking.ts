@@ -72,7 +72,6 @@ export async function deployStaking(contracts: Record<string, Contract>) {
     },
   ]);
 
-  // await contracts.contractManager.setFactories([stakingInstance.address], [contracts.contractManager.address]);
   await contracts.contractManager.addFactory(stakingInstance.address, MINTER_ROLE);
 
   contracts.staking = stakingInstance;

@@ -7,7 +7,9 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractMysteryboxAddress = process.env.ERC721_MYSTERYBOX_ADDR || wallet;
+    const erc721ContractMysteryboxSimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR || wallet;
+    const erc721ContractMysteryboxPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;
+    const erc721ContractMysteryboxBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
 
     // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
@@ -32,7 +34,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         updated_at
       ) VALUES (
         601,
-        '${erc721ContractMysteryboxAddress}',
+        '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERYBOX (weapon)',
         '${simpleFormatting}',
@@ -49,7 +51,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         '${currentDateTime}'
       ), (
         602,
-        '${erc721ContractMysteryboxAddress}',
+        '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERYBOX (inactive)',
         '${simpleFormatting}',
@@ -66,7 +68,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         '${currentDateTime}'
       ), (
         603,
-        '${erc721ContractMysteryboxAddress}',
+        '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERYBOX (new)',
         '${simpleFormatting}',
@@ -83,7 +85,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         '${currentDateTime}'
       ), (
         604,
-        '${erc721ContractMysteryboxAddress}',
+        '${erc721ContractMysteryboxPausableAddress}',
         '${chainId}',
         'MYSTERYBOX (hero)',
         '${simpleFormatting}',
@@ -100,7 +102,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         '${currentDateTime}'
       ), (
         605,
-        '${erc721ContractMysteryboxAddress}',
+        '${erc721ContractMysteryboxBlacklistAddress}',
         '${chainId}',
         'MYSTERYBOX (blacklist)',
         '${simpleFormatting}',
@@ -117,7 +119,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         '${currentDateTime}'
       ), (
         606,
-        '${erc721ContractMysteryboxAddress}',
+        '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERYBOX (mixed)',
         '${simpleFormatting}',

@@ -4,20 +4,56 @@ import { Contract } from "ethers";
 import { baseTokenURI, MINTER_ROLE } from "../../../test/constants";
 
 export async function deployMysterybox(contracts: Record<string, Contract>) {
-  const mysteryboxFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
-  const mysteryboxInstance = await mysteryboxFactory.deploy("Mysterybox", "LOOT", 100, baseTokenURI);
+  const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
+  const mysteryboxSimpleInstance = await mysteryboxSimpleFactory.deploy("Mysterybox", "MB721", 100, baseTokenURI);
 
-  await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-  await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-  await contracts.erc998Random.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-  await contracts.erc1155Simple.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+  await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxSimpleInstance.address);
+  await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxSimpleInstance.address);
+  await contracts.erc998Random.grantRole(MINTER_ROLE, mysteryboxSimpleInstance.address);
+  await contracts.erc1155Simple.grantRole(MINTER_ROLE, mysteryboxSimpleInstance.address);
 
-  await mysteryboxInstance.grantRole(MINTER_ROLE, contracts.staking.address);
-  await mysteryboxInstance.grantRole(MINTER_ROLE, contracts.exchange.address);
-  await mysteryboxInstance.grantRole(MINTER_ROLE, contracts.claimProxy.address);
+  await mysteryboxSimpleInstance.grantRole(MINTER_ROLE, contracts.staking.address);
+  await mysteryboxSimpleInstance.grantRole(MINTER_ROLE, contracts.exchange.address);
+  await mysteryboxSimpleInstance.grantRole(MINTER_ROLE, contracts.claimProxy.address);
 
-  // await contracts.contractManager.setFactories([mysteryboxInstance.address], [contracts.contractManager.address]);
-  await contracts.contractManager.addFactory(mysteryboxInstance.address, MINTER_ROLE);
+  await contracts.contractManager.addFactory(mysteryboxSimpleInstance.address, MINTER_ROLE);
 
-  contracts.erc721Mysterybox = mysteryboxInstance;
+  contracts.erc721MysteryboxSimple = mysteryboxSimpleInstance;
+
+  const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryboxPausable");
+  const mysteryboxPausableInstance = await mysteryboxPausableFactory.deploy("Mysterybox", "MB-P721", 100, baseTokenURI);
+
+  await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxPausableInstance.address);
+  await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxPausableInstance.address);
+  await contracts.erc998Random.grantRole(MINTER_ROLE, mysteryboxPausableInstance.address);
+  await contracts.erc1155Simple.grantRole(MINTER_ROLE, mysteryboxPausableInstance.address);
+
+  await mysteryboxPausableInstance.grantRole(MINTER_ROLE, contracts.staking.address);
+  await mysteryboxPausableInstance.grantRole(MINTER_ROLE, contracts.exchange.address);
+  await mysteryboxPausableInstance.grantRole(MINTER_ROLE, contracts.claimProxy.address);
+
+  await contracts.contractManager.addFactory(mysteryboxPausableInstance.address, MINTER_ROLE);
+
+  contracts.erc721MysteryboxPausable = mysteryboxPausableInstance;
+
+  const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryboxBlacklist");
+  const mysteryboxBlacklistInstance = await mysteryboxBlacklistFactory.deploy(
+    "Mysterybox",
+    "MB-BL721",
+    100,
+    baseTokenURI,
+  );
+
+  await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address);
+  await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address);
+  await contracts.erc998Random.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address);
+  await contracts.erc1155Simple.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address);
+
+  await mysteryboxBlacklistInstance.grantRole(MINTER_ROLE, contracts.staking.address);
+  await mysteryboxBlacklistInstance.grantRole(MINTER_ROLE, contracts.exchange.address);
+  await mysteryboxBlacklistInstance.grantRole(MINTER_ROLE, contracts.claimProxy.address);
+
+  await contracts.contractManager.addFactory(mysteryboxBlacklistInstance.address, MINTER_ROLE);
+
+  contracts.erc721MysteryboxBlacklist = mysteryboxBlacklistInstance;
 }
