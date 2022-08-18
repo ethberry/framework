@@ -7,7 +7,7 @@ import { ITemplate, ITemplateSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { Erc721TemplateItem } from "../../tokens/erc721/template-list/item";
+import { Erc721TemplateListItem } from "../../tokens/erc721/template-list/item";
 
 export const Erc998: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -32,7 +32,7 @@ export const Erc998: FC<ITabPanelProps> = props => {
         <Grid container spacing={2}>
           {rows.map(template => (
             <Grid item lg={4} sm={6} xs={12} key={template.id}>
-              <Erc721TemplateItem template={template} />
+              <Erc721TemplateListItem template={template} />
             </Grid>
           ))}
         </Grid>

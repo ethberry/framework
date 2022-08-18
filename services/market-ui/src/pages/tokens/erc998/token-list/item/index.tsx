@@ -9,11 +9,11 @@ import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
 
-interface ITokenProps {
+interface IErc998TokenListItemProps {
   token: IToken;
 }
 
-export const Erc998Token: FC<ITokenProps> = props => {
+export const Erc998TokenListItem: FC<IErc998TokenListItemProps> = props => {
   const { token } = props;
 
   const classes = useStyles(token);

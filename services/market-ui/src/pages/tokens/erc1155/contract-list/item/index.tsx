@@ -11,7 +11,7 @@ interface IErc1155TokenItemProps {
   contract: IContract;
 }
 
-export const Erc1155ContractItem: FC<IErc1155TokenItemProps> = props => {
+export const Erc1155ContractListItem: FC<IErc1155TokenItemProps> = props => {
   const { contract } = props;
 
   const classes = useStyles();

@@ -9,14 +9,14 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { ITemplate, ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Erc998TemplateItem } from "./item";
+import { Erc998TemplateListItem } from "./item";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 
-export interface ITemplateListProps {
+export interface IErc998TemplateListProps {
   embedded?: boolean;
 }
 
-export const Erc998TemplateList: FC<ITemplateListProps> = props => {
+export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
   const { embedded } = props;
 
   const { id } = useParams<{ id: string }>();
@@ -59,7 +59,7 @@ export const Erc998TemplateList: FC<ITemplateListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(template => (
             <Grid item lg={4} sm={6} xs={12} key={template.id}>
-              <Erc998TemplateItem template={template} />
+              <Erc998TemplateListItem template={template} />
             </Grid>
           ))}
         </Grid>

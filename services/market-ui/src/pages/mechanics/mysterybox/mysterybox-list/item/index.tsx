@@ -8,11 +8,11 @@ import { MysteryboxPurchaseButton } from "../../../../../components/buttons";
 import { formatPrice } from "../../../../../utils/money";
 import { useStyles } from "./styles";
 
-interface IMysteryboxItemProps {
+interface IMysteryboxListItemProps {
   mysterybox: IMysterybox;
 }
 
-export const MysteryboxItem: FC<IMysteryboxItemProps> = props => {
+export const MysteryboxListItem: FC<IMysteryboxListItemProps> = props => {
   const { mysterybox } = props;
 
   const classes = useStyles();

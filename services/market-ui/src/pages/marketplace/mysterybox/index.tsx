@@ -7,7 +7,7 @@ import { IMysterybox, IMysteryboxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { MysteryboxItem } from "../../mechanics/mysterybox/mysterybox-list/item";
+import { MysteryboxListItem } from "../../mechanics/mysterybox/mysterybox-list/item";
 
 export const Mysterybox: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -29,7 +29,7 @@ export const Mysterybox: FC<ITabPanelProps> = props => {
         <Grid container spacing={2}>
           {rows.map(mysterybox => (
             <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
-              <MysteryboxItem mysterybox={mysterybox} />
+              <MysteryboxListItem mysterybox={mysterybox} />
             </Grid>
           ))}
         </Grid>

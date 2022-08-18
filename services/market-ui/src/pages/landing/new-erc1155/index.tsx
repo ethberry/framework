@@ -8,10 +8,10 @@ import { IPaginationResult } from "@gemunion/types-collection";
 import { ITemplate, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { MultiCarousel } from "../multi-carousel";
-import { Erc998TemplateItem } from "../../tokens/erc998/template-list/item";
+import { MultiCarouselHierarchy } from "../multi-carousel-hierarchy";
+import { Erc1155TemplateListItem } from "../../tokens/erc1155/template-list/item";
 
-export const NewErc998: FC = () => {
+export const NewErc1155: FC = () => {
   const classes = useStyles();
 
   const [templates, setTemplates] = useState<Array<ITemplate>>([]);
@@ -21,14 +21,14 @@ export const NewErc998: FC = () => {
       return api.fetchJson({
         url: "/templates/new",
         data: {
-          contractType: TokenType.ERC998,
+          contractType: TokenType.ERC1155,
         },
       });
     },
     { success: false, error: false },
   );
 
-  const fetchTokens = async (): Promise<void> => {
+  const fetchTokens = async (): Promise<any> => {
     return fn()
       .then((json: IPaginationResult<ITemplate>) => {
         setTemplates(json.rows);
@@ -45,9 +45,9 @@ export const NewErc998: FC = () => {
   return (
     <ProgressOverlay isLoading={isLoading}>
       <Typography variant="h4" className={classes.title}>
-        <FormattedMessage id="pages.landing.erc998-new" />
+        <FormattedMessage id="pages.landing.erc1155-new" />
       </Typography>
-      <MultiCarousel template={templates} component={Erc998TemplateItem} />
+      <MultiCarouselHierarchy templates={templates} component={Erc1155TemplateListItem} />
     </ProgressOverlay>
   );
 };

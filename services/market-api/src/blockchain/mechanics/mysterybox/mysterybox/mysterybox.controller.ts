@@ -6,6 +6,7 @@ import { MysteryboxSearchDto } from "./dto";
 import { MysteryboxBoxService } from "./mysterybox.service";
 import { MysteryboxEntity } from "./mysterybox.entity";
 import { UserEntity } from "../../../../user/user.entity";
+import { TemplateNewDto } from "../../../hierarchy/template/dto/new";
 
 @Public()
 @Controller("/mysterybox-boxes")
@@ -24,6 +25,15 @@ export class MysteryboxBoxController {
   @Get("/autocomplete")
   public autocomplete(): Promise<Array<MysteryboxEntity>> {
     return this.mysteryboxBoxService.autocomplete();
+  }
+
+  @Get("/new")
+  @UseInterceptors(PaginationInterceptor)
+  public getNewTemplates(
+    @Query() dto: TemplateNewDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<MysteryboxEntity>, number]> {
+    return this.mysteryboxBoxService.search({ take: 10 }, userEntity);
   }
 
   @Get("/:id")

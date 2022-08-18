@@ -8,7 +8,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { IMysterybox, IMysteryboxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { MysteryboxItem } from "./item";
+import { MysteryboxListItem } from "./item";
 import { MysteryboxSearchForm } from "./form";
 
 export interface IMysteryboxListProps {
@@ -48,7 +48,7 @@ export const MysteryboxBoxList: FC<IMysteryboxListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(mysterybox => (
             <Grid item lg={4} sm={6} xs={12} key={mysterybox.id}>
-              <MysteryboxItem mysterybox={mysterybox} />
+              <MysteryboxListItem mysterybox={mysterybox} />
             </Grid>
           ))}
         </Grid>

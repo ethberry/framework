@@ -9,7 +9,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { ITemplate, ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Erc1155Template } from "./item";
+import { Erc1155TemplateListItem } from "./item";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 
 export interface IErc1155TokenListProps {
@@ -59,7 +59,7 @@ export const Erc1155TemplateList: FC<IErc1155TokenListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc1155Template template={token} />
+              <Erc1155TemplateListItem template={token} />
             </Grid>
           ))}
         </Grid>

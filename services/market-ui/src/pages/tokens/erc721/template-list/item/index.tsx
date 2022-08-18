@@ -8,11 +8,11 @@ import { useStyles } from "./styles";
 import { formatPrice } from "../../../../../utils/money";
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 
-interface IErc721TemplateItemProps {
+interface IErc721TemplateListItemProps {
   template: ITemplate;
 }
 
-export const Erc721TemplateItem: FC<IErc721TemplateItemProps> = props => {
+export const Erc721TemplateListItem: FC<IErc721TemplateListItemProps> = props => {
   const { template } = props;
 
   const classes = useStyles();

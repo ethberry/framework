@@ -8,8 +8,8 @@ import { ITemplate } from "@framework/types";
 import { useStyles } from "./styles";
 import { MultiCarouselButtonGroup } from "./button-group";
 
-declare interface IMultiCarouselProps {
-  template: Array<ITemplate>;
+declare interface IMultiCarouselHierarchyProps {
+  templates: Array<ITemplate>;
   component: FC<{ template: ITemplate }>;
 }
 
@@ -19,8 +19,8 @@ export enum IResolutions {
   MOBILE = "MOBILE",
 }
 
-export const MultiCarousel: FC<IMultiCarouselProps> = props => {
-  const { template, component } = props;
+export const MultiCarouselHierarchy: FC<IMultiCarouselHierarchyProps> = props => {
+  const { templates, component } = props;
 
   const classes = useStyles();
   const there = useTheme();
@@ -65,7 +65,7 @@ export const MultiCarousel: FC<IMultiCarouselProps> = props => {
       customButtonGroup={<MultiCarouselButtonGroup />}
       infinite
     >
-      {template.map(template => createElement(component, { key: template.id, template }))}
+      {templates.map(template => createElement(component, { key: template.id, template }))}
     </Carousel>
   );
 };

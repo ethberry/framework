@@ -7,11 +7,11 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
 
-interface ITokenItemProps {
+interface IErc998ContractListItemProps {
   contract: IContract;
 }
 
-export const ContractItem: FC<ITokenItemProps> = props => {
+export const Erc998ContractListItem: FC<IErc998ContractListItemProps> = props => {
   const { contract } = props;
 
   const classes = useStyles();

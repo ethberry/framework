@@ -6,7 +6,7 @@ import { IContract } from "@framework/types";
 import { ISearchDto } from "@gemunion/types-collection";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { ContractItem } from "./item";
+import { Erc998ContractListItem } from "./item";
 
 export const Erc998ContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
@@ -23,7 +23,7 @@ export const Erc998ContractList: FC = () => {
         <Grid container spacing={2}>
           {rows.map(contract => (
             <Grid item lg={4} sm={6} xs={12} key={contract.id}>
-              <ContractItem contract={contract} />
+              <Erc998ContractListItem contract={contract} />
             </Grid>
           ))}
         </Grid>

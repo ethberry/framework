@@ -7,7 +7,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { IToken, ITokenSearchDto, ModuleType, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Erc721Token } from "./item";
+import { Erc721TokenListItem } from "./item";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 
 export interface IErc721TokenListProps {
@@ -54,7 +54,7 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc721Token token={token} />
+              <Erc721TokenListItem token={token} />
             </Grid>
           ))}
         </Grid>

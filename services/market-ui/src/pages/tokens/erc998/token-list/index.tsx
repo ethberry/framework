@@ -7,14 +7,14 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { IToken, ITokenSearchDto, ModuleType, TokenAttributes, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { Erc998Token } from "./item";
+import { Erc998TokenListItem } from "./item";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 
-export interface ITokenListProps {
+export interface IErc998TokenListProps {
   embedded?: boolean;
 }
 
-export const Erc998TokenList: FC<ITokenListProps> = props => {
+export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
@@ -54,7 +54,7 @@ export const Erc998TokenList: FC<ITokenListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <Erc998Token token={token} />
+              <Erc998TokenListItem token={token} />
             </Grid>
           ))}
         </Grid>

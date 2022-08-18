@@ -7,7 +7,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { MysteryboxToken } from "./item";
+import { MysteryboxTokenListItem } from "./item";
 import { TokenSearchForm } from "./form";
 
 export interface IMysteryboxTokenListProps {
@@ -51,7 +51,7 @@ export const MysteryboxTokenList: FC<IMysteryboxTokenListProps> = props => {
         <Grid container spacing={2}>
           {rows.map(token => (
             <Grid item lg={4} sm={6} xs={12} key={token.id}>
-              <MysteryboxToken token={token} />
+              <MysteryboxTokenListItem token={token} />
             </Grid>
           ))}
         </Grid>

@@ -8,7 +8,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
-import { Erc1155Template } from "../../tokens/erc1155/template-list/item";
+import { Erc1155TemplateListItem } from "../../tokens/erc1155/template-list/item";
 
 export const Erc1155: FC<ITabPanelProps> = props => {
   const { value } = props;
@@ -41,7 +41,7 @@ export const Erc1155: FC<ITabPanelProps> = props => {
         <Grid container spacing={2}>
           {rows.map(template => (
             <Grid item lg={4} sm={6} xs={12} key={template.id}>
-              <Erc1155Template template={template} />
+              <Erc1155TemplateListItem template={template} />
             </Grid>
           ))}
         </Grid>

@@ -9,11 +9,11 @@ import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../../../components/buttons";
 import { formatEther } from "../../../../../utils/money";
 
-interface IErc1155TokenProps {
+interface IErc1155TokenListItemProps {
   token: IToken;
 }
 
-export const Erc1155Token: FC<IErc1155TokenProps> = props => {
+export const Erc1155TokenListItem: FC<IErc1155TokenListItemProps> = props => {
   const { token } = props;
 
   const classes = useStyles();

@@ -9,11 +9,11 @@ import { useStyles } from "./styles";
 import { formatPrice } from "../../../../../utils/money";
 import { TemplatePurchaseButton } from "../../../../../components/buttons";
 
-interface IErc1155TemplateItemProps {
+interface IErc1155TemplateListItemProps {
   template: ITemplate;
 }
 
-export const Erc1155Template: FC<IErc1155TemplateItemProps> = props => {
+export const Erc1155TemplateListItem: FC<IErc1155TemplateListItemProps> = props => {
   const { template } = props;
 
   const classes = useStyles();
