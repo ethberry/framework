@@ -291,8 +291,8 @@
           "title": "Lottery"
         },
         "mysterybox": {
-          "contracts": "Mysterybox Contracts",
           "boxes": "Mysterybox Boxes",
+          "contracts": "Mysterybox Contracts",
           "title": "Mysterybox",
           "tokens": "Mysterybox Tokens"
         },
@@ -315,27 +315,34 @@
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
     },
-    "erc1155-contract-list": {
+    "erc1155-contracts": {
       "title": "ERC1155 Contracts"
+    },
+    "erc1155-template": {
+      "price": "Price: {amount}",
+      "title": "ERC721 Template: {title}"
+    },
+    "erc1155-templates": {
+      "title": "ERC1155 Templates"
     },
     "erc1155-token": {
       "price": "Base price: {amount}",
       "title": "ERC1155 Token: {title}"
     },
-    "erc1155-token-list": {
+    "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
     "erc721-contract": {
       "title": "ERC721 Contract: {title}"
     },
-    "erc721-contract-list": {
+    "erc721-contracts": {
       "title": "ERC721 Contracts"
     },
     "erc721-template": {
       "price": "Price: {amount}",
       "title": "ERC721 Template: {title}"
     },
-    "erc721-template-list": {
+    "erc721-templates": {
       "title": "ERC721 Templates"
     },
     "erc721-token": {
@@ -343,49 +350,24 @@
       "price": "Base price: {amount}",
       "title": "ERC721 Token: {title}"
     },
-    "erc721-token-list": {
+    "erc721-tokens": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
       },
       "title": "ERC721 Tokens"
     },
-    "mysterybox-contract": {
-      "title": "Mysterybox Contract: {title}"
-    },
-    "mysterybox-contracts": {
-      "title": "Mysterybox Contracts"
-    },
-    "mysterybox-box": {
-      "price": "Price: {amount}",
-      "title": "Mysterybox Box: {title}"
-    },
-    "mysterybox-boxes": {
-      "title": "Mysterybox Boxes"
-    },
-    "mysterybox-token": {
-      "level": "Level: {grade}",
-      "price": "Base price: {amount}",
-      "title": "Mysterybox Token: {title}"
-    },
-    "mysterybox-tokens": {
-      "sort": {
-        "createdAt": "Date",
-        "price": "Price"
-      },
-      "title": "Mysterybox Tokens"
-    },
     "erc998-contract": {
       "title": "ERC998 Contract: {title}"
     },
-    "erc998-contract-list": {
+    "erc998-contracts": {
       "title": "ERC998 Contracts"
     },
     "erc998-template": {
       "price": "Price: {amount}",
       "title": "ERC998 Template: {title}"
     },
-    "erc998-template-list": {
+    "erc998-templates": {
       "title": "ERC998 Templates"
     },
     "erc998-token": {
@@ -393,7 +375,7 @@
       "price": "Base price: {amount}",
       "title": "ERC998 Token: {title}"
     },
-    "erc998-token-list": {
+    "erc998-tokens": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
@@ -422,8 +404,8 @@
         "title": "Leaderboard"
       },
       "purchase": {
-        "title": "Buy a ticket",
-        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players."
+        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
+        "title": "Buy a ticket"
       },
       "tickets": {
         "title": "My tickets"
@@ -456,6 +438,31 @@
       "attach": "Attach",
       "detach": "Detach",
       "title": "My wallet"
+    },
+    "mysterybox-box": {
+      "price": "Price: {amount}",
+      "title": "Mysterybox Box: {title}"
+    },
+    "mysterybox-boxes": {
+      "title": "Mysterybox Boxes"
+    },
+    "mysterybox-contract": {
+      "title": "Mysterybox Contract: {title}"
+    },
+    "mysterybox-contracts": {
+      "title": "Mysterybox Contracts"
+    },
+    "mysterybox-token": {
+      "level": "Level: {grade}",
+      "price": "Base price: {amount}",
+      "title": "Mysterybox Token: {title}"
+    },
+    "mysterybox-tokens": {
+      "sort": {
+        "createdAt": "Date",
+        "price": "Price"
+      },
+      "title": "Mysterybox Tokens"
     },
     "page": {
       "title": "{title}"

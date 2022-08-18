@@ -31,9 +31,9 @@ export const Erc721TokenList: FC<IErc721TokenListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-token-list"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "erc721-tokens"]} isHidden={embedded} />
 
-      <PageHeader message="pages.erc721-token-list.title">
+      <PageHeader message="pages.erc721-tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
