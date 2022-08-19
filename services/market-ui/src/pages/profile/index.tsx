@@ -8,12 +8,10 @@ import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { EnabledLanguages } from "@framework/constants";
+import { EnabledLanguages, availableChains } from "@framework/constants";
 import { IUser } from "@framework/types";
 
 import { validationSchema } from "./validation";
-
-const availableChains = [1, 56, 1337];
 
 export const Profile: FC = () => {
   const user = useUser<IUser>();
