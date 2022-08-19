@@ -22,12 +22,6 @@ export enum MetadataHash {
 
 export enum ModuleType {
   CORE = "CORE",
-  EXTERNAL = "EXTERNAL",
-  VESTING = "VESTING",
-  STAKING = "STAKING",
-  CLAIM = "CLAIM",
   MYSTERYBOX = "MYSTERYBOX",
   LOTTERY = "LOTTERY",
-  MARKETPLACE = "MARKETPLACE",
-  CRAFT = "CRAFT",
 }

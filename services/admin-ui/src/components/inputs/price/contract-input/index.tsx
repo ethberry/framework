@@ -2,15 +2,16 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, NativeContractFeatures, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, NativeContractFeatures, TokenType } from "@framework/types";
 
 export interface IContractInputProps {
   prefix: string;
   name?: string;
+  disabledOptions?: Array<ModuleType>;
 }
 
 export const ContractInput: FC<IContractInputProps> = props => {
-  const { prefix, name = "contractId" } = props;
+  const { prefix, name = "contractId", disabledOptions = [] } = props;
 
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
   const form = useFormContext<any>();
@@ -55,6 +56,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
           data={{
             contractStatus: [ContractStatus.ACTIVE],
             contractType: [TokenType.ERC721],
+            contractModule: Object.values(ModuleType).filter(moduleType => !disabledOptions.includes(moduleType)),
           }}
           onChange={handleChange}
         />

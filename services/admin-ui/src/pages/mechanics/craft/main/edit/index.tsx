@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 
-import { CraftStatus, ICraft, TokenType } from "@framework/types";
+import { CraftStatus, ICraft, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../../components/inputs/price";
@@ -36,7 +36,11 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
       {...rest}
     >
       {id ? <SelectInput name="craftStatus" options={CraftStatus} disabledOptions={[CraftStatus.NEW]} /> : null}
-      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
+      <PriceInput
+        prefix="item"
+        disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]}
+        disabledModuleTypes={[ModuleType.MYSTERYBOX, ModuleType.LOTTERY]}
+      />
       {/* all toke types are available */}
       <PriceInput prefix="price" multiple />
     </FormDialog>

@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
-import { IAssetComponent, TokenType } from "@framework/types";
+import { IAssetComponent, ModuleType, TokenType } from "@framework/types";
 
 import { emptyItem, emptyPrice } from "./empty-price";
 import { TokenTypeInput } from "./token-type-input";
@@ -16,10 +16,11 @@ export interface IPriceEditDialogProps {
   prefix: string;
   multiple?: boolean;
   disabledTokenTypes?: Array<TokenType>;
+  disabledModuleTypes?: Array<ModuleType>;
 }
 
 export const PriceInput: FC<IPriceEditDialogProps> = props => {
-  const { prefix = "price", multiple = false, disabledTokenTypes } = props;
+  const { prefix = "price", multiple = false, disabledTokenTypes, disabledModuleTypes } = props;
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
@@ -69,7 +70,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
           <Box flex={1}>
             <Paper sx={{ p: 2 }}>
               <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledTokenTypes} />
-              <ContractInput prefix={`${nestedPrefix}[${i}]`} />
+              <ContractInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledModuleTypes} />
               <TemplateInput prefix={`${nestedPrefix}[${i}]`} />
               <AmountInput prefix={`${nestedPrefix}[${i}]`} />
             </Paper>
