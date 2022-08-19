@@ -59,7 +59,6 @@ export class Erc721TokenServiceEth {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
       const templateEntity = await this.templateService.findOne({ id: templateId });
-
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
       }
@@ -70,8 +69,7 @@ export class Erc721TokenServiceEth {
         royalty: contractEntity.royalty,
         templateId: templateEntity.id,
       });
-
-      await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
+      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
     }
 
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());

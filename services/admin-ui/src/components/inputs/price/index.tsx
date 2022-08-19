@@ -15,12 +15,13 @@ import { AmountInput } from "./amount-input";
 export interface IPriceEditDialogProps {
   prefix: string;
   multiple?: boolean;
+  readOnly?: boolean;
   disabledTokenTypes?: Array<TokenType>;
   disabledModuleTypes?: Array<ModuleType>;
 }
 
 export const PriceInput: FC<IPriceEditDialogProps> = props => {
-  const { prefix = "price", multiple = false, disabledTokenTypes, disabledModuleTypes } = props;
+  const { prefix = "price", multiple = false, disabledTokenTypes, disabledModuleTypes, readOnly } = props;
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
@@ -69,10 +70,18 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
         >
           <Box flex={1}>
             <Paper sx={{ p: 2 }}>
-              <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledTokenTypes} />
-              <ContractInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledModuleTypes} />
-              <TemplateInput prefix={`${nestedPrefix}[${i}]`} />
-              <AmountInput prefix={`${nestedPrefix}[${i}]`} />
+              <TokenTypeInput
+                prefix={`${nestedPrefix}[${i}]`}
+                disabledOptions={disabledTokenTypes}
+                readOnly={readOnly}
+              />
+              <ContractInput
+                prefix={`${nestedPrefix}[${i}]`}
+                disabledOptions={disabledModuleTypes}
+                readOnly={readOnly}
+              />
+              <TemplateInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
+              <AmountInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
             </Paper>
           </Box>
 

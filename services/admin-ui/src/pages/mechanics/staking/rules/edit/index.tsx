@@ -13,15 +13,16 @@ import { PriceInput } from "../../../../../components/inputs/price";
 
 export interface IStakingEditDialogProps {
   open: boolean;
+  readOnly?: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IStakingRule>, form: any) => Promise<void>;
   initialValues: IStakingRule;
 }
 
 export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
-  const { initialValues, ...rest } = props;
+  const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, recurrent, deposit, reward, duration, stakingStatus } = initialValues;
+  const { id, title, description, penalty, recurrent, deposit, reward, duration } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,7 +32,6 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     penalty,
     recurrent,
     duration,
-    stakingStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -46,13 +46,12 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      {id ? <TextInput name="stakingStatus" readOnly={true} /> : null}
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <PriceInput prefix="deposit" />
+          <PriceInput prefix="deposit" readOnly={readOnly} />
         </Grid>
         <Grid item xs={6}>
-          <PriceInput prefix="reward" />
+          <PriceInput prefix="reward" readOnly={readOnly} />
         </Grid>
       </Grid>
       <NumberInput
@@ -64,6 +63,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
             </InputAdornment>
           ),
         }}
+        readOnly={readOnly}
       />
       <CurrencyInput
         name="penalty"
@@ -71,8 +71,9 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
         InputProps={{
           endAdornment: <InputAdornment position="start">%</InputAdornment>,
         }}
+        readOnly={readOnly}
       />
-      <CheckboxInput name="recurrent" />
+      <CheckboxInput name="recurrent" readOnly={readOnly} />
     </FormDialog>
   );
 };

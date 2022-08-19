@@ -125,8 +125,11 @@ export class TokenService {
 
     queryBuilder.select(["token.id", "token.tokenId"]);
 
+    queryBuilder.leftJoin("token.balance", "balance");
+    queryBuilder.addSelect(["balance.account"]);
+
     if (account) {
-      queryBuilder.andWhere("token.account = :account", { account });
+      queryBuilder.andWhere("balance.account = :account", { account });
     }
 
     queryBuilder.leftJoin("token.template", "template");

@@ -5,6 +5,7 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IToken } from "@framework/types";
 
 export const TokenInput: FC = () => {
+  const account: string = useWatch({ name: "account" });
   const contractId: number = useWatch({ name: "contractId" });
   const templateId: number = useWatch({ name: "templateId" });
 
@@ -20,10 +21,11 @@ export const TokenInput: FC = () => {
       name="tokenId"
       controller="tokens"
       data={{
+        account,
         contractIds: [contractId],
-        templateIds: [templateId],
+        templateIds: templateId ? [templateId] : [],
       }}
-      getTitle={(token: IToken) => token.template!.title}
+      getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
       onChange={handleChange}
     />
   );

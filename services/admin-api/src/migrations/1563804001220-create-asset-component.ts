@@ -24,6 +24,7 @@ export class CreateAssetComponent1563804001220 implements MigrationInterface {
         {
           name: "template_id",
           type: "int",
+          isNullable: true,
         },
         {
           name: "amount",

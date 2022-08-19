@@ -7,11 +7,12 @@ import { ContractStatus, ModuleType, NativeContractFeatures, TokenType } from "@
 export interface IContractInputProps {
   prefix: string;
   name?: string;
+  readOnly?: boolean;
   disabledOptions?: Array<ModuleType>;
 }
 
 export const ContractInput: FC<IContractInputProps> = props => {
-  const { prefix, name = "contractId", disabledOptions = [] } = props;
+  const { prefix, name = "contractId", disabledOptions = [], readOnly } = props;
 
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
   const form = useFormContext<any>();
@@ -34,6 +35,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
             contractType: [TokenType.NATIVE],
           }}
           onChange={handleChange}
+          readOnly={readOnly}
         />
       );
     case TokenType.ERC20:
@@ -46,6 +48,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
             contractType: [TokenType.ERC20],
           }}
           onChange={handleChange}
+          readOnly={readOnly}
         />
       );
     case TokenType.ERC721:
@@ -59,6 +62,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
             contractModule: Object.values(ModuleType).filter(moduleType => !disabledOptions.includes(moduleType)),
           }}
           onChange={handleChange}
+          readOnly={readOnly}
         />
       );
     case TokenType.ERC998:
@@ -71,6 +75,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
             contractType: [TokenType.ERC998],
           }}
           onChange={handleChange}
+          readOnly={readOnly}
         />
       );
     case TokenType.ERC1155:
@@ -83,6 +88,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
             contractType: [TokenType.ERC1155],
           }}
           onChange={handleChange}
+          readOnly={readOnly}
         />
       );
     default:

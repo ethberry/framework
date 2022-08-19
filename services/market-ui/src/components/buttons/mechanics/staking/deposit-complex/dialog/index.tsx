@@ -10,6 +10,7 @@ export interface IStakingDepositDto {
   templateId: number;
   contractId: number;
   blockchainId: string;
+  account: string;
 }
 
 export interface IStakingDepositDialogProps {

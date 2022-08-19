@@ -28,7 +28,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       deposit: rule.deposit?.components.map(component => ({
         tokenType: Object.keys(TokenType).indexOf(component.tokenType),
         token: component.contract!.address,
-        tokenId: component.templateId,
+        tokenId: component.templateId || 0,
         amount: component.amount,
       }))[0],
       reward: rule.reward?.components.map(component => ({

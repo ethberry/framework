@@ -32,7 +32,7 @@ export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
   @IsInt({ each: true, message: "typeMismatch" })
-  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Min(0, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public templateIds: Array<number>;
 }
