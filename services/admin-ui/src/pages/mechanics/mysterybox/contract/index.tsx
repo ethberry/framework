@@ -45,9 +45,9 @@ export const MysteryboxContract: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
+    handleDeleteConfirm,
     handleSearch,
     handleChangePage,
-    handleDeleteConfirm,
   } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/mysterybox-contracts",
     empty: {

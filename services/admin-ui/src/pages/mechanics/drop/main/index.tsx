@@ -9,12 +9,13 @@ import {
   ListItemText,
   Pagination,
 } from "@mui/material";
-import { Add, Create } from "@mui/icons-material";
+import { Add, Create, Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
 
 import { IPaginationDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { IDrop } from "@framework/types";
 
@@ -31,10 +32,14 @@ export const Drop: FC = () => {
     selected,
     isLoading,
     isEditDialogOpen,
+    isDeleteDialogOpen,
     handleCreate,
     handleEdit,
     handleEditCancel,
     handleEditConfirm,
+    handleDelete,
+    handleDeleteCancel,
+    handleDeleteConfirm,
     handleChangePage,
   } = useCollection<IDrop, IPaginationDto>({
     baseUrl: "/drops",
@@ -71,6 +76,9 @@ export const Drop: FC = () => {
                 <IconButton onClick={handleEdit(drop)}>
                   <Create />
                 </IconButton>
+                <IconButton onClick={handleDelete(drop)}>
+                  <Delete />
+                </IconButton>
               </ListItemSecondaryAction>
             </ListItem>
           ))}
@@ -83,6 +91,13 @@ export const Drop: FC = () => {
         page={search.skip / search.take + 1}
         count={Math.ceil(count / search.take)}
         onChange={handleChangePage}
+      />
+
+      <DeleteDialog
+        onCancel={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        open={isDeleteDialogOpen}
+        initialValues={{ ...selected, title: selected.item?.components[0]?.template?.title }}
       />
 
       <DropEditDialog

@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { IPaginationDto } from "@gemunion/types-collection";
 
 import { DropEntity } from "./drop.entity";
 import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
 import { AssetService } from "../asset/asset.service";
+import { PageEntity } from "../../../page/page.entity";
 
 @Injectable()
 export class DropService {
@@ -95,5 +96,9 @@ export class DropService {
         },
       },
     });
+  }
+
+  public delete(where: FindOptionsWhere<PageEntity>): Promise<DeleteResult> {
+    return this.dropEntityRepository.delete(where);
   }
 }
