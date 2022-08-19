@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository, DeepPartial } from "typeorm";
 
 import { LotteryRoundEntity } from "./round.entity";
 
@@ -16,5 +16,9 @@ export class LotteryRoundService {
     options?: FindOneOptions<LotteryRoundEntity>,
   ): Promise<LotteryRoundEntity | null> {
     return this.roundEntityRepository.findOne({ where, ...options });
+  }
+
+  public async create(dto: DeepPartial<LotteryRoundEntity>): Promise<LotteryRoundEntity> {
+    return this.roundEntityRepository.create(dto).save();
   }
 }

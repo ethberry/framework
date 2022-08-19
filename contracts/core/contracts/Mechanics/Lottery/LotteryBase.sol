@@ -31,9 +31,9 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   uint8 internal comm = 30; // commission 30%
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
-  event Purchase(address account, uint256 round, bool[36] numbers);
+  event Purchase(address account, uint256 price, uint256 round, bool[36] numbers);
   event Released(uint256 round, uint256 amount);
-  event Prize(address addr, uint256 ticketId, uint256 amount);
+  event Prize(address account, uint256 ticketId, uint256 amount);
 
   constructor(
     string memory name,
@@ -187,7 +187,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     currentRound.balance += price;
     currentRound.total += price;
 
-    emit Purchase(account, roundNumber, numbers);
+    emit Purchase(account, price, roundNumber, numbers);
 
     SafeERC20.safeTransferFrom(IERC20(_acceptedToken), _msgSender(), address(this), price);
     IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);

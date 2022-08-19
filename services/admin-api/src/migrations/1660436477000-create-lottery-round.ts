@@ -16,6 +16,7 @@ export class CreateLotteryRoundAt1660436477000 implements MigrationInterface {
           name: "numbers",
           type: "boolean",
           isArray: true,
+          isNullable: true,
         },
         {
           name: "start_timestamp",
@@ -24,6 +25,7 @@ export class CreateLotteryRoundAt1660436477000 implements MigrationInterface {
         {
           name: "end_timestamp",
           type: "timestamptz",
+          isNullable: true,
         },
         {
           name: "created_at",
