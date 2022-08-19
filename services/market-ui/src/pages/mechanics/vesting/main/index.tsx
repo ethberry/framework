@@ -19,7 +19,7 @@ export const Vesting: FC = () => {
   const { isActive, account } = useWeb3React();
   const { formatMessage } = useIntl();
   const { enqueueSnackbar } = useSnackbar();
-  const { openConnectWalletDialog } = useWallet();
+  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -54,6 +54,14 @@ export const Vesting: FC = () => {
   const handleOpenConnectWalletDialog = () => {
     void openConnectWalletDialog();
   };
+
+  useEffect(() => {
+    if (!isActive) {
+      void openConnectWalletDialog();
+    } else {
+      void closeConnectWalletDialog();
+    }
+  }, [isActive]);
 
   useEffect(() => {
     void fetchVesting();
