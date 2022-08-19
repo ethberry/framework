@@ -32,6 +32,11 @@
     "view": "View"
   },
   "enums": {
+    "chainId": {
+      "1": "ETHEREUM",
+      "1337": "BESU",
+      "56": "BINANCE"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
@@ -124,6 +129,7 @@
       "address": "Address",
       "amount": "Amount",
       "breakLastPeriod": "Break last period",
+      "chainId": "Chain",
       "collectionId": "Collection",
       "confirm": "Confirm",
       "contractId": "Contract",

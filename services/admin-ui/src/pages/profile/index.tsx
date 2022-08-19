@@ -13,6 +13,8 @@ import { IUser } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
+const availableChains = [1, 56, 1337];
+
 export const Profile: FC = () => {
   const user = useUser<IUser>();
   const { enqueueSnackbar } = useSnackbar();
@@ -31,8 +33,8 @@ export const Profile: FC = () => {
     await fn(form, values);
   };
 
-  const { email, displayName, language, imageUrl } = user.profile;
-  const fixedValues = { email, displayName, language, imageUrl };
+  const { email, displayName, language, imageUrl, chainId } = user.profile;
+  const fixedValues = { email, displayName, language, imageUrl, chainId };
 
   return (
     <Grid>
@@ -50,6 +52,10 @@ export const Profile: FC = () => {
         <TextInput name="displayName" />
         <SelectInput name="language" options={EnabledLanguages} />
         <AvatarInput name="imageUrl" />
+        <SelectInput
+          name="chainId"
+          options={availableChains.reduce((memo, current) => Object.assign(memo, { [current]: current }), {})}
+        />
       </FormWrapper>
     </Grid>
   );

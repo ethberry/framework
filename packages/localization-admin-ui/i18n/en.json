@@ -46,6 +46,11 @@
     "whitelist": "Add to whitelist"
   },
   "enums": {
+    "chainId": {
+      "1": "ETHEREUM",
+      "1337": "BESU",
+      "56": "BINANCE"
+    },
     "claimStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
@@ -163,8 +168,6 @@
       "percent": "%"
     },
     "buttons": {
-      "pause": "Pause",
-      "unpause": "Unpause",
       "accept": "Accept",
       "add": "Add",
       "blacklist": "Blacklist",
@@ -187,6 +190,7 @@
       "mint": "Mint",
       "mintToken": "Mint Tokens",
       "ok": "Ok",
+      "pause": "Pause",
       "reject": "Reject",
       "renounceRole": "Renounce Role",
       "revokeRole": "Revoke Role",
@@ -199,6 +203,7 @@
       "startRound": "Start round",
       "submit": "Submit",
       "unblacklist": "Un blacklist",
+      "unpause": "Unpause",
       "upload": "Upload"
     },
     "hints": {
@@ -213,6 +218,7 @@
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "cap": "Cap",
+      "chainId": "Chain",
       "child": "Child",
       "childId": "Child",
       "childIds": "Child",
