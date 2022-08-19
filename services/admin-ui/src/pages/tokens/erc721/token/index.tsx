@@ -47,6 +47,7 @@ export const Erc721Token: FC = () => {
         [TokenAttributes.RARITY]: [],
       },
       contractIds: [],
+      templateIds: [],
       tokenId: "",
     },
   });

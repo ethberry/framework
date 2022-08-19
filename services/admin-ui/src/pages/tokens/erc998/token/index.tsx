@@ -47,6 +47,7 @@ export const Erc998Token: FC = () => {
         [TokenAttributes.RARITY]: [],
       },
       contractIds: [],
+      templateIds: [],
       tokenId: "",
     },
   });

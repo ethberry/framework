@@ -67,11 +67,11 @@ export class TokenService {
 
     if (templateIds) {
       if (templateIds.length === 1) {
-        queryBuilder.andWhere("template.templateId = :templateId", {
+        queryBuilder.andWhere("token.templateId = :templateId", {
           templateId: templateIds[0],
         });
       } else {
-        queryBuilder.andWhere("template.templateId IN(:...templateIds)", { templateIds });
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
       }
     }
 
