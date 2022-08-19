@@ -6,7 +6,7 @@ import { constants, utils } from "ethers";
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
-import { IClaimItemCreateDto } from "./interfaces";
+import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 import { AssetService } from "../asset/asset.service";
 
@@ -98,7 +98,7 @@ export class ClaimService {
     return this.update({ id: claimEntity.id }, dto);
   }
 
-  public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemCreateDto): Promise<ClaimEntity> {
+  public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemUpdateDto): Promise<ClaimEntity> {
     const { account, item, endTimestamp } = dto;
 
     let claimEntity = await this.findOneWithRelations(where);

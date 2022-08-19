@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
@@ -6,7 +6,7 @@ import { constants, utils } from "ethers";
 import { ClaimStatus, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
-import { IClaimItemCreateDto } from "./interfaces";
+import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 import { AssetService } from "../asset/asset.service";
 
@@ -28,8 +28,22 @@ export class ClaimService {
     return this.claimEntityRepository.findOne({ where, ...options });
   }
 
+  public findOneWithRelations(where: FindOptionsWhere<ClaimEntity>): Promise<ClaimEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "claim",
+        leftJoinAndSelect: {
+          item: "claim.item",
+          item_components: "item.components",
+          item_template: "item_components.template",
+          item_contract: "item_components.contract",
+        },
+      },
+    });
+  }
+
   public async create(dto: IClaimItemCreateDto): Promise<ClaimEntity> {
-    const { account } = dto;
+    const { account, endTimestamp } = dto;
 
     // TODO disallow NATIVE and ERC20
 
@@ -43,24 +57,17 @@ export class ClaimService {
         item: assetEntity,
         signature: "0x",
         nonce: "",
+        endTimestamp,
       })
       .save();
 
     return this.update({ id: claimEntity.id }, dto);
   }
 
-  public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemCreateDto): Promise<ClaimEntity> {
-    const { account, item } = dto;
+  public async update(where: FindOptionsWhere<ClaimEntity>, dto: IClaimItemUpdateDto): Promise<ClaimEntity> {
+    const { account, item, endTimestamp } = dto;
 
-    let claimEntity = await this.findOne(where, {
-      join: {
-        alias: "claim",
-        leftJoinAndSelect: {
-          item: "claim.item",
-          item_components: "item.components",
-        },
-      },
-    });
+    let claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
@@ -68,29 +75,19 @@ export class ClaimService {
 
     // Update only NEW Claims
     if (claimEntity.claimStatus !== ClaimStatus.NEW) {
-      throw new NotFoundException("claimRedeemed");
+      throw new BadRequestException("claimRedeemed");
     }
 
     await this.assetService.update(claimEntity.item, item);
 
-    claimEntity = await this.findOne(where, {
-      join: {
-        alias: "claim",
-        leftJoinAndSelect: {
-          item: "claim.item",
-          item_components: "item.components",
-          item_template: "item_components.template",
-          item_contract: "item_components.contract",
-        },
-      },
-    });
+    claimEntity = await this.findOneWithRelations(where);
 
     if (!claimEntity) {
       throw new NotFoundException("claimNotFound");
     }
 
     const nonce = utils.randomBytes(32);
-    const expiresAt = 0;
+    const expiresAt = Math.ceil(new Date(endTimestamp).getTime() / 1000);
     const signature = await this.getSignature(
       account,
       {
@@ -103,8 +100,7 @@ export class ClaimService {
       claimEntity,
     );
 
-    Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, expiresAt });
-
+    Object.assign(claimEntity, { nonce: utils.hexlify(nonce), signature, account, endTimestamp });
     return claimEntity.save();
   }
 
