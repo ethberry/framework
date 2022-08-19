@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ERC1155Simple, ERC20Simple, ERC721Mysterybox, ERC721Simple, Exchange } from "../../../typechain-types";
@@ -82,7 +83,7 @@ describe("ExchangeMysterybox", function () {
           price: [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -108,7 +109,7 @@ describe("ExchangeMysterybox", function () {
           [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -126,10 +127,10 @@ describe("ExchangeMysterybox", function () {
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721SimpleInstance.address, tokenId, 1]],
-          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(mysteryboxInstance, "Transfer")
-          .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+          .withArgs(constants.AddressZero, this.receiver.address, tokenId);
       });
     });
 
@@ -155,7 +156,7 @@ describe("ExchangeMysterybox", function () {
           price: [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -181,7 +182,7 @@ describe("ExchangeMysterybox", function () {
           [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -199,10 +200,10 @@ describe("ExchangeMysterybox", function () {
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721SimpleInstance.address, tokenId, 1]],
-          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(mysteryboxInstance, "Transfer")
-          .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+          .withArgs(constants.AddressZero, this.receiver.address, tokenId);
       });
     });
   });

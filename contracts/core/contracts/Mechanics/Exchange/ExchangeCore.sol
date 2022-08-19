@@ -8,6 +8,7 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
@@ -32,5 +33,9 @@ abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessContr
     acquire(toArray(item), account);
 
     emit Purchase(account, params.externalId, item, price);
+
+    _afterPurchase(params);
   }
+
+  function _afterPurchase(Params memory params) internal virtual;
 }

@@ -8,7 +8,6 @@ import { ContractManagerService } from "./contract-manager.service";
 @Module({
   imports: [ConfigModule, TypeOrmModule.forFeature([ContractManagerEntity])],
   providers: [Logger, ContractManagerService],
-  controllers: [],
   exports: [ContractManagerService],
 })
 export class ContractManagerModule {}

@@ -32,26 +32,26 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         asset_id
       ) VALUES (
         'NATIVE',
-        1,
-        12001, -- ETH
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         50101
       ), (
         'ERC20',
-        2,
-        12002, -- space credit
+        201,
+        201001, -- space credit
         '${constants.WeiPerEther.toString()}',
         50102
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
         50201
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
         50202
       );
@@ -69,28 +69,28 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         'FLAT',
         0,
         50101,
-        15,
+        305,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
         0,
         50102,
-        16,
+        306,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'LINEAR',
         1,
         50201,
-        25,
+        405,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
         1,
         50202,
-        26, -- hero
+        406, -- hero
         '${currentDateTime}',
         '${currentDateTime}'
       );

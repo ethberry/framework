@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
@@ -27,7 +27,7 @@ export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = 
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleRevokeRole}>
         <ListItemIcon>
           <NoAccounts fontSize="small" />
@@ -42,6 +42,6 @@ export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = 
         open={isRevokeRoleDialogOpen}
         data={{ address }}
       />
-    </>
+    </Fragment>
   );
 };

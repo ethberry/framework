@@ -12,11 +12,11 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        23101
+        2306001
       ), (
-        23102
+        2306002
       ), (
-        23103
+        2306003
       );
     `);
 
@@ -31,22 +31,22 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        15,
-        13601, -- sword
+        306,
+        306001, -- sword
         '1',
-        23101
+        2306001
       ), (
         'ERC721',
-        15,
-        13602, -- mace
+        306,
+        306002, -- mace
         '1',
-        23102
+        2306002
       ), (
         'ERC721',
-        15,
-        13603, -- axe
+        306,
+        306003, -- axe
         '1',
-        23103
+        2306003
       );
     `);
 
@@ -62,7 +62,7 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        23101,
+        2306001,
         'NEW',
         '0x189f5940e334cd4037a2b00e4f381fd457465065bc917a095d64e402a429cd020df8be7631ef6306a34c1931e206a2972ba206f651fc2d550d6f059a073ac5ea1b',
         '0xd145bd1283e38b8c089f17fbd60487b2cb5e73f8bd0a357b1d72dee44c421f9e',
@@ -71,7 +71,7 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         '${wallet}',
-        23102,
+        2306002,
         'NEW',
         '0x53aead30f3b57f52c6ea7d23a71f47d3d03811dae35a71fdcee396b70ba8169b073a7c566c978c327db9ded895edd761173708e9ab1e567554b1acdadf11a7df1b',
         '0xc4784e41b015c3476ab061982cd1ac4407b2123b50a5b6dd5b2ce09c81468fed',
@@ -80,7 +80,7 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         '${wallet}',
-        23103,
+        2306003,
         'UNPACKED',
         '0xa5eb1c7f0edf69c9bdc89ef28773ecbeb44f0960d7c2d2b13741faee14f6f96931f5cc38d539de4ea48f55c78f4decc39f8d30df0ab21fc4100153c46010747b1c',
         '0x151aa8477d5770833002170e74834ce285adc242b33ffde12ad87d2a500cf369',

@@ -17,19 +17,25 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
       ) VALUES (
         '${wallet}',
         1,
-        14101,
+        406001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14102,
+        406002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        14103,
+        406003,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        411001,
         '${currentDateTime}',
         '${currentDateTime}'
       );

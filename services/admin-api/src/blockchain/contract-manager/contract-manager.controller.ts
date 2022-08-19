@@ -15,6 +15,7 @@ import {
   Erc20ContractDeployDto,
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
+  MysteryboxContractDeployDto,
   VestingDeployDto,
 } from "./dto";
 
@@ -71,9 +72,15 @@ export class ContractManagerController {
     return this.contractManagerSignService.erc1155Token(dto);
   }
 
+  // MODULE:MYSTERYBOX
+  @Post("/mysterybox")
+  public mysterybox(@Body() dto: MysteryboxContractDeployDto): Promise<IServerSignature> {
+    return this.contractManagerSignService.mysterybox(dto);
+  }
+
   // MODULE:VESTING
   @Post("/vesting")
-  public vsting(@Body() dto: VestingDeployDto): Promise<IServerSignature> {
+  public vesting(@Body() dto: VestingDeployDto): Promise<IServerSignature> {
     return this.contractManagerSignService.vesting(dto);
   }
 }

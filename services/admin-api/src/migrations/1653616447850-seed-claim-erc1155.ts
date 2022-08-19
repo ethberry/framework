@@ -12,9 +12,9 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        25101
+        2501001
       ), (
-        25102
+        2501002
       );
     `);
 
@@ -29,16 +29,16 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
-        25101
+        2501001
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
-        25102
+        2501002
       );
     `);
 
@@ -54,7 +54,7 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        25101,
+        2501001,
         'NEW',
         '0xb841fe2c754de1cf18c963271470d4d8f613ec99aed88a3280b428815d04db0c3dc5d37ba055c926c894d29b2ce15956aeb1e52d7dbefbf43924e5109e04f0dd1c',
         '0xd16e43eff7128fb019e3cbf3aeee8a926ee8a09f2317957fe9fbdafc1ec88f28',
@@ -63,7 +63,7 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         '${wallet}',
-        25101,
+        2501002,
         'REDEEMED', -- it is actually not redeemed
         '0xc1e8ab3604dd9d086054e1cf1a2a7c5a70a5ee3b8ea5234ad245a7be2e371a274830e84e23ae11271e2cfdf0b5b386f0be29a2ed08ade88a650587826fb706511b',
         '0x90b773d416db1a96768036eaa9fd5712e4f21eef2bbdc93f6c508a00db513e96',

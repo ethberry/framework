@@ -26,6 +26,7 @@
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
+    "deposit": "Deposit",
     "edit": "Edit",
     "view": "View"
   },
@@ -88,6 +89,7 @@
       "back": "Back",
       "buy": "Buy now!",
       "cancel": "Cancel",
+      "copy": "Copy",
       "craft": "Craft",
       "create": "Create",
       "delete": "Delete",
@@ -109,7 +111,8 @@
       "signup": "Sign up",
       "submit": "Submit",
       "upgrade": "Upgrade",
-      "upload": "Upload"
+      "upload": "Upload",
+      "withdraw": "Withdraw"
     },
     "hints": {
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
@@ -135,13 +138,17 @@
       "externalId": "External ID",
       "imageUrl": "Avatar",
       "language": "Language",
+      "level": "Level",
       "maxPrice": "Max. price",
       "minPrice": "Min. price",
+      "numbers": "Numbers",
       "password": "Password",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
+      "referrer": "Referrer",
       "reward": "Reward",
       "roles": "Roles",
+      "roundId": "Round",
       "sort": "Sort by",
       "stakeStatus": "Status",
       "stakingStatus": "Status",
@@ -223,54 +230,82 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "erc1155": {
-        "contracts": "ERC1155 Contracts",
-        "templates": "ERC1155 Templates",
-        "title": "ERC1155",
-        "tokens": "ERC1155 Tokens"
+      "hierarchy": {
+        "erc1155": {
+          "contracts": "ERC1155 Contracts",
+          "templates": "ERC1155 Templates",
+          "title": "ERC1155",
+          "tokens": "ERC1155 Tokens"
+        },
+        "erc721": {
+          "contracts": "ERC721 Contracts",
+          "templates": "ERC721 Templates",
+          "title": "ERC721",
+          "tokens": "ERC721 Tokens"
+        },
+        "erc998": {
+          "contracts": "ERC998 Contracts",
+          "templates": "ERC998 Templates",
+          "title": "ERC998",
+          "tokens": "ERC998 Tokens"
+        }
       },
-      "erc721": {
-        "contracts": "ERC721 Contracts",
-        "templates": "ERC721 Templates",
-        "title": "ERC721",
-        "tokens": "ERC721 Tokens"
-      },
-      "erc998": {
-        "contracts": "ERC998 Contracts",
-        "templates": "ERC998 Templates",
-        "title": "ERC998",
-        "tokens": "ERC998 Tokens"
+      "integrations": {
+        "marketplace": {
+          "main": "Primary marketplace",
+          "title": "Marketplace"
+        },
+        "pages": {
+          "about-us": "About us",
+          "faq": "FAQ",
+          "title": "Pages"
+        },
+        "personal": {
+          "title": "My stash",
+          "wallet": "My wallet"
+        },
+        "referral": {
+          "leaderboard": "Leaderboard",
+          "link": "Cabinet",
+          "reward": "Rewards history",
+          "title": "Referral program"
+        }
       },
       "mechanics": {
-        "claim": "Claim",
-        "craft": "Craft",
-        "drop": "Drop",
-        "mysteryboxes": "Mysteryboxes",
-        "title": "Mechanics",
-        "vesting": "Vesting"
-      },
-      "pages": {
-        "about-us": "About us",
-        "faq": "FAQ",
-        "title": "Pages"
-      },
-      "personal": {
-        "assets": "My assets",
-        "auctions": "My auctions",
-        "title": "My stash",
-        "wallet": "My wallet"
-      },
-      "sections": {
-        "auctions": "Secondary marketplace",
-        "craft": "Craft",
-        "marketplace": "Primary marketplace",
-        "title": "Sections"
-      },
-      "staking": {
-        "leaderboard": "Leaderboard",
-        "rules": "Rules",
-        "stakes": "My stakes",
-        "title": "Staking"
+        "claim": {
+          "main": "Claim",
+          "title": "Claim"
+        },
+        "craft": {
+          "main": "Craft",
+          "title": "Craft"
+        },
+        "drop": {
+          "main": "Drop",
+          "title": "Drop"
+        },
+        "lottery": {
+          "leaderboard": "Leaderboard",
+          "purchase": "Buy a ticket",
+          "tickets": "My tickets",
+          "title": "Lottery"
+        },
+        "mysterybox": {
+          "boxes": "Mysterybox Boxes",
+          "contracts": "Mysterybox Contracts",
+          "title": "Mysterybox",
+          "tokens": "Mysterybox Tokens"
+        },
+        "staking": {
+          "leaderboard": "Leaderboard",
+          "rules": "Rules",
+          "stakes": "My stakes",
+          "title": "Staking"
+        },
+        "vesting": {
+          "main": "Vesting",
+          "title": "Vesting"
+        }
       },
       "title": "Dashboard"
     },
@@ -280,27 +315,34 @@
     "erc1155-contract": {
       "title": "ERC1155 Contract: {title}"
     },
-    "erc1155-contract-list": {
+    "erc1155-contracts": {
       "title": "ERC1155 Contracts"
+    },
+    "erc1155-template": {
+      "price": "Price: {amount}",
+      "title": "ERC721 Template: {title}"
+    },
+    "erc1155-templates": {
+      "title": "ERC1155 Templates"
     },
     "erc1155-token": {
       "price": "Base price: {amount}",
       "title": "ERC1155 Token: {title}"
     },
-    "erc1155-token-list": {
+    "erc1155-tokens": {
       "title": "ERC1155 Tokens"
     },
     "erc721-contract": {
       "title": "ERC721 Contract: {title}"
     },
-    "erc721-contract-list": {
+    "erc721-contracts": {
       "title": "ERC721 Contracts"
     },
     "erc721-template": {
       "price": "Price: {amount}",
       "title": "ERC721 Template: {title}"
     },
-    "erc721-template-list": {
+    "erc721-templates": {
       "title": "ERC721 Templates"
     },
     "erc721-token": {
@@ -308,7 +350,7 @@
       "price": "Base price: {amount}",
       "title": "ERC721 Token: {title}"
     },
-    "erc721-token-list": {
+    "erc721-tokens": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
@@ -318,14 +360,14 @@
     "erc998-contract": {
       "title": "ERC998 Contract: {title}"
     },
-    "erc998-contract-list": {
+    "erc998-contracts": {
       "title": "ERC998 Contracts"
     },
     "erc998-template": {
       "price": "Price: {amount}",
       "title": "ERC998 Template: {title}"
     },
-    "erc998-template-list": {
+    "erc998-templates": {
       "title": "ERC998 Templates"
     },
     "erc998-token": {
@@ -333,7 +375,7 @@
       "price": "Base price: {amount}",
       "title": "ERC998 Token: {title}"
     },
-    "erc998-token-list": {
+    "erc998-tokens": {
       "sort": {
         "createdAt": "Date",
         "price": "Price"
@@ -351,14 +393,25 @@
       "erc1155-new": "New 1155 Templates",
       "erc721-new": "New 721 Templates",
       "erc998-new": "New 998 Templates",
+      "mysterybox-new": "New Mysteryboxes",
       "popular": "Popular items"
     },
-    "mysterybox": {
-      "price": "Price: {amount}",
-      "title": "Mysterybox: {title}"
-    },
-    "mysterybox-list": {
-      "title": "Mysteryboxes"
+    "lottery": {
+      "leaderboard": {
+        "account": "Account",
+        "amount": "Amount",
+        "count": "Count",
+        "id": "ID",
+        "title": "Leaderboard"
+      },
+      "purchase": {
+        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
+        "title": "Buy a ticket"
+      },
+      "tickets": {
+        "title": "My tickets"
+      },
+      "title": "Lottery"
     },
     "marketplace": {
       "erc1155": {
@@ -387,11 +440,51 @@
       "detach": "Detach",
       "title": "My wallet"
     },
+    "mysterybox-box": {
+      "price": "Price: {amount}",
+      "title": "Mysterybox Box: {title}"
+    },
+    "mysterybox-boxes": {
+      "title": "Mysterybox Boxes"
+    },
+    "mysterybox-contract": {
+      "title": "Mysterybox Contract: {title}"
+    },
+    "mysterybox-contracts": {
+      "title": "Mysterybox Contracts"
+    },
+    "mysterybox-token": {
+      "level": "Level: {grade}",
+      "price": "Base price: {amount}",
+      "title": "Mysterybox Token: {title}"
+    },
+    "mysterybox-tokens": {
+      "sort": {
+        "createdAt": "Date",
+        "price": "Price"
+      },
+      "title": "Mysterybox Tokens"
+    },
     "page": {
       "title": "{title}"
     },
     "profile": {
       "title": "Profile"
+    },
+    "referral": {
+      "leaderboard": {
+        "account": "Account",
+        "amount": "Amount",
+        "id": "ID",
+        "title": "Leaderboard"
+      },
+      "link": {
+        "title": "Your referral link"
+      },
+      "reward": {
+        "title": "Referral rewards"
+      },
+      "title": "Referral program"
     },
     "staking": {
       "deposit": "Deposit",
@@ -401,6 +494,7 @@
         "score": "Score",
         "title": "Leaderboard"
       },
+      "reward": "Reward",
       "rules": {
         "deposit": "Deposit",
         "title": "Staking rules"
@@ -420,11 +514,14 @@
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "error": "Unknown Error",
+    "featureIsNotSupported": "Feature is not supported",
+    "gradeNotFound": "Grade not found",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "success": "Success",
+    "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",

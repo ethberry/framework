@@ -18,8 +18,9 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { StakesSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
+import { StakingRewardButton } from "../../../../components/buttons/mechanics/staking/reward";
 
-export const Stakes: FC = () => {
+export const StakingStakes: FC = () => {
   const {
     rows,
     count,
@@ -44,7 +45,7 @@ export const Stakes: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking.stakes"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.stakes"]} />
 
       <PageHeader message="pages.staking.stakes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -60,6 +61,7 @@ export const Stakes: FC = () => {
             <ListItem key={i}>
               <ListItemText>{stake.stakingRule?.title}</ListItemText>
               <ListItemSecondaryAction>
+                <StakingRewardButton stake={stake} />
                 <IconButton onClick={handleView(stake)}>
                   <Visibility />
                 </IconButton>

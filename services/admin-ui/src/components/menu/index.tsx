@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from "react";
+import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
@@ -10,7 +10,7 @@ import { ContractRenounceRoleMenuItem } from "./renounce-role";
 import { BlacklistAddMenuItem } from "./blacklist-add";
 import { UnBlacklistMenuItem } from "./blacklist-remove";
 import { MintMenuItem } from "./mint";
-import { Erc20ContractTemplate, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 export enum ContractActions {
   MINT = "MINT",
@@ -41,7 +41,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
   };
 
   return (
-    <>
+    <Fragment>
       <IconButton
         aria-label="more"
         id="contract-menu-button"
@@ -55,11 +55,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         <MoreVert />
       </IconButton>
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-        {!(
-          contract.contractType === TokenType.ERC20 &&
-          (contract.contractTemplate === Erc20ContractTemplate.NATIVE ||
-            contract.contractTemplate === Erc20ContractTemplate.EXTERNAL)
-        ) ? (
+        {contract.contractType !== TokenType.NATIVE ? (
           <MintMenuItem address={contract.address} contractId={contract.id} tokenType={contract.contractType} />
         ) : null}
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem address={contract.address} /> : null}
@@ -72,6 +68,6 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
         {actions.includes(ContractActions.BLACKLIST_ADD) ? <BlacklistAddMenuItem address={contract.address} /> : null}
         {actions.includes(ContractActions.BLACKLIST_REMOVE) ? <UnBlacklistMenuItem address={contract.address} /> : null}
       </Menu>
-    </>
+    </Fragment>
   );
 };

@@ -10,10 +10,10 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
 
-import "./ERC721Upgradeable.sol";
+import "./ERC721Simple.sol";
 import "./interfaces/IERC721Random.sol";
 
-contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeable {
+contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Simple {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -28,41 +28,40 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeabl
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721Upgradeable(name, symbol, royalty, baseTokenURI) {}
+  ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address to, uint256 templateId)
     public
-    override(IERC721Simple, ERC721Upgradeable)
+    override(ERC721Simple)
     onlyRole(MINTER_ROLE)
   {
-    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId != 0, "ERC721: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, 1);
 
     _safeMint(to, tokenId);
   }
 
   function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId != 0, "ERC721: wrong type");
     _queue[getRandomNumber()] = Request(to, templateId);
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
     upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
-    safeMint(request.account);
+    _safeMint(request.account, tokenId);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {

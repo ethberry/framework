@@ -10,9 +10,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../ERC721Upgradeable.sol";
 import "../interfaces/IERC721Random.sol";
-import "../../MOCKS/ChainLink/ERC721ChainLinkHardhat.sol";
+import "../../MOCKS/ChainLink/ChainLinkHardhat.sol";
 
-contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upgradeable {
+contract ERC721RandomHardhat is IERC721Random, ChainLinkHardhat, ERC721Upgradeable {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -31,7 +31,7 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
 
   function mintCommon(address to, uint256 templateId)
     public
-    override(IERC721Simple, ERC721Upgradeable)
+    override(ERC721Upgradeable)
     onlyRole(MINTER_ROLE)
   {
     require(templateId != 0, "ERC721RandomHardhat: wrong type");
@@ -47,12 +47,13 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
   }
 
   function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
+    require(templateId != 0, "ERC721: wrong type");
     _queue[getRandomNumber()] = Request(to, templateId);
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
@@ -61,7 +62,7 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
     upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
-    safeMint(request.account);
+    _safeMint(request.account, tokenId);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {
@@ -82,9 +83,5 @@ contract ERC721RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC721Upg
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
-  }
-
-  function getInterface() public pure returns (bytes4) {
-    return type(IERC721Random).interfaceId;
   }
 }

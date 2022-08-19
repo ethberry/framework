@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { PaidOutlined } from "@mui/icons-material";
@@ -40,7 +40,7 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleRoyalty}>
         <ListItemIcon>
           <PaidOutlined fontSize="small" />
@@ -55,6 +55,6 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
         open={isRoyaltyDialogOpen}
         initialValues={{ royalty }}
       />
-    </>
+    </Fragment>
   );
 };

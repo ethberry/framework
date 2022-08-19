@@ -27,20 +27,20 @@ export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface
         asset_id
       ) VALUES (
         'ERC721',
-        16,
-        13601, -- sword
+        306,
+        306001, -- sword
         1,
         40201
       ), (
         'ERC1155',
-        31,
-        15102, -- wood
+        501,
+        501002, -- wood
         10,
         40202
       ), (
         'ERC1155',
-        31,
-        15103, -- iron
+        501,
+        501003, -- iron
         10,
         40202
       );

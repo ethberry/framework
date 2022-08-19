@@ -5,6 +5,9 @@ export const emptyPrice = {
     {
       tokenType: TokenType.NATIVE,
       contractId: 0,
+      contract: {
+        decimals: 18,
+      },
       templateId: 0,
       amount: "0",
     } as IAssetComponent,
@@ -16,6 +19,9 @@ export const emptyItem = {
     {
       tokenType: TokenType.ERC721,
       contractId: 3,
+      contract: {
+        decimals: 0,
+      },
       templateId: 0,
       amount: "0",
     } as IAssetComponent,

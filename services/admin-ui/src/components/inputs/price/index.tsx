@@ -6,7 +6,7 @@ import { Add, Delete } from "@mui/icons-material";
 
 import { IAssetComponent, TokenType } from "@framework/types";
 
-import { emptyPrice, emptyItem } from "./empty-price";
+import { emptyItem, emptyPrice } from "./empty-price";
 import { TokenTypeInput } from "./token-type-input";
 import { ContractInput } from "./contract-input";
 import { TemplateInput } from "./template-input";
@@ -23,13 +23,14 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
+  const ancestorPrefix = prefix.split(".").pop() as string;
   const nestedPrefix = `${prefix}.components`;
 
   const values = get(useWatch(), nestedPrefix);
 
   const handleOptionAdd = (): (() => void) => (): void => {
     const newValue = get(form.getValues(), nestedPrefix);
-    newValue.push((prefix === "price" ? emptyPrice : emptyItem).components[0]);
+    newValue.push((ancestorPrefix === "price" ? emptyPrice : emptyItem).components[0]);
     form.setValue(nestedPrefix, newValue);
   };
 
@@ -53,7 +54,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
   return (
     <Box mt={2}>
       <Typography>
-        <FormattedMessage id={`form.labels.${prefix}`} />
+        <FormattedMessage id={`form.labels.${ancestorPrefix}`} />
       </Typography>
 
       {values?.map((o: IAssetComponent, i: number) => (

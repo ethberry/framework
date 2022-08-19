@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class SeedComposition1658980520010 implements MigrationInterface {
+export class SeedCompositionAt1658980520010 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 
@@ -14,8 +14,14 @@ export class SeedComposition1658980520010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        26, -- hero
-        16, -- item
+        406, -- hero
+        306, -- weapon
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        406, -- hero
+        305, -- armour
         5,
         '${currentDateTime}',
         '${currentDateTime}'

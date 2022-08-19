@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, Erc721ContractTemplate, Erc998ContractTemplate, TokenType } from "@framework/types";
+import { ContractStatus, Erc721ContractFeatures, Erc998ContractFeatures, TokenType } from "@framework/types";
 
 export interface IContractInputProps {
   name: string;
@@ -10,7 +10,8 @@ export interface IContractInputProps {
   data?: {
     contractType?: Array<TokenType>;
     contractStatus?: Array<ContractStatus>;
-    contractTemplate?: Array<Erc721ContractTemplate | Erc998ContractTemplate>;
+    contractFeatures?: Array<Erc721ContractFeatures | Erc998ContractFeatures>;
+    excludeFeatures?: Array<Erc721ContractFeatures | Erc998ContractFeatures>;
   };
 }
 

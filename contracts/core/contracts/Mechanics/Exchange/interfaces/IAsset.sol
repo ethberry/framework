@@ -30,4 +30,5 @@ struct Params {
   bytes32 nonce;
   uint256 externalId;
   uint256 expiresAt;
+  address referrer;
 }

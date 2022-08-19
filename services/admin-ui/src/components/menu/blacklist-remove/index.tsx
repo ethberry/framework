@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOff } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -27,7 +27,7 @@ export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleUnBlacklist}>
         <ListItemIcon>
           <DoNotDisturbOff fontSize="small" />
@@ -42,6 +42,6 @@ export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
         open={isUnBlacklistDialogOpen}
         data={{ address }}
       />
-    </>
+    </Fragment>
   );
 };

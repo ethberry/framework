@@ -1,30 +1,27 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { BigNumber, Contract, utils } from "ethers";
+import { BigNumber, constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { ContractTemplate, GradeStrategy, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
+import { ContractFeatures, GradeStrategy, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
 import { IServerSignature } from "@gemunion/types-collection";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
-const getMultiplier = (level: number, amount: string, grade: IGrade) => {
-  switch (grade.gradeStrategy) {
-    case GradeStrategy.FLAT:
-      return BigNumber.from(amount);
-    case GradeStrategy.LINEAR:
-      return BigNumber.from(amount).mul(level);
-    case GradeStrategy.EXPONENTIAL:
-      // eslint-disable-next-line no-case-declarations
-      const exp = (1 + grade.growthRate / 100) ** level;
-      // eslint-disable-next-line no-case-declarations
-      const [whole = "", decimals = ""] = exp.toString().split(".");
-      return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
-    default:
-      throw new Error("unknownStrategy");
+const getMultiplier = (level: number, amount: string, { gradeStrategy, growthRate }: IGrade) => {
+  if (gradeStrategy === GradeStrategy.FLAT) {
+    return BigNumber.from(amount);
+  } else if (gradeStrategy === GradeStrategy.LINEAR) {
+    return BigNumber.from(amount).mul(level);
+  } else if (gradeStrategy === GradeStrategy.EXPONENTIAL) {
+    const exp = (1 + growthRate / 100) ** level;
+    const [whole = "", decimals = ""] = exp.toString().split(".");
+    return BigNumber.from(amount).mul(`${whole}${decimals}`).div(BigNumber.from(10).pow(decimals.length));
+  } else {
+    throw new Error("unknownStrategy");
   }
 };
 
@@ -46,7 +43,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
 
   const api = useApi();
 
-  const { contractTemplate } = token.template!.contract!;
+  const { contractFeatures } = token.template!.contract!;
 
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
@@ -71,6 +68,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
               nonce: utils.arrayify(sign.nonce),
               externalId: grade.id,
               expiresAt: sign.expiresAt,
+              referrer: constants.AddressZero,
             },
             {
               tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
@@ -106,7 +104,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
     await metaFn();
   };
 
-  if (!(contractTemplate === ContractTemplate.UPGRADEABLE || contractTemplate === ContractTemplate.RANDOM)) {
+  if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
     return null;
   }
 

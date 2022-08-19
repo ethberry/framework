@@ -45,9 +45,9 @@ export class FirebaseWsStrategy extends PassportStrategy(Strategy, "firebase-ws"
       throw new WsException("userNotFound");
     }
 
-    if (data.email && !data.email_verified) {
-      throw new WsException("emailIsNotVerified");
-    }
+    // if (data.email && !data.email_verified) {
+    //   throw new WsException("emailIsNotVerified");
+    // }
 
     return userEntity;
   }

@@ -21,6 +21,7 @@ import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@fram
 
 import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
+import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
 
@@ -55,6 +56,11 @@ export const Staking: FC = () => {
       penalty: 100,
       recurrent: false,
     },
+    filter: ({ deposit, reward, ...rest }) => ({
+      ...rest,
+      deposit: cleanUpAsset(deposit),
+      reward: cleanUpAsset(reward),
+    }),
     search: {
       query: "",
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
@@ -67,9 +73,10 @@ export const Staking: FC = () => {
     },
   });
 
+  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking.rules"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

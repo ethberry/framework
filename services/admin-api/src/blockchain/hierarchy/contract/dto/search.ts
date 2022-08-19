@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { ContractStatus, ContractTemplate, IContractSearchDto } from "@framework/types";
+import { ContractFeatures, ContractStatus, IContractSearchDto } from "@framework/types";
 
 export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @ApiPropertyOptional({
@@ -19,14 +19,12 @@ export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   public contractStatus: Array<ContractStatus>;
 
   @ApiPropertyOptional({
-    enum: ContractTemplate,
+    enum: ContractFeatures,
     isArray: true,
-    // https://github.com/OAI/OpenAPI-Specification/issues/1706
-    // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<ContractTemplate>)
-  @IsEnum(ContractTemplate, { each: true, message: "badInput" })
-  public contractTemplate: Array<ContractTemplate>;
+  @Transform(({ value }) => value as Array<ContractFeatures>)
+  @IsEnum(ContractFeatures, { each: true, message: "badInput" })
+  public contractFeatures: Array<ContractFeatures>;
 }

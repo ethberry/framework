@@ -4,6 +4,7 @@ import { IContractHistory } from "../contract-history";
 
 import { ITemplate } from "./template";
 import { ModuleType, TokenType } from "../common";
+import { IComposition } from "./composition";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -11,45 +12,49 @@ export enum ContractStatus {
   NEW = "NEW",
 }
 
-export enum Erc20ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBCS
-  "BLACKLIST" = "BLACKLIST", // ACBCS + BLACKLIST
-  "EXTERNAL" = "EXTERNAL", // any 3rd party token
-  "NATIVE" = "NATIVE", // ETH
+export enum NativeContractFeatures {
+  "NATIVE" = "NATIVE",
 }
 
-export enum Erc721ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBER
-  "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
-  "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
-  "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
+export enum Erc20ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "EXTERNAL" = "EXTERNAL",
+}
+
+export enum Erc721ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "UPGRADEABLE" = "UPGRADEABLE",
+  "RANDOM" = "RANDOM",
+  "SOULBOUND" = "SOULBOUND",
   // MODULE:MYSTERYBOX
-  "MYSTERYBOX" = "MYSTERYBOX", // ACBER + METADATA + Unpack
+  "MYSTERYBOX" = "MYSTERYBOX",
 }
 
-export enum Erc998ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBER
-  "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
-  "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
-  "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
+export enum Erc998ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "UPGRADEABLE" = "UPGRADEABLE",
+  "RANDOM" = "RANDOM",
 }
 
-export enum Erc1155ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBS
-  "BLACKLIST" = "BLACKLIST", // ACBS + BLACKLIST
+export enum Erc1155ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+}
+
+export enum MysteryboxContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "PAUSABLE" = "PAUSABLE",
 }
 
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
-export enum ContractTemplate {
-  "UNKNOWN" = "UNKNOWN",
-  "SIMPLE" = "SIMPLE",
-  "BLACKLIST" = "BLACKLIST",
-  "EXTERNAL" = "EXTERNAL",
+export enum ContractFeatures {
   "NATIVE" = "NATIVE",
+  "EXTERNAL" = "EXTERNAL",
+  "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
+  "SOULBOUND" = "SOULBOUND",
   // MODULE:MYSTERYBOX
-  "MYSTERYBOX" = "MYSTERYBOX", // ACBER + METADATA + Unpack
+  "PAUSABLE" = "PAUSABLE",
 }
 
 export interface IContract extends IDeployable, ISearchable {
@@ -61,8 +66,9 @@ export interface IContract extends IDeployable, ISearchable {
   baseTokenURI: string;
   contractStatus: ContractStatus;
   contractType: TokenType;
-  contractTemplate: ContractTemplate;
+  contractFeatures: Array<ContractFeatures>;
   contractModule: ModuleType;
   templates: Array<ITemplate>;
   history?: Array<IContractHistory>;
+  children?: Array<IComposition>;
 }

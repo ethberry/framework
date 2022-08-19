@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { TemplateEntity } from "./template.entity";
 import { TemplateService } from "./template.service";
 import { TemplateController } from "./template.controller";
-import { AssetModule } from "../../../mechanics/asset/asset.module";
+import { AssetModule } from "../../mechanics/asset/asset.module";
 
 @Module({
   imports: [forwardRef(() => AssetModule), TypeOrmModule.forFeature([TemplateEntity])],

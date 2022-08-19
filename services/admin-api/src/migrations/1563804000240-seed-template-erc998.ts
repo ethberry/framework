@@ -11,15 +11,17 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        14101
+        1406001
       ), (
-        14102
+        1406002
       ), (
-        14103
+        1406003
+      ), (
+        1411001
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 14103, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 411001, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -35,45 +37,57 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        14101,
+        406001,
         'Warrior',
         '${simpleFormatting}',
         '${imageUrl}',
-        14101,
+        1406001,
         0,
         1,
         'ACTIVE',
-        26,
+        406,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        14102,
+        406002,
         'Rouge',
         '${simpleFormatting}',
         '${imageUrl}',
-        14102,
+        1406002,
         0,
         1,
         'ACTIVE',
-        26,
+        406,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        14103,
+        406003,
         'Mage',
         '${simpleFormatting}',
         '${imageUrl}',
-        14103,
+        1406003,
         0,
         1,
         'ACTIVE',
-        26,
+        406,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        411001,
+        'BEP',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        1411001,
+        0,
+        1,
+        'ACTIVE',
+        411,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 14103, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 411003, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

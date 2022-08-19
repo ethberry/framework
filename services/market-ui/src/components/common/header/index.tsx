@@ -8,7 +8,7 @@ import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 
 import { Sections } from "./sections";
-
+import { Referrer } from "./referrer";
 import { useStyles } from "./styles";
 
 export const Header: FC = () => {
@@ -20,6 +20,7 @@ export const Header: FC = () => {
           <Hidden smDown>{companyName} - Marketplace</Hidden>
         </Link>
         <div className={classes.grow} />
+        <Referrer />
         <Wallet />
         <Theme />
         <Localization languages={Object.values(EnabledLanguages)} />

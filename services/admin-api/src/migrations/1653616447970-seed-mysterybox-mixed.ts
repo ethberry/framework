@@ -13,8 +13,6 @@ export class SeedMysteryboxMixedAt1653616447970 implements MigrationInterface {
         id
       ) VALUES (
         36101
-      ), (
-        36111
       );
     `);
 
@@ -29,34 +27,28 @@ export class SeedMysteryboxMixedAt1653616447970 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC20',
-        2,
-        12002, -- space credit
+        201,
+        201001, -- space credit
         '${constants.WeiPerEther.toString()}',
         36101
       ), (
         'ERC721',
-        16,
-        13601, -- sword
+        306,
+        306001, -- sword
         '1',
         36101
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         '1',
         36101
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
         36101
-      ), (
-        'ERC20',
-        2,
-        12002, -- space credit
-        '${constants.WeiPerEther.toString()}',
-        36111
       );
     `);
 
@@ -66,7 +58,6 @@ export class SeedMysteryboxMixedAt1653616447970 implements MigrationInterface {
         description,
         image_url,
         item_id,
-        price_id,
         template_id,
         mysterybox_status,
         created_at,
@@ -76,8 +67,7 @@ export class SeedMysteryboxMixedAt1653616447970 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         36101,
-        36111,
-        16105,
+        606001,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

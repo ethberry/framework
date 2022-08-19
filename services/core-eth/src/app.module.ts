@@ -1,6 +1,7 @@
 import { APP_FILTER } from "@nestjs/core";
 import { Logger, Module, OnApplicationShutdown } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ScheduleModule } from "@nestjs/schedule";
 import { WinstonModule } from "nest-winston";
 
 import { HttpExceptionFilter } from "@gemunion/nest-js-utils";
@@ -12,13 +13,8 @@ import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import ormconfig from "./ormconfig";
 import { HealthModule } from "./health/health.module";
 import { AppController } from "./app.controller";
-import { Erc20Module } from "./erc20/erc20.module";
-import { Erc721Module } from "./erc721/erc721.module";
-import { Erc998Module } from "./erc998/erc998.module";
-import { Erc1155Module } from "./erc1155/erc1155.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { NotificatorModule } from "./notificator/notificator.module";
-import { MechanicsModule } from "./mechanics/mechanics.module";
 
 @Module({
   providers: [
@@ -44,13 +40,9 @@ import { MechanicsModule } from "./mechanics/mechanics.module";
         return configService.get<string>("GEMUNION_API_KEY", "");
       },
     }),
+    ScheduleModule.forRoot(),
     RequestLoggerModule,
     HealthModule,
-    Erc20Module,
-    Erc721Module,
-    Erc998Module,
-    Erc1155Module,
-    MechanicsModule,
     BlockchainModule,
     NotificatorModule,
   ],

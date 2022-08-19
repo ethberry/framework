@@ -27,11 +27,11 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_template,
+        contract_features,
         created_at,
         updated_at
       ) VALUES (
-        31,
+        501,
         '${erc1155ContractSimpleAddress}',
         '${chainId}',
         'RESOURCES (simple)',
@@ -43,11 +43,11 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC1155',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        32,
+        502,
         '${erc1155ContractInactiveAddress}',
         '${chainId}',
         'ERC1155 (inactive)',
@@ -59,11 +59,11 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC1155',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        33,
+        503,
         '${erc1155ContractNewAddress}',
         '${chainId}',
         'ERC1155 (new)',
@@ -75,11 +75,11 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC1155',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        34,
+        504,
         '${erc1155ContractBlacklistAddress}',
         '${chainId}',
         'POTIONS (blacklist)',
@@ -91,13 +91,29 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC1155',
-        'BLACKLIST',
+        '{BLACKLIST}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        511,
+        '${wallet}',
+        '56',
+        'BEP (binance)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '',
+        '',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC1155',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 34, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 511, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
+import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -13,10 +13,11 @@ interface ITokenSearchFormProps {
   initialValues: ITokenSearchDto;
   open: boolean;
   contractType: Array<TokenType>;
+  contractModule: Array<ModuleType>;
 }
 
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractType } = props;
+  const { onSubmit, initialValues, open, contractType, contractModule } = props;
 
   const classes = useStyles();
 
@@ -35,7 +36,7 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
+            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
           </Grid>
           <Grid item xs={6}>
             <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />

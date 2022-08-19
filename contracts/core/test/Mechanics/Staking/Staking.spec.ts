@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers, waffle, web3, network } from "hardhat";
-import { BigNumber } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
@@ -25,11 +25,12 @@ import {
   PAUSER_ROLE,
   royalty,
   templateId,
+  tokenId,
   VRF_ADDR,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { IAsset, IRule } from "./interface/staking";
-import { randomRequest } from "./shared/randomRequest";
+import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 
 use(solidity);
@@ -83,18 +84,23 @@ describe("Staking", function () {
     // Staking
     const stakingFactory = await ethers.getContractFactory("Staking");
     stakingInstance = await stakingFactory.deploy(1);
+
     // ERC20 Simple
     const erc20Factory = await ethers.getContractFactory("ERC20Simple");
     erc20Instance = await erc20Factory.deploy("ERC20Simple", "SMP", 1000000000);
+
     // ERC721 Simple
     const simple721Factory = await ethers.getContractFactory("ERC721Simple");
     erc721SimpleInstance = await simple721Factory.deploy("ERC721Simple", "SMP", royalty, baseTokenURI);
+
     // ERC721 Random
     const erc721randomFactory = await ethers.getContractFactory("ERC721RandomHardhat");
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
+
     // ERC721 Mysterybox
     const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
     mysteryboxInstance = await mysteryboxFactory.deploy("ERC721Mysterybox", "LOOT", royalty, baseTokenURI);
+
     // ERC1155
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
     erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
@@ -107,7 +113,7 @@ describe("Staking", function () {
     await erc1155Instance.grantRole(MINTER_ROLE, stakingInstance.address);
 
     // Fund LINK to erc721Random contract
-    await linkInstance.transfer(erc721RandomInstance.address, ethers.BigNumber.from("1000").mul(decimals));
+    await linkInstance.transfer(erc721RandomInstance.address, BigNumber.from("1000").mul(decimals));
 
     this.contractInstance = stakingInstance;
 
@@ -117,73 +123,73 @@ describe("Staking", function () {
     stakeCycles = 2;
 
     nativeDeposit = {
-      tokenType: BigNumber.from(0), // NATIVE
-      token: "0x0000000000000000000000000000000000000000",
-      tokenId: BigNumber.from(0),
-      amount: BigNumber.from(1000),
+      tokenType: 0, // NATIVE
+      token: constants.AddressZero,
+      tokenId: 0,
+      amount: 1000,
     };
 
     nativeReward = {
-      tokenType: BigNumber.from(0), // NATIVE
-      token: "0x0000000000000000000000000000000000000000",
-      tokenId: BigNumber.from(0),
-      amount: BigNumber.from(1000),
+      tokenType: 0, // NATIVE
+      token: constants.AddressZero,
+      tokenId: 0,
+      amount: 1000,
     };
 
     erc721Deposit = {
-      tokenType: BigNumber.from(2), // ERC721
+      tokenType: 2, // ERC721
       token: erc721RandomInstance.address,
-      tokenId: BigNumber.from(1),
-      amount: BigNumber.from(0),
+      tokenId: 1,
+      amount: 0,
     };
 
     erc721RewardSmpl = {
-      tokenType: BigNumber.from(2), // ERC721
+      tokenType: 2, // ERC721
       token: erc721SimpleInstance.address,
-      tokenId: BigNumber.from(1),
-      amount: BigNumber.from(0),
+      tokenId: 1,
+      amount: 0,
     };
 
     erc721RewardRnd = {
-      tokenType: BigNumber.from(2), // ERC721
+      tokenType: 2, // ERC721
       token: erc721RandomInstance.address,
-      tokenId: BigNumber.from(1),
-      amount: BigNumber.from(0),
+      tokenId: 1,
+      amount: 0,
     };
 
     erc721RewardDbx = {
-      tokenType: BigNumber.from(2), // ERC721
+      tokenType: 2, // ERC721
       token: mysteryboxInstance.address,
-      tokenId: BigNumber.from(1),
-      amount: BigNumber.from(0),
+      tokenId: 1,
+      amount: 0,
     };
 
     erc20Deposit = {
-      tokenType: BigNumber.from(1), // ERC20
+      tokenType: 1, // ERC20
       token: erc20Instance.address,
-      tokenId: BigNumber.from(0),
-      amount: BigNumber.from(100),
+      tokenId: 0,
+      amount: 100,
     };
 
     erc20Reward = {
-      tokenType: BigNumber.from(1), // ERC20
+      tokenType: 1, // ERC20
       token: erc20Instance.address,
-      tokenId: BigNumber.from(0),
-      amount: BigNumber.from(100),
+      tokenId: 0,
+      amount: 100,
     };
 
     erc1155Deposit = {
-      tokenType: BigNumber.from(4), // ERC1155
+      tokenType: 4, // ERC1155
       token: erc1155Instance.address,
-      tokenId: BigNumber.from(1),
-      amount: BigNumber.from(100),
+      tokenId: 1,
+      amount: 100,
     };
 
     erc1155Reward = {
-      tokenType: BigNumber.from(4), // ERC1155
+      tokenType: 4, // ERC1155
       token: erc1155Instance.address,
-      tokenId: BigNumber.from(1),
-      amount: BigNumber.from(100),
+      tokenId: 1,
+      amount: 100,
     };
   });
 
@@ -192,11 +198,11 @@ describe("Staking", function () {
   describe("setRule", function () {
     it("should fail for wrong role", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -210,11 +216,11 @@ describe("Staking", function () {
 
     it("should fail edit when Rule not exist", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -228,11 +234,11 @@ describe("Staking", function () {
 
     it("should set one Rule", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -243,21 +249,21 @@ describe("Staking", function () {
 
     it("should set multiple Rules", async function () {
       const stakeRule1: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
 
       const stakeRule2: IRule = {
-        externalId: BigNumber.from(2),
+        externalId: 2,
         deposit: nativeDeposit,
         reward: erc721RewardDbx,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -268,11 +274,11 @@ describe("Staking", function () {
 
     it("should edit Rule", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -288,11 +294,11 @@ describe("Staking", function () {
   describe("Staking", function () {
     it("should fail for not existing rule", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -300,17 +306,17 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(2, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(2, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: rule doesn't exist");
     });
 
     it("should fail for not active rule", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: false,
       };
@@ -318,17 +324,17 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: rule doesn't active");
     });
 
     it("should fail for wrong pay amount", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -336,17 +342,17 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: wrong amount");
     });
 
     it("should fail for limit exceed", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -356,17 +362,17 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: BigNumber.from(100) });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: stake limit exceeded");
     });
 
     it("should stake NATIVE", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -380,11 +386,11 @@ describe("Staking", function () {
 
     it("should stake ERC20", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc20Deposit,
         reward: erc20Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -398,19 +404,21 @@ describe("Staking", function () {
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
 
       const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc20Instance, "Transfer");
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(erc20Instance, "Transfer")
+        .withArgs(this.owner.address, stakingInstance.address, erc20Deposit.amount);
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
     });
 
     it("should stake ERC721", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: erc20Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -421,22 +429,24 @@ describe("Staking", function () {
       await erc721RandomInstance.mintCommon(this.owner.address, templateId);
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
-      await erc721RandomInstance.approve(stakingInstance.address, 1);
+      await erc721RandomInstance.approve(stakingInstance.address, tokenId);
 
       const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(erc721RandomInstance, "Transfer")
+        .withArgs(this.owner.address, stakingInstance.address, tokenId);
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
     });
 
     it("should stake ERC1155", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc1155Deposit,
         reward: erc20Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -444,15 +454,23 @@ describe("Staking", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      await erc1155Instance.mint(this.owner.address, 1, erc1155Deposit.amount, "0x");
-      let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
+      await erc1155Instance.mint(this.owner.address, tokenId, erc1155Deposit.amount, "0x");
+      let balance = await erc1155Instance.balanceOf(this.owner.address, tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
       const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
-      balance = await erc1155Instance.balanceOf(this.owner.address, 1);
+      await expect(tx1)
+        .to.emit(stakingInstance, "StakingStart")
+        .to.emit(erc1155Instance, "TransferSingle")
+        .withArgs(
+          stakingInstance.address,
+          this.owner.address,
+          stakingInstance.address,
+          erc1155Deposit.tokenId,
+          erc1155Deposit.amount,
+        );
+      balance = await erc1155Instance.balanceOf(this.owner.address, tokenId);
       expect(balance).to.equal(0);
     });
   });
@@ -460,11 +478,11 @@ describe("Staking", function () {
   describe("Reward", function () {
     it("should fail for wrong staking id", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -484,18 +502,18 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
+      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
       const tx2 = stakingInstance.connect(this.receiver).receiveReward(2, true, true);
       await expect(tx2).to.be.revertedWith("Staking: wrong staking id");
     });
 
     it("should fail for not an owner", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -514,18 +532,18 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
+      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
       const tx2 = stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.be.revertedWith("Staking: not an owner");
     });
 
     it("should fail for withdrawn already", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -544,11 +562,12 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
+      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
       const tx2 = await stakingInstance.connect(this.receiver).receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.changeEtherBalance(this.receiver, nativeReward.amount.mul(2).add(nativeReward.amount));
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.changeEtherBalance(this.receiver, nativeReward.amount * 2 + nativeReward.amount);
 
       const tx3 = stakingInstance.connect(this.receiver).receiveReward(1, true, true);
       await expect(tx3).to.be.revertedWith("Staking: deposit withdrawn already");
@@ -556,11 +575,11 @@ describe("Staking", function () {
 
     it("should fail deposit for wrong tokenId", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -574,24 +593,24 @@ describe("Staking", function () {
       const balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(2);
       expect(await erc721RandomInstance.getRecordFieldValue(erc721Deposit.tokenId, templateKey)).to.equal(templateId);
-      expect(await erc721RandomInstance.getRecordFieldValue(erc721Deposit.tokenId.add(1), templateKey)).to.equal(
+      expect(await erc721RandomInstance.getRecordFieldValue(erc721Deposit.tokenId + 1, templateKey)).to.equal(
         templateId + 1,
       );
       // APPROVE
       await erc721RandomInstance.approve(stakingInstance.address, 1);
       await erc721RandomInstance.approve(stakingInstance.address, 2);
       // DEPOSIT
-      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId.add(1));
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId + 1);
       await expect(tx1).to.be.revertedWith("Staking: wrong deposit token templateID");
     });
 
     it("should stake NATIVE & receive NATIVE", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -608,23 +627,21 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
+      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.changeEtherBalance(
-        this.owner,
-        nativeReward.amount.mul(stakeCycles).add(nativeReward.amount),
-      );
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.changeEtherBalance(this.owner, nativeReward.amount * stakeCycles + nativeReward.amount);
     });
 
     it("should stake NATIVE & receive ERC20", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc20Reward,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -641,26 +658,27 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
+      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount * stakeCycles);
       let balance = await erc20Instance.balanceOf(stakingInstance.address);
-      expect(balance).to.equal(erc20Reward.amount.mul(stakeCycles));
+      expect(balance).to.equal(erc20Reward.amount * stakeCycles);
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc20Instance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
-      expect(balance).to.equal(erc20Reward.amount.mul(stakeCycles));
+      expect(balance).to.equal(erc20Reward.amount * stakeCycles);
       // DEPOSIT
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
 
     it("should stake NATIVE & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -678,23 +696,26 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
-      await expect(tx2).to.emit(linkInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc721RandomInstance, "RandomRequest")
+        .to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, 2, this.owner.address);
+      await randomRequest(erc721RandomInstance, vrfInstance);
+      const balance = await erc721RandomInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(2);
       // DEPOSIT
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
 
     it("should stake NATIVE & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardSmpl,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -712,9 +733,10 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc721SimpleInstance, "Transfer");
       const balance = await erc721SimpleInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
@@ -722,11 +744,11 @@ describe("Staking", function () {
 
     it("should stake NATIVE & receive ERC721 Mysterybox", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardDbx,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -744,9 +766,10 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(mysteryboxInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(mysteryboxInstance, "Transfer");
       const balance = await mysteryboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
@@ -754,11 +777,11 @@ describe("Staking", function () {
 
     it("should stake NATIVE & receive ERC1155", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: nativeDeposit,
         reward: erc1155Reward,
-        period: BigNumber.from(stakePeriod), // 60 sec
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod, // 60 sec
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -776,21 +799,22 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc1155Instance, "TransferSingle");
       const balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
-      expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles));
+      expect(balance).to.equal(erc20Reward.amount * stakeCycles);
       await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
 
     it("should stake ERC20 & receive NATIVE", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc20Deposit,
         reward: nativeReward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -804,30 +828,30 @@ describe("Staking", function () {
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
       const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc20Instance, "Transfer");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
+      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount.mul(stakeCycles));
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.changeEtherBalance(this.owner, nativeReward.amount * stakeCycles);
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
     });
 
     it("should stake ERC20 & receive ERC20", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc20Deposit,
         reward: erc20Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -849,21 +873,21 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
+      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount * stakeCycles);
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       balance = await erc20Instance.balanceOf(this.owner.address);
-      expect(balance).to.equal(erc20Reward.amount.mul(stakeCycles).add(erc20Deposit.amount));
+      expect(balance).to.equal(erc20Reward.amount * stakeCycles + erc20Deposit.amount);
     });
 
     it("should stake ERC20 & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc20Deposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -891,18 +915,20 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles, this.owner.address);
+      await randomRequest(erc721RandomInstance, vrfInstance);
+      balance = await erc721RandomInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(stakeCycles);
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
     });
 
     it("should stake ERC20 & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc20Deposit,
         reward: erc721RewardSmpl,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -936,11 +962,11 @@ describe("Staking", function () {
 
     it("should stake ERC20 & receive ERC721 Mysterybox", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc20Deposit,
         reward: erc721RewardDbx,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -973,11 +999,11 @@ describe("Staking", function () {
 
     it("should stake ERC20 & receive ERC1155", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc20Deposit,
         reward: erc1155Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1005,18 +1031,18 @@ describe("Staking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
-      expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles));
+      expect(balance).to.equal(erc1155Reward.amount * stakeCycles);
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
     });
 
     it("should stake ERC721 & receive NATIVE", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: nativeReward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1038,22 +1064,22 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
+      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
       const tx2 = await stakingInstance.receiveReward(1, true, true);
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount.mul(stakeCycles));
+      await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount * stakeCycles);
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
     });
 
     it("should stake ERC721 & receive ERC20", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: erc20Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1075,23 +1101,22 @@ describe("Staking", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
+      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount * stakeCycles);
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
       balance = await erc20Instance.balanceOf(this.owner.address);
-      expect(balance).to.equal(erc20Reward.amount.mul(stakeCycles));
+      expect(balance).to.equal(erc20Reward.amount * stakeCycles);
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
     });
 
     it("should stake ERC721 & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1105,8 +1130,7 @@ describe("Staking", function () {
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
       const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
       // TIME
@@ -1114,21 +1138,24 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
-      await expect(tx2).to.emit(linkInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc721RandomInstance, "RandomRequest")
+        .to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles, this.owner.address);
+      await randomRequest(erc721RandomInstance, vrfInstance);
+      balance = await erc721RandomInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(3);
     });
 
     it("should stake ERC721 & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardSmpl,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1142,8 +1169,7 @@ describe("Staking", function () {
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
       const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
       // TIME
@@ -1151,9 +1177,10 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc721SimpleInstance, "Transfer");
       balance = await erc721SimpleInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1162,11 +1189,11 @@ describe("Staking", function () {
 
     it("should stake ERC721 & receive ERC721 Mysterybox", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardDbx,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1180,8 +1207,7 @@ describe("Staking", function () {
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
       const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
       // TIME
@@ -1189,9 +1215,10 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(mysteryboxInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(mysteryboxInstance, "Transfer");
       balance = await mysteryboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1200,11 +1227,11 @@ describe("Staking", function () {
 
     it("should stake ERC721 & receive ERC1155", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc721Deposit,
         reward: erc1155Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1218,8 +1245,7 @@ describe("Staking", function () {
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
       const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
       // TIME
@@ -1227,22 +1253,23 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
-      expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles));
+      expect(balance).to.equal(erc1155Reward.amount * stakeCycles);
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
     });
 
     it("should stake ERC1155 & receive NATIVE", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc1155Deposit,
         reward: nativeReward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1255,30 +1282,30 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
       const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await stakingInstance.fundEth({ value: ethers.utils.parseEther("1.0") });
+      await stakingInstance.fundEth({ value: utils.parseEther("1.0") });
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.changeEtherBalance(this.owner, nativeReward.amount.mul(stakeCycles));
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.changeEtherBalance(this.owner, nativeReward.amount * stakeCycles);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
     it("should stake ERC1155 & receive ERC20", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc1155Deposit,
         reward: erc20Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1291,31 +1318,29 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
       const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
       // TIME
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount.mul(stakeCycles));
+      await erc20Instance.mint(stakingInstance.address, erc20Reward.amount * stakeCycles);
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw").to.emit(stakingInstance, "StakingFinish");
       balance = await erc20Instance.balanceOf(this.owner.address);
-      expect(balance).to.equal(erc20Reward.amount.mul(stakeCycles));
+      expect(balance).to.equal(erc20Reward.amount * stakeCycles);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
     it("should stake ERC1155 & receive ERC721 Random", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc1155Deposit,
         reward: erc721RewardRnd,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1328,8 +1353,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
       const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
       // TIME
@@ -1342,18 +1366,20 @@ describe("Staking", function () {
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
       await expect(tx2).to.emit(linkInstance, "Transfer");
       // RANDOM
-      await randomRequest(erc721RandomInstance, vrfInstance, stakeCycles, this.owner.address);
+      await randomRequest(erc721RandomInstance, vrfInstance);
+      balance = await erc721RandomInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(2);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
       expect(balance).to.equal(erc1155Deposit.amount);
     });
 
     it("should stake ERC1155 & receive ERC721 Common", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc1155Deposit,
         reward: erc721RewardSmpl,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1375,9 +1401,10 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721SimpleInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc721SimpleInstance, "Transfer");
       balance = await erc721SimpleInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
@@ -1386,11 +1413,11 @@ describe("Staking", function () {
 
     it("should stake ERC1155 & receive ERC721 Mysterybox", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc1155Deposit,
         reward: erc721RewardDbx,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1403,8 +1430,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
       const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
       // TIME
@@ -1412,9 +1438,10 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(mysteryboxInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(mysteryboxInstance, "Transfer");
       balance = await mysteryboxInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(stakeCycles);
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
@@ -1423,11 +1450,11 @@ describe("Staking", function () {
 
     it("should stake ERC1155 & receive ERC1155", async function () {
       const stakeRule: IRule = {
-        externalId: BigNumber.from(1),
+        externalId: 1,
         deposit: erc1155Deposit,
         reward: erc1155Reward,
-        period: BigNumber.from(stakePeriod),
-        penalty: BigNumber.from(stakePenalty),
+        period: stakePeriod,
+        penalty: stakePenalty,
         recurrent: false,
         active: true,
       };
@@ -1440,8 +1467,7 @@ describe("Staking", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
       const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
-      await expect(tx1).to.emit(stakingInstance, "StakingStart");
-      await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
       // TIME
@@ -1449,12 +1475,14 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc1155Instance, "TransferSingle");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
-      expect(balance).to.equal(erc1155Reward.amount.mul(stakeCycles).add(erc1155Reward.amount));
+      expect(balance).to.equal(erc1155Reward.amount * stakeCycles + erc1155Reward.amount);
     });
   });
+
   // todo test recurrent
 });

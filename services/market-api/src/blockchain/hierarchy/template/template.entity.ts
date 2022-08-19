@@ -6,7 +6,8 @@ import { ITemplate, TemplateStatus } from "@framework/types";
 
 import { ContractEntity } from "../contract/contract.entity";
 import { TokenEntity } from "../token/token.entity";
-import { AssetEntity } from "../../../mechanics/asset/asset.entity";
+import { AssetEntity } from "../../mechanics/asset/asset.entity";
+import { MysteryboxEntity } from "../../mechanics/mysterybox/mysterybox/mysterybox.entity";
 
 @Entity({ schema: ns, name: "template" })
 export class TemplateEntity extends SearchableEntity implements ITemplate {
@@ -41,4 +42,7 @@ export class TemplateEntity extends SearchableEntity implements ITemplate {
 
   @OneToMany(_type => TokenEntity, token => token.template)
   public tokens: Array<TokenEntity>;
+
+  @OneToOne(_type => MysteryboxEntity, box => box.template)
+  public mysterybox?: MysteryboxEntity;
 }

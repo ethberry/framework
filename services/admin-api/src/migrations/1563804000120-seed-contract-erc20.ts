@@ -1,24 +1,22 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
-import { constants } from "ethers";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-const usdt: Record<string, string> = {
-  "1": "0xdac17f958d2ee523a2206206994597c13d831ec7",
-  "56": "0x55d398326f99059ff775485246999027b3197955",
-  "1337": process.env.ERC20_USDT_ADDR || wallet,
-};
-
 export class SeedContractErc20At1563804000120 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    const usdt: Record<string, string> = {
+      "1": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "56": "0x55d398326f99059ff775485246999027b3197955",
+      "1337": process.env.USDT_ADDR || wallet,
+    };
     const currentDateTime = new Date().toISOString();
     const erc20TokenSimpleAddress = process.env.ERC20_SIMPLE_ADDR || wallet;
     const erc20TokenInactiveAddress = process.env.ERC20_INACTIVE_ADDR || wallet;
     const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR || wallet;
-    const erc20TokenBlackListAddress = process.env.BLACKLIST_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || "1337";
+    const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR || wallet;
+    const chainId = (process.env.CHAIN_ID as string) || "1337";
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -35,28 +33,11 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_template,
+        contract_features,
         created_at,
         updated_at
       ) VALUES (
-        1,
-        '${constants.AddressZero}',
-        '${chainId}',
-        'Native token (ETH)',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'Ethereum',
-        'ETH',
-        18,
-        0,
-        '',
-        'ACTIVE',
-        'ERC20',
-        'NATIVE',
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        2,
+        201,
         '${erc20TokenSimpleAddress}',
         '${chainId}',
         'Space Credits',
@@ -69,11 +50,11 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        3,
+        202,
         '${erc20TokenInactiveAddress}',
         '${chainId}',
         'ERC20 (inactive)',
@@ -86,11 +67,11 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'INACTIVE',
         'ERC20',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        4,
+        203,
         '${erc20TokenNewAddress}',
         '${chainId}',
         'ERC20 (new)',
@@ -103,11 +84,11 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'NEW',
         'ERC20',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        5,
+        204,
         '${erc20TokenBlackListAddress}',
         '${chainId}',
         'ERC20 (blacklist)',
@@ -120,11 +101,11 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'BLACKLIST',
+        '{BLACKLIST}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        6,
+        205,
         '${usdt[chainId]}',
         '${chainId}',
         'USDT',
@@ -137,13 +118,30 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '',
         'ACTIVE',
         'ERC20',
-        'EXTERNAL',
+        '{EXTERNAL}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        211,
+        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        '56',
+        'BUSD',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Biance USD',
+        'BUSD',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 6, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 211, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

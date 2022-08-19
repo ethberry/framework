@@ -12,6 +12,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "./SignatureValidator.sol";
 import "./ExchangeUtils.sol";
 import "./interfaces/IAsset.sol";
+import "../../ERC721/interfaces/IERC721Upgradeable.sol";
 
 abstract contract ExchangeGrade is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
   event Upgrade(address from, uint256 externalId, Asset item, Asset[] price);

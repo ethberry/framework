@@ -14,8 +14,17 @@ import "./ExchangeCraft.sol";
 import "./ExchangeGrade.sol";
 import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
+import "./ExchangeReferral.sol";
 
-contract Exchange is ExchangeCore, ExchangeCraft, ExchangeGrade, ExchangeMysterybox, ExchangeClaim, ERC1155Holder {
+contract Exchange is
+  ExchangeCore,
+  ExchangeCraft,
+  ExchangeGrade,
+  ExchangeMysterybox,
+  ExchangeClaim,
+  ExchangeReferral,
+  ERC1155Holder
+{
   using Address for address;
 
   // bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
@@ -43,5 +52,9 @@ contract Exchange is ExchangeCore, ExchangeCraft, ExchangeGrade, ExchangeMystery
     returns (bool)
   {
     return super.supportsInterface(interfaceId);
+  }
+
+  function _afterPurchase(Params memory params) internal override(ExchangeCore, ExchangeMysterybox, ExchangeReferral) {
+    return super._afterPurchase(params);
   }
 }

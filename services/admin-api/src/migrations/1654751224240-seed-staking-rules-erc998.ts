@@ -45,63 +45,63 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
         asset_id
       ) VALUES (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         1,
         80411
       ), (
-        'ERC20',
-        2,
-        12001, -- ETH
+        'NATIVE',
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         80412
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         1,
         80421
       ), (
         'ERC20',
-        2,
-        12002, -- space credit
+        201,
+        201001, -- space credit
         '${constants.WeiPerEther.toString()}',
         80422
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         1,
         80431
       ), (
         'ERC721',
-        16,
-        13601, -- sword
+        306,
+        306001, -- sword
         1,
         80432
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         1,
         80441
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         1,
         80442
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         1,
         80451
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
-        1,
+        501,
+        501001, -- gold
+        1000,
         80452
       );
     `);
@@ -170,13 +170,13 @@ export class SeedStakingRulesErc998At1654751224240 implements MigrationInterface
       ), (
         'ERC998 > ERC1155',
         '${simpleFormatting}',
-        30,
         1,
-        false,
+        1,
+        true,
         80451,
         80452,
         45,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

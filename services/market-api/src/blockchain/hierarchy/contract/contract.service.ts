@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ISearchDto } from "@gemunion/types-collection";
 import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
@@ -8,6 +8,7 @@ import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from 
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
 import { IContractUpdateDto } from "./interfaces";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class ContractService {
@@ -16,21 +17,31 @@ export class ContractService {
     protected readonly contractEntityRepository: Repository<ContractEntity>,
   ) {}
 
-  public async search(dto: ISearchDto, contractType: TokenType): Promise<[Array<ContractEntity>, number]> {
+  public async search(
+    dto: ISearchDto,
+    userEntity: UserEntity,
+    contractType: TokenType,
+    contractModule: ModuleType,
+  ): Promise<[Array<ContractEntity>, number]> {
     const { query, skip, take } = dto;
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
     queryBuilder.select();
 
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
-
-    // MODULE:MYSTERYBOX
-    queryBuilder.andWhere("contract.contractModule != :contractModule", {
-      contractModule: ModuleType.MYSTERYBOX,
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule,
     });
 
-    queryBuilder.andWhere("contract.contractStatus = :contractStatus", { contractStatus: ContractStatus.ACTIVE });
+    queryBuilder.andWhere("contract.contractStatus = :contractStatus", {
+      contractStatus: ContractStatus.ACTIVE,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (query) {
       queryBuilder.leftJoin(
@@ -57,7 +68,7 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractTemplate = [], contractType = [] } = dto;
+    const { contractStatus = [], contractFeatures = [], contractType = [] } = dto;
 
     const where = {
       contractStatus: ContractStatus.ACTIVE,
@@ -75,9 +86,10 @@ export class ContractService {
       });
     }
 
-    if (contractTemplate.length) {
+    if (contractFeatures.length) {
       Object.assign(where, {
-        contractTemplate: In(contractTemplate),
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: ArrayOverlap(contractFeatures),
       });
     }
 

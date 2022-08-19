@@ -10,9 +10,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "../ERC998Upgradeable.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
-import "../../MOCKS/ChainLink/ERC721ChainLinkHardhat.sol";
+import "../../MOCKS/ChainLink/ChainLinkHardhat.sol";
 
-contract ERC998RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC998Upgradeable {
+contract ERC998RandomHardhat is IERC721Random, ChainLinkHardhat, ERC998Upgradeable {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -31,7 +31,7 @@ contract ERC998RandomHardhat is IERC721Random, ERC721ChainLinkHardhat, ERC998Upg
 
   function mintCommon(address to, uint256 templateId)
   external
-    override(IERC721Simple, ERC998Upgradeable)
+    override(ERC998Upgradeable)
     onlyRole(MINTER_ROLE)
   {
     require(templateId != 0, "ERC998RandomHardhat: wrong type");

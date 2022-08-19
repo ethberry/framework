@@ -2,9 +2,10 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { ContractStatus, ContractTemplate, IContract, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractStatus, IContract, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { TemplateEntity } from "../template/template.entity";
+import { CompositionEntity } from "../../tokens/erc998/composition/composition.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
@@ -40,9 +41,10 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
 
   @Column({
     type: "enum",
-    enum: ContractTemplate,
+    enum: ContractFeatures,
+    array: true,
   })
-  public contractTemplate: ContractTemplate;
+  public contractFeatures: Array<ContractFeatures>;
 
   @Column({
     type: "enum",
@@ -52,4 +54,7 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
 
   @OneToMany(_type => TemplateEntity, template => template.contract)
   public templates: Array<TemplateEntity>;
+
+  @OneToMany(_type => CompositionEntity, composition => composition.parent)
+  public children: Array<CompositionEntity>;
 }

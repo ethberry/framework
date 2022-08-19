@@ -16,6 +16,7 @@ export default {
     hardhat: {
       allowUnlimitedContractSize: true,
       blockGasLimit: 1e10, // default: 3e7
+      gas: 7000000,
     },
     besu: {
       url: process.env.BESU_RPC_URL,
@@ -42,6 +43,9 @@ export default {
     compilers: [
       {
         version: "0.4.17",
+      },
+      {
+        version: "0.5.16",
       },
       {
         version: "0.7.6",

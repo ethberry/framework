@@ -33,8 +33,8 @@ contract ExchangeUtils {
     // (bool sent, ) = receiver.call{ value: amount, gas: 20317 }("");
     // require(sent, "Exchange: Failed to send Ether");
 
-    // TODO ETH and ERC20 tokens should be transferes to PaymentSplitter,
-    // TODO ERC721 and ERC11155 should be burned
+    // TODO ETH and ERC20 tokens should be transferred to PaymentSplitter,
+    // TODO ERC721 and ERC1155 should be burned
     // TODO PaymentSplitter address should be set by ContractManager
     address receiver = address(this);
     for (uint256 i = 0; i < length; i++) {

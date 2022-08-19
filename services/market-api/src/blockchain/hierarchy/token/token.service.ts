@@ -5,6 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import {
   ITokenAutocompleteDto,
   ITokenSearchDto,
+  ModuleType,
   TokenAttributes,
   TokenRarity,
   TokenStatus,
@@ -25,8 +26,17 @@ export class TokenService {
     dto: ITokenSearchDto,
     userEntity: UserEntity,
     contractType: TokenType,
+    contractModule: ModuleType,
   ): Promise<[Array<TokenEntity>, number]> {
-    const { query, attributes = {}, contractIds, account = userEntity.wallet?.toLowerCase(), skip, take } = dto;
+    const {
+      query,
+      attributes = {},
+      contractIds,
+      templateIds,
+      account = userEntity.wallet?.toLowerCase(),
+      skip,
+      take,
+    } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
@@ -36,7 +46,15 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (account) {
       queryBuilder.andWhere("balance.account = :account", { account });
@@ -67,6 +85,16 @@ export class TokenService {
       }
     }
 
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
     if (query) {
       queryBuilder.leftJoin(
         "(SELECT 1)",
@@ -92,14 +120,40 @@ export class TokenService {
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto): Promise<Array<TokenEntity>> {
-    const { account } = dto;
+    const { account, contractIds, templateIds } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
-    queryBuilder.select(["id", "tokenId"]);
-    queryBuilder.andWhere("token.account = :account", { account });
+    queryBuilder.select(["token.id", "token.tokenId"]);
+
+    if (account) {
+      queryBuilder.andWhere("token.account = :account", { account });
+    }
 
     queryBuilder.leftJoin("token.template", "template");
     queryBuilder.addSelect(["template.title"]);
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    queryBuilder.leftJoin("template.contract", "contract");
+    queryBuilder.addSelect(["contract.address"]);
 
     queryBuilder.orderBy({
       "token.createdAt": "DESC",

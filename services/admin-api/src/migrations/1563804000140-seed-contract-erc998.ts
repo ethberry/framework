@@ -29,11 +29,11 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_template,
+        contract_features,
         created_at,
         updated_at
       ) VALUES (
-        21,
+        401,
         '${erc998ContractSimpleAddress}',
         '${chainId}',
         'ERC998 (simple)',
@@ -45,11 +45,11 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        22,
+        402,
         '${erc998ContractInactiveAddress}',
         '${chainId}',
         'ERC998 (inactive)',
@@ -61,11 +61,11 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC998',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        23,
+        403,
         '${erc998ContractNewAddress}',
         '${chainId}',
         'ERC998 (new)',
@@ -77,11 +77,11 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC998',
-        'SIMPLE',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        24,
+        404,
         '${erc998ContractBlacklistAddress}',
         '${chainId}',
         'ERC998 (blacklist)',
@@ -93,11 +93,11 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        'BLACKLIST',
+        '{BLACKLIST}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        25,
+        405,
         '${erc998ContractUpgradeableAddress}',
         '${chainId}',
         'ERC998 (upgradeable)',
@@ -109,11 +109,11 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        'UPGRADEABLE',
+        '{UPGRADEABLE}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        26,
+        406,
         '${erc998ContractRandomAddress}',
         '${chainId}',
         'HERO (random)',
@@ -125,13 +125,29 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        'RANDOM',
+        '{UPGRADEABLE,RANDOM}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        411,
+        '${wallet}',
+        '56',
+        'BEP (binance)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'BEP',
+        'BEP998',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{}',
         '${currentDateTime}',
         '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 26, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 411, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
