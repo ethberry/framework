@@ -20,15 +20,10 @@ export const ContractInput: FC<IContractInputProps> = props => {
 
   const form = useFormContext<any>();
 
-  return (
-    <EntityInput
-      name={name}
-      controller="contracts"
-      data={data}
-      onChange={(_event: ChangeEvent<unknown>, option: any | null): void => {
-        form.setValue(name, option?.id ?? 0);
-        form.setValue(related, option?.address ?? "0x");
-      }}
-    />
-  );
+  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+    form.setValue(name, option?.id ?? 0);
+    form.setValue(related, option?.address ?? "0x");
+  };
+
+  return <EntityInput name={name} controller="contracts" data={data} onChange={handleChange} />;
 };

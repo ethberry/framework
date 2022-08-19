@@ -20,6 +20,7 @@ import { Drop } from "./mechanics/drop";
 import { Admin } from "./integrations/admin";
 import { ChainLink } from "./integrations/chain-link";
 import { CoinGecko } from "./integrations/coin-gecko";
+import { Marketplace } from "./integrations/marketplace";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -49,6 +50,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={4}>
           <ChainLink />
           <CoinGecko />
+          <Marketplace />
           <Admin />
         </Grid>
       </Grid>

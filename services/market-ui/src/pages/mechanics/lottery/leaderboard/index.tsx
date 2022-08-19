@@ -1,6 +1,5 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { useIntl } from "react-intl";
-import { Grid } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
@@ -25,33 +24,33 @@ export const LotteryLeaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({id: "pages.lottery.leaderboard.id"}),
+      headerName: formatMessage({ id: "pages.lottery.leaderboard.id" }),
       sortable: true,
-      flex: 0,
+      flex: 0
     },
     {
       field: "account",
-      headerName: formatMessage({id: "pages.lottery.leaderboard.account"}),
+      headerName: formatMessage({ id: "pages.lottery.leaderboard.account" }),
       sortable: false,
       flex: 1
     },
     {
       field: "count",
-      headerName: formatMessage({id: "pages.lottery.leaderboard.count"}),
+      headerName: formatMessage({ id: "pages.lottery.leaderboard.count" }),
       sortable: true,
       flex: 1
     },
     {
       field: "amount",
-      headerName: formatMessage({id: "pages.lottery.leaderboard.amount"}),
+      headerName: formatMessage({ id: "pages.lottery.leaderboard.amount" }),
       sortable: true,
-      valueFormatter: ({value}: { value: string }) => formatEther(value),
+      valueFormatter: ({ value }: { value: string }) => formatEther(value),
       flex: 1
-    },
+    }
   ];
 
   return (
-    <Grid>
+    <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.leaderboard"]} />
 
       <PageHeader message="pages.lottery.leaderboard.title" />
@@ -71,6 +70,6 @@ export const LotteryLeaderboard: FC = () => {
         rows={rows}
         autoHeight
       />
-    </Grid>
+    </Fragment>
   );
 };

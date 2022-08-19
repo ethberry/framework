@@ -437,6 +437,10 @@
         "coin-gecko": {
           "rates": "Rates",
           "title": "CoinGecko"
+        },
+        "marketplace": {
+          "insights": "Insights",
+          "title": "Marketplace"
         }
       },
       "mechanics": {
@@ -478,6 +482,15 @@
         }
       },
       "title": "Dashboard"
+    },
+    "marketplace": {
+      "title": "Marketplace insights",
+      "insights": {
+        "id": "ID",
+        "title": "title",
+        "createdAt": "Date",
+        "price": "Price"
+      }
     },
     "drops": {
       "title": "Drops"

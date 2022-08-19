@@ -1,15 +1,6 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import {
-  Button,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
-  Pagination,
-} from "@mui/material";
+import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
@@ -58,7 +49,7 @@ export const Claim: FC = () => {
 
   const { formatMessage } = useIntl();
   return (
-    <Grid>
+    <Fragment>
       <Breadcrumbs path={["dashboard", "claims"]} />
 
       <PageHeader message="pages.claims.title">
@@ -117,6 +108,6 @@ export const Claim: FC = () => {
         open={isEditDialogOpen}
         initialValues={selected}
       />
-    </Grid>
+    </Fragment>
   );
 };

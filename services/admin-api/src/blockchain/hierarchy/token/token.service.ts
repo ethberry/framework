@@ -55,16 +55,6 @@ export class TokenService {
       }
     }
 
-    if (contractIds) {
-      if (contractIds.length === 1) {
-        queryBuilder.andWhere("template.contractId = :contractId", {
-          contractId: contractIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
-      }
-    }
-
     if (templateIds) {
       if (templateIds.length === 1) {
         queryBuilder.andWhere("token.templateId = :templateId", {
@@ -72,6 +62,16 @@ export class TokenService {
         });
       } else {
         queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("template.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("template.contractId IN(:...contractIds)", { contractIds });
       }
     }
 
