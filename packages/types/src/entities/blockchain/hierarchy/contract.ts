@@ -64,6 +64,7 @@ export interface IContract extends IDeployable, ISearchable {
   decimals: number;
   royalty: number;
   baseTokenURI: string;
+  isPaused: boolean;
   contractStatus: ContractStatus;
   contractType: TokenType;
   contractFeatures: Array<ContractFeatures>;

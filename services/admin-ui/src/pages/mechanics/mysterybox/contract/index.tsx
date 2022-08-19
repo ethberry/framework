@@ -115,6 +115,7 @@ export const MysteryboxContract: FC = () => {
                     contract.contractFeatures.includes(ContractFeatures.BLACKLIST)
                       ? ContractActions.BLACKLIST_REMOVE
                       : null,
+                    contract.contractFeatures.includes(ContractFeatures.PAUSABLE) ? ContractActions.PAUSABLE : null,
                   ]}
                 />
               </ListItemSecondaryAction>

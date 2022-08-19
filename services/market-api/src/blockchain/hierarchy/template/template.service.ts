@@ -45,6 +45,9 @@ export class TemplateService {
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
+    queryBuilder.andWhere("contract.isPaused = :isPaused", {
+      isPaused: false,
+    });
 
     queryBuilder.andWhere("template.templateStatus = :templateStatus", {
       templateStatus: TemplateStatus.ACTIVE,

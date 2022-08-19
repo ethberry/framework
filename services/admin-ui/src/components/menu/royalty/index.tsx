@@ -6,17 +6,19 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { IContract } from "@framework/types";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 import { IRoyaltyDto, RoyaltyEditDialog } from "./edit";
 
 export interface IRoyaltyMenuItemProps {
-  address: string;
-  royalty: number;
+  contract: IContract;
 }
 
 export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
-  const { address, royalty } = props;
+  const {
+    contract: { address, royalty },
+  } = props;
 
   const [isRoyaltyDialogOpen, setIsRoyaltyDialogOpen] = useState(false);
 

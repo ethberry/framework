@@ -3,14 +3,18 @@ import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
 
+import { IContract } from "@framework/types";
+
 import { AccessControlRevokeRoleDialog } from "./edit";
 
 export interface IContractRevokeRoleMenuItemProps {
-  address: string;
+  contract: IContract;
 }
 
 export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
-  const { address } = props;
+  const {
+    contract: { address },
+  } = props;
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
 

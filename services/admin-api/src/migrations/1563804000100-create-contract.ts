@@ -112,6 +112,11 @@ export class CreateContract1563804000100 implements MigrationInterface {
           default: "'CORE'",
         },
         {
+          name: "is_paused",
+          type: "boolean",
+          default: false,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

@@ -45,6 +45,9 @@ export class ContractService {
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });
+    queryBuilder.andWhere("contract.isPaused = :isPaused", {
+      isPaused: false,
+    });
 
     if (query) {
       queryBuilder.leftJoin(

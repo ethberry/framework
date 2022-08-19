@@ -6,18 +6,20 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
+import { AccessControlRoleHash, AccessControlRoleType, IContract } from "@framework/types";
 
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./edit";
 
 export interface IOzContractGrantRoleMenuItemProps {
-  address: string;
+  contract: IContract;
 }
 
 export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = props => {
-  const { address } = props;
+  const {
+    contract: { address },
+  } = props;
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
 

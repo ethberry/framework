@@ -7,8 +7,8 @@ import { AccessControlEventType, ContractEventType, ContractType } from "@framew
 import { MysteryboxLogService } from "./log.service";
 import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
 import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
-// dynamic contract
-import MysteryboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxSimple.sol/ERC721MysteryboxSimple.json";
+
+import MysteryboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
 
 @Module({
   imports: [

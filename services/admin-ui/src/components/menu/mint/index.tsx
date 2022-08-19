@@ -6,22 +6,22 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { IContract, TokenType } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 import { IMintTokenDto, MintTokenDialog } from "./edit";
-import { TokenType } from "@framework/types";
 
 export interface IMintMenuItemProps {
-  address: string;
-  contractId: number;
-  tokenType: TokenType;
+  contract: IContract;
 }
 
 export const MintMenuItem: FC<IMintMenuItemProps> = props => {
-  const { address, contractId, tokenType } = props;
+  const {
+    contract: { address, id: contractId, contractType },
+  } = props;
 
   const [isMintTokenDialogOpen, setIsMintTokenDialogOpen] = useState(false);
 
@@ -69,13 +69,13 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
         onConfirm={handleMintTokenConfirmed}
         open={isMintTokenDialogOpen}
         initialValues={{
-          tokenType,
+          tokenType: contractType,
           address,
           contractId,
           templateId: 0,
           amount: "0",
           account: process.env.ACCOUNT,
-          decimals: tokenType === TokenType.ERC20 ? 18 : 0,
+          decimals: contractType === TokenType.ERC20 ? 18 : 0,
         }}
       />
     </Fragment>

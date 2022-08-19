@@ -24,7 +24,6 @@ import {
   IContract,
   IContractSearchDto,
   ITemplate,
-  ModuleType,
 } from "@framework/types";
 
 import { Erc20TokenEditDialog } from "./edit";
@@ -114,7 +113,7 @@ export const Erc20Contract: FC = () => {
                   contract={contract}
                   disabled={
                     contract.contractStatus === ContractStatus.INACTIVE ||
-                    contract.contractModule === ModuleType.EXTERNAL
+                    contract.contractFeatures.includes(ContractFeatures.EXTERNAL)
                   }
                   actions={[
                     ContractActions.SNAPSHOT,

@@ -3,14 +3,18 @@ import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOff } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
+import { IContract } from "@framework/types";
+
 import { AccessListUnBlacklistDialog } from "./edit";
 
 export interface IUnBlacklistMenuItemProps {
-  address: string;
+  contract: IContract;
 }
 
 export const UnBlacklistMenuItem: FC<IUnBlacklistMenuItemProps> = props => {
-  const { address } = props;
+  const {
+    contract: { address },
+  } = props;
 
   const [isUnBlacklistDialogOpen, setIsUnBlacklistDialogOpen] = useState(false);
 

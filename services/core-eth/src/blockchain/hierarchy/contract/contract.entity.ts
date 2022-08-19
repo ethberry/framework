@@ -26,6 +26,9 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   @Column({ type: "varchar" })
   public baseTokenURI: string;
 
+  @Column({ type: "boolean" })
+  public isPaused: boolean;
+
   @Column({
     type: "enum",
     enum: ContractStatus,

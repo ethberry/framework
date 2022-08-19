@@ -163,6 +163,8 @@
       "percent": "%"
     },
     "buttons": {
+      "pause": "Pause",
+      "unpause": "Unpause",
       "accept": "Accept",
       "add": "Add",
       "blacklist": "Blacklist",
