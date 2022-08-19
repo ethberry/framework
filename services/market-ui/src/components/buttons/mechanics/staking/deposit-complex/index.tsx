@@ -9,6 +9,7 @@ import { IStakingRule, StakingStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
+
 import { getEthPrice } from "../../../../../utils/money";
 import { IStakingDepositDto, StakingDepositDialog } from "./dialog";
 
@@ -23,7 +24,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
 
   const { formatMessage } = useIntl();
 
-  const metaDeposit = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
     return contract.deposit(rule.externalId, values.blockchainId, {
       value: getEthPrice(rule.deposit),
@@ -35,7 +36,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   };
 
   const handleDepositConfirm = (values: IStakingDepositDto) => {
-    return metaDeposit(rule, values);
+    return metaFn(rule, values);
   };
 
   const handleDeployCancel = () => {
@@ -48,7 +49,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
 
   return (
     <Fragment>
-      <Tooltip title={formatMessage({ id: "pages.staking.rules.deposit" })}>
+      <Tooltip title={formatMessage({ id: "form.tips.deposit" })}>
         <IconButton onClick={handleDeposit} data-testid="StakeDepositComplexButton">
           <Savings />
         </IconButton>

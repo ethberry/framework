@@ -28,6 +28,7 @@
     "delete": "Delete `{title}`?",
     "deposit": "Deposit",
     "edit": "Edit",
+    "reward": "Reward",
     "view": "View"
   },
   "enums": {
@@ -122,6 +123,7 @@
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
+      "breakLastPeriod": "Break last period",
       "collectionId": "Collection",
       "confirm": "Confirm",
       "contractId": "Contract",
@@ -161,7 +163,8 @@
       "tokenIds": "Tokens",
       "tokenType": "Type",
       "type": "Type",
-      "updatedAt": "Updated"
+      "updatedAt": "Updated",
+      "withdrawDeposit": "Withdraw deposit"
     },
     "placeholders": {
       "address": "0x...",
@@ -187,9 +190,11 @@
     "tips": {
       "add": "Add",
       "delete": "Delete",
+      "deposit": "Deposit",
       "edit": "Edit",
       "redeem": "Redeem",
-      "release": "Release"
+      "release": "Release",
+      "reward": "Reward"
     },
     "validations": {
       "badInput": "{label} is invalid",

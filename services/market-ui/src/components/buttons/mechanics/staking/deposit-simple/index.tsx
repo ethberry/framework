@@ -43,7 +43,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
   }
 
   return (
-    <Tooltip title={formatMessage({ id: "pages.staking.rules.deposit" })}>
+    <Tooltip title={formatMessage({ id: "form.tips.deposit" })}>
       <IconButton onClick={handleDeposit(rule)} data-testid="StakeDepositSimpleButton">
         <Savings />
       </IconButton>

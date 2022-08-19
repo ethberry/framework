@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { StakesSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
-import { StakingRewardButton } from "../../../../components/buttons/mechanics/staking/reward";
+import { StakingRewardButton } from "../../../../components/buttons";
 
 export const StakingStakes: FC = () => {
   const {
