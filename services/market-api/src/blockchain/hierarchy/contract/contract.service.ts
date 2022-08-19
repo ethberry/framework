@@ -27,6 +27,9 @@ export class ContractService {
 
     const queryBuilder = this.contractEntityRepository.createQueryBuilder("contract");
 
+    // this filters out contract without templates
+    queryBuilder.innerJoinAndSelect("contract.templates", "template");
+
     queryBuilder.select();
 
     queryBuilder.andWhere("contract.contractType = :contractType", {
