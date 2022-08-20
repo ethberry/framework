@@ -11,7 +11,7 @@ import {
   TAccessListEventData,
 } from "@framework/types";
 
-import { AccessListHistoryService } from "./access-list-history/access-list-history.service";
+import { AccessListHistoryService } from "./history/history.service";
 import { AccessListService } from "./access-list.service";
 
 @Injectable()

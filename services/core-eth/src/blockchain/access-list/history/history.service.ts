@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { AccessListHistoryEntity } from "./access-list-history.entity";
+import { AccessListHistoryEntity } from "./history.entity";
 
 @Injectable()
 export class AccessListHistoryService {

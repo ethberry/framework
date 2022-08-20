@@ -9,7 +9,7 @@ import { AccessControlModule } from "../../../access-control/access-control.modu
 import { AccessListModule } from "../../../access-list/access-list.module";
 import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
 import { AccessListServiceEth } from "../../../access-list/access-list.service.eth";
-import { AccessListHistoryModule } from "../../../access-list/access-list-history/access-list-history.module";
+import { AccessListHistoryModule } from "../../../access-list/history/history.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";

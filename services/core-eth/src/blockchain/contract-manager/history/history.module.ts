@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ContractManagerHistoryService } from "./contract-manager-history.service";
-import { ContractManagerHistoryEntity } from "./contract-manager-history.entity";
+import { ContractManagerHistoryService } from "./history.service";
+import { ContractManagerHistoryEntity } from "./history.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([ContractManagerHistoryEntity])],

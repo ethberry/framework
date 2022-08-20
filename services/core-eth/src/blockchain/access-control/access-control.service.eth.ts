@@ -11,7 +11,7 @@ import {
   TAccessControlEventData,
 } from "@framework/types";
 
-import { AccessControlHistoryService } from "./access-control-history/access-control-history.service";
+import { AccessControlHistoryService } from "./history/history.service";
 import { AccessControlService } from "./access-control.service";
 import { ContractManagerService } from "../contract-manager/contract-manager.service";
 

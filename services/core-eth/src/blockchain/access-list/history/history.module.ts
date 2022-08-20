@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { AccessListHistoryService } from "./access-list-history.service";
-import { AccessListHistoryEntity } from "./access-list-history.entity";
+import { AccessListHistoryService } from "./history.service";
+import { AccessListHistoryEntity } from "./history.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([AccessListHistoryEntity])],

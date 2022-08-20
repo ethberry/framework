@@ -26,7 +26,7 @@ import {
   VestingContractTemplate,
 } from "@framework/types";
 
-import { ContractManagerHistoryService } from "./contract-manager-history/contract-manager-history.service";
+import { ContractManagerHistoryService } from "./history/history.service";
 import { VestingService } from "../mechanics/vesting/vesting.service";
 import { Erc20LogService } from "../tokens/erc20/token/token-log/token-log.service";
 import { Erc721TokenLogService } from "../tokens/erc721/token/token-log/token-log.service";

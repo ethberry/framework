@@ -1,7 +1,7 @@
 import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
-import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/contract-manager-history/contract-manager-history.entity";
+import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/history/history.entity";
 import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
@@ -9,7 +9,7 @@ import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
 import { MysteryboxBoxEntity } from "./blockchain/mechanics/mysterybox/mysterybox.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
-import { AccessControlHistoryEntity } from "./blockchain/access-control/access-control-history/access-control-history.entity";
+import { AccessControlHistoryEntity } from "./blockchain/access-control/history/history.entity";
 import { StakingHistoryEntity } from "./blockchain/mechanics/staking/history/history.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";

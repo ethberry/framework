@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractManagerHistoryEntity } from "./contract-manager-history.entity";
+import { ContractManagerHistoryEntity } from "./history.entity";
 
 @Injectable()
 export class ContractManagerHistoryService {

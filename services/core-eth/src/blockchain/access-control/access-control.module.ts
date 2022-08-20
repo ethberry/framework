@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AccessControlService } from "./access-control.service";
 import { AccessControlEntity } from "./access-control.entity";
-import { AccessControlHistoryModule } from "./access-control-history/access-control-history.module";
+import { AccessControlHistoryModule } from "./history/history.module";
 import { AccessControlServiceEth } from "./access-control.service.eth";
 import { ContractManagerModule } from "../contract-manager/contract-manager.module";
 import { AccessControlControllerEth } from "./access-control.controller.eth";
