@@ -5,18 +5,15 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
-  ContractEventType,
   IRandomRequest,
-  ITokenApprove,
-  ITokenApprovedForAll,
   ITokenMintRandom,
   ITokenTransfer,
-  TContractEventData,
   TokenAttributes,
   TokenRarity,
   TokenStatus,
 } from "@framework/types";
 
+import { ABI } from "../../erc721/token/token-log/interfaces";
 import { getMetadata } from "../../../../common/utils";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
@@ -24,22 +21,24 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
-import { ABI } from "../../erc721/token/token-log/interfaces";
+import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 
 @Injectable()
-export class Erc998TokenServiceEth {
+export class Erc998TokenServiceEth extends TokenServiceEth {
   constructor(
     @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    private readonly jsonRpcProvider: providers.JsonRpcProvider,
-    private readonly contractManagerService: ContractManagerService,
-    private readonly tokenService: TokenService,
-    private readonly balanceService: BalanceService,
-    private readonly templateService: TemplateService,
-    private readonly contractHistoryService: ContractHistoryService,
-    private readonly contractService: ContractService,
-  ) {}
+    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly contractManagerService: ContractManagerService,
+    protected readonly tokenService: TokenService,
+    protected readonly balanceService: BalanceService,
+    protected readonly templateService: TemplateService,
+    protected readonly contractHistoryService: ContractHistoryService,
+    protected readonly contractService: ContractService,
+  ) {
+    super(loggerService, contractManagerService, tokenService, contractHistoryService);
+  }
 
   public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
     const {
@@ -106,24 +105,6 @@ export class Erc998TokenServiceEth {
     //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
   }
 
-  public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
-    const {
-      args: { tokenId },
-    } = event;
-
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
-
-    if (!erc998TokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    await this.updateHistory(event, context, erc998TokenEntity.id);
-  }
-
-  public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
     const {
       args: { to, tokenId, templateId, rarity, mysteryboxId },
@@ -165,26 +146,5 @@ export class Erc998TokenServiceEth {
 
   public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-  }
-
-  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log, erc998TokenId?: number) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), Erc998TokenServiceEth.name);
-
-    const { args, name } = event;
-    const { transactionHash, address, blockNumber } = context;
-
-    await this.contractHistoryService.create({
-      address: address.toLowerCase(),
-      transactionHash: transactionHash.toLowerCase(),
-      eventType: name as ContractEventType,
-      eventData: args,
-      // ApprovedForAll has no tokenId
-      tokenId: erc998TokenId || null,
-    });
-
-    await this.contractManagerService.updateLastBlockByAddr(
-      context.address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
   }
 }

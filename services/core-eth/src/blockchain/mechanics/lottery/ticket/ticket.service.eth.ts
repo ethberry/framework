@@ -3,7 +3,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "@ethersproject/abstract-provider";
 
 import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IPurchase, LotteryEventType, TLotteryEventData } from "@framework/types";
+import { ILotteryPurchase, LotteryEventType, TLotteryEventData } from "@framework/types";
 
 import { LotteryTicketService } from "./ticket.service";
 import { LotteryHistoryService } from "../history/history.service";
@@ -19,7 +19,7 @@ export class LotteryTicketServiceEth {
     private readonly lotteryHistoryService: LotteryHistoryService,
   ) {}
 
-  public async purchase(event: ILogEvent<IPurchase>, context: Log): Promise<void> {
+  public async purchase(event: ILogEvent<ILotteryPurchase>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     const {

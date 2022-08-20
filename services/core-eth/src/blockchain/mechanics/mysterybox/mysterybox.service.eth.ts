@@ -4,43 +4,37 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
-import {
-  ContractEventType,
-  IMysteryboxUnpack,
-  ITokenApprove,
-  ITokenApprovedForAll,
-  ITokenTransfer,
-  TContractEventData,
-  TokenAttributes,
-  TokenStatus,
-} from "@framework/types";
+import { IMysteryboxUnpack, ITokenTransfer, TokenAttributes, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../common/utils";
 
+import { ABI } from "../../tokens/erc721/token/token-log/interfaces";
 import { ContractManagerService } from "../../contract-manager/contract-manager.service";
 import { ContractHistoryService } from "../../contract-history/contract-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
-import { ABI } from "../../tokens/erc721/token/token-log/interfaces";
 import { MysteryboxService } from "./mysterybox.service";
+import { TokenServiceEth } from "../../hierarchy/token/token.service.eth";
 
 @Injectable()
-export class MysteryboxServiceEth {
+export class MysteryboxServiceEth extends TokenServiceEth {
   constructor(
     @Inject(Logger)
-    private readonly loggerService: LoggerService,
+    protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    private readonly jsonRpcProvider: providers.JsonRpcProvider,
-    private readonly contractManagerService: ContractManagerService,
-    private readonly tokenService: TokenService,
-    private readonly templateService: TemplateService,
-    private readonly balanceService: BalanceService,
-    private readonly contractHistoryService: ContractHistoryService,
-    private readonly contractService: ContractService,
-    private readonly mysteryboxService: MysteryboxService,
-  ) {}
+    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    protected readonly contractManagerService: ContractManagerService,
+    protected readonly tokenService: TokenService,
+    protected readonly templateService: TemplateService,
+    protected readonly balanceService: BalanceService,
+    protected readonly contractHistoryService: ContractHistoryService,
+    protected readonly contractService: ContractService,
+    protected readonly mysteryboxService: MysteryboxService,
+  ) {
+    super(loggerService, contractManagerService, tokenService, contractHistoryService);
+  }
 
   public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
     const {
@@ -113,24 +107,6 @@ export class MysteryboxServiceEth {
     //   : await mysteryboxTokenEntity.mysterybox.template.save();
   }
 
-  public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
-    const {
-      args: { tokenId },
-    } = event;
-
-    const mysteryboxTokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
-
-    if (!mysteryboxTokenEntity) {
-      throw new NotFoundException("tokenNotFound");
-    }
-
-    await this.updateHistory(event, context, mysteryboxTokenEntity.id);
-  }
-
-  public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
   public async unpack(event: ILogEvent<IMysteryboxUnpack>, context: Log): Promise<void> {
     const {
       args: { collection, tokenId },
@@ -149,26 +125,5 @@ export class MysteryboxServiceEth {
     }
 
     await this.updateHistory(event, context, TokenEntity.id);
-  }
-
-  private async updateHistory(event: ILogEvent<TContractEventData>, context: Log, TokenId?: number) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), MysteryboxServiceEth.name);
-
-    const { args, name } = event;
-    const { transactionHash, address, blockNumber } = context;
-
-    await this.contractHistoryService.create({
-      address: address.toLowerCase(),
-      transactionHash: transactionHash.toLowerCase(),
-      eventType: name as ContractEventType,
-      eventData: args,
-      // ApprovedForAll has no tokenId
-      tokenId: TokenId || null,
-    });
-
-    await this.contractManagerService.updateLastBlockByAddr(
-      context.address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
   }
 }

@@ -44,9 +44,6 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("token.balance", "balance");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    // queryBuilder.leftJoinAndSelect("token.erc998Mysterybox", "mysterybox");
-    // queryBuilder.leftJoinAndSelect("mysterybox.erc998Collection", "collectionMysterybox");
-    // queryBuilder.leftJoinAndSelect("mysterybox.erc998Template", "templateMysterybox");
 
     queryBuilder.andWhere("token.tokenId = :tokenId", {
       tokenId,
