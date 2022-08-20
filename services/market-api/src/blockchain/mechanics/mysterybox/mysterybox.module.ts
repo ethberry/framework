@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 
 import { MysteryboxContractModule } from "./contract/contract.module";
 import { MysteryboxTokenModule } from "./token/token.module";
-import { MysteryboxBoxModule } from "./mysterybox/mysterybox.module";
+import { MysteryboxBoxModule } from "./box/box.module";
 import { MysteryboxSignModule } from "./sign/sign.module";
 
 @Module({

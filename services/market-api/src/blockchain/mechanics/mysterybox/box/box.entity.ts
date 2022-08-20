@@ -4,11 +4,11 @@ import { ns } from "@framework/constants";
 import { IMysterybox, MysteryboxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
 
-import { AssetEntity } from "../../asset/asset.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
+import { AssetEntity } from "../../asset/asset.entity";
 
 @Entity({ schema: ns, name: "mysterybox" })
-export class MysteryboxEntity extends SearchableEntity implements IMysterybox {
+export class MysteryboxBoxEntity extends SearchableEntity implements IMysterybox {
   @Column({ type: "varchar" })
   public imageUrl: string;
 

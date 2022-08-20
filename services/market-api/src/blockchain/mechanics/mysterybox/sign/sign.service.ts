@@ -7,8 +7,8 @@ import { IAsset, IParams, SignerService } from "@gemunion/nest-js-module-exchang
 
 import { ISignMysteryboxDto } from "./interfaces";
 import { TemplateService } from "../../../hierarchy/template/template.service";
-import { MysteryboxBoxService } from "../mysterybox/mysterybox.service";
-import { MysteryboxEntity } from "../mysterybox/mysterybox.entity";
+import { MysteryboxBoxService } from "../box/box.service";
+import { MysteryboxBoxEntity } from "../box/box.entity";
 
 @Injectable()
 export class MysteryboxSignService {
@@ -48,7 +48,7 @@ export class MysteryboxSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt };
   }
 
-  public async getSignature(account: string, params: IParams, mysteryboxEntity: MysteryboxEntity): Promise<string> {
+  public async getSignature(account: string, params: IParams, mysteryboxEntity: MysteryboxBoxEntity): Promise<string> {
     return this.signerService.getManyToManySignature(
       account,
       params,

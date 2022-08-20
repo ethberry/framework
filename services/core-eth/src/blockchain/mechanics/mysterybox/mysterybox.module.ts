@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
-import { MysteryboxEntity } from "./mysterybox.entity";
+import { MysteryboxBoxEntity } from "./mysterybox.entity";
 import { MysteryboxService } from "./mysterybox.service";
 import { MysteryboxLogModule } from "./log/log.module";
 import { MysteryboxControllerEth } from "./mysterybox.controller.eth";
@@ -28,7 +28,7 @@ import { BalanceModule } from "../../hierarchy/balance/balance.module";
     TemplateModule,
     ContractHistoryModule,
     ContractModule,
-    TypeOrmModule.forFeature([MysteryboxEntity]),
+    TypeOrmModule.forFeature([MysteryboxBoxEntity]),
   ],
   providers: [Logger, MysteryboxService, MysteryboxServiceEth, ethersRpcProvider],
   controllers: [MysteryboxControllerEth],

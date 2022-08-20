@@ -2,21 +2,21 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { MysteryboxEntity } from "./mysterybox.entity";
+import { MysteryboxBoxEntity } from "./box.entity";
 import { UserEntity } from "../../../../user/user.entity";
 import { ContractStatus, IMysteryboxSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 @Injectable()
 export class MysteryboxBoxService {
   constructor(
-    @InjectRepository(MysteryboxEntity)
-    private readonly mysteryboxEntityRepository: Repository<MysteryboxEntity>,
+    @InjectRepository(MysteryboxBoxEntity)
+    private readonly mysteryboxEntityRepository: Repository<MysteryboxBoxEntity>,
   ) {}
 
   public async search(
     dto: Partial<IMysteryboxSearchDto>,
     userEntity: UserEntity,
-  ): Promise<[Array<MysteryboxEntity>, number]> {
+  ): Promise<[Array<MysteryboxBoxEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
     const queryBuilder = this.mysteryboxEntityRepository.createQueryBuilder("mysterybox");
 
@@ -104,13 +104,13 @@ export class MysteryboxBoxService {
   }
 
   public findOne(
-    where: FindOptionsWhere<MysteryboxEntity>,
-    options?: FindOneOptions<MysteryboxEntity>,
-  ): Promise<MysteryboxEntity | null> {
+    where: FindOptionsWhere<MysteryboxBoxEntity>,
+    options?: FindOneOptions<MysteryboxBoxEntity>,
+  ): Promise<MysteryboxBoxEntity | null> {
     return this.mysteryboxEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<MysteryboxEntity>): Promise<MysteryboxEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<MysteryboxBoxEntity>): Promise<MysteryboxBoxEntity | null> {
     return this.findOne(where, {
       join: {
         alias: "mysterybox",
@@ -131,7 +131,7 @@ export class MysteryboxBoxService {
     });
   }
 
-  public async autocomplete(): Promise<Array<MysteryboxEntity>> {
+  public async autocomplete(): Promise<Array<MysteryboxBoxEntity>> {
     return this.mysteryboxEntityRepository.find({
       select: {
         id: true,

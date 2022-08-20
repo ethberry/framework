@@ -7,21 +7,21 @@ import { IMysteryboxSearchDto, MysteryboxStatus } from "@framework/types";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { AssetService } from "../../asset/asset.service";
 
-import { MysteryboxEntity } from "./mysterybox.entity";
+import { MysteryboxBoxEntity } from "./box.entity";
 import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
-export class MysteryboxService {
+export class MysteryboxBoxService {
   constructor(
-    @InjectRepository(MysteryboxEntity)
-    private readonly mysteryboxEntityRepository: Repository<MysteryboxEntity>,
+    @InjectRepository(MysteryboxBoxEntity)
+    private readonly mysteryboxEntityRepository: Repository<MysteryboxBoxEntity>,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IMysteryboxSearchDto): Promise<[Array<MysteryboxEntity>, number]> {
+  public async search(dto: IMysteryboxSearchDto): Promise<[Array<MysteryboxBoxEntity>, number]> {
     const { query, mysteryboxStatus, skip, take } = dto;
 
     const queryBuilder = this.mysteryboxEntityRepository.createQueryBuilder("mysterybox");
@@ -62,7 +62,7 @@ export class MysteryboxService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<MysteryboxEntity>> {
+  public async autocomplete(): Promise<Array<MysteryboxBoxEntity>> {
     return this.mysteryboxEntityRepository.find({
       select: {
         id: true,
@@ -72,13 +72,13 @@ export class MysteryboxService {
   }
 
   public findOne(
-    where: FindOptionsWhere<MysteryboxEntity>,
-    options?: FindOneOptions<MysteryboxEntity>,
-  ): Promise<MysteryboxEntity | null> {
+    where: FindOptionsWhere<MysteryboxBoxEntity>,
+    options?: FindOneOptions<MysteryboxBoxEntity>,
+  ): Promise<MysteryboxBoxEntity | null> {
     return this.mysteryboxEntityRepository.findOne({ where, ...options });
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<MysteryboxEntity>): Promise<MysteryboxEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<MysteryboxBoxEntity>): Promise<MysteryboxBoxEntity | null> {
     return this.findOne(where, {
       join: {
         alias: "mysterybox",
@@ -98,9 +98,9 @@ export class MysteryboxService {
   }
 
   public async update(
-    where: FindOptionsWhere<MysteryboxEntity>,
+    where: FindOptionsWhere<MysteryboxBoxEntity>,
     dto: Partial<IMysteryboxUpdateDto>,
-  ): Promise<MysteryboxEntity> {
+  ): Promise<MysteryboxBoxEntity> {
     const { price, item, ...rest } = dto;
 
     const mysteryboxEntity = await this.findOne(where, {
@@ -133,7 +133,7 @@ export class MysteryboxService {
     return mysteryboxEntity.save();
   }
 
-  public async create(dto: IMysteryboxCreateDto): Promise<MysteryboxEntity> {
+  public async create(dto: IMysteryboxCreateDto): Promise<MysteryboxBoxEntity> {
     const { price, item, contractId } = dto;
 
     const priceEntity = await this.assetService.create({
@@ -166,7 +166,7 @@ export class MysteryboxService {
     return this.mysteryboxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
-  public async delete(where: FindOptionsWhere<MysteryboxEntity>): Promise<MysteryboxEntity> {
+  public async delete(where: FindOptionsWhere<MysteryboxBoxEntity>): Promise<MysteryboxBoxEntity> {
     return this.update(where, { mysteryboxStatus: MysteryboxStatus.INACTIVE });
   }
 }

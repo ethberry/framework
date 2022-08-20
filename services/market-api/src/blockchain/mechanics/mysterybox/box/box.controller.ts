@@ -3,8 +3,8 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 
 import { MysteryboxSearchDto } from "./dto";
-import { MysteryboxBoxService } from "./mysterybox.service";
-import { MysteryboxEntity } from "./mysterybox.entity";
+import { MysteryboxBoxService } from "./box.service";
+import { MysteryboxBoxEntity } from "./box.entity";
 import { UserEntity } from "../../../../user/user.entity";
 import { TemplateNewDto } from "../../../hierarchy/template/dto/new";
 
@@ -18,12 +18,12 @@ export class MysteryboxBoxController {
   public search(
     @Query() dto: MysteryboxSearchDto,
     @User() userEntity: UserEntity,
-  ): Promise<[Array<MysteryboxEntity>, number]> {
+  ): Promise<[Array<MysteryboxBoxEntity>, number]> {
     return this.mysteryboxBoxService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")
-  public autocomplete(): Promise<Array<MysteryboxEntity>> {
+  public autocomplete(): Promise<Array<MysteryboxBoxEntity>> {
     return this.mysteryboxBoxService.autocomplete();
   }
 
@@ -32,13 +32,13 @@ export class MysteryboxBoxController {
   public getNewTemplates(
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
-  ): Promise<[Array<MysteryboxEntity>, number]> {
+  ): Promise<[Array<MysteryboxBoxEntity>, number]> {
     return this.mysteryboxBoxService.search({ take: 10 }, userEntity);
   }
 
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("id", ParseIntPipe) id: number): Promise<MysteryboxEntity | null> {
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<MysteryboxBoxEntity | null> {
     return this.mysteryboxBoxService.findOneWithRelations({ id });
   }
 }

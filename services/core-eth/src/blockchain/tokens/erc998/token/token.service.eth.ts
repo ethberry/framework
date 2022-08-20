@@ -1,5 +1,4 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
@@ -29,23 +28,18 @@ import { ABI } from "../../erc721/token/token-log/interfaces";
 
 @Injectable()
 export class Erc998TokenServiceEth {
-  private itemsAddr: string;
-
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     private readonly jsonRpcProvider: providers.JsonRpcProvider,
-    private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
     private readonly templateService: TemplateService,
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
-  ) {
-    this.itemsAddr = configService.get<string>("ERC998_ITEM_ADDR", "");
-  }
+  ) {}
 
   public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
     const {

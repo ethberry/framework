@@ -8,7 +8,7 @@ import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ClaimEntity } from "../../claim/claim.entity";
 import { CraftEntity } from "../../craft/craft.entity";
 import { GradeEntity } from "../../grade/grade.entity";
-import { MysteryboxEntity } from "../../mysterybox/mysterybox.entity";
+import { MysteryboxBoxEntity } from "../../mysterybox/mysterybox.entity";
 
 @Entity({ schema: ns, name: "exchange_history" })
 export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchangeHistory {
@@ -63,6 +63,6 @@ export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchange
   public mysteryboxId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => MysteryboxEntity)
-  public mysterybox?: MysteryboxEntity;
+  @ManyToOne(_type => MysteryboxBoxEntity)
+  public mysterybox?: MysteryboxBoxEntity;
 }

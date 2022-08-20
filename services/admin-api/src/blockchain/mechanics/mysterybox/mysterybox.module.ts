@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { MysteryboxBoxModule } from "./mysterybox/mysterybox.module";
+import { MysteryboxBoxModule } from "./box/box.module";
 import { MysteryboxContractModule } from "./contract/contract.module";
 
 @Module({

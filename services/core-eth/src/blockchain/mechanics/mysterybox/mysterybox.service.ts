@@ -2,19 +2,19 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { MysteryboxEntity } from "./mysterybox.entity";
+import { MysteryboxBoxEntity } from "./mysterybox.entity";
 
 @Injectable()
 export class MysteryboxService {
   constructor(
-    @InjectRepository(MysteryboxEntity)
-    private readonly mysteryboxEntityRepository: Repository<MysteryboxEntity>,
+    @InjectRepository(MysteryboxBoxEntity)
+    private readonly mysteryboxEntityRepository: Repository<MysteryboxBoxEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<MysteryboxEntity>,
-    options?: FindOneOptions<MysteryboxEntity>,
-  ): Promise<MysteryboxEntity | null> {
+    where: FindOptionsWhere<MysteryboxBoxEntity>,
+    options?: FindOneOptions<MysteryboxBoxEntity>,
+  ): Promise<MysteryboxBoxEntity | null> {
     return this.mysteryboxEntityRepository.findOne({ where, ...options });
   }
 }

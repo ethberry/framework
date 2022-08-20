@@ -1,5 +1,4 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
@@ -29,14 +28,11 @@ import { MysteryboxService } from "./mysterybox.service";
 
 @Injectable()
 export class MysteryboxServiceEth {
-  private itemsAddr: string;
-
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     private readonly jsonRpcProvider: providers.JsonRpcProvider,
-    private readonly configService: ConfigService,
     private readonly contractManagerService: ContractManagerService,
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
@@ -44,9 +40,7 @@ export class MysteryboxServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
     private readonly contractService: ContractService,
     private readonly mysteryboxService: MysteryboxService,
-  ) {
-    this.itemsAddr = configService.get<string>("ERC721_RANDOM_ADDR", "");
-  }
+  ) {}
 
   public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
     const {

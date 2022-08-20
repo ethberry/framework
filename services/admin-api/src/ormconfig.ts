@@ -23,7 +23,7 @@ import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-compone
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { MysteryboxEntity } from "./blockchain/mechanics/mysterybox/mysterybox/mysterybox.entity";
+import { MysteryboxBoxEntity } from "./blockchain/mechanics/mysterybox/box/box.entity";
 import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
@@ -179,7 +179,7 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     BalanceEntity,
     ClaimEntity,
-    MysteryboxEntity,
+    MysteryboxBoxEntity,
     CraftEntity,
     GradeEntity,
     CompositionEntity,
