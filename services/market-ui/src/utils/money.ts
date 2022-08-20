@@ -9,7 +9,7 @@ export const formatPrice = (asset?: IAsset): string => {
   return (
     asset?.components
       .map(component => formatEther(component.amount, component.contract!.decimals, component.contract!.symbol))
-      .join("") || ""
+      .join(", ") || ""
   );
 };
 

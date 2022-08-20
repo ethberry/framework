@@ -177,6 +177,7 @@
       "deploy": "Deploy",
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
+      "export": "Export",
       "finishRound": "Finish round",
       "forgot": "Forgot password?",
       "fund": "Fund",
@@ -439,7 +440,7 @@
           "title": "CoinGecko"
         },
         "marketplace": {
-          "insights": "Insights",
+          "report": "Report",
           "title": "Marketplace"
         }
       },
@@ -482,15 +483,6 @@
         }
       },
       "title": "Dashboard"
-    },
-    "marketplace": {
-      "title": "Marketplace insights",
-      "insights": {
-        "id": "ID",
-        "title": "title",
-        "createdAt": "Date",
-        "price": "Price"
-      }
     },
     "drops": {
       "title": "Drops"
@@ -544,6 +536,15 @@
         "title": "Rounds"
       },
       "title": "Lottery"
+    },
+    "marketplace": {
+      "report": {
+        "createdAt": "Date",
+        "id": "ID",
+        "price": "Price",
+        "title": "title"
+      },
+      "title": "Marketplace report"
     },
     "mysterybox-boxes": {
       "title": "Mysterybox Boxes"

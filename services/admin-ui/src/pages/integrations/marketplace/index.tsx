@@ -1,16 +1,16 @@
 import { FC, Fragment } from "react";
 import { Button } from "@mui/material";
-import { FilterList } from "@mui/icons-material";
+import { CloudDownload, FilterList } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { IAsset, IMarketplaceInsightsSearchDto, IToken } from "@framework/types";
+import { IAsset, IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
-import { MarketplaceInsightsSearchForm } from "./form";
+import { MarketplaceReportSearchForm } from "./form";
 import { formatPrice } from "../../../utils/money";
 
 export const Marketplace: FC = () => {
@@ -24,8 +24,8 @@ export const Marketplace: FC = () => {
     handleSearch,
     handleChangePage,
     handleChangeRowsPerPage,
-  } = useCollection<IToken, IMarketplaceInsightsSearchDto>({
-    baseUrl: "/marketplace/insights",
+  } = useCollection<IToken, IMarketplaceReportSearchDto>({
+    baseUrl: "/marketplace/report",
     search: {
       contractIds: [],
       templateIds: [],
@@ -34,32 +34,43 @@ export const Marketplace: FC = () => {
     },
   });
 
+  const { fn } = useApiCall(async (api, values) => {
+    return api.fetchFile({
+      url: "/marketplace/export",
+      data: values,
+    });
+  });
+
   const { formatMessage } = useIntl();
+
+  const handleExport = (): Promise<void> => {
+    return fn(void 0, search);
+  };
 
   // prettier-ignore
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.marketplace.insights.id" }),
+      headerName: formatMessage({ id: "pages.marketplace.report.id" }),
       sortable: true,
       flex: 0
     },
     {
       field: "title",
-      headerName: formatMessage({ id: "pages.marketplace.insights.title" }),
+      headerName: formatMessage({ id: "pages.marketplace.report.title" }),
       sortable: false,
       flex: 1
     },
     {
       field: "createdAt",
-      headerName: formatMessage({ id: "pages.marketplace.insights.createdAt" }),
+      headerName: formatMessage({ id: "pages.marketplace.report.createdAt" }),
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1
     },
     {
       field: "price",
-      headerName: formatMessage({ id: "pages.marketplace.insights.price" }),
+      headerName: formatMessage({ id: "pages.marketplace.report.price" }),
       sortable: true,
       valueFormatter: ({ value }: { value: IAsset }) => formatPrice(value),
       flex: 1
@@ -77,9 +88,12 @@ export const Marketplace: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
+        <Button startIcon={<CloudDownload />} onClick={handleExport}>
+          <FormattedMessage id="form.buttons.export" />
+        </Button>
       </PageHeader>
 
-      <MarketplaceInsightsSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <MarketplaceReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <DataGrid
         pagination

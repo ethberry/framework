@@ -24,12 +24,12 @@ export const Marketplace: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/marketplace/insights">
+        <ListItem button component={RouterLink} to="/marketplace/report">
           <ListItemIcon>
             <PeopleAlt />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.insights" />
+            <FormattedMessage id="pages.dashboard.integrations.marketplace.report" />
           </ListItemText>
         </ListItem>
       </List>

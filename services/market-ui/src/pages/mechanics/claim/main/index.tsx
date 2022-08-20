@@ -38,7 +38,7 @@ export const Claim: FC = () => {
 
   const fetchClaim = useMetamask(
     async (web3Context: Web3ContextType): Promise<void> => {
-      return fn(undefined, web3Context)
+      return fn(void 0, web3Context)
         .then((json: IPaginationResult<IClaim>) => {
           setClaims(json.rows);
         })

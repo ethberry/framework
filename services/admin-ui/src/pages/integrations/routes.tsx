@@ -18,7 +18,7 @@ export const integrations: Array<RouteObject> = [
     children: [{ index: true, element: <CoinGecko /> }],
   },
   {
-    path: "/marketplace/insights",
+    path: "/marketplace/report",
     element: <Protected />,
     children: [{ index: true, element: <Marketplace /> }],
   },

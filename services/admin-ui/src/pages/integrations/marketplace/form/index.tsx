@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IMarketplaceInsightsSearchDto, TokenType } from "@framework/types";
+import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -10,13 +10,13 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { useStyles } from "./styles";
 import { TemplateInput } from "./template-input";
 
-interface IMarketplaceInsightsSearchFormProps {
-  onSubmit: (values: IMarketplaceInsightsSearchDto) => Promise<void>;
-  initialValues: IMarketplaceInsightsSearchDto;
+interface IMarketplaceReportSearchFormProps {
+  onSubmit: (values: IMarketplaceReportSearchDto) => Promise<void>;
+  initialValues: IMarketplaceReportSearchDto;
   open: boolean;
 }
 
-export const MarketplaceInsightsSearchForm: FC<IMarketplaceInsightsSearchFormProps> = props => {
+export const MarketplaceReportSearchForm: FC<IMarketplaceReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();

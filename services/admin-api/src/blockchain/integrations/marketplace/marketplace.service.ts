@@ -1,10 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, Repository } from "typeorm";
+import { parse } from "json2csv";
 
-import { IMarketplaceInsightsSearchDto } from "@framework/types";
+import { IMarketplaceReportSearchDto } from "@framework/types";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { formatPrice } from "./marketplace.utils";
 
 @Injectable()
 export class MarketplaceService {
@@ -13,7 +15,7 @@ export class MarketplaceService {
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
-  public async search(dto: IMarketplaceInsightsSearchDto): Promise<[Array<TokenEntity>, number]> {
+  public async search(dto: Partial<IMarketplaceReportSearchDto>): Promise<[Array<TokenEntity>, number]> {
     const { query, contractIds, templateIds, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
@@ -21,6 +23,8 @@ export class MarketplaceService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
+
+    // TODO use actual price
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
@@ -75,5 +79,23 @@ export class MarketplaceService {
     });
 
     return queryBuilder.getManyAndCount();
+  }
+
+  public async export(dto: IMarketplaceReportSearchDto): Promise<string> {
+    const { skip: _skip, take: _take, ...rest } = dto;
+
+    const [list] = await this.search(rest);
+
+    const headers = ["id", "title", "createdAt", "price"];
+
+    return parse(
+      list.map(token => ({
+        id: token.id,
+        title: token.template.title,
+        createdAt: token.createdAt,
+        price: formatPrice(token.template.price),
+      })),
+      { fields: headers },
+    );
   }
 }
