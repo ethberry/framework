@@ -7,11 +7,11 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { ILeaderboard, LeaderboardRank } from "@framework/types";
+import { IStakingLeaderboard, StakingLeaderboardRank } from "@framework/types";
 
 export const StakingLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
-    useCollection<ILeaderboard>({
+    useCollection<IStakingLeaderboard>({
       baseUrl: "/staking/leaderboard",
       empty: {
         wallet: "",
@@ -24,19 +24,19 @@ export const StakingLeaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
+      headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
       flex: 1,
       renderCell: (cell: GridCellParams) => {
-        const row = cell.row as ILeaderboard;
+        const row = cell.row as IStakingLeaderboard;
         // @ts-ignore
         const index: number = cell.api.getRowIndex(row.id);
         return (
           <Grid container direction="row" alignItems="center">
-            {row.rank === LeaderboardRank.GOLD ? <Filter1 /> : null}
-            {row.rank === LeaderboardRank.SILVER ? <Filter2 /> : null}
-            {row.rank === LeaderboardRank.BRONZE ? <Filter3 /> : null}
-            {row.rank === LeaderboardRank.BASIC ? <Filter4 /> : null}
+            {row.rank === StakingLeaderboardRank.GOLD ? <Filter1 /> : null}
+            {row.rank === StakingLeaderboardRank.SILVER ? <Filter2 /> : null}
+            {row.rank === StakingLeaderboardRank.BRONZE ? <Filter3 /> : null}
+            {row.rank === StakingLeaderboardRank.BASIC ? <Filter4 /> : null}
             <Typography ml={1}>{index + search.skip + 1}</Typography>
           </Grid>
         );
@@ -44,19 +44,19 @@ export const StakingLeaderboard: FC = () => {
     },
     {
       field: "account",
-      headerName: formatMessage({ id: "pages.staking.leaderboard.account" }),
+      headerName: formatMessage({ id: "form.labels.account" }),
       sortable: false,
       flex: 1
     },
     {
       field: "score",
-      headerName: formatMessage({ id: "pages.staking.leaderboard.score" }),
+      headerName: formatMessage({ id: "form.labels.score" }),
       sortable: false,
       flex: 1
     },
     {
       field: "rank",
-      headerName: formatMessage({ id: "pages.staking.leaderboard.rank" }),
+      headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
       flex: 1
     }
@@ -66,7 +66,7 @@ export const StakingLeaderboard: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
-      <PageHeader message="pages.staking.leaderboard.title" />
+      <PageHeader message="form.labels.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 

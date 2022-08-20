@@ -1,5 +1,15 @@
+export enum StakingLeaderboardRank {
+  GOLD = "GOLD",
+  SILVER = "SILVER",
+  BRONZE = "BRONZE",
+  BASIC = "BASIC",
+}
+
 export interface IStakingLeaderboard {
   id: number;
-  account: string;
-  amount: string;
+  email: string;
+  wallet: string;
+  secureWallet: string;
+  rank: StakingLeaderboardRank;
+  score: number;
 }

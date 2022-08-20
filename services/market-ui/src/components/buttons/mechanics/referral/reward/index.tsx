@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract } from "ethers";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 export const ReferralRewardButton: FC = () => {
@@ -20,7 +20,7 @@ export const ReferralRewardButton: FC = () => {
     return metaFn();
   };
 
-  const getBalance = useMetamask(
+  const getBalance = useMetamaskValue(
     (web3Context: Web3ContextType) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
       return contract.getBalance(account) as Promise<string>;

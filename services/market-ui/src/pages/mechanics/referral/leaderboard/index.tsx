@@ -25,19 +25,19 @@ export const ReferralLeaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({id: "pages.referral.leaderboard.id"}),
+      headerName: formatMessage({id: "form.labels.id"}),
       sortable: true,
       flex: 0,
     },
     {
       field: "account",
-      headerName: formatMessage({id: "pages.referral.leaderboard.account"}),
+      headerName: formatMessage({id: "form.labels.account"}),
       sortable: false,
       flex: 1
     },
     {
       field: "amount",
-      headerName: formatMessage({id: "pages.referral.leaderboard.amount"}),
+      headerName: formatMessage({id: "form.labels.amount"}),
       sortable: true,
       valueFormatter: ({value}: { value: string }) => formatEther(value),
       flex: 1
@@ -48,7 +48,7 @@ export const ReferralLeaderboard: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.leaderboard"]} />
 
-      <PageHeader message="pages.referral.leaderboard.title" />
+      <PageHeader message="form.labels.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 

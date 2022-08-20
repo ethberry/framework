@@ -89,11 +89,11 @@ export class MarketplaceService {
     const headers = ["id", "title", "createdAt", "price"];
 
     return parse(
-      list.map(token => ({
-        id: token.id,
-        title: token.template.title,
-        createdAt: token.createdAt,
-        price: formatPrice(token.template.price),
+      list.map(tokenEntity => ({
+        id: tokenEntity.id,
+        title: tokenEntity.template.title,
+        createdAt: tokenEntity.createdAt,
+        price: formatPrice(tokenEntity.template.price),
       })),
       { fields: headers },
     );

@@ -248,6 +248,7 @@
       "endTimestamp": "End date",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
+      "id": "ID",
       "imageUrl": "Avatar",
       "item": "Item",
       "items": "Items",
@@ -538,12 +539,6 @@
       "title": "Lottery"
     },
     "marketplace": {
-      "report": {
-        "createdAt": "Date",
-        "id": "ID",
-        "price": "Price",
-        "title": "title"
-      },
       "title": "Marketplace report"
     },
     "mysterybox-boxes": {

@@ -1,34 +1,36 @@
-import { FC, Fragment } from "react";
-import { Button } from "@mui/material";
+import { FC } from "react";
+import { Button, Grid } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { IAsset, IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
-import { MarketplaceReportSearchForm } from "./form";
-import { formatPrice } from "../../../utils/money";
+import { formatEther } from "../../../../utils/money";
+import { ReferralReportSearchForm } from "./form";
 
-export const Marketplace: FC = () => {
+export const ReferralReport: FC = () => {
   const {
     rows,
     count,
     search,
     isLoading,
     isFiltersOpen,
-    handleToggleFilters,
     handleSearch,
+    handleToggleFilters,
     handleChangePage,
     handleChangeRowsPerPage,
-  } = useCollection<IToken, IMarketplaceReportSearchDto>({
-    baseUrl: "/marketplace/report",
+  } = useCollection<IReferralReward, IReferralReportSearchDto>({
+    baseUrl: "/referral/report",
+    empty: {
+      createdAt: new Date().toISOString(),
+    },
     search: {
-      contractIds: [],
-      templateIds: [],
+      query: "",
       startTimestamp: startOfMonth(new Date()).toISOString(),
       endTimestamp: endOfMonth(new Date()).toISOString(),
     },
@@ -38,7 +40,7 @@ export const Marketplace: FC = () => {
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchFile({
-      url: "/marketplace/export",
+      url: "/referral/export",
       data: values,
     });
   });
@@ -56,8 +58,8 @@ export const Marketplace: FC = () => {
       flex: 0
     },
     {
-      field: "title",
-      headerName: formatMessage({ id: "form.labels.title" }),
+      field: "referrer",
+      headerName: formatMessage({ id: "form.labels.referrer" }),
       sortable: false,
       flex: 1
     },
@@ -69,19 +71,19 @@ export const Marketplace: FC = () => {
       flex: 1
     },
     {
-      field: "price",
-      headerName: formatMessage({ id: "form.labels.price" }),
+      field: "amount",
+      headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: IAsset }) => formatPrice(value),
+      valueFormatter: ({ value }: { value: string }) => formatEther(value),
       flex: 1
     }
   ];
 
   return (
-    <Fragment>
-      <Breadcrumbs path={["dashboard", "marketplace"]} />
+    <Grid>
+      <Breadcrumbs path={["dashboard", "referral", "referral.report"]} />
 
-      <PageHeader message="pages.marketplace.title">
+      <PageHeader message="pages.referral.report.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -93,7 +95,7 @@ export const Marketplace: FC = () => {
         </Button>
       </PageHeader>
 
-      <MarketplaceReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <ReferralReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <DataGrid
         pagination
@@ -105,14 +107,14 @@ export const Marketplace: FC = () => {
         rowsPerPageOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
-        rows={rows.map((token: IToken) => ({
-          id: token.id,
-          createdAt: token.createdAt,
-          title: token.template?.title,
-          price: token.template?.price,
+        rows={rows.map((reward: IReferralReward) => ({
+          id: reward.id,
+          referrer: reward.referrer,
+          createdAt: reward.createdAt,
+          amount: reward.amount,
         }))}
         autoHeight
       />
-    </Fragment>
+    </Grid>
   );
 };

@@ -101,6 +101,7 @@
       "delete": "Delete",
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
+      "export": "Export",
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
@@ -134,6 +135,7 @@
       "confirm": "Confirm",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "count": "Count",
       "createdAt": "Created",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
@@ -143,7 +145,9 @@
       "duration": "Duration",
       "email": "Email",
       "endDate": "End date",
+      "endTimestamp": "End date",
       "externalId": "External ID",
+      "id": "ID",
       "imageUrl": "Avatar",
       "language": "Language",
       "level": "Level",
@@ -151,16 +155,19 @@
       "minPrice": "Min. price",
       "numbers": "Numbers",
       "password": "Password",
+      "rank": "Rank",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
       "referrer": "Referrer",
       "reward": "Reward",
       "roles": "Roles",
       "roundId": "Round",
+      "score": "Score",
       "sort": "Sort by",
       "stakeStatus": "Status",
       "stakingStatus": "Status",
       "startDate": "Start date",
+      "startTimestamp": "Start date",
       "status": "Status",
       "templateId": "Template",
       "templateIds": "Templates",
@@ -278,7 +285,7 @@
         "referral": {
           "leaderboard": "Leaderboard",
           "link": "Cabinet",
-          "reward": "Rewards history",
+          "report": "Report",
           "title": "Referral program"
         }
       },
@@ -408,13 +415,6 @@
       "popular": "Popular items"
     },
     "lottery": {
-      "leaderboard": {
-        "account": "Account",
-        "amount": "Amount",
-        "count": "Count",
-        "id": "ID",
-        "title": "Leaderboard"
-      },
       "purchase": {
         "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
         "title": "Buy a ticket"
@@ -483,28 +483,16 @@
       "title": "Profile"
     },
     "referral": {
-      "leaderboard": {
-        "account": "Account",
-        "amount": "Amount",
-        "id": "ID",
-        "title": "Leaderboard"
-      },
       "link": {
         "title": "Your referral link"
       },
-      "reward": {
-        "title": "Referral rewards"
+      "report": {
+        "title": "Report"
       },
       "title": "Referral program"
     },
     "staking": {
       "deposit": "Deposit",
-      "leaderboard": {
-        "account": "Account",
-        "rank": "Rank",
-        "score": "Score",
-        "title": "Leaderboard"
-      },
       "reward": "Reward",
       "rules": {
         "deposit": "Deposit",

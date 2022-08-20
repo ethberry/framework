@@ -31,12 +31,12 @@ export const Referral: FC = () => {
             <FormattedMessage id="pages.dashboard.integrations.referral.leaderboard" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/referral/reward">
+        <ListItem button component={RouterLink} to="/referral/report">
           <ListItemIcon>
             <Timeline />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.referral.reward" />
+            <FormattedMessage id="pages.dashboard.integrations.referral.report" />
           </ListItemText>
         </ListItem>
       </List>

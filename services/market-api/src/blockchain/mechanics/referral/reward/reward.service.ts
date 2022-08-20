@@ -2,12 +2,13 @@ import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ISearchDto } from "@gemunion/types-collection";
 import { ns } from "@framework/constants";
-import { IReferralLeaderboard, IReferralLeaderboardSearchDto } from "@framework/types";
+import { IReferralLeaderboard, IReferralLeaderboardSearchDto, IReferralReportSearchDto } from "@framework/types";
 
 import { ReferralRewardEntity } from "./reward.entity";
 import { UserEntity } from "../../../../user/user.entity";
+import { parse } from "json2csv";
+import { formatEther } from "./reward.utils";
 
 @Injectable()
 export class ReferralRewardService {
@@ -18,8 +19,11 @@ export class ReferralRewardService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async search(dto: ISearchDto, userEntity: UserEntity): Promise<[Array<ReferralRewardEntity>, number]> {
-    const { skip, take } = dto;
+  public async search(
+    dto: Partial<IReferralReportSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<ReferralRewardEntity>, number]> {
+    const { query, startTimestamp, endTimestamp, skip, take } = dto;
     const queryBuilder = this.referralRewardEntityRepository.createQueryBuilder("reward");
 
     queryBuilder.select();
@@ -27,6 +31,17 @@ export class ReferralRewardService {
     queryBuilder.andWhere("reward.account = :address", {
       address: userEntity.wallet,
     });
+
+    if (startTimestamp && endTimestamp) {
+      queryBuilder.andWhere("reward.createdAt >= :startTimestamp AND reward.createdAt < :endTimestamp", {
+        startTimestamp,
+        endTimestamp,
+      });
+    }
+
+    if (query) {
+      queryBuilder.andWhere("reward.referrer ILIKE '%' || :referrer || '%'", { referrer: query });
+    }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -59,5 +74,23 @@ export class ReferralRewardService {
     options?: FindOneOptions<ReferralRewardEntity>,
   ): Promise<ReferralRewardEntity | null> {
     return this.referralRewardEntityRepository.findOne({ where, ...options });
+  }
+
+  public async export(dto: IReferralReportSearchDto, userEntity: UserEntity): Promise<string> {
+    const { skip: _skip, take: _take, ...rest } = dto;
+
+    const [list] = await this.search(rest, userEntity);
+
+    const headers = ["id", "referrer", "createdAt", "amount"];
+
+    return parse(
+      list.map(referralRewardEntity => ({
+        id: referralRewardEntity.id,
+        referrer: referralRewardEntity.referrer,
+        createdAt: referralRewardEntity.createdAt,
+        amount: formatEther(referralRewardEntity.amount),
+      })),
+      { fields: headers },
+    );
   }
 }

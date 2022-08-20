@@ -3,6 +3,5 @@ export * from "./otp";
 export * from "./page";
 export * from "./user";
 export * from "./settings";
-export * from "./leaderboard";
 
 export * from "./blockchain";

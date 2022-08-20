@@ -24,25 +24,25 @@ export const LotteryLeaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({ id: "pages.lottery.leaderboard.id" }),
+      headerName: formatMessage({ id: "form.labels.id" }),
       sortable: true,
       flex: 0
     },
     {
       field: "account",
-      headerName: formatMessage({ id: "pages.lottery.leaderboard.account" }),
+      headerName: formatMessage({ id: "form.labels.account" }),
       sortable: false,
       flex: 1
     },
     {
       field: "count",
-      headerName: formatMessage({ id: "pages.lottery.leaderboard.count" }),
+      headerName: formatMessage({ id: "form.labels.count" }),
       sortable: true,
       flex: 1
     },
     {
       field: "amount",
-      headerName: formatMessage({ id: "pages.lottery.leaderboard.amount" }),
+      headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => formatEther(value),
       flex: 1
@@ -53,7 +53,7 @@ export const LotteryLeaderboard: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.leaderboard"]} />
 
-      <PageHeader message="pages.lottery.leaderboard.title" />
+      <PageHeader message="form.labels.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 
