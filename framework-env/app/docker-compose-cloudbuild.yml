@@ -63,6 +63,7 @@ services:
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
+      CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
       STAKING_ADDR: "${STAKING_ADDR}"
     ports:
       # admin-api
@@ -102,6 +103,7 @@ services:
       WEBSOCKET_ADDR: "${WEBSOCKET_ADDR}"
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       STAKING_ADDR: "${STAKING_ADDR}"
     ports:
@@ -138,6 +140,7 @@ services:
       STARTING_BLOCK: "${STARTING_BLOCK}"
       # Contracts
       CONTRACT_MANAGER_ADDR: "${CONTRACT_MANAGER_ADDR}"
+      CLAIM_PROXY_ADDR: "${CLAIM_PROXY_ADDR}"
       EXCHANGE_ADDR: "${EXCHANGE_ADDR}"
       STAKING_ADDR: "${STAKING_ADDR}"
     ports:
