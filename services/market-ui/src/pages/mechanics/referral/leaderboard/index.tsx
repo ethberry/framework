@@ -57,7 +57,7 @@ export const ReferralLeaderboard: FC = () => {
         paginationMode="server"
         rowCount={count}
         pageSize={search.take}
-        onPageChange={page => handleChangePage(null as any, page)}
+        onPageChange={page => handleChangePage(null as any, page + 1)}
         onPageSizeChange={handleChangeRowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
         loading={isLoading}
