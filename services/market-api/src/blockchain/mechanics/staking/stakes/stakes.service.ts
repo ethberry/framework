@@ -36,10 +36,20 @@ export class StakingStakesService {
     dto: Partial<IStakingStakesSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<StakingStakesEntity>, number]> {
-    const { stakeStatus, skip, take } = dto;
+    const { stakeStatus, deposit, reward, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
+
+    queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
+    queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
+    // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
+    queryBuilder.leftJoinAndSelect("deposit_components.contract", "deposit_contract");
+
+    queryBuilder.leftJoinAndSelect("rule.reward", "reward");
+    queryBuilder.leftJoinAndSelect("reward.components", "reward_components");
+    // queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
+    queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
 
     queryBuilder.select();
 
@@ -50,6 +60,30 @@ export class StakingStakesService {
         queryBuilder.andWhere("stake.stakeStatus = :stakeStatus", { stakeStatus: stakeStatus[0] });
       } else {
         queryBuilder.andWhere("stake.stakeStatus IN(:...stakeStatus)", { stakeStatus });
+      }
+    }
+
+    if (deposit && deposit.tokenType) {
+      if (deposit.tokenType.length === 1) {
+        queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
+          depositTokenType: deposit.tokenType[0],
+        });
+      } else {
+        queryBuilder.andWhere("deposit_contract.contractType IN(:...depositTokenType)", {
+          depositTokenType: deposit.tokenType,
+        });
+      }
+    }
+
+    if (reward && reward.tokenType) {
+      if (reward.tokenType.length === 1) {
+        queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
+          rewardTokenType: reward.tokenType[0],
+        });
+      } else {
+        queryBuilder.andWhere("reward_contract.contractType IN(:...rewardTokenType)", {
+          rewardTokenType: reward.tokenType,
+        });
       }
     }
 

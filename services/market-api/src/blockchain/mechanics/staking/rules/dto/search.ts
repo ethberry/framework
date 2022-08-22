@@ -3,7 +3,7 @@ import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IStakingItemSearchDto, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingItemSearchDto, IStakingRuleSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 export class StakingItemSearchDto implements IStakingItemSearchDto {
   @ApiPropertyOptional({
@@ -19,7 +19,7 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
   public tokenType: Array<TokenType>;
 }
 
-export class StakingSearchDto extends SearchDto implements IStakingSearchDto {
+export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearchDto {
   // search by status is disabled for marketplace
   public stakingStatus: Array<StakingStatus>;
 

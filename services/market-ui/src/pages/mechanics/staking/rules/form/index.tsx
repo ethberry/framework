@@ -4,13 +4,13 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IStakingSearchDto, TokenType } from "@framework/types";
+import { IStakingRuleSearchDto, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface ICraftSearchFormProps {
-  onSubmit: (values: IStakingSearchDto) => Promise<void>;
-  initialValues: IStakingSearchDto;
+  onSubmit: (values: IStakingRuleSearchDto) => Promise<void>;
+  initialValues: IStakingRuleSearchDto;
   open: boolean;
 }
 
@@ -44,7 +44,6 @@ export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
               multiple
               name="deposit.tokenType"
               options={TokenType}
-              disabledOptions={[TokenType.ERC998]}
               label={formatMessage({ id: "form.labels.deposit" })}
             />
           </Grid>
@@ -53,7 +52,6 @@ export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
               multiple
               name="reward.tokenType"
               options={TokenType}
-              disabledOptions={[TokenType.ERC998]}
               label={formatMessage({ id: "form.labels.reward" })}
             />
           </Grid>

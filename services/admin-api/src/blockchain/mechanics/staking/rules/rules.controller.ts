@@ -17,7 +17,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { StakingRulesService } from "./rules.service";
-import { StakingCreateDto, StakingSearchDto } from "./dto";
+import { StakingCreateDto, StakingRuleSearchDto } from "./dto";
 import { StakingRulesEntity } from "./rules.entity";
 import { StakingUpdateDto } from "./dto/update";
 
@@ -28,7 +28,7 @@ export class StakingRulesController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: StakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
+  public search(@Query() dto: StakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
     return this.stakingService.search(dto);
   }
 

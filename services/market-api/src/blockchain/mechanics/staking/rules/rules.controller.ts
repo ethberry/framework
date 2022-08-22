@@ -13,7 +13,7 @@ import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-ut
 
 import { StakingRulesService } from "./rules.service";
 import { StakingRulesEntity } from "./rules.entity";
-import { StakingSearchDto } from "./dto";
+import { StakingRuleSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/staking/rules")
@@ -23,7 +23,7 @@ export class StakingRulesController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   @UseInterceptors(ClassSerializerInterceptor)
-  public search(@Query() dto: StakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
+  public search(@Query() dto: StakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
     return this.stakingService.search(dto);
   }
 

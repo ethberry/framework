@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingSearchDto, StakingStatus } from "@framework/types";
+import { IStakingRuleSearchDto, StakingStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./rules.entity";
 import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
@@ -16,7 +16,7 @@ export class StakingRulesService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public search(dto: IStakingSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
+  public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
     const { query, deposit, reward, stakingStatus, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
@@ -56,17 +56,25 @@ export class StakingRulesService {
 
     if (deposit && deposit.tokenType) {
       if (deposit.tokenType.length === 1) {
-        queryBuilder.andWhere("deposit.tokenType = :depositTokenType", { depositTokenType: deposit.tokenType[0] });
+        queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
+          depositTokenType: deposit.tokenType[0],
+        });
       } else {
-        queryBuilder.andWhere("deposit.tokenType IN(:...depositTokenType)", { depositTokenType: deposit.tokenType });
+        queryBuilder.andWhere("deposit_contract.contractType IN(:...depositTokenType)", {
+          depositTokenType: deposit.tokenType,
+        });
       }
     }
 
     if (reward && reward.tokenType) {
       if (reward.tokenType.length === 1) {
-        queryBuilder.andWhere("reward.tokenType = :rewardTokenType", { rewardTokenType: reward.tokenType[0] });
+        queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
+          rewardTokenType: reward.tokenType[0],
+        });
       } else {
-        queryBuilder.andWhere("reward.tokenType IN(:...rewardTokenType)", { rewardTokenType: reward.tokenType });
+        queryBuilder.andWhere("reward_contract.contractType IN(:...rewardTokenType)", {
+          rewardTokenType: reward.tokenType,
+        });
       }
     }
 

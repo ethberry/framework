@@ -5,7 +5,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 
 import { StakingStakesEntity } from "./stakes.entity";
 import { StakingStakesService } from "./stakes.service";
-import { StakesSearchDto } from "./dto";
+import { StakingStakesSearchDto } from "./dto";
 import { UserEntity } from "../../../../user/user.entity";
 
 @ApiBearerAuth()
@@ -16,7 +16,7 @@ export class StakingStakesController {
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() dto: StakesSearchDto,
+    @Query() dto: StakingStakesSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<StakingStakesEntity>, number]> {
     return this.stakesService.search(dto, userEntity);

@@ -3,13 +3,13 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRuleSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface ICraftSearchFormProps {
-  onSubmit: (values: IStakingSearchDto) => Promise<void>;
-  initialValues: IStakingSearchDto;
+  onSubmit: (values: IStakingRuleSearchDto) => Promise<void>;
+  initialValues: IStakingRuleSearchDto;
   open: boolean;
 }
 
@@ -41,10 +41,10 @@ export const StakingSearchForm: FC<ICraftSearchFormProps> = props => {
             <SelectInput multiple name="stakingStatus" options={StakingStatus} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="deposit.tokenType" options={TokenType} disabledOptions={[TokenType.ERC998]} />
+            <SelectInput multiple name="deposit.tokenType" options={TokenType} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput multiple name="reward.tokenType" options={TokenType} disabledOptions={[TokenType.ERC998]} />
+            <SelectInput multiple name="reward.tokenType" options={TokenType} />
           </Grid>
         </Grid>
       </Collapse>

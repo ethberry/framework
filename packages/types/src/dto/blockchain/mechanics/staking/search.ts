@@ -6,7 +6,7 @@ export interface IStakingItemSearchDto {
   tokenType: Array<TokenType>;
 }
 
-export interface IStakingSearchDto extends ISearchDto {
+export interface IStakingRuleSearchDto extends ISearchDto {
   stakingStatus: Array<StakingStatus>;
   deposit: IStakingItemSearchDto;
   reward: IStakingItemSearchDto;
@@ -14,4 +14,6 @@ export interface IStakingSearchDto extends ISearchDto {
 
 export interface IStakingStakesSearchDto extends ISearchDto {
   stakeStatus: Array<StakeStatus>;
+  deposit: IStakingItemSearchDto;
+  reward: IStakingItemSearchDto;
 }
