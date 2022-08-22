@@ -13,7 +13,7 @@ import {
   TokenStatus,
 } from "@framework/types";
 
-import { ABI } from "./token-log/interfaces";
+import { ABI } from "./log/interfaces";
 import { getMetadata } from "../../../../common/utils";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

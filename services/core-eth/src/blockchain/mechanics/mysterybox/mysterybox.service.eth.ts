@@ -8,7 +8,7 @@ import { IMysteryboxUnpack, ITokenTransfer, TokenAttributes, TokenStatus } from 
 
 import { getMetadata } from "../../../common/utils";
 
-import { ABI } from "../../tokens/erc721/token/token-log/interfaces";
+import { ABI } from "../../tokens/erc721/token/log/interfaces";
 import { ContractHistoryService } from "../../contract-history/contract-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../hierarchy/template/template.service";

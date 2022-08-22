@@ -7,7 +7,7 @@ import { ContractHistoryModule } from "../../../contract-history/contract-histor
 
 import { Erc998TokenControllerEth } from "./token.controller.eth";
 import { Erc998TokenServiceEth } from "./token.service.eth";
-import { Erc998TokenLogModule } from "./token-log/token-log.module";
+import { Erc998TokenLogModule } from "./log/log.module";
 import { AccessControlModule } from "../../../access-control/access-control.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";

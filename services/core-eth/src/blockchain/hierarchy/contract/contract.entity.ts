@@ -21,9 +21,6 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   public decimals: number;
 
   @Column({ type: "int" })
-  public chainId: number;
-
-  @Column({ type: "int" })
   public royalty: number;
 
   @Column({ type: "int" })

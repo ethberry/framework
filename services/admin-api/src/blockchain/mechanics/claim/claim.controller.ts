@@ -10,8 +10,8 @@ import {
   Post,
   Put,
   Query,
-  UseInterceptors,
   UploadedFile,
+  UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth } from "@nestjs/swagger";

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository, DeleteResult, DeepPartial } from "typeorm";
+import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { CompositionEntity } from "./composition.entity";
 
@@ -18,7 +18,7 @@ export class Erc998CompositionService {
     return this.compositionEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<CompositionEntity>): Promise<CompositionEntity> {
+  public create(dto: DeepPartial<CompositionEntity>): Promise<CompositionEntity> {
     return this.compositionEntityRepository.create(dto).save();
   }
 

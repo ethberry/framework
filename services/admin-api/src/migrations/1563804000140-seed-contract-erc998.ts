@@ -14,7 +14,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
-    const lastBlock = process.env.STARTING_BLOCK || 0;
+    const fromBloack = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -48,7 +48,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -65,7 +65,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'INACTIVE',
         'ERC998',
         '{}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -82,7 +82,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'NEW',
         'ERC998',
         '{}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -99,7 +99,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{BLACKLIST}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -116,7 +116,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{UPGRADEABLE}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -133,7 +133,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{UPGRADEABLE,RANDOM}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -150,7 +150,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

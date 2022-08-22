@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository, DeleteResult } from "typeorm";
+import { DeepPartial, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { OwnershipEntity } from "./ownership.entity";
 
@@ -18,7 +18,7 @@ export class OwnershipService {
     return this.ownershipEntityRepository.findOne({ where, ...options });
   }
 
-  public async create(dto: DeepPartial<OwnershipEntity>): Promise<OwnershipEntity> {
+  public create(dto: DeepPartial<OwnershipEntity>): Promise<OwnershipEntity> {
     return this.ownershipEntityRepository.create(dto).save();
   }
 

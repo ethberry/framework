@@ -6,9 +6,8 @@ import { ns } from "@framework/constants";
 export class SeedContractSystemAt1563804000109 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || "1337";
-
-    const lastBlock = process.env.STARTING_BLOCK || 0;
+    const chainId = process.env.CHAIN_ID || 1337;
+    const fromBloack = process.env.STARTING_BLOCK || 0;
 
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
     const exchangeAddr = process.env.EXCHANGE_ADDR || wallet;
@@ -50,7 +49,7 @@ export class SeedContractSystemAt1563804000109 implements MigrationInterface {
         'NATIVE',
         '{}',
         'SYSTEM',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -67,7 +66,7 @@ export class SeedContractSystemAt1563804000109 implements MigrationInterface {
         'NATIVE',
         '{}',
         'SYSTEM',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -84,7 +83,7 @@ export class SeedContractSystemAt1563804000109 implements MigrationInterface {
         'NATIVE',
         '{}',
         'SYSTEM',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -101,7 +100,7 @@ export class SeedContractSystemAt1563804000109 implements MigrationInterface {
         'NATIVE',
         '{}',
         'SYSTEM',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -118,7 +117,7 @@ export class SeedContractSystemAt1563804000109 implements MigrationInterface {
         'NATIVE',
         '{}',
         'SYSTEM',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

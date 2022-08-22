@@ -6,7 +6,7 @@ import { wallet } from "@gemunion/constants";
 export class SeedUser1563804000040 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || "1337";
+    const chainId = process.env.CHAIN_ID || 1337;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.user (

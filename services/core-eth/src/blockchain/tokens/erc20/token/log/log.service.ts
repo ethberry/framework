@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
-import { ContractType, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { ICreateListenerPayload } from "../../../../../common/interfaces";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";

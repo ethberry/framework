@@ -27,10 +27,10 @@ import {
 
 import { ContractManagerHistoryService } from "./history/history.service";
 import { VestingService } from "../mechanics/vesting/vesting.service";
-import { Erc20LogService } from "../tokens/erc20/token/token-log/token-log.service";
-import { Erc721TokenLogService } from "../tokens/erc721/token/token-log/token-log.service";
-import { Erc998TokenLogService } from "../tokens/erc998/token/token-log/token-log.service";
-import { Erc1155LogService } from "../tokens/erc1155/token/token-log/token-log.service";
+import { Erc20LogService } from "../tokens/erc20/token/log/log.service";
+import { Erc721TokenLogService } from "../tokens/erc721/token/log/log.service";
+import { Erc998TokenLogService } from "../tokens/erc998/token/log/log.service";
+import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
 import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";

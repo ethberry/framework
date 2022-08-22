@@ -18,7 +18,7 @@ export interface IErc20TokenEditDialogProps {
 export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, contractStatus, symbol, decimals, address } = initialValues;
+  const { id, title, description, contractStatus, symbol, decimals, address, chainId } = initialValues;
 
   const fixedValues = {
     id,
@@ -35,7 +35,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
       validationSchema={validationSchema}
       message={message}
       testId="Erc20TokenEditDialog"
-      headActions={<BlockchainInfoPopover symbol={symbol} address={address} decimals={decimals} />}
+      action={<BlockchainInfoPopover symbol={symbol} address={address} decimals={decimals} chainId={chainId} />}
       {...rest}
     >
       <TextInput name="symbol" />

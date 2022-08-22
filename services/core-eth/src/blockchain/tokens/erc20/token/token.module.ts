@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Erc20TokenControllerEth } from "./token.controller.eth";
 import { Erc20TokenServiceEth } from "./token.service.eth";
 import { ContractHistoryModule } from "../../../contract-history/contract-history.module";
-import { Erc20TokenLogModule } from "./token-log/token-log.module";
+import { Erc20TokenLogModule } from "./log/log.module";
 import { AccessControlModule } from "../../../access-control/access-control.module";
 import { AccessListModule } from "../../../access-list/access-list.module";
 import { AccessListServiceEth } from "../../../access-list/access-list.service.eth";

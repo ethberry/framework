@@ -6,7 +6,7 @@ import { AccessControlEventType, ContractEventType, ContractType, TokenType } fr
 
 // custom contracts
 import { ABI } from "./interfaces";
-import { Erc998TokenLogService } from "./token-log.service";
+import { Erc998TokenLogService } from "./log.service";
 import { ContractModule } from "../../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../../hierarchy/contract/contract.service";
 

@@ -6,10 +6,10 @@ import { ContractManagerServiceEth } from "./contract-manager.service.eth";
 
 import { ContractManagerHistoryModule } from "./history/history.module";
 import { VestingModule } from "../mechanics/vesting/vesting.module";
-import { Erc20TokenLogModule } from "../tokens/erc20/token/token-log/token-log.module";
-import { Erc721TokenLogModule } from "../tokens/erc721/token/token-log/token-log.module";
-import { Erc998TokenLogModule } from "../tokens/erc998/token/token-log/token-log.module";
-import { Erc1155TokenLogModule } from "../tokens/erc1155/token/token-log/token-log.module";
+import { Erc20TokenLogModule } from "../tokens/erc20/token/log/log.module";
+import { Erc721TokenLogModule } from "../tokens/erc721/token/log/log.module";
+import { Erc998TokenLogModule } from "../tokens/erc998/token/log/log.module";
+import { Erc1155TokenLogModule } from "../tokens/erc1155/token/log/log.module";
 import { VestingLogModule } from "../mechanics/vesting/log/vesting.log.module";
 import { ContractManagerLogModule } from "./log/log.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";

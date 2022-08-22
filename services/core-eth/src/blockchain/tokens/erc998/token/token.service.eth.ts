@@ -18,7 +18,7 @@ import {
   TokenStatus,
 } from "@framework/types";
 
-import { ABI } from "../../erc721/token/token-log/interfaces";
+import { ABI } from "../../erc721/token/log/interfaces";
 import { getMetadata } from "../../../../common/utils";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";

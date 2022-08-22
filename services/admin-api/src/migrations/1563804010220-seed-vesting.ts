@@ -10,7 +10,7 @@ export class SeedVesting1563804010220 implements MigrationInterface {
     const vestingGradedAddress = process.env.VESTING_GRADED_ADDR || wallet;
     const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
-    const lastBlock = process.env.STARTING_BLOCK || 0;
+    const fromBloack = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.vesting (
@@ -30,7 +30,7 @@ export class SeedVesting1563804010220 implements MigrationInterface {
         '${currentDateTime}',
         'LINEAR',
         '${chainId}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -40,7 +40,7 @@ export class SeedVesting1563804010220 implements MigrationInterface {
         '${currentDateTime}',
         'GRADED',
         '${chainId}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -50,7 +50,7 @@ export class SeedVesting1563804010220 implements MigrationInterface {
         '${currentDateTime}',
         'CLIFF',
         '${chainId}',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

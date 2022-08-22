@@ -19,7 +19,7 @@ export interface IErc721ContractEditDialogProps {
 export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, baseTokenURI, imageUrl, contractStatus, address, symbol, name, royalty } =
+  const { id, title, description, baseTokenURI, imageUrl, contractStatus, address, symbol, name, royalty, chainId } =
     initialValues;
 
   const fixedValues = {
@@ -39,13 +39,14 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
       validationSchema={validationSchema}
       message={message}
       testId="Erc721ContractEditForm"
-      headActions={
+      action={
         <BlockchainInfoPopover
           name={name}
           symbol={symbol}
           address={address}
           baseTokenURI={baseTokenURI}
           royalty={`%${royalty / 100}`}
+          chainId={chainId}
         />
       }
       {...rest}

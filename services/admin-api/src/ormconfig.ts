@@ -105,8 +105,7 @@ import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/16536164480
 import { SeedCraftErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-craft-erc721-erc1155-recipe";
 
 import { CreateContractManagerHistory1652682493386 } from "./migrations/1652682493386-create-contract-manager-history";
-// import { CreateContractManager1652962207600 } from "./migrations/1652962207600-create-contract-manager";
-// import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager";
+
 import { CreateAccessControl1653616447230 } from "./migrations/1653616447230-create-access-control";
 import { CreateAccessControlHistory1653616447240 } from "./migrations/1653616447240-create-access-control-history";
 import { CreateAccessList1653616447330 } from "./migrations/1653616447330-create-access-list";

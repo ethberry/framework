@@ -11,7 +11,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
     const erc721ContractMysteryboxPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;
     const erc721ContractMysteryboxBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
-    const lastBlock = process.env.STARTING_BLOCK || 0;
+    const fromBloack = process.env.STARTING_BLOCK || 0;
 
     // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
 
@@ -49,7 +49,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         'ERC721',
         '{}',
         'MYSTERYBOX',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -67,7 +67,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         'ERC721',
         '{}',
         'MYSTERYBOX',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -85,7 +85,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         'ERC721',
         '{}',
         'MYSTERYBOX',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -103,7 +103,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         'ERC721',
         '{PAUSABLE}',
         'MYSTERYBOX',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -121,7 +121,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         'ERC721',
         '{BLACKLIST}',
         'MYSTERYBOX',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -139,7 +139,7 @@ export class SeedContractMysteryboxAt1563804000160 implements MigrationInterface
         'ERC721',
         '{}',
         'MYSTERYBOX',
-        '${lastBlock}',
+        '${fromBloack}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

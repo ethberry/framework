@@ -39,7 +39,7 @@ export const MysteryboxContractEditDialog: FC<IMysteryboxContractEditDialogProps
       validationSchema={validationSchema}
       message={message}
       testId="MysteryboxContractEditForm"
-      headActions={
+      action={
         <BlockchainInfoPopover
           name={name}
           symbol={symbol}

@@ -28,7 +28,7 @@ export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
       message="dialogs.upload"
       testId="ClaimUploadDialog"
       onConfirm={onConfirm}
-      headActions={<ClaimInfoPopover />}
+      action={<ClaimInfoPopover />}
       {...rest}
     >
       <FileInput />
