@@ -5,6 +5,7 @@ import { AutoSave } from "@gemunion/mui-form";
 
 import { validationSchema } from "./validation";
 import { FileInput } from "./file-input";
+import { ClaimInfoPopover } from "./popover";
 
 export interface IClaimUploadDto {
   files: Array<File>;
@@ -27,6 +28,7 @@ export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
       message="dialogs.upload"
       testId="ClaimUploadDialog"
       onConfirm={onConfirm}
+      headActions={<ClaimInfoPopover />}
       {...rest}
     >
       <FileInput />

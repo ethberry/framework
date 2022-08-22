@@ -1,10 +1,9 @@
 import { FC, MouseEvent, useState } from "react";
 
-import { Box, IconButton, Popover, Table, TableBody, TableCell, TableRow } from "@mui/material";
+import { Box, IconButton, Popover, Typography } from "@mui/material";
 import { Help } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 
-export const BlockchainInfoPopover: FC<Record<string, string | number>> = props => {
+export const ClaimInfoPopover: FC<Record<string, string | number>> = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -16,7 +15,7 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "contract-info" : undefined;
+  const id = open ? "claim-info" : undefined;
 
   return (
     <Box position="absolute" right={16} top={16} zIndex="1000">
@@ -37,18 +36,12 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
           horizontal: "right",
         }}
       >
-        <Table sx={{ minWidth: 650 }} aria-label="contract parameters">
-          <TableBody>
-            {Object.keys(props).map(key => (
-              <TableRow key={key}>
-                <TableCell>
-                  <FormattedMessage id={`form.labels.${key}`} />
-                </TableCell>
-                <TableCell>{props[key]}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <Box sx={{ p: 2 }}>
+          <Typography>Format: </Typography>
+          <pre>account,endTimestamp,tokenType,contractId,templateId,amount</pre>
+          <Typography>Example: </Typography>
+          <pre>0xfe3b557e8fb62b89f4916b721be55ceb828dbd73,2025-01-01T00:00:00.000Z,ERC20,201,,1000000000000000000</pre>
+        </Box>
       </Popover>
     </Box>
   );
