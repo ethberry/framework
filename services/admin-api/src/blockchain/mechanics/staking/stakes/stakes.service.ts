@@ -27,8 +27,8 @@ export class StakingStakesService {
     return this.stakesEntityRepository.find({ where, ...options });
   }
 
-  public async search(dto: IStakingStakesSearchDto): Promise<[Array<StakingStakesEntity>, number]> {
-    const { query, account, stakeStatus, deposit, reward, skip, take } = dto;
+  public async search(dto: Partial<IStakingStakesSearchDto>): Promise<[Array<StakingStakesEntity>, number]> {
+    const { query, account, stakeStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
@@ -93,6 +93,13 @@ export class StakingStakesService {
           rewardTokenType: reward.tokenType,
         });
       }
+    }
+
+    if (startTimestamp && endTimestamp) {
+      queryBuilder.andWhere("stake.createdAt >= :startTimestamp AND stake.createdAt < :endTimestamp", {
+        startTimestamp,
+        endTimestamp,
+      });
     }
 
     queryBuilder.skip(skip);

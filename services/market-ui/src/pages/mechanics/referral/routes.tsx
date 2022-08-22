@@ -16,10 +16,7 @@ export const referralRoutes: Array<RouteObject> = [
       { path: "/referral/leaderboard", element: <ReferralLeaderboard /> },
       {
         path: "/referral/report",
-        children: [
-          { index: true, element: <ReferralReport /> },
-          { path: "/referral/report/:id", element: <ReferralReport /> },
-        ],
+        element: <ReferralReport />,
       },
     ],
   },

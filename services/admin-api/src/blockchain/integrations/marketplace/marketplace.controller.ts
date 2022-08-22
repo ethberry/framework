@@ -10,11 +10,11 @@ import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { MarketplaceReportSearchDto } from "./dto";
 
 @ApiBearerAuth()
-@Controller("/marketplace")
+@Controller("/marketplace/report")
 export class MarketplaceController {
   constructor(private readonly marketplaceService: MarketplaceService) {}
 
-  @Get("/report")
+  @Get("/search")
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: MarketplaceReportSearchDto): Promise<[Array<TokenEntity>, number]> {
     return this.marketplaceService.search(dto);

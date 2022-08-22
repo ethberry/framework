@@ -25,7 +25,7 @@ export const Marketplace: FC = () => {
     handleChangePage,
     handleChangeRowsPerPage,
   } = useCollection<IToken, IMarketplaceReportSearchDto>({
-    baseUrl: "/marketplace/report",
+    baseUrl: "/marketplace/report/search",
     search: {
       contractIds: [],
       templateIds: [],
@@ -38,7 +38,7 @@ export const Marketplace: FC = () => {
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchFile({
-      url: "/marketplace/export",
+      url: "/marketplace/report/export",
       data: values,
     });
   });
@@ -62,19 +62,19 @@ export const Marketplace: FC = () => {
       flex: 1
     },
     {
+      field: "price",
+      headerName: formatMessage({ id: "form.labels.price" }),
+      sortable: true,
+      valueFormatter: ({ value }: { value: IAsset }) => formatPrice(value),
+      flex: 1
+    },
+    {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1
     },
-    {
-      field: "price",
-      headerName: formatMessage({ id: "form.labels.price" }),
-      sortable: true,
-      valueFormatter: ({ value }: { value: IAsset }) => formatPrice(value),
-      flex: 1
-    }
   ];
 
   return (
@@ -107,9 +107,9 @@ export const Marketplace: FC = () => {
         columns={columns}
         rows={rows.map((token: IToken) => ({
           id: token.id,
-          createdAt: token.createdAt,
           title: token.template?.title,
           price: token.template?.price,
+          createdAt: token.createdAt,
         }))}
         autoHeight
       />

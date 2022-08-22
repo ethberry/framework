@@ -19,8 +19,8 @@ export const ReferralReportSearchForm: FC<IReferralReportSearchFormProps> = prop
 
   const classes = useStyles();
 
-  const { startTimestamp, endTimestamp } = initialValues;
-  const fixedValues = { startTimestamp, endTimestamp };
+  const { query, startTimestamp, endTimestamp } = initialValues;
+  const fixedValues = { query, startTimestamp, endTimestamp };
 
   return (
     <FormWrapper

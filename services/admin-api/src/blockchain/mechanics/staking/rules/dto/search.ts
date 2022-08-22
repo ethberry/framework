@@ -17,6 +17,11 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
   @Transform(({ value }) => value as Array<TokenType>)
   @IsEnum(TokenType, { each: true, message: "badInput" })
   public tokenType: Array<TokenType>;
+
+  public contractId: Array<number>;
+  public templateId: Array<number>;
+  public maxPrice: string;
+  public minPrice: string;
 }
 
 export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearchDto {

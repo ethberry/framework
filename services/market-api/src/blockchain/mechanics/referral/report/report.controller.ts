@@ -5,23 +5,23 @@ import archiver from "archiver";
 
 import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
-import { MarketplaceReportSearchDto } from "./dto";
-import { ReferralRewardEntity } from "./reward.entity";
-import { ReferralRewardService } from "./reward.service";
+import { ReferralReportService } from "./report.service";
 import { UserEntity } from "../../../../user/user.entity";
+import { MarketplaceReportSearchDto } from "../reward/dto";
+import { ReferralRewardEntity } from "../reward/reward.entity";
 
 @ApiBearerAuth()
-@Controller("/referral")
-export class ReferralRewardController {
-  constructor(private readonly referralRewardService: ReferralRewardService) {}
+@Controller("/referral/report")
+export class ReferralReportController {
+  constructor(private readonly referralReportService: ReferralReportService) {}
 
-  @Get("/report")
+  @Get("/search")
   @UseInterceptors(PaginationInterceptor)
   public search(
     @Query() dto: MarketplaceReportSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<ReferralRewardEntity>, number]> {
-    return this.referralRewardService.search(dto, userEntity);
+    return this.referralReportService.search(dto, userEntity);
   }
 
   @Get("/export")
@@ -30,7 +30,7 @@ export class ReferralRewardController {
     @User() userEntity: UserEntity,
     @Res() res: Response,
   ): Promise<void> {
-    const csv = await this.referralRewardService.export(query, userEntity);
+    const csv = await this.referralReportService.export(query, userEntity);
 
     const archive = archiver("zip");
 

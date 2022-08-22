@@ -31,12 +31,12 @@ export const Staking: FC = () => {
             <FormattedMessage id="pages.dashboard.mechanics.staking.stakes" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/staking/statistics">
+        <ListItem button component={RouterLink} to="/staking/report">
           <ListItemIcon>
             <BarChart />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.staking.statistics" />
+            <FormattedMessage id="pages.dashboard.mechanics.staking.report" />
           </ListItemText>
         </ListItem>
       </List>

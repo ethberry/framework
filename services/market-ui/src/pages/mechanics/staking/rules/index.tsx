@@ -15,7 +15,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStakingRule, IStakingRuleSearchDto, TokenType } from "@framework/types";
+import { IStakingItemSearchDto, IStakingRule, IStakingRuleSearchDto, TokenType } from "@framework/types";
 
 import { StakingDepositButton } from "../../../../components/buttons";
 import { StakingSearchForm } from "./form";
@@ -52,10 +52,10 @@ export const StakingRules: FC = () => {
       query: "",
       deposit: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingItemSearchDto,
       reward: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingItemSearchDto,
     },
     filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });

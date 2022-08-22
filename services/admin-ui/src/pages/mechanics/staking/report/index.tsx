@@ -6,14 +6,20 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
+import {
+  IStakingItemSearchDto,
+  IStakingStake,
+  IStakingStakesSearchDto,
+  StakeStatus,
+  TokenType,
+} from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
-import { formatEther } from "../../../../utils/money";
-import { ReferralReportSearchForm } from "./form";
+import { StakingReportSearchForm } from "./form";
+import { formatPrice } from "../../../../utils/money";
 
-export const ReferralReport: FC = () => {
+export const StakingReport: FC = () => {
   const {
     rows,
     count,
@@ -24,13 +30,21 @@ export const ReferralReport: FC = () => {
     handleToggleFilters,
     handleChangePage,
     handleChangeRowsPerPage,
-  } = useCollection<IReferralReward, IReferralReportSearchDto>({
-    baseUrl: "/referral/report/search",
+  } = useCollection<IStakingStake, IStakingStakesSearchDto>({
+    baseUrl: "/staking/report/search",
     empty: {
       createdAt: new Date().toISOString(),
     },
     search: {
       query: "",
+      account: "",
+      stakeStatus: [StakeStatus.ACTIVE],
+      deposit: {
+        tokenType: [] as Array<TokenType>,
+      } as IStakingItemSearchDto,
+      reward: {
+        tokenType: [] as Array<TokenType>,
+      } as IStakingItemSearchDto,
       startTimestamp: startOfMonth(new Date()).toISOString(),
       endTimestamp: endOfMonth(new Date()).toISOString(),
     },
@@ -40,7 +54,7 @@ export const ReferralReport: FC = () => {
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchFile({
-      url: "/referral/report/export",
+      url: "/staking/report/export",
       data: values,
     });
   });
@@ -58,16 +72,15 @@ export const ReferralReport: FC = () => {
       flex: 0
     },
     {
-      field: "referrer",
-      headerName: formatMessage({ id: "form.labels.referrer" }),
-      sortable: false,
+      field: "account",
+      headerName: formatMessage({ id: "form.labels.account" }),
+      sortable: true,
       flex: 1
     },
     {
-      field: "amount",
-      headerName: formatMessage({ id: "form.labels.amount" }),
+      field: "deposit",
+      headerName: formatMessage({ id: "form.labels.deposit" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: string }) => formatEther(value),
       flex: 1
     },
     {
@@ -76,14 +89,14 @@ export const ReferralReport: FC = () => {
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1
-    },
+    }
   ];
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "referral", "referral.report"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.report"]} />
 
-      <PageHeader message="pages.referral.report.title">
+      <PageHeader message="pages.staking.report.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -95,7 +108,7 @@ export const ReferralReport: FC = () => {
         </Button>
       </PageHeader>
 
-      <ReferralReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <StakingReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <DataGrid
         pagination
@@ -107,11 +120,11 @@ export const ReferralReport: FC = () => {
         rowsPerPageOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
-        rows={rows.map((reward: IReferralReward) => ({
-          id: reward.id,
-          referrer: reward.referrer,
-          amount: reward.amount,
-          createdAt: reward.createdAt,
+        rows={rows.map((stake: IStakingStake) => ({
+          id: stake.id,
+          account: stake.account,
+          deposit: formatPrice(stake.stakingRule?.deposit),
+          createdAt: stake.createdAt,
         }))}
         autoHeight
       />

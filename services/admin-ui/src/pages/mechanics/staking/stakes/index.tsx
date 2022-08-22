@@ -13,7 +13,14 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IStakingRule, IStakingStake, IStakingStakesSearchDto, StakeStatus, TokenType } from "@framework/types";
+import {
+  IStakingItemSearchDto,
+  IStakingRule,
+  IStakingStake,
+  IStakingStakesSearchDto,
+  StakeStatus,
+  TokenType,
+} from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
@@ -48,10 +55,10 @@ export const Stakes: FC = () => {
       stakeStatus: [StakeStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingItemSearchDto,
       reward: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingItemSearchDto,
     },
   });
 

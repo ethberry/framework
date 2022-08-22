@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { Protected } from "@gemunion/firebase-login";
 import { Staking } from "./rules";
 import { Stakes } from "./stakes";
-import { Statistics } from "./statistics";
+import { StakingReport } from "./report";
 
 export const stakingRoutes: Array<RouteObject> = [
   {
@@ -28,11 +28,11 @@ export const stakingRoutes: Array<RouteObject> = [
     ],
   },
   {
-    path: "/staking/statistics",
+    path: "/staking/report",
     element: <Protected />,
     children: [
-      { index: true, element: <Statistics /> },
-      { path: "/staking/statistics/:id", element: <Statistics /> },
+      { index: true, element: <Navigate to="/staking/report/search" /> },
+      { path: "/staking/report/search", element: <StakingReport /> },
     ],
   },
 ];

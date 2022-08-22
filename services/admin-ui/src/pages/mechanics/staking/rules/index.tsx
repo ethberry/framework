@@ -17,7 +17,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStakingRule, IStakingRuleSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingItemSearchDto, IStakingRule, IStakingRuleSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
@@ -66,10 +66,10 @@ export const Staking: FC = () => {
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingItemSearchDto,
       reward: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingItemSearchDto,
     },
   });
 

@@ -1,13 +1,23 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsEthereumAddress, IsOptional, IsString, ValidateNested } from "class-validator";
+import {
+  IsArray,
+  IsEnum,
+  IsEthereumAddress,
+  IsISO8601,
+  IsOptional,
+  IsString,
+  ValidateIf,
+  ValidateNested,
+} from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 
 import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
 import { StakingItemSearchDto } from "../../rules/dto";
+import { IsBeforeDate } from "./is-before-date";
 
-export class StakingStakesSearchDto extends SearchDto implements IStakingStakesSearchDto {
+export class StakingReportSearchDto extends SearchDto implements IStakingStakesSearchDto {
   @ApiPropertyOptional({
     enum: StakeStatus,
     isArray: true,
@@ -41,6 +51,17 @@ export class StakingStakesSearchDto extends SearchDto implements IStakingStakesS
   @Type(() => StakingItemSearchDto)
   public reward: StakingItemSearchDto;
 
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @IsISO8601({ message: "patternMismatch" })
+  @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
   public startTimestamp: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @IsISO8601({ message: "patternMismatch" })
+  @ValidateIf(o => !!o.startTimestamp)
   public endTimestamp: string;
 }

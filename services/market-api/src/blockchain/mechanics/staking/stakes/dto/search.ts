@@ -35,4 +35,6 @@ export class StakingStakesSearchDto extends SearchDto implements IStakingStakesS
   public reward: StakingItemSearchDto;
 
   public account: string;
+  public startTimestamp: string;
+  public endTimestamp: string;
 }

@@ -1,4 +1,5 @@
 import type { RouteObject } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { Protected } from "@gemunion/firebase-login";
 
@@ -20,6 +21,9 @@ export const integrations: Array<RouteObject> = [
   {
     path: "/marketplace/report",
     element: <Protected />,
-    children: [{ index: true, element: <Marketplace /> }],
+    children: [
+      { index: true, element: <Navigate to="/marketplace/report/search" /> },
+      { path: "/marketplace/report/search", element: <Marketplace /> },
+    ],
   },
 ];
