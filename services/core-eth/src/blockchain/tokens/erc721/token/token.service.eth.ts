@@ -16,7 +16,6 @@ import {
 import { ABI } from "./token-log/interfaces";
 import { getMetadata } from "../../../../common/utils";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
@@ -31,14 +30,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly configService: ConfigService,
-    protected readonly contractManagerService: ContractManagerService,
+    protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
     protected readonly contractHistoryService: ContractHistoryService,
-    protected readonly contractService: ContractService,
   ) {
-    super(loggerService, contractManagerService, tokenService, contractHistoryService);
+    super(loggerService, contractService, tokenService, contractHistoryService);
   }
 
   public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {

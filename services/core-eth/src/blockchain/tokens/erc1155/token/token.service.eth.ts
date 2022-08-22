@@ -13,7 +13,6 @@ import {
 } from "@framework/types";
 
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -24,10 +23,9 @@ export class Erc1155TokenServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
     private readonly contractHistoryService: ContractHistoryService,
     private readonly balanceService: BalanceService,
-    private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
   ) {}
@@ -126,7 +124,7 @@ export class Erc1155TokenServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

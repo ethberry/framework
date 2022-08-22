@@ -9,6 +9,7 @@ export class SeedContractLotteryAt1563804000170 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
     const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
+    const lastBlock = process.env.STARTING_BLOCK || 0;
 
     // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
 
@@ -28,6 +29,7 @@ export class SeedContractLotteryAt1563804000170 implements MigrationInterface {
         contract_type,
         contract_features,
         contract_module,
+        from_block,
         created_at,
         updated_at
       ) VALUES (
@@ -45,6 +47,7 @@ export class SeedContractLotteryAt1563804000170 implements MigrationInterface {
         'ERC721',
         '{}',
         'LOTTERY',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

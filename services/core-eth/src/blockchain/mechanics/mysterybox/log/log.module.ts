@@ -2,27 +2,24 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 
 import { MysteryboxLogService } from "./log.service";
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 
 import MysteryboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
+    ContractModule,
     // ContractManager
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, ContractManagerModule],
-      inject: [ConfigService, ContractManagerService],
-      useFactory: async (
-        configService: ConfigService,
-        contractManagerService: ContractManagerService,
-      ): Promise<IModuleOptions> => {
-        const mysteryboxContracts = await contractManagerService.findAllByType(ContractType.MYSTERYBOX);
+      imports: [ConfigModule, ContractModule],
+      inject: [ConfigService, ContractService],
+      useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const mysteryboxContracts = await contractService.findAllByType(ModuleType.MYSTERYBOX);
         return {
           contract: {
             contractType: ContractType.MYSTERYBOX,

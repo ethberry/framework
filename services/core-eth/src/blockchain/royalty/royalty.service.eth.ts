@@ -6,7 +6,6 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ContractEventType, IDefaultRoyaltyInfo, ITokenRoyaltyInfo, TContractEventData } from "@framework/types";
 
 import { ContractHistoryService } from "../contract-history/contract-history.service";
-import { ContractManagerService } from "../contract-manager/contract-manager.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 
 @Injectable()
@@ -15,7 +14,6 @@ export class RoyaltyServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly contractService: ContractService,
-    private readonly contractManagerService: ContractManagerService,
     private readonly contractHistoryService: ContractHistoryService,
   ) {}
 
@@ -58,7 +56,7 @@ export class RoyaltyServiceEth {
       tokenId: erc998TokenId || null,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

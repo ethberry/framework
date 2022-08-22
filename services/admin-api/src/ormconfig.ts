@@ -105,8 +105,8 @@ import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/16536164480
 import { SeedCraftErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-craft-erc721-erc1155-recipe";
 
 import { CreateContractManagerHistory1652682493386 } from "./migrations/1652682493386-create-contract-manager-history";
-import { CreateContractManager1652962207600 } from "./migrations/1652962207600-create-contract-manager";
-import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager";
+// import { CreateContractManager1652962207600 } from "./migrations/1652962207600-create-contract-manager";
+// import { SeedContractManager1652962207610 } from "./migrations/1652962207610-seed-contract-manager";
 import { CreateAccessControl1653616447230 } from "./migrations/1653616447230-create-access-control";
 import { CreateAccessControlHistory1653616447240 } from "./migrations/1653616447240-create-access-control-history";
 import { CreateAccessList1653616447330 } from "./migrations/1653616447330-create-access-list";
@@ -153,7 +153,9 @@ import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed
 import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
-import { SeedContractManager1660436477050 } from "./migrations/1660436477050-seed-contract-manager";
+// import { SeedContractManager1660436477050 } from "./migrations/1660436477050-seed-contract-manager";
+import { CreateOwnershipAt1658980520100 } from "./migrations/1658980520100-create-ownership";
+import { SeedContractSystemAt1563804000109 } from "./migrations/1563804000109-seed-contract-system";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -215,6 +217,7 @@ const config: PostgresConnectionOptions = {
     CreateAsset1563804000100,
 
     CreateContract1563804000100,
+    SeedContractSystemAt1563804000109,
     SeedContractNativeAt1563804000110,
     SeedContractErc20At1563804000120,
     SeedContractErc721At1563804000130,
@@ -266,8 +269,8 @@ const config: PostgresConnectionOptions = {
     CreateAccessList1653616447330,
     SeedAccessList1653616447340,
     CreateAccessListHistory1653616447350,
-    CreateContractManager1652962207600,
-    SeedContractManager1652962207610,
+    // CreateContractManager1652962207600,
+    // SeedContractManager1652962207610,
 
     CreateClaimTable1653616447810,
     SeedClaimErc721At1653616447830,
@@ -310,6 +313,8 @@ const config: PostgresConnectionOptions = {
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,
 
+    CreateOwnershipAt1658980520100,
+
     CreateDropAt1658980521000,
     SeedDropErc721At1658980521030,
     SeedDropErc998At1658980521040,
@@ -325,7 +330,7 @@ const config: PostgresConnectionOptions = {
     CreateLotteryTicketAt1660436477020,
     SeedLotteryTicketsAt1660436477030,
     CreateLotteryHistoryAt1660436477040,
-    SeedContractManager1660436477050,
+    // SeedContractManager1660436477050,
   ],
 };
 

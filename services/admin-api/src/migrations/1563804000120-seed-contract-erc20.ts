@@ -17,6 +17,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
     const erc20TokenNewAddress = process.env.ERC20_NEW_ADDR || wallet;
     const erc20TokenBlackListAddress = process.env.ERC20_BLACKLIST_ADDR || wallet;
     const chainId = (process.env.CHAIN_ID as string) || "1337";
+    const lastBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -34,6 +35,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
+        from_block,
         created_at,
         updated_at
       ) VALUES (
@@ -51,6 +53,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -68,6 +71,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'INACTIVE',
         'ERC20',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -85,6 +89,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'NEW',
         'ERC20',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -102,6 +107,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{BLACKLIST}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -119,6 +125,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{EXTERNAL}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -136,6 +143,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         'ACTIVE',
         'ERC20',
         '{EXTERNAL}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

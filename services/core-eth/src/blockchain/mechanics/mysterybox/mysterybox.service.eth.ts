@@ -9,7 +9,6 @@ import { IMysteryboxUnpack, ITokenTransfer, TokenAttributes, TokenStatus } from 
 import { getMetadata } from "../../../common/utils";
 
 import { ABI } from "../../tokens/erc721/token/token-log/interfaces";
-import { ContractManagerService } from "../../contract-manager/contract-manager.service";
 import { ContractHistoryService } from "../../contract-history/contract-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
@@ -25,15 +24,14 @@ export class MysteryboxServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
-    protected readonly contractManagerService: ContractManagerService,
+    protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
     protected readonly contractHistoryService: ContractHistoryService,
-    protected readonly contractService: ContractService,
     protected readonly mysteryboxService: MysteryboxService,
   ) {
-    super(loggerService, contractManagerService, tokenService, contractHistoryService);
+    super(loggerService, contractService, tokenService, contractHistoryService);
   }
 
   public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {

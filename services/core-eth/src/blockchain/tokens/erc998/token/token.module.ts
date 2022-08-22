@@ -8,18 +8,18 @@ import { ContractHistoryModule } from "../../../contract-history/contract-histor
 import { Erc998TokenControllerEth } from "./token.controller.eth";
 import { Erc998TokenServiceEth } from "./token.service.eth";
 import { Erc998TokenLogModule } from "./token-log/token-log.module";
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
 import { AccessControlModule } from "../../../access-control/access-control.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
+import { OwnershipModule } from "../ownership/ownership.module";
+import { Erc998CompositionModule } from "../composition/composition.module";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
     ContractHistoryModule,
     Erc998TokenLogModule,
     TemplateModule,
@@ -27,6 +27,8 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
     TokenModule,
     BalanceModule,
     ContractModule,
+    OwnershipModule,
+    Erc998CompositionModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
   providers: [Logger, ethersRpcProvider, Erc998TokenServiceEth],

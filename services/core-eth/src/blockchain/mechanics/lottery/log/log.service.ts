@@ -1,28 +1,30 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
-import { ContractType } from "@framework/types";
 
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class LotteryLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async getLastBlock(address: string): Promise<number | null> {
-    const contractManagerEntity = await this.contractManagerService.findOne({ address });
+    const contractEntity = await this.contractService.findOne({ address });
 
-    if (contractManagerEntity) {
-      return contractManagerEntity.fromBlock;
+    if (contractEntity) {
+      return contractEntity.fromBlock;
     }
     return 0;
   }
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractManagerService.updateLastBlockByType(ContractType.LOTTERY, lastBlock);
+    const lotteryAddr = this.configService.get<string>("LOTTERY_ADDR", "");
+    return this.contractService.updateLastBlockByAddr(lotteryAddr, lastBlock);
   }
 }

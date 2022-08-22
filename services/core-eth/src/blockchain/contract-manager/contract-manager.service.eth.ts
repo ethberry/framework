@@ -8,7 +8,6 @@ import { imageUrl } from "@framework/constants";
 import {
   ContractFeatures,
   ContractManagerEventType,
-  ContractType,
   Erc1155ContractFeatures,
   Erc20ContractFeatures,
   Erc721ContractFeatures,
@@ -33,7 +32,6 @@ import { Erc721TokenLogService } from "../tokens/erc721/token/token-log/token-lo
 import { Erc998TokenLogService } from "../tokens/erc998/token/token-log/token-log.service";
 import { Erc1155LogService } from "../tokens/erc1155/token/token-log/token-log.service";
 import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
-import { ContractManagerService } from "./contract-manager.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
@@ -48,7 +46,6 @@ export class ContractManagerServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly configService: ConfigService,
-    private readonly contractManagerService: ContractManagerService,
     private readonly contractManagerHistoryService: ContractManagerHistoryService,
     private readonly vestingService: VestingService,
     private readonly contractService: ContractService,
@@ -81,7 +78,7 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
     });
 
-    await this.vestingLogService.addListener({
+    this.vestingLogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -108,6 +105,7 @@ export class ContractManagerServiceEth {
       contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
       contractType: TokenType.ERC20,
       chainId: this.chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
     const templateEntity = await this.templateService.create({
@@ -125,7 +123,7 @@ export class ContractManagerServiceEth {
       template: templateEntity,
     });
 
-    await this.erc20LogService.addListener({
+    this.erc20LogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -153,13 +151,14 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
       royalty: ~~royalty,
       baseTokenURI,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
     if (contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
     }
 
-    await this.erc721LogService.addListener({
+    this.erc721LogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -187,13 +186,14 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
       royalty: ~~royalty,
       baseTokenURI,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
     if (contractFeatures.includes(Erc998ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
     }
 
-    await this.erc998LogService.addListener({
+    this.erc998LogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -218,9 +218,10 @@ export class ContractManagerServiceEth {
       contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
       contractType: TokenType.ERC1155,
       chainId: this.chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    await this.erc1155LogService.addListener({
+    this.erc1155LogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -249,9 +250,10 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
       royalty: ~~royalty,
       baseTokenURI,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    await this.mysteryboxLogService.addListener({
+    this.mysteryboxLogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
@@ -285,9 +287,7 @@ export class ContractManagerServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByType(
-      ContractType.CONTRACT_MANAGER,
-      parseInt(blockNumber.toString(), 16),
-    );
+    const contractManagerAddr = this.configService.get<string>("CONTRACT_MANAGER_ADDR", "");
+    await this.contractService.updateLastBlockByAddr(contractManagerAddr, parseInt(blockNumber.toString(), 16));
   }
 }

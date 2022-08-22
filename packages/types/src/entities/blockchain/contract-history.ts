@@ -7,16 +7,21 @@ export enum ContractEventType {
   MintRandom = "MintRandom",
   Paused = "Paused",
   RandomRequest = "RandomRequest",
+  ReceivedChild = "ReceivedChild",
   RedeemClaim = "RedeemClaim",
+  SetMaxChild = "SetMaxChild",
   Snapshot = "Snapshot",
   TokenRoyaltyInfo = "TokenRoyaltyInfo",
   Transfer = "Transfer",
   TransferBatch = "TransferBatch",
+  TransferChild = "TransferChild",
   TransferSingle = "TransferSingle",
   URI = "URI",
+  UnWhitelistedChild = "UnWhitelistedChild",
   UnpackClaim = "UnpackClaim",
   UnpackMysterybox = "UnpackMysterybox",
   Unpaused = "Unpaused",
+  WhitelistedChild = "WhitelistedChild",
 }
 
 export interface IErc20TokenTransfer {
@@ -54,6 +59,35 @@ export interface IClaimRedeem {
   tokenId: string;
   templateId: string;
   price: string;
+}
+
+// 998
+export interface IErc998TokenWhitelistedChild {
+  addr: string;
+  maxCount: string;
+}
+
+export interface IErc998TokenUnWhitelistedChild {
+  addr: string;
+}
+
+export interface IErc998TokenSetMaxChild {
+  addr: string;
+  maxCount: string;
+}
+
+export interface IErc998TokenReceivedChild {
+  from: string;
+  tokenId: string;
+  childContract: string;
+  childTokenId: string;
+}
+
+export interface IErc998TokenTransferChild {
+  to: string;
+  tokenId: string;
+  childContract: string;
+  childTokenId: string;
 }
 
 // dev random test
@@ -148,7 +182,12 @@ export type TContractEventData =
   | ITokenApprovedForAll
   | ITokenMintRandom
   | ITokenRoyaltyInfo
-  | ITokenTransfer;
+  | ITokenTransfer
+  | IErc998TokenReceivedChild
+  | IErc998TokenTransferChild
+  | IErc998TokenSetMaxChild
+  | IErc998TokenUnWhitelistedChild
+  | IErc998TokenWhitelistedChild;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;

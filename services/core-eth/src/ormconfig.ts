@@ -2,7 +2,6 @@ import { SnakeNamingStrategy } from "typeorm-naming-strategies";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 import { ContractManagerHistoryEntity } from "./blockchain/contract-manager/history/history.entity";
-import { ContractManagerEntity } from "./blockchain/contract-manager/contract-manager.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
@@ -31,7 +30,6 @@ const config: PostgresConnectionOptions = {
   name: "default",
   type: "postgres",
   entities: [
-    ContractManagerEntity,
     ContractManagerHistoryEntity,
     AccessControlEntity,
     AccessControlHistoryEntity,

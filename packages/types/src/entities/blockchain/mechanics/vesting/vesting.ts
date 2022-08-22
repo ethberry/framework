@@ -12,6 +12,7 @@ export interface IVesting extends IDeployable {
   account: string;
   duration: number;
   startTimestamp: string;
+  fromBlock: number;
   contractTemplate: VestingContractTemplate;
   history?: Array<IVestingHistory>;
 }

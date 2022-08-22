@@ -8,25 +8,21 @@ import { ContractType, StakingEventType } from "@framework/types";
 // system contract
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 import { StakingLogService } from "./log.service";
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
+    ContractModule,
     // Mechanics
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, ContractManagerModule],
-      inject: [ConfigService, ContractManagerService],
-      useFactory: async (
-        configService: ConfigService,
-        contractManagerService: ContractManagerService,
-      ): Promise<IModuleOptions> => {
+      imports: [ConfigModule, ContractModule],
+      inject: [ConfigService, ContractService],
+      useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const stakingAddr = configService.get<string>("STAKING_ADDR", "");
         const fromBlock =
-          (await contractManagerService.getLastBlock(stakingAddr)) ||
-          ~~configService.get<string>("STARTING_BLOCK", "0");
+          (await contractService.getLastBlock(stakingAddr)) || ~~configService.get<string>("STARTING_BLOCK", "0");
         return {
           contract: {
             contractType: ContractType.STAKING,

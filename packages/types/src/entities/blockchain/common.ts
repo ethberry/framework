@@ -21,6 +21,7 @@ export enum MetadataHash {
 }
 
 export enum ModuleType {
+  SYSTEM = "SYSTEM",
   CORE = "CORE",
   MYSTERYBOX = "MYSTERYBOX",
   LOTTERY = "LOTTERY",

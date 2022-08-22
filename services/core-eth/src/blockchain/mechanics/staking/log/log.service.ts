@@ -1,18 +1,19 @@
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
-import { ContractType } from "@framework/types";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class StakingLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
   ) {}
 
   public async getLastBlock(address: string): Promise<number | null> {
-    const contractManagerEntity = await this.contractManagerService.findOne({ address });
+    const contractManagerEntity = await this.contractService.findOne({ address });
 
     if (contractManagerEntity) {
       return contractManagerEntity.fromBlock;
@@ -22,7 +23,7 @@ export class StakingLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    console.info("Saved Mechanics@lastBlock:", lastBlock);
-    return await this.contractManagerService.updateLastBlockByType(ContractType.STAKING, lastBlock);
+    const stakingAddr = this.configService.get<string>("STAKING_ADDR", "");
+    return await this.contractService.updateLastBlockByAddr(stakingAddr, lastBlock);
   }
 }

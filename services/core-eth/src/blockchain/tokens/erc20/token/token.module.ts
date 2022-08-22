@@ -7,7 +7,6 @@ import { ContractHistoryModule } from "../../../contract-history/contract-histor
 import { Erc20TokenLogModule } from "./token-log/token-log.module";
 import { AccessControlModule } from "../../../access-control/access-control.module";
 import { AccessListModule } from "../../../access-list/access-list.module";
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
 import { AccessListServiceEth } from "../../../access-list/access-list.service.eth";
 import { AccessListHistoryModule } from "../../../access-list/history/history.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
@@ -18,7 +17,6 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
 @Module({
   imports: [
     TokenModule,
-    ContractManagerModule,
     BalanceModule,
     ContractModule,
     ContractHistoryModule,

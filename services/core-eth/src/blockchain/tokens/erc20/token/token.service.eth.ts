@@ -12,7 +12,6 @@ import {
 } from "@framework/types";
 
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
@@ -23,10 +22,9 @@ export class Erc20TokenServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly contractHistoryService: ContractHistoryService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
     private readonly tokenService: TokenService,
     private readonly balanceService: BalanceService,
-    private readonly contractService: ContractService,
   ) {}
 
   public async transfer(event: ILogEvent<IErc20TokenTransfer>, context: Log): Promise<void> {
@@ -73,7 +71,7 @@ export class Erc20TokenServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

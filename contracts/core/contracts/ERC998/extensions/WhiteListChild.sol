@@ -12,14 +12,14 @@ contract WhiteListChild {
   mapping(address => uint256) private _childContractsCounter;
   mapping(address => uint256) private _maxChildPerContract;
 
-  event WhitelistedChild(address indexed addr);
+  event WhitelistedChild(address indexed addr, uint256 maxCount);
   event UnWhitelistedChild(address indexed addr);
   event SetMaxChild(address indexed addr, uint256 maxCount);
 
   function _whiteListChild(address addr, uint256 max) internal {
     _whiteListChildAccess[addr] = true;
     _maxChildPerContract[addr] = max;
-    emit WhitelistedChild(addr);
+    emit WhitelistedChild(addr, max);
   }
 
   function _unWhitelistChild(address addr) internal {

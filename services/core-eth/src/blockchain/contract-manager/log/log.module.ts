@@ -8,24 +8,20 @@ import { ContractManagerEventType, ContractType } from "@framework/types";
 // system contract
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 import { ContractManagerLogService } from "./log.service";
-import { ContractManagerModule } from "../contract-manager.module";
-import { ContractManagerService } from "../contract-manager.service";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
-    // ContractManager
+    ContractModule,
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, ContractManagerModule],
-      inject: [ConfigService, ContractManagerService],
-      useFactory: async (
-        configService: ConfigService,
-        contractManagerService: ContractManagerService,
-      ): Promise<IModuleOptions> => {
+      imports: [ConfigModule, ContractModule],
+      inject: [ConfigService, ContractService],
+      useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
         const fromBlock =
-          (await contractManagerService.getLastBlock(contractManagerAddr)) ||
+          (await contractService.getLastBlock(contractManagerAddr)) ||
           ~~configService.get<string>("STARTING_BLOCK", "0");
         return {
           contract: {

@@ -8,7 +8,6 @@ import { ContractHistoryModule } from "../../../contract-history/contract-histor
 import { Erc721TokenControllerEth } from "./token.controller.eth";
 import { Erc721TokenServiceEth } from "./token.service.eth";
 import { Erc721TokenLogModule } from "./token-log/token-log.module";
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
 import { AccessControlModule } from "../../../access-control/access-control.module";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
@@ -19,7 +18,6 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
     ContractHistoryModule,
     Erc721TokenLogModule,
     AccessControlModule,

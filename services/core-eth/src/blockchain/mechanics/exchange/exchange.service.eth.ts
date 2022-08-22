@@ -13,17 +13,17 @@ import {
   TExchangeEventData,
 } from "@framework/types";
 
-import { ContractManagerService } from "../../contract-manager/contract-manager.service";
 import { ExchangeHistoryService } from "./history/exchange-history.service";
 import { ExchangeService } from "./exchange.service";
 import { ClaimService } from "../claim/claim.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ExchangeServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
     private readonly exchangeService: ExchangeService,
     private readonly claimService: ClaimService,
     private readonly exchangeHistoryService: ExchangeHistoryService,
@@ -66,7 +66,7 @@ export class ExchangeServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

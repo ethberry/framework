@@ -4,9 +4,9 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IReward, IWithdraw, ReferralProgramEventType, TReferralEventData } from "@framework/types";
 
-import { ContractManagerService } from "../../contract-manager/contract-manager.service";
 import { ReferralHistoryService } from "./history/history.service";
 import { ReferralService } from "./referral.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ReferralServiceEth {
@@ -15,7 +15,7 @@ export class ReferralServiceEth {
     private readonly loggerService: LoggerService,
     private readonly referralService: ReferralService,
     private readonly referralHistoryService: ReferralHistoryService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async reward(event: ILogEvent<IReward>, context: Log): Promise<void> {
@@ -44,7 +44,7 @@ export class ReferralServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

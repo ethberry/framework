@@ -4,14 +4,14 @@ import { constants, Contract } from "ethers";
 import { wallets } from "@gemunion/constants";
 
 export async function deployERC20(contracts: Record<string, Contract>) {
-  const [owner] = await ethers.getSigners();
+  // const [owner] = await ethers.getSigners();
   const amount = constants.WeiPerEther.mul(1e6);
 
-  const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
-  const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);
-  await erc20SimpleInstance.mint(owner.address, amount);
-  await erc20SimpleInstance.approve(contracts.exchange.address, amount);
-  contracts.erc20Simple = erc20SimpleInstance;
+  // const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
+  // const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);
+  // await erc20SimpleInstance.mint(owner.address, amount);
+  // await erc20SimpleInstance.approve(contracts.exchange.address, amount);
+  // contracts.erc20Simple = erc20SimpleInstance;
 
   const erc20InactiveFactory = await ethers.getContractFactory("ERC20Simple");
   contracts.erc20Inactive = await erc20InactiveFactory.deploy("ERC20 INACTIVE", "OFF20", amount);

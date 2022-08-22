@@ -10,18 +10,23 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
         'ApprovalForAll',
         'DefaultRoyaltyInfo',
         'MintRandom',
+        'Paused',
         'RandomRequest',
+        'ReceivedChild',
         'RedeemClaim',
+        'SetMaxChild',
         'Snapshot',
         'TokenRoyaltyInfo',
         'Transfer',
         'TransferBatch',
+        'TransferChild',
         'TransferSingle',
         'URI',
+        'UnWhitelistedChild',
         'UnpackClaim',
         'UnpackMysterybox',
-        'Paused'
-        'Unpaused'
+        'Unpaused',
+        'WhitelistedChild'
       );
     `);
 

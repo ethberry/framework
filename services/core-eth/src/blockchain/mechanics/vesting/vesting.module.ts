@@ -6,10 +6,10 @@ import { VestingEntity } from "./vesting.entity";
 import { VestingControllerEth } from "./vesting.controller.eth";
 import { VestingHistoryModule } from "./history/vesting-history.module";
 import { VestingService } from "./vesting.service";
-import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [ContractManagerModule, VestingHistoryModule, TypeOrmModule.forFeature([VestingEntity])],
+  imports: [VestingHistoryModule, TypeOrmModule.forFeature([VestingEntity]), ContractModule],
   providers: [Logger, VestingService, VestingServiceEth],
   controllers: [VestingControllerEth],
   exports: [VestingService, VestingServiceEth],

@@ -1,29 +1,24 @@
 import { Injectable } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
-import { ContractType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { ICreateListenerPayload } from "../../../../../common/interfaces";
-import { ContractManagerService } from "../../../../contract-manager/contract-manager.service";
+import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class Erc998TokenLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
-  public async addListener(dto: ICreateListenerPayload): Promise<void> {
+  public addListener(dto: ICreateListenerPayload): void {
     this.ethersContractService.updateListener([dto.address], dto.fromBlock);
-    await this.contractManagerService.create({
-      address: dto.address.toLowerCase(),
-      contractType: ContractType.ERC998_TOKEN,
-      fromBlock: dto.fromBlock,
-    });
   }
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractManagerService.updateLastBlockByType(ContractType.ERC998_TOKEN, lastBlock);
+    return this.contractService.updateLastBlockByTokenType(TokenType.ERC998, lastBlock);
   }
 }

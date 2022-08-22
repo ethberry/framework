@@ -6,8 +6,8 @@ import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 import { ContractEventType, ITokenApprove, ITokenApprovedForAll, TContractEventData } from "@framework/types";
 
 import { TokenService } from "./token.service";
-import { ContractManagerService } from "../../contract-manager/contract-manager.service";
 import { ContractHistoryService } from "../../contract-history/contract-history.service";
+import { ContractService } from "../contract/contract.service";
 
 @Injectable()
 export class TokenServiceEth {
@@ -15,7 +15,7 @@ export class TokenServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
-    protected readonly contractManagerService: ContractManagerService,
+    protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly contractHistoryService: ContractHistoryService,
   ) {}
@@ -53,7 +53,7 @@ export class TokenServiceEth {
       tokenId: tokenId || null,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

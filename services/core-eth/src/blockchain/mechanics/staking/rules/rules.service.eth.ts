@@ -13,10 +13,10 @@ import {
   TStakingEventData,
 } from "@framework/types";
 
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 import { StakingHistoryService } from "../history/history.service";
 import { StakingRulesService } from "./rules.service";
 import { StakingStakesService } from "../stakes/stakes.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class StakingRulesServiceEth {
@@ -26,7 +26,7 @@ export class StakingRulesServiceEth {
     private readonly stakingRulesService: StakingRulesService,
     private readonly stakingStakesService: StakingStakesService,
     private readonly historyService: StakingHistoryService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async create(event: ILogEvent<IStakingCreate>, context: Log): Promise<void> {
@@ -124,7 +124,7 @@ export class StakingRulesServiceEth {
       eventData: event.args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

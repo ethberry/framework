@@ -1,30 +1,26 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
 import { ContractType, VestingEventType } from "@framework/types";
 
+import { VestingModule } from "../vesting.module";
+import { VestingService } from "../vesting.service";
 import { VestingLogService } from "./vesting.log.service";
-
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 // custom contracts
 import { VestingAbi } from "./interfaces";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
+    VestingModule,
     // Erc721 user contracts
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, ContractManagerModule],
-      inject: [ConfigService, ContractManagerService],
-      useFactory: async (
-        configService: ConfigService,
-        contractManagerService: ContractManagerService,
-      ): Promise<IModuleOptions> => {
-        const vestingContracts = await contractManagerService.findAllByType(ContractType.VESTING);
+      imports: [ConfigModule, VestingModule],
+      inject: [ConfigService, VestingService],
+      useFactory: async (configService: ConfigService, contractService: VestingService): Promise<IModuleOptions> => {
+        const vestingContracts = await contractService.findAllContracts();
         return {
           contract: {
             contractType: ContractType.VESTING,
@@ -47,4 +43,11 @@ import { VestingAbi } from "./interfaces";
   providers: [VestingLogService, Logger],
   exports: [VestingLogService],
 })
-export class VestingLogModule {}
+export class VestingLogModule implements OnModuleDestroy {
+  constructor(private readonly vestingLogService: VestingLogService) {}
+
+  // save last block on SIGTERM
+  public async onModuleDestroy(): Promise<number> {
+    return await this.vestingLogService.updateBlock();
+  }
+}

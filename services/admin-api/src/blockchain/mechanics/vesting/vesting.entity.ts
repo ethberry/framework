@@ -12,6 +12,9 @@ export class VestingEntity extends DeployableEntity implements IVesting {
   @Column({ type: "int" })
   public duration: number;
 
+  @Column({ type: "int" })
+  public fromBlock: number;
+
   @Column({ type: "timestamptz" })
   public startTimestamp: string;
 

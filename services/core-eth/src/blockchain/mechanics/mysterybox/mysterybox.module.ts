@@ -10,7 +10,6 @@ import { MysteryboxLogModule } from "./log/log.module";
 import { MysteryboxControllerEth } from "./mysterybox.controller.eth";
 import { MysteryboxServiceEth } from "./mysterybox.service.eth";
 import { AccessControlModule } from "../../access-control/access-control.module";
-import { ContractManagerModule } from "../../contract-manager/contract-manager.module";
 import { ContractHistoryModule } from "../../contract-history/contract-history.module";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";
@@ -24,7 +23,6 @@ import { BalanceModule } from "../../hierarchy/balance/balance.module";
     BalanceModule,
     MysteryboxLogModule,
     AccessControlModule,
-    ContractManagerModule,
     TemplateModule,
     ContractHistoryModule,
     ContractModule,

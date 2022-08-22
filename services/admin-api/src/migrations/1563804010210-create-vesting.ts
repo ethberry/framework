@@ -46,6 +46,11 @@ export class CreateVesting1563804010210 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "from_block",
+          type: "int",
+          default: 0,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

@@ -7,25 +7,21 @@ import { ContractType, ExchangeEventType, ReferralProgramEventType } from "@fram
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
 import { ExchangeLogService } from "./exchange-log.service";
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
+    ContractModule,
     // ContractManager
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, ContractManagerModule],
-      inject: [ConfigService, ContractManagerService],
-      useFactory: async (
-        configService: ConfigService,
-        contractManagerService: ContractManagerService,
-      ): Promise<IModuleOptions> => {
+      imports: [ConfigModule, ContractModule],
+      inject: [ConfigService, ContractService],
+      useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const exchangeAddr = configService.get<string>("EXCHANGE_ADDR", "");
         const fromBlock =
-          (await contractManagerService.getLastBlock(exchangeAddr)) ||
-          ~~configService.get<string>("STARTING_BLOCK", "0");
+          (await contractService.getLastBlock(exchangeAddr)) || ~~configService.get<string>("STARTING_BLOCK", "0");
         return {
           contract: {
             contractType: ContractType.EXCHANGE,
@@ -36,7 +32,7 @@ import { ContractManagerService } from "../../../contract-manager/contract-manag
               ExchangeEventType.Purchase,
               ExchangeEventType.Claim,
               ReferralProgramEventType.ReferralWithdraw,
-              ReferralProgramEventType.ReferralReward,
+              ReferralProgramEventType.ReferralReward
             ],
           },
           block: {

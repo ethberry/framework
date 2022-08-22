@@ -14,6 +14,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_module_enum AS ENUM (
+        'SYSTEM',
         'CORE'
       );
     `);
@@ -115,6 +116,11 @@ export class CreateContract1563804000100 implements MigrationInterface {
           name: "is_paused",
           type: "boolean",
           default: false,
+        },
+        {
+          name: "from_block",
+          type: "int",
+          default: 0,
         },
         {
           name: "created_at",

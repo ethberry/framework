@@ -13,7 +13,7 @@ import {
 
 import { AccessControlHistoryService } from "./history/history.service";
 import { AccessControlService } from "./access-control.service";
-import { ContractManagerService } from "../contract-manager/contract-manager.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -22,7 +22,7 @@ export class AccessControlServiceEth {
     private readonly loggerService: LoggerService,
     private readonly accessControlService: AccessControlService,
     private readonly accessControlHistoryService: AccessControlHistoryService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async roleGranted(event: ILogEvent<IAccessControlRoleGranted>, context: Log): Promise<void> {
@@ -103,7 +103,7 @@ export class AccessControlServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

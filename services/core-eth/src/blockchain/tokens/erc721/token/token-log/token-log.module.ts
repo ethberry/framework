@@ -3,27 +3,24 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { AccessControlEventType, ContractEventType, ContractType } from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, TokenType } from "@framework/types";
 
 // custom contracts
 import { ABI } from "./interfaces";
 import { Erc721TokenLogService } from "./token-log.service";
-import { ContractManagerModule } from "../../../../contract-manager/contract-manager.module";
-import { ContractManagerService } from "../../../../contract-manager/contract-manager.service";
+import { ContractModule } from "../../../../hierarchy/contract/contract.module";
+import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
+    ContractModule,
     // Erc721 user contracts
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, ContractManagerModule],
-      inject: [ConfigService, ContractManagerService],
-      useFactory: async (
-        configService: ConfigService,
-        contractManagerService: ContractManagerService,
-      ): Promise<IModuleOptions> => {
-        const erc721Contracts = await contractManagerService.findAllByType(ContractType.ERC721_TOKEN);
+      imports: [ConfigModule, ContractModule],
+      inject: [ConfigService, ContractService],
+      useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const erc721Contracts = await contractService.findAllTokensByType(TokenType.ERC721);
         return {
           contract: {
             contractType: ContractType.ERC721_TOKEN,

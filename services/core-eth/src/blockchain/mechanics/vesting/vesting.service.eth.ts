@@ -6,7 +6,7 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IVestingERC20Released, IVestingEtherReleased, TVestingEventData, VestingEventType } from "@framework/types";
 
 import { VestingHistoryService } from "./history/vesting-history.service";
-import { ContractManagerService } from "../../contract-manager/contract-manager.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class VestingServiceEth {
@@ -14,7 +14,7 @@ export class VestingServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly vestingHistoryService: VestingHistoryService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async erc20Released(event: ILogEvent<IVestingERC20Released>, context: Log): Promise<void> {
@@ -38,7 +38,7 @@ export class VestingServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
+    await this.contractService.updateLastBlockByAddr(
       context.address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );

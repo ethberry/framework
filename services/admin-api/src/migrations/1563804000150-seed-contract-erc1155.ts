@@ -12,6 +12,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
     const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR || wallet;
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
+    const lastBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -28,6 +29,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
+        from_block,
         created_at,
         updated_at
       ) VALUES (
@@ -44,6 +46,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ACTIVE',
         'ERC1155',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -60,6 +63,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'INACTIVE',
         'ERC1155',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -76,6 +80,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'NEW',
         'ERC1155',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -92,6 +97,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'NEW',
         'ERC1155',
         '{BLACKLIST}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -108,6 +114,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         'ACTIVE',
         'ERC1155',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

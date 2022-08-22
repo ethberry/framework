@@ -6,6 +6,8 @@ import { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractEventType,
   ContractType,
+  IErc998TokenReceivedChild,
+  IErc998TokenTransferChild,
   IRandomRequest,
   ITokenApprove,
   ITokenApprovedForAll,
@@ -14,6 +16,11 @@ import {
 } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
+import {
+  IErc998TokenSetMaxChild,
+  IErc998TokenUnWhitelistedChild,
+  IErc998TokenWhitelistedChild,
+} from "@framework/types/dist";
 
 @Controller()
 export class Erc998TokenControllerEth {
@@ -37,6 +44,34 @@ export class Erc998TokenControllerEth {
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.MintRandom })
   public mintRandom(@Payload() event: ILogEvent<ITokenMintRandom>, @Ctx() context: Log): Promise<void> {
     return this.erc998TokenServiceEth.mintRandom(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.ReceivedChild })
+  public receivedChild(@Payload() event: ILogEvent<IErc998TokenReceivedChild>, @Ctx() context: Log): Promise<void> {
+    return this.erc998TokenServiceEth.receivedChild(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.TransferChild })
+  public transferChild(@Payload() event: ILogEvent<IErc998TokenTransferChild>, @Ctx() context: Log): Promise<void> {
+    return this.erc998TokenServiceEth.transferChild(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.WhitelistedChild })
+  public whitelistChild(@Payload() event: ILogEvent<IErc998TokenWhitelistedChild>, @Ctx() context: Log): Promise<void> {
+    return this.erc998TokenServiceEth.whitelist(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.UnWhitelistedChild })
+  public unWhitelistChild(
+    @Payload() event: ILogEvent<IErc998TokenUnWhitelistedChild>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.erc998TokenServiceEth.unWhitelist(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.SetMaxChild })
+  public setMaxChild(@Payload() event: ILogEvent<IErc998TokenSetMaxChild>, @Ctx() context: Log): Promise<void> {
+    return this.erc998TokenServiceEth.setMaxChild(event, context);
   }
 
   // dev test - random request

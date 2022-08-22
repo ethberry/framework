@@ -11,7 +11,6 @@ import { Erc721TokenLogModule } from "../tokens/erc721/token/token-log/token-log
 import { Erc998TokenLogModule } from "../tokens/erc998/token/token-log/token-log.module";
 import { Erc1155TokenLogModule } from "../tokens/erc1155/token/token-log/token-log.module";
 import { VestingLogModule } from "../mechanics/vesting/log/vesting.log.module";
-import { ContractManagerModule } from "./contract-manager.module";
 import { ContractManagerLogModule } from "./log/log.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
@@ -30,7 +29,6 @@ import { MysteryboxLogModule } from "../mechanics/mysterybox/log/log.module";
     VestingLogModule,
     ContractManagerLogModule,
     ContractManagerHistoryModule,
-    ContractManagerModule,
     VestingModule,
     ContractModule,
     TemplateModule,

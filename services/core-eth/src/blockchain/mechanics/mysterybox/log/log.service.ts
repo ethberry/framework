@@ -1,30 +1,24 @@
 import { Injectable } from "@nestjs/common";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
-import { ContractType } from "@framework/types";
+import { ModuleType } from "@framework/types";
 
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
 import { ICreateListenerPayload } from "../../../../common/interfaces";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class MysteryboxLogService {
   constructor(
     private readonly ethersContractService: EthersContractService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
-  public async addListener(dto: ICreateListenerPayload): Promise<void> {
+  public addListener(dto: ICreateListenerPayload): void {
     this.ethersContractService.updateListener([dto.address], dto.fromBlock);
-
-    await this.contractManagerService.create({
-      address: dto.address.toLowerCase(),
-      contractType: ContractType.MYSTERYBOX,
-      fromBlock: dto.fromBlock,
-    });
   }
 
   public async getLastBlock(address: string): Promise<number | null> {
-    const contractManagerEntity = await this.contractManagerService.findOne({ address });
+    const contractManagerEntity = await this.contractService.findOne({ address });
 
     if (contractManagerEntity) {
       return contractManagerEntity.fromBlock;
@@ -34,6 +28,6 @@ export class MysteryboxLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.contractManagerService.updateLastBlockByType(ContractType.MYSTERYBOX, lastBlock);
+    return this.contractService.updateLastBlockByType(ModuleType.MYSTERYBOX, lastBlock);
   }
 }

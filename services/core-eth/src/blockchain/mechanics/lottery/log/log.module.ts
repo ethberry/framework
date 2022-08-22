@@ -5,27 +5,27 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, LotteryEventType } from "@framework/types";
 
 import { LotteryLogService } from "./log.service";
-import { ContractManagerModule } from "../../../contract-manager/contract-manager.module";
-import { ContractManagerService } from "../../../contract-manager/contract-manager.service";
+
 // system contract
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [
     ConfigModule,
-    ContractManagerModule,
+    ContractModule,
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, ContractManagerModule],
-      inject: [ConfigService, ContractManagerService],
-      useFactory: async (
-        configService: ConfigService,
-        contractManagerService: ContractManagerService,
-      ): Promise<IModuleOptions> => {
-        const lotteryContracts = await contractManagerService.findAllByType(ContractType.LOTTERY);
+      imports: [ConfigModule, ContractModule],
+      inject: [ConfigService, ContractService],
+      useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const lotteryAddr = configService.get<string>("LOTTERY_ADDR", "");
+        const fromBlock =
+          (await contractService.getLastBlock(lotteryAddr)) || ~~configService.get<string>("STARTING_BLOCK", "0");
         return {
           contract: {
             contractType: ContractType.LOTTERY,
-            contractAddress: lotteryContracts.address || [],
+            contractAddress: [lotteryAddr],
             contractInterface: LotterySol.abi,
             // prettier-ignore
             eventNames: [
@@ -42,7 +42,7 @@ import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/
             ],
           },
           block: {
-            fromBlock: lotteryContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            fromBlock,
             debug: true,
           },
         };

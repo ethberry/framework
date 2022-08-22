@@ -15,6 +15,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
     const erc721ContractRandomAddress = process.env.ERC721_RANDOM_ADDR || wallet;
     const erc721ContractSoulboundAddress = process.env.ERC721_SOULBOUND_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
+    const lastBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -31,6 +32,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         contract_status,
         contract_type,
         contract_features,
+        from_block,
         created_at,
         updated_at
       ) VALUES (
@@ -47,6 +49,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -63,6 +66,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'INACTIVE',
         'ERC721',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -79,6 +83,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'NEW',
         'ERC721',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -95,6 +100,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{BLACKLIST}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -111,6 +117,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{UPGRADEABLE}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -127,6 +134,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{UPGRADEABLE,RANDOM}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -143,6 +151,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{SOULBOUND}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -159,6 +168,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         'ACTIVE',
         'ERC721',
         '{}',
+        '${lastBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       )
