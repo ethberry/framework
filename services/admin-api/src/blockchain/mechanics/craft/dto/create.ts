@@ -3,20 +3,21 @@ import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { ICraftCreateDto } from "../interfaces";
-import { AssetDto } from "../../asset/dto";
+import { ItemDto } from "../../asset/dto";
+import { IngredientsDto } from "./ingredients";
 
 export class ExchangeCreateDto implements ICraftCreateDto {
   @ApiProperty({
-    type: AssetDto,
+    type: ItemDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public item: AssetDto;
+  @Type(() => ItemDto)
+  public item: ItemDto;
 
   @ApiProperty({
-    type: AssetDto,
+    type: IngredientsDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public price: AssetDto;
+  @Type(() => IngredientsDto)
+  public price: IngredientsDto;
 }

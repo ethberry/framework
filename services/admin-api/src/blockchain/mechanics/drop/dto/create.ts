@@ -4,22 +4,22 @@ import { Type } from "class-transformer";
 
 import { IDropCreateDto } from "../interfaces";
 import { IsBeforeDate } from "./is-before-date";
-import { AssetDto } from "../../asset/dto";
+import { ItemDto, PriceDto } from "../../asset/dto";
 
 export class DropCreateDto implements IDropCreateDto {
   @ApiProperty({
-    type: AssetDto,
+    type: ItemDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public item: AssetDto;
+  @Type(() => ItemDto)
+  public item: ItemDto;
 
   @ApiProperty({
-    type: AssetDto,
+    type: PriceDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public price: AssetDto;
+  @Type(() => PriceDto)
+  public price: PriceDto;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

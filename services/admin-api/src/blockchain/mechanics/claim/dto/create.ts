@@ -3,15 +3,15 @@ import { IsEthereumAddress, IsISO8601, IsString, ValidateNested } from "class-va
 import { Transform, Type } from "class-transformer";
 
 import { IClaimItemCreateDto } from "../interfaces";
-import { AssetDto } from "../../asset/dto";
+import { ItemDto } from "../../asset/dto";
 
 export class ClaimItemCreateDto implements IClaimItemCreateDto {
   @ApiProperty({
-    type: AssetDto,
+    type: ItemDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public item: AssetDto;
+  @Type(() => ItemDto)
+  public item: ItemDto;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

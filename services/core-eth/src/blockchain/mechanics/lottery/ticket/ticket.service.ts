@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository, DeepPartial } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { LotteryTicketEntity } from "./ticket.entity";
 

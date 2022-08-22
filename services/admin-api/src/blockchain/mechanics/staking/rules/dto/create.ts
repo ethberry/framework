@@ -1,39 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsEnum, IsInt, IsJSON, IsNumber, IsString, Min, ValidateIf, ValidateNested } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { IsBoolean, IsInt, IsJSON, IsNumber, IsString, Min, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
 
-import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { TokenType } from "@framework/types";
-
-import { IStakingCreateDto, IStakingItemCreateDto } from "../interfaces";
-import { AssetDto } from "../../../asset/dto";
-
-export class StakingItemCreateDto implements IStakingItemCreateDto {
-  @ApiProperty({
-    enum: TokenType,
-  })
-  @Transform(({ value }) => value as TokenType)
-  @IsEnum(TokenType, { message: "badInput" })
-  public tokenType: TokenType;
-
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  public collection: number;
-
-  @ApiProperty()
-  @IsInt({ message: "typeMismatch" })
-  @Min(1, { message: "rangeUnderflow" })
-  @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
-  public tokenId: number;
-
-  @ApiProperty({
-    type: Number,
-  })
-  @IsBigNumber({}, { message: "typeMismatch" })
-  @ValidateIf(o => [TokenType.NATIVE, TokenType.ERC20, TokenType.ERC1155].includes(o.TokenType))
-  public amount: string;
-}
+import { IStakingCreateDto } from "../interfaces";
+import { DepositDto } from "./deposit";
+import { RewardDto } from "./reward";
 
 export class StakingCreateDto implements IStakingCreateDto {
   @ApiProperty()
@@ -45,18 +16,18 @@ export class StakingCreateDto implements IStakingCreateDto {
   public description: string;
 
   @ApiProperty({
-    type: AssetDto,
+    type: DepositDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public deposit: AssetDto;
+  @Type(() => DepositDto)
+  public deposit: DepositDto;
 
   @ApiProperty({
-    type: AssetDto,
+    type: RewardDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public reward: AssetDto;
+  @Type(() => RewardDto)
+  public reward: RewardDto;
 
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })

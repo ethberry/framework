@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { GradeStrategy } from "@framework/types";
 
 import { IGradeUpdateDto } from "../interfaces";
-import { AssetDto } from "../../asset/dto";
+import { PriceDto } from "../../asset/dto";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({
@@ -28,10 +28,10 @@ export class GradeUpdateDto implements IGradeUpdateDto {
   public growthRate: number;
 
   @ApiPropertyOptional({
-    type: AssetDto,
+    type: PriceDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AssetDto)
-  public price: AssetDto;
+  @Type(() => PriceDto)
+  public price: PriceDto;
 }

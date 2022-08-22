@@ -3,7 +3,7 @@ import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-valid
 import { Type } from "class-transformer";
 
 import { IMysteryboxCreateDto } from "../interfaces";
-import { AssetDto } from "../../../asset/dto";
+import { ItemDto, PriceDto } from "../../../asset/dto";
 
 export class MysteryboxCreateDto implements IMysteryboxCreateDto {
   @ApiProperty()
@@ -15,18 +15,18 @@ export class MysteryboxCreateDto implements IMysteryboxCreateDto {
   public description: string;
 
   @ApiProperty({
-    type: AssetDto,
+    type: ItemDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public item: AssetDto;
+  @Type(() => ItemDto)
+  public item: ItemDto;
 
   @ApiProperty({
-    type: AssetDto,
+    type: PriceDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public price: AssetDto;
+  @Type(() => PriceDto)
+  public price: PriceDto;
 
   @ApiProperty()
   @IsUrl({}, { message: "patternMismatch" })

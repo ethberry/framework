@@ -3,8 +3,7 @@ import { IsISO8601, IsOptional, IsString, ValidateNested } from "class-validator
 import { Transform, Type } from "class-transformer";
 
 import { IClaimItemUpdateDto } from "../interfaces";
-import { IAssetDto } from "@framework/types";
-import { AssetDto } from "../../asset/dto";
+import { ItemDto } from "../../asset/dto";
 
 export class ClaimItemUpdateDto implements IClaimItemUpdateDto {
   @ApiPropertyOptional()
@@ -14,12 +13,12 @@ export class ClaimItemUpdateDto implements IClaimItemUpdateDto {
   public account: string;
 
   @ApiPropertyOptional({
-    type: AssetDto,
+    type: ItemDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AssetDto)
-  public item: IAssetDto;
+  @Type(() => ItemDto)
+  public item: ItemDto;
 
   @ApiPropertyOptional()
   @IsOptional()

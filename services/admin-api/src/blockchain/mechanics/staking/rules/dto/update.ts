@@ -3,7 +3,8 @@ import { IsBoolean, IsInt, IsJSON, IsNumber, IsOptional, IsString, Min, Validate
 import { Type } from "class-transformer";
 
 import { IStakingUpdateDto } from "../interfaces";
-import { AssetDto } from "../../../asset/dto";
+import { DepositDto } from "./deposit";
+import { RewardDto } from "./reward";
 
 export class StakingUpdateDto implements IStakingUpdateDto {
   @ApiPropertyOptional()
@@ -23,20 +24,20 @@ export class StakingUpdateDto implements IStakingUpdateDto {
   public description: string;
 
   @ApiPropertyOptional({
-    type: AssetDto,
+    type: DepositDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AssetDto)
-  public deposit: AssetDto;
+  @Type(() => DepositDto)
+  public deposit: DepositDto;
 
   @ApiPropertyOptional({
-    type: AssetDto,
+    type: RewardDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AssetDto)
-  public reward: AssetDto;
+  @Type(() => RewardDto)
+  public reward: RewardDto;
 
   @ApiPropertyOptional()
   @IsOptional()

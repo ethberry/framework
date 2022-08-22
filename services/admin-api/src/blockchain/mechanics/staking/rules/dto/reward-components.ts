@@ -1,13 +1,11 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsOptional, Min, ValidateIf } from "class-validator";
+import { IsEnum, IsInt, IsOptional, Min, Validate, ValidateIf } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { TokenType } from "@framework/types";
+import { ForbidEnumValues, IsBigNumber } from "@gemunion/nest-js-validators";
+import { IAssetComponentDto, TokenType } from "@framework/types";
 
-import { IAssetComponentDto } from "../interfaces";
-
-export class AssetComponentDto implements IAssetComponentDto {
+export class RewardComponentDto implements IAssetComponentDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
@@ -18,6 +16,7 @@ export class AssetComponentDto implements IAssetComponentDto {
     enum: TokenType,
   })
   @Transform(({ value }) => value as TokenType)
+  @Validate(ForbidEnumValues, [TokenType.NATIVE, TokenType.ERC20])
   @IsEnum(TokenType, { message: "badInput" })
   public tokenType: TokenType;
 
@@ -30,7 +29,7 @@ export class AssetComponentDto implements IAssetComponentDto {
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @ValidateIf(o => [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155].includes(o.TokenType))
-  public tokenId: number;
+  public templateId: number;
 
   @ApiProperty({
     type: Number,

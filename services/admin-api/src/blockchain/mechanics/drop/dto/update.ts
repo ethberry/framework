@@ -4,24 +4,24 @@ import { Type } from "class-transformer";
 
 import { IDropUpdateDto } from "../interfaces";
 import { IsBeforeDate } from "./is-before-date";
-import { AssetDto } from "../../asset/dto";
+import { ItemDto, PriceDto } from "../../asset/dto";
 
 export class DropUpdateDto implements IDropUpdateDto {
   @ApiPropertyOptional({
-    type: AssetDto,
+    type: ItemDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AssetDto)
-  public item: AssetDto;
+  @Type(() => ItemDto)
+  public item: ItemDto;
 
   @ApiPropertyOptional({
-    type: AssetDto,
+    type: PriceDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AssetDto)
-  public price: AssetDto;
+  @Type(() => PriceDto)
+  public price: PriceDto;
 
   @ApiPropertyOptional()
   @IsOptional()

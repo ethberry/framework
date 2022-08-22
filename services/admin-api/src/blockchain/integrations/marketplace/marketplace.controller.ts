@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseInterceptors, Res } from "@nestjs/common";
+import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";

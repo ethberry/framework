@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, LoggerService, NotFoundException, BadRequestException } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
@@ -44,8 +44,6 @@ export class ClaimService {
 
   public async create(dto: IClaimItemCreateDto): Promise<ClaimEntity> {
     const { account, endTimestamp } = dto;
-
-    // TODO disallow NATIVE and ERC20
 
     const assetEntity = await this.assetService.create({
       components: [],
