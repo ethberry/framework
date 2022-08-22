@@ -9,7 +9,7 @@ export class TokenAutocompleteDto implements ITokenAutocompleteDto {
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 
   @ApiPropertyOptional({

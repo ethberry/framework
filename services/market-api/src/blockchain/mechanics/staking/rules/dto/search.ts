@@ -20,9 +20,6 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
 }
 
 export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearchDto {
-  // search by status is disabled for marketplace
-  public stakingStatus: Array<StakingStatus>;
-
   @ApiPropertyOptional({
     type: StakingItemSearchDto,
   })
@@ -36,4 +33,6 @@ export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearc
   @ValidateNested()
   @Type(() => StakingItemSearchDto)
   public reward: StakingItemSearchDto;
+
+  public stakingStatus: Array<StakingStatus>;
 }

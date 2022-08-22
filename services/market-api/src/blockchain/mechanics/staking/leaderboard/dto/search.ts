@@ -11,6 +11,6 @@ export class LeaderboardSearchDto extends PaginationDto implements ILeaderboardS
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }) => (value === "" ? null : (value as string)))
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 }

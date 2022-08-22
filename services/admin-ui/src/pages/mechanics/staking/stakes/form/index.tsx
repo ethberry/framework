@@ -3,7 +3,7 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { IStakingStakesSearchDto, StakeStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
@@ -20,8 +20,8 @@ export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
   const classes = useStyles();
   const { formatMessage } = useIntl();
 
-  const { query, stakeStatus, deposit, reward } = initialValues;
-  const fixedValues = { query, stakeStatus, deposit, reward };
+  const { query, stakeStatus, account, deposit, reward } = initialValues;
+  const fixedValues = { query, stakeStatus, account, deposit, reward };
 
   return (
     <FormWrapper
@@ -39,8 +39,11 @@ export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <SelectInput name="stakeStatus" options={StakeStatus} multiple />
+          </Grid>
+          <Grid item xs={6}>
+            <TextInput name="account" />
           </Grid>
           <Grid item xs={6}>
             <SelectInput

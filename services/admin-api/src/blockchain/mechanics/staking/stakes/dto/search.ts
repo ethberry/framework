@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsEthereumAddress, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -19,6 +19,13 @@ export class StakingStakesSearchDto extends SearchDto implements IStakingStakesS
   @Transform(({ value }) => value as Array<StakeStatus>)
   @IsEnum(StakeStatus, { each: true, message: "badInput" })
   public stakeStatus: Array<StakeStatus>;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString({ message: "typeMismatch" })
+  @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
+  public account: string;
 
   @ApiPropertyOptional({
     type: StakingItemSearchDto,

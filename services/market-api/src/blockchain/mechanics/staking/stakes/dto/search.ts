@@ -33,4 +33,6 @@ export class StakingStakesSearchDto extends SearchDto implements IStakingStakesS
   @ValidateNested()
   @Type(() => StakingItemSearchDto)
   public reward: StakingItemSearchDto;
+
+  public account: string;
 }

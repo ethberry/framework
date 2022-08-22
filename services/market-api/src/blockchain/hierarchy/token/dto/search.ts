@@ -61,7 +61,7 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }) => (value === "" ? null : (value as string)))
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 
   public tokenStatus: Array<TokenStatus>;

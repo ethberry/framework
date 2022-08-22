@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { Brackets, EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { IStakingLeaderboard, IStakingStakesSearchDto, StakeStatus } from "@framework/types";
@@ -36,7 +36,7 @@ export class StakingStakesService {
     dto: Partial<IStakingStakesSearchDto>,
     userEntity: UserEntity,
   ): Promise<[Array<StakingStakesEntity>, number]> {
-    const { stakeStatus, deposit, reward, skip, take } = dto;
+    const { query, stakeStatus, deposit, reward, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
@@ -54,6 +54,20 @@ export class StakingStakesService {
     queryBuilder.select();
 
     queryBuilder.andWhere("stake.account = :account", { account: userEntity.wallet });
+
+    if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(rule.description->'blocks') blocks ON TRUE",
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("rule.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
 
     if (stakeStatus) {
       if (stakeStatus.length === 1) {

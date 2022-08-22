@@ -26,6 +26,6 @@ export class SignLotteryDto implements ISignLotteryDto {
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public referrer: string;
 }

@@ -13,6 +13,7 @@ export interface IStakingRuleSearchDto extends ISearchDto {
 }
 
 export interface IStakingStakesSearchDto extends ISearchDto {
+  account: string;
   stakeStatus: Array<StakeStatus>;
   deposit: IStakingItemSearchDto;
   reward: IStakingItemSearchDto;

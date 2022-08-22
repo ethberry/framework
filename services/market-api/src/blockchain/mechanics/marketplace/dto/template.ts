@@ -22,6 +22,6 @@ export class SignTemplateDto implements ISignTemplateDto {
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public referrer: string;
 }

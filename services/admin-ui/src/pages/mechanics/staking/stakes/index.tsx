@@ -44,6 +44,7 @@ export const Stakes: FC = () => {
     },
     search: {
       query: "",
+      account: "",
       stakeStatus: [StakeStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
