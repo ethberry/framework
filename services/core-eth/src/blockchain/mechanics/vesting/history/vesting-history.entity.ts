@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 
 import { IVestingHistory, TVestingEventData, VestingEventType } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 @Entity({ schema: ns, name: "vesting_history" })
 export class VestingHistoryEntity extends IdDateBaseEntity implements IVestingHistory {

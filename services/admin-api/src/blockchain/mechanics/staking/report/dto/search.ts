@@ -12,10 +12,10 @@ import {
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-
+import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
+
 import { StakingItemSearchDto } from "../../rules/dto";
-import { IsBeforeDate } from "./is-before-date";
 
 export class StakingReportSearchDto extends SearchDto implements IStakingStakesSearchDto {
   @ApiPropertyOptional({

@@ -3,9 +3,8 @@ import { IsArray, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateIf } from
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
+import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import { IMarketplaceReportSearchDto } from "@framework/types";
-
-import { IsBeforeDate } from "../../../mechanics/drop/dto/is-before-date";
 
 export class MarketplaceReportSearchDto extends SearchDto implements IMarketplaceReportSearchDto {
   @ApiPropertyOptional({

@@ -2,8 +2,9 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsISO8601, IsString, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import { IsBeforeDate } from "@gemunion/nest-js-validators";
+
 import { IDropCreateDto } from "../interfaces";
-import { IsBeforeDate } from "./is-before-date";
 import { ItemDto, PriceDto } from "../../asset/dto";
 
 export class DropCreateDto implements IDropCreateDto {

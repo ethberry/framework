@@ -2,9 +2,8 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsISO8601, IsOptional, IsString, ValidateIf } from "class-validator";
 
 import { SearchDto } from "@gemunion/collection";
+import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import { IReferralReportSearchDto } from "@framework/types";
-
-import { IsBeforeDate } from "./is-before-date";
 
 export class MarketplaceReportSearchDto extends SearchDto implements IReferralReportSearchDto {
   @ApiPropertyOptional()

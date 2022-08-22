@@ -25,7 +25,7 @@ import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
 import { StakingSearchForm } from "./form";
 
-export const Staking: FC = () => {
+export const StakingRules: FC = () => {
   const {
     rows,
     count,

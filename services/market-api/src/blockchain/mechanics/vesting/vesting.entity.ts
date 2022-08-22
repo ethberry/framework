@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { DeployableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IVesting, VestingContractTemplate } from "@framework/types";
 import { ns } from "@framework/constants";
 

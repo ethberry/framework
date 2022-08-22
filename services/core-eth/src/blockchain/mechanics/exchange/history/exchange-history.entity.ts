@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { ExchangeEventType, IExchangeHistory, TExchangeEventData } from "@framework/types";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ClaimEntity } from "../../claim/claim.entity";

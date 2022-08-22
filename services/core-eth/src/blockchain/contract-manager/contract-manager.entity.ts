@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { ContractType, IContractManager } from "@framework/types";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 @Entity({ schema: ns, name: "contract_manager" })
 export class ContractManagerEntity extends IdDateBaseEntity implements IContractManager {

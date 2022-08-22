@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IAssetComponent, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 

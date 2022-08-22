@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 import { IToken, TokenStatus } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";

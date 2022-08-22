@@ -475,7 +475,6 @@
         },
         "staking": {
           "rules": "Rules",
-          "stakes": "Stakes",
           "report": "Report",
           "title": "Staking"
         },
@@ -570,9 +569,6 @@
         "deactivate": "Deactivate rule",
         "title": "Staking rules",
         "upload": "Upload rule"
-      },
-      "stakes": {
-        "title": "Staking stakes"
       },
       "report": {
         "title": "Report"

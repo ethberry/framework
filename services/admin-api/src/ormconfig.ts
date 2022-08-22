@@ -8,7 +8,7 @@ import {
   createSchema,
   createTokenTypes,
   installExtensionUUID,
-} from "@gemunion/nest-js-module-typeorm-helpers";
+} from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { UserEntity } from "./user/user.entity";
 import { OtpEntity } from "./otp/otp.entity";

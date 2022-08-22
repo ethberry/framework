@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { BarChart, Rule, Savings } from "@mui/icons-material";
+import { BarChart, Rule } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -21,14 +21,6 @@ export const Staking: FC = () => {
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.mechanics.staking.rules" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/staking/stakes">
-          <ListItemIcon>
-            <Savings />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.staking.stakes" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking/report">

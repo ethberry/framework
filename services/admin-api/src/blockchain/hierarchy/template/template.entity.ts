@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "type
 import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ITemplate, TemplateStatus } from "@framework/types";
 
 import { ContractEntity } from "../contract/contract.entity";
