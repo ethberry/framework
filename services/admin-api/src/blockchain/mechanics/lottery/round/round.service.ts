@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
-import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ILotteryRoundSearchDto } from "@framework/types";
 
@@ -11,8 +11,6 @@ export class LotteryRoundService {
   constructor(
     @InjectRepository(LotteryRoundEntity)
     private readonly roundEntityRepository: Repository<LotteryRoundEntity>,
-    @InjectEntityManager()
-    private readonly entityManager: EntityManager,
   ) {}
 
   public async search(dto: Partial<ILotteryRoundSearchDto>): Promise<[Array<LotteryRoundEntity>, number]> {

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Savings } from "@mui/icons-material";
+import { Savings, ConfirmationNumber } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,12 +15,20 @@ export const Lottery: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/lottery/round">
+        <ListItem button component={RouterLink} to="/lottery/rounds">
           <ListItemIcon>
             <Savings />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.mechanics.lottery.rounds" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/lottery/tickets">
+          <ListItemIcon>
+            <ConfirmationNumber />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.mechanics.lottery.tickets" />
           </ListItemText>
         </ListItem>
       </List>

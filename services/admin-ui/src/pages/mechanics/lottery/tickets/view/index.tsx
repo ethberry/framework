@@ -3,20 +3,20 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@m
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { ILotteryRound } from "@framework/types";
+import { ILotteryTicket } from "@framework/types";
 
 import { getNumbers } from "../../utils";
 
-export interface ILotteryRoundViewDialogProps {
+export interface ILotteryTicketViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: ILotteryRound;
+  initialValues: ILotteryTicket;
 }
 
-export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props => {
+export const LotteryTicketViewDialog: FC<ILotteryTicketViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { id } = initialValues;
+  const { id, account, token } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -38,6 +38,18 @@ export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props =>
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
               <TableCell align="right">{getNumbers(initialValues)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.tokenId" />
+              </TableCell>
+              <TableCell align="right">{token?.tokenId}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.account" />
+              </TableCell>
+              <TableCell align="right">{account}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

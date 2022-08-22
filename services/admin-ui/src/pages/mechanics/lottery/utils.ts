@@ -1,6 +1,6 @@
-import { ILotteryRound } from "@framework/types";
+import { ILotteryRound, ILotteryTicket } from "@framework/types";
 
-export const getNumbers = ({ numbers }: ILotteryRound) => {
+export const getNumbers = ({ numbers }: ILotteryRound | ILotteryTicket) => {
   return numbers
     .reduce((memo, current, i) => {
       if (current) {

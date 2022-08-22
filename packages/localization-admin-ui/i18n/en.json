@@ -465,6 +465,7 @@
         },
         "lottery": {
           "rounds": "Rounds",
+          "tickets": "Tickets",
           "title": "Lottery"
         },
         "mysterybox": {
@@ -536,6 +537,9 @@
     "lottery": {
       "rounds": {
         "title": "Rounds"
+      },
+      "tickets": {
+        "title": "Tickets"
       },
       "title": "Lottery"
     },

@@ -8,7 +8,7 @@ import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
 
 @ApiBearerAuth()
-@Controller("/lottery/round")
+@Controller("/lottery/rounds")
 export class LotteryRoundController {
   constructor(private readonly lotteryRoundService: LotteryRoundService) {}
 

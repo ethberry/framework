@@ -5,12 +5,12 @@ import { Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { ISearchDto } from "@gemunion/types-collection";
-import { ILotteryRound } from "@framework/types";
+import { ILotteryTicket } from "@framework/types";
 
-import { LotteryRoundViewDialog } from "./view";
+import { LotteryTicketViewDialog } from "./view";
 import { getNumbers } from "../utils";
 
-export const LotteryRounds: FC = () => {
+export const LotteryTickets: FC = () => {
   const {
     rows,
     count,
@@ -22,8 +22,8 @@ export const LotteryRounds: FC = () => {
     handleViewConfirm,
     handleViewCancel,
     handleChangePage,
-  } = useCollection<ILotteryRound, ISearchDto>({
-    baseUrl: "/lottery/round",
+  } = useCollection<ILotteryTicket, ISearchDto>({
+    baseUrl: "/lottery/tickets",
     empty: {
       numbers: [],
     },
@@ -31,9 +31,9 @@ export const LotteryRounds: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "lottery", "lottery.rounds"]} />
+      <Breadcrumbs path={["dashboard", "lottery", "lottery.tickets"]} />
 
-      <PageHeader message="pages.lottery.rounds.title" />
+      <PageHeader message="pages.lottery.tickets.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
@@ -60,7 +60,7 @@ export const LotteryRounds: FC = () => {
         onChange={handleChangePage}
       />
 
-      <LotteryRoundViewDialog
+      <LotteryTicketViewDialog
         onCancel={handleViewCancel}
         onConfirm={handleViewConfirm}
         open={isViewDialogOpen}
