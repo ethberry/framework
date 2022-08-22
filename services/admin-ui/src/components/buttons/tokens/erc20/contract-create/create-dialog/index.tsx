@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { Alert } from "@mui/material";
+import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
@@ -25,6 +27,9 @@ export const Erc20ContractCreateDialog: FC<IErc20ContractCreateDialogProps> = pr
       testId="Erc20ContractCreateForm"
       {...rest}
     >
+      <Alert severity="warning">
+        <FormattedMessage id="form.hints.risk" />
+      </Alert>
       <TextInput name="symbol" />
       <NumberInput name="decimals" />
       <TextInput name="title" />

@@ -210,7 +210,8 @@
     },
     "hints": {
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
-      "prompt": "You have unsaved information, are you sure you want to leave this page?"
+      "prompt": "You have unsaved information, are you sure you want to leave this page?",
+      "risk": "You are doing this at your own risk!"
     },
     "labels": {
       "DUMMY": "Dummy",
