@@ -12,6 +12,7 @@ import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
 import { emptyItem } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
+import { ClaimUploadButton } from "../../../../components/buttons/mechanics/claim/upload";
 
 export const Claim: FC = () => {
   const {
@@ -59,6 +60,7 @@ export const Claim: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
+        <ClaimUploadButton />
         <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="ClaimCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>

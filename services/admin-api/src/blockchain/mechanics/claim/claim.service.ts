@@ -2,6 +2,7 @@ import { BadRequestException, Inject, Injectable, Logger, LoggerService, NotFoun
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
+import csv2json from "csvtojson";
 
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
@@ -161,6 +162,52 @@ export class ClaimService {
         amount: component.amount,
       })),
       [],
+    );
+  }
+
+  public async upload(file: Express.Multer.File): Promise<Array<ClaimEntity>> {
+    const parsed = await csv2json({
+      noheader: true,
+      headers: ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"],
+    }).fromString(file.buffer.toString());
+    return Promise.allSettled(
+      parsed.map(
+        ({
+          account,
+          endTimestamp,
+          tokenType,
+          contractId,
+          templateId,
+          amount,
+        }: {
+          account: string;
+          endTimestamp: string;
+          tokenType: TokenType;
+          contractId: number;
+          templateId: number;
+          amount: string;
+        }) => {
+          return this.create({
+            account,
+            endTimestamp,
+            item: {
+              components: [
+                {
+                  tokenType,
+                  contractId,
+                  templateId,
+                  amount,
+                },
+              ],
+            },
+          });
+        },
+      ),
+    ).then(values =>
+      values
+        .filter(c => c.status === "fulfilled")
+        .map(c => <PromiseFulfilledResult<ClaimEntity>>c)
+        .map(c => c.value),
     );
   }
 }

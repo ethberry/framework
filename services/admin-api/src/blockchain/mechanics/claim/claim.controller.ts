@@ -11,7 +11,9 @@ import {
   Put,
   Query,
   UseInterceptors,
+  UploadedFile,
 } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
@@ -34,6 +36,12 @@ export class ClaimController {
   @Post("/")
   public create(@Body() dto: ClaimItemCreateDto): Promise<ClaimEntity> {
     return this.claimService.create(dto);
+  }
+
+  @Post("/upload")
+  @UseInterceptors(FileInterceptor("file"))
+  public upload(@UploadedFile() file: Express.Multer.File): Promise<Array<ClaimEntity>> {
+    return this.claimService.upload(file);
   }
 
   @Put("/:id")
