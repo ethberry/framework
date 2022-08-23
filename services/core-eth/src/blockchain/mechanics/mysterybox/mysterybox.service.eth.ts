@@ -72,7 +72,7 @@ export class MysteryboxServiceEth extends TokenServiceEth {
       await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), "1");
     }
 
-    const mysteryboxTokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const mysteryboxTokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!mysteryboxTokenEntity) {
       throw new NotFoundException("tokenNotFound");

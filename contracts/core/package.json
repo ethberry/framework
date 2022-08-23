@@ -72,8 +72,8 @@
     "deploy:mainnet": "hardhat --network mainnet deploy",
     "lint": "eslint . --fix",
     "prebuild": "hardhat clean",
-    "prepare:contracts:besu": "hardhat --network besu run scripts/001-deploy-dev.ts",
-    "prepare:contracts:mainnet": "hardhat --network binancetest run scripts/001-deploy-prod.ts",
+    "prepare:contracts:besu": "hardhat --network besu run scripts/deploy-dev.ts",
+    "prepare:contracts:mainnet": "hardhat --network binancetest run scripts/deploy-prod.ts",
     "prepublish": "npm run build",
     "solhint": "solhint -f table contracts/**/*.sol",
     "test": "hardhat test"

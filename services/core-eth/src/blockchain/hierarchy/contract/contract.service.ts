@@ -77,6 +77,7 @@ export class ContractService {
       return entity.fromBlock;
     }
     return lastBlock;
+    // todo throw error?
   }
 
   public async updateLastBlockByType(contractModule: ModuleType, lastBlock: number): Promise<number> {

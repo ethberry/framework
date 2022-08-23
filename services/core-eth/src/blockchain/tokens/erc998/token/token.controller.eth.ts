@@ -58,7 +58,7 @@ export class Erc998TokenControllerEth {
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.WhitelistedChild })
   public whitelistChild(@Payload() event: ILogEvent<IErc998TokenWhitelistedChild>, @Ctx() context: Log): Promise<void> {
-    return this.erc998TokenServiceEth.whitelist(event, context);
+    return this.erc998TokenServiceEth.whitelistChild(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.UnWhitelistedChild })
@@ -66,7 +66,7 @@ export class Erc998TokenControllerEth {
     @Payload() event: ILogEvent<IErc998TokenUnWhitelistedChild>,
     @Ctx() context: Log,
   ): Promise<void> {
-    return this.erc998TokenServiceEth.unWhitelist(event, context);
+    return this.erc998TokenServiceEth.unWhitelistChild(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.SetMaxChild })

@@ -7,9 +7,10 @@ import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers
 import { LotteryRoundEntity } from "./round.entity";
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundServiceCron } from "./round.service.cron";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [ConfigModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
+  imports: [ConfigModule, ContractModule, TypeOrmModule.forFeature([LotteryRoundEntity])],
   providers: [Logger, ethersRpcProvider, ethersSignerProvider, LotteryRoundService, LotteryRoundServiceCron],
   exports: [LotteryRoundService],
 })

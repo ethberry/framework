@@ -287,7 +287,6 @@ export class ContractManagerServiceEth {
       eventData: args,
     });
 
-    const contractManagerAddr = this.configService.get<string>("CONTRACT_MANAGER_ADDR", "");
-    await this.contractService.updateLastBlockByAddr(contractManagerAddr, parseInt(blockNumber.toString(), 16));
+    await this.contractService.updateLastBlockByAddr(address, parseInt(blockNumber.toString(), 16));
   }
 }

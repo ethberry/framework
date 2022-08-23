@@ -24,6 +24,10 @@ export enum ContractEventType {
   WhitelistedChild = "WhitelistedChild",
 }
 
+export interface IPaused {
+  account: string;
+}
+
 export interface IErc20TokenTransfer {
   from: string;
   to: string;
@@ -187,7 +191,8 @@ export type TContractEventData =
   | IErc998TokenTransferChild
   | IErc998TokenSetMaxChild
   | IErc998TokenUnWhitelistedChild
-  | IErc998TokenWhitelistedChild;
+  | IErc998TokenWhitelistedChild
+  | IPaused;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;

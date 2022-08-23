@@ -69,7 +69,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
     }
 
-    const erc721TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!erc721TokenEntity) {
       throw new NotFoundException("tokenNotFound");

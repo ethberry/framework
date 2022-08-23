@@ -48,7 +48,6 @@ export class AccessControlServiceEth {
 
     await this.updateHistory(event, context);
 
-    // TODO probably add role status: active\revoked?
     await this.accessControlService.delete({
       address: context.address.toLowerCase(),
       account: account.toLowerCase(),
@@ -104,7 +103,7 @@ export class AccessControlServiceEth {
     });
 
     await this.contractService.updateLastBlockByAddr(
-      context.address.toLowerCase(),
+      address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );
   }

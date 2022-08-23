@@ -62,7 +62,7 @@ export class Erc1155TokenServiceEth {
 
     await this.updateHistory(event, context);
 
-    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), context.address.toLowerCase(), id, value);
+    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), id, value);
   }
 
   public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatch>, context: Log): Promise<void> {
@@ -125,7 +125,7 @@ export class Erc1155TokenServiceEth {
     });
 
     await this.contractService.updateLastBlockByAddr(
-      context.address.toLowerCase(),
+      address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );
   }

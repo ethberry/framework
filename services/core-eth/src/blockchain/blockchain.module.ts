@@ -6,12 +6,14 @@ import { ContractHistoryModule } from "./contract-history/contract-history.modul
 import { RoyaltyModule } from "./royalty/royalty.module";
 import { TokensModule } from "./tokens/tokens.module";
 import { MechanicsModule } from "./mechanics/mechanics.module";
+import { PauseModule } from "./pause/pause.module";
 
 @Module({
   imports: [
     ContractManagerModuleEth,
     ContractHistoryModule,
     AccessControlModule,
+    PauseModule,
     RoyaltyModule,
     TokensModule,
     MechanicsModule,

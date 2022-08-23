@@ -14,6 +14,7 @@ import {
 
 import { LotteryHistoryService } from "../history/history.service";
 import { LotteryRoundService } from "./round.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class LotteryRoundServiceEth {
@@ -22,6 +23,7 @@ export class LotteryRoundServiceEth {
     private readonly loggerService: LoggerService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryHistoryService: LotteryHistoryService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async start(event: ILogEvent<IRoundStarted>, context: Log): Promise<void> {
@@ -75,7 +77,7 @@ export class LotteryRoundServiceEth {
     this.loggerService.log(JSON.stringify(event, null, "\t"), LotteryRoundServiceEth.name);
 
     const { args, name } = event;
-    const { transactionHash, address } = context;
+    const { transactionHash, address, blockNumber } = context;
 
     await this.lotteryHistoryService.create({
       address: address.toLowerCase(),
@@ -83,5 +85,10 @@ export class LotteryRoundServiceEth {
       eventType: name as LotteryEventType,
       eventData: args,
     });
+
+    await this.contractService.updateLastBlockByAddr(
+      address.toLowerCase(),
+      parseInt(blockNumber.toString(), 16),
+    );
   }
 }

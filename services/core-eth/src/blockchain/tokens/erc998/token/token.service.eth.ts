@@ -79,7 +79,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
     }
 
-    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
 
     if (!erc998TokenEntity) {
       throw new NotFoundException("tokenNotFound");
@@ -199,7 +199,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async whitelist(event: ILogEvent<IErc998TokenWhitelistedChild>, context: Log): Promise<void> {
+  public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChild>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { addr, maxCount },
@@ -225,7 +225,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     });
   }
 
-  public async unWhitelist(event: ILogEvent<IErc998TokenUnWhitelistedChild>, context: Log): Promise<void> {
+  public async unWhitelistChild(event: ILogEvent<IErc998TokenUnWhitelistedChild>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { addr },

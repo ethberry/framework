@@ -13,6 +13,7 @@ import {
 
 import { AccessListHistoryService } from "./history/history.service";
 import { AccessListService } from "./access-list.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
 
 @Injectable()
 export class AccessListServiceEth {
@@ -21,6 +22,7 @@ export class AccessListServiceEth {
     private readonly loggerService: LoggerService,
     private readonly accessListService: AccessListService,
     private readonly accessListHistoryService: AccessListHistoryService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async blacklisted(event: ILogEvent<IBlacklisted>, context: Log): Promise<void> {
@@ -81,7 +83,7 @@ export class AccessListServiceEth {
     this.loggerService.log(JSON.stringify(event, null, "\t"), AccessListServiceEth.name);
 
     const { args, name } = event;
-    const { transactionHash, address } = context;
+    const { transactionHash, address, blockNumber } = context;
 
     await this.accessListHistoryService.create({
       address,
@@ -89,5 +91,10 @@ export class AccessListServiceEth {
       eventType: name as AccessListEventType,
       eventData: args,
     });
+
+    await this.contractService.updateLastBlockByAddr(
+      address.toLowerCase(),
+      parseInt(blockNumber.toString(), 16),
+    );
   }
 }

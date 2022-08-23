@@ -67,7 +67,7 @@ export class ExchangeServiceEth {
     });
 
     await this.contractService.updateLastBlockByAddr(
-      context.address.toLowerCase(),
+      address.toLowerCase(),
       parseInt(blockNumber.toString(), 16),
     );
   }

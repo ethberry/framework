@@ -35,7 +35,9 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               ContractEventType.UnpackMysterybox,
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked
+              AccessControlEventType.RoleRevoked,
+              ContractEventType.Paused,
+              ContractEventType.Unpaused,
             ],
           },
           block: {
