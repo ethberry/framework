@@ -16,10 +16,10 @@ async function main() {
   const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
   const vrfInstance = await vrfFactory.deploy(linkInstance.address);
   console.info(`VRF_ADDR=${vrfInstance.address}`);
-  await blockAwait(ethers.provider);
+  // await blockAwait(ethers.provider);
   const tx = await linkInstance.mint(owner.address, linkAmountInWei);
   console.info(`some LINK tokens minted:`, tx.hash);
-  await blockAwait(ethers.provider);
+  // await blockAwait(ethers.provider);
   const linkBalanceOwner = await linkInstance.balanceOf(owner.address);
   console.info("linkBalanceOwner", linkBalanceOwner);
 

@@ -17,7 +17,7 @@ async function main() {
   console.info(`ERC721_R_ADDR=${itemrInstance.address.toLowerCase()}`);
 
   // Setup Contracts
-  await blockAwait(ethers.provider);
+  // await blockAwait(ethers.provider);
 
   // ERC721 getRecordField Template
   const templateKey = await itemInstance.TEMPLATE_ID();

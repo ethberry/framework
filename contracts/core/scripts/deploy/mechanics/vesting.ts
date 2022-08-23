@@ -9,13 +9,13 @@ export async function deployVesting(contracts: Record<string, Contract>) {
   await blockAwait();
   const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
   contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await blockAwait(3);
+  await blockAwait();
 
   const gradedVestingFactory = await ethers.getContractFactory("GradedVesting");
   contracts.vestingGraded = await gradedVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await blockAwait(3);
+  await blockAwait();
 
   const cliffVestingFactory = await ethers.getContractFactory("CliffVesting");
   contracts.vestingCliff = await cliffVestingFactory.deploy(wallet, timestamp, 365 * 86400);
-  await blockAwait(3);
+  await blockAwait();
 }
