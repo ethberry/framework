@@ -19,7 +19,7 @@ export const NewMysterybox: FC = () => {
   const { fn, isLoading } = useApiCall(
     async api => {
       return api.fetchJson({
-        url: "/mysteryboxes/new",
+        url: "/mysterybox-boxes/new",
       });
     },
     { success: false, error: false },

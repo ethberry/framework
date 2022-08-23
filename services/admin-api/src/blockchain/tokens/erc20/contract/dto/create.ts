@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEthereumAddress, IsInt, IsJSON, IsString, MaxLength, Min } from "class-validator";
+import { IsEthereumAddress, IsInt, IsJSON, IsString, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 import { IErc20ContractCreateDto } from "@framework/types";
 
@@ -12,6 +12,7 @@ export class Erc20ContractCreateDto implements IErc20ContractCreateDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
+  @Max(18, { message: "rangeOverflow" })
   public decimals: number;
 
   @ApiProperty()

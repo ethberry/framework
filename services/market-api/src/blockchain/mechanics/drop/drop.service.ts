@@ -21,7 +21,7 @@ export class DropService {
     private readonly signerService: SignerService,
   ) {}
 
-  public async search(dto: IPaginationDto): Promise<[Array<DropEntity>, number]> {
+  public async search(dto: Partial<IPaginationDto>): Promise<[Array<DropEntity>, number]> {
     const { skip, take } = dto;
     const now = new Date();
 

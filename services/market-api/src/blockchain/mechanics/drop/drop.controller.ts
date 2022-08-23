@@ -20,6 +20,12 @@ export class DropController {
     return this.dropService.search(dto);
   }
 
+  @Get("/new")
+  @UseInterceptors(PaginationInterceptor)
+  public getNewTemplates(): Promise<[Array<DropEntity>, number]> {
+    return this.dropService.search({ take: 10 });
+  }
+
   @Post("/sign")
   public sign(@Body() dto: SignDropDto): Promise<IServerSignature> {
     return this.dropService.sign(dto);

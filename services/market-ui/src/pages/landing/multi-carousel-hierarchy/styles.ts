@@ -11,5 +11,5 @@ export const useStyles = makeStyles<Theme>(
       padding: theme.spacing(2, 1, 2, 1),
     },
   }),
-  { name: "MultiCarousel" },
+  { name: "MultiCarouselHierarchy" },
 );
