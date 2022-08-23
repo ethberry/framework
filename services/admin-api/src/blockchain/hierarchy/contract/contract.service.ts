@@ -7,6 +7,7 @@ import { ContractStatus, IContractAutocompleteDto, IContractSearchDto, ModuleTyp
 import { ContractEntity } from "./contract.entity";
 import { TemplateEntity } from "../template/template.entity";
 import { IContractUpdateDto } from "./interfaces";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class ContractService {
@@ -17,6 +18,7 @@ export class ContractService {
 
   public async search(
     dto: IContractSearchDto,
+    userEntity: UserEntity,
     contractType: TokenType,
     contractModule: ModuleType,
   ): Promise<[Array<ContractEntity>, number]> {
@@ -33,6 +35,9 @@ export class ContractService {
     });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
     });
 
     if (contractStatus) {
@@ -77,9 +82,14 @@ export class ContractService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
+  public async autocomplete(
+    dto: Partial<IContractAutocompleteDto>,
+    userEntity: UserEntity,
+  ): Promise<Array<ContractEntity>> {
     const { contractStatus = [], contractFeatures = [], contractType = [], contractModule = [] } = dto;
-    const where = {};
+    const where = {
+      chainId: userEntity.chainId,
+    };
 
     if (contractType.length) {
       Object.assign(where, {

@@ -31,7 +31,6 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
 
       return contract.deployERC998Token(
         nonce,
-        // @ts-ignore
         sign.bytecode,
         name,
         symbol,

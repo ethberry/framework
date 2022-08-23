@@ -10,6 +10,7 @@ import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class Erc20ContractService extends ContractService {
@@ -25,8 +26,8 @@ export class Erc20ContractService extends ContractService {
     super(contractEntityRepository);
   }
 
-  public search(dto: IContractSearchDto): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, TokenType.ERC20, ModuleType.CORE);
+  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, TokenType.ERC20, ModuleType.CORE);
   }
 
   public async create(dto: IErc20ContractCreateDto): Promise<ContractEntity> {

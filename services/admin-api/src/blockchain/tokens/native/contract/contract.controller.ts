@@ -1,12 +1,13 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { NativeContractService } from "./contract.service";
 import { NativeContractCreateDto } from "./dto";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractSearchDto, ContractUpdateDto } from "../../../hierarchy/contract/dto";
+import { UserEntity } from "../../../../user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/native-contracts")
@@ -15,8 +16,11 @@ export class NativeTokenController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: ContractSearchDto): Promise<[Array<ContractEntity>, number]> {
-    return this.nativeContractService.search(dto);
+  public search(
+    @Query() dto: ContractSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<ContractEntity>, number]> {
+    return this.nativeContractService.search(dto, userEntity);
   }
 
   @Post("/")

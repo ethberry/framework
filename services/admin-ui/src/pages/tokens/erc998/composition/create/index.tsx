@@ -5,7 +5,7 @@ import { NumberInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../../components/inputs/contract";
-import { ContractStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 export interface IErc998CompositionCreateDto {
   parent: string;
@@ -50,6 +50,7 @@ export const Erc998CompositionCreateDialog: FC<IErc998CompositionCreateDialogPro
         data={{
           contractType: [TokenType.ERC721, TokenType.ERC998],
           contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+          contractModule: [ModuleType.CORE],
         }}
       />
       <NumberInput name="amount" />

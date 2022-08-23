@@ -8,7 +8,6 @@ import { deployERC1155 } from "./deploy/hierarchy/erc1155";
 import { deployVesting } from "./deploy/mechanics/vesting";
 import { deployMysterybox } from "./deploy/mechanics/mysterybox";
 import { deployStaking } from "./deploy/mechanics/staking";
-import { deployClaim } from "./deploy/mechanics/claim";
 import { deployChainLink } from "./deploy/integrations/chain-link";
 import { deployUsdt } from "./deploy/integrations/usdt";
 import { deployLottery } from "./deploy/mechanics/lottery";
@@ -24,7 +23,6 @@ async function deployHierarchy(contracts: Record<string, Contract>) {
 
 async function deployMechanics(contracts: Record<string, Contract>) {
   await deployVesting(contracts);
-  await deployClaim(contracts);
   await deployStaking(contracts);
   await deployMysterybox(contracts);
   await deployLottery(contracts);

@@ -31,7 +31,6 @@ export const Erc20ContractDeployButton: FC<IErc20ContractDeployButtonProps> = pr
 
       return contract.deployERC20Token(
         nonce,
-        // @ts-ignore
         sign.bytecode,
         name,
         symbol,

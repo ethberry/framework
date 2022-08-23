@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateContractManagerHistory1652682493386 implements MigrationInterface {
+export class CreateContractManagerHistory1652682493410 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_manager_event_enum AS ENUM (

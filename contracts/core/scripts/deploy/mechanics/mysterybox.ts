@@ -17,7 +17,6 @@ export async function deployMysterybox(contracts: Record<string, Contract>) {
 
   await mysteryboxSimpleInstance.grantRole(MINTER_ROLE, contracts.staking.address);
   await mysteryboxSimpleInstance.grantRole(MINTER_ROLE, contracts.exchange.address);
-  await mysteryboxSimpleInstance.grantRole(MINTER_ROLE, contracts.claimProxy.address);
   await blockAwait(3);
 
   await contracts.contractManager.addFactory(mysteryboxSimpleInstance.address, MINTER_ROLE);
@@ -37,7 +36,6 @@ export async function deployMysterybox(contracts: Record<string, Contract>) {
 
   await mysteryboxPausableInstance.grantRole(MINTER_ROLE, contracts.staking.address);
   await mysteryboxPausableInstance.grantRole(MINTER_ROLE, contracts.exchange.address);
-  await mysteryboxPausableInstance.grantRole(MINTER_ROLE, contracts.claimProxy.address);
   await blockAwait(3);
 
   await contracts.contractManager.addFactory(mysteryboxPausableInstance.address, MINTER_ROLE);
@@ -62,7 +60,6 @@ export async function deployMysterybox(contracts: Record<string, Contract>) {
 
   await mysteryboxBlacklistInstance.grantRole(MINTER_ROLE, contracts.staking.address);
   await mysteryboxBlacklistInstance.grantRole(MINTER_ROLE, contracts.exchange.address);
-  await mysteryboxBlacklistInstance.grantRole(MINTER_ROLE, contracts.claimProxy.address);
   await blockAwait(3);
 
   await contracts.contractManager.addFactory(mysteryboxBlacklistInstance.address, MINTER_ROLE);

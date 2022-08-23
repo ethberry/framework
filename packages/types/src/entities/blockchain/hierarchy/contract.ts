@@ -26,8 +26,6 @@ export enum Erc721ContractFeatures {
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
   "SOULBOUND" = "SOULBOUND",
-  // MODULE:MYSTERYBOX
-  "MYSTERYBOX" = "MYSTERYBOX",
 }
 
 export enum Erc998ContractFeatures {

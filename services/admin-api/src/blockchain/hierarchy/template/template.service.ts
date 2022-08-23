@@ -6,6 +6,7 @@ import { ITemplateAutocompleteDto, ITemplateSearchDto, ModuleType, TemplateStatu
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
 import { AssetService } from "../../mechanics/asset/asset.service";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class TemplateService {
@@ -18,6 +19,7 @@ export class TemplateService {
 
   public async search(
     dto: ITemplateSearchDto,
+    userEntity: UserEntity,
     contractType: TokenType,
     contractModule: ModuleType,
   ): Promise<[Array<TemplateEntity>, number]> {
@@ -33,6 +35,9 @@ export class TemplateService {
     });
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
     });
 
     if (templateStatus) {

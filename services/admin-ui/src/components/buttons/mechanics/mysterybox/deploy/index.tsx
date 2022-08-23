@@ -30,7 +30,6 @@ export const MysteryboxContractDeployButton: FC<IMysteryboxContractDeployButtonP
       );
       return contract.deployMysterybox(
         nonce,
-        // @ts-ignore
         sign.bytecode,
         name,
         symbol,

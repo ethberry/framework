@@ -30,7 +30,6 @@ export const Erc721ContractDeployButton: FC<IErc721ContractDeployButtonProps> = 
       );
       return contract.deployERC721Token(
         nonce,
-        // @ts-ignore
         sign.bytecode,
         name,
         symbol,

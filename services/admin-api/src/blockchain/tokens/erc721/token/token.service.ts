@@ -6,6 +6,7 @@ import { ITokenSearchDto, TokenType } from "@framework/types";
 
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
 import { TokenService } from "../../../hierarchy/token/token.service";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class Erc721TokenService extends TokenService {
@@ -16,7 +17,7 @@ export class Erc721TokenService extends TokenService {
     super(tokenEntityRepository);
   }
 
-  public async search(dto: ITokenSearchDto): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, TokenType.ERC721);
+  public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
+    return super.search(dto, userEntity, TokenType.ERC721);
   }
 }

@@ -10,6 +10,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { Erc1155TokenService } from "../token/token.service";
 import { AssetService } from "../../../mechanics/asset/asset.service";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class Erc1155TemplateService extends TemplateService {
@@ -22,8 +23,8 @@ export class Erc1155TemplateService extends TemplateService {
     super(templateEntityRepository, assetService);
   }
 
-  public async search(dto: ITemplateSearchDto): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, TokenType.ERC1155, ModuleType.CORE);
+  public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
+    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.CORE);
   }
 
   public async getMaxTokenIdForTemplate(templateId: number): Promise<number> {

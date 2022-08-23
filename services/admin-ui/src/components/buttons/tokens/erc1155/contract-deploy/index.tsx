@@ -31,7 +31,6 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
 
       return contract.deployERC1155Token(
         nonce,
-        // @ts-ignore
         sign.bytecode,
         royalty,
         baseTokenURI,

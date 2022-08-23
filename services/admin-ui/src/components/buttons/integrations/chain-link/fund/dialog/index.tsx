@@ -4,7 +4,7 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { validationSchema } from "./validation";
-import { ContractInput } from "./contract-input";
+import { ContractInput } from "../../../../../inputs/contract";
 
 export interface IChainLinkFundDto {
   contractId: number;
@@ -30,7 +30,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
       testId="FundLinkForm"
       {...rest}
     >
-      <ContractInput />
+      <ContractInput name="contractId" controller="chain-link" />
       <EthInput name="amount" units={18} symbol="" />
     </FormDialog>
   );

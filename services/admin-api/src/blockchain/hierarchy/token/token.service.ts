@@ -5,6 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class TokenService {
@@ -13,7 +14,11 @@ export class TokenService {
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
-  public async search(dto: ITokenSearchDto, contractType: TokenType): Promise<[Array<TokenEntity>, number]> {
+  public async search(
+    dto: ITokenSearchDto,
+    userEntity: UserEntity,
+    contractType: TokenType,
+  ): Promise<[Array<TokenEntity>, number]> {
     const { query, tokenStatus, tokenId, attributes = {}, contractIds, templateIds, account, skip, take } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
@@ -24,6 +29,9 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (account) {
       queryBuilder.leftJoinAndSelect("token.balance", "balance");

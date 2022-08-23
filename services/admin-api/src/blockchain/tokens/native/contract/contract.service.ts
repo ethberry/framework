@@ -17,6 +17,7 @@ import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class NativeContractService extends ContractService {
@@ -32,8 +33,8 @@ export class NativeContractService extends ContractService {
     super(contractEntityRepository);
   }
 
-  public search(dto: IContractSearchDto): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, TokenType.NATIVE, ModuleType.CORE);
+  public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
+    return super.search(dto, userEntity, TokenType.NATIVE, ModuleType.CORE);
   }
 
   public async create(dto: INativeContractCreateDto): Promise<ContractEntity> {
