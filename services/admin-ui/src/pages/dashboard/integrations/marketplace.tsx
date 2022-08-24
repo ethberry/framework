@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { BarChart } from "@mui/icons-material";
+import { BarChart, Timeline } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -24,12 +24,20 @@ export const Marketplace: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/marketplace/report">
+        <ListItem button component={RouterLink} to="/marketplace/report/search">
           <ListItemIcon>
             <BarChart />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.dashboard.integrations.marketplace.report" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/marketplace/report/chart">
+          <ListItemIcon>
+            <Timeline />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.dashboard.integrations.marketplace.chart" />
           </ListItemText>
         </ListItem>
       </List>

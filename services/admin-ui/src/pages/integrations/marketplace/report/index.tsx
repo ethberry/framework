@@ -11,9 +11,9 @@ import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { IAsset, IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
 import { MarketplaceReportSearchForm } from "./form";
-import { formatPrice } from "../../../utils/money";
+import { formatPrice } from "../../../../utils/money";
 
-export const Marketplace: FC = () => {
+export const MarketplaceReport: FC = () => {
   const {
     rows,
     count,
@@ -27,6 +27,7 @@ export const Marketplace: FC = () => {
   } = useCollection<IToken, IMarketplaceReportSearchDto>({
     baseUrl: "/marketplace/report/search",
     search: {
+      query: "",
       contractIds: [],
       templateIds: [],
       startTimestamp: startOfMonth(new Date()).toISOString(),
@@ -79,9 +80,9 @@ export const Marketplace: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "marketplace"]} />
+      <Breadcrumbs path={["dashboard", "marketplace", "marketplace.report"]} />
 
-      <PageHeader message="pages.marketplace.title">
+      <PageHeader message="pages.marketplace.report.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

@@ -5,7 +5,8 @@ import { Protected } from "@gemunion/firebase-login";
 
 import { ChainLink } from "./chain-link";
 import { CoinGecko } from "./coin-gecko";
-import { Marketplace } from "./marketplace";
+import { MarketplaceReport } from "./marketplace/report";
+import { MarketplaceChart } from "./marketplace/chart";
 
 export const integrations: Array<RouteObject> = [
   {
@@ -19,11 +20,12 @@ export const integrations: Array<RouteObject> = [
     children: [{ index: true, element: <CoinGecko /> }],
   },
   {
-    path: "/marketplace/report",
+    path: "/marketplace",
     element: <Protected />,
     children: [
       { index: true, element: <Navigate to="/marketplace/report/search" /> },
-      { path: "/marketplace/report/search", element: <Marketplace /> },
+      { path: "/marketplace/report/search", element: <MarketplaceReport /> },
+      { path: "/marketplace/report/chart", element: <MarketplaceChart /> },
     ],
   },
 ];

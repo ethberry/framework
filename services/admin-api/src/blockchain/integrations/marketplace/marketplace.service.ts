@@ -1,18 +1,21 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, Repository } from "typeorm";
+import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
+import { Brackets, EntityManager, Repository } from "typeorm";
 import { parse } from "json2csv";
 
-import { IMarketplaceReportSearchDto } from "@framework/types";
+import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { formatPrice } from "./marketplace.utils";
+import { ns } from "@framework/constants";
 
 @Injectable()
 export class MarketplaceService {
   constructor(
     @InjectRepository(TokenEntity)
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {}
 
   public async search(dto: Partial<IMarketplaceReportSearchDto>): Promise<[Array<TokenEntity>, number]> {
@@ -23,12 +26,17 @@ export class MarketplaceService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
     // TODO use actual price
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
     queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+
+    queryBuilder.andWhere("contract.contractType IN(:...contractType)", {
+      contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+    });
 
     if (templateIds) {
       if (templateIds.length === 1) {
@@ -97,5 +105,34 @@ export class MarketplaceService {
       })),
       { fields: headers },
     );
+  }
+
+  public async chart(dto: IMarketplaceReportSearchDto): Promise<any> {
+    const { templateIds = [], contractIds = [], startTimestamp, endTimestamp } = dto;
+
+    const queryString = `
+        SELECT 
+            COUNT(token.id)::INTEGER AS count,
+            date_trunc('day', token.created_at) as date
+        FROM
+            ${ns}.token
+        LEFT JOIN
+            ${ns}.template ON template.id = token.template_id
+        WHERE
+            (token.template_id = ANY ($1) OR cardinality($1) = 0)
+            AND
+            (template.contract_id = ANY ($2) OR cardinality($2) = 0)
+            AND
+            (token.created_at >= $3 AND token.created_at < $4)
+        GROUP BY
+            date
+        ORDER BY
+            date
+    `;
+
+    return Promise.all([
+      this.entityManager.query(queryString, [templateIds, contractIds, startTimestamp, endTimestamp]),
+      0,
+    ]);
   }
 }

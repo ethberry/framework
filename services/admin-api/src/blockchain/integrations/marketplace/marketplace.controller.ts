@@ -20,6 +20,12 @@ export class MarketplaceController {
     return this.marketplaceService.search(dto);
   }
 
+  @Get("/chart")
+  @UseInterceptors(PaginationInterceptor)
+  public chart(@Query() dto: MarketplaceReportSearchDto): Promise<any> {
+    return this.marketplaceService.chart(dto);
+  }
+
   @Get("/export")
   public async export(@Query() query: MarketplaceReportSearchDto, @Res() res: Response): Promise<void> {
     const csv = await this.marketplaceService.export(query);

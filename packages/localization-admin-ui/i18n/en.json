@@ -444,6 +444,7 @@
           "title": "CoinGecko"
         },
         "marketplace": {
+          "chart": "Chart",
           "report": "Report",
           "title": "Marketplace"
         }
@@ -545,7 +546,13 @@
       "title": "Lottery"
     },
     "marketplace": {
-      "title": "Marketplace report"
+      "title": "Marketplace",
+      "report": {
+        "title": "Report"
+      },
+      "chart": {
+        "title": "Chart"
+      }
     },
     "mysterybox-boxes": {
       "title": "Mysterybox Boxes"
