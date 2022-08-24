@@ -8,7 +8,7 @@ import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import {
   ERC1155Simple,
   ERC20Simple,
-  ERC721Mysterybox,
+  ERC721MysteryboxSimple,
   ERC721RandomHardhat,
   ERC721Simple,
   LinkErc20,
@@ -38,7 +38,7 @@ use(solidity);
 describe("Staking", function () {
   let stakingInstance: Staking;
   let erc721RandomInstance: ERC721RandomHardhat;
-  let mysteryboxInstance: ERC721Mysterybox;
+  let mysteryboxInstance: ERC721MysteryboxSimple;
   let erc721SimpleInstance: ERC721Simple;
   let erc20Instance: ERC20Simple;
   let erc1155Instance: ERC1155Simple;
@@ -98,8 +98,8 @@ describe("Staking", function () {
     erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
 
     // ERC721 Mysterybox
-    const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
-    mysteryboxInstance = await mysteryboxFactory.deploy("ERC721Mysterybox", "LOOT", royalty, baseTokenURI);
+    const mysteryboxFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
+    mysteryboxInstance = await mysteryboxFactory.deploy("ERC721MysteryboxSimple", "LOOT", royalty, baseTokenURI);
 
     // ERC1155
     const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");

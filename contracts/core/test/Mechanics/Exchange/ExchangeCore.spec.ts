@@ -4,7 +4,7 @@ import { utils, constants, BigNumber } from "ethers";
 import { Network } from "@ethersproject/networks";
 import { time } from "@openzeppelin/test-helpers";
 
-import { ERC1155Simple, ERC20Simple, ERC721Mysterybox, ERC721Simple, Exchange } from "../../../typechain-types";
+import { ERC1155Simple, ERC20Simple, ERC721MysteryboxSimple, ERC721Simple, Exchange } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -27,7 +27,7 @@ describe("ExchangeCore", function () {
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
   let erc1155Instance: ERC1155Simple;
-  let mysteryboxInstance: ERC721Mysterybox;
+  let mysteryboxInstance: ERC721MysteryboxSimple;
   let network: Network;
 
   let generateSignature: (values: Record<string, any>) => Promise<string>;
@@ -50,7 +50,7 @@ describe("ExchangeCore", function () {
     erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
     await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
-    const mysteryboxFactory = await ethers.getContractFactory("ERC721Mysterybox");
+    const mysteryboxFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
     mysteryboxInstance = await mysteryboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
     await mysteryboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
 

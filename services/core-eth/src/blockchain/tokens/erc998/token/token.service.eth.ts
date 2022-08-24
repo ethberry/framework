@@ -14,7 +14,6 @@ import {
   ITokenMintRandom,
   ITokenTransfer,
   TokenAttributes,
-  TokenRarity,
   TokenStatus,
 } from "@framework/types";
 
@@ -85,7 +84,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, erc998TokenEntity.id);
+    await this.updateHistory(event, context, contractEntity.id, erc998TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc998TokenEntity.template.amount += 1;
@@ -123,7 +122,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("token998NotFound");
     }
 
-    await this.updateHistory(event, context, ~~tokenId);
+    await this.updateHistory(event, context, erc998TokenEntity.template.contractId, ~~tokenId);
 
     const erc721TokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
@@ -138,6 +137,13 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const {
       args: { childContract, childTokenId },
     } = event;
+    const { address } = context;
+
+    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!parentContractEntity) {
+      throw new NotFoundException("contract998NotFound");
+    }
 
     const erc721TokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
@@ -145,7 +151,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("token721NotFound");
     }
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, parentContractEntity.id, erc721TokenEntity.id);
 
     const ownershipEntity = await this.ownershipService.findOne({ childId: erc721TokenEntity.id });
 
@@ -157,50 +163,67 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
   }
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
-    const {
-      args: { to, tokenId, templateId, rarity, mysteryboxId },
-    } = event;
+    // const {
+    //   args: { to, tokenId, templateId, randomness },
+    // } = event;
+    // requestId: string;
+    // to: string;
+    // randomness: string;
+    // templateId: string;
+    // tokenId: string;
+    const { address } = context;
 
-    const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
+    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
-    if (!erc998TemplateEntity) {
-      throw new NotFoundException("templateNotFound");
+    if (!parentContractEntity) {
+      throw new NotFoundException("contract998NotFound");
     }
 
-    let erc998MysteryboxEntity; // if minted as Mechanics reward
-    if (~~mysteryboxId !== 0) {
-      erc998MysteryboxEntity = await this.tokenService.findOne({ id: ~~mysteryboxId });
+    // const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
+    //
+    // if (!erc998TemplateEntity) {
+    //   throw new NotFoundException("templateNotFound");
+    // }
+    // let erc998MysteryboxEntity; // if minted as Mechanics reward
+    // if (~~mysteryboxId !== 0) {
+    //   erc998MysteryboxEntity = await this.tokenService.findOne({ id: ~~mysteryboxId });
+    //
+    //   if (!erc998MysteryboxEntity) {
+    //     throw new NotFoundException("mysteryboxNotFound");
+    //   }
+    // }
+    // const erc998TokenEntity = await this.tokenService.create({
+    //   tokenId,
+    //   attributes: JSON.stringify({
+    //     rarity: Object.values(TokenRarity)[~~rarity],
+    //   }),
+    //   royalty: erc998TemplateEntity.contract.royalty,
+    //   template: erc998TemplateEntity,
+    //   // token: erc998MysteryboxEntity,
+    // });
+    //
+    // await this.balanceService.create({
+    //   account: to.toLowerCase(),
+    //   amount: "1",
+    //   tokenId: erc998TokenEntity.id,
+    // });
 
-      if (!erc998MysteryboxEntity) {
-        throw new NotFoundException("mysteryboxNotFound");
-      }
-    }
-
-    const erc998TokenEntity = await this.tokenService.create({
-      tokenId,
-      attributes: JSON.stringify({
-        rarity: Object.values(TokenRarity)[~~rarity],
-      }),
-      royalty: erc998TemplateEntity.contract.royalty,
-      template: erc998TemplateEntity,
-      // token: erc998MysteryboxEntity,
-    });
-
-    await this.balanceService.create({
-      account: to.toLowerCase(),
-      amount: "1",
-      tokenId: erc998TokenEntity.id,
-    });
-
-    await this.updateHistory(event, context, erc998TokenEntity.id);
+    await this.updateHistory(event, context, parentContractEntity.id, void 0);
   }
 
   public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    const { address } = context;
+
+    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!parentContractEntity) {
+      throw new NotFoundException("contract998NotFound");
+    }
+
+    await this.updateHistory(event, context, parentContractEntity.id, void 0);
   }
 
   public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChild>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
     const {
       args: { addr, maxCount },
     } = event;
@@ -211,6 +234,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     if (!parentContractEntity) {
       throw new NotFoundException("contract998NotFound");
     }
+
+    await this.updateHistory(event, context, parentContractEntity.id, void 0);
 
     const childContractEntity = await this.contractService.findOne({ address: addr.toLowerCase() });
 
@@ -226,7 +251,6 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
   }
 
   public async unWhitelistChild(event: ILogEvent<IErc998TokenUnWhitelistedChild>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
     const {
       args: { addr },
     } = event;
@@ -237,6 +261,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     if (!parentContractEntity) {
       throw new NotFoundException("contract998NotFound");
     }
+
+    await this.updateHistory(event, context, parentContractEntity.id, void 0);
 
     const childContractEntity = await this.contractService.findOne({ address: addr.toLowerCase() });
 
@@ -251,7 +277,6 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
   }
 
   public async setMaxChild(event: ILogEvent<IErc998TokenSetMaxChild>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
     const {
       args: { addr, maxCount },
     } = event;
@@ -262,6 +287,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     if (!parentContractEntity) {
       throw new NotFoundException("contract998NotFound");
     }
+
+    await this.updateHistory(event, context, parentContractEntity.id, void 0);
 
     const childContractEntity = await this.contractService.findOne({ address: addr.toLowerCase() });
 

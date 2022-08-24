@@ -1,4 +1,6 @@
 import { IIdDateBase } from "@gemunion/types-collection";
+import { IContract } from "./hierarchy/contract";
+import { IToken } from "./hierarchy/token";
 
 export enum ContractEventType {
   Approval = "Approval",
@@ -94,23 +96,23 @@ export interface IErc998TokenTransferChild {
   childTokenId: string;
 }
 
-// dev random test
-export interface IRandomRequest {
-  requestId: string;
-}
-
 export interface ITokenTransfer {
   from: string;
   to: string;
   tokenId: string;
 }
 
+// dev random test
+export interface IRandomRequest {
+  requestId: string;
+}
+
 export interface ITokenMintRandom {
+  requestId: string;
   to: string;
-  tokenId: string;
+  randomness: string;
   templateId: string;
-  rarity: string;
-  mysteryboxId: string;
+  tokenId: string;
 }
 
 export interface ITokenApprove {
@@ -199,4 +201,8 @@ export interface IContractHistory extends IIdDateBase {
   transactionHash: string;
   eventType: ContractEventType;
   eventData: TContractEventData;
+  contractId?: number;
+  contract?: IContract;
+  tokenId?: number;
+  token?: IToken;
 }

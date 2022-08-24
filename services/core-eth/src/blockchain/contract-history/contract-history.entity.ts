@@ -22,5 +22,8 @@ export class ContractHistoryEntity extends IdDateBaseEntity implements IContract
   public eventData: TContractEventData;
 
   @Column({ type: "int", nullable: true })
-  public tokenId: number | null;
+  public tokenId: number | undefined;
+
+  @Column({ type: "int", nullable: true })
+  public contractId: number | undefined;
 }

@@ -4,14 +4,7 @@ import { constants, providers } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
-import {
-  IRandomRequest,
-  ITokenMintRandom,
-  ITokenTransfer,
-  TokenAttributes,
-  TokenRarity,
-  TokenStatus,
-} from "@framework/types";
+import { IRandomRequest, ITokenMintRandom, ITokenTransfer, TokenAttributes, TokenStatus } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
 import { getMetadata } from "../../../../common/utils";
@@ -75,7 +68,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, erc721TokenEntity.id);
+    await this.updateHistory(event, context, contractEntity.id, erc721TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc721TokenEntity.template.amount += 1;
@@ -103,45 +96,27 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   }
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
-    const {
-      args: { to, tokenId, templateId, rarity, mysteryboxId },
-    } = event;
+    const { address } = context;
 
-    const templateEntity = await this.templateService.findOne({ id: ~~templateId });
+    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
-    if (!templateEntity) {
-      throw new NotFoundException("templateNotFound");
+    if (!parentContractEntity) {
+      throw new NotFoundException("contract721NotFound");
     }
 
-    let mysteryboxEntity; // if minted as Mechanics reward
-    if (~~mysteryboxId !== 0) {
-      mysteryboxEntity = await this.tokenService.findOne({ id: ~~mysteryboxId });
-
-      if (!mysteryboxEntity) {
-        throw new NotFoundException("mysteryboxNotFound");
-      }
-    }
-
-    const tokenEntity = await this.tokenService.create({
-      tokenId,
-      attributes: JSON.stringify({
-        rarity: Object.values(TokenRarity)[~~rarity],
-      }),
-      royalty: templateEntity.contract.royalty,
-      template: templateEntity,
-      // erc721Token: mysteryboxEntity,
-    });
-
-    await this.balanceService.create({
-      account: to.toLowerCase(),
-      amount: "1",
-      tokenId: tokenEntity.id,
-    });
-
-    await this.updateHistory(event, context, tokenEntity.id);
+    await this.updateHistory(event, context, parentContractEntity.id, void 0);
   }
 
+  // TODO remove it, as MintRandom do the same
   public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
+    const { address } = context;
+
+    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+    if (!parentContractEntity) {
+      throw new NotFoundException("contract721NotFound");
+    }
+
+    await this.updateHistory(event, context, parentContractEntity.id, void 0);
   }
 }

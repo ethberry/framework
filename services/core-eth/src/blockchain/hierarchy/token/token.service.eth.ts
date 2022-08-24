@@ -38,7 +38,12 @@ export class TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  protected async updateHistory(event: ILogEvent<TContractEventData>, context: Log, tokenId?: number) {
+  protected async updateHistory(
+    event: ILogEvent<TContractEventData>,
+    context: Log,
+    contractId?: number,
+    tokenId?: number,
+  ) {
     this.loggerService.log(JSON.stringify(event, null, "\t"), TokenServiceEth.name);
 
     const { args, name } = event;
@@ -51,11 +56,9 @@ export class TokenServiceEth {
       eventData: args,
       // ApprovedForAll has no tokenId
       tokenId: tokenId || null,
+      contractId: contractId || null,
     });
 
-    await this.contractService.updateLastBlockByAddr(
-      address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

@@ -39,8 +39,7 @@ export class Erc721TokenControllerEth {
     return this.erc721TokenServiceEth.mintRandom(event, context);
   }
 
-  // dev test - random request
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: "IRandomRequest" })
+  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.RandomRequest })
   public randomRequest(@Payload() event: ILogEvent<IRandomRequest>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.randomRequest(event, context);
   }

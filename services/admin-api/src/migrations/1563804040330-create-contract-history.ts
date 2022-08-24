@@ -60,6 +60,11 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "contract_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
@@ -73,6 +78,12 @@ export class CreateContractHistory1563804040330 implements MigrationInterface {
           columnNames: ["token_id"],
           referencedColumnNames: ["id"],
           referencedTableName: `${ns}.token`,
+          onDelete: "CASCADE",
+        },
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
           onDelete: "CASCADE",
         },
       ],

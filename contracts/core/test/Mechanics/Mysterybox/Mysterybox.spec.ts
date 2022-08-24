@@ -30,7 +30,7 @@ import { shouldSetBaseURI } from "../../ERC721/shared/setBaseURI";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 
-describe("ERC721Mysterybox", function () {
+describe("ERC721MysteryboxSimple", function () {
   let mysteryboxInstance: ERC721MysteryboxTest;
   let erc721SimpleInstance: ERC721Simple;
   let erc1155SimpleInstance: ERC1155Simple;
