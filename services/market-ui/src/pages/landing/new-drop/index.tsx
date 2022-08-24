@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from "react";
 
+import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IPaginationResult } from "@gemunion/types-collection";
 import { IDrop } from "@framework/types";
 
 import { MultiCarouselDrop } from "../multi-carousel-drop";

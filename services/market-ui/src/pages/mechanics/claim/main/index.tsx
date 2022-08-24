@@ -6,10 +6,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSnackbar } from "notistack";
 import { constants, Contract, utils } from "ethers";
 
+import type { IPaginationResult } from "@gemunion/types-collection";
 import { ApiError } from "@gemunion/provider-api-firebase";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useWallet } from "@gemunion/provider-wallet";
-import { IPaginationResult } from "@gemunion/types-collection";
 import { Spinner } from "@gemunion/mui-page-layout";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { ClaimStatus, IClaim, TokenType } from "@framework/types";

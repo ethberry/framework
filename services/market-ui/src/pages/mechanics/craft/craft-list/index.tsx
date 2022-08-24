@@ -1,8 +1,8 @@
 import { FC, Fragment } from "react";
 import { Grid, Pagination } from "@mui/material";
 
+import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ISearchDto } from "@gemunion/types-collection";
 import { ICraft } from "@framework/types";
 import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { useCollection } from "@gemunion/react-hooks";

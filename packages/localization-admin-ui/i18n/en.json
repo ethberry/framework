@@ -393,6 +393,9 @@
     "coin-gecko": {
       "title": "CoinGecko"
     },
+    "coin-market-cap": {
+      "title": "CoinMarketCap"
+    },
     "craft": {
       "activate": "Activate rule",
       "deactivate": "Deactivate rule",
@@ -442,6 +445,10 @@
         "coin-gecko": {
           "rates": "Rates",
           "title": "CoinGecko"
+        },
+        "coin-market-cap": {
+          "rates": "Rates",
+          "title": "CoinMarketCap"
         },
         "marketplace": {
           "chart": "Chart",

@@ -20,6 +20,7 @@ import { Drop } from "./mechanics/drop";
 import { Admin } from "./integrations/admin";
 import { ChainLink } from "./integrations/chain-link";
 import { CoinGecko } from "./integrations/coin-gecko";
+import { CoinMarketCap } from "./integrations/coin-market-cap";
 import { Marketplace } from "./integrations/marketplace";
 
 export const Dashboard: FC = () => {
@@ -50,6 +51,7 @@ export const Dashboard: FC = () => {
         <Grid item xs={4}>
           <ChainLink />
           <CoinGecko />
+          <CoinMarketCap />
           <Marketplace />
           <Admin />
         </Grid>

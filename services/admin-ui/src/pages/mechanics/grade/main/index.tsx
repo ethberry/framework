@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { Create } from "@mui/icons-material";
 
-import { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { IContract, IGrade } from "@framework/types";

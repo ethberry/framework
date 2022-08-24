@@ -5,10 +5,10 @@ import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 
+import type { IServerSignature } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useWallet } from "@gemunion/provider-wallet";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { IServerSignature } from "@gemunion/types-collection";
 import { useSettings } from "@gemunion/provider-settings";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
 

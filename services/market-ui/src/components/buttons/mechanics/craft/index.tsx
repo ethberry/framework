@@ -4,8 +4,8 @@ import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
+import type { IServerSignature } from "@gemunion/types-collection";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { IServerSignature } from "@gemunion/types-collection";
 import { ICraft, TokenType } from "@framework/types";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 

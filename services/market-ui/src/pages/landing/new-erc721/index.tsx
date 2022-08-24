@@ -2,9 +2,9 @@ import { FC, useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Typography } from "@mui/material";
 
+import type { IPaginationResult } from "@gemunion/types-collection";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
-import { IPaginationResult } from "@gemunion/types-collection";
 import { ITemplate, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";

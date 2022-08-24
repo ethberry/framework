@@ -4,10 +4,10 @@ import { FormattedMessage } from "react-intl";
 import { BigNumber, constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
+import type { IServerSignature } from "@gemunion/types-collection";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeStrategy, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";
-import { IServerSignature } from "@gemunion/types-collection";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
