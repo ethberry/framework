@@ -1,14 +1,20 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
-import { ns } from "@framework/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { imageUrl, ns } from "@framework/constants";
 
-export class SeedContractExchangeAt1657846608000 implements MigrationInterface {
+export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
+    const addr: Record<string, string> = {
+      "1": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "56": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "137": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+      "1337": process.env.WETH_ADDR || wallet,
+    };
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const exchangeAddr = process.env.EXCHANGE_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -20,28 +26,30 @@ export class SeedContractExchangeAt1657846608000 implements MigrationInterface {
         image_url,
         name,
         symbol,
+        decimals,
+        royalty,
         base_token_uri,
         contract_status,
         contract_type,
         contract_features,
-        contract_module,
         from_block,
         created_at,
         updated_at
       ) VALUES (
-        2,
-        '${exchangeAddr}',
+        206,
+        '${addr[chainId]}',
         '${chainId}',
-        'EXCHANGE',
-        '${JSON.stringify({})}',
-        '',
-        'Exchange',
-        '',
+        'WETH',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Wrapped ETH',
+        'WETH',
+        18,
+        0,
         '',
         'ACTIVE',
-        'NATIVE',
-        '{}',
-        'SYSTEM',
+        'ERC20',
+        '{EXTERNAL}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

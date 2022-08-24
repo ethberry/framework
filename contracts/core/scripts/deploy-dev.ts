@@ -11,6 +11,7 @@ import { deployStaking } from "./deploy/mechanics/staking";
 import { deployChainLink } from "./deploy/integrations/chain-link";
 import { deployUsdt } from "./deploy/integrations/usdt";
 import { deployLottery } from "./deploy/mechanics/lottery";
+import { deployWeth } from "./deploy/integrations/weth";
 
 const contracts: Record<string, Contract> = {};
 
@@ -31,6 +32,7 @@ async function deployMechanics(contracts: Record<string, Contract>) {
 async function deployIntegrations(contracts: Record<string, Contract>) {
   await deployChainLink(contracts);
   await deployUsdt(contracts);
+  await deployWeth(contracts);
 }
 
 async function main() {

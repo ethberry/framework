@@ -35,6 +35,7 @@
     "chainId": {
       "1": "ETHEREUM",
       "1337": "BESU",
+      "137": "POLYGON",
       "56": "BINANCE"
     },
     "language": {

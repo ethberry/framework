@@ -10,7 +10,7 @@ export class SeedContractLotteryAt1563804000170 implements MigrationInterface {
     const lotteryAddr = process.env.LOTTERY_ADDR || wallet;
     const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
-    const fromBloack = process.env.STARTING_BLOCK || 0;
+    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
 
@@ -46,7 +46,7 @@ export class SeedContractLotteryAt1563804000170 implements MigrationInterface {
         'NATIVE',
         '{RANDOM}',
         'LOTTERY',
-        '${fromBloack}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -86,7 +86,7 @@ export class SeedContractLotteryAt1563804000170 implements MigrationInterface {
         'ERC721',
         '{}',
         'LOTTERY',
-        '${fromBloack}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       )

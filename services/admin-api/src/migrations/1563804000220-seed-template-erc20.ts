@@ -70,18 +70,6 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        205001,
-        'USDT',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        null,
-        0,
-        '100000000000',
-        'ACTIVE',
-        205,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
         211001,
         'BUSD',
         '${simpleFormatting}',

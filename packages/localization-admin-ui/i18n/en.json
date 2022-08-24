@@ -28,7 +28,6 @@
     }
   },
   "dialogs": {
-    "upload": "Upload",
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -43,6 +42,7 @@
     "top-up": "Top up",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
+    "upload": "Upload",
     "view": "View",
     "whitelist": "Add to whitelist"
   },
@@ -50,6 +50,7 @@
     "chainId": {
       "1": "ETHEREUM",
       "1337": "BESU",
+      "137": "POLYGON",
       "56": "BINANCE"
     },
     "claimStatus": {
@@ -475,8 +476,8 @@
           "title": "Mystery box"
         },
         "staking": {
-          "rules": "Rules",
           "report": "Report",
+          "rules": "Rules",
           "title": "Staking"
         },
         "title": "Mechanics",
@@ -565,14 +566,14 @@
       "title": "Settings"
     },
     "staking": {
+      "report": {
+        "title": "Report"
+      },
       "rules": {
         "activate": "Activate rule",
         "deactivate": "Deactivate rule",
         "title": "Staking rules",
         "upload": "Upload rule"
-      },
-      "report": {
-        "title": "Report"
       },
       "title": "Staking"
     },

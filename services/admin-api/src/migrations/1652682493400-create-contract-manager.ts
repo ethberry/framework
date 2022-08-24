@@ -7,7 +7,7 @@ export class SeedContractManagerAt1563804000109 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || 1337;
-    const fromBloack = process.env.STARTING_BLOCK || 0;
+    const fromBlock = process.env.STARTING_BLOCK || 0;
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
 
     await queryRunner.query(`
@@ -42,7 +42,7 @@ export class SeedContractManagerAt1563804000109 implements MigrationInterface {
         'NATIVE',
         '{}',
         'SYSTEM',
-        '${fromBloack}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       );

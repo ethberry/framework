@@ -7,7 +7,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || 1337;
-    const fromBloack = process.env.STARTING_BLOCK || 0;
+    const fromBlock = process.env.STARTING_BLOCK || 0;
     const stakingAddr = process.env.STAKING_ADDR || wallet;
 
     await queryRunner.query(`
@@ -42,7 +42,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         'NATIVE',
         '{}',
         'SYSTEM',
-        '${fromBloack}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
