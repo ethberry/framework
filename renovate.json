@@ -7,12 +7,14 @@
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["^@gemunion"],
+      "matchPackagePrefixes": ["@gemunion/"],
+      "commitMessageTopic": "Gemunion",
       "groupName": "@Gemunion packages",
       "groupSlug": "gemunion"
     },
     {
-      "matchPackagePatterns": ["^@mui"],
+      "matchPackagePrefixes": ["@mui/"],
+      "commitMessageTopic": "MUI",
       "groupName": "MUI packages",
       "groupSlug": "mui"
     }
