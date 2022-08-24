@@ -6,6 +6,12 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import WebpackBar from "webpackbar";
 
+const nodeModules = "[\\/]node_modules[\\/]";
+const reGemunion = "(@gemunion)";
+const reMui = "(@mui)";
+
+const reVendors = new RegExp(`${nodeModules}(?!${reMui}|${reGemunion})`);
+
 const config: Configuration = {
   mode: "production",
   devtool: "source-map",
@@ -81,9 +87,21 @@ const config: Configuration = {
     minimize: true,
     splitChunks: {
       cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
+        vendors: {
+          test: reVendors,
           name: "vendors",
+          chunks: "all",
+          enforce: true,
+        },
+        gemunion: {
+          test: new RegExp(`${nodeModules}${reGemunion}`),
+          name: "gemunion",
+          chunks: "all",
+          enforce: true,
+        },
+        mui: {
+          test: new RegExp(`${nodeModules}${reMui}`),
+          name: "mui",
           chunks: "all",
           enforce: true,
         },

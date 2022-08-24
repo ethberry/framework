@@ -6,7 +6,14 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ReactRefreshTypeScript from "react-refresh-typescript";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import "webpack-dev-server";
+
+const nodeModules = "[\\/]node_modules[\\/]";
+const reGemunion = "(@gemunion)";
+const reMui = "(@mui)";
+
+const reVendors = new RegExp(`${nodeModules}(?!${reMui}|${reGemunion})`);
 
 const config: Configuration = {
   mode: "development",
@@ -61,6 +68,7 @@ const config: Configuration = {
     ],
   },
   plugins: [
+    new BundleAnalyzerPlugin(),
     new ProvidePlugin({
       process: "process/browser",
       Buffer: ["buffer", "Buffer"],
@@ -84,9 +92,21 @@ const config: Configuration = {
   optimization: {
     splitChunks: {
       cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
+        vendors: {
+          test: reVendors,
           name: "vendors",
+          chunks: "all",
+          enforce: true,
+        },
+        gemunion: {
+          test: new RegExp(`${nodeModules}${reGemunion}`),
+          name: "gemunion",
+          chunks: "all",
+          enforce: true,
+        },
+        mui: {
+          test: new RegExp(`${nodeModules}${reMui}`),
+          name: "mui",
           chunks: "all",
           enforce: true,
         },
