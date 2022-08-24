@@ -1,4 +1,4 @@
-import { IDeployable } from "@gemunion/types-collection";
+import type { IDeployable } from "@gemunion/types-collection";
 
 import { IVestingHistory } from "./history";
 

@@ -8,7 +8,7 @@ import { endOfMonth, format, parseISO, startOfMonth } from "date-fns";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import { IAsset, IMarketplaceReportSearchDto, IToken } from "@framework/types";
+import type { IAsset, IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
 import { MarketplaceReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";

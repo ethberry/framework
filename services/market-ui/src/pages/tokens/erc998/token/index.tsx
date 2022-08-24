@@ -5,13 +5,14 @@ import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ContractFeatures, ITemplate, IToken } from "@framework/types";
+import { ITemplate, IToken, ContractFeatures } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 
 import { useStyles } from "./styles";
@@ -55,9 +56,9 @@ export const Erc998Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998-tokens", "erc998-token"]} data={[{}, {}, selected.template]} />
+      <Breadcrumbs path={["dashboard", "erc998.tokens", "erc998.token"]} data={[{}, {}, selected.template]} />
 
-      <PageHeader message="pages.erc998-token.title" data={selected.template} />
+      <PageHeader message="pages.erc998.token.title" data={selected.template} />
 
       <Grid container>
         <Grid item xs={9}>

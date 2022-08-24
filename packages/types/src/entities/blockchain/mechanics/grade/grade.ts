@@ -1,4 +1,4 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IContract } from "../../hierarchy/contract";
 import { IAsset } from "../asset";

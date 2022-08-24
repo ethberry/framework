@@ -32,11 +32,11 @@ export const Erc1155Contract: FC = () => {
   return (
     <Fragment>
       <Breadcrumbs
-        path={["dashboard", "erc1155-contracts", "erc1155-contract"]}
+        path={["dashboard", "erc1155.contracts", "erc1155.contract"]}
         data={[{}, {}, { title: selected.title }]}
       />
 
-      <PageHeader message="pages.erc1155-contract.title" data={selected}>
+      <PageHeader message="pages.erc1155.contract.title" data={selected}>
         <Button variant="outlined" startIcon={<Hardware />} component={RouterLink} to="/exchanges">
           <FormattedMessage id="form.buttons.craft" />
         </Button>

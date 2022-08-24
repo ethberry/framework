@@ -1,4 +1,4 @@
-import { IPaginationDto, ISearchDto } from "@gemunion/types-collection";
+import type { IPaginationDto, ISearchDto } from "@gemunion/types-collection";
 
 export interface IReferralLeaderboardSearchDto extends IPaginationDto {
   account: string;

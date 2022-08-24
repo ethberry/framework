@@ -2,6 +2,8 @@ import { FC, Fragment, MouseEvent, useState } from "react";
 import { IconButton, Menu } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 
+import { IContract, TokenType } from "@framework/types";
+
 import { IErc20TokenSnapshotMenuItem } from "./snapshot";
 import { RoyaltyMenuItem } from "./royalty";
 import { ContractGrantRoleMenuItem } from "./grant-role";
@@ -10,7 +12,6 @@ import { ContractRenounceRoleMenuItem } from "./renounce-role";
 import { BlacklistAddMenuItem } from "./blacklist-add";
 import { UnBlacklistMenuItem } from "./blacklist-remove";
 import { MintMenuItem } from "./mint";
-import { IContract, TokenType } from "@framework/types";
 import { PausableMenuItem } from "./pausable";
 
 export enum ContractActions {

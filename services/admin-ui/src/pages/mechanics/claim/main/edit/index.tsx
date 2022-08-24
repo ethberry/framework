@@ -2,8 +2,8 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
-import { IClaim, TokenType } from "@framework/types";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { IClaim, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../../components/inputs/price";

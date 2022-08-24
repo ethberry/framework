@@ -3,7 +3,7 @@ import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOff } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import { AccessListUnBlacklistDialog } from "./edit";
 

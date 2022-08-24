@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { BigNumber, utils } from "ethers";
 
-import { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-collection";
 import { TokenType } from "@framework/types";
 import { IAsset, IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 

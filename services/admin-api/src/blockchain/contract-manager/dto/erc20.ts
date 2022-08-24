@@ -3,7 +3,8 @@ import { IsArray, IsEnum, IsString, MaxLength } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
-import { Erc20ContractFeatures, IErc20TokenDeployDto } from "@framework/types";
+import type { IErc20TokenDeployDto } from "@framework/types";
+import { Erc20ContractFeatures } from "@framework/types";
 
 export class Erc20ContractDeployDto implements IErc20TokenDeployDto {
   @ApiProperty({

@@ -1,4 +1,4 @@
-import { ILotteryRound, ILotteryTicket } from "@framework/types";
+import type { ILotteryRound, ILotteryTicket } from "@framework/types";
 
 export const getNumbers = ({ numbers }: ILotteryRound | ILotteryTicket) => {
   return numbers

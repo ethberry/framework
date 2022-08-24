@@ -2,10 +2,9 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { IToken } from "@framework/types";
+import type { IToken } from "@framework/types";
 
 export const TokenInput: FC = () => {
-  const account: string = useWatch({ name: "account" });
   const contractId: number = useWatch({ name: "contractId" });
   const templateId: number = useWatch({ name: "templateId" });
 
@@ -16,12 +15,15 @@ export const TokenInput: FC = () => {
     form.setValue("blockchainId", option?.tokenId ?? 0);
   };
 
+  if (!contractId) {
+    return null;
+  }
+
   return (
     <EntityInput
       name="tokenId"
       controller="tokens"
       data={{
-        account,
         contractIds: [contractId],
         templateIds: templateId ? [templateId] : [],
       }}

@@ -1,4 +1,4 @@
-import { IIdBase } from "@gemunion/types-collection";
+import type { IIdBase } from "@gemunion/types-collection";
 
 import { IAssetComponent } from "./asset-component";
 

@@ -5,7 +5,8 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { IMysteryboxContractDeployDto, MysteryboxContractFeatures } from "@framework/types";
+import type { IMysteryboxContractDeployDto } from "@framework/types";
+import { MysteryboxContractFeatures } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 

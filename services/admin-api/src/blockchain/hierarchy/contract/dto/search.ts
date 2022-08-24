@@ -3,7 +3,8 @@ import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { ContractFeatures, ContractStatus, IContractSearchDto } from "@framework/types";
+import type { IContractSearchDto } from "@framework/types";
+import { ContractFeatures, ContractStatus } from "@framework/types";
 
 export class ContractSearchDto extends SearchDto implements IContractSearchDto {
   @ApiPropertyOptional({

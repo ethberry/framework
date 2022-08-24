@@ -4,7 +4,8 @@ import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ContractFeatures, IContractSearchDto, IErc20ContractCreateDto, ModuleType, TokenType } from "@framework/types";
+import type { IContractSearchDto, IErc20ContractCreateDto } from "@framework/types";
+import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";

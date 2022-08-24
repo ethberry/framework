@@ -1,4 +1,4 @@
-import { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 
 export interface ICompositionSearchDto extends IPaginationDto {
   parentIds: Array<number>;

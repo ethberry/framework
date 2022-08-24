@@ -29,9 +29,9 @@ export const Erc721Template: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-templates", "erc721-templates"]} data={[{}, {}, selected]} />
+      <Breadcrumbs path={["dashboard", "erc721.templates", "erc721.templates"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.erc721-template.title" data={selected} />
+      <PageHeader message="pages.erc721.template.title" data={selected} />
 
       <Grid container>
         <Grid item xs={9}>

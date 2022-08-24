@@ -1,4 +1,4 @@
-import { ISearchable } from "@gemunion/types-collection";
+import type { ISearchable } from "@gemunion/types-collection";
 
 import { IAsset } from "../asset";
 import { ITemplate } from "../../hierarchy/template";

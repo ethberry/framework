@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
-import { ContractFeatures, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
+import type { IContractAutocompleteDto } from "@framework/types";
+import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";

@@ -3,7 +3,7 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ContractFeatures, ITemplate, IToken } from "@framework/types";
+import { ITemplate, IToken, ContractFeatures } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -31,9 +31,9 @@ export const Erc721Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-tokens", "erc721-token"]} data={[{}, {}, selected.template]} />
+      <Breadcrumbs path={["dashboard", "erc721.tokens", "erc721.token"]} data={[{}, {}, selected.template]} />
 
-      <PageHeader message="pages.erc721-token.title" data={selected.template} />
+      <PageHeader message="pages.erc721.token.title" data={selected.template} />
 
       <Grid container>
         <Grid item xs={9}>

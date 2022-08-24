@@ -3,7 +3,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@m
 import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { ILotteryTicket } from "@framework/types";
+import type { ILotteryTicket } from "@framework/types";
 
 import { getNumbers } from "../../utils";
 

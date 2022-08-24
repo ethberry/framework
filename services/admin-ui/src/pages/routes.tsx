@@ -15,7 +15,7 @@ import { Settings } from "./settings";
 import { Email } from "./email";
 import { Page } from "./page";
 import { mechanicsRoutes } from "./mechanics/routes";
-import { integrations } from "./integrations/routes";
+import { integrationsRoutes } from "./integrations/routes";
 import { tokenRoutes } from "./tokens/routes";
 
 const routes: Array<RouteObject> = [
@@ -66,7 +66,7 @@ const routes: Array<RouteObject> = [
       },
       ...tokenRoutes,
       ...mechanicsRoutes,
-      ...integrations,
+      ...integrationsRoutes,
       {
         path: "/error/:error",
         element: <Error />,

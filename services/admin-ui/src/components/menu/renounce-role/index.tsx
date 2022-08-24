@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
 
-import { IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
 
 import { AccessControlRenounceRoleDialog } from "./edit";
 

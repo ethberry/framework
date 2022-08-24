@@ -11,7 +11,7 @@ export const Referral: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.referral.title" />
+            <FormattedMessage id="pages.dashboard.integrations.referral" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Referral: FC = () => {
             <RecordVoiceOver />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.referral.link" />
+            <FormattedMessage id="pages.referral.link.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/referral/leaderboard">
@@ -28,7 +28,7 @@ export const Referral: FC = () => {
             <Leaderboard />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.referral.leaderboard" />
+            <FormattedMessage id="pages.referral.leaderboard.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/referral/report">
@@ -36,7 +36,7 @@ export const Referral: FC = () => {
             <Timeline />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.referral.report" />
+            <FormattedMessage id="pages.referral.report.title" />
           </ListItemText>
         </ListItem>
       </List>

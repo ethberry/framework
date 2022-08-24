@@ -1,4 +1,4 @@
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 import { ContractStatus, ContractFeatures } from "../../../../entities";
 
 export interface IContractSearchDto extends ISearchDto {

@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IMysteryboxSearchDto, MysteryboxStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
+import { IMysteryboxSearchDto, MysteryboxStatus } from "@framework/types";
 
 import { useStyles } from "./styles";
 

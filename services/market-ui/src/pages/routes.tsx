@@ -11,6 +11,7 @@ import { Dashboard } from "./dashboard";
 import { Profile } from "./profile";
 
 import { mechanicsRoutes } from "./mechanics/routes";
+import { integrationsRoutes } from "./integrations/routes";
 import { tokenRoutes } from "./tokens/routes";
 
 import { Marketplace } from "./marketplace";
@@ -38,6 +39,7 @@ const routes: Array<RouteObject> = [
         ],
       },
       ...mechanicsRoutes,
+      ...integrationsRoutes,
       ...tokenRoutes,
       {
         path: "/marketplace",

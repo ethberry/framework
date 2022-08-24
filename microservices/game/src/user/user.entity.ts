@@ -1,7 +1,8 @@
 import { Column, Entity } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IUser, UserRole, UserStatus } from "@framework/types";
+import type { IUser } from "@framework/types";
+import { UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages, ns } from "@framework/constants";
 
 @Entity({ schema: ns, name: "user" })

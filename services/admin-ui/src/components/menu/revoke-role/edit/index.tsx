@@ -10,7 +10,8 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { IAccessControl, IUser } from "@framework/types";
+import type { IAccessControl, IUser } from "@framework/types";
+
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
 export interface IAccessControlRevokeRoleDialogProps {

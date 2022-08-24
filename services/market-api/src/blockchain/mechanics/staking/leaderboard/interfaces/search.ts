@@ -1,4 +1,4 @@
-import { IPaginationDto } from "@gemunion/types-collection";
+import type { IPaginationDto } from "@gemunion/types-collection";
 
 export interface ILeaderboardSearchDto extends IPaginationDto {
   account: string;

@@ -1,4 +1,4 @@
-import { ISearchable } from "@gemunion/types-collection";
+import type { ISearchable } from "@gemunion/types-collection";
 
 import { IAsset } from "../mechanics/asset";
 import { IContract } from "./contract";

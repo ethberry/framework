@@ -9,7 +9,7 @@ import { CoinMarketCap } from "./coin-market-cap";
 import { MarketplaceReport } from "./marketplace/report";
 import { MarketplaceChart } from "./marketplace/chart";
 
-export const integrations: Array<RouteObject> = [
+export const integrationsRoutes: Array<RouteObject> = [
   {
     path: "/chain-link",
     element: <Protected />,

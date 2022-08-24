@@ -7,7 +7,7 @@ import * as Plot from "@observablehq/plot";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IMarketplaceReportSearchDto, IToken } from "@framework/types";
+import type { IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
 import { MarketplaceReportSearchForm } from "./form";
 

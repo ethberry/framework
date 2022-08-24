@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { Button } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { ContractFeatures, IToken } from "@framework/types";
+
+import { IToken, ContractFeatures } from "@framework/types";
 
 interface ITokenSellButtonProps {
   token: IToken;

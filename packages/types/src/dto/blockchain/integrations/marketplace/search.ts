@@ -1,4 +1,4 @@
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 export interface IMarketplaceReportSearchDto extends ISearchDto {
   startTimestamp: string;

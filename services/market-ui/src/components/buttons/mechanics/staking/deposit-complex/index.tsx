@@ -3,7 +3,7 @@ import { useIntl } from "react-intl";
 import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
 import { Contract } from "ethers";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
+import { Web3ContextType } from "@web3-react/core";
 
 import { IStakingRule, StakingStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -23,7 +23,6 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
   const [isDepositDialogOpen, setIsDepositDialogOpen] = useState(false);
 
   const { formatMessage } = useIntl();
-  const { account } = useWeb3React();
 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
@@ -60,7 +59,6 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
         onCancel={handleDeployCancel}
         open={isDepositDialogOpen}
         initialValues={{
-          account: account || "",
           tokenId: 0,
           blockchainId: "",
           templateId: rule.deposit!.components[0].templateId,

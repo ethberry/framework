@@ -11,7 +11,7 @@ export const Erc721Section: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc721.title" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc721" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Erc721Section: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc721.contracts" />
+            <FormattedMessage id="pages.erc721.contracts.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-templates">
@@ -28,7 +28,7 @@ export const Erc721Section: FC = () => {
             <Filter />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc721.templates" />
+            <FormattedMessage id="pages.erc721.templates.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc721-tokens">
@@ -36,7 +36,7 @@ export const Erc721Section: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc721.tokens" />
+            <FormattedMessage id="pages.erc721.tokens.title" />
           </ListItemText>
         </ListItem>
       </List>

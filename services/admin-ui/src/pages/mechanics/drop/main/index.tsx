@@ -17,7 +17,7 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { IDrop } from "@framework/types";
+import type { IDrop } from "@framework/types";
 
 import { DropEditDialog } from "./edit";
 import { emptyItem, emptyPrice } from "../../../../components/inputs/price/empty-price";

@@ -6,8 +6,7 @@ import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest
 import { MysteryboxTokenService } from "./token.service";
 import { UserEntity } from "../../../../user/user.entity";
 import { TokenEntity } from "../../../hierarchy/token/token.entity";
-import { TokenAutocompleteDto } from "../../../hierarchy/token/dto/autocomplete";
-import { TokenSearchDto } from "../../../hierarchy/token/dto";
+import { TokenAutocompleteDto, TokenSearchDto } from "../../../hierarchy/token/dto";
 
 @ApiBearerAuth()
 @Controller("/mysterybox-tokens")
@@ -21,8 +20,8 @@ export class MysteryboxTokenController {
   }
 
   @Get("/autocomplete")
-  public autocomplete(@Query() dto: TokenAutocompleteDto): Promise<Array<TokenEntity>> {
-    return this.mysteryboxTokenService.autocomplete(dto);
+  public autocomplete(@Query() dto: TokenAutocompleteDto, @User() userEntity: UserEntity): Promise<Array<TokenEntity>> {
+    return this.mysteryboxTokenService.autocomplete(dto, userEntity);
   }
 
   @Get("/:id")

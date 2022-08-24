@@ -2,9 +2,9 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { TemplateInput } from "./template-input";

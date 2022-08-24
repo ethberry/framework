@@ -18,6 +18,7 @@ import { Claim } from "./mechanics/claim";
 import { Craft } from "./mechanics/craft";
 import { Drop } from "./mechanics/drop";
 import { Referral } from "./integrations/referral";
+import { Ipfs } from "./integrations/ipfs";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -45,6 +46,7 @@ export const Dashboard: FC = () => {
           <Personal />
           <Marketplace />
           <Referral />
+          <Ipfs />
           <Pages />
         </Grid>
       </Grid>

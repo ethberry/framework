@@ -2,10 +2,10 @@ import { FC } from "react";
 import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
 
-import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ILotteryTicket } from "@framework/types";
+import type { ISearchDto } from "@gemunion/types-collection";
+import type { ILotteryTicket } from "@framework/types";
 
 import { LotteryTicketViewDialog } from "./view";
 import { getNumbers } from "../utils";

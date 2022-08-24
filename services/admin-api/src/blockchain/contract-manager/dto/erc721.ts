@@ -2,7 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { Erc721ContractFeatures, IErc721ContractDeployDto } from "@framework/types";
+import type { IErc721ContractDeployDto } from "@framework/types";
+import { Erc721ContractFeatures } from "@framework/types";
 
 export class Erc721ContractDeployDto implements IErc721ContractDeployDto {
   @ApiProperty({

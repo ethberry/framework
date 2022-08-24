@@ -2,10 +2,10 @@ import { FC } from "react";
 import { Grid, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { Create } from "@mui/icons-material";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { IContract, IGrade } from "@framework/types";
+import type { IPaginationDto } from "@gemunion/types-collection";
+import type { IContract, IGrade } from "@framework/types";
 
 import { GradeEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";

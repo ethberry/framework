@@ -2,7 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { IMysteryboxContractDeployDto, MysteryboxContractFeatures } from "@framework/types";
+import type { IMysteryboxContractDeployDto } from "@framework/types";
+import { MysteryboxContractFeatures } from "@framework/types";
 
 export class MysteryboxContractDeployDto implements IMysteryboxContractDeployDto {
   @ApiProperty({

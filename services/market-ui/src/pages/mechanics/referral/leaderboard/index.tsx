@@ -48,7 +48,7 @@ export const ReferralLeaderboard: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "referral", "referral.leaderboard"]} />
 
-      <PageHeader message="form.labels.title" />
+      <PageHeader message="pages.referral.leaderboard.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 

@@ -15,9 +15,9 @@ export const Erc721ContractList: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721-contracts"]} />
+      <Breadcrumbs path={["dashboard", "erc721.contracts"]} />
 
-      <PageHeader message="pages.erc721-contracts.title" />
+      <PageHeader message="pages.erc721.contracts.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

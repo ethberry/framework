@@ -2,7 +2,6 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-
 import { CraftStatus, ICraft, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";

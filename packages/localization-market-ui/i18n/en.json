@@ -250,30 +250,12 @@
     },
     "dashboard": {
       "hierarchy": {
-        "erc1155": {
-          "contracts": "ERC1155 Contracts",
-          "templates": "ERC1155 Templates",
-          "title": "ERC1155",
-          "tokens": "ERC1155 Tokens"
-        },
-        "erc721": {
-          "contracts": "ERC721 Contracts",
-          "templates": "ERC721 Templates",
-          "title": "ERC721",
-          "tokens": "ERC721 Tokens"
-        },
-        "erc998": {
-          "contracts": "ERC998 Contracts",
-          "templates": "ERC998 Templates",
-          "title": "ERC998",
-          "tokens": "ERC998 Tokens"
-        }
+        "erc1155": "ERC1155",
+        "erc721": "ERC721",
+        "erc998": "ERC998"
       },
       "integrations": {
-        "marketplace": {
-          "main": "Primary marketplace",
-          "title": "Marketplace"
-        },
+        "marketplace": "Marketplace",
         "pages": {
           "about-us": "About us",
           "faq": "FAQ",
@@ -283,12 +265,8 @@
           "title": "My stash",
           "wallet": "My wallet"
         },
-        "referral": {
-          "leaderboard": "Leaderboard",
-          "link": "Cabinet",
-          "report": "Report",
-          "title": "Referral program"
-        }
+        "ipfs": "IPFS",
+        "referral": "Referral program"
       },
       "mechanics": {
         "claim": {
@@ -331,75 +309,81 @@
     "drop-list": {
       "title": "Drops"
     },
-    "erc1155-contract": {
-      "title": "ERC1155 Contract: {title}"
-    },
-    "erc1155-contracts": {
-      "title": "ERC1155 Contracts"
-    },
-    "erc1155-template": {
-      "price": "Price: {amount}",
-      "title": "ERC721 Template: {title}"
-    },
-    "erc1155-templates": {
-      "title": "ERC1155 Templates"
-    },
-    "erc1155-token": {
-      "price": "Base price: {amount}",
-      "title": "ERC1155 Token: {title}"
-    },
-    "erc1155-tokens": {
-      "title": "ERC1155 Tokens"
-    },
-    "erc721-contract": {
-      "title": "ERC721 Contract: {title}"
-    },
-    "erc721-contracts": {
-      "title": "ERC721 Contracts"
-    },
-    "erc721-template": {
-      "price": "Price: {amount}",
-      "title": "ERC721 Template: {title}"
-    },
-    "erc721-templates": {
-      "title": "ERC721 Templates"
-    },
-    "erc721-token": {
-      "level": "Level: {grade}",
-      "price": "Base price: {amount}",
-      "title": "ERC721 Token: {title}"
-    },
-    "erc721-tokens": {
-      "sort": {
-        "createdAt": "Date",
-        "price": "Price"
+    "erc1155": {
+      "contract": {
+        "title": "ERC1155 Contract: {title}"
       },
-      "title": "ERC721 Tokens"
-    },
-    "erc998-contract": {
-      "title": "ERC998 Contract: {title}"
-    },
-    "erc998-contracts": {
-      "title": "ERC998 Contracts"
-    },
-    "erc998-template": {
-      "price": "Price: {amount}",
-      "title": "ERC998 Template: {title}"
-    },
-    "erc998-templates": {
-      "title": "ERC998 Templates"
-    },
-    "erc998-token": {
-      "level": "Level: {grade}",
-      "price": "Base price: {amount}",
-      "title": "ERC998 Token: {title}"
-    },
-    "erc998-tokens": {
-      "sort": {
-        "createdAt": "Date",
-        "price": "Price"
+      "contracts": {
+        "title": "ERC1155 Contracts"
       },
-      "title": "ERC998 Tokens"
+      "template": {
+        "price": "Price: {amount}",
+        "title": "ERC721 Template: {title}"
+      },
+      "templates": {
+        "title": "ERC1155 Templates"
+      },
+      "token": {
+        "price": "Base price: {amount}",
+        "title": "ERC1155 Token: {title}"
+      },
+      "tokens": {
+        "title": "ERC1155 Tokens"
+      }
+    },
+    "erc721": {
+      "contract": {
+        "title": "ERC721 Contract: {title}"
+      },
+      "contracts": {
+        "title": "ERC721 Contracts"
+      },
+      "template": {
+        "price": "Price: {amount}",
+        "title": "ERC721 Template: {title}"
+      },
+      "templates": {
+        "title": "ERC721 Templates"
+      },
+      "token": {
+        "level": "Level: {grade}",
+        "price": "Base price: {amount}",
+        "title": "ERC721 Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "ERC721 Tokens"
+      }
+    },
+    "erc998": {
+      "contract": {
+        "title": "ERC998 Contract: {title}"
+      },
+      "contracts": {
+        "title": "ERC998 Contracts"
+      },
+      "template": {
+        "price": "Price: {amount}",
+        "title": "ERC998 Template: {title}"
+      },
+      "templates": {
+        "title": "ERC998 Templates"
+      },
+      "token": {
+        "level": "Level: {grade}",
+        "price": "Base price: {amount}",
+        "title": "ERC998 Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "ERC998 Tokens"
+      }
     },
     "exchanges": {
       "title": "Exchanges"
@@ -477,6 +461,12 @@
       },
       "title": "Mysterybox Tokens"
     },
+    "ipfs": {
+      "title": "IPFS",
+      "pinata": {
+        "title": "Pinata"
+      }
+    },
     "page": {
       "title": "{title}"
     },
@@ -489,6 +479,9 @@
       },
       "report": {
         "title": "Report"
+      },
+      "leaderboard": {
+        "title": "Leaderboard"
       },
       "title": "Referral program"
     },

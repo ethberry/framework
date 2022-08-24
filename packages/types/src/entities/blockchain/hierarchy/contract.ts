@@ -1,4 +1,4 @@
-import { IDeployable, ISearchable } from "@gemunion/types-collection";
+import type { IDeployable, ISearchable } from "@gemunion/types-collection";
 
 import { IContractHistory } from "../contract-history";
 

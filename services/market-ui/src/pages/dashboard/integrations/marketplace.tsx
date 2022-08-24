@@ -11,7 +11,7 @@ export const Marketplace: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.title" />
+            <FormattedMessage id="pages.dashboard.integrations.marketplace" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Marketplace: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.marketplace.main" />
+            <FormattedMessage id="pages.marketplace.title" />
           </ListItemText>
         </ListItem>
       </List>

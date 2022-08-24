@@ -6,6 +6,7 @@ export const useStyles = makeStyles<Theme>(
     return {
       container: {
         height: "100%",
+        minHeight: "450px",
         maxHeight: "450px",
         maxWidth: "1150px",
         padding: "0 20px",

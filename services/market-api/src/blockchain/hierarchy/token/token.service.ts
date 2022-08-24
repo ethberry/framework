@@ -119,8 +119,8 @@ export class TokenService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: ITokenAutocompleteDto): Promise<Array<TokenEntity>> {
-    const { account, contractIds, templateIds } = dto;
+  public async autocomplete(dto: ITokenAutocompleteDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
+    const { contractIds, templateIds } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["token.id", "token.tokenId"]);
@@ -128,12 +128,17 @@ export class TokenService {
     queryBuilder.leftJoin("token.balance", "balance");
     queryBuilder.addSelect(["balance.account"]);
 
-    if (account) {
-      queryBuilder.andWhere("balance.account = :account", { account });
-    }
+    queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
 
     queryBuilder.leftJoin("token.template", "template");
     queryBuilder.addSelect(["template.title"]);
+
+    queryBuilder.leftJoin("template.contract", "contract");
+    queryBuilder.addSelect(["contract.address"]);
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (contractIds) {
       if (contractIds.length === 1) {
@@ -155,12 +160,10 @@ export class TokenService {
       }
     }
 
-    queryBuilder.leftJoin("template.contract", "contract");
-    queryBuilder.addSelect(["contract.address"]);
-
     queryBuilder.orderBy({
       "token.createdAt": "DESC",
     });
+
     return queryBuilder.getMany();
   }
 

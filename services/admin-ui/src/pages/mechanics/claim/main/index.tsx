@@ -5,8 +5,8 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
-import { ClaimStatus, IClaim, IClaimSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { ClaimStatus, IClaim, IClaimSearchDto } from "@framework/types";
 
 import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
