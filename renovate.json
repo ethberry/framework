@@ -15,7 +15,7 @@
     {
       "matchPackagePrefixes": ["@mui/"],
       "commitMessageTopic": "MUI",
-      "groupName": "MUI packages",
+      "groupName": "@Mui packages",
       "groupSlug": "mui-packages"
     }
   ]
