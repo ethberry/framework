@@ -20,8 +20,6 @@ contract ERC998RandomHardhat is IERC721Random, ChainLinkHardhat, ERC998Upgradeab
     uint256 templateId;
   }
 
-  event MintRandom(bytes32 requestId, address to, uint256 randomness, uint256 templateId, uint256 tokenId);
-
   mapping(bytes32 => Request) internal _queue;
 
   constructor(

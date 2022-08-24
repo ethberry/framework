@@ -23,8 +23,6 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkBinance, ERC721Simple {
 
   mapping(bytes32 => Request) internal _queue;
 
-  event MintRandom(bytes32 requestId, address to, uint256 randomness, uint256 templateId, uint256 tokenId);
-
   constructor(
     string memory name,
     string memory symbol,
