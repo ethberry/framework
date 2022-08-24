@@ -10,13 +10,13 @@
       "matchPackagePrefixes": ["@gemunion/"],
       "commitMessageTopic": "Gemunion",
       "groupName": "@Gemunion packages",
-      "groupSlug": "gemunion"
+      "groupSlug": "gemunion-packages"
     },
     {
       "matchPackagePrefixes": ["@mui/"],
       "commitMessageTopic": "MUI",
-      "groupName": "MUI packages",
-      "groupSlug": "mui"
+      "groupName": "@Mui packages",
+      "groupSlug": "mui-packages"
     }
   ]
 }
