@@ -16,14 +16,10 @@ export class PauseControllerEth {
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Paused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Paused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Paused },
-    { contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.Paused },
-    { contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Paused },
     { contractType: ContractType.MYSTERYBOX, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Unpaused },
-    { contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.Unpaused },
-    { contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Unpaused },
   ])
   public pause(@Payload() event: ILogEvent<IPaused>, @Ctx() context: Log): Promise<void> {
     return this.pauseServiceEth.pause(event, context);
