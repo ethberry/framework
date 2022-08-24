@@ -101,7 +101,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract721NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     await this.updateHistory(event, context, parentContractEntity.id, void 0);
@@ -114,7 +114,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract721NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     await this.updateHistory(event, context, parentContractEntity.id, void 0);

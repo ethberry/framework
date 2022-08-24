@@ -142,7 +142,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract998NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     const erc721TokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
@@ -176,7 +176,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract998NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     // const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
@@ -217,7 +217,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract998NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     await this.updateHistory(event, context, parentContractEntity.id, void 0);
@@ -232,7 +232,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract998NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     await this.updateHistory(event, context, parentContractEntity.id, void 0);
@@ -259,7 +259,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract998NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     await this.updateHistory(event, context, parentContractEntity.id, void 0);
@@ -285,7 +285,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
-      throw new NotFoundException("contract998NotFound");
+      throw new NotFoundException("contractNotFound");
     }
 
     await this.updateHistory(event, context, parentContractEntity.id, void 0);
