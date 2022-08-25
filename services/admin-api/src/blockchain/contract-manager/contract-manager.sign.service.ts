@@ -48,6 +48,7 @@ import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/M
 import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
 import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
 import MysteryboxFullSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
+import { UserEntity } from "../../user/user.entity";
 
 @Injectable()
 export class ContractManagerSignService {
@@ -57,7 +58,7 @@ export class ContractManagerSignService {
     private readonly configService: ConfigService,
   ) {}
 
-  public async erc20Token(dto: IErc20TokenDeployDto): Promise<IServerSignature> {
+  public async erc20Token(dto: IErc20TokenDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, cap } = dto;
 
     const nonce = utils.randomBytes(32);
@@ -67,7 +68,7 @@ export class ContractManagerSignService {
       {
         name: "ContractManager",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        chainId: userEntity.chainId,
         verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
       },
       // Types
@@ -95,46 +96,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:VESTING
-  public async vesting(dto: IVestingDeployDto): Promise<IServerSignature> {
-    const { contractTemplate, account, startTimestamp, duration } = dto;
-
-    const nonce = utils.randomBytes(32);
-    const bytecode = this.getBytecodeByVestingContractTemplate(contractTemplate);
-    const signature = await this.signer._signTypedData(
-      // Domain
-      {
-        name: "ContractManager",
-        version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
-        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
-      },
-      // Types
-      {
-        EIP712: [
-          { name: "nonce", type: "bytes32" },
-          { name: "bytecode", type: "bytes" },
-          { name: "account", type: "address" },
-          { name: "startTimestamp", type: "uint64" },
-          { name: "duration", type: "uint64" },
-          { name: "templateId", type: "uint256" },
-        ],
-      },
-      // Value
-      {
-        nonce,
-        bytecode,
-        account,
-        startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
-        duration: duration * 60 * 60 * 24, // in seconds
-        templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
-      },
-    );
-
-    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
-  }
-
-  public async erc721Token(dto: IErc721ContractDeployDto): Promise<IServerSignature> {
+  public async erc721Token(dto: IErc721ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
@@ -144,7 +106,7 @@ export class ContractManagerSignService {
       {
         name: "ContractManager",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        chainId: userEntity.chainId,
         verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
       },
       // Types
@@ -173,7 +135,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  public async erc998Token(dto: IErc998ContractDeployDto): Promise<IServerSignature> {
+  public async erc998Token(dto: IErc998ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
@@ -183,7 +145,7 @@ export class ContractManagerSignService {
       {
         name: "ContractManager",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        chainId: userEntity.chainId,
         verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
       },
       // Types
@@ -213,7 +175,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  public async erc1155Token(dto: IErc1155ContractDeployDto): Promise<IServerSignature> {
+  public async erc1155Token(dto: IErc1155ContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, royalty, baseTokenURI } = dto;
 
     const nonce = utils.randomBytes(32);
@@ -223,7 +185,7 @@ export class ContractManagerSignService {
       {
         name: "ContractManager",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        chainId: userEntity.chainId,
         verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
       },
       // Types
@@ -249,7 +211,8 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  public async mysterybox(dto: IMysteryboxContractDeployDto): Promise<IServerSignature> {
+  // MODULE:MYSTERYBOX
+  public async mysterybox(dto: IMysteryboxContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
     const nonce = utils.randomBytes(32);
     const bytecode = this.getBytecodeByMysteryboxContractFeatures(contractFeatures);
@@ -258,7 +221,7 @@ export class ContractManagerSignService {
       {
         name: "ContractManager",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        chainId: userEntity.chainId,
         verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
       },
       // Types
@@ -282,6 +245,45 @@ export class ContractManagerSignService {
         baseTokenURI,
         royalty,
         featureIds: contractFeatures.map(feature => Object.keys(MysteryboxContractFeatures).indexOf(feature)),
+      },
+    );
+
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
+  // MODULE:VESTING
+  public async vesting(dto: IVestingDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { contractTemplate, account, startTimestamp, duration } = dto;
+
+    const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByVestingContractTemplate(contractTemplate);
+    const signature = await this.signer._signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "account", type: "address" },
+          { name: "startTimestamp", type: "uint64" },
+          { name: "duration", type: "uint64" },
+          { name: "templateId", type: "uint256" },
+        ],
+      },
+      // Value
+      {
+        nonce,
+        bytecode,
+        account,
+        startTimestamp: Math.ceil(new Date(startTimestamp).getTime() / 1000), // in seconds
+        duration: duration * 60 * 60 * 24, // in seconds
+        templateId: Object.keys(VestingContractTemplate).indexOf(contractTemplate),
       },
     );
 
