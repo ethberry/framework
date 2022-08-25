@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
+
 import { ns } from "@framework/constants";
 
 export class CreateTemplate1563804000200 implements MigrationInterface {
@@ -45,6 +46,11 @@ export class CreateTemplate1563804000200 implements MigrationInterface {
           name: "amount",
           type: "uint256",
           default: 0,
+        },
+        {
+          name: "cid",
+          type: "varchar",
+          isNullable: true,
         },
         {
           name: "contract_id",

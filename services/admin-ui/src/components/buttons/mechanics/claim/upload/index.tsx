@@ -17,7 +17,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn } = useApiCall(async (api, { files }: IClaimUploadDto) => {
+  const { fn } = useApiCall((api, { files }: IClaimUploadDto) => {
     return api.fetchJson({
       url: "/claims/upload",
       data: getFormData({ file: files[0] }),

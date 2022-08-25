@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
-import { ContractEventType, IContractHistory, TContractEventData } from "@framework/types";
+import type { IContractHistory, TContractEventData } from "@framework/types";
+import { ContractEventType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { TokenEntity } from "../hierarchy/token/token.entity";
@@ -28,4 +29,7 @@ export class ContractHistoryEntity extends IdDateBaseEntity implements IContract
   @JoinColumn()
   @ManyToOne(_type => TokenEntity, token => token.history)
   public token: TokenEntity;
+
+  @Column({ type: "int", nullable: true })
+  public contractId: number | null;
 }

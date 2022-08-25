@@ -12,6 +12,7 @@ import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { FirebaseModule } from "@gemunion/nest-js-module-firebase";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
@@ -75,6 +76,16 @@ import { PageModule } from "./page/page.module";
       inject: [ConfigService],
       useFactory: (configService: ConfigService): string => {
         return configService.get<string>("GEMUNION_API_KEY", "");
+      },
+    }),
+    FirebaseModule.forRootAsync(FirebaseModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const bucket = configService.get<string>("FIREBASE_STORAGE_BUCKET", "");
+        return {
+          bucket,
+        };
       },
     }),
     RequestLoggerModule,

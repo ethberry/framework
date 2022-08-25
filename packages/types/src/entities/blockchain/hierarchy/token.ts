@@ -18,6 +18,7 @@ export interface IToken extends IIdDateBase {
   attributes: any;
   tokenId: string;
   royalty: number;
+  cid: string | null;
   tokenStatus: TokenStatus;
   templateId: number | null;
   template?: ITemplate;

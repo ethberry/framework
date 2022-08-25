@@ -201,8 +201,8 @@ export interface IContractHistory extends IIdDateBase {
   transactionHash: string;
   eventType: ContractEventType;
   eventData: TContractEventData;
-  contractId?: number;
+  contractId: number | null;
   contract?: IContract;
-  tokenId?: number;
+  tokenId: number | null;
   token?: IToken;
 }

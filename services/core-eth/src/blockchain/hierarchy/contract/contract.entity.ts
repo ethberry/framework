@@ -2,7 +2,8 @@ import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
 import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { IContract, ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 import { TemplateEntity } from "../template/template.entity";
 

@@ -8,6 +8,10 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
+    "@gemunion/nest-js-module-pinata-firebase": "1.1.0",
+    "@gemunion/nest-js-module-firebase": "0.1.0",
+    "@gemunion/draft-js-utils": "0.3.16",
+    "@pinata/sdk": "1.1.26",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "2.0.5",

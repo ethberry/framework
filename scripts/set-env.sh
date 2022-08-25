@@ -50,7 +50,6 @@ touch ./services/admin-ui/.env.production
   echo BE_URL=$ADMIN_BE_URL >>./services/admin-ui/.env.production
   echo GOOGLE_RECAPTCHA_PUBLIC=$GOOGLE_RECAPTCHA_PUBLIC >>./services/admin-ui/.env.production
   echo GOOGLE_ANALYTICS=$GOOGLE_ANALYTICS >> ./services/admin-ui/.env.production
-  echo AWS_REGION=$AWS_REGION >>./services/admin-ui/.env.production
   echo FIREBASE_API_KEY=$FIREBASE_API_KEY >>./services/admin-ui/.env.production
   echo FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN >>./services/admin-ui/.env.production
   echo FIREBASE_DB_URL=$FIREBASE_DB_URL >>./services/admin-ui/.env.production
@@ -88,7 +87,6 @@ touch ./services/public-ui/.env.production
   echo BE_URL=$PUBLIC_BE_URL >>./services/public-ui/.env.production
   echo GOOGLE_RECAPTCHA_PUBLIC=$GOOGLE_RECAPTCHA_PUBLIC >>./services/public-ui/.env.production
   echo GOOGLE_ANALYTICS=$GOOGLE_ANALYTICS >> ./services/public-ui/.env.production
-  echo AWS_REGION=$AWS_REGION >>./services/public-ui/.env.production
   echo FIREBASE_API_KEY=$FIREBASE_API_KEY >>./services/public-ui/.env.production
   echo FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN >>./services/public-ui/.env.production
   echo FIREBASE_DB_URL=$FIREBASE_DB_URL >>./services/public-ui/.env.production

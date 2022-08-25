@@ -23,6 +23,9 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   public decimals: number;
 
   @Column({ type: "int" })
+  public fromBlock: number;
+
+  @Column({ type: "int" })
   public royalty: number;
 
   @Column({ type: "varchar" })

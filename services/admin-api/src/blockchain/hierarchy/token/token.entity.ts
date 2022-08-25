@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
-import { IToken, TokenStatus } from "@framework/types";
+import type { IToken } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-postgres";
 
@@ -12,17 +13,20 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   @JsonColumn()
   public attributes: any;
 
-  @Column({
-    type: "enum",
-    enum: TokenStatus,
-  })
-  public tokenStatus: TokenStatus;
-
   @Column({ type: "numeric" })
   public tokenId: string;
 
   @Column({ type: "int" })
   public royalty: number;
+
+  @Column({ type: "varchar", nullable: true })
+  public cid: string | null;
+
+  @Column({
+    type: "enum",
+    enum: TokenStatus,
+  })
+  public tokenStatus: TokenStatus;
 
   @Column({ type: "int" })
   public templateId: number;
