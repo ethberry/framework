@@ -17,6 +17,7 @@ contract WhiteListChild {
   event SetMaxChild(address indexed addr, uint256 maxCount);
 
   function _whiteListChild(address addr, uint256 max) internal {
+//    require(!_whiteListChildAccess[addr], "WhiteListChild: already whitelisted");
     _whiteListChildAccess[addr] = true;
     _maxChildPerContract[addr] = max;
     emit WhitelistedChild(addr, max);

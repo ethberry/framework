@@ -46,7 +46,7 @@ export const Erc721Token: FC = () => {
           <Paper className={classes.paper}>
             <Typography>
               <FormattedMessage
-                id="pages.erc721-token.price"
+                id="pages.erc721.token.price"
                 values={{ amount: formatPrice(selected.template?.price) }}
               />
             </Typography>
@@ -56,7 +56,7 @@ export const Erc721Token: FC = () => {
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
             <Paper className={classes.paper}>
               <Typography>
-                <FormattedMessage id="pages.erc721-token.level" values={selected.attributes} />
+                <FormattedMessage id="pages.erc721.token.level" values={selected.attributes} />
               </Typography>
               <UpgradeButton token={selected} />
             </Paper>

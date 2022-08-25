@@ -5,9 +5,9 @@ import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typ
 import type { IContract } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
-
 import { TemplateEntity } from "../template/template.entity";
 import { CompositionEntity } from "../../tokens/erc998/composition/composition.entity";
+import { ContractHistoryEntity } from "../../contract-history/contract-history.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
@@ -24,10 +24,10 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   public decimals: number;
 
   @Column({ type: "int" })
-  public fromBlock: number;
+  public royalty: number;
 
   @Column({ type: "int" })
-  public royalty: number;
+  public fromBlock: number;
 
   @Column({ type: "varchar" })
   public baseTokenURI: string;
@@ -62,6 +62,12 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
 
   @OneToMany(_type => TemplateEntity, template => template.contract)
   public templates: Array<TemplateEntity>;
+
+  @OneToMany(_type => ContractHistoryEntity, history => history.contractId)
+  public history: Array<ContractHistoryEntity>;
+
+  @OneToMany(_type => CompositionEntity, composition => composition.child)
+  public parent: Array<CompositionEntity>;
 
   @OneToMany(_type => CompositionEntity, composition => composition.parent)
   public children: Array<CompositionEntity>;

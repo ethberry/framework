@@ -121,8 +121,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     if (!erc998TokenEntity) {
       throw new NotFoundException("token998NotFound");
     }
-
-    await this.updateHistory(event, context, erc998TokenEntity.template.contractId, ~~tokenId);
+    await this.updateHistory(event, context, erc998TokenEntity.template.contractId, erc998TokenEntity.id);
 
     const erc721TokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
@@ -228,7 +227,6 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       args: { addr, maxCount },
     } = event;
     const { address } = context;
-
     const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
 
     if (!parentContractEntity) {
@@ -243,7 +241,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("contractChildNotFound");
     }
 
-    await this.erc998CompositionService.create({
+    await this.erc998CompositionService.upsert({
       parentId: parentContractEntity.id,
       childId: childContractEntity.id,
       amount: ~~maxCount,

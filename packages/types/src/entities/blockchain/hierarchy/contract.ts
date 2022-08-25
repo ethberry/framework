@@ -70,5 +70,6 @@ export interface IContract extends IDeployable, ISearchable {
   contractModule: ModuleType;
   templates: Array<ITemplate>;
   history?: Array<IContractHistory>;
+  parent?: Array<IComposition>;
   children?: Array<IComposition>;
 }

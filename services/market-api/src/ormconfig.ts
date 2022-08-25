@@ -22,6 +22,7 @@ import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/rew
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { MysteryboxBoxEntity } from "./blockchain/mechanics/mysterybox/box/box.entity";
+import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -41,6 +42,7 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     BalanceEntity,
     CompositionEntity,
+    OwnershipEntity,
     AssetEntity,
     AssetComponentEntity,
     DropEntity,
