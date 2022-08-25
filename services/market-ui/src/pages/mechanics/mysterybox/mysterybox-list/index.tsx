@@ -31,9 +31,9 @@ export const MysteryboxBoxList: FC<IMysteryboxListProps> = props => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mysterybox-boxes"]} isHidden={embedded} />
+      <Breadcrumbs path={["dashboard", "mysterybox.boxes"]} isHidden={embedded} />
 
-      <PageHeader message="pages.mysterybox-boxes.title">
+      <PageHeader message="pages.mysterybox.boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

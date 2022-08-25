@@ -11,7 +11,7 @@ export const Craft: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.craft.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.craft" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Craft: FC = () => {
             <Construction />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.craft.main" />
+            <FormattedMessage id="pages.craft.title" />
           </ListItemText>
         </ListItem>
       </List>

@@ -11,7 +11,7 @@ export const ChainLink: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.chain-link.title" />
+            <FormattedMessage id="pages.dashboard.integrations.chain-link" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const ChainLink: FC = () => {
             <Paid />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.chain-link.fund" />
+            <FormattedMessage id="pages.chain-link.fund" />
           </ListItemText>
         </ListItem>
       </List>

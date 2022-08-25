@@ -11,7 +11,7 @@ export const CoinMarketCap: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.coin-market-cap.title" />
+            <FormattedMessage id="pages.dashboard.integrations.coin-market-cap" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const CoinMarketCap: FC = () => {
             <Paid />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.coin-market-cap.rates" />
+            <FormattedMessage id="pages.coin-market-cap.rates" />
           </ListItemText>
         </ListItem>
       </List>

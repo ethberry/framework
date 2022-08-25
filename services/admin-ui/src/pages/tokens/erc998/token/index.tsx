@@ -54,9 +54,9 @@ export const Erc998Token: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc998-tokens"]} />
+      <Breadcrumbs path={["dashboard", "erc998.tokens"]} />
 
-      <PageHeader message="pages.erc998-tokens.title">
+      <PageHeader message="pages.erc998.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

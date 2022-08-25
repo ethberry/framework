@@ -83,9 +83,9 @@ export const Erc998Composition: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc998-composition"]} />
+      <Breadcrumbs path={["dashboard", "erc998.composition"]} />
 
-      <PageHeader message="pages.erc998-composition.title">
+      <PageHeader message="pages.erc998.composition.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

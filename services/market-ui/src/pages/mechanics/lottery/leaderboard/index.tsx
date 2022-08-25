@@ -53,7 +53,7 @@ export const LotteryLeaderboard: FC = () => {
     <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.leaderboard"]} />
 
-      <PageHeader message="form.labels.title" />
+      <PageHeader message="pages.lottery.leaderboard.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 

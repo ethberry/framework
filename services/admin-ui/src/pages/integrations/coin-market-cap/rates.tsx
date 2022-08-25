@@ -14,7 +14,7 @@ export const Rates: FC = () => {
   const { fn } = useApiCall(
     async api => {
       return api.fetchJson({
-        url: `/coin-market-cap/rates`,
+        url: "/coin-market-cap/rates",
         data: {
           baseCoinId,
           targetCoinId,

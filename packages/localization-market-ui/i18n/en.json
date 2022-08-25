@@ -255,54 +255,24 @@
         "erc998": "ERC998"
       },
       "integrations": {
+        "ipfs": "IPFS",
         "marketplace": "Marketplace",
         "pages": {
           "about-us": "About us",
           "faq": "FAQ",
           "title": "Pages"
         },
-        "personal": {
-          "title": "My stash",
-          "wallet": "My wallet"
-        },
-        "ipfs": "IPFS",
+        "personal": "My stash",
         "referral": "Referral program"
       },
       "mechanics": {
-        "claim": {
-          "main": "Claim",
-          "title": "Claim"
-        },
-        "craft": {
-          "main": "Craft",
-          "title": "Craft"
-        },
-        "drop": {
-          "main": "Drop",
-          "title": "Drop"
-        },
-        "lottery": {
-          "leaderboard": "Leaderboard",
-          "purchase": "Buy a ticket",
-          "tickets": "My tickets",
-          "title": "Lottery"
-        },
-        "mysterybox": {
-          "boxes": "Mysterybox Boxes",
-          "contracts": "Mysterybox Contracts",
-          "title": "Mysterybox",
-          "tokens": "Mysterybox Tokens"
-        },
-        "staking": {
-          "leaderboard": "Leaderboard",
-          "rules": "Rules",
-          "stakes": "My stakes",
-          "title": "Staking"
-        },
-        "vesting": {
-          "main": "Vesting",
-          "title": "Vesting"
-        }
+        "claim": "Claim",
+        "craft": "Craft",
+        "drop": "Drop",
+        "lottery": "Lottery",
+        "mysterybox": "Mysterybox",
+        "staking": "Staking",
+        "vesting": "Vesting"
       },
       "title": "Dashboard"
     },
@@ -392,6 +362,12 @@
       "confirmation": "Please check your inbox to verify your email.",
       "login": "Login"
     },
+    "ipfs": {
+      "pinata": {
+        "title": "Pinata"
+      },
+      "title": "IPFS"
+    },
     "landing": {
       "erc1155-new": "New 1155 Templates",
       "erc721-new": "New 721 Templates",
@@ -400,6 +376,9 @@
       "popular": "Popular items"
     },
     "lottery": {
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
       "purchase": {
         "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
         "title": "Buy a ticket"
@@ -436,35 +415,31 @@
       "detach": "Detach",
       "title": "My wallet"
     },
-    "mysterybox-box": {
-      "price": "Price: {amount}",
-      "title": "Mysterybox Box: {title}"
-    },
-    "mysterybox-boxes": {
-      "title": "Mysterybox Boxes"
-    },
-    "mysterybox-contract": {
-      "title": "Mysterybox Contract: {title}"
-    },
-    "mysterybox-contracts": {
-      "title": "Mysterybox Contracts"
-    },
-    "mysterybox-token": {
-      "level": "Level: {grade}",
-      "price": "Base price: {amount}",
-      "title": "Mysterybox Token: {title}"
-    },
-    "mysterybox-tokens": {
-      "sort": {
-        "createdAt": "Date",
-        "price": "Price"
+    "mysterybox": {
+      "box": {
+        "price": "Price: {amount}",
+        "title": "Mysterybox Box: {title}"
       },
-      "title": "Mysterybox Tokens"
-    },
-    "ipfs": {
-      "title": "IPFS",
-      "pinata": {
-        "title": "Pinata"
+      "boxes": {
+        "title": "Mysterybox Boxes"
+      },
+      "contract": {
+        "title": "Mysterybox Contract: {title}"
+      },
+      "contracts": {
+        "title": "Mysterybox Contracts"
+      },
+      "token": {
+        "level": "Level: {grade}",
+        "price": "Base price: {amount}",
+        "title": "Mysterybox Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "Mysterybox Tokens"
       }
     },
     "page": {
@@ -474,19 +449,22 @@
       "title": "Profile"
     },
     "referral": {
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
       "link": {
         "title": "Your referral link"
       },
       "report": {
         "title": "Report"
       },
-      "leaderboard": {
-        "title": "Leaderboard"
-      },
       "title": "Referral program"
     },
     "staking": {
       "deposit": "Deposit",
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
       "reward": "Reward",
       "rules": {
         "deposit": "Deposit",

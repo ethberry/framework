@@ -11,7 +11,7 @@ export const Erc20Sections: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc20.title" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc20" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Erc20Sections: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc20.contracts" />
+            <FormattedMessage id="pages.erc20.contracts.title" />
           </ListItemText>
         </ListItem>
       </List>

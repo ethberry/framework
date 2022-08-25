@@ -11,7 +11,7 @@ export const Erc1155Section: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc1155.title" />
+            <FormattedMessage id="pages.dashboard.hierarchy.erc1155" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Erc1155Section: FC = () => {
             <Collections />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc1155.contracts" />
+            <FormattedMessage id="pages.erc1155.contracts.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/erc1155-templates">
@@ -28,7 +28,7 @@ export const Erc1155Section: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.hierarchy.erc1155.templates" />
+            <FormattedMessage id="pages.erc1155.templates.title" />
           </ListItemText>
         </ListItem>
       </List>

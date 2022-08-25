@@ -60,9 +60,9 @@ export const NativeContract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "native-contracts"]} />
+      <Breadcrumbs path={["dashboard", "native.contracts"]} />
 
-      <PageHeader message="pages.native-contracts.title">
+      <PageHeader message="pages.native.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

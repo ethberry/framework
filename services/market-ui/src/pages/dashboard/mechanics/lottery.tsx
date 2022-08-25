@@ -11,7 +11,7 @@ export const Lottery: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.lottery.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.lottery" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Lottery: FC = () => {
             <Casino />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.lottery.purchase" />
+            <FormattedMessage id="pages.lottery.purchase.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/lottery/ticket">
@@ -28,7 +28,7 @@ export const Lottery: FC = () => {
             <ConfirmationNumber />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.lottery.tickets" />
+            <FormattedMessage id="pages.lottery.tickets.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/lottery/leaderboard">
@@ -36,7 +36,7 @@ export const Lottery: FC = () => {
             <BarChart />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.lottery.leaderboard" />
+            <FormattedMessage id="pages.lottery.leaderboard.title" />
           </ListItemText>
         </ListItem>
       </List>

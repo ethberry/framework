@@ -66,7 +66,7 @@ export const StakingLeaderboard: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
-      <PageHeader message="form.labels.title" />
+      <PageHeader message="pages.staking.leaderboard.title" />
 
       <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
 

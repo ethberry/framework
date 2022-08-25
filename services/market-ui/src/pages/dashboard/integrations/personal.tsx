@@ -11,7 +11,7 @@ export const Personal: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.personal.title" />
+            <FormattedMessage id="pages.dashboard.integrations.personal" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Personal: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.personal.wallet" />
+            <FormattedMessage id="pages.my-wallet.title" />
           </ListItemText>
         </ListItem>
       </List>

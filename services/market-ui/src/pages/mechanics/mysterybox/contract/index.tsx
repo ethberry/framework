@@ -29,9 +29,9 @@ export const MysteryboxContract: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mysterybox-contracts", "mysterybox-contract"]} data={[{}, {}, selected]} />
+      <Breadcrumbs path={["dashboard", "mysterybox.contracts", "mysterybox.contract"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.mysterybox-contract.title" data={selected} />
+      <PageHeader message="pages.mysterybox.contract.title" data={selected} />
 
       <Box display="flex">
         <Box margin={1}>

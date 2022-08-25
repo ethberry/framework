@@ -11,7 +11,7 @@ export const Claim: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.claim.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.claim" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Claim: FC = () => {
             <Paragliding />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.claim.main" />
+            <FormattedMessage id="pages.claim.title" />
           </ListItemText>
         </ListItem>
       </List>

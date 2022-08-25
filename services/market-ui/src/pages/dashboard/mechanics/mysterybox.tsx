@@ -11,7 +11,7 @@ export const Mysterybox: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.mysterybox" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Mysterybox: FC = () => {
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.contracts" />
+            <FormattedMessage id="pages.mysterybox.contracts.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/mysterybox-boxes">
@@ -28,7 +28,7 @@ export const Mysterybox: FC = () => {
             <Filter />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.boxes" />
+            <FormattedMessage id="pages.mysterybox.boxes.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/mysterybox-tokens">
@@ -36,7 +36,7 @@ export const Mysterybox: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.mysterybox.tokens" />
+            <FormattedMessage id="pages.mysterybox.tokens.title" />
           </ListItemText>
         </ListItem>
       </List>

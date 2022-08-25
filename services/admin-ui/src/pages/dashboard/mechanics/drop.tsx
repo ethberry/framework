@@ -11,7 +11,7 @@ export const Drop: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.drop.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.drop" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Drop: FC = () => {
             <AccessTime />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.drop.main" />
+            <FormattedMessage id="pages.drop.title" />
           </ListItemText>
         </ListItem>
       </List>

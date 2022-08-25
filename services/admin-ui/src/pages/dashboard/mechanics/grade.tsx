@@ -11,7 +11,7 @@ export const Grade: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.grade.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.grade" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Grade: FC = () => {
             <Upgrade />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.grade.main" />
+            <FormattedMessage id="pages.grade.title" />
           </ListItemText>
         </ListItem>
       </List>

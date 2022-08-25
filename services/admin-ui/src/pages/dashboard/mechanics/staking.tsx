@@ -11,7 +11,7 @@ export const Staking: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.staking.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.staking" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Staking: FC = () => {
             <Rule />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.staking.rules" />
+            <FormattedMessage id="pages.staking.rules.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking/report">
@@ -28,7 +28,7 @@ export const Staking: FC = () => {
             <BarChart />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.staking.report" />
+            <FormattedMessage id="pages.staking.report.title" />
           </ListItemText>
         </ListItem>
       </List>

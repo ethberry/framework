@@ -11,7 +11,7 @@ export const NativeSections: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.hierarchy.native.title" />
+            <FormattedMessage id="pages.dashboard.hierarchy.native" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const NativeSections: FC = () => {
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.hierarchy.native.contracts" />
+            <FormattedMessage id="pages.native.contracts.title" />
           </ListItemText>
         </ListItem>
       </List>

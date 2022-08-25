@@ -79,9 +79,9 @@ export const Mysterybox: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "mysterybox-boxes"]} />
+      <Breadcrumbs path={["dashboard", "mysterybox.boxes"]} />
 
-      <PageHeader message="pages.mysterybox-boxes.title">
+      <PageHeader message="pages.mysterybox.boxes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

@@ -74,9 +74,9 @@ export const Erc20Contract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc20-contracts"]} />
+      <Breadcrumbs path={["dashboard", "erc20.contracts"]} />
 
-      <PageHeader message="pages.erc20-contracts.title">
+      <PageHeader message="pages.erc20.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

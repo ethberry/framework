@@ -28,9 +28,9 @@ export const MysteryboxBox: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mysterybox-boxes", "mysterybox-box"]} data={[{}, {}, selected]} />
+      <Breadcrumbs path={["dashboard", "mysterybox.boxes", "mysterybox.box"]} data={[{}, {}, selected]} />
 
-      <PageHeader message="pages.mysterybox-box.title" data={selected} />
+      <PageHeader message="pages.mysterybox.box.title" data={selected} />
 
       <Grid container>
         <Grid item xs={9}>

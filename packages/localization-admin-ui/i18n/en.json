@@ -384,17 +384,20 @@
       "title": "Blockchain Settings"
     },
     "chain-link": {
-      "title": "ChainLink"
+      "title": "ChainLink",
+      "fund": "Fund"
     },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
     },
     "coin-gecko": {
-      "title": "CoinGecko"
+      "title": "CoinGecko",
+      "rates": "Rates"
     },
     "coin-market-cap": {
-      "title": "CoinMarketCap"
+      "title": "CoinMarketCap",
+      "rates": "Rates"
     },
     "craft": {
       "activate": "Activate rule",
@@ -403,32 +406,11 @@
     },
     "dashboard": {
       "hierarchy": {
-        "erc1155": {
-          "contracts": "ERC1155 Contracts",
-          "templates": "ERC1155 Templates",
-          "title": "ERC1155"
-        },
-        "erc20": {
-          "contracts": "ERC20 Contracts",
-          "title": "ERC20"
-        },
-        "erc721": {
-          "contracts": "ERC721 Contracts",
-          "templates": "ERC721 Templates",
-          "title": "ERC721",
-          "tokens": "ERC721 Tokens"
-        },
-        "erc998": {
-          "composition": "ERC998 Composition",
-          "contracts": "ERC998 Contracts",
-          "templates": "ERC998 Templates",
-          "title": "ERC998",
-          "tokens": "ERC998 Tokens"
-        },
-        "native": {
-          "contracts": "Native Tokens",
-          "title": "NATIVE"
-        }
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "native": "NATIVE"
       },
       "integrations": {
         "admin": {
@@ -438,18 +420,9 @@
           "title": "Admin",
           "users": "Users"
         },
-        "chain-link": {
-          "fund": "Fund",
-          "title": "ChainLink"
-        },
-        "coin-gecko": {
-          "rates": "Rates",
-          "title": "CoinGecko"
-        },
-        "coin-market-cap": {
-          "rates": "Rates",
-          "title": "CoinMarketCap"
-        },
+        "chain-link": "ChainLink",
+        "coin-gecko": "CoinGecko",
+        "coin-market-cap": "CoinMarketCap",
         "marketplace": {
           "chart": "Chart",
           "report": "Report",
@@ -457,85 +430,66 @@
         }
       },
       "mechanics": {
-        "claim": {
-          "main": "Claim",
-          "title": "Claim"
-        },
-        "craft": {
-          "main": "Craft",
-          "title": "Craft"
-        },
-        "drop": {
-          "main": "Drop",
-          "title": "Drop"
-        },
-        "grade": {
-          "main": "Grade",
-          "title": "Grade"
-        },
-        "lottery": {
-          "rounds": "Rounds",
-          "tickets": "Tickets",
-          "title": "Lottery"
-        },
-        "mysterybox": {
-          "boxes": "Mysterybox Boxes",
-          "contracts": "Mysterybox Contracts",
-          "title": "Mystery box"
-        },
-        "staking": {
-          "report": "Report",
-          "rules": "Rules",
-          "title": "Staking"
-        },
+        "claim": "Claim",
+        "craft": "Craft",
+        "drop": "Drop",
+        "grade": "Grade",
+        "lottery": "Lottery",
+        "mysterybox": "Mysterybox",
+        "staking": "Staking",
         "title": "Mechanics",
-        "vesting": {
-          "main": "Vesting",
-          "title": "Vesting"
-        }
+        "vesting": "Vesting"
       },
       "title": "Dashboard"
     },
-    "drops": {
+    "drop": {
       "title": "Drops"
     },
     "emails": {
       "title": "Emails"
     },
-    "erc1155-contracts": {
-      "title": "ERC1155 Contracts"
+    "erc1155": {
+      "contracts": {
+        "title": "ERC1155 Contracts"
+      },
+      "templates": {
+        "title": "ERC1155 Templates"
+      }
     },
-    "erc1155-templates": {
-      "title": "ERC1155 Templates"
+    "erc20": {
+      "contracts": {
+        "snapshot": "Make snapshot",
+        "title": "ERC20 Contracts"
+      }
     },
-    "erc20-contracts": {
-      "snapshot": "Make snapshot",
-      "title": "ERC20 Contracts"
+    "erc721": {
+      "contracts": {
+        "royalty": "Royalty",
+        "title": "ERC721 Contracts"
+      },
+      "templates": {
+        "title": "ERC721 Templates"
+      },
+      "tokens": {
+        "title": "ERC721 Tokens"
+      }
     },
-    "erc721-contracts": {
-      "royalty": "Royalty",
-      "title": "ERC721 Contracts"
+    "erc998": {
+      "composition": {
+        "title": "ERC998 Composition"
+      },
+      "contracts": {
+        "royalty": "Royalty",
+        "title": "ERC998 Contracts"
+      },
+      "templates": {
+        "title": "ERC998 Templates"
+      },
+      "tokens": {
+        "title": "ERC998 Tokens"
+      }
     },
-    "erc721-templates": {
-      "title": "ERC721 Templates"
-    },
-    "erc721-tokens": {
-      "title": "ERC721 Tokens"
-    },
-    "erc998-composition": {
-      "title": "ERC998 Composition"
-    },
-    "erc998-contracts": {
-      "royalty": "Royalty",
-      "title": "ERC998 Contracts"
-    },
-    "erc998-templates": {
-      "title": "ERC998 Templates"
-    },
-    "erc998-tokens": {
-      "title": "ERC998 Tokens"
-    },
-    "grades": {
+    "grade": {
       "title": "Grade Rules"
     },
     "guest": {
@@ -561,14 +515,18 @@
         "title": "Chart"
       }
     },
-    "mysterybox-boxes": {
-      "title": "Mysterybox Boxes"
+    "mysterybox": {
+      "boxes": {
+        "title": "Mysterybox Boxes"
+      },
+      "contracts": {
+        "title": "Mysterybox Contracts"
+      }
     },
-    "mysterybox-contracts": {
-      "title": "Mysterybox Contracts"
-    },
-    "native-contracts": {
-      "title": "Native Tokens"
+    "native": {
+      "contracts": {
+        "title": "Native Tokens"
+      }
     },
     "pages": {
       "title": "Pages"

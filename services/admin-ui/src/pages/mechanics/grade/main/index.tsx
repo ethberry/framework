@@ -41,9 +41,9 @@ export const Grade: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "grades"]} />
+      <Breadcrumbs path={["dashboard", "grade"]} />
 
-      <PageHeader message="pages.grades.title" />
+      <PageHeader message="pages.grade.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

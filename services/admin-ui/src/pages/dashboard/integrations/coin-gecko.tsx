@@ -11,7 +11,7 @@ export const CoinGecko: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.integrations.coin-gecko.title" />
+            <FormattedMessage id="pages.dashboard.integrations.coin-gecko" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const CoinGecko: FC = () => {
             <Paid />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.coin-gecko.rates" />
+            <FormattedMessage id="pages.coin-gecko.rates" />
           </ListItemText>
         </ListItem>
       </List>

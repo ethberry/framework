@@ -11,7 +11,7 @@ export const Vesting: FC = () => {
         component="nav"
         subheader={
           <ListSubheader>
-            <FormattedMessage id="pages.dashboard.mechanics.vesting.title" />
+            <FormattedMessage id="pages.dashboard.mechanics.vesting" />
           </ListSubheader>
         }
       >
@@ -20,7 +20,7 @@ export const Vesting: FC = () => {
             <Savings />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.dashboard.mechanics.vesting.main" />
+            <FormattedMessage id="pages.vesting.title" />
           </ListItemText>
         </ListItem>
       </List>

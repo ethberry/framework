@@ -79,9 +79,9 @@ export const Erc998Template: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc998-templates"]} />
+      <Breadcrumbs path={["dashboard", "erc998.templates"]} />
 
-      <PageHeader message="pages.erc998-templates.title">
+      <PageHeader message="pages.erc998.templates.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
