@@ -8,6 +8,7 @@ import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 import { MarketplaceService } from "./marketplace.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { MarketplaceReportSearchDto } from "./dto";
+import { MarketplaceSupplySearchDto } from "./dto/supply";
 
 @ApiBearerAuth()
 @Controller("/marketplace/report")
@@ -24,6 +25,12 @@ export class MarketplaceController {
   @UseInterceptors(PaginationInterceptor)
   public chart(@Query() dto: MarketplaceReportSearchDto): Promise<any> {
     return this.marketplaceService.chart(dto);
+  }
+
+  @Get("/supply")
+  @UseInterceptors(PaginationInterceptor)
+  public rarity(@Query() dto: MarketplaceSupplySearchDto): Promise<any> {
+    return this.marketplaceService.supply(dto);
   }
 
   @Get("/export")

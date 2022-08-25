@@ -30,3 +30,4 @@ export * from "./tokens/erc1155/contract/deploy";
 export * from "./tokens/mysterybox/contract/deploy";
 
 export * from "./integrations/marketplace/search";
+export * from "./integrations/marketplace/supply";

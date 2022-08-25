@@ -3,11 +3,12 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, EntityManager, Repository } from "typeorm";
 import { parse } from "json2csv";
 
-import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
-
-import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { formatPrice } from "./marketplace.utils";
 import { ns } from "@framework/constants";
+import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
+import { TokenType } from "@framework/types";
+
+import { formatPrice } from "./marketplace.utils";
+import { TokenEntity } from "../../hierarchy/token/token.entity";
 
 @Injectable()
 export class MarketplaceService {
@@ -107,22 +108,53 @@ export class MarketplaceService {
     );
   }
 
+  public async supply(dto: IMarketplaceSupplySearchDto): Promise<any> {
+    const { attribute, templateIds = [], contractIds = [] } = dto;
+
+    // prettier-ignore
+    const queryString = `
+        SELECT
+            COUNT(token.id)::INTEGER AS count,
+            (token.attributes->>$3)::INTEGER as attribute
+        FROM
+            gemunion.token
+          LEFT JOIN
+            gemunion.template ON template.id = token.template_id
+          LEFT JOIN
+            gemunion.contract ON contract.id = template.contract_id
+        WHERE
+            (token.template_id = ANY($1) OR cardinality($1) = 0)
+          AND
+            (template.contract_id = ANY($2) OR cardinality($2) = 0)
+          AND
+            (token.attributes->>$3) is not null
+        GROUP BY
+            attribute
+        ORDER BY
+            attribute
+          DESC
+    `;
+
+    return Promise.all([this.entityManager.query(queryString, [templateIds, contractIds, attribute]), 0]);
+  }
+
   public async chart(dto: IMarketplaceReportSearchDto): Promise<any> {
     const { templateIds = [], contractIds = [], startTimestamp, endTimestamp } = dto;
 
+    // prettier-ignore
     const queryString = `
         SELECT 
             COUNT(token.id)::INTEGER AS count,
             date_trunc('day', token.created_at) as date
         FROM
             ${ns}.token
-        LEFT JOIN
+          LEFT JOIN 
             ${ns}.template ON template.id = token.template_id
         WHERE
-            (token.template_id = ANY ($1) OR cardinality($1) = 0)
-            AND
-            (template.contract_id = ANY ($2) OR cardinality($2) = 0)
-            AND
+            (token.template_id = ANY($1) OR cardinality($1) = 0)
+          AND
+            (template.contract_id = ANY($2) OR cardinality($2) = 0)
+          AND
             (token.created_at >= $3 AND token.created_at < $4)
         GROUP BY
             date

@@ -384,20 +384,20 @@
       "title": "Blockchain Settings"
     },
     "chain-link": {
-      "title": "ChainLink",
-      "fund": "Fund"
+      "fund": "Fund",
+      "title": "ChainLink"
     },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
     },
     "coin-gecko": {
-      "title": "CoinGecko",
-      "rates": "Rates"
+      "rates": "Rates",
+      "title": "CoinGecko"
     },
     "coin-market-cap": {
-      "title": "CoinMarketCap",
-      "rates": "Rates"
+      "rates": "Rates",
+      "title": "CoinMarketCap"
     },
     "craft": {
       "activate": "Activate rule",
@@ -425,6 +425,8 @@
         "coin-market-cap": "CoinMarketCap",
         "marketplace": {
           "chart": "Chart",
+          "grade": "Grade",
+          "rarity": "Rarity",
           "report": "Report",
           "title": "Marketplace"
         }
@@ -507,13 +509,23 @@
       "title": "Lottery"
     },
     "marketplace": {
-      "title": "Marketplace",
+      "chart": {
+        "title": "Chart"
+      },
+      "grade": {
+        "amount": "Amount",
+        "attribute": "Grade",
+        "title": "Grade"
+      },
+      "rarity": {
+        "amount": "Amount",
+        "attribute": "Rarity",
+        "title": "Rarity"
+      },
       "report": {
         "title": "Report"
       },
-      "chart": {
-        "title": "Chart"
-      }
+      "title": "Marketplace"
     },
     "mysterybox": {
       "boxes": {

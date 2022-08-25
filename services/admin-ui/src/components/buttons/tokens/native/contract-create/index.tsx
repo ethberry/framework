@@ -17,7 +17,7 @@ export const NativeContractCreateButton: FC<INativeContractCreateButtonProps> = 
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
 
-  const { fn } = useApiCall(async (api, values) => {
+  const { fn } = useApiCall((api, values) => {
     return api.fetchJson({
       url: "/native-contracts",
       method: "POST",

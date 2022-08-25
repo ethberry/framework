@@ -19,7 +19,7 @@ export const ContractInput: FC = () => {
       name="contractId"
       controller="contracts"
       data={{
-        contractType: [tokenType],
+        contractType: tokenType ? [tokenType] : [],
         contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       }}
       onChange={handleChange}

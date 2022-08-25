@@ -8,6 +8,8 @@ import { CoinGecko } from "./coin-gecko";
 import { CoinMarketCap } from "./coin-market-cap";
 import { MarketplaceReport } from "./marketplace/report";
 import { MarketplaceChart } from "./marketplace/chart";
+import { MarketplaceGrade } from "./marketplace/grade";
+import { MarketplaceRarity } from "./marketplace/rarity";
 
 export const integrationsRoutes: Array<RouteObject> = [
   {
@@ -32,6 +34,8 @@ export const integrationsRoutes: Array<RouteObject> = [
       { index: true, element: <Navigate to="/marketplace/report/search" /> },
       { path: "/marketplace/report/search", element: <MarketplaceReport /> },
       { path: "/marketplace/report/chart", element: <MarketplaceChart /> },
+      { path: "/marketplace/report/rarity", element: <MarketplaceRarity /> },
+      { path: "/marketplace/report/grade", element: <MarketplaceGrade /> },
     ],
   },
 ];

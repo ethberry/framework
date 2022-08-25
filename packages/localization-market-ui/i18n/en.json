@@ -8,7 +8,7 @@
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
-        "profile ": "Profile"
+        "profile": "Profile"
       },
       "theme": {
         "switch": "Switch Theme"
