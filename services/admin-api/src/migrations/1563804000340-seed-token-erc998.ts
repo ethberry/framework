@@ -52,8 +52,21 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         })}',
         100,
         '3',
-        'BURNED',
+        'MINTED',
         406003,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        406004,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "406001",
+          [TokenAttributes.GRADE]: "10",
+          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+        })}',
+        100,
+        '3',
+        'BURNED',
+        406001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -65,7 +78,7 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         })}',
         100,
         '3',
-        'BURNED',
+        'MINTED',
         411001,
         '${currentDateTime}',
         '${currentDateTime}'

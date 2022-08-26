@@ -126,6 +126,19 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        306004,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "306001",
+          [TokenAttributes.GRADE]: "10",
+          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
+        })}',
+        100,
+        '3',
+        'BURNED',
+        306001,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         307001,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "307001",

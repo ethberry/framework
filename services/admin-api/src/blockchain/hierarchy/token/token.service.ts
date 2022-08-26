@@ -55,6 +55,17 @@ export class TokenService {
       }
     }
 
+    const grade = attributes[TokenAttributes.GRADE];
+    if (grade) {
+      if (grade.length === 1) {
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.GRADE}' = :grade`, {
+          grade: grade[0],
+        });
+      } else {
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.GRADE}' IN(:...grade)`, { grade });
+      }
+    }
+
     if (tokenStatus) {
       if (tokenStatus.length === 1) {
         queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });

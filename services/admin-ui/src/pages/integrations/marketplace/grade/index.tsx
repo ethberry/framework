@@ -1,13 +1,25 @@
 import { FC, useEffect, useState } from "react";
-import { Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Link,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { useLocation, useNavigate } from "react-router";
+import { Link as RouterLink } from "react-router-dom";
 import { stringify } from "qs";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
-import { TokenAttributes } from "@framework/types";
+import { TokenAttributes, TokenStatus, TokenType } from "@framework/types";
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { MarketplaceGradeSearchForm } from "./form";
@@ -16,6 +28,8 @@ export const MarketplaceGrade: FC = () => {
   const [isFiltersOpen, setIsFilterOpen] = useState(false);
   const [search, setSearch] = useState<IMarketplaceSupplySearchDto>({
     attribute: TokenAttributes.GRADE,
+    tokenStatus: TokenStatus.MINTED,
+    tokenType: TokenType.ERC721,
     contractIds: [] as Array<number>,
     templateIds: [] as Array<number>,
   });
@@ -85,7 +99,19 @@ export const MarketplaceGrade: FC = () => {
                 const row = rows.find(e => e.attribute === i + 1);
                 return (
                   <TableRow key={i}>
-                    <TableCell align="left">{i + 1}</TableCell>
+                    <TableCell align="left">
+                      <Link
+                        component={RouterLink}
+                        to={`/${search.tokenType.toLowerCase()}-tokens?${stringify({
+                          attributes: { [TokenAttributes.GRADE]: [i + 1] },
+                          tokenStatus: [search.tokenStatus],
+                          contractIds: search.contractIds,
+                          templateIds: search.templateIds,
+                        })}`}
+                      >
+                        {i + 1}
+                      </Link>
+                    </TableCell>
                     <TableCell align="right">{row?.count ?? 0}</TableCell>
                   </TableRow>
                 );

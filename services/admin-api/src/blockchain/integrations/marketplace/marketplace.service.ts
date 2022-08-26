@@ -109,13 +109,13 @@ export class MarketplaceService {
   }
 
   public async supply(dto: IMarketplaceSupplySearchDto): Promise<any> {
-    const { attribute, templateIds = [], contractIds = [] } = dto;
+    const { attribute, tokenType, tokenStatus, templateIds = [], contractIds = [] } = dto;
 
     // prettier-ignore
     const queryString = `
-        SELECT
+        SELECT 
             COUNT(token.id)::INTEGER AS count,
-            (token.attributes->>$3)::INTEGER as attribute
+            (token.attributes->>$1)::INTEGER as attribute
         FROM
             gemunion.token
           LEFT JOIN
@@ -123,11 +123,15 @@ export class MarketplaceService {
           LEFT JOIN
             gemunion.contract ON contract.id = template.contract_id
         WHERE
-            (token.template_id = ANY($1) OR cardinality($1) = 0)
+            (token.attributes->>$1) is not null
           AND
-            (template.contract_id = ANY($2) OR cardinality($2) = 0)
+            contract.contract_type = $2
           AND
-            (token.attributes->>$3) is not null
+            token.token_status = $3
+          AND
+            (token.template_id = ANY($4) OR cardinality ($4) = 0)
+          AND
+            (template.contract_id = ANY($5) OR cardinality ($5) = 0)
         GROUP BY
             attribute
         ORDER BY
@@ -135,7 +139,10 @@ export class MarketplaceService {
           DESC
     `;
 
-    return Promise.all([this.entityManager.query(queryString, [templateIds, contractIds, attribute]), 0]);
+    return Promise.all([
+      this.entityManager.query(queryString, [attribute, tokenType, tokenStatus, templateIds, contractIds]),
+      0,
+    ]);
   }
 
   public async chart(dto: IMarketplaceReportSearchDto): Promise<any> {
@@ -143,19 +150,23 @@ export class MarketplaceService {
 
     // prettier-ignore
     const queryString = `
-        SELECT 
-            COUNT(token.id)::INTEGER AS count,
+        SELECT COUNT(token.id) ::INTEGER AS count,
             date_trunc('day', token.created_at) as date
         FROM
             ${ns}.token
-          LEFT JOIN 
-            ${ns}.template ON template.id = token.template_id
+            LEFT JOIN
+            ${ns}.template
+        ON template.id = token.template_id
         WHERE
-            (token.template_id = ANY($1) OR cardinality($1) = 0)
+            (token.template_id = ANY ($1)
+           OR cardinality ($1) = 0)
           AND
-            (template.contract_id = ANY($2) OR cardinality($2) = 0)
+            (template.contract_id = ANY ($2)
+           OR cardinality ($2) = 0)
           AND
-            (token.created_at >= $3 AND token.created_at < $4)
+            (token.created_at >= $3
+          AND token.created_at
+            < $4)
         GROUP BY
             date
         ORDER BY

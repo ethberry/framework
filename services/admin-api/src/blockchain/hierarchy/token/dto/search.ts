@@ -24,6 +24,18 @@ export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   @Transform(({ value }) => value as Array<TokenRarity>)
   @IsEnum(TokenRarity, { each: true, message: "badInput" })
   public [TokenAttributes.RARITY]: Array<TokenRarity>;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public [TokenAttributes.GRADE]: Array<number>;
 }
 
 export class TokenSearchDto extends SearchDto implements ITokenSearchDto {

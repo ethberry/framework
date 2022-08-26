@@ -1,12 +1,26 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
-import { Type } from "class-transformer";
+import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
-import { TokenAttributes } from "@framework/types";
+import { TokenAttributes, TokenStatus, TokenType } from "@framework/types";
 
 export class MarketplaceSupplySearchDto extends SearchDto implements IMarketplaceSupplySearchDto {
+  @ApiProperty({
+    enum: TokenStatus,
+  })
+  @Transform(({ value }) => value as TokenStatus)
+  @IsEnum(TokenStatus, { message: "badInput" })
+  public tokenStatus: TokenStatus;
+
+  @ApiProperty({
+    enum: TokenType,
+  })
+  @Transform(({ value }) => value as TokenType)
+  @IsEnum(TokenType, { message: "badInput" })
+  public tokenType: TokenType;
+
   @ApiProperty({
     enum: TokenAttributes,
   })
