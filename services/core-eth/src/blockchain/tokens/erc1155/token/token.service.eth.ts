@@ -31,38 +31,57 @@ export class Erc1155TokenServiceEth {
   ) {}
 
   public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingle>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
     const {
-      args: { from, to, id, value },
+      args: { from, to, id /* 1155 template_id */, value },
     } = event;
     const { address } = context;
 
-    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+    const templateEntity = await this.templateService.findOne({ id: ~~id }, { relations: { contract: true } });
 
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
     }
 
-    if (from === constants.AddressZero || from.toLowerCase() === address.toLowerCase()) {
-      const templateEntity = await this.templateService.findOne({ id: ~~id });
+    const tokenEntity = await this.tokenService.findOne({ templateId: templateEntity.id });
 
-      if (!templateEntity) {
-        throw new NotFoundException("templateNotFound");
-      }
-
-      await this.tokenService.create({
-        tokenId: id,
-        attributes: "{}",
-        royalty: contractEntity.royalty,
-        templateId: templateEntity.id,
-      });
-
-      // todo single balance management
-      // await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), value);
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context);
-
-    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), id, value);
+    await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenEntity.tokenId, value);
+    // if (from === constants.AddressZero || from.toLowerCase() === address.toLowerCase()) {
+    //   const templateEntity = await this.templateService.findOne({ id: ~~id }, { relations: { contract: true } });
+    //
+    //   if (!templateEntity) {
+    //     throw new NotFoundException("templateNotFound");
+    //   }
+    //
+    //   const tokenEntity = await this.tokenService.findOne({ templateId: templateEntity.id });
+    //
+    //   if (!tokenEntity) {
+    //     throw new NotFoundException("tokenNotFound");
+    //   }
+    //
+    //   await this.updateBalances(
+    //     from.toLowerCase(),
+    //     to.toLowerCase(),
+    //     address.toLowerCase(),
+    //     tokenEntity.tokenId,
+    //     value,
+    //   );
+    //
+    //   // await this.tokenService.create({
+    //   //   tokenId: id,
+    //   //   attributes: "{}",
+    //   //   royalty: templateEntity.contract.royalty,
+    //   //   templateId: templateEntity.id,
+    //   // });
+    //
+    //   // todo single balance management
+    //   // await this.balanceService.increment(tokenEntity.id, from.toLowerCase(), value);
+    // }
+    // await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), id, value);
   }
 
   public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatch>, context: Log): Promise<void> {
@@ -124,9 +143,6 @@ export class Erc1155TokenServiceEth {
       eventData: args,
     });
 
-    await this.contractService.updateLastBlockByAddr(
-      address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

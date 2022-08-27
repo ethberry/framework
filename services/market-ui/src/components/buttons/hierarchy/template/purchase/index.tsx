@@ -24,6 +24,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
   const metaFnWithSign = useServerSignature(
     (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+
       return contract.purchase(
         {
           nonce: utils.arrayify(sign.nonce),
@@ -40,7 +41,11 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
         template.price?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
+          // pass templateId instead of tokenId = 0
+          tokenId:
+            component.template!.tokens![0].tokenId === "0"
+              ? component.template!.tokens![0].templateId
+              : component.template!.tokens![0].tokenId,
           amount: component.amount,
         })),
         process.env.ACCOUNT,

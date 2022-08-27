@@ -14,6 +14,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
+import { AssetModule } from "../../../mechanics/asset/asset.module";
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { BalanceModule } from "../../../hierarchy/balance/balance.module";
     BalanceModule,
     ContractModule,
     TokenModule,
+    AssetModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
   providers: [Logger, ethersRpcProvider, Erc721TokenServiceEth],

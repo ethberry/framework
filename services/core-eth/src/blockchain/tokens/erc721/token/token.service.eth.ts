@@ -14,6 +14,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
+import { AssetService } from "../../../mechanics/asset/asset.service";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -27,6 +28,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly tokenService: TokenService,
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
+    protected readonly assetService: AssetService,
     protected readonly contractHistoryService: ContractHistoryService,
   ) {
     super(loggerService, contractService, tokenService, contractHistoryService);
@@ -60,6 +62,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         templateId: templateEntity.id,
       });
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
     }
 
     const erc721TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());

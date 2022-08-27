@@ -26,6 +26,7 @@ import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticke
 import { LotteryHistoryEntity } from "./blockchain/mechanics/lottery/history/history.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
+import { AssetComponentHistoryEntity } from "./blockchain/mechanics/asset/asset-component-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -54,6 +55,7 @@ const config: PostgresConnectionOptions = {
     CompositionEntity,
     OwnershipEntity,
     AssetComponentEntity,
+    AssetComponentHistoryEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
     LotteryHistoryEntity,

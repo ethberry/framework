@@ -20,7 +20,6 @@ export class ExchangeControllerEth {
   constructor(private readonly exchangeServiceEth: ExchangeServiceEth) {}
 
   @EventPattern([
-    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase },
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft },
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade },
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox },
@@ -40,5 +39,14 @@ export class ExchangeControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.claim(event, context);
+  }
+
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase }])
+  public purchase(
+    @Payload()
+    event: ILogEvent<IExchangePurchase>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.exchangeServiceEth.purchase(event, context);
   }
 }

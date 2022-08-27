@@ -9,6 +9,9 @@ import { ExchangeLogModule } from "./log/exchange-log.module";
 import { ExchangeHistoryModule } from "./history/exchange-history.module";
 import { ClaimModule } from "../claim/claim.module";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
+import { AssetModule } from "../asset/asset.module";
+import { TokenModule } from "../../hierarchy/token/token.module";
+import { TemplateModule } from "../../hierarchy/template/template.module";
 
 @Module({
   imports: [
@@ -16,6 +19,9 @@ import { ContractModule } from "../../hierarchy/contract/contract.module";
     ExchangeHistoryModule,
     ExchangeLogModule,
     ClaimModule,
+    TemplateModule,
+    TokenModule,
+    AssetModule,
     TypeOrmModule.forFeature([ExchangeEntity]),
   ],
   providers: [Logger, ExchangeService, ExchangeServiceEth],

@@ -45,7 +45,7 @@ export const Erc1155Token: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <FormattedMessage
-              id="pages.erc1155-token.price"
+              id="pages.erc1155.token.price"
               values={{ amount: formatPrice(selected.template?.price) }}
             />
             <TokenSellButton token={selected} />

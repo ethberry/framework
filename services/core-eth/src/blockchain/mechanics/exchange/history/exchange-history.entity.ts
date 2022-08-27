@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 import { ns } from "@framework/constants";
 import { ExchangeEventType, IExchangeHistory, TExchangeEventData } from "@framework/types";
@@ -9,6 +9,7 @@ import { ClaimEntity } from "../../claim/claim.entity";
 import { CraftEntity } from "../../craft/craft.entity";
 import { GradeEntity } from "../../grade/grade.entity";
 import { MysteryboxBoxEntity } from "../../mysterybox/mysterybox.entity";
+import { AssetComponentHistoryEntity } from "../../asset/asset-component-history.entity";
 
 @Entity({ schema: ns, name: "exchange_history" })
 export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchangeHistory {
@@ -65,4 +66,7 @@ export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchange
   @JoinColumn()
   @ManyToOne(_type => MysteryboxBoxEntity)
   public mysterybox?: MysteryboxBoxEntity;
+
+  @OneToMany(_type => AssetComponentHistoryEntity, assets => assets.history)
+  public assets: Array<AssetComponentHistoryEntity>;
 }

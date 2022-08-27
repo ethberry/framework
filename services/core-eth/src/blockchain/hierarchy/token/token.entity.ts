@@ -41,7 +41,7 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   public balance: Array<BalanceEntity>;
 
   @OneToOne(_type => OwnershipEntity, ownership => ownership.parent)
-  public parent: OwnershipEntity;
+  public parent: Array<OwnershipEntity>;
 
   @OneToMany(_type => OwnershipEntity, ownership => ownership.child)
   public children: Array<OwnershipEntity>;

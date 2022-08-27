@@ -1,11 +1,13 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, Repository } from "typeorm";
+import { DeepPartial, Repository, FindOptionsWhere, FindOneOptions, IsNull } from "typeorm";
 
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
-import { IAssetDto, TokenType } from "@framework/types";
+import { ExchangeType, IAssetDto, TokenType } from "@framework/types";
+import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
+import { ExchangeHistoryService } from "../exchange/history/exchange-history.service";
 
 @Injectable()
 export class AssetService {
@@ -14,8 +16,11 @@ export class AssetService {
     private readonly assetEntityRepository: Repository<AssetEntity>,
     @InjectRepository(AssetComponentEntity)
     private readonly assetComponentEntityRepository: Repository<AssetComponentEntity>,
+    @InjectRepository(AssetComponentHistoryEntity)
+    private readonly assetComponentHistoryEntityRepository: Repository<AssetComponentHistoryEntity>,
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
+    private readonly exchangeHistoryService: ExchangeHistoryService,
   ) {}
 
   public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
@@ -78,5 +83,33 @@ export class AssetService {
     }
 
     return asset.save();
+  }
+
+  public async createAssetHistory(dto: DeepPartial<AssetComponentHistoryEntity>): Promise<AssetComponentHistoryEntity> {
+    return this.assetComponentHistoryEntityRepository.create(dto).save();
+  }
+
+  public async updateAssetHistory(transactionHash: string, tokenId: number): Promise<void> {
+    const queryBuilder = this.assetComponentHistoryEntityRepository.createQueryBuilder("assets");
+    queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("assets.history", "history");
+    queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull() });
+    queryBuilder.andWhere("history.transactionHash = :transactionHash", {
+      transactionHash,
+    });
+
+    const assetHistoryEntity = await queryBuilder.getOne();
+
+    if (assetHistoryEntity) {
+      Object.assign(assetHistoryEntity, { tokenId });
+      await assetHistoryEntity.save();
+    }
+  }
+
+  public findOneComponent(
+    where: FindOptionsWhere<AssetComponentEntity>,
+    options?: FindOneOptions<AssetComponentEntity>,
+  ): Promise<AssetComponentEntity | null> {
+    return this.assetComponentEntityRepository.findOne({ where, ...options });
   }
 }

@@ -37,7 +37,7 @@ export class Erc1155TemplateController {
 
   @Post("/")
   public create(@Body() dto: TemplateCreateDto): Promise<TemplateEntity> {
-    return this.erc1155TemplateService.createTemplate(dto);
+    return this.erc1155TemplateService.create(dto);
   }
 
   @Put("/:id")

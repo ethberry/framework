@@ -161,6 +161,7 @@ import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-c
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
 import { CreateOwnershipAt1658980520100 } from "./migrations/1658980520100-create-ownership";
+import { CreateAssetComponentHistory1657846609000 } from "./migrations/1657846609000-create-asset-component-history";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -267,6 +268,7 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsErc998At1563804001240,
     SeedAssetComponentsErc1155At1563804001250,
     SeedAssetComponentsMysteryboxAt1563804001260,
+    CreateAssetComponentHistory1657846609000,
 
     CreateContractHistory1563804040330,
     CreateVesting1563804010210,

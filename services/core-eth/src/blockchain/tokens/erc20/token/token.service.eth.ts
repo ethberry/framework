@@ -28,11 +28,11 @@ export class Erc20TokenServiceEth {
   ) {}
 
   public async transfer(event: ILogEvent<IErc20TokenTransfer>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+
     const { args } = event;
     const { from, to, value } = args;
     const { address } = context;
-
-    await this.updateHistory(event, context);
 
     const tokenEntity = await this.tokenService.getToken("0", address.toLowerCase());
 

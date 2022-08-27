@@ -5,9 +5,15 @@ import { AssetService } from "./asset.service";
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateModule } from "../../hierarchy/template/template.module";
+import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
+import { ExchangeHistoryModule } from "../exchange/history/exchange-history.module";
 
 @Module({
-  imports: [forwardRef(() => TemplateModule), TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity])],
+  imports: [
+    ExchangeHistoryModule,
+    forwardRef(() => TemplateModule),
+    TypeOrmModule.forFeature([AssetEntity, AssetComponentEntity, AssetComponentHistoryEntity]),
+  ],
   providers: [AssetService],
   exports: [AssetService],
 })

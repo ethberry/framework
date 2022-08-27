@@ -29,23 +29,41 @@ export class Erc1155TemplateService extends TemplateService {
 
   public async getMaxTokenIdForTemplate(templateId: number): Promise<number> {
     const queryString = `
-      select
-        coalesce(max(token_id::integer), 0) as "tokenId"
-      from
-        ${ns}.token
-      where
-       template_id = $1
+        select coalesce(max(token_id::integer), 0) as "tokenId"
+        from ${ns}.token
+        where template_id = $1
     `;
 
     const result: Array<{ tokenId: number }> = await this.templateEntityRepository.query(queryString, [templateId]);
+    return result[0].tokenId;
+  }
 
+  public async getMaxTokenIdForContract(contractId: number): Promise<number> {
+    const queryString = `
+        select coalesce(max(token_token_id::integer), 0) as "tokenId"
+        from (SELECT "token"."token_id" AS "token_token_id"
+              FROM ${ns}."token" "token"
+                       LEFT JOIN ${ns}."template" "template" ON "template"."id" = "token"."template_id"
+                       LEFT JOIN ${ns}."contract" "contract" ON "contract"."id" = "template"."contract_id"
+              WHERE contract_id = $1) AS tokens
+    `;
+    // const queryString = `
+    //   select
+    //     coalesce(max(token_id::integer), 0) as "tokenId"
+    //   from
+    //     ${ns}.token
+    //   where
+    //    template_id = $1
+    // `;
+
+    const result: Array<{ tokenId: number }> = await this.templateEntityRepository.query(queryString, [contractId]);
     return result[0].tokenId;
   }
 
   public async create(dto: ITemplateCreateDto): Promise<TemplateEntity> {
-    const templateEntity = await super.create(dto);
-
-    const maxTokenId = await this.getMaxTokenIdForTemplate(templateEntity.id);
+    const templateEntity = await super.createTemplate(dto);
+    // const maxTokenId = await this.getMaxTokenIdForTemplate(templateEntity.id);
+    const maxTokenId = await this.getMaxTokenIdForContract(templateEntity.contractId);
 
     await this.tokenService.create({
       tokenId: (maxTokenId + 1).toString(),

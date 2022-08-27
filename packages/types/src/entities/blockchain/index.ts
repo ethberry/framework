@@ -9,6 +9,7 @@ export * from "./contract-manager-history";
 
 export * from "./mechanics/asset";
 export * from "./mechanics/asset-component";
+export * from "./mechanics/asset-component-history";
 export * from "./mechanics/marketplace-history";
 export * from "./mechanics/exchange-history";
 export * from "./mechanics/claim/claim";

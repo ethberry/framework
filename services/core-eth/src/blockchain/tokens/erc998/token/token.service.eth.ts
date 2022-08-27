@@ -27,6 +27,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { OwnershipService } from "../ownership/ownership.service";
 import { Erc998CompositionService } from "../composition/composition.service";
+import { AssetService } from "../../../mechanics/asset/asset.service";
 
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
@@ -41,6 +42,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly contractHistoryService: ContractHistoryService,
     protected readonly contractService: ContractService,
     protected readonly ownershipService: OwnershipService,
+    protected readonly assetService: AssetService,
     protected readonly erc998CompositionService: Erc998CompositionService,
   ) {
     super(loggerService, contractService, tokenService, contractHistoryService);
@@ -76,6 +78,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       });
 
       await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), "1");
+      await this.assetService.updateAssetHistory(context.transactionHash, tokenEntity.id);
     }
 
     const erc998TokenEntity = await this.tokenService.getToken(tokenId, address.toLowerCase());
