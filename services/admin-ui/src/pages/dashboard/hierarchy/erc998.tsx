@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { AutoAwesomeMotion, Collections, Storage } from "@mui/icons-material";
+import { AutoAwesomeMotion, Collections, Extension, Storage } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -41,7 +41,7 @@ export const Erc998Section: FC = () => {
         </ListItem>
         <ListItem button component={RouterLink} to="/erc998-composition">
           <ListItemIcon>
-            <Storage />
+            <Extension />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.erc998.composition.title" />

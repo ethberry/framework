@@ -3,6 +3,7 @@ import type { RouteObject } from "react-router-dom";
 import { ReferralLink } from "./link";
 import { ReferralLeaderboard } from "./leaderboard";
 import { ReferralReport } from "./report";
+import { ReferralChart } from "./chart";
 
 export const referralRoutes: Array<RouteObject> = [
   {
@@ -15,8 +16,12 @@ export const referralRoutes: Array<RouteObject> = [
       },
       { path: "/referral/leaderboard", element: <ReferralLeaderboard /> },
       {
-        path: "/referral/report",
+        path: "/referral/report/search",
         element: <ReferralReport />,
+      },
+      {
+        path: "/referral/report/chart",
+        element: <ReferralChart />,
       },
     ],
   },

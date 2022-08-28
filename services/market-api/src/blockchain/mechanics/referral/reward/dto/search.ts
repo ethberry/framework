@@ -5,7 +5,7 @@ import { SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import { IReferralReportSearchDto } from "@framework/types";
 
-export class MarketplaceReportSearchDto extends SearchDto implements IReferralReportSearchDto {
+export class ReferralReportSearchDto extends SearchDto implements IReferralReportSearchDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })

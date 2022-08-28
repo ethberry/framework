@@ -129,9 +129,9 @@ export class MarketplaceService {
           AND
             token.token_status = $3
           AND
-            (token.template_id = ANY($4) OR cardinality ($4) = 0)
+            (token.template_id = ANY($4) OR cardinality($4) = 0)
           AND
-            (template.contract_id = ANY($5) OR cardinality ($5) = 0)
+            (template.contract_id = ANY($5) OR cardinality($5) = 0)
         GROUP BY
             attribute
         ORDER BY
@@ -150,23 +150,19 @@ export class MarketplaceService {
 
     // prettier-ignore
     const queryString = `
-        SELECT COUNT(token.id) ::INTEGER AS count,
+        SELECT 
+            COUNT(token.id)::INTEGER AS count,
             date_trunc('day', token.created_at) as date
         FROM
             ${ns}.token
-            LEFT JOIN
-            ${ns}.template
-        ON template.id = token.template_id
+          LEFT JOIN 
+            ${ns}.template ON template.id = token.template_id
         WHERE
-            (token.template_id = ANY ($1)
-           OR cardinality ($1) = 0)
+            (token.template_id = ANY($1) OR cardinality($1) = 0)
           AND
-            (template.contract_id = ANY ($2)
-           OR cardinality ($2) = 0)
+            (template.contract_id = ANY($2) OR cardinality($2) = 0)
           AND
-            (token.created_at >= $3
-          AND token.created_at
-            < $4)
+            (token.created_at >= $3 AND token.created_at < $4)
         GROUP BY
             date
         ORDER BY

@@ -7,7 +7,7 @@ import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { ReferralReportService } from "./report.service";
 import { UserEntity } from "../../../../user/user.entity";
-import { MarketplaceReportSearchDto } from "../reward/dto";
+import { ReferralReportSearchDto } from "../reward/dto";
 import { ReferralRewardEntity } from "../reward/reward.entity";
 
 @ApiBearerAuth()
@@ -18,15 +18,21 @@ export class ReferralReportController {
   @Get("/search")
   @UseInterceptors(PaginationInterceptor)
   public search(
-    @Query() dto: MarketplaceReportSearchDto,
+    @Query() dto: ReferralReportSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<ReferralRewardEntity>, number]> {
     return this.referralReportService.search(dto, userEntity);
   }
 
+  @Get("/chart")
+  @UseInterceptors(PaginationInterceptor)
+  public chart(@Query() dto: ReferralReportSearchDto): Promise<any> {
+    return this.referralReportService.chart(dto);
+  }
+
   @Get("/export")
   public async export(
-    @Query() query: MarketplaceReportSearchDto,
+    @Query() query: ReferralReportSearchDto,
     @User() userEntity: UserEntity,
     @Res() res: Response,
   ): Promise<void> {

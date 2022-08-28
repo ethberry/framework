@@ -458,6 +458,9 @@
       "report": {
         "title": "Report"
       },
+      "chart": {
+        "title": "Chart"
+      },
       "title": "Referral program"
     },
     "staking": {
