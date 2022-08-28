@@ -1,4 +1,5 @@
 import type { RouteObject } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { ReferralLink } from "./link";
 import { ReferralLeaderboard } from "./leaderboard";
@@ -16,12 +17,12 @@ export const referralRoutes: Array<RouteObject> = [
       },
       { path: "/referral/leaderboard", element: <ReferralLeaderboard /> },
       {
-        path: "/referral/report/search",
-        element: <ReferralReport />,
-      },
-      {
-        path: "/referral/report/chart",
-        element: <ReferralChart />,
+        path: "/referral/report",
+        children: [
+          { index: true, element: <Navigate to="/referral/report/search" /> },
+          { path: "/referral/report/search", element: <ReferralReport /> },
+          { path: "/referral/report/chart", element: <ReferralChart /> },
+        ],
       },
     ],
   },

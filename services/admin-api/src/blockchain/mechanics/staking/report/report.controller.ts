@@ -8,6 +8,7 @@ import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 import { StakingReportService } from "./report.service";
 import { StakingStakesEntity } from "../stakes/stakes.entity";
 import { StakingReportSearchDto } from "./dto";
+import { StakingReportChartDto } from "./dto/chart";
 
 @ApiBearerAuth()
 @Controller("/staking/report")
@@ -18,6 +19,12 @@ export class StakingStakesController {
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() dto: StakingReportSearchDto): Promise<[Array<StakingStakesEntity>, number]> {
     return this.stakingReportService.search(dto);
+  }
+
+  @Get("/chart")
+  @UseInterceptors(PaginationInterceptor)
+  public chart(@Query() dto: StakingReportChartDto): Promise<any> {
+    return this.stakingReportService.chart(dto);
   }
 
   @Get("/export")

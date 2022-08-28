@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -18,8 +18,19 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
   @IsEnum(TokenType, { each: true, message: "badInput" })
   public tokenType: Array<TokenType>;
 
-  public contractId: Array<number>;
-  public templateId: Array<number>;
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractIds: Array<number> = [];
+
+  public templateIds: Array<number>;
   public maxPrice: string;
   public minPrice: string;
 }

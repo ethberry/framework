@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
-import { IAssetDto } from "@framework/types";
+import type { IAssetDto } from "@framework/types";
 
 import { ItemComponentDto } from "./item-components";
 

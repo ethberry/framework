@@ -563,6 +563,9 @@
       "title": "Settings"
     },
     "staking": {
+      "chart": {
+        "title": "Chart"
+      },
       "report": {
         "title": "Report"
       },

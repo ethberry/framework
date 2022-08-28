@@ -4,8 +4,8 @@ import { StakeStatus, StakingStatus, TokenType } from "../../../../entities";
 
 export interface IStakingItemSearchDto {
   tokenType: Array<TokenType>;
-  contractId: Array<number>;
-  templateId: Array<number>;
+  contractIds: Array<number>;
+  templateIds: Array<number>;
   maxPrice: string;
   minPrice: string;
 }

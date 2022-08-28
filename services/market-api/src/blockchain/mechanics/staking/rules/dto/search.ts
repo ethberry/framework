@@ -18,8 +18,8 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
   @IsEnum(TokenType, { each: true, message: "badInput" })
   public tokenType: Array<TokenType>;
 
-  public contractId: Array<number>;
-  public templateId: Array<number>;
+  public contractIds: Array<number>;
+  public templateIds: Array<number>;
   public maxPrice: string;
   public minPrice: string;
 }
