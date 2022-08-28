@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { BarChart, Casino, ConfirmationNumber } from "@mui/icons-material";
+import { Casino, ConfirmationNumber, EmojiEvents } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -33,7 +33,7 @@ export const Lottery: FC = () => {
         </ListItem>
         <ListItem button component={RouterLink} to="/lottery/leaderboard">
           <ListItemIcon>
-            <BarChart />
+            <EmojiEvents />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.lottery.leaderboard.title" />

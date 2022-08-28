@@ -87,6 +87,66 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        305004,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '4',
+        'MINTED',
+        305004,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305005,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '5',
+        'MINTED',
+        305005,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305006,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '6',
+        'MINTED',
+        305006,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305007,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '7',
+        'MINTED',
+        305007,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        305008,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '8',
+        'MINTED',
+        305008,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         306001,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "306001",

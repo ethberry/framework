@@ -144,6 +144,8 @@ import { CreateExchangeHistory1657846608010 } from "./migrations/1657846608010-c
 
 import { CreateCompositionAt1658980520000 } from "./migrations/1658980520000-create-composition";
 import { SeedCompositionAt1658980520010 } from "./migrations/1658980520010-seed-composition";
+import { CreateOwnershipAt1658980520100 } from "./migrations/1658980520100-create-ownership";
+import { SeedOwnershipAt1658980520110 } from "./migrations/1658980520110-seed-ownership";
 
 import { CreateDropAt1658980521000 } from "./migrations/1658980521000-create-drop";
 import { SeedDropErc721At1658980521030 } from "./migrations/1658980521030-seed-drop-erc721";
@@ -160,7 +162,6 @@ import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed
 import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
-import { CreateOwnershipAt1658980520100 } from "./migrations/1658980520100-create-ownership";
 import { CreateAssetComponentHistory1657846609000 } from "./migrations/1657846609000-create-asset-component-history";
 
 // Check typeORM documentation for more information.
@@ -325,8 +326,8 @@ const config: PostgresConnectionOptions = {
 
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,
-
     CreateOwnershipAt1658980520100,
+    SeedOwnershipAt1658980520110,
 
     CreateDropAt1658980521000,
     SeedDropErc721At1658980521030,

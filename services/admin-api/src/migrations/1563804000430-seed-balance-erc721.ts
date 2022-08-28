@@ -6,6 +6,7 @@ import { wallet } from "@gemunion/constants";
 export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (
@@ -33,25 +34,55 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${wallet}',
+        '${erc998ContractRandomAddress}',
         1,
         305001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${wallet}',
+        '${erc998ContractRandomAddress}',
         1,
         305002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${wallet}',
+        '${erc998ContractRandomAddress}',
         1,
         305003,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
+        1,
+        305004,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        305005,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        305006,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        305007,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        305008,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractRandomAddress}',
         1,
         306001,
         '${currentDateTime}',

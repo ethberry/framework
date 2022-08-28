@@ -1,11 +1,11 @@
 import { ChangeEvent, FC, Fragment } from "react";
 import { Grid, Paper, Typography } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ITemplate, IToken, ContractFeatures } from "@framework/types";
+import { ContractFeatures, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -30,6 +30,7 @@ export const Erc998Token: FC = () => {
     },
   });
 
+  const { formatMessage } = useIntl();
   const classes = useStyles();
 
   const metaFn = useMetamask((data: IToken, web3Context: Web3ContextType) => {
@@ -69,30 +70,59 @@ export const Erc998Token: FC = () => {
           <br />
           <br />
           <Typography variant="h4">Composed tokens</Typography>
-          {selected.template?.contract?.children?.map(child => (
-            <FormWrapper
-              key={child.id}
-              initialValues={{}}
-              onSubmit={Promise.resolve}
-              showButtons={false}
-              showPrompt={false}
-              testId="???"
-            >
-              <Typography variant="h5">{child.child?.title}</Typography>
-              {new Array(child.amount).fill(null).map((e, i) => (
-                <EntityInput
-                  key={i}
-                  name="tokenId"
-                  controller="tokens"
-                  data={{
-                    contractIds: [child.child?.id],
-                  }}
-                  getTitle={(token: IToken) => token.template!.title}
-                  onChange={handleChange}
-                />
-              ))}
-            </FormWrapper>
-          ))}
+          {selected.template?.contract?.children?.map(child => {
+            const filtered = selected.children!.filter(
+              ownership => ownership.child?.template?.contractId === child.childId,
+            );
+
+            return (
+              <FormWrapper
+                key={child.id}
+                initialValues={filtered.reduce(
+                  (memo, current, i) => {
+                    memo.tokenId[i] = current.childId;
+                    return memo;
+                  },
+                  { tokenId: [] as Array<number> },
+                )}
+                onSubmit={Promise.resolve}
+                showButtons={false}
+                showPrompt={false}
+                testId="???"
+              >
+                <Typography variant="h5">{child.child?.title}</Typography>
+                {new Array(filtered.length).fill(null).map((e, i) => (
+                  <EntityInput
+                    key={i}
+                    name={`tokenId[${i}]`}
+                    controller="tokens"
+                    data={{
+                      account: selected.template?.contract?.address,
+                      contractIds: [child.child?.id],
+                    }}
+                    label={formatMessage({ id: "form.labels.tokenId" })}
+                    placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
+                    getTitle={(token: IToken) => token.template!.title}
+                    onChange={handleChange}
+                  />
+                ))}
+                {new Array(child.amount - filtered.length).fill(null).map((e, i) => (
+                  <EntityInput
+                    key={i}
+                    name={`tokenId[${i + filtered.length}]`}
+                    controller="tokens"
+                    data={{
+                      contractIds: [child.child?.id],
+                    }}
+                    label={formatMessage({ id: "form.labels.tokenId" })}
+                    placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
+                    getTitle={(token: IToken) => token.template!.title}
+                    onChange={handleChange}
+                  />
+                ))}
+              </FormWrapper>
+            );
+          })}
         </Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
