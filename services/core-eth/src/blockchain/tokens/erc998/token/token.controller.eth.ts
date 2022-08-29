@@ -4,8 +4,6 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type {
-  ContractEventType,
-  ContractType,
   IErc998TokenReceivedChild,
   IErc998TokenSetMaxChild,
   IErc998TokenTransferChild,
@@ -17,6 +15,8 @@ import type {
   ITokenMintRandom,
   ITokenTransfer,
 } from "@framework/types";
+
+import { ContractEventType, ContractType } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
 

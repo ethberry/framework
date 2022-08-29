@@ -3,9 +3,9 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
-  ContractEventType,
-  ContractType,
+import { ContractEventType, ContractType } from "@framework/types";
+
+import type {
   IRandomRequest,
   ITokenApprove,
   ITokenApprovedForAll,
