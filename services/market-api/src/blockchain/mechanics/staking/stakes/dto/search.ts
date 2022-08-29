@@ -4,8 +4,24 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 
-import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
-import { StakingItemSearchDto } from "../../rules/dto";
+import type { IStakingStakeItemSearchDto, IStakingStakesSearchDto } from "@framework/types";
+import { StakeStatus, TokenType } from "@framework/types";
+
+export class StakingStakeItemSearchDto implements IStakingStakeItemSearchDto {
+  @ApiPropertyOptional({
+    enum: TokenType,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<TokenType>)
+  @IsEnum(TokenType, { each: true, message: "badInput" })
+  public tokenType: Array<TokenType>;
+
+  public contractIds: Array<number>;
+}
 
 export class StakingStakesSearchDto extends SearchDto implements IStakingStakesSearchDto {
   @ApiPropertyOptional({
@@ -21,18 +37,18 @@ export class StakingStakesSearchDto extends SearchDto implements IStakingStakesS
   public stakeStatus: Array<StakeStatus>;
 
   @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+    type: StakingStakeItemSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public deposit: StakingItemSearchDto;
+  @Type(() => StakingStakeItemSearchDto)
+  public deposit: StakingStakeItemSearchDto;
 
   @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+    type: StakingStakeItemSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public reward: StakingItemSearchDto;
+  @Type(() => StakingStakeItemSearchDto)
+  public reward: StakingStakeItemSearchDto;
 
   public account: string;
   public startTimestamp: string;

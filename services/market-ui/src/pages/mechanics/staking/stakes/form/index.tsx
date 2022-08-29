@@ -4,17 +4,18 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IStakingStakesSearchDto, StakeStatus, TokenType } from "@framework/types";
+import type { IStakingStakesSearchDto } from "@framework/types";
+import { StakeStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
-interface IStakesSearchFormProps {
+interface IStakingStakesSearchFormProps {
   onSubmit: (values: IStakingStakesSearchDto) => Promise<void>;
   initialValues: IStakingStakesSearchDto;
   open: boolean;
 }
 
-export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
+export const StakingStakesSearchForm: FC<IStakingStakesSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
@@ -30,7 +31,7 @@ export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      testId="StakesSearchForm"
+      testId="StakingStakesSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

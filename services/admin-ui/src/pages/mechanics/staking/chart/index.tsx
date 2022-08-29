@@ -7,7 +7,7 @@ import * as Plot from "@observablehq/plot";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IStakingItemSearchDto, IStakingStakesSearchDto, IToken } from "@framework/types";
+import type { IStakingChartSearchDto, IToken } from "@framework/types";
 import { TokenType } from "@framework/types";
 
 import { StakingChartSearchForm } from "./form";
@@ -15,18 +15,18 @@ import { StakingChartSearchForm } from "./form";
 export const StakingChart: FC = () => {
   const { rows, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch } = useCollection<
     IToken,
-    IStakingStakesSearchDto
+    IStakingChartSearchDto
   >({
     baseUrl: "/staking/report/chart",
     search: {
       deposit: {
-        tokenType: [TokenType.ERC20] as Array<TokenType>,
-        contractIds: [101],
-      } as IStakingItemSearchDto,
+        tokenType: TokenType.ERC20,
+        contractId: 201,
+      },
       reward: {
-        tokenType: [TokenType.ERC721] as Array<TokenType>,
-        contractIds: [301],
-      } as IStakingItemSearchDto,
+        tokenType: TokenType.ERC721,
+        contractId: 306,
+      },
       startTimestamp: startOfMonth(new Date()).toISOString(),
       endTimestamp: endOfMonth(new Date()).toISOString(),
     },

@@ -4,8 +4,7 @@ import { EntityManager } from "typeorm";
 import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
-import type { IStakingStakesSearchDto } from "@framework/types";
-import { TokenType } from "@framework/types";
+import type { IStakingChartSearchDto, IStakingReportSearchDto, IStakingStakeItemSearchDto } from "@framework/types";
 
 import { StakingStakesEntity } from "../stakes/stakes.entity";
 import { StakingStakesService } from "../stakes/stakes.service";
@@ -18,23 +17,23 @@ export class StakingReportService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async search(dto: Partial<IStakingStakesSearchDto>): Promise<[Array<StakingStakesEntity>, number]> {
-    return this.stakingStakesService.search(dto);
+  public async search(dto: IStakingReportSearchDto): Promise<[Array<StakingStakesEntity>, number]> {
+    const { deposit, reward, ...rest } = dto;
+    return this.stakingStakesService.search({
+      ...rest,
+      deposit: {
+        tokenType: [deposit.tokenType],
+        contractIds: [deposit.contractId],
+      } as IStakingStakeItemSearchDto,
+      reward: {
+        tokenType: [reward.tokenType],
+        contractIds: [reward.contractId],
+      } as IStakingStakeItemSearchDto,
+    });
   }
 
-  public async chart(dto: IStakingStakesSearchDto): Promise<any> {
-    const {
-      deposit = {
-        tokenType: TokenType.NATIVE,
-        contractIds: [],
-      },
-      reward = {
-        tokenType: TokenType.ERC721,
-        contractIds: [],
-      },
-      startTimestamp,
-      endTimestamp,
-    } = dto;
+  public async chart(dto: IStakingChartSearchDto): Promise<any> {
+    const { deposit, reward, startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
     const queryString = `
@@ -58,13 +57,13 @@ export class StakingReportService {
                 LEFT JOIN
             ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
         WHERE
-            (deposit_contract.contract_type = ANY($1) OR cardinality($1) = 0)
+            deposit_contract.contract_type = $1
           AND
-            (deposit_contract.id = ANY($2) OR cardinality($2) = 0)
+            deposit_contract.id = $2
           AND
-            (reward_contract.contract_type = ANY($3) OR cardinality($3) = 0)
+            reward_contract.contract_type = $3
           AND
-            (reward_contract.id = ANY($4) OR cardinality($4) = 0)
+            reward_contract.id = $4
           AND
             (staking_stakes.created_at >= $5 AND staking_stakes.created_at < $6)
         GROUP BY
@@ -76,9 +75,9 @@ export class StakingReportService {
     return Promise.all([
       this.entityManager.query(queryString, [
         deposit.tokenType,
-        deposit.contractIds,
+        deposit.contractId,
         reward.tokenType,
-        reward.contractIds,
+        reward.contractId,
         startTimestamp,
         endTimestamp,
       ]),
@@ -86,10 +85,11 @@ export class StakingReportService {
     ]);
   }
 
-  public async export(dto: IStakingStakesSearchDto): Promise<string> {
+  public async export(dto: IStakingReportSearchDto): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
-    const [list] = await this.search(rest);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    const [list] = await this.search(rest as IStakingReportSearchDto);
 
     const headers = ["id", "account", "createdAt"];
 

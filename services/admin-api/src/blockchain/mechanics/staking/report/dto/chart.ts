@@ -1,30 +1,46 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsISO8601, IsOptional, IsString, ValidateIf, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { IsEnum, IsInt, IsISO8601, IsOptional, IsString, Min, ValidateIf, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
-import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
+import type { IStakingChartItemSearchDto, IStakingChartSearchDto } from "@framework/types";
+import { TokenType } from "@framework/types";
 
-import { StakingItemSearchDto } from "../../rules/dto";
-
-export class StakingReportChartDto extends SearchDto implements IStakingStakesSearchDto {
-  public stakeStatus: Array<StakeStatus>;
-  public account: string;
+export class StakingChartItemSearchDto implements IStakingChartItemSearchDto {
+  @ApiProperty({
+    enum: TokenType,
+    isArray: true,
+    // https://github.com/OAI/OpenAPI-Specification/issues/1706
+    // format: "deepObject"
+  })
+  @Transform(({ value }) => value as TokenType)
+  @IsEnum(TokenType, { message: "badInput" })
+  public tokenType: TokenType;
 
   @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+    minimum: 1,
   })
-  @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public deposit: StakingItemSearchDto;
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
+}
 
-  @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+export class StakingChartSearchDto extends SearchDto implements IStakingChartSearchDto {
+  @ApiProperty({
+    type: StakingChartItemSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public reward: StakingItemSearchDto;
+  @Type(() => StakingChartItemSearchDto)
+  public deposit: StakingChartItemSearchDto;
+
+  @ApiProperty({
+    type: StakingChartItemSearchDto,
+  })
+  @ValidateNested()
+  @Type(() => StakingChartItemSearchDto)
+  public reward: StakingChartItemSearchDto;
 
   @ApiPropertyOptional()
   @IsOptional()

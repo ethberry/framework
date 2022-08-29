@@ -17,13 +17,14 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStakingItemSearchDto, IStakingRule, IStakingRuleSearchDto, StakingStatus, TokenType } from "@framework/types";
+import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
+import { StakingStatus, TokenType } from "@framework/types";
 
 import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
-import { StakingSearchForm } from "./form";
+import { StakingRuleSearchForm } from "./form";
 
 export const StakingRules: FC = () => {
   const {
@@ -66,10 +67,10 @@ export const StakingRules: FC = () => {
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+      } as IStakingRuleItemSearchDto,
       reward: {
         tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+      } as IStakingRuleItemSearchDto,
     },
   });
 
@@ -90,7 +91,7 @@ export const StakingRules: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

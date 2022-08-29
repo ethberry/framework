@@ -1,22 +1,43 @@
 import { FC } from "react";
-import { useIntl } from "react-intl";
-import { Grid, Typography } from "@mui/material";
-import { Filter1, Filter2, Filter3, Filter4 } from "@mui/icons-material";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Button, Grid, Typography } from "@mui/material";
+import { Filter1, Filter2, Filter3, Filter4, FilterList } from "@mui/icons-material";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { CommonSearchForm } from "@gemunion/mui-form-search";
-import { IStakingLeaderboard, StakingLeaderboardRank } from "@framework/types";
+import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
+import { StakingLeaderboardRank, TokenType } from "@framework/types";
+
+import { StakingLeaderboardSearchForm } from "./form";
 
 export const StakingLeaderboard: FC = () => {
-  const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
-    useCollection<IStakingLeaderboard>({
-      baseUrl: "/staking/leaderboard",
-      empty: {
-        wallet: "",
+  const {
+    rows,
+    search,
+    count,
+    isLoading,
+    isFiltersOpen,
+    handleSearch,
+    handleChangeRowsPerPage,
+    handleChangePage,
+    handleToggleFilters,
+  } = useCollection<IStakingLeaderboard, IStakingLeaderboardSearchDto>({
+    baseUrl: "/staking/leaderboard",
+    search: {
+      deposit: {
+        tokenType: TokenType.ERC20,
+        contractId: 201,
       },
-    });
+      reward: {
+        tokenType: TokenType.ERC721,
+        contractId: 306,
+      },
+    },
+    empty: {
+      wallet: "",
+    },
+  });
 
   const { formatMessage } = useIntl();
 
@@ -66,9 +87,16 @@ export const StakingLeaderboard: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
 
-      <PageHeader message="pages.staking.leaderboard.title" />
+      <PageHeader message="pages.staking.leaderboard.title">
+        <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
+          <FormattedMessage
+            id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
+            data-testid="ToggleFiltersButton"
+          />
+        </Button>
+      </PageHeader>
 
-      <CommonSearchForm onSubmit={handleSearch} initialValues={search} />
+      <StakingLeaderboardSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <DataGrid
         pagination

@@ -6,14 +6,14 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import type { IStakingStakesSearchDto } from "@framework/types";
-import { ContractStatus, TokenType } from "@framework/types";
+import type { IStakingChartSearchDto } from "@framework/types";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 interface IStakingReportSearchFormProps {
-  onSubmit: (values: IStakingStakesSearchDto) => Promise<void>;
-  initialValues: IStakingStakesSearchDto;
+  onSubmit: (values: IStakingChartSearchDto) => Promise<void>;
+  initialValues: IStakingChartSearchDto;
   open: boolean;
 }
 
@@ -33,13 +33,12 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      testId="StakingChartForm"
+      testId="StakingChartSearchForm"
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
             <SelectInput
-              multiple
               name="deposit.tokenType"
               options={TokenType}
               label={formatMessage({ id: "form.labels.deposit" })}
@@ -47,7 +46,6 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
           </Grid>
           <Grid item xs={6}>
             <SelectInput
-              multiple
               name="reward.tokenType"
               options={TokenType}
               label={formatMessage({ id: "form.labels.reward" })}
@@ -55,23 +53,23 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
           </Grid>
           <Grid item xs={6}>
             <EntityInput
-              multiple
-              name="deposit.contractIds"
+              name="deposit.contractId"
               controller="contracts"
               data={{
-                contractType: deposit.tokenType,
+                contractType: [deposit.tokenType],
                 contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+                contractModule: [ModuleType.CORE],
               }}
             />
           </Grid>
           <Grid item xs={6}>
             <EntityInput
-              multiple
-              name="reward.contractIds"
+              name="reward.contractId"
               controller="contracts"
               data={{
-                contractType: reward.tokenType,
+                contractType: [reward.tokenType],
                 contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+                contractModule: [ModuleType.CORE],
               }}
             />
           </Grid>

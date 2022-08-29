@@ -3,10 +3,9 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import type { ILotteryLeaderboard, ILotteryTicketSearchDto } from "@framework/types";
+import type { ILotteryLeaderboard, ILotteryLeaderboardSearchDto, ILotteryTicketSearchDto } from "@framework/types";
 
 import { LotteryTicketEntity } from "./ticket.entity";
-import { ILotteryLeaderboardSearchDto } from "../leaderboard/interfaces/search";
 import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()

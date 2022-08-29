@@ -15,10 +15,11 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStakingItemSearchDto, IStakingRule, IStakingRuleSearchDto, TokenType } from "@framework/types";
+import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { StakingDepositButton } from "../../../../components/buttons";
-import { StakingSearchForm } from "./form";
+import { StakingRuleSearchForm } from "./form";
 import { emptyPrice } from "../../../../components/inputs/empty-price";
 import { StakingViewDialog } from "./view";
 
@@ -52,10 +53,10 @@ export const StakingRules: FC = () => {
       query: "",
       deposit: {
         tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+      } as IStakingRuleItemSearchDto,
       reward: {
         tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+      } as IStakingRuleItemSearchDto,
     },
     filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
@@ -73,7 +74,7 @@ export const StakingRules: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

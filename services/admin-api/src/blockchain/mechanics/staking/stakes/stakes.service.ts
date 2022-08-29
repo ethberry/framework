@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingStakesSearchDto } from "@framework/types";
+import type { IStakingStakesSearchDto } from "@framework/types";
 
 import { StakingStakesEntity } from "./stakes.entity";
 
@@ -71,27 +71,53 @@ export class StakingStakesService {
       }
     }
 
-    if (deposit && deposit.tokenType) {
-      if (deposit.tokenType.length === 1) {
-        queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
-          depositTokenType: deposit.tokenType[0],
-        });
-      } else {
-        queryBuilder.andWhere("deposit_contract.contractType IN(:...depositTokenType)", {
-          depositTokenType: deposit.tokenType,
-        });
+    if (deposit) {
+      if (deposit.tokenType) {
+        if (deposit.tokenType.length === 1) {
+          queryBuilder.andWhere("deposit_contract.contractType = :depositTokenType", {
+            depositTokenType: deposit.tokenType[0],
+          });
+        } else {
+          queryBuilder.andWhere("deposit_contract.contractType IN(:...depositTokenType)", {
+            depositTokenType: deposit.tokenType,
+          });
+        }
+      }
+      if (deposit.contractIds) {
+        if (deposit.contractIds.length === 1) {
+          queryBuilder.andWhere("deposit_contract.id = :depositContractId", {
+            depositContractId: deposit.contractIds[0],
+          });
+        } else {
+          queryBuilder.andWhere("deposit_contract.id IN(:...depositContractId)", {
+            depositContractId: deposit.contractIds,
+          });
+        }
       }
     }
 
-    if (reward && reward.tokenType) {
-      if (reward.tokenType.length === 1) {
-        queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
-          rewardTokenType: reward.tokenType[0],
-        });
-      } else {
-        queryBuilder.andWhere("reward_contract.contractType IN(:...rewardTokenType)", {
-          rewardTokenType: reward.tokenType,
-        });
+    if (reward) {
+      if (reward.tokenType) {
+        if (reward.tokenType.length === 1) {
+          queryBuilder.andWhere("reward_contract.contractType = :rewardTokenType", {
+            rewardTokenType: reward.tokenType[0],
+          });
+        } else {
+          queryBuilder.andWhere("reward_contract.contractType IN(:...rewardTokenType)", {
+            rewardTokenType: reward.tokenType,
+          });
+        }
+      }
+      if (reward.contractIds) {
+        if (reward.contractIds.length === 1) {
+          queryBuilder.andWhere("reward_contract.id = :rewardContractId", {
+            rewardContractId: reward.contractIds[0],
+          });
+        } else {
+          queryBuilder.andWhere("reward_contract.id IN(:...rewardContractId)", {
+            rewardContractId: reward.contractIds,
+          });
+        }
       }
     }
 

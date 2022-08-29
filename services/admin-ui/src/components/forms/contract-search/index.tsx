@@ -3,7 +3,8 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { ContractStatus, IContractSearchDto } from "@framework/types";
+import type { IContractSearchDto } from "@framework/types";
+import { ContractStatus } from "@framework/types";
 
 import { useStyles } from "./styles";
 

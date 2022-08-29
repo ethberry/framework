@@ -4,7 +4,8 @@ import { Collapse, Grid } from "@mui/material";
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
+import type { ITemplateSearchDto } from "@framework/types";
+import { TemplateStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 

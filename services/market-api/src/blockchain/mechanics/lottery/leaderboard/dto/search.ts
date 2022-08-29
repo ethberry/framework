@@ -3,8 +3,7 @@ import { IsEthereumAddress, IsOptional, IsString } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { PaginationDto } from "@gemunion/collection";
-
-import { ILotteryLeaderboardSearchDto } from "../interfaces/search";
+import type { ILotteryLeaderboardSearchDto } from "@framework/types";
 
 export class LotteryLeaderboardSearchDto extends PaginationDto implements ILotteryLeaderboardSearchDto {
   @ApiPropertyOptional()

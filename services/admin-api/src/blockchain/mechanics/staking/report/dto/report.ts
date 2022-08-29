@@ -1,11 +1,13 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsArray,
   IsEnum,
   IsEthereumAddress,
+  IsInt,
   IsISO8601,
   IsOptional,
   IsString,
+  Min,
   ValidateIf,
   ValidateNested,
 } from "class-validator";
@@ -13,11 +15,27 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
-import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
+import type { IStakingReportItemSearchDto, IStakingReportSearchDto } from "@framework/types";
+import { StakeStatus, TokenType } from "@framework/types";
 
-import { StakingItemSearchDto } from "../../rules/dto";
+export class StakingReportItemSearchDto implements IStakingReportItemSearchDto {
+  @ApiProperty({
+    enum: TokenType,
+  })
+  @Transform(({ value }) => value as TokenType)
+  @IsEnum(TokenType, { message: "badInput" })
+  public tokenType: TokenType;
 
-export class StakingReportSearchDto extends SearchDto implements IStakingStakesSearchDto {
+  @ApiProperty({
+    minimum: 1,
+  })
+  @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
+  @Type(() => Number)
+  public contractId: number;
+}
+
+export class StakingReportSearchDto extends SearchDto implements IStakingReportSearchDto {
   @ApiPropertyOptional({
     enum: StakeStatus,
     isArray: true,
@@ -37,19 +55,19 @@ export class StakingReportSearchDto extends SearchDto implements IStakingStakesS
   @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 
-  @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+  @ApiProperty({
+    type: StakingReportItemSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public deposit: StakingItemSearchDto;
+  @Type(() => StakingReportItemSearchDto)
+  public deposit: StakingReportItemSearchDto;
 
-  @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+  @ApiProperty({
+    type: StakingReportItemSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public reward: StakingItemSearchDto;
+  @Type(() => StakingReportItemSearchDto)
+  public reward: StakingReportItemSearchDto;
 
   @ApiPropertyOptional()
   @IsOptional()

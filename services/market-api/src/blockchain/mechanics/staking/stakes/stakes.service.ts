@@ -3,11 +3,11 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IStakingLeaderboard, IStakingStakesSearchDto, StakeStatus } from "@framework/types";
+import type { IStakingLeaderboard, IStakingLeaderboardSearchDto, IStakingStakesSearchDto } from "@framework/types";
+import { StakeStatus } from "@framework/types";
 
 import { StakingStakesEntity } from "./stakes.entity";
 import { UserEntity } from "../../../../user/user.entity";
-import { ILeaderboardSearchDto } from "../leaderboard/interfaces/search";
 
 @Injectable()
 export class StakingStakesService {
@@ -109,24 +109,51 @@ export class StakingStakesService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async leaderboard(dto: Partial<ILeaderboardSearchDto>): Promise<[Array<IStakingLeaderboard>, number]> {
-    const { skip, take } = dto;
+  public async leaderboard(dto: IStakingLeaderboardSearchDto): Promise<[Array<IStakingLeaderboard>, number]> {
+    const { deposit, reward, skip, take } = dto;
 
     const queryString = `
-      SELECT
-        row_number() OVER (ORDER BY account)::INTEGER id,
-        0 AS amount,
-        account
-      FROM
-        ${ns}.staking_stakes as stake
-      WHERE
-        stake.stake_status = '${StakeStatus.ACTIVE}'
-      GROUP BY account
+        SELECT row_number() OVER (ORDER BY account)::INTEGER id,
+               SUM(deposit_component.amount)::NUMERIC AS amount,
+               account
+        FROM ${ns}.staking_stakes
+                 LEFT JOIN
+             ${ns}.staking_rules ON staking_rules.id = staking_stakes.staking_rule_id
+                 LEFT JOIN
+             ${ns}.asset as asset_deposit ON staking_rules.deposit_id = asset_deposit.id
+                 LEFT JOIN
+             ${ns}.asset as asset_reward ON staking_rules.reward_id = asset_reward.id
+                 LEFT JOIN
+             ${ns}.asset_component as deposit_component ON deposit_component.asset_id = asset_deposit.id
+                 LEFT JOIN
+             ${ns}.contract as deposit_contract ON deposit_component.contract_id = deposit_contract.id
+                 LEFT JOIN
+             ${ns}.asset_component as reward_component ON reward_component.asset_id = asset_reward.id
+                 LEFT JOIN
+             ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
+        WHERE (staking_stakes.stake_status = '${StakeStatus.ACTIVE}' OR
+               staking_stakes.stake_status = '${StakeStatus.COMPLETE}')
+          AND deposit_contract.contract_type = $1
+          AND deposit_contract.id = $2
+          AND reward_contract.contract_type = $3
+          AND reward_contract.id = $4
+        GROUP BY account
     `;
 
     return Promise.all([
-      this.entityManager.query(`${queryString} ORDER BY amount DESC OFFSET $1 LIMIT $2`, [skip, take]),
-      this.entityManager.query(`SELECT COUNT(DISTINCT(id))::INTEGER as count FROM (${queryString}) as l`),
+      this.entityManager.query(`${queryString} ORDER BY amount DESC OFFSET $5 LIMIT $6`, [
+        deposit.tokenType,
+        deposit.contractId,
+        reward.tokenType,
+        reward.contractId,
+        skip,
+        take,
+      ]),
+      this.entityManager.query(
+        `SELECT COUNT(DISTINCT (id))::INTEGER as count
+         FROM (${queryString}) as l`,
+        [deposit.tokenType, deposit.contractId, reward.tokenType, reward.contractId],
+      ),
     ]).then(([list, [{ count }]]) => [list, count]);
   }
 

@@ -13,16 +13,11 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import {
-  IStakingItemSearchDto,
-  IStakingStake,
-  IStakingStakesSearchDto,
-  StakeStatus,
-  TokenType,
-} from "@framework/types";
+import type { IStakingStake, IStakingStakesSearchDto } from "@framework/types";
+import { StakeStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { StakesSearchForm } from "./form";
+import { StakingStakesSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
 import { StakingRewardButton } from "../../../../components/buttons";
 
@@ -48,10 +43,12 @@ export const StakingStakes: FC = () => {
       stakeStatus: [StakeStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+        contractIds: [],
+      },
       reward: {
         tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+        contractIds: [],
+      },
     },
   });
 
@@ -65,7 +62,7 @@ export const StakingStakes: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakesSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <StakingStakesSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

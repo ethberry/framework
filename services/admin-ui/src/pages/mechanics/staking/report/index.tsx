@@ -6,13 +6,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { endOfMonth, format, parseISO, startOfMonth } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import {
-  IStakingItemSearchDto,
-  IStakingStake,
-  IStakingStakesSearchDto,
-  StakeStatus,
-  TokenType,
-} from "@framework/types";
+import type { IStakingReportSearchDto, IStakingStake } from "@framework/types";
+import { StakeStatus, TokenType } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
@@ -30,7 +25,7 @@ export const StakingReport: FC = () => {
     handleToggleFilters,
     handleChangePage,
     handleChangeRowsPerPage,
-  } = useCollection<IStakingStake, IStakingStakesSearchDto>({
+  } = useCollection<IStakingStake, IStakingReportSearchDto>({
     baseUrl: "/staking/report/search",
     empty: {
       createdAt: new Date().toISOString(),
@@ -40,11 +35,13 @@ export const StakingReport: FC = () => {
       account: "",
       stakeStatus: [StakeStatus.ACTIVE],
       deposit: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+        tokenType: TokenType.ERC20,
+        contractId: 201,
+      },
       reward: {
-        tokenType: [] as Array<TokenType>,
-      } as IStakingItemSearchDto,
+        tokenType: TokenType.ERC721,
+        contractId: 306,
+      },
       startTimestamp: startOfMonth(new Date()).toISOString(),
       endTimestamp: endOfMonth(new Date()).toISOString(),
     },

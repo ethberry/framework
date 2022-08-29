@@ -6,7 +6,8 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { AccessControlRoleHash, AccessControlRoleType, IContract } from "@framework/types";
+import type { IContract } from "@framework/types";
+import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 

@@ -3,9 +3,10 @@ import { IsArray, IsEnum, IsOptional, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IStakingItemSearchDto, IStakingRuleSearchDto, StakingStatus, TokenType } from "@framework/types";
+import type { IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
+import { StakingStatus, TokenType } from "@framework/types";
 
-export class StakingItemSearchDto implements IStakingItemSearchDto {
+export class StakingRuleItemSearchDto implements IStakingRuleItemSearchDto {
   @ApiPropertyOptional({
     enum: TokenType,
     isArray: true,
@@ -26,18 +27,18 @@ export class StakingItemSearchDto implements IStakingItemSearchDto {
 
 export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearchDto {
   @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+    type: StakingRuleItemSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public deposit: StakingItemSearchDto;
+  @Type(() => StakingRuleItemSearchDto)
+  public deposit: StakingRuleItemSearchDto;
 
   @ApiPropertyOptional({
-    type: StakingItemSearchDto,
+    type: StakingRuleItemSearchDto,
   })
   @ValidateNested()
-  @Type(() => StakingItemSearchDto)
-  public reward: StakingItemSearchDto;
+  @Type(() => StakingRuleItemSearchDto)
+  public reward: StakingRuleItemSearchDto;
 
   public stakingStatus: Array<StakingStatus>;
 }

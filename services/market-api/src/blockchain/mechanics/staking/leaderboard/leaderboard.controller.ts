@@ -4,7 +4,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { StakingLeaderboardService } from "./leaderboard.service";
-import { LeaderboardSearchDto } from "./dto";
+import { StakingLeaderboardSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/staking/leaderboard")
@@ -13,7 +13,7 @@ export class StakingLeaderboardController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: LeaderboardSearchDto): Promise<any> {
+  public search(@Query() dto: StakingLeaderboardSearchDto): Promise<any> {
     return this.stakingLeaderboardService.leaderboard(dto);
   }
 }

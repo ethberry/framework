@@ -7,7 +7,7 @@ import { getAuth, signOut } from "firebase/auth";
 
 import { useUser } from "@gemunion/provider-user";
 import { useApi } from "@gemunion/provider-api-firebase";
-import { IUser } from "@framework/types";
+import type { IUser } from "@framework/types";
 
 import { useStyles } from "./styles";
 
