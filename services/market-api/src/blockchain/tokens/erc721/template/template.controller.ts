@@ -1,4 +1,5 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 
@@ -10,7 +11,10 @@ import { UserEntity } from "../../../../user/user.entity";
 @Public()
 @Controller("/erc721-templates")
 export class Erc721TemplateController {
-  constructor(private readonly erc721TemplateService: Erc721TemplateService) {}
+  constructor(
+    private readonly erc721TemplateService: Erc721TemplateService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
@@ -18,7 +22,8 @@ export class Erc721TemplateController {
     @Query() dto: TemplateSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    return this.erc721TemplateService.search(dto, userEntity);
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    return this.erc721TemplateService.search(dto, userEntity?.chainId || chainId);
   }
 
   @Get("/autocomplete")

@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { TemplateEntity } from "./template.entity";
-import { ContractStatus, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
-import { UserEntity } from "../../../user/user.entity";
+import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import type { ITemplateSearchDto } from "@framework/types";
 
 @Injectable()
 export class TemplateService {
@@ -15,11 +15,12 @@ export class TemplateService {
 
   public async search(
     dto: Partial<ITemplateSearchDto>,
-    userEntity: UserEntity,
+    chainId: number,
     contractType: TokenType,
     contractModule: ModuleType,
   ): Promise<[Array<TemplateEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
+
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
 
     queryBuilder.select();
@@ -43,7 +44,7 @@ export class TemplateService {
       contractStatus: ContractStatus.ACTIVE,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId: userEntity.chainId,
+      chainId,
     });
     queryBuilder.andWhere("contract.isPaused = :isPaused", {
       isPaused: false,

@@ -1,4 +1,5 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 
@@ -11,7 +12,7 @@ import { ModuleType } from "@framework/types";
 @Public()
 @Controller("/templates")
 export class TemplateController {
-  constructor(private readonly templateService: TemplateService) {}
+  constructor(private readonly templateService: TemplateService, private readonly configService: ConfigService) {}
 
   @Get("/new")
   @UseInterceptors(PaginationInterceptor)
@@ -19,7 +20,8 @@ export class TemplateController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    return this.templateService.search({ take: 10 }, userEntity, dto.contractType, ModuleType.CORE);
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    return this.templateService.search({ take: 10 }, userEntity?.chainId || chainId, dto.contractType, ModuleType.CORE);
   }
 
   @Get("/:id")

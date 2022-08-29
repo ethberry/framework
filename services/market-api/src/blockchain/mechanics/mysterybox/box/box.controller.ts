@@ -1,4 +1,5 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 
@@ -11,7 +12,10 @@ import { TemplateNewDto } from "../../../hierarchy/template/dto/new";
 @Public()
 @Controller("/mysterybox-boxes")
 export class MysteryboxBoxController {
-  constructor(private readonly mysteryboxBoxService: MysteryboxBoxService) {}
+  constructor(
+    private readonly mysteryboxBoxService: MysteryboxBoxService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
@@ -19,7 +23,8 @@ export class MysteryboxBoxController {
     @Query() dto: MysteryboxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryboxBoxEntity>, number]> {
-    return this.mysteryboxBoxService.search(dto, userEntity);
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    return this.mysteryboxBoxService.search(dto, userEntity?.chainId || chainId);
   }
 
   @Get("/autocomplete")
@@ -33,7 +38,8 @@ export class MysteryboxBoxController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryboxBoxEntity>, number]> {
-    return this.mysteryboxBoxService.search({ take: 10 }, userEntity);
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    return this.mysteryboxBoxService.search({ take: 10 }, userEntity?.chainId || chainId);
   }
 
   @Get("/:id")

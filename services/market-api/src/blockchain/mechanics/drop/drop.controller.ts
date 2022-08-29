@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import { PaginationDto } from "@gemunion/collection";
 import type { IServerSignature } from "@gemunion/types-collection";
 
@@ -9,6 +9,7 @@ import { DropService } from "./drop.service";
 import { DropEntity } from "./drop.entity";
 import { SignDropDto } from "./dto";
 
+@Public()
 @ApiBearerAuth()
 @Controller("/drops")
 export class DropController {

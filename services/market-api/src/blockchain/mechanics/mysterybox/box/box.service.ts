@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MysteryboxBoxEntity } from "./box.entity";
-import { UserEntity } from "../../../../user/user.entity";
-import { ContractStatus, IMysteryboxSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+import type { IMysteryboxSearchDto } from "@framework/types";
 
 @Injectable()
 export class MysteryboxBoxService {
@@ -15,9 +15,10 @@ export class MysteryboxBoxService {
 
   public async search(
     dto: Partial<IMysteryboxSearchDto>,
-    userEntity: UserEntity,
+    chainId: number,
   ): Promise<[Array<MysteryboxBoxEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
+
     const queryBuilder = this.mysteryboxEntityRepository.createQueryBuilder("mysterybox");
 
     queryBuilder.select();
@@ -47,7 +48,7 @@ export class MysteryboxBoxService {
       contractStatus: ContractStatus.ACTIVE,
     });
     queryBuilder.andWhere("contract.chainId = :chainId", {
-      chainId: userEntity.chainId,
+      chainId,
     });
 
     queryBuilder.andWhere("mysterybox.mysteryboxStatus = :mysteryboxStatus", {
