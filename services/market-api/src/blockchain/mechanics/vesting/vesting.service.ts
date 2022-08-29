@@ -17,4 +17,8 @@ export class VestingService {
   ): Promise<VestingEntity | null> {
     return this.vestingEntityRepository.findOne({ where, ...options });
   }
+
+  public sell(_dto: any): Promise<VestingEntity | null> {
+    return this.findOne({});
+  }
 }

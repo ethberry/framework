@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { AccountBalanceWallet } from "@mui/icons-material";
@@ -12,6 +12,7 @@ import { Spinner } from "@gemunion/mui-page-layout";
 import { IVesting } from "@framework/types";
 
 import { VestingReleaseButton } from "../../../../components/buttons";
+import { VestingSellButton } from "../../../../components/buttons/mechanics/vesting/sell";
 
 export const Vesting: FC = () => {
   const [vesting, setVesting] = useState<IVesting | null>(null);
@@ -82,7 +83,12 @@ export const Vesting: FC = () => {
   }
 
   if (vesting) {
-    return <VestingReleaseButton vesting={vesting} />;
+    return (
+      <Fragment>
+        <VestingReleaseButton vesting={vesting} />
+        <VestingSellButton vesting={vesting} />
+      </Fragment>
+    );
   }
 
   return <FormattedMessage id="pages.vesting.sorry" />;

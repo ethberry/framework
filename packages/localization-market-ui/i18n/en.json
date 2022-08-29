@@ -27,6 +27,7 @@
     "confirmation": "Please confirm",
     "delete": "Delete `{title}`?",
     "deposit": "Deposit",
+    "sell": "Sell",
     "edit": "Edit",
     "reward": "Reward",
     "view": "View"
@@ -91,6 +92,7 @@
   },
   "form": {
     "buttons": {
+      "release": "Release",
       "add": "Add",
       "approve": "Approve",
       "back": "Back",
@@ -127,6 +129,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "price": "Price",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -181,6 +184,7 @@
       "withdrawDeposit": "Withdraw deposit"
     },
     "placeholders": {
+      "account": "0x...",
       "address": "0x...",
       "amount": "100",
       "confirm": "******",
@@ -207,7 +211,6 @@
       "deposit": "Deposit",
       "edit": "Edit",
       "redeem": "Redeem",
-      "release": "Release",
       "reward": "Reward"
     },
     "validations": {

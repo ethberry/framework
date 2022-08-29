@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UseInterceptors } from "@nestjs/common";
 
 import { AddressPipe, ApiAddress, NotFoundInterceptor, Public } from "@gemunion/nest-js-utils";
 
@@ -15,5 +15,11 @@ export class VestingController {
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("wallet", AddressPipe) wallet: string): Promise<VestingEntity | null> {
     return this.vestingService.findOne({ account: wallet.toLowerCase() });
+  }
+
+  @Post("/")
+  @UseInterceptors(NotFoundInterceptor)
+  public sell(@Body() dto: any): Promise<VestingEntity | null> {
+    return this.vestingService.sell(dto);
   }
 }
