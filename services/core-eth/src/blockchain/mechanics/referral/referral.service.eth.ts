@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { IReward, IWithdraw, ReferralProgramEventType, TReferralEventData } from "@framework/types";
 
 import { ReferralHistoryService } from "./history/history.service";
@@ -44,9 +44,6 @@ export class ReferralServiceEth {
       eventData: args,
     });
 
-    await this.contractService.updateLastBlockByAddr(
-      address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ILotteryPurchase, LotteryEventType, TLotteryEventData } from "@framework/types";
 
 import { LotteryTicketService } from "./ticket.service";

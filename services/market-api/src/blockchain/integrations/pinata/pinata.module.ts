@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
-import { PinataFirebaseModule } from "@gemunion/nest-js-module-pinata-firebase";
 import type { IPinataOptions } from "@gemunion/nest-js-module-pinata-firebase";
+import { PinataFirebaseModule } from "@gemunion/nest-js-module-pinata-firebase";
 
 import { PinataService } from "./pinata.service";
 import { PinataController } from "./pinata.controller";

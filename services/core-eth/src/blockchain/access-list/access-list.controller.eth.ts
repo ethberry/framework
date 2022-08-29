@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { AccessListEventType, ContractType, IBlacklisted, IUnBlacklisted } from "@framework/types";
 
 import { AccessListServiceEth } from "./access-list.service.eth";

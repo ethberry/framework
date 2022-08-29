@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { constants } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractEventType,
   IErc20TokenApprove,
@@ -71,9 +71,6 @@ export class Erc20TokenServiceEth {
       eventData: args,
     });
 
-    await this.contractService.updateLastBlockByAddr(
-      address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

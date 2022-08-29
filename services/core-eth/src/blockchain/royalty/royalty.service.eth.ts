@@ -2,8 +2,9 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "@ethersproject/abstract-provider";
 import { BigNumber } from "ethers";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, IDefaultRoyaltyInfo, ITokenRoyaltyInfo, TContractEventData } from "@framework/types";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ContractEventType } from "@framework/types";
+import type { IDefaultRoyaltyInfo, ITokenRoyaltyInfo, TContractEventData } from "@framework/types";
 
 import { ContractHistoryService } from "../contract-history/contract-history.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
@@ -56,9 +57,6 @@ export class RoyaltyServiceEth {
       tokenId: erc998TokenId || null,
     });
 
-    await this.contractService.updateLastBlockByAddr(
-      address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

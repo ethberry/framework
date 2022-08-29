@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { imageUrl } from "@framework/constants";
 import {

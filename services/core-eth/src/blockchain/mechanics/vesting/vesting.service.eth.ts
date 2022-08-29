@@ -2,8 +2,9 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IVestingERC20Released, IVestingEtherReleased, TVestingEventData, VestingEventType } from "@framework/types";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import { VestingEventType } from "@framework/types";
+import type { IVestingERC20Released, IVestingEtherReleased, TVestingEventData } from "@framework/types";
 
 import { VestingHistoryService } from "./history/vesting-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
@@ -38,9 +39,6 @@ export class VestingServiceEth {
       eventData: args,
     });
 
-    await this.contractService.updateLastBlockByAddr(
-      address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

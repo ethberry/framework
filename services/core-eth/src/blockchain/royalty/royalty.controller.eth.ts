@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ContractEventType, ContractType, IDefaultRoyaltyInfo, ITokenRoyaltyInfo } from "@framework/types";
 
 import { RoyaltyServiceEth } from "./royalty.service.eth";

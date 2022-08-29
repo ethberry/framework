@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
 import { IdBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ExchangeType, IAssetComponentHistory, TokenType } from "@framework/types";

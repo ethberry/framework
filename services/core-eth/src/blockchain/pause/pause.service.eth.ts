@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ContractEventType, IPaused, TAccessListEventData } from "@framework/types";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { ContractHistoryService } from "../contract-history/contract-history.service";

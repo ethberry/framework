@@ -74,7 +74,9 @@ export const Erc998Composition: FC = () => {
   });
 
   const handleCreateConfirm = (values: IErc998CompositionCreateDto) => {
-    return metaFn2(values);
+    return metaFn2(values).finally(() => {
+      setIsCreateDialogOpen(false);
+    });
   };
 
   const handleCreateCancel = () => {

@@ -25,6 +25,12 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         5,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        401, -- simple
+        305, -- armour
+        5,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

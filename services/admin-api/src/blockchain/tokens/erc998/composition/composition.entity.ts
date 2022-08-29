@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { IComposition } from "@framework/types";
 import { ns } from "@framework/constants";
@@ -19,7 +19,7 @@ export class CompositionEntity extends IdDateBaseEntity implements IComposition 
   public childId: number;
 
   @JoinColumn()
-  @OneToOne(_type => ContractEntity)
+  @ManyToOne(_type => ContractEntity)
   public child: ContractEntity;
 
   @Column({ type: "int" })

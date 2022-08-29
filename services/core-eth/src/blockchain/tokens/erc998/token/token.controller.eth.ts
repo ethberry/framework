@@ -2,20 +2,20 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
-import {
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import type {
   ContractEventType,
   ContractType,
   IErc998TokenReceivedChild,
+  IErc998TokenSetMaxChild,
   IErc998TokenTransferChild,
+  IErc998TokenUnWhitelistedChild,
+  IErc998TokenWhitelistedChild,
   IRandomRequest,
   ITokenApprove,
   ITokenApprovedForAll,
   ITokenMintRandom,
   ITokenTransfer,
-  IErc998TokenSetMaxChild,
-  IErc998TokenUnWhitelistedChild,
-  IErc998TokenWhitelistedChild,
 } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
