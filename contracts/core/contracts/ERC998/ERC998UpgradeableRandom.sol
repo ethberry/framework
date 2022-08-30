@@ -64,7 +64,7 @@ contract ERC998UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC99
     upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
-    safeMint(request.account);
+    _safeMint(request.account, tokenId);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {

@@ -7,7 +7,7 @@ import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { ExchangeType, IAssetDto, TokenType } from "@framework/types";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
-import { ExchangeHistoryService } from "../exchange/history/exchange-history.service";
+import { ContractHistoryService } from "../../contract-history/contract-history.service";
 
 @Injectable()
 export class AssetService {
@@ -20,7 +20,7 @@ export class AssetService {
     private readonly assetComponentHistoryEntityRepository: Repository<AssetComponentHistoryEntity>,
     @Inject(forwardRef(() => TemplateService))
     private readonly templateService: TemplateService,
-    private readonly exchangeHistoryService: ExchangeHistoryService,
+    protected readonly contractHistoryService: ContractHistoryService,
   ) {}
 
   public async create(dto: DeepPartial<AssetEntity>): Promise<AssetEntity> {
@@ -103,6 +103,28 @@ export class AssetService {
     if (assetHistoryEntity) {
       Object.assign(assetHistoryEntity, { tokenId });
       await assetHistoryEntity.save();
+    }
+  }
+
+  public async updateAssetHistoryRandom(requestId: string, tokenId: number): Promise<void> {
+    const historyEntity = await this.contractHistoryService.findByRandomRequest(requestId);
+    if (historyEntity) {
+      const transactionHash = historyEntity.transactionHash;
+
+      const queryBuilder = this.assetComponentHistoryEntityRepository.createQueryBuilder("assets");
+      queryBuilder.select();
+      queryBuilder.leftJoinAndSelect("assets.history", "history");
+      queryBuilder.where({ exchangeType: ExchangeType.ITEM, tokenId: IsNull() });
+      queryBuilder.andWhere("history.transactionHash = :transactionHash", {
+        transactionHash,
+      });
+
+      const assetHistoryEntity = await queryBuilder.getOne();
+
+      if (assetHistoryEntity) {
+        Object.assign(assetHistoryEntity, { tokenId });
+        await assetHistoryEntity.save();
+      }
     }
   }
 

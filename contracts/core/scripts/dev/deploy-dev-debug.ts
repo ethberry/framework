@@ -7,6 +7,8 @@ import { baseTokenURI, MINTER_ROLE, royalty, tokenName } from "../../test/consta
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 1; // block delay
+const decimals = ethers.BigNumber.from(10).pow(18);
+const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
 
 interface IObj {
   address?: string;
@@ -29,6 +31,16 @@ const timestamp = Math.ceil(Date.now() / 1000);
 
 async function main() {
   const [owner] = await ethers.getSigners();
+  // LINK & VRF
+  const linkFactory = await ethers.getContractFactory("LinkErc20");
+  const linkInstance = await linkFactory.deploy("LINK", "LINK");
+  contracts.link = linkInstance;
+  console.info(`LINK_ADDR=${contracts.link.address}`);
+  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+  contracts.vrf = await vrfFactory.deploy(contracts.link.address);
+  console.info(`VRF_ADDR=${contracts.vrf.address}`);
+  await debug(await linkInstance.mint(owner.address, linkAmountInWei.mul(100)), "LinkInstance.mint");
+  process.exit(0);
 
   const cmFactory = await ethers.getContractFactory("ContractManager");
   contracts.contractManager = await cmFactory.deploy();
@@ -327,16 +339,39 @@ async function main() {
     await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address),
     "erc721Simple.grantRole",
   );
+
+  await debug(
+    await contracts.erc721Simple.grantRole(MINTER_ROLE, contracts.exchange.address),
+    "erc721Simple.grantRole",
+  );
+
   await debug(
     await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address),
     "erc721Random.grantRole",
   );
+
+  await debug(
+    await contracts.erc721Random.grantRole(MINTER_ROLE, contracts.exchange.address),
+    "erc721Random.grantRole",
+  );
+
   await debug(
     await contracts.erc998Random.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address),
     "erc998Random.grantRole",
   );
+
+  await debug(
+    await contracts.erc998Random.grantRole(MINTER_ROLE, contracts.exchange.address),
+    "erc998Random.grantRole",
+  );
+
   await debug(
     await contracts.erc1155Simple.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address),
+    "erc1155Simple.grantRole",
+  );
+
+  await debug(
+    await contracts.erc1155Simple.grantRole(MINTER_ROLE, contracts.exchange.address),
     "erc1155Simple.grantRole",
   );
 
@@ -364,10 +399,6 @@ async function main() {
     contracts.erc721Lottery.address,
     contracts.erc20Simple.address,
   );
-  await debug(contracts);
-
-  const linkFactory = await ethers.getContractFactory("LinkToken");
-  contracts.link = await linkFactory.deploy();
   await debug(contracts);
 
   const usdtFactory = await ethers.getContractFactory("TetherToken");

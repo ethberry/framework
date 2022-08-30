@@ -1,7 +1,7 @@
 import { Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
+import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
 
 import { ContractHistoryModule } from "../../../contract-history/contract-history.module";
 
@@ -20,8 +20,8 @@ import { AssetModule } from "../../../mechanics/asset/asset.module";
 
 @Module({
   imports: [
-    AssetModule,
     ConfigModule,
+    AssetModule,
     ContractHistoryModule,
     Erc998TokenLogModule,
     TemplateModule,
@@ -33,7 +33,7 @@ import { AssetModule } from "../../../mechanics/asset/asset.module";
     Erc998CompositionModule,
     TypeOrmModule.forFeature([TokenEntity]),
   ],
-  providers: [Logger, ethersRpcProvider, Erc998TokenServiceEth],
+  providers: [Logger, ethersRpcProvider, ethersSignerProvider, Erc998TokenServiceEth],
   controllers: [Erc998TokenControllerEth],
   exports: [Erc998TokenServiceEth],
 })

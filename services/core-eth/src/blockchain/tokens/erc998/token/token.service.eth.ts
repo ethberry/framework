@@ -1,8 +1,9 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
-import { constants, providers } from "ethers";
+import { ConfigService } from "@nestjs/config";
+import { constants, providers, Wallet } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   IErc998TokenReceivedChild,
@@ -28,6 +29,7 @@ import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { OwnershipService } from "../ownership/ownership.service";
 import { Erc998CompositionService } from "../composition/composition.service";
 import { AssetService } from "../../../mechanics/asset/asset.service";
+import { callRandom } from "../../../../common/utils/random";
 
 @Injectable()
 export class Erc998TokenServiceEth extends TokenServiceEth {
@@ -36,6 +38,9 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
     protected readonly jsonRpcProvider: providers.JsonRpcProvider,
+    @Inject(ETHERS_SIGNER)
+    protected readonly ethersSignerProvider: Wallet,
+    protected readonly configService: ConfigService,
     protected readonly tokenService: TokenService,
     protected readonly balanceService: BalanceService,
     protected readonly templateService: TemplateService,
@@ -54,17 +59,11 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     } = event;
     const { address } = context;
 
-    const contractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
-
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
     // Mint token create
     if (from === constants.AddressZero) {
       const attributes = await getMetadata(tokenId, address, ABI, this.jsonRpcProvider);
       const templateId = ~~attributes[TokenAttributes.TEMPLATE_ID];
-      const templateEntity = await this.templateService.findOne({ id: templateId });
+      const templateEntity = await this.templateService.findOne({ id: templateId }, { relations: { contract: true } });
 
       if (!templateEntity) {
         throw new NotFoundException("templateNotFound");
@@ -73,7 +72,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       const tokenEntity = await this.tokenService.create({
         tokenId,
         attributes: JSON.stringify(attributes),
-        royalty: contractEntity.royalty,
+        royalty: templateEntity.contract.royalty,
         template: templateEntity,
       });
 
@@ -87,7 +86,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, contractEntity.id, erc998TokenEntity.id);
+    await this.updateHistory(event, context, void 0, erc998TokenEntity.id);
 
     if (from === constants.AddressZero) {
       erc998TokenEntity.template.amount += 1;
@@ -153,7 +152,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       throw new NotFoundException("token721NotFound");
     }
 
-    await this.updateHistory(event, context, parentContractEntity.id, erc721TokenEntity.id);
+    await this.updateHistory(event, context, erc721TokenEntity.id);
 
     const ownershipEntity = await this.ownershipService.findOne({ childId: erc721TokenEntity.id });
 
@@ -165,64 +164,20 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
   }
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
-    // const {
-    //   args: { to, tokenId, templateId, randomness },
-    // } = event;
-    // requestId: string;
-    // to: string;
-    // randomness: string;
-    // templateId: string;
-    // tokenId: string;
-    const { address } = context;
-
-    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
-
-    if (!parentContractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    // const erc998TemplateEntity = await this.templateService.findOne({ id: ~~templateId });
-    //
-    // if (!erc998TemplateEntity) {
-    //   throw new NotFoundException("templateNotFound");
-    // }
-    // let erc998MysteryboxEntity; // if minted as Mechanics reward
-    // if (~~mysteryboxId !== 0) {
-    //   erc998MysteryboxEntity = await this.tokenService.findOne({ id: ~~mysteryboxId });
-    //
-    //   if (!erc998MysteryboxEntity) {
-    //     throw new NotFoundException("mysteryboxNotFound");
-    //   }
-    // }
-    // const erc998TokenEntity = await this.tokenService.create({
-    //   tokenId,
-    //   attributes: JSON.stringify({
-    //     rarity: Object.values(TokenRarity)[~~rarity],
-    //   }),
-    //   royalty: erc998TemplateEntity.contract.royalty,
-    //   template: erc998TemplateEntity,
-    //   // token: erc998MysteryboxEntity,
-    // });
-    //
-    // await this.balanceService.create({
-    //   account: to.toLowerCase(),
-    //   amount: "1",
-    //   tokenId: erc998TokenEntity.id,
-    // });
-
-    await this.updateHistory(event, context, parentContractEntity.id, void 0);
+    await this.updateHistory(event, context);
   }
 
   public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
-    const { address } = context;
-
-    const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
-
-    if (!parentContractEntity) {
-      throw new NotFoundException("contractNotFound");
+    await this.updateHistory(event, context);
+    // DEV ONLY
+    if (process.env.NODE_ENV === "development") {
+      const {
+        args: { requestId },
+      } = event;
+      const { address } = context;
+      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
     }
-
-    await this.updateHistory(event, context, parentContractEntity.id, void 0);
   }
 
   public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChild>, context: Log): Promise<void> {

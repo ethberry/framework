@@ -49,6 +49,15 @@ export class TokenServiceEth {
     const { args, name } = event;
     const { transactionHash, address, blockNumber } = context;
 
+    if (!contractId) {
+      const parentContractEntity = await this.contractService.findOne({ address: address.toLowerCase() });
+
+      if (!parentContractEntity) {
+        throw new NotFoundException("contractNotFound");
+      }
+      contractId = parentContractEntity.id;
+    }
+
     await this.contractHistoryService.create({
       address: address.toLowerCase(),
       transactionHash: transactionHash.toLowerCase(),
@@ -56,7 +65,7 @@ export class TokenServiceEth {
       eventData: args,
       // ApprovedForAll has no tokenId
       tokenId: tokenId || null,
-      contractId: contractId || null,
+      contractId,
     });
 
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));

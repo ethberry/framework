@@ -63,7 +63,7 @@ contract ERC998RandomHardhat is IERC721Random, ChainLinkHardhat, ERC998Upgradeab
     upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
-    safeMint(request.account);
+    _safeMint(request.account, tokenId);
   }
 
   function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {
