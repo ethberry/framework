@@ -1,8 +1,9 @@
 import { FC, Fragment, useState } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
+import { useIntl } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IVesting, TokenType } from "@framework/types";
@@ -19,6 +20,8 @@ export const VestingFundButton: FC<IVestingButtonProps> = props => {
   const { vesting } = props;
 
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
+
+  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.NATIVE) {
@@ -49,9 +52,11 @@ export const VestingFundButton: FC<IVestingButtonProps> = props => {
 
   return (
     <Fragment>
-      <IconButton onClick={handleFund} data-testid="VestingFundButton">
-        <Savings />
-      </IconButton>
+      <Tooltip title={formatMessage({ id: "form.tips.fund" })}>
+        <IconButton onClick={handleFund} data-testid="VestingFundButton">
+          <Savings />
+        </IconButton>
+      </Tooltip>
       <VestingFundDialog
         onConfirm={handleFundConfirm}
         onCancel={handleFundCancel}

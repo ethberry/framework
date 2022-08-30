@@ -40,6 +40,11 @@
       "137": "POLYGON",
       "56": "BINANCE"
     },
+    "claimStatus": {
+      "NEW": "New",
+      "REDEEMED": "Redeemed",
+      "UNPACKED": "Unpacked"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
@@ -130,6 +135,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "claimStatus": "Status",
       "contractTemplate": "Template",
       "price": "Price",
       "account": "Account",
@@ -212,8 +218,11 @@
       "delete": "Delete",
       "deposit": "Deposit",
       "edit": "Edit",
+      "view": "View",
       "redeem": "Redeem",
-      "reward": "Reward"
+      "release": "Release",
+      "reward": "Reward",
+      "transfer": "Transfer ownership"
     },
     "validations": {
       "badInput": "{label} is invalid",

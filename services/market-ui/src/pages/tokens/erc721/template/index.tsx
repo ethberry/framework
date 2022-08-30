@@ -41,10 +41,10 @@ export const Erc721Template: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          {selected.templateStatus === TemplateStatus.ACTIVE ? (
+          {selected.templateStatus === TemplateStatus.ACTIVE && selected.amount !== selected.cap ? (
             <Paper className={classes.paper}>
               <Typography variant="body2" color="textSecondary" component="p">
-                <FormattedMessage id="pages.erc721-template.price" values={{ amount: formatPrice(selected.price) }} />
+                <FormattedMessage id="pages.erc721.template.price" values={{ amount: formatPrice(selected.price) }} />
               </Typography>
               <TemplatePurchaseButton template={selected} />
             </Paper>

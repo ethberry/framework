@@ -368,7 +368,8 @@
       "create": "Create",
       "delete": "Delete",
       "edit": "Edit",
-      "view": "View"
+      "view": "View",
+      "fund": "Fund"
     },
     "validations": {
       "badInput": "{label} is invalid",

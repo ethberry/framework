@@ -1,10 +1,11 @@
 import { FC, Fragment, useState } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IVesting } from "@framework/types";
+import { useIntl } from "react-intl";
 
 import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
 import { IVestingTransferOwnershipDto, VestingTransferOwnershipDialog } from "./dialog";
@@ -17,6 +18,8 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
   const { vesting } = props;
 
   const [isTransferOwnershipDialogOpen, setIsTransferOwnershipDialogOpen] = useState(false);
+
+  const { formatMessage } = useIntl();
 
   const metaFn = useMetamask(async (dto: IVestingTransferOwnershipDto, web3Context: Web3ContextType) => {
     const contract = new Contract(vesting.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
@@ -39,9 +42,11 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
 
   return (
     <Fragment>
-      <IconButton onClick={handleSell} data-testid="VestingTransferOwnershipButton">
-        <Send />
-      </IconButton>
+      <Tooltip title={formatMessage({ id: "form.tips.transfer" })}>
+        <IconButton onClick={handleSell} data-testid="VestingTransferOwnershipButton">
+          <Send />
+        </IconButton>
+      </Tooltip>
       <VestingTransferOwnershipDialog
         onConfirm={handleSellConfirm}
         onCancel={handleSellCancel}

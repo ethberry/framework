@@ -8,9 +8,10 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Pagination,
+  Tooltip,
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IVesting, IVestingSearchDto } from "@framework/types";
@@ -49,6 +50,8 @@ export const Vesting: FC = () => {
     },
   });
 
+  const { formatMessage } = useIntl();
+
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "vesting"]} />
@@ -70,9 +73,11 @@ export const Vesting: FC = () => {
               <ListItemText>{vesting.contractTemplate}</ListItemText>
               <ListItemSecondaryAction>
                 <VestingFundButton vesting={vesting} />
-                <IconButton onClick={handleView(vesting)}>
-                  <Visibility />
-                </IconButton>
+                <Tooltip title={formatMessage({ id: "form.tips.view" })}>
+                  <IconButton onClick={handleView(vesting)}>
+                    <Visibility />
+                  </IconButton>
+                </Tooltip>
               </ListItemSecondaryAction>
             </ListItem>
           ))}

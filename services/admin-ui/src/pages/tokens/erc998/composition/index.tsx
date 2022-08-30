@@ -8,9 +8,10 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Pagination,
+  Tooltip,
 } from "@mui/material";
 import { Add, Delete, FilterList, Visibility } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
@@ -52,6 +53,8 @@ export const Erc998Composition: FC = () => {
   });
 
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+
+  const { formatMessage } = useIntl();
 
   const metaFn1 = useMetamask((composition: IComposition, web3Context: Web3ContextType) => {
     const contract = new Contract(composition.parent!.address, ERC998SimpleSol.abi, web3Context.provider?.getSigner());
@@ -114,12 +117,16 @@ export const Erc998Composition: FC = () => {
                 {composition.parent?.title} + {composition.child?.title}
               </ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleView(composition)}>
-                  <Visibility />
-                </IconButton>
-                <IconButton onClick={handleDelete(composition)}>
-                  <Delete />
-                </IconButton>
+                <Tooltip title={formatMessage({ id: "form.tips.view" })}>
+                  <IconButton onClick={handleView(composition)}>
+                    <Visibility />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
+                  <IconButton onClick={handleDelete(composition)}>
+                    <Delete />
+                  </IconButton>
+                </Tooltip>
               </ListItemSecondaryAction>
             </ListItem>
           ))}

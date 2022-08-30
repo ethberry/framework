@@ -1,16 +1,21 @@
-import { FC, Fragment } from "react";
+import { FC, useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { useWallet } from "@gemunion/provider-wallet";
 
 export const ClaimWrapper: FC = () => {
-  return (
-    <Fragment>
-      <Breadcrumbs path={["dashboard", "claim"]} />
+  const { isActive } = useWeb3React();
 
-      <PageHeader message="pages.claim.title" />
+  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
 
-      <Outlet />
-    </Fragment>
-  );
+  useEffect(() => {
+    if (!isActive) {
+      void openConnectWalletDialog();
+    } else {
+      void closeConnectWalletDialog();
+    }
+  }, [isActive]);
+
+  return isActive ? <Outlet /> : null;
 };
