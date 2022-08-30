@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Web3ContextType } from "@web3-react/core";
 import { Redeem } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -27,8 +26,8 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
   };
 
   return (
-    <Button onClick={handleRelease} startIcon={<Redeem />} data-testid="VestingReleaseButton">
-      <FormattedMessage id="form.buttons.release" />
-    </Button>
+    <IconButton onClick={handleRelease} data-testid="VestingReleaseButton">
+      <Redeem />
+    </IconButton>
   );
 };

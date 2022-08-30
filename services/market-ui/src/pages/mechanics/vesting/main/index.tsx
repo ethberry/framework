@@ -8,6 +8,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IVesting, IVestingSearchDto } from "@framework/types";
 import { VestingViewDialog } from "./view";
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
+import { VestingReleaseButton } from "../../../../components/buttons";
 
 export const Vesting: FC = () => {
   const { account } = useWeb3React();
@@ -49,6 +50,7 @@ export const Vesting: FC = () => {
               <ListItemText>{vesting.contractTemplate}</ListItemText>
               <ListItemSecondaryAction>
                 <VestingTransferOwnershipButton vesting={vesting} />
+                <VestingReleaseButton vesting={vesting} />
                 <IconButton onClick={handleView(vesting)}>
                   <Visibility />
                 </IconButton>
