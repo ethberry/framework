@@ -169,8 +169,9 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
 
   public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-    // DEV ONLY
-    if (process.env.NODE_ENV === "development") {
+    // TODO DEV ONLY!!!
+    const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
+    if (nodeEnv === "development") {
       const {
         args: { requestId },
       } = event;

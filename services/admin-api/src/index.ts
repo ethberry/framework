@@ -15,14 +15,13 @@ async function bootstrap(): Promise<void> {
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
 
   const baseUrl = configService.get<string>("ADMIN_FE_URL", "http://localhost:3002");
 
   app.enableCors({
     origin:
-      process.env.NODE_ENV === "development"
-        ? ["http://localhost:3002", "http://127.0.0.1:3002", "http://0.0.0.0:3002"]
-        : [baseUrl],
+      nodeEnv === "development" ? ["http://localhost:3002", "http://127.0.0.1:3002", "http://0.0.0.0:3002"] : [baseUrl],
     credentials: true,
     exposedHeaders: ["Content-Disposition"],
   });
@@ -39,8 +38,6 @@ async function bootstrap(): Promise<void> {
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
-
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
 
   if (nodeEnv === "production" || nodeEnv === "staging") {
     app.enableShutdownHooks();
