@@ -9,8 +9,8 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { useStyles } from "./styles";
+import { emptyItem, emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { CraftButton } from "../../../../components/buttons";
-import { emptyItem, emptyPrice } from "../../../../components/inputs/empty-price";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({

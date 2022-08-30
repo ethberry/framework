@@ -47,7 +47,7 @@ async function bootstrap(): Promise<void> {
   }
 
   const host = configService.get<string>("HOST", "localhost");
-  const port = configService.get<number>("PORT", 3003);
+  const port = configService.get<number>("PORT", 3005);
 
   await app.listen(port, host, () => {
     console.info(`API server is running on http://${host}:${port}`);

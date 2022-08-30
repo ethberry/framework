@@ -21,3 +21,15 @@ export const getEthPrice = (asset?: IAsset) => {
     return memo;
   }, BigNumber.from(0));
 };
+
+export const cleanUpAsset = ({ components }: IAsset = { components: [], id: 0 }) => {
+  return {
+    components: components.map(({ id, tokenType, contractId, templateId, amount }) => ({
+      id,
+      tokenType,
+      contractId,
+      templateId,
+      amount,
+    })),
+  };
+};

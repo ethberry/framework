@@ -17,7 +17,7 @@ import "../../ERC721/interfaces/IERC721Random.sol";
 contract ExchangeUtils {
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
-  function spend(Asset[] memory price, address account) internal {
+  function spend(Asset[] memory price, address account, address receiver) internal {
     uint256 length = price.length;
 
     // TODO calculate what is most efficient to pre-calculate here
@@ -36,7 +36,6 @@ contract ExchangeUtils {
     // TODO ETH and ERC20 tokens should be transferred to PaymentSplitter,
     // TODO ERC721 and ERC1155 should be burned
     // TODO PaymentSplitter address should be set by ContractManager
-    address receiver = address(this);
     for (uint256 i = 0; i < length; i++) {
       Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {

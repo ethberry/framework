@@ -1,19 +1,25 @@
-import { Controller, Get, Param, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 
-import { AddressPipe, ApiAddress, NotFoundInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { VestingService } from "./vesting.service";
 import { VestingEntity } from "./vesting.entity";
+import { VestingSearchDto } from "./dto";
 
 @Public()
 @Controller("/vesting")
 export class VestingController {
   constructor(private readonly vestingService: VestingService) {}
 
-  @ApiAddress("wallet")
-  @Get("/:wallet")
+  @Get("/")
+  @UseInterceptors(PaginationInterceptor)
+  public search(@Query() dto: VestingSearchDto): Promise<[Array<VestingEntity>, number]> {
+    return this.vestingService.search(dto);
+  }
+
+  @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
-  public findOne(@Param("wallet", AddressPipe) wallet: string): Promise<VestingEntity | null> {
-    return this.vestingService.findOne({ account: wallet.toLowerCase() });
+  public findOne(@Param("id", ParseIntPipe) id: number): Promise<VestingEntity | null> {
+    return this.vestingService.findOne({ id });
   }
 }

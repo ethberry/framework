@@ -73,10 +73,11 @@ export class ContractService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(dto: IContractAutocompleteDto): Promise<Array<ContractEntity>> {
+  public async autocomplete(dto: IContractAutocompleteDto, chainId: number): Promise<Array<ContractEntity>> {
     const { contractStatus = [], contractFeatures = [], contractType = [] } = dto;
 
     const where = {
+      chainId,
       contractStatus: ContractStatus.ACTIVE,
     };
 

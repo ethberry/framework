@@ -3,11 +3,12 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
-import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractFeatures, IMarketplaceSupplySearchDto, TokenStatus, TokenType } from "@framework/types";
+import type { IMarketplaceSupplySearchDto } from "@framework/types";
+import { TokenStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 import { TemplateInput } from "./template-input";
+import { ContractInput } from "./contract-input";
 
 interface IMarketplaceGradeSearchFormProps {
   onSubmit: (values: IMarketplaceSupplySearchDto) => Promise<any>;
@@ -45,15 +46,7 @@ export const MarketplaceGradeSearchForm: FC<IMarketplaceGradeSearchFormProps> = 
             <SelectInput name="tokenStatus" options={TokenStatus} />
           </Grid>
           <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{
-                contractType: [TokenType.ERC721, TokenType.ERC998],
-                contractFeatures: [ContractFeatures.UPGRADEABLE],
-              }}
-            />
+            <ContractInput />
           </Grid>
           <Grid item xs={6}>
             <TemplateInput />

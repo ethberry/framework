@@ -2,7 +2,7 @@ import { ContractStatus, ContractFeatures, ModuleType, TokenType } from "../../.
 
 export interface IContractAutocompleteDto {
   contractStatus: Array<ContractStatus>;
-  contractFeatures: Array<ContractFeatures>;
   contractType: Array<TokenType>;
+  contractFeatures: Array<ContractFeatures>;
   contractModule: Array<ModuleType>;
 }

@@ -18,9 +18,9 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import { TokenType } from "@framework/types";
 
+import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { StakingDepositButton } from "../../../../components/buttons";
 import { StakingRuleSearchForm } from "./form";
-import { emptyPrice } from "../../../../components/inputs/empty-price";
 import { StakingViewDialog } from "./view";
 
 export const StakingRules: FC = () => {

@@ -6,7 +6,7 @@ import { format, formatDistance, formatDuration, intervalToDuration, parseISO } 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { networks } from "@gemunion/provider-wallet";
-import { IVesting } from "@framework/types";
+import type { IVesting } from "@framework/types";
 
 export interface IVestingViewDialogProps {
   open: boolean;

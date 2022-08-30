@@ -6,7 +6,6 @@ import { SearchDto } from "@gemunion/collection";
 
 import { Erc1155ContractService } from "./contract.service";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
-import { ContractAutocompleteDto } from "../../../hierarchy/contract/dto";
 import { UserEntity } from "../../../../user/user.entity";
 
 @ApiBearerAuth()
@@ -18,11 +17,6 @@ export class Erc1155ContractController {
   @UseInterceptors(PaginationInterceptor)
   public search(@Query() query: SearchDto, @User() userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
     return this.erc1155ContractService.search(query, userEntity);
-  }
-
-  @Get("/autocomplete")
-  public autocomplete(@Query() dto: ContractAutocompleteDto): Promise<Array<ContractEntity>> {
-    return this.erc1155ContractService.autocomplete(dto);
   }
 
   @Get("/:id")

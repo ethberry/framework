@@ -39,7 +39,7 @@ export const Vesting: FC = () => {
   } = useCollection<IVesting, IVestingSearchDto>({
     baseUrl: "/vesting",
     search: {
-      query: "",
+      account: "",
       contractTemplate: [],
     },
     empty: {
