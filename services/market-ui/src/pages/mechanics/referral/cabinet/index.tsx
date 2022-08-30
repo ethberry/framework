@@ -9,7 +9,7 @@ import { useWallet } from "@gemunion/provider-wallet";
 
 import { ReferralRewardButton } from "../../../../components/buttons/mechanics/referral/reward";
 
-export const ReferralLink: FC = () => {
+export const ReferralCabinet: FC = () => {
   const { isActive, account = "" } = useWeb3React();
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
   const clipboard = useClipboard();
@@ -24,9 +24,9 @@ export const ReferralLink: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "referral", "referral.link"]} />
+      <Breadcrumbs path={["dashboard", "referral", "referral.cabinet"]} />
 
-      <PageHeader message="pages.referral.link.title">
+      <PageHeader message="pages.referral.cabinet.title">
         <ReferralRewardButton />
       </PageHeader>
 

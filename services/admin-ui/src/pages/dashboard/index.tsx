@@ -42,8 +42,8 @@ export const Dashboard: FC = () => {
         <Grid item xs={4}>
           <Vesting />
           <Claim />
-          <Craft />
           <Drop />
+          <Craft />
           <Grade />
           <Lottery />
           <Staking />

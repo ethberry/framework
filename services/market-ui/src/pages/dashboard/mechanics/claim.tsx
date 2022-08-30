@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Paragliding } from "@mui/icons-material";
+import { MarkunreadMailbox } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +17,7 @@ export const Claim: FC = () => {
       >
         <ListItem button component={RouterLink} to="/claim">
           <ListItemIcon>
-            <Paragliding />
+            <MarkunreadMailbox />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.claim.title" />

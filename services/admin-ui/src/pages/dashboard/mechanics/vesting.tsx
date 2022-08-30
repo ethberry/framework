@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Savings } from "@mui/icons-material";
+import { AccountBalance } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +17,7 @@ export const Vesting: FC = () => {
       >
         <ListItem button component={RouterLink} to="/vesting">
           <ListItemIcon>
-            <Savings />
+            <AccountBalance />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.vesting.title" />
