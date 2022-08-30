@@ -18,8 +18,8 @@ export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { query, contractTemplate } = initialValues;
-  const fixedValues = { query, contractTemplate };
+  const { account, contractTemplate } = initialValues;
+  const fixedValues = { account, contractTemplate };
 
   return (
     <FormWrapper
@@ -32,7 +32,7 @@ export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" />
+          <SearchInput name="account" />
         </Grid>
       </Grid>
       <Collapse in={open}>

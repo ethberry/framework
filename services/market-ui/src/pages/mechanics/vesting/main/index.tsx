@@ -1,95 +1,77 @@
-import { FC, Fragment, useEffect, useState } from "react";
-import { IconButton, Tooltip } from "@mui/material";
+import { FC, Fragment } from "react";
+import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
+import { Visibility } from "@mui/icons-material";
 import { useWeb3React } from "@web3-react/core";
-import { AccountBalanceWallet } from "@mui/icons-material";
-import { FormattedMessage, useIntl } from "react-intl";
-import { useSnackbar } from "notistack";
 
-import { ApiError } from "@gemunion/provider-api-firebase";
-import { useApiCall } from "@gemunion/react-hooks";
-import { useWallet } from "@gemunion/provider-wallet";
-import { Spinner } from "@gemunion/mui-page-layout";
-import { IVesting } from "@framework/types";
-
-import { VestingReleaseButton } from "../../../../components/buttons";
-import { VestingSellButton } from "../../../../components/buttons/mechanics/vesting/sell";
+import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
+import { useCollection } from "@gemunion/react-hooks";
+import type { IVesting, IVestingSearchDto } from "@framework/types";
+import { VestingViewDialog } from "./view";
+import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
 
 export const Vesting: FC = () => {
-  const [vesting, setVesting] = useState<IVesting | null>(null);
+  const { account } = useWeb3React();
 
-  const { isActive, account } = useWeb3React();
-  const { formatMessage } = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
-  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
-
-  const { fn, isLoading } = useApiCall(
-    async api => {
-      return api.fetchJson({
-        url: `/vesting/${account as string}`,
-      });
+  const {
+    rows,
+    count,
+    search,
+    selected,
+    isLoading,
+    isViewDialogOpen,
+    handleView,
+    handleViewConfirm,
+    handleViewCancel,
+    handleChangePage,
+  } = useCollection<IVesting, IVestingSearchDto>({
+    baseUrl: `/vesting`,
+    search: {
+      account,
     },
-    { success: false, error: false },
+    empty: {
+      account: "",
+      duration: 0,
+      startTimestamp: new Date().toISOString(),
+    },
+  });
+
+  return (
+    <Fragment>
+      <Breadcrumbs path={["dashboard", "vesting"]} />
+
+      <PageHeader message="pages.vesting.title" />
+
+      <ProgressOverlay isLoading={isLoading}>
+        <List>
+          {rows.map((vesting, i) => (
+            <ListItem key={i}>
+              <ListItemText sx={{ width: 0.6 }}>{vesting.account}</ListItemText>
+              <ListItemText>{vesting.contractTemplate}</ListItemText>
+              <ListItemSecondaryAction>
+                <VestingTransferOwnershipButton vesting={vesting} />
+                <IconButton onClick={handleView(vesting)}>
+                  <Visibility />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
+      </ProgressOverlay>
+
+      <Pagination
+        sx={{ mt: 2 }}
+        shape="rounded"
+        page={search.skip / search.take + 1}
+        count={Math.ceil(count / search.take)}
+        onChange={handleChangePage}
+      />
+
+      <VestingViewDialog
+        onCancel={handleViewCancel}
+        onConfirm={handleViewConfirm}
+        open={isViewDialogOpen}
+        initialValues={selected}
+      />
+    </Fragment>
   );
-
-  const fetchVesting = async (): Promise<void> => {
-    if (!isActive) {
-      return;
-    }
-
-    return fn()
-      .then((json: IVesting) => {
-        setVesting(json);
-      })
-      .catch((e: ApiError) => {
-        if (e.status === 404) {
-          setVesting(null);
-        } else if (e.status) {
-          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
-        } else {
-          console.error(e);
-          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
-        }
-      });
-  };
-
-  const handleOpenConnectWalletDialog = () => {
-    void openConnectWalletDialog();
-  };
-
-  useEffect(() => {
-    if (!isActive) {
-      void openConnectWalletDialog();
-    } else {
-      void closeConnectWalletDialog();
-    }
-  }, [isActive]);
-
-  useEffect(() => {
-    void fetchVesting();
-  }, [isActive, account]);
-
-  if (!isActive) {
-    return (
-      <Tooltip title={formatMessage({ id: "components.header.wallet.connect" })} enterDelay={300}>
-        <IconButton color="inherit" onClick={handleOpenConnectWalletDialog}>
-          <AccountBalanceWallet />
-        </IconButton>
-      </Tooltip>
-    );
-  }
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (vesting) {
-    return (
-      <Fragment>
-        <VestingReleaseButton vesting={vesting} />
-        <VestingSellButton vesting={vesting} />
-      </Fragment>
-    );
-  }
-
-  return <FormattedMessage id="pages.vesting.sorry" />;
 };

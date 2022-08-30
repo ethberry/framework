@@ -1,16 +1,21 @@
-import { FC, Fragment } from "react";
+import { FC, useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useWeb3React } from "@web3-react/core";
 
-import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
+import { useWallet } from "@gemunion/provider-wallet";
 
 export const VestingWrapper: FC = () => {
-  return (
-    <Fragment>
-      <Breadcrumbs path={["dashboard", "vesting"]} />
+  const { isActive } = useWeb3React();
 
-      <PageHeader message="pages.vesting.title" />
+  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
 
-      <Outlet />
-    </Fragment>
-  );
+  useEffect(() => {
+    if (!isActive) {
+      void openConnectWalletDialog();
+    } else {
+      void closeConnectWalletDialog();
+    }
+  }, [isActive]);
+
+  return isActive ? <Outlet /> : null;
 };

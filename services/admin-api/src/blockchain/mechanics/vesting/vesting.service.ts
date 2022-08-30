@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IVestingSearchDto } from "@framework/types";
+import type { IVestingSearchDto } from "@framework/types";
 
 import { VestingEntity } from "./vesting.entity";
 
@@ -14,7 +14,7 @@ export class VestingService {
   ) {}
 
   public async search(dto: IVestingSearchDto): Promise<[Array<VestingEntity>, number]> {
-    const { query, contractTemplate, skip, take } = dto;
+    const { account, contractTemplate, skip, take } = dto;
 
     const queryBuilder = this.vestingEntityRepository.createQueryBuilder("vesting");
 
@@ -30,8 +30,8 @@ export class VestingService {
       }
     }
 
-    if (query) {
-      queryBuilder.andWhere("vesting.account = :account", { account: query });
+    if (account) {
+      queryBuilder.andWhere("vesting.account = :account", { account });
     }
 
     queryBuilder.skip(skip);

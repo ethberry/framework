@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ITemplateAutocompleteDto, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
@@ -83,15 +83,22 @@ export class TemplateService {
   }
 
   public async autocomplete(dto: ITemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
-    const { templateStatus = [], contractIds = [], contractType = [] } = dto;
+    const { contractFeatures = [], templateStatus = [], contractIds = [], contractType = [] } = dto;
 
-    const where = {};
+    const where = {
+      contract: {},
+    };
 
     if (contractType.length) {
-      Object.assign(where, {
-        contract: {
-          contractType: In(contractType),
-        },
+      Object.assign(where.contract, {
+        contractType: In(contractType),
+      });
+    }
+
+    if (contractFeatures.length) {
+      Object.assign(where.contract, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: ArrayOverlap(contractFeatures),
       });
     }
 

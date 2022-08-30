@@ -28,6 +28,7 @@
     "delete": "Delete `{title}`?",
     "deposit": "Deposit",
     "sell": "Sell",
+    "transfer": "Transfer",
     "edit": "Edit",
     "reward": "Reward",
     "view": "View"
@@ -129,6 +130,7 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "contractTemplate": "Template",
       "price": "Price",
       "account": "Account",
       "address": "Address",

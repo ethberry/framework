@@ -2,7 +2,7 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
-import { ITemplateAutocompleteDto, TemplateStatus, TokenType } from "@framework/types";
+import { ContractFeatures, ITemplateAutocompleteDto, TemplateStatus, TokenType } from "@framework/types";
 
 export class TemplateAutocompleteDto implements ITemplateAutocompleteDto {
   @ApiPropertyOptional({
@@ -28,6 +28,16 @@ export class TemplateAutocompleteDto implements ITemplateAutocompleteDto {
   @Transform(({ value }) => value as Array<TokenType>)
   @IsEnum(TokenType, { each: true, message: "badInput" })
   public contractType: Array<TokenType>;
+
+  @ApiPropertyOptional({
+    enum: ContractFeatures,
+    isArray: true,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<ContractFeatures>)
+  @IsEnum(ContractFeatures, { each: true, message: "badInput" })
+  public contractFeatures: Array<ContractFeatures>;
 
   @ApiPropertyOptional({
     type: Number,

@@ -2,23 +2,21 @@ import { FC } from "react";
 import { useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractFeatures, TemplateStatus } from "@framework/types";
+import { ContractFeatures, ContractStatus } from "@framework/types";
 
-export const TemplateInput: FC = () => {
+export const ContractInput: FC = () => {
   const tokenType = useWatch({ name: "tokenType" });
-  const contractIds = useWatch({ name: "contractIds" });
 
   return (
     <EntityInput
-      name="templateIds"
-      controller="templates"
+      multiple
+      name="contractIds"
+      controller="contracts"
       data={{
-        contractIds,
         contractType: [tokenType],
-        templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
+        contractStatus: [ContractStatus.ACTIVE],
         contractFeatures: [ContractFeatures.UPGRADEABLE],
       }}
-      multiple
     />
   );
 };
