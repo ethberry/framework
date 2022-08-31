@@ -1,10 +1,5 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
-import { ICraft } from "./craft/craft";
-import { ITemplate } from "../hierarchy/template";
-import { IClaim } from "./claim/claim";
-import { IGrade } from "./grade/grade";
-import { IMysterybox } from "./mysterybox/mysterybox";
 import { IAssetComponentHistory } from "./asset-component-history";
 
 export enum ExchangeEventType {
@@ -67,15 +62,5 @@ export interface IExchangeHistory extends IIdDateBase {
   transactionHash: string;
   eventType: ExchangeEventType;
   eventData: TExchangeEventData;
-  templateId: number | null;
-  template?: ITemplate;
-  claimId: number | null;
-  claim?: IClaim;
-  craftId: number | null;
-  craft?: ICraft;
-  gradeId: number | null;
-  grade?: IGrade;
-  mysteryboxId: number | null;
-  mysterybox?: IMysterybox;
   assets?: Array<IAssetComponentHistory>;
 }

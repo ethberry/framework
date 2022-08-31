@@ -12,6 +12,7 @@ import { ContractModule } from "../../hierarchy/contract/contract.module";
 import { AssetModule } from "../asset/asset.module";
 import { TokenModule } from "../../hierarchy/token/token.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";
+import { GradeModule } from "../grade/grade.module";
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { TemplateModule } from "../../hierarchy/template/template.module";
     ExchangeHistoryModule,
     ExchangeLogModule,
     ClaimModule,
+    GradeModule,
     TemplateModule,
     TokenModule,
     AssetModule,

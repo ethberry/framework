@@ -7,7 +7,10 @@ import {
   ExchangeEventType,
   ExchangeType,
   IExchangeClaim,
+  IExchangeCraft,
+  IExchangeGrade,
   IExchangeItem,
+  IExchangeMysterybox,
   IExchangePurchase,
   TExchangeEventData,
 } from "@framework/types";
@@ -20,6 +23,7 @@ import { AssetService } from "../asset/asset.service";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { ExchangeHistoryEntity } from "./history/exchange-history.entity";
+import { GradeService } from "../grade/grade.service";
 
 @Injectable()
 export class ExchangeServiceEth {
@@ -29,6 +33,7 @@ export class ExchangeServiceEth {
     private readonly contractService: ContractService,
     private readonly exchangeService: ExchangeService,
     private readonly claimService: ClaimService,
+    private readonly gradeService: GradeService,
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
     private readonly exchangeHistoryService: ExchangeHistoryService,
@@ -42,7 +47,41 @@ export class ExchangeServiceEth {
 
     const history = await this.updateHistory(event, context);
 
-    await this.newMethod(history, [item], price);
+    await this.saveAssetHistory(history, [item], price);
+  }
+
+  public async claim(event: ILogEvent<IExchangeClaim>, context: Log): Promise<void> {
+    const {
+      args: { items, externalId },
+    } = event;
+    const history = await this.updateHistory(event, context);
+
+    const claimEntity = await this.claimService.findOne({ id: ~~externalId });
+
+    if (!claimEntity) {
+      throw new NotFoundException("claimNotFound");
+    }
+
+    Object.assign(claimEntity, { claimStatus: ClaimStatus.REDEEMED });
+    await claimEntity.save();
+
+    await this.saveAssetHistory(history, [items]);
+  }
+
+  public async log(event: ILogEvent<IExchangeGrade | IExchangeMysterybox>, context: Log): Promise<void> {
+    const {
+      args: { items, price },
+    } = event;
+    const history = await this.updateHistory(event, context);
+    await this.saveAssetHistory(history, [items], price);
+  }
+
+  public async logCraft(event: ILogEvent<IExchangeCraft>, context: Log): Promise<void> {
+    const {
+      args: { items, price },
+    } = event;
+    const history = await this.updateHistory(event, context);
+    await this.saveAssetHistory(history, items, price);
   }
 
   private async updateHistory(event: ILogEvent<TExchangeEventData>, context: Log): Promise<ExchangeHistoryEntity> {
@@ -64,31 +103,12 @@ export class ExchangeServiceEth {
     return exchangeHistoryEntity;
   }
 
-  public async log(event: ILogEvent<TExchangeEventData>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-  }
-
-  public async claim(event: ILogEvent<IExchangeClaim>, context: Log): Promise<void> {
-    await this.updateHistory(event, context);
-
-    const { args } = event;
-    const { externalId } = args;
-
-    const claimEntity = await this.claimService.findOne({ id: ~~externalId });
-
-    if (!claimEntity) {
-      throw new NotFoundException("claimNotFound");
-    }
-
-    Object.assign(claimEntity, { claimStatus: ClaimStatus.REDEEMED });
-    await claimEntity.save();
-  }
-
-  public async newMethod(
+  public async saveAssetHistory(
     exchangeHistoryEntity: ExchangeHistoryEntity,
     items: Array<IExchangeItem>,
-    price: Array<IExchangeItem>,
+    price?: Array<IExchangeItem>,
   ): Promise<void> {
+    // ITEMS
     await Promise.allSettled(
       items.map(async ([itemType, _itemTokenAddr, itemTokenId, itemAmount]) => {
         const assetComponentHistoryItem = {
@@ -113,30 +133,32 @@ export class ExchangeServiceEth {
         return this.assetService.createAssetHistory(assetComponentHistoryItem);
       }),
     );
+    // PRICE
+    if (price) {
+      await Promise.allSettled(
+        price.map(async ([_priceType, _priceTokenAddr, priceTokenId, priceAmount]) => {
+          const assetComponentHistoryPrice = {
+            historyId: exchangeHistoryEntity.id,
+            exchangeType: ExchangeType.PRICE,
+            amount: priceAmount,
+          };
 
-    await Promise.allSettled(
-      price.map(async ([_priceType, _priceTokenAddr, priceTokenId, priceAmount]) => {
-        const assetComponentHistoryPrice = {
-          historyId: exchangeHistoryEntity.id,
-          exchangeType: ExchangeType.PRICE,
-          amount: priceAmount,
-        };
+          // find price item template
+          const templateEntity = await this.templateService.findOne(
+            { id: ~~priceTokenId },
+            { relations: { tokens: true } },
+          );
+          if (!templateEntity) {
+            throw new NotFoundException("templateNotFound");
+          }
+          Object.assign(assetComponentHistoryPrice, {
+            tokenId: templateEntity.tokens[0].id,
+            contractId: templateEntity.contractId,
+          });
 
-        // find price item template
-        const templateEntity = await this.templateService.findOne(
-          { id: ~~priceTokenId },
-          { relations: { tokens: true } },
-        );
-        if (!templateEntity) {
-          throw new NotFoundException("templateNotFound");
-        }
-        Object.assign(assetComponentHistoryPrice, {
-          tokenId: templateEntity.tokens[0].id,
-          contractId: templateEntity.contractId,
-        });
-
-        return this.assetService.createAssetHistory(assetComponentHistoryPrice);
-      }),
-    );
+          return this.assetService.createAssetHistory(assetComponentHistoryPrice);
+        }),
+      );
+    }
   }
 }

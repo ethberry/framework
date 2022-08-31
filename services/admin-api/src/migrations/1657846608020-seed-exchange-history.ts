@@ -14,7 +14,6 @@ export class SeedExchangeHistory1657846608020 implements MigrationInterface {
         transaction_hash,
         event_type,
         event_data,
-        template_id,
         created_at,
         updated_at
       ) VALUES (
@@ -22,7 +21,6 @@ export class SeedExchangeHistory1657846608020 implements MigrationInterface {
         '${constants.HashZero}',
         'Purchase',
         '{}',
-        301001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -30,7 +28,6 @@ export class SeedExchangeHistory1657846608020 implements MigrationInterface {
         '${constants.HashZero}',
         'Purchase',
         '{}',
-        301002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
@@ -38,7 +35,6 @@ export class SeedExchangeHistory1657846608020 implements MigrationInterface {
         '${constants.HashZero}',
         'Purchase',
         '{}',
-        301003,
         '${currentDateTime}',
         '${currentDateTime}'
       );
