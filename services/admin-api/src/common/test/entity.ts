@@ -15,6 +15,7 @@ export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
       sub: v4(),
       userStatus: UserStatus.ACTIVE,
       userRoles: [UserRole.USER],
+      chainId: 1337,
     },
     data,
   );
