@@ -23,7 +23,7 @@ export class AssetComponentEntity extends IdBaseEntity implements IAssetComponen
   @OneToOne(_type => ContractEntity)
   public contract: ContractEntity;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", nullable: true })
   public templateId: number;
 
   @JoinColumn()

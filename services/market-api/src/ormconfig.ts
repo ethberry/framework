@@ -15,6 +15,7 @@ import { CompositionEntity } from "./blockchain/tokens/erc998/composition/compos
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
 import { AssetEntity } from "./blockchain/mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-component.entity";
+import { AssetComponentHistoryEntity } from "./blockchain/mechanics/asset/asset-component-history.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
@@ -23,6 +24,7 @@ import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.e
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { MysteryboxBoxEntity } from "./blockchain/mechanics/mysterybox/box/box.entity";
 import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
+import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -45,12 +47,14 @@ const config: PostgresConnectionOptions = {
     OwnershipEntity,
     AssetEntity,
     AssetComponentEntity,
+    AssetComponentHistoryEntity,
     DropEntity,
     GradeEntity,
     ReferralRewardEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
     MysteryboxBoxEntity,
+    ExchangeHistoryEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
