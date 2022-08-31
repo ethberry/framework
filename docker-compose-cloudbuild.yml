@@ -176,6 +176,31 @@ services:
       # admin-api
       - "${PORT_JSON_API}:${PORT_JSON_API}"
 
+  game-api:
+    container_name: game-api
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "npm run --prefix ./microservices/game start:${BASE_MODE}"
+    environment:
+      # common
+      BASE_MODE: "${BASE_MODE}"
+      NODE_ENV: "${NODE_ENV}"
+      HOST: "${HOST}"
+      PORT: "${PORT_GAME_API}"
+      # admin api
+      POSTGRES_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}"
+      # REDIS
+      REDIS_THROTTLE_URL: "${REDIS_THROTTLE_URL}"
+      # THROTTLE
+      THROTTLE_TTL: "${THROTTLE_TTL}"
+      THROTTLE_LIMIT: "${THROTTLE_LIMIT}"
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+      # GEMUNION
+      GEMUNION_API_KEY: "${GEMUNION_API_KEY}"
+      GAME_MICROSERVICE_API_KEY: "${GAME_MICROSERVICE_API_KEY}"
+    ports:
+      # game-api
+      - "${PORT_GAME_API}:${PORT_GAME_API}"
+
   nginx:
     container_name: nginx
     image: nginx
@@ -202,4 +227,5 @@ services:
       - market-ui
       - market-api
       - json-api
+      - game-api
       - core-eth
