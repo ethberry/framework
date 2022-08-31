@@ -38,7 +38,7 @@ export class ExchangeControllerEth {
     event: ILogEvent<IExchangeCraft>,
     @Ctx() context: Log,
   ): Promise<void> {
-    return this.exchangeServiceEth.logCraft(event, context);
+    return this.exchangeServiceEth.craft(event, context);
   }
 
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Claim }])
