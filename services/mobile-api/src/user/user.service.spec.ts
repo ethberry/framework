@@ -61,6 +61,7 @@ describe("UserService", () => {
         userRoles: [UserRole.USER],
         userStatus: UserStatus.ACTIVE,
         sub: "test_user_id",
+        chainId: 1337,
       });
       expect(userEntity).toMatchObject({
         displayName: "test_name",
