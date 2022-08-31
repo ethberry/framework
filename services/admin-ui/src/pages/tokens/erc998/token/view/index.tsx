@@ -45,7 +45,7 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.description" />
               </TableCell>
               <TableCell align="right">
-                <RichTextDisplay data={template?.description || {}} />
+                <RichTextDisplay data={template?.description} />
               </TableCell>
             </TableRow>
             <TableRow>
