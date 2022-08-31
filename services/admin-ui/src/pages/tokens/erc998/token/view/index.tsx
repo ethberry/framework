@@ -17,7 +17,7 @@ export interface IErc998ViewDialogProps {
 export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { template, tokenId, attributes } = initialValues;
+  const { template, tokenId, attributes, balance } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -53,6 +53,12 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.attributes" />
               </TableCell>
               <TableCell align="right">{JSON.stringify(JSON.parse(attributes), null, "\t")}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.account" />
+              </TableCell>
+              <TableCell align="right">{balance?.pop()?.account}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
