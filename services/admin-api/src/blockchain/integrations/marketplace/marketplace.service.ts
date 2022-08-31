@@ -9,6 +9,7 @@ import { ExchangeType, TokenType } from "@framework/types";
 
 import { formatPrice } from "./marketplace.utils";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class MarketplaceService {
@@ -19,7 +20,10 @@ export class MarketplaceService {
     private readonly entityManager: EntityManager,
   ) {}
 
-  public async search(dto: Partial<IMarketplaceReportSearchDto>): Promise<[Array<TokenEntity>, number]> {
+  public async search(
+    dto: Partial<IMarketplaceReportSearchDto>,
+    userEntity: UserEntity,
+  ): Promise<[Array<TokenEntity>, number]> {
     const { query, contractIds, templateIds, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
@@ -28,6 +32,9 @@ export class MarketplaceService {
 
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     queryBuilder.leftJoinAndSelect("token.history", "item_history");
     queryBuilder.leftJoinAndSelect("item_history.history", "exchange_history");
@@ -41,7 +48,7 @@ export class MarketplaceService {
     queryBuilder.leftJoinAndSelect("price_token.template", "price_template");
     queryBuilder.leftJoinAndSelect("price_history.contract", "price_contract");
 
-    // TODO remove
+    // DEV
     queryBuilder.andWhere("item_history.id IS NOT NULL");
 
     queryBuilder.andWhere("contract.contractType IN(:...contractType)", {
@@ -99,10 +106,10 @@ export class MarketplaceService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async export(dto: IMarketplaceReportSearchDto): Promise<string> {
+  public async export(dto: IMarketplaceReportSearchDto, userEntity: UserEntity): Promise<string> {
     const { skip: _skip, take: _take, ...rest } = dto;
 
-    const [list] = await this.search(rest);
+    const [list] = await this.search(rest, userEntity);
 
     const headers = ["id", "title", "createdAt", "price"];
 
@@ -117,7 +124,7 @@ export class MarketplaceService {
     );
   }
 
-  public async supply(dto: IMarketplaceSupplySearchDto): Promise<any> {
+  public async supply(dto: IMarketplaceSupplySearchDto, userEntity: UserEntity): Promise<any> {
     const { attribute, tokenType, tokenStatus, templateIds = [], contractIds = [] } = dto;
 
     // prettier-ignore
@@ -126,11 +133,11 @@ export class MarketplaceService {
             COUNT(token.id)::INTEGER AS count,
             (token.attributes->>$1)::INTEGER as attribute
         FROM
-            gemunion.token
+            ${ns}.token
           LEFT JOIN
-            gemunion.template ON template.id = token.template_id
+            ${ns}.template ON template.id = token.template_id
           LEFT JOIN
-            gemunion.contract ON contract.id = template.contract_id
+            ${ns}.contract ON contract.id = template.contract_id
         WHERE
             (token.attributes->>$1) is not null
           AND
@@ -141,6 +148,8 @@ export class MarketplaceService {
             (token.template_id = ANY($4) OR cardinality($4) = 0)
           AND
             (template.contract_id = ANY($5) OR cardinality($5) = 0)
+          AND
+            contract.chain_id = $6
         GROUP BY
             attribute
         ORDER BY
@@ -149,12 +158,19 @@ export class MarketplaceService {
     `;
 
     return Promise.all([
-      this.entityManager.query(queryString, [attribute, tokenType, tokenStatus, templateIds, contractIds]),
+      this.entityManager.query(queryString, [
+        attribute,
+        tokenType,
+        tokenStatus,
+        templateIds,
+        contractIds,
+        userEntity.chainId,
+      ]),
       0,
     ]);
   }
 
-  public async chart(dto: IMarketplaceReportSearchDto): Promise<any> {
+  public async chart(dto: IMarketplaceReportSearchDto, userEntity: UserEntity): Promise<any> {
     const { templateIds = [], contractIds = [], startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -166,12 +182,16 @@ export class MarketplaceService {
             ${ns}.token
           LEFT JOIN 
             ${ns}.template ON template.id = token.template_id
+          LEFT JOIN
+            ${ns}.contract ON contract.id = template.contract_id
         WHERE
             (token.template_id = ANY($1) OR cardinality($1) = 0)
           AND
             (template.contract_id = ANY($2) OR cardinality($2) = 0)
           AND
             (token.created_at >= $3 AND token.created_at < $4)
+          AND
+            contract.chain_id = $5
         GROUP BY
             date
         ORDER BY
@@ -179,7 +199,13 @@ export class MarketplaceService {
     `;
 
     return Promise.all([
-      this.entityManager.query(queryString, [templateIds, contractIds, startTimestamp, endTimestamp]),
+      this.entityManager.query(queryString, [
+        templateIds,
+        contractIds,
+        startTimestamp,
+        endTimestamp,
+        userEntity.chainId,
+      ]),
       0,
     ]);
   }
