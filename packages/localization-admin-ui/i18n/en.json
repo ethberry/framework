@@ -84,6 +84,7 @@
       "NEW": "New"
     },
     "emailType": {
+      "LINK_TOKEN": "LINK notification",
       "DUMMY": "Test email"
     },
     "gradeStrategy": {
