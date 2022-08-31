@@ -4,4 +4,5 @@ export interface IUserImportDto extends IUserCommonDto {
   userStatus: UserStatus;
   userRoles: Array<UserRole>;
   sub: string;
+  chainId: number;
 }
