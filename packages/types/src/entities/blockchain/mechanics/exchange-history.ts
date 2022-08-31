@@ -5,6 +5,7 @@ import { ITemplate } from "../hierarchy/template";
 import { IClaim } from "./claim/claim";
 import { IGrade } from "./grade/grade";
 import { IMysterybox } from "./mysterybox/mysterybox";
+import { IAssetComponentHistory } from "./asset-component-history";
 
 export enum ExchangeEventType {
   Claim = "Claim",
@@ -14,7 +15,7 @@ export enum ExchangeEventType {
   Upgrade = "Upgrade",
 }
 
-type IExchangeItem = [number, string, string, string];
+export type IExchangeItem = [number, string, string, string];
 
 export interface IExchangePurchase {
   from: string;
@@ -76,4 +77,5 @@ export interface IExchangeHistory extends IIdDateBase {
   grade?: IGrade;
   mysteryboxId: number | null;
   mysterybox?: IMysterybox;
+  assets?: Array<IAssetComponentHistory>;
 }

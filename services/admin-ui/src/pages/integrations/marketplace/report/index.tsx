@@ -8,7 +8,7 @@ import { endOfMonth, format, parseISO, startOfMonth } from "date-fns";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
-import type { IAsset, IMarketplaceReportSearchDto, IToken } from "@framework/types";
+import type { IAssetComponent, IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
 import { MarketplaceReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";
@@ -66,7 +66,7 @@ export const MarketplaceReport: FC = () => {
       field: "price",
       headerName: formatMessage({ id: "form.labels.price" }),
       sortable: true,
-      valueFormatter: ({ value }: { value: IAsset }) => formatPrice(value),
+      valueFormatter: ({ value }: { value: Array<IAssetComponent> }) => formatPrice({ id: 0, components: value }),
       flex: 1
     },
     {
@@ -75,7 +75,7 @@ export const MarketplaceReport: FC = () => {
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1
-    },
+    }
   ];
 
   return (
@@ -109,7 +109,7 @@ export const MarketplaceReport: FC = () => {
         rows={rows.map((token: IToken) => ({
           id: token.id,
           title: token.template?.title,
-          price: token.template?.price,
+          price: token.history?.history?.assets,
           createdAt: token.createdAt,
         }))}
         autoHeight

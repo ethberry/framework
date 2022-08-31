@@ -16,7 +16,7 @@ import { ContractModule } from "../hierarchy/contract/contract.module";
 import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
 import { GradeModule } from "../mechanics/grade/grade.module";
-import { MysteryboxLogModule } from "../mechanics/mysterybox/log/log.module";
+import { MysteryboxLogModule } from "../mechanics/mysterybox/box/log/log.module";
 
 @Module({
   imports: [

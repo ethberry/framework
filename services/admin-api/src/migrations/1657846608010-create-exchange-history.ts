@@ -78,7 +78,7 @@ export class CreateExchangeHistory1657846608010 implements MigrationInterface {
         {
           columnNames: ["template_id"],
           referencedColumnNames: ["id"],
-          referencedTableName: `${ns}.claim`,
+          referencedTableName: `${ns}.template`,
           onDelete: "CASCADE",
         },
         {

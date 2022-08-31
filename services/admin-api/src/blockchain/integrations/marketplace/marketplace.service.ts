@@ -5,7 +5,7 @@ import { parse } from "json2csv";
 
 import { ns } from "@framework/constants";
 import type { IMarketplaceReportSearchDto, IMarketplaceSupplySearchDto } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { ExchangeType, TokenType } from "@framework/types";
 
 import { formatPrice } from "./marketplace.utils";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
@@ -29,11 +29,20 @@ export class MarketplaceService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    // TODO use actual price
-    queryBuilder.leftJoinAndSelect("template.price", "price");
-    queryBuilder.leftJoinAndSelect("price.components", "price_components");
-    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
-    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("token.history", "item_history");
+    queryBuilder.leftJoinAndSelect("item_history.history", "exchange_history");
+    queryBuilder.leftJoinAndSelect(
+      "exchange_history.assets",
+      "price_history",
+      "price_history.exchangeType = :exchangeType",
+      { exchangeType: ExchangeType.PRICE },
+    );
+    queryBuilder.leftJoinAndSelect("price_history.token", "price_token");
+    queryBuilder.leftJoinAndSelect("price_token.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_history.contract", "price_contract");
+
+    // TODO remove
+    queryBuilder.andWhere("item_history.id IS NOT NULL");
 
     queryBuilder.andWhere("contract.contractType IN(:...contractType)", {
       contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],

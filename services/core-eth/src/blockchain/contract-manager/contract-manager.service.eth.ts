@@ -36,7 +36,7 @@ import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
 import { GradeService } from "../mechanics/grade/grade.service";
-import { MysteryboxLogService } from "../mechanics/mysterybox/log/log.service";
+import { MysteryboxLogService } from "../mechanics/mysterybox/box/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {

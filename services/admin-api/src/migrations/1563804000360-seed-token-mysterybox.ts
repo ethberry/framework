@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { TokenAttributes } from "@framework/types";
@@ -6,6 +7,7 @@ import { TokenAttributes } from "@framework/types";
 export class SeedTokenMysteryboxAt1563804000360 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const now = new Date();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
@@ -26,7 +28,7 @@ export class SeedTokenMysteryboxAt1563804000360 implements MigrationInterface {
         '1',
         'MINTED',
         601001,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         604001,
@@ -37,7 +39,7 @@ export class SeedTokenMysteryboxAt1563804000360 implements MigrationInterface {
         '1',
         'MINTED',
         604001,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         605001,
@@ -48,7 +50,7 @@ export class SeedTokenMysteryboxAt1563804000360 implements MigrationInterface {
         '1',
         'MINTED',
         605001,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         606001,
@@ -59,7 +61,7 @@ export class SeedTokenMysteryboxAt1563804000360 implements MigrationInterface {
         '1',
         'MINTED',
         606001,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );
     `);

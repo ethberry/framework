@@ -3,8 +3,8 @@ import { Injectable } from "@nestjs/common";
 import { EthersContractService } from "@gemunion/nestjs-ethers";
 import { ModuleType } from "@framework/types";
 
-import { ICreateListenerPayload } from "../../../../common/interfaces";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ICreateListenerPayload } from "../../../../../common/interfaces";
+import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class MysteryboxLogService {

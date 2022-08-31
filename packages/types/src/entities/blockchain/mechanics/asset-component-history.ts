@@ -1,8 +1,8 @@
 import type { IIdBase } from "@gemunion/types-collection";
 
-import { TokenType } from "../common";
-import { IContract } from "../hierarchy/contract";
 import { IToken } from "../hierarchy/token";
+import { IExchangeHistory } from "./exchange-history";
+import { IContract } from "../hierarchy/contract";
 
 export enum ExchangeType {
   ITEM = "ITEM",
@@ -10,8 +10,9 @@ export enum ExchangeType {
 }
 
 export interface IAssetComponentHistory extends IIdBase {
+  exchangeType: ExchangeType;
   historyId: number;
-  tokenType: TokenType;
+  history?: IExchangeHistory;
   contractId: number;
   contract?: IContract;
   tokenId: number | null;

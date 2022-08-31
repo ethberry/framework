@@ -20,6 +20,7 @@ import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { AssetEntity } from "./blockchain/mechanics/asset/asset.entity";
 import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-component.entity";
+import { AssetComponentHistoryEntity } from "./blockchain/mechanics/asset/asset-component-history.entity";
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
@@ -34,6 +35,7 @@ import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -141,6 +143,9 @@ import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
 
 import { SeedContractExchangeAt1657846608000 } from "./migrations/1657846608000-seed-contract-exchange";
 import { CreateExchangeHistory1657846608010 } from "./migrations/1657846608010-create-exchange-history";
+import { SeedExchangeHistory1657846608020 } from "./migrations/1657846608020-seed-exchange-history";
+import { CreateAssetComponentHistory1657846609000 } from "./migrations/1657846609000-create-asset-component-history";
+import { SeedAssetComponentHistory1657846609010 } from "./migrations/1657846609010-seed-asset-component-history";
 
 import { CreateCompositionAt1658980520000 } from "./migrations/1658980520000-create-composition";
 import { SeedCompositionAt1658980520010 } from "./migrations/1658980520010-seed-composition";
@@ -162,7 +167,6 @@ import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed
 import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
-import { CreateAssetComponentHistory1657846609000 } from "./migrations/1657846609000-create-asset-component-history";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -183,6 +187,7 @@ const config: PostgresConnectionOptions = {
     PageEntity,
     AssetEntity,
     AssetComponentEntity,
+    AssetComponentHistoryEntity,
     ContractEntity,
     TemplateEntity,
     TokenEntity,
@@ -195,6 +200,7 @@ const config: PostgresConnectionOptions = {
     DropEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
+    ExchangeHistoryEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -269,7 +275,6 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsErc998At1563804001240,
     SeedAssetComponentsErc1155At1563804001250,
     SeedAssetComponentsMysteryboxAt1563804001260,
-    CreateAssetComponentHistory1657846609000,
 
     CreateContractHistory1563804040330,
     CreateVesting1563804010210,
@@ -321,8 +326,11 @@ const config: PostgresConnectionOptions = {
     CreateGrade1657846587000,
     SeedGrade1657846587010,
 
-    CreateExchangeHistory1657846608010,
     SeedContractExchangeAt1657846608000,
+    CreateExchangeHistory1657846608010,
+    SeedExchangeHistory1657846608020,
+    CreateAssetComponentHistory1657846609000,
+    SeedAssetComponentHistory1657846609010,
 
     CreateCompositionAt1658980520000,
     SeedCompositionAt1658980520010,

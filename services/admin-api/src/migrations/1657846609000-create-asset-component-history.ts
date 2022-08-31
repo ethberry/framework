@@ -28,11 +28,6 @@ export class CreateAssetComponentHistory1657846609000 implements MigrationInterf
           type: `${ns}.exchange_type_enum`,
         },
         {
-          name: "token_type",
-          type: `${ns}.token_type_enum`,
-          default: "'NATIVE'",
-        },
-        {
           name: "contract_id",
           type: "int",
         },

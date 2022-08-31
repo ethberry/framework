@@ -6,19 +6,19 @@ import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import { IMysteryboxUnpack, ITokenTransfer, TokenAttributes, TokenStatus } from "@framework/types";
 
-import { getMetadata } from "../../../common/utils";
+import { getMetadata } from "../../../../common/utils";
 
-import { ABI } from "../../tokens/erc721/token/log/interfaces";
-import { ContractHistoryService } from "../../contract-history/contract-history.service";
-import { ContractService } from "../../hierarchy/contract/contract.service";
-import { TemplateService } from "../../hierarchy/template/template.service";
-import { TokenService } from "../../hierarchy/token/token.service";
-import { BalanceService } from "../../hierarchy/balance/balance.service";
-import { MysteryboxService } from "./mysterybox.service";
-import { TokenServiceEth } from "../../hierarchy/token/token.service.eth";
+import { ABI } from "../../../tokens/erc721/token/log/interfaces";
+import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { TemplateService } from "../../../hierarchy/template/template.service";
+import { TokenService } from "../../../hierarchy/token/token.service";
+import { BalanceService } from "../../../hierarchy/balance/balance.service";
+import { MysteryboxBoxService } from "./box.service";
+import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 
 @Injectable()
-export class MysteryboxServiceEth extends TokenServiceEth {
+export class MysteryboxBoxServiceEth extends TokenServiceEth {
   constructor(
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
@@ -29,7 +29,7 @@ export class MysteryboxServiceEth extends TokenServiceEth {
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
     protected readonly contractHistoryService: ContractHistoryService,
-    protected readonly mysteryboxService: MysteryboxService,
+    protected readonly mysteryboxService: MysteryboxBoxService,
   ) {
     super(loggerService, contractService, tokenService, contractHistoryService);
   }

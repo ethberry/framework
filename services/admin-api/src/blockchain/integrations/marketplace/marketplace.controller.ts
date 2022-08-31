@@ -3,13 +3,14 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";
 
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 
 import { MarketplaceService } from "./marketplace.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { MarketplaceReportSearchDto } from "./dto";
 import { MarketplaceSupplySearchDto } from "./dto/supply";
 
+@Public()
 @ApiBearerAuth()
 @Controller("/marketplace/report")
 export class MarketplaceController {

@@ -12,11 +12,11 @@ import {
   ITokenTransfer,
 } from "@framework/types";
 
-import { MysteryboxServiceEth } from "./mysterybox.service.eth";
+import { MysteryboxBoxServiceEth } from "./box.service.eth";
 
 @Controller()
-export class MysteryboxControllerEth {
-  constructor(private readonly mysteryboxServiceEth: MysteryboxServiceEth) {}
+export class MysteryboxBoxControllerEth {
+  constructor(private readonly mysteryboxServiceEth: MysteryboxBoxServiceEth) {}
 
   @EventPattern({ contractType: ContractType.MYSTERYBOX, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<ITokenTransfer>, @Ctx() context: Log): Promise<void> {

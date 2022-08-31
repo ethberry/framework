@@ -1,10 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 
 export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const now = new Date();
     const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
@@ -24,7 +26,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '1',
         'MINTED',
         501001,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         501002,
@@ -33,7 +35,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '2',
         'MINTED',
         501002,
-        '${currentDateTime}',
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         501003,
@@ -42,7 +44,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '3',
         'MINTED',
         501003,
-        '${currentDateTime}',
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         501004,
@@ -51,7 +53,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '4',
         'MINTED',
         501004,
-        '${currentDateTime}',
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
         501005,
@@ -60,7 +62,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '5',
         'MINTED',
         501005,
-        '${currentDateTime}',
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
         504001,
@@ -69,7 +71,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '1',
         'MINTED',
         504001,
-        '${currentDateTime}',
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
         504002,
@@ -78,7 +80,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '2',
         'MINTED',
         504002,
-        '${currentDateTime}',
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
         504003,
@@ -87,7 +89,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '3',
         'MINTED',
         504003,
-        '${currentDateTime}',
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
         511001,
@@ -96,7 +98,7 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         '3',
         'MINTED',
         511001,
-        '${currentDateTime}',
+        '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );
     `);

@@ -4,11 +4,11 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { AccessControlEventType, ContractEventType, ContractType, ModuleType } from "@framework/types";
 
-import { MysteryboxLogService } from "./log.service";
-
 import MysteryboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
-import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+
+import { MysteryboxLogService } from "./log.service";
+import { ContractModule } from "../../../../hierarchy/contract/contract.module";
+import { ContractService } from "../../../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [

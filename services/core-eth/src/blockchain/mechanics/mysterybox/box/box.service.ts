@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { MysteryboxBoxEntity } from "./mysterybox.entity";
+import { MysteryboxBoxEntity } from "./box.entity";
 
 @Injectable()
-export class MysteryboxService {
+export class MysteryboxBoxService {
   constructor(
     @InjectRepository(MysteryboxBoxEntity)
     private readonly mysteryboxEntityRepository: Repository<MysteryboxBoxEntity>,

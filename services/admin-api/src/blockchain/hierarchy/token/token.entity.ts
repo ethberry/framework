@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
 import type { IToken } from "@framework/types";
 import { TokenStatus } from "@framework/types";
@@ -7,6 +7,7 @@ import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-p
 
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
+import { AssetComponentHistoryEntity } from "../../mechanics/asset/asset-component-history.entity";
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
@@ -37,4 +38,7 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
 
   @OneToMany(_type => BalanceEntity, balance => balance.token)
   public balance: Array<BalanceEntity>;
+
+  @OneToOne(_type => AssetComponentHistoryEntity, history => history.token)
+  public history: AssetComponentHistoryEntity;
 }
