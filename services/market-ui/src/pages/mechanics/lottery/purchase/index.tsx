@@ -1,62 +1,13 @@
-import { FC, useEffect, useState } from "react";
-import { useWeb3React, Web3ContextType } from "@web3-react/core";
-import { Button, Grid, IconButton, Paper, Typography } from "@mui/material";
-import { Casino } from "@mui/icons-material";
+import { FC, Fragment, useState } from "react";
+import { IconButton, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
-import { constants, Contract, utils } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import { useWallet } from "@gemunion/provider-wallet";
-import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
-import { useSettings } from "@gemunion/provider-settings";
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
+
+import { LotteryPurchaseButton } from "../../../../components/buttons";
 
 export const LotteryPurchase: FC = () => {
-  const { isActive } = useWeb3React();
-  const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
   const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(new Array(36).fill(false));
-
-  const settings = useSettings();
-
-  const metaFnWithSign = useServerSignature(
-    (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.LOTTERY_ADDR, LotterySol.abi, web3Context.provider?.getSigner());
-      return contract.purchase(
-        {
-          nonce: utils.arrayify(sign.nonce),
-          externalId: 0,
-          expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
-        },
-        ticketNumbers,
-        constants.WeiPerEther,
-        process.env.ACCOUNT,
-        sign.signature,
-      ) as Promise<void>;
-    },
-  );
-
-  const metaFn = useMetamask((web3Context: Web3ContextType) => {
-    const { account } = web3Context;
-
-    return metaFnWithSign(
-      {
-        url: "/lottery/ticket/sign",
-        method: "POST",
-        data: {
-          ticketNumbers,
-          account,
-          referrer: settings.getReferrer(),
-        },
-      },
-      web3Context,
-    );
-  });
-
-  const handlePurchase = () => {
-    return metaFn();
-  };
 
   const handleClick = (i: number) => {
     return () => {
@@ -69,22 +20,12 @@ export const LotteryPurchase: FC = () => {
     };
   };
 
-  useEffect(() => {
-    if (!isActive) {
-      void openConnectWalletDialog();
-    } else {
-      void closeConnectWalletDialog();
-    }
-  }, [isActive]);
-
   return (
-    <Grid>
+    <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
 
       <PageHeader message="pages.lottery.purchase.title">
-        <Button startIcon={<Casino />} onClick={handlePurchase} data-testid="LotteryBuyTicket">
-          <FormattedMessage id="form.buttons.buy" />
-        </Button>
+        <LotteryPurchaseButton ticketNumbers={ticketNumbers} />
       </PageHeader>
 
       <Paper sx={{ width: "34em", textAlign: "center", margin: "0 auto", padding: 2 }}>
@@ -106,6 +47,6 @@ export const LotteryPurchase: FC = () => {
       <Typography>
         <FormattedMessage id="pages.lottery.purchase.rules" />
       </Typography>
-    </Grid>
+    </Fragment>
   );
 };

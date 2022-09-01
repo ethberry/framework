@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import { LotteryPurchase } from "./purchase";
 import { LotteryLeaderboard } from "./leaderboard";
 import { LotteryTicketList } from "./ticket-list";
+import { LotteryWrapper } from "./purchase/wrapper";
 
 export const lotteryRoutes: Array<RouteObject> = [
   {
@@ -12,6 +13,7 @@ export const lotteryRoutes: Array<RouteObject> = [
       { index: true, element: <Navigate to="/lottery/purchase" /> },
       {
         path: "/lottery/purchase",
+        element: <LotteryWrapper />,
         children: [{ index: true, element: <LotteryPurchase /> }],
       },
       {

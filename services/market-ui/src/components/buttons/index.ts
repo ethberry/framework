@@ -4,6 +4,8 @@ export * from "./hierarchy/template/purchase";
 export * from "./mechanics/craft";
 export * from "./mechanics/claim/redeem";
 export * from "./mechanics/drop/purchase";
+export * from "./mechanics/lottery/reward";
+export * from "./mechanics/lottery/purchase";
 export * from "./mechanics/mysterybox/purchase";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/staking/reward";
