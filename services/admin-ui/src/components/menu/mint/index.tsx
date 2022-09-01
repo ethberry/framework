@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Contract } from "ethers";
+import { Contract, constants } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -74,7 +74,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
           address,
           contractId,
           templateId: 0,
-          amount: "0",
+          amount: contractType === TokenType.ERC20 ? constants.WeiPerEther.toString() : "1",
           account: process.env.ACCOUNT,
           decimals: contractType === TokenType.ERC20 ? 18 : 0,
         }}
