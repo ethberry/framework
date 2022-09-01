@@ -5,12 +5,21 @@ import { ReferralCabinet } from "./cabinet";
 import { ReferralLeaderboard } from "./leaderboard";
 import { ReferralReport } from "./report";
 import { ReferralChart } from "./chart";
+import { IndexWrapper } from "../../index-wrapper";
+import { Referral } from "../../dashboard/integrations/referral";
 
 export const referralRoutes: Array<RouteObject> = [
   {
     path: "/referral",
     children: [
-      { index: true, element: <ReferralCabinet /> },
+      {
+        index: true,
+        element: (
+          <IndexWrapper index="referral">
+            <Referral />
+          </IndexWrapper>
+        ),
+      },
       {
         path: "/referral/cabinet",
         children: [{ index: true, element: <ReferralCabinet /> }],

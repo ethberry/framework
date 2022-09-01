@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 
 import { Vesting } from "./main";
-import { WalletWrapper } from "../../wrapper";
+import { WalletWrapper } from "../../wallet-wrapper";
 
 export const vestingRoutes: Array<RouteObject> = [
   {

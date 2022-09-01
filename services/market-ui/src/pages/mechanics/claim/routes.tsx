@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 
 import { Claim } from "./main";
-import { WalletWrapper } from "../../wrapper";
+import { WalletWrapper } from "../../wallet-wrapper";
 
 export const claimRoutes: Array<RouteObject> = [
   {
