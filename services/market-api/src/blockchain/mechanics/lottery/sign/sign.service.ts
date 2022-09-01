@@ -47,8 +47,8 @@ export class LotterySignService {
       // Types
       {
         EIP712: [
-          { name: "nonce", type: "bytes32" },
-          { name: "numbers", type: "bool[40]" },
+          { name: "params", type: "Params" },
+          { name: "numbers", type: "bool[36]" },
           { name: "price", type: "uint256" },
         ],
         Params: [

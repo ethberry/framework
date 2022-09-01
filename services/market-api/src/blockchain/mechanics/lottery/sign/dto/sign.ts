@@ -1,5 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsBoolean, IsEthereumAddress, IsOptional, IsString } from "class-validator";
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsBoolean,
+  IsEthereumAddress,
+  IsOptional,
+  IsString,
+} from "class-validator";
 import { Transform } from "class-transformer";
 
 import { ISignLotteryDto } from "../interfaces";
@@ -20,6 +28,8 @@ export class SignLotteryDto implements ISignLotteryDto {
   @IsArray({ message: "typeMismatch" })
   @Transform(({ value }) => value as Array<boolean>)
   @IsBoolean({ each: true, message: "badInput" })
+  @ArrayMinSize(36, { message: "tooShort" })
+  @ArrayMaxSize(36, { message: "tooLong" })
   public ticketNumbers: Array<boolean>;
 
   @ApiPropertyOptional()

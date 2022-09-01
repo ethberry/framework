@@ -30,6 +30,7 @@ export const LotteryPurchase: FC = () => {
           referrer: settings.getReferrer(),
         },
         ticketNumbers,
+        constants.WeiPerEther,
         process.env.ACCOUNT,
         sign.signature,
         {
@@ -40,12 +41,16 @@ export const LotteryPurchase: FC = () => {
   );
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
+    const { account } = web3Context;
+
     return metaFnWithSign(
       {
-        url: "/lottery/sign",
+        url: "/lottery/ticket/sign",
         method: "POST",
         data: {
           ticketNumbers,
+          account,
+          referrer: settings.getReferrer(),
         },
       },
       web3Context,
