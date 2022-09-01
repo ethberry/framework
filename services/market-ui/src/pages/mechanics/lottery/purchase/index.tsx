@@ -33,9 +33,6 @@ export const LotteryPurchase: FC = () => {
         constants.WeiPerEther,
         process.env.ACCOUNT,
         sign.signature,
-        {
-          value: constants.WeiPerEther,
-        },
       ) as Promise<void>;
     },
   );
