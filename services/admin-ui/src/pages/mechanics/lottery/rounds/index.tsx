@@ -23,7 +23,7 @@ export const LotteryRounds: FC = () => {
     handleViewCancel,
     handleChangePage,
   } = useCollection<ILotteryRound, ISearchDto>({
-    baseUrl: "/lottery/round",
+    baseUrl: "/lottery/rounds",
     empty: {
       numbers: [],
     },
