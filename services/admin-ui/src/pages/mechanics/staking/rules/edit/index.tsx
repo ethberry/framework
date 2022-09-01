@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, InputAdornment } from "@mui/material";
+import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -47,6 +47,15 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
       <TextInput name="title" />
       <RichTextEditor name="description" />
       <Grid container spacing={2}>
+        {readOnly ? (
+          <Grid item xs={12}>
+            <Box mt={2}>
+              <Alert severity="warning">
+                <FormattedMessage id="form.hints.editNotAllowed" />
+              </Alert>
+            </Box>
+          </Grid>
+        ) : null}
         <Grid item xs={6}>
           <PriceInput prefix="deposit" readOnly={readOnly} />
         </Grid>

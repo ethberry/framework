@@ -132,7 +132,7 @@ export const StakingRules: FC = () => {
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         initialValues={selected}
-        readOnly={selected.stakingStatus !== StakingStatus.ACTIVE}
+        readOnly={selected.stakingStatus === StakingStatus.ACTIVE}
       />
     </Grid>
   );
