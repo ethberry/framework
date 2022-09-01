@@ -25,6 +25,7 @@ export class LotteryTicketService {
 
     const queryBuilder = this.ticketEntityRepository.createQueryBuilder("ticket");
     queryBuilder.leftJoinAndSelect("ticket.round", "round");
+    queryBuilder.leftJoinAndSelect("ticket.token", "token");
 
     queryBuilder.select();
 
