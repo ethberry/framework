@@ -309,12 +309,14 @@
       "url": "Url",
       "userId": "User",
       "userIds": "Users",
+      "roundIds": "Round",
       "userRoles": "Roles",
       "userStatus": "Status",
       "year": "Year"
     },
     "placeholders": {
       "DUMMY": "Dummy",
+      "roundIds": "Round",
       "account": "0x...",
       "address": "0x...",
       "amount": "10",

@@ -1,12 +1,13 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { PaginationDto } from "@gemunion/collection";
 
-import { LotteryRoundSearchDto } from "./dto";
 import { LotteryRoundService } from "./round.service";
 import { LotteryRoundEntity } from "./round.entity";
 
+@Public()
 @ApiBearerAuth()
 @Controller("/lottery/rounds")
 export class LotteryRoundController {
@@ -14,8 +15,13 @@ export class LotteryRoundController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: LotteryRoundSearchDto): Promise<[Array<LotteryRoundEntity>, number]> {
+  public search(@Query() dto: PaginationDto): Promise<[Array<LotteryRoundEntity>, number]> {
     return this.lotteryRoundService.search(dto);
+  }
+
+  @Get("/autocomplete")
+  public autocomplete(): Promise<Array<LotteryRoundEntity>> {
+    return this.lotteryRoundService.autocomplete();
   }
 
   @Get("/:id")

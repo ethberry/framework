@@ -137,6 +137,7 @@
     "labels": {
       "claimStatus": "Status",
       "contractTemplate": "Template",
+      "roundIds": "Round",
       "price": "Price",
       "account": "Account",
       "address": "Address",
@@ -192,6 +193,7 @@
       "withdrawDeposit": "Withdraw deposit"
     },
     "placeholders": {
+      "roundIds": "Round",
       "account": "0x...",
       "address": "0x...",
       "amount": "100",

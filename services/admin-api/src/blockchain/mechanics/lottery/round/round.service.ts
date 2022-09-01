@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ILotteryRoundSearchDto } from "@framework/types";
+import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { LotteryRoundEntity } from "./round.entity";
 
@@ -13,22 +13,12 @@ export class LotteryRoundService {
     private readonly roundEntityRepository: Repository<LotteryRoundEntity>,
   ) {}
 
-  public async search(dto: Partial<ILotteryRoundSearchDto>): Promise<[Array<LotteryRoundEntity>, number]> {
-    const { roundIds, skip, take } = dto;
+  public async search(dto: Partial<IPaginationDto>): Promise<[Array<LotteryRoundEntity>, number]> {
+    const { skip, take } = dto;
 
     const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
 
     queryBuilder.select();
-
-    if (roundIds) {
-      if (roundIds.length === 1) {
-        queryBuilder.andWhere("round.id = :roundId", {
-          roundId: roundIds[0],
-        });
-      } else {
-        queryBuilder.andWhere("round.id IN(:...roundIds)", { roundIds });
-      }
-    }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -43,5 +33,17 @@ export class LotteryRoundService {
     options?: FindOneOptions<LotteryRoundEntity>,
   ): Promise<LotteryRoundEntity | null> {
     return this.roundEntityRepository.findOne({ where, ...options });
+  }
+
+  public async autocomplete(): Promise<Array<LotteryRoundEntity>> {
+    const queryBuilder = this.roundEntityRepository.createQueryBuilder("round");
+
+    queryBuilder.select(["id", "id::VARCHAR as title"]);
+
+    queryBuilder.orderBy({
+      "round.createdAt": "DESC",
+    });
+
+    return queryBuilder.getRawMany();
   }
 }

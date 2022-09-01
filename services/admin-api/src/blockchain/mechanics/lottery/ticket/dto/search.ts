@@ -2,11 +2,11 @@ import { ApiPropertyOptional } from "@nestjs/swagger";
 import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
-import { SearchDto } from "@gemunion/collection";
+import { PaginationDto } from "@gemunion/collection";
 
-import { ILotteryRoundSearchDto } from "@framework/types";
+import { ILotteryTicketSearchDto } from "@framework/types";
 
-export class LotteryTicketSearchDto extends SearchDto implements ILotteryRoundSearchDto {
+export class LotteryTicketSearchDto extends PaginationDto implements ILotteryTicketSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,

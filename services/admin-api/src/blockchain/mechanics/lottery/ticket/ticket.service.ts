@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ILotteryRoundSearchDto } from "@framework/types";
+import { ILotteryTicketSearchDto } from "@framework/types";
 
 import { LotteryTicketEntity } from "./ticket.entity";
 
@@ -13,7 +13,7 @@ export class LotteryTicketService {
     private readonly ticketEntityRepository: Repository<LotteryTicketEntity>,
   ) {}
 
-  public async search(dto: Partial<ILotteryRoundSearchDto>): Promise<[Array<LotteryTicketEntity>, number]> {
+  public async search(dto: Partial<ILotteryTicketSearchDto>): Promise<[Array<LotteryTicketEntity>, number]> {
     const { roundIds, skip, take } = dto;
 
     const queryBuilder = this.ticketEntityRepository.createQueryBuilder("ticket");
