@@ -26,7 +26,7 @@ export class ReferralReportService {
     return this.referralRewardService.search(dto, userEntity);
   }
 
-  public async chart(dto: IReferralReportSearchDto): Promise<any> {
+  public async chart(dto: IReferralReportSearchDto, userEntity: UserEntity): Promise<any> {
     const { startTimestamp, endTimestamp } = dto;
 
     // prettier-ignore
@@ -39,13 +39,15 @@ export class ReferralReportService {
             ${ns}.referral_reward
         WHERE
             (referral_reward.created_at >= $1 AND referral_reward.created_at < $2)
+          AND
+            referral_reward.account = $3
         GROUP BY
             date
         ORDER BY
             date
     `;
 
-    return Promise.all([this.entityManager.query(queryString, [startTimestamp, endTimestamp]), 0]);
+    return Promise.all([this.entityManager.query(queryString, [startTimestamp, endTimestamp, userEntity.wallet]), 0]);
   }
 
   public async export(dto: IReferralReportSearchDto, userEntity: UserEntity): Promise<string> {

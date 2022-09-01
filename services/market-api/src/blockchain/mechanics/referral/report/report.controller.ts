@@ -26,8 +26,8 @@ export class ReferralReportController {
 
   @Get("/chart")
   @UseInterceptors(PaginationInterceptor)
-  public chart(@Query() dto: ReferralReportSearchDto): Promise<any> {
-    return this.referralReportService.chart(dto);
+  public chart(@Query() dto: ReferralReportSearchDto, @User() userEntity: UserEntity): Promise<any> {
+    return this.referralReportService.chart(dto, userEntity);
   }
 
   @Get("/export")
