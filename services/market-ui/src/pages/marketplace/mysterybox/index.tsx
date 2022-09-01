@@ -17,7 +17,7 @@ export const Mysterybox: FC<ITabPanelProps> = props => {
   }
 
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IMysterybox, IMysteryboxSearchDto>({
-    baseUrl: "/mysteryboxes",
+    baseUrl: "/mysterybox-boxes",
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });
 

@@ -43,7 +43,7 @@ export const MysteryboxBox: FC = () => {
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
               <FormattedMessage
-                id="pages.mysterybox.price"
+                id="pages.mysterybox.box.price"
                 values={{ amount: formatPrice(selected.template?.price) }}
               />
             </Typography>
