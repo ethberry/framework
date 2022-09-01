@@ -1,12 +1,12 @@
 import type { RouteObject } from "react-router-dom";
 
 import { Claim } from "./main";
-import { ClaimWrapper } from "./main/wrapper";
+import { WalletWrapper } from "../../wrapper";
 
 export const claimRoutes: Array<RouteObject> = [
   {
     path: "/claim",
-    element: <ClaimWrapper />,
+    element: <WalletWrapper />,
     children: [{ index: true, element: <Claim /> }],
   },
 ];

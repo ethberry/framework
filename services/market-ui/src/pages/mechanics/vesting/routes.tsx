@@ -1,12 +1,12 @@
 import type { RouteObject } from "react-router-dom";
 
-import { VestingWrapper } from "./main/wrapper";
 import { Vesting } from "./main";
+import { WalletWrapper } from "../../wrapper";
 
 export const vestingRoutes: Array<RouteObject> = [
   {
     path: "/vesting",
-    element: <VestingWrapper />,
+    element: <WalletWrapper />,
     children: [
       { index: true, element: <Vesting /> },
       { path: "/vesting/:id", element: <Vesting /> },

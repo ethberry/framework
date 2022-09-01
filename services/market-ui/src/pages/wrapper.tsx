@@ -1,10 +1,12 @@
-import { FC, useEffect } from "react";
+import { FC, Fragment, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useWeb3React } from "@web3-react/core";
+import { FormattedMessage } from "react-intl";
+import { Alert } from "@mui/material";
 
 import { useWallet } from "@gemunion/provider-wallet";
 
-export const VestingWrapper: FC = () => {
+export const WalletWrapper: FC = () => {
   const { isActive } = useWeb3React();
 
   const { openConnectWalletDialog, closeConnectWalletDialog } = useWallet();
@@ -17,5 +19,15 @@ export const VestingWrapper: FC = () => {
     }
   }, [isActive]);
 
-  return isActive ? <Outlet /> : null;
+  if (isActive) {
+    return <Outlet />;
+  }
+
+  return (
+    <Fragment>
+      <Alert severity="error">
+        <FormattedMessage id="snackbar.walletIsNotConnected" />
+      </Alert>
+    </Fragment>
+  );
 };
