@@ -3,8 +3,6 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, ContractType } from "@framework/types";
-
 import type {
   IRandomRequest,
   ITokenApprove,
@@ -12,6 +10,7 @@ import type {
   ITokenMintRandom,
   ITokenTransfer,
 } from "@framework/types";
+import { ContractEventType, ContractType } from "@framework/types";
 
 import { Erc721TokenServiceEth } from "./token.service.eth";
 

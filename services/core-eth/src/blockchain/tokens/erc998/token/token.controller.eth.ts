@@ -15,7 +15,6 @@ import type {
   ITokenMintRandom,
   ITokenTransfer,
 } from "@framework/types";
-
 import { ContractEventType, ContractType } from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";

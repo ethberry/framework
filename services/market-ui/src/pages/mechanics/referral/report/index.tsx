@@ -3,7 +3,7 @@ import { Button, Grid } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
 import { DataGrid } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
-import { endOfMonth, format, parseISO, startOfMonth } from "date-fns";
+import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { IReferralReportSearchDto, IReferralReward } from "@framework/types";
@@ -31,8 +31,8 @@ export const ReferralReport: FC = () => {
     },
     search: {
       query: "",
-      startTimestamp: startOfMonth(new Date()).toISOString(),
-      endTimestamp: endOfMonth(new Date()).toISOString(),
+      startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
+      endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
   });
 
@@ -76,7 +76,7 @@ export const ReferralReport: FC = () => {
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
       flex: 1
-    },
+    }
   ];
 
   return (

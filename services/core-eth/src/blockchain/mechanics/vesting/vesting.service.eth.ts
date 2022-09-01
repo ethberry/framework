@@ -3,8 +3,8 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { VestingEventType } from "@framework/types";
 import type { IVestingERC20Released, IVestingEtherReleased, TVestingEventData } from "@framework/types";
+import { VestingEventType } from "@framework/types";
 
 import { VestingHistoryService } from "./history/vesting-history.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";

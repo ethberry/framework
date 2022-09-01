@@ -1,4 +1,4 @@
-import { ethers, utils, ContractTransaction, Wallet } from "ethers";
+import { ContractTransaction, ethers, utils, Wallet } from "ethers";
 import VrfSol from "@framework/core-contracts/artifacts/contracts/MOCKS/ChainLink/VrfCoordinator.test.sol/VRFCoordinatorMock.json";
 
 export const callRandom = async function (

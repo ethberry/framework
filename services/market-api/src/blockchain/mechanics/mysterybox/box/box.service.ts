@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MysteryboxBoxEntity } from "./box.entity";
-import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import type { IMysteryboxSearchDto } from "@framework/types";
+import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 @Injectable()
 export class MysteryboxBoxService {

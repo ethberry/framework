@@ -18,7 +18,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
-import { StakingStatus, TokenType, IStakingRuleItemSearchDto } from "@framework/types";
+import { IStakingRuleItemSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";

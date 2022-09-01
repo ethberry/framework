@@ -2,7 +2,7 @@ import { FC, Fragment, useEffect, useRef } from "react";
 import { Box, Button } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
-import { endOfMonth, startOfMonth } from "date-fns";
+import { addMonths, endOfMonth, startOfMonth, subMonths } from "date-fns";
 import * as Plot from "@observablehq/plot";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
@@ -27,8 +27,8 @@ export const StakingChart: FC = () => {
         tokenType: TokenType.ERC721,
         contractId: 306,
       },
-      startTimestamp: startOfMonth(new Date()).toISOString(),
-      endTimestamp: endOfMonth(new Date()).toISOString(),
+      startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
+      endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
     },
   });
 

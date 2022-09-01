@@ -3,8 +3,8 @@ import { Log } from "@ethersproject/abstract-provider";
 import { BigNumber } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType } from "@framework/types";
 import type { IDefaultRoyaltyInfo, ITokenRoyaltyInfo, TContractEventData } from "@framework/types";
+import { ContractEventType } from "@framework/types";
 
 import { ContractHistoryService } from "../contract-history/contract-history.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
