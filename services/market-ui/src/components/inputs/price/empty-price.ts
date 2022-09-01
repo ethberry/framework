@@ -1,4 +1,6 @@
 import { IAsset, IAssetComponent, TokenType } from "@framework/types";
+import { imageUrl } from "@framework/constants";
+import { emptyStateString } from "@gemunion/draft-js-utils";
 
 export const emptyPrice = {
   components: [
@@ -7,8 +9,12 @@ export const emptyPrice = {
       contractId: 0,
       contract: {
         decimals: 18,
+        contractType: TokenType.NATIVE,
       },
       templateId: 0,
+      template: {
+        title: "",
+      },
       amount: "0",
     } as IAssetComponent,
   ],
@@ -23,6 +29,10 @@ export const emptyItem = {
         decimals: 0,
       },
       templateId: 0,
+      template: {
+        imageUrl,
+        description: emptyStateString,
+      },
       amount: "0",
     } as IAssetComponent,
   ],
