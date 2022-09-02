@@ -7,6 +7,7 @@
 pragma solidity ^0.8.9;
 
 import "../ERC721/ERC721Simple.sol";
+import "./extensions/WhiteListChild.sol";
 import "./extensions/ERC998ERC721.sol";
 
 contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {

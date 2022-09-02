@@ -14,11 +14,8 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "../interfaces/IERC998ERC721TopDown.sol";
-import "../interfaces/IERC998ERC721TopDownEnumerable.sol";
 
-import "./WhiteListChild.sol";
-
-abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown, IERC998ERC721TopDownEnumerable {
+abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown {
   using Address for address;
   using Counters for Counters.Counter;
   using EnumerableSet for EnumerableSet.UintSet;
@@ -135,10 +132,10 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
   ////////////////////////////////////////////////////////
 
   // tokenId => child contract
-  mapping(uint256 => EnumerableSet.AddressSet) private childContracts;
+  mapping(uint256 => EnumerableSet.AddressSet) internal childContracts;
 
   // tokenId => (child address => array of child tokens)
-  mapping(uint256 => mapping(address => EnumerableSet.UintSet)) private childTokens;
+  mapping(uint256 => mapping(address => EnumerableSet.UintSet)) internal childTokens;
 
   // child address => childId => tokenId
   mapping(address => mapping(uint256 => uint256)) private childTokenOwner;
@@ -210,45 +207,15 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     // convert up to 32 bytes of _data to uint256, owner nft tokenId passed as uint in bytes
     uint256 tokenId = _parseTokenId(_data);
     receiveChild(_from, tokenId, _msgSender(), _childTokenId);
-    require(
-      IERC721(_msgSender()).ownerOf(_childTokenId) != address(0),
-      "CTD: onERC721Received child token not owned"
-    );
+    require(IERC721(_msgSender()).ownerOf(_childTokenId) != address(0), "CTD: onERC721Received child token not owned");
     // a check for looped ownership chain
     rootOwnerOf(tokenId);
     return this.onERC721Received.selector;
   }
 
-  // ERC998ERC721TopDownEnumerable
-
   function childExists(address _childContract, uint256 _childTokenId) external view returns (bool) {
     uint256 tokenId = childTokenOwner[_childContract][_childTokenId];
     return tokenId != 0;
-  }
-
-  function totalChildContracts(uint256 _tokenId) external view override returns (uint256) {
-    return childContracts[_tokenId].length();
-  }
-
-  function childContractByIndex(uint256 _tokenId, uint256 _index)
-    external
-    view
-    override
-    returns (address childContract)
-  {
-    return childContracts[_tokenId].at(_index);
-  }
-
-  function totalChildTokens(uint256 _tokenId, address _childContract) external view override returns (uint256) {
-    return childTokens[_tokenId][_childContract].length();
-  }
-
-  function childTokenByIndex(
-    uint256 _tokenId,
-    address _childContract,
-    uint256 _index
-  ) external view override returns (uint256 childTokenId) {
-    return childTokens[_tokenId][_childContract].at(_index);
   }
 
   function ownerOfChild(address _childContract, uint256 _childTokenId)
@@ -295,7 +262,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     return (ownerOf(parentTokenId), parentTokenId);
   }
 
-  function _parseTokenId(bytes memory _data) private pure returns (uint256 tokenId) {
+  function _parseTokenId(bytes memory _data) internal pure returns (uint256 tokenId) {
     // convert up to 32 bytes of_data to uint256, owner nft tokenId passed as uint in bytes
     assembly {
       tokenId := mload(add(_data, 0x20))
@@ -312,20 +279,31 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
   ) internal virtual {
     // remove child token
     uint256 lastTokenIndex = childTokens[_tokenId][_childContract].length() - 1;
-    require(
-      childTokens[_tokenId][_childContract].remove(_childTokenId),
-      "CTD: removeChild: _childTokenId not found"
-    );
+    require(childTokens[_tokenId][_childContract].remove(_childTokenId), "CTD: removeChild: _childTokenId not found");
+
+    _beforeRemoveERC721(_tokenId, _childContract, _childTokenId);
+
     delete childTokenOwner[_childContract][_childTokenId];
 
     // remove contract
     if (lastTokenIndex == 0) {
-      require(
-        childContracts[_tokenId].remove(_childContract),
-        "CTD: removeChild: _childContract not found"
-      );
+      require(childContracts[_tokenId].remove(_childContract), "CTD: removeChild: _childContract not found");
     }
+
+    _afterRemoveERC721(_tokenId, _childContract, _childTokenId);
   }
+
+  function _beforeRemoveERC721(
+    uint256 _tokenId,
+    address _childContract,
+    uint256 _childTokenId
+  ) internal virtual {}
+
+  function _afterRemoveERC721(
+    uint256 _tokenId,
+    address _childContract,
+    uint256 _childTokenId
+  ) internal virtual {}
 
   function receiveChild(
     address _from,
@@ -343,13 +321,29 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     if (childTokensLength == 0) {
       require(childContracts[_tokenId].add(_childContract), "CTD: receiveChild: add _childContract");
     }
-    require(
-      childTokens[_tokenId][_childContract].add(_childTokenId),
-      "CTD: receiveChild: add _childTokenId"
-    );
+    require(childTokens[_tokenId][_childContract].add(_childTokenId), "CTD: receiveChild: add _childTokenId");
+
+    _beforeReceiveERC721(_from, _tokenId, _childContract, _childTokenId);
+
     childTokenOwner[_childContract][_childTokenId] = _tokenId;
     emit ReceivedChild(_from, _tokenId, _childContract, _childTokenId);
+
+    _afterReceiveERC721(_from, _tokenId, _childContract, _childTokenId);
   }
+
+  function _beforeReceiveERC721(
+    address _from,
+    uint256 _tokenId,
+    address _childContract,
+    uint256 _childTokenId
+  ) internal virtual {}
+
+  function _afterReceiveERC721(
+    address _from,
+    uint256 _tokenId,
+    address _childContract,
+    uint256 _childTokenId
+  ) internal virtual {}
 
   function childContractsFor(uint256 tokenId) external view returns (address[] memory) {
     address[] memory _childContracts = new address[](childContracts[tokenId].length());
@@ -359,6 +353,13 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     }
 
     return _childContracts;
+  }
+
+  function _localRootId(uint256 tokenId) internal view virtual returns (uint256) {
+    while (ownerOf(tokenId) == address(this)) {
+      tokenId = childTokenOwner[address(this)][tokenId];
+    }
+    return tokenId;
   }
 
   ////////////////////////////////////////////////////////
@@ -374,7 +375,6 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
   function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
     return
       interfaceId == type(IERC998ERC721TopDown).interfaceId ||
-      interfaceId == type(IERC998ERC721TopDownEnumerable).interfaceId ||
       interfaceId == 0x1bc995e4 ||
       super.supportsInterface(interfaceId);
   }
