@@ -33,7 +33,7 @@ export class Erc998TokenService extends TokenService {
           token_children: "token.children",
           token_children_child: "token_children.child",
           token_children_template: "token_children_child.template",
-          // token_children_contract: "token_children_template.contract",
+          token_children_contract: "token_children_template.contract",
           contract_children: "contract.children",
           composition_child: "contract_children.child",
           price: "template.price",

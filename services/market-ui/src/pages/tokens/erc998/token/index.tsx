@@ -14,6 +14,7 @@ import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
+import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
 
 import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
@@ -47,8 +48,27 @@ export const Erc998Token: FC = () => {
     ) as Promise<void>;
   });
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): Promise<any> => {
-    return metaFn(option);
+  const metaFnClear = useMetamask((data: IToken, web3Context: Web3ContextType) => {
+    const contract = new Contract(
+      selected.template!.contract!.address,
+      ERC998SimpleSol.abi,
+      web3Context.provider?.getSigner(),
+    );
+
+    return contract["safeTransferChild(uint256,address,address,uint256)"](
+      selected.tokenId,
+      web3Context.account,
+      selected.children![0].child!.template!.contract!.address,
+      selected.children![0].child?.tokenId,
+    ) as Promise<void>;
+  });
+
+  const handleChange = (_event: ChangeEvent<unknown>, option: any | null, reason: string): Promise<any> => {
+    if (reason === "clear") {
+      return metaFnClear(option);
+    } else {
+      return metaFn(option);
+    }
   };
 
   if (isLoading) {
@@ -102,7 +122,7 @@ export const Erc998Token: FC = () => {
                     }}
                     label={formatMessage({ id: "form.labels.tokenId" })}
                     placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
-                    getTitle={(token: IToken) => token.template!.title}
+                    getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
                     onChange={handleChange}
                   />
                 ))}
@@ -116,7 +136,7 @@ export const Erc998Token: FC = () => {
                     }}
                     label={formatMessage({ id: "form.labels.tokenId" })}
                     placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
-                    getTitle={(token: IToken) => token.template!.title}
+                    getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
                     onChange={handleChange}
                   />
                 ))}

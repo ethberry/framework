@@ -31,7 +31,7 @@ export class TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, tokenEntity.id);
+    await this.updateHistory(event, context, void 0, tokenEntity.id);
   }
 
   public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
