@@ -1,5 +1,5 @@
 import { FC, Fragment, useState } from "react";
-import { IconButton, Paper, Typography } from "@mui/material";
+import { Box, IconButton, Paper, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
@@ -27,6 +27,13 @@ export const LotteryPurchase: FC = () => {
       <PageHeader message="pages.lottery.purchase.title">
         <LotteryPurchaseButton ticketNumbers={ticketNumbers} />
       </PageHeader>
+
+      <Box>
+        <FormattedMessage
+          id="pages.lottery.purchase.selected"
+          values={{ selected: ticketNumbers.filter(e => e).length }}
+        />
+      </Box>
 
       <Paper sx={{ width: "34em", textAlign: "center", margin: "0 auto", padding: 2 }}>
         {new Array(36).fill(null).map((e, i) => (
