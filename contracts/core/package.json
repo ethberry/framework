@@ -9,9 +9,9 @@
     "@gemunion/constants": "0.8.5",
     "@gemunion/contracts": "0.7.7",
     "@gemunion/utils-eth": "0.0.4",
+    "@nomicfoundation/hardhat-network-helpers": "1.0.5",
     "@nomiclabs/hardhat-ethers": "2.1.1",
     "@nomiclabs/hardhat-etherscan": "3.1.0",
-    "@nomicfoundation/hardhat-network-helpers": "1.0.5",
     "@nomiclabs/hardhat-waffle": "2.0.3",
     "@nomiclabs/hardhat-web3": "2.0.0",
     "@openzeppelin/contracts": "4.7.3",
@@ -21,6 +21,7 @@
     "dotenv": "16.0.2",
     "ethers": "5.7.0",
     "hardhat": "2.11.0",
+    "hardhat-contract-sizer": "2.6.1",
     "hardhat-deploy": "0.11.12",
     "hardhat-gas-reporter": "1.0.8",
     "web3": "1.7.5"

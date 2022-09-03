@@ -375,7 +375,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
 
   function isApprovedForAll(address owner, address operator) public view virtual override returns (bool);
 
-  function _ownerOrApproved(address sender, uint256 tokenId) internal virtual view {
+  function _ownerOrApproved(address sender, uint256 tokenId) internal virtual override view {
     address rootOwner = address(uint160(uint256(rootOwnerOf(tokenId))));
     require(
       rootOwner == sender ||

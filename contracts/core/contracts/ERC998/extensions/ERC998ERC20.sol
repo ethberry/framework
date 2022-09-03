@@ -165,6 +165,4 @@ abstract contract ERC998ERC20 is Context, ERC165, IERC721, IERC998ERC20TopDown, 
   ////////////////////////////////////////////////////////
 
   function ownerOf(uint256 tokenId) public view virtual override returns (address);
-
-  function _ownerOrApproved(address _sender, uint256 _tokenId) internal virtual view;
 }

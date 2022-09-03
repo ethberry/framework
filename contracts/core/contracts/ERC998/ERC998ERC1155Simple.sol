@@ -39,7 +39,7 @@ contract ERC998ERC1155Simple is ERC998Simple, ERC998ERC1155 {
     return super.supportsInterface(interfaceId);
   }
 
-  function _ownerOrApproved(address sender, uint256 tokenId) internal view override(ERC998ERC721, ERC998ERC1155) {
+  function _ownerOrApproved(address sender, uint256 tokenId) internal view override(ERC998ERC721, ERC998Utils) {
      super._ownerOrApproved(sender, tokenId);
   }
 }

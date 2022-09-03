@@ -6,6 +6,7 @@ import "@typechain/hardhat";
 // import "@ethersproject/shims";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
+import "hardhat-contract-sizer";
 
 import "./tasks";
 
@@ -72,5 +73,8 @@ export default {
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS === "true",
+  },
+  contractSizer: {
+    alphaSort: true,
   },
 } as HardhatUserConfig;

@@ -6,7 +6,9 @@
 
 pragma solidity ^0.8.9;
 
-contract ERC998Utils  {
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+
+abstract contract ERC998Utils  {
   function _parseTokenId(bytes memory _data) internal pure returns (uint256 tokenId) {
     // convert up to 32 bytes of_data to uint256, owner nft tokenId passed as uint in bytes
     assembly {
@@ -23,4 +25,6 @@ contract ERC998Utils  {
 
     return array;
   }
+
+  function _ownerOrApproved(address _sender, uint256 _tokenId) internal virtual view;
 }
