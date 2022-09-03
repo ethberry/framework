@@ -220,6 +220,7 @@
     },
     "tips": {
       "add": "Add",
+      "clear": "Clear",
       "delete": "Delete",
       "deposit": "Deposit",
       "edit": "Edit",

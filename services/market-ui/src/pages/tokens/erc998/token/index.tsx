@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, Fragment } from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid, IconButton, Paper, Tooltip, Typography } from "@mui/material";
+
 import { FormattedMessage, useIntl } from "react-intl";
 import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
@@ -19,6 +20,8 @@ import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC99
 import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
+import { Clear } from "@mui/icons-material";
+import { IOwnership } from "@framework/types/dist/entities/blockchain/hierarchy/ownership";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -58,17 +61,17 @@ export const Erc998Token: FC = () => {
     return contract["safeTransferChild(uint256,address,address,uint256)"](
       selected.tokenId,
       web3Context.account,
-      selected.children![0].child!.template!.contract!.address,
-      selected.children![0].child?.tokenId,
+      data.template!.contract!.address,
+      data.tokenId,
     ) as Promise<void>;
   });
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null, reason: string): Promise<any> => {
-    if (reason === "clear") {
-      return metaFnClear(option);
-    } else {
-      return metaFn(option);
-    }
+  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): Promise<any> => {
+    return metaFn(option);
+  };
+
+  const handleClear = (ownership: IOwnership) => async () => {
+    await metaFnClear(ownership.child);
   };
 
   if (isLoading) {
@@ -112,22 +115,35 @@ export const Erc998Token: FC = () => {
               >
                 <Typography variant="h5">{child.child?.title}</Typography>
                 {new Array(filtered.length).fill(null).map((e, i) => (
-                  <EntityInput
-                    key={i}
-                    name={`tokenId[${i}]`}
-                    controller="tokens"
-                    data={{
-                      account: selected.template?.contract?.address,
-                      contractIds: [child.child?.id],
-                    }}
-                    label={formatMessage({ id: "form.labels.tokenId" })}
-                    placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
-                    getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
-                    onChange={handleChange}
-                  />
+                  <Grid container key={child.child?.id}>
+                    <Grid item xs={6}>
+                      <EntityInput
+                        disableClear={true}
+                        key={i}
+                        name={`tokenId[${i}]`}
+                        controller="tokens"
+                        data={{
+                          account: selected.template?.contract?.address,
+                          contractIds: [child.child?.id],
+                        }}
+                        label={formatMessage({ id: "form.labels.tokenId" })}
+                        placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
+                        getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Tooltip title={formatMessage({ id: "form.tips.clear" })}>
+                        <IconButton onClick={handleClear(filtered[i])} data-testid="ChildClearButton">
+                          <Clear />
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
                 ))}
                 {new Array(child.amount - filtered.length).fill(null).map((e, i) => (
                   <EntityInput
+                    disableClear={true}
                     key={i}
                     name={`tokenId[${i + filtered.length}]`}
                     controller="tokens"
