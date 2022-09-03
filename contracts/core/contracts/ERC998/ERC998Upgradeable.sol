@@ -29,7 +29,7 @@ contract ERC998Upgradeable is IERC721Upgradeable, ERC998Simple {
   override(IERC721Simple, ERC721Simple)
   onlyRole(MINTER_ROLE)
   {
-    require(templateId != 0, "ERC721Upgradeable: wrong type");
+    require(templateId != 0, "ERC998: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();

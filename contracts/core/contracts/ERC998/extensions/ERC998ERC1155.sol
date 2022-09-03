@@ -3,27 +3,18 @@
 pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
 
 import "../interfaces/IERC998ERC1155TopDown.sol";
 import "../interfaces/IERC998ERC1155TopDownEnumerable.sol";
-import "../ERC998Simple.sol";
+import "./ERC998Utils.sol";
 
-contract ComposableTopDownERC1155 is ERC998Simple, IERC998ERC1155TopDown, IERC1155Receiver {
-  //erc1155 zepellin ERC721Receiver.sol
-  bytes4 constant ERC1155_RECEIVED_SINGLE = 0xf23a6e61;
-  bytes4 constant ERC1155_RECEIVED_BATCH = 0xbc197c81;
-
+abstract contract ERC998ERC1155 is Context, ERC165, IERC721, IERC998ERC1155TopDown, IERC1155Receiver, ERC998Utils {
   // tokenId => (erc1155 contract => (childToken => balance))
   mapping(uint256 => mapping(address => mapping(uint256 => uint256))) internal erc1155Balances;
-
-  constructor(
-    string memory name,
-    string memory symbol,
-    uint96 royalty,
-    string memory baseTokenURI
-  ) ERC998Simple(name, symbol, royalty, baseTokenURI) {}
 
   /**
    * @dev See {IERC1155-safeTransferFrom}.
@@ -38,7 +29,7 @@ contract ComposableTopDownERC1155 is ERC998Simple, IERC998ERC1155TopDown, IERC11
   ) public override {
     require(_to != address(0), "CTD: transferERC1155 _to zero address");
     address sender = _msgSender();
-    _isApprovedOrOwner(sender, _fromTokenId);
+    _ownerOrApproved(sender, _fromTokenId);
 
     uint256[] memory childTokenIds = _asSingletonArray(_childTokenId);
     uint256[] memory amounts = _asSingletonArray(_amount);
@@ -69,7 +60,7 @@ contract ComposableTopDownERC1155 is ERC998Simple, IERC998ERC1155TopDown, IERC11
     );
     require(_to != address(0), "CTD: batchTransferERC1155 _to zero address");
     address sender = _msgSender();
-    _isApprovedOrOwner(sender, _fromTokenId);
+    _ownerOrApproved(sender, _fromTokenId);
 
     _beforeRemoveERC1155(sender, _fromTokenId, _to, _erc1155Contract, _childTokenIds, _amounts, _data);
 
@@ -179,7 +170,7 @@ contract ComposableTopDownERC1155 is ERC998Simple, IERC998ERC1155TopDown, IERC11
 
     _afterReceiveERC1155(_operator, _from, tokenId, erc1155Contract, childTokenIds, amounts, _data);
 
-    return ERC1155_RECEIVED_SINGLE;
+    return this.onERC1155Received.selector;
   }
 
   /**
@@ -219,7 +210,7 @@ contract ComposableTopDownERC1155 is ERC998Simple, IERC998ERC1155TopDown, IERC11
 
     _afterReceiveERC1155(_operator, _from, tokenId, erc1155Contract, _childTokenIds, _amounts, _data);
 
-    return ERC1155_RECEIVED_BATCH;
+    return this.onERC1155BatchReceived.selector;
   }
 
   function _beforeReceiveERC1155(
@@ -242,17 +233,18 @@ contract ComposableTopDownERC1155 is ERC998Simple, IERC998ERC1155TopDown, IERC11
     bytes memory data
   ) internal virtual {}
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC998Simple) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC165) returns (bool) {
     return
       interfaceId == type(IERC998ERC1155TopDown).interfaceId ||
       interfaceId == type(IERC1155Receiver).interfaceId ||
-      ERC998Simple.supportsInterface(interfaceId);
+      super.supportsInterface(interfaceId);
   }
 
-  function _asSingletonArray(uint256 element) private pure returns (uint256[] memory) {
-    uint256[] memory array = new uint256[](1);
-    array[0] = element;
+  ////////////////////////////////////////////////////////
+  // ERC721 mock
+  ////////////////////////////////////////////////////////
 
-    return array;
-  }
+  function ownerOf(uint256 tokenId) public view virtual override returns (address);
+
+  function _ownerOrApproved(address _sender, uint256 _tokenId) internal virtual view;
 }

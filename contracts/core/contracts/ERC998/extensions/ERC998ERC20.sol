@@ -6,23 +6,19 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/utils/Context.sol";
 
 import "../interfaces/IERC20AndERC223.sol";
 import "../interfaces/IERC998ERC20TopDown.sol";
-import "../ERC998Simple.sol";
+import "./ERC998Utils.sol";
 
-contract ComposableTopDownERC20 is ERC998Simple, IERC998ERC20TopDown {
+
+abstract contract ERC998ERC20 is Context, ERC165, IERC721, IERC998ERC20TopDown, ERC998Utils {
   using EnumerableSet for EnumerableSet.AddressSet;
 
   // tokenId => (token contract => balance)
   mapping(uint256 => mapping(address => uint256)) erc20Balances;
 
-  constructor(
-    string memory name,
-    string memory symbol,
-    uint96 royalty,
-    string memory baseTokenURI
-  ) ERC998Simple(name, symbol, royalty, baseTokenURI) {}
 
   function transferERC20(
     uint256 _tokenId,
@@ -32,7 +28,7 @@ contract ComposableTopDownERC20 is ERC998Simple, IERC998ERC20TopDown {
   ) external override {
     require(_to != address(0), "CTD: transferERC20 _to zero address");
     address sender = _msgSender();
-    _isApprovedOrOwner(sender, _tokenId);
+    _ownerOrApproved(sender, _tokenId);
     _removeERC20(_tokenId, _to, _erc20Contract, _value);
     require(IERC20AndERC223(_erc20Contract).transfer(_to, _value), "CTD: transferERC20 transfer failed");
   }
@@ -47,7 +43,7 @@ contract ComposableTopDownERC20 is ERC998Simple, IERC998ERC20TopDown {
   ) external override {
     require(_to != address(0), "CTD: transferERC223 _to zero address");
     address sender = _msgSender();
-    _isApprovedOrOwner(sender, _tokenId);
+    _ownerOrApproved(sender, _tokenId);
     _removeERC20(_tokenId, _to, _erc223Contract, _value);
     require(IERC20AndERC223(_erc223Contract).transfer(_to, _value, _data), "CTD: transferERC223 transfer failed");
   }
@@ -160,7 +156,15 @@ contract ComposableTopDownERC20 is ERC998Simple, IERC998ERC20TopDown {
     uint256 _value
   ) internal virtual {}
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC998Simple) returns (bool) {
-    return interfaceId == type(IERC998ERC20TopDown).interfaceId || ERC998Simple.supportsInterface(interfaceId);
+  function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC165) returns (bool) {
+    return interfaceId == type(IERC998ERC20TopDown).interfaceId || super.supportsInterface(interfaceId);
   }
+
+  ////////////////////////////////////////////////////////
+  // ERC721 mock
+  ////////////////////////////////////////////////////////
+
+  function ownerOf(uint256 tokenId) public view virtual override returns (address);
+
+  function _ownerOrApproved(address _sender, uint256 _tokenId) internal virtual view;
 }

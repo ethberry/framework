@@ -11,7 +11,7 @@ import "../interfaces/IERC998ERC1155TopDown.sol";
 import "../interfaces/IERC998ERC1155TopDownEnumerable.sol";
 import "./ERC998ERC1155.sol";
 
-contract ComposableTopDownERC1155Enumerable is ComposableTopDownERC1155, IERC998ERC1155TopDownEnumerable {
+abstract contract ERC998ERC1155Enumerable is ERC998ERC1155, IERC998ERC1155TopDownEnumerable {
   using EnumerableSet for EnumerableSet.UintSet;
   using EnumerableSet for EnumerableSet.AddressSet;
 
@@ -20,13 +20,6 @@ contract ComposableTopDownERC1155Enumerable is ComposableTopDownERC1155, IERC998
 
   // tokenId => (erc1155 contract => array of erc1155 tokens)
   mapping(uint256 => mapping(address => EnumerableSet.UintSet)) internal erc1155Tokens;
-
-  constructor(
-    string memory name,
-    string memory symbol,
-    uint96 royalty,
-    string memory baseTokenURI
-  ) ComposableTopDownERC1155(name, symbol, royalty, baseTokenURI) {}
 
   function _beforeReceiveERC1155(
     address, /* _operator */
@@ -94,9 +87,9 @@ contract ComposableTopDownERC1155Enumerable is ComposableTopDownERC1155, IERC998
     return erc1155Tokens[_tokenId][_erc1155Contract].at(_index);
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(ComposableTopDownERC1155) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC998ERC1155) returns (bool) {
     return
       interfaceId == type(IERC998ERC1155TopDownEnumerable).interfaceId ||
-      ComposableTopDownERC1155.supportsInterface(interfaceId);
+      super.supportsInterface(interfaceId);
   }
 }

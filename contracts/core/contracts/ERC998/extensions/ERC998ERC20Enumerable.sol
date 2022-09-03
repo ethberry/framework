@@ -11,18 +11,11 @@ import "../interfaces/IERC20AndERC223.sol";
 import "../interfaces/IERC998ERC20TopDownEnumerable.sol";
 import "./ERC998ERC20.sol";
 
-contract ComposableTopDownERC20Enumerable is ComposableTopDownERC20, IERC998ERC20TopDownEnumerable {
+abstract contract ERC998ERC20Enumerable is ERC998ERC20, IERC998ERC20TopDownEnumerable {
   using EnumerableSet for EnumerableSet.AddressSet;
 
   // tokenId => token contract
   mapping(uint256 => EnumerableSet.AddressSet) erc20Contracts;
-
-  constructor(
-    string memory name,
-    string memory symbol,
-    uint96 royalty,
-    string memory baseTokenURI
-  ) ComposableTopDownERC20(name, symbol, royalty, baseTokenURI) {}
 
   function _beforeERC20Received(
     address, /*_from*/
@@ -58,9 +51,9 @@ contract ComposableTopDownERC20Enumerable is ComposableTopDownERC20, IERC998ERC2
     return erc20Contracts[_tokenId].length();
   }
 
-  function supportsInterface(bytes4 interfaceId) public view virtual override(ComposableTopDownERC20) returns (bool) {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(ERC998ERC20) returns (bool) {
     return
       interfaceId == type(IERC998ERC20TopDownEnumerable).interfaceId ||
-      ComposableTopDownERC20.supportsInterface(interfaceId);
+      ERC998ERC20.supportsInterface(interfaceId);
   }
 }

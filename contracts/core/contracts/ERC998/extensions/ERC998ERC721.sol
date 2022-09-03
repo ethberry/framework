@@ -14,8 +14,9 @@ import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
 import "../interfaces/IERC998ERC721TopDown.sol";
+import "./ERC998Utils.sol";
 
-abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown {
+abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown, ERC998Utils {
   using Address for address;
   using Counters for Counters.Counter;
   using EnumerableSet for EnumerableSet.UintSet;
@@ -242,13 +243,10 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     require(tokenId != 0, "CTD: _transferChild _childContract _childTokenId not found");
     require(tokenId == _fromTokenId, "CTD: _transferChild wrong tokenId found");
     require(_to != address(0), "CTD: _transferChild _to zero address");
-    address rootOwner = address(uint160(uint256(rootOwnerOf(tokenId))));
-    require(
-      rootOwner == _msgSender() ||
-        isApprovedForAll(rootOwner, _msgSender()) ||
-        rootOwnerAndTokenIdToApprovedAddress[rootOwner][tokenId] == _msgSender(),
-      "CTD: _transferChild _msgSender() not eligible"
-    );
+
+    address sender = _msgSender();
+    _ownerOrApproved(sender, tokenId);
+
     removeChild(tokenId, _childContract, _childTokenId);
   }
 
@@ -260,16 +258,6 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     parentTokenId = childTokenOwner[_childContract][_childTokenId];
     require(parentTokenId != 0, "CTD: _ownerOfChild not found");
     return (ownerOf(parentTokenId), parentTokenId);
-  }
-
-  function _parseTokenId(bytes memory _data) internal pure returns (uint256 tokenId) {
-    // convert up to 32 bytes of_data to uint256, owner nft tokenId passed as uint in bytes
-    assembly {
-      tokenId := mload(add(_data, 0x20))
-    }
-    if (_data.length < 32) {
-      tokenId = tokenId >> (256 - _data.length * 8);
-    }
   }
 
   function removeChild(
@@ -386,4 +374,15 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
   function ownerOf(uint256 tokenId) public view virtual override returns (address);
 
   function isApprovedForAll(address owner, address operator) public view virtual override returns (bool);
+
+  function _ownerOrApproved(address sender, uint256 tokenId) internal virtual view {
+    address rootOwner = address(uint160(uint256(rootOwnerOf(tokenId))));
+    require(
+      rootOwner == sender ||
+      isApprovedForAll(rootOwner, sender) ||
+      rootOwnerAndTokenIdToApprovedAddress[rootOwner][tokenId] ==
+      sender,
+      "CTD: sender is not approved"
+    );
+  }
 }

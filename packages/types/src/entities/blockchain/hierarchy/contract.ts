@@ -32,6 +32,8 @@ export enum Erc998ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
+  "ERC20" = "ERC20",
+  "ERC1155" = "ERC1155",
 }
 
 export enum Erc1155ContractFeatures {
