@@ -87,7 +87,7 @@ describe("ERC721MysteryboxSimple", function () {
 
   describe("mint", function () {
     it("should mint (singular)", async function () {
-      const tx1 = mysteryboxInstance.mintMysterybox(this.receiver.address, templateId, [
+      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,
@@ -102,7 +102,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     it("should mint (multiple)", async function () {
-      const tx1 = mysteryboxInstance.mintMysterybox(this.receiver.address, templateId, [
+      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,
@@ -123,7 +123,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     it("should fail: No content", async function () {
-      const tx1 = mysteryboxInstance.mintMysterybox(this.receiver.address, templateId, []);
+      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, []);
 
       await expect(tx1).to.be.revertedWith("Mysterybox: no content");
     });
@@ -131,7 +131,7 @@ describe("ERC721MysteryboxSimple", function () {
 
   describe("unpack", function () {
     it("should mint (singular)", async function () {
-      const tx1 = mysteryboxInstance.mintMysterybox(this.receiver.address, templateId, [
+      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,
@@ -153,7 +153,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     it("should mint Random (singular)", async function () {
-      const tx1 = mysteryboxInstance.mintMysterybox(this.receiver.address, templateId, [
+      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721RandomInstance.address,
@@ -180,7 +180,7 @@ describe("ERC721MysteryboxSimple", function () {
     });
 
     it("should mint (multiple)", async function () {
-      const tx1 = mysteryboxInstance.mintMysterybox(this.receiver.address, templateId, [
+      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,

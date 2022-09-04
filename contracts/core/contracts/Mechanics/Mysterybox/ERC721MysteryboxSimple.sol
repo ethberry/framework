@@ -30,7 +30,11 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintMysterybox(
+  function mintCommon(address, uint256) external virtual override onlyRole(MINTER_ROLE) {
+    revert("Mysterybox: this method is not supported");
+  }
+
+  function mintBox(
     address to,
     uint256 templateId,
     Asset[] memory items
@@ -43,12 +47,10 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
 
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
 
-    // remove mysterybox itself
-    // delete items[items.length - 1];
-
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
-    uint256 length = items.length;
+    // _itemData[tokenId] = items;
 
+    uint256 length = items.length;
     for (uint256 i = 0; i < length; i++) {
       _itemData[tokenId].push(items[i]);
     }

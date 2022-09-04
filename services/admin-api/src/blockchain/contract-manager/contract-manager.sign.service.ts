@@ -216,7 +216,7 @@ export class ContractManagerSignService {
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
-  // MODULE:MYSTERYBOX
+  // MODULE:MYSTERY
   public async mysterybox(dto: IMysteryboxContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
     const nonce = utils.randomBytes(32);

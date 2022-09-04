@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 
 import { ClaimModule } from "./claim/claim.module";
-import { MysteryboxModule } from "./mysterybox/mysterybox.module";
+import { MysteryModule } from "./mystery/mystery.module";
 import { CraftModule } from "./craft/craft.module";
 import { StakingModule } from "./staking/staking.module";
 import { VestingModule } from "./vesting/vesting.module";
@@ -12,7 +12,7 @@ import { LotteryModule } from "./lottery/lottery.module";
 @Module({
   imports: [
     ClaimModule,
-    MysteryboxModule,
+    MysteryModule,
     CraftModule,
     StakingModule,
     VestingModule,

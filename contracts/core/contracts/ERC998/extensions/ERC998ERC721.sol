@@ -183,7 +183,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     uint256,
     bytes memory
   ) external pure override {
-    revert("ERC998ERC721TopDown: this method is not supported");
+    revert("CTD: this method is not supported");
   }
 
   function getChild(
@@ -192,7 +192,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998ERC721TopDown
     address,
     uint256
   ) external pure override {
-    revert("ERC998ERC721TopDown: this method is not supported");
+    revert("CTD: this method is not supported");
   }
 
   function onERC721Received(

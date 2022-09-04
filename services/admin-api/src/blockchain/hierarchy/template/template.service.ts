@@ -83,7 +83,13 @@ export class TemplateService {
   }
 
   public async autocomplete(dto: ITemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
-    const { contractFeatures = [], templateStatus = [], contractIds = [], contractType = [] } = dto;
+    const {
+      contractFeatures = [],
+      templateStatus = [],
+      contractIds = [],
+      contractModule = [],
+      contractType = [],
+    } = dto;
 
     const where = {
       contract: {},
@@ -92,6 +98,12 @@ export class TemplateService {
     if (contractType.length) {
       Object.assign(where.contract, {
         contractType: In(contractType),
+      });
+    }
+
+    if (contractModule.length) {
+      Object.assign(where.contract, {
+        contractModule: In(contractModule),
       });
     }
 

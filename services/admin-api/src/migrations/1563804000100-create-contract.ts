@@ -19,8 +19,11 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
-    // MODULE:MYSTERYBOX
-    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERYBOX';`);
+    // MODULE:MYSTERY
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERY';`);
+
+    // MODULE:WRAPPER
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'WRAPPER';`);
 
     // MODULE:LOTTERY
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
@@ -36,7 +39,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
       );
     `);
 
-    // MODULE:MYSTERYBOX
+    // MODULE:MYSTERY
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'PAUSABLE';`);
 
     const table = new Table({
@@ -100,7 +103,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         {
           name: "contract_type",
           type: `${ns}.token_type_enum`,
-          default: "'NATIVE'",
+          isNullable: true,
         },
         {
           name: "contract_features",

@@ -30,13 +30,13 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
     setIsBlacklistDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IBlacklistDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IBlacklistDto, web3Context: Web3ContextType) => {
     const contract = new Contract(address, ERC20BlacklistSol.abi, web3Context.provider?.getSigner());
     return contract.blacklist(values.account) as Promise<void>;
   });
 
   const handleBlacklistConfirmed = async (values: IBlacklistDto): Promise<void> => {
-    await meta(values).finally(() => {
+    await metaFn(values).finally(() => {
       setIsBlacklistDialogOpen(false);
     });
   };

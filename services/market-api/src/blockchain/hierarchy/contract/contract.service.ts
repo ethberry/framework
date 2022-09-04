@@ -74,7 +74,7 @@ export class ContractService {
   }
 
   public async autocomplete(dto: IContractAutocompleteDto, chainId: number): Promise<Array<ContractEntity>> {
-    const { contractStatus = [], contractFeatures = [], contractType = [] } = dto;
+    const { contractStatus = [], contractFeatures = [], contractType = [], contractModule = [] } = dto;
 
     const where = {
       chainId,
@@ -97,6 +97,12 @@ export class ContractService {
       Object.assign(where, {
         // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
         contractFeatures: ArrayOverlap(contractFeatures),
+      });
+    }
+
+    if (contractModule.length) {
+      Object.assign(where, {
+        contractModule: In(contractModule),
       });
     }
 

@@ -9,7 +9,7 @@ pragma solidity ^0.8.9;
 import "../../Exchange/interfaces/IAsset.sol";
 
 interface IERC721Mysterybox {
-  function mintMysterybox(
+  function mintBox(
     address to,
     uint256 templateId,
     Asset[] memory items

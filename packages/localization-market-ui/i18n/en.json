@@ -25,12 +25,13 @@
     "auction": "Sell `{title}` on auction",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
+    "create": "Create",
     "delete": "Delete `{title}`?",
     "deposit": "Deposit",
-    "sell": "Sell",
-    "transfer": "Transfer",
     "edit": "Edit",
     "reward": "Reward",
+    "sell": "Sell",
+    "transfer": "Transfer",
     "view": "View"
   },
   "enums": {
@@ -98,7 +99,6 @@
   },
   "form": {
     "buttons": {
-      "release": "Release",
       "add": "Add",
       "approve": "Approve",
       "back": "Back",
@@ -120,6 +120,7 @@
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
+      "release": "Release",
       "save": "Save",
       "search": "Search",
       "sell": "Sell",
@@ -135,19 +136,17 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
-      "claimStatus": "Status",
-      "contractTemplate": "Template",
-      "roundIds": "Round",
-      "price": "Price",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
       "breakLastPeriod": "Break last period",
       "chainId": "Chain",
+      "claimStatus": "Status",
       "collectionId": "Collection",
       "confirm": "Confirm",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "contractTemplate": "Template",
       "count": "Count",
       "createdAt": "Created",
       "dateRangeEnd": "To",
@@ -162,12 +161,14 @@
       "externalId": "External ID",
       "id": "ID",
       "imageUrl": "Avatar",
+      "item": "Item",
       "language": "Language",
       "level": "Level",
       "maxPrice": "Max. price",
       "minPrice": "Min. price",
       "numbers": "Numbers",
       "password": "Password",
+      "price": "Price",
       "rank": "Rank",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
@@ -175,6 +176,7 @@
       "reward": "Reward",
       "roles": "Roles",
       "roundId": "Round",
+      "roundIds": "Round",
       "score": "Score",
       "sort": "Sort by",
       "stakeStatus": "Status",
@@ -193,7 +195,6 @@
       "withdrawDeposit": "Withdraw deposit"
     },
     "placeholders": {
-      "roundIds": "Round",
       "account": "0x...",
       "address": "0x...",
       "amount": "100",
@@ -208,6 +209,7 @@
       "minPrice": "1",
       "password": "******",
       "query": "Search...",
+      "roundIds": "Round",
       "search": "Search...",
       "templateId": "Template",
       "templateIds": "Templates",
@@ -220,11 +222,11 @@
       "delete": "Delete",
       "deposit": "Deposit",
       "edit": "Edit",
-      "view": "View",
       "redeem": "Redeem",
       "release": "Release",
       "reward": "Reward",
-      "transfer": "Transfer ownership"
+      "transfer": "Transfer ownership",
+      "view": "View"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -288,7 +290,8 @@
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
         "staking": "Staking",
-        "vesting": "Vesting"
+        "vesting": "Vesting",
+        "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
     },
@@ -432,7 +435,7 @@
       "detach": "Detach",
       "title": "My wallet"
     },
-    "mysterybox": {
+    "mystery": {
       "box": {
         "price": "Price: {amount}",
         "title": "Mysterybox Box: {title}"
@@ -466,17 +469,17 @@
       "title": "Profile"
     },
     "referral": {
-      "leaderboard": {
-        "title": "Leaderboard"
-      },
       "cabinet": {
         "title": "Cabinet"
       },
-      "report": {
-        "title": "Report"
-      },
       "chart": {
         "title": "Chart"
+      },
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "report": {
+        "title": "Report"
       },
       "title": "Referral program"
     },
@@ -498,6 +501,18 @@
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
+    },
+    "wrapper": {
+      "token": {
+        "title": "Wrapped Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "Token wrapper"
+      }
     }
   },
   "snackbar": {

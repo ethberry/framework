@@ -36,7 +36,7 @@ import { ContractService } from "../hierarchy/contract/contract.service";
 import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
 import { GradeService } from "../mechanics/grade/grade.service";
-import { MysteryboxLogService } from "../mechanics/mysterybox/box/log/log.service";
+import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -54,7 +54,7 @@ export class ContractManagerServiceEth {
     private readonly erc998LogService: Erc998TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
-    private readonly mysteryboxLogService: MysteryboxLogService,
+    private readonly mysteryboxLogService: MysteryLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
@@ -246,7 +246,7 @@ export class ContractManagerServiceEth {
       imageUrl,
       contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
       contractType: TokenType.ERC721,
-      contractModule: ModuleType.MYSTERYBOX,
+      contractModule: ModuleType.MYSTERY,
       chainId: this.chainId,
       royalty: ~~royalty,
       baseTokenURI,

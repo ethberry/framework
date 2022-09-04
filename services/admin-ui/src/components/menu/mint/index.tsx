@@ -34,7 +34,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     setIsMintTokenDialogOpen(false);
   };
 
-  const meta = useMetamask(async (values: IMintTokenDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask(async (values: IMintTokenDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
       await contractErc20.mint(values.account, values.amount);
@@ -50,7 +50,7 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
   });
 
   const handleMintTokenConfirmed = async (values: IMintTokenDto): Promise<void> => {
-    await meta(values).finally(() => {
+    await metaFn(values).finally(() => {
       setIsMintTokenDialogOpen(false);
     });
   };

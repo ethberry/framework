@@ -15,28 +15,28 @@ export const Mysterybox: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/mysterybox-contracts">
+        <ListItem button component={RouterLink} to="/mystery-contracts">
           <ListItemIcon>
             <Storefront />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.mysterybox.contracts.title" />
+            <FormattedMessage id="pages.mystery.contracts.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/mysterybox-boxes">
+        <ListItem button component={RouterLink} to="/mystery-boxes">
           <ListItemIcon>
             <Filter />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.mysterybox.boxes.title" />
+            <FormattedMessage id="pages.mystery.boxes.title" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/mysterybox-tokens">
+        <ListItem button component={RouterLink} to="/mystery-tokens">
           <ListItemIcon>
             <Storage />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.mysterybox.tokens.title" />
+            <FormattedMessage id="pages.mystery.tokens.title" />
           </ListItemText>
         </ListItem>
       </List>

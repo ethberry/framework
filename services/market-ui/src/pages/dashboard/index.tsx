@@ -19,6 +19,7 @@ import { Craft } from "./mechanics/craft";
 import { Drop } from "./mechanics/drop";
 import { Referral } from "./integrations/referral";
 import { Ipfs } from "./integrations/ipfs";
+import { Wrapper } from "./mechanics/wrapper";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -33,6 +34,7 @@ export const Dashboard: FC = () => {
           <Erc998Section />
           <Erc1155Section />
           <Mysterybox />
+          <Wrapper />
         </Grid>
         <Grid item xs={4}>
           <Vesting />

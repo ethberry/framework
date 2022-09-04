@@ -38,7 +38,7 @@ export const CraftEditDialog: FC<IExchangeEditDialogProps> = props => {
       <PriceInput
         prefix="item"
         disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]}
-        disabledModuleTypes={[ModuleType.MYSTERYBOX, ModuleType.LOTTERY]}
+        disabledModuleTypes={[ModuleType.MYSTERY, ModuleType.LOTTERY]}
       />
       {/* all toke types are available */}
       <PriceInput prefix="price" multiple />

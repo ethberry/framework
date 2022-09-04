@@ -26,11 +26,6 @@ export class Erc998TemplateController {
     return this.erc998TemplateService.search(dto, userEntity?.chainId || chainId);
   }
 
-  @Get("/autocomplete")
-  public autocomplete(): Promise<Array<TemplateEntity>> {
-    return this.erc998TemplateService.autocomplete();
-  }
-
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<TemplateEntity | null> {

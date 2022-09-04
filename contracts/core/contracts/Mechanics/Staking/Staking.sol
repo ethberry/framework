@@ -173,7 +173,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
           if (randomInterface) {
             IERC721Random(rewardItem.token).mintRandom(receiver, rewardItem.tokenId);
             //          } else if (mysteryboxInterface) {
-            //            IERC721Mysterybox(rewardItem.token).mintMysterybox(receiver, rewardItem.tokenId);
+            //            IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId);
           } else {
             IERC721Simple(rewardItem.token).mintCommon(receiver, rewardItem.tokenId);
           }

@@ -55,6 +55,9 @@ export enum ContractFeatures {
   "SOULBOUND" = "SOULBOUND",
   // MODULE:MYSTERYBOX
   "PAUSABLE" = "PAUSABLE",
+  // MODULE:ERC998
+  "ERC20" = "ERC20",
+  "ERC1155" = "ERC1155",
 }
 
 export interface IContract extends IDeployable, ISearchable {

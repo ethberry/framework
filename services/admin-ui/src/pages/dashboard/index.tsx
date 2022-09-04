@@ -8,7 +8,7 @@ import { Erc20Sections } from "./hierarchy/erc20";
 import { Erc1155Section } from "./hierarchy/erc1155";
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
-import { Mysterybox } from "./mechanics/mysterybox";
+import { Mystery } from "./mechanics/mystery";
 import { Staking } from "./mechanics/staking";
 import { NativeSections } from "./hierarchy/native";
 import { Lottery } from "./mechanics/lottery";
@@ -37,7 +37,7 @@ export const Dashboard: FC = () => {
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
-          <Mysterybox />
+          <Mystery />
         </Grid>
         <Grid item xs={4}>
           <Vesting />

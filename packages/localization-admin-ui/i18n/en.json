@@ -60,15 +60,15 @@
     },
     "contractFeatures": {
       "BLACKLIST": "Blacklist",
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
       "EXTERNAL": "External",
-      "MYSTERYBOX": "Mysterybox",
+      "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
       "RANDOM": "Random",
       "SOULBOUND": "SoulBound",
-      "UPGRADEABLE": "Upgradeable",
-      "ERC20": "ERC20",
-      "ERC1155": "ERC1155"
+      "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
       "ACTIVE": "Active",
@@ -86,8 +86,20 @@
       "NEW": "New"
     },
     "emailType": {
-      "LINK_TOKEN": "LINK notification",
-      "DUMMY": "Test email"
+      "DUMMY": "Test email",
+      "LINK_TOKEN": "LINK notification"
+    },
+    "grade": {
+      "1": "1",
+      "10": "10",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
     },
     "gradeStrategy": {
       "EXPONENTIAL": "Exponential",
@@ -114,18 +126,6 @@
       "RARE": "Rare",
       "UNCOMMON": "Uncommon",
       "UNKNOWN": "Unknown"
-    },
-    "grade": {
-      "1": "1",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9",
-      "10": "10"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -225,15 +225,14 @@
       "upload": "Upload"
     },
     "hints": {
-      "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
       "editNotAllowed": "Editing of this rule is not allowed",
+      "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?",
       "risk": "You are doing this at your own risk!"
     },
     "labels": {
       "DUMMY": "Dummy",
       "account": "Account",
-      "grade": "Grade",
       "address": "Address",
       "amount": "Amount",
       "attributes": "Attributes",
@@ -266,6 +265,7 @@
       "duration": "Duration",
       "email": "Email",
       "endTimestamp": "End date",
+      "grade": "Grade",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -291,6 +291,7 @@
       "reward": "Reward",
       "role": "Role",
       "roundId": "Round",
+      "roundIds": "Round",
       "royalty": "Royalty",
       "slug": "Slug",
       "stakeStatus": "Status",
@@ -311,14 +312,12 @@
       "url": "Url",
       "userId": "User",
       "userIds": "Users",
-      "roundIds": "Round",
       "userRoles": "Roles",
       "userStatus": "Status",
       "year": "Year"
     },
     "placeholders": {
       "DUMMY": "Dummy",
-      "roundIds": "Round",
       "account": "0x...",
       "address": "0x...",
       "amount": "10",
@@ -353,6 +352,7 @@
       "query": "Search...",
       "rarity": "Legendary",
       "recipient": "Recipient",
+      "roundIds": "Round",
       "royalty": "1",
       "search": "Search...",
       "slug": "terms-and-conditions",
@@ -374,8 +374,8 @@
       "create": "Create",
       "delete": "Delete",
       "edit": "Edit",
-      "view": "View",
-      "fund": "Fund"
+      "fund": "Fund",
+      "view": "View"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -457,7 +457,7 @@
         "drop": "Drop",
         "grade": "Grade",
         "lottery": "Lottery",
-        "mysterybox": "Mysterybox",
+        "mystery": "Mystery",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting"
@@ -547,12 +547,12 @@
       },
       "title": "Marketplace"
     },
-    "mysterybox": {
+    "mystery": {
       "boxes": {
-        "title": "Mysterybox Boxes"
+        "title": "Mystery Boxes"
       },
       "contracts": {
-        "title": "Mysterybox Contracts"
+        "title": "Mystery Contracts"
       }
     },
     "native": {

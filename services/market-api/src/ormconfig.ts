@@ -22,7 +22,7 @@ import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { ReferralRewardEntity } from "./blockchain/mechanics/referral/reward/reward.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
-import { MysteryboxBoxEntity } from "./blockchain/mechanics/mysterybox/box/box.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 
@@ -53,7 +53,7 @@ const config: PostgresConnectionOptions = {
     ReferralRewardEntity,
     LotteryRoundEntity,
     LotteryTicketEntity,
-    MysteryboxBoxEntity,
+    MysteryBoxEntity,
     ExchangeHistoryEntity,
   ],
   synchronize: false,

@@ -12,11 +12,11 @@ export class PauseControllerEth {
   constructor(private readonly pauseServiceEth: PauseServiceEth) {}
 
   @EventPattern([
-    { contractType: ContractType.MYSTERYBOX, eventName: ContractEventType.Paused },
+    { contractType: ContractType.MYSTERY, eventName: ContractEventType.Paused },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Paused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Paused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Paused },
-    { contractType: ContractType.MYSTERYBOX, eventName: ContractEventType.Unpaused },
+    { contractType: ContractType.MYSTERY, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.LOTTERY, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.EXCHANGE, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.STAKING, eventName: ContractEventType.Unpaused },

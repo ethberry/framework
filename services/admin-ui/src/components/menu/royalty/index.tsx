@@ -31,13 +31,13 @@ export const RoyaltyMenuItem: FC<IRoyaltyMenuItemProps> = props => {
     setIsRoyaltyDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IRoyaltyDto, web3Context: Web3ContextType) => {
     const contract = new Contract(address, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
     return contract.setDefaultRoyalty(web3Context.account, values.royalty) as Promise<void>;
   });
 
   const handleRoyaltyConfirmed = async (values: IRoyaltyDto): Promise<void> => {
-    await meta(values).finally(() => {
+    await metaFn(values).finally(() => {
       setIsRoyaltyDialogOpen(false);
     });
   };

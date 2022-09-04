@@ -15,7 +15,7 @@ interface IMysteryboxBuyButtonProps {
   mysterybox: IMysterybox;
 }
 
-export const MysteryboxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => {
+export const MysteryBoxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => {
   const { mysterybox } = props;
 
   const metaFnWithSign = useServerSignature(

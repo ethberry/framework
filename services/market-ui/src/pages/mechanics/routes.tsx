@@ -4,10 +4,11 @@ import { claimRoutes } from "./claim/routes";
 import { craftRoutes } from "./craft/routes";
 import { dropRoutes } from "./drop/routes";
 import { lotteryRoutes } from "./lottery/routes";
-import { mysteryboxRoutes } from "./mysterybox/routes";
+import { mysteryboxRoutes } from "./mystery/routes";
 import { referralRoutes } from "./referral/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
+import { wrapperRoutes } from "./wrapper/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
@@ -18,4 +19,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...referralRoutes,
   ...stakingRoutes,
   ...vestingRoutes,
+  ...wrapperRoutes,
 ];

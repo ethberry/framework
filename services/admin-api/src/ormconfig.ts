@@ -24,7 +24,7 @@ import { AssetComponentHistoryEntity } from "./blockchain/mechanics/asset/asset-
 import { AccessControlEntity } from "./blockchain/access-control/access-control.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
-import { MysteryboxBoxEntity } from "./blockchain/mechanics/mysterybox/box/box.entity";
+import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
@@ -51,8 +51,9 @@ import { SeedContractErc20WETHAt1563804000122 } from "./migrations/1563804000122
 import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-contract-erc721";
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
-import { SeedContractMysteryboxAt1563804000160 } from "./migrations/1563804000160-seed-contract-mysterybox";
-import { SeedContractLotteryAt1563804000170 } from "./migrations/1563804000170-seed-contract-lottery";
+import { SeedContractMysteryAt1563804000160 } from "./migrations/1563804000160-seed-contract-mystery";
+import { SeedContractWrapperAt1563804000170 } from "./migrations/1563804000170-seed-contract-wrapper";
+import { SeedContractLotteryAt1563804000180 } from "./migrations/1563804000180-seed-contract-lottery";
 
 import { CreateTemplate1563804000200 } from "./migrations/1563804000200-create-template";
 import { SeedTemplateNativeAt1563804000210 } from "./migrations/1563804000210-seed-template-native";
@@ -62,8 +63,9 @@ import { SeedTemplateErc20WETHAt1563804000222 } from "./migrations/1563804000222
 import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
 import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
-import { SeedTemplateMysteryboxAt1563804000260 } from "./migrations/1563804000260-seed-template-mysterybox";
-import { SeedTemplateLotteryAt1563804000270 } from "./migrations/1563804000270-seed-template-lottery";
+import { SeedTemplateMysteryAt1563804000260 } from "./migrations/1563804000260-seed-template-mystery";
+import { SeedTemplateWrapperAt1563804000270 } from "./migrations/1563804000270-seed-template-wrapper";
+import { SeedTemplateLotteryAt1563804000280 } from "./migrations/1563804000280-seed-template-lottery";
 
 import { CreateToken1563804000300 } from "./migrations/1563804000300-create-token";
 import { SeedTokenNativeAt1563804000310 } from "./migrations/1563804000310-seed-token-native";
@@ -73,16 +75,18 @@ import { SeedTokenErc20WETHAt1563804000322 } from "./migrations/1563804000322-se
 import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
 import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
 import { SeedTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
-import { SeedTokenMysteryboxAt1563804000360 } from "./migrations/1563804000360-seed-token-mysterybox";
-import { SeedTokenLotteryAt1563804000370 } from "./migrations/1563804000370-seed-token-lottery";
+import { SeedTokenMysteryAt1563804000360 } from "./migrations/1563804000360-seed-token-mystery";
+import { SeedTokenWrapperAt1563804000370 } from "./migrations/1563804000370-seed-token-wrapper";
+import { SeedTokenLotteryAt1563804000380 } from "./migrations/1563804000380-seed-token-lottery";
 
 import { CreateBalanceTable1563804000400 } from "./migrations/1563804000400-create-balance";
 import { SeedBalanceErc20At1563804020420 } from "./migrations/1563804000420-seed-balance-erc20";
 import { SeedBalanceErc721At1563804020430 } from "./migrations/1563804000430-seed-balance-erc721";
 import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-seed-balance-erc998";
 import { SeedBalanceErc1155At1563804020450 } from "./migrations/1563804000450-seed-balance-erc1155";
-import { SeedBalanceErcMysteryboxAt1563804020460 } from "./migrations/1563804000460-seed-balance-mysterybox";
-import { SeedBalanceLotteryAt1563804020470 } from "./migrations/1563804000470-seed-balance-lottery";
+import { SeedBalanceErcMysteryAt1563804020460 } from "./migrations/1563804000460-seed-balance-mysterybox";
+import { SeedBalanceErcWrapperAt1563804020470 } from "./migrations/1563804000470-seed-balance-wrapper";
+import { SeedBalanceLotteryAt1563804020480 } from "./migrations/1563804000480-seed-balance-lottery";
 
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
 import { SeedAssetComponentsErc721At1563804001230 } from "./migrations/1563804001230-seed-asset-component-erc721";
@@ -138,8 +142,10 @@ import { CreateStakingHistory1654751224400 } from "./migrations/1654751224400-cr
 
 import { CreatePage1655626535100 } from "./migrations/1655626535100-create-page";
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
+
 import { CreateGrade1657846587000 } from "./migrations/1657846587000-create-grade";
 import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
+import { SeedAssetComponentGrade1657846587020 } from "./migrations/1657846587020-seed-asset-component-grade";
 
 import { SeedContractExchangeAt1657846608000 } from "./migrations/1657846608000-seed-contract-exchange";
 import { CreateExchangeHistory1657846608010 } from "./migrations/1657846608010-create-exchange-history";
@@ -193,7 +199,7 @@ const config: PostgresConnectionOptions = {
     TokenEntity,
     BalanceEntity,
     ClaimEntity,
-    MysteryboxBoxEntity,
+    MysteryBoxEntity,
     CraftEntity,
     GradeEntity,
     CompositionEntity,
@@ -237,8 +243,9 @@ const config: PostgresConnectionOptions = {
     SeedContractErc721At1563804000130,
     SeedContractErc998At1563804000140,
     SeedContractErc1155At1563804000150,
-    SeedContractMysteryboxAt1563804000160,
-    SeedContractLotteryAt1563804000170,
+    SeedContractMysteryAt1563804000160,
+    SeedContractWrapperAt1563804000170,
+    SeedContractLotteryAt1563804000180,
 
     CreateTemplate1563804000200,
     SeedTemplateNativeAt1563804000210,
@@ -248,8 +255,9 @@ const config: PostgresConnectionOptions = {
     SeedTemplateErc721At1563804000230,
     SeedTemplateErc998At1563804000240,
     SeedTemplateErc1155At1563804000250,
-    SeedTemplateMysteryboxAt1563804000260,
-    SeedTemplateLotteryAt1563804000270,
+    SeedTemplateMysteryAt1563804000260,
+    SeedTemplateWrapperAt1563804000270,
+    SeedTemplateLotteryAt1563804000280,
 
     CreateToken1563804000300,
     SeedTokenNativeAt1563804000310,
@@ -259,16 +267,18 @@ const config: PostgresConnectionOptions = {
     SeedTokenErc721At1563804000330,
     SeedTokenErc998At1563804000340,
     SeedTokenErc1155At1563804000350,
-    SeedTokenMysteryboxAt1563804000360,
-    SeedTokenLotteryAt1563804000370,
+    SeedTokenMysteryAt1563804000360,
+    SeedTokenWrapperAt1563804000370,
+    SeedTokenLotteryAt1563804000380,
 
     CreateBalanceTable1563804000400,
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
     SeedBalanceErc1155At1563804020450,
-    SeedBalanceErcMysteryboxAt1563804020460,
-    SeedBalanceLotteryAt1563804020470,
+    SeedBalanceErcMysteryAt1563804020460,
+    SeedBalanceErcWrapperAt1563804020470,
+    SeedBalanceLotteryAt1563804020480,
 
     CreateAssetComponent1563804001220,
     SeedAssetComponentsErc721At1563804001230,
@@ -325,6 +335,7 @@ const config: PostgresConnectionOptions = {
 
     CreateGrade1657846587000,
     SeedGrade1657846587010,
+    SeedAssetComponentGrade1657846587020,
 
     SeedContractExchangeAt1657846608000,
     CreateExchangeHistory1657846608010,

@@ -23,7 +23,7 @@ export const AllowanceButton: FC = () => {
     setIsAllowanceDialogOpen(false);
   };
 
-  const meta = useMetamask(async (values: IAllowanceDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask(async (values: IAllowanceDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
       await contractErc20.approve(process.env.EXCHANGE_ADDR, values.amount);
@@ -42,7 +42,7 @@ export const AllowanceButton: FC = () => {
   });
 
   const handleAllowanceConfirm = async (values: IAllowanceDto): Promise<void> => {
-    await meta(values).finally(() => {
+    await metaFn(values).finally(() => {
       setIsAllowanceDialogOpen(false);
     });
   };

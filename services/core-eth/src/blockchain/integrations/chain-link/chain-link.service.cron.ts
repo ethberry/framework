@@ -49,14 +49,14 @@ export class ChainLinkServiceCron {
     );
   }
 
-  // MODULE:MYSTERYBOX
+  // MODULE:MYSTERY
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
-  public async mysterybox(): Promise<void> {
+  public async mystery(): Promise<void> {
     const linkAddr = this.configService.get<string>("LINK_ADDR", "");
     const adminEmail = this.configService.get<string>("ADMIN_EMAIL", "");
 
     const contractEntities = await this.contractService.findAll({
-      contractModule: ModuleType.MYSTERYBOX,
+      contractModule: ModuleType.MYSTERY,
     });
 
     const contract = new Contract(linkAddr, LinkSol.abi, this.signer);

@@ -1,0 +1,17 @@
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
+import { TemplateModule } from "../../../hierarchy/template/template.module";
+import { MysteryBoxEntity } from "./box.entity";
+import { MysteryBoxService } from "./box.service";
+import { MysteryBoxController } from "./box.controller";
+import { AssetModule } from "../../asset/asset.module";
+
+@Module({
+  imports: [ContractModule, TemplateModule, AssetModule, TypeOrmModule.forFeature([MysteryBoxEntity])],
+  providers: [MysteryBoxService],
+  controllers: [MysteryBoxController],
+  exports: [MysteryBoxService],
+})
+export class MysteryBoxModule {}

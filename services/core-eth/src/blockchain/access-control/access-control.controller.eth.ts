@@ -19,7 +19,7 @@ export class AccessControlControllerEth {
 
   @EventPattern([
     {
-      contractType: ContractType.MYSTERYBOX,
+      contractType: ContractType.MYSTERY,
       eventName: AccessControlEventType.RoleGranted,
     },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleGranted },
@@ -33,7 +33,7 @@ export class AccessControlControllerEth {
 
   @EventPattern([
     {
-      contractType: ContractType.MYSTERYBOX,
+      contractType: ContractType.MYSTERY,
       eventName: AccessControlEventType.RoleRevoked,
     },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleRevoked },
@@ -47,7 +47,7 @@ export class AccessControlControllerEth {
 
   @EventPattern([
     {
-      contractType: ContractType.MYSTERYBOX,
+      contractType: ContractType.MYSTERY,
       eventName: AccessControlEventType.RoleAdminChanged,
     },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },

@@ -9,9 +9,9 @@ abstract contract MyStateHash is IStateHash {
   mapping(uint256 => bytes32) internal tokenIdToStateHash;
 
   function stateHash(uint256 tokenId) external view returns (bytes32) {
-    bytes32 _stateHash = tokenIdToStateHash[tokenId];
-    require(_stateHash != 0, "CTD: stateHash of _tokenId is zero");
-    return _stateHash;
+    bytes32 stateHash = tokenIdToStateHash[tokenId];
+    require(stateHash != 0, "CTD: stateHash of tokenId is zero");
+    return stateHash;
   }
 
   function _localRootId(uint256 tokenId) internal view virtual returns (uint256);
@@ -19,22 +19,22 @@ abstract contract MyStateHash is IStateHash {
   function _calculateHash(
     bytes32 rootStateHash,
     uint256 rootTokenId,
-    address _childContract,
-    uint256 _childTokenId,
+    address childContract,
+    uint256 childTokenId,
     uint256 balance,
     bytes32 childStateHash
   ) internal view virtual returns (bytes32) {
     return
-      keccak256(abi.encodePacked(rootStateHash, rootTokenId, _childContract, _childTokenId, balance, childStateHash));
+      keccak256(abi.encodePacked(rootStateHash, rootTokenId, childContract, childTokenId, balance, childStateHash));
   }
 
-  function _beforeTokenTransfer(
+  function _afterTokenTransfer(
     address from,
     address,
     uint256 tokenId
   ) internal virtual {
     if (from == address(0)) {
-      tokenIdToStateHash[tokenId] = keccak256(abi.encodePacked(address(this), tokenId));
+      tokenIdToStateHash[tokenId] = _calculateHash(0x00, tokenId, address(0), 0, 0, 0x00);
     }
   }
 
@@ -42,13 +42,13 @@ abstract contract MyStateHash is IStateHash {
 
   function _afterReceivedERC20(
     address,
-    uint256 _tokenId,
-    address _erc20Contract,
+    uint256 tokenId,
+    address erc20Contract,
     uint256
   ) internal virtual {
-    uint256 balance = this.balanceOfERC20(_tokenId, _erc20Contract);
-    uint256 rootId = _localRootId(_tokenId);
-    tokenIdToStateHash[rootId] = _calculateHash(tokenIdToStateHash[rootId], _tokenId, _erc20Contract, 1, balance, 0x00);
+    uint256 balance = this.balanceOfERC20(tokenId, erc20Contract);
+    uint256 rootId = _localRootId(tokenId);
+    tokenIdToStateHash[rootId] = _calculateHash(tokenIdToStateHash[rootId], tokenId, erc20Contract, 1, balance, 0x00);
   }
 
   function _afterRemoveERC20(

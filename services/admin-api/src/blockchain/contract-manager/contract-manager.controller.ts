@@ -76,7 +76,7 @@ export class ContractManagerController {
     return this.contractManagerSignService.erc1155Token(dto, userEntity);
   }
 
-  // MODULE:MYSTERYBOX
+  // MODULE:MYSTERY
   @Post("/mysterybox")
   public mysterybox(
     @Body() dto: MysteryboxContractDeployDto,

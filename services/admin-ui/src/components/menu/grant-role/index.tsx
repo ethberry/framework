@@ -32,13 +32,13 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
     setIsGrantRoleDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IGrantRoleDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IGrantRoleDto, web3Context: Web3ContextType) => {
     const contract = new Contract(address, IAccessControlSol.abi, web3Context.provider?.getSigner());
     return contract.grantRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 
   const handleGrantRoleConfirmed = async (values: IGrantRoleDto): Promise<void> => {
-    await meta(values).finally(() => {
+    await metaFn(values).finally(() => {
       setIsGrantRoleDialogOpen(false);
     });
   };

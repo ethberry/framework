@@ -19,28 +19,30 @@ export class SeedContractManager1660436477050 implements MigrationInterface {
         from ${ns}.contract
         where chain_id = 1337
           and contract_type != 'NATIVE'
-  and contract_status = 'ACTIVE'
-  and contract_module = 'CORE'
+          and contract_status = 'ACTIVE'
+          and contract_module = 'CORE'
         union all
         select distinct address,
-                        'MYSTERYBOX'::${ns}.contract_manager_type_enum as contract_type, 1 as from_block,
+                        'MYSTERY'::${ns}.contract_manager_type_enum as contract_type,
+                        1                                              as from_block,
                         created_at,
                         updated_at
         from ${ns}.contract
         where chain_id = 1337
           and contract_type != 'NATIVE'
-  and contract_status = 'ACTIVE'
-  and contract_module = 'MYSTERYBOX'
+          and contract_status = 'ACTIVE'
+          and contract_module = 'MYSTERY'
         union all
         select address,
-               'LOTTERY'::${ns}.contract_manager_type_enum as contract_type, 1 as from_block,
+               'LOTTERY'::${ns}.contract_manager_type_enum as contract_type,
+               1                                           as from_block,
                created_at,
                updated_at
         from ${ns}.contract
         where chain_id = 1337
           and contract_type != 'NATIVE'
-  and contract_status = 'ACTIVE'
-  and contract_module = 'LOTTERY';
+          and contract_status = 'ACTIVE'
+          and contract_module = 'LOTTERY';
     `);
   }
 

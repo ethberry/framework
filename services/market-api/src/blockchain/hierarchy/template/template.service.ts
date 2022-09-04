@@ -1,9 +1,9 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { TemplateEntity } from "./template.entity";
-import type { ITemplateSearchDto } from "@framework/types";
+import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 @Injectable()
@@ -103,11 +103,61 @@ export class TemplateService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async autocomplete(): Promise<Array<TemplateEntity>> {
+  public async autocomplete(dto: ITemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
+    const {
+      contractFeatures = [],
+      templateStatus = [],
+      contractIds = [],
+      contractModule = [],
+      contractType = [],
+    } = dto;
+
+    const where = {
+      contract: {},
+    };
+
+    if (contractType.length) {
+      Object.assign(where.contract, {
+        contractType: In(contractType),
+      });
+    }
+
+    if (contractModule.length) {
+      Object.assign(where.contract, {
+        contractModule: In(contractModule),
+      });
+    }
+
+    if (contractFeatures.length) {
+      Object.assign(where.contract, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: ArrayOverlap(contractFeatures),
+      });
+    }
+
+    if (templateStatus.length) {
+      Object.assign(where, {
+        templateStatus: In(templateStatus),
+      });
+    }
+
+    if (contractIds.length) {
+      Object.assign(where, {
+        contractId: In(contractIds),
+      });
+    }
+
     return this.templateEntityRepository.find({
+      where,
       select: {
         id: true,
         title: true,
+      },
+      join: {
+        alias: "template",
+        leftJoinAndSelect: {
+          contract: "template.contract",
+        },
       },
     });
   }

@@ -9,9 +9,9 @@ abstract contract StateHash is IStateHash {
   mapping(uint256 => bytes32) internal tokenIdToStateHash;
 
   function stateHash(uint256 tokenId) external view returns (bytes32) {
-    bytes32 _stateHash = tokenIdToStateHash[tokenId];
-    require(_stateHash != 0, "CTD: stateHash of _tokenId is zero");
-    return _stateHash;
+    bytes32 stateHash = tokenIdToStateHash[tokenId];
+    require(stateHash != 0, "CTD: stateHash of tokenId is zero");
+    return stateHash;
   }
 
   function _localRootId(uint256 tokenId) internal view virtual returns (uint256);
@@ -26,18 +26,18 @@ abstract contract StateHash is IStateHash {
     }
   }
 
-  function balanceOfERC20(uint256 _tokenId, address _erc20Contract) external view virtual returns (uint256);
+  function balanceOfERC20(uint256 tokenId, address erc20Contract) external view virtual returns (uint256);
 
   function _afterReceivedERC20(
     address,
-    uint256 _tokenId,
-    address _erc20Contract,
+    uint256 tokenId,
+    address erc20Contract,
     uint256
   ) internal virtual {
-    uint256 balance = this.balanceOfERC20(_tokenId, _erc20Contract);
-    uint256 rootId = _localRootId(_tokenId);
+    uint256 balance = this.balanceOfERC20(tokenId, erc20Contract);
+    uint256 rootId = _localRootId(tokenId);
     tokenIdToStateHash[rootId] = keccak256(
-      abi.encodePacked(tokenIdToStateHash[rootId], _tokenId, _erc20Contract, balance)
+      abi.encodePacked(tokenIdToStateHash[rootId], tokenId, erc20Contract, balance)
     );
   }
 
