@@ -14,27 +14,7 @@ export const TemplateInput: FC = () => {
 
   switch (tokenType) {
     case TokenType.ERC721:
-      return (
-        <EntityInput
-          name="templateId"
-          controller="templates"
-          data={{
-            contractIds: [contractId],
-            templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
-          }}
-        />
-      );
     case TokenType.ERC998:
-      return (
-        <EntityInput
-          name="templateId"
-          controller="templates"
-          data={{
-            contractIds: [contractId],
-            templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
-          }}
-        />
-      );
     case TokenType.ERC1155:
       return (
         <EntityInput

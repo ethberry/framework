@@ -56,8 +56,7 @@
       "EPIC": "Epic",
       "LEGENDARY": "Legendary",
       "RARE": "Rare",
-      "UNCOMMON": "Uncommon",
-      "UNKNOWN": "Unknown"
+      "UNCOMMON": "Uncommon"
     },
     "sort": {
       "createdAt": "Date",
@@ -136,6 +135,8 @@
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "mom": "Mom",
+      "dad": "Dad",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -284,6 +285,7 @@
         "referral": "Referral program"
       },
       "mechanics": {
+        "breed": "Breed",
         "claim": "Claim",
         "craft": "Craft",
         "drop": "Drop",
@@ -297,6 +299,9 @@
     },
     "drop-list": {
       "title": "Drops"
+    },
+    "breed": {
+      "title": "Breed"
     },
     "erc1155": {
       "contract": {

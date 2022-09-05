@@ -5,14 +5,19 @@ import type { IServerSignature } from "@gemunion/types-collection";
 import { ContractFeatures, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
 
-import { ISignGradeDto } from "./interfaces";
+import { ISignBreedDto } from "./interfaces";
 import { UserEntity } from "../../../user/user.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
+import { TemplateService } from "../../hierarchy/template/template.service";
 
 @Injectable()
 export class BreedService {
-  constructor(private readonly tokenService: TokenService, private readonly signerService: SignerService) {}
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly templateService: TemplateService,
+    private readonly signerService: SignerService,
+  ) {}
 
   public async getToken(tokenId: number): Promise<TokenEntity> {
     const tokenEntity = await this.tokenService.findOneWithRelations({ id: tokenId });
@@ -22,14 +27,14 @@ export class BreedService {
     }
 
     const { contractFeatures } = tokenEntity.template.contract;
-    if (!contractFeatures.includes(ContractFeatures.UPGRADEABLE)) {
+    if (!contractFeatures.includes(ContractFeatures.GENES)) {
       throw new BadRequestException("featureIsNotSupported");
     }
 
     return tokenEntity;
   }
 
-  public async sign(dto: ISignGradeDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async sign(dto: ISignBreedDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { momId, dadId } = dto;
 
     const momTokenEntity = await this.getToken(momId);
@@ -37,7 +42,10 @@ export class BreedService {
 
     // TODO mix genes;
 
-    const templateEntity = { id: 307001 };
+    const templateEntity = await this.templateService.findOne({ id: 307001 });
+    if (!templateEntity) {
+      throw new NotFoundException("templateNotFound");
+    }
 
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;

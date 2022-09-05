@@ -11,8 +11,6 @@
         "switch": "Switch Language"
       },
       "menu": {
-        "catalog": "Catalog",
-        "collection": "Collection",
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
@@ -125,8 +123,7 @@
       "EPIC": "Epic",
       "LEGENDARY": "Legendary",
       "RARE": "Rare",
-      "UNCOMMON": "Uncommon",
-      "UNKNOWN": "Unknown"
+      "UNCOMMON": "Uncommon"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -163,9 +160,7 @@
       "ERC1155": "ERC1155",
       "ERC20": "ERC20",
       "ERC721": "ERC721",
-      "ERC721D": "ERC721D",
       "ERC998": "ERC998",
-      "ERC998D": "ERC998D",
       "NATIVE": "Native"
     },
     "userRoles": {
@@ -457,6 +452,7 @@
         "craft": "Craft",
         "drop": "Drop",
         "grade": "Grade",
+        "breed": "Breed",
         "lottery": "Lottery",
         "mystery": "Mystery",
         "staking": "Staking",

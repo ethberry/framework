@@ -1,4 +1,4 @@
-export interface ISignGradeDto {
+export interface ISignBreedDto {
   momId: number;
   dadId: number;
 }

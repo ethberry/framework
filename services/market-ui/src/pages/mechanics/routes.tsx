@@ -9,6 +9,7 @@ import { referralRoutes } from "./referral/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
 import { wrapperRoutes } from "./wrapper/routes";
+import { breedRoutes } from "./breed/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
@@ -20,4 +21,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...stakingRoutes,
   ...vestingRoutes,
   ...wrapperRoutes,
+  ...breedRoutes,
 ];

@@ -20,6 +20,7 @@ import { Drop } from "./mechanics/drop";
 import { Referral } from "./integrations/referral";
 import { Ipfs } from "./integrations/ipfs";
 import { Wrapper } from "./mechanics/wrapper";
+import { Breed } from "./mechanics/breed";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -41,6 +42,7 @@ export const Dashboard: FC = () => {
           <Claim />
           <Drop />
           <Craft />
+          <Breed />
           <Lottery />
           <Staking />
         </Grid>

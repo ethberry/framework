@@ -11,6 +11,7 @@ import { DropModule } from "./drop/drop.module";
 import { ReferralModule } from "./referral/referral.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { WrapperModule } from "./wrapper/wrapper.module";
+import { BreedModule } from "./breed/breed.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { WrapperModule } from "./wrapper/wrapper.module";
     VestingModule,
     MarketplaceModule,
     GradeModule,
+    BreedModule,
     DropModule,
     ReferralModule,
     LotteryModule,

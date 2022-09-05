@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
-import { ISignGradeDto } from "../interfaces";
+import { ISignBreedDto } from "../interfaces";
 
-export class SignGradeDto implements ISignGradeDto {
+export class SignBreedDto implements ISignBreedDto {
   @ApiProperty({
     minimum: 1,
   })

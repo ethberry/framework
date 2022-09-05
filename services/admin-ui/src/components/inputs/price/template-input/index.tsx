@@ -24,33 +24,7 @@ export const TemplateInput: FC<ITemplateInputProps> = props => {
 
   switch (tokenType) {
     case TokenType.ERC721:
-      return (
-        <EntityInput
-          name={`${prefix}.${name}`}
-          controller="templates"
-          label={formatMessage({ id: "form.labels.templateIds" })}
-          placeholder={formatMessage({ id: "form.placeholders.templateIds" })}
-          data={{
-            contractIds: [contractId],
-            templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
-          }}
-          readOnly={readOnly}
-        />
-      );
     case TokenType.ERC998:
-      return (
-        <EntityInput
-          name={`${prefix}.${name}`}
-          controller="templates"
-          label={formatMessage({ id: "form.labels.templateIds" })}
-          placeholder={formatMessage({ id: "form.placeholders.templateIds" })}
-          data={{
-            contractIds: [contractId],
-            templateStatus: [TemplateStatus.ACTIVE, TemplateStatus.HIDDEN],
-          }}
-          readOnly={readOnly}
-        />
-      );
     case TokenType.ERC1155:
       return (
         <EntityInput
