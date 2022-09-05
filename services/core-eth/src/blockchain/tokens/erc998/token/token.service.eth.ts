@@ -6,6 +6,8 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
+  IErc998BatchReceivedChild,
+  IErc998BatchTransferChild,
   IErc998TokenReceivedChild,
   IErc998TokenSetMaxChild,
   IErc998TokenTransferChild,
@@ -125,13 +127,40 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     }
     await this.updateHistory(event, context, erc998TokenEntity.template.contractId, erc998TokenEntity.id);
 
-    const erc721TokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
+    const tokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
-    if (!erc721TokenEntity) {
-      throw new NotFoundException("token721NotFound");
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
     }
 
-    await this.ownershipService.create({ parentId: erc998TokenEntity.id, childId: erc721TokenEntity.id, amount: 1 });
+    await this.ownershipService.create({ parentId: erc998TokenEntity.id, childId: tokenEntity.id, amount: 1 });
+  }
+
+  public async receivedChildBatch(event: ILogEvent<IErc998BatchReceivedChild>, context: Log): Promise<void> {
+    const {
+      args: { tokenId, childContract, childTokenIds, amounts },
+    } = event;
+
+    const erc998TokenEntity = await this.tokenService.getToken(tokenId, context.address.toLowerCase());
+
+    if (!erc998TokenEntity) {
+      throw new NotFoundException("token998NotFound");
+    }
+    await this.updateHistory(event, context, erc998TokenEntity.template.contractId, erc998TokenEntity.id);
+
+    childTokenIds.map(async (childTokenId, indx) => {
+      const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
+
+      if (!childTokenEntity) {
+        throw new NotFoundException("childTokenNotFound");
+      }
+
+      await this.ownershipService.create({
+        parentId: erc998TokenEntity.id,
+        childId: childTokenEntity.id,
+        amount: ~~amounts[indx],
+      });
+    });
   }
 
   public async transferChild(event: ILogEvent<IErc998TokenTransferChild>, context: Log): Promise<void> {
@@ -154,6 +183,37 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     }
 
     await this.ownershipService.delete({ id: ownershipEntity.id });
+  }
+
+  public async transferChildBatch(event: ILogEvent<IErc998BatchTransferChild>, context: Log): Promise<void> {
+    const {
+      args: { childContract, childTokenIds, amounts },
+    } = event;
+
+    await Promise.all(
+      childTokenIds.map(async (childTokenId, indx) => {
+        const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
+
+        if (!childTokenEntity) {
+          throw new NotFoundException("childTokenNotFound");
+        }
+
+        await this.updateHistory(event, context, void 0, childTokenEntity.id);
+
+        const ownershipEntity = await this.ownershipService.findOne({ childId: childTokenEntity.id });
+
+        if (!ownershipEntity) {
+          throw new NotFoundException("ownershipNotFound");
+        }
+
+        if (ownershipEntity.amount > ~~amounts[indx]) {
+          Object.assign(ownershipEntity, { amount: ownershipEntity.amount - ~~amounts[indx] });
+          await ownershipEntity.save();
+        } else {
+          await this.ownershipService.delete({ id: ownershipEntity.id });
+        }
+      }),
+    );
   }
 
   public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {

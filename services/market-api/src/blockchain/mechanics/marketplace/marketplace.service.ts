@@ -22,6 +22,7 @@ export class MarketplaceService {
           alias: "template",
           leftJoinAndSelect: {
             contract: "template.contract",
+            tokens: "template.tokens",
             price: "template.price",
             price_components: "price.components",
             price_template: "price_components.template",
@@ -64,7 +65,10 @@ export class MarketplaceService {
       {
         tokenType: Object.keys(TokenType).indexOf(templateEntity.contract.contractType),
         token: templateEntity.contract.address,
-        tokenId: templateEntity.id.toString(),
+        tokenId:
+          templateEntity.contract.contractType === TokenType.ERC1155
+            ? templateEntity.tokens[0].tokenId
+            : templateEntity.id.toString(),
         amount: "1",
       },
       templateEntity.price.components.map(component => ({

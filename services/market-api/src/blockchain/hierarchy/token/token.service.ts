@@ -131,10 +131,10 @@ export class TokenService {
     queryBuilder.andWhere("balance.account = :account", { account });
 
     queryBuilder.leftJoin("token.template", "template");
-    queryBuilder.addSelect(["template.title"]);
+    queryBuilder.addSelect(["template.title", "template.id"]);
 
     queryBuilder.leftJoin("template.contract", "contract");
-    queryBuilder.addSelect(["contract.address"]);
+    queryBuilder.addSelect(["contract.address", "contract.contractType"]);
 
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,

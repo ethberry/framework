@@ -15,7 +15,12 @@ import type {
   ITokenMintRandom,
   ITokenTransfer,
 } from "@framework/types";
-import { ContractEventType, ContractType } from "@framework/types";
+import {
+  ContractEventType,
+  ContractType,
+  IErc998BatchReceivedChild,
+  IErc998BatchTransferChild,
+} from "@framework/types";
 
 import { Erc998TokenServiceEth } from "./token.service.eth";
 
@@ -48,9 +53,25 @@ export class Erc998TokenControllerEth {
     return this.erc998TokenServiceEth.receivedChild(event, context);
   }
 
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.BatchReceivedChild })
+  public receivedChildBatch(
+    @Payload() event: ILogEvent<IErc998BatchReceivedChild>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.erc998TokenServiceEth.receivedChildBatch(event, context);
+  }
+
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.TransferChild })
   public transferChild(@Payload() event: ILogEvent<IErc998TokenTransferChild>, @Ctx() context: Log): Promise<void> {
     return this.erc998TokenServiceEth.transferChild(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.BatchTransferChild })
+  public transferChildBatch(
+    @Payload() event: ILogEvent<IErc998BatchTransferChild>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.erc998TokenServiceEth.transferChildBatch(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC998_TOKEN, eventName: ContractEventType.WhitelistedChild })

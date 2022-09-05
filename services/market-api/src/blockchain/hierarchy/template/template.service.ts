@@ -27,6 +27,10 @@ export class TemplateService {
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
+    if (contractType === TokenType.ERC1155) {
+      queryBuilder.leftJoinAndSelect("template.tokens", "tokens");
+    }
+
     queryBuilder.leftJoinAndSelect("template.price", "price");
     queryBuilder.leftJoinAndSelect("price.components", "price_components");
     queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");

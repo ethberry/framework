@@ -6,7 +6,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ContractFeatures, ITemplate, IToken } from "@framework/types";
+import { ContractFeatures, TokenType, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -14,8 +14,12 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { FormWrapper } from "@gemunion/mui-form";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
+import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
+import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
+// import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
+// TODO make real 998Full.sol
+import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json";
 
 import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
@@ -38,32 +42,75 @@ export const Erc998Token: FC = () => {
   const classes = useStyles();
 
   const metaFn = useMetamask((data: IToken, web3Context: Web3ContextType) => {
-    const contract = new Contract(
-      data.template!.contract!.address,
-      ERC721SimpleSol.abi,
+    const contractType = data.template!.contract!.contractType;
+    const contractAbi =
+      contractType === TokenType.ERC1155
+        ? ERC1155SimpleSol.abi
+        : contractType === TokenType.ERC721
+        ? ERC721SimpleSol.abi
+        : ERC20SimpleSol.abi; // ERC20
+
+    const contract = new Contract(data.template!.contract!.address, contractAbi, web3Context.provider?.getSigner());
+
+    const contract998 = new Contract(
+      selected.template!.contract!.address,
+      ERC998FullSol.abi,
       web3Context.provider?.getSigner(),
     );
-    return contract["safeTransferFrom(address,address,uint256,bytes)"](
-      web3Context.account,
-      selected.template!.contract!.address,
-      data.tokenId,
-      utils.hexZeroPad(BigNumber.from(selected.tokenId).toHexString(), 32),
-    ) as Promise<void>;
+
+    if (contractType === TokenType.ERC721) {
+      return contract["safeTransferFrom(address,address,uint256,bytes)"](
+        web3Context.account,
+        selected.template!.contract!.address,
+        data.tokenId,
+        utils.hexZeroPad(BigNumber.from(selected.tokenId).toHexString(), 32),
+      ) as Promise<void>;
+    } else if (contractType === TokenType.ERC1155) {
+      return contract.safeTransferFrom(
+        web3Context.account,
+        selected.template!.contract!.address,
+        data.tokenId,
+        1,
+        utils.hexZeroPad(BigNumber.from(selected.tokenId).toHexString(), 32),
+      ) as Promise<void>;
+    } else {
+      // ERC20
+      return contract998.getERC20(
+        web3Context.account,
+        selected.tokenId,
+        data.template!.contract!.address,
+        // TODO amount popup
+        utils.parseEther("0.1"),
+      ) as Promise<void>;
+    }
   });
 
   const metaFnClear = useMetamask((data: IToken, web3Context: Web3ContextType) => {
+    const contractType = data.template!.contract!.contractType;
+
     const contract = new Contract(
       selected.template!.contract!.address,
-      ERC998SimpleSol.abi,
+      ERC998FullSol.abi,
       web3Context.provider?.getSigner(),
     );
-
-    return contract["safeTransferChild(uint256,address,address,uint256)"](
-      selected.tokenId,
-      web3Context.account,
-      data.template!.contract!.address,
-      data.tokenId,
-    ) as Promise<void>;
+    if (contractType === TokenType.ERC1155) {
+      return contract.safeTransferFromERC1155(
+        selected.tokenId,
+        web3Context.account,
+        data.template!.contract!.address,
+        data.tokenId,
+        1,
+        "0x",
+      ) as Promise<void>;
+    } else {
+      // ERC20
+      return contract.transferERC20(
+        selected.tokenId,
+        web3Context.account,
+        data.template!.contract!.address,
+        utils.parseEther("0.1"),
+      ) as Promise<void>;
+    }
   });
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any | null): Promise<any> => {

@@ -5,6 +5,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
 import { AttachWalletButton } from "./attach-wallet";
 import { AllowanceButton } from "./allowance";
+import { AllowanceCustomButton } from "./custom-allowance";
 
 export const MyWallet: FC = () => {
   return (
@@ -15,6 +16,7 @@ export const MyWallet: FC = () => {
 
       <AttachWalletButton />
       <AllowanceButton />
+      <AllowanceCustomButton />
     </Grid>
   );
 };

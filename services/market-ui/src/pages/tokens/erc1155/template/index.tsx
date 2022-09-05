@@ -43,7 +43,7 @@ export const Erc1155Template: FC = () => {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
-              <FormattedMessage id="pages.erc1155-template.price" values={{ amount: formatPrice(selected.price) }} />
+              <FormattedMessage id="pages.erc1155.template.price" values={{ amount: formatPrice(selected.price) }} />
             </Typography>
             <TemplatePurchaseButton template={selected} />
           </Paper>

@@ -29,6 +29,8 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             eventNames: [
               ContractEventType.Approval,
               ContractEventType.ApprovalForAll,
+              ContractEventType.BatchReceivedChild,
+              ContractEventType.BatchTransferChild,
               ContractEventType.DefaultRoyaltyInfo,
               ContractEventType.MintRandom,
               ContractEventType.Paused,
