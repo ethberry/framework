@@ -11,6 +11,8 @@ import { TokenType } from "@framework/types";
 import type { IServerSignature } from "@gemunion/types-collection";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
+
+import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";
 import { ContractInput } from "./contract-input";
 import { TemplateInput } from "./template-input";
@@ -91,11 +93,17 @@ export const Breed: FC = () => {
         initialValues={{
           tokenType: TokenType.ERC721,
           mom: {
+            address: constants.AddressZero,
             tokenId: 0,
             blockchainId: 0,
           },
-          dad: {},
+          dad: {
+            address: constants.AddressZero,
+            tokenId: 0,
+            blockchainId: 0,
+          },
         }}
+        validationSchema={validationSchema}
         onSubmit={onSubmit}
         showPrompt={false}
         testId="BreedForm"
