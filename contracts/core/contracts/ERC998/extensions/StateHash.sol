@@ -10,7 +10,7 @@ abstract contract StateHash is IStateHash {
 
   function stateHash(uint256 tokenId) external view returns (bytes32) {
     bytes32 stateHash = tokenIdToStateHash[tokenId];
-    require(stateHash != 0, "CTD: stateHash of tokenId is zero");
+    require(stateHash != 0, "CTD:0 hash");
     return stateHash;
   }
 

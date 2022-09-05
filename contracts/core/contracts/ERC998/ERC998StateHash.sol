@@ -51,7 +51,7 @@ contract ERC998StateHash is ERC998Simple, StateHash {
   }
 
   function balanceOfERC20(uint256, address) external pure override(StateHash) returns (uint256) {
-    revert("CTD: this method is not supported");
+    revert("CTD: NS");
   }
 
   function balanceOfERC1155(
@@ -59,6 +59,6 @@ contract ERC998StateHash is ERC998Simple, StateHash {
     address,
     uint256
   ) external pure override(StateHash) returns (uint256) {
-    revert("CTD: this method is not supported");
+    revert("CTD: NS");
   }
 }

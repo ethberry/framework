@@ -29,7 +29,7 @@ abstract contract ERC998ERC1155Enumerable is ERC998ERC1155, IERC998ERC1155TopDow
     uint256[] memory _childTokenIds,
     uint256[] memory _amounts,
     bytes memory /* data */
-  ) internal virtual override {
+  ) internal virtual {
     uint256 childTokensReceptions = 0;
     for (uint256 i = 0; i < _childTokenIds.length; ++i) {
       if (erc1155Balances[_tokenId][_erc1155Contract][_childTokenIds[i]] == 0 && _amounts[i] > 0) {
@@ -52,7 +52,7 @@ abstract contract ERC998ERC1155Enumerable is ERC998ERC1155, IERC998ERC1155TopDow
     uint256[] memory _childTokenIds,
     uint256[] memory _amounts,
     bytes memory /* data */
-  ) internal virtual override {
+  ) internal virtual {
     uint256 childTokensRemovals = 0;
     for (uint256 i = 0; i < _childTokenIds.length; i++) {
       if (erc1155Balances[_tokenId][_erc1155Contract][_childTokenIds[i]] == _amounts[i] && _amounts[i] > 0) {

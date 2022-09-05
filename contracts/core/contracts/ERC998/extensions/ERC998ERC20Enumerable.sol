@@ -22,9 +22,9 @@ abstract contract ERC998ERC20Enumerable is ERC998ERC20, IERC998ERC20TopDownEnume
     uint256 _tokenId,
     address _erc20Contract,
     uint256 _value
-  ) internal virtual override {
+  ) internal virtual {
     if (erc20Balances[_tokenId][_erc20Contract] == 0 && _value > 0) {
-      require(erc20Contracts[_tokenId].add(_erc20Contract), "CTD: erc20Received: erc20Contracts add _erc20Contract");
+      require(erc20Contracts[_tokenId].add(_erc20Contract), "CTD:erc20Received: erc20Contracts add _erc20Contract");
     }
   }
 
@@ -38,7 +38,7 @@ abstract contract ERC998ERC20Enumerable is ERC998ERC20, IERC998ERC20TopDownEnume
       // the new balance becomes 0, so the ERC20 contract is removed
       require(
         erc20Contracts[_tokenId].remove(_erc20Contract),
-        "CTD: removeERC20: erc20Contracts remove _erc20Contract"
+        "CTD:removeERC20: erc20Contracts remove _erc20Contract"
       );
     }
   }

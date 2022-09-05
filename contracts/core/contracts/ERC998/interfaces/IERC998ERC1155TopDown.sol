@@ -3,22 +3,20 @@
 pragma solidity ^0.8.9;
 
 interface IERC998ERC1155TopDown {
-//    event ReceivedERC20(address indexed _from, uint256 indexed _tokenId, address indexed _erc20Contract, uint256 _value);
-    event TransferERC1155(uint256 _fromTokenId, address _to, address _erc1155Contract, uint256 _childTokenId, uint256 _amount);
-    event BatchTransferERC1155(uint256 _fromTokenId, address _to, address _erc1155Contract, uint256[] _childTokenIds, uint256[] _amounts);
-    event ReceivedErc1155(
-        address indexed _from,
-        uint256 indexed _tokenId,
-        address indexed _childContract,
-        uint256 _childTokenId,
-        uint256 _amount
+    event BatchTransferChild(
+        uint256 indexed tokenId,
+        address indexed to,
+        address indexed childContract,
+        uint256[] childTokenIds,
+        uint256[] amounts
     );
-    event ReceivedBatchErc1155(
-        address indexed _from,
-        uint256 indexed _tokenId,
-        address indexed _childContract,
-        uint256[] _childTokenIds,
-        uint256[] _amounts
+
+    event BatchReceivedChild(
+        address indexed from,
+        uint256 indexed tokenId,
+        address indexed childContract,
+        uint256[] childTokenIds,
+        uint256[] amounts
     );
 
     /**

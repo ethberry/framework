@@ -53,7 +53,7 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     public
     view
     virtual
-    override(ERC721Simple, ERC998ERC721)
+    override(AccessControl, ERC721Simple, ERC998ERC721)
     returns (bool)
   {
     return super.supportsInterface(interfaceId);
@@ -76,19 +76,19 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     super.receiveChild(_from, _tokenId, _childContract, _childTokenId);
   }
 
-  function whiteListChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE){
-    _whiteListChild(addr, max);
-  }
+//  function whiteListChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE){
+//    _whiteListChild(addr, max);
+//  }
+//
+//  function unWhitelistChild(address addr) public onlyRole(DEFAULT_ADMIN_ROLE) {
+//    _unWhitelistChild(addr);
+//  }
 
-  function unWhitelistChild(address addr) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _unWhitelistChild(addr);
-  }
+//  function setDefaultMaxChild(uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
+//    _setDefaultMaxChild(max);
+//  }
 
-  function setDefaultMaxChild(uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setDefaultMaxChild(max);
-  }
-
-  function setMaxChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setMaxChild(addr, max);
-  }
+//  function setMaxChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
+//    _setMaxChild(addr, max);
+//  }
 }
