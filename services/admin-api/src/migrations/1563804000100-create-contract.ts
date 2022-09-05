@@ -49,6 +49,10 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:MYSTERY
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'PAUSABLE';`);
 
+    // MODULE:ERC998
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'ERC20OWNER';`);
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'ERC1155OWNER';`);
+
     const table = new Table({
       name: `${ns}.contract`,
       columns: [

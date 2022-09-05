@@ -403,8 +403,8 @@ export class ContractManagerSignService {
         return ERC998RandomBlacklistSol.bytecode;
       }
       if (
-        contractFeatures.includes(Erc998ContractFeatures.ERC20) &&
-        contractFeatures.includes(Erc998ContractFeatures.ERC1155)
+        contractFeatures.includes(Erc998ContractFeatures.ERC20OWNER) &&
+        contractFeatures.includes(Erc998ContractFeatures.ERC1155OWNER)
       ) {
         return ERC998ERC1155ERC20SimpleSol.bytecode;
       }
@@ -421,11 +421,11 @@ export class ContractManagerSignService {
         return ERC998RandomSol.bytecode;
       }
 
-      if (contractFeatures.includes(Erc998ContractFeatures.ERC20)) {
+      if (contractFeatures.includes(Erc998ContractFeatures.ERC20OWNER)) {
         return ERC998ERC20SimpleSol.bytecode;
       }
 
-      if (contractFeatures.includes(Erc998ContractFeatures.ERC1155)) {
+      if (contractFeatures.includes(Erc998ContractFeatures.ERC1155OWNER)) {
         return ERC998ERC1155SimpleSol.bytecode;
       }
 

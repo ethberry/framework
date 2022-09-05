@@ -34,8 +34,8 @@ export enum Erc998ContractFeatures {
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
   "GENES" = "GENES",
-  "ERC20" = "ERC20",
-  "ERC1155" = "ERC1155",
+  "ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER" = "ERC1155OWNER",
 }
 
 export enum Erc1155ContractFeatures {
@@ -59,8 +59,8 @@ export enum ContractFeatures {
   // MODULE:MYSTERYBOX
   "PAUSABLE" = "PAUSABLE",
   // MODULE:ERC998
-  "ERC20" = "ERC20",
-  "ERC1155" = "ERC1155",
+  "ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER" = "ERC1155OWNER",
 }
 
 export interface IContract extends IDeployable, ISearchable {

@@ -58,8 +58,8 @@
     },
     "contractFeatures": {
       "BLACKLIST": "Blacklist",
-      "ERC1155": "ERC1155",
-      "ERC20": "ERC20",
+      "ERC1155OWNER": "ERC1155OWNER",
+      "ERC20OWNER": "ERC20OWNER",
       "EXTERNAL": "External",
       "GENES": "Genes",
       "MYSTERYBOX": "MysteryBox",

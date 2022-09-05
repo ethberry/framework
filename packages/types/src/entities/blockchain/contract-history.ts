@@ -5,6 +5,8 @@ import { IToken } from "./hierarchy/token";
 export enum ContractEventType {
   Approval = "Approval",
   ApprovalForAll = "ApprovalForAll",
+  BatchReceivedChild = "BatchReceivedChild",
+  BatchTransferChild = "BatchTransferChild",
   DefaultRoyaltyInfo = "DefaultRoyaltyInfo",
   MintRandom = "MintRandom",
   Paused = "Paused",
@@ -87,6 +89,7 @@ export interface IErc998TokenReceivedChild {
   tokenId: string;
   childContract: string;
   childTokenId: string;
+  amount: string;
 }
 
 export interface IErc998TokenTransferChild {
@@ -94,6 +97,23 @@ export interface IErc998TokenTransferChild {
   tokenId: string;
   childContract: string;
   childTokenId: string;
+  amount: string;
+}
+
+export interface IErc998BatchReceivedChild {
+  from: string;
+  tokenId: string;
+  childContract: string;
+  childTokenIds: Array<string>;
+  amounts: Array<string>;
+}
+
+export interface IErc998BatchTransferChild {
+  to: string;
+  tokenId: string;
+  childContract: string;
+  childTokenIds: Array<string>;
+  amounts: Array<string>;
 }
 
 export interface ITokenTransfer {
@@ -191,6 +211,8 @@ export type TContractEventData =
   | ITokenTransfer
   | IErc998TokenReceivedChild
   | IErc998TokenTransferChild
+  | IErc998BatchReceivedChild
+  | IErc998BatchTransferChild
   | IErc998TokenSetMaxChild
   | IErc998TokenUnWhitelistedChild
   | IErc998TokenWhitelistedChild

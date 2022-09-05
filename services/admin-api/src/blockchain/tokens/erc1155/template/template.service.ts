@@ -47,14 +47,6 @@ export class Erc1155TemplateService extends TemplateService {
                        LEFT JOIN ${ns}."contract" "contract" ON "contract"."id" = "template"."contract_id"
               WHERE contract_id = $1) AS tokens
     `;
-    // const queryString = `
-    //   select
-    //     coalesce(max(token_id::integer), 0) as "tokenId"
-    //   from
-    //     ${ns}.token
-    //   where
-    //    template_id = $1
-    // `;
 
     const result: Array<{ tokenId: number }> = await this.templateEntityRepository.query(queryString, [contractId]);
     return result[0].tokenId;
@@ -62,7 +54,6 @@ export class Erc1155TemplateService extends TemplateService {
 
   public async create(dto: ITemplateCreateDto): Promise<TemplateEntity> {
     const templateEntity = await super.createTemplate(dto);
-    // const maxTokenId = await this.getMaxTokenIdForTemplate(templateEntity.id);
     const maxTokenId = await this.getMaxTokenIdForContract(templateEntity.contractId);
 
     await this.tokenService.create({
@@ -71,6 +62,9 @@ export class Erc1155TemplateService extends TemplateService {
       royalty: 0,
       template: templateEntity,
     });
+
+    // Object.assign(tokenEntity, { tokenId: tokenEntity.id.toString() });
+    // await tokenEntity.save();
 
     return templateEntity;
   }

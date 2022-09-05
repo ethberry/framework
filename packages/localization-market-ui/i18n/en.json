@@ -146,6 +146,7 @@
       "collectionId": "Collection",
       "confirm": "Confirm",
       "contractId": "Contract",
+      "contractCustomId": "Allowance Contract",
       "contractIds": "Contracts",
       "contractTemplate": "Template",
       "count": "Count",
@@ -201,6 +202,7 @@
       "amount": "100",
       "confirm": "******",
       "contractId": "Contract",
+      "contractCustomId": "Allowance Contract",
       "contractIds": "Contracts",
       "createdAt": "Registered",
       "displayName": "Gordon Freeman",
@@ -437,6 +439,7 @@
     },
     "my-wallet": {
       "allowance": "Allowance",
+      "allowanceCustom": "Custom Allowance",
       "attach": "Attach",
       "detach": "Detach",
       "title": "My wallet"
