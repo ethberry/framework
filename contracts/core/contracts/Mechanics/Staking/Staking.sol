@@ -96,10 +96,10 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     } else if (depositItem.tokenType == TokenType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
     } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-        if(rule.deposit.tokenId != 0) {
-          uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
-          require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
-        }
+      if (rule.deposit.tokenId != 0) {
+        uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
+        require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
+      }
       IERC721Metadata(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
     } else if (depositItem.tokenType == TokenType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");

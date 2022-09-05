@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.9;
 
 import "hardhat/console.sol";
 
@@ -18,8 +18,9 @@ contract InterfaceIdCalculator {
     console.logBytes4(type(IERC721Random).interfaceId);
     console.logBytes4(type(IERC721Mysterybox).interfaceId);
 
-    console.logBytes32(keccak256("template_id"));
-    console.logBytes32(keccak256("grade"));
-    console.logBytes32(keccak256("rarity"));
+    console.logBytes32(keccak256("TEMPLATE_ID"));
+    console.logBytes32(keccak256("GRADE"));
+    console.logBytes32(keccak256("RARITY"));
+    console.logBytes32(keccak256("GENES"));
   }
 }

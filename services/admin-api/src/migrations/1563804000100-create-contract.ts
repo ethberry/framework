@@ -33,11 +33,18 @@ export class CreateContract1563804000100 implements MigrationInterface {
         'BLACKLIST',
         'EXTERNAL',
         'NATIVE',
-        'UPGRADEABLE',
-        'RANDOM',
         'SOULBOUND'
       );
     `);
+
+    // MODULE:GRADE
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'UPGRADEABLE';`);
+
+    // MODULE:RARITY
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'RANDOM';`);
+
+    // MODULE:GENES
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'GENES';`);
 
     // MODULE:MYSTERY
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'PAUSABLE';`);

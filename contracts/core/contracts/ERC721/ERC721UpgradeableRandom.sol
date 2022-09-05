@@ -12,8 +12,9 @@ import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.so
 
 import "./ERC721Upgradeable.sol";
 import "./interfaces/IERC721Random.sol";
+import "../Mechanics/Rarity/Rarity.sol";
 
-contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeable {
+contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC721Upgradeable, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -30,11 +31,7 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC72
     string memory baseTokenURI
   ) ERC721Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 templateId)
-    public
-    override(ERC721Upgradeable)
-    onlyRole(MINTER_ROLE)
-  {
+  function mintCommon(address account, uint256 templateId) public override(ERC721Upgradeable) onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Random: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
@@ -44,7 +41,7 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC72
     upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, 1);
 
-    _safeMint(to, tokenId);
+    _safeMint(account, tokenId);
   }
 
   function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
@@ -52,7 +49,7 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC72
     _queue[getRandomNumber()] = Request(to, templateId);
   }
 
-  function upgrade(uint256 tokenId) public onlyRole(MINTER_ROLE) override returns (bool) {
+  function upgrade(uint256 tokenId) public override onlyRole(MINTER_ROLE) returns (bool) {
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
     upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
@@ -70,22 +67,6 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC72
 
     delete _queue[requestId];
     safeMint(request.account);
-  }
-
-  function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {
-    uint256 percent = (randomness % 100) + 1;
-    if (percent < 1) {
-      return 5;
-    } else if (percent < 1 + 3) {
-      return 4;
-    } else if (percent < 1 + 3 + 8) {
-      return 3;
-    } else if (percent < 1 + 3 + 8 + 20) {
-      return 2;
-    }
-
-    // common
-    return 1;
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {

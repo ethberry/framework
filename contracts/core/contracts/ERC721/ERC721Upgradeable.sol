@@ -23,7 +23,7 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 templateId)
+  function mintCommon(address account, uint256 templateId)
     public
     virtual
     override(IERC721Simple, ERC721Simple)
@@ -37,7 +37,7 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     upsertRecordField(tokenId, GRADE, 1);
 
-    _safeMint(to, tokenId);
+    _safeMint(account, tokenId);
   }
 
   function upgrade(uint256 tokenId) public virtual onlyRole(MINTER_ROLE) returns (bool) {

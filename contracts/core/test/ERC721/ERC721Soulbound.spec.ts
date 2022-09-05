@@ -18,11 +18,11 @@ import { shouldMint } from "./shared/mint";
 import { shouldMintCommon } from "./shared/mintCommon";
 import { shouldSafeMint } from "./shared/safeMint";
 
-describe("ERC721Soulbound", function () {
+describe("ERC721SoulBound", function () {
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Soulbound");
+    const erc721Factory = await ethers.getContractFactory("ERC721SoulBound");
     this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
@@ -47,7 +47,7 @@ describe("ERC721Soulbound", function () {
       await this.erc721Instance.mintCommon(this.owner.address, templateId);
       const tx = this.erc721Instance.transferFrom(this.owner.address, this.receiver.address, tokenId);
 
-      await expect(tx).to.be.revertedWith("ERC721Soulbound: can't be transferred");
+      await expect(tx).to.be.revertedWith("ERC721SoulBound: can't be transferred");
     });
   });
 });

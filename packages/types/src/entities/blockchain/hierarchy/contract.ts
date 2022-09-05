@@ -25,6 +25,7 @@ export enum Erc721ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
+  "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",
 }
 
@@ -32,6 +33,7 @@ export enum Erc998ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
+  "GENES" = "GENES",
   "ERC20" = "ERC20",
   "ERC1155" = "ERC1155",
 }
@@ -52,6 +54,7 @@ export enum ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
+  "GENES" = "GENES",
   "SOULBOUND" = "SOULBOUND",
   // MODULE:MYSTERYBOX
   "PAUSABLE" = "PAUSABLE",

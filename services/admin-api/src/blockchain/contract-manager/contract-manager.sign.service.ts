@@ -29,8 +29,9 @@ import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ER
 import ERC721FullSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Full.sol/ERC721Full.json";
 import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
 import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721RandomBlacklist.sol/ERC721RandomBlacklist.json";
+import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Genes.sol/ERC721Genes.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
+import ERC721SoulBoundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulBound.sol/ERC721SoulBound.json";
 import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
 import ERC721UpgradeableBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableBlacklist.sol/ERC721UpgradeableBlacklist.json";
 import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableRandom.sol/ERC721UpgradeableRandom.json";
@@ -39,6 +40,7 @@ import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC99
 import ERC998BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
 import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
 import ERC998RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998RandomBlacklist.sol/ERC998RandomBlacklist.json";
+import ERC998GenesSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Genes.sol/ERC998Genes.json";
 import ERC998UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
 import ERC998UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998UpgradeableRandom.sol/ERC998UpgradeableRandom.json";
 import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Full.sol/ERC998Full.json";
@@ -53,6 +55,7 @@ import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/M
 import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
 import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
 import MysteryboxFullSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
+
 import { UserEntity } from "../../user/user.entity";
 
 @Injectable()
@@ -366,7 +369,11 @@ export class ContractManagerSignService {
       }
 
       if (contractFeatures.includes(Erc721ContractFeatures.SOULBOUND)) {
-        return ERC721SoulboundSol.bytecode;
+        return ERC721SoulBoundSol.bytecode;
+      }
+
+      if (contractFeatures.includes(Erc721ContractFeatures.GENES)) {
+        return ERC721GenesSol.bytecode;
       }
     }
 
@@ -420,6 +427,10 @@ export class ContractManagerSignService {
 
       if (contractFeatures.includes(Erc998ContractFeatures.ERC1155)) {
         return ERC998ERC1155SimpleSol.bytecode;
+      }
+
+      if (contractFeatures.includes(Erc998ContractFeatures.GENES)) {
+        return ERC998GenesSol.bytecode;
       }
     }
 

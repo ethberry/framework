@@ -63,6 +63,7 @@
       "ERC1155": "ERC1155",
       "ERC20": "ERC20",
       "EXTERNAL": "External",
+      "GENES": "Genes",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",

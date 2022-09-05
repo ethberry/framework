@@ -32,4 +32,8 @@ export async function deployERC998(contracts: Record<string, Contract>) {
   await erc998RandomInstance.whiteListChild(contracts.erc721Random.address, 5);
   await blockAwait();
   contracts.erc998Random = erc998RandomInstance;
+
+  const erc998GenesFactory = await ethers.getContractFactory("ERC998Genes");
+  contracts.erc998Genes = await erc998GenesFactory.deploy("ERC998 AXIE", "DNA998", royalty, baseTokenURI);
+  await blockAwait();
 }

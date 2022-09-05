@@ -72,6 +72,20 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
+        407001,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "407001",
+          [TokenAttributes.GRADE]: "10",
+          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+          [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+        })}',
+        100,
+        '1',
+        'MINTED',
+        407001,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
         411001,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "411001",

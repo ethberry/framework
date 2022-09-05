@@ -13,6 +13,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractBlacklistAddress = process.env.ERC998_BLACKLIST_ADDR || wallet;
     const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
+    const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
@@ -133,6 +134,23 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         'ACTIVE',
         'ERC998',
         '{UPGRADEABLE,RANDOM}',
+        '${fromBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        407,
+        '${erc998ContractGenesAddress}',
+        '${chainId}',
+        'AXIE (genes)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'GENES',
+        'DNA998',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC998',
+        '{GENES}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

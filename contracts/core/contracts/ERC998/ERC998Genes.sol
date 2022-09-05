@@ -12,9 +12,9 @@ import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.so
 
 import "./ERC998Simple.sol";
 import "../ERC721/interfaces/IERC721Random.sol";
-import "../Mechanics/Rarity/Rarity.sol";
+import "../Mechanics/Genes/Genes.sol";
 
-contract ERC998Random is IERC721Random, ERC721ChainLinkBinance, ERC998Simple, Rarity {
+contract ERC998Genes is IERC721Random, ERC721ChainLinkBinance, ERC998Simple, Genes {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -31,16 +31,8 @@ contract ERC998Random is IERC721Random, ERC721ChainLinkBinance, ERC998Simple, Ra
     string memory baseTokenURI
   ) ERC998Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address account, uint256 templateId) public override(ERC721Simple) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
-
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    upsertRecordField(tokenId, RARITY, 1);
-
-    _safeMint(account, tokenId);
+  function mintCommon(address, uint256) external virtual override onlyRole(MINTER_ROLE) {
+    revert("Genes: this method is not supported");
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
@@ -51,19 +43,14 @@ contract ERC998Random is IERC721Random, ERC721ChainLinkBinance, ERC998Simple, Ra
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
-    uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
     upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    upsertRecordField(tokenId, RARITY, rarity);
+    upsertRecordField(tokenId, GENES, randomness);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);
-  }
-
-  function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-    return interfaceId == type(IERC721Random).interfaceId || super.supportsInterface(interfaceId);
   }
 }

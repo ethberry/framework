@@ -11,9 +11,19 @@ export enum TokenStatus {
 }
 
 export enum TokenAttributes {
-  TEMPLATE_ID = "template_id",
-  GRADE = "grade",
-  RARITY = "rarity",
+  TEMPLATE_ID = "TEMPLATE_ID",
+  GRADE = "GRADE",
+  RARITY = "RARITY",
+  GENES = "GENES",
+}
+
+export enum TokenGenes {
+  STRENGTH = "STRENGTH",
+  DEXTERITY = "DEXTERITY",
+  CONSTITUTION = "CONSTITUTION",
+  INTELLIGENCE = "INTELLIGENCE",
+  WISDOM = "WISDOM",
+  CHARISMA = "CHARISMA",
 }
 
 export interface IToken extends IIdDateBase {

@@ -12,6 +12,7 @@ import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "./ExchangeCore.sol";
 import "./ExchangeCraft.sol";
 import "./ExchangeGrade.sol";
+import "./ExchangeBreed.sol";
 import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
 import "./ExchangeReferral.sol";
@@ -20,6 +21,7 @@ contract Exchange is
   ExchangeCore,
   ExchangeCraft,
   ExchangeGrade,
+  ExchangeBreed,
   ExchangeMysterybox,
   ExchangeClaim,
   ExchangeReferral,

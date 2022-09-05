@@ -12,8 +12,9 @@ import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.so
 
 import "../ERC721/interfaces/IERC721Random.sol";
 import "./ERC998Upgradeable.sol";
+import "../Mechanics/Rarity/Rarity.sol";
 
-contract ERC998UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC998Upgradeable {
+contract ERC998UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC998Upgradeable, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -30,11 +31,7 @@ contract ERC998UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC99
     string memory baseTokenURI
   ) ERC998Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 templateId)
-  external
-    override(ERC998Upgradeable)
-    onlyRole(MINTER_ROLE)
-  {
+  function mintCommon(address account, uint256 templateId) external override(ERC998Upgradeable) onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC998: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
@@ -44,12 +41,12 @@ contract ERC998UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC99
     upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, 1);
 
-    _safeMint(to, tokenId);
+    _safeMint(account, tokenId);
   }
 
-  function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
+  function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC998: wrong type");
-    _queue[getRandomNumber()] = Request(to, templateId);
+    _queue[getRandomNumber()] = Request(account, templateId);
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
@@ -65,22 +62,6 @@ contract ERC998UpgradeableRandom is IERC721Random, ERC721ChainLinkBinance, ERC99
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);
-  }
-
-  function _getDispersion(uint256 randomness) internal pure virtual returns (uint256) {
-    uint256 percent = (randomness % 100) + 1;
-    if (percent < 1) {
-      return 5;
-    } else if (percent < 1 + 3) {
-      return 4;
-    } else if (percent < 1 + 3 + 8) {
-      return 3;
-    } else if (percent < 1 + 3 + 8 + 20) {
-      return 2;
-    }
-
-    // common
-    return 1;
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
