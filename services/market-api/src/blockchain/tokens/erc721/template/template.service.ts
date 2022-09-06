@@ -18,6 +18,6 @@ export class Erc721TemplateService extends TemplateService {
   }
 
   public async search(dto: ITemplateSearchDto, chainId: number): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, chainId, TokenType.ERC721, ModuleType.CORE);
+    return super.search(dto, chainId, TokenType.ERC721, ModuleType.HIERARCHY);
   }
 }

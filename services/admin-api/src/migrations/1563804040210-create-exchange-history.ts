@@ -2,21 +2,22 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateContractManagerHistory1652682493410 implements MigrationInterface {
+export class CreateExchangeHistory1563804040210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.contract_manager_event_enum AS ENUM (
-        'VestingDeployed',
-        'ERC20TokenDeployed',
-        'ERC721TokenDeployed',
-        'ERC998TokenDeployed',
-        'ERC1155TokenDeployed',
-        'MysteryboxDeployed'
-      );
-    `);
+    await queryRunner.query(
+      `CREATE TYPE ${ns}.exchange_event_enum AS ENUM (
+        'Claim',
+        'Craft',
+        'Mysterybox',
+        'Purchase',
+        'Paused',
+        'Unpaused',
+        'Reward'
+      );`,
+    );
 
     const table = new Table({
-      name: `${ns}.contract_manager_history`,
+      name: `${ns}.exchange_history`,
       columns: [
         {
           name: "id",
@@ -33,7 +34,7 @@ export class CreateContractManagerHistory1652682493410 implements MigrationInter
         },
         {
           name: "event_type",
-          type: `${ns}.contract_manager_event_enum`,
+          type: `${ns}.exchange_event_enum`,
         },
         {
           name: "event_data",
@@ -54,7 +55,7 @@ export class CreateContractManagerHistory1652682493410 implements MigrationInter
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.contract_manager_history`);
-    await queryRunner.query(`DROP TYPE ${ns}.contract_manager_event_enum;`);
+    await queryRunner.dropTable(`${ns}.exchange_history`);
+    await queryRunner.query(`DROP TYPE ${ns}.exchange_event_enum;`);
   }
 }

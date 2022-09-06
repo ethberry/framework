@@ -12,9 +12,9 @@ import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.so
 
 import "./ERC721Simple.sol";
 import "./interfaces/IERC721Random.sol";
-import "../Mechanics/Genes/Genes.sol";
+import "../Mechanics/Breed/Breed.sol";
 
-contract ERC721Genes is IERC721Random, ERC721ChainLinkBinance, ERC721Simple, Genes {
+contract ERC721Genes is IERC721Random, ERC721ChainLinkBinance, ERC721Simple, Breed {
   using Counters for Counters.Counter;
 
   struct Request {

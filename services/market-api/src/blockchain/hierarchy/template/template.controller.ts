@@ -22,7 +22,12 @@ export class TemplateController {
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
     const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
-    return this.templateService.search({ take: 10 }, userEntity?.chainId || chainId, dto.contractType, ModuleType.CORE);
+    return this.templateService.search(
+      { take: 10 },
+      userEntity?.chainId || chainId,
+      dto.contractType,
+      ModuleType.HIERARCHY,
+    );
   }
 
   @Get("/autocomplete")

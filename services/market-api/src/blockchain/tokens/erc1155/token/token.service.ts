@@ -18,6 +18,6 @@ export class Erc1155TokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.CORE);
+    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.HIERARCHY);
   }
 }

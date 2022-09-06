@@ -261,19 +261,15 @@ export class ContractManagerServiceEth {
 
   private async updateHistory(event: ILogEvent<TContractManagerEventData>, ctx: Log) {
     this.loggerService.log(
-      JSON.stringify(
-        Object.assign({
-          name: event.name,
-          signature: event.signature,
-          topic: event.topic,
-          args: event.args,
-          address: ctx.address,
-          transactionHash: ctx.transactionHash,
-          blockNumber: ctx.blockNumber,
-        }),
-        null,
-        "\t",
-      ),
+      JSON.stringify({
+        name: event.name,
+        signature: event.signature,
+        topic: event.topic,
+        args: event.args,
+        address: ctx.address,
+        transactionHash: ctx.transactionHash,
+        blockNumber: ctx.blockNumber,
+      }),
       ContractManagerServiceEth.name,
     );
 

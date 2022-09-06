@@ -44,6 +44,8 @@ import { CreateOtp1563804000060 } from "./migrations/1563804000060-create-otp";
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
 import { CreateContract1563804000100 } from "./migrations/1563804000100-create-contract";
+import { SeedContractManagerAt1563804000101 } from "./migrations/1563804000101-create-contract-manager";
+import { SeedContractExchangeAt1563804000102 } from "./migrations/1563804000102-seed-contract-exchange";
 import { SeedContractNativeAt1563804000110 } from "./migrations/1563804000110-seed-contract-native";
 import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-seed-contract-erc20";
 import { SeedContractErc20USDTAt1563804000121 } from "./migrations/1563804000121-seed-contract-erc20-usdt";
@@ -94,10 +96,14 @@ import { SeedAssetComponentsErc998At1563804001240 } from "./migrations/156380400
 import { SeedAssetComponentsErc1155At1563804001250 } from "./migrations/1563804001250-seed-asset-component-erc1155";
 import { SeedAssetComponentsMysteryboxAt1563804001260 } from "./migrations/1563804001260-seed-asset-component-mysterybox";
 
-import { CreateContractHistory1563804040330 } from "./migrations/1563804040330-create-contract-history";
-import { CreateVesting1563804010210 } from "./migrations/1563804010210-create-vesting";
-import { SeedVesting1563804010220 } from "./migrations/1563804010220-seed-vesting";
-import { CreateVestingHistory1563804010230 } from "./migrations/1563804010230-create-vesting-history";
+import { CreateContractHistory1563804040010 } from "./migrations/1563804040010-create-contract-history";
+import { CreateContractManagerHistory1563804040110 } from "./migrations/1563804040110-create-contract-manager-history";
+import { CreateExchangeHistory1563804040210 } from "./migrations/1563804040210-create-exchange-history";
+import { SeedExchangeHistory1563804040220 } from "./migrations/1563804040220-seed-exchange-history";
+
+import { CreateVesting1653616433210 } from "./migrations/1653616433210-create-vesting";
+import { SeedVesting1653616433210 } from "./migrations/1653616433220-seed-vesting";
+import { CreateVestingHistory1563804010230 } from "./migrations/1653616433230-create-vesting-history";
 
 import { CreateClaimTable1653616447810 } from "./migrations/1653616447810-create-claim";
 import { SeedClaimErc721At1653616447830 } from "./migrations/1653616447830-seed-claim-erc721";
@@ -115,9 +121,6 @@ import { SeedMysteryboxMixedAt1653616447970 } from "./migrations/1653616447970-s
 import { CreateCraft1653616448010 } from "./migrations/1653616448010-create-craft";
 import { SeedCraftErc1155Erc1155At1653616448020 } from "./migrations/1653616448020-seed-craft-erc1155-erc1155";
 import { SeedCraftErc721Erc1155At1653616448030 } from "./migrations/1653616448030-seed-craft-erc721-erc1155-recipe";
-
-import { SeedContractManagerAt1563804000109 } from "./migrations/1652682493400-create-contract-manager";
-import { CreateContractManagerHistory1652682493410 } from "./migrations/1652682493410-create-contract-manager-history";
 
 import { CreateAccessControl1653616447230 } from "./migrations/1653616447230-create-access-control";
 import { CreateAccessControlHistory1653616447240 } from "./migrations/1653616447240-create-access-control-history";
@@ -147,9 +150,6 @@ import { CreateGrade1657846587000 } from "./migrations/1657846587000-create-grad
 import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
 import { SeedAssetComponentGrade1657846587020 } from "./migrations/1657846587020-seed-asset-component-grade";
 
-import { SeedContractExchangeAt1657846608000 } from "./migrations/1657846608000-seed-contract-exchange";
-import { CreateExchangeHistory1657846608010 } from "./migrations/1657846608010-create-exchange-history";
-import { SeedExchangeHistory1657846608020 } from "./migrations/1657846608020-seed-exchange-history";
 import { CreateAssetComponentHistory1657846609000 } from "./migrations/1657846609000-create-asset-component-history";
 import { SeedAssetComponentHistory1657846609010 } from "./migrations/1657846609010-seed-asset-component-history";
 
@@ -236,6 +236,8 @@ const config: PostgresConnectionOptions = {
     CreateAsset1563804000100,
 
     CreateContract1563804000100,
+    SeedContractManagerAt1563804000101,
+    SeedContractExchangeAt1563804000102,
     SeedContractNativeAt1563804000110,
     SeedContractErc20At1563804000120,
     SeedContractErc20USDTAt1563804000121,
@@ -286,13 +288,14 @@ const config: PostgresConnectionOptions = {
     SeedAssetComponentsErc1155At1563804001250,
     SeedAssetComponentsMysteryboxAt1563804001260,
 
-    CreateContractHistory1563804040330,
-    CreateVesting1563804010210,
-    SeedVesting1563804010220,
-    CreateVestingHistory1563804010230,
+    CreateContractHistory1563804040010,
+    CreateContractManagerHistory1563804040110,
+    CreateExchangeHistory1563804040210,
+    SeedExchangeHistory1563804040220,
 
-    SeedContractManagerAt1563804000109,
-    CreateContractManagerHistory1652682493410,
+    CreateVesting1653616433210,
+    SeedVesting1653616433210,
+    CreateVestingHistory1563804010230,
 
     CreateAccessControl1653616447230,
     CreateAccessControlHistory1653616447240,
@@ -337,9 +340,6 @@ const config: PostgresConnectionOptions = {
     SeedGrade1657846587010,
     SeedAssetComponentGrade1657846587020,
 
-    SeedContractExchangeAt1657846608000,
-    CreateExchangeHistory1657846608010,
-    SeedExchangeHistory1657846608020,
     CreateAssetComponentHistory1657846609000,
     SeedAssetComponentHistory1657846609010,
 

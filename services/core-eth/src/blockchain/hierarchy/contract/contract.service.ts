@@ -101,7 +101,7 @@ export class ContractService {
   public async updateLastBlockByTokenType(contractType: TokenType, lastBlock: number): Promise<number> {
     const entity = await this.findOne({
       contractType,
-      contractModule: ModuleType.CORE,
+      contractModule: ModuleType.HIERARCHY,
       chainId: this.chainId,
     });
 
@@ -132,7 +132,7 @@ export class ContractService {
   public async findAllTokensByType(contractType: TokenType): Promise<IContractListenerResult> {
     const contractEntities = await this.findAll({
       contractType,
-      contractModule: ModuleType.CORE,
+      contractModule: ModuleType.HIERARCHY,
       chainId: this.chainId,
     });
 

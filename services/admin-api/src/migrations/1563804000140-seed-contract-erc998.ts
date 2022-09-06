@@ -48,7 +48,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{}',
+        '{ALLOWANCE}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -65,7 +65,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC998',
-        '{}',
+        '{ALLOWANCE}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -82,7 +82,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC998',
-        '{}',
+        '{ALLOWANCE}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -99,7 +99,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{BLACKLIST}',
+        '{ALLOWANCE,BLACKLIST}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -116,7 +116,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{UPGRADEABLE}',
+        '{ALLOWANCE,UPGRADEABLE}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -133,7 +133,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{UPGRADEABLE,RANDOM}',
+        '{ALLOWANCE,UPGRADEABLE,RANDOM}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -150,7 +150,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{GENES}',
+        '{ALLOWANCE,GENES}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -167,7 +167,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC998',
-        '{}',
+        '{ALLOWANCE}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

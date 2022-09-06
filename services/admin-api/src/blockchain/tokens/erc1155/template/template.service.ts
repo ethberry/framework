@@ -24,7 +24,7 @@ export class Erc1155TemplateService extends TemplateService {
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.CORE);
+    return super.search(dto, userEntity, TokenType.ERC1155, ModuleType.HIERARCHY);
   }
 
   public async getMaxTokenIdForTemplate(templateId: number): Promise<number> {
@@ -62,9 +62,6 @@ export class Erc1155TemplateService extends TemplateService {
       royalty: 0,
       template: templateEntity,
     });
-
-    // Object.assign(tokenEntity, { tokenId: tokenEntity.id.toString() });
-    // await tokenEntity.save();
 
     return templateEntity;
   }

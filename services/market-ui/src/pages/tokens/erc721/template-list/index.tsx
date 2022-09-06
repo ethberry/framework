@@ -51,7 +51,7 @@ export const Erc721TemplateList: FC<IErc721TemplateListProps> = props => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
-        contractModule={[ModuleType.CORE]}
+        contractModule={[ModuleType.HIERARCHY]}
         embedded={embedded}
       />
 

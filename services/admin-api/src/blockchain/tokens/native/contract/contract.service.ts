@@ -34,7 +34,7 @@ export class NativeContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.NATIVE, ModuleType.CORE);
+    return super.search(dto, userEntity, TokenType.NATIVE, ModuleType.HIERARCHY);
   }
 
   public async create(dto: INativeContractCreateDto): Promise<ContractEntity> {
@@ -49,7 +49,7 @@ export class NativeContractService extends ContractService {
         royalty: 0,
         contractType: TokenType.NATIVE,
         contractFeatures: [ContractFeatures.NATIVE],
-        contractModule: ModuleType.CORE,
+        contractModule: ModuleType.HIERARCHY,
         contractStatus: ContractStatus.ACTIVE,
         name: title,
         title,

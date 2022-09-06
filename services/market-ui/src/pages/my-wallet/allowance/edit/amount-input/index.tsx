@@ -12,6 +12,7 @@ export const AmountInput: FC = () => {
   if (!address) {
     return null;
   }
+
   switch (tokenType) {
     case TokenType.ERC20:
       return <EthInput name="amount" units={decimals} symbol="" />;

@@ -51,7 +51,7 @@ export const Erc1155TemplateList: FC<IErc1155TokenListProps> = props => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC1155]}
-        contractModule={[ModuleType.CORE]}
+        contractModule={[ModuleType.HIERARCHY]}
         embedded={embedded}
       />
 

@@ -3,12 +3,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedContractExchangeAt1657846608000 implements MigrationInterface {
+export class SeedContractManagerAt1563804000101 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const exchangeAddr = process.env.EXCHANGE_ADDR || wallet;
+    const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -22,22 +22,24 @@ export class SeedContractExchangeAt1657846608000 implements MigrationInterface {
         symbol,
         base_token_uri,
         contract_status,
+        contract_type,
         contract_features,
         contract_module,
         from_block,
         created_at,
         updated_at
       ) VALUES (
-        2,
-        '${exchangeAddr}',
+        1,
+        '${contractManagerAddress}',
         '${chainId}',
-        'EXCHANGE',
+        'CONTRACT MANAGER',
         '${JSON.stringify({})}',
         '',
-        'Exchange',
+        'ContractManager',
         '',
         '',
         'ACTIVE',
+        'NATIVE',
         '{}',
         'SYSTEM',
         '${fromBlock}',
@@ -45,6 +47,8 @@ export class SeedContractExchangeAt1657846608000 implements MigrationInterface {
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 1, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

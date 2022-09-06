@@ -21,7 +21,7 @@ export const ContractInput: FC = () => {
       data={{
         contractType: [tokenType],
         contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-        contractModule: [ModuleType.CORE],
+        contractModule: [ModuleType.HIERARCHY],
       }}
       onChange={handleChange}
     />

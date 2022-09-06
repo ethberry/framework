@@ -35,7 +35,7 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     require(ownerOf1 == account, "Exchange: Wrong signer");
 
     address ownerOf2 = IERC721(price.token).ownerOf(item.tokenId);
-    require(ownerOf1 == account, "Exchange: Wrong signer");
+    require(ownerOf2 == account, "Exchange: Wrong signer");
 
     emit Breed(account, params.externalId, item, price);
 

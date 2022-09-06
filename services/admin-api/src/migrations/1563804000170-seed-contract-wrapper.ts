@@ -45,7 +45,7 @@ export class SeedContractWrapperAt1563804000170 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC721',
-        '{}',
+        '{ALLOWANCE}',
         'WRAPPER',
         '${fromBlock}',
         '${currentDateTime}',

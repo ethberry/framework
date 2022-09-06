@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.9;
 
-contract Genes {
+contract Breed {
   struct Genes {
     int256 strength;
     int256 dexterity;

@@ -18,7 +18,7 @@ export class Erc998TokenService extends TokenService {
   }
 
   public async search(dto: ITokenSearchDto, userEntity: UserEntity): Promise<[Array<TokenEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.CORE);
+    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.HIERARCHY);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TokenEntity>): Promise<TokenEntity | null> {

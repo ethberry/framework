@@ -75,20 +75,4 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
   ) internal override onlyWhiteListedWithIncrement(_childContract) {
     super.receiveChild(_from, _tokenId, _childContract, _childTokenId);
   }
-
-//  function whiteListChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE){
-//    _whiteListChild(addr, max);
-//  }
-//
-//  function unWhitelistChild(address addr) public onlyRole(DEFAULT_ADMIN_ROLE) {
-//    _unWhitelistChild(addr);
-//  }
-
-//  function setDefaultMaxChild(uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
-//    _setDefaultMaxChild(max);
-//  }
-
-//  function setMaxChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
-//    _setMaxChild(addr, max);
-//  }
 }

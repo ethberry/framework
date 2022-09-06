@@ -47,7 +47,7 @@ export const Erc998TokenList: FC<IErc998TokenListProps> = props => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC721]}
-        contractModule={[ModuleType.CORE]}
+        contractModule={[ModuleType.HIERARCHY]}
       />
 
       <ProgressOverlay isLoading={isLoading}>

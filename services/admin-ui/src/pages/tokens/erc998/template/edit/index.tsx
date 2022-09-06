@@ -52,7 +52,7 @@ export const Erc998TemplateEditDialog: FC<ITemplateEditDialogProps> = props => {
         controller="contracts"
         data={{
           contractType: [TokenType.ERC998],
-          contractModule: [ModuleType.CORE],
+          contractModule: [ModuleType.HIERARCHY],
         }}
         readOnly={!!id}
       />

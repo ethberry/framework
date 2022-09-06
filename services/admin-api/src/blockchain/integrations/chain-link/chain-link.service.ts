@@ -16,7 +16,7 @@ export class ChainLinkService {
       {
         contractType: [TokenType.NATIVE, TokenType.ERC721, TokenType.ERC998],
         contractFeatures: [ContractFeatures.RANDOM],
-        contractModule: [ModuleType.CORE, ModuleType.LOTTERY],
+        contractModule: [ModuleType.HIERARCHY, ModuleType.LOTTERY],
       },
       userEntity,
     );

@@ -50,7 +50,7 @@ export const Erc998CompositionCreateDialog: FC<IErc998CompositionCreateDialogPro
         data={{
           contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC20, TokenType.ERC1155],
           contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-          contractModule: [ModuleType.CORE],
+          contractModule: [ModuleType.HIERARCHY],
         }}
       />
       <NumberInput name="amount" />

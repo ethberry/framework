@@ -44,7 +44,7 @@ export const WrapperToken: FC = () => {
           </Typography>
         </Grid>
         <Grid item xs={3}>
-          {selected.template?.contract?.contractModule === ModuleType.CORE ||
+          {selected.template?.contract?.contractModule === ModuleType.HIERARCHY ||
           selected.template?.contract?.contractModule === ModuleType.MYSTERY ? (
             <Paper className={classes.paper}>
               <Typography>

@@ -4,7 +4,7 @@ import { constants } from "ethers";
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedExchangeHistory1657846608020 implements MigrationInterface {
+export class SeedExchangeHistory1563804040220 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
 

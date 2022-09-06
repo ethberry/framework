@@ -22,7 +22,7 @@ export enum MetadataHash {
 
 export enum ModuleType {
   SYSTEM = "SYSTEM",
-  CORE = "CORE",
+  HIERARCHY = "HIERARCHY",
   MYSTERY = "MYSTERY",
   WRAPPER = "WRAPPER",
   LOTTERY = "LOTTERY",

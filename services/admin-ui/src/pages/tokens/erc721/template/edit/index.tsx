@@ -52,7 +52,7 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
         controller="contracts"
         data={{
           contractType: [TokenType.ERC721],
-          contractModule: [ModuleType.CORE],
+          contractModule: [ModuleType.HIERARCHY],
         }}
         readOnly={!!id}
       />

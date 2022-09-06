@@ -51,7 +51,7 @@ export const Erc998TemplateList: FC<IErc998TemplateListProps> = props => {
         initialValues={search}
         open={isFiltersOpen}
         contractType={[TokenType.ERC998]}
-        contractModule={[ModuleType.CORE]}
+        contractModule={[ModuleType.HIERARCHY]}
         embedded={embedded}
       />
 

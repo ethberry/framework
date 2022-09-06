@@ -58,7 +58,7 @@ abstract contract WhiteListChild is AccessControl {
   function incrementChildCount(address addr) public onlyWhiteListed(addr) {
     uint256 max = _maxChildPerContract[addr] > 0 ? _maxChildPerContract[addr] : _defaultMaxChildPerContract;
     if (max > 0) {
-      require(_childContractsCounter[addr] < max, "WLC: max addr");
+      require(_childContractsCounter[addr] < max, "WhiteListChild: excess number of address");
     }
     _childContractsCounter[addr]++;
   }
@@ -70,7 +70,7 @@ abstract contract WhiteListChild is AccessControl {
   }
 
   modifier onlyWhiteListed(address addr) {
-    require(isWhitelisted(addr), "WLC: not WL");
+    require(isWhitelisted(addr), "WhiteListChild: the contract is not on the whitelist");
     _;
   }
 

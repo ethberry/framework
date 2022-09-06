@@ -43,7 +43,7 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
         '',
         '',
         'ACTIVE',
-        'NATIVE',
+        null,
         '{RANDOM}',
         'LOTTERY',
         '${fromBlock}',

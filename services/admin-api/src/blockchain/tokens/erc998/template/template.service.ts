@@ -20,6 +20,6 @@ export class Erc998TemplateService extends TemplateService {
   }
 
   public async search(dto: ITemplateSearchDto, userEntity: UserEntity): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.CORE);
+    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.HIERARCHY);
   }
 }

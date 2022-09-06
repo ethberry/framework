@@ -3,12 +3,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedContractManagerAt1563804000109 implements MigrationInterface {
+export class SeedContractExchangeAt1563804000102 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || 1337;
+    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -29,24 +29,26 @@ export class SeedContractManagerAt1563804000109 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1,
-        '${contractManagerAddress}',
+        2,
+        '${exchangeAddress}',
         '${chainId}',
-        'CONTRACT MANAGER',
+        'EXCHANGE',
         '${JSON.stringify({})}',
         '',
-        'ContractManager',
+        'Exchange',
         '',
         '',
         'ACTIVE',
-        'NATIVE',
-        '{}',
+        null,
+        '{ALLOWANCE}',
         'SYSTEM',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 2, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

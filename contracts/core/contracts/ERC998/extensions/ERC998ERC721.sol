@@ -62,7 +62,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
       (rootOwnerAddress, _childTokenId) = _ownerOfChild(rootOwnerAddress, _childTokenId);
       require(
         !(rootOwnerAddress_ == rootOwnerAddress && childTokenId_ == _childTokenId),
-        "CTD: circ OWNR"
+        "CTD: circular ownership is forbidden"
       );
     }
     bytes memory callData = abi.encodeWithSelector(ROOT_OWNER_OF_CHILD, address(this), _childTokenId);
@@ -93,11 +93,11 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
 
   function approve(address to, uint256 _tokenId) public virtual override {
     address rootOwner = address(uint160(uint256(rootOwnerOf(_tokenId))));
-    require(to != rootOwner, "CTD: OWN alr");
+    require(to != rootOwner, "CTD: approval to current owner");
 
     require(
       _msgSender() == rootOwner || isApprovedForAll(rootOwner, _msgSender()),
-      "CTD: not OWN"
+      "CTD: approve caller is not owner nor approved for all"
     );
     rootOwnerAndTokenIdToApprovedAddress[rootOwner][_tokenId] = to;
     emit Approval(rootOwner, to, _tokenId);
@@ -123,7 +123,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
         }
         require(
           rootOwner & 0xffffffff00000000000000000000000000000000000000000000000000000000 != ERC998_MAGIC_VALUE_32,
-          "CTD: OWN alr"
+          "CTD: _transferFrom token is child of other top down composable"
         );
       }
     }
@@ -184,7 +184,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     uint256,
     bytes memory
   ) external pure override {
-    revert("CTD:NS");
+    revert("CTD: this method is not supported");
   }
 
   function getChild(
@@ -193,7 +193,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     address,
     uint256
   ) external pure override {
-    revert("CTD:NS");
+    revert("CTD: this method is not supported");
   }
 
   function onERC721Received(
@@ -204,12 +204,12 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
   ) external override returns (bytes4) {
     require(
       _data.length > 0,
-      "CTD: no data"
+      "CTD: onERC721Received _data must contain the uint256 tokenId to transfer the child token to"
     );
     // convert up to 32 bytes of _data to uint256, owner nft tokenId passed as uint in bytes
     uint256 tokenId = _parseTokenId(_data);
     receiveChild(_from, tokenId, _msgSender(), _childTokenId);
-    require(IERC721(_msgSender()).ownerOf(_childTokenId) != address(0), "CTD: not OWN");
+    require(IERC721(_msgSender()).ownerOf(_childTokenId) != address(0), "CTD: onERC721Received child token not owned");
     // a check for looped ownership chain
     rootOwnerOf(tokenId);
     return this.onERC721Received.selector;
@@ -227,7 +227,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     returns (bytes32 parentTokenOwner, uint256 parentTokenId)
   {
     parentTokenId = childTokenOwner[_childContract][_childTokenId];
-    require(parentTokenId != 0, "CTD: NF");
+    require(parentTokenId != 0, "CTD: ownerOfChild not found");
     address parentTokenOwnerAddress = ownerOf(parentTokenId);
     assembly {
       parentTokenOwner := or(ERC998_MAGIC_VALUE_32, parentTokenOwnerAddress)
@@ -241,9 +241,9 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     uint256 _childTokenId
   ) private {
     uint256 tokenId = childTokenOwner[_childContract][_childTokenId];
-    require(tokenId != 0, "CTD: NF");
-    require(tokenId == _fromTokenId, "CTD: same");
-    require(_to != address(0), "CTD:to 0");
+    require(tokenId != 0, "CTD: _transferChild _childContract _childTokenId not found");
+    require(tokenId == _fromTokenId, "CTD: _transferChild wrong tokenId found");
+    require(_to != address(0), "CTD: _transferChild _to zero address");
 
     address sender = _msgSender();
     _ownerOrApproved(sender, tokenId);
@@ -257,7 +257,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     returns (address parentTokenOwner, uint256 parentTokenId)
   {
     parentTokenId = childTokenOwner[_childContract][_childTokenId];
-    require(parentTokenId != 0, "CTD: NF");
+    require(parentTokenId != 0, "CTD: _ownerOfChild not found");
     return (ownerOf(parentTokenId), parentTokenId);
   }
 
@@ -268,7 +268,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
   ) internal virtual {
     // remove child token
     uint256 lastTokenIndex = childTokens[_tokenId][_childContract].length() - 1;
-    require(childTokens[_tokenId][_childContract].remove(_childTokenId), "CTD: NF");
+    require(childTokens[_tokenId][_childContract].remove(_childTokenId), "CTD: removeChild: _childTokenId not found");
 
     _beforeRemoveERC721(_tokenId, _childContract, _childTokenId);
 
@@ -276,7 +276,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
 
     // remove contract
     if (lastTokenIndex == 0) {
-      require(childContracts[_tokenId].remove(_childContract), "CTD: NF");
+      require(childContracts[_tokenId].remove(_childContract), "CTD: removeChild: _childContract not found");
     }
 
     _afterRemoveERC721(_tokenId, _childContract, _childTokenId);
@@ -300,17 +300,17 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     address _childContract,
     uint256 _childTokenId
   ) internal virtual {
-    require(ownerOf(_tokenId) != address(0), "CTD: t NE");
+    require(ownerOf(_tokenId) != address(0), "CTD: receiveChild _tokenId does not exist.");
     // @dev this is edge case, _tokenId can't be 0
     require(
       childTokenOwner[_childContract][_childTokenId] != _tokenId,
-      "CTD: alr RCVD"
+      "CTD: receiveChild _childTokenId already received"
     );
     uint256 childTokensLength = childTokens[_tokenId][_childContract].length();
     if (childTokensLength == 0) {
-      require(childContracts[_tokenId].add(_childContract), "CTD: not add");
+      require(childContracts[_tokenId].add(_childContract), "CTD: receiveChild: add _childContract");
     }
-    require(childTokens[_tokenId][_childContract].add(_childTokenId), "CTD:not add");
+    require(childTokens[_tokenId][_childContract].add(_childTokenId), "CTD: receiveChild: add _childTokenId");
 
     _beforeReceiveERC721(_from, _tokenId, _childContract, _childTokenId);
 
@@ -376,14 +376,13 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
 
   function isApprovedForAll(address owner, address operator) public view virtual override returns (bool);
 
-  function _ownerOrApproved(address sender, uint256 tokenId) internal virtual override view {
+  function _ownerOrApproved(address sender, uint256 tokenId) internal view virtual override {
     address rootOwner = address(uint160(uint256(rootOwnerOf(tokenId))));
     require(
       rootOwner == sender ||
-      isApprovedForAll(rootOwner, sender) ||
-      rootOwnerAndTokenIdToApprovedAddress[rootOwner][tokenId] ==
-      sender,
-      "CTD:N appr"
+        isApprovedForAll(rootOwner, sender) ||
+        rootOwnerAndTokenIdToApprovedAddress[rootOwner][tokenId] == sender,
+      "CTD: sender is not approved"
     );
   }
 }

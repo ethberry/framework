@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedVesting1563804010220 implements MigrationInterface {
+export class SeedVesting1653616433210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const vestingLinearAddress = process.env.VESTING_LINEAR_ADDR || wallet;

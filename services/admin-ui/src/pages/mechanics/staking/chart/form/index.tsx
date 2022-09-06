@@ -58,7 +58,7 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
               data={{
                 contractType: [deposit.tokenType],
                 contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-                contractModule: [ModuleType.CORE],
+                contractModule: [ModuleType.HIERARCHY],
               }}
             />
           </Grid>
@@ -69,7 +69,7 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
               data={{
                 contractType: [reward.tokenType],
                 contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
-                contractModule: [ModuleType.CORE],
+                contractModule: [ModuleType.HIERARCHY],
               }}
             />
           </Grid>

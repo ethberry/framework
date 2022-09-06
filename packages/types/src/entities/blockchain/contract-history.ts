@@ -185,12 +185,6 @@ export interface IErc1155TokenUri {
   id: string;
 }
 
-export interface IErc1155RoleGrant {
-  role: string;
-  account: string;
-  sender: string;
-}
-
 export type TContractEventData =
   | IClaimRedeem
   | IClaimUnpack

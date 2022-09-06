@@ -9,9 +9,9 @@ abstract contract StateHash is IStateHash {
   mapping(uint256 => bytes32) internal tokenIdToStateHash;
 
   function stateHash(uint256 tokenId) external view returns (bytes32) {
-    bytes32 stateHash = tokenIdToStateHash[tokenId];
-    require(stateHash != 0, "CTD:0 hash");
-    return stateHash;
+    bytes32 _stateHash = tokenIdToStateHash[tokenId];
+    require(_stateHash != 0, "CTD: stateHash of tokenId is zero");
+    return _stateHash;
   }
 
   function _localRootId(uint256 tokenId) internal view virtual returns (uint256);

@@ -18,6 +18,6 @@ export class Erc998ContractService extends ContractService {
   }
 
   public search(dto: IContractSearchDto, userEntity: UserEntity): Promise<[Array<ContractEntity>, number]> {
-    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.CORE);
+    return super.search(dto, userEntity, TokenType.ERC998, ModuleType.HIERARCHY);
   }
 }

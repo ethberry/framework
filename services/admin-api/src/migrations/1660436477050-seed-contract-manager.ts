@@ -20,7 +20,7 @@ export class SeedContractManager1660436477050 implements MigrationInterface {
         where chain_id = 1337
           and contract_type != 'NATIVE'
           and contract_status = 'ACTIVE'
-          and contract_module = 'CORE'
+          and contract_module = 'HIERARCHY'
         union all
         select distinct address,
                         'MYSTERY'::${ns}.contract_manager_type_enum as contract_type,

@@ -18,7 +18,7 @@ export class Erc1155TemplateService extends TemplateService {
   }
 
   public async search(dto: ITemplateSearchDto, chainId: number): Promise<[Array<TemplateEntity>, number]> {
-    return super.search(dto, chainId, TokenType.ERC1155, ModuleType.CORE);
+    return super.search(dto, chainId, TokenType.ERC1155, ModuleType.HIERARCHY);
   }
 
   public findOneWithRelations(where: FindOptionsWhere<TemplateEntity>): Promise<TemplateEntity | null> {

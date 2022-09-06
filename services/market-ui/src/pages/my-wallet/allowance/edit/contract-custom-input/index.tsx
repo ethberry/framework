@@ -2,7 +2,7 @@ import { ChangeEvent, FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ContractStatus, TokenType } from "@framework/types";
+import { ContractFeatures } from "@framework/types";
 
 export const ContractCustomInput: FC = () => {
   const form = useFormContext<any>();
@@ -17,8 +17,7 @@ export const ContractCustomInput: FC = () => {
       name="contractCustomId"
       controller="contracts"
       data={{
-        contractStatus: [ContractStatus.ACTIVE],
-        contractType: [TokenType.ERC998],
+        contractFeatures: [ContractFeatures.ALLOWANCE],
       }}
       onChange={handleChange}
     />

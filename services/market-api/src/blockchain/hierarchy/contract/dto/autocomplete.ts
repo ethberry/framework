@@ -6,16 +6,6 @@ import type { IContractAutocompleteDto } from "@framework/types";
 import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 export class ContractAutocompleteDto implements IContractAutocompleteDto {
-  @ApiPropertyOptional({
-    enum: ContractStatus,
-    isArray: true,
-    // https://github.com/OAI/OpenAPI-Specification/issues/1706
-    // format: "deepObject"
-  })
-  @IsOptional()
-  @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<ContractStatus>)
-  @IsEnum(ContractStatus, { each: true, message: "badInput" })
   public contractStatus: Array<ContractStatus>;
 
   @ApiPropertyOptional({

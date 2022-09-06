@@ -13,5 +13,7 @@ export interface ITokenInputProps {
 export const TokenTypeInput: FC<ITokenInputProps> = props => {
   const { prefix, name = "tokenType", disabledOptions = [], readOnly } = props;
 
-  return <SelectInput name={`${prefix}.${name}`} options={TokenType} disabledOptions={disabledOptions} readOnly={readOnly} />;
+  return (
+    <SelectInput name={`${prefix}.${name}`} options={TokenType} disabledOptions={disabledOptions} readOnly={readOnly} />
+  );
 };

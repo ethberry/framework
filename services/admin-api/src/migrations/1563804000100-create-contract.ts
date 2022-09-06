@@ -15,7 +15,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_module_enum AS ENUM (
         'SYSTEM',
-        'CORE'
+        'HIERARCHY'
       );
     `);
 
@@ -30,6 +30,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (
+        'ALLOWANCE',
         'BLACKLIST',
         'EXTERNAL',
         'NATIVE',
@@ -124,7 +125,7 @@ export class CreateContract1563804000100 implements MigrationInterface {
         {
           name: "contract_module",
           type: `${ns}.contract_module_enum`,
-          default: "'CORE'",
+          default: "'HIERARCHY'",
         },
         {
           name: "is_paused",

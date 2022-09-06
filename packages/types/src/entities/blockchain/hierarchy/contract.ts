@@ -49,6 +49,7 @@ export enum MysteryboxContractFeatures {
 
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
 export enum ContractFeatures {
+  "ALLOWANCE" = "ALLOWANCE",
   "NATIVE" = "NATIVE",
   "EXTERNAL" = "EXTERNAL",
   "BLACKLIST" = "BLACKLIST",
