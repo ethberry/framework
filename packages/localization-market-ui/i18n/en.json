@@ -20,6 +20,7 @@
     }
   },
   "dialogs": {
+    "fund": "Fund",
     "add": "Add",
     "allowance": "Allowance",
     "auction": "Sell `{title}` on auction",
@@ -343,7 +344,7 @@
         "title": "ERC721 Templates"
       },
       "token": {
-        "level": "Level: {grade}",
+        "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "ERC721 Token: {title}"
       },
@@ -370,7 +371,7 @@
         "title": "ERC998 Templates"
       },
       "token": {
-        "level": "Level: {grade}",
+        "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "ERC998 Token: {title}"
       },
@@ -439,7 +440,6 @@
     },
     "my-wallet": {
       "allowance": "Allowance",
-      "allowanceCustom": "Custom Allowance",
       "attach": "Attach",
       "detach": "Detach",
       "title": "My wallet"
@@ -459,7 +459,7 @@
         "title": "Mysterybox Contracts"
       },
       "token": {
-        "level": "Level: {grade}",
+        "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "Mysterybox Token: {title}"
       },

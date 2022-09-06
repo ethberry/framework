@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { constants } from "ethers";
 
 import { ns } from "@framework/constants";
 
@@ -15,7 +16,7 @@ export class SeedOwnershipAt1658980520110 implements MigrationInterface {
         updated_at
       ) VALUES (
         406001, -- hero
-        306001, -- sword
+        405001, -- Scroll
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -35,6 +36,18 @@ export class SeedOwnershipAt1658980520110 implements MigrationInterface {
         406001, -- hero
         305003, -- Gloves
         1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        406001, -- hero
+        201001, -- space credit
+        '${constants.WeiPerEther.toString()}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        406001, -- hero
+        501001, -- gold
+        '1000',
         '${currentDateTime}',
         '${currentDateTime}'
       );

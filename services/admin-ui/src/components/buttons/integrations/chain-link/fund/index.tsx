@@ -24,8 +24,9 @@ export const ChainLinkFundButton: FC = () => {
   };
 
   const handleFundConfirm = async (values: IChainLinkFundDto): Promise<void> => {
-    await metaFn(values);
-    setIsFundDialogOpen(false);
+    await metaFn(values).finally(() => {
+      setIsFundDialogOpen(false);
+    });
   };
 
   const handleFundCancel = () => {

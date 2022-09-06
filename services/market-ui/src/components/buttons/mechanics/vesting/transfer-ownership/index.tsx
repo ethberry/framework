@@ -21,9 +21,9 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask(async (dto: IVestingTransferOwnershipDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((dto: IVestingTransferOwnershipDto, web3Context: Web3ContextType) => {
     const contract = new Contract(vesting.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
-    return contract.transferOwnership(dto.account) as Promise<void>;
+    return contract.transferOwnership(dto.account) as Promise<any>;
   });
 
   const handleSell = (): void => {

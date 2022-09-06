@@ -22,7 +22,7 @@ export class CreateOwnershipAt1658980520100 implements MigrationInterface {
         },
         {
           name: "amount",
-          type: "int",
+          type: "uint256",
         },
         {
           name: "created_at",

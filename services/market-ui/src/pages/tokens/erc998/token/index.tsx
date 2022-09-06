@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, Fragment } from "react";
+import { ChangeEvent, FC, Fragment, useState } from "react";
 import { Grid, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 
 import { FormattedMessage, useIntl } from "react-intl";
@@ -6,7 +6,7 @@ import { BigNumber, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ContractFeatures, TokenType, ITemplate, IToken } from "@framework/types";
+import { ContractFeatures, ITemplate, IToken, TokenType } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -26,8 +26,17 @@ import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { Clear } from "@mui/icons-material";
 import { IOwnership } from "@framework/types/dist/entities/blockchain/hierarchy/ownership";
+import { ComposeTokenDialog, IComposeTokenDto } from "./dialog";
+
+export interface IComposition {
+  token: IToken;
+  metaFn: (...args: Array<any>) => Promise<any>;
+}
 
 export const Erc998Token: FC = () => {
+  const [action, setAction] = useState<IComposition>({} as IComposition);
+  const [isComposeTokenDialogOpen, setIsComposeTokenDialogOpen] = useState(false);
+
   const { selected, isLoading } = useCollection<IToken>({
     baseUrl: "/erc998-tokens",
     empty: {
@@ -41,7 +50,7 @@ export const Erc998Token: FC = () => {
   const { formatMessage } = useIntl();
   const classes = useStyles();
 
-  const metaFn = useMetamask((data: IToken, web3Context: Web3ContextType) => {
+  const metaComposeFn = useMetamask((data: IToken, values: IComposeTokenDto, web3Context: Web3ContextType) => {
     const contractType = data.template!.contract!.contractType;
     const contractAbi =
       contractType === TokenType.ERC1155
@@ -70,7 +79,7 @@ export const Erc998Token: FC = () => {
         web3Context.account,
         selected.template!.contract!.address,
         data.tokenId,
-        1,
+        values.amount,
         utils.hexZeroPad(BigNumber.from(selected.tokenId).toHexString(), 32),
       ) as Promise<void>;
     } else {
@@ -79,13 +88,12 @@ export const Erc998Token: FC = () => {
         web3Context.account,
         selected.tokenId,
         data.template!.contract!.address,
-        // TODO amount popup
-        utils.parseEther("0.1"),
+        values.amount,
       ) as Promise<void>;
     }
   });
 
-  const metaFnClear = useMetamask((data: IToken, web3Context: Web3ContextType) => {
+  const metaDecomposeFn = useMetamask((data: IToken, values: IComposeTokenDto, web3Context: Web3ContextType) => {
     const contractType = data.template!.contract!.contractType;
 
     const contract = new Contract(
@@ -99,26 +107,51 @@ export const Erc998Token: FC = () => {
         web3Context.account,
         data.template!.contract!.address,
         data.tokenId,
-        1,
+        values.amount,
         "0x",
       ) as Promise<void>;
     } else {
-      // ERC20
       return contract.transferERC20(
         selected.tokenId,
         web3Context.account,
         data.template!.contract!.address,
-        utils.parseEther("0.1"),
+        values.amount,
       ) as Promise<void>;
     }
   });
 
-  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): Promise<any> => {
-    return metaFn(option);
+  const handleComposeToken = (): void => {
+    setIsComposeTokenDialogOpen(true);
   };
 
-  const handleClear = (ownership: IOwnership) => async () => {
-    await metaFnClear(ownership.child);
+  const postponeAction = (token: IToken, metaFn: (...args: Array<any>) => Promise<any>) => {
+    if (
+      token.template!.contract!.contractType === TokenType.ERC20 ||
+      token.template!.contract!.contractType === TokenType.ERC1155
+    ) {
+      setAction({ token, metaFn });
+      handleComposeToken();
+    } else {
+      void metaFn(token, {});
+    }
+  };
+
+  const handleComposeTokenConfirm = async (values: IComposeTokenDto): Promise<void> => {
+    await action.metaFn(action.token, values).finally(() => {
+      setIsComposeTokenDialogOpen(false);
+    });
+  };
+
+  const handleComposeTokenCancel = (): void => {
+    setIsComposeTokenDialogOpen(false);
+  };
+
+  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+    postponeAction(option, metaComposeFn);
+  };
+
+  const handleClear = (ownership: IOwnership) => () => {
+    postponeAction(ownership.child!, metaDecomposeFn);
   };
 
   if (isLoading) {
@@ -158,11 +191,13 @@ export const Erc998Token: FC = () => {
                 onSubmit={Promise.resolve}
                 showButtons={false}
                 showPrompt={false}
-                testId="???"
+                testId="TokenCompositionDialog"
               >
-                <Typography variant="h5">{child.child?.title}</Typography>
+                <Typography variant="h5" sx={{ mt: 3 }}>
+                  {child.child?.title}
+                </Typography>
                 {new Array(filtered.length).fill(null).map((e, i) => (
-                  <Grid container key={child.child?.id}>
+                  <Grid container key={i}>
                     <Grid item xs={6}>
                       <EntityInput
                         disableClear={true}
@@ -189,19 +224,23 @@ export const Erc998Token: FC = () => {
                   </Grid>
                 ))}
                 {new Array(child.amount - filtered.length).fill(null).map((e, i) => (
-                  <EntityInput
-                    disableClear={true}
-                    key={i}
-                    name={`tokenId[${i + filtered.length}]`}
-                    controller="tokens"
-                    data={{
-                      contractIds: [child.child?.id],
-                    }}
-                    label={formatMessage({ id: "form.labels.tokenId" })}
-                    placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
-                    getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
-                    onChange={handleChange}
-                  />
+                  <Grid container key={i}>
+                    <Grid item xs={6}>
+                      <EntityInput
+                        disableClear={true}
+                        key={i}
+                        name={`tokenId[${i + filtered.length}]`}
+                        controller="tokens"
+                        data={{
+                          contractIds: [child.child?.id],
+                        }}
+                        label={formatMessage({ id: "form.labels.tokenId" })}
+                        placeholder={formatMessage({ id: "form.placeholders.tokenId" })}
+                        getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                  </Grid>
                 ))}
               </FormWrapper>
             );
@@ -228,6 +267,16 @@ export const Erc998Token: FC = () => {
           ) : null}
         </Grid>
       </Grid>
+
+      <ComposeTokenDialog
+        onCancel={handleComposeTokenCancel}
+        onConfirm={handleComposeTokenConfirm}
+        open={isComposeTokenDialogOpen}
+        initialValues={{
+          amount: "0",
+          decimals: action.token.template!.contract!.decimals,
+        }}
+      />
     </Fragment>
   );
 };

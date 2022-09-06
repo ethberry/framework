@@ -24,16 +24,16 @@ export const AllowanceButton: FC = () => {
     setIsAllowanceDialogOpen(false);
   };
 
-  const metaFn = useMetamask(async (values: IAllowanceDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      await contractErc20.approve(values.addressCustom, values.amount);
+      return contractErc20.approve(values.addressCustom, values.amount) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC721 || values.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(values.address, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
-      await contractErc721.setApprovalForAll(values.addressCustom, true);
+      return contractErc721.setApprovalForAll(values.addressCustom, true) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(values.address, ERC1155SimpleSol.abi, web3Context.provider?.getSigner());
-      await contractErc1155.setApprovalForAll(values.addressCustom, true);
+      return contractErc1155.setApprovalForAll(values.addressCustom, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
@@ -48,7 +48,7 @@ export const AllowanceButton: FC = () => {
   return (
     <Fragment>
       <Button onClick={handleAllowance}>
-        <FormattedMessage id="pages.my-wallet.allowanceCustom" />
+        <FormattedMessage id="pages.my-wallet.allowance" />
       </Button>
       <AllowanceDialog
         onCancel={handleAllowanceCancel}

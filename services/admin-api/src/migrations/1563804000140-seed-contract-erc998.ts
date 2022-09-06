@@ -107,7 +107,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         405,
         '${erc998ContractUpgradeableAddress}',
         '${chainId}',
-        'ERC998 (upgradeable)',
+        'Spell book (upgradeable)',
         '${simpleFormatting}',
         '${imageUrl}',
         'ERC998 UPGRADEABLE',

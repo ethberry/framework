@@ -46,7 +46,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
 
   const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
     const contract = new Contract(values.address, ERC721TokenWrapperSol.abi, web3Context.provider?.getSigner());
-    return contract.mintBox(web3Context.account, values.templateId, values.item) as Promise<void>;
+    return contract.mintBox(web3Context.account, values.templateId, values.item) as Promise<any>;
   });
 
   const handleEditConfirm = async (values: ICreateWrappedToken, _form: any) => {

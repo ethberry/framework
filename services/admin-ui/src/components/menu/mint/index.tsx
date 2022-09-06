@@ -34,16 +34,16 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
     setIsMintTokenDialogOpen(false);
   };
 
-  const metaFn = useMetamask(async (values: IMintTokenDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IMintTokenDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.ERC20) {
       const contractErc20 = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      await contractErc20.mint(values.account, values.amount);
+      return contractErc20.mint(values.account, values.amount) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC721 || values.tokenType === TokenType.ERC998) {
       const contractErc721 = new Contract(values.address, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
-      await contractErc721.mintCommon(values.account, values.templateId);
+      return contractErc721.mintCommon(values.account, values.templateId) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(values.address, ERC1155SimpleSol.abi, web3Context.provider?.getSigner());
-      await contractErc1155.mint(values.account, values.templateId, values.amount, "0x");
+      return contractErc1155.mint(values.account, values.templateId, values.amount, "0x") as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

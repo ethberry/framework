@@ -15,7 +15,7 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         updated_at
       ) VALUES (
         406, -- hero
-        306, -- weapon
+        405, -- spell book
         1,
         '${currentDateTime}',
         '${currentDateTime}'
@@ -26,9 +26,21 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
+        406, -- hero
+        201, -- space credit
+        1,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        406, -- hero
+        501, -- resources
+        3,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
         401, -- simple
-        305, -- armour
-        5,
+        201, -- space credit
+        1,
         '${currentDateTime}',
         '${currentDateTime}'
       );
