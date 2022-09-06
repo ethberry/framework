@@ -110,12 +110,20 @@ export const Erc998Token: FC = () => {
         values.amount,
         "0x",
       ) as Promise<void>;
-    } else {
+    } else if (contractType === TokenType.ERC20) {
       return contract.transferERC20(
         selected.tokenId,
         web3Context.account,
         data.template!.contract!.address,
         values.amount,
+      ) as Promise<void>;
+    } else {
+      // ERC721 or ERC998
+      return contract["safeTransferChild(uint256,address,address,uint256)"](
+        selected.tokenId,
+        web3Context.account,
+        selected.children![0].child!.template!.contract!.address,
+        selected.children![0].child?.tokenId,
       ) as Promise<void>;
     }
   });
