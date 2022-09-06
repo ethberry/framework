@@ -26,7 +26,7 @@ contract ERC721TokenWrapper is ERC721Simple, ExchangeUtils {
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address, uint256) external virtual override onlyRole(MINTER_ROLE) {
-    revert("Wrapper: this method is not supported");
+    revert MethodNotSupported();
   }
 
   function mintBox(

@@ -13,6 +13,7 @@ import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
+import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../interfaces/IERC998ERC721TopDown.sol";
 import "../interfaces/IERC998TopDown.sol";
 import "./ERC998Utils.sol";
@@ -184,7 +185,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     uint256,
     bytes memory
   ) external pure override {
-    revert("CTD: this method is not supported");
+    revert MethodNotSupported();
   }
 
   function getChild(
@@ -193,7 +194,7 @@ abstract contract ERC998ERC721 is Context, ERC165, IERC721, IERC998TopDown, IERC
     address,
     uint256
   ) external pure override {
-    revert("CTD: this method is not supported");
+    revert MethodNotSupported();
   }
 
   function onERC721Received(

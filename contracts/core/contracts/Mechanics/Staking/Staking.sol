@@ -38,7 +38,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
   bytes4 private constant IERC721_MYSTERYBOX = type(IERC721Mysterybox).interfaceId;
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes32 public constant TEMPLATE_ID = keccak256("template_id");
+  bytes32 public constant TEMPLATE_ID = keccak256("TEMPLATE_ID");
 
   struct Metadata {
     bytes32 key;

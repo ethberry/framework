@@ -39,11 +39,11 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721ACBaseUrl, MetaDataGe
   }
 
   function mint(address) public pure override {
-    revert("ERC721Simple: this method is not supported");
+    revert MethodNotSupported();
   }
 
   function safeMint(address) public pure override {
-    revert("ERC721Simple: this method is not supported");
+    revert MethodNotSupported();
   }
 
   function setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) public onlyRole(METADATA_ADMIN_ROLE) {

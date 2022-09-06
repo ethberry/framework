@@ -48,7 +48,7 @@ describe("ERC721Upgradeable", function () {
       await this.erc721Instance.mintCommon(this.receiver.address, templateId);
       const value = await this.erc721Instance.getRecordFieldValue(
         tokenId,
-        utils.keccak256(ethers.utils.toUtf8Bytes("grade")),
+        utils.keccak256(ethers.utils.toUtf8Bytes("GRADE")),
       );
       expect(value).to.equal(1);
     });
@@ -72,7 +72,7 @@ describe("ERC721Upgradeable", function () {
 
       const value2 = await this.erc721Instance.getRecordFieldValue(
         tokenId,
-        utils.keccak256(ethers.utils.toUtf8Bytes("grade")),
+        utils.keccak256(ethers.utils.toUtf8Bytes("GRADE")),
       );
       expect(value2).to.equal(2);
     });

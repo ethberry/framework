@@ -4,13 +4,17 @@ import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, toke
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
 import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
 import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
+import { shouldMint } from "../ERC721/shared/mint";
+import { shouldSafeMint } from "../ERC721/shared/safeMint";
+import { shouldMintCommon } from "../ERC721/shared/mintCommon";
+import { shouldBlacklist } from "../shared/blacklist";
 
-describe("ERC998Upgradeable", function () {
+describe("ERC998Blacklist", function () {
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const erc998Factory = await ethers.getContractFactory("ERC998Upgradeable");
-    this.erc998Instance = await erc998Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+    const erc721Factory = await ethers.getContractFactory("ERC998Blacklist");
+    this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
     this.erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
@@ -18,10 +22,14 @@ describe("ERC998Upgradeable", function () {
     const erc721NonReceiverFactory = await ethers.getContractFactory("ERC721NonReceiverMock");
     this.erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
 
-    this.contractInstance = this.erc998Instance;
+    this.contractInstance = this.erc721Instance;
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldGetTokenURI();
   shouldSetBaseURI();
+  shouldBlacklist();
+  shouldMint();
+  shouldSafeMint();
+  shouldMintCommon();
 });

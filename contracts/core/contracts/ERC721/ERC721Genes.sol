@@ -32,7 +32,7 @@ contract ERC721Genes is IERC721Random, ERC721ChainLinkBinance, ERC721Simple, Bre
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address, uint256) external virtual override onlyRole(MINTER_ROLE) {
-    revert("Genes: this method is not supported");
+    revert MethodNotSupported();
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {

@@ -31,7 +31,7 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address, uint256) external virtual override onlyRole(MINTER_ROLE) {
-    revert("Mysterybox: this method is not supported");
+    revert MethodNotSupported();
   }
 
   function mintBox(
