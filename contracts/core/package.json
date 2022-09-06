@@ -5,6 +5,7 @@
     "url": "https://www.gemunion.io/"
   },
   "dependencies": {
+    "@gemunion/genes": "0.0.1",
     "@chainlink/contracts": "0.4.2",
     "@gemunion/constants": "0.8.5",
     "@gemunion/contracts": "0.7.7",
