@@ -37,7 +37,7 @@ export class UserCommonDto implements IUserCommonDto {
     maxLength: emailMaxLength,
   })
   @IsOptional()
-  @IsEmail()
+  @IsEmail({}, { message: "patternMismatch" })
   @Transform(({ value }: { value: string }) => value.toLowerCase())
   public email: string;
 }

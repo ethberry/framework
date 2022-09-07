@@ -2,9 +2,10 @@ import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import type { ITemplateSearchDto } from "@framework/types";
+import { TemplateStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
@@ -23,8 +24,6 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
   const { query, templateStatus, contractIds } = initialValues;
   const fixedValues = { query, templateStatus, contractIds };
 
-  const testIdPrefix = "TemplateSearchForm";
-
   return (
     <FormWrapper
       initialValues={fixedValues}
@@ -32,31 +31,20 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid={testIdPrefix}
+      testId="TemplateSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <SearchInput name="query" data-testid={`${testIdPrefix}-query`} />
+          <SearchInput name="query" />
         </Grid>
       </Grid>
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <EntityInput
-              name="contractIds"
-              controller="contracts"
-              multiple
-              data={{ contractType }}
-              data-testid={`${testIdPrefix}-contractIds`}
-            />
+            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
           </Grid>
           <Grid item xs={6}>
-            <SelectInput
-              multiple
-              name="templateStatus"
-              options={TemplateStatus}
-              data-testid={`${testIdPrefix}-templateStatus`}
-            />
+            <SelectInput multiple name="templateStatus" options={TemplateStatus} />
           </Grid>
         </Grid>
       </Collapse>

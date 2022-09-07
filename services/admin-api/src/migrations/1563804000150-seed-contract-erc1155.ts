@@ -12,6 +12,7 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
     const erc1155ContractNewAddress = process.env.ERC1155_NEW_ADDR || wallet;
     const erc1155ContractBlacklistAddress = process.env.ERC1155_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
+    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -27,14 +28,15 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         base_token_uri,
         contract_status,
         contract_type,
-        contract_template,
+        contract_features,
+        from_block,
         created_at,
         updated_at
       ) VALUES (
-        31,
+        501,
         '${erc1155ContractSimpleAddress}',
         '${chainId}',
-        'RESOURCES',
+        'RESOURCES (simple)',
         '${simpleFormatting}',
         '${imageUrl}',
         '',
@@ -43,14 +45,15 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'ACTIVE',
         'ERC1155',
-        'SIMPLE',
+        '{}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        32,
+        502,
         '${erc1155ContractInactiveAddress}',
         '${chainId}',
-        'INACTIVE',
+        'ERC1155 (inactive)',
         '${simpleFormatting}',
         '${imageUrl}',
         '',
@@ -59,14 +62,15 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'INACTIVE',
         'ERC1155',
-        'SIMPLE',
+        '{}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        33,
+        503,
         '${erc1155ContractNewAddress}',
         '${chainId}',
-        'NEW',
+        'ERC1155 (new)',
         '${simpleFormatting}',
         '${imageUrl}',
         '',
@@ -75,14 +79,15 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC1155',
-        'SIMPLE',
+        '{}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        34,
+        504,
         '${erc1155ContractBlacklistAddress}',
         '${chainId}',
-        'POTIONS',
+        'POTIONS (blacklist)',
         '${simpleFormatting}',
         '${imageUrl}',
         '',
@@ -91,13 +96,31 @@ export class SeedContractErc1155At1563804000150 implements MigrationInterface {
         '${baseTokenURI}',
         'NEW',
         'ERC1155',
-        'BLACKLIST',
+        '{BLACKLIST}',
+        '${fromBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        511,
+        '${wallet}',
+        '56',
+        'BEP (binance)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        '',
+        '',
+        100,
+        '${baseTokenURI}',
+        'ACTIVE',
+        'ERC1155',
+        '{}',
+        '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 34, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 511, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

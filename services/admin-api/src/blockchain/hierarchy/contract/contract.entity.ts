@@ -1,8 +1,9 @@
 import { Column, Entity, OneToMany } from "typeorm";
 import { Mixin } from "ts-mixer";
 
-import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { ContractStatus, ContractTemplate, IContract, ModuleType, TokenType } from "@framework/types";
+import { DeployableEntity, SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import type { IContract } from "@framework/types";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { TemplateEntity } from "../template/template.entity";
@@ -22,10 +23,16 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
   public decimals: number;
 
   @Column({ type: "int" })
+  public fromBlock: number;
+
+  @Column({ type: "int" })
   public royalty: number;
 
   @Column({ type: "varchar" })
   public baseTokenURI: string;
+
+  @Column({ type: "boolean" })
+  public isPaused: boolean;
 
   @Column({
     type: "enum",
@@ -41,9 +48,10 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
 
   @Column({
     type: "enum",
-    enum: ContractTemplate,
+    enum: ContractFeatures,
+    array: true,
   })
-  public contractTemplate: ContractTemplate;
+  public contractFeatures: Array<ContractFeatures>;
 
   @Column({
     type: "enum",

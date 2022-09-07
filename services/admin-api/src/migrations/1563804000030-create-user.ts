@@ -69,6 +69,10 @@ export class CreateUser1563804000030 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "chain_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

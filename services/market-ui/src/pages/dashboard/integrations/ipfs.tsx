@@ -1,0 +1,29 @@
+import { FC } from "react";
+import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
+import { PushPin } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
+import { FormattedMessage } from "react-intl";
+
+export const Ipfs: FC = () => {
+  return (
+    <Paper sx={{ mb: 2 }}>
+      <List
+        component="nav"
+        subheader={
+          <ListSubheader>
+            <FormattedMessage id="pages.dashboard.integrations.ipfs" />
+          </ListSubheader>
+        }
+      >
+        <ListItem button component={RouterLink} to="/ipfs/pinata">
+          <ListItemIcon>
+            <PushPin />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.ipfs.pinata.title" />
+          </ListItemText>
+        </ListItem>
+      </List>
+    </Paper>
+  );
+};

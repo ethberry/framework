@@ -11,14 +11,12 @@ import { Dashboard } from "./dashboard";
 import { Profile } from "./profile";
 import { User } from "./user";
 
-import { erc20Routes } from "./erc20/routes";
-import { erc721Routes } from "./erc721/routes";
-import { erc998Routes } from "./erc998/routes";
-import { erc1155Routes } from "./erc1155/routes";
 import { Settings } from "./settings";
 import { Email } from "./email";
 import { Page } from "./page";
-import { mechanics } from "./mechanics/routes";
+import { mechanicsRoutes } from "./mechanics/routes";
+import { integrationsRoutes } from "./integrations/routes";
+import { tokenRoutes } from "./tokens/routes";
 
 const routes: Array<RouteObject> = [
   {
@@ -66,11 +64,9 @@ const routes: Array<RouteObject> = [
         element: <Protected />,
         children: [{ index: true, element: <Email /> }],
       },
-      ...erc20Routes,
-      ...erc721Routes,
-      ...erc998Routes,
-      ...erc1155Routes,
-      ...mechanics,
+      ...tokenRoutes,
+      ...mechanicsRoutes,
+      ...integrationsRoutes,
       {
         path: "/error/:error",
         element: <Error />,

@@ -1,63 +1,23 @@
 import type { RouteObject } from "react-router-dom";
 
-import { Protected } from "@gemunion/firebase-login";
-
-import { Claim } from "./claim";
-import { Lootbox } from "./lootbox";
-import { Craft } from "./craft";
-import { Vesting } from "./vesting";
-import { Grade } from "./grade";
+import { claimRoutes } from "./claim/routes";
+import { craftRoutes } from "./craft/routes";
+import { dropRoutes } from "./drop/routes";
+import { gradeRoutes } from "./grade/routes";
+import { lotteryRoutes } from "./lottery/routes";
+import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
-import { Drop } from "./drop";
+import { vestingRoutes } from "./vesting/routes";
+import { pyramidRoutes } from "./pyramid/routes";
 
-export const mechanics: Array<RouteObject> = [
-  {
-    path: "/claims",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Claim /> },
-      { path: "/claims/:id", element: <Claim /> },
-    ],
-  },
-  {
-    path: "/lootboxes",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Lootbox /> },
-      { path: "/lootboxes/:id", element: <Lootbox /> },
-    ],
-  },
-  {
-    path: "/craft",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Craft /> },
-      { path: "/craft/:id", element: <Craft /> },
-    ],
-  },
-  {
-    path: "/vesting",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Vesting /> },
-      { path: "/vesting/:id", element: <Vesting /> },
-    ],
-  },
-  {
-    path: "/grades",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Grade /> },
-      { path: "/grades/:id", element: <Grade /> },
-    ],
-  },
-  {
-    path: "/drops",
-    element: <Protected />,
-    children: [
-      { index: true, element: <Drop /> },
-      { path: "/drops/:id", element: <Drop /> },
-    ],
-  },
+export const mechanicsRoutes: Array<RouteObject> = [
+  ...claimRoutes,
+  ...craftRoutes,
+  ...dropRoutes,
+  ...gradeRoutes,
+  ...lotteryRoutes,
+  ...mysteryRoutes,
   ...stakingRoutes,
+  ...vestingRoutes,
+  ...pyramidRoutes,
 ];

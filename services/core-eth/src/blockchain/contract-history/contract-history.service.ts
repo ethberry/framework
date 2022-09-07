@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ContractHistoryEntity } from "./contract-history.entity";
+import { ContractEventType } from "@framework/types";
 
 @Injectable()
 export class ContractHistoryService {
@@ -13,6 +14,23 @@ export class ContractHistoryService {
 
   public async create(dto: DeepPartial<ContractHistoryEntity>): Promise<ContractHistoryEntity> {
     return this.contractHistoryService.create(dto).save();
+  }
+
+  public async findJson(key: string, value: string): Promise<ContractHistoryEntity | null> {
+    const queryBuilder = this.contractHistoryService.createQueryBuilder("history");
+    queryBuilder.select();
+    queryBuilder.andWhere(`history.event_data->>'${key}' = :${key}`, { [key]: value });
+    return await queryBuilder.getOne();
+  }
+
+  public async findByRandomRequest(requestId: string): Promise<ContractHistoryEntity | null> {
+    const queryBuilder = this.contractHistoryService.createQueryBuilder("history");
+    queryBuilder.select();
+    queryBuilder.andWhere("history.eventType = :eventType", {
+      eventType: ContractEventType.RandomRequest,
+    });
+    queryBuilder.andWhere(`history.event_data->>'requestId' = :requestId`, { requestId });
+    return await queryBuilder.getOne();
   }
 
   public findOne(

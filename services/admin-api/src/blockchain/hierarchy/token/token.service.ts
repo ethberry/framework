@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
+import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class TokenService {
@@ -13,8 +14,13 @@ export class TokenService {
     protected readonly tokenEntityRepository: Repository<TokenEntity>,
   ) {}
 
-  public async search(dto: ITokenSearchDto, contractType: TokenType): Promise<[Array<TokenEntity>, number]> {
-    const { query, tokenStatus, tokenId, attributes = {}, contractIds, account, skip, take } = dto;
+  public async search(
+    dto: ITokenSearchDto,
+    userEntity: UserEntity,
+    contractType: TokenType,
+    contractModule: ModuleType,
+  ): Promise<[Array<TokenEntity>, number]> {
+    const { query, tokenStatus, tokenId, attributes = {}, contractIds, templateIds, account, skip, take } = dto;
 
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
@@ -23,7 +29,15 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
 
     if (account) {
       queryBuilder.leftJoinAndSelect("token.balance", "balance");
@@ -47,11 +61,32 @@ export class TokenService {
       }
     }
 
+    const grade = attributes[TokenAttributes.GRADE];
+    if (grade) {
+      if (grade.length === 1) {
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.GRADE}' = :grade`, {
+          grade: grade[0],
+        });
+      } else {
+        queryBuilder.andWhere(`token.attributes->>'${TokenAttributes.GRADE}' IN(:...grade)`, { grade });
+      }
+    }
+
     if (tokenStatus) {
       if (tokenStatus.length === 1) {
         queryBuilder.andWhere("token.tokenStatus = :tokenStatus", { tokenStatus: tokenStatus[0] });
       } else {
         queryBuilder.andWhere("token.tokenStatus IN(:...tokenStatus)", { tokenStatus });
+      }
+    }
+
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("token.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("token.templateId IN(:...templateIds)", { templateIds });
       }
     }
 

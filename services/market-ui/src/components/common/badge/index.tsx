@@ -22,7 +22,7 @@ export const RarityBadge: FC<IRarityBadgeProps> = props => {
 
   return (
     <div className={classes.root}>
-      <FormattedMessage id={`enums.rarity.${rarity as string}`} />
+      <FormattedMessage id={`enums.RARITY.${rarity as string}`} />
     </div>
   );
 };

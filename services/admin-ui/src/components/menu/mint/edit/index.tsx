@@ -29,14 +29,12 @@ export interface IMintTokenDialogProps {
 export const MintTokenDialog: FC<IMintTokenDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const testIdPrefix = "MintForm";
-
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.mintToken"
-      data-testid={testIdPrefix}
+      testId="MintForm"
       {...rest}
     >
       <ContractInput />

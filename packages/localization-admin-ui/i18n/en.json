@@ -11,8 +11,6 @@
         "switch": "Switch Language"
       },
       "menu": {
-        "catalog": "Catalog",
-        "collection": "Collection",
         "dashboard": "Dashboard",
         "login": "Login",
         "logout": "Logout",
@@ -34,20 +32,61 @@
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
     "edit": "Edit",
+    "fund": "Fund",
     "grantRole": "Grant role",
     "mintToken": "Mint tokens",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
+    "top-up": "Top up",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
+    "upload": "Upload",
     "view": "View",
     "whitelist": "Add to whitelist"
   },
   "enums": {
+    "GRADE": {
+      "1": "1",
+      "10": "10",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
+    },
+    "RARITY": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon"
+    },
+    "chainId": {
+      "1": "ETHEREUM",
+      "1337": "BESU",
+      "137": "POLYGON",
+      "56": "BINANCE"
+    },
     "claimStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
+    },
+    "contractFeatures": {
+      "BLACKLIST": "Blacklist",
+      "ERC1155OWNER": "ERC1155OWNER",
+      "ERC20OWNER": "ERC20OWNER",
+      "EXTERNAL": "External",
+      "GENES": "Genes",
+      "MYSTERYBOX": "MysteryBox",
+      "NATIVE": "Native",
+      "PAUSABLE": "Pausable",
+      "RANDOM": "Random",
+      "SOULBOUND": "SoulBound",
+      "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
       "ACTIVE": "Active",
@@ -55,15 +94,9 @@
       "NEW": "New"
     },
     "contractTemplate": {
-      "BLACKLIST": "Blacklist",
       "CLIFF": "Cliff",
-      "EXTERNAL": "External",
-      "LINEAR": "Linear",
-      "LOOTBOX": "Lootbox",
-      "NATIVE": "Native",
-      "RANDOM": "Random",
-      "SIMPLE": "Simple",
-      "UPGRADEABLE": "Upgradeable"
+      "GRADED": "Graded",
+      "LINEAR": "Linear"
     },
     "craftStatus": {
       "ACTIVE": "Active",
@@ -71,7 +104,8 @@
       "NEW": "New"
     },
     "emailType": {
-      "DUMMY": "Test email"
+      "DUMMY": "Test email",
+      "LINK_TOKEN": "LINK notification"
     },
     "gradeStrategy": {
       "EXPONENTIAL": "Exponential",
@@ -83,21 +117,13 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
-    "lootboxStatus": {
+    "mysteryboxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
     "pageStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
-    },
-    "rarity": {
-      "COMMON": "Common",
-      "EPIC": "Epic",
-      "LEGENDARY": "Legendary",
-      "RARE": "Rare",
-      "UNCOMMON": "Uncommon",
-      "UNKNOWN": "Unknown"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -119,6 +145,7 @@
     },
     "templateStatus": {
       "ACTIVE": "Active",
+      "HIDDEN": "Hidden",
       "INACTIVE": "Inactive"
     },
     "tokenStatus": {
@@ -133,9 +160,7 @@
       "ERC1155": "ERC1155",
       "ERC20": "ERC20",
       "ERC721": "ERC721",
-      "ERC721D": "ERC721D",
       "ERC998": "ERC998",
-      "ERC998D": "ERC998D",
       "NATIVE": "Native"
     },
     "userRoles": {
@@ -145,11 +170,6 @@
     "userStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
-    },
-    "vestingContractTemplate": {
-      "CLIFF": "CLIFF",
-      "GRADED": "GRADED",
-      "LINEAR": "LINEAR"
     }
   },
   "errors": {
@@ -170,7 +190,10 @@
       "deploy": "Deploy",
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
+      "export": "Export",
+      "finishRound": "Finish round",
       "forgot": "Forgot password?",
+      "fund": "Fund",
       "grantRole": "Grant Role",
       "hideFilters": "Hide filters",
       "load": "Load",
@@ -181,6 +204,7 @@
       "mint": "Mint",
       "mintToken": "Mint Tokens",
       "ok": "Ok",
+      "pause": "Pause",
       "reject": "Reject",
       "renounceRole": "Renounce Role",
       "revokeRole": "Revoke Role",
@@ -190,23 +214,29 @@
       "showFilters": "Show filters",
       "signup": "Sign up",
       "snapshot": "Snapshot",
+      "startRound": "Start round",
       "submit": "Submit",
       "unblacklist": "Un blacklist",
+      "unpause": "Unpause",
       "upload": "Upload"
     },
     "hints": {
+      "editNotAllowed": "Editing of this rule is not allowed",
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target=\"_blank\">GH Flavored Markdown</a>",
-      "prompt": "You have unsaved information, are you sure you want to leave this page?"
+      "prompt": "You have unsaved information, are you sure you want to leave this page?",
+      "risk": "You are doing this at your own risk!"
     },
     "labels": {
       "DUMMY": "Dummy",
-      "VestingContractTemplate": "Template",
+      "GRADE": "Grade",
+      "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "cap": "Cap",
+      "chainId": "Chain",
       "child": "Child",
       "childId": "Child",
       "childIds": "Child",
@@ -216,6 +246,7 @@
       "comment": "Comment",
       "confirm": "Confirm",
       "contract": "Contract",
+      "contractFeatures": "Features (optional)",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "contractStatus": "Status",
@@ -234,12 +265,14 @@
       "endTimestamp": "End date",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
+      "id": "ID",
       "imageUrl": "Avatar",
       "item": "Item",
       "items": "Items",
       "language": "Language",
-      "lootboxStatus": "Status",
+      "mysteryboxStatus": "Status",
       "name": "Name",
+      "numbers": "Numbers",
       "owner": "Owner",
       "pageStatus": "Status",
       "parent": "Parent",
@@ -247,14 +280,14 @@
       "parentIds": "Parent",
       "password": "Password",
       "penalty": "Penalty",
-      "price": "price",
       "price": "Price",
       "random": "Random",
-      "rarity": "Rarity",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
       "reward": "Reward",
       "role": "Role",
+      "roundId": "Round",
+      "roundIds": "Round",
       "royalty": "Royalty",
       "slug": "Slug",
       "stakeStatus": "Status",
@@ -315,6 +348,7 @@
       "query": "Search...",
       "rarity": "Legendary",
       "recipient": "Recipient",
+      "roundIds": "Round",
       "royalty": "1",
       "search": "Search...",
       "slug": "terms-and-conditions",
@@ -336,6 +370,7 @@
       "create": "Create",
       "delete": "Delete",
       "edit": "Edit",
+      "fund": "Fund",
       "view": "View"
     },
     "validations": {
@@ -364,9 +399,21 @@
     "blockchain": {
       "title": "Blockchain Settings"
     },
+    "chain-link": {
+      "fund": "Fund",
+      "title": "ChainLink"
+    },
     "claims": {
       "defaultItemTitle": "Claim",
       "title": "Claim"
+    },
+    "coin-gecko": {
+      "rates": "Rates",
+      "title": "CoinGecko"
+    },
+    "coin-market-cap": {
+      "rates": "Rates",
+      "title": "CoinMarketCap"
     },
     "craft": {
       "activate": "Activate rule",
@@ -374,92 +421,95 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "admin": {
-        "emails": "Emails",
-        "pages": "Pages",
-        "settings": "Settings",
-        "title": "Admin",
-        "users": "Users"
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc20": "ERC20",
+        "erc721": "ERC721",
+        "erc998": "ERC998",
+        "native": "NATIVE"
       },
-      "erc1155": {
-        "contracts": "ERC1155 Contracts",
-        "templates": "ERC1155 Templates",
-        "title": "ERC1155"
-      },
-      "erc20": {
-        "contracts": "ERC20 Contracts",
-        "title": "ERC20"
-      },
-      "erc721": {
-        "contracts": "ERC721 Contracts",
-        "templates": "ERC721 Templates",
-        "title": "ERC721",
-        "tokens": "ERC721 Tokens"
-      },
-      "erc998": {
-        "composition": "ERC998 Composition",
-        "contracts": "ERC998 Contracts",
-        "templates": "ERC998 Templates",
-        "title": "ERC998",
-        "tokens": "ERC998 Tokens"
+      "integrations": {
+        "admin": {
+          "emails": "Emails",
+          "pages": "Pages",
+          "settings": "Settings",
+          "title": "Admin",
+          "users": "Users"
+        },
+        "chain-link": "ChainLink",
+        "coin-gecko": "CoinGecko",
+        "coin-market-cap": "CoinMarketCap",
+        "marketplace": {
+          "chart": "Chart",
+          "grade": "Grade",
+          "rarity": "Rarity",
+          "report": "Report",
+          "title": "Marketplace"
+        }
       },
       "mechanics": {
-        "claims": "Claims",
+        "breed": "Breed",
+        "claim": "Claim",
         "craft": "Craft",
-        "drops": "Drops",
-        "grades": "Grades",
-        "lootboxes": "Lootboxes",
+        "drop": "Drop",
+        "grade": "Grade",
+        "lottery": "Lottery",
+        "mystery": "Mystery",
+        "pyramid": "Pyramid",
+        "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting"
       },
-      "staking": {
-        "rules": "Rules",
-        "stakes": "Stakes",
-        "statistics": "Statistics",
-        "title": "Staking"
-      },
       "title": "Dashboard"
     },
-    "drops": {
+    "drop": {
       "title": "Drops"
     },
     "emails": {
       "title": "Emails"
     },
-    "erc1155-contracts": {
-      "title": "ERC1155 Contracts"
+    "erc1155": {
+      "contracts": {
+        "title": "ERC1155 Contracts"
+      },
+      "templates": {
+        "title": "ERC1155 Templates"
+      }
     },
-    "erc1155-templates": {
-      "title": "ERC1155 Templates"
+    "erc20": {
+      "contracts": {
+        "snapshot": "Make snapshot",
+        "title": "ERC20 Contracts"
+      }
     },
-    "erc20-contracts": {
-      "snapshot": "Make snapshot",
-      "title": "ERC20 Contracts"
+    "erc721": {
+      "contracts": {
+        "royalty": "Royalty",
+        "title": "ERC721 Contracts"
+      },
+      "templates": {
+        "title": "ERC721 Templates"
+      },
+      "tokens": {
+        "title": "ERC721 Tokens"
+      }
     },
-    "erc721-contracts": {
-      "royalty": "Royalty",
-      "title": "ERC721 Contracts"
+    "erc998": {
+      "composition": {
+        "title": "ERC998 Composition"
+      },
+      "contracts": {
+        "royalty": "Royalty",
+        "title": "ERC998 Contracts"
+      },
+      "templates": {
+        "title": "ERC998 Templates"
+      },
+      "tokens": {
+        "title": "ERC998 Tokens"
+      }
     },
-    "erc721-templates": {
-      "title": "ERC721 Templates"
-    },
-    "erc721-tokens": {
-      "title": "ERC721 Tokens"
-    },
-    "erc998-composition": {
-      "title": "ERC998 Composition"
-    },
-    "erc998-contracts": {
-      "royalty": "Royalty",
-      "title": "ERC998 Contracts"
-    },
-    "erc998-templates": {
-      "title": "ERC998 Templates"
-    },
-    "erc998-tokens": {
-      "title": "ERC998 Tokens"
-    },
-    "grades": {
+    "grade": {
       "title": "Grade Rules"
     },
     "guest": {
@@ -467,8 +517,49 @@
       "forgotPassword": "Forgot password",
       "login": "Login"
     },
-    "lootboxes": {
-      "title": "Lootboxes"
+    "lottery": {
+      "rounds": {
+        "title": "Rounds"
+      },
+      "tickets": {
+        "title": "Tickets"
+      },
+      "title": "Lottery"
+    },
+    "marketplace": {
+      "chart": {
+        "title": "Chart"
+      },
+      "grade": {
+        "amount": "Amount",
+        "attribute": "Grade",
+        "title": "Grade"
+      },
+      "rarity": {
+        "amount": "Amount",
+        "attribute": "Rarity",
+        "title": "Rarity"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "title": "Marketplace"
+    },
+    "mystery": {
+      "boxes": {
+        "title": "Mystery Boxes"
+      },
+      "contracts": {
+        "title": "Mystery Contracts"
+      },
+      "tokens": {
+        "title": "Mystery Tokens"
+      }
+    },
+    "native": {
+      "contracts": {
+        "title": "Native Tokens"
+      }
     },
     "pages": {
       "title": "Pages"
@@ -476,21 +567,24 @@
     "profile": {
       "title": "Profile"
     },
+    "pyramid": {
+      "title": "Pyramid Rules"
+    },
     "settings": {
       "title": "Settings"
     },
     "staking": {
+      "chart": {
+        "title": "Chart"
+      },
+      "report": {
+        "title": "Report"
+      },
       "rules": {
         "activate": "Activate rule",
         "deactivate": "Deactivate rule",
         "title": "Staking rules",
         "upload": "Upload rule"
-      },
-      "stakes": {
-        "title": "Staking stakes"
-      },
-      "statistics": {
-        "title": "Staking statistics"
       },
       "title": "Staking"
     },
@@ -537,6 +631,7 @@
     "tokenNotFound": "Product not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
+    "unsupportedCombination": "Unsupported feature combination",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",

@@ -12,9 +12,9 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        25101
+        2501001
       ), (
-        25102
+        2501002
       );
     `);
 
@@ -29,16 +29,16 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
-        25101
+        2501001
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
-        '100',
-        25102
+        501,
+        501001, -- gold
+        '1000',
+        2501002
       );
     `);
 
@@ -54,19 +54,19 @@ export class SeedClaimErc1155At1653616447850 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        25101,
+        2501001,
         'NEW',
-        '0x4848640f61c4bb0b0edab8bab540184a1b16a210e3e65e921c8053a9dde71c7c0022e73e63bb60c3b53907fecf6d11eb83ea58d39e351654ccedf3fd3498ae6e1b',
-        '0x17fdcea410c1f8ee61a2bbc06f80a5bdf84611c935f0ed859d6acb475619d5f0',
+        '0xb841fe2c754de1cf18c963271470d4d8f613ec99aed88a3280b428815d04db0c3dc5d37ba055c926c894d29b2ce15956aeb1e52d7dbefbf43924e5109e04f0dd1c',
+        '0xd16e43eff7128fb019e3cbf3aeee8a926ee8a09f2317957fe9fbdafc1ec88f28',
         '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
-        25101,
-        'REDEEMED',
-        '0xb3bdebe040a7832102b556fe3cdf0f9e7bfa1349b2793a8d6afadb00559d2a26017ebc9ca7cc6cc3207d526aec71df13d6c8dc4449c1d21f10b291a2439f36b21c',
-        '0x5f3b61b7da793b35cb2b07ae382c5182a1a38d52031d7cb6a00f887df32d7db8',
+        2501002,
+        'REDEEMED', -- it is actually not redeemed
+        '0xc1e8ab3604dd9d086054e1cf1a2a7c5a70a5ee3b8ea5234ad245a7be2e371a274830e84e23ae11271e2cfdf0b5b386f0be29a2ed08ade88a650587826fb706511b',
+        '0x90b773d416db1a96768036eaa9fd5712e4f21eef2bbdc93f6c508a00db513e96',
         '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'

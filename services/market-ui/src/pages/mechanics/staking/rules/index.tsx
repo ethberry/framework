@@ -15,11 +15,12 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
+import { TokenType } from "@framework/types";
 
+import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { StakingDepositButton } from "../../../../components/buttons";
-import { StakingSearchForm } from "./form";
-import { emptyPrice } from "../../../../components/inputs/empty-price";
+import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
 
 export const StakingRules: FC = () => {
@@ -37,7 +38,7 @@ export const StakingRules: FC = () => {
     handleToggleFilters,
     handleSearch,
     handleChangePage,
-  } = useCollection<IStakingRule, IStakingSearchDto>({
+  } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
       title: "",
@@ -50,13 +51,12 @@ export const StakingRules: FC = () => {
     },
     search: {
       query: "",
-      stakingStatus: [StakingStatus.ACTIVE],
       deposit: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingRuleItemSearchDto,
       reward: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingRuleItemSearchDto,
     },
     filter: ({ id, title, description, ...rest }) => (id ? { title, description } : { title, description, ...rest }),
   });
@@ -74,7 +74,7 @@ export const StakingRules: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

@@ -12,21 +12,17 @@ import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { FirebaseModule } from "@gemunion/nest-js-module-firebase";
 
 import ormconfig from "./ormconfig";
 import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
-import { Erc20Module } from "./erc20/erc20.module";
-import { Erc721Module } from "./erc721/erc721.module";
-import { Erc998Module } from "./erc998/erc998.module";
-import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 import { PageModule } from "./page/page.module";
-import { MechanicsModule } from "./mechanics/mechanics.module";
 
 @Module({
   providers: [
@@ -82,20 +78,25 @@ import { MechanicsModule } from "./mechanics/mechanics.module";
         return configService.get<string>("GEMUNION_API_KEY", "");
       },
     }),
+    FirebaseModule.forRootAsync(FirebaseModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const bucket = configService.get<string>("FIREBASE_STORAGE_BUCKET", "");
+        return {
+          bucket,
+        };
+      },
+    }),
     RequestLoggerModule,
     AuthModule,
     GemunionThrottlerModule,
     HealthModule,
-    Erc20Module,
-    Erc721Module,
-    Erc998Module,
-    Erc1155Module,
     ProfileModule,
     UserModule,
     EmailModule,
     BlockchainModule,
     PageModule,
-    MechanicsModule,
   ],
   controllers: [AppController],
 })

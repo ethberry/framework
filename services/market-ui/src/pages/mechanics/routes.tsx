@@ -1,47 +1,27 @@
 import type { RouteObject } from "react-router-dom";
-import { Protected } from "@gemunion/firebase-login";
 
-import { Claim } from "./claim";
-import { ClaimWrapper } from "./claim/wrapper";
-import { VestingWrapper } from "./vesting/wrapper";
-import { Vesting } from "./vesting";
-import { LootboxList } from "./lootbox-list";
-import { Lootbox } from "./lootbox";
-import { CraftList } from "./craft-list";
-import { Craft } from "./craft";
-import { DropList } from "./drop-list";
+import { claimRoutes } from "./claim/routes";
+import { craftRoutes } from "./craft/routes";
+import { dropRoutes } from "./drop/routes";
+import { lotteryRoutes } from "./lottery/routes";
+import { mysteryboxRoutes } from "./mystery/routes";
+import { referralRoutes } from "./referral/routes";
 import { stakingRoutes } from "./staking/routes";
+import { vestingRoutes } from "./vesting/routes";
+import { wrapperRoutes } from "./wrapper/routes";
+import { breedRoutes } from "./breed/routes";
+import { pyramidRoutes } from "./pyramid/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
-  {
-    path: "/claim",
-    element: <ClaimWrapper />,
-    children: [{ index: true, element: <Claim /> }],
-  },
-  {
-    path: "/drops",
-    element: <DropList />,
-  },
-  {
-    path: "/lootboxes",
-    element: <Protected />,
-    children: [
-      { index: true, element: <LootboxList /> },
-      { path: "/lootboxes/:id", element: <Lootbox /> },
-    ],
-  },
-  {
-    path: "/craft",
-    element: <Protected />,
-    children: [
-      { index: true, element: <CraftList /> },
-      { path: "/craft/:id", element: <Craft /> },
-    ],
-  },
-  {
-    path: "/vesting",
-    element: <VestingWrapper />,
-    children: [{ index: true, element: <Vesting /> }],
-  },
+  ...claimRoutes,
+  ...craftRoutes,
+  ...dropRoutes,
+  ...lotteryRoutes,
+  ...mysteryboxRoutes,
+  ...referralRoutes,
   ...stakingRoutes,
+  ...vestingRoutes,
+  ...wrapperRoutes,
+  ...breedRoutes,
+  ...pyramidRoutes,
 ];

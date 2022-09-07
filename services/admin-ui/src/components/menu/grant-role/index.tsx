@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
@@ -6,6 +6,7 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { IContract } from "@framework/types";
 import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
@@ -13,11 +14,13 @@ import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin
 import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./edit";
 
 export interface IOzContractGrantRoleMenuItemProps {
-  address: string;
+  contract: IContract;
 }
 
 export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = props => {
-  const { address } = props;
+  const {
+    contract: { address },
+  } = props;
 
   const [isGrantRoleDialogOpen, setIsGrantRoleDialogOpen] = useState(false);
 
@@ -29,19 +32,19 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
     setIsGrantRoleDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IGrantRoleDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IGrantRoleDto, web3Context: Web3ContextType) => {
     const contract = new Contract(address, IAccessControlSol.abi, web3Context.provider?.getSigner());
     return contract.grantRole(AccessControlRoleHash[values.role], values.address) as Promise<void>;
   });
 
   const handleGrantRoleConfirmed = async (values: IGrantRoleDto): Promise<void> => {
-    await meta(values).finally(() => {
+    await metaFn(values).finally(() => {
       setIsGrantRoleDialogOpen(false);
     });
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleGrantRole}>
         <ListItemIcon>
           <AccountCircle fontSize="small" />
@@ -59,6 +62,6 @@ export const ContractGrantRoleMenuItem: FC<IOzContractGrantRoleMenuItemProps> = 
           address: "",
         }}
       />
-    </>
+    </Fragment>
   );
 };

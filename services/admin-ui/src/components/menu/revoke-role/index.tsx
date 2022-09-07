@@ -1,16 +1,20 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { NoAccounts } from "@mui/icons-material";
 
+import type { IContract } from "@framework/types";
+
 import { AccessControlRevokeRoleDialog } from "./edit";
 
 export interface IContractRevokeRoleMenuItemProps {
-  address: string;
+  contract: IContract;
 }
 
 export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = props => {
-  const { address } = props;
+  const {
+    contract: { address },
+  } = props;
 
   const [isRevokeRoleDialogOpen, setIsRevokeRoleDialogOpen] = useState(false);
 
@@ -27,7 +31,7 @@ export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = 
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleRevokeRole}>
         <ListItemIcon>
           <NoAccounts fontSize="small" />
@@ -42,6 +46,6 @@ export const ContractRevokeRoleMenuItem: FC<IContractRevokeRoleMenuItemProps> = 
         open={isRevokeRoleDialogOpen}
         data={{ address }}
       />
-    </>
+    </Fragment>
   );
 };

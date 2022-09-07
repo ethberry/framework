@@ -18,7 +18,7 @@ import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 import "./interfaces/IStaking.sol";
-import "../Lootbox/interfaces/IERC721Lootbox.sol";
+import "../Mysterybox/interfaces/IERC721Mysterybox.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
@@ -36,9 +36,9 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   mapping(uint256 => Stake) internal _stakes;
 
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
-  bytes4 private constant IERC721_LOOTBOX = type(IERC721Lootbox).interfaceId;
+  bytes4 private constant IERC721_MYSTERYBOX = type(IERC721Mysterybox).interfaceId;
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
-  bytes32 public constant TEMPLATE_ID = keccak256("template_id");
+  bytes32 public constant TEMPLATE_ID = keccak256("TEMPLATE_ID");
 
   struct Metadata {
     bytes32 key;
@@ -91,15 +91,15 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
 
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
 
-    // TODO for ERC721 and ERC998 we have to get metadata and check template_id
-
     if (depositItem.tokenType == TokenType.NATIVE) {
       require(msg.value == depositItem.amount, "Staking: wrong amount");
     } else if (depositItem.tokenType == TokenType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
     } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
-      uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
-      require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
+      if (rule.deposit.tokenId != 0) {
+        uint256 templateId = IERC721Metadata(depositItem.token).getRecordFieldValue(tokenId, TEMPLATE_ID);
+        require(templateId == rule.deposit.tokenId, "Staking: wrong deposit token templateID");
+      }
       IERC721Metadata(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId);
     } else if (depositItem.tokenType == TokenType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
@@ -167,13 +167,13 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM);
-        //        bool lootboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_LOOTBOX);
+        //        bool mysteryboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERYBOX);
 
         for (uint256 i = 0; i < multiplier; i++) {
           if (randomInterface) {
             IERC721Random(rewardItem.token).mintRandom(receiver, rewardItem.tokenId);
-            //          } else if (lootboxInterface) {
-            //            IERC721Lootbox(rewardItem.token).mintLootbox(receiver, rewardItem.tokenId);
+            //          } else if (mysteryboxInterface) {
+            //            IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId);
           } else {
             IERC721Simple(rewardItem.token).mintCommon(receiver, rewardItem.tokenId);
           }

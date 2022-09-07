@@ -6,7 +6,7 @@ import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { TemplateStatus } from "@framework/types";
 
 import { ITemplateUpdateDto } from "../interfaces";
-import { AssetDto } from "../../../../mechanics/asset/dto";
+import { PriceDto } from "../../../mechanics/asset/dto";
 
 export class TemplateUpdateDto implements ITemplateUpdateDto {
   @ApiPropertyOptional()
@@ -20,12 +20,12 @@ export class TemplateUpdateDto implements ITemplateUpdateDto {
   public description: string;
 
   @ApiPropertyOptional({
-    type: AssetDto,
+    type: PriceDto,
   })
   @IsOptional()
   @ValidateNested()
-  @Type(() => AssetDto)
-  public price: AssetDto;
+  @Type(() => PriceDto)
+  public price: PriceDto;
 
   @ApiPropertyOptional({
     minimum: 0,

@@ -1,4 +1,4 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
 export enum AccessControlRoleType {
   DEFAULT_ADMIN_ROLE = "DEFAULT_ADMIN_ROLE",
@@ -7,6 +7,7 @@ export enum AccessControlRoleType {
   SNAPSHOT_ROLE = "SNAPSHOT_ROLE",
   PREDICATE_ROLE = "PREDICATE_ROLE",
   DEPOSITOR_ROLE = "DEPOSITOR_ROLE",
+  METADATA_ADMIN_ROLE = "METADATA_ADMIN_ROLE",
 }
 
 export enum AccessControlRoleHash {
@@ -16,6 +17,7 @@ export enum AccessControlRoleHash {
   SNAPSHOT_ROLE = "0x5fdbd35e8da83ee755d5e62a539e5ed7f47126abede0b8b10f9ea43dc6eed07f",
   PREDICATE_ROLE = "0x12ff340d0cd9c652c747ca35727e68c547d0f0bfa7758d2e77f75acef481b4f2",
   DEPOSITOR_ROLE = "0x8f4f2da22e8ac8f11e15f9fc141cddbb5deea8800186560abb6e68c5496619a9",
+  METADATA_ADMIN_ROLE = "0xe02a0315b383857ac496e9d2b2546a699afaeb4e5e83a1fdef64376d0b74e5a5",
 }
 
 export interface IAccessControl extends IIdDateBase {

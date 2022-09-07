@@ -1,9 +1,9 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
 export enum ContractType {
   CONTRACT_MANAGER = "CONTRACT_MANAGER",
   CLAIM = "CLAIM",
-  LOOTBOX = "LOOTBOX",
+  MYSTERY = "MYSTERY",
   EXCHANGE = "EXCHANGE",
   STAKING = "STAKING",
   VESTING = "VESTING",
@@ -12,6 +12,7 @@ export enum ContractType {
   ERC998_TOKEN = "ERC998_TOKEN",
   ERC1155_TOKEN = "ERC1155_TOKEN",
   METADATA = "METADATA",
+  LOTTERY = "LOTTERY",
 }
 
 export interface IContractManagerUpdateDto {

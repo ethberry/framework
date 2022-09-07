@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractManagerEventType,
@@ -11,6 +11,7 @@ import {
   IContractManagerERC20TokenDeployed,
   IContractManagerERC721TokenDeployed,
   IContractManagerERC998TokenDeployed,
+  IContractManagerMysteryboxDeployed,
   IContractManagerVestingDeployed,
 } from "@framework/types";
 
@@ -61,5 +62,13 @@ export class ContractManagerControllerEth {
     @Ctx() ctx: Log,
   ): Promise<void> {
     return this.contractManagerServiceEth.erc1155Token(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.MysteryboxDeployed,
+  })
+  public mysterybox(@Payload() event: ILogEvent<IContractManagerMysteryboxDeployed>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.mysterybox(event, ctx);
   }
 }

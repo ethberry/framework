@@ -6,6 +6,7 @@ import { wallet } from "@gemunion/constants";
 export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (
@@ -17,55 +18,103 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
       ) VALUES (
         '${wallet}',
         1,
-        13101,
+        301001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13102,
+        301002,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13103,
+        301003,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractRandomAddress}',
+        1,
+        305001,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractRandomAddress}',
+        1,
+        305002,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractRandomAddress}',
+        1,
+        305003,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13501,
+        305004,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13502,
+        305005,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13503,
+        305006,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13601,
+        305007,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13602,
+        305008,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractRandomAddress}',
+        1,
+        306001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        13603,
+        306002,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        306003,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        307001,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        308001,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        1,
+        311001,
         '${currentDateTime}',
         '${currentDateTime}'
       );

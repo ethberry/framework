@@ -4,10 +4,10 @@ import { Button } from "@mui/material";
 import { useWeb3React, Web3ContextType } from "@web3-react/core";
 import { v4 } from "uuid";
 
+import type { IMetamaskDto } from "@gemunion/types-jwt";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { phrase } from "@gemunion/constants";
 import { useUser } from "@gemunion/provider-user";
-import { IMetamaskDto } from "@gemunion/types-jwt";
 import { useApiCall } from "@gemunion/react-hooks";
 import { IUser } from "@framework/types";
 

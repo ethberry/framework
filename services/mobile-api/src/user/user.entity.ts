@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IUser, UserRole, UserStatus } from "@framework/types";
 import { EnabledLanguages, ns } from "@framework/constants";
 
@@ -23,6 +23,9 @@ export class UserEntity extends IdDateBaseEntity implements IUser {
 
   @Column({ type: "varchar" })
   public wallet: string;
+
+  @Column({ type: "varchar" })
+  public chainId: number;
 
   @Column({
     type: "enum",

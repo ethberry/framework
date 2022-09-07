@@ -1,14 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  IsArray,
-  IsEnum,
-  IsEthereumAddress,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Min,
-  ValidateNested,
-} from "class-validator";
+import { IsArray, IsEnum, IsEthereumAddress, IsInt, IsOptional, IsString, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
@@ -33,6 +24,18 @@ export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   @Transform(({ value }) => value as Array<TokenRarity>)
   @IsEnum(TokenRarity, { each: true, message: "badInput" })
   public [TokenAttributes.RARITY]: Array<TokenRarity>;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public [TokenAttributes.GRADE]: Array<number>;
 }
 
 export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
@@ -55,10 +58,22 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @IsNumber({}, { each: true, message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public contractIds: Array<number>;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public templateIds: Array<number>;
 
   @ApiPropertyOptional({
     type: TokenAttributesSearchDto,
@@ -79,5 +94,6 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 }

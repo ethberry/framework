@@ -1,8 +1,9 @@
 import { Column, Entity } from "typeorm";
 
-import { ContractEventType, IContractHistory, TContractEventData } from "@framework/types";
+import type { IContractHistory, TContractEventData } from "@framework/types";
+import { ContractEventType } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 @Entity({ schema: ns, name: "contract_history" })
 export class ContractHistoryEntity extends IdDateBaseEntity implements IContractHistory {
@@ -23,4 +24,7 @@ export class ContractHistoryEntity extends IdDateBaseEntity implements IContract
 
   @Column({ type: "int", nullable: true })
   public tokenId: number | null;
+
+  @Column({ type: "int", nullable: true })
+  public contractId: number | null;
 }

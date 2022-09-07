@@ -14,7 +14,7 @@ import { UserSeedModule } from "./user.seed.module";
 import { UserSeedService } from "./user.seed.service";
 
 describe("UserService", () => {
-  let service: UserService;
+  let userService: UserService;
   let userSeedService: UserSeedService;
 
   beforeEach(async () => {
@@ -35,20 +35,20 @@ describe("UserService", () => {
         AuthModule,
         UserSeedModule,
       ],
-      providers: [Logger, UserService],
+      providers: [Logger, UserService, UserSeedService],
     }).compile();
 
-    service = module.get<UserService>(UserService);
+    userService = module.get<UserService>(UserService);
     userSeedService = module.get<UserSeedService>(UserSeedService);
   });
 
   it("should be defined", () => {
-    expect(service).toBeDefined();
+    expect(userService).toBeDefined();
   });
 
   it("should find user", async () => {
     const entities = await userSeedService.setup();
-    const userEntity = await service.findOne({ id: entities.users[0].id });
+    const userEntity = await userService.findOne({ id: entities.users[0].id });
     expect(userEntity?.email).toEqual(entities.users[0].email);
   });
 });

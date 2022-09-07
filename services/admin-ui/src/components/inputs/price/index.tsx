@@ -4,9 +4,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
-import { IAssetComponent, TokenType } from "@framework/types";
+import { IAssetComponent, ModuleType, TokenType } from "@framework/types";
 
-import { emptyPrice, emptyItem } from "./empty-price";
+import { emptyItem, emptyPrice } from "./empty-price";
 import { TokenTypeInput } from "./token-type-input";
 import { ContractInput } from "./contract-input";
 import { TemplateInput } from "./template-input";
@@ -15,21 +15,24 @@ import { AmountInput } from "./amount-input";
 export interface IPriceEditDialogProps {
   prefix: string;
   multiple?: boolean;
+  readOnly?: boolean;
   disabledTokenTypes?: Array<TokenType>;
+  contractModule?: Array<ModuleType>;
 }
 
 export const PriceInput: FC<IPriceEditDialogProps> = props => {
-  const { prefix = "price", multiple = false, disabledTokenTypes } = props;
+  const { prefix = "price", multiple = false, disabledTokenTypes, contractModule, readOnly } = props;
 
   const { formatMessage } = useIntl();
   const form = useFormContext<any>();
+  const ancestorPrefix = prefix.split(".").pop() as string;
   const nestedPrefix = `${prefix}.components`;
 
   const values = get(useWatch(), nestedPrefix);
 
   const handleOptionAdd = (): (() => void) => (): void => {
     const newValue = get(form.getValues(), nestedPrefix);
-    newValue.push((prefix === "price" ? emptyPrice : emptyItem).components[0]);
+    newValue.push((ancestorPrefix === "price" ? emptyPrice : emptyItem).components[0]);
     form.setValue(nestedPrefix, newValue);
   };
 
@@ -53,7 +56,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
   return (
     <Box mt={2}>
       <Typography>
-        <FormattedMessage id={`form.labels.${prefix}`} />
+        <FormattedMessage id={`form.labels.${ancestorPrefix}`} />
       </Typography>
 
       {values?.map((o: IAssetComponent, i: number) => (
@@ -67,10 +70,14 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
         >
           <Box flex={1}>
             <Paper sx={{ p: 2 }}>
-              <TokenTypeInput prefix={`${nestedPrefix}[${i}]`} disabledOptions={disabledTokenTypes} />
-              <ContractInput prefix={`${nestedPrefix}[${i}]`} />
-              <TemplateInput prefix={`${nestedPrefix}[${i}]`} />
-              <AmountInput prefix={`${nestedPrefix}[${i}]`} />
+              <TokenTypeInput
+                prefix={`${nestedPrefix}[${i}]`}
+                disabledOptions={disabledTokenTypes}
+                readOnly={readOnly}
+              />
+              <ContractInput prefix={`${nestedPrefix}[${i}]`} contractModule={contractModule} readOnly={readOnly} />
+              <TemplateInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
+              <AmountInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
             </Paper>
           </Box>
 

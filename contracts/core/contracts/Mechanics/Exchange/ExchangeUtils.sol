@@ -17,7 +17,11 @@ import "../../ERC721/interfaces/IERC721Random.sol";
 contract ExchangeUtils {
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
-  function spend(Asset[] memory price, address account) internal {
+  function spend(
+    Asset[] memory price,
+    address account,
+    address receiver
+  ) internal {
     uint256 length = price.length;
 
     // TODO calculate what is most efficient to pre-calculate here
@@ -30,22 +34,16 @@ contract ExchangeUtils {
       }
     }
 
-    // (bool sent, ) = receiver.call{ value: amount, gas: 20317 }("");
-    // require(sent, "Exchange: Failed to send Ether");
-
-    // TODO ETH and ERC20 tokens should be transferes to PaymentSplitter,
-    // TODO ERC721 and ERC11155 should be burned
-    // TODO PaymentSplitter address should be set by ContractManager
-    address receiver = address(this);
     for (uint256 i = 0; i < length; i++) {
       Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
         require(totalAmount == msg.value, "Exchange: Wrong amount");
       } else if (ingredient.tokenType == TokenType.ERC20) {
         IERC20(ingredient.token).transferFrom(account, receiver, ingredient.amount);
+      } else if (ingredient.tokenType == TokenType.ERC721 || ingredient.tokenType == TokenType.ERC998) {
+        IERC721(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId);
       } else if (ingredient.tokenType == TokenType.ERC1155) {
         IERC1155(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId, ingredient.amount, "0x");
-        // IERC1155Simple(ingredient.token).burn(account, ingredient.tokenId, ingredient.amount);
       } else {
         revert("Exchange: unsupported token type");
       }

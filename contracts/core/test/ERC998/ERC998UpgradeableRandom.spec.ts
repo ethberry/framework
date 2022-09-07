@@ -1,0 +1,35 @@
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
+import { shouldHaveRole } from "../ERC721/shared/accessControl/hasRoles";
+import { shouldGetTokenURI } from "../ERC721/shared/common/tokenURI";
+import { shouldSetBaseURI } from "../ERC721/shared/common/setBaseURI";
+import { shouldMintCommon } from "../ERC721/shared/common/mintCommon";
+import { shouldMint } from "../ERC721/shared/mint";
+import { shouldSafeMint } from "../ERC721/shared/safeMint";
+import { shouldApprove } from "../ERC721/shared/common/approve";
+import { shouldGetBalanceOf } from "../ERC721/shared/common/balanceOf";
+import { shouldBurn } from "../ERC721/shared/common/burn";
+import { shouldGetOwnerOf } from "../ERC721/shared/common/ownerOf";
+import { shouldSetApprovalForAll } from "../ERC721/shared/common/setApprovalForAll";
+import { shouldTransferFrom } from "../ERC721/shared/common/transferFrom";
+import { shouldSafeTransferFrom } from "../ERC721/shared/common/safeTransferFrom";
+import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
+
+describe("ERC998UpgradeableRandom", function () {
+  const name = "ERC998UpgradeableRandom";
+
+  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldMintCommon(name);
+  shouldMint(name);
+  shouldSafeMint(name);
+  shouldApprove(name);
+  shouldGetBalanceOf(name);
+  shouldBurn(name);
+  shouldGetOwnerOf(name);
+  shouldSetApprovalForAll(name);
+  shouldTransferFrom(name);
+  shouldSafeTransferFrom(name);
+  shouldGetTokenURI(name);
+  shouldSetBaseURI(name);
+
+  shouldMintRandom(name);
+});

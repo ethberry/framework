@@ -1,9 +1,10 @@
-import { IDeployable, ISearchable } from "@gemunion/types-collection";
+import type { IDeployable, ISearchable } from "@gemunion/types-collection";
 
 import { IContractHistory } from "../contract-history";
 
 import { ITemplate } from "./template";
 import { ModuleType, TokenType } from "../common";
+import { IComposition } from "./composition";
 
 export enum ContractStatus {
   ACTIVE = "ACTIVE",
@@ -11,45 +12,56 @@ export enum ContractStatus {
   NEW = "NEW",
 }
 
-export enum Erc20ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBCS
-  "BLACKLIST" = "BLACKLIST", // ACBCS + BLACKLIST
-  "EXTERNAL" = "EXTERNAL", // any 3rd party token
-  "NATIVE" = "NATIVE", // ETH
+export enum NativeContractFeatures {
+  "NATIVE" = "NATIVE",
 }
 
-export enum Erc721ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBER
-  "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
-  "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
-  "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
-  // MODULE:LOOTBOX
-  "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack
+export enum Erc20ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "EXTERNAL" = "EXTERNAL",
 }
 
-export enum Erc998ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBER
-  "BLACKLIST" = "BLACKLIST", // ACBER + BLACKLIST
-  "UPGRADEABLE" = "UPGRADEABLE", // ACBER + METADATA
-  "RANDOM" = "RANDOM", // ACBER + METADATA + CHAINLINK
+export enum Erc721ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "UPGRADEABLE" = "UPGRADEABLE",
+  "RANDOM" = "RANDOM",
+  "GENES" = "GENES",
+  "SOULBOUND" = "SOULBOUND",
 }
 
-export enum Erc1155ContractTemplate {
-  "SIMPLE" = "SIMPLE", // ACBS
-  "BLACKLIST" = "BLACKLIST", // ACBS + BLACKLIST
+export enum Erc998ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "UPGRADEABLE" = "UPGRADEABLE",
+  "RANDOM" = "RANDOM",
+  "GENES" = "GENES",
+  "ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER" = "ERC1155OWNER",
+}
+
+export enum Erc1155ContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+}
+
+export enum MysteryContractFeatures {
+  "BLACKLIST" = "BLACKLIST",
+  "PAUSABLE" = "PAUSABLE",
 }
 
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
-export enum ContractTemplate {
-  "UNKNOWN" = "UNKNOWN",
-  "SIMPLE" = "SIMPLE",
-  "BLACKLIST" = "BLACKLIST",
-  "EXTERNAL" = "EXTERNAL",
+export enum ContractFeatures {
+  "ALLOWANCE" = "ALLOWANCE",
   "NATIVE" = "NATIVE",
+  "EXTERNAL" = "EXTERNAL",
+  "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",
   "RANDOM" = "RANDOM",
-  // MODULE:LOOTBOX
-  "LOOTBOX" = "LOOTBOX", // ACBER + METADATA + Unpack
+  "GENES" = "GENES",
+  "SOULBOUND" = "SOULBOUND",
+  // MODULE:MYSTERYBOX
+  "PAUSABLE" = "PAUSABLE",
+  // MODULE:ERC998
+  "ERC20OWNER" = "ERC20OWNER",
+  "ERC1155OWNER" = "ERC1155OWNER",
 }
 
 export interface IContract extends IDeployable, ISearchable {
@@ -59,10 +71,14 @@ export interface IContract extends IDeployable, ISearchable {
   decimals: number;
   royalty: number;
   baseTokenURI: string;
+  isPaused: boolean;
+  fromBlock: number;
   contractStatus: ContractStatus;
   contractType: TokenType;
-  contractTemplate: ContractTemplate;
+  contractFeatures: Array<ContractFeatures>;
   contractModule: ModuleType;
   templates: Array<ITemplate>;
   history?: Array<IContractHistory>;
+  parent?: Array<IComposition>;
+  children?: Array<IComposition>;
 }

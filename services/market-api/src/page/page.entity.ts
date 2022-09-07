@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IPage, PageStatus } from "@framework/types";
 import { ns } from "@framework/constants";
 

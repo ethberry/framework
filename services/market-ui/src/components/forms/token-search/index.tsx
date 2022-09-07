@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
+import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
@@ -13,15 +13,25 @@ interface ITokenSearchFormProps {
   initialValues: ITokenSearchDto;
   open: boolean;
   contractType: Array<TokenType>;
+  contractModule: Array<ModuleType>;
 }
 
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
-  const { onSubmit, initialValues, open, contractType } = props;
+  const { onSubmit, initialValues, open, contractType, contractModule } = props;
 
   const classes = useStyles();
 
-  const { contractIds, attributes } = initialValues;
-  const fixedValues = { contractIds, attributes };
+  const { contractIds = [], attributes } = initialValues;
+  const fixedValues = {
+    contractIds,
+    attributes: Object.assign(
+      {
+        [TokenAttributes.RARITY]: [],
+        [TokenAttributes.GRADE]: [],
+      },
+      attributes,
+    ),
+  };
 
   return (
     <FormWrapper
@@ -30,16 +40,30 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="TokenSearchForm"
+      testId="TokenSearchForm"
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={6}>
-            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType }} />
+          <Grid item xs={12}>
+            <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
           </Grid>
-          <Grid item xs={6}>
-            <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
-          </Grid>
+          {contractType.filter(value => [TokenType.ERC721, TokenType.ERC998].includes(value)).length &&
+          contractModule.filter(value => [ModuleType.HIERARCHY].includes(value)).length ? (
+            <Fragment>
+              <Grid item xs={6}>
+                <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
+              </Grid>
+              <Grid item xs={6}>
+                <SelectInput
+                  name={`attributes.${TokenAttributes.GRADE}`}
+                  options={new Array(10)
+                    .fill(null)
+                    .reduce((memo: Record<string, string>, value, i) => Object.assign(memo, { [i + 1]: i + 1 }), {})}
+                  multiple
+                />
+              </Grid>
+            </Fragment>
+          ) : null}
         </Grid>
       </Collapse>
       <AutoSave onSubmit={onSubmit} />

@@ -1,8 +1,9 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants, utils } from "ethers";
 import { Network } from "@ethersproject/networks";
 
-import { ERC1155Simple, ERC20Simple, ERC721Lootbox, ERC721Simple, Exchange } from "../../../typechain-types";
+import { ERC1155Simple, ERC20Simple, ERC721MysteryboxSimple, ERC721Simple, Exchange } from "../../../typechain-types";
 import {
   amount,
   baseTokenURI,
@@ -23,7 +24,7 @@ describe("ExchangeCore", function () {
   let erc20Instance: ERC20Simple;
   let erc721Instance: ERC721Simple;
   let erc1155Instance: ERC1155Simple;
-  let lootboxInstance: ERC721Lootbox;
+  let mysteryboxInstance: ERC721MysteryboxSimple;
   let network: Network;
 
   let generateSignature: (values: Record<string, any>) => Promise<string>;
@@ -46,9 +47,9 @@ describe("ExchangeCore", function () {
     erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
     await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
-    const lootboxFactory = await ethers.getContractFactory("ERC721Lootbox");
-    lootboxInstance = await lootboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await lootboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
+    const mysteryboxFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
+    mysteryboxInstance = await mysteryboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+    await mysteryboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
     network = await ethers.provider.getNetwork();
 
@@ -167,7 +168,7 @@ describe("ExchangeCore", function () {
           price: [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -187,7 +188,7 @@ describe("ExchangeCore", function () {
           [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -205,10 +206,10 @@ describe("ExchangeCore", function () {
           // .withArgs(
           //   this.receiver.address,
           //   [[2, erc721Instance.address, tokenId, 1]],
-          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+          .withArgs(constants.AddressZero, this.receiver.address, tokenId);
       });
 
       it("should fail: Wrong amount", async function () {
@@ -226,7 +227,7 @@ describe("ExchangeCore", function () {
           price: [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -246,7 +247,7 @@ describe("ExchangeCore", function () {
           [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -318,7 +319,7 @@ describe("ExchangeCore", function () {
           //   [[1, erc20Instance.address, tokenId, amount]],
           // )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId)
+          .withArgs(constants.AddressZero, this.receiver.address, tokenId)
           .to.emit(erc20Instance, "Transfer")
           .withArgs(this.receiver.address, exchangeInstance.address, amount);
       });
@@ -594,7 +595,7 @@ describe("ExchangeCore", function () {
           price: [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -614,7 +615,7 @@ describe("ExchangeCore", function () {
           [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -632,10 +633,10 @@ describe("ExchangeCore", function () {
           // .withArgs(
           //   this.receiver.address,
           //   [[4, erc1155Instance.address, tokenId, amount]],
-          //   [[0, ethers.constants.AddressZero, tokenId, amount]],
+          //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, ethers.constants.AddressZero, this.receiver.address, tokenId, amount);
+          .withArgs(exchangeInstance.address, constants.AddressZero, this.receiver.address, tokenId, amount);
       });
 
       it("should fail: Wrong amount", async function () {
@@ -653,7 +654,7 @@ describe("ExchangeCore", function () {
           price: [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -673,7 +674,7 @@ describe("ExchangeCore", function () {
           [
             {
               tokenType: 0,
-              token: ethers.constants.AddressZero,
+              token: constants.AddressZero,
               tokenId,
               amount,
             },
@@ -745,7 +746,7 @@ describe("ExchangeCore", function () {
           //   [[1, erc20Instance.address, tokenId, amount]],
           // )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, ethers.constants.AddressZero, this.receiver.address, tokenId, amount)
+          .withArgs(exchangeInstance.address, constants.AddressZero, this.receiver.address, tokenId, amount)
           .to.emit(erc20Instance, "Transfer")
           .withArgs(this.receiver.address, exchangeInstance.address, amount);
       });
@@ -1037,13 +1038,7 @@ describe("ExchangeCore", function () {
     });
 
     it("should fail for wrong signature", async function () {
-      const tx = exchangeInstance.craft(
-        params,
-        [],
-        [],
-        this.owner.address,
-        ethers.utils.formatBytes32String("signature"),
-      );
+      const tx = exchangeInstance.craft(params, [], [], this.owner.address, utils.formatBytes32String("signature"));
 
       await expect(tx).to.be.revertedWith(`Exchange: Invalid signature`);
     });

@@ -7,6 +7,7 @@ import { wallet } from "@gemunion/constants";
 export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.balance (
@@ -18,19 +19,31 @@ export class SeedBalanceErc20At1563804020420 implements MigrationInterface {
       ) VALUES (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        12001,
+        201001,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractRandomAddress}',
+        '${constants.WeiPerEther.toString()}',
+        201001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        12002,
+        204001,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         '${constants.WeiPerEther.toString()}',
-        12006,
+        205001,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${wallet}',
+        '${constants.WeiPerEther.toString()}',
+        211001,
         '${currentDateTime}',
         '${currentDateTime}'
       );

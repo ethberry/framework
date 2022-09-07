@@ -1,11 +1,12 @@
 import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
+import { ArrayOverlap, Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ITemplateAutocompleteDto, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../../mechanics/asset/asset.service";
+import { AssetService } from "../../mechanics/asset/asset.service";
+import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
 export class TemplateService {
@@ -16,7 +17,12 @@ export class TemplateService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: ITemplateSearchDto, contractType: TokenType): Promise<[Array<TemplateEntity>, number]> {
+  public async search(
+    dto: ITemplateSearchDto,
+    userEntity: UserEntity,
+    contractType: TokenType,
+    contractModule: ModuleType,
+  ): Promise<[Array<TemplateEntity>, number]> {
     const { query, templateStatus, contractIds, skip, take } = dto;
 
     const queryBuilder = this.templateEntityRepository.createQueryBuilder("template");
@@ -24,11 +30,14 @@ export class TemplateService {
     queryBuilder.select();
 
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
-
-    // MODULE:LOOTBOX
-    queryBuilder.andWhere("contract.contractModule != :contractModule", {
-      contractModule: ModuleType.LOOTBOX,
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule,
+    });
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
     });
 
     if (templateStatus) {
@@ -74,9 +83,36 @@ export class TemplateService {
   }
 
   public async autocomplete(dto: ITemplateAutocompleteDto): Promise<Array<TemplateEntity>> {
-    const { templateStatus = [], contractIds = [] } = dto;
+    const {
+      contractFeatures = [],
+      templateStatus = [],
+      contractIds = [],
+      contractModule = [],
+      contractType = [],
+    } = dto;
 
-    const where = {};
+    const where = {
+      contract: {},
+    };
+
+    if (contractType.length) {
+      Object.assign(where.contract, {
+        contractType: In(contractType),
+      });
+    }
+
+    if (contractModule.length) {
+      Object.assign(where.contract, {
+        contractModule: In(contractModule),
+      });
+    }
+
+    if (contractFeatures.length) {
+      Object.assign(where.contract, {
+        // https://github.com/typeorm/typeorm/blob/master/docs/find-options.md
+        contractFeatures: ArrayOverlap(contractFeatures),
+      });
+    }
 
     if (templateStatus.length) {
       Object.assign(where, {
@@ -95,6 +131,12 @@ export class TemplateService {
       select: {
         id: true,
         title: true,
+      },
+      join: {
+        alias: "template",
+        leftJoinAndSelect: {
+          contract: "template.contract",
+        },
       },
     });
   }

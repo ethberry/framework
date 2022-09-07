@@ -10,7 +10,7 @@ export class ContractManagerSearchDto extends SearchDto implements IContractMana
   @IsOptional()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }) => (value === "" ? null : (value as string)))
+  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public address: string;
 
   @ApiPropertyOptional({

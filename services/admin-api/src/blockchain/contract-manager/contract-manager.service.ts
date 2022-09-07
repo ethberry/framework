@@ -59,11 +59,7 @@ export class ContractManagerService {
   public async create(dto: IContractManagerCreateDto): Promise<ContractManagerEntity | null> {
     const { address, fromBlock, contractType } = dto;
 
-    const contractManagerEntity = await this.contractManagerEntityRepository
-      .create({ address, fromBlock, contractType })
-      .save();
-
-    return contractManagerEntity;
+    return await this.contractManagerEntityRepository.create({ address, fromBlock, contractType }).save();
   }
 
   public async delete(where: FindOptionsWhere<ContractManagerEntity>): Promise<DeleteResult> {

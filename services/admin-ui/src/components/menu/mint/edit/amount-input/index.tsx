@@ -7,7 +7,6 @@ import { TokenType } from "@framework/types";
 export const AmountInput: FC = () => {
   const tokenType = useWatch({ name: "tokenType" });
   const decimals = useWatch({ name: "decimals" });
-
   switch (tokenType) {
     case TokenType.ERC20:
     case TokenType.ERC1155:

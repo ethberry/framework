@@ -1,69 +1,43 @@
-import { ethers } from "hardhat";
-import { expect } from "chai";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
 
-import {
-  baseTokenURI,
-  DEFAULT_ADMIN_ROLE,
-  MINTER_ROLE,
-  royalty,
-  templateId,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-} from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "./shared/tokenURI";
-import { shouldSetBaseURI } from "./shared/setBaseURI";
+import { shouldHaveRole } from "./shared/accessControl/hasRoles";
+import { shouldGetRoleAdmin } from "./shared/accessControl/getRoleAdmin";
+import { shouldGrantRole } from "./shared/accessControl/grantRole";
+import { shouldRevokeRole } from "./shared/accessControl/revokeRole";
+import { shouldRenounceRole } from "./shared/accessControl/renounceRole";
+
+import { shouldGetTokenURI } from "./shared/common/tokenURI";
+import { shouldSetBaseURI } from "./shared/common/setBaseURI";
+import { shouldMintCommon } from "./shared/common/mintCommon";
+import { shouldMint } from "./shared/mint";
+import { shouldSafeMint } from "./shared/safeMint";
+import { shouldApprove } from "./shared/common/approve";
+import { shouldGetBalanceOf } from "./shared/common/balanceOf";
+import { shouldBurn } from "./shared/common/burn";
+import { shouldGetOwnerOf } from "./shared/common/ownerOf";
+import { shouldSetApprovalForAll } from "./shared/common/setApprovalForAll";
+import { shouldSafeTransferFrom } from "./shared/common/safeTransferFrom";
+import { shouldTransferFrom } from "./shared/common/transferFrom";
 
 describe("ERC721Simple", function () {
-  beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
+  const name = "ERC721Simple";
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Simple");
-    this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
-    this.erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
-    const erc721NonReceiverFactory = await ethers.getContractFactory("ERC721NonReceiverMock");
-    this.erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
+  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGetRoleAdmin(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGrantRole(name);
+  shouldRevokeRole(name);
+  shouldRenounceRole(name);
 
-    this.contractInstance = this.erc721Instance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGetTokenURI();
-  shouldSetBaseURI();
-
-  describe("mintCommon", function () {
-    it("should mint to wallet", async function () {
-      const tx = this.erc721Instance.mintCommon(this.receiver.address, templateId);
-      await expect(tx)
-        .to.emit(this.erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
-
-      const balance = await this.erc721Instance.balanceOf(this.receiver.address);
-      expect(balance).to.equal(1);
-    });
-
-    it("should mint to receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, templateId);
-      await expect(tx)
-        .to.emit(this.erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.erc721ReceiverInstance.address, tokenId);
-
-      const balance = await this.erc721Instance.balanceOf(this.erc721ReceiverInstance.address);
-      expect(balance).to.equal(1);
-    });
-
-    it("should fail: wrong role", async function () {
-      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, templateId);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
-    });
-
-    it("should fail: to mint to non receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, templateId);
-      await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
-    });
-  });
+  shouldMintCommon(name);
+  shouldMint(name);
+  shouldSafeMint(name);
+  shouldApprove(name);
+  shouldGetBalanceOf(name);
+  shouldBurn(name);
+  shouldGetOwnerOf(name);
+  shouldSetApprovalForAll(name);
+  shouldTransferFrom(name);
+  shouldSafeTransferFrom(name);
+  shouldGetTokenURI(name);
+  shouldSetBaseURI(name);
 });

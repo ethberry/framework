@@ -1,28 +1,33 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 
-import { IToken, TokenStatus } from "@framework/types";
+import type { IToken } from "@framework/types";
+import { TokenStatus } from "@framework/types";
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-helpers";
+import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
+import { AssetComponentHistoryEntity } from "../../mechanics/asset/asset-component-history.entity";
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
   @JsonColumn()
   public attributes: any;
 
-  @Column({
-    type: "enum",
-    enum: TokenStatus,
-  })
-  public tokenStatus: TokenStatus;
-
   @Column({ type: "numeric" })
   public tokenId: string;
 
   @Column({ type: "int" })
   public royalty: number;
+
+  @Column({ type: "varchar", nullable: true })
+  public cid: string | null;
+
+  @Column({
+    type: "enum",
+    enum: TokenStatus,
+  })
+  public tokenStatus: TokenStatus;
 
   @Column({ type: "int" })
   public templateId: number;
@@ -33,4 +38,7 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
 
   @OneToMany(_type => BalanceEntity, balance => balance.token)
   public balance: Array<BalanceEntity>;
+
+  @OneToOne(_type => AssetComponentHistoryEntity, history => history.token)
+  public history: AssetComponentHistoryEntity;
 }

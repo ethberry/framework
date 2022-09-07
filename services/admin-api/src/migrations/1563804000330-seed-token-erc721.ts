@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { TokenAttributes } from "@framework/types";
@@ -6,6 +7,7 @@ import { TokenAttributes } from "@framework/types";
 export class SeedTokenErc721At1563804000330 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const now = new Date();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.token (
@@ -18,112 +20,219 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        13101,
+        301001,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13101",
+          [TokenAttributes.TEMPLATE_ID]: "301001",
         })}',
         100,
         '1',
         'MINTED',
-        13101,
-        '${currentDateTime}',
+        301001,
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        13102,
+        301002,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13102",
+          [TokenAttributes.TEMPLATE_ID]: "301002",
         })}',
         100,
         '1',
         'MINTED',
-        13102,
-        '${currentDateTime}',
+        301002,
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        13103,
+        301003,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13103",
+          [TokenAttributes.TEMPLATE_ID]: "301003",
         })}',
         100,
         '1',
         'MINTED',
-        13103,
-        '${currentDateTime}',
+        301003,
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        13501,
+        305001,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13501",
+          [TokenAttributes.TEMPLATE_ID]: "305001",
           [TokenAttributes.GRADE]: "1",
         })}',
         100,
         '1',
         'MINTED',
-        13501,
-        '${currentDateTime}',
+        305001,
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        13502,
+        305002,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13502",
+          [TokenAttributes.TEMPLATE_ID]: "305002",
           [TokenAttributes.GRADE]: "5",
         })}',
         100,
         '2',
         'MINTED',
-        13502,
-        '${currentDateTime}',
+        305002,
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        13503,
+        305003,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13503",
+          [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
         100,
         '3',
         'MINTED',
-        13503,
-        '${currentDateTime}',
+        305003,
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        13601,
+        305004,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13601",
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '4',
+        'MINTED',
+        305004,
+        '${subDays(now, 4).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        305005,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '5',
+        'MINTED',
+        305005,
+        '${subDays(now, 5).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        305006,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '6',
+        'MINTED',
+        305006,
+        '${subDays(now, 6).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        305007,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '7',
+        'MINTED',
+        305007,
+        '${subDays(now, 7).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        305008,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.GRADE]: "10",
+        })}',
+        100,
+        '8',
+        'MINTED',
+        305008,
+        '${subDays(now, 8).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        306001,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "306001",
           [TokenAttributes.GRADE]: "1",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '1',
         'MINTED',
-        13601,
-        '${currentDateTime}',
+        306001,
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        13602,
+        306002,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13602",
+          [TokenAttributes.TEMPLATE_ID]: "306002",
           [TokenAttributes.GRADE]: "5",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '2',
         'MINTED',
-        13602,
-        '${currentDateTime}',
+        306002,
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        13603,
+        306003,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "13603",
+          [TokenAttributes.TEMPLATE_ID]: "306003",
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
         100,
         '3',
         'MINTED',
-        13603,
-        '${currentDateTime}',
+        306003,
+        '${subDays(now, 3).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        306004,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "306001",
+          [TokenAttributes.GRADE]: "10",
+          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
+        })}',
+        100,
+        '3',
+        'BURNED',
+        306001,
+        '${subDays(now, 4).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        307001,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "307001",
+          [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+        })}',
+        100,
+        '1',
+        'MINTED',
+        307001,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        308001,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "308001",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        308001,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        311001,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "311001",
+        })}',
+        100,
+        '1',
+        'MINTED',
+        311001,
+        '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );
     `);

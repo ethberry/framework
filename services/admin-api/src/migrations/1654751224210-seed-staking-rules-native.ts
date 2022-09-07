@@ -44,63 +44,63 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         amount,
         asset_id
       ) VALUES (
-        'ERC20',
-        2,
-        12001, -- ETH
+        'NATIVE',
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         80111
       ), (
-        'ERC20',
-        2,
-        12001, -- ETH
+        'NATIVE',
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         80112
       ), (
-        'ERC20',
-        2,
-        12001, -- ETH
+        'NATIVE',
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         80121
       ), (
         'ERC20',
-        2,
-        12002, -- space credit
+        201,
+        201001, -- space credit
         '${constants.WeiPerEther.toString()}',
         80122
       ), (
-        'ERC20',
-        2,
-        12001, -- ETH
+        'NATIVE',
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         80131
       ), (
         'ERC721',
-        16,
-        13501, -- sword
+        306,
+        306001, -- sword
         1,
         80132
       ), (
-        'ERC20',
-        2,
-        12001, -- ETH
+        'NATIVE',
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         80141
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         1,
         80142
       ), (
-        'ERC20',
-        2,
-        12001, -- ETH
+        'NATIVE',
+        101,
+        101001, -- ETH
         '${constants.WeiPerEther.toString()}',
         80151
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         10,
         80152
       );
@@ -128,7 +128,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         80111,
         80112,
         11,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

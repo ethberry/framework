@@ -17,7 +17,7 @@ import { HealthModule } from "./health/health.module";
 import { AuthModule } from "./auth/auth.module";
 import { AppController } from "./app.controller";
 import { SyncModule } from "./sync/sync.module";
-import { ClaimModule } from "./mechanics/claim/claim.module";
+import { MechanicsModule } from "./blockchain/mechanics/mechanics.module";
 
 @Module({
   providers: [
@@ -63,7 +63,7 @@ import { ClaimModule } from "./mechanics/claim/claim.module";
     RequestLoggerModule,
     HealthModule,
     AuthModule,
-    ClaimModule,
+    MechanicsModule,
     SyncModule,
   ],
   controllers: [AppController],

@@ -7,6 +7,7 @@
 pragma solidity ^0.8.9;
 
 import "../ERC721/ERC721Simple.sol";
+import "./extensions/WhiteListChild.sol";
 import "./extensions/ERC998ERC721.sol";
 
 contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
@@ -52,7 +53,7 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     public
     view
     virtual
-    override(ERC721Simple, ERC998ERC721)
+    override(AccessControl, ERC721Simple, ERC998ERC721)
     returns (bool)
   {
     return super.supportsInterface(interfaceId);
@@ -73,21 +74,5 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     uint256 _childTokenId
   ) internal override onlyWhiteListedWithIncrement(_childContract) {
     super.receiveChild(_from, _tokenId, _childContract, _childTokenId);
-  }
-
-  function whiteListChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE){
-    _whiteListChild(addr, max);
-  }
-
-  function unWhitelistChild(address addr) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _unWhitelistChild(addr);
-  }
-
-  function setDefaultMaxChild(uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setDefaultMaxChild(max);
-  }
-
-  function setMaxChild(address addr, uint256 max) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _setMaxChild(addr, max);
   }
 }

@@ -2,93 +2,69 @@ import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { expect } from "chai";
 
-import {
-  baseTokenURI,
-  DEFAULT_ADMIN_ROLE,
-  MINTER_ROLE,
-  royalty,
-  templateId,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-} from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "./shared/tokenURI";
-import { shouldSetBaseURI } from "./shared/setBaseURI";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, templateId, tokenId } from "../constants";
+
+import { shouldHaveRole } from "./shared/accessControl/hasRoles";
+import { shouldGetRoleAdmin } from "./shared/accessControl/getRoleAdmin";
+import { shouldGrantRole } from "./shared/accessControl/grantRole";
+import { shouldRevokeRole } from "./shared/accessControl/revokeRole";
+import { shouldRenounceRole } from "./shared/accessControl/renounceRole";
+
+import { shouldGetTokenURI } from "./shared/common/tokenURI";
+import { shouldSetBaseURI } from "./shared/common/setBaseURI";
+import { shouldMintCommon } from "./shared/common/mintCommon";
+import { shouldMint } from "./shared/mint";
+import { shouldSafeMint } from "./shared/safeMint";
+import { shouldApprove } from "./shared/common/approve";
+import { shouldGetBalanceOf } from "./shared/common/balanceOf";
+import { shouldBurn } from "./shared/common/burn";
+import { shouldGetOwnerOf } from "./shared/common/ownerOf";
+import { shouldSetApprovalForAll } from "./shared/common/setApprovalForAll";
+import { shouldTransferFrom } from "./shared/common/transferFrom";
+import { shouldSafeTransferFrom } from "./shared/common/safeTransferFrom";
+import { deployErc721Fixture } from "./shared/fixture";
 
 describe("ERC721Upgradeable", function () {
-  beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
+  const name = "ERC721Upgradeable";
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Upgradeable");
-    this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGetRoleAdmin(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGrantRole(name);
+  shouldRevokeRole(name);
+  shouldRenounceRole(name);
 
-    const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
-    this.erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
-
-    const erc721NonReceiverFactory = await ethers.getContractFactory("ERC721NonReceiverMock");
-    this.erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
-
-    this.contractInstance = this.erc721Instance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGetTokenURI();
-  shouldSetBaseURI();
-
-  describe("mintCommon", function () {
-    it("should mint to wallet", async function () {
-      const tx = this.erc721Instance.mintCommon(this.receiver.address, templateId);
-      await expect(tx)
-        .to.emit(this.erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
-
-      const balance = await this.erc721Instance.balanceOf(this.receiver.address);
-      expect(balance).to.equal(1);
-
-      const value = await this.erc721Instance.getRecordFieldValue(
-        tokenId,
-        utils.keccak256(ethers.utils.toUtf8Bytes("template_id")),
-      );
-      expect(value).to.equal(templateId);
-    });
-
-    it("should mint to receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721ReceiverInstance.address, templateId);
-      await expect(tx)
-        .to.emit(this.erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.erc721ReceiverInstance.address, tokenId);
-
-      const balance = await this.erc721Instance.balanceOf(this.erc721ReceiverInstance.address);
-      expect(balance).to.equal(1);
-    });
-
-    it("should fail: wrong role", async function () {
-      const tx = this.erc721Instance.connect(this.receiver).mintCommon(this.receiver.address, templateId);
-      await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
-      );
-    });
-
-    it("should fail: to mint to non receiver", async function () {
-      const tx = this.erc721Instance.mintCommon(this.erc721NonReceiverInstance.address, templateId);
-      await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);
-    });
-  });
+  shouldMintCommon(name);
+  shouldMint(name);
+  shouldSafeMint(name);
+  shouldApprove(name);
+  shouldGetBalanceOf(name);
+  shouldBurn(name);
+  shouldGetOwnerOf(name);
+  shouldSetApprovalForAll(name);
+  shouldTransferFrom(name);
+  shouldSafeTransferFrom(name);
+  shouldGetTokenURI(name);
+  shouldSetBaseURI(name);
 
   describe("getRecordFieldValue", function () {
     it("should get record field value", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
-      const value = await this.erc721Instance.getRecordFieldValue(
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      await contractInstance.mintCommon(receiver.address, templateId);
+      const value = await contractInstance.getRecordFieldValue(
         tokenId,
-        utils.keccak256(ethers.utils.toUtf8Bytes("grade")),
+        utils.keccak256(ethers.utils.toUtf8Bytes("GRADE")),
       );
       expect(value).to.equal(1);
     });
 
     it("should fail: field not found", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
-      const value = this.erc721Instance.getRecordFieldValue(
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      await contractInstance.mintCommon(receiver.address, templateId);
+      const value = contractInstance.getRecordFieldValue(
         tokenId,
         utils.keccak256(ethers.utils.toUtf8Bytes("non-existing-field")),
       );
@@ -98,24 +74,30 @@ describe("ERC721Upgradeable", function () {
 
   describe("upgrade", function () {
     it("should level up", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
 
-      const tx1 = this.erc721Instance.upgrade(tokenId);
+      await contractInstance.mintCommon(receiver.address, templateId);
+
+      const tx1 = contractInstance.upgrade(tokenId);
       await expect(tx1).to.not.be.reverted;
 
-      const value2 = await this.erc721Instance.getRecordFieldValue(
+      const value2 = await contractInstance.getRecordFieldValue(
         tokenId,
-        utils.keccak256(ethers.utils.toUtf8Bytes("grade")),
+        utils.keccak256(ethers.utils.toUtf8Bytes("GRADE")),
       );
       expect(value2).to.equal(2);
     });
 
     it("should fail: insufficient permissions", async function () {
-      await this.erc721Instance.mintCommon(this.receiver.address, templateId);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
 
-      const tx1 = this.erc721Instance.connect(this.receiver).upgrade(tokenId);
+      await contractInstance.mintCommon(receiver.address, templateId);
+
+      const tx1 = contractInstance.connect(receiver).upgrade(tokenId);
       await expect(tx1).to.be.revertedWith(
-        `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
+        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
       );
     });
   });

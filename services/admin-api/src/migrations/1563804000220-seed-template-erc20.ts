@@ -22,19 +22,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        12001,
-        'Native token (ETH)',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        null,
-        0,
-        '${constants.WeiPerEther.mul(1e6).toString()}',
-        'ACTIVE',
-        1,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        12002,
+        201001,
         'Space Credits',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -42,11 +30,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        2,
+        201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12003,
+        202001,
         'Inactive token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -54,11 +42,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'INACTIVE',
-        3,
+        202,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12004,
+        203001,
         'New token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -66,11 +54,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        4,
+        203,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12005,
+        204001,
         'Black list token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -78,25 +66,25 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        5,
+        204,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        12006,
-        'USDT',
+        211001,
+        'BUSD',
         '${simpleFormatting}',
         '${imageUrl}',
         null,
         0,
-        '100000000000',
+        '31000000000000000000000000',
         'ACTIVE',
-        6,
+        211,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 12006, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 211001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

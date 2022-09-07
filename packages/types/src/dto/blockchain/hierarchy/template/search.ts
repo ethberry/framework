@@ -1,4 +1,4 @@
-import { ISearchDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { TemplateStatus } from "../../../../entities";
 

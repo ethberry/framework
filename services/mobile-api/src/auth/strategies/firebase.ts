@@ -1,5 +1,6 @@
 import { forwardRef, Inject, Injectable, Logger, LoggerService, UnauthorizedException } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
+import { ConfigService } from "@nestjs/config";
 import { ExtractJwt } from "passport-jwt";
 import { Strategy } from "passport-firebase-jwt";
 import { app } from "firebase-admin";
@@ -20,6 +21,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
     private readonly userService: UserService,
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    private readonly configService: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -45,6 +47,8 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
           this.loggerService.error(error);
         });
 
+      const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+
       userEntity = await this.userService.import({
         displayName: firebaseUser?.displayName,
         language: EnabledLanguages.EN,
@@ -52,6 +56,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
         userRoles: [UserRole.USER],
         userStatus: UserStatus.ACTIVE,
         sub: data.sub,
+        chainId,
       });
     }
 

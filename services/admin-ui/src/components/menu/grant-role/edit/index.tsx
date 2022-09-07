@@ -21,18 +21,16 @@ export interface IAccessControlGrantRoleDialogProps {
 export const AccessControlGrantRoleDialog: FC<IAccessControlGrantRoleDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const testIdPrefix = "AccessControlGrantRoleForm";
-
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.grantRole"
-      data-testid={testIdPrefix}
+      testId="AccessControlGrantRoleForm"
       {...rest}
     >
-      <SelectInput name="role" options={AccessControlRoleType} data-testid={`${testIdPrefix}-role`} />
-      <TextInput name="address" data-testid={`${testIdPrefix}-address`} />
+      <SelectInput name="role" options={AccessControlRoleType} />
+      <TextInput name="address" />
     </FormDialog>
   );
 };

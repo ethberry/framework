@@ -8,7 +8,7 @@ import { useUser } from "@gemunion/provider-user";
 import { useApiCall } from "@gemunion/react-hooks";
 import { FormWrapper } from "@gemunion/mui-form";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
-import { EnabledLanguages } from "@framework/constants";
+import { availableChains, EnabledLanguages } from "@framework/constants";
 import { IUser } from "@framework/types";
 
 import { validationSchema } from "./validation";
@@ -31,8 +31,8 @@ export const Profile: FC = () => {
     await fn(form, values);
   };
 
-  const { email, displayName, language, imageUrl } = user.profile;
-  const fixedValues = { email, displayName, language, imageUrl };
+  const { email, displayName, language, imageUrl, chainId } = user.profile;
+  const fixedValues = { email, displayName, language, imageUrl, chainId };
 
   return (
     <Grid>
@@ -44,12 +44,16 @@ export const Profile: FC = () => {
         initialValues={fixedValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-        data-testid="Profile"
+        testId="Profile"
       >
         <TextInput name="email" autoComplete="username" onClick={onClick} />
         <TextInput name="displayName" />
         <SelectInput name="language" options={EnabledLanguages} />
         <AvatarInput name="imageUrl" />
+        <SelectInput
+          name="chainId"
+          options={availableChains.reduce((memo, current) => Object.assign(memo, { [current]: current }), {})}
+        />
       </FormWrapper>
     </Grid>
   );

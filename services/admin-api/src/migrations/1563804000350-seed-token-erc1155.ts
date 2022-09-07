@@ -1,10 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { subDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 
 export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const now = new Date();
     const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
@@ -18,81 +20,90 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        15101,
+        501001,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        15101,
-        '${currentDateTime}',
+        501001,
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        15102,
+        501002,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        15102,
-        '${currentDateTime}',
+        501002,
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        15103,
+        501003,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        15103,
-        '${currentDateTime}',
+        501003,
+        '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        15104,
+        501004,
         '${defaultJSON}',
         100,
         '4',
         'MINTED',
-        15105,
-        '${currentDateTime}',
+        501004,
+        '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        15105,
+        501005,
         '${defaultJSON}',
         100,
         '5',
         'MINTED',
-        15105,
-        '${currentDateTime}',
+        501005,
+        '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        15201,
+        504001,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        15201,
-        '${currentDateTime}',
+        504001,
+        '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        15202,
+        504002,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        15202,
-        '${currentDateTime}',
+        504002,
+        '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        15203,
+        504003,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        15203,
-        '${currentDateTime}',
+        504003,
+        '${subDays(now, 3).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        511001,
+        '${defaultJSON}',
+        100,
+        '3',
+        'MINTED',
+        511001,
+        '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 15203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 511001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

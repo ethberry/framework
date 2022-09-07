@@ -1,25 +1,28 @@
 import { FC } from "react";
 import { Collapse, Grid } from "@mui/material";
+import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IStakingStakesSearchDto, StakeStatus } from "@framework/types";
+import type { IStakingStakesSearchDto } from "@framework/types";
+import { StakeStatus, TokenType } from "@framework/types";
 
 import { useStyles } from "./styles";
 
-interface IStakesSearchFormProps {
+interface IStakingStakesSearchFormProps {
   onSubmit: (values: IStakingStakesSearchDto) => Promise<void>;
   initialValues: IStakingStakesSearchDto;
   open: boolean;
 }
 
-export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
+export const StakingStakesSearchForm: FC<IStakingStakesSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const classes = useStyles();
+  const { formatMessage } = useIntl();
 
-  const { query, stakeStatus } = initialValues;
-  const fixedValues = { query, stakeStatus };
+  const { query, stakeStatus, deposit, reward } = initialValues;
+  const fixedValues = { query, stakeStatus, deposit, reward };
 
   return (
     <FormWrapper
@@ -28,7 +31,7 @@ export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
       showButtons={false}
       showPrompt={false}
       className={classes.root}
-      data-testid="StakesSearchForm"
+      testId="StakingStakesSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -39,6 +42,22 @@ export const StakesSearchForm: FC<IStakesSearchFormProps> = props => {
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
             <SelectInput name="stakeStatus" options={StakeStatus} multiple />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="deposit.tokenType"
+              options={TokenType}
+              label={formatMessage({ id: "form.labels.deposit" })}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput
+              multiple
+              name="reward.tokenType"
+              options={TokenType}
+              label={formatMessage({ id: "form.labels.reward" })}
+            />
           </Grid>
         </Grid>
       </Collapse>

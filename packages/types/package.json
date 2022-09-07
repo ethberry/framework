@@ -5,9 +5,9 @@
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "@gemunion/types-collection": "1.4.5",
+    "@gemunion/types-collection": "1.5.1",
     "@framework/constants": "0.0.1",
-    "ethers": "5.6.9"
+    "ethers": "5.7.0"
   },
   "devDependencies": {
     "rimraf": "3.0.2"

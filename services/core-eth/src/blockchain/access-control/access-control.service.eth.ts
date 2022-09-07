@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   AccessControlRoleHash,
@@ -11,9 +11,9 @@ import {
   TAccessControlEventData,
 } from "@framework/types";
 
-import { AccessControlHistoryService } from "./access-control-history/access-control-history.service";
+import { AccessControlHistoryService } from "./history/history.service";
 import { AccessControlService } from "./access-control.service";
-import { ContractManagerService } from "../contract-manager/contract-manager.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
 
 @Injectable()
 export class AccessControlServiceEth {
@@ -22,7 +22,7 @@ export class AccessControlServiceEth {
     private readonly loggerService: LoggerService,
     private readonly accessControlService: AccessControlService,
     private readonly accessControlHistoryService: AccessControlHistoryService,
-    private readonly contractManagerService: ContractManagerService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async roleGranted(event: ILogEvent<IAccessControlRoleGranted>, context: Log): Promise<void> {
@@ -48,7 +48,7 @@ export class AccessControlServiceEth {
 
     await this.updateHistory(event, context);
 
-    await this.accessControlService.create({
+    await this.accessControlService.delete({
       address: context.address.toLowerCase(),
       account: account.toLowerCase(),
       role: Object.keys(AccessControlRoleHash)[
@@ -102,9 +102,6 @@ export class AccessControlServiceEth {
       eventData: args,
     });
 
-    await this.contractManagerService.updateLastBlockByAddr(
-      context.address.toLowerCase(),
-      parseInt(blockNumber.toString(), 16),
-    );
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

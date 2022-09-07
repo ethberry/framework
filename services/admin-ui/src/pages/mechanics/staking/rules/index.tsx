@@ -17,14 +17,16 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IStakingRule, IStakingSearchDto, StakingStatus, TokenType } from "@framework/types";
+import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
+import { IStakingRuleItemSearchDto, StakingStatus, TokenType } from "@framework/types";
 
 import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
+import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
-import { StakingSearchForm } from "./form";
+import { StakingRuleSearchForm } from "./form";
 
-export const Staking: FC = () => {
+export const StakingRules: FC = () => {
   const {
     rows,
     count,
@@ -44,7 +46,7 @@ export const Staking: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IStakingRule, IStakingSearchDto>({
+  } = useCollection<IStakingRule, IStakingRuleSearchDto>({
     baseUrl: "/staking/rules",
     empty: {
       title: "",
@@ -55,21 +57,27 @@ export const Staking: FC = () => {
       penalty: 100,
       recurrent: false,
     },
+    filter: ({ deposit, reward, ...rest }) => ({
+      ...rest,
+      deposit: cleanUpAsset(deposit),
+      reward: cleanUpAsset(reward),
+    }),
     search: {
       query: "",
       stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingRuleItemSearchDto,
       reward: {
         tokenType: [] as Array<TokenType>,
-      },
+      } as IStakingRuleItemSearchDto,
     },
   });
 
+  // TODO - disable editing for ACTIVE rules, only View!!!
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking.rules"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -83,7 +91,7 @@ export const Staking: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <StakingRuleSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
@@ -124,6 +132,7 @@ export const Staking: FC = () => {
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         initialValues={selected}
+        readOnly={selected.stakingStatus === StakingStatus.ACTIVE}
       />
     </Grid>
   );

@@ -1,22 +1,35 @@
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
+import { IContract } from "./hierarchy/contract";
+import { IToken } from "./hierarchy/token";
 
 export enum ContractEventType {
   Approval = "Approval",
   ApprovalForAll = "ApprovalForAll",
+  BatchReceivedChild = "BatchReceivedChild",
+  BatchTransferChild = "BatchTransferChild",
   DefaultRoyaltyInfo = "DefaultRoyaltyInfo",
   MintRandom = "MintRandom",
   Paused = "Paused",
   RandomRequest = "RandomRequest",
+  ReceivedChild = "ReceivedChild",
   RedeemClaim = "RedeemClaim",
+  SetMaxChild = "SetMaxChild",
   Snapshot = "Snapshot",
   TokenRoyaltyInfo = "TokenRoyaltyInfo",
   Transfer = "Transfer",
   TransferBatch = "TransferBatch",
+  TransferChild = "TransferChild",
   TransferSingle = "TransferSingle",
   URI = "URI",
+  UnWhitelistedChild = "UnWhitelistedChild",
   UnpackClaim = "UnpackClaim",
-  UnpackLootbox = "UnpackLootbox",
+  UnpackMysterybox = "UnpackMysterybox",
   Unpaused = "Unpaused",
+  WhitelistedChild = "WhitelistedChild",
+}
+
+export interface IPaused {
+  account: string;
 }
 
 export interface IErc20TokenTransfer {
@@ -35,7 +48,7 @@ export interface IErc20TokenSnapshot {
   id: string;
 }
 
-export interface ILootboxUnpack {
+export interface IMysteryboxUnpack {
   collection: string;
   tokenId: string;
   templateId: string;
@@ -56,9 +69,51 @@ export interface IClaimRedeem {
   price: string;
 }
 
-// dev random test
-export interface IRandomRequest {
-  requestId: string;
+// 998
+export interface IErc998TokenWhitelistedChild {
+  addr: string;
+  maxCount: string;
+}
+
+export interface IErc998TokenUnWhitelistedChild {
+  addr: string;
+}
+
+export interface IErc998TokenSetMaxChild {
+  addr: string;
+  maxCount: string;
+}
+
+export interface IErc998TokenReceivedChild {
+  from: string;
+  tokenId: string;
+  childContract: string;
+  childTokenId: string;
+  amount: string;
+}
+
+export interface IErc998TokenTransferChild {
+  to: string;
+  tokenId: string;
+  childContract: string;
+  childTokenId: string;
+  amount: string;
+}
+
+export interface IErc998BatchReceivedChild {
+  from: string;
+  tokenId: string;
+  childContract: string;
+  childTokenIds: Array<string>;
+  amounts: Array<string>;
+}
+
+export interface IErc998BatchTransferChild {
+  to: string;
+  tokenId: string;
+  childContract: string;
+  childTokenIds: Array<string>;
+  amounts: Array<string>;
 }
 
 export interface ITokenTransfer {
@@ -67,12 +122,17 @@ export interface ITokenTransfer {
   tokenId: string;
 }
 
+// dev random test
+export interface IRandomRequest {
+  requestId: string;
+}
+
 export interface ITokenMintRandom {
+  requestId: string;
   to: string;
-  tokenId: string;
+  randomness: string;
   templateId: string;
-  rarity: string;
-  lootboxId: string;
+  tokenId: string;
 }
 
 export interface ITokenApprove {
@@ -125,17 +185,11 @@ export interface IErc1155TokenUri {
   id: string;
 }
 
-export interface IErc1155RoleGrant {
-  role: string;
-  account: string;
-  sender: string;
-}
-
 export type TContractEventData =
   | IClaimRedeem
   | IClaimUnpack
   | IDefaultRoyaltyInfo
-  | ILootboxUnpack
+  | IMysteryboxUnpack
   | IErc1155TokenApprovalForAll
   | IErc1155TokenTransferBatch
   | IErc1155TokenTransferSingle
@@ -148,11 +202,23 @@ export type TContractEventData =
   | ITokenApprovedForAll
   | ITokenMintRandom
   | ITokenRoyaltyInfo
-  | ITokenTransfer;
+  | ITokenTransfer
+  | IErc998TokenReceivedChild
+  | IErc998TokenTransferChild
+  | IErc998BatchReceivedChild
+  | IErc998BatchTransferChild
+  | IErc998TokenSetMaxChild
+  | IErc998TokenUnWhitelistedChild
+  | IErc998TokenWhitelistedChild
+  | IPaused;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;
   transactionHash: string;
   eventType: ContractEventType;
   eventData: TContractEventData;
+  contractId: number | null;
+  contract?: IContract;
+  tokenId: number | null;
+  token?: IToken;
 }

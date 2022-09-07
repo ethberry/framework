@@ -1,16 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsString, IsUrl, Max, MaxLength, Min } from "class-validator";
 import { Transform } from "class-transformer";
 
-import { Erc721ContractTemplate, IErc721ContractDeployDto } from "@framework/types";
+import type { IErc721ContractDeployDto } from "@framework/types";
+import { Erc721ContractFeatures } from "@framework/types";
 
 export class Erc721ContractDeployDto implements IErc721ContractDeployDto {
   @ApiProperty({
-    enum: Erc721ContractTemplate,
+    enum: Erc721ContractFeatures,
+    isArray: true,
   })
-  @Transform(({ value }) => value as Erc721ContractTemplate)
-  @IsEnum(Erc721ContractTemplate, { message: "badInput" })
-  public contractTemplate: Erc721ContractTemplate;
+  @IsArray({ message: "typeMismatch" })
+  @Transform(({ value }) => value as Array<Erc721ContractFeatures>)
+  @IsEnum(Erc721ContractFeatures, { each: true, message: "badInput" })
+  public contractFeatures: Array<Erc721ContractFeatures>;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
@@ -19,7 +22,7 @@ export class Erc721ContractDeployDto implements IErc721ContractDeployDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @MaxLength(5, { message: "rangeOverflow" })
+  @MaxLength(32, { message: "rangeOverflow" })
   public symbol: string;
 
   @ApiProperty()

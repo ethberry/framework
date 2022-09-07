@@ -4,13 +4,25 @@ import { Grid } from "@mui/material";
 import { PageHeader } from "@gemunion/mui-page-layout";
 
 import { useStyles } from "./styles";
-import { Erc20Sections } from "./sections/erc20";
-import { Erc1155Section } from "./sections/erc1155";
-import { Erc721Section } from "./sections/erc721";
-import { Erc998Section } from "./sections/erc998";
-import { Admin } from "./sections/admin";
-import { Mechanics } from "./sections/mechanics";
-import { Staking } from "./sections/staking";
+import { Erc20Sections } from "./hierarchy/erc20";
+import { Erc1155Section } from "./hierarchy/erc1155";
+import { Erc721Section } from "./hierarchy/erc721";
+import { Erc998Section } from "./hierarchy/erc998";
+import { Mystery } from "./mechanics/mystery";
+import { Staking } from "./mechanics/staking";
+import { NativeSections } from "./hierarchy/native";
+import { Lottery } from "./mechanics/lottery";
+import { Vesting } from "./mechanics/vesting";
+import { Claim } from "./mechanics/claim";
+import { Grade } from "./mechanics/grade";
+import { Craft } from "./mechanics/craft";
+import { Drop } from "./mechanics/drop";
+import { Admin } from "./integrations/admin";
+import { ChainLink } from "./integrations/chain-link";
+import { CoinGecko } from "./integrations/coin-gecko";
+import { CoinMarketCap } from "./integrations/coin-market-cap";
+import { Marketplace } from "./integrations/marketplace";
+import { Pyramid } from "./mechanics/pyramid";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -20,15 +32,29 @@ export const Dashboard: FC = () => {
       <PageHeader message="pages.dashboard.title" />
 
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
+          <NativeSections />
           <Erc20Sections />
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
+          <Mystery />
         </Grid>
-        <Grid item xs={6}>
-          <Mechanics />
+        <Grid item xs={4}>
+          <Vesting />
+          <Claim />
+          <Drop />
+          <Craft />
+          <Grade />
+          <Lottery />
           <Staking />
+          <Pyramid />
+        </Grid>
+        <Grid item xs={4}>
+          <ChainLink />
+          <CoinGecko />
+          <CoinMarketCap />
+          <Marketplace />
           <Admin />
         </Grid>
       </Grid>

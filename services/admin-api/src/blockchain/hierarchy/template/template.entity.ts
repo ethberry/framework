@@ -1,13 +1,13 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
-import { Exclude } from "class-transformer";
 
 import { ns } from "@framework/constants";
-import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { ITemplate, TemplateStatus } from "@framework/types";
+import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import type { ITemplate } from "@framework/types";
+import { TemplateStatus } from "@framework/types";
 
 import { ContractEntity } from "../contract/contract.entity";
 import { TokenEntity } from "../token/token.entity";
-import { AssetEntity } from "../../../mechanics/asset/asset.entity";
+import { AssetEntity } from "../../mechanics/asset/asset.entity";
 
 @Entity({ schema: ns, name: "template" })
 export class TemplateEntity extends SearchableEntity implements ITemplate {
@@ -18,7 +18,6 @@ export class TemplateEntity extends SearchableEntity implements ITemplate {
   @OneToOne(_type => AssetEntity)
   public price: AssetEntity;
 
-  @Exclude()
   @Column({ type: "int" })
   public priceId: number;
 
@@ -27,6 +26,9 @@ export class TemplateEntity extends SearchableEntity implements ITemplate {
 
   @Column({ type: "int" })
   public amount: string;
+
+  @Column({ type: "varchar", nullable: true })
+  public cid: string | null;
 
   @Column({
     type: "enum",

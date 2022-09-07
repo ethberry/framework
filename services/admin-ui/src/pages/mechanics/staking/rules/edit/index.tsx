@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, InputAdornment } from "@mui/material";
+import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
@@ -13,15 +13,16 @@ import { PriceInput } from "../../../../../components/inputs/price";
 
 export interface IStakingEditDialogProps {
   open: boolean;
+  readOnly?: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IStakingRule>, form: any) => Promise<void>;
   initialValues: IStakingRule;
 }
 
 export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
-  const { initialValues, ...rest } = props;
+  const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, recurrent, deposit, reward, duration, stakingStatus } = initialValues;
+  const { id, title, description, penalty, recurrent, deposit, reward, duration } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,29 +32,35 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     penalty,
     recurrent,
     duration,
-    stakingStatus,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
-  const testIdPrefix = "StakingEditForm";
 
   return (
     <FormDialog
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      data-testid={testIdPrefix}
+      testId="StakingEditForm"
       {...rest}
     >
-      <TextInput name="title" data-testid={`${testIdPrefix}-title`} />
-      <RichTextEditor name="description" data-testid={`${testIdPrefix}-description`} />
-      <TextInput name="stakingStatus" readOnly={true} data-testid={`${testIdPrefix}-stakingStatus`} />
+      <TextInput name="title" />
+      <RichTextEditor name="description" />
       <Grid container spacing={2}>
+        {readOnly ? (
+          <Grid item xs={12}>
+            <Box mt={2}>
+              <Alert severity="warning">
+                <FormattedMessage id="form.hints.editNotAllowed" />
+              </Alert>
+            </Box>
+          </Grid>
+        ) : null}
         <Grid item xs={6}>
-          <PriceInput prefix="deposit" />
+          <PriceInput prefix="deposit" readOnly={readOnly} />
         </Grid>
         <Grid item xs={6}>
-          <PriceInput prefix="reward" />
+          <PriceInput prefix="reward" readOnly={readOnly} />
         </Grid>
       </Grid>
       <NumberInput
@@ -65,7 +72,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
             </InputAdornment>
           ),
         }}
-        data-testid={`${testIdPrefix}-duration`}
+        readOnly={readOnly}
       />
       <CurrencyInput
         name="penalty"
@@ -73,9 +80,9 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
         InputProps={{
           endAdornment: <InputAdornment position="start">%</InputAdornment>,
         }}
-        data-testid={`${testIdPrefix}-penalty`}
+        readOnly={readOnly}
       />
-      <CheckboxInput name="recurrent" data-testid={`${testIdPrefix}-recurrent`} />
+      <CheckboxInput name="recurrent" readOnly={readOnly} />
     </FormDialog>
   );
 };

@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { IOtp, OtpType } from "@framework/types";
 import { ns } from "@framework/constants";
-import { UuidDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
+import { UuidDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { UserEntity } from "../user/user.entity";
 

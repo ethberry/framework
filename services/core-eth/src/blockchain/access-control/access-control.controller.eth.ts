@@ -2,7 +2,7 @@ import { Controller } from "@nestjs/common";
 import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
-import { ILogEvent } from "@gemunion/nestjs-ethers";
+import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   ContractType,
@@ -19,7 +19,7 @@ export class AccessControlControllerEth {
 
   @EventPattern([
     {
-      contractType: ContractType.LOOTBOX,
+      contractType: ContractType.MYSTERY,
       eventName: AccessControlEventType.RoleGranted,
     },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleGranted },
@@ -33,7 +33,7 @@ export class AccessControlControllerEth {
 
   @EventPattern([
     {
-      contractType: ContractType.LOOTBOX,
+      contractType: ContractType.MYSTERY,
       eventName: AccessControlEventType.RoleRevoked,
     },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleRevoked },
@@ -47,7 +47,7 @@ export class AccessControlControllerEth {
 
   @EventPattern([
     {
-      contractType: ContractType.LOOTBOX,
+      contractType: ContractType.MYSTERY,
       eventName: AccessControlEventType.RoleAdminChanged,
     },
     { contractType: ContractType.ERC1155_TOKEN, eventName: AccessControlEventType.RoleAdminChanged },

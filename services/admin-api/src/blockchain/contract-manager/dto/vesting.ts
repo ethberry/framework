@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsEthereumAddress, IsInt, IsISO8601, IsString } from "class-validator";
+import { Transform } from "class-transformer";
 
 import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
 
@@ -13,6 +14,7 @@ export class VestingDeployDto implements IVestingDeployDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @IsEthereumAddress({ message: "patternMismatch" })
+  @Transform(({ value }: { value: string }) => value.toLowerCase())
   public account: string;
 
   @ApiProperty()

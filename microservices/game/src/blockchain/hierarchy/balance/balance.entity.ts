@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-helpers";
-import { IBalance } from "@framework/types";
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
+import type { IBalance } from "@framework/types";
 
 import { TokenEntity } from "../token/token.entity";
 

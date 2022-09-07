@@ -10,12 +10,11 @@ import { Landing } from "./landing";
 import { Dashboard } from "./dashboard";
 import { Profile } from "./profile";
 
-import { erc721Routes } from "./erc721/routes";
-import { erc998Routes } from "./erc998/routes";
-import { erc1155Routes } from "./erc1155/routes";
 import { mechanicsRoutes } from "./mechanics/routes";
+import { integrationsRoutes } from "./integrations/routes";
+import { tokenRoutes } from "./tokens/routes";
 
-import { Marketplace } from "./mechanics/marketplace";
+import { Marketplace } from "./marketplace";
 import { MyWallet } from "./my-wallet";
 import { Page } from "./page";
 
@@ -39,10 +38,9 @@ const routes: Array<RouteObject> = [
           { path: "/profile/:tab", element: <Profile /> },
         ],
       },
-      ...erc721Routes,
-      ...erc998Routes,
-      ...erc1155Routes,
       ...mechanicsRoutes,
+      ...integrationsRoutes,
+      ...tokenRoutes,
       {
         path: "/marketplace",
         children: [

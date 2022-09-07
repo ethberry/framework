@@ -65,6 +65,7 @@ export const Sections: FC = () => {
       </IconButton>
       <Menu id="material-appbar" anchorEl={anchor} open={!!anchor} onClose={handleMenuClose}>
         <MenuItem
+          onClick={handleMenuClose}
           component={RouterNavLink}
           to="/dashboard"
           color="inherit"
@@ -73,6 +74,7 @@ export const Sections: FC = () => {
           <FormattedMessage id="components.header.menu.dashboard" />
         </MenuItem>
         <MenuItem
+          onClick={handleMenuClose}
           color="inherit"
           component={RouterNavLink}
           to="/profile"

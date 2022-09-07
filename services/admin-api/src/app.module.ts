@@ -12,19 +12,15 @@ import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
+import { CoinMarketCapModule } from "@gemunion/nest-js-module-coin-market-cap";
 
 import ormconfig from "./ormconfig";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
-import { Erc20Module } from "./erc20/erc20.module";
-import { Erc721Module } from "./erc721/erc721.module";
-import { Erc998Module } from "./erc998/erc998.module";
-import { Erc1155Module } from "./erc1155/erc1155.module";
 import { ProfileModule } from "./profile/profile.module";
 import { UserModule } from "./user/user.module";
 import { AppController } from "./app.controller";
 import { EmailModule } from "./email/email.module";
-import { MechanicsModule } from "./mechanics/mechanics.module";
 import { SettingsModule } from "./settings/settings.module";
 import { PageModule } from "./page/page.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
@@ -88,16 +84,12 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     AuthModule,
     EmailModule,
     HealthModule,
-    Erc20Module,
-    Erc721Module,
-    Erc998Module,
-    Erc1155Module,
-    MechanicsModule,
     ProfileModule,
     UserModule,
     SettingsModule,
     PageModule,
     BlockchainModule,
+    CoinMarketCapModule,
   ],
   controllers: [AppController],
 })

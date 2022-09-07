@@ -12,7 +12,7 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        27101
+        2701001
       );
     `);
 
@@ -27,22 +27,22 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        16,
-        13501, -- sword
+        306,
+        306001, -- sword
         '1',
-        27101
+        2701001
       ), (
         'ERC998',
-        26,
-        14101, -- warrior
+        406,
+        406001, -- warrior
         '1',
-        27101
+        2701001
       ), (
         'ERC1155',
-        31,
-        15101, -- gold
+        501,
+        501001, -- gold
         '1000',
-        27101
+        2701001
       );
     `);
 
@@ -58,10 +58,10 @@ export class SeedClaimMixedAt1653616447870 implements MigrationInterface {
         updated_at
       ) VALUES (
         '${wallet}',
-        27101,
+        2701001,
         'NEW',
-        '0x4204557726050cba3b2b57ff13de21b9dd37df2a223f01bc236d09864ea78660463d6264686d856b214dfeeaed249533630168d77702e3ae8d462e97cc40db7a1b',
-        '0x8e42ff64a8d5cc3ca1b29eb027b5b8d9c1a883be264bd2db14f796dadbc39642',
+        '0xcd1b1a4803b8d01757eabff41348275fdda5acf9f45511fd275e5d3076f0169549507eef804244d2a97eade4d93fd20d3f6c5aaaf1deafe97bcd01a4522deb0f1c',
+        '0x01252ba107b2da38c6b1ba1dce277f777daa3f86ef63a32a59904c3db5baedc0',
         '${zeroDateTime}',
         '${currentDateTime}',
         '${currentDateTime}'

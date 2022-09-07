@@ -29,6 +29,11 @@ export class CreateToken1563804000300 implements MigrationInterface {
           default: 0,
         },
         {
+          name: "cid",
+          type: "varchar",
+          isNullable: true,
+        },
+        {
           name: "token_id",
           type: "uint256",
         },

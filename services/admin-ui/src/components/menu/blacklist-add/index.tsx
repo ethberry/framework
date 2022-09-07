@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import { ListItemIcon, MenuItem, Typography } from "@mui/material";
 import { DoNotDisturbOn } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -6,16 +6,19 @@ import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import type { IContract } from "@framework/types";
 import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
 import { AccessListBlacklistDialog, IBlacklistDto } from "./edit";
 
 export interface IBlacklistMenuItemProps {
-  address: string;
+  contract: IContract;
 }
 
 export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
-  const { address } = props;
+  const {
+    contract: { address },
+  } = props;
 
   const [isBlacklistDialogOpen, setIsBlacklistDialogOpen] = useState(false);
 
@@ -27,19 +30,19 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
     setIsBlacklistDialogOpen(false);
   };
 
-  const meta = useMetamask((values: IBlacklistDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IBlacklistDto, web3Context: Web3ContextType) => {
     const contract = new Contract(address, ERC20BlacklistSol.abi, web3Context.provider?.getSigner());
     return contract.blacklist(values.account) as Promise<void>;
   });
 
   const handleBlacklistConfirmed = async (values: IBlacklistDto): Promise<void> => {
-    await meta(values).finally(() => {
+    await metaFn(values).finally(() => {
       setIsBlacklistDialogOpen(false);
     });
   };
 
   return (
-    <>
+    <Fragment>
       <MenuItem onClick={handleBlacklist}>
         <ListItemIcon>
           <DoNotDisturbOn fontSize="small" />
@@ -56,6 +59,6 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
           account: "",
         }}
       />
-    </>
+    </Fragment>
   );
 };

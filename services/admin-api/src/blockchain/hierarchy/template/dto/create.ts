@@ -1,11 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, IsString, IsUrl, ValidateNested } from "class-validator";
+import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
 import { ITemplateCreateDto } from "../interfaces";
-import { AssetDto } from "../../../../mechanics/asset/dto";
+import { PriceDto } from "../../../mechanics/asset/dto";
 
 export class TemplateCreateDto implements ITemplateCreateDto {
   @ApiProperty()
@@ -17,11 +17,11 @@ export class TemplateCreateDto implements ITemplateCreateDto {
   public description: string;
 
   @ApiProperty({
-    type: AssetDto,
+    type: PriceDto,
   })
   @ValidateNested()
-  @Type(() => AssetDto)
-  public price: AssetDto;
+  @Type(() => PriceDto)
+  public price: PriceDto;
 
   @ApiProperty({
     minimum: 0,
@@ -38,5 +38,6 @@ export class TemplateCreateDto implements ITemplateCreateDto {
     minimum: 1,
   })
   @IsInt({ message: "typeMismatch" })
+  @Min(1, { message: "rangeUnderflow" })
   public contractId: number;
 }

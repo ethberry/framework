@@ -9,6 +9,7 @@ export NODE_ENV=$NODE_ENV
 export POSTGRES_URL=$POSTGRES_URL
 export CHAIN_ID=$CHAIN_ID
 
-lerna bootstrap --concurrency 1 --hoist
+lerna bootstrap --concurrency 1 --hoist --ignore-scripts
+lerna run build --stream
 
 lerna exec --concurrency 1 -- npm run test

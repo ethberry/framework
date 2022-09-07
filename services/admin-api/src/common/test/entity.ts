@@ -1,7 +1,9 @@
 import { v4 } from "uuid";
+import { constants } from "ethers";
 
-import { IUser, UserRole, UserStatus } from "@framework/types";
-import { EnabledLanguages, imageUrl } from "@framework/constants";
+import { simpleFormatting } from "@gemunion/draft-js-utils";
+import { ContractStatus, IContract, IUser, TokenType, UserRole, UserStatus } from "@framework/types";
+import { baseTokenURI, EnabledLanguages, imageUrl, testChainId } from "@framework/constants";
 
 export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
   return Object.assign(
@@ -14,7 +16,29 @@ export const generateTestUser = (data: Partial<IUser> = {}): Partial<IUser> => {
       comment: "Fraud!",
       sub: v4(),
       userStatus: UserStatus.ACTIVE,
-      userRoles: [UserRole.USER],
+      userRoles: [UserRole.ADMIN],
+      chainId: testChainId,
+    },
+    data,
+  );
+};
+
+export const generateTestContract = (data: Partial<IContract> = {}): Record<string, any> => {
+  return Object.assign(
+    {
+      address: constants.AddressZero,
+      chainId: testChainId,
+      title: "Native token",
+      description: simpleFormatting,
+      imageUrl,
+      name: "Ethereum",
+      symbol: "ETH",
+      decimals: 18,
+      royalty: 0,
+      baseTokenUri: baseTokenURI,
+      contractStatus: ContractStatus.ACTIVE,
+      contractType: TokenType.NATIVE,
+      contractFeatures: [],
     },
     data,
   );

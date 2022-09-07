@@ -25,23 +25,51 @@
     "auction": "Sell `{title}` on auction",
     "bulk-cancel-order": "You are about to cancel all your orders. Do you want to continue?",
     "confirmation": "Please confirm",
+    "create": "Create",
     "delete": "Delete `{title}`?",
+    "deposit": "Deposit",
     "edit": "Edit",
+    "fund": "Fund",
+    "reward": "Reward",
+    "sell": "Sell",
+    "transfer": "Transfer",
     "view": "View"
   },
   "enums": {
-    "language": {
-      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
-      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
-      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    "GRADE": {
+      "1": "1",
+      "10": "10",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
     },
-    "rarity": {
+    "RARITY": {
       "COMMON": "Common",
       "EPIC": "Epic",
       "LEGENDARY": "Legendary",
       "RARE": "Rare",
-      "UNCOMMON": "Uncommon",
-      "UNKNOWN": "Unknown"
+      "UNCOMMON": "Uncommon"
+    },
+    "chainId": {
+      "1": "ETHEREUM",
+      "1337": "BESU",
+      "137": "POLYGON",
+      "56": "BINANCE"
+    },
+    "claimStatus": {
+      "NEW": "New",
+      "REDEEMED": "Redeemed",
+      "UNPACKED": "Unpacked"
+    },
+    "language": {
+      "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
+      "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
+      "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
     "sort": {
       "createdAt": "Date",
@@ -88,11 +116,13 @@
       "back": "Back",
       "buy": "Buy now!",
       "cancel": "Cancel",
+      "copy": "Copy",
       "craft": "Craft",
       "create": "Create",
       "delete": "Delete",
       "disconnect": "Disconnect",
       "empty": "\uFEFF",
+      "export": "Export",
       "forgot": "Forgot password?",
       "hideFilter": "Hide Filters",
       "hideFilters": "Hide filters",
@@ -102,6 +132,7 @@
       "next": "Next",
       "nonce": "Increment nonce",
       "ok": "Ok",
+      "release": "Release",
       "save": "Save",
       "search": "Search",
       "sell": "Sell",
@@ -109,21 +140,31 @@
       "signup": "Sign up",
       "submit": "Submit",
       "upgrade": "Upgrade",
-      "upload": "Upload"
+      "upload": "Upload",
+      "withdraw": "Withdraw"
     },
     "hints": {
       "markdown": "This field supports <a href=\"https://guides.github.com/features/mastering-markdown/\" target:\"_blank\">GH Flavored Markdown</a>",
       "prompt": "You have unsaved information, are you sure you want to leave this page?"
     },
     "labels": {
+      "GRADE": "Grade",
+      "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
+      "breakLastPeriod": "Break last period",
+      "chainId": "Chain",
+      "claimStatus": "Status",
       "collectionId": "Collection",
       "confirm": "Confirm",
+      "contractCustomId": "Allowance Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "contractTemplate": "Template",
+      "count": "Count",
       "createdAt": "Created",
+      "dad": "Dad",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "deposit": "Deposit",
@@ -132,20 +173,34 @@
       "duration": "Duration",
       "email": "Email",
       "endDate": "End date",
+      "endTimestamp": "End date",
       "externalId": "External ID",
+      "id": "ID",
       "imageUrl": "Avatar",
+      "item": "Item",
       "language": "Language",
+      "level": "Level",
       "maxPrice": "Max. price",
       "minPrice": "Min. price",
+      "mom": "Mom",
+      "numbers": "Numbers",
       "password": "Password",
+      "price": "Price",
+      "rank": "Rank",
       "rarity": "Rarity",
+      "RARITY": "Rarity",
       "recurrent": "Is recurrent?",
+      "referrer": "Referrer",
       "reward": "Reward",
       "roles": "Roles",
+      "roundId": "Round",
+      "roundIds": "Round",
+      "score": "Score",
       "sort": "Sort by",
       "stakeStatus": "Status",
       "stakingStatus": "Status",
       "startDate": "Start date",
+      "startTimestamp": "Start date",
       "status": "Status",
       "templateId": "Template",
       "templateIds": "Templates",
@@ -154,12 +209,15 @@
       "tokenIds": "Tokens",
       "tokenType": "Type",
       "type": "Type",
-      "updatedAt": "Updated"
+      "updatedAt": "Updated",
+      "withdrawDeposit": "Withdraw deposit"
     },
     "placeholders": {
+      "account": "0x...",
       "address": "0x...",
       "amount": "100",
       "confirm": "******",
+      "contractCustomId": "Allowance Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "createdAt": "Registered",
@@ -170,6 +228,7 @@
       "minPrice": "1",
       "password": "******",
       "query": "Search...",
+      "roundIds": "Round",
       "search": "Search...",
       "templateId": "Template",
       "templateIds": "Templates",
@@ -179,10 +238,15 @@
     },
     "tips": {
       "add": "Add",
+      "clear": "Clear",
       "delete": "Delete",
+      "deposit": "Deposit",
       "edit": "Edit",
       "redeem": "Redeem",
-      "release": "Release"
+      "release": "Release",
+      "reward": "Reward",
+      "transfer": "Transfer ownership",
+      "view": "View"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -205,6 +269,9 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "breed": {
+      "title": "Breed"
+    },
     "claim": {
       "connect": "Please connect your wallet first",
       "sorry": "Sorry, maybe you will get lucky next time",
@@ -223,122 +290,114 @@
       "title": "Craft recipes"
     },
     "dashboard": {
-      "erc1155": {
-        "contracts": "ERC1155 Contracts",
-        "templates": "ERC1155 Templates",
-        "title": "ERC1155",
-        "tokens": "ERC1155 Tokens"
+      "hierarchy": {
+        "erc1155": "ERC1155",
+        "erc721": "ERC721",
+        "erc998": "ERC998"
       },
-      "erc721": {
-        "contracts": "ERC721 Contracts",
-        "templates": "ERC721 Templates",
-        "title": "ERC721",
-        "tokens": "ERC721 Tokens"
-      },
-      "erc998": {
-        "contracts": "ERC998 Contracts",
-        "templates": "ERC998 Templates",
-        "title": "ERC998",
-        "tokens": "ERC998 Tokens"
+      "integrations": {
+        "ipfs": "IPFS",
+        "marketplace": "Marketplace",
+        "pages": {
+          "about-us": "About us",
+          "faq": "FAQ",
+          "title": "Pages"
+        },
+        "personal": "My stash",
+        "referral": "Referral program"
       },
       "mechanics": {
+        "breed": "Breed",
         "claim": "Claim",
         "craft": "Craft",
         "drop": "Drop",
-        "lootboxes": "Lootboxes",
-        "title": "Mechanics",
-        "vesting": "Vesting"
-      },
-      "pages": {
-        "about-us": "About us",
-        "faq": "FAQ",
-        "title": "Pages"
-      },
-      "personal": {
-        "assets": "My assets",
-        "auctions": "My auctions",
-        "title": "My stash",
-        "wallet": "My wallet"
-      },
-      "sections": {
-        "auctions": "Secondary marketplace",
-        "craft": "Craft",
-        "marketplace": "Primary marketplace",
-        "title": "Sections"
-      },
-      "staking": {
-        "leaderboard": "Leaderboard",
-        "rules": "Rules",
-        "stakes": "My stakes",
-        "title": "Staking"
+        "lottery": "Lottery",
+        "mysterybox": "Mysterybox",
+        "pyramid": "Pyramid",
+        "staking": "Staking",
+        "vesting": "Vesting",
+        "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
     },
     "drop-list": {
       "title": "Drops"
     },
-    "erc1155-contract": {
-      "title": "ERC1155 Contract: {title}"
-    },
-    "erc1155-contract-list": {
-      "title": "ERC1155 Contracts"
-    },
-    "erc1155-token": {
-      "price": "Base price: {amount}",
-      "title": "ERC1155 Token: {title}"
-    },
-    "erc1155-token-list": {
-      "title": "ERC1155 Tokens"
-    },
-    "erc721-contract": {
-      "title": "ERC721 Contract: {title}"
-    },
-    "erc721-contract-list": {
-      "title": "ERC721 Contracts"
-    },
-    "erc721-template": {
-      "price": "Price: {amount}",
-      "title": "ERC721 Template: {title}"
-    },
-    "erc721-template-list": {
-      "title": "ERC721 Templates"
-    },
-    "erc721-token": {
-      "level": "Level: {grade}",
-      "price": "Base price: {amount}",
-      "title": "ERC721 Token: {title}"
-    },
-    "erc721-token-list": {
-      "sort": {
-        "createdAt": "Date",
-        "price": "Price"
+    "erc1155": {
+      "contract": {
+        "title": "ERC1155 Contract: {title}"
       },
-      "title": "ERC721 Tokens"
-    },
-    "erc998-contract": {
-      "title": "ERC998 Contract: {title}"
-    },
-    "erc998-contract-list": {
-      "title": "ERC998 Contracts"
-    },
-    "erc998-template": {
-      "price": "Price: {amount}",
-      "title": "ERC998 Template: {title}"
-    },
-    "erc998-template-list": {
-      "title": "ERC998 Templates"
-    },
-    "erc998-token": {
-      "level": "Level: {grade}",
-      "price": "Base price: {amount}",
-      "title": "ERC998 Token: {title}"
-    },
-    "erc998-token-list": {
-      "sort": {
-        "createdAt": "Date",
-        "price": "Price"
+      "contracts": {
+        "title": "ERC1155 Contracts"
       },
-      "title": "ERC998 Tokens"
+      "template": {
+        "price": "Price: {amount}",
+        "title": "ERC721 Template: {title}"
+      },
+      "templates": {
+        "title": "ERC1155 Templates"
+      },
+      "token": {
+        "price": "Base price: {amount}",
+        "title": "ERC1155 Token: {title}"
+      },
+      "tokens": {
+        "title": "ERC1155 Tokens"
+      }
+    },
+    "erc721": {
+      "contract": {
+        "title": "ERC721 Contract: {title}"
+      },
+      "contracts": {
+        "title": "ERC721 Contracts"
+      },
+      "template": {
+        "price": "Price: {amount}",
+        "title": "ERC721 Template: {title}"
+      },
+      "templates": {
+        "title": "ERC721 Templates"
+      },
+      "token": {
+        "level": "Level: {GRADE}",
+        "price": "Base price: {amount}",
+        "title": "ERC721 Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "ERC721 Tokens"
+      }
+    },
+    "erc998": {
+      "contract": {
+        "title": "ERC998 Contract: {title}"
+      },
+      "contracts": {
+        "title": "ERC998 Contracts"
+      },
+      "template": {
+        "price": "Price: {amount}",
+        "title": "ERC998 Template: {title}"
+      },
+      "templates": {
+        "title": "ERC998 Templates"
+      },
+      "token": {
+        "level": "Level: {GRADE}",
+        "price": "Base price: {amount}",
+        "title": "ERC998 Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "ERC998 Tokens"
+      }
     },
     "exchanges": {
       "title": "Exchanges"
@@ -347,18 +406,32 @@
       "confirmation": "Please check your inbox to verify your email.",
       "login": "Login"
     },
+    "ipfs": {
+      "pinata": {
+        "title": "Pinata"
+      },
+      "title": "IPFS"
+    },
     "landing": {
       "erc1155-new": "New 1155 Templates",
       "erc721-new": "New 721 Templates",
       "erc998-new": "New 998 Templates",
+      "mysterybox-new": "New Mysteryboxes",
       "popular": "Popular items"
     },
-    "lootbox": {
-      "price": "Price: {amount}",
-      "title": "Lootbox: {title}"
-    },
-    "lootbox-list": {
-      "title": "Lootboxes"
+    "lottery": {
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "purchase": {
+        "rules": "Select 6 out of 36 numbers. 70% gathered funds will be proportionally split among players.",
+        "selected": "Selected {selected}/6.",
+        "title": "Buy a ticket"
+      },
+      "tickets": {
+        "title": "My tickets"
+      },
+      "title": "Lottery"
     },
     "marketplace": {
       "erc1155": {
@@ -370,14 +443,14 @@
       "erc998": {
         "title": "ERC998"
       },
-      "lootbox": {
-        "title": "Lootbox"
+      "mysterybox": {
+        "title": "Mysterybox"
       },
       "tabs": {
         "erc1155": "ERC1155",
         "erc721": "ERC721",
         "erc998": "ERC998",
-        "lootbox": "Lootbox"
+        "mysterybox": "Mysterybox"
       },
       "title": "Primary market"
     },
@@ -387,20 +460,63 @@
       "detach": "Detach",
       "title": "My wallet"
     },
+    "mystery": {
+      "box": {
+        "price": "Price: {amount}",
+        "title": "Mysterybox Box: {title}"
+      },
+      "boxes": {
+        "title": "Mysterybox Boxes"
+      },
+      "contract": {
+        "title": "Mysterybox Contract: {title}"
+      },
+      "contracts": {
+        "title": "Mysterybox Contracts"
+      },
+      "token": {
+        "level": "Level: {GRADE}",
+        "price": "Base price: {amount}",
+        "title": "Mystery Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "Mystery Tokens"
+      }
+    },
     "page": {
       "title": "{title}"
     },
     "profile": {
       "title": "Profile"
     },
+    "pyramid": {
+      "title": "Pyramid"
+    },
+    "referral": {
+      "cabinet": {
+        "title": "Cabinet"
+      },
+      "chart": {
+        "title": "Chart"
+      },
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "report": {
+        "title": "Report"
+      },
+      "title": "Referral program"
+    },
     "staking": {
       "deposit": "Deposit",
       "leaderboard": {
-        "account": "Account",
-        "rank": "Rank",
-        "score": "Score",
         "title": "Leaderboard"
       },
+      "reward": "Reward",
       "rules": {
         "deposit": "Deposit",
         "title": "Staking rules"
@@ -413,6 +529,18 @@
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
+    },
+    "wrapper": {
+      "token": {
+        "title": "Wrapped Token: {title}"
+      },
+      "tokens": {
+        "sort": {
+          "createdAt": "Date",
+          "price": "Price"
+        },
+        "title": "Token wrapper"
+      }
     }
   },
   "snackbar": {
@@ -420,11 +548,14 @@
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
     "error": "Unknown Error",
+    "featureIsNotSupported": "Feature is not supported",
+    "gradeNotFound": "Grade not found",
     "internalServerError": "Internal server error.",
     "pageNotFound": "Page not found",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "success": "Success",
+    "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",

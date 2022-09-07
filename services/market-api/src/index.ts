@@ -15,14 +15,12 @@ async function bootstrap(): Promise<void> {
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
-
-  const baseUrl = configService.get<string>("MARKET_FE_URL", "http://localhost:3004");
+  const nodeEnv = configService.get<string>("NODE_ENV", "development");
+  const baseUrl = configService.get<string>("MARKET_FE_URL", "http://localhost:3006");
 
   app.enableCors({
     origin:
-      process.env.NODE_ENV === "development"
-        ? ["http://localhost:3004", "http://127.0.0.1:3004", "http://0.0.0.0:3004"]
-        : [baseUrl],
+      nodeEnv === "development" ? ["http://localhost:3006", "http://127.0.0.1:3006", "http://0.0.0.0:3006"] : [baseUrl],
     credentials: true,
     exposedHeaders: ["Content-Disposition"],
   });
@@ -35,19 +33,17 @@ async function bootstrap(): Promise<void> {
     .addBearerAuth()
     .setTitle(companyName)
     .setDescription("API description")
-    .setVersion("1.0.0")
+    .setVersion("2.0.0")
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
-
-  const nodeEnv = configService.get<string>("NODE_ENV", "development");
 
   if (nodeEnv === "production" || nodeEnv === "staging") {
     app.enableShutdownHooks();
   }
 
   const host = configService.get<string>("HOST", "localhost");
-  const port = configService.get<number>("PORT", 3003);
+  const port = configService.get<number>("PORT", 3005);
 
   await app.listen(port, host, () => {
     console.info(`API server is running on http://${host}:${port}`);

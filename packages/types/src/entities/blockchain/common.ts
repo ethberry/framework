@@ -15,17 +15,15 @@ export enum TokenRarity {
 }
 
 export enum MetadataHash {
-  "0x9319bf1fd23873eaf43c06bb91a1db3e678411d693e959f1512879196908f12c" = "template_id",
-  "0x08e1ec9b1b54002f93fd04c8195a36be67f2b6b212f18cc951984bc2411b08ee" = "grade",
-  "0x29daa7827568eaaa01af346b3b05934ea63f4e23858c064cc599d07420ce3a73" = "rarity",
+  "0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842" = "TEMPLATE_ID",
+  "0x76e34cd5c7c46b6bfe6b1da94d54447ea83a4af449bc62a0ef3ecae24c08031a" = "GRADE",
+  "0xda9488a573bb2899ea5782d71e9ebaeb1d8291bf3812a066ec86608a697c51fc" = "RARITY",
 }
 
 export enum ModuleType {
-  CORE = "CORE",
-  VESTING = "VESTING",
-  STAKING = "STAKING",
-  CLAIM = "CLAIM",
-  LOOTBOX = "LOOTBOX",
-  MARKETPLACE = "MARKETPLACE",
-  CRAFT = "CRAFT",
+  SYSTEM = "SYSTEM",
+  HIERARCHY = "HIERARCHY",
+  MYSTERY = "MYSTERY",
+  WRAPPER = "WRAPPER",
+  LOTTERY = "LOTTERY",
 }

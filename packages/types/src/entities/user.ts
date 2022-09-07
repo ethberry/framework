@@ -1,5 +1,5 @@
 import { EnabledLanguages } from "@framework/constants";
-import { IIdDateBase } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
 export enum UserStatus {
   ACTIVE = "ACTIVE",
@@ -21,4 +21,5 @@ export interface IUser extends IIdDateBase {
   userRoles: Array<UserRole>;
   comment: string;
   wallet: string;
+  chainId: number;
 }

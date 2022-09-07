@@ -13,13 +13,15 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IStakingStake, IStakingStakesSearchDto, StakeStatus } from "@framework/types";
+import type { IStakingStake, IStakingStakesSearchDto } from "@framework/types";
+import { StakeStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { StakesSearchForm } from "./form";
+import { StakingStakesSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
+import { StakingRewardButton } from "../../../../components/buttons";
 
-export const Stakes: FC = () => {
+export const StakingStakes: FC = () => {
   const {
     rows,
     count,
@@ -39,12 +41,20 @@ export const Stakes: FC = () => {
     search: {
       query: "",
       stakeStatus: [StakeStatus.ACTIVE],
+      deposit: {
+        tokenType: [] as Array<TokenType>,
+        contractIds: [],
+      },
+      reward: {
+        tokenType: [] as Array<TokenType>,
+        contractIds: [],
+      },
     },
   });
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking.stakes"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.stakes"]} />
 
       <PageHeader message="pages.staking.stakes.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
@@ -52,7 +62,7 @@ export const Stakes: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakesSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <StakingStakesSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
@@ -60,6 +70,7 @@ export const Stakes: FC = () => {
             <ListItem key={i}>
               <ListItemText>{stake.stakingRule?.title}</ListItemText>
               <ListItemSecondaryAction>
+                <StakingRewardButton stake={stake} />
                 <IconButton onClick={handleView(stake)}>
                   <Visibility />
                 </IconButton>

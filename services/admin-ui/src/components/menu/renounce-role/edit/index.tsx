@@ -10,7 +10,8 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { useApiCall } from "@gemunion/react-hooks";
 import { useUser } from "@gemunion/provider-user";
-import { IAccessControl, IUser } from "@framework/types";
+import type { IAccessControl, IUser } from "@framework/types";
+
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
 export interface IAccessControlRenounceRoleDialogProps {
@@ -61,7 +62,9 @@ export const AccessControlRenounceRoleDialog: FC<IAccessControlRenounceRoleDialo
             {rows.map((access, i) => (
               <ListItem key={i}>
                 <ListItemText>
-                  {access.account} ({access.role})
+                  {access.account}
+                  <br />
+                  {access.role}
                 </ListItemText>
                 <ListItemSecondaryAction>
                   <IconButton onClick={handleRenounce(access)}>
