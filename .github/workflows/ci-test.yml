@@ -61,4 +61,7 @@ jobs:
           CHAIN_ID: 1337
           GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+          MM_PRIVATEKEY: ${{ secrets.MM_PRIVATEKEY }}
+          RINKEBY_RPC_URL: ${{ secrets.RINKEBY_RPC_URL }}
+          GOERLI_RPC_URL: ${{ secrets.GOERLI_RPC_URL }}
 
