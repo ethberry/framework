@@ -34,8 +34,8 @@ abstract contract ExchangeCore is SignatureValidator, ExchangeUtils, AccessContr
 
     emit Purchase(account, params.externalId, item, price);
 
-    _afterPurchase(params);
+    _afterPurchase(params, price);
   }
 
-  function _afterPurchase(Params memory params) internal virtual;
+  function _afterPurchase(Params memory params, Asset[] memory price) internal virtual;
 }

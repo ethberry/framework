@@ -15,7 +15,7 @@ import "./ExchangeGrade.sol";
 import "./ExchangeBreed.sol";
 import "./ExchangeMysterybox.sol";
 import "./ExchangeClaim.sol";
-import "./ExchangeReferral.sol";
+import "./referral/LinearReferral.sol";
 
 contract Exchange is
   ExchangeCore,
@@ -24,7 +24,7 @@ contract Exchange is
   ExchangeBreed,
   ExchangeMysterybox,
   ExchangeClaim,
-  ExchangeReferral,
+  LinearReferral,
   ERC1155Holder
 {
   using Address for address;
@@ -56,7 +56,7 @@ contract Exchange is
     return super.supportsInterface(interfaceId);
   }
 
-  function _afterPurchase(Params memory params) internal override(ExchangeCore, ExchangeMysterybox, ExchangeReferral) {
-    return super._afterPurchase(params);
+  function _afterPurchase(Params memory params, Asset[] memory price) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral) {
+    return super._afterPurchase(params, price);
   }
 }

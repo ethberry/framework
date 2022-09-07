@@ -25,6 +25,11 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "contract_id",
+          type: "int",
+          isNullable: true,
+        },
+        {
           name: "amount",
           type: "uint256",
         },
@@ -35,6 +40,14 @@ export class CreateReferralRewardAt1660103709900 implements MigrationInterface {
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
         },
       ],
     });

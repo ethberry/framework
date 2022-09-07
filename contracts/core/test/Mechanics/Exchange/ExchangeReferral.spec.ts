@@ -16,6 +16,7 @@ import {
   tokenId,
   tokenName,
   tokenSymbol,
+  tokenZero,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
 import { wrapOneToManySignature } from "./shared/utils";
@@ -28,11 +29,23 @@ describe("ExchangeReferral", function () {
 
   let generateSignature: (values: Record<string, any>) => Promise<string>;
 
+  const refProgram = {
+    maxRefs: 10,
+    refReward: 10 * 100, // 10.00 %
+    refDecrease: 10, // 10% - 1% - 0.1% - 0.01% etc.
+  };
+
   beforeEach(async function () {
     [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
 
     const exchangeFactory = await ethers.getContractFactory("Exchange");
     exchangeInstance = await exchangeFactory.deploy(tokenName);
+
+    // SET REF PROGRAM
+    const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
+    await expect(tx)
+      .to.emit(exchangeInstance, "ReferralProgram")
+      .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
     const erc20Factory = await ethers.getContractFactory("ERC20Simple");
     erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount * 10);
@@ -51,9 +64,9 @@ describe("ExchangeReferral", function () {
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
-  describe("purchase", function () {
-    it("referrer", async function () {
-      const params1 = {
+  describe("exchange purchase", function () {
+    it("referrer rewards", async function () {
+      const refParams1 = {
         nonce: utils.randomBytes(32),
         externalId,
         expiresAt,
@@ -62,7 +75,7 @@ describe("ExchangeReferral", function () {
 
       const signature1 = await generateSignature({
         account: this.owner.address,
-        params: params1,
+        params: refParams1,
         item: {
           tokenType: 2,
           token: erc721Instance.address,
@@ -83,7 +96,7 @@ describe("ExchangeReferral", function () {
       await erc20Instance.connect(this.owner).approve(exchangeInstance.address, amount);
 
       const tx1 = exchangeInstance.connect(this.owner).purchase(
-        params1,
+        refParams1,
         {
           tokenType: 2,
           token: erc721Instance.address,
@@ -104,7 +117,7 @@ describe("ExchangeReferral", function () {
 
       await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "ReferralReward");
 
-      const params2 = {
+      const refParams2 = {
         nonce: utils.randomBytes(32),
         externalId,
         expiresAt,
@@ -113,7 +126,7 @@ describe("ExchangeReferral", function () {
 
       const signature2 = await generateSignature({
         account: this.receiver.address,
-        params: params2,
+        params: refParams2,
         item: {
           tokenType: 2,
           token: erc721Instance.address,
@@ -134,7 +147,7 @@ describe("ExchangeReferral", function () {
       await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
 
       const tx2 = exchangeInstance.connect(this.receiver).purchase(
-        params2,
+        refParams2,
         {
           tokenType: 2,
           token: erc721Instance.address,
@@ -156,9 +169,18 @@ describe("ExchangeReferral", function () {
       await expect(tx2)
         .to.emit(exchangeInstance, "Purchase")
         .to.emit(exchangeInstance, "ReferralReward")
-        .withArgs(this.receiver.address, this.owner.address, 0, constants.WeiPerEther);
+        .withArgs(
+          this.receiver.address,
+          this.owner.address,
+          0,
+          erc20Instance.address,
+          ethers.BigNumber.from(amount)
+            .div(100)
+            .mul((refProgram.refReward / 100) | 0)
+            .div(refProgram.refDecrease ** 0),
+        );
 
-      const params3 = {
+      const refParams3 = {
         nonce: utils.randomBytes(32),
         externalId,
         expiresAt,
@@ -167,7 +189,7 @@ describe("ExchangeReferral", function () {
 
       const signature3 = await generateSignature({
         account: this.stranger.address,
-        params: params3,
+        params: refParams3,
         item: {
           tokenType: 2,
           token: erc721Instance.address,
@@ -188,7 +210,7 @@ describe("ExchangeReferral", function () {
       await erc20Instance.connect(this.stranger).approve(exchangeInstance.address, amount);
 
       const tx3 = exchangeInstance.connect(this.stranger).purchase(
-        params3,
+        refParams3,
         {
           tokenType: 2,
           token: erc721Instance.address,
@@ -210,15 +232,33 @@ describe("ExchangeReferral", function () {
       await expect(tx3)
         .to.emit(exchangeInstance, "Purchase")
         .to.emit(exchangeInstance, "ReferralReward")
-        .withArgs(this.stranger.address, this.owner.address, 1, constants.WeiPerEther.div(10))
+        .withArgs(
+          this.stranger.address,
+          this.owner.address,
+          1,
+          erc20Instance.address,
+          ethers.BigNumber.from(amount)
+            .div(100)
+            .mul((refProgram.refReward / 100) | 0)
+            .div(refProgram.refDecrease ** 1),
+        )
         .to.emit(exchangeInstance, "ReferralReward")
-        .withArgs(this.stranger.address, this.receiver.address, 0, constants.WeiPerEther);
+        .withArgs(
+          this.stranger.address,
+          this.receiver.address,
+          0,
+          erc20Instance.address,
+          ethers.BigNumber.from(amount)
+            .div(100)
+            .mul((refProgram.refReward / 100) | 0)
+            .div(refProgram.refDecrease ** 0),
+        );
     });
   });
 
   describe("getBalance", function () {
     it("should get zero balance", async function () {
-      const balance = await exchangeInstance.getBalance(this.owner.address);
+      const balance = await exchangeInstance.getBalance(this.owner.address, tokenZero);
       expect(balance).to.equal(0);
     });
 
@@ -275,10 +315,25 @@ describe("ExchangeReferral", function () {
       await expect(tx1)
         .to.emit(exchangeInstance, "Purchase")
         .to.emit(exchangeInstance, "ReferralReward")
-        .withArgs(this.receiver.address, this.owner.address, 0, constants.WeiPerEther);
+        .withArgs(
+          this.receiver.address,
+          this.owner.address,
+          0,
+          erc20Instance.address,
+          ethers.BigNumber.from(amount)
+            .div(100)
+            .mul((refProgram.refReward / 100) | 0)
+            .div(refProgram.refDecrease ** 0),
+        );
+      // .withArgs(this.receiver.address, this.owner.address, 0, constants.WeiPerEther);
 
-      const balance = await exchangeInstance.getBalance(this.owner.address);
-      expect(balance).to.equal(constants.WeiPerEther);
+      const balance = await exchangeInstance.getBalance(this.owner.address, erc20Instance.address);
+      expect(balance).to.equal(
+        ethers.BigNumber.from(amount)
+          .div(100)
+          .mul((refProgram.refReward / 100) | 0)
+          .div(refProgram.refDecrease ** 0),
+      );
     });
   });
 });

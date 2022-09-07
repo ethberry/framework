@@ -6,6 +6,7 @@ export class CreateReferralHistoryAt1660103709950 implements MigrationInterface 
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
       CREATE TYPE ${ns}.referral_event_enum AS ENUM (
+        'ReferralProgram',
         'ReferralReward',
         'ReferralWithdraw'
       );

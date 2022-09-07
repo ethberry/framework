@@ -1,4 +1,5 @@
 import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ReferralHistoryModule } from "./history/history.module";
@@ -9,7 +10,7 @@ import { ReferralEntity } from "./referral.entity";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ReferralEntity]), ReferralHistoryModule, ContractModule],
+  imports: [TypeOrmModule.forFeature([ReferralEntity]), ReferralHistoryModule, ContractModule, ConfigModule],
   providers: [Logger, ReferralService, ReferralServiceEth],
   controllers: [ReferralControllerEth],
   exports: [ReferralService, ReferralServiceEth],

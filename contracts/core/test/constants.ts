@@ -7,6 +7,7 @@ export const tokenName = "Lorem ipsum...";
 export const tokenId = 1;
 export const templateId = 1;
 export const royalty = 100;
+export const cap = constants.WeiPerEther.mul(1000000000);
 
 export const DEFAULT_ADMIN_ROLE = "0x0000000000000000000000000000000000000000000000000000000000000000";
 export const METADATA_ADMIN_ROLE = utils.id("METADATA_ADMIN_ROLE");

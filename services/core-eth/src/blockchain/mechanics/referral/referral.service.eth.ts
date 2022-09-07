@@ -1,4 +1,6 @@
-import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
+import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
@@ -10,20 +12,32 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ReferralServiceEth {
+  private chainId: number;
+
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
+    private readonly configService: ConfigService,
     private readonly referralService: ReferralService,
     private readonly referralHistoryService: ReferralHistoryService,
     private readonly contractService: ContractService,
-  ) {}
+  ) {
+    this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
+  }
 
   public async reward(event: ILogEvent<IReward>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     const { args } = event;
+    const { token } = args;
 
-    await this.referralService.create(args);
+    const contractEntity = await this.contractService.findOne({ chainId: this.chainId, address: token });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    await this.referralService.create({ contractId: contractEntity.id, ...args });
   }
 
   public async withdraw(event: ILogEvent<IWithdraw>, context: Log): Promise<void> {

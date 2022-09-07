@@ -187,6 +187,8 @@
       "password": "Password",
       "price": "Price",
       "rank": "Rank",
+      "rarity": "Rarity",
+      "RARITY": "Rarity",
       "recurrent": "Is recurrent?",
       "referrer": "Referrer",
       "reward": "Reward",

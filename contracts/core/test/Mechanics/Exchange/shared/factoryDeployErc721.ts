@@ -14,7 +14,7 @@ import {
 import { blockAwait } from "../../../../scripts/utils/blockAwait";
 import { ContractManager, ERC721Simple } from "../../../../typechain-types";
 
-export async function factoryDeploy(
+export async function factoryDeployErc721(
   factoryInstance: ContractManager,
   exchangeInstanceAddr: string,
 ): Promise<ERC721Simple> {
