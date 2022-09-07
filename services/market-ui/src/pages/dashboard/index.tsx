@@ -21,6 +21,7 @@ import { Referral } from "./integrations/referral";
 import { Ipfs } from "./integrations/ipfs";
 import { Wrapper } from "./mechanics/wrapper";
 import { Breed } from "./mechanics/breed";
+import { Pyramid } from "./mechanics/pyramid";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -45,6 +46,7 @@ export const Dashboard: FC = () => {
           <Breed />
           <Lottery />
           <Staking />
+          <Pyramid />
         </Grid>
         <Grid item xs={4}>
           <Personal />

@@ -10,7 +10,6 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 // import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
 // TODO make real 998Full.sol
-
 import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";

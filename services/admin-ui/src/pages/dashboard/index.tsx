@@ -22,6 +22,7 @@ import { ChainLink } from "./integrations/chain-link";
 import { CoinGecko } from "./integrations/coin-gecko";
 import { CoinMarketCap } from "./integrations/coin-market-cap";
 import { Marketplace } from "./integrations/marketplace";
+import { Pyramid } from "./mechanics/pyramid";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -47,6 +48,7 @@ export const Dashboard: FC = () => {
           <Grade />
           <Lottery />
           <Staking />
+          <Pyramid />
         </Grid>
         <Grid item xs={4}>
           <ChainLink />

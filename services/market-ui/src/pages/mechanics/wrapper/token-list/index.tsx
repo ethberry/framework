@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
 import { Add, FilterList } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";

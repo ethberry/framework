@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository, FindOptionsWhere } from "typeorm";
+import { FindOptionsWhere, Repository } from "typeorm";
 
 import type { ITemplateSearchDto } from "@framework/types";
 import { ModuleType, TokenType } from "@framework/types";

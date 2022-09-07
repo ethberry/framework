@@ -311,6 +311,7 @@
         "drop": "Drop",
         "lottery": "Lottery",
         "mysterybox": "Mysterybox",
+        "pyramid": "Pyramid",
         "staking": "Staking",
         "vesting": "Vesting",
         "wrapper": "Token wrapper"
@@ -489,6 +490,9 @@
     },
     "profile": {
       "title": "Profile"
+    },
+    "pyramid": {
+      "title": "Pyramid"
     },
     "referral": {
       "cabinet": {

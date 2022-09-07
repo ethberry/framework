@@ -8,6 +8,7 @@ import { lotteryRoutes } from "./lottery/routes";
 import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
+import { pyramidRoutes } from "./pyramid/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
@@ -18,4 +19,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...mysteryRoutes,
   ...stakingRoutes,
   ...vestingRoutes,
+  ...pyramidRoutes,
 ];

@@ -455,6 +455,7 @@
         "grade": "Grade",
         "lottery": "Lottery",
         "mystery": "Mystery",
+        "pyramid": "Pyramid",
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting"
@@ -565,6 +566,9 @@
     },
     "profile": {
       "title": "Profile"
+    },
+    "pyramid": {
+      "title": "Pyramid Rules"
     },
     "settings": {
       "title": "Settings"

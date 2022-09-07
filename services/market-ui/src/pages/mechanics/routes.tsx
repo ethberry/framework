@@ -10,6 +10,7 @@ import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
 import { wrapperRoutes } from "./wrapper/routes";
 import { breedRoutes } from "./breed/routes";
+import { pyramidRoutes } from "./pyramid/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
@@ -22,4 +23,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...vestingRoutes,
   ...wrapperRoutes,
   ...breedRoutes,
+  ...pyramidRoutes,
 ];
