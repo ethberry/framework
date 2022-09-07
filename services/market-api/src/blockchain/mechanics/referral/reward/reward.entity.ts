@@ -17,4 +17,7 @@ export class ReferralRewardEntity extends IdDateBaseEntity implements IReferralR
 
   @Column({ type: "varchar" })
   public amount: string;
+
+  @Column({ type: "int", nullable: true })
+  public contractId: number | null;
 }

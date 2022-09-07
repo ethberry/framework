@@ -40,7 +40,7 @@ async function main() {
   contracts.vrf = await vrfFactory.deploy(contracts.link.address);
   console.info(`VRF_ADDR=${contracts.vrf.address}`);
   await debug(await linkInstance.mint(owner.address, linkAmountInWei.mul(100)), "LinkInstance.mint");
-  process.exit(0);
+  // process.exit(0);
 
   const cmFactory = await ethers.getContractFactory("ContractManager");
   contracts.contractManager = await cmFactory.deploy();
@@ -106,7 +106,7 @@ async function main() {
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc721SoulboundFactory = await ethers.getContractFactory("ERC721SoulBound");
+  const erc721SoulboundFactory = await ethers.getContractFactory("ERC721Soulbound");
   contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
   await debug(contracts);
 
