@@ -36,3 +36,4 @@ export * from "./hierarchy/template";
 export * from "./hierarchy/token";
 export * from "./hierarchy/balance";
 export * from "./hierarchy/composition";
+export * from "./hierarchy/ownership";

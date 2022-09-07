@@ -25,6 +25,7 @@ export const Erc1155TokenList: FC<ITokenListProps> = props => {
         contractIds: [],
         attributes: {
           [TokenAttributes.RARITY]: [],
+          [TokenAttributes.GRADE]: [],
         },
       },
     });

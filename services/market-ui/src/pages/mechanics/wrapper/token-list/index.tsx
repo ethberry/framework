@@ -13,9 +13,9 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721TokenWrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721TokenWrapper.sol/ERC721TokenWrapper.json";
 
 import { WrapperTokenListItem } from "./item";
-import { TokenSearchForm } from "./form";
 import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
+import { TokenSearchForm } from "../../../../components/forms/token-search";
 
 export interface IWrapperTokenListProps {
   embedded?: boolean;

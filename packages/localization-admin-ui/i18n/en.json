@@ -45,6 +45,25 @@
     "whitelist": "Add to whitelist"
   },
   "enums": {
+    "GRADE": {
+      "1": "1",
+      "10": "10",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9"
+    },
+    "RARITY": {
+      "COMMON": "Common",
+      "EPIC": "Epic",
+      "LEGENDARY": "Legendary",
+      "RARE": "Rare",
+      "UNCOMMON": "Uncommon"
+    },
     "chainId": {
       "1": "ETHEREUM",
       "1337": "BESU",
@@ -88,18 +107,6 @@
       "DUMMY": "Test email",
       "LINK_TOKEN": "LINK notification"
     },
-    "grade": {
-      "1": "1",
-      "10": "10",
-      "2": "2",
-      "3": "3",
-      "4": "4",
-      "5": "5",
-      "6": "6",
-      "7": "7",
-      "8": "8",
-      "9": "9"
-    },
     "gradeStrategy": {
       "EXPONENTIAL": "Exponential",
       "FLAT": "Flat",
@@ -117,13 +124,6 @@
     "pageStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
-    },
-    "rarity": {
-      "COMMON": "Common",
-      "EPIC": "Epic",
-      "LEGENDARY": "Legendary",
-      "RARE": "Rare",
-      "UNCOMMON": "Uncommon"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -228,6 +228,8 @@
     },
     "labels": {
       "DUMMY": "Dummy",
+      "GRADE": "Grade",
+      "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -261,7 +263,6 @@
       "duration": "Duration",
       "email": "Email",
       "endTimestamp": "End date",
-      "grade": "Grade",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -281,7 +282,6 @@
       "penalty": "Penalty",
       "price": "Price",
       "random": "Random",
-      "rarity": "Rarity",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
       "reward": "Reward",
@@ -448,11 +448,11 @@
         }
       },
       "mechanics": {
+        "breed": "Breed",
         "claim": "Claim",
         "craft": "Craft",
         "drop": "Drop",
         "grade": "Grade",
-        "breed": "Breed",
         "lottery": "Lottery",
         "mystery": "Mystery",
         "staking": "Staking",

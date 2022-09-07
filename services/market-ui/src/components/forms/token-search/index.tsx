@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
@@ -35,12 +35,26 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
           </Grid>
-          <Grid item xs={6}>
-            <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
-          </Grid>
+          {contractType.filter(value => [TokenType.ERC721, TokenType.ERC998].includes(value)).length &&
+          contractModule.filter(value => [ModuleType.HIERARCHY].includes(value)).length ? (
+            <Fragment>
+              <Grid item xs={6}>
+                <SelectInput name={`attributes.${TokenAttributes.RARITY}`} options={TokenRarity} multiple />
+              </Grid>
+              <Grid item xs={6}>
+                <SelectInput
+                  name={`attributes.${TokenAttributes.GRADE}`}
+                  options={new Array(10)
+                    .fill(null)
+                    .reduce((memo: Record<string, string>, value, i) => Object.assign(memo, { [i + 1]: i + 1 }), {})}
+                  multiple
+                />
+              </Grid>
+            </Fragment>
+          ) : null}
         </Grid>
       </Collapse>
       <AutoSave onSubmit={onSubmit} />

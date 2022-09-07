@@ -109,7 +109,7 @@ export const MarketplaceRarity: FC = () => {
                           templateIds: search.templateIds,
                         })}`}
                       >
-                        <FormattedMessage id={`enums.rarity.${e}`} />
+                        <FormattedMessage id={`enums.RARITY.${e}`} />
                       </Link>
                     </TableCell>
                     <TableCell align="right">{row?.count ?? 0}</TableCell>

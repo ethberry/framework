@@ -9,11 +9,11 @@ import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
 
-interface IMysteryboxTokenListItemProps {
+interface IMysteryTokenListItemProps {
   token: IToken;
 }
 
-export const MysteryboxTokenListItem: FC<IMysteryboxTokenListItemProps> = props => {
+export const MysteryTokenListItem: FC<IMysteryTokenListItemProps> = props => {
   const { token } = props;
 
   const classes = useStyles(token);
