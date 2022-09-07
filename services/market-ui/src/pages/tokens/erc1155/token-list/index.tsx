@@ -4,7 +4,7 @@ import { Button, Grid, Pagination } from "@mui/material";
 import { FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IToken, ITokenSearchDto, ModuleType, TokenAttributes, TokenType } from "@framework/types";
+import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc1155TokenListItem } from "./item";
@@ -21,13 +21,6 @@ export const Erc1155TokenList: FC<ITokenListProps> = props => {
     useCollection<IToken, ITokenSearchDto>({
       baseUrl: "/erc1155-tokens",
       embedded,
-      search: {
-        contractIds: [],
-        attributes: {
-          [TokenAttributes.RARITY]: [],
-          [TokenAttributes.GRADE]: [],
-        },
-      },
     });
 
   return (

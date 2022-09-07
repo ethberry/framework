@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ITokenSearchDto, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
+import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
 
 import { TokenEntity } from "./token.entity";
 import { UserEntity } from "../../../user/user.entity";
@@ -18,6 +18,7 @@ export class TokenService {
     dto: ITokenSearchDto,
     userEntity: UserEntity,
     contractType: TokenType,
+    contractModule: ModuleType,
   ): Promise<[Array<TokenEntity>, number]> {
     const { query, tokenStatus, tokenId, attributes = {}, contractIds, templateIds, account, skip, take } = dto;
 
@@ -28,7 +29,12 @@ export class TokenService {
     queryBuilder.leftJoinAndSelect("token.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    queryBuilder.andWhere("contract.contractType = :contractType", { contractType });
+    queryBuilder.andWhere("contract.contractType = :contractType", {
+      contractType,
+    });
+    queryBuilder.andWhere("contract.contractModule = :contractModule", {
+      contractModule,
+    });
     queryBuilder.andWhere("contract.chainId = :chainId", {
       chainId: userEntity.chainId,
     });

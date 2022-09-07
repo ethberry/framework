@@ -21,9 +21,6 @@ export const MysteryboxTokenList: FC<IMysteryTokenListProps> = props => {
     useCollection<IToken, ITokenSearchDto>({
       baseUrl: "/mystery-tokens",
       embedded,
-      search: {
-        contractIds: [],
-      },
     });
 
   return (

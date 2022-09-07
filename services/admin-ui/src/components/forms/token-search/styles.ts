@@ -7,5 +7,5 @@ export const useStyles = makeStyles<Theme>(
       margin: theme.spacing(3, 0),
     },
   }),
-  { name: "Erc998TokenSearchForm" },
+  { name: "IErc721TokenSearchFormProps" },
 );

@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { Erc721TokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 
-export const Erc721Token: FC = () => {
+export const MysteryToken: FC = () => {
   const {
     rows,
     count,
@@ -35,7 +35,7 @@ export const Erc721Token: FC = () => {
     handleSearch,
     handleChangePage,
   } = useCollection<IToken, ITokenSearchDto>({
-    baseUrl: "/erc721-tokens",
+    baseUrl: "/mystery-tokens",
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
@@ -44,9 +44,9 @@ export const Erc721Token: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "erc721.tokens"]} />
+      <Breadcrumbs path={["dashboard", "mystery.tokens"]} />
 
-      <PageHeader message="pages.erc721.tokens.title">
+      <PageHeader message="pages.mystery.tokens.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -59,7 +59,7 @@ export const Erc721Token: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractModule={[ModuleType.HIERARCHY]}
+        contractModule={[ModuleType.MYSTERY]}
         contractType={[TokenType.ERC721]}
       />
 

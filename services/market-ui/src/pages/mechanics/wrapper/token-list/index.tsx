@@ -39,9 +39,6 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
   } = useCollection<IToken, ITokenSearchDto>({
     baseUrl: "/wrapper-tokens",
     embedded,
-    search: {
-      contractIds: [],
-    },
   });
 
   const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {

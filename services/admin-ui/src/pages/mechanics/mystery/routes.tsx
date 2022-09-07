@@ -4,6 +4,7 @@ import { Protected } from "@gemunion/firebase-login";
 
 import { MysteryBox } from "./box";
 import { MysteryboxContract } from "./contract";
+import { MysteryToken } from "./token";
 
 export const mysteryRoutes: Array<RouteObject> = [
   {
@@ -20,6 +21,14 @@ export const mysteryRoutes: Array<RouteObject> = [
     children: [
       { index: true, element: <MysteryBox /> },
       { path: "/mystery-boxes/:id", element: <MysteryBox /> },
+    ],
+  },
+  {
+    path: "/mystery-tokens",
+    element: <Protected />,
+    children: [
+      { index: true, element: <MysteryToken /> },
+      { path: "/mystery-tokens/:id", element: <MysteryToken /> },
     ],
   },
 ];

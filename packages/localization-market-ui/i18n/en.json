@@ -474,14 +474,14 @@
       "token": {
         "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
-        "title": "Mysterybox Token: {title}"
+        "title": "Mystery Token: {title}"
       },
       "tokens": {
         "sort": {
           "createdAt": "Date",
           "price": "Price"
         },
-        "title": "Mysterybox Tokens"
+        "title": "Mystery Tokens"
       }
     },
     "page": {

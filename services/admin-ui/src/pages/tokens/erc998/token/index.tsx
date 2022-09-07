@@ -13,11 +13,11 @@ import {
 import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { ITemplate, IToken, ITokenSearchDto, TokenAttributes, TokenStatus } from "@framework/types";
+import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { Erc998TokenViewDialog } from "./view";
-import { Erc998TokenSearchForm } from "./form";
+import { TokenSearchForm } from "../../../../components/forms/token-search";
 
 export const Erc998Token: FC = () => {
   const {
@@ -40,17 +40,6 @@ export const Erc998Token: FC = () => {
       template: {} as ITemplate,
       attributes: "{}",
     },
-    search: {
-      query: "",
-      tokenStatus: [TokenStatus.MINTED],
-      attributes: {
-        [TokenAttributes.RARITY]: [],
-        [TokenAttributes.GRADE]: [],
-      },
-      contractIds: [],
-      templateIds: [],
-      tokenId: "",
-    },
   });
 
   return (
@@ -66,7 +55,13 @@ export const Erc998Token: FC = () => {
         </Button>
       </PageHeader>
 
-      <Erc998TokenSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <TokenSearchForm
+        onSubmit={handleSearch}
+        initialValues={search}
+        open={isFiltersOpen}
+        contractModule={[ModuleType.HIERARCHY]}
+        contractType={[TokenType.ERC721]}
+      />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

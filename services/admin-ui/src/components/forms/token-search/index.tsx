@@ -2,11 +2,12 @@ import { FC, Fragment } from "react";
 import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenType } from "@framework/types";
-import { SelectInput } from "@gemunion/mui-inputs-core";
+import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenStatus, TokenType } from "@framework/types";
+import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { useStyles } from "./styles";
+import { TemplateInput } from "./template-input";
 
 interface ITokenSearchFormProps {
   onSubmit: (values: ITokenSearchDto) => Promise<void>;
@@ -21,9 +22,20 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
 
   const classes = useStyles();
 
-  const { contractIds = [], attributes } = initialValues;
+  const {
+    query = "",
+    tokenStatus = [TokenStatus.MINTED],
+    contractIds = [],
+    templateIds = [],
+    tokenId = "",
+    attributes,
+  } = initialValues;
   const fixedValues = {
+    query,
+    tokenStatus,
     contractIds,
+    templateIds,
+    tokenId,
     attributes: Object.assign(
       {
         [TokenAttributes.RARITY]: [],
@@ -44,8 +56,17 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <EntityInput name="contractIds" controller="contracts" multiple data={{ contractType, contractModule }} />
+          </Grid>
+          <Grid item xs={6}>
+            <TemplateInput />
+          </Grid>
+          <Grid item xs={6}>
+            <TextInput name="tokenId" />
+          </Grid>
+          <Grid item xs={6}>
+            <SelectInput name="tokenStatus" options={TokenStatus} multiple />
           </Grid>
           {contractType.filter(value => [TokenType.ERC721, TokenType.ERC998].includes(value)).length &&
           contractModule.filter(value => [ModuleType.HIERARCHY].includes(value)).length ? (
