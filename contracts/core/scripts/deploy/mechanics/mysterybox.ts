@@ -7,8 +7,8 @@ import { blockAwait } from "../../utils/blockAwait";
 export async function deployMysterybox(contracts: Record<string, Contract>) {
   const mysteryboxSimpleFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
   const mysteryboxSimpleInstance = await mysteryboxSimpleFactory.deploy("Mysterybox", "MB721", 100, baseTokenURI);
-  await blockAwait();
   contracts.erc721MysteryboxSimple = mysteryboxSimpleInstance;
+  await blockAwait();
 
   await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxSimpleInstance.address);
   await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxSimpleInstance.address);
@@ -25,8 +25,8 @@ export async function deployMysterybox(contracts: Record<string, Contract>) {
 
   const mysteryboxPausableFactory = await ethers.getContractFactory("ERC721MysteryboxPausable");
   const mysteryboxPausableInstance = await mysteryboxPausableFactory.deploy("Mysterybox", "MB-P721", 100, baseTokenURI);
-  await blockAwait();
   contracts.erc721MysteryboxPausable = mysteryboxPausableInstance;
+  await blockAwait();
 
   await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxPausableInstance.address);
   await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxPausableInstance.address);
@@ -40,6 +40,7 @@ export async function deployMysterybox(contracts: Record<string, Contract>) {
 
   await contracts.contractManager.addFactory(mysteryboxPausableInstance.address, MINTER_ROLE);
   await blockAwait();
+
   const mysteryboxBlacklistFactory = await ethers.getContractFactory("ERC721MysteryboxBlacklist");
   const mysteryboxBlacklistInstance = await mysteryboxBlacklistFactory.deploy(
     "Mysterybox",
@@ -47,8 +48,8 @@ export async function deployMysterybox(contracts: Record<string, Contract>) {
     100,
     baseTokenURI,
   );
-  await blockAwait();
   contracts.erc721MysteryboxBlacklist = mysteryboxBlacklistInstance;
+  await blockAwait();
 
   await contracts.erc721Simple.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address);
   await contracts.erc721Random.grantRole(MINTER_ROLE, mysteryboxBlacklistInstance.address);
