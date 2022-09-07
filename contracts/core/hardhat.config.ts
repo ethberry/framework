@@ -48,12 +48,6 @@ export default {
       // },
       saveDeployments: true,
     },
-    goerli: {
-      chainId: 5,
-      // url: `https://www.ethercluster.com/goerli`,
-      url: `https://eth-goerli.g.alchemy.com/v2/EQ2GoNoVdLEhtc9dTtoEku8I7q_elsta`,
-      accounts: [process.env.PRIVATE_KEY],
-    },
   },
   solidity: {
     compilers: [
