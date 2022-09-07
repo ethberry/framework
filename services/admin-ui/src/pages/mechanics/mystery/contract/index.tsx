@@ -21,15 +21,15 @@ import {
   ContractStatus,
   IContract,
   IContractSearchDto,
-  MysteryboxContractFeatures,
+  MysteryContractFeatures,
 } from "@framework/types";
 
-import { MysteryboxContractEditDialog } from "./edit";
-import { MysteryboxContractDeployButton } from "../../../../components/buttons";
+import { MysteryContractEditDialog } from "./edit";
+import { MysteryContractDeployButton } from "../../../../components/buttons";
 import { ContractActions, ContractActionsMenu } from "../../../../components/menu";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
-export const MysteryboxContract: FC = () => {
+export const MysteryContract: FC = () => {
   const {
     rows,
     count,
@@ -79,14 +79,14 @@ export const MysteryboxContract: FC = () => {
             data-testid="ToggleFiltersButton"
           />
         </Button>
-        <MysteryboxContractDeployButton />
+        <MysteryContractDeployButton />
       </PageHeader>
 
       <ContractSearchForm
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractFeaturesOptions={MysteryboxContractFeatures}
+        contractFeaturesOptions={MysteryContractFeatures}
       />
 
       <ProgressOverlay isLoading={isLoading}>
@@ -139,7 +139,7 @@ export const MysteryboxContract: FC = () => {
         initialValues={selected}
       />
 
-      <MysteryboxContractEditDialog
+      <MysteryContractEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

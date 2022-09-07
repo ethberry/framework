@@ -7,11 +7,11 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 
 import { useStyles } from "./styles";
 
-interface IMysteryboxContractListItemProps {
+interface IMysteryContractListItemProps {
   contract: IContract;
 }
 
-export const MysteryboxContractListItem: FC<IMysteryboxContractListItemProps> = props => {
+export const MysteryContractListItem: FC<IMysteryContractListItemProps> = props => {
   const { contract } = props;
 
   const classes = useStyles();

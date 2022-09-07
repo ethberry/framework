@@ -13,9 +13,9 @@ import {
   IErc20TokenDeployDto,
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
-  IMysteryboxContractDeployDto,
+  IMysteryContractDeployDto,
   IVestingDeployDto,
-  MysteryboxContractFeatures,
+  MysteryContractFeatures,
   VestingContractTemplate,
 } from "@framework/types";
 
@@ -220,10 +220,10 @@ export class ContractManagerSignService {
   }
 
   // MODULE:MYSTERY
-  public async mysterybox(dto: IMysteryboxContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+  public async mysterybox(dto: IMysteryContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { contractFeatures, name, symbol, royalty, baseTokenURI } = dto;
     const nonce = utils.randomBytes(32);
-    const bytecode = this.getBytecodeByMysteryboxContractFeatures(dto);
+    const bytecode = this.getBytecodeByMysteryContractFeatures(dto);
     const signature = await this.signer._signTypedData(
       // Domain
       {
@@ -252,7 +252,7 @@ export class ContractManagerSignService {
         symbol,
         baseTokenURI,
         royalty,
-        featureIds: contractFeatures.map(feature => Object.keys(MysteryboxContractFeatures).indexOf(feature)),
+        featureIds: contractFeatures.map(feature => Object.keys(MysteryContractFeatures).indexOf(feature)),
       },
     );
 
@@ -451,7 +451,7 @@ export class ContractManagerSignService {
     throw this.throwValidationError(dto);
   }
 
-  public getBytecodeByMysteryboxContractFeatures(dto: IMysteryboxContractDeployDto) {
+  public getBytecodeByMysteryContractFeatures(dto: IMysteryContractDeployDto) {
     const { contractFeatures } = dto;
 
     if (!contractFeatures.length) {
@@ -461,11 +461,11 @@ export class ContractManagerSignService {
     if (contractFeatures.length === 2) {
       return MysteryboxFullSol.bytecode;
     } else if (contractFeatures.length === 1) {
-      if (contractFeatures.includes(MysteryboxContractFeatures.BLACKLIST)) {
+      if (contractFeatures.includes(MysteryContractFeatures.BLACKLIST)) {
         return MysteryboxBlacklistSol.bytecode;
       }
 
-      if (contractFeatures.includes(MysteryboxContractFeatures.PAUSABLE)) {
+      if (contractFeatures.includes(MysteryContractFeatures.PAUSABLE)) {
         return MysteryboxPausableSol.bytecode;
       }
     }

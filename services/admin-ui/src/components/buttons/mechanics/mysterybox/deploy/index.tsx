@@ -5,22 +5,22 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import type { IMysteryboxContractDeployDto } from "@framework/types";
-import { MysteryboxContractFeatures } from "@framework/types";
+import type { IMysteryContractDeployDto } from "@framework/types";
+import { MysteryContractFeatures } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
-import { MysteryboxContractDeployDialog } from "./dialog";
+import { MysteryContractDeployDialog } from "./dialog";
 
-export interface IMysteryboxContractDeployButtonProps {
+export interface IMysteryContractDeployButtonProps {
   className?: string;
 }
 
-export const MysteryboxContractDeployButton: FC<IMysteryboxContractDeployButtonProps> = props => {
+export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IMysteryboxContractDeployDto, web3Context, sign) => {
+    (values: IMysteryContractDeployDto, web3Context, sign) => {
       const { contractFeatures, name, symbol, royalty, baseTokenURI } = values;
 
       const nonce = utils.arrayify(sign.nonce);
@@ -36,7 +36,7 @@ export const MysteryboxContractDeployButton: FC<IMysteryboxContractDeployButtonP
         symbol,
         royalty,
         baseTokenURI,
-        contractFeatures.map(feature => Object.keys(MysteryboxContractFeatures).indexOf(feature)),
+        contractFeatures.map(feature => Object.keys(MysteryContractFeatures).indexOf(feature)),
         process.env.ACCOUNT,
         sign.signature,
       ) as Promise<void>;
@@ -60,12 +60,12 @@ export const MysteryboxContractDeployButton: FC<IMysteryboxContractDeployButtonP
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="MysteryboxContractDeployButton"
+        data-testid="MysteryContractDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <MysteryboxContractDeployDialog
+      <MysteryContractDeployDialog
         onConfirm={onDeployConfirm}
         onCancel={handleDeployCancel}
         open={isDeployDialogOpen}

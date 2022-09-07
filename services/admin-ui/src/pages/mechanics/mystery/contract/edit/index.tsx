@@ -9,14 +9,14 @@ import { ContractStatus, IContract } from "@framework/types";
 import { validationSchema } from "./validation";
 import { BlockchainInfoPopover } from "../../../../../components/popover";
 
-export interface IMysteryboxContractEditDialogProps {
+export interface IMysteryContractEditDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form: any) => Promise<void>;
   initialValues: IContract;
 }
 
-export const MysteryboxContractEditDialog: FC<IMysteryboxContractEditDialogProps> = props => {
+export const MysteryContractEditDialog: FC<IMysteryContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   const { id, title, description, baseTokenURI, imageUrl, contractStatus, address, symbol, name, royalty } =
@@ -38,7 +38,7 @@ export const MysteryboxContractEditDialog: FC<IMysteryboxContractEditDialogProps
       initialValues={fixedValues}
       validationSchema={validationSchema}
       message={message}
-      testId="MysteryboxContractEditForm"
+      testId="MysteryContractEditForm"
       action={
         <BlockchainInfoPopover
           name={name}

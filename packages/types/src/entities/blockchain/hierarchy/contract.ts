@@ -42,7 +42,7 @@ export enum Erc1155ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
 }
 
-export enum MysteryboxContractFeatures {
+export enum MysteryContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "PAUSABLE" = "PAUSABLE",
 }

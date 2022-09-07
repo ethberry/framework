@@ -19,7 +19,7 @@ import {
   IContractManagerMysteryboxDeployed,
   IContractManagerVestingDeployed,
   ModuleType,
-  MysteryboxContractFeatures,
+  MysteryContractFeatures,
   TContractManagerEventData,
   TokenType,
   VestingContractTemplate,
@@ -234,7 +234,7 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    const availableFeatures = Object.values(MysteryboxContractFeatures);
+    const availableFeatures = Object.values(MysteryContractFeatures);
     const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
 
     await this.contractService.create({

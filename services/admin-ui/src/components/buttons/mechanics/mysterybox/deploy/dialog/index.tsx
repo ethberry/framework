@@ -3,18 +3,18 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { IContract, IMysteryboxContractDeployDto, MysteryboxContractFeatures } from "@framework/types";
+import { IContract, IMysteryContractDeployDto, MysteryContractFeatures } from "@framework/types";
 
 import { validationSchema } from "./validation";
 
-export interface IMysteryboxContractDeployDialogProps {
+export interface IMysteryContractDeployDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: (values: Partial<IContract>, form?: any) => Promise<void>;
-  initialValues: IMysteryboxContractDeployDto;
+  initialValues: IMysteryContractDeployDto;
 }
 
-export const MysteryboxContractDeployDialog: FC<IMysteryboxContractDeployDialogProps> = props => {
+export const MysteryContractDeployDialog: FC<IMysteryContractDeployDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
   return (
@@ -22,10 +22,10 @@ export const MysteryboxContractDeployDialog: FC<IMysteryboxContractDeployDialogP
       initialValues={initialValues}
       validationSchema={validationSchema}
       message="dialogs.deploy"
-      testId="MysteryboxContractDeployForm"
+      testId="MysteryContractDeployForm"
       {...rest}
     >
-      <SelectInput name="contractFeatures" options={MysteryboxContractFeatures} multiple />
+      <SelectInput name="contractFeatures" options={MysteryContractFeatures} multiple />
       <TextInput name="name" />
       <TextInput name="symbol" />
       <TextInput name="baseTokenURI" />

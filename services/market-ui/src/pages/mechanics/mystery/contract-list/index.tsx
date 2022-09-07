@@ -6,9 +6,9 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { IContract } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
-import { MysteryboxContractListItem } from "./item";
+import { MysteryContractListItem } from "./item";
 
-export const MysteryboxContractList: FC = () => {
+export const MysteryContractList: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IContract, ISearchDto>({
     baseUrl: "/mystery-contracts",
   });
@@ -23,7 +23,7 @@ export const MysteryboxContractList: FC = () => {
         <Grid container spacing={2}>
           {rows.map(contract => (
             <Grid item lg={4} sm={6} xs={12} key={contract.id}>
-              <MysteryboxContractListItem contract={contract} />
+              <MysteryContractListItem contract={contract} />
             </Grid>
           ))}
         </Grid>

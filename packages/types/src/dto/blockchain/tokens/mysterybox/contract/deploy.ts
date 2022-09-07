@@ -1,7 +1,7 @@
-import { MysteryboxContractFeatures } from "../../../../../entities";
+import { MysteryContractFeatures } from "../../../../../entities";
 
-export interface IMysteryboxContractDeployDto {
-  contractFeatures: Array<MysteryboxContractFeatures>;
+export interface IMysteryContractDeployDto {
+  contractFeatures: Array<MysteryContractFeatures>;
   name: string;
   symbol: string;
   baseTokenURI: string;

@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 
-import { MysteryboxContractList } from "./contract-list";
-import { MysteryboxContract } from "./contract";
+import { MysteryContractList } from "./contract-list";
+import { MysteryContract } from "./contract";
 import { MysteryBoxList } from "./mysterybox-list";
 import { MysteryBox } from "./mysterybox";
 import { MysteryboxTokenList } from "./token-list";
@@ -11,8 +11,8 @@ export const mysteryboxRoutes: Array<RouteObject> = [
   {
     path: "/mystery-contracts",
     children: [
-      { index: true, element: <MysteryboxContractList /> },
-      { path: "/mystery-contracts/:id", element: <MysteryboxContract /> },
+      { index: true, element: <MysteryContractList /> },
+      { path: "/mystery-contracts/:id", element: <MysteryContract /> },
     ],
   },
   {

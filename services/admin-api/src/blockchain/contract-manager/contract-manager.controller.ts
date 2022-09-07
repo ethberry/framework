@@ -15,7 +15,7 @@ import {
   Erc20ContractDeployDto,
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
-  MysteryboxContractDeployDto,
+  MysteryContractDeployDto,
   VestingDeployDto,
 } from "./dto";
 import { UserEntity } from "../../user/user.entity";
@@ -78,10 +78,7 @@ export class ContractManagerController {
 
   // MODULE:MYSTERY
   @Post("/mysterybox")
-  public mysterybox(
-    @Body() dto: MysteryboxContractDeployDto,
-    @User() userEntity: UserEntity,
-  ): Promise<IServerSignature> {
+  public mysterybox(@Body() dto: MysteryContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.mysterybox(dto, userEntity);
   }
 

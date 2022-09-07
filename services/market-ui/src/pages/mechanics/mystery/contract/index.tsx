@@ -11,7 +11,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import { MysteryBoxList } from "../mysterybox-list";
 import { useStyles } from "./styles";
 
-export const MysteryboxContract: FC = () => {
+export const MysteryContract: FC = () => {
   const { selected, isLoading } = useCollection<IContract, IContractSearchDto>({
     baseUrl: "/mystery-contracts",
     empty: {
