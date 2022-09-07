@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { baseTokenURI, templateId, tokenId } from "../../constants";
+import { baseTokenURI, templateId, tokenId } from "../../../constants";
 
 export function shouldGetTokenURI() {
   describe("tokenURI", function () {
@@ -9,6 +9,8 @@ export function shouldGetTokenURI() {
       const uri = await this.contractInstance.tokenURI(tokenId);
       expect(uri).to.equal(`${baseTokenURI}/${this.contractInstance.address.toLowerCase()}/${tokenId}`);
     });
+
+    // setTokenURI is not supported
 
     it("should fail: URI query for nonexistent token", async function () {
       const uri = this.contractInstance.tokenURI(tokenId);

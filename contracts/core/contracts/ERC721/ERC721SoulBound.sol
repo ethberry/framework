@@ -18,9 +18,9 @@ contract ERC721SoulBound is ERC721Simple {
 
   function _beforeTokenTransfer(
     address from,
-    address,
+    address to,
     uint256
   ) internal pure override {
-    require(from == address(0), "ERC721SoulBound: can't be transferred");
+    require(from == address(0) || to == address(0), "ERC721SoulBound: can't be transferred");
   }
 }

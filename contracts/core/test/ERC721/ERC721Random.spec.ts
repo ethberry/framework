@@ -2,9 +2,9 @@ import { ethers } from "hardhat";
 
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "./shared/tokenURI";
-import { shouldSetBaseURI } from "./shared/setBaseURI";
-import { shouldMintCommon } from "./shared/mintCommon";
+import { shouldGetTokenURI } from "./shared/common/tokenURI";
+import { shouldSetBaseURI } from "./shared/common/setBaseURI";
+import { shouldMintCommon } from "./shared/common/mintCommon";
 import { shouldMint } from "./shared/mint";
 import { shouldSafeMint } from "./shared/safeMint";
 

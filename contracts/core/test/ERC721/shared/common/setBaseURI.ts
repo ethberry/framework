@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { templateId, tokenId } from "../../constants";
+import { templateId, tokenId } from "../../../constants";
 
 export function shouldSetBaseURI() {
   describe("setBaseURI", function () {

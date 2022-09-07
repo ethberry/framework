@@ -2,11 +2,18 @@ import { ethers } from "hardhat";
 
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "./shared/tokenURI";
-import { shouldSetBaseURI } from "./shared/setBaseURI";
-import { shouldMintCommon } from "./shared/mintCommon";
+import { shouldGetTokenURI } from "./shared/common/tokenURI";
+import { shouldSetBaseURI } from "./shared/common/setBaseURI";
+import { shouldMintCommon } from "./shared/common/mintCommon";
 import { shouldMint } from "./shared/mint";
 import { shouldSafeMint } from "./shared/safeMint";
+import { shouldApprove } from "./shared/common/approve";
+import { shouldGetBalanceOf } from "./shared/common/balanceOf";
+import { shouldBurn } from "./shared/common/burn";
+import { shouldGetOwnerOf } from "./shared/common/ownerOf";
+import { shouldSetApprovalForAll } from "./shared/common/setApprovalForAll";
+import { shouldSafeTransferFrom } from "./shared/common/safeTransferFrom";
+import { shouldTransferFrom } from "./shared/common/transferFrom";
 
 describe("ERC721Simple", function () {
   beforeEach(async function () {
@@ -25,10 +32,16 @@ describe("ERC721Simple", function () {
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGetTokenURI();
-  shouldSetBaseURI();
-
   shouldMintCommon();
   shouldMint();
   shouldSafeMint();
+  shouldApprove();
+  shouldGetBalanceOf();
+  shouldBurn();
+  shouldGetOwnerOf();
+  shouldSetApprovalForAll();
+  shouldTransferFrom();
+  shouldSafeTransferFrom();
+  shouldGetTokenURI();
+  shouldSetBaseURI();
 });

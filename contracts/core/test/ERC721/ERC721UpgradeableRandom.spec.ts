@@ -2,8 +2,8 @@ import { ethers } from "hardhat";
 
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "./shared/tokenURI";
-import { shouldSetBaseURI } from "./shared/setBaseURI";
+import { shouldGetTokenURI } from "./shared/common/tokenURI";
+import { shouldSetBaseURI } from "./shared/common/setBaseURI";
 
 describe("ERC721UpgradeableRandom", function () {
   beforeEach(async function () {

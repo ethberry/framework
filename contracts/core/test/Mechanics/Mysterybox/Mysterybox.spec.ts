@@ -25,8 +25,8 @@ import {
   VRF_ADDR,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "../../ERC721/shared/tokenURI";
-import { shouldSetBaseURI } from "../../ERC721/shared/setBaseURI";
+import { shouldGetTokenURI } from "../../ERC721/shared/common/tokenURI";
+import { shouldSetBaseURI } from "../../ERC721/shared/common/setBaseURI";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 

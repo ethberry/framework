@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 
-import { DEFAULT_ADMIN_ROLE, templateId } from "../constants";
+import { DEFAULT_ADMIN_ROLE, templateId } from "../../constants";
 
 use(solidity);
 

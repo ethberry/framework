@@ -2,12 +2,19 @@ import { ethers } from "hardhat";
 
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "./shared/tokenURI";
-import { shouldSetBaseURI } from "./shared/setBaseURI";
+import { shouldGetTokenURI } from "./shared/common/tokenURI";
+import { shouldSetBaseURI } from "./shared/common/setBaseURI";
 import { shouldMint } from "./shared/mint";
 import { shouldSafeMint } from "./shared/safeMint";
-import { shouldMintCommon } from "./shared/mintCommon";
-import { shouldBlacklist } from "../shared/blacklist";
+import { shouldMintCommon } from "./shared/common/mintCommon";
+import { shouldApprove } from "./shared/common/approve";
+import { shouldGetBalanceOf } from "./shared/common/balanceOf";
+import { shouldBurn } from "./shared/common/burn";
+import { shouldGetOwnerOf } from "./shared/common/ownerOf";
+import { shouldSetApprovalForAll } from "./shared/common/setApprovalForAll";
+import { shouldTransferFrom } from "./shared/common/transferFrom";
+import { shouldSafeTransferFrom } from "./shared/common/safeTransferFrom";
+import { shouldBlacklist } from "./shared/blacklist";
 
 describe("ERC721Blacklist", function () {
   beforeEach(async function () {
@@ -26,10 +33,17 @@ describe("ERC721Blacklist", function () {
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldMintCommon();
+  shouldMint();
+  shouldSafeMint();
+  shouldApprove();
+  shouldGetBalanceOf();
+  shouldBurn();
+  shouldGetOwnerOf();
+  shouldSetApprovalForAll();
+  shouldTransferFrom();
+  shouldSafeTransferFrom();
   shouldGetTokenURI();
   shouldSetBaseURI();
   shouldBlacklist();
-  shouldMint();
-  shouldSafeMint();
-  shouldMintCommon();
 });

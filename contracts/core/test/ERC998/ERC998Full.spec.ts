@@ -2,12 +2,12 @@ import { ethers } from "hardhat";
 
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
-import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
-import { shouldBlacklist } from "../shared/blacklist";
+import { shouldGetTokenURI } from "../ERC721/shared/common/tokenURI";
+import { shouldSetBaseURI } from "../ERC721/shared/common/setBaseURI";
+import { shouldBlacklist } from "../ERC721/shared/blacklist";
 import { shouldMint } from "../ERC721/shared/mint";
 import { shouldSafeMint } from "../ERC721/shared/safeMint";
-import { shouldMintCommon } from "../ERC721/shared/mintCommon";
+import { shouldMintCommon } from "../ERC721/shared/common/mintCommon";
 
 describe("ERC998Full", function () {
   beforeEach(async function () {
