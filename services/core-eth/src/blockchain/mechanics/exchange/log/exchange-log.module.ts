@@ -31,6 +31,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             eventNames: [
               ExchangeEventType.Purchase,
               ExchangeEventType.Claim,
+              ReferralProgramEventType.ReferralProgram,
               ReferralProgramEventType.ReferralWithdraw,
               ReferralProgramEventType.ReferralReward,
               ContractEventType.Paused,
