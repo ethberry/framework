@@ -39,8 +39,8 @@ abstract contract ExchangeMysterybox is SignatureValidator, ExchangeUtils, Acces
 
     IERC721Mysterybox(box.token).mintBox(account, box.tokenId, items);
 
-    _afterPurchase(params, price);
+    _afterPurchase(params.referrer, price);
   }
 
-  function _afterPurchase(Params memory params, Asset[] memory price) internal virtual;
+  function _afterPurchase(address referrer, Asset[] memory price) internal virtual;
 }

@@ -43,8 +43,9 @@ abstract contract LinearReferral is Context, AccessControl {
   function getRefProgram() public view returns(Ref memory) {
     return _refProgram;
   }
-  function _afterPurchase(Params memory params, Asset[] memory price) internal virtual {
-    updateReferrers(params.referrer, price);
+
+  function _afterPurchase(address referrer, Asset[] memory price) internal virtual {
+    updateReferrers(referrer, price);
   }
 
   function updateReferrers(address initReferrer, Asset[] memory price) internal {
@@ -106,6 +107,4 @@ abstract contract LinearReferral is Context, AccessControl {
   function getBalance(address referral, address token) public view returns (uint256 balance) {
     return _rewardBalances[referral][token];
   }
-
-  receive() external payable {}
 }

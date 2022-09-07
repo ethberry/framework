@@ -56,7 +56,7 @@ contract Exchange is
     return super.supportsInterface(interfaceId);
   }
 
-  function _afterPurchase(Params memory params, Asset[] memory price) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral) {
-    return super._afterPurchase(params, price);
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(ExchangeCore, ExchangeMysterybox, LinearReferral) {
+    return super._afterPurchase(referrer, price);
   }
 }
