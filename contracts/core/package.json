@@ -5,10 +5,10 @@
     "url": "https://www.gemunion.io/"
   },
   "dependencies": {
-    "@gemunion/genes": "0.0.1",
     "@chainlink/contracts": "0.4.2",
     "@gemunion/constants": "0.8.5",
     "@gemunion/contracts": "0.7.7",
+    "@gemunion/genes": "0.0.1",
     "@gemunion/utils-eth": "0.0.4",
     "@nomicfoundation/hardhat-network-helpers": "1.0.5",
     "@nomiclabs/hardhat-ethers": "2.1.1",
