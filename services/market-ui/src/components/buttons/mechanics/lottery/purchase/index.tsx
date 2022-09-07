@@ -20,23 +20,21 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
 
   const settings = useSettings();
 
-  const metaFnWithSign = useServerSignature(
-    (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.LOTTERY_ADDR, LotterySol.abi, web3Context.provider?.getSigner());
-      return contract.purchase(
-        {
-          nonce: utils.arrayify(sign.nonce),
-          externalId: 0,
-          expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
-        },
-        ticketNumbers,
-        constants.WeiPerEther,
-        process.env.ACCOUNT,
-        sign.signature,
-      ) as Promise<void>;
-    },
-  );
+  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+    const contract = new Contract(process.env.LOTTERY_ADDR, LotterySol.abi, web3Context.provider?.getSigner());
+    return contract.purchase(
+      {
+        nonce: utils.arrayify(sign.nonce),
+        externalId: 0,
+        expiresAt: sign.expiresAt,
+        referrer: settings.getReferrer(),
+      },
+      ticketNumbers,
+      constants.WeiPerEther,
+      process.env.ACCOUNT,
+      sign.signature,
+    ) as Promise<void>;
+  });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
@@ -51,6 +49,7 @@ export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
           referrer: settings.getReferrer(),
         },
       },
+      null,
       web3Context,
     );
   });
