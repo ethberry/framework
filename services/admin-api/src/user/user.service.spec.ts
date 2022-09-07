@@ -35,7 +35,7 @@ describe("UserService", () => {
         AuthModule,
         UserSeedModule,
       ],
-      providers: [Logger, UserService],
+      providers: [Logger, UserService, UserSeedService],
     }).compile();
 
     userService = module.get<UserService>(UserService);
