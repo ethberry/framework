@@ -29,7 +29,7 @@ export async function deployERC721(contracts: Record<string, Contract>) {
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await blockAwait();
 
-  const erc721SoulBoundFactory = await ethers.getContractFactory("ERC721SoulBound");
+  const erc721SoulBoundFactory = await ethers.getContractFactory("ERC721Soulbound");
   contracts.erc721SoulBound = await erc721SoulBoundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
   await blockAwait();
 
