@@ -8,7 +8,7 @@ pragma solidity ^0.8.9;
 
 import "./ERC721Simple.sol";
 
-contract ERC721Soulbound is ERC721Simple {
+contract ERC721SoulBound is ERC721Simple {
   constructor(
     string memory name,
     string memory symbol,

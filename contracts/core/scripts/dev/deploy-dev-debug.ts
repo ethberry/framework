@@ -106,7 +106,7 @@ async function main() {
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc721SoulboundFactory = await ethers.getContractFactory("ERC721Soulbound");
+  const erc721SoulboundFactory = await ethers.getContractFactory("ERC721SoulBound");
   contracts.erc721Soulbound = await erc721SoulboundFactory.deploy("ERC721 MEDAL", "SB721", royalty, baseTokenURI);
   await debug(contracts);
 
