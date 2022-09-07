@@ -21,40 +21,38 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
 
   const settings = useSettings();
 
-  const metaFnWithSign = useServerSignature(
-    (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
-      return contract.purchase(
-        {
-          nonce: utils.arrayify(sign.nonce),
-          externalId: template.id,
-          expiresAt: sign.expiresAt,
-          referrer: settings.getReferrer(),
-        },
-        {
-          tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
-          token: template.contract?.address,
-          tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
-          amount: 1,
-        },
-        template.price?.components.map(component => ({
-          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-          token: component.contract!.address,
-          // pass templateId instead of tokenId = 0
-          tokenId:
-            component.template!.tokens![0].tokenId === "0"
-              ? component.template!.tokens![0].templateId
-              : component.template!.tokens![0].tokenId,
-          amount: component.amount,
-        })),
-        process.env.ACCOUNT,
-        sign.signature,
-        {
-          value: getEthPrice(template.price),
-        },
-      ) as Promise<void>;
-    },
-  );
+  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+    return contract.purchase(
+      {
+        nonce: utils.arrayify(sign.nonce),
+        externalId: template.id,
+        expiresAt: sign.expiresAt,
+        referrer: settings.getReferrer(),
+      },
+      {
+        tokenType: Object.keys(TokenType).indexOf(template.contract!.contractType),
+        token: template.contract?.address,
+        tokenId: template.contract!.contractType === TokenType.ERC1155 ? template.tokens![0].tokenId : template.id,
+        amount: 1,
+      },
+      template.price?.components.map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract!.address,
+        // pass templateId instead of tokenId = 0
+        tokenId:
+          component.template!.tokens![0].tokenId === "0"
+            ? component.template!.tokens![0].templateId
+            : component.template!.tokens![0].tokenId,
+        amount: component.amount,
+      })),
+      process.env.ACCOUNT,
+      sign.signature,
+      {
+        value: getEthPrice(template.price),
+      },
+    ) as Promise<void>;
+  });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
@@ -69,6 +67,7 @@ export const TemplatePurchaseButton: FC<ITemplatePurchaseButtonProps> = props =>
           referrer: settings.getReferrer(),
         },
       },
+      null,
       web3Context,
     );
   });
