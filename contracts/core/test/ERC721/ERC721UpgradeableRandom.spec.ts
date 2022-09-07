@@ -1,18 +1,15 @@
 import { ethers } from "hardhat";
-import { expect } from "chai";
 
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-// import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
-// import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
-import { shouldMint } from "../ERC721/shared/mint";
-import { shouldSafeMint } from "../ERC721/shared/safeMint";
+import { shouldGetTokenURI } from "./shared/tokenURI";
+import { shouldSetBaseURI } from "./shared/setBaseURI";
 
-describe("ERC998Genes", function () {
+describe("ERC721UpgradeableRandom", function () {
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const erc721Factory = await ethers.getContractFactory("ERC998Genes");
+    const erc721Factory = await ethers.getContractFactory("ERC721Upgradeable");
     this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
@@ -25,15 +22,6 @@ describe("ERC998Genes", function () {
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  // shouldGetTokenURI();
-  // shouldSetBaseURI();
-  shouldMint();
-  shouldSafeMint();
-
-  describe("mintCommon", function () {
-    it("should mint to wallet", async function () {
-      const tx = this.erc721Instance.connect(this.receiver).mint(this.receiver.address);
-      await expect(tx).to.be.revertedWith("MethodNotSupported");
-    });
-  });
+  shouldGetTokenURI();
+  shouldSetBaseURI();
 });

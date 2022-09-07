@@ -3,16 +3,14 @@ import { expect } from "chai";
 
 import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
 import { shouldHaveRole } from "../shared/accessControl/hasRoles";
-// import { shouldGetTokenURI } from "../ERC721/shared/tokenURI";
-// import { shouldSetBaseURI } from "../ERC721/shared/setBaseURI";
-import { shouldMint } from "../ERC721/shared/mint";
-import { shouldSafeMint } from "../ERC721/shared/safeMint";
+import { shouldMint } from "./shared/mint";
+import { shouldSafeMint } from "./shared/safeMint";
 
-describe("ERC998Genes", function () {
+describe("ERC721Genes", function () {
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
-    const erc721Factory = await ethers.getContractFactory("ERC998Genes");
+    const erc721Factory = await ethers.getContractFactory("ERC721Genes");
     this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
 
     const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
