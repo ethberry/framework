@@ -1,7 +1,11 @@
-import { ethers } from "hardhat";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
 
-import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
+import { shouldHaveRole } from "./shared/accessControl/hasRoles";
+import { shouldGetRoleAdmin } from "./shared/accessControl/getRoleAdmin";
+import { shouldGrantRole } from "./shared/accessControl/grantRole";
+import { shouldRevokeRole } from "./shared/accessControl/revokeRole";
+import { shouldRenounceRole } from "./shared/accessControl/renounceRole";
+
 import { shouldGetTokenURI } from "./shared/common/tokenURI";
 import { shouldSetBaseURI } from "./shared/common/setBaseURI";
 import { shouldMint } from "./shared/mint";
@@ -17,33 +21,26 @@ import { shouldSafeTransferFrom } from "./shared/common/safeTransferFrom";
 import { shouldBlacklist } from "./shared/blacklist";
 
 describe("ERC721Blacklist", function () {
-  beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
+  const name = "ERC721Blacklist";
 
-    const erc721Factory = await ethers.getContractFactory("ERC721Blacklist");
-    this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGetRoleAdmin(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGrantRole(name);
+  shouldRevokeRole(name);
+  shouldRenounceRole(name);
 
-    const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
-    this.erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
+  shouldMintCommon(name);
+  shouldMint(name);
+  shouldSafeMint(name);
+  shouldApprove(name);
+  shouldGetBalanceOf(name);
+  shouldBurn(name);
+  shouldGetOwnerOf(name);
+  shouldSetApprovalForAll(name);
+  shouldTransferFrom(name);
+  shouldSafeTransferFrom(name);
+  shouldGetTokenURI(name);
+  shouldSetBaseURI(name);
 
-    const erc721NonReceiverFactory = await ethers.getContractFactory("ERC721NonReceiverMock");
-    this.erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
-
-    this.contractInstance = this.erc721Instance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldMintCommon();
-  shouldMint();
-  shouldSafeMint();
-  shouldApprove();
-  shouldGetBalanceOf();
-  shouldBurn();
-  shouldGetOwnerOf();
-  shouldSetApprovalForAll();
-  shouldTransferFrom();
-  shouldSafeTransferFrom();
-  shouldGetTokenURI();
-  shouldSetBaseURI();
-  shouldBlacklist();
+  shouldBlacklist(name);
 });

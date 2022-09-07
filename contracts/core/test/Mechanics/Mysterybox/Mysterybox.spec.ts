@@ -25,8 +25,8 @@ import {
   VRF_ADDR,
 } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "../../ERC721/shared/common/tokenURI";
-import { shouldSetBaseURI } from "../../ERC721/shared/common/setBaseURI";
+// import { shouldGetTokenURI } from "../../ERC721/shared/common/tokenURI";
+// import { shouldSetBaseURI } from "../../ERC721/shared/common/setBaseURI";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
 
@@ -82,8 +82,8 @@ describe("ERC721MysteryboxSimple", function () {
   });
 
   shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGetTokenURI();
-  shouldSetBaseURI();
+  // shouldGetTokenURI();
+  // shouldSetBaseURI();
 
   describe("mint", function () {
     it("should mint (singular)", async function () {

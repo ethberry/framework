@@ -1,39 +1,50 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { templateId, tokenId } from "../../../constants";
 
-export function shouldBurn() {
+import { templateId, tokenId } from "../../../constants";
+import { deployErc721Fixture } from "../fixture";
+
+export function shouldBurn(name: string) {
   describe("burn", function () {
     it("should fail: not an owner", async function () {
-      await this.contractInstance.mintCommon(this.owner.address, templateId);
-      const tx = this.contractInstance.connect(this.receiver).burn(tokenId);
+      const [owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      await contractInstance.mintCommon(owner.address, templateId);
+      const tx = contractInstance.connect(receiver).burn(tokenId);
 
       await expect(tx).to.be.revertedWith(`ERC721: caller is not token owner nor approved`);
     });
 
     it("should burn own token", async function () {
-      await this.contractInstance.mintCommon(this.owner.address, templateId);
-      const tx = await this.contractInstance.burn(tokenId);
+      const [owner] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      await contractInstance.mintCommon(owner.address, templateId);
+      const tx = await contractInstance.burn(tokenId);
 
       await expect(tx)
-        .to.emit(this.contractInstance, "Transfer")
-        .withArgs(this.owner.address, ethers.constants.AddressZero, tokenId);
+        .to.emit(contractInstance, "Transfer")
+        .withArgs(owner.address, ethers.constants.AddressZero, tokenId);
 
-      const balanceOfOwner = await this.contractInstance.balanceOf(this.owner.address);
+      const balanceOfOwner = await contractInstance.balanceOf(owner.address);
       expect(balanceOfOwner).to.equal(0);
     });
 
     it("should burn approved token", async function () {
-      await this.contractInstance.mintCommon(this.owner.address, templateId);
-      await this.contractInstance.approve(this.receiver.address, tokenId);
+      const [owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
 
-      const tx = await this.contractInstance.burn(tokenId);
+      await contractInstance.mintCommon(owner.address, templateId);
+      await contractInstance.approve(receiver.address, tokenId);
+
+      const tx = await contractInstance.burn(tokenId);
 
       await expect(tx)
-        .to.emit(this.contractInstance, "Transfer")
-        .withArgs(this.owner.address, ethers.constants.AddressZero, tokenId);
+        .to.emit(contractInstance, "Transfer")
+        .withArgs(owner.address, ethers.constants.AddressZero, tokenId);
 
-      const balanceOfOwner = await this.contractInstance.balanceOf(this.owner.address);
+      const balanceOfOwner = await contractInstance.balanceOf(owner.address);
       expect(balanceOfOwner).to.equal(0);
     });
   });

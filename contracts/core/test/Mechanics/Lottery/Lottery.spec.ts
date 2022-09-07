@@ -1,7 +1,7 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers, network, web3 } from "hardhat";
-import { utils, BigNumber, constants } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 import { Network } from "@ethersproject/networks";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";

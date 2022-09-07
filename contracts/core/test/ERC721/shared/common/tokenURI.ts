@@ -1,19 +1,26 @@
 import { expect } from "chai";
+import { ethers } from "hardhat";
 
 import { baseTokenURI, templateId, tokenId } from "../../../constants";
+import { deployErc721Fixture } from "../fixture";
 
-export function shouldGetTokenURI() {
+export function shouldGetTokenURI(name: string) {
   describe("tokenURI", function () {
     it("should get token uri", async function () {
-      await this.contractInstance.mintCommon(this.owner.address, templateId);
-      const uri = await this.contractInstance.tokenURI(tokenId);
-      expect(uri).to.equal(`${baseTokenURI}/${this.contractInstance.address.toLowerCase()}/${tokenId}`);
+      const [owner] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      await contractInstance.mintCommon(owner.address, templateId);
+      const uri = await contractInstance.tokenURI(tokenId);
+      expect(uri).to.equal(`${baseTokenURI}/${contractInstance.address.toLowerCase()}/${tokenId}`);
     });
 
     // setTokenURI is not supported
 
     it("should fail: URI query for nonexistent token", async function () {
-      const uri = this.contractInstance.tokenURI(tokenId);
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      const uri = contractInstance.tokenURI(tokenId);
       await expect(uri).to.be.revertedWith("ERC721: invalid token ID");
     });
   });

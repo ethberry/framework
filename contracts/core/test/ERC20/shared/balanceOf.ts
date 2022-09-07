@@ -2,32 +2,40 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { amount } from "../../constants";
+import { deployErc20Fixture } from "./fixture";
 
-export function shouldBalanceOf(burnable = false) {
+export function shouldBalanceOf(name: string) {
   describe("balanceOf", function () {
     it("should get balance of owner", async function () {
-      await this.contractInstance.mint(this.owner.address, amount);
+      const [owner] = await ethers.getSigners();
+      const { contractInstance } = await deployErc20Fixture(name);
 
-      const balance = await this.contractInstance.balanceOf(this.owner.address);
+      await contractInstance.mint(owner.address, amount);
+
+      const balance = await contractInstance.balanceOf(owner.address);
       expect(balance).to.equal(amount);
     });
 
     it("should get balance of not owner", async function () {
-      const balance = await this.contractInstance.balanceOf(this.receiver.address);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc20Fixture(name);
+
+      const balance = await contractInstance.balanceOf(receiver.address);
       expect(balance).to.equal(0);
     });
 
     it("should not fail for zero addr", async function () {
-      await this.contractInstance.mint(this.owner.address, amount);
+      const [owner] = await ethers.getSigners();
+      const { contractInstance } = await deployErc20Fixture(name);
 
-      if (burnable) {
-        const tx = this.contractInstance.burn(amount);
-        await expect(tx)
-          .to.emit(this.contractInstance, "Transfer")
-          .withArgs(this.owner.address, ethers.constants.AddressZero, amount);
-      }
+      await contractInstance.mint(owner.address, amount);
 
-      const balance = await this.contractInstance.balanceOf(ethers.constants.AddressZero);
+      const tx = contractInstance.burn(amount);
+      await expect(tx)
+        .to.emit(contractInstance, "Transfer")
+        .withArgs(owner.address, ethers.constants.AddressZero, amount);
+
+      const balance = await contractInstance.balanceOf(ethers.constants.AddressZero);
       expect(balance).to.equal(0);
     });
   });

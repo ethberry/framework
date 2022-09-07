@@ -1,6 +1,6 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
-import { ethers, waffle, web3, network } from "hardhat";
+import { ethers, network, waffle, web3 } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";

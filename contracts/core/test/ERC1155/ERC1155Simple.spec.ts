@@ -1,42 +1,48 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { ERC1155Simple } from "../../typechain-types";
-import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenId } from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, tokenId } from "../constants";
+
+import { shouldHaveRole } from "./shared/accessControl/hasRoles";
+import { shouldGetRoleAdmin } from "./shared/accessControl/getRoleAdmin";
+import { shouldGrantRole } from "./shared/accessControl/grantRole";
+import { shouldRevokeRole } from "./shared/accessControl/revokeRole";
+import { shouldRenounceRole } from "./shared/accessControl/renounceRole";
+import { deployErc1155Fixture } from "./shared/fixture";
 
 describe("ERC1155Simple", function () {
-  let erc1155Instance: ERC1155Simple;
+  const name = "ERC1155Simple";
 
-  beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
-
-    const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
-
-    this.contractInstance = erc1155Instance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGetRoleAdmin(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldGrantRole(name);
+  shouldRevokeRole(name);
+  shouldRenounceRole(name);
 
   describe("mintBatch", function () {
     it("should fail for wrong role", async function () {
-      const tx = erc1155Instance.connect(this.receiver).mintBatch(this.receiver.address, [tokenId], [amount], "0x");
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc1155Fixture(name);
+
+      const tx = contractInstance.connect(receiver).mintBatch(receiver.address, [tokenId], [amount], "0x");
       await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
+        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${MINTER_ROLE}`,
       );
     });
 
     it("should mint", async function () {
-      const tx = erc1155Instance.mintBatch(this.receiver.address, [tokenId], [amount], "0x");
-      await expect(tx)
-        .to.emit(erc1155Instance, "TransferBatch")
-        .withArgs(this.owner.address, ethers.constants.AddressZero, this.receiver.address, [tokenId], [amount]);
+      const [owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc1155Fixture(name);
 
-      const balance = await erc1155Instance.balanceOf(this.receiver.address, tokenId);
+      const tx = contractInstance.mintBatch(receiver.address, [tokenId], [amount], "0x");
+      await expect(tx)
+        .to.emit(contractInstance, "TransferBatch")
+        .withArgs(owner.address, ethers.constants.AddressZero, receiver.address, [tokenId], [amount]);
+
+      const balance = await contractInstance.balanceOf(receiver.address, tokenId);
       expect(balance).to.equal(amount);
 
-      const totalSupply = await erc1155Instance.totalSupply(tokenId);
+      const totalSupply = await contractInstance.totalSupply(tokenId);
       expect(totalSupply).to.equal(amount);
     });
   });

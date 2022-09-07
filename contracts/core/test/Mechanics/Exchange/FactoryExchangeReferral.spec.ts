@@ -1,11 +1,11 @@
 import { expect, use } from "chai";
 import { solidity } from "ethereum-waffle";
 import { ethers } from "hardhat";
-import { ContractFactory, constants, utils } from "ethers";
+import { constants, ContractFactory, utils } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ContractManager, Exchange } from "../../../typechain-types";
-import { nonce, tokenName, amountWei, amountWeiEth, tokenZero, templateId } from "../../constants";
+import { amountWei, amountWeiEth, nonce, templateId, tokenName, tokenZero } from "../../constants";
 import { wrapOneToManySignature } from "./shared/utils";
 import { blockAwait } from "../../../scripts/utils/blockAwait";
 import { factoryDeploy } from "./shared/factoryDeploy";

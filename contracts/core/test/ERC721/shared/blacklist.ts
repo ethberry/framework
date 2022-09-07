@@ -1,42 +1,56 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
+import { expect } from "chai";
+import { ethers } from "hardhat";
 
 import { DEFAULT_ADMIN_ROLE, templateId } from "../../constants";
+import { deployErc721Fixture } from "./fixture";
 
-use(solidity);
-
-export function shouldBlacklist() {
+export function shouldBlacklist(name: string) {
   describe("Black list", function () {
     it("should fail: account is missing role", async function () {
-      const tx = this.contractInstance.connect(this.receiver).blacklist(this.receiver.address);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      const tx = contractInstance.connect(receiver).blacklist(receiver.address);
       await expect(tx).to.be.revertedWith(
-        `AccessControl: account ${this.receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
+        `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,
       );
     });
 
     it("should check black list", async function () {
-      const isBlackListed = await this.contractInstance.isBlacklisted(this.receiver.address);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      const isBlackListed = await contractInstance.isBlacklisted(receiver.address);
       expect(isBlackListed).to.equal(false);
     });
 
     it("should add to black list", async function () {
-      const tx = this.contractInstance.blacklist(this.receiver.address);
-      await expect(tx).to.emit(this.contractInstance, "Blacklisted").withArgs(this.receiver.address);
-      const isBlackListed = await this.contractInstance.isBlacklisted(this.receiver.address);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      const tx = contractInstance.blacklist(receiver.address);
+      await expect(tx).to.emit(contractInstance, "Blacklisted").withArgs(receiver.address);
+      const isBlackListed = await contractInstance.isBlacklisted(receiver.address);
       expect(isBlackListed).to.equal(true);
     });
 
     it("should delete from black list", async function () {
-      await this.contractInstance.blacklist(this.receiver.address);
-      const tx = this.contractInstance.unBlacklist(this.receiver.address);
-      await expect(tx).to.emit(this.contractInstance, "UnBlacklisted").withArgs(this.receiver.address);
-      const isBlackListed = await this.contractInstance.isBlacklisted(this.receiver.address);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      await contractInstance.blacklist(receiver.address);
+      const tx = contractInstance.unBlacklist(receiver.address);
+      await expect(tx).to.emit(contractInstance, "UnBlacklisted").withArgs(receiver.address);
+      const isBlackListed = await contractInstance.isBlacklisted(receiver.address);
       expect(isBlackListed).to.equal(false);
     });
 
     it("should fail: blacklisted", async function () {
-      await this.contractInstance.blacklist(this.receiver.address);
-      const tx = this.contractInstance.mintCommon(this.receiver.address, templateId);
+      const [_owner, receiver] = await ethers.getSigners();
+      const { contractInstance } = await deployErc721Fixture(name);
+
+      await contractInstance.blacklist(receiver.address);
+      const tx = contractInstance.mintCommon(receiver.address, templateId);
       await expect(tx).to.be.revertedWith(`Blacklist: receiver is blacklisted`);
     });
   });

@@ -1,33 +1,32 @@
-import { ethers } from "hardhat";
-
-import { baseTokenURI, DEFAULT_ADMIN_ROLE, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../constants";
-import { shouldHaveRole } from "../shared/accessControl/hasRoles";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
+import { shouldHaveRole } from "../ERC721/shared/accessControl/hasRoles";
 import { shouldGetTokenURI } from "../ERC721/shared/common/tokenURI";
 import { shouldSetBaseURI } from "../ERC721/shared/common/setBaseURI";
 import { shouldMint } from "../ERC721/shared/mint";
 import { shouldSafeMint } from "../ERC721/shared/safeMint";
 import { shouldMintCommon } from "../ERC721/shared/common/mintCommon";
+import { shouldApprove } from "../ERC721/shared/common/approve";
+import { shouldGetBalanceOf } from "../ERC721/shared/common/balanceOf";
+import { shouldBurn } from "../ERC721/shared/common/burn";
+import { shouldGetOwnerOf } from "../ERC721/shared/common/ownerOf";
+import { shouldSetApprovalForAll } from "../ERC721/shared/common/setApprovalForAll";
+import { shouldTransferFrom } from "../ERC721/shared/common/transferFrom";
+import { shouldSafeTransferFrom } from "../ERC721/shared/common/safeTransferFrom";
 
 describe("ERC998ERC1155ERC20Simple", function () {
-  beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
+  const name = "ERC998ERC1155ERC20Simple";
 
-    const erc721Factory = await ethers.getContractFactory("ERC998ERC1155ERC20Simple");
-    this.erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-
-    const erc721ReceiverFactory = await ethers.getContractFactory("ERC721ReceiverMock");
-    this.erc721ReceiverInstance = await erc721ReceiverFactory.deploy();
-
-    const erc721NonReceiverFactory = await ethers.getContractFactory("ERC721NonReceiverMock");
-    this.erc721NonReceiverInstance = await erc721NonReceiverFactory.deploy();
-
-    this.contractInstance = this.erc721Instance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGetTokenURI();
-  shouldSetBaseURI();
-  shouldMint();
-  shouldSafeMint();
-  shouldMintCommon();
+  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldMintCommon(name);
+  shouldMint(name);
+  shouldSafeMint(name);
+  shouldApprove(name);
+  shouldGetBalanceOf(name);
+  shouldBurn(name);
+  shouldGetOwnerOf(name);
+  shouldSetApprovalForAll(name);
+  shouldTransferFrom(name);
+  shouldSafeTransferFrom(name);
+  shouldGetTokenURI(name);
+  shouldSetBaseURI(name);
 });
