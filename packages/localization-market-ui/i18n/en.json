@@ -150,6 +150,7 @@
     "labels": {
       "GRADE": "Grade",
       "RARITY": "Rarity",
+      "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -188,7 +189,6 @@
       "price": "Price",
       "rank": "Rank",
       "rarity": "Rarity",
-      "RARITY": "Rarity",
       "recurrent": "Is recurrent?",
       "referrer": "Referrer",
       "reward": "Reward",
@@ -277,6 +277,10 @@
       "sorry": "Sorry, maybe you will get lucky next time",
       "title": "Claim"
     },
+    "coin-gecko": {
+      "rates": "Rates",
+      "title": "CoinGecko"
+    },
     "craft": {
       "price": "price",
       "tabs": {
@@ -296,6 +300,7 @@
         "erc998": "ERC998"
       },
       "integrations": {
+        "coin-gecko": "CoinGecko",
         "ipfs": "IPFS",
         "marketplace": "Marketplace",
         "pages": {

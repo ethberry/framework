@@ -34,6 +34,7 @@
     "@gemunion/mui-rte": "2.0.3",
     "@gemunion/popup": "0.0.36",
     "@gemunion/provider-api-firebase": "0.0.14",
+    "@gemunion/provider-coingecko": "0.2.5",
     "@gemunion/provider-license": "1.0.33",
     "@gemunion/provider-localization": "3.0.16",
     "@gemunion/provider-picker": "3.5.15",
