@@ -8,6 +8,7 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
+    "@gemunion/types-coin-gecko": "0.3.2",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@framework/constants": "0.0.1",

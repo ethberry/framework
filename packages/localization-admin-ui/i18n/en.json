@@ -410,6 +410,7 @@
     },
     "coin-gecko": {
       "rates": "Rates",
+      "ohlc": "OHLC",
       "title": "CoinGecko"
     },
     "coin-market-cap": {

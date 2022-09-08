@@ -13,6 +13,7 @@ import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@ge
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { CoinMarketCapModule } from "@gemunion/nest-js-module-coin-market-cap";
+import { CoinGeckoModule } from "@gemunion/nest-js-module-coin-gecko";
 
 import ormconfig from "./ormconfig";
 import { AuthModule } from "./auth/auth.module";
@@ -90,6 +91,7 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     PageModule,
     BlockchainModule,
     CoinMarketCapModule,
+    CoinGeckoModule,
   ],
   controllers: [AppController],
 })

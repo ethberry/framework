@@ -15,7 +15,7 @@ export const CoinMarketCap: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/coin-market-cap">
+        <ListItem button component={RouterLink} to="/coin-market-cap/rates">
           <ListItemIcon>
             <Paid />
           </ListItemIcon>
