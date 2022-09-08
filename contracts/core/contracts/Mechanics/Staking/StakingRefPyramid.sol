@@ -113,7 +113,7 @@ contract StakingReferralPyramid is IStaking, AccessControl, Pausable, ERC1155Hol
     _afterPurchase(referrer, depositItems);
   }
 
-  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferralPyramid) {
     return super._afterPurchase(referrer, price);
   }
 
@@ -237,7 +237,25 @@ contract StakingReferralPyramid is IStaking, AccessControl, Pausable, ERC1155Hol
   function _setRule(Rule memory rule) internal {
     _ruleIdCounter.increment();
     uint256 ruleId = _ruleIdCounter.current();
-    _rules[ruleId] = rule;
+
+    // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
+    // _rules[ruleId] = rule
+
+    Rule storage p = _rules[ruleId];
+    p.deposit = rule.deposit;
+    p.reward = rule.reward;
+    // p.content = rule.content;
+    p.period = rule.period;
+    p.penalty = rule.penalty;
+    p.recurrent = rule.recurrent;
+    p.active = rule.active;
+    p.externalId = rule.externalId;
+
+    uint256 length = rule.content.length;
+    for (uint256 i = 0; i < length; i++) {
+      p.content.push(rule.content[i]);
+    }
+
     emit RuleCreated(ruleId, rule, rule.externalId);
   }
 
