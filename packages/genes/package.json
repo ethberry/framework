@@ -22,7 +22,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/genes",
+  "name": "@framework/genes",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

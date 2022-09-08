@@ -1,4 +1,22 @@
 {
-  "extends": ["github>gemunion/renovate-config"],
-  "baseBranches": ["dev"]
+  "extends": [
+    "github>gemunion/renovate-config"
+  ],
+  "baseBranches": [
+    "dev"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePrefixes": ["@gemunion/"],
+      "commitMessageTopic": "Gemunion",
+      "groupName": "@Gemunion packages",
+      "groupSlug": "gemunion-packages"
+    },
+    {
+      "matchPackagePrefixes": ["@mui/"],
+      "commitMessageTopic": "MUI",
+      "groupName": "@Mui packages",
+      "groupSlug": "mui-packages"
+    }
+  ]
 }
