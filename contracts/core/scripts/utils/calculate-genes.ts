@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { BigNumber } from "ethers";
 
-import { encodeGenes, decodeGenes } from "@gemunion/genes";
+import { encodeGenes, decodeGenes } from "@framework/genes";
 
 // Patch BigNumber
 Object.defineProperties(BigNumber.prototype, {

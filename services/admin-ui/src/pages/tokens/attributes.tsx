@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import { Grid } from "@mui/material";
 
 import { TokenAttributes, TokenRarity } from "@framework/types";
-import { decodeGenes } from "@gemunion/genes";
+import { decodeGenes } from "@framework/genes";
 
 export interface ITokenAttributesView {
   attributes: Record<string, any>;

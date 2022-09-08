@@ -6,7 +6,7 @@ import { BigNumber } from "ethers";
 
 import { getPainText } from "@gemunion/draft-js-utils";
 import { TokenAttributes, TokenRarity } from "@framework/types";
-import { decodeGenes } from "@gemunion/genes";
+import { decodeGenes } from "@framework/genes";
 
 import { IOpenSeaMetadata, IOpenSeaMetadataAttribute } from "../../common/interfaces";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";

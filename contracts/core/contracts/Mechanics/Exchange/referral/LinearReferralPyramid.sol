@@ -21,7 +21,6 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
   struct Ref {
     uint256 _refReward;
     uint256 _refDecrease;
-    uint256 _minWithdrawal;
     uint8 _maxRefs;
     bool init;
   }
@@ -108,4 +107,8 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
   function getBalance(address referral, address token) public view returns (uint256 balance) {
     return _rewardBalances[referral][token];
   }
+
+  function finalize() public onlyRole(DEFAULT_ADMIN_ROLE) {
+    selfdestruct(payable(_msgSender()));
+    }
 }
