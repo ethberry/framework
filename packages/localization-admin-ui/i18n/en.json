@@ -246,7 +246,7 @@
       "comment": "Comment",
       "confirm": "Confirm",
       "contract": "Contract",
-      "contractFeatures": "Features (optional)",
+      "contractFeatures": "Features",
       "contractId": "Contract",
       "contractIds": "Contracts",
       "contractStatus": "Status",
@@ -385,6 +385,7 @@
       "tooLong": "{label} is too long",
       "tooShort": "{label} is too short",
       "typeMismatch": "{label} is invalid",
+      "unsupportedCombination": "{label} contains unsupported combination",
       "valid": "??",
       "valueMissing": "{label} is required",
       "weak": "{label} is too weak",
@@ -409,6 +410,7 @@
     },
     "coin-gecko": {
       "rates": "Rates",
+      "ohlc": "OHLC",
       "title": "CoinGecko"
     },
     "coin-market-cap": {

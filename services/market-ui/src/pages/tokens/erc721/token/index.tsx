@@ -12,6 +12,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
+import { TokenAttributesView } from "../../genes";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -60,6 +61,15 @@ export const Erc721Token: FC = () => {
                 <FormattedMessage id="pages.erc721.token.level" values={selected.attributes} />
               </Typography>
               <UpgradeButton token={selected} />
+            </Paper>
+          ) : null}
+
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+            <Paper className={classes.paper}>
+              <Typography>
+                <FormattedMessage id="pages.erc721.token.genes" />
+              </Typography>
+              <TokenAttributesView attributes={selected.attributes} />
             </Paper>
           ) : null}
         </Grid>

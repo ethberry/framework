@@ -1,37 +1,33 @@
 import { BigNumber } from "ethers";
 
-export const encodeNumbers = ({
-  strength,
-  dexterity,
-  constitution,
-  intelligence,
-  wisdom,
-  charisma,
-}: {
-  strength: number;
-  dexterity: number;
-  constitution: number;
-  intelligence: number;
-  wisdom: number;
-  charisma: number;
-}) => {
+const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
+
+export const encodeNumbers = (numbers: Array<number>, size = 32) => {
   let encoded = BigNumber.from(0);
-  encoded = encoded.or(BigNumber.from(strength).shl(160));
-  encoded = encoded.or(BigNumber.from(dexterity).shl(128));
-  encoded = encoded.or(BigNumber.from(constitution).shl(96));
-  encoded = encoded.or(BigNumber.from(intelligence).shl(64));
-  encoded = encoded.or(BigNumber.from(wisdom).shl(32));
-  encoded = encoded.or(BigNumber.from(charisma).shl(0));
+  numbers.reverse().forEach((number, i) => {
+    encoded = encoded.or(BigNumber.from(number).shl(i * size));
+  });
   return encoded;
 };
 
-export const decodeNumber = (encoded: BigNumber) => {
-  return {
-    strength: encoded.shr(160).mask(32).toNumber(),
-    dexterity: encoded.shr(128).mask(32).toNumber(),
-    constitution: encoded.shr(96).mask(32).toNumber(),
-    intelligence: encoded.shr(64).mask(32).toNumber(),
-    wisdom: encoded.shr(32).mask(32).toNumber(),
-    charisma: encoded.shr(0).mask(32).toNumber(),
-  };
+export const decodeNumber = (encoded: BigNumber, size = 32) => {
+  return new Array(256 / size)
+    .fill(null)
+    .map((_e, i) =>
+      encoded
+        .shr(i * size)
+        .mask(size)
+        .toNumber(),
+    )
+    .reverse();
+};
+
+export const encodeGenes = (genes: Record<string, number>) => {
+  return encodeNumbers(Object.values(genes));
+};
+
+export const decodeGenes = (encoded: BigNumber, genes = DND) => {
+  return decodeNumber(encoded)
+    .slice(-genes.length)
+    .reduceRight((memo, value, i) => ({ [genes[i]]: value, ...memo }), {} as Record<string, number>);
 };

@@ -3,8 +3,8 @@ import type { RouteObject } from "react-router-dom";
 import { Protected } from "@gemunion/firebase-login";
 
 import { ChainLink } from "./chain-link";
-import { CoinGecko } from "./coin-gecko";
-import { CoinMarketCap } from "./coin-market-cap";
+import { coinGeckoRoutes } from "./coin-gecko/routes";
+import { coinMarketCapRoutes } from "./coin-market-cap/routes";
 import { marketRoutes } from "./marketplace/routes";
 
 export const integrationsRoutes: Array<RouteObject> = [
@@ -13,15 +13,7 @@ export const integrationsRoutes: Array<RouteObject> = [
     element: <Protected />,
     children: [{ index: true, element: <ChainLink /> }],
   },
-  {
-    path: "/coin-gecko",
-    element: <Protected />,
-    children: [{ index: true, element: <CoinGecko /> }],
-  },
-  {
-    path: "/coin-market-cap",
-    element: <Protected />,
-    children: [{ index: true, element: <CoinMarketCap /> }],
-  },
+  ...coinGeckoRoutes,
+  ...coinMarketCapRoutes,
   ...marketRoutes,
 ];

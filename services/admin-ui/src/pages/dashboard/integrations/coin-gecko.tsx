@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Paid } from "@mui/icons-material";
+import { Paid, WaterfallChart } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,12 +15,20 @@ export const CoinGecko: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/coin-gecko">
+        <ListItem button component={RouterLink} to="/coin-gecko/rates">
           <ListItemIcon>
             <Paid />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.coin-gecko.rates" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/coin-gecko/ohlc">
+          <ListItemIcon>
+            <WaterfallChart />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.coin-gecko.ohlc" />
           </ListItemText>
         </ListItem>
       </List>

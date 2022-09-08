@@ -18,44 +18,42 @@ interface IMysteryboxBuyButtonProps {
 export const MysteryBoxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => {
   const { mysterybox } = props;
 
-  const metaFnWithSign = useServerSignature(
-    (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
-      const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
-      return contract.mysterybox(
-        {
-          nonce: utils.arrayify(sign.nonce),
-          externalId: mysterybox.id,
-          expiresAt: sign.expiresAt,
-          referrer: constants.AddressZero,
-        },
-        ([] as Array<any>).concat(
-          mysterybox.item?.components.map(component => ({
-            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-            token: component.contract!.address,
-            tokenId: component.templateId,
-            amount: component.amount,
-          })),
-          {
-            tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
-            token: mysterybox.template!.contract!.address,
-            tokenId: mysterybox.id.toString(),
-            amount: "1",
-          },
-        ),
-        mysterybox.template?.price?.components.map(component => ({
+  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+    const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+    return contract.mysterybox(
+      {
+        nonce: utils.arrayify(sign.nonce),
+        externalId: mysterybox.id,
+        expiresAt: sign.expiresAt,
+        referrer: constants.AddressZero,
+      },
+      ([] as Array<any>).concat(
+        mysterybox.item?.components.map(component => ({
           tokenType: Object.keys(TokenType).indexOf(component.tokenType),
           token: component.contract!.address,
-          tokenId: component.template!.tokens![0].tokenId,
+          tokenId: component.templateId,
           amount: component.amount,
         })),
-        process.env.ACCOUNT,
-        sign.signature,
         {
-          value: getEthPrice(mysterybox.template?.price),
+          tokenType: Object.keys(TokenType).indexOf(TokenType.ERC721),
+          token: mysterybox.template!.contract!.address,
+          tokenId: mysterybox.id.toString(),
+          amount: "1",
         },
-      ) as Promise<void>;
-    },
-  );
+      ),
+      mysterybox.template?.price?.components.map(component => ({
+        tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+        token: component.contract!.address,
+        tokenId: component.template!.tokens![0].tokenId,
+        amount: component.amount,
+      })),
+      process.env.ACCOUNT,
+      sign.signature,
+      {
+        value: getEthPrice(mysterybox.template?.price),
+      },
+    ) as Promise<void>;
+  });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const { account } = web3Context;
@@ -70,6 +68,7 @@ export const MysteryBoxPurchaseButton: FC<IMysteryboxBuyButtonProps> = props => 
           referrer: constants.AddressZero,
         },
       },
+      null,
       web3Context,
     );
   });

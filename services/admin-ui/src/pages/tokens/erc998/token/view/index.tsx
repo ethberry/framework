@@ -4,8 +4,9 @@ import { FormattedMessage } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-
 import { IToken } from "@framework/types";
+
+import { TokenAttributesView } from "../../../attributes";
 
 export interface IErc998ViewDialogProps {
   open: boolean;
@@ -52,7 +53,9 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.attributes" />
               </TableCell>
-              <TableCell align="right">{JSON.stringify(JSON.parse(attributes), null, "\t")}</TableCell>
+              <TableCell align="right">
+                <TokenAttributesView attributes={JSON.parse(attributes)} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

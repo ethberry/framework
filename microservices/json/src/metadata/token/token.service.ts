@@ -6,7 +6,7 @@ import { BigNumber } from "ethers";
 
 import { getPainText } from "@gemunion/draft-js-utils";
 import { TokenAttributes, TokenRarity } from "@framework/types";
-import { decodeNumber } from "@gemunion/genes";
+import { decodeGenes } from "@gemunion/genes";
 
 import { IOpenSeaMetadata, IOpenSeaMetadataAttribute } from "../../common/interfaces";
 import { TokenEntity } from "../../blockchain/hierarchy/token/token.entity";
@@ -73,7 +73,7 @@ export class MetadataTokenService {
           });
           break;
         case TokenAttributes.GENES:
-          Object.entries(decodeNumber(BigNumber.from(value))).forEach(([key, value]) => {
+          Object.entries(decodeGenes(BigNumber.from(value))).forEach(([key, value]) => {
             memo.push({
               trait_type: key,
               value,

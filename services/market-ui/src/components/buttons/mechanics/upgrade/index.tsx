@@ -45,47 +45,45 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
 
   const { contractFeatures } = token.template!.contract!;
 
-  const metaFnWithSign = useServerSignature(
-    (_values: Record<string, any>, web3Context: Web3ContextType, sign: IServerSignature) => {
-      return api
-        .fetchJson({
-          url: `/grade/${token.id}`,
-        })
-        .then((grade: IGrade) => {
-          const level = token.attributes[TokenAttributes.GRADE];
+  const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
+    return api
+      .fetchJson({
+        url: `/grade/${token.id}`,
+      })
+      .then((grade: IGrade) => {
+        const level = token.attributes[TokenAttributes.GRADE];
 
-          const price =
-            grade.price?.components.map(component => ({
-              tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-              token: component.contract!.address,
-              tokenId: component.template!.tokens![0].tokenId,
-              amount: getMultiplier(level, component.amount, grade),
-            })) || [];
+        const price =
+          grade.price?.components.map(component => ({
+            tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+            token: component.contract!.address,
+            tokenId: component.template!.tokens![0].tokenId,
+            amount: getMultiplier(level, component.amount, grade),
+          })) || [];
 
-          const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
-          return contract.upgrade(
-            {
-              nonce: utils.arrayify(sign.nonce),
-              externalId: grade.id,
-              expiresAt: sign.expiresAt,
-              referrer: constants.AddressZero,
-            },
-            {
-              tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
-              token: token.template!.contract!.address,
-              tokenId: token.tokenId.toString(),
-              amount: "1",
-            },
-            price,
-            process.env.ACCOUNT,
-            sign.signature,
-            {
-              value: getEthPrice(price),
-            },
-          ) as Promise<void>;
-        });
-    },
-  );
+        const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
+        return contract.upgrade(
+          {
+            nonce: utils.arrayify(sign.nonce),
+            externalId: grade.id,
+            expiresAt: sign.expiresAt,
+            referrer: constants.AddressZero,
+          },
+          {
+            tokenType: Object.keys(TokenType).indexOf(token.template!.contract!.contractType),
+            token: token.template!.contract!.address,
+            tokenId: token.tokenId.toString(),
+            amount: "1",
+          },
+          price,
+          process.env.ACCOUNT,
+          sign.signature,
+          {
+            value: getEthPrice(price),
+          },
+        ) as Promise<void>;
+      });
+  });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     return metaFnWithSign(
@@ -96,6 +94,7 @@ export const UpgradeButton: FC<IUpgradeButtonProps> = props => {
           tokenId: token.id,
         },
       },
+      null,
       web3Context,
     );
   });
