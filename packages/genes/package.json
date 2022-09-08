@@ -22,7 +22,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/genes",
+  "name": "@framework/genes",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
@@ -35,7 +35,7 @@
     "lint": "eslint . --fix",
     "prebuild": "rimraf dist/",
     "prepublish": "npm run build",
-    "test": "jest --config jest.config.json --detectOpenHandles"
+    "test": "jest --config=jest.config.json --detectOpenHandles --runInBand --forceExit"
   },
   "title": "-=Gemun Ion Studio=-",
   "types": "./dist/index.d.ts",
