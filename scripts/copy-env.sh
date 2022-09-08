@@ -14,9 +14,13 @@ cp -rf $PWD/microservices/eml/.env.sample $PWD/microservices/eml/.env.test
 cp -rf $PWD/microservices/game/.env.sample $PWD/microservices/game/.env.test
 cp -rf $PWD/microservices/json/.env.sample $PWD/microservices/json/.env.test
 
-sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $PWD/contracts/core/.env
-sed -i -e "s/RINKEBY_RPC_URL=.*/RINKEBY_RPC_URL=$RINKEBY_RPC_URL/g" $PWD/contracts/core/.env
-sed -i -e "s/GOERLI_RPC_URL=.*/GOERLI_RPC_URL=$GOERLI_RPC_URL/g" $PWD/contracts/core/.env
+export PRIVATE_KEY=$PRIVATE_KEY
+export RINKEBY_RPC_URL=$RINKEBY_RPC_URL
+export GOERLI_RPC_URL=$GOERLI_RPC_URL
+
+sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=""$PRIVATE_KEY""/g" $PWD/contracts/core/.env
+sed -i -e "s/RINKEBY_RPC_URL=.*/RINKEBY_RPC_URL=""$RINKEBY_RPC_URL""/g" $PWD/contracts/core/.env
+sed -i -e "s/GOERLI_RPC_URL=.*/GOERLI_RPC_URL=""$GOERLI_RPC_URL""/g" $PWD/contracts/core/.env
 
 echo -e "\033[34mAll done!\n\033[0m";
 
