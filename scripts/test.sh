@@ -12,4 +12,9 @@ export CHAIN_ID=$CHAIN_ID
 lerna bootstrap --concurrency 1 --hoist --ignore-scripts
 lerna run build --stream
 
-lerna exec --concurrency 1 -- npm run test
+#lerna exec --concurrency 1 -- npm run test
+lerna exec --scope @framework/core-contracts -- npm run test
+lerna exec --scope @framework/admin-api -- npm run test
+lerna exec --scope @framework/genes -- npm run test
+lerna exec --scope @framework/market-api -- npm run test
+lerna exec --scope @framework/mobile-api -- npm run test

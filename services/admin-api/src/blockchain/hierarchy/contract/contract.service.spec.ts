@@ -53,7 +53,7 @@ describe("ContractService", () => {
       const contractEntity = await contractService.findOne({});
       expect(contractEntity).toMatchObject({
         contractStatus: ContractStatus.ACTIVE,
-        contractType: TokenType.ERC721,
+        contractType: TokenType.NATIVE,
       });
     });
   });

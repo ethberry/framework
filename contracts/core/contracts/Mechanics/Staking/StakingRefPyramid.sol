@@ -24,9 +24,9 @@ import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
 
-import "../Exchange/referral/LinearReferral.sol";
+import "../Exchange/referral/LinearReferralPyramid.sol";
 
-contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder, LinearReferral {
+contract StakingReferralPyramid is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder, LinearReferralPyramid {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
