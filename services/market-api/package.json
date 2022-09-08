@@ -108,7 +108,7 @@
   },
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@framework/marketplace-api",
+  "name": "@framework/market-api",
   "private": true,
   "repository": {
     "type": "git",
