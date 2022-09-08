@@ -21,8 +21,8 @@ import { shouldGetOwnerOf } from "./shared/common/ownerOf";
 import { shouldSetApprovalForAll } from "./shared/common/setApprovalForAll";
 import { deployErc721Fixture } from "./shared/fixture";
 
-describe("ERC721SoulBound", function () {
-  const name = "ERC721SoulBound";
+describe("ERC721Soulbound", function () {
+  const name = "ERC721Soulbound";
 
   shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
   shouldGetRoleAdmin(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
@@ -49,7 +49,7 @@ describe("ERC721SoulBound", function () {
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance.transferFrom(owner.address, receiver.address, tokenId);
 
-      await expect(tx).to.be.revertedWith("ERC721SoulBound: can't be transferred");
+      await expect(tx).to.be.revertedWith("ERC721Soulbound: can't be transferred");
     });
   });
 
@@ -64,7 +64,7 @@ describe("ERC721SoulBound", function () {
         receiver.address,
         tokenId,
       );
-      await expect(tx).to.be.revertedWith("ERC721SoulBound: can't be transferred");
+      await expect(tx).to.be.revertedWith("ERC721Soulbound: can't be transferred");
     });
   });
 });

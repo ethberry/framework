@@ -31,7 +31,7 @@ import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC72
 import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721RandomBlacklist.sol/ERC721RandomBlacklist.json";
 import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Genes.sol/ERC721Genes.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
-import ERC721SoulBoundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721SoulBound.sol/ERC721SoulBound.json";
+import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
 import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
 import ERC721UpgradeableBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableBlacklist.sol/ERC721UpgradeableBlacklist.json";
 import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableRandom.sol/ERC721UpgradeableRandom.json";
@@ -369,7 +369,7 @@ export class ContractManagerSignService {
       }
 
       if (contractFeatures.includes(Erc721ContractFeatures.SOULBOUND)) {
-        return ERC721SoulBoundSol.bytecode;
+        return ERC721SoulboundSol.bytecode;
       }
 
       if (contractFeatures.includes(Erc721ContractFeatures.GENES)) {
