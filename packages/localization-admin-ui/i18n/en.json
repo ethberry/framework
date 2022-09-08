@@ -85,7 +85,7 @@
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
       "RANDOM": "Random",
-      "SOULBOUND": "SoulBound",
+      "SOULBOUND": "Soulbound",
       "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
