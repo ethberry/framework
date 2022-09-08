@@ -12,7 +12,7 @@ import {
   ERC721RandomHardhat,
   ERC721Simple,
   LinkErc20,
-  StakingReferral,
+  StakingReferralPyramid,
   VRFCoordinatorMock,
 } from "../../../typechain-types";
 import {
@@ -35,8 +35,8 @@ import { deployLinkVrfFixture } from "../../shared/link";
 
 use(solidity);
 
-describe("Staking Referral", function () {
-  let stakingInstance: StakingReferral;
+describe("Staking", function () {
+  let stakingInstance: StakingReferralPyramid;
   let erc721RandomInstance: ERC721RandomHardhat;
   let mysteryboxInstance: ERC721MysteryboxSimple;
   let erc721SimpleInstance: ERC721Simple;
@@ -89,9 +89,8 @@ describe("Staking Referral", function () {
     this.provider = waffle.provider;
 
     // Staking
-    const stakingFactory = await ethers.getContractFactory("StakingReferral");
+    const stakingFactory = await ethers.getContractFactory("StakingReferralPyramid");
     stakingInstance = await stakingFactory.deploy(1);
-
     // SET REF PROGRAM
     const tx = stakingInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
     await expect(tx)
@@ -214,6 +213,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -232,6 +232,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -250,6 +251,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -265,6 +267,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -275,6 +278,7 @@ describe("Staking Referral", function () {
         externalId: 2,
         deposit: nativeDeposit,
         reward: erc721RewardDbx,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -290,6 +294,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -310,6 +315,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -319,7 +325,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 2, erc721RewardRnd.tokenId, { value: 100 });
+      const tx1 = stakingInstance.deposit(2, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: rule doesn't exist");
     });
 
@@ -328,6 +334,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -337,7 +344,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721RewardRnd.tokenId, { value: 100 });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: rule doesn't active");
     });
 
@@ -346,6 +353,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -355,7 +363,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721RewardRnd.tokenId, { value: 100 });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: wrong amount");
     });
 
@@ -364,6 +372,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -375,7 +384,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721RewardRnd.tokenId, { value: 100 });
+      const tx1 = stakingInstance.deposit(1, erc721RewardRnd.tokenId, { value: 100 });
       await expect(tx1).to.be.revertedWith("Staking: stake limit exceeded");
     });
 
@@ -384,6 +393,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -393,9 +403,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, nativeDeposit.tokenId, {
-        value: nativeDeposit.amount,
-      });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
     });
 
@@ -404,6 +412,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc20Deposit,
         reward: erc20Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -418,7 +427,7 @@ describe("Staking Referral", function () {
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc20Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
         .to.emit(erc20Instance, "Transfer")
@@ -432,6 +441,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: erc20Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -446,7 +456,7 @@ describe("Staking Referral", function () {
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, tokenId);
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
         .to.emit(erc721RandomInstance, "Transfer")
@@ -460,6 +470,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc1155Deposit,
         reward: erc20Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -474,7 +485,7 @@ describe("Staking Referral", function () {
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
 
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc1155Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1)
         .to.emit(stakingInstance, "StakingStart")
         .to.emit(erc1155Instance, "TransferSingle")
@@ -496,6 +507,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -508,7 +520,7 @@ describe("Staking Referral", function () {
       // STAKE
       const tx1 = stakingInstance
         .connect(this.receiver)
-        .deposit(this.owner.address, 1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
+        .deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
 
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
@@ -527,6 +539,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -539,7 +552,7 @@ describe("Staking Referral", function () {
       // STAKE
       const tx1 = stakingInstance
         .connect(this.receiver)
-        .deposit(this.owner.address, 1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
+        .deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -557,6 +570,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -569,7 +583,7 @@ describe("Staking Referral", function () {
       // STAKE
       const tx1 = stakingInstance
         .connect(this.receiver)
-        .deposit(this.owner.address, 1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
+        .deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -593,6 +607,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -615,7 +630,7 @@ describe("Staking Referral", function () {
       await erc721RandomInstance.approve(stakingInstance.address, 1);
       await erc721RandomInstance.approve(stakingInstance.address, 2);
       // DEPOSIT
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId + 1);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId + 1);
       await expect(tx1).to.be.revertedWith("Staking: wrong deposit token templateID");
     });
 
@@ -624,6 +639,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: nativeReward,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -634,9 +650,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, nativeDeposit.tokenId, {
-        value: nativeDeposit.amount,
-      });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -657,6 +671,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc20Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -667,9 +682,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, nativeDeposit.tokenId, {
-        value: nativeDeposit.amount,
-      });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -696,6 +709,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -706,9 +720,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, nativeDeposit.tokenId, {
-        value: nativeDeposit.amount,
-      });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -735,6 +747,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardSmpl,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -745,9 +758,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, nativeDeposit.tokenId, {
-        value: nativeDeposit.amount,
-      });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -770,6 +781,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc721RewardDbx,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -780,9 +792,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, nativeDeposit.tokenId, {
-        value: nativeDeposit.amount,
-      });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -790,14 +800,14 @@ describe("Staking Referral", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      // const tx2 = await stakingInstance.receiveReward(1, true, true);
-      // await expect(tx2)
-      //   .to.emit(stakingInstance, "StakingWithdraw")
-      //   .to.emit(stakingInstance, "StakingFinish")
-      //   .to.emit(mysteryboxInstance, "Transfer");
-      // const balance = await mysteryboxInstance.balanceOf(this.owner.address);
-      // expect(balance).to.equal(stakeCycles);
-      // await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(mysteryboxInstance, "Transfer");
+      const balance = await mysteryboxInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(stakeCycles);
+      await expect(tx2).to.changeEtherBalance(this.owner, nativeDeposit.amount);
     });
 
     it("should stake NATIVE & receive ERC1155", async function () {
@@ -805,6 +815,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: nativeDeposit,
         reward: erc1155Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -815,9 +826,7 @@ describe("Staking Referral", function () {
       const tx = stakingInstance.setRules([stakeRule]);
       await expect(tx).to.emit(stakingInstance, "RuleCreated");
       // STAKE
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, nativeDeposit.tokenId, {
-        value: nativeDeposit.amount,
-      });
+      const tx1 = stakingInstance.deposit(1, nativeDeposit.tokenId, { value: nativeDeposit.amount });
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       const stakeBalance = await this.provider.getBalance(stakingInstance.address);
       expect(stakeBalance).to.equal(nativeDeposit.amount);
@@ -840,6 +849,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc20Deposit,
         reward: nativeReward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -854,7 +864,7 @@ describe("Staking Referral", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc20Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
@@ -877,6 +887,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc20Deposit,
         reward: erc20Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -891,7 +902,7 @@ describe("Staking Referral", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc20Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -913,6 +924,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc20Deposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -927,7 +939,7 @@ describe("Staking Referral", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc20Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -954,6 +966,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc20Deposit,
         reward: erc721RewardSmpl,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -968,7 +981,7 @@ describe("Staking Referral", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc20Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -992,6 +1005,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc20Deposit,
         reward: erc721RewardDbx,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1005,7 +1019,7 @@ describe("Staking Referral", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc20Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc20Instance, "Transfer");
       balance = await erc20Instance.balanceOf(this.owner.address);
@@ -1014,14 +1028,14 @@ describe("Staking Referral", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      // const tx2 = await stakingInstance.receiveReward(1, true, true);
-      // await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      // await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      // await expect(tx2).to.emit(mysteryboxInstance, "Transfer");
-      // balance = await mysteryboxInstance.balanceOf(this.owner.address);
-      // expect(balance).to.equal(stakeCycles);
-      // balance = await erc20Instance.balanceOf(this.owner.address);
-      // expect(balance).to.equal(erc20Deposit.amount);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
+      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
+      await expect(tx2).to.emit(mysteryboxInstance, "Transfer");
+      balance = await mysteryboxInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(stakeCycles);
+      balance = await erc20Instance.balanceOf(this.owner.address);
+      expect(balance).to.equal(erc20Deposit.amount);
     });
 
     it("should stake ERC20 & receive ERC1155", async function () {
@@ -1029,6 +1043,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc20Deposit,
         reward: erc1155Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1043,7 +1058,7 @@ describe("Staking Referral", function () {
       let balance = await erc20Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(erc20Deposit.amount);
       await erc20Instance.approve(stakingInstance.address, erc20Deposit.amount);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc20Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc20Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
 
       await expect(tx1).to.emit(erc20Instance, "Transfer");
@@ -1068,6 +1083,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: nativeReward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1082,7 +1098,7 @@ describe("Staking Referral", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1105,6 +1121,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: erc20Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1119,7 +1136,7 @@ describe("Staking Referral", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
@@ -1142,6 +1159,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1156,7 +1174,7 @@ describe("Staking Referral", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
@@ -1181,6 +1199,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardSmpl,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1195,7 +1214,7 @@ describe("Staking Referral", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
@@ -1219,6 +1238,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: erc721RewardDbx,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1233,7 +1253,7 @@ describe("Staking Referral", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
@@ -1241,15 +1261,15 @@ describe("Staking Referral", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      // const tx2 = await stakingInstance.receiveReward(1, true, true);
-      // await expect(tx2)
-      //   .to.emit(stakingInstance, "StakingWithdraw")
-      //   .to.emit(stakingInstance, "StakingFinish")
-      //   .to.emit(mysteryboxInstance, "Transfer");
-      // balance = await mysteryboxInstance.balanceOf(this.owner.address);
-      // expect(balance).to.equal(stakeCycles);
-      // balance = await erc721RandomInstance.balanceOf(this.owner.address);
-      // expect(balance).to.equal(1);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(mysteryboxInstance, "Transfer");
+      balance = await mysteryboxInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(stakeCycles);
+      balance = await erc721RandomInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(1);
     });
 
     it("should stake ERC721 & receive ERC1155", async function () {
@@ -1257,6 +1277,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc721Deposit,
         reward: erc1155Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1271,7 +1292,7 @@ describe("Staking Referral", function () {
       let balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
       await erc721RandomInstance.approve(stakingInstance.address, 1);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc721Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc721Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc721RandomInstance, "Transfer");
       balance = await erc721RandomInstance.balanceOf(this.owner.address);
       expect(balance).to.equal(0);
@@ -1295,6 +1316,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc1155Deposit,
         reward: nativeReward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1308,7 +1330,7 @@ describe("Staking Referral", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc1155Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
@@ -1331,6 +1353,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc1155Deposit,
         reward: erc20Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1344,7 +1367,7 @@ describe("Staking Referral", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc1155Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
@@ -1366,6 +1389,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc1155Deposit,
         reward: erc721RewardRnd,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1379,7 +1403,7 @@ describe("Staking Referral", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc1155Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
@@ -1405,6 +1429,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc1155Deposit,
         reward: erc721RewardSmpl,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1418,7 +1443,7 @@ describe("Staking Referral", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc1155Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart");
       await expect(tx1).to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
@@ -1443,6 +1468,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc1155Deposit,
         reward: erc721RewardDbx,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1456,7 +1482,7 @@ describe("Staking Referral", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc1155Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
@@ -1464,15 +1490,15 @@ describe("Staking Referral", function () {
       const current = await time.latestBlock();
       await time.advanceBlockTo(current.add(web3.utils.toBN(stakePeriod * stakeCycles)));
       // REWARD
-      // const tx2 = await stakingInstance.receiveReward(1, true, true);
-      // await expect(tx2)
-      //   .to.emit(stakingInstance, "StakingWithdraw")
-      //   .to.emit(stakingInstance, "StakingFinish")
-      //   .to.emit(mysteryboxInstance, "Transfer");
-      // balance = await mysteryboxInstance.balanceOf(this.owner.address);
-      // expect(balance).to.equal(stakeCycles);
-      // balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
-      // expect(balance).to.equal(erc1155Deposit.amount);
+      const tx2 = await stakingInstance.receiveReward(1, true, true);
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(mysteryboxInstance, "Transfer");
+      balance = await mysteryboxInstance.balanceOf(this.owner.address);
+      expect(balance).to.equal(stakeCycles);
+      balance = await erc1155Instance.balanceOf(this.owner.address, erc1155Reward.tokenId);
+      expect(balance).to.equal(erc1155Deposit.amount);
     });
 
     it("should stake ERC1155 & receive ERC1155", async function () {
@@ -1480,6 +1506,7 @@ describe("Staking Referral", function () {
         externalId: 1,
         deposit: erc1155Deposit,
         reward: erc1155Reward,
+        content: [erc721RewardSmpl],
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1493,7 +1520,7 @@ describe("Staking Referral", function () {
       let balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(erc1155Deposit.amount);
       await erc1155Instance.setApprovalForAll(stakingInstance.address, true);
-      const tx1 = stakingInstance.deposit(this.receiver.address, 1, erc1155Deposit.tokenId);
+      const tx1 = stakingInstance.deposit(1, erc1155Deposit.tokenId);
       await expect(tx1).to.emit(stakingInstance, "StakingStart").to.emit(erc1155Instance, "TransferSingle");
       balance = await erc1155Instance.balanceOf(this.owner.address, 1);
       expect(balance).to.equal(0);
