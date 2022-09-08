@@ -12,7 +12,7 @@ import "./tasks";
 config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-
+console.info("PRIVATE_KEY", PRIVATE_KEY);
 export default {
   defaultNetwork: "hardhat",
   networks: {
