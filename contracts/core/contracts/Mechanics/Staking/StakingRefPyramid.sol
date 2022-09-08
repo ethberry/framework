@@ -24,7 +24,9 @@ import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Metadata.sol";
 
-contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder {
+import "../Exchange/referral/LinearReferralPyramid.sol";
+
+contract StakingReferralPyramid is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Holder, LinearReferralPyramid {
   using Address for address;
   using Counters for Counters.Counter;
   using SafeERC20 for IERC20;
@@ -76,7 +78,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     _maxStake = maxStake;
   }
 
-  function deposit(uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
+  function deposit(address referrer, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
     Rule storage rule = _rules[ruleId];
     require(rule.externalId != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
@@ -104,6 +106,15 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     } else if (depositItem.tokenType == TokenType.ERC1155) {
       IERC1155(depositItem.token).safeTransferFrom(_msgSender(), address(this), tokenId, depositItem.amount, "0x");
     }
+
+    Asset[] memory depositItems = new Asset[](1);
+    depositItems[0] = depositItem;
+
+    _afterPurchase(referrer, depositItems);
+  }
+
+  function _afterPurchase(address referrer, Asset[] memory price) internal override(LinearReferral) {
+    return super._afterPurchase(referrer, price);
   }
 
   function receiveReward(
@@ -167,13 +178,13 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       } else if (rewardItem.tokenType == TokenType.ERC721 || rewardItem.tokenType == TokenType.ERC998) {
         bool randomInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_RANDOM);
-        bool mysteryboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERYBOX);
+        //        bool mysteryboxInterface = IERC721Metadata(rewardItem.token).supportsInterface(IERC721_MYSTERYBOX);
 
         for (uint256 i = 0; i < multiplier; i++) {
           if (randomInterface) {
             IERC721Random(rewardItem.token).mintRandom(receiver, rewardItem.tokenId);
-          } else if (mysteryboxInterface) {
-            IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId, rule.content);
+            //          } else if (mysteryboxInterface) {
+            //            IERC721Mysterybox(rewardItem.token).mintBox(receiver, rewardItem.tokenId);
           } else {
             IERC721Simple(rewardItem.token).mintCommon(receiver, rewardItem.tokenId);
           }
@@ -226,25 +237,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   function _setRule(Rule memory rule) internal {
     _ruleIdCounter.increment();
     uint256 ruleId = _ruleIdCounter.current();
-
-    // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
-    // _rules[ruleId] = rule
-
-    Rule storage p = _rules[ruleId];
-    p.deposit = rule.deposit;
-    p.reward = rule.reward;
-    // p.content = rule.content;
-    p.period = rule.period;
-    p.penalty = rule.penalty;
-    p.recurrent = rule.recurrent;
-    p.active = rule.active;
-    p.externalId = rule.externalId;
-
-    uint256 length = rule.content.length;
-    for (uint256 i = 0; i < length; i++) {
-      p.content.push(rule.content[i]);
-    }
-
+    _rules[ruleId] = rule;
     emit RuleCreated(ruleId, rule, rule.externalId);
   }
 

@@ -6,7 +6,7 @@ import { blockAwait } from "../utils/blockAwait";
 import { baseTokenURI, MINTER_ROLE, royalty, tokenName } from "../../test/constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
-const delay = 1; // block delay
+const delay = 3; // block delay
 const decimals = ethers.BigNumber.from(10).pow(18);
 const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
 
@@ -40,7 +40,10 @@ async function main() {
   contracts.vrf = await vrfFactory.deploy(contracts.link.address);
   console.info(`VRF_ADDR=${contracts.vrf.address}`);
   await debug(await linkInstance.mint(owner.address, linkAmountInWei.mul(100)), "LinkInstance.mint");
-  // process.exit(0);
+
+  console.log("afterDebug");
+  process.exit(0);
+  // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
 
   const cmFactory = await ethers.getContractFactory("ContractManager");
   contracts.contractManager = await cmFactory.deploy();

@@ -12,6 +12,7 @@ interface IStaking {
   struct Rule {
     Asset deposit;
     Asset reward;
+    Asset[] content;
     uint256 period;
     uint256 penalty;
     bool recurrent;

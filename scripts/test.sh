@@ -15,6 +15,7 @@ export GOERLI_RPC_URL=$GOERLI_RPC_URL
 lerna bootstrap --concurrency 1 --hoist --ignore-scripts
 lerna run build --stream
 
+
 lerna exec --scope @framework/core-contracts -- npm run test
 lerna exec --scope @framework/admin-api -- npm run test
 lerna exec --scope @framework/genes -- npm run test
