@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import { Grid } from "@mui/material";
 
 import { TokenAttributes, TokenRarity } from "@framework/types";
-import { decodeNumber } from "@gemunion/genes";
+import { decodeGenes } from "@gemunion/genes";
 
 export interface ITokenAttributesView {
   attributes: Record<string, any>;
@@ -21,7 +21,7 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
         Object.assign(memo, { [key]: Object.values(TokenRarity)[~~value] });
         break;
       case TokenAttributes.GENES:
-        Object.entries(decodeNumber(BigNumber.from(value))).forEach(([key, value]) => {
+        Object.entries(decodeGenes(BigNumber.from(value))).forEach(([key, value]) => {
           Object.assign(memo, { [key]: value });
         });
         break;
@@ -37,9 +37,7 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
     <Grid container>
       {Object.entries(result).map(([key, value], i) => (
         <Grid key={i} container>
-          <Grid xs={6} alignSelf="start">
-            {key}
-          </Grid>
+          <Grid xs={6}>{key}</Grid>
           <Grid xs={6}>{value}</Grid>
         </Grid>
       ))}

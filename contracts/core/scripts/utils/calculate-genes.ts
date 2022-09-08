@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { BigNumber } from "ethers";
 
-import { encodeNumbers, decodeNumber } from "@gemunion/genes";
+import { encodeGenes, decodeGenes } from "@gemunion/genes";
 
 // Patch BigNumber
 Object.defineProperties(BigNumber.prototype, {
@@ -29,16 +29,16 @@ const data = {
 };
 
 async function main() {
-  const interfaceIdCalculator = await ethers.getContractFactory("Genes");
+  const interfaceIdCalculator = await ethers.getContractFactory("Breed");
 
   const instance = await interfaceIdCalculator.deploy();
 
   const encodedSOL = await instance.encodeNumbers(data);
-  const encodedJS = encodeNumbers(data);
+  const encodedJS = encodeGenes(data);
   console.info(encodedSOL, encodedJS);
 
   const decodedSOL = await instance.decodeNumber(encodedSOL);
-  const decodedJS = decodeNumber(encodedJS);
+  const decodedJS = decodeGenes(encodedJS);
   console.info(transform(decodedSOL), decodedJS);
 }
 
