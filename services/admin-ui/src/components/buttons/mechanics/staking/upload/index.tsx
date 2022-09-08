@@ -23,6 +23,19 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
       return Promise.reject(new Error(""));
     }
 
+    const content = [];
+    if (rule.reward!.components[0].template!.mysterybox) {
+      const mysteryComponents = rule.reward!.components[0].template!.mysterybox.item!.components;
+      mysteryComponents.map(component => {
+        const contentItem = {
+          tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+          token: component.template!.contract!.address,
+          tokenId: component.templateId || 0,
+          amount: component.amount,
+        };
+        return content.push(contentItem);
+      });
+    }
     const stakingRule = {
       externalId: rule.id,
       deposit: rule.deposit?.components.map(component => ({
@@ -37,6 +50,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
         tokenId: component.templateId,
         amount: component.amount,
       }))[0],
+      content: [],
       // period: rule.duration * 86400 || 0, // todo fix same name // seconds in days
       period: rule.duration * 60 || 0, // todo fix same name // seconds in minutes !!!DEV!!!
       penalty: rule.penalty || 0,
