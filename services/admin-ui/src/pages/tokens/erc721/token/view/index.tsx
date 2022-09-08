@@ -1,10 +1,12 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-
 import { IToken } from "@framework/types";
+
+import { TokenAttributesView } from "../../../attributes";
 
 export interface IErc721ViewDialogProps {
   open: boolean;
@@ -51,7 +53,9 @@ export const Erc721TokenViewDialog: FC<IErc721ViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.attributes" />
               </TableCell>
-              <TableCell align="right">{JSON.stringify(JSON.parse(attributes), null, "\t")}</TableCell>
+              <TableCell align="right">
+                <TokenAttributesView attributes={JSON.parse(attributes)} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

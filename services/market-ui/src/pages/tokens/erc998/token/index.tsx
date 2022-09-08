@@ -8,12 +8,12 @@ import { ContractFeatures, ITemplate, IToken } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-// import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
-// TODO make real 998Full.sol
+
 import { useStyles } from "./styles";
 import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { Erc998Composition } from "./composition";
+import { TokenAttributesView } from "../../genes";
 
 export const Erc998Token: FC = () => {
   const { selected, isLoading } = useCollection<IToken>({
@@ -65,6 +65,15 @@ export const Erc998Token: FC = () => {
                 <FormattedMessage id="pages.erc998.token.level" values={selected.attributes} />
               </Typography>
               <UpgradeButton token={selected} />
+            </Paper>
+          ) : null}
+
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+            <Paper className={classes.paper}>
+              <Typography>
+                <FormattedMessage id="pages.erc998.token.genes" />
+              </Typography>
+              <TokenAttributesView attributes={selected.attributes} />
             </Paper>
           ) : null}
         </Grid>

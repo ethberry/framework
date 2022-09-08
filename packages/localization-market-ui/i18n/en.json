@@ -365,6 +365,7 @@
         "title": "ERC721 Templates"
       },
       "token": {
+        "genes": "Genes",
         "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "ERC721 Token: {title}"
@@ -392,6 +393,7 @@
         "title": "ERC998 Templates"
       },
       "token": {
+        "genes": "Genes",
         "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "ERC998 Token: {title}"

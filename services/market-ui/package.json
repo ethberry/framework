@@ -18,6 +18,7 @@
     "@gemunion/constants": "0.8.5",
     "@gemunion/draft-js-utils": "0.3.18",
     "@gemunion/firebase-login": "2.0.17",
+    "@gemunion/genes": "0.0.1",
     "@gemunion/history": "1.2.10",
     "@gemunion/metamask-login": "3.0.21",
     "@gemunion/mui-dialog-confirmation": "3.2.21",

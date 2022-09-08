@@ -8,7 +8,6 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
-    "@gemunion/types-coin-gecko": "0.3.2",
     "@emotion/react": "11.10.4",
     "@emotion/styled": "11.10.4",
     "@framework/constants": "0.0.1",
@@ -20,6 +19,7 @@
     "@gemunion/constants": "0.8.5",
     "@gemunion/draft-js-utils": "0.3.18",
     "@gemunion/firebase-login": "2.0.17",
+    "@gemunion/genes": "0.0.1",
     "@gemunion/history": "1.2.10",
     "@gemunion/mui-dialog-confirmation": "3.2.21",
     "@gemunion/mui-dialog-delete": "3.2.21",
@@ -48,6 +48,7 @@
     "@gemunion/provider-wallet": "2.0.18",
     "@gemunion/react-hooks": "1.0.22",
     "@gemunion/react-hooks-eth": "1.0.28",
+    "@gemunion/types-coin-gecko": "0.3.2",
     "@gemunion/types-collection": "1.5.1",
     "@gemunion/yup-rules": "2.0.11",
     "@gemunion/yup-rules-eth": "1.0.8",
