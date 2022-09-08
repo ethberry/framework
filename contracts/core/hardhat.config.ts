@@ -3,7 +3,6 @@ import { HardhatUserConfig } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
 import "@openzeppelin/hardhat-upgrades";
 import "@typechain/hardhat";
-// import "@ethersproject/shims";
 import "hardhat-deploy";
 import "hardhat-gas-reporter";
 import "hardhat-contract-sizer";
@@ -11,9 +10,6 @@ import "hardhat-contract-sizer";
 import "./tasks";
 
 config();
-
-// const GOERLI_RPC_URL = process.env.GOERLI_RPC_URL;
-const GOERLI_PRIVATE_KEY = process.env.MM_PRIVATEKEY;
 
 export default {
   defaultNetwork: "hardhat",
@@ -34,7 +30,7 @@ export default {
     },
     goerli: {
       url: process.env.GOERLI_RPC_URL,
-      accounts: [`0x${GOERLI_PRIVATE_KEY}`],
+      accounts: [`0x${process.env.PRIVATE_KEY}`],
       timeout: 142000,
     },
     rinkeby: {
