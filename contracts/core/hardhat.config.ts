@@ -11,6 +11,8 @@ import "./tasks";
 
 config();
 
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
+
 export default {
   defaultNetwork: "hardhat",
   networks: {
@@ -30,7 +32,7 @@ export default {
     },
     goerli: {
       url: process.env.GOERLI_RPC_URL,
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      accounts: [`0x${PRIVATE_KEY}`],
       timeout: 142000,
     },
     rinkeby: {
@@ -38,7 +40,7 @@ export default {
       gas: 2100000,
       gasPrice: 8000000000,
       timeout: 142000,
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: [PRIVATE_KEY],
       // accounts: {
       //   mnemonic: process.env.MM_MNEMONIC,
       // },
