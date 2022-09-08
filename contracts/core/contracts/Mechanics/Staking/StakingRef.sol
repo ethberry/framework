@@ -255,7 +255,6 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     for (uint256 i = 0; i < length; i++) {
       p.content.push(rule.content[i]);
     }
-
     emit RuleCreated(ruleId, rule, rule.externalId);
   }
 

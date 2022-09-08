@@ -21,7 +21,6 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
   struct Ref {
     uint256 _refReward;
     uint256 _refDecrease;
-//    uint256 _minWithdrawal;
     uint8 _maxRefs;
     bool init;
   }
