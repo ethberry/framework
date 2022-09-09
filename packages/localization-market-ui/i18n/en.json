@@ -417,6 +417,9 @@
       "pinata": {
         "title": "Pinata"
       },
+      "infura": {
+        "title": "Infura"
+      },
       "title": "IPFS"
     },
     "landing": {

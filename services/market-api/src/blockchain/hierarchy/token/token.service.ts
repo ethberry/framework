@@ -120,7 +120,7 @@ export class TokenService {
   }
 
   public async autocomplete(dto: ITokenAutocompleteDto, userEntity: UserEntity): Promise<Array<TokenEntity>> {
-    const { contractIds, templateIds, account = userEntity.wallet } = dto;
+    const { contractIds, templateIds } = dto;
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select(["token.id", "token.tokenId"]);
@@ -128,7 +128,7 @@ export class TokenService {
     queryBuilder.leftJoin("token.balance", "balance");
     queryBuilder.addSelect(["balance.account"]);
 
-    queryBuilder.andWhere("balance.account = :account", { account });
+    queryBuilder.andWhere("balance.account = :account", { account: userEntity.wallet });
 
     queryBuilder.leftJoin("token.template", "template");
     queryBuilder.addSelect(["template.title", "template.id"]);

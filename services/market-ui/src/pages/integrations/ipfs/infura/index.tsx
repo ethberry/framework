@@ -10,11 +10,11 @@ import { TokenType } from "@framework/types";
 import { TokenInput } from "../../../../components/buttons/mechanics/staking/deposit-complex/dialog/token-input";
 import { validationSchema } from "./validation";
 
-export const Pinata: FC = () => {
+export const Infura: FC = () => {
   const { fn } = useApiCall((api, { tokenId }: { tokenId: number }) => {
     return api
       .fetchJson({
-        url: `/pinata/pin/${tokenId}`,
+        url: `/infura/pin/${tokenId}`,
       })
       .then(console.info);
   });
@@ -25,16 +25,16 @@ export const Pinata: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "ipfs", "ipfs.pinata"]} />
+      <Breadcrumbs path={["dashboard", "ipfs", "ipfs.infura"]} />
 
-      <PageHeader message="pages.ipfs.pinata.title" />
+      <PageHeader message="pages.ipfs.infura.title" />
 
       <FormWrapper
         initialValues={{ contractId: 0, tokenId: 0 }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         showPrompt={false}
-        testId="PinataForm"
+        testId="InfuraForm"
       >
         <EntityInput
           name="contractId"

@@ -1,18 +1,18 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { getPainText } from "@gemunion/draft-js-utils";
 
-import { PinataFirebaseService } from "@gemunion/nest-js-module-pinata-firebase";
+import { InfuraFirebaseService } from "@gemunion/nest-js-module-infura-firebase";
 
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 
-const pinataBaseUrl = "https://gateway.pinata.cloud/ipfs";
+const infuraBaseUrl = "https://ipfs.io/ipfs";
 
 @Injectable()
-export class PinataService {
+export class InfuraService {
   constructor(
-    private readonly pinataFirebaseService: PinataFirebaseService,
+    private readonly infuraFirebaseService: InfuraFirebaseService,
     private readonly tokenService: TokenService,
   ) {}
 
@@ -23,7 +23,7 @@ export class PinataService {
     }
 
     if (tokenEntity.cid) {
-      return `${pinataBaseUrl}/${tokenEntity.cid}`;
+      return `${infuraBaseUrl}/${tokenEntity.cid}`;
     }
 
     if (!tokenEntity.template.cid) {
@@ -32,14 +32,14 @@ export class PinataService {
 
     await this.pinToken(tokenEntity);
 
-    return `${pinataBaseUrl}/${tokenEntity.cid!}`;
+    return `${infuraBaseUrl}/${tokenEntity.cid!}`;
   }
 
   public async pinTemplate(templateEntity: TemplateEntity) {
     const objectName = new URL(templateEntity.imageUrl).pathname.split("/").pop()!;
-    const pin = await this.pinataFirebaseService.pinFileToIPFS(objectName);
+    const pin = await this.infuraFirebaseService.pinFileToIPFS(objectName);
 
-    Object.assign(templateEntity, { cid: pin.IpfsHash });
+    Object.assign(templateEntity, { cid: pin.path });
     await templateEntity.save();
 
     return pin;
@@ -47,17 +47,17 @@ export class PinataService {
 
   public async pinToken(tokenEntity: TokenEntity) {
     const objectName = new URL(tokenEntity.template.imageUrl).pathname.split("/").pop()!;
-    const pin = await this.pinataFirebaseService.pinJSONToIPFS(
+    const pin = await this.infuraFirebaseService.pinJSONToIPFS(
       {
         title: tokenEntity.template.title,
         description: getPainText(tokenEntity.template.description),
-        image: `${pinataBaseUrl}/${tokenEntity.template.cid!}`,
+        image: `${infuraBaseUrl}/${tokenEntity.template.cid!}`,
         attributes: tokenEntity.attributes,
       },
       objectName,
     );
 
-    Object.assign(tokenEntity, { cid: pin.IpfsHash });
+    Object.assign(tokenEntity, { cid: pin.path });
     await tokenEntity.save();
 
     return pin;
