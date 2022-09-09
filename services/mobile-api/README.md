@@ -13,7 +13,7 @@ cp -rf .env.sample .env.development
 nano .env.development
 ```
 
-obtain service-account-file.json from the team
+obtain gemunion-firebase-key.json from the team
 
 ## Start
 
