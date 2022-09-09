@@ -1,11 +1,12 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryboxCreateDto, MysteryboxSearchDto, MysteryboxUpdateDto } from "./dto";
+import { UserEntity } from "../../../../user/user.entity";
 
 @ApiBearerAuth()
 @Controller("/mystery-boxes")
@@ -14,8 +15,11 @@ export class MysteryBoxController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: MysteryboxSearchDto): Promise<[Array<MysteryBoxEntity>, number]> {
-    return this.mysteryboxService.search(dto);
+  public search(
+    @Query() dto: MysteryboxSearchDto,
+    @User() userEntity: UserEntity,
+  ): Promise<[Array<MysteryBoxEntity>, number]> {
+    return this.mysteryboxService.search(dto, userEntity);
   }
 
   @Get("/autocomplete")

@@ -27,15 +27,8 @@ export class StakingRulesService {
 
     queryBuilder.leftJoinAndSelect("rule.reward", "reward");
     queryBuilder.leftJoinAndSelect("reward.components", "reward_components");
+    // queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
     queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
-
-    // MysteryBox
-    queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
-    queryBuilder.leftJoinAndSelect("reward_template.mysterybox", "reward_mbox");
-    queryBuilder.leftJoinAndSelect("reward_mbox.item", "reward_mbox_item");
-    queryBuilder.leftJoinAndSelect("reward_mbox_item.components", "reward_mbox_components");
-    queryBuilder.leftJoinAndSelect("reward_mbox_components.template", "reward_mbox_components_template");
-    queryBuilder.leftJoinAndSelect("reward_mbox_components_template.contract", "reward_mbox_components_contract");
 
     queryBuilder.select();
 

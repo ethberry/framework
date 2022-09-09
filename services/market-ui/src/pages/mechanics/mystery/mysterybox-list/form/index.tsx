@@ -3,15 +3,15 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput } from "@gemunion/mui-inputs-core";
-import { IMysteryboxSearchDto } from "@framework/types";
+import { IMysteryBoxSearchDto } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 import { useStyles } from "./styles";
 
 interface IMysteryboxSearchFormProps {
-  onSubmit: (values: IMysteryboxSearchDto) => Promise<void>;
+  onSubmit: (values: IMysteryBoxSearchDto) => Promise<void>;
 
-  initialValues: IMysteryboxSearchDto;
+  initialValues: IMysteryBoxSearchDto;
   open: boolean;
   embedded?: boolean;
 }

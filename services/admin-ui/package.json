@@ -140,8 +140,7 @@
     "prebuild": "rimraf dist/",
     "prepublish": "npm run build",
     "start": "cross-env NODE_ENV=${NODE_ENV:=development} webpack serve --config webpack.development.ts",
-    "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
-    "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
+    "start:prod": "exit 0",
     "test": "exit 0"
   },
   "title": "Gemunion Framework - Admin UI",

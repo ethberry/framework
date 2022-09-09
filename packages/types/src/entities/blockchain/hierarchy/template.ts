@@ -3,7 +3,6 @@ import type { ISearchable } from "@gemunion/types-collection";
 import { IAsset } from "../mechanics/asset";
 import { IContract } from "./contract";
 import { IToken } from "./token";
-import { IMysterybox } from "../mechanics/mysterybox/mysterybox";
 
 export enum TemplateStatus {
   ACTIVE = "ACTIVE",
@@ -22,5 +21,4 @@ export interface ITemplate extends ISearchable {
   contractId: number;
   contract?: IContract;
   tokens?: Array<IToken>;
-  mysterybox?: IMysterybox;
 }
