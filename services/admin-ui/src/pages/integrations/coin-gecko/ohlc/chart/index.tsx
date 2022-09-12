@@ -3,6 +3,7 @@ import { Box } from "@mui/material";
 import * as Plot from "@observablehq/plot";
 
 import { useApiCall } from "@gemunion/react-hooks";
+import { BaseCoins, TargetCoins } from "../../rates/enums";
 
 interface IOhlcResult {
   date: number;
@@ -15,13 +16,13 @@ interface IOhlcResult {
 const transformOhlc = (rows: number[][]): IOhlcResult[] => {
   const result: IOhlcResult[] = [];
 
-  rows.forEach((row: number[]) =>
+  rows.forEach(([date, open, low, high, close]: number[]) =>
     result.push({
-      date: row[0],
-      open: row[1],
-      low: row[2],
-      high: row[3],
-      close: row[4],
+      date,
+      open,
+      low,
+      high,
+      close,
     }),
   );
 
@@ -38,8 +39,8 @@ export const OhlcChart: FC = () => {
           url: "/coin-gecko/ohlc",
           method: "GET",
           data: {
-            baseCoinId: "ethereum",
-            targetCoinId: "usd",
+            baseCoinId: BaseCoins.ETHEREUM,
+            targetCoinId: TargetCoins.USD,
             days: 365,
           },
         })
