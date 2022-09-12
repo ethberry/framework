@@ -3,6 +3,8 @@ import { Grid, Typography } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
+import { OhlcChart } from "./chart";
+
 export const CoinGeckoOhlc: FC = () => {
   return (
     <Grid>
@@ -11,6 +13,7 @@ export const CoinGeckoOhlc: FC = () => {
       <PageHeader message="pages.coin-gecko.ohlc" />
 
       <Typography>Here be dragons</Typography>
+      <OhlcChart />
     </Grid>
   );
 };
