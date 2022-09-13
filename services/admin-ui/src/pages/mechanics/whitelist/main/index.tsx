@@ -4,7 +4,7 @@ import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemTe
 import { Add, Delete, TimerOutlined } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { useCollection } from "@gemunion/react-hooks";
+import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { IWhitelist, IWhitelistSearchDto } from "@framework/types";
 
@@ -18,12 +18,9 @@ export const Whitelist: FC = () => {
     search,
     selected,
     isLoading,
-    isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
     handleCreate,
-    handleToggleFilters,
-    handleEdit,
     handleEditCancel,
     handleEditConfirm,
     handleDelete,
@@ -43,8 +40,15 @@ export const Whitelist: FC = () => {
 
   const { formatMessage } = useIntl();
 
+  const { fn } = useApiCall(async api => {
+    return api.fetchJson({
+      url: `/whitelist/generate`,
+    });
+  });
+
   const handleUpload = () => {
-    alert("Not implemented!");
+    // TODO call contract
+    return fn().then(console.info);
   };
 
   return (

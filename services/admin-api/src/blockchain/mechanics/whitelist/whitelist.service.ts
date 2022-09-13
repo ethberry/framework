@@ -55,4 +55,8 @@ export class WhitelistService {
   public async delete(where: FindOptionsWhere<WhitelistEntity>): Promise<DeleteResult> {
     return this.whitelistEntityRepository.delete(where);
   }
+
+  public async generate(): Promise<{ proof: string }> {
+    return Promise.resolve({ proof: "abcde" });
+  }
 }

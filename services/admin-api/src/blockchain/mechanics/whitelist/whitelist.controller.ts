@@ -35,6 +35,11 @@ export class WhitelistController {
     return this.whitelistService.create(dto);
   }
 
+  @Get("/generate")
+  public generate(): Promise<{ proof: string }> {
+    return this.whitelistService.generate();
+  }
+
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {

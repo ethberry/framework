@@ -561,6 +561,7 @@
     "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
+    "duplicateAccount": "Duplicate account",
     "error": "Unknown Error",
     "featureIsNotSupported": "Feature is not supported",
     "gradeNotFound": "Grade not found",
