@@ -5,8 +5,6 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { IWhitelistSearchDto } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IWhitelistSearchFormProps {
   onSubmit: (values: IWhitelistSearchDto) => Promise<void>;
   initialValues: IWhitelistSearchDto;
@@ -14,8 +12,6 @@ interface IWhitelistSearchFormProps {
 
 export const WhitelistSearchForm: FC<IWhitelistSearchFormProps> = props => {
   const { onSubmit, initialValues } = props;
-
-  const classes = useStyles();
 
   const { account } = initialValues;
   const fixedValues = { account };
@@ -26,7 +22,6 @@ export const WhitelistSearchForm: FC<IWhitelistSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="WhitelistSearchForm"
     >
       <Grid container spacing={2}>

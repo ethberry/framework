@@ -6,8 +6,6 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import type { IContractSearchDto } from "@framework/types";
 import { ContractStatus } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IContractSearchFormProps {
   onSubmit: (values: IContractSearchDto) => Promise<void>;
   initialValues: IContractSearchDto;
@@ -18,8 +16,6 @@ interface IContractSearchFormProps {
 export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
   const { onSubmit, initialValues, open, contractFeaturesOptions } = props;
 
-  const classes = useStyles();
-
   const { query, contractStatus, contractFeatures } = initialValues;
   const fixedValues = { query, contractStatus, contractFeatures };
 
@@ -29,7 +25,6 @@ export const ContractSearchForm: FC<IContractSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="ContractSearchForm"
     >
       <Grid container spacing={2}>

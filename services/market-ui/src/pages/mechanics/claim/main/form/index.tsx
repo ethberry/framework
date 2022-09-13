@@ -6,8 +6,6 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IClaimSearchDto } from "@framework/types";
 import { ClaimStatus } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IClaimSearchFormProps {
   onSubmit: (values: IClaimSearchDto) => Promise<void>;
   initialValues: IClaimSearchDto;
@@ -16,8 +14,6 @@ interface IClaimSearchFormProps {
 
 export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { account, claimStatus } = initialValues;
   const fixedValues = { account, claimStatus };
@@ -28,7 +24,6 @@ export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="StakingRuleSearchForm"
     >
       <Collapse in={open}>

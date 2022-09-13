@@ -6,8 +6,6 @@ import { SearchInput } from "@gemunion/mui-inputs-core";
 import { IMysteryBoxSearchDto } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
-import { useStyles } from "./styles";
-
 interface IMysteryboxSearchFormProps {
   onSubmit: (values: IMysteryBoxSearchDto) => Promise<void>;
 
@@ -19,8 +17,6 @@ interface IMysteryboxSearchFormProps {
 export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
-
   const { query, minPrice, maxPrice } = initialValues;
   const fixedValues = { query, minPrice, maxPrice };
 
@@ -30,7 +26,6 @@ export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="MysteryboxSearchForm"
     >
       <Grid container spacing={2}>

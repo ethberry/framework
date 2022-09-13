@@ -5,8 +5,6 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { ClaimStatus, IClaimSearchDto } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IClaimSearchFormProps {
   onSubmit: (values: IClaimSearchDto) => Promise<void>;
   initialValues: IClaimSearchDto;
@@ -15,8 +13,6 @@ interface IClaimSearchFormProps {
 
 export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { claimStatus, account } = initialValues;
   const fixedValues = { claimStatus, account };
@@ -27,7 +23,6 @@ export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="ClaimSearchForm"
     >
       <Grid container spacing={2}>

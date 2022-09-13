@@ -6,7 +6,6 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 import { EthInput } from "@gemunion/mui-inputs-mask";
-import { useStyles } from "./styles";
 
 interface ITemplateSearchFormProps {
   onSubmit: (values: ITemplateSearchDto) => Promise<void>;
@@ -20,8 +19,6 @@ interface ITemplateSearchFormProps {
 export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
   const { onSubmit, initialValues, open, contractType, contractModule, embedded } = props;
 
-  const classes = useStyles();
-
   const { query, contractIds, minPrice, maxPrice } = initialValues;
   const fixedValues = { query, contractIds, minPrice, maxPrice };
 
@@ -31,7 +28,6 @@ export const TemplateSearchForm: FC<ITemplateSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="TemplateSearchForm"
     >
       <Grid container spacing={2}>

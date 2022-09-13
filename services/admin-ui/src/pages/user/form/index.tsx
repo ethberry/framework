@@ -5,8 +5,6 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { IUserSearchDto, UserRole, UserStatus } from "@framework/types";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 
-import { useStyles } from "./styles";
-
 interface IUserSearchFormProps {
   onSubmit: (values: IUserSearchDto) => Promise<void>;
   initialValues: IUserSearchDto;
@@ -15,8 +13,6 @@ interface IUserSearchFormProps {
 
 export const UserSearchForm: FC<IUserSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { query, userStatus, userRoles } = initialValues;
   const fixedValues = { query, userStatus, userRoles };
@@ -27,7 +23,6 @@ export const UserSearchForm: FC<IUserSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="UserSearchForm"
     >
       <Grid container spacing={2}>

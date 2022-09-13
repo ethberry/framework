@@ -6,7 +6,6 @@ import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { IMarketplaceReportSearchDto, TokenType } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { TemplateInput } from "./template-input";
 
 interface IMarketplaceReportSearchFormProps {
@@ -18,8 +17,6 @@ interface IMarketplaceReportSearchFormProps {
 export const MarketplaceReportSearchForm: FC<IMarketplaceReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
-
   const { startTimestamp, endTimestamp, contractIds, templateIds } = initialValues;
   const fixedValues = { startTimestamp, endTimestamp, contractIds, templateIds };
 
@@ -29,7 +26,6 @@ export const MarketplaceReportSearchForm: FC<IMarketplaceReportSearchFormProps> 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="ClaimSearchForm"
     >
       <Collapse in={open}>

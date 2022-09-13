@@ -6,7 +6,6 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import type { IMarketplaceSupplySearchDto } from "@framework/types";
 import { TokenStatus, TokenType } from "@framework/types";
 
-import { useStyles } from "./styles";
 import { TemplateInput } from "./template-input";
 import { ContractInput } from "./contract-input";
 
@@ -19,8 +18,6 @@ interface IMarketplaceGradeSearchFormProps {
 export const MarketplaceGradeSearchForm: FC<IMarketplaceGradeSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
-
   const { tokenStatus, tokenType, contractIds, templateIds, attribute } = initialValues;
   const fixedValues = { tokenStatus, tokenType, contractIds, templateIds, attribute };
 
@@ -30,7 +27,6 @@ export const MarketplaceGradeSearchForm: FC<IMarketplaceGradeSearchFormProps> = 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="GradeSearchForm"
     >
       <Collapse in={open}>
