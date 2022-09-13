@@ -59,6 +59,7 @@
     "firebase-admin": "11.0.1",
     "ioredis": "5.2.3",
     "json2csv": "5.0.7",
+    "merkletreejs": "0.2.32",
     "nest-winston": "1.7.0",
     "passport": "0.6.0",
     "passport-firebase-jwt": "1.2.1",

@@ -1,6 +1,8 @@
 import { ConflictException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { MerkleTree } from "merkletreejs";
+import { utils } from "ethers";
 
 import { IWhitelistSearchDto } from "@framework/types";
 
@@ -57,6 +59,13 @@ export class WhitelistService {
   }
 
   public async generate(): Promise<{ proof: string }> {
-    return Promise.resolve({ proof: "abcde" });
+    const whitelistEntities = await this.whitelistEntityRepository.find({});
+
+    const merkleTree = new MerkleTree(
+      whitelistEntities.map(whitelistEntity => whitelistEntity.account),
+      utils.keccak256,
+    );
+
+    return { proof: merkleTree.getHexRoot() };
   }
 }
