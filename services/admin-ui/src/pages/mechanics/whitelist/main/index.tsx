@@ -2,11 +2,16 @@ import { FC, Fragment } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { Add, Delete, TimerOutlined } from "@mui/icons-material";
+import { Contract } from "ethers";
+import { Web3ContextType } from "@web3-react/core";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { IWhitelist, IWhitelistSearchDto } from "@framework/types";
+import { useMetamask } from "@gemunion/react-hooks-eth";
+
+import WhitelistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Whitelist/Whitelist.sol/Whitelist.json";
 
 import { WhitelistSearchForm } from "./form";
 import { WhitelistEditDialog } from "./edit";
@@ -46,9 +51,14 @@ export const Whitelist: FC = () => {
     });
   });
 
-  const handleUpload = () => {
-    // TODO call contract
-    return fn().then(console.info);
+  const metaFn = useMetamask((proof: string, web3Context: Web3ContextType) => {
+    const contract = new Contract(process.env.WHITELIST_ADDR, WhitelistSol.abi, web3Context.provider?.getSigner());
+    return contract.setReward(proof, []) as Promise<void>;
+  });
+
+  const handleUpload = async () => {
+    const { proof } = await fn();
+    return metaFn(proof);
   };
 
   return (
