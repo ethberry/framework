@@ -22,6 +22,7 @@ export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/stake";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
+export * from "./mechanics/whitelist/whitelist";
 
 export * from "./tokens/native/contract/create";
 export * from "./tokens/erc20/contract/create";

@@ -405,7 +405,7 @@
       "title": "ChainLink"
     },
     "claims": {
-      "defaultItemTitle": "Claim",
+      "defaultItemTitle": "{account}",
       "title": "Claim"
     },
     "coin-gecko": {
@@ -601,7 +601,8 @@
       "title": "Vesting"
     },
     "whitelist": {
-      "title": "Whitelist"
+      "title": "Whitelist",
+      "defaultItemTitle": "{account}"
     }
   },
   "snackbar": {
@@ -614,6 +615,7 @@
     "deleted": "Successfully deleted",
     "deployed": "Successfully deployed",
     "duplicateEmail": "User with this email already registered",
+    "duplicateAccount": "Duplicate account",
     "email": "Email successfully sent.",
     "error": "Unknown Error",
     "inactive": "Successfully inactivated",

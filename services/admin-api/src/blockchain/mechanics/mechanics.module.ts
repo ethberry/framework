@@ -8,6 +8,7 @@ import { VestingModule } from "./vesting/vesting.module";
 import { GradeModule } from "./grade/grade.module";
 import { DropModule } from "./drop/drop.module";
 import { LotteryModule } from "./lottery/lottery.module";
+import { WhitelistModule } from "./whitelist/whitelist.module";
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { LotteryModule } from "./lottery/lottery.module";
     GradeModule,
     DropModule,
     LotteryModule,
+    WhitelistModule,
   ],
 })
 export class MechanicsModule {}

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Timer } from "@mui/icons-material";
+import { TimerOutlined } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +17,7 @@ export const Whitelist: FC = () => {
       >
         <ListItem button component={RouterLink} to="/whitelist">
           <ListItemIcon>
-            <Timer />
+            <TimerOutlined />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.whitelist.title" />

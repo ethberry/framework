@@ -36,6 +36,7 @@ import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
+import { WhitelistEntity } from "./blockchain/mechanics/whitelist/whitelist.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -175,6 +176,8 @@ import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-c
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
 
+import { CreateWhitelistTable1663047650500 } from "./migrations/1663047650500-create-whitelist";
+
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
@@ -208,6 +211,7 @@ const config: PostgresConnectionOptions = {
     LotteryRoundEntity,
     LotteryTicketEntity,
     ExchangeHistoryEntity,
+    WhitelistEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -365,6 +369,8 @@ const config: PostgresConnectionOptions = {
     CreateLotteryTicketAt1660436477020,
     SeedLotteryTicketsAt1660436477030,
     CreateLotteryHistoryAt1660436477040,
+
+    CreateWhitelistTable1663047650500,
   ],
 };
 
