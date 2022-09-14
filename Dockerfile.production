@@ -27,5 +27,6 @@ RUN npm i --only=production
 
 COPY --chown=node:node . .
 
-RUN npm run bootstrap
-RUN npm run build
+RUN lerna bootstrap --concurrency 1 --hoist --ignore-scripts
+RUN lerna exec --scope @framework/core-contracts -- npm run build
+RUN lerna run build --stream --ignore @framework/core-contracts
