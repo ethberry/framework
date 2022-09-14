@@ -28,4 +28,4 @@ RUN npm i --only=production
 COPY --chown=node:node . .
 
 RUN npm run bootstrap
-#RUN npm run bootstrap -- --ignore @framework/core-contracts
+RUN npm run build
