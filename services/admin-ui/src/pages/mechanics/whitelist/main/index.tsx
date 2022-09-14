@@ -14,7 +14,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import WhitelistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Whitelist/Whitelist.sol/Whitelist.json";
 
 import { WhitelistSearchForm } from "./form";
-import { WhitelistEditDialog } from "./edit";
+import { AccountDialog } from "../../../../components/dialogs/account";
 
 export const Whitelist: FC = () => {
   const {
@@ -114,10 +114,12 @@ export const Whitelist: FC = () => {
         }}
       />
 
-      <WhitelistEditDialog
+      <AccountDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
+        message={selected.id ? "dialogs.edit" : "dialogs.create"}
+        testId="WhitelistEditDialog"
         initialValues={selected}
       />
     </Fragment>

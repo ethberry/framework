@@ -6,7 +6,7 @@ import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { BlockchainInfoPopover } from "../../../../../components/popover";
+import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
 import { formatEther } from "../../../../../utils/money";
 
 export interface IErc20TokenEditDialogProps {

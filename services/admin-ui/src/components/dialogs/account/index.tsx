@@ -5,26 +5,28 @@ import { TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
 
-export interface IBlacklistDto {
+export interface IAccountDto {
   account: string;
 }
 
-export interface IBlacklistAddDialogProps {
+export interface IAccountDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IBlacklistDto, form: any) => Promise<void>;
-  initialValues: IBlacklistDto;
+  onConfirm: (values: IAccountDto, form: any) => Promise<void>;
+  initialValues: IAccountDto;
+  message: string;
+  testId: string;
 }
 
-export const AccessListBlacklistDialog: FC<IBlacklistAddDialogProps> = props => {
-  const { initialValues, ...rest } = props;
+export const AccountDialog: FC<IAccountDialogProps> = props => {
+  const { initialValues, message, testId = "AccountDialogForm", ...rest } = props;
 
   return (
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.blacklist"
-      testId="AccessListBlacklistForm"
+      message={message}
+      testId={testId}
       {...rest}
     >
       <TextInput name="account" />
