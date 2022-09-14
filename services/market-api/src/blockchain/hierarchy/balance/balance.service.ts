@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
+import { TokenType } from "@framework/types";
+
 import { BalanceEntity } from "./balance.entity";
 import { UserEntity } from "../../../user/user.entity";
-import { TokenType } from "@framework/types";
 
 @Injectable()
 export class BalanceService {

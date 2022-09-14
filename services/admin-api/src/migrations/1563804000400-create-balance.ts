@@ -47,6 +47,6 @@ export class CreateBalanceTable1563804000400 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.erc1155_balance`);
+    await queryRunner.dropTable(`${ns}.balance`);
   }
 }

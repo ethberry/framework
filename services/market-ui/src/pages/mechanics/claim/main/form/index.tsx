@@ -24,7 +24,7 @@ export const ClaimSearchForm: FC<IClaimSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      testId="StakingRuleSearchForm"
+      testId="ClaimSearchForm"
     >
       <Collapse in={open}>
         <Grid container columnSpacing={2} alignItems="flex-end">

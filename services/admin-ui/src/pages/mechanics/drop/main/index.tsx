@@ -62,7 +62,7 @@ export const Drop: FC = () => {
       <Breadcrumbs path={["dashboard", "drop"]} />
 
       <PageHeader message="pages.drop.title">
-        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="MysteryboxCreateButton">
+        <Button variant="outlined" startIcon={<Add />} onClick={handleCreate} data-testid="DropCreateButton">
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>

@@ -26,7 +26,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
       <TableContainer component={Paper}>
-        <Table aria-label="vesting table">
+        <Table aria-label="table">
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">

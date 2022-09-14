@@ -72,6 +72,7 @@ export class MetadataTokenService {
             value,
           });
           break;
+        // MODULE:BREEDING
         case TokenAttributes.GENES:
           Object.entries(decodeGenes(BigNumber.from(value))).forEach(([key, value]) => {
             memo.push({

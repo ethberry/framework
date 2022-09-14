@@ -1,4 +1,4 @@
-import { MysteryContractFeatures } from "../../../../../entities";
+import { MysteryContractFeatures } from "../../../../entities";
 
 export interface IMysteryContractDeployDto {
   contractFeatures: Array<MysteryContractFeatures>;

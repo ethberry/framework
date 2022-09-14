@@ -14,6 +14,7 @@ export * from "./mechanics/craft/search";
 export * from "./mechanics/lottery/search";
 export * from "./mechanics/lottery/leaderboard";
 export * from "./mechanics/mysterybox/search";
+export * from "./mechanics/mysterybox/deploy";
 export * from "./mechanics/referral/search";
 export * from "./mechanics/staking/chart";
 export * from "./mechanics/staking/leaderboard";
@@ -31,9 +32,8 @@ export * from "./tokens/erc721/contract/deploy";
 export * from "./tokens/erc721/token-history/search";
 export * from "./tokens/erc998/composition/search";
 export * from "./tokens/erc998/contract/deploy";
-export * from "./tokens/erc998/token-history/search";
+export * from "./hierarchy/contract-history/search";
 export * from "./tokens/erc1155/contract/deploy";
-export * from "./tokens/mysterybox/contract/deploy";
 
 export * from "./integrations/marketplace/search";
 export * from "./integrations/marketplace/supply";

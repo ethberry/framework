@@ -14,12 +14,15 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
 
   const result = Object.entries(attributes).reduce((memo, [key, value]) => {
     switch (key) {
+      // MODULE:GRADE
       case TokenAttributes.GRADE:
         Object.assign(memo, { [key]: value });
         break;
+      // MODULE:RANDOM
       case TokenAttributes.RARITY:
         Object.assign(memo, { [key]: Object.values(TokenRarity)[~~value] });
         break;
+      // MODULE:BREEDING
       case TokenAttributes.GENES:
         Object.entries(decodeGenes(BigNumber.from(value))).forEach(([key, value]) => {
           Object.assign(memo, { [key]: value });
