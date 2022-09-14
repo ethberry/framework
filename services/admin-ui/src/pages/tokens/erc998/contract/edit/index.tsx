@@ -7,7 +7,7 @@ import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
 import { ContractStatus, IContract } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { BlockchainInfoPopover } from "../../../../../components/popover/contract";
+import { BlockchainInfoPopover } from "../../../../../components/dialogs/contract";
 
 export interface IErc998ContractEditDialogProps {
   open: boolean;

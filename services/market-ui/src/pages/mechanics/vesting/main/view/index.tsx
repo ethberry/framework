@@ -1,12 +1,13 @@
 import { FC } from "react";
-import { Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { format, formatDistance, formatDuration, intervalToDuration, parseISO } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { networks } from "@gemunion/provider-wallet";
 import type { IVesting } from "@framework/types";
+
+import { ScannerLink } from "../../../../../components/common/scanner-link";
 
 export interface IVestingViewDialogProps {
   open: boolean;
@@ -37,9 +38,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.address" />
               </TableCell>
               <TableCell align="right">
-                <Link href={`${networks[~~process.env.CHAIN_ID].blockExplorerUrls[0]}/address/${address}`}>
-                  {address}
-                </Link>
+                <ScannerLink address={address} />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -47,9 +46,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
-                <Link href={`${networks[~~process.env.CHAIN_ID].blockExplorerUrls[0]}/address/${account}`}>
-                  {account}
-                </Link>
+                <ScannerLink address={account} />
               </TableCell>
             </TableRow>
             <TableRow>
