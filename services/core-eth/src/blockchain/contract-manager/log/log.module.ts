@@ -35,7 +35,8 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
               ContractManagerEventType.ERC721TokenDeployed,
               ContractManagerEventType.ERC998TokenDeployed,
               ContractManagerEventType.ERC1155TokenDeployed,
-              ContractManagerEventType.MysteryboxDeployed
+              ContractManagerEventType.MysteryboxDeployed,
+              ContractManagerEventType.PyramidDeployed
             ],
           },
           block: {

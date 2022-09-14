@@ -8,7 +8,8 @@ export class CreateReferralHistoryAt1660103709950 implements MigrationInterface 
       CREATE TYPE ${ns}.referral_event_enum AS ENUM (
         'ReferralProgram',
         'ReferralReward',
-        'ReferralWithdraw'
+        'ReferralWithdraw',
+        'ReferralBonus'
       );
     `);
 

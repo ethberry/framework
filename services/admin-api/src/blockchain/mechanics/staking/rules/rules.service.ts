@@ -160,7 +160,7 @@ export class StakingRulesService {
     if (stakingEntity.stakingStatus === StakingStatus.NEW) {
       await stakingEntity.remove();
     } else {
-      Object.assign(stakingEntity, { craftStatus: StakingStatus.INACTIVE });
+      Object.assign(stakingEntity, { stakingStatus: StakingStatus.INACTIVE });
       await stakingEntity.save();
     }
   }

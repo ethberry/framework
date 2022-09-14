@@ -67,7 +67,6 @@ export const MysteryContract: FC = () => {
       contractStatus,
     }),
   });
-
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "mystery.contracts"]} />

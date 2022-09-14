@@ -16,7 +16,9 @@ import {
   IMysteryContractDeployDto,
   IVestingDeployDto,
   MysteryContractFeatures,
+  PyramidContractFeatures,
   VestingContractTemplate,
+  IPyramidContractDeployDto,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
@@ -55,6 +57,8 @@ import MysteryboxSimpleSol from "@framework/core-contracts/artifacts/contracts/M
 import MysteryboxBlacklistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxBlacklist.sol/ERC721MysteryboxBlacklist.json";
 import MysteryboxPausableSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxPausable.sol/ERC721MysteryboxPausable.json";
 import MysteryboxFullSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
+
+import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 import { UserEntity } from "../../user/user.entity";
 
@@ -216,6 +220,37 @@ export class ContractManagerSignService {
       },
     );
 
+    return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
+  }
+
+  // MODULE:PYRAMID
+  public async pyramid(dto: IPyramidContractDeployDto, userEntity: UserEntity): Promise<IServerSignature> {
+    const { contractFeatures } = dto;
+    const nonce = utils.randomBytes(32);
+    const bytecode = this.getBytecodeByPyramidContractFeatures(dto);
+    const signature = await this.signer._signTypedData(
+      // Domain
+      {
+        name: "ContractManager",
+        version: "1.0.0",
+        chainId: userEntity.chainId,
+        verifyingContract: this.configService.get<string>("CONTRACT_MANAGER_ADDR", ""),
+      },
+      // Types
+      {
+        EIP712: [
+          { name: "nonce", type: "bytes32" },
+          { name: "bytecode", type: "bytes" },
+          { name: "featureIds", type: "uint8[]" },
+        ],
+      },
+      // Value
+      {
+        nonce,
+        bytecode,
+        featureIds: contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
+      },
+    );
     return { nonce: utils.hexlify(nonce), signature, expiresAt: 0, bytecode };
   }
 
@@ -468,6 +503,20 @@ export class ContractManagerSignService {
       if (contractFeatures.includes(MysteryContractFeatures.PAUSABLE)) {
         return MysteryboxPausableSol.bytecode;
       }
+    }
+
+    throw this.throwValidationError(dto);
+  }
+
+  public getBytecodeByPyramidContractFeatures(dto: IPyramidContractDeployDto) {
+    const { contractFeatures } = dto;
+
+    if (!contractFeatures.length) {
+      return PyramidSol.bytecode;
+    }
+
+    if (contractFeatures.includes(PyramidContractFeatures.LINEAR_REFERRAL)) {
+      return PyramidSol.bytecode;
     }
 
     throw this.throwValidationError(dto);

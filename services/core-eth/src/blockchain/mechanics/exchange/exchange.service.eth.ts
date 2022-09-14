@@ -16,7 +16,6 @@ import {
 } from "@framework/types";
 
 import { ExchangeHistoryService } from "./history/exchange-history.service";
-import { ExchangeService } from "./exchange.service";
 import { ClaimService } from "../claim/claim.service";
 import { ContractService } from "../../hierarchy/contract/contract.service";
 import { AssetService } from "../asset/asset.service";
@@ -31,7 +30,6 @@ export class ExchangeServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly contractService: ContractService,
-    private readonly exchangeService: ExchangeService,
     private readonly claimService: ClaimService,
     private readonly gradeService: GradeService,
     private readonly tokenService: TokenService,

@@ -26,4 +26,5 @@ export enum ModuleType {
   MYSTERY = "MYSTERY",
   WRAPPER = "WRAPPER",
   LOTTERY = "LOTTERY",
+  PYRAMID = "PYRAMID",
 }

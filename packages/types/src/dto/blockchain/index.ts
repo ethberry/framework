@@ -24,7 +24,12 @@ export * from "./mechanics/staking/stake";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
 export * from "./mechanics/whitelist/whitelist";
-
+export * from "./mechanics/pyramid/contract/deploy";
+export * from "./mechanics/pyramid/chart";
+export * from "./mechanics/pyramid/leaderboard";
+export * from "./mechanics/pyramid/report";
+export * from "./mechanics/pyramid/rule";
+export * from "./mechanics/pyramid/stake";
 export * from "./tokens/native/contract/create";
 export * from "./tokens/erc20/contract/create";
 export * from "./tokens/erc20/contract/deploy";

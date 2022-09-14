@@ -3,7 +3,7 @@ import { constants, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-collection";
 import { ContractFeatures, TokenType } from "@framework/types";
-import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignBreedDto } from "./interfaces";
 import { UserEntity } from "../../../user/user.entity";

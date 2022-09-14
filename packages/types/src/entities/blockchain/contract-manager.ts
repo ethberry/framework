@@ -13,6 +13,7 @@ export enum ContractType {
   ERC1155_TOKEN = "ERC1155_TOKEN",
   METADATA = "METADATA",
   LOTTERY = "LOTTERY",
+  PYRAMID = "PYRAMID",
 }
 
 export interface IContractManagerUpdateDto {

@@ -12,7 +12,7 @@ export async function deployStaking(contracts: Record<string, Contract>) {
 
   await stakingInstance.setRules([
     {
-      externalId: 11, // NATIVE > NATIVE
+      externalId: 1, // NATIVE > NATIVE
       deposit: {
         tokenType: 0,
         token: constants.AddressZero,
@@ -43,7 +43,7 @@ export async function deployStaking(contracts: Record<string, Contract>) {
 
   await stakingInstance.setRules([
     {
-      externalId: 23, // ERC20 > ERC721
+      externalId: 8, // ERC20 > ERC721
       deposit: {
         tokenType: 1,
         token: contracts.erc20Simple.address,
@@ -74,7 +74,7 @@ export async function deployStaking(contracts: Record<string, Contract>) {
 
   await stakingInstance.setRules([
     {
-      externalId: 45, // ERC998 > ERC1155
+      externalId: 19, // ERC998 > ERC1155
       deposit: {
         tokenType: 3,
         token: contracts.erc998Random.address,

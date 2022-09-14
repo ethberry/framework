@@ -20,7 +20,7 @@ export class ContractService {
   public async search(
     dto: IContractSearchDto,
     userEntity: UserEntity,
-    contractType: TokenType,
+    contractType: TokenType | undefined,
     contractModule: ModuleType,
   ): Promise<[Array<ContractEntity>, number]> {
     const { query, contractStatus, contractFeatures, skip, take } = dto;
@@ -31,9 +31,12 @@ export class ContractService {
 
     queryBuilder.leftJoinAndSelect("contract.templates", "templates");
 
-    queryBuilder.andWhere("contract.contractType = :contractType", {
-      contractType,
-    });
+    if (contractType) {
+      queryBuilder.andWhere("contract.contractType = :contractType", {
+        contractType,
+      });
+    }
+
     queryBuilder.andWhere("contract.contractModule = :contractModule", {
       contractModule,
     });

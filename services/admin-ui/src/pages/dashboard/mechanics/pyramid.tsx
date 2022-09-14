@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { ChangeHistory } from "@mui/icons-material";
+import { Collections, Rule, ChangeHistory } from "@mui/icons-material";
+
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -15,12 +16,20 @@ export const Pyramid: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/pyramid">
+        <ListItem button component={RouterLink} to="/pyramid/contracts">
           <ListItemIcon>
-            <ChangeHistory />
+            <Collections />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.pyramid.title" />
+            <FormattedMessage id="pages.pyramid.contracts.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/pyramid/rules">
+          <ListItemIcon>
+            <Rule />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.staking.rules.title" />
           </ListItemText>
         </ListItem>
       </List>

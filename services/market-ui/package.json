@@ -129,7 +129,7 @@
   },
   "license": "UNLICENSED",
   "main": "./dist/main.js",
-  "name": "@framework/marketplace-ui",
+  "name": "@framework/market-ui",
   "private": true,
   "repository": {
     "type": "git",
