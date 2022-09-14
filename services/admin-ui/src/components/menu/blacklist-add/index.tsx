@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
-import { AccessListBlacklistDialog, IBlacklistDto } from "./edit";
+import { AccountDialog, IAccountDto } from "../../dialogs/account";
 
 export interface IBlacklistMenuItemProps {
   contract: IContract;
@@ -30,12 +30,12 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
     setIsBlacklistDialogOpen(false);
   };
 
-  const metaFn = useMetamask((values: IBlacklistDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((values: IAccountDto, web3Context: Web3ContextType) => {
     const contract = new Contract(address, ERC20BlacklistSol.abi, web3Context.provider?.getSigner());
     return contract.blacklist(values.account) as Promise<void>;
   });
 
-  const handleBlacklistConfirmed = async (values: IBlacklistDto): Promise<void> => {
+  const handleBlacklistConfirmed = async (values: IAccountDto): Promise<void> => {
     await metaFn(values).finally(() => {
       setIsBlacklistDialogOpen(false);
     });
@@ -51,10 +51,12 @@ export const BlacklistAddMenuItem: FC<IBlacklistMenuItemProps> = props => {
           <FormattedMessage id="form.buttons.blacklist" />
         </Typography>
       </MenuItem>
-      <AccessListBlacklistDialog
+      <AccountDialog
         onCancel={handleBlacklistCancel}
         onConfirm={handleBlacklistConfirmed}
         open={isBlacklistDialogOpen}
+        message="dialogs.blacklist"
+        testId="AccessListBlacklistForm"
         initialValues={{
           account: "",
         }}

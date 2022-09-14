@@ -5,8 +5,6 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { CraftStatus, ICraftSearchDto } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IExchangeSearchFormProps {
   onSubmit: (values: ICraftSearchDto) => Promise<void>;
   initialValues: ICraftSearchDto;
@@ -15,8 +13,6 @@ interface IExchangeSearchFormProps {
 
 export const ExchangeSearchForm: FC<IExchangeSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { query, craftStatus } = initialValues;
   const fixedValues = { query, craftStatus };
@@ -27,7 +23,6 @@ export const ExchangeSearchForm: FC<IExchangeSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="ExchangeSearchForm"
     >
       <Grid container spacing={2}>

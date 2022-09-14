@@ -5,8 +5,6 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ILotteryTicketSearchDto } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface ILotteryTicketSearchFormProps {
   onSubmit: (values: ILotteryTicketSearchDto) => Promise<void>;
   initialValues: ILotteryTicketSearchDto;
@@ -15,8 +13,6 @@ interface ILotteryTicketSearchFormProps {
 
 export const LotteryTicketSearchForm: FC<ILotteryTicketSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { roundIds } = initialValues;
   const fixedValues = { roundIds };
@@ -27,7 +23,6 @@ export const LotteryTicketSearchForm: FC<ILotteryTicketSearchFormProps> = props 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="LotteryTicketSearchForm"
     >
       <Collapse in={open}>

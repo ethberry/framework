@@ -5,8 +5,6 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import { IVestingSearchDto, VestingContractTemplate } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IVestingSearchFormProps {
   onSubmit: (values: IVestingSearchDto) => Promise<void>;
   initialValues: IVestingSearchDto;
@@ -15,8 +13,6 @@ interface IVestingSearchFormProps {
 
 export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { account, contractTemplate } = initialValues;
   const fixedValues = { account, contractTemplate };
@@ -27,7 +23,6 @@ export const VestingSearchForm: FC<IVestingSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="VestingSearchForm"
     >
       <Grid container spacing={2}>

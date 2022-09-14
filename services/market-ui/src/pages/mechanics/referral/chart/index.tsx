@@ -24,67 +24,86 @@ export const ReferralChart: FC = () => {
     },
   });
 
-  const chartRef1 = useRef<HTMLDivElement>(null);
-  const chartRef2 = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isLoading) {
-      if (chartRef1.current) {
+      if (chartRef.current) {
+        const width = chartRef.current.clientWidth;
+        const height = 400;
+
         const chart = Plot.plot({
-          width: chartRef1.current.clientWidth,
+          width: Math.min(width, 780),
+          height,
+          marginLeft: 70,
+          marginRight: 50,
+          marginBottom: 40,
           y: {
+            axis: "left",
             grid: true,
             label: "Sold items",
+            nice: true,
+            labelAnchor: "top",
+            labelOffset: 40,
           },
           x: {
             label: "Date",
+            type: "band",
+            line: true,
+            nice: true,
             thresholds: 100,
+            labelAnchor: "center",
             transform: (d: string) => new Date(d),
           },
-          marks: [Plot.line(rows, { y: "count", x: "date", curve: "catmull-rom", marker: "circle" }), Plot.ruleY([0])],
+          marks: [
+            Plot.barY(rows, { y: "count", x: "date", fill: "#ccc" }),
+            () =>
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+              Plot.plot({
+                width: Math.min(width, 780),
+                height,
+                marginLeft: 70,
+                marginRight: 50,
+                marginBottom: 40,
+                x: {
+                  type: "band",
+                  axis: null,
+                  nice: true,
+                  transform: (d: string) => new Date(d),
+                },
+                y: {
+                  axis: "right",
+                  label: "Gained profit",
+                  line: true,
+                  nice: true,
+                  transform: (d: BigNumber) => BigNumber.from(d).div(1e15).toNumber(),
+                },
+                marks: [
+                  Plot.line(rows, {
+                    y: "amount",
+                    x: "date",
+                    curve: "catmull-rom",
+                    marker: "circle",
+                  }),
+                ],
+                color: {
+                  scheme: "cool",
+                },
+              }),
+          ],
           color: {
-            scheme: "blues",
+            scheme: "cool",
           },
         });
 
-        while (chartRef1.current.lastChild) {
-          chartRef1.current.removeChild(chartRef1.current.lastChild);
+        while (chartRef.current.lastChild) {
+          chartRef.current.removeChild(chartRef.current.lastChild);
         }
 
-        chartRef1.current.append(chart);
+        chartRef.current.append(chart);
       }
     }
-  }, [chartRef1.current, rows]);
-
-  useEffect(() => {
-    if (isLoading) {
-      if (chartRef2.current) {
-        const chart = Plot.plot({
-          width: chartRef2.current.clientWidth,
-          y: {
-            grid: true,
-            label: "Gained profit",
-            transform: (d: BigNumber) => BigNumber.from(d).div(1e15).toNumber(),
-          },
-          x: {
-            label: "Date",
-            thresholds: 100,
-            transform: (d: string) => new Date(d),
-          },
-          marks: [Plot.line(rows, { y: "amount", x: "date", curve: "catmull-rom", marker: "circle" }), Plot.ruleY([0])],
-          color: {
-            scheme: "blues",
-          },
-        });
-
-        while (chartRef2.current.lastChild) {
-          chartRef2.current.removeChild(chartRef2.current.lastChild);
-        }
-
-        chartRef2.current.append(chart);
-      }
-    }
-  }, [chartRef2.current, rows]);
+  }, [chartRef.current, rows]);
 
   return (
     <Fragment>
@@ -101,8 +120,7 @@ export const ReferralChart: FC = () => {
 
       <ReferralReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
-      <Box mt={4} width="100%" ref={chartRef1} />
-      <Box mt={4} width="100%" ref={chartRef2} />
+      <Box mt={4} width="100%" ref={chartRef} overflow="visible" />
     </Fragment>
   );
 };

@@ -12,6 +12,7 @@ import { ReferralModule } from "./referral/referral.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { WrapperModule } from "./wrapper/wrapper.module";
 import { BreedModule } from "./breed/breed.module";
+import { WhitelistModule } from "./whitelist/whitelist.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { BreedModule } from "./breed/breed.module";
     ReferralModule,
     LotteryModule,
     WrapperModule,
+    WhitelistModule,
   ],
 })
 export class MechanicsModule {}

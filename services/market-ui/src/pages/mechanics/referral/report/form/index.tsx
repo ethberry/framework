@@ -6,8 +6,6 @@ import { IReferralReportSearchDto } from "@framework/types";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
-import { useStyles } from "./styles";
-
 interface IReferralReportSearchFormProps {
   onSubmit: (values: IReferralReportSearchDto) => Promise<void>;
   initialValues: IReferralReportSearchDto;
@@ -16,8 +14,6 @@ interface IReferralReportSearchFormProps {
 
 export const ReferralReportSearchForm: FC<IReferralReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { query, startTimestamp, endTimestamp } = initialValues;
   const fixedValues = { query, startTimestamp, endTimestamp };
@@ -28,7 +24,6 @@ export const ReferralReportSearchForm: FC<IReferralReportSearchFormProps> = prop
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="ReferralReportSearchForm"
     >
       <Grid container spacing={2}>

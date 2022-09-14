@@ -3,27 +3,27 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { MysteryBoxEntity } from "./box.entity";
-import type { IMysteryboxSearchDto } from "@framework/types";
+import type { IMysteryBoxSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 @Injectable()
 export class MysteryBoxService {
   constructor(
     @InjectRepository(MysteryBoxEntity)
-    private readonly mysteryboxEntityRepository: Repository<MysteryBoxEntity>,
+    private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
   ) {}
 
-  public async search(dto: Partial<IMysteryboxSearchDto>, chainId: number): Promise<[Array<MysteryBoxEntity>, number]> {
+  public async search(dto: Partial<IMysteryBoxSearchDto>, chainId: number): Promise<[Array<MysteryBoxEntity>, number]> {
     const { query, skip, take, contractIds, minPrice, maxPrice } = dto;
 
-    const queryBuilder = this.mysteryboxEntityRepository.createQueryBuilder("mysterybox");
+    const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("mysterybox.template", "template");
+    queryBuilder.leftJoinAndSelect("box.template", "template");
     queryBuilder.leftJoinAndSelect("template.contract", "contract");
 
-    queryBuilder.leftJoinAndSelect("mysterybox.item", "item");
+    queryBuilder.leftJoinAndSelect("box.item", "item");
     queryBuilder.leftJoinAndSelect("item.components", "item_components");
     queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
@@ -48,7 +48,7 @@ export class MysteryBoxService {
       chainId,
     });
 
-    queryBuilder.andWhere("mysterybox.mysteryboxStatus = :mysteryboxStatus", {
+    queryBuilder.andWhere("box.mysteryboxStatus = :mysteryboxStatus", {
       mysteryboxStatus: TemplateStatus.ACTIVE,
     });
 
@@ -95,7 +95,7 @@ export class MysteryBoxService {
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "mysterybox.createdAt": "DESC",
+      "box.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
@@ -105,17 +105,17 @@ export class MysteryBoxService {
     where: FindOptionsWhere<MysteryBoxEntity>,
     options?: FindOneOptions<MysteryBoxEntity>,
   ): Promise<MysteryBoxEntity | null> {
-    return this.mysteryboxEntityRepository.findOne({ where, ...options });
+    return this.mysteryBoxEntityRepository.findOne({ where, ...options });
   }
 
   public findOneWithRelations(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity | null> {
     return this.findOne(where, {
       join: {
-        alias: "mysterybox",
+        alias: "box",
         leftJoinAndSelect: {
-          template: "mysterybox.template",
+          template: "box.template",
           contract: "template.contract",
-          item: "mysterybox.item",
+          item: "box.item",
           item_components: "item.components",
           item_contract: "item_components.contract",
           item_template: "item_components.template",
@@ -130,7 +130,7 @@ export class MysteryBoxService {
   }
 
   public async autocomplete(): Promise<Array<MysteryBoxEntity>> {
-    return this.mysteryboxEntityRepository.find({
+    return this.mysteryBoxEntityRepository.find({
       select: {
         id: true,
         title: true,

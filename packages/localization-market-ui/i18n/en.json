@@ -321,6 +321,7 @@
         "pyramid": "Pyramid",
         "staking": "Staking",
         "vesting": "Vesting",
+        "whitelist": "Whitelist",
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
@@ -414,6 +415,9 @@
       "login": "Login"
     },
     "ipfs": {
+      "infura": {
+        "title": "Infura"
+      },
       "pinata": {
         "title": "Pinata"
       },
@@ -537,6 +541,9 @@
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
     },
+    "whitelist": {
+      "title": "Whitelist"
+    },
     "wrapper": {
       "token": {
         "title": "Wrapped Token: {title}"
@@ -554,6 +561,7 @@
     "blockchainError": "Blockchain error",
     "created": "Successfully saved",
     "deleted": "Successfully deleted",
+    "duplicateAccount": "Duplicate account",
     "error": "Unknown Error",
     "featureIsNotSupported": "Feature is not supported",
     "gradeNotFound": "Grade not found",

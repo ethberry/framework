@@ -9,8 +9,6 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingChartSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IStakingReportSearchFormProps {
   onSubmit: (values: IStakingChartSearchDto) => Promise<void>;
   initialValues: IStakingChartSearchDto;
@@ -20,7 +18,6 @@ interface IStakingReportSearchFormProps {
 export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
   const { formatMessage } = useIntl();
 
   const { deposit, reward, startTimestamp, endTimestamp } = initialValues;
@@ -32,7 +29,6 @@ export const StakingChartSearchForm: FC<IStakingReportSearchFormProps> = props =
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="StakingChartSearchForm"
     >
       <Collapse in={open}>

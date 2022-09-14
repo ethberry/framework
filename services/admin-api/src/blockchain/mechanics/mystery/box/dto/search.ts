@@ -3,10 +3,10 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min } from "class-validator";
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IMysteryboxSearchDto, MysteryboxStatus } from "@framework/types";
+import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-export class MysteryboxSearchDto extends SearchDto implements IMysteryboxSearchDto {
+export class MysteryboxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
   @ApiPropertyOptional({
     enum: MysteryboxStatus,
     isArray: true,
@@ -30,6 +30,18 @@ export class MysteryboxSearchDto extends SearchDto implements IMysteryboxSearchD
   @Min(1, { each: true, message: "rangeUnderflow" })
   @Type(() => Number)
   public contractIds: Array<number>;
+
+  @ApiPropertyOptional({
+    type: Number,
+    isArray: true,
+    minimum: 1,
+  })
+  @IsOptional()
+  @IsArray({ message: "typeMismatch" })
+  @IsInt({ each: true, message: "typeMismatch" })
+  @Min(1, { each: true, message: "rangeUnderflow" })
+  @Type(() => Number)
+  public templateIds: Array<number>;
 
   @ApiPropertyOptional({
     type: Number,

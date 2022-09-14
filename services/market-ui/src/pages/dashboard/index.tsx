@@ -23,6 +23,7 @@ import { Wrapper } from "./mechanics/wrapper";
 import { Breed } from "./mechanics/breed";
 import { Pyramid } from "./mechanics/pyramid";
 import { CoinGecko } from "./integrations/coin-gecko";
+import { Whitelist } from "./mechanics/whitelist";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -41,6 +42,7 @@ export const Dashboard: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <Vesting />
+          <Whitelist />
           <Claim />
           <Drop />
           <Craft />

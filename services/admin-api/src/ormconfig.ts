@@ -36,6 +36,7 @@ import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
+import { WhitelistEntity } from "./blockchain/mechanics/whitelist/whitelist.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -137,6 +138,7 @@ import { SeedStakingRulesNativeAt1654751224210 } from "./migrations/165475122421
 import { SeedStakingRulesErc20At1654751224220 } from "./migrations/1654751224220-seed-staking-rules-erc20";
 import { SeedStakingRulesErc998At1654751224240 } from "./migrations/1654751224240-seed-staking-rules-erc998";
 import { SeedStakingRulesErc1155At1654751224250 } from "./migrations/1654751224250-seed-staking-rules-erc1155";
+import { SeedStakingRulesMysteryboxAt1654751224260 } from "./migrations/1654751224260-seed-staking-rules-mysterybox";
 import { CreateStakes1654751224300 } from "./migrations/1654751224300-create-stakes";
 import { SeedStakesNativeAt1654751224310 } from "./migrations/1654751224310-seed-stakes-native";
 import { SeedStakesErc20At1654751224320 } from "./migrations/1654751224320-seed-stakes-erc20";
@@ -174,6 +176,8 @@ import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-c
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
 
+import { CreateWhitelistTable1663047650500 } from "./migrations/1663047650500-create-whitelist";
+
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
   name: "default",
@@ -207,6 +211,7 @@ const config: PostgresConnectionOptions = {
     LotteryRoundEntity,
     LotteryTicketEntity,
     ExchangeHistoryEntity,
+    WhitelistEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -327,6 +332,7 @@ const config: PostgresConnectionOptions = {
     SeedStakingRulesErc721At1654751224230,
     SeedStakingRulesErc998At1654751224240,
     SeedStakingRulesErc1155At1654751224250,
+    SeedStakingRulesMysteryboxAt1654751224260,
     CreateStakes1654751224300,
     SeedStakesNativeAt1654751224310,
     SeedStakesErc20At1654751224320,
@@ -363,6 +369,8 @@ const config: PostgresConnectionOptions = {
     CreateLotteryTicketAt1660436477020,
     SeedLotteryTicketsAt1660436477030,
     CreateLotteryHistoryAt1660436477040,
+
+    CreateWhitelistTable1663047650500,
   ],
 };
 

@@ -101,7 +101,10 @@ export const Claim: FC = () => {
         onCancel={handleDeleteCancel}
         onConfirm={handleDeleteConfirm}
         open={isDeleteDialogOpen}
-        initialValues={{ ...selected, title: formatMessage({ id: "pages.claims.defaultItemTitle" }) }}
+        initialValues={{
+          ...selected,
+          title: formatMessage({ id: "pages.claims.defaultItemTitle" }, { account: selected.account }),
+        }}
       />
 
       <ClaimEditDialog

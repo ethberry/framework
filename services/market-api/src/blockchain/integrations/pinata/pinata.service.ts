@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { getPainText } from "@gemunion/draft-js-utils";
-import type { PinataPinResponse } from "@pinata/sdk";
 
 import { PinataFirebaseService } from "@gemunion/nest-js-module-pinata-firebase";
 
@@ -36,7 +35,7 @@ export class PinataService {
     return `${pinataBaseUrl}/${tokenEntity.cid!}`;
   }
 
-  public async pinTemplate(templateEntity: TemplateEntity): Promise<PinataPinResponse> {
+  public async pinTemplate(templateEntity: TemplateEntity) {
     const objectName = new URL(templateEntity.imageUrl).pathname.split("/").pop()!;
     const pin = await this.pinataFirebaseService.pinFileToIPFS(objectName);
 
@@ -46,7 +45,7 @@ export class PinataService {
     return pin;
   }
 
-  public async pinToken(tokenEntity: TokenEntity): Promise<PinataPinResponse> {
+  public async pinToken(tokenEntity: TokenEntity) {
     const objectName = new URL(tokenEntity.template.imageUrl).pathname.split("/").pop()!;
     const pin = await this.pinataFirebaseService.pinJSONToIPFS(
       {

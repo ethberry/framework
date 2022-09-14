@@ -25,6 +25,7 @@ import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticke
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
+import { WhitelistEntity } from "./blockchain/mechanics/whitelist/whitelist.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -55,6 +56,7 @@ const config: PostgresConnectionOptions = {
     LotteryTicketEntity,
     MysteryBoxEntity,
     ExchangeHistoryEntity,
+    WhitelistEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

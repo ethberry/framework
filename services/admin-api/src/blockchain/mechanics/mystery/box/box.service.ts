@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IMysteryboxSearchDto, MysteryboxStatus } from "@framework/types";
+import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
 
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { AssetService } from "../../asset/asset.service";
@@ -10,33 +10,48 @@ import { AssetService } from "../../asset/asset.service";
 import { MysteryBoxEntity } from "./box.entity";
 import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
 export class MysteryBoxService {
   constructor(
     @InjectRepository(MysteryBoxEntity)
-    private readonly mysteryboxEntityRepository: Repository<MysteryBoxEntity>,
+    private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
     private readonly templateService: TemplateService,
     private readonly contractService: ContractService,
     private readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IMysteryboxSearchDto): Promise<[Array<MysteryBoxEntity>, number]> {
-    const { query, mysteryboxStatus, skip, take } = dto;
+  public async search(dto: IMysteryBoxSearchDto, userEntity: UserEntity): Promise<[Array<MysteryBoxEntity>, number]> {
+    const { query, mysteryboxStatus, contractIds, templateIds, minPrice, maxPrice, skip, take } = dto;
 
-    const queryBuilder = this.mysteryboxEntityRepository.createQueryBuilder("mysterybox");
+    const queryBuilder = this.mysteryBoxEntityRepository.createQueryBuilder("box");
 
     queryBuilder.select();
+
+    queryBuilder.leftJoinAndSelect("box.template", "template");
+    queryBuilder.leftJoinAndSelect("template.contract", "contract");
+
+    queryBuilder.leftJoinAndSelect("box.item", "item");
+    queryBuilder.leftJoinAndSelect("item.components", "item_components");
+    queryBuilder.leftJoinAndSelect("item_components.template", "item_template");
+    queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
+
+    queryBuilder.leftJoinAndSelect("template.price", "price");
+    queryBuilder.leftJoinAndSelect("price.components", "price_components");
+    queryBuilder.leftJoinAndSelect("price_components.contract", "price_contract");
+    queryBuilder.leftJoinAndSelect("price_components.template", "price_template");
+    queryBuilder.leftJoinAndSelect("price_template.tokens", "price_tokens");
 
     if (query) {
       queryBuilder.leftJoin(
         "(SELECT 1)",
         "dummy",
-        "TRUE LEFT JOIN LATERAL json_array_elements(mysterybox.description->'blocks') blocks ON TRUE",
+        "TRUE LEFT JOIN LATERAL json_array_elements(box.description->'blocks') blocks ON TRUE",
       );
       queryBuilder.andWhere(
         new Brackets(qb => {
-          qb.where("mysterybox.title ILIKE '%' || :title || '%'", { title: query });
+          qb.where("box.title ILIKE '%' || :title || '%'", { title: query });
           qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
         }),
       );
@@ -44,26 +59,58 @@ export class MysteryBoxService {
 
     if (mysteryboxStatus) {
       if (mysteryboxStatus.length === 1) {
-        queryBuilder.andWhere("mysterybox.mysteryboxStatus = :mysteryboxStatus", {
+        queryBuilder.andWhere("box.mysteryboxStatus = :mysteryboxStatus", {
           mysteryboxStatus: mysteryboxStatus[0],
         });
       } else {
-        queryBuilder.andWhere("mysterybox.mysteryboxStatus IN(:...mysteryboxStatus)", { mysteryboxStatus });
+        queryBuilder.andWhere("box.mysteryboxStatus IN(:...mysteryboxStatus)", { mysteryboxStatus });
       }
+    }
+
+    if (contractIds) {
+      if (contractIds.length === 1) {
+        queryBuilder.andWhere("box.contractId = :contractId", {
+          contractId: contractIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("box.contractId IN(:...contractIds)", { contractIds });
+      }
+    }
+
+    if (templateIds) {
+      if (templateIds.length === 1) {
+        queryBuilder.andWhere("box.templateId = :templateId", {
+          templateId: templateIds[0],
+        });
+      } else {
+        queryBuilder.andWhere("box.templateId IN(:...templateIds)", { templateIds });
+      }
+    }
+
+    queryBuilder.andWhere("contract.chainId = :chainId", {
+      chainId: userEntity.chainId,
+    });
+
+    if (maxPrice) {
+      queryBuilder.andWhere("price_components.amount <= :maxPrice", { maxPrice });
+    }
+
+    if (minPrice) {
+      queryBuilder.andWhere("price_components.amount >= :minPrice", { minPrice });
     }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
     queryBuilder.orderBy({
-      "mysterybox.createdAt": "DESC",
+      "box.createdAt": "DESC",
     });
 
     return queryBuilder.getManyAndCount();
   }
 
   public async autocomplete(): Promise<Array<MysteryBoxEntity>> {
-    return this.mysteryboxEntityRepository.find({
+    return this.mysteryBoxEntityRepository.find({
       select: {
         id: true,
         title: true,
@@ -75,16 +122,16 @@ export class MysteryBoxService {
     where: FindOptionsWhere<MysteryBoxEntity>,
     options?: FindOneOptions<MysteryBoxEntity>,
   ): Promise<MysteryBoxEntity | null> {
-    return this.mysteryboxEntityRepository.findOne({ where, ...options });
+    return this.mysteryBoxEntityRepository.findOne({ where, ...options });
   }
 
   public findOneWithRelations(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity | null> {
     return this.findOne(where, {
       join: {
-        alias: "mysterybox",
+        alias: "box",
         leftJoinAndSelect: {
-          template: "mysterybox.template",
-          item: "mysterybox.item",
+          template: "box.template",
+          item: "box.item",
           item_components: "item.components",
           item_contract: "item_components.contract",
           item_template: "item_components.template",
@@ -105,10 +152,10 @@ export class MysteryBoxService {
 
     const mysteryboxEntity = await this.findOne(where, {
       join: {
-        alias: "mysterybox",
+        alias: "box",
         leftJoinAndSelect: {
-          template: "mysterybox.template",
-          item: "mysterybox.item",
+          template: "box.template",
+          item: "box.item",
           item_components: "item.components",
           price: "template.price",
           price_components: "price.components",
@@ -163,7 +210,7 @@ export class MysteryBoxService {
       contractId: contractEntity.id,
     });
 
-    return this.mysteryboxEntityRepository.create({ ...dto, template: templateEntity }).save();
+    return this.mysteryBoxEntityRepository.create({ ...dto, template: templateEntity }).save();
   }
 
   public async delete(where: FindOptionsWhere<MysteryBoxEntity>): Promise<MysteryBoxEntity> {

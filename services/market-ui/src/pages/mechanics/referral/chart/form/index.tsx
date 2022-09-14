@@ -5,8 +5,6 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 import { IReferralReportSearchDto } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IReferralReportSearchFormProps {
   onSubmit: (values: IReferralReportSearchDto) => Promise<void>;
   initialValues: IReferralReportSearchDto;
@@ -15,8 +13,6 @@ interface IReferralReportSearchFormProps {
 
 export const ReferralReportSearchForm: FC<IReferralReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { startTimestamp, endTimestamp } = initialValues;
   const fixedValues = { startTimestamp, endTimestamp };
@@ -27,7 +23,6 @@ export const ReferralReportSearchForm: FC<IReferralReportSearchFormProps> = prop
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="ClaimSearchForm"
     >
       <Collapse in={open}>

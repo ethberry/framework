@@ -9,8 +9,6 @@ import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
 
-import { useStyles } from "./styles";
-
 interface IStakingReportSearchFormProps {
   onSubmit: (values: IStakingReportSearchDto) => Promise<void>;
   initialValues: IStakingReportSearchDto;
@@ -20,7 +18,6 @@ interface IStakingReportSearchFormProps {
 export const StakingReportSearchForm: FC<IStakingReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
   const { formatMessage } = useIntl();
 
   const { query, stakeStatus, account, deposit, reward, startTimestamp, endTimestamp } = initialValues;
@@ -32,7 +29,6 @@ export const StakingReportSearchForm: FC<IStakingReportSearchFormProps> = props 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="StakingReportSearchForm"
     >
       <Grid container spacing={2}>

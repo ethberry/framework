@@ -8,7 +8,8 @@ import type { IVesting } from "@framework/types";
 import { useIntl } from "react-intl";
 
 import CliffVestingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Vesting/CliffVesting.sol/CliffVesting.json";
-import { IVestingTransferOwnershipDto, VestingTransferOwnershipDialog } from "./dialog";
+
+import { AccountDialog, IAccountDto } from "../../../../dialogs/account";
 
 interface IVestingSellButtonProps {
   vesting: IVesting;
@@ -21,7 +22,7 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask((dto: IVestingTransferOwnershipDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((dto: IAccountDto, web3Context: Web3ContextType) => {
     const contract = new Contract(vesting.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
     return contract.transferOwnership(dto.account) as Promise<any>;
   });
@@ -30,7 +31,7 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
     setIsTransferOwnershipDialogOpen(true);
   };
 
-  const handleSellConfirm = async (dto: IVestingTransferOwnershipDto) => {
+  const handleSellConfirm = async (dto: IAccountDto) => {
     await metaFn(dto).finally(() => {
       setIsTransferOwnershipDialogOpen(false);
     });
@@ -47,10 +48,12 @@ export const VestingTransferOwnershipButton: FC<IVestingSellButtonProps> = props
           <Send />
         </IconButton>
       </Tooltip>
-      <VestingTransferOwnershipDialog
+      <AccountDialog
         onConfirm={handleSellConfirm}
         onCancel={handleSellCancel}
         open={isTransferOwnershipDialogOpen}
+        message="dialogs.transfer"
+        testId="VestingTransferOwnershipDialogForm"
         initialValues={{
           account: "",
         }}

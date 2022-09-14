@@ -6,7 +6,6 @@ import { ITokenSearchDto, ModuleType, TokenAttributes, TokenRarity, TokenStatus,
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
-import { useStyles } from "./styles";
 import { TemplateInput } from "./template-input";
 
 interface ITokenSearchFormProps {
@@ -19,8 +18,6 @@ interface ITokenSearchFormProps {
 
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open, contractType, contractModule } = props;
-
-  const classes = useStyles();
 
   const {
     query = "",
@@ -51,7 +48,6 @@ export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="TokenSearchForm"
     >
       <Collapse in={open}>

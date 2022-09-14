@@ -3,7 +3,7 @@ import { Grid, Pagination } from "@mui/material";
 import { stringify } from "qs";
 
 import { PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMysterybox, IMysteryboxSearchDto } from "@framework/types";
+import { IMysterybox, IMysteryBoxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { ITabPanelProps, MarketplaceTabs } from "../tabs";
@@ -16,7 +16,7 @@ export const Mystery: FC<ITabPanelProps> = props => {
     return null;
   }
 
-  const { rows, count, search, isLoading, handleChangePage } = useCollection<IMysterybox, IMysteryboxSearchDto>({
+  const { rows, count, search, isLoading, handleChangePage } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
     baseUrl: "/mystery-boxes",
     redirect: (_baseUrl, search) => `/marketplace/${value}?${stringify(search)}`,
   });

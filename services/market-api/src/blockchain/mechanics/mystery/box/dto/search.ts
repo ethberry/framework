@@ -3,10 +3,10 @@ import { IsArray, IsInt, IsOptional, Min } from "class-validator";
 import { Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import { IMysteryboxSearchDto, MysteryboxStatus } from "@framework/types";
+import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 
-export class MysteryboxSearchDto extends SearchDto implements IMysteryboxSearchDto {
+export class MysteryboxSearchDto extends SearchDto implements IMysteryBoxSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -33,5 +33,6 @@ export class MysteryboxSearchDto extends SearchDto implements IMysteryboxSearchD
   @IsBigNumber({}, { message: "typeMismatch" })
   public maxPrice: string;
 
+  public templateIds: Array<number>;
   public mysteryboxStatus: Array<MysteryboxStatus>;
 }

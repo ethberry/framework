@@ -7,8 +7,6 @@ import { ICompositionSearchDto, TokenType } from "@framework/types";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 
-import { useStyles } from "./styles";
-
 interface IErc998CompositionSearchFormProps {
   onSubmit: (values: ICompositionSearchDto) => Promise<void>;
   initialValues: ICompositionSearchDto;
@@ -18,7 +16,6 @@ interface IErc998CompositionSearchFormProps {
 export const Erc998CompositionSearchForm: FC<IErc998CompositionSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
   const { formatMessage } = useIntl();
 
   const { parentIds, childIds } = initialValues;
@@ -30,7 +27,6 @@ export const Erc998CompositionSearchForm: FC<IErc998CompositionSearchFormProps> 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="Erc998TokenSearchForm"
     >
       <Grid container spacing={2}>

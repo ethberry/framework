@@ -3,20 +3,16 @@ import { Collapse, Grid } from "@mui/material";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import { IMysteryboxSearchDto, MysteryboxStatus } from "@framework/types";
-
-import { useStyles } from "./styles";
+import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
 
 interface IMysteryboxSearchFormProps {
-  onSubmit: (values: IMysteryboxSearchDto) => Promise<void>;
-  initialValues: IMysteryboxSearchDto;
+  onSubmit: (values: IMysteryBoxSearchDto) => Promise<void>;
+  initialValues: IMysteryBoxSearchDto;
   open: boolean;
 }
 
 export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
-
-  const classes = useStyles();
 
   const { query, mysteryboxStatus } = initialValues;
   const fixedValues = { query, mysteryboxStatus };
@@ -27,7 +23,6 @@ export const MysteryboxSearchForm: FC<IMysteryboxSearchFormProps> = props => {
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="MysteryboxSearchForm"
     >
       <Grid container spacing={2}>

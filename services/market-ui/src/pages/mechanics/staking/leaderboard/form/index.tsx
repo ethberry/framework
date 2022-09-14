@@ -8,8 +8,6 @@ import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingLeaderboardSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IStakingLeaderboardSearchFormProps {
   onSubmit: (values: IStakingLeaderboardSearchDto) => Promise<void>;
   initialValues: IStakingLeaderboardSearchDto;
@@ -19,7 +17,6 @@ interface IStakingLeaderboardSearchFormProps {
 export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
   const { formatMessage } = useIntl();
 
   const { deposit, reward } = initialValues;
@@ -31,7 +28,6 @@ export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="StakingLeaderboardSearchForm"
     >
       <Collapse in={open}>

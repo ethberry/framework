@@ -30,6 +30,7 @@ export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/stake";
 export * from "./mechanics/vesting/vesting";
 export * from "./mechanics/vesting/history";
+export * from "./mechanics/whitelist/whitelist";
 
 export * from "./hierarchy/contract";
 export * from "./hierarchy/template";

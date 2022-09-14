@@ -15,6 +15,14 @@ export const Ipfs: FC = () => {
           </ListSubheader>
         }
       >
+        <ListItem button component={RouterLink} to="/ipfs/infura">
+          <ListItemIcon>
+            <PushPin />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.ipfs.infura.title" />
+          </ListItemText>
+        </ListItem>
         <ListItem button component={RouterLink} to="/ipfs/pinata">
           <ListItemIcon>
             <PushPin />

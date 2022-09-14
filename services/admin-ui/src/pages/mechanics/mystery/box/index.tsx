@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { IMysterybox, IMysteryboxSearchDto, ITemplate, MysteryboxStatus } from "@framework/types";
+import { IMysterybox, IMysteryBoxSearchDto, ITemplate, MysteryboxStatus } from "@framework/types";
 
 import { MysteryboxEditDialog } from "./edit";
 import { MysteryboxSearchForm } from "./form";
@@ -43,7 +43,7 @@ export const MysteryBox: FC = () => {
     handleSearch,
     handleChangePage,
     handleDeleteConfirm,
-  } = useCollection<IMysterybox, IMysteryboxSearchDto>({
+  } = useCollection<IMysterybox, IMysteryBoxSearchDto>({
     baseUrl: "/mystery-boxes",
     empty: {
       title: "",

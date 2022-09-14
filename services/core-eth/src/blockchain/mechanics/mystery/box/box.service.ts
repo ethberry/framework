@@ -8,13 +8,13 @@ import { MysteryBoxEntity } from "./box.entity";
 export class MysteryBoxService {
   constructor(
     @InjectRepository(MysteryBoxEntity)
-    private readonly mysteryboxEntityRepository: Repository<MysteryBoxEntity>,
+    private readonly mysteryBoxEntityRepository: Repository<MysteryBoxEntity>,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<MysteryBoxEntity>,
     options?: FindOneOptions<MysteryBoxEntity>,
   ): Promise<MysteryBoxEntity | null> {
-    return this.mysteryboxEntityRepository.findOne({ where, ...options });
+    return this.mysteryBoxEntityRepository.findOne({ where, ...options });
   }
 }

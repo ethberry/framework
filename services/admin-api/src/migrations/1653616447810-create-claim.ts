@@ -68,6 +68,6 @@ export class CreateClaimTable1653616447810 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.air_drop`);
+    await queryRunner.dropTable(`${ns}.claim`);
   }
 }

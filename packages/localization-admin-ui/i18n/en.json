@@ -405,12 +405,12 @@
       "title": "ChainLink"
     },
     "claims": {
-      "defaultItemTitle": "Claim",
+      "defaultItemTitle": "{account}",
       "title": "Claim"
     },
     "coin-gecko": {
-      "rates": "Rates",
       "ohlc": "OHLC",
+      "rates": "Rates",
       "title": "CoinGecko"
     },
     "coin-market-cap": {
@@ -460,7 +460,8 @@
         "pyramid": "Pyramid",
         "staking": "Staking",
         "title": "Mechanics",
-        "vesting": "Vesting"
+        "vesting": "Vesting",
+        "whitelist": "Whitelist"
       },
       "title": "Dashboard"
     },
@@ -598,6 +599,10 @@
     },
     "vesting": {
       "title": "Vesting"
+    },
+    "whitelist": {
+      "title": "Whitelist",
+      "defaultItemTitle": "{account}"
     }
   },
   "snackbar": {
@@ -610,6 +615,7 @@
     "deleted": "Successfully deleted",
     "deployed": "Successfully deployed",
     "duplicateEmail": "User with this email already registered",
+    "duplicateAccount": "Duplicate account",
     "email": "Email successfully sent.",
     "error": "Unknown Error",
     "inactive": "Successfully inactivated",

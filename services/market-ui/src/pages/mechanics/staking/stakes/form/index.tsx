@@ -7,8 +7,6 @@ import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
 import type { IStakingStakesSearchDto } from "@framework/types";
 import { StakeStatus, TokenType } from "@framework/types";
 
-import { useStyles } from "./styles";
-
 interface IStakingStakesSearchFormProps {
   onSubmit: (values: IStakingStakesSearchDto) => Promise<void>;
   initialValues: IStakingStakesSearchDto;
@@ -18,7 +16,6 @@ interface IStakingStakesSearchFormProps {
 export const StakingStakesSearchForm: FC<IStakingStakesSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
-  const classes = useStyles();
   const { formatMessage } = useIntl();
 
   const { query, stakeStatus, deposit, reward } = initialValues;
@@ -30,7 +27,6 @@ export const StakingStakesSearchForm: FC<IStakingStakesSearchFormProps> = props 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      className={classes.root}
       testId="StakingStakesSearchForm"
     >
       <Grid container spacing={2}>

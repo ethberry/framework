@@ -33,6 +33,7 @@ export const Pinata: FC = () => {
         initialValues={{ contractId: 0, tokenId: 0 }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
+        showPrompt={false}
         testId="PinataForm"
       >
         <EntityInput

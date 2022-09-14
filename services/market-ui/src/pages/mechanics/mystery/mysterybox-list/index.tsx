@@ -5,7 +5,7 @@ import { FilterList } from "@mui/icons-material";
 import { constants } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IMysterybox, IMysteryboxSearchDto } from "@framework/types";
+import { IMysterybox, IMysteryBoxSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
 import { MysteryboxListItem } from "./item";
@@ -19,7 +19,7 @@ export const MysteryBoxList: FC<IMysteryboxListProps> = props => {
   const { embedded } = props;
 
   const { rows, count, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch, handleChangePage } =
-    useCollection<IMysterybox, IMysteryboxSearchDto>({
+    useCollection<IMysterybox, IMysteryBoxSearchDto>({
       baseUrl: "/mystery-boxes",
       embedded,
       search: {

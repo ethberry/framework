@@ -12,7 +12,7 @@ import "./tasks";
 config();
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
-console.info("PRIVATE_KEY", PRIVATE_KEY);
+
 export default {
   defaultNetwork: "hardhat",
   networks: {
@@ -41,9 +41,6 @@ export default {
       gasPrice: 8000000000,
       timeout: 142000,
       accounts: [PRIVATE_KEY],
-      // accounts: {
-      //   mnemonic: process.env.MM_MNEMONIC,
-      // },
       saveDeployments: true,
     },
   },
@@ -63,7 +60,7 @@ export default {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 2,
+            runs: 1000,
           },
         },
       },
