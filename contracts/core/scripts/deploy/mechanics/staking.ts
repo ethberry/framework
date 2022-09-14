@@ -12,7 +12,7 @@ export async function deployStaking(contracts: Record<string, Contract>) {
 
   await stakingInstance.setRules([
     {
-      externalId: 11, // NATIVE > NATIVE
+      externalId: 1, // NATIVE > NATIVE
       deposit: {
         tokenType: 0,
         token: constants.AddressZero,
@@ -25,6 +25,14 @@ export async function deployStaking(contracts: Record<string, Contract>) {
         tokenId: 0,
         amount: constants.WeiPerEther.div(100).mul(5), // 5%
       },
+      content: [
+        {
+          tokenType: 2,
+          token: contracts.erc721Random.address,
+          tokenId: 306001,
+          amount: 1,
+        },
+      ],
       period: 30 * 84600,
       penalty: 1,
       recurrent: false,
@@ -35,7 +43,7 @@ export async function deployStaking(contracts: Record<string, Contract>) {
 
   await stakingInstance.setRules([
     {
-      externalId: 23, // ERC20 > ERC721
+      externalId: 8, // ERC20 > ERC721
       deposit: {
         tokenType: 1,
         token: contracts.erc20Simple.address,
@@ -48,6 +56,14 @@ export async function deployStaking(contracts: Record<string, Contract>) {
         tokenId: 306001,
         amount: 1,
       },
+      content: [
+        {
+          tokenType: 2,
+          token: contracts.erc721Random.address,
+          tokenId: 306001,
+          amount: 1,
+        },
+      ],
       period: 30 * 84600,
       penalty: 1,
       recurrent: false,
@@ -58,7 +74,7 @@ export async function deployStaking(contracts: Record<string, Contract>) {
 
   await stakingInstance.setRules([
     {
-      externalId: 45, // ERC998 > ERC1155
+      externalId: 19, // ERC998 > ERC1155
       deposit: {
         tokenType: 3,
         token: contracts.erc998Random.address,
@@ -71,6 +87,14 @@ export async function deployStaking(contracts: Record<string, Contract>) {
         tokenId: 501001,
         amount: 1000,
       },
+      content: [
+        {
+          tokenType: 2,
+          token: contracts.erc721Random.address,
+          tokenId: 306001,
+          amount: 1,
+        },
+      ],
       period: 1 * 84600,
       penalty: 0,
       recurrent: true,

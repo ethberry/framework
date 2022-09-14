@@ -52,7 +52,6 @@ export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps
               controller="contracts"
               data={{
                 contractType: [deposit.tokenType],
-                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
                 contractModule: [ModuleType.HIERARCHY],
               }}
             />
@@ -63,7 +62,6 @@ export const StakingLeaderboardSearchForm: FC<IStakingLeaderboardSearchFormProps
               controller="contracts"
               data={{
                 contractType: [reward.tokenType],
-                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
                 contractModule: [ModuleType.HIERARCHY],
               }}
             />

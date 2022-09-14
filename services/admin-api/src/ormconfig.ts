@@ -175,6 +175,12 @@ import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed
 import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
+import { CreatePyramidRules1660436477100 } from "./migrations/1660436477100-create-pyramid-rules";
+import { SeedPyramidRules1660436477150 } from "./migrations/1660436477150-seed-pyramid-rules";
+import { CreatePyramidStakes1660436477200 } from "./migrations/1660436477200-create-pyramid-stakes";
+import { CreatePyramidStakingHistory1660436477250 } from "./migrations/1660436477250-create-pyramid-staking-history";
+import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
+import { PyramidStakesEntity } from "./blockchain/mechanics/pyramid/stakes/stakes.entity";
 
 import { CreateWhitelistTable1663047650500 } from "./migrations/1663047650500-create-whitelist";
 
@@ -211,6 +217,8 @@ const config: PostgresConnectionOptions = {
     LotteryRoundEntity,
     LotteryTicketEntity,
     ExchangeHistoryEntity,
+    PyramidRulesEntity,
+    PyramidStakesEntity,
     WhitelistEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
@@ -371,6 +379,11 @@ const config: PostgresConnectionOptions = {
     CreateLotteryHistoryAt1660436477040,
 
     CreateWhitelistTable1663047650500,
+
+    CreatePyramidRules1660436477100,
+    SeedPyramidRules1660436477150,
+    CreatePyramidStakes1660436477200,
+    CreatePyramidStakingHistory1660436477250,
   ],
 };
 

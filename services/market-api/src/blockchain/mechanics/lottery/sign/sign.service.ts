@@ -4,7 +4,7 @@ import { constants, utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-collection";
-import { IParams } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignLotteryDto } from "./interfaces";
 

@@ -8,6 +8,7 @@ import { VestingModule } from "./vesting/vesting.module";
 import { GradeModule } from "./grade/grade.module";
 import { DropModule } from "./drop/drop.module";
 import { LotteryModule } from "./lottery/lottery.module";
+import { PyramidModule } from "./pyramid/pyramid.module";
 import { WhitelistModule } from "./whitelist/whitelist.module";
 
 @Module({
@@ -20,6 +21,7 @@ import { WhitelistModule } from "./whitelist/whitelist.module";
     GradeModule,
     DropModule,
     LotteryModule,
+    PyramidModule,
     WhitelistModule,
   ],
 })

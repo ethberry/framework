@@ -1,8 +1,5 @@
 import { Logger, Module } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { ExchangeService } from "./exchange.service";
-import { ExchangeEntity } from "./exchange.entity";
 import { ExchangeServiceEth } from "./exchange.service.eth";
 import { ExchangeControllerEth } from "./exchange.controller.eth";
 import { ExchangeLogModule } from "./log/exchange-log.module";
@@ -24,10 +21,9 @@ import { GradeModule } from "../grade/grade.module";
     TemplateModule,
     TokenModule,
     AssetModule,
-    TypeOrmModule.forFeature([ExchangeEntity]),
   ],
-  providers: [Logger, ExchangeService, ExchangeServiceEth],
+  providers: [Logger, ExchangeServiceEth],
   controllers: [ExchangeControllerEth],
-  exports: [ExchangeService, ExchangeServiceEth],
+  exports: [ExchangeServiceEth],
 })
 export class ExchangeModule {}

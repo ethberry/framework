@@ -19,7 +19,7 @@
   "keywords": [],
   "license": "UNLICENSED",
   "main": "./dist/index.js",
-  "name": "@gemunion/nest-js-module-exchange-signer",
+  "name": "@framework/nest-js-module-exchange-signer",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },

@@ -5,7 +5,7 @@ import { constants, utils } from "ethers";
 import csv2json from "csvtojson";
 
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
-import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";

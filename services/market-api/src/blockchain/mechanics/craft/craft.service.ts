@@ -5,7 +5,7 @@ import { constants, utils } from "ethers";
 
 import type { ISearchDto, IServerSignature } from "@gemunion/types-collection";
 import { CraftStatus, TokenType } from "@framework/types";
-import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignCraftDto } from "./interfaces";
 import { CraftEntity } from "./craft.entity";

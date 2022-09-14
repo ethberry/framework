@@ -17,9 +17,11 @@ import {
   IContractManagerERC721TokenDeployed,
   IContractManagerERC998TokenDeployed,
   IContractManagerMysteryboxDeployed,
+  IContractManagerPyramidDeployed,
   IContractManagerVestingDeployed,
   ModuleType,
   MysteryContractFeatures,
+  PyramidContractFeatures,
   TContractManagerEventData,
   TokenType,
   VestingContractTemplate,
@@ -250,6 +252,33 @@ export class ContractManagerServiceEth {
       chainId: this.chainId,
       royalty: ~~royalty,
       baseTokenURI,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    this.mysteryboxLogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async pyramid(event: ILogEvent<IContractManagerPyramidDeployed>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, featureIds },
+    } = event;
+
+    await this.updateHistory(event, ctx);
+
+    const availableFeatures = Object.values(PyramidContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: "new PYRAMID contract",
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractModule: ModuleType.PYRAMID,
+      chainId: this.chainId,
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 

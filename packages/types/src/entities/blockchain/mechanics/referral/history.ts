@@ -4,6 +4,7 @@ export enum ReferralProgramEventType {
   ReferralProgram = "ReferralProgram",
   ReferralReward = "ReferralReward",
   ReferralWithdraw = "ReferralWithdraw",
+  ReferralBonus = "ReferralBonus",
 }
 
 export type IReferralProgram = [string, string, string, boolean];
@@ -26,7 +27,13 @@ export interface IWithdraw {
   amount: string;
 }
 
-export type TReferralEventData = IRProgram | IReward | IWithdraw;
+export interface IBonus {
+  referrer: string;
+  token: string;
+  amount: string;
+}
+
+export type TReferralEventData = IRProgram | IReward | IWithdraw | IBonus;
 
 export interface IReferralHistory extends IIdDateBase {
   address: string;

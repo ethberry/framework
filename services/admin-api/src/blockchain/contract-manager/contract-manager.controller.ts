@@ -15,10 +15,11 @@ import {
   Erc20ContractDeployDto,
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
-  MysteryContractDeployDto,
-  VestingDeployDto,
+  MysteryContractDeployDto, PyramidContractDeployDto,
+  VestingDeployDto
 } from "./dto";
 import { UserEntity } from "../../user/user.entity";
+import { Pyramid } from "@framework/core-contracts";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")
@@ -86,5 +87,11 @@ export class ContractManagerController {
   @Post("/vesting")
   public vesting(@Body() dto: VestingDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
     return this.contractManagerSignService.vesting(dto, userEntity);
+  }
+
+  // MODULE:PYRAMID
+  @Post("/pyramid")
+  public pyramid(@Body() dto: PyramidContractDeployDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
+    return this.contractManagerSignService.pyramid(dto, userEntity);
   }
 }

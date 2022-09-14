@@ -1,6 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
 
-import { SignerModule } from "@gemunion/nest-js-module-exchange-signer";
+import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { MysterySignService } from "./sign.service";

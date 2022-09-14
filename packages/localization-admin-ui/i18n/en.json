@@ -86,7 +86,8 @@
       "PAUSABLE": "Pausable",
       "RANDOM": "Random",
       "SOULBOUND": "Soulbound",
-      "UPGRADEABLE": "Upgradeable"
+      "UPGRADEABLE": "Upgradeable",
+      "LINEAR_REFERRAL": "LINEAR REFERRAL"
     },
     "contractStatus": {
       "ACTIVE": "Active",
@@ -271,6 +272,7 @@
       "items": "Items",
       "language": "Language",
       "mysteryboxStatus": "Status",
+      "maxStakes": "Max Stakes",
       "name": "Name",
       "numbers": "Numbers",
       "owner": "Owner",
@@ -336,6 +338,7 @@
       "email": "me@google.com",
       "growthRate": "2",
       "item": "Bottle of water",
+      "maxStakes": "0",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
@@ -571,6 +574,15 @@
       "title": "Profile"
     },
     "pyramid": {
+      "contracts": {
+        "title": "Pyramid Contracts"
+      },
+      "rules": {
+        "activate": "Activate rule",
+        "deactivate": "Deactivate rule",
+        "title": "Pyramid rules",
+        "upload": "Upload rule"
+      },
       "title": "Pyramid Rules"
     },
     "settings": {

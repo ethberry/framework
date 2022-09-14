@@ -4,7 +4,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, utils } from "ethers";
 
 import type { IPaginationDto, IServerSignature } from "@gemunion/types-collection";
-import { IParams, SignerService } from "@gemunion/nest-js-module-exchange-signer";
+import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 import { TokenType } from "@framework/types";
 
 import { ISignDropDto } from "./interfaces";

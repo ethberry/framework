@@ -12,6 +12,7 @@ import {
   IContractManagerERC721TokenDeployed,
   IContractManagerERC998TokenDeployed,
   IContractManagerMysteryboxDeployed,
+  IContractManagerPyramidDeployed,
   IContractManagerVestingDeployed,
 } from "@framework/types";
 
@@ -70,5 +71,13 @@ export class ContractManagerControllerEth {
   })
   public mysterybox(@Payload() event: ILogEvent<IContractManagerMysteryboxDeployed>, @Ctx() ctx: Log): Promise<void> {
     return this.contractManagerServiceEth.mysterybox(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.PyramidDeployed,
+  })
+  public pyramid(@Payload() event: ILogEvent<IContractManagerPyramidDeployed>, @Ctx() ctx: Log): Promise<void> {
+    return this.contractManagerServiceEth.pyramid(event, ctx);
   }
 }

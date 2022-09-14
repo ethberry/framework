@@ -27,5 +27,22 @@ RUN npm i --only=production
 
 COPY --chown=node:node . .
 
-RUN npm run bootstrap
-#RUN npm run bootstrap -- --ignore @framework/core-contracts
+RUN lerna bootstrap --concurrency 1 --hoist --ignore-scripts
+RUN lerna exec --scope @framework/core-contracts -- npm run build
+# RUN lerna run build --stream --ignore @framework/core-contracts
+RUN lerna exec --scope @framework/constants -- npm run build
+RUN lerna exec --scope @framework/types -- npm run build
+RUN lerna exec --scope @framework/nest-js-module-exchange-signer -- npm run build
+RUN lerna exec --scope @framework/genes -- npm run build
+RUN lerna exec --scope @framework/json -- npm run build
+RUN lerna exec --scope @framework/eml -- npm run build
+RUN lerna exec --scope @framework/game -- npm run build
+RUN lerna exec --scope @framework/localization-admin-ui -- npm run build
+RUN lerna exec --scope @framework/localization-market-ui -- npm run build
+RUN lerna exec --scope @framework/admin-api -- npm run build
+RUN lerna exec --scope @framework/core-eth -- npm run build
+RUN lerna exec --scope @framework/market-api -- npm run build
+RUN lerna exec --scope @framework/mobile-api -- npm run build
+RUN lerna exec --scope @framework/admin-ui -- npm run build
+RUN lerna exec --scope @framework/market-ui -- npm run build
+

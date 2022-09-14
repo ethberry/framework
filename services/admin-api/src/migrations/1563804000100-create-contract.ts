@@ -28,6 +28,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:LOTTERY
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
 
+    // MODULE:PYRAMID
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'PYRAMID';`);
+
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (
         'ALLOWANCE',
@@ -53,6 +56,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:ERC998
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'ERC20OWNER';`);
     await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'ERC1155OWNER';`);
+
+    // MODULE:PYRAMID
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_features_enum ADD VALUE 'LINEAR_REFERRAL';`);
 
     const table = new Table({
       name: `${ns}.contract`,

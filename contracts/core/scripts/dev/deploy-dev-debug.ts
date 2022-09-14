@@ -32,17 +32,17 @@ const timestamp = Math.ceil(Date.now() / 1000);
 async function main() {
   const [owner] = await ethers.getSigners();
   // LINK & VRF
-  const linkFactory = await ethers.getContractFactory("LinkErc20");
-  const linkInstance = await linkFactory.deploy("LINK", "LINK");
-  contracts.link = linkInstance;
-  console.info(`LINK_ADDR=${contracts.link.address}`);
-  const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
-  contracts.vrf = await vrfFactory.deploy(contracts.link.address);
-  console.info(`VRF_ADDR=${contracts.vrf.address}`);
-  await debug(await linkInstance.mint(owner.address, linkAmountInWei.mul(100)), "LinkInstance.mint");
-
-  console.log("afterDebug");
-  process.exit(0);
+  // const linkFactory = await ethers.getContractFactory("LinkErc20");
+  // const linkInstance = await linkFactory.deploy("LINK", "LINK");
+  // contracts.link = linkInstance;
+  // console.info(`LINK_ADDR=${contracts.link.address}`);
+  // const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
+  // contracts.vrf = await vrfFactory.deploy(contracts.link.address);
+  // console.info(`VRF_ADDR=${contracts.vrf.address}`);
+  // await debug(await linkInstance.mint(owner.address, linkAmountInWei.mul(100)), "LinkInstance.mint");
+  //
+  // console.log("afterDebug");
+  // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
 
   const cmFactory = await ethers.getContractFactory("ContractManager");
@@ -179,7 +179,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 11, // NATIVE > NATIVE
+        externalId: 1, // NATIVE > NATIVE
         deposit: {
           tokenType: 0,
           token: constants.AddressZero,
@@ -192,6 +192,14 @@ async function main() {
           tokenId: 0,
           amount: constants.WeiPerEther.div(100).mul(5), // 5%
         },
+        content: [
+          {
+            tokenType: 2,
+            token: contracts.erc721Random.address,
+            tokenId: 306001,
+            amount: 1,
+          },
+        ],
         period: 30 * 84600,
         penalty: 1,
         recurrent: false,
@@ -204,7 +212,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 23, // ERC20 > ERC721
+        externalId: 8, // ERC20 > ERC721
         deposit: {
           tokenType: 1,
           token: contracts.erc20Simple.address,
@@ -217,6 +225,14 @@ async function main() {
           tokenId: 306001,
           amount: 1,
         },
+        content: [
+          {
+            tokenType: 2,
+            token: contracts.erc721Random.address,
+            tokenId: 306001,
+            amount: 1,
+          },
+        ],
         period: 30 * 84600,
         penalty: 1,
         recurrent: false,
@@ -229,7 +245,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 45, // ERC998 > ERC1155
+        externalId: 19, // ERC998 > ERC1155
         deposit: {
           tokenType: 3,
           token: contracts.erc998Random.address,
@@ -242,6 +258,14 @@ async function main() {
           tokenId: 501001,
           amount: 1000,
         },
+        content: [
+          {
+            tokenType: 2,
+            token: contracts.erc721Random.address,
+            tokenId: 306001,
+            amount: 1,
+          },
+        ],
         period: 1 * 84600,
         penalty: 0,
         recurrent: true,
