@@ -1,19 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+
+import { SearchableDto } from "@gemunion/collection";
 
 import { IMysteryboxCreateDto } from "../interfaces";
 import { ItemDto, PriceDto } from "../../../asset/dto";
 
-export class MysteryboxCreateDto implements IMysteryboxCreateDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
-
-  @ApiProperty()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
-
+export class MysteryboxCreateDto extends SearchableDto implements IMysteryboxCreateDto {
   @ApiProperty({
     type: ItemDto,
   })

@@ -1,18 +1,12 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsEthereumAddress, IsOptional, IsString } from "class-validator";
+import { IsArray, IsEnum, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { PaginationDto } from "@gemunion/collection";
+import { AccountOptionalDto, PaginationDto } from "@gemunion/collection";
 import { IVestingSearchDto, VestingContractTemplate } from "@framework/types";
 
-export class VestingSearchDto extends PaginationDto implements IVestingSearchDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
-  public account: string;
-
+export class VestingSearchDto extends Mixin(AccountOptionalDto, PaginationDto) implements IVestingSearchDto {
   @ApiPropertyOptional({
     enum: VestingContractTemplate,
     isArray: true,

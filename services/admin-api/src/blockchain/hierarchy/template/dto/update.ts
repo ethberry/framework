@@ -1,24 +1,15 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
+import { IsEnum, IsOptional, IsString, IsUrl, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
+import { SearchableOptionalDto } from "@gemunion/collection";
 import { IsBigNumber } from "@gemunion/nest-js-validators";
 import { TemplateStatus } from "@framework/types";
 
 import { ITemplateUpdateDto } from "../interfaces";
 import { PriceDto } from "../../../mechanics/asset/dto";
 
-export class TemplateUpdateDto implements ITemplateUpdateDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
-
+export class TemplateUpdateDto extends SearchableOptionalDto implements ITemplateUpdateDto {
   @ApiPropertyOptional({
     type: PriceDto,
   })

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEventType, IErc1155TokenApprovalForAll, ITokenHistorySearchDto } from "@framework/types";
+import { ContractEventType, IErc1155TokenApprovalForAll, IContractHistorySearchDto } from "@framework/types";
 
 import { ContractHistoryEntity } from "./contract-history.entity";
 import { UserEntity } from "../../user/user.entity";
@@ -14,13 +14,13 @@ export class ContractHistoryService {
     private readonly contractHistoryEntityRepository: Repository<ContractHistoryEntity>,
   ) {}
 
-  public async search(dto: ITokenHistorySearchDto): Promise<[Array<ContractHistoryEntity>, number]> {
-    const { token, tokenId, take, skip } = dto;
+  public async search(dto: IContractHistorySearchDto): Promise<[Array<ContractHistoryEntity>, number]> {
+    const { address, tokenId, take, skip } = dto;
     const queryBuilder = this.contractHistoryEntityRepository.createQueryBuilder("history");
 
     queryBuilder.select();
 
-    queryBuilder.andWhere("history.address = :address", { address: token });
+    queryBuilder.andWhere("history.address = :address", { address });
     queryBuilder.andWhere("history.event_data->>'tokenId' = :tokenId", { tokenId });
 
     queryBuilder.skip(skip);

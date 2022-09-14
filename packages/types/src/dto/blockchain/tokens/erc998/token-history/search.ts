@@ -1,6 +1,6 @@
 import type { IPaginationDto } from "@gemunion/types-collection";
 
-export interface ITokenHistorySearchDto extends IPaginationDto {
-  token: string;
+export interface IContractHistorySearchDto extends IPaginationDto {
+  address: string;
   tokenId: string;
 }

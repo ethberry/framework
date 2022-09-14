@@ -1,19 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsJSON, IsString, MaxLength } from "class-validator";
+import { IsString, MaxLength } from "class-validator";
 
+import { SearchableDto } from "@gemunion/collection";
 import { INativeContractCreateDto } from "@framework/types";
 
-export class NativeContractCreateDto implements INativeContractCreateDto {
+export class NativeContractCreateDto extends SearchableDto implements INativeContractCreateDto {
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
   @MaxLength(32, { message: "rangeOverflow" })
   public symbol: string;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
-
-  @ApiProperty()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
 }

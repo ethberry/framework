@@ -1,23 +1,19 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEthereumAddress, IsISO8601, IsString, ValidateNested } from "class-validator";
-import { Transform, Type } from "class-transformer";
+import { IsISO8601, IsString, ValidateNested } from "class-validator";
+import { Type } from "class-transformer";
+
+import { AccountDto } from "@gemunion/collection";
 
 import { IClaimItemCreateDto } from "../interfaces";
 import { ItemDto } from "../../asset/dto";
 
-export class ClaimItemCreateDto implements IClaimItemCreateDto {
+export class ClaimItemCreateDto extends AccountDto implements IClaimItemCreateDto {
   @ApiProperty({
     type: ItemDto,
   })
   @ValidateNested()
   @Type(() => ItemDto)
   public item: ItemDto;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public account: string;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

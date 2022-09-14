@@ -1,24 +1,14 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import {
-  ArrayMaxSize,
-  ArrayMinSize,
-  IsArray,
-  IsBoolean,
-  IsEthereumAddress,
-  IsOptional,
-  IsString,
-} from "class-validator";
+import { ApiPropertyOptional } from "@nestjs/swagger";
+import { ArrayMaxSize, ArrayMinSize, IsArray, IsBoolean, IsOptional } from "class-validator";
 import { Transform } from "class-transformer";
+import { Mixin } from "ts-mixer";
+
+import { AccountDto } from "@gemunion/collection";
 
 import { ISignLotteryDto } from "../interfaces";
+import { ReferrerOptionalDto } from "../../../../../common/validators/referrer";
 
-export class SignLotteryDto implements ISignLotteryDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public account: string;
-
+export class SignLotteryDto extends Mixin(ReferrerOptionalDto, AccountDto) implements ISignLotteryDto {
   @ApiPropertyOptional({
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
@@ -31,11 +21,4 @@ export class SignLotteryDto implements ISignLotteryDto {
   @ArrayMinSize(36, { message: "tooShort" })
   @ArrayMaxSize(36, { message: "tooLong" })
   public ticketNumbers: Array<boolean>;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
-  public referrer: string;
 }

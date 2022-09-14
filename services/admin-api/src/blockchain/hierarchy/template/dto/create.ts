@@ -1,21 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, IsJSON, IsString, IsUrl, Min, ValidateNested } from "class-validator";
+import { IsInt, IsString, IsUrl, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { IsBigNumber } from "@gemunion/nest-js-validators";
+import { SearchableDto } from "@gemunion/collection";
 
 import { ITemplateCreateDto } from "../interfaces";
 import { PriceDto } from "../../../mechanics/asset/dto";
 
-export class TemplateCreateDto implements ITemplateCreateDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
-
-  @ApiProperty()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
-
+export class TemplateCreateDto extends SearchableDto implements ITemplateCreateDto {
   @ApiProperty({
     type: PriceDto,
   })

@@ -1,15 +1,11 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsEthereumAddress, IsInt, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
-import {
-  ITokenAttributesSearchDto,
-  ITokenSearchDto,
-  TokenAttributes,
-  TokenRarity,
-  TokenStatus,
-} from "@framework/types";
+import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
+import type { ITokenAttributesSearchDto, ITokenSearchDto } from "@framework/types";
+import { TokenAttributes, TokenRarity, TokenStatus } from "@framework/types";
 
 export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   @ApiPropertyOptional({
@@ -25,7 +21,7 @@ export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   public [TokenAttributes.RARITY]: Array<TokenRarity>;
 }
 
-export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
+export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements ITokenSearchDto {
   @ApiPropertyOptional({
     type: Number,
     isArray: true,
@@ -56,13 +52,6 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   @ValidateNested()
   @Type(() => TokenAttributesSearchDto)
   public attributes: TokenAttributesSearchDto;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
-  public account: string;
 
   public tokenStatus: Array<TokenStatus>;
   public tokenId: string;

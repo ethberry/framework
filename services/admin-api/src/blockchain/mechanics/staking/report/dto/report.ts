@@ -2,7 +2,6 @@ import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsArray,
   IsEnum,
-  IsEthereumAddress,
   IsInt,
   IsISO8601,
   IsOptional,
@@ -12,8 +11,9 @@ import {
   ValidateNested,
 } from "class-validator";
 import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
+import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import type { IStakingReportItemSearchDto, IStakingReportSearchDto } from "@framework/types";
 import { StakeStatus, TokenType } from "@framework/types";
@@ -35,7 +35,7 @@ export class StakingReportItemSearchDto implements IStakingReportItemSearchDto {
   public contractId: number;
 }
 
-export class StakingReportSearchDto extends SearchDto implements IStakingReportSearchDto {
+export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements IStakingReportSearchDto {
   @ApiPropertyOptional({
     enum: StakeStatus,
     isArray: true,
@@ -47,13 +47,6 @@ export class StakingReportSearchDto extends SearchDto implements IStakingReportS
   @Transform(({ value }) => value as Array<StakeStatus>)
   @IsEnum(StakeStatus, { each: true, message: "badInput" })
   public stakeStatus: Array<StakeStatus>;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
-  public account: string;
 
   @ApiProperty({
     type: StakingReportItemSearchDto,

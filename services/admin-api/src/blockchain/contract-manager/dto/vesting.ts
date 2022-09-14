@@ -1,21 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEnum, IsEthereumAddress, IsInt, IsISO8601, IsString } from "class-validator";
-import { Transform } from "class-transformer";
+import { IsEnum, IsInt, IsISO8601, IsString } from "class-validator";
 
+import { AccountDto } from "@gemunion/collection";
 import { IVestingDeployDto, VestingContractTemplate } from "@framework/types";
 
-export class VestingDeployDto implements IVestingDeployDto {
+export class VestingDeployDto extends AccountDto implements IVestingDeployDto {
   @ApiProperty({
     enum: VestingContractTemplate,
   })
   @IsEnum(VestingContractTemplate, { message: "badInput" })
   public contractTemplate: VestingContractTemplate;
-
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => value.toLowerCase())
-  public account: string;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })

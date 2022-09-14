@@ -1,20 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsInt, IsJSON, IsNumber, IsString, Min, ValidateNested } from "class-validator";
+import { IsBoolean, IsInt, IsNumber, Min, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+
+import { SearchableDto } from "@gemunion/collection";
 
 import { IStakingCreateDto } from "../interfaces";
 import { DepositDto } from "./deposit";
 import { RewardDto } from "./reward";
 
-export class StakingCreateDto implements IStakingCreateDto {
-  @ApiProperty()
-  @IsString({ message: "typeMismatch" })
-  public title: string;
-
-  @ApiProperty()
-  @IsJSON({ message: "patternMismatch" })
-  public description: string;
-
+export class StakingCreateDto extends SearchableDto implements IStakingCreateDto {
   @ApiProperty({
     type: DepositDto,
   })

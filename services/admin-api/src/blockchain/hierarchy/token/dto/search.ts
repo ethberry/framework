@@ -1,8 +1,9 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsEthereumAddress, IsInt, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-validator";
 import { Transform, Type } from "class-transformer";
+import { Mixin } from "ts-mixer";
 
-import { SearchDto } from "@gemunion/collection";
+import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
 import {
   ITokenAttributesSearchDto,
   ITokenSearchDto,
@@ -38,7 +39,7 @@ export class TokenAttributesSearchDto implements ITokenAttributesSearchDto {
   public [TokenAttributes.GRADE]: Array<number>;
 }
 
-export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
+export class TokenSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements ITokenSearchDto {
   @ApiPropertyOptional({
     enum: TokenStatus,
     isArray: true,
@@ -89,11 +90,4 @@ export class TokenSearchDto extends SearchDto implements ITokenSearchDto {
   @IsOptional()
   @IsBigNumber({ allowEmptyString: true }, { message: "typeMismatch" })
   public tokenId: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
-  public account: string;
 }
