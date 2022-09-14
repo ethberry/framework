@@ -4,7 +4,11 @@ import { Transform } from "class-transformer";
 import { decorate } from "ts-mixer";
 
 export class ReferrerOptionalDto {
-  @decorate(ApiPropertyOptional())
+  @decorate(
+    ApiPropertyOptional({
+      type: String,
+    }),
+  )
   @decorate(IsOptional())
   @decorate(IsString({ message: "typeMismatch" }))
   @decorate(IsEthereumAddress({ message: "patternMismatch" }))
