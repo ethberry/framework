@@ -26,20 +26,4 @@ COPY --chown=node:node . .
 RUN npm i --only=production
 
 RUN npm run bootstrap
-RUN npm run build -- --scope @framework/core-contracts
-RUN npm run build -- --scope @framework/constants
-RUN npm run build -- --scope @framework/types
-RUN npm run build -- --scope @framework/nest-js-module-exchange-signer
-RUN npm run build -- --scope @framework/genes
-RUN npm run build -- --scope @framework/json
-RUN npm run build -- --scope @framework/eml
-RUN npm run build -- --scope @framework/game
-RUN npm run build -- --scope @framework/localization-admin-ui
-RUN npm run build -- --scope @framework/localization-market-ui
-RUN npm run build -- --scope @framework/admin-api
-RUN npm run build -- --scope @framework/core-eth
-RUN npm run build -- --scope @framework/market-api
-RUN npm run build -- --scope @framework/mobile-api
-RUN npm run build -- --scope @framework/admin-ui
-RUN npm run build -- --scope @framework/market-ui
-
+RUN npm run build
