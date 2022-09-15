@@ -49,7 +49,11 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     _updateRule(ruleId, active);
   }
 
-  function deposit(address referrer, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
+  function deposit(
+    address referrer,
+    uint256 ruleId,
+    uint256 tokenId
+  ) public payable whenNotPaused {
     Rule storage rule = _rules[ruleId];
     require(rule.externalId != 0, "Pyramid: rule doesn't exist");
     require(rule.active, "Pyramid: rule doesn't active");
@@ -57,7 +61,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     _stakeIdCounter.increment();
     uint256 stakeId = _stakeIdCounter.current();
 
-    Asset memory depositItem = Asset(rule.deposit.tokenType, rule.deposit.token, rule.deposit.amount);
+    Asset memory depositItem = Asset(rule.deposit.tokenType, rule.deposit.token, 0, rule.deposit.amount);
     _stakes[stakeId] = Stake(_msgSender(), depositItem, ruleId, block.timestamp, 0, true);
 
     emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
@@ -226,7 +230,10 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
 
   // ETH FUND
   function fundEth() public payable onlyRole(DEFAULT_ADMIN_ROLE) {}
-  receive() external payable { revert(); }
+
+  receive() external payable {
+    revert();
+  }
 
   // PAUSE
   function pause() public onlyRole(PAUSER_ROLE) {
@@ -238,13 +245,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
   }
 
   // INTERFACE
-  function supportsInterface(bytes4 interfaceId)
-  public
-  view
-  virtual
-  override(AccessControl)
-  returns (bool)
-  {
+  function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 }
