@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { StakingRules } from "./rules";
 import { StakingLeaderboard } from "./leaderboard";
-import { StakingDeposit } from "./stakes";
+import { StakingDeposit } from "./deposit";
 import { IndexWrapper } from "../../index-wrapper";
 import { Staking } from "../../dashboard/mechanics/staking";
 

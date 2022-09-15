@@ -54,9 +54,9 @@ export const StakingDeposit: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking", "staking.stakes"]} />
+      <Breadcrumbs path={["dashboard", "staking", "staking.deposit"]} />
 
-      <PageHeader message="pages.staking.stakes.title">
+      <PageHeader message="pages.staking.deposit.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`} />
         </Button>

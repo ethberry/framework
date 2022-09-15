@@ -7,7 +7,7 @@ import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import type { IPyramidReportSearchDto, IPyramidDeposit } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { PyramidDepositStatus, TokenType } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
@@ -34,13 +34,14 @@ export const PyramidReport: FC = () => {
     search: {
       query: "",
       account: "",
+      pyramidDepositStatus: [PyramidDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
         contractId: 201,
       },
       reward: {
-        tokenType: TokenType.ERC721,
-        contractId: 306,
+        tokenType: TokenType.ERC20,
+        contractId: 201,
       },
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),

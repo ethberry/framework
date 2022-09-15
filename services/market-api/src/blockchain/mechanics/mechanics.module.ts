@@ -13,6 +13,7 @@ import { LotteryModule } from "./lottery/lottery.module";
 import { WrapperModule } from "./wrapper/wrapper.module";
 import { BreedModule } from "./breed/breed.module";
 import { WhitelistModule } from "./whitelist/whitelist.module";
+import { PyramidModule } from "./pyramid/pyramid.module";
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { WhitelistModule } from "./whitelist/whitelist.module";
     LotteryModule,
     WrapperModule,
     WhitelistModule,
+    PyramidModule,
   ],
 })
 export class MechanicsModule {}

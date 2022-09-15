@@ -6,14 +6,14 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
-import { StakingLeaderboardRank, TokenType } from "@framework/types";
+import type { IPyramidLeaderboard, IPyramidLeaderboardSearchDto } from "@framework/types";
+import { PyramidLeaderboardRank, TokenType } from "@framework/types";
 
-import { StakingLeaderboardSearchForm } from "./form";
+import { PyramidLeaderboardSearchForm } from "./form";
 import { ScannerLink } from "../../../../components/common/scanner-link";
 import { formatEther } from "../../../../utils/money";
 
-export const StakingLeaderboard: FC = () => {
+export const PyramidLeaderboard: FC = () => {
   const {
     rows,
     search,
@@ -24,16 +24,16 @@ export const StakingLeaderboard: FC = () => {
     handleChangeRowsPerPage,
     handleChangePage,
     handleToggleFilters,
-  } = useCollection<IStakingLeaderboard, IStakingLeaderboardSearchDto>({
-    baseUrl: "/staking/leaderboard",
+  } = useCollection<IPyramidLeaderboard, IPyramidLeaderboardSearchDto>({
+    baseUrl: "/pyramid/leaderboard",
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
         contractId: 201,
       },
       reward: {
-        tokenType: TokenType.ERC721,
-        contractId: 306,
+        tokenType: TokenType.ERC20,
+        contractId: 201,
       },
     },
   });
@@ -48,15 +48,15 @@ export const StakingLeaderboard: FC = () => {
       sortable: false,
       flex: 1,
       renderCell: (params: GridCellParams) => {
-        const row = params.row as IStakingLeaderboard;
+        const row = params.row as IPyramidLeaderboard;
         // @ts-ignore
         const index: number = params.api.getRowIndex(row.id);
         return (
           <Grid container direction="row" alignItems="center">
-            {row.rank === StakingLeaderboardRank.GOLD ? <Filter1 /> : null}
-            {row.rank === StakingLeaderboardRank.SILVER ? <Filter2 /> : null}
-            {row.rank === StakingLeaderboardRank.BRONZE ? <Filter3 /> : null}
-            {row.rank === StakingLeaderboardRank.BASIC ? <Filter4 /> : null}
+            {row.rank === PyramidLeaderboardRank.GOLD ? <Filter1 /> : null}
+            {row.rank === PyramidLeaderboardRank.SILVER ? <Filter2 /> : null}
+            {row.rank === PyramidLeaderboardRank.BRONZE ? <Filter3 /> : null}
+            {row.rank === PyramidLeaderboardRank.BASIC ? <Filter4 /> : null}
             <Typography ml={1}>{index + search.skip + 1}</Typography>
           </Grid>
         );
@@ -90,9 +90,9 @@ export const StakingLeaderboard: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "staking", "staking.leaderboard"]} />
+      <Breadcrumbs path={["dashboard", "pyramid", "pyramid.leaderboard"]} />
 
-      <PageHeader message="pages.staking.leaderboard.title">
+      <PageHeader message="pages.pyramid.leaderboard.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters}>
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}
@@ -101,7 +101,7 @@ export const StakingLeaderboard: FC = () => {
         </Button>
       </PageHeader>
 
-      <StakingLeaderboardSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <PyramidLeaderboardSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <DataGrid
         pagination

@@ -139,6 +139,11 @@
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
+    "pyramidDepositStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
+    },
     "stakingRuleStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
@@ -292,7 +297,9 @@
       "roundIds": "Round",
       "royalty": "Royalty",
       "slug": "Slug",
+      "pyramidDepositStatus": "Status",
       "stakingDepositStatus": "Status",
+      "pyramidRuleStatus": "Status",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",

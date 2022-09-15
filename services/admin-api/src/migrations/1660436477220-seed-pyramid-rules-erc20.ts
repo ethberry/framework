@@ -92,7 +92,7 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
         90221,
         90222,
         22,
-        'NEW',
+        'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
       );

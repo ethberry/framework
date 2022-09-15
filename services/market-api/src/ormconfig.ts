@@ -26,6 +26,8 @@ import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity"
 import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 import { WhitelistEntity } from "./blockchain/mechanics/whitelist/whitelist.entity";
+import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
+import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -57,6 +59,8 @@ const config: PostgresConnectionOptions = {
     MysteryBoxEntity,
     ExchangeHistoryEntity,
     WhitelistEntity,
+    PyramidRulesEntity,
+    PyramidDepositEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

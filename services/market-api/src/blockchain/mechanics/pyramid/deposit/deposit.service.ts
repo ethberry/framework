@@ -3,43 +3,43 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import type { IStakingLeaderboard, IStakingLeaderboardSearchDto, IStakingDepositSearchDto } from "@framework/types";
-import { StakingDepositStatus } from "@framework/types";
+import type { IPyramidLeaderboard, IPyramidLeaderboardSearchDto, IPyramidDepositSearchDto } from "@framework/types";
+import { PyramidDepositStatus } from "@framework/types";
 
-import { StakingDepositEntity } from "./deposit.entity";
+import { PyramidDepositEntity } from "./deposit.entity";
 import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()
-export class StakingDepositService {
+export class PyramidDepositService {
   constructor(
-    @InjectRepository(StakingDepositEntity)
-    private readonly stakesEntityRepository: Repository<StakingDepositEntity>,
+    @InjectRepository(PyramidDepositEntity)
+    private readonly stakesEntityRepository: Repository<PyramidDepositEntity>,
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<StakingDepositEntity>,
-    options?: FindOneOptions<StakingDepositEntity>,
-  ): Promise<StakingDepositEntity | null> {
+    where: FindOptionsWhere<PyramidDepositEntity>,
+    options?: FindOneOptions<PyramidDepositEntity>,
+  ): Promise<PyramidDepositEntity | null> {
     return this.stakesEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
-    where: FindOptionsWhere<StakingDepositEntity>,
-    options?: FindOneOptions<StakingDepositEntity>,
-  ): Promise<Array<StakingDepositEntity>> {
+    where: FindOptionsWhere<PyramidDepositEntity>,
+    options?: FindOneOptions<PyramidDepositEntity>,
+  ): Promise<Array<PyramidDepositEntity>> {
     return this.stakesEntityRepository.find({ where, ...options });
   }
 
   public async search(
-    dto: Partial<IStakingDepositSearchDto>,
+    dto: Partial<IPyramidDepositSearchDto>,
     userEntity: UserEntity,
-  ): Promise<[Array<StakingDepositEntity>, number]> {
-    const { query, stakingDepositStatus, deposit, reward, skip, take } = dto;
+  ): Promise<[Array<PyramidDepositEntity>, number]> {
+    const { query, pyramidDepositStatus, deposit, reward, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
-    queryBuilder.leftJoinAndSelect("stake.stakingRule", "rule");
+    queryBuilder.leftJoinAndSelect("stake.pyramidRule", "rule");
 
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
@@ -69,13 +69,13 @@ export class StakingDepositService {
       );
     }
 
-    if (stakingDepositStatus) {
-      if (stakingDepositStatus.length === 1) {
-        queryBuilder.andWhere("stake.stakingDepositStatus = :stakingDepositStatus", {
-          stakingDepositStatus: stakingDepositStatus[0],
+    if (pyramidDepositStatus) {
+      if (pyramidDepositStatus.length === 1) {
+        queryBuilder.andWhere("stake.pyramidDepositStatus = :pyramidDepositStatus", {
+          pyramidDepositStatus: pyramidDepositStatus[0],
         });
       } else {
-        queryBuilder.andWhere("stake.stakingDepositStatus IN(:...stakingDepositStatus)", { stakingDepositStatus });
+        queryBuilder.andWhere("stake.pyramidDepositStatus IN(:...pyramidDepositStatus)", { pyramidDepositStatus });
       }
     }
 
@@ -111,7 +111,7 @@ export class StakingDepositService {
     return queryBuilder.getManyAndCount();
   }
 
-  public async leaderboard(dto: IStakingLeaderboardSearchDto): Promise<[Array<IStakingLeaderboard>, number]> {
+  public async leaderboard(dto: IPyramidLeaderboardSearchDto): Promise<[Array<IPyramidLeaderboard>, number]> {
     const { deposit, reward, skip, take } = dto;
 
     const queryString = `
@@ -119,13 +119,13 @@ export class StakingDepositService {
                SUM(deposit_component.amount)::NUMERIC AS amount,
                deposit_contract.name as name,
                account
-        FROM ${ns}.staking_stakes
+        FROM ${ns}.pyramid_deposit
                  LEFT JOIN
-             ${ns}.staking_rules ON staking_rules.id = staking_stakes.staking_rule_id
+             ${ns}.pyramid_rules ON pyramid_rules.id = pyramid_deposit.pyramid_rule_id
                  LEFT JOIN
-             ${ns}.asset as asset_deposit ON staking_rules.deposit_id = asset_deposit.id
+             ${ns}.asset as asset_deposit ON pyramid_rules.deposit_id = asset_deposit.id
                  LEFT JOIN
-             ${ns}.asset as asset_reward ON staking_rules.reward_id = asset_reward.id
+             ${ns}.asset as asset_reward ON pyramid_rules.reward_id = asset_reward.id
                  LEFT JOIN
              ${ns}.asset_component as deposit_component ON deposit_component.asset_id = asset_deposit.id
                  LEFT JOIN
@@ -134,8 +134,8 @@ export class StakingDepositService {
              ${ns}.asset_component as reward_component ON reward_component.asset_id = asset_reward.id
                  LEFT JOIN
              ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
-        WHERE (staking_stakes.staking_deposit_status = '${StakingDepositStatus.ACTIVE}' OR
-               staking_stakes.staking_deposit_status = '${StakingDepositStatus.COMPLETE}')
+        WHERE (pyramid_deposit.pyramid_deposit_status = '${PyramidDepositStatus.ACTIVE}' OR
+               pyramid_deposit.pyramid_deposit_status = '${PyramidDepositStatus.COMPLETE}')
           AND deposit_contract.contract_type = $1
           AND deposit_contract.id = $2
           AND reward_contract.contract_type = $3
@@ -160,12 +160,12 @@ export class StakingDepositService {
     ]).then(([list, [{ count }]]) => [list, count]);
   }
 
-  public findOneWithRelations(where: FindOptionsWhere<StakingDepositEntity>): Promise<StakingDepositEntity | null> {
+  public findOneWithRelations(where: FindOptionsWhere<PyramidDepositEntity>): Promise<PyramidDepositEntity | null> {
     return this.findOne(where, {
       join: {
         alias: "stake",
         leftJoinAndSelect: {
-          rule: "stake.stakingRule",
+          rule: "stake.pyramidRule",
           deposit: "rule.deposit",
           deposit_components: "deposit.components",
           deposit_contract: "deposit_components.contract",

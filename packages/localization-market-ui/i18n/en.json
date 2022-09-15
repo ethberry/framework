@@ -150,7 +150,6 @@
     "labels": {
       "GRADE": "Grade",
       "RARITY": "Rarity",
-      "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",
@@ -505,6 +504,17 @@
       "title": "Profile"
     },
     "pyramid": {
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "reward": "Reward",
+      "rules": {
+        "deposit": "Deposit",
+        "title": "Deposit rules"
+      },
+      "deposit": {
+        "title": "My Deposits"
+      },
       "title": "Pyramid"
     },
     "referral": {
@@ -523,17 +533,16 @@
       "title": "Referral program"
     },
     "staking": {
-      "deposit": "Deposit",
       "leaderboard": {
         "title": "Leaderboard"
       },
       "reward": "Reward",
       "rules": {
         "deposit": "Deposit",
-        "title": "Staking rules"
+        "title": "Deposit rules"
       },
-      "stakes": {
-        "title": "My Stakes"
+      "deposit": {
+        "title": "My Deposits"
       },
       "title": "Staking"
     },
