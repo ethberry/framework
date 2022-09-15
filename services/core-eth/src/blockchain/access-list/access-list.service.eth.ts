@@ -4,10 +4,10 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessListEventType,
-  IBlacklisted,
-  IUnBlacklisted,
-  IUnWhitelisted,
-  IWhitelisted,
+  IBlacklistedEvent,
+  IUnBlacklistedEvent,
+  IUnWhitelistedEvent,
+  IWhitelistedEvent,
   TAccessListEventData,
 } from "@framework/types";
 
@@ -25,7 +25,7 @@ export class AccessListServiceEth {
     private readonly contractService: ContractService,
   ) {}
 
-  public async blacklisted(event: ILogEvent<IBlacklisted>, context: Log): Promise<void> {
+  public async blacklisted(event: ILogEvent<IBlacklistedEvent>, context: Log): Promise<void> {
     const {
       args: { account },
     } = event;
@@ -39,7 +39,7 @@ export class AccessListServiceEth {
     });
   }
 
-  public async unBlacklisted(event: ILogEvent<IUnBlacklisted>, context: Log): Promise<void> {
+  public async unBlacklisted(event: ILogEvent<IUnBlacklistedEvent>, context: Log): Promise<void> {
     const {
       args: { account },
     } = event;
@@ -52,7 +52,7 @@ export class AccessListServiceEth {
     });
   }
 
-  public async whitelisted(event: ILogEvent<IWhitelisted>, context: Log): Promise<void> {
+  public async whitelisted(event: ILogEvent<IWhitelistedEvent>, context: Log): Promise<void> {
     const {
       args: { account },
     } = event;
@@ -66,7 +66,7 @@ export class AccessListServiceEth {
     });
   }
 
-  public async unWhitelisted(event: ILogEvent<IUnWhitelisted>, context: Log): Promise<void> {
+  public async unWhitelisted(event: ILogEvent<IUnWhitelistedEvent>, context: Log): Promise<void> {
     const {
       args: { account },
     } = event;

@@ -6,12 +6,12 @@ import {
   ClaimStatus,
   ExchangeEventType,
   ExchangeType,
-  IExchangeClaim,
-  IExchangeCraft,
-  IExchangeGrade,
+  IExchangeClaimEvent,
+  IExchangeCraftEvent,
+  IExchangeGradeEvent,
   IExchangeItem,
-  IExchangeMysterybox,
-  IExchangePurchase,
+  IExchangeMysteryEvent,
+  IExchangePurchaseEvent,
   TExchangeEventData,
 } from "@framework/types";
 
@@ -38,7 +38,7 @@ export class ExchangeServiceEth {
     private readonly assetService: AssetService,
   ) {}
 
-  public async purchase(event: ILogEvent<IExchangePurchase>, context: Log): Promise<void> {
+  public async purchase(event: ILogEvent<IExchangePurchaseEvent>, context: Log): Promise<void> {
     const {
       args: { item, price },
     } = event;
@@ -48,7 +48,7 @@ export class ExchangeServiceEth {
     await this.saveAssetHistory(history, [item], price);
   }
 
-  public async claim(event: ILogEvent<IExchangeClaim>, context: Log): Promise<void> {
+  public async claim(event: ILogEvent<IExchangeClaimEvent>, context: Log): Promise<void> {
     const {
       args: { items, externalId },
     } = event;
@@ -66,7 +66,7 @@ export class ExchangeServiceEth {
     await this.saveAssetHistory(history, [items], []);
   }
 
-  public async craft(event: ILogEvent<IExchangeCraft>, context: Log): Promise<void> {
+  public async craft(event: ILogEvent<IExchangeCraftEvent>, context: Log): Promise<void> {
     const {
       args: { items, price },
     } = event;
@@ -74,7 +74,7 @@ export class ExchangeServiceEth {
     await this.saveAssetHistory(history, items, price);
   }
 
-  public async log(event: ILogEvent<IExchangeGrade | IExchangeMysterybox>, context: Log): Promise<void> {
+  public async log(event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>, context: Log): Promise<void> {
     const {
       args: { items, price },
     } = event;

@@ -5,10 +5,10 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractEventType,
-  IErc1155TokenApprovalForAll,
-  IErc1155TokenTransferBatch,
-  IErc1155TokenTransferSingle,
-  IErc1155TokenUri,
+  IErc1155TokenApprovalForAllEvent,
+  IErc1155TokenTransferBatchEvent,
+  IErc1155TokenTransferSingleEvent,
+  IErc1155TokenUriEvent,
   TContractEventData,
 } from "@framework/types";
 
@@ -30,7 +30,7 @@ export class Erc1155TokenServiceEth {
     private readonly templateService: TemplateService,
   ) {}
 
-  public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingle>, context: Log): Promise<void> {
+  public async transferSingle(event: ILogEvent<IErc1155TokenTransferSingleEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { from, to, id /* 1155 db tokenId */, value },
@@ -46,7 +46,7 @@ export class Erc1155TokenServiceEth {
     await this.updateBalances(from.toLowerCase(), to.toLowerCase(), address.toLowerCase(), tokenEntity.tokenId, value);
   }
 
-  public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatch>, context: Log): Promise<void> {
+  public async transferBatch(event: ILogEvent<IErc1155TokenTransferBatchEvent>, context: Log): Promise<void> {
     const {
       args: { from, to, ids, values },
     } = event;
@@ -66,11 +66,11 @@ export class Erc1155TokenServiceEth {
     );
   }
 
-  public async approvalForAll(event: ILogEvent<IErc1155TokenApprovalForAll>, context: Log): Promise<void> {
+  public async approvalForAll(event: ILogEvent<IErc1155TokenApprovalForAllEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async uri(event: ILogEvent<IErc1155TokenUri>, context: Log): Promise<void> {
+  public async uri(event: ILogEvent<IErc1155TokenUriEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

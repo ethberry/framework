@@ -473,16 +473,16 @@
     "mystery": {
       "box": {
         "price": "Price: {amount}",
-        "title": "Mysterybox Box: {title}"
+        "title": "Mystery Box: {title}"
       },
       "boxes": {
-        "title": "Mysterybox Boxes"
+        "title": "Mystery Boxes"
       },
       "contract": {
-        "title": "Mysterybox Contract: {title}"
+        "title": "Mystery Contract: {title}"
       },
       "contracts": {
-        "title": "Mysterybox Contracts"
+        "title": "Mystery Contracts"
       },
       "token": {
         "level": "Level: {GRADE}",

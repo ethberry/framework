@@ -3,7 +3,7 @@ import { Log } from "@ethersproject/abstract-provider";
 import { BigNumber } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import type { IDefaultRoyaltyInfo, ITokenRoyaltyInfo, TContractEventData } from "@framework/types";
+import type { IDefaultRoyaltyInfoEvent, ITokenRoyaltyInfoEvent, TContractEventData } from "@framework/types";
 import { ContractEventType } from "@framework/types";
 
 import { ContractHistoryService } from "../contract-history/contract-history.service";
@@ -18,7 +18,7 @@ export class RoyaltyServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
   ) {}
 
-  public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfo>, context: Log): Promise<void> {
+  public async defaultRoyaltyInfo(event: ILogEvent<IDefaultRoyaltyInfoEvent>, context: Log): Promise<void> {
     const {
       args: { royaltyNumerator },
     } = event;
@@ -38,7 +38,7 @@ export class RoyaltyServiceEth {
     await this.updateHistory(event, context);
   }
 
-  public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfo>, context: Log): Promise<void> {
+  public async tokenRoyaltyInfo(event: ILogEvent<ITokenRoyaltyInfoEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

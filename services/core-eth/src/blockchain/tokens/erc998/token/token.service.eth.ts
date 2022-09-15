@@ -6,16 +6,16 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
-  IErc998BatchReceivedChild,
-  IErc998BatchTransferChild,
-  IErc998TokenReceivedChild,
-  IErc998TokenSetMaxChild,
-  IErc998TokenTransferChild,
-  IErc998TokenUnWhitelistedChild,
-  IErc998TokenWhitelistedChild,
-  IRandomRequest,
-  ITokenMintRandom,
-  ITokenTransfer,
+  IErc998BatchReceivedChildEvent,
+  IErc998BatchTransferChildEvent,
+  IErc998TokenReceivedChildEvent,
+  IErc998TokenSetMaxChildEvent,
+  IErc998TokenTransferChildEvent,
+  IErc998TokenUnWhitelistedChildEvent,
+  IErc998TokenWhitelistedChildEvent,
+  IERC721RandomRequestEvent,
+  IERC721TokenMintRandomEvent,
+  IERC721TokenTransferEvent,
   TokenAttributes,
   TokenStatus,
 } from "@framework/types";
@@ -55,7 +55,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     super(loggerService, contractService, tokenService, contractHistoryService);
   }
 
-  public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
+  public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
       args: { from, to, tokenId },
     } = event;
@@ -115,7 +115,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     //   : await erc998TokenEntity.erc998Mysterybox.erc998Template.save();
   }
 
-  public async receivedChild(event: ILogEvent<IErc998TokenReceivedChild>, context: Log): Promise<void> {
+  public async receivedChild(event: ILogEvent<IErc998TokenReceivedChildEvent>, context: Log): Promise<void> {
     const {
       args: { tokenId, childContract, childTokenId },
     } = event;
@@ -136,7 +136,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.ownershipService.create({ parentId: erc998TokenEntity.id, childId: tokenEntity.id, amount: 1 });
   }
 
-  public async receivedChildBatch(event: ILogEvent<IErc998BatchReceivedChild>, context: Log): Promise<void> {
+  public async receivedChildBatch(event: ILogEvent<IErc998BatchReceivedChildEvent>, context: Log): Promise<void> {
     const {
       args: { tokenId, childContract, childTokenIds, amounts },
     } = event;
@@ -163,7 +163,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     });
   }
 
-  public async transferChild(event: ILogEvent<IErc998TokenTransferChild>, context: Log): Promise<void> {
+  public async transferChild(event: ILogEvent<IErc998TokenTransferChildEvent>, context: Log): Promise<void> {
     const {
       args: { childContract, childTokenId },
     } = event;
@@ -185,7 +185,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     await this.ownershipService.delete({ id: ownershipEntity.id });
   }
 
-  public async transferChildBatch(event: ILogEvent<IErc998BatchTransferChild>, context: Log): Promise<void> {
+  public async transferChildBatch(event: ILogEvent<IErc998BatchTransferChildEvent>, context: Log): Promise<void> {
     const {
       args: { childContract, childTokenIds, amounts },
     } = event;
@@ -216,11 +216,11 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     );
   }
 
-  public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
+  public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
+  public async randomRequest(event: ILogEvent<IERC721RandomRequestEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     // TODO DEV ONLY!!!
     const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
@@ -234,7 +234,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     }
   }
 
-  public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChild>, context: Log): Promise<void> {
+  public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChildEvent>, context: Log): Promise<void> {
     const {
       args: { addr, maxCount },
     } = event;
@@ -260,7 +260,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     });
   }
 
-  public async unWhitelistChild(event: ILogEvent<IErc998TokenUnWhitelistedChild>, context: Log): Promise<void> {
+  public async unWhitelistChild(event: ILogEvent<IErc998TokenUnWhitelistedChildEvent>, context: Log): Promise<void> {
     const {
       args: { addr },
     } = event;
@@ -286,7 +286,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     });
   }
 
-  public async setMaxChild(event: ILogEvent<IErc998TokenSetMaxChild>, context: Log): Promise<void> {
+  public async setMaxChild(event: ILogEvent<IErc998TokenSetMaxChildEvent>, context: Log): Promise<void> {
     const {
       args: { addr, maxCount },
     } = event;

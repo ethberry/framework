@@ -4,7 +4,12 @@ import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IReward, IWithdraw, ReferralProgramEventType, TReferralEventData } from "@framework/types";
+import {
+  IReferralRewardEvent,
+  IReferralWithdrawEvent,
+  ReferralProgramEventType,
+  TReferralEventData,
+} from "@framework/types";
 
 import { ReferralHistoryService } from "./history/history.service";
 import { ReferralService } from "./referral.service";
@@ -25,7 +30,7 @@ export class ReferralServiceEth {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
 
-  public async reward(event: ILogEvent<IReward>, context: Log): Promise<void> {
+  public async reward(event: ILogEvent<IReferralRewardEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     const { args } = event;
@@ -40,7 +45,7 @@ export class ReferralServiceEth {
     await this.referralService.create({ contractId: contractEntity.id, ...args });
   }
 
-  public async withdraw(event: ILogEvent<IWithdraw>, context: Log): Promise<void> {
+  public async withdraw(event: ILogEvent<IReferralWithdrawEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

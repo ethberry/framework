@@ -5,9 +5,9 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractEventType,
-  IErc20TokenApprove,
-  IErc20TokenSnapshot,
-  IErc20TokenTransfer,
+  IErc20TokenApproveEvent,
+  IErc20TokenSnapshotEvent,
+  IErc20TokenTransferEvent,
   TContractEventData,
 } from "@framework/types";
 
@@ -27,7 +27,7 @@ export class Erc20TokenServiceEth {
     private readonly balanceService: BalanceService,
   ) {}
 
-  public async transfer(event: ILogEvent<IErc20TokenTransfer>, context: Log): Promise<void> {
+  public async transfer(event: ILogEvent<IErc20TokenTransferEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     const { args } = event;
@@ -50,11 +50,11 @@ export class Erc20TokenServiceEth {
     }
   }
 
-  public async approval(event: ILogEvent<IErc20TokenApprove>, context: Log): Promise<void> {
+  public async approval(event: ILogEvent<IErc20TokenApproveEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async snapshot(event: ILogEvent<IErc20TokenSnapshot>, context: Log): Promise<void> {
+  public async snapshot(event: ILogEvent<IErc20TokenSnapshotEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

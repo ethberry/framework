@@ -10,12 +10,12 @@ export enum ContractManagerEventType {
   PyramidDeployed = "PyramidDeployed",
 }
 
-export interface IContractManagerPyramidDeployed {
+export interface IContractManagerPyramidDeployedEvent {
   addr: string;
   featureIds: Array<number>;
 }
 
-export interface IContractManagerVestingDeployed {
+export interface IContractManagerVestingDeployedEvent {
   addr: string;
   account: string;
   startTimestamp: string; // in seconds
@@ -23,7 +23,7 @@ export interface IContractManagerVestingDeployed {
   templateId: string;
 }
 
-export interface IContractManagerERC20TokenDeployed {
+export interface IContractManagerERC20TokenDeployedEvent {
   addr: string;
   name: string;
   symbol: string;
@@ -31,7 +31,7 @@ export interface IContractManagerERC20TokenDeployed {
   featureIds: Array<number>;
 }
 
-export interface IContractManagerERC721TokenDeployed {
+export interface IContractManagerERC721TokenDeployedEvent {
   addr: string;
   name: string;
   symbol: string;
@@ -40,7 +40,7 @@ export interface IContractManagerERC721TokenDeployed {
   featureIds: Array<number>;
 }
 
-export interface IContractManagerERC998TokenDeployed {
+export interface IContractManagerERC998TokenDeployedEvent {
   addr: string;
   name: string;
   symbol: string;
@@ -49,7 +49,7 @@ export interface IContractManagerERC998TokenDeployed {
   featureIds: Array<number>;
 }
 
-export interface IContractManagerMysteryboxDeployed {
+export interface IContractManagerMysteryTokenDeployedEvent {
   addr: string;
   name: string;
   symbol: string;
@@ -58,20 +58,20 @@ export interface IContractManagerMysteryboxDeployed {
   featureIds: Array<number>;
 }
 
-export interface IContractManagerERC1155TokenDeployed {
+export interface IContractManagerERC1155TokenDeployedEvent {
   addr: string;
   baseTokenURI: string;
   featureIds: Array<number>;
 }
 
 export type TContractManagerEventData =
-  | IContractManagerVestingDeployed
-  | IContractManagerERC20TokenDeployed
-  | IContractManagerERC721TokenDeployed
-  | IContractManagerERC998TokenDeployed
-  | IContractManagerERC1155TokenDeployed
-  | IContractManagerMysteryboxDeployed
-  | IContractManagerPyramidDeployed;
+  | IContractManagerVestingDeployedEvent
+  | IContractManagerERC20TokenDeployedEvent
+  | IContractManagerERC721TokenDeployedEvent
+  | IContractManagerERC998TokenDeployedEvent
+  | IContractManagerERC1155TokenDeployedEvent
+  | IContractManagerMysteryTokenDeployedEvent
+  | IContractManagerPyramidDeployedEvent;
 
 export interface IContractManagerHistory extends IIdDateBase {
   address: string;

@@ -12,7 +12,7 @@ export enum ExchangeEventType {
 
 export type IExchangeItem = [number, string, string, string];
 
-export interface IExchangePurchase {
+export interface IExchangePurchaseEvent {
   from: string;
   externalId: string;
   item: IExchangeItem;
@@ -20,14 +20,14 @@ export interface IExchangePurchase {
 }
 
 // MODULE:CLAIM
-export interface IExchangeClaim {
+export interface IExchangeClaimEvent {
   from: string;
   externalId: string;
   items: IExchangeItem; // TODO array
 }
 
 // MODULE:CRAFT
-export interface IExchangeCraft {
+export interface IExchangeCraftEvent {
   from: string;
   externalId: string;
   items: Array<IExchangeItem>;
@@ -35,7 +35,7 @@ export interface IExchangeCraft {
 }
 
 // MODULE:GRADE
-export interface IExchangeGrade {
+export interface IExchangeGradeEvent {
   from: string;
   externalId: string;
   items: IExchangeItem;
@@ -43,7 +43,7 @@ export interface IExchangeGrade {
 }
 
 // MODULE:MYSTERYBOX
-export interface IExchangeMysterybox {
+export interface IExchangeMysteryEvent {
   from: string;
   externalId: string;
   items: IExchangeItem; // TODO array
@@ -51,11 +51,11 @@ export interface IExchangeMysterybox {
 }
 
 export type TExchangeEventData =
-  | IExchangePurchase
-  | IExchangeClaim
-  | IExchangeCraft
-  | IExchangeGrade
-  | IExchangeMysterybox;
+  | IExchangePurchaseEvent
+  | IExchangeClaimEvent
+  | IExchangeCraftEvent
+  | IExchangeGradeEvent
+  | IExchangeMysteryEvent;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;

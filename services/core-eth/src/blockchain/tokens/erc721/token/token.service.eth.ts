@@ -6,9 +6,9 @@ import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
-  IRandomRequest,
-  ITokenMintRandom,
-  ITokenTransfer,
+  IERC721RandomRequestEvent,
+  IERC721TokenMintRandomEvent,
+  IERC721TokenTransferEvent,
   TokenAttributes,
   TokenStatus,
 } from "@framework/types";
@@ -44,7 +44,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     super(loggerService, contractService, tokenService, contractHistoryService);
   }
 
-  public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
+  public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
       args: { from, to, tokenId },
     } = event;
@@ -77,7 +77,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         if (!historyEntity) {
           throw new NotFoundException("historyNotFound");
         }
-        const eventData = historyEntity.eventData as ITokenMintRandom;
+        const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
         await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
       }
     }
@@ -106,11 +106,11 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     await erc721TokenEntity.balance[0].save();
   }
 
-  public async mintRandom(event: ILogEvent<ITokenMintRandom>, context: Log): Promise<void> {
+  public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async randomRequest(event: ILogEvent<IRandomRequest>, context: Log): Promise<void> {
+  public async randomRequest(event: ILogEvent<IERC721RandomRequestEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     // DEV ONLY
     const nodeEnv = this.configService.get<string>("NODE_ENV", "development");

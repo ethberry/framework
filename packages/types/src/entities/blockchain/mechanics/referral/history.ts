@@ -13,7 +13,7 @@ export interface IRProgram {
   refProgram: IReferralProgram;
 }
 
-export interface IReward {
+export interface IReferralRewardEvent {
   account: string;
   referrer: string;
   level: number;
@@ -21,7 +21,7 @@ export interface IReward {
   amount: string;
 }
 
-export interface IWithdraw {
+export interface IReferralWithdrawEvent {
   account: string;
   token: string;
   amount: string;
@@ -33,7 +33,7 @@ export interface IBonus {
   amount: string;
 }
 
-export type TReferralEventData = IRProgram | IReward | IWithdraw | IBonus;
+export type TReferralEventData = IRProgram | IReferralRewardEvent | IReferralWithdrawEvent | IBonus;
 
 export interface IReferralHistory extends IIdDateBase {
   address: string;

@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, ContractType, IPaused } from "@framework/types";
+import { ContractEventType, ContractType, IPausedEvent } from "@framework/types";
 
 import { PauseServiceEth } from "./pause.service.eth";
 
@@ -23,7 +23,7 @@ export class PauseControllerEth {
     { contractType: ContractType.STAKING, eventName: ContractEventType.Unpaused },
     { contractType: ContractType.PYRAMID, eventName: ContractEventType.Unpaused },
   ])
-  public pause(@Payload() event: ILogEvent<IPaused>, @Ctx() context: Log): Promise<void> {
+  public pause(@Payload() event: ILogEvent<IPausedEvent>, @Ctx() context: Log): Promise<void> {
     return this.pauseServiceEth.pause(event, context);
   }
 }

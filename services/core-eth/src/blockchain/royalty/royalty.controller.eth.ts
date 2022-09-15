@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, ContractType, IDefaultRoyaltyInfo, ITokenRoyaltyInfo } from "@framework/types";
+import { ContractEventType, ContractType, IDefaultRoyaltyInfoEvent, ITokenRoyaltyInfoEvent } from "@framework/types";
 
 import { RoyaltyServiceEth } from "./royalty.service.eth";
 
@@ -22,7 +22,7 @@ export class RoyaltyControllerEth {
     },
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.DefaultRoyaltyInfo },
   ])
-  public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
+  public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfoEvent>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.defaultRoyaltyInfo(event, context);
   }
 
@@ -37,7 +37,7 @@ export class RoyaltyControllerEth {
     },
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.TokenRoyaltyInfo },
   ])
-  public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfo>, @Ctx() context: Log): Promise<void> {
+  public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfoEvent>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.tokenRoyaltyInfo(event, context);
   }
 }
