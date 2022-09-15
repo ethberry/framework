@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { Protected } from "@gemunion/firebase-login";
 
-import { Pyramid } from "./main";
+import { Pyramid } from "../../dashboard/mechanics/pyramid";
 import { PyramidContract } from "./contract";
 import { PyramidRules } from "./rules";
 import { IndexWrapper } from "../../index-wrapper";

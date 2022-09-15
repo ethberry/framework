@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { Collections, Rule, ChangeHistory } from "@mui/icons-material";
+import { Collections, Rule } from "@mui/icons-material";
 
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
@@ -29,7 +29,7 @@ export const Pyramid: FC = () => {
             <Rule />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.staking.rules.title" />
+            <FormattedMessage id="pages.pyramid.rules.title" />
           </ListItemText>
         </ListItem>
       </List>

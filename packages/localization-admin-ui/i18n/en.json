@@ -81,13 +81,13 @@
       "ERC20OWNER": "ERC20OWNER",
       "EXTERNAL": "External",
       "GENES": "Genes",
+      "LINEAR_REFERRAL": "LINEAR REFERRAL",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
       "RANDOM": "Random",
       "SOULBOUND": "Soulbound",
-      "UPGRADEABLE": "Upgradeable",
-      "LINEAR_REFERRAL": "LINEAR REFERRAL"
+      "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
       "ACTIVE": "Active",
@@ -271,8 +271,8 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
-      "mysteryboxStatus": "Status",
       "maxStakes": "Max Stakes",
+      "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
       "owner": "Owner",
@@ -574,6 +574,12 @@
       "title": "Profile"
     },
     "pyramid": {
+      "chart": {
+        "title": "Chart"
+      },
+      "report": {
+        "title": "Report"
+      },
       "contracts": {
         "title": "Pyramid Contracts"
       },
@@ -613,8 +619,8 @@
       "title": "Vesting"
     },
     "whitelist": {
-      "title": "Whitelist",
-      "defaultItemTitle": "{account}"
+      "defaultItemTitle": "{account}",
+      "title": "Whitelist"
     }
   },
   "snackbar": {
@@ -626,8 +632,8 @@
     "declined": "Declined!",
     "deleted": "Successfully deleted",
     "deployed": "Successfully deployed",
-    "duplicateEmail": "User with this email already registered",
     "duplicateAccount": "Duplicate account",
+    "duplicateEmail": "User with this email already registered",
     "email": "Email successfully sent.",
     "error": "Unknown Error",
     "inactive": "Successfully inactivated",
