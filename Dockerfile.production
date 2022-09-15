@@ -25,20 +25,7 @@ COPY --chown=node:node . .
 
 RUN npm i --only=production
 
-RUN npm run bootstrap \
-&& npm run build -- --scope @framework/constants \
-&& npm run build -- --scope @framework/types \
-&& npm run build -- --scope @framework/nest-js-module-exchange-signer  \
-&& npm run build -- --scope @framework/genes \
-&& npm run build -- --scope @framework/json \
-&& npm run build -- --scope @framework/eml \
-&& npm run build -- --scope @framework/game \
-&& npm run build -- --scope @framework/localization-admin-ui \
-&& npm run build -- --scope @framework/localization-market-ui \
-&& npm run build -- --scope @framework/core-contracts \
-&& npm run build -- --scope @framework/admin-api \
-&& npm run build -- --scope @framework/core-eth \
-&& npm run build -- --scope @framework/market-api \
-&& npm run build -- --scope @framework/mobile-api \
-&& npm run build -- --scope @framework/admin-ui \
-&& npm run build -- --scope @framework/market-ui \
+RUN echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*"], "version": "independent", "useNx": true}' >> /home/node/framework/lerna.json
+RUN cat /home/node/framework/lerna.json
+
+RUN npm run docker:bootstrap
