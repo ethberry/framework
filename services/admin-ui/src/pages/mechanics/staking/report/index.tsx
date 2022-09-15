@@ -6,8 +6,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import type { IStakingReportSearchDto, IStakingStake } from "@framework/types";
-import { StakeStatus, TokenType } from "@framework/types";
+import type { IStakingReportSearchDto, IStakingDeposit } from "@framework/types";
+import { StakingDepositStatus, TokenType } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
@@ -26,15 +26,15 @@ export const StakingReport: FC = () => {
     handleToggleFilters,
     handleChangePage,
     handleChangeRowsPerPage,
-  } = useCollection<IStakingStake, IStakingReportSearchDto>({
-    baseUrl: "/staking/report/search",
+  } = useCollection<IStakingDeposit, IStakingReportSearchDto>({
+    baseUrl: "/staking/report",
     empty: {
       createdAt: new Date().toISOString(),
     },
     search: {
       query: "",
       account: "",
-      stakeStatus: [StakeStatus.ACTIVE],
+      stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
         contractId: 201,
@@ -123,7 +123,7 @@ export const StakingReport: FC = () => {
         rowsPerPageOptions={[5, 10, 25]}
         loading={isLoading}
         columns={columns}
-        rows={rows.map((stake: IStakingStake) => ({
+        rows={rows.map((stake: IStakingDeposit) => ({
           id: stake.id,
           account: stake.account,
           deposit: formatPrice(stake.stakingRule?.deposit),

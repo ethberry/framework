@@ -5,14 +5,14 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { IStakingStake, StakeStatus } from "@framework/types";
+import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 
 import { IStakingRewardDto, StakingRewardDialog } from "./dialog";
 
 export interface IStakingRewardComplexButtonProps {
-  stake: IStakingStake;
+  stake: IStakingDeposit;
 }
 
 export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = props => {
@@ -22,7 +22,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask((stake: IStakingStake, values: IStakingRewardDto, web3Context: Web3ContextType) => {
+  const metaFn = useMetamask((stake: IStakingDeposit, values: IStakingRewardDto, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
     return contract.receiveReward(stake.externalId, values.withdrawDeposit, values.breakLastPeriod) as Promise<void>;
   });
@@ -39,7 +39,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
     setIsRewardDialogOpen(false);
   };
 
-  if (stake.stakeStatus !== StakeStatus.ACTIVE) {
+  if (stake.stakingDepositStatus !== StakingDepositStatus.ACTIVE) {
     return null;
   }
 

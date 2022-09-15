@@ -2,7 +2,7 @@ import type { ISearchable } from "@gemunion/types-collection";
 
 import { IAsset } from "../asset";
 
-export enum StakingStatus {
+export enum StakingRuleStatus {
   NEW = "NEW",
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
@@ -16,6 +16,6 @@ export interface IStakingRule extends ISearchable {
   duration: number;
   penalty: number;
   recurrent: boolean;
-  stakingStatus: StakingStatus;
+  stakingRuleStatus: StakingRuleStatus;
   externalId: string;
 }

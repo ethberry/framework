@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { AssetModule } from "../../asset/asset.module";
-import { PyramidStakesModule } from "../stakes/stakes.module";
+import { PyramidDepositModule } from "../deposit/deposit.module";
 import { PyramidRulesService } from "./rules.service";
 import { PyramidRulesEntity } from "./rules.entity";
 import { PyramidLogModule } from "../log/log.module";
@@ -16,7 +16,7 @@ import { PyramidHistoryModule } from "../history/history.module";
     AssetModule,
     ContractModule,
     PyramidLogModule,
-    PyramidStakesModule,
+    PyramidDepositModule,
     PyramidHistoryModule,
     TypeOrmModule.forFeature([PyramidRulesEntity]),
   ],

@@ -18,7 +18,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IPyramidRule, IPyramidRuleSearchDto } from "@framework/types";
-import { IPyramidRuleItemSearchDto, PyramidStakingStatus, TokenType } from "@framework/types";
+import { IPyramidRuleItemSearchDto, PyramidRuleStatus, TokenType } from "@framework/types";
 
 import { PyramidUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
@@ -66,7 +66,7 @@ export const PyramidRules: FC = () => {
     }),
     search: {
       query: "",
-      stakingStatus: [PyramidStakingStatus.ACTIVE, PyramidStakingStatus.NEW],
+      pyramidRuleStatus: [PyramidRuleStatus.ACTIVE, PyramidRuleStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
       } as IPyramidRuleItemSearchDto,
@@ -106,7 +106,7 @@ export const PyramidRules: FC = () => {
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingStatus !== PyramidStakingStatus.NEW}>
+                <IconButton onClick={handleDelete(rule)} disabled={rule.pyramidRuleStatus !== PyramidRuleStatus.NEW}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -135,7 +135,7 @@ export const PyramidRules: FC = () => {
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         initialValues={selected}
-        readOnly={selected.stakingStatus === PyramidStakingStatus.ACTIVE}
+        readOnly={selected.pyramidRuleStatus === PyramidRuleStatus.ACTIVE}
       />
     </Grid>
   );

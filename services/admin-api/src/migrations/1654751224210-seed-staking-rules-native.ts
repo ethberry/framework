@@ -116,7 +116,7 @@ export class SeedStakingRulesNativeAt1654751224210 implements MigrationInterface
         deposit_id,
         reward_id,
         external_id,
-        staking_status,
+        staking_rule_status,
         created_at,
         updated_at
       ) VALUES (

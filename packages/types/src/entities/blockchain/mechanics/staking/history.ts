@@ -8,20 +8,20 @@ export enum StakingEventType {
   StakingFinish = "StakingFinish",
 }
 
-export interface IStakingCreate {
+export interface IStakingCreateEvent {
   ruleId: string;
-  rule: IStakingSol;
+  rule: IStakingRule;
   externalId: string;
 }
 
-export interface IStakingUpdate {
+export interface IStakingUpdateEvent {
   ruleId: string;
   active: boolean;
 }
 
-export interface IStakingSol {
-  deposit: IStakingItemSol;
-  reward: IStakingItemSol;
+interface IStakingRule {
+  deposit: IStakingRuleItem;
+  reward: IStakingRuleItem;
   period: string;
   penalty: string;
   recurrent: boolean;
@@ -29,14 +29,14 @@ export interface IStakingSol {
   externalId: string;
 }
 
-export interface IStakingItemSol {
+interface IStakingRuleItem {
   itemType: StakingItemType;
   address: string;
   tokenId: string;
   amount: string;
 }
 
-export enum StakingItemType {
+enum StakingItemType {
   NATIVE = "0",
   ERC20 = "1",
   ERC721 = "2",
@@ -44,7 +44,7 @@ export enum StakingItemType {
   ERC1155 = "4",
 }
 
-export interface IStakingDeposit {
+export interface IStakingDepositEvent {
   stakingId: string;
   ruleId: string;
   owner: string;
@@ -52,20 +52,24 @@ export interface IStakingDeposit {
   tokenId: string;
 }
 
-export interface IStakingWithdraw {
+export interface IStakingWithdrawEvent {
   stakingId: string;
   owner: string;
   withdrawTimestamp: string;
 }
 
-export interface IStakingFinish {
+export interface IStakingFinishEvent {
   stakingId: string;
   owner: string;
   withdrawTimestamp: string;
   multiplier: string;
 }
 
-export type TStakingEventData = IStakingCreate | IStakingUpdate | IStakingDeposit | IStakingWithdraw;
+export type TStakingEventData =
+  | IStakingCreateEvent
+  | IStakingUpdateEvent
+  | IStakingDepositEvent
+  | IStakingWithdrawEvent;
 
 export interface IStakingHistory extends IIdDateBase {
   address: string;

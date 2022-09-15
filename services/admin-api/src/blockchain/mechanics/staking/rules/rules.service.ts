@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingRuleSearchDto, StakingStatus } from "@framework/types";
+import { IStakingRuleSearchDto, StakingRuleStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./rules.entity";
 import { IStakingCreateDto, IStakingUpdateDto } from "./interfaces";
@@ -17,7 +17,7 @@ export class StakingRulesService {
   ) {}
 
   public search(dto: IStakingRuleSearchDto): Promise<[Array<StakingRulesEntity>, number]> {
-    const { query, deposit, reward, stakingStatus, skip, take } = dto;
+    const { query, deposit, reward, stakingRuleStatus, skip, take } = dto;
 
     const queryBuilder = this.stakingRuleEntityRepository.createQueryBuilder("rule");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
@@ -46,11 +46,13 @@ export class StakingRulesService {
       );
     }
 
-    if (stakingStatus) {
-      if (stakingStatus.length === 1) {
-        queryBuilder.andWhere("rule.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
+    if (stakingRuleStatus) {
+      if (stakingRuleStatus.length === 1) {
+        queryBuilder.andWhere("rule.stakingRuleStatus = :stakingRuleStatus", {
+          stakingRuleStatus: stakingRuleStatus[0],
+        });
       } else {
-        queryBuilder.andWhere("rule.stakingStatus IN(:...stakingStatus)", { stakingStatus });
+        queryBuilder.andWhere("rule.stakingRuleStatus IN(:...stakingRuleStatus)", { stakingRuleStatus });
       }
     }
 
@@ -157,10 +159,10 @@ export class StakingRulesService {
       return;
     }
 
-    if (stakingEntity.stakingStatus === StakingStatus.NEW) {
+    if (stakingEntity.stakingRuleStatus === StakingRuleStatus.NEW) {
       await stakingEntity.remove();
     } else {
-      Object.assign(stakingEntity, { stakingStatus: StakingStatus.INACTIVE });
+      Object.assign(stakingEntity, { stakingRuleStatus: StakingRuleStatus.INACTIVE });
       await stakingEntity.save();
     }
   }

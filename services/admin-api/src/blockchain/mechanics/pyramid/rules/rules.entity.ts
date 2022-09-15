@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IPyramidRule, PyramidStakingStatus } from "@framework/types";
+import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { PyramidStakesEntity } from "../stakes/stakes.entity";
+import { PyramidDepositEntity } from "../deposit/deposit.entity";
 import { AssetEntity } from "../../asset/asset.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
@@ -45,13 +45,13 @@ export class PyramidRulesEntity extends SearchableEntity implements IPyramidRule
 
   @Column({
     type: "enum",
-    enum: PyramidStakingStatus,
+    enum: PyramidRuleStatus,
   })
-  public stakingStatus: PyramidStakingStatus;
+  public pyramidRuleStatus: PyramidRuleStatus;
 
   @Column({ type: "numeric" })
   public externalId: string;
 
-  @OneToMany(_type => PyramidStakesEntity, stake => stake.pyramidRule)
-  public stakes: Array<PyramidStakesEntity>;
+  @OneToMany(_type => PyramidDepositEntity, pyramid => pyramid.pyramidRule)
+  public stakes: Array<PyramidDepositEntity>;
 }

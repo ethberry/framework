@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 
 import { StakingLeaderboardService } from "./leaderboard.service";
 import { StakingLeaderboardController } from "./leaderboard.controller";
-import { StakingStakesModule } from "../stakes/stakes.module";
+import { StakingDepositModule } from "../deposit/deposit.module";
 
 @Module({
-  imports: [StakingStakesModule],
+  imports: [StakingDepositModule],
   providers: [StakingLeaderboardService],
   controllers: [StakingLeaderboardController],
   exports: [StakingLeaderboardService],

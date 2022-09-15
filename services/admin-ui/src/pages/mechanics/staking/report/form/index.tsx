@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import type { IStakingReportSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, StakeStatus, TokenType } from "@framework/types";
+import { ContractStatus, ModuleType, StakingDepositStatus, TokenType } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
@@ -20,8 +20,8 @@ export const StakingReportSearchForm: FC<IStakingReportSearchFormProps> = props 
 
   const { formatMessage } = useIntl();
 
-  const { query, stakeStatus, account, deposit, reward, startTimestamp, endTimestamp } = initialValues;
-  const fixedValues = { query, stakeStatus, account, deposit, reward, startTimestamp, endTimestamp };
+  const { query, stakingDepositStatus, account, deposit, reward, startTimestamp, endTimestamp } = initialValues;
+  const fixedValues = { query, stakingDepositStatus, account, deposit, reward, startTimestamp, endTimestamp };
 
   return (
     <FormWrapper
@@ -39,7 +39,7 @@ export const StakingReportSearchForm: FC<IStakingReportSearchFormProps> = props 
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={6}>
-            <SelectInput name="stakeStatus" options={StakeStatus} multiple />
+            <SelectInput name="stakingDepositStatus" options={StakingDepositStatus} multiple />
           </Grid>
           <Grid item xs={6}>
             <TextInput name="account" />

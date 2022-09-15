@@ -134,12 +134,12 @@
       "PREDICATE_ROLE": "PREDICATE_ROLE",
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
     },
-    "stakeStatus": {
+    "stakingDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
-    "stakingStatus": {
+    "stakingRuleStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -292,8 +292,8 @@
       "roundIds": "Round",
       "royalty": "Royalty",
       "slug": "Slug",
-      "stakeStatus": "Status",
-      "stakingStatus": "Status",
+      "stakingDepositStatus": "Status",
+      "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
       "templateId": "Template",
@@ -355,7 +355,7 @@
       "royalty": "1",
       "search": "Search...",
       "slug": "terms-and-conditions",
-      "stakingStatus": "Status",
+      "stakingRuleStatus": "Status",
       "symbol": "XXX",
       "templateId": "Template",
       "templateIds": "Template",
@@ -589,7 +589,7 @@
         "title": "Pyramid rules",
         "upload": "Upload rule"
       },
-      "title": "Pyramid Rules"
+      "title": "Pyramid"
     },
     "settings": {
       "title": "Settings"

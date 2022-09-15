@@ -5,7 +5,7 @@ import { Check, Close, CloudUpload } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { IPyramidRule, PyramidStakingStatus, TokenType } from "@framework/types";
+import { IPyramidRule, PyramidRuleStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
@@ -19,7 +19,7 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaLoadRule = useMetamask((rule: IPyramidRule, web3Context: Web3ContextType) => {
-    if (rule.stakingStatus !== PyramidStakingStatus.NEW) {
+    if (rule.pyramidRuleStatus !== PyramidRuleStatus.NEW) {
       return Promise.reject(new Error(""));
     }
 
@@ -55,11 +55,11 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
 
   const metaToggleRule = useMetamask((rule: IPyramidRule, web3Context: Web3ContextType) => {
     let ruleStatus: boolean;
-    if (rule.stakingStatus === PyramidStakingStatus.NEW) {
+    if (rule.pyramidRuleStatus === PyramidRuleStatus.NEW) {
       // this should never happen
       return Promise.reject(new Error(":)"));
     } else {
-      ruleStatus = rule.stakingStatus !== PyramidStakingStatus.ACTIVE;
+      ruleStatus = rule.pyramidRuleStatus !== PyramidRuleStatus.ACTIVE;
     }
 
     const contract = new Contract(rule.contract.address, PyramidSol.abi, web3Context.provider?.getSigner());
@@ -72,7 +72,7 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
     };
   };
 
-  if (rule.stakingStatus === PyramidStakingStatus.NEW) {
+  if (rule.pyramidRuleStatus === PyramidRuleStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
         <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
@@ -86,13 +86,13 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
     <Tooltip
       title={formatMessage({
         id:
-          rule.stakingStatus === PyramidStakingStatus.ACTIVE
+          rule.pyramidRuleStatus === PyramidRuleStatus.ACTIVE
             ? "pages.staking.rules.deactivate"
             : "pages.staking.rules.activate",
       })}
     >
       <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">
-        {rule.stakingStatus === PyramidStakingStatus.ACTIVE ? <Close /> : <Check />}
+        {rule.pyramidRuleStatus === PyramidRuleStatus.ACTIVE ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

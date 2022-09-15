@@ -4,7 +4,7 @@ import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
 import type { IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
-import { StakingStatus, TokenType } from "@framework/types";
+import { StakingRuleStatus, TokenType } from "@framework/types";
 
 export class StakingRuleItemSearchDto implements IStakingRuleItemSearchDto {
   @ApiPropertyOptional({
@@ -40,5 +40,5 @@ export class StakingRuleSearchDto extends SearchDto implements IStakingRuleSearc
   @Type(() => StakingRuleItemSearchDto)
   public reward: StakingRuleItemSearchDto;
 
-  public stakingStatus: Array<StakingStatus>;
+  public stakingRuleStatus: Array<StakingRuleStatus>;
 }

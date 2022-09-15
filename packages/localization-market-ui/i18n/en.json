@@ -75,12 +75,12 @@
       "createdAt": "Date",
       "price": "Price"
     },
-    "stakeStatus": {
+    "stakingDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
-    "stakingStatus": {
+    "stakingRuleStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -197,8 +197,8 @@
       "roundIds": "Round",
       "score": "Score",
       "sort": "Sort by",
-      "stakeStatus": "Status",
-      "stakingStatus": "Status",
+      "stakingDepositStatus": "Status",
+      "stakingRuleStatus": "Status",
       "startDate": "Start date",
       "startTimestamp": "Start date",
       "status": "Status",

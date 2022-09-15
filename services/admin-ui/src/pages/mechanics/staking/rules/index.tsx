@@ -18,7 +18,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
-import { IStakingRuleItemSearchDto, StakingStatus, TokenType } from "@framework/types";
+import { IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
 import { StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
@@ -64,7 +64,7 @@ export const StakingRules: FC = () => {
     }),
     search: {
       query: "",
-      stakingStatus: [StakingStatus.ACTIVE, StakingStatus.NEW],
+      stakingRuleStatus: [StakingRuleStatus.ACTIVE, StakingRuleStatus.NEW],
       deposit: {
         tokenType: [] as Array<TokenType>,
       } as IStakingRuleItemSearchDto,
@@ -103,7 +103,7 @@ export const StakingRules: FC = () => {
                 <IconButton onClick={handleEdit(rule)}>
                   <Create />
                 </IconButton>
-                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingStatus !== StakingStatus.NEW}>
+                <IconButton onClick={handleDelete(rule)} disabled={rule.stakingRuleStatus !== StakingRuleStatus.NEW}>
                   <Delete />
                 </IconButton>
               </ListItemSecondaryAction>
@@ -132,7 +132,7 @@ export const StakingRules: FC = () => {
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
         initialValues={selected}
-        readOnly={selected.stakingStatus === StakingStatus.ACTIVE}
+        readOnly={selected.stakingRuleStatus === StakingRuleStatus.ACTIVE}
       />
     </Grid>
   );

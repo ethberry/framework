@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
-import { IStakingStake } from "@framework/types";
+import { IStakingDeposit } from "@framework/types";
 
 import { formatPrice } from "../../../../../utils/money";
 
@@ -12,7 +12,7 @@ export interface IStakesViewDialogProps {
   open: boolean;
   onCancel: () => void;
   onConfirm: () => void;
-  initialValues: IStakingStake;
+  initialValues: IStakingDeposit;
 }
 
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {

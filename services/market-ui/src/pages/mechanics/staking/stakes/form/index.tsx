@@ -4,22 +4,22 @@ import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SearchInput, SelectInput } from "@gemunion/mui-inputs-core";
-import type { IStakingStakesSearchDto } from "@framework/types";
-import { StakeStatus, TokenType } from "@framework/types";
+import type { IStakingDepositSearchDto } from "@framework/types";
+import { StakingDepositStatus, TokenType } from "@framework/types";
 
-interface IStakingStakesSearchFormProps {
-  onSubmit: (values: IStakingStakesSearchDto) => Promise<void>;
-  initialValues: IStakingStakesSearchDto;
+interface IStakingDepositSearchFormProps {
+  onSubmit: (values: IStakingDepositSearchDto) => Promise<void>;
+  initialValues: IStakingDepositSearchDto;
   open: boolean;
 }
 
-export const StakingStakesSearchForm: FC<IStakingStakesSearchFormProps> = props => {
+export const StakingDepositSearchForm: FC<IStakingDepositSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const { formatMessage } = useIntl();
 
-  const { query, stakeStatus, deposit, reward } = initialValues;
-  const fixedValues = { query, stakeStatus, deposit, reward };
+  const { query, stakingDepositStatus, deposit, reward } = initialValues;
+  const fixedValues = { query, stakingDepositStatus, deposit, reward };
 
   return (
     <FormWrapper
@@ -27,7 +27,7 @@ export const StakingStakesSearchForm: FC<IStakingStakesSearchFormProps> = props 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      testId="StakingStakesSearchForm"
+      testId="StakingDepositSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -37,7 +37,7 @@ export const StakingStakesSearchForm: FC<IStakingStakesSearchFormProps> = props 
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
           <Grid item xs={12}>
-            <SelectInput name="stakeStatus" options={StakeStatus} multiple />
+            <SelectInput name="stakingDepositStatus" options={StakingDepositStatus} multiple />
           </Grid>
           <Grid item xs={6}>
             <SelectInput

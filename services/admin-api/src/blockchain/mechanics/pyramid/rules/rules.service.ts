@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IPyramidRuleSearchDto, PyramidStakingStatus } from "@framework/types";
+import { IPyramidRuleSearchDto, PyramidRuleStatus } from "@framework/types";
 
 import { PyramidRulesEntity } from "./rules.entity";
 import { IPyramidCreateDto, IPyramidUpdateDto } from "./interfaces";
@@ -17,7 +17,7 @@ export class PyramidRulesService {
   ) {}
 
   public search(dto: IPyramidRuleSearchDto): Promise<[Array<PyramidRulesEntity>, number]> {
-    const { query, deposit, reward, stakingStatus, skip, take } = dto;
+    const { query, deposit, reward, pyramidRuleStatus, skip, take } = dto;
 
     const queryBuilder = this.pyramidRuleEntityRepository.createQueryBuilder("rule");
     queryBuilder.leftJoinAndSelect("rule.contract", "contract");
@@ -47,11 +47,13 @@ export class PyramidRulesService {
       );
     }
 
-    if (stakingStatus) {
-      if (stakingStatus.length === 1) {
-        queryBuilder.andWhere("rule.stakingStatus = :stakingStatus", { stakingStatus: stakingStatus[0] });
+    if (pyramidRuleStatus) {
+      if (pyramidRuleStatus.length === 1) {
+        queryBuilder.andWhere("rule.pyramidRuleStatus = :pyramidRuleStatus", {
+          pyramidRuleStatus: pyramidRuleStatus[0],
+        });
       } else {
-        queryBuilder.andWhere("rule.stakingStatus IN(:...stakingStatus)", { stakingStatus });
+        queryBuilder.andWhere("rule.pyramidRuleStatus IN(:...pyramidRuleStatus)", { pyramidRuleStatus });
       }
     }
 
@@ -158,10 +160,10 @@ export class PyramidRulesService {
       return;
     }
 
-    if (pyramidEntity.stakingStatus === PyramidStakingStatus.NEW) {
+    if (pyramidEntity.pyramidRuleStatus === PyramidRuleStatus.NEW) {
       await pyramidEntity.remove();
     } else {
-      Object.assign(pyramidEntity, { stakingStatus: PyramidStakingStatus.INACTIVE });
+      Object.assign(pyramidEntity, { pyramidRuleStatus: PyramidRuleStatus.INACTIVE });
       await pyramidEntity.save();
     }
   }

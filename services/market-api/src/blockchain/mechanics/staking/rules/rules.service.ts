@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { IStakingRuleSearchDto, StakingStatus } from "@framework/types";
+import { IStakingRuleSearchDto, StakingRuleStatus } from "@framework/types";
 
 import { StakingRulesEntity } from "./rules.entity";
 
@@ -44,7 +44,9 @@ export class StakingRulesService {
       );
     }
 
-    queryBuilder.andWhere("rule.stakingStatus = :stakingStatus", { stakingStatus: StakingStatus.ACTIVE });
+    queryBuilder.andWhere("rule.stakingRuleStatus = :stakingRuleStatus", {
+      stakingRuleStatus: StakingRuleStatus.ACTIVE,
+    });
 
     if (deposit && deposit.tokenType) {
       if (deposit.tokenType.length === 1) {

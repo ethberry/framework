@@ -6,25 +6,18 @@ import archiver from "archiver";
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { PyramidReportService } from "./report.service";
-import { PyramidStakesEntity } from "../stakes/stakes.entity";
+import { PyramidDepositEntity } from "../deposit/deposit.entity";
 import { PyramidReportSearchDto } from "./dto";
-import { PyramidChartSearchDto } from "./dto/chart";
 
 @ApiBearerAuth()
 @Controller("/pyramid/report")
-export class PyramidStakesController {
+export class PyramidDepositController {
   constructor(private readonly pyramidReportService: PyramidReportService) {}
 
-  @Get("/search")
+  @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PyramidReportSearchDto): Promise<[Array<PyramidStakesEntity>, number]> {
+  public search(@Query() dto: PyramidReportSearchDto): Promise<[Array<PyramidDepositEntity>, number]> {
     return this.pyramidReportService.search(dto);
-  }
-
-  @Get("/chart")
-  @UseInterceptors(PaginationInterceptor)
-  public chart(@Query() dto: PyramidChartSearchDto): Promise<any> {
-    return this.pyramidReportService.chart(dto);
   }
 
   @Get("/export")

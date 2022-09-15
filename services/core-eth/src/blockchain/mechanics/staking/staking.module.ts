@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 
 import { StakingRulesModule } from "./rules/rules.module";
-import { StakingStakesModule } from "./stakes/stakes.module";
+import { StakingDepositModule } from "./deposit/deposit.module";
 
 @Module({
-  imports: [StakingRulesModule, StakingStakesModule],
+  imports: [StakingRulesModule, StakingDepositModule],
 })
 export class StakingModule {}

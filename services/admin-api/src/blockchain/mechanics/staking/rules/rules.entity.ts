@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IStakingRule, StakingStatus } from "@framework/types";
+import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { StakingStakesEntity } from "../stakes/stakes.entity";
+import { StakingDepositEntity } from "../deposit/deposit.entity";
 import { AssetEntity } from "../../asset/asset.entity";
 
 @Entity({ schema: ns, name: "staking_rules" })
@@ -37,13 +37,13 @@ export class StakingRulesEntity extends SearchableEntity implements IStakingRule
 
   @Column({
     type: "enum",
-    enum: StakingStatus,
+    enum: StakingRuleStatus,
   })
-  public stakingStatus: StakingStatus;
+  public stakingRuleStatus: StakingRuleStatus;
 
   @Column({ type: "numeric" })
   public externalId: string;
 
-  @OneToMany(_type => StakingStakesEntity, stake => stake.stakingRule)
-  public stakes: Array<StakingStakesEntity>;
+  @OneToMany(_type => StakingDepositEntity, stake => stake.stakingRule)
+  public stakes: Array<StakingDepositEntity>;
 }

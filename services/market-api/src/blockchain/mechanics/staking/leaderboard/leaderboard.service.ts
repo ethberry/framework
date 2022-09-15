@@ -2,13 +2,13 @@ import { Injectable } from "@nestjs/common";
 
 import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
 
-import { StakingStakesService } from "../stakes/stakes.service";
+import { StakingDepositService } from "../deposit/deposit.service";
 
 @Injectable()
 export class StakingLeaderboardService {
-  constructor(private readonly stakingStakesService: StakingStakesService) {}
+  constructor(private readonly stakingDepositService: StakingDepositService) {}
 
   public async leaderboard(dto: IStakingLeaderboardSearchDto): Promise<[Array<IStakingLeaderboard>, number]> {
-    return this.stakingStakesService.leaderboard(dto);
+    return this.stakingDepositService.leaderboard(dto);
   }
 }

@@ -25,7 +25,7 @@ import { AccessControlEntity } from "./blockchain/access-control/access-control.
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { ClaimEntity } from "./blockchain/mechanics/claim/claim.entity";
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
-import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
+import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { CraftEntity } from "./blockchain/mechanics/craft/craft.entity";
 import { PageEntity } from "./page/page.entity";
@@ -139,11 +139,11 @@ import { SeedStakingRulesErc20At1654751224220 } from "./migrations/1654751224220
 import { SeedStakingRulesErc998At1654751224240 } from "./migrations/1654751224240-seed-staking-rules-erc998";
 import { SeedStakingRulesErc1155At1654751224250 } from "./migrations/1654751224250-seed-staking-rules-erc1155";
 import { SeedStakingRulesMysteryboxAt1654751224260 } from "./migrations/1654751224260-seed-staking-rules-mysterybox";
-import { CreateStakes1654751224300 } from "./migrations/1654751224300-create-stakes";
-import { SeedStakesNativeAt1654751224310 } from "./migrations/1654751224310-seed-stakes-native";
-import { SeedStakesErc20At1654751224320 } from "./migrations/1654751224320-seed-stakes-erc20";
-import { SeedStakesErc998At1654751224340 } from "./migrations/1654751224340-seed-stakes-erc998";
-import { CreateStakingHistory1654751224400 } from "./migrations/1654751224400-create-staking-history";
+import { CreateStakingDeposit1654751224300 } from "./migrations/1654751224300-create-staking-deposit";
+import { SeedStakingDepositNativeAt1654751224310 } from "./migrations/1654751224310-seed-staking-deposit-native";
+import { SeedStakingDepositErc20At1654751224320 } from "./migrations/1654751224320-seed-staking-deposit-erc20";
+import { SeedStakingDepositErc998At1654751224340 } from "./migrations/1654751224340-seed-staking-deposit-erc998";
+import { CreateStakingDepositHistory1654751224400 } from "./migrations/1654751224400-create-staking-deposit-history";
 
 import { CreatePage1655626535100 } from "./migrations/1655626535100-create-page";
 import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
@@ -177,16 +177,18 @@ import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-se
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
 
 import { SeedContractStakingAt1660436477100 } from "./migrations/1660436477100-seed-contract-pyramid";
-import { CreatePyramidRules1660436477100 } from "./migrations/1660436477100-create-pyramid-rules";
-import { SeedPyramidRulesNativeAt1660436477110 } from "./migrations/1660436477110-seed-pyramid-rules-native";
-import { SeedPyramidRulesErc20At1660436477120 } from "./migrations/1660436477120-seed-pyramid-rules-erc20";
+import { CreatePyramidRules1660436477200 } from "./migrations/1660436477200-create-pyramid-rules";
+import { SeedPyramidRulesNativeAt1660436477210 } from "./migrations/1660436477210-seed-pyramid-rules-native";
+import { SeedPyramidRulesErc20At1660436477220 } from "./migrations/1660436477220-seed-pyramid-rules-erc20";
 
-import { CreatePyramidStakes1660436477200 } from "./migrations/1660436477200-create-pyramid-stakes";
-import { CreatePyramidStakingHistory1660436477250 } from "./migrations/1660436477250-create-pyramid-staking-history";
+import { CreatePyramidDeposit1660436477300 } from "./migrations/1660436477300-create-pyramid-deposit";
+import { CreatePyramidDepositHistory1660436477400 } from "./migrations/1660436477400-create-pyramid-deposit-history";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
-import { PyramidStakesEntity } from "./blockchain/mechanics/pyramid/stakes/stakes.entity";
+import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 
 import { CreateWhitelistTable1663047650500 } from "./migrations/1663047650500-create-whitelist";
+import { SeedPyramidDepositNativeAt1660436477310 } from "./migrations/1660436477310-seed-pyramid-deposit-native";
+import { SeedPyramidDepositErc20At1660436477320 } from "./migrations/1660436477320-seed-pyramid-deposit-erc20";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -203,7 +205,7 @@ const config: PostgresConnectionOptions = {
     ContractEntity,
     TemplateEntity,
     StakingRulesEntity,
-    StakingStakesEntity,
+    StakingDepositEntity,
     PageEntity,
     AssetEntity,
     AssetComponentEntity,
@@ -222,7 +224,7 @@ const config: PostgresConnectionOptions = {
     LotteryTicketEntity,
     ExchangeHistoryEntity,
     PyramidRulesEntity,
-    PyramidStakesEntity,
+    PyramidDepositEntity,
     WhitelistEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
@@ -345,11 +347,11 @@ const config: PostgresConnectionOptions = {
     SeedStakingRulesErc998At1654751224240,
     SeedStakingRulesErc1155At1654751224250,
     SeedStakingRulesMysteryboxAt1654751224260,
-    CreateStakes1654751224300,
-    SeedStakesNativeAt1654751224310,
-    SeedStakesErc20At1654751224320,
-    SeedStakesErc998At1654751224340,
-    CreateStakingHistory1654751224400,
+    CreateStakingDeposit1654751224300,
+    SeedStakingDepositNativeAt1654751224310,
+    SeedStakingDepositErc20At1654751224320,
+    SeedStakingDepositErc998At1654751224340,
+    CreateStakingDepositHistory1654751224400,
 
     CreatePage1655626535100,
     SeedPages1655626535110,
@@ -385,11 +387,13 @@ const config: PostgresConnectionOptions = {
     CreateWhitelistTable1663047650500,
 
     SeedContractStakingAt1660436477100,
-    CreatePyramidRules1660436477100,
-    SeedPyramidRulesNativeAt1660436477110,
-    SeedPyramidRulesErc20At1660436477120,
-    CreatePyramidStakes1660436477200,
-    CreatePyramidStakingHistory1660436477250,
+    CreatePyramidRules1660436477200,
+    SeedPyramidRulesNativeAt1660436477210,
+    SeedPyramidRulesErc20At1660436477220,
+    CreatePyramidDeposit1660436477300,
+    SeedPyramidDepositNativeAt1660436477310,
+    SeedPyramidDepositErc20At1660436477320,
+    CreatePyramidDepositHistory1660436477400,
   ],
 };
 

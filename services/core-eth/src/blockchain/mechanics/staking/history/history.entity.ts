@@ -4,7 +4,7 @@ import { IStakingHistory, StakingEventType, TStakingEventData } from "@framework
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-@Entity({ schema: ns, name: "staking_history" })
+@Entity({ schema: ns, name: "staking_deposit_history" })
 export class StakingHistoryEntity extends IdDateBaseEntity implements IStakingHistory {
   @Column({ type: "varchar" })
   public address: string;

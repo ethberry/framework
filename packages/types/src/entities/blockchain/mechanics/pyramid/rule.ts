@@ -3,7 +3,7 @@ import type { ISearchable } from "@gemunion/types-collection";
 import { IAsset } from "../asset";
 import { IContract } from "../../hierarchy/contract";
 
-export enum PyramidStakingStatus {
+export enum PyramidRuleStatus {
   NEW = "NEW",
   ACTIVE = "ACTIVE",
   INACTIVE = "INACTIVE",
@@ -19,6 +19,6 @@ export interface IPyramidRule extends ISearchable {
   duration: number;
   penalty: number;
   recurrent: boolean;
-  stakingStatus: PyramidStakingStatus;
+  pyramidRuleStatus: PyramidRuleStatus;
   externalId: string;
 }

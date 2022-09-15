@@ -6,7 +6,7 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { IMysterybox, IStakingRule, StakingStatus, TokenType } from "@framework/types";
+import { IMysterybox, IStakingRule, StakingRuleStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
@@ -20,7 +20,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaLoadRule = useMetamask((rule: IStakingRule, mysteryBox: IMysterybox, web3Context: Web3ContextType) => {
-    if (rule.stakingStatus !== StakingStatus.NEW) {
+    if (rule.stakingRuleStatus !== StakingRuleStatus.NEW) {
       return Promise.reject(new Error(""));
     }
 
@@ -81,11 +81,11 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
 
   const metaToggleRule = useMetamask((rule: IStakingRule, web3Context: Web3ContextType) => {
     let ruleStatus: boolean;
-    if (rule.stakingStatus === StakingStatus.NEW) {
+    if (rule.stakingRuleStatus === StakingRuleStatus.NEW) {
       // this should never happen
       return Promise.reject(new Error(":)"));
     } else {
-      ruleStatus = rule.stakingStatus !== StakingStatus.ACTIVE;
+      ruleStatus = rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE;
     }
 
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
@@ -98,7 +98,7 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     };
   };
 
-  if (rule.stakingStatus === StakingStatus.NEW) {
+  if (rule.stakingRuleStatus === StakingRuleStatus.NEW) {
     return (
       <Tooltip title={formatMessage({ id: "pages.staking.rules.upload" })}>
         <IconButton onClick={handleLoadRule(rule)} data-testid="StakeRuleUploadButton">
@@ -112,13 +112,13 @@ export const StakingUploadButton: FC<IStakingUploadButtonProps> = props => {
     <Tooltip
       title={formatMessage({
         id:
-          rule.stakingStatus === StakingStatus.ACTIVE
+          rule.stakingRuleStatus === StakingRuleStatus.ACTIVE
             ? "pages.staking.rules.deactivate"
             : "pages.staking.rules.activate",
       })}
     >
       <IconButton onClick={handleToggleRule(rule)} data-testid="StakeRuleToggleButton">
-        {rule.stakingStatus === StakingStatus.ACTIVE ? <Close /> : <Check />}
+        {rule.stakingRuleStatus === StakingRuleStatus.ACTIVE ? <Close /> : <Check />}
       </IconButton>
     </Tooltip>
   );

@@ -17,7 +17,7 @@ export const StakingChart: FC = () => {
     IToken,
     IStakingChartSearchDto
   >({
-    baseUrl: "/staking/report/chart",
+    baseUrl: "/staking/chart",
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
