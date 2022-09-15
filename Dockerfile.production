@@ -26,4 +26,3 @@ COPY --chown=node:node . .
 RUN npm i --only=production
 
 RUN npm run bootstrap
-RUN npm run build
