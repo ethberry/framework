@@ -175,8 +175,12 @@ import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed
 import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
+
+import { SeedContractStakingAt1660436477100 } from "./migrations/1660436477100-seed-contract-pyramid";
 import { CreatePyramidRules1660436477100 } from "./migrations/1660436477100-create-pyramid-rules";
-import { SeedPyramidRules1660436477150 } from "./migrations/1660436477150-seed-pyramid-rules";
+import { SeedPyramidRulesNativeAt1660436477110 } from "./migrations/1660436477110-seed-pyramid-rules-native";
+import { SeedPyramidRulesErc20At1660436477120 } from "./migrations/1660436477120-seed-pyramid-rules-erc20";
+
 import { CreatePyramidStakes1660436477200 } from "./migrations/1660436477200-create-pyramid-stakes";
 import { CreatePyramidStakingHistory1660436477250 } from "./migrations/1660436477250-create-pyramid-staking-history";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
@@ -380,8 +384,10 @@ const config: PostgresConnectionOptions = {
 
     CreateWhitelistTable1663047650500,
 
+    SeedContractStakingAt1660436477100,
     CreatePyramidRules1660436477100,
-    SeedPyramidRules1660436477150,
+    SeedPyramidRulesNativeAt1660436477110,
+    SeedPyramidRulesErc20At1660436477120,
     CreatePyramidStakes1660436477200,
     CreatePyramidStakingHistory1660436477250,
   ],

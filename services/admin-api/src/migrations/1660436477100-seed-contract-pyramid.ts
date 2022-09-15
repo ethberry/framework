@@ -3,7 +3,7 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { wallet } from "@gemunion/constants";
 import { ns } from "@framework/constants";
 
-export class SeedContractStakingAt1654751224100 implements MigrationInterface {
+export class SeedContractStakingAt1660436477100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const chainId = process.env.CHAIN_ID || 1337;
@@ -28,18 +28,18 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        3,
+        4,
         '${stakingAddr}',
         '${chainId}',
-        'STAKING',
+        'PYRAMID',
         '${JSON.stringify({})}',
         '',
-        'Staking',
+        'Pyramid',
         '',
         '',
         'ACTIVE',
         '{ALLOWANCE}',
-        'STAKING',
+        'PYRAMID',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
