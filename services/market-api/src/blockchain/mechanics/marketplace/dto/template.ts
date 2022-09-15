@@ -1,23 +1,17 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEthereumAddress, IsInt, IsOptional, IsString, Min } from "class-validator";
-import { Transform } from "class-transformer";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsInt, Min } from "class-validator";
+import { Mixin } from "ts-mixer";
 
 import { AccountDto } from "@gemunion/collection";
 
 import { ISignTemplateDto } from "../interfaces";
+import { ReferrerOptionalDto } from "../../../../common/validators/referrer";
 
-export class SignTemplateDto extends AccountDto implements ISignTemplateDto {
+export class SignTemplateDto extends Mixin(ReferrerOptionalDto, AccountDto) implements ISignTemplateDto {
   @ApiProperty({
     minimum: 1,
   })
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   public templateId: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString({ message: "typeMismatch" })
-  @IsEthereumAddress({ message: "patternMismatch" })
-  @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
-  public referrer: string;
 }
