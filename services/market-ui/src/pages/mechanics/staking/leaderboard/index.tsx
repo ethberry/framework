@@ -10,6 +10,7 @@ import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framewo
 import { StakingLeaderboardRank, TokenType } from "@framework/types";
 
 import { StakingLeaderboardSearchForm } from "./form";
+import { ScannerLink } from "../../../../components/common/scanner-link";
 
 export const StakingLeaderboard: FC = () => {
   const {
@@ -48,10 +49,10 @@ export const StakingLeaderboard: FC = () => {
       headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
       flex: 1,
-      renderCell: (cell: GridCellParams) => {
-        const row = cell.row as IStakingLeaderboard;
+      renderCell: (params: GridCellParams) => {
+        const row = params.row as IStakingLeaderboard;
         // @ts-ignore
-        const index: number = cell.api.getRowIndex(row.id);
+        const index: number = params.api.getRowIndex(row.id);
         return (
           <Grid container direction="row" alignItems="center">
             {row.rank === StakingLeaderboardRank.GOLD ? <Filter1 /> : null}
@@ -67,6 +68,11 @@ export const StakingLeaderboard: FC = () => {
       field: "account",
       headerName: formatMessage({ id: "form.labels.account" }),
       sortable: false,
+      renderCell: (params: GridCellParams) => {
+        return (
+          <ScannerLink address={params.value} />
+        );
+      },
       flex: 1
     },
     {
