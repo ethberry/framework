@@ -471,7 +471,7 @@
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
-        "whitelist": "Whitelist"
+        "waitlist": "Waitlist"
       },
       "title": "Dashboard"
     },
@@ -625,9 +625,9 @@
     "vesting": {
       "title": "Vesting"
     },
-    "whitelist": {
+    "waitlist": {
       "defaultItemTitle": "{account}",
-      "title": "Whitelist"
+      "title": "Waitlist"
     }
   },
   "snackbar": {

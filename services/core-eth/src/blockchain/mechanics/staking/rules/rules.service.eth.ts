@@ -35,7 +35,8 @@ export class StakingRulesServiceEth {
       args: { ruleId, externalId },
     } = event;
 
-    const stakingEntity = await this.stakingRulesService.findOne({ id: ~~externalId });
+    // const stakingEntity = await this.stakingRulesService.findOne({ id: ~~externalId });
+    const stakingEntity = await this.stakingRulesService.findOne({ externalId });
 
     if (!stakingEntity) {
       throw new NotFoundException("stakingRuleNotFound");

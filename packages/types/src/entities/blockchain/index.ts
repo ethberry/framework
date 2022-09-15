@@ -34,7 +34,7 @@ export * from "./mechanics/pyramid/rule";
 export * from "./mechanics/pyramid/deposit";
 export * from "./mechanics/vesting/vesting";
 export * from "./mechanics/vesting/history";
-export * from "./mechanics/whitelist/whitelist";
+export * from "./mechanics/waitlist/waitlist";
 
 export * from "./hierarchy/contract";
 export * from "./hierarchy/template";

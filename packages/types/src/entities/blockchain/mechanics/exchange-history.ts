@@ -8,6 +8,9 @@ export enum ExchangeEventType {
   Mysterybox = "Mysterybox",
   Purchase = "Purchase",
   Upgrade = "Upgrade",
+  // MODULE:WAITLIST
+  RewardSet = "RewardSet",
+  ClaimReward = "ClaimReward",
 }
 
 export type IExchangeItem = [number, string, string, string];
@@ -50,12 +53,27 @@ export interface IExchangeMysteryEvent {
   price: Array<IExchangeItem>;
 }
 
+export type IRewardItem = [number, string, string, string];
+
+export interface IRewardSetEvent {
+  externalId: string;
+  items: Array<IRewardItem>;
+}
+
+export interface IClaimRewardEvent {
+  from: string;
+  externalId: string;
+  items: Array<IRewardItem>;
+}
+
 export type TExchangeEventData =
   | IExchangePurchaseEvent
   | IExchangeClaimEvent
   | IExchangeCraftEvent
   | IExchangeGradeEvent
-  | IExchangeMysteryEvent;
+  | IExchangeMysteryEvent
+  | IRewardSetEvent
+  | IClaimRewardEvent;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;

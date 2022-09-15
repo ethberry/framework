@@ -14,7 +14,7 @@ export const AmountInput: FC<ITokenInputProps> = props => {
   const { prefix, name = "amount", readOnly } = props;
 
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
-  const decimals = useWatch({ name: `${prefix}.decimals` });
+  const decimals = useWatch({ name: `${prefix}.contract.decimals` });
 
   switch (tokenType) {
     case TokenType.NATIVE:

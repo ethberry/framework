@@ -36,7 +36,7 @@ import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
-import { WhitelistEntity } from "./blockchain/mechanics/whitelist/whitelist.entity";
+import { WaitlistEntity } from "./blockchain/mechanics/waitlist/waitlist.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -176,7 +176,7 @@ import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-c
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
 
-import { SeedContractStakingAt1660436477100 } from "./migrations/1660436477100-seed-contract-pyramid";
+import { SeedContractPyramidAt1660436477100 } from "./migrations/1660436477100-seed-contract-pyramid";
 import { CreatePyramidRules1660436477200 } from "./migrations/1660436477200-create-pyramid-rules";
 import { SeedPyramidRulesNativeAt1660436477210 } from "./migrations/1660436477210-seed-pyramid-rules-native";
 import { SeedPyramidRulesErc20At1660436477220 } from "./migrations/1660436477220-seed-pyramid-rules-erc20";
@@ -186,9 +186,10 @@ import { CreatePyramidDepositHistory1660436477400 } from "./migrations/166043647
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 
-import { CreateWhitelistTable1663047650500 } from "./migrations/1663047650500-create-whitelist";
+import { CreateWaitlistTable1663047650500 } from "./migrations/1663047650500-create-waitlist";
 import { SeedPyramidDepositNativeAt1660436477310 } from "./migrations/1660436477310-seed-pyramid-deposit-native";
 import { SeedPyramidDepositErc20At1660436477320 } from "./migrations/1660436477320-seed-pyramid-deposit-erc20";
+import { SeedContractWaitlistAt1660436477110 } from "./migrations/1660436477110-seed-contract-waitlist";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -225,7 +226,7 @@ const config: PostgresConnectionOptions = {
     ExchangeHistoryEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
-    WhitelistEntity,
+    WaitlistEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -384,9 +385,9 @@ const config: PostgresConnectionOptions = {
     SeedLotteryTicketsAt1660436477030,
     CreateLotteryHistoryAt1660436477040,
 
-    CreateWhitelistTable1663047650500,
+    CreateWaitlistTable1663047650500,
 
-    SeedContractStakingAt1660436477100,
+    SeedContractPyramidAt1660436477100,
     CreatePyramidRules1660436477200,
     SeedPyramidRulesNativeAt1660436477210,
     SeedPyramidRulesErc20At1660436477220,
@@ -394,6 +395,7 @@ const config: PostgresConnectionOptions = {
     SeedPyramidDepositNativeAt1660436477310,
     SeedPyramidDepositErc20At1660436477320,
     CreatePyramidDepositHistory1660436477400,
+    SeedContractWaitlistAt1660436477110,
   ],
 };
 

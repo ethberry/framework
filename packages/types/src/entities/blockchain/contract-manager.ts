@@ -14,6 +14,7 @@ export enum ContractType {
   METADATA = "METADATA",
   LOTTERY = "LOTTERY",
   PYRAMID = "PYRAMID",
+  WAITLIST = "WAITLIST",
 }
 
 export interface IContractManagerUpdateDto {

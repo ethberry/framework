@@ -10,12 +10,12 @@ export enum PyramidEventType {
   FinalizedToken = "FinalizedToken",
 }
 
-export interface IWithdrawToken {
+export interface IWithdrawTokenEvent {
   token: string;
   amount: string;
 }
 
-export interface IFinalizedToken {
+export interface IFinalizedTokenEvent {
   token: string;
   amount: string;
 }
@@ -79,7 +79,8 @@ export type TPyramidEventData =
   | IPyramidUpdateEvent
   | IPyramidDepositEvent
   | IPyramidWithdrawEvent
-  | IFinalizedToken;
+  | IFinalizedTokenEvent
+  | IWithdrawTokenEvent;
 
 export interface IPyramidHistory extends IIdDateBase {
   address: string;

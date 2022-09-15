@@ -5,11 +5,11 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
-  IFinalizedToken,
+  IFinalizedTokenEvent,
   IPyramidDepositEvent,
   IPyramidFinishEvent,
   IPyramidWithdrawEvent,
-  IWithdrawToken,
+  IWithdrawTokenEvent,
   PyramidEventType,
 } from "@framework/types";
 
@@ -45,7 +45,7 @@ export class PyramidDepositControllerEth {
     },
   ])
   public finishToken(
-    @Payload() event: ILogEvent<IWithdrawToken | IFinalizedToken>,
+    @Payload() event: ILogEvent<IFinalizedTokenEvent | IWithdrawTokenEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.pyramidServiceEth.finishToken(event, context);

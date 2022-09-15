@@ -23,7 +23,7 @@ import { CoinGecko } from "./integrations/coin-gecko";
 import { CoinMarketCap } from "./integrations/coin-market-cap";
 import { Marketplace } from "./integrations/marketplace";
 import { Pyramid } from "./mechanics/pyramid";
-import { Whitelist } from "./mechanics/whitelist";
+import { Waitlist } from "./mechanics/waitlist";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -43,7 +43,7 @@ export const Dashboard: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <Vesting />
-          <Whitelist />
+          <Waitlist />
           <Claim />
           <Drop />
           <Craft />

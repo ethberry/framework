@@ -21,6 +21,7 @@ export const emptyItem = {
       contractId: 3,
       contract: {
         decimals: 0,
+        address: "0x",
       },
       templateId: 0,
       amount: "0",

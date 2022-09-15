@@ -3,7 +3,7 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  IFinalizedToken,
+  IFinalizedTokenEvent,
   IPyramidDepositEvent,
   IPyramidFinishEvent,
   IPyramidWithdrawEvent,
@@ -110,7 +110,7 @@ export class PyramidDepositServiceEth {
     await stakeEntity.save();
   }
 
-  public async finishToken(event: ILogEvent<IPyramidFinishEvent | IFinalizedToken>, context: Log): Promise<void> {
+  public async finishToken(event: ILogEvent<IPyramidFinishEvent | IFinalizedTokenEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     // TODO cancel all stakes (or all TOKEN depost\reward stakes)
   }

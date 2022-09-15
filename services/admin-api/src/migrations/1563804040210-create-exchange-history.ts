@@ -16,6 +16,10 @@ export class CreateExchangeHistory1563804040210 implements MigrationInterface {
       );`,
     );
 
+    // MODULE:WAITLIST
+    await queryRunner.query(`ALTER TYPE ${ns}.exchange_event_enum ADD VALUE 'RewardSet';`);
+    await queryRunner.query(`ALTER TYPE ${ns}.exchange_event_enum ADD VALUE 'ClaimReward';`);
+
     const table = new Table({
       name: `${ns}.exchange_history`,
       columns: [
