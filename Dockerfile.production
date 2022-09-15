@@ -25,7 +25,8 @@ COPY --chown=node:node . .
 
 RUN npm i --only=production
 
-RUN npm run build -- --scope @framework/constants \
+RUN npm run bootstrap \
+&& npm run build -- --scope @framework/constants \
 && npm run build -- --scope @framework/types \
 && npm run build -- --scope @framework/nest-js-module-exchange-signer  \
 && npm run build -- --scope @framework/genes \
