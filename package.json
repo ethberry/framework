@@ -42,9 +42,8 @@
     "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
-    "bootstrap": "npm run bootstrap:ignore && npm run build",
-    "bootstrap:ignore": "lerna bootstrap --concurrency 1 --hoist --ignore-scripts",
-    "build": "lerna run build --concurrency 1",
+    "bootstrap": "lerna bootstrap --concurrency 1 --hoist --ignore-scripts",
+    "build": "lerna run build --stream",
     "clean": "sh scripts/clean.sh",
     "docker:build": "docker compose build",
     "docker:up": "docker compose up -d",
