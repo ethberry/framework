@@ -25,8 +25,7 @@ COPY --chown=node:node . .
 
 RUN npm i --only=production
 
-RUN npm run build -- --scope @framework/core-contracts \
-&& npm run build -- --scope @framework/constants \
+RUN npm run build -- --scope @framework/constants \
 && npm run build -- --scope @framework/types \
 && npm run build -- --scope @framework/nest-js-module-exchange-signer  \
 && npm run build -- --scope @framework/genes \
@@ -35,6 +34,7 @@ RUN npm run build -- --scope @framework/core-contracts \
 && npm run build -- --scope @framework/game \
 && npm run build -- --scope @framework/localization-admin-ui \
 && npm run build -- --scope @framework/localization-market-ui \
+&& npm run build -- --scope @framework/core-contracts \
 && npm run build -- --scope @framework/admin-api \
 && npm run build -- --scope @framework/core-eth \
 && npm run build -- --scope @framework/market-api \
