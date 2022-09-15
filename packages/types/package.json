@@ -7,7 +7,7 @@
   "dependencies": {
     "@gemunion/types-collection": "1.5.2",
     "@framework/constants": "0.0.1",
-    "ethers": "5.7.0"
+    "ethers": "5.7.1"
   },
   "devDependencies": {
     "rimraf": "3.0.2"
