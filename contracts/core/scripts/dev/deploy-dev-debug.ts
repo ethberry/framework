@@ -434,20 +434,20 @@ async function main() {
   */
   const waitlistFactory = await ethers.getContractFactory("Waitlist");
   contracts.waitlist = await waitlistFactory.deploy();
-  await blockAwait();
-
-  const proof = "0x0d8c4b1f3b24d4558a4957f19aec0e635de5990da009d2850fb69af9d3debeb4";
-  const items = [
-    {
-      tokenType: 2,
-      token: "0x5c41079f959127be3b74e4e5cdbc4b5114f2df91",
-      tokenId: 301002,
-      amount: "0",
-    },
-  ];
-
-  const tx = await contracts.waitlist.setReward(proof, items, 0);
-  console.log("tx", tx.hash);
+  // await blockAwait();
+  //
+  // const proof = "0x0d8c4b1f3b24d4558a4957f19aec0e635de5990da009d2850fb69af9d3debeb4";
+  // const items = [
+  //   {
+  //     tokenType: 2,
+  //     token: "0x5c41079f959127be3b74e4e5cdbc4b5114f2df91",
+  //     tokenId: 301002,
+  //     amount: "0",
+  //   },
+  // ];
+  //
+  // const tx = await contracts.waitlist.setReward(proof, items, 0);
+  // console.log("tx", tx.hash);
 }
 
 main()

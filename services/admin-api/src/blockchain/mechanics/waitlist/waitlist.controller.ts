@@ -40,6 +40,11 @@ export class WaitlistController {
     return this.waitlistService.generate();
   }
 
+  @Get("/proof")
+  public proof(): Promise<{ proof: string }> {
+    return this.waitlistService.proof();
+  }
+
   @Delete("/:id")
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {

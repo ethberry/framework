@@ -5,6 +5,7 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.9;
+import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
@@ -45,15 +46,24 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
   }
 
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
-    require(_roots[externalId] == 0, "Not yet started");
+    require(_roots[externalId] != "", "Not yet started");
 
     address account = _msgSender();
-
     require(proof.verify(_roots[externalId], keccak256(abi.encodePacked(account))), "You are not in the wait list");
 
-    acquire(_items[externalId], account);
+//    acquire(_items[externalId], account);
 
     emit ClaimReward(account, externalId, _items[externalId]);
+  }
+
+  function testkeccak(bytes32[] memory proof) public whenNotPaused {
+    address account = _msgSender();
+    bytes32 hash = keccak256(abi.encodePacked(account));
+    console.logBytes32(_roots[123]);
+    console.logBytes32(hash);
+    bool ver = proof.verify(_roots[123], keccak256(abi.encodePacked(account)));
+    console.log(ver);
+    //    require(proof == hash, "nope!!!");
   }
 
   function pause() public virtual onlyRole(PAUSER_ROLE) {

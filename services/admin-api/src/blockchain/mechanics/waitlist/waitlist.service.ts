@@ -61,12 +61,32 @@ export class WaitlistService {
   public async generate(): Promise<{ proof: string }> {
     const waitlistEntities = await this.waitlistEntityRepository.find({});
 
-    const leaves = waitlistEntities
-      .map(waitlistEntity => waitlistEntity.account)
-      .map(x => utils.keccak256(utils.toUtf8Bytes(x)));
+    const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).map(x => utils.keccak256(x));
 
     const merkleTree = new MerkleTree(leaves, utils.keccak256);
 
     return { proof: merkleTree.getHexRoot() };
+  }
+
+  public async proof(): Promise<{ proof: string }> {
+    const waitlistEntities = await this.waitlistEntityRepository.find({});
+    console.log("waitlistEntities[0]", waitlistEntities[0]);
+    const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).map(x => utils.keccak256(x));
+
+    const merkleTree = new MerkleTree(leaves, utils.keccak256);
+
+    // const prf = merkleTree.getProof(leaves[0]);
+    // console.log("prf", prf);
+    console.log("leaves", leaves);
+    // const root = merkleTree.getRoot();
+    // const proof = merkleTree.getProof(leaves[0]);
+    const proofHex = merkleTree.getHexProof(leaves[0]);
+    console.log("proofHex", proofHex);
+    // console.log("proof", proof);
+    // const verified = merkleTree.verify(proof, leaves[0], root);
+    // console.log("verified", verified);
+    // const proofdata = utils.hexlify(proof[0].data);
+    // console.log("proofdata", proofdata);
+    return { proof: proofHex[0] };
   }
 }

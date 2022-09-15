@@ -1,18 +1,10 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { IAsset, IAssetComponent, TokenType } from "@framework/types";
+import { IAsset, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../../components/inputs/price";
-
-export interface IAssetComponentExt extends IAssetComponent {
-  address: string;
-}
-
-export interface IAssetExt {
-  components: Array<IAssetComponentExt>;
-}
 
 export interface IWaitlistGenerateDto {
   item: IAsset;

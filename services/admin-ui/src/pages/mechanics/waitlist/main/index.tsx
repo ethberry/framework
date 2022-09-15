@@ -2,6 +2,8 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Pagination } from "@mui/material";
 import { Add, Delete, TimerOutlined } from "@mui/icons-material";
+import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
+
 import { Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
@@ -14,10 +16,9 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
 
 import { WaitlistSearchForm } from "./form";
-import { IAssetComponentExt, IWaitlistGenerateDto, WaitlistGenerateDialog } from "./edit";
+import { IWaitlistGenerateDto, WaitlistGenerateDialog } from "./edit";
 import { AccountDialog } from "../../../../components/dialogs/account";
 import { emptyItem } from "../../../../components/inputs/price/empty-price";
-import { cleanUpAsset } from "../../../../utils/money";
 
 export interface IProof {
   proof: string;
@@ -72,7 +73,13 @@ export const Waitlist: FC = () => {
       tokenId: component.templateId || 0,
       amount: component.amount,
     }));
-    return contract.setReward(utils.arrayify(proof.proof), asset, 0) as Promise<void>;
+    return contract.setReward(utils.arrayify(proof.proof), asset, 321) as Promise<void>;
+  });
+
+  const metaFnClaim = useMetamask((proof: IProof, web3Context: Web3ContextType) => {
+    const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSol.abi, web3Context.provider?.getSigner());
+    console.log("proof", proof.proof);
+    return contract.claim([utils.arrayify(proof.proof)], 321) as Promise<void>;
     // return contract.pause() as Promise<void>;
   });
 
@@ -89,11 +96,24 @@ export const Waitlist: FC = () => {
     return metaFn(values, proof);
   };
 
+  const handleClaimConfirm = async () => {
+    const proof = await fn();
+    return metaFnClaim(proof);
+  };
+
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "waitlist"]} />
 
       <PageHeader message="pages.waitlist.title">
+        <Button
+          variant="outlined"
+          startIcon={<AccessibleForwardIcon />}
+          onClick={handleClaimConfirm}
+          data-testid="WaitlistClaimButton"
+        >
+          <FormattedMessage id={`form.buttons.claim`} />
+        </Button>
         <Button
           variant="outlined"
           startIcon={<TimerOutlined />}
