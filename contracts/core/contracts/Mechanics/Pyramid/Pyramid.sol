@@ -112,11 +112,18 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     }
 
     uint256 stakeAmount = depositItem.amount;
+
     address payable receiver = payable(stake.owner);
 
     if (withdrawDeposit) {
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
       stake.activeDeposit = false;
+
+      // PENALTY
+      uint256 penalty = rule.penalty;
+      if (penalty > 0) {
+        stakeAmount -= stakeAmount / 100 * penalty;
+      }
 
       if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), stakeAmount);
