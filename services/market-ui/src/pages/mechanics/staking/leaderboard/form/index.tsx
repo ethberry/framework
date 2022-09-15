@@ -6,7 +6,7 @@ import { AutoSave, FormWrapper } from "@gemunion/mui-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import type { IStakingLeaderboardSearchDto } from "@framework/types";
-import { ContractStatus, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
 interface IStakingLeaderboardSearchFormProps {
   onSubmit: (values: IStakingLeaderboardSearchDto) => Promise<void>;

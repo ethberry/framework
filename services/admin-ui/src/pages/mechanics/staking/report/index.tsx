@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
@@ -13,6 +13,7 @@ import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
 import { StakingReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";
+import { ScannerLink } from "../../../../components/common/scanner-link";
 
 export const StakingReport: FC = () => {
   const {
@@ -72,6 +73,11 @@ export const StakingReport: FC = () => {
       field: "account",
       headerName: formatMessage({ id: "form.labels.account" }),
       sortable: true,
+      renderCell: (params: GridCellParams) => {
+        return (
+          <ScannerLink address={params.value} />
+        );
+      },
       flex: 1
     },
     {
