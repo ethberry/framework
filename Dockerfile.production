@@ -26,21 +26,20 @@ COPY --chown=node:node . .
 RUN npm i --only=production
 
 RUN lerna bootstrap --concurrency 1 --hoist --ignore-scripts
-RUN lerna exec --scope @framework/core-contracts -- npm run build
-# RUN lerna run build --stream --ignore @framework/core-contracts
-RUN lerna exec --scope @framework/constants -- npm run build
-RUN lerna exec --scope @framework/types -- npm run build
-RUN lerna exec --scope @framework/nest-js-module-exchange-signer -- npm run build
-RUN lerna exec --scope @framework/genes -- npm run build
-RUN lerna exec --scope @framework/json -- npm run build
-RUN lerna exec --scope @framework/eml -- npm run build
-RUN lerna exec --scope @framework/game -- npm run build
-RUN lerna exec --scope @framework/localization-admin-ui -- npm run build
-RUN lerna exec --scope @framework/localization-market-ui -- npm run build
-RUN lerna exec --scope @framework/admin-api -- npm run build
-RUN lerna exec --scope @framework/core-eth -- npm run build
-RUN lerna exec --scope @framework/market-api -- npm run build
-RUN lerna exec --scope @framework/mobile-api -- npm run build
-RUN lerna exec --scope @framework/admin-ui -- npm run build
-RUN lerna exec --scope @framework/market-ui -- npm run build
+RUN npm run build -- --scope @framework/core-contracts
+RUN npm run build -- --scope @framework/constants
+RUN npm run build -- --scope @framework/types
+RUN npm run build -- --scope @framework/nest-js-module-exchange-signer
+RUN npm run build -- --scope @framework/genes
+RUN npm run build -- --scope @framework/json
+RUN npm run build -- --scope @framework/eml
+RUN npm run build -- --scope @framework/game
+RUN npm run build -- --scope @framework/localization-admin-ui
+RUN npm run build -- --scope @framework/localization-market-ui
+RUN npm run build -- --scope @framework/admin-api
+RUN npm run build -- --scope @framework/core-eth
+RUN npm run build -- --scope @framework/market-api
+RUN npm run build -- --scope @framework/mobile-api
+RUN npm run build -- --scope @framework/admin-ui
+RUN npm run build -- --scope @framework/market-ui
 
