@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { get, useFormContext, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
@@ -53,53 +53,56 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
     });
   }, [values]);
 
-  return (
-    <Box mt={2}>
-      <Typography>
-        <FormattedMessage id={`form.labels.${ancestorPrefix}`} />
-      </Typography>
+  return useMemo(
+    () => (
+      <Box mt={2}>
+        <Typography>
+          <FormattedMessage id={`form.labels.${ancestorPrefix}`} />
+        </Typography>
 
-      {values?.map((o: IAssetComponent, i: number) => (
-        <Box
-          key={`${o.contractId}_${o.templateId}_${i}`}
-          mt={1}
-          mb={1}
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Box flex={1}>
-            <Paper sx={{ p: 2 }}>
-              <TokenTypeInput
-                prefix={`${nestedPrefix}[${i}]`}
-                disabledOptions={disabledTokenTypes}
-                readOnly={readOnly}
-              />
-              <ContractInput prefix={`${nestedPrefix}[${i}]`} contractModule={contractModule} readOnly={readOnly} />
-              <TemplateInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
-              <AmountInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
-            </Paper>
+        {values?.map((o: IAssetComponent, i: number) => (
+          <Box
+            key={`${o.contractId}_${o.templateId}_${i}`}
+            mt={1}
+            mb={1}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box flex={1}>
+              <Paper sx={{ p: 2 }}>
+                <TokenTypeInput
+                  prefix={`${nestedPrefix}[${i}]`}
+                  disabledOptions={disabledTokenTypes}
+                  readOnly={readOnly}
+                />
+                <ContractInput prefix={`${nestedPrefix}[${i}]`} contractModule={contractModule} readOnly={readOnly} />
+                <TemplateInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
+                <AmountInput prefix={`${nestedPrefix}[${i}]`} readOnly={readOnly} />
+              </Paper>
+            </Box>
+
+            <Box ml={2}>
+              {multiple && (
+                <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
+                  <IconButton aria-label="delete" onClick={handleOptionDelete(i)}>
+                    <Delete />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </Box>
           </Box>
+        ))}
 
-          <Box ml={2}>
-            {multiple && (
-              <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
-                <IconButton aria-label="delete" onClick={handleOptionDelete(i)} disabled={!i}>
-                  <Delete />
-                </IconButton>
-              </Tooltip>
-            )}
-          </Box>
-        </Box>
-      ))}
-
-      {multiple ? (
-        <Tooltip title={formatMessage({ id: "form.tips.create" })}>
-          <IconButton size="large" aria-label="add" onClick={handleOptionAdd()}>
-            <Add fontSize="large" color="primary" />
-          </IconButton>
-        </Tooltip>
-      ) : null}
-    </Box>
+        {multiple ? (
+          <Tooltip title={formatMessage({ id: "form.tips.create" })}>
+            <IconButton size="large" aria-label="add" onClick={handleOptionAdd()}>
+              <Add fontSize="large" color="primary" />
+            </IconButton>
+          </Tooltip>
+        ) : null}
+      </Box>
+    ),
+    [disabledTokenTypes, readOnly, values],
   );
 };
