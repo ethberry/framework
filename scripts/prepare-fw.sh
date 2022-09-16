@@ -74,11 +74,9 @@ fi
 
     ADMIN_BE_URL=$(echo $ADMIN_BE_URL | sed 's#/#\\/#g')
     JSON_RPC_ADDR=$(echo $JSON_RPC_ADDR | sed 's#/#\\/#g')
-    WEBSOCKET_ADDR=$(echo $WEBSOCKET_ADDR | sed 's#/#\\/#g')
 
   sed -i -e "s/BE_URL=.*/BE_URL=$ADMIN_BE_URL/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/JSON_RPC_ADDR=.*/JSON_RPC_ADDR=$JSON_RPC_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
-  sed -i -e "s/WEBSOCKET_ADDR=.*/WEBSOCKET_ADDR=$WEBSOCKET_ADDR/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/CHAIN_ID=.*/CHAIN_ID=$CHAIN_ID/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
   sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/admin-ui/.env.$BASE_MODE
 
@@ -95,7 +93,6 @@ fi
 
   sed -i -e "s/BE_URL=.*/BE_URL=$MARKET_BE_URL/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/JSON_RPC_ADDR=.*/JSON_RPC_ADDR=$JSON_RPC_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
-  sed -i -e "s/WEBSOCKET_ADDR=.*/WEBSOCKET_ADDR=$WEBSOCKET_ADDR/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/CHAIN_ID=.*/CHAIN_ID=$CHAIN_ID/g" $CURDIR/services/market-ui/.env.$BASE_MODE
   sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/market-ui/.env.$BASE_MODE
 
@@ -109,7 +106,6 @@ fi
   cp $CURDIR/services/core-eth/.env.sample $CURDIR/services/core-eth/.env.$BASE_MODE
 
   sed -i -e "s/JSON_RPC_ADDR=.*/JSON_RPC_ADDR=$JSON_RPC_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
-  sed -i -e "s/WEBSOCKET_ADDR=.*/WEBSOCKET_ADDR=$WEBSOCKET_ADDR/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/CHAIN_ID=.*/CHAIN_ID=$CHAIN_ID/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/core-eth/.env.$BASE_MODE
   sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/core-eth/.env.$BASE_MODE
@@ -130,7 +126,6 @@ fi
   sed -i -e "s/FE_URL=.*/FE_URL=$ADMIN_FE_URL/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/GOOGLE_APPLICATION_CREDENTIALS=.*/GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/JSON_RPC_ADDR=.*/JSON_RPC_ADDR=$JSON_RPC_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
-  sed -i -e "s/WEBSOCKET_ADDR=.*/WEBSOCKET_ADDR=$WEBSOCKET_ADDR/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/CHAIN_ID=.*/CHAIN_ID=$CHAIN_ID/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/admin-api/.env.$BASE_MODE
   sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/admin-api/.env.$BASE_MODE
@@ -150,7 +145,6 @@ fi
   sed -i -e "s/FE_URL=.*/FE_URL=$MARKET_FE_URL/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/GOOGLE_APPLICATION_CREDENTIALS=.*/GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/JSON_RPC_ADDR=.*/JSON_RPC_ADDR=$JSON_RPC_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
-  sed -i -e "s/WEBSOCKET_ADDR=.*/WEBSOCKET_ADDR=$WEBSOCKET_ADDR/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/CHAIN_ID=.*/CHAIN_ID=$CHAIN_ID/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/ACCOUNT=.*/ACCOUNT=$ACCOUNT/g" $CURDIR/services/market-api/.env.$BASE_MODE
   sed -i -e "s/PRIVATE_KEY=.*/PRIVATE_KEY=$PRIVATE_KEY/g" $CURDIR/services/market-api/.env.$BASE_MODE
