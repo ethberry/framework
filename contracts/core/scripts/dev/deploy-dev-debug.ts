@@ -41,8 +41,7 @@ async function main() {
   console.info(`VRF_ADDR=${contracts.vrf.address}`);
   await debug(await linkInstance.mint(owner.address, linkAmountInWei.mul(100)), "LinkInstance.mint");
 
-  console.log("afterDebug");
-  process.exit(0);
+  // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
 
   const cmFactory = await ethers.getContractFactory("ContractManager");

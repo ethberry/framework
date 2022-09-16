@@ -25,6 +25,14 @@ export async function deployStaking(contracts: Record<string, Contract>) {
         tokenId: 0,
         amount: constants.WeiPerEther.div(100).mul(5), // 5%
       },
+      content: [
+        {
+          tokenType: 2,
+          token: contracts.erc721Random.address,
+          tokenId: 306001,
+          amount: 1,
+        },
+      ],
       period: 30 * 84600,
       penalty: 1,
       recurrent: false,
@@ -48,6 +56,14 @@ export async function deployStaking(contracts: Record<string, Contract>) {
         tokenId: 306001,
         amount: 1,
       },
+      content: [
+        {
+          tokenType: 2,
+          token: contracts.erc721Random.address,
+          tokenId: 306001,
+          amount: 1,
+        },
+      ],
       period: 30 * 84600,
       penalty: 1,
       recurrent: false,
@@ -71,6 +87,14 @@ export async function deployStaking(contracts: Record<string, Contract>) {
         tokenId: 501001,
         amount: 1000,
       },
+      content: [
+        {
+          tokenType: 2,
+          token: contracts.erc721Random.address,
+          tokenId: 306001,
+          amount: 1,
+        },
+      ],
       period: 1 * 84600,
       penalty: 0,
       recurrent: true,
