@@ -48,7 +48,7 @@ export const StakingLeaderboard: FC = () => {
       field: "id",
       headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
-      flex: 1,
+      flex: 0.3,
       renderCell: (params: GridCellParams) => {
         const row = params.row as IStakingLeaderboard;
         // @ts-ignore
@@ -79,14 +79,14 @@ export const StakingLeaderboard: FC = () => {
       field: "score",
       headerName: formatMessage({ id: "form.labels.score" }),
       sortable: false,
-      flex: 1
+      flex: 0.5
     },
     {
       field: "rank",
       headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
-      flex: 1
-    }
+      flex: 0.5
+    },
   ];
 
   return (
