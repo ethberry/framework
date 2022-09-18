@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo } from "react";
-import { get, useFormContext, useWatch } from "react-hook-form";
+import { FC, useMemo } from "react";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
@@ -11,6 +11,10 @@ import { TokenTypeInput } from "./token-type-input";
 import { ContractInput } from "./contract-input";
 import { TemplateInput } from "./template-input";
 import { AmountInput } from "./amount-input";
+
+type TAssetComponentParams = IAssetComponent & {
+  id: string;
+};
 
 export interface IPriceEditDialogProps {
   prefix: string;
@@ -28,30 +32,25 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
   const ancestorPrefix = prefix.split(".").pop() as string;
   const nestedPrefix = `${prefix}.components`;
 
-  const values = get(useWatch(), nestedPrefix);
+  const { fields, append, remove } = useFieldArray({ name: nestedPrefix, control: form.control });
+  const watchFields = useWatch({ name: nestedPrefix });
+  const values: TAssetComponentParams[] = fields.map(
+    (field, index) =>
+      ({
+        ...field,
+        ...watchFields[index],
+      } as TAssetComponentParams),
+  );
 
   const handleOptionAdd = (): (() => void) => (): void => {
-    const newValue = get(form.getValues(), nestedPrefix);
-    newValue.push((ancestorPrefix === "price" ? emptyPrice : emptyItem).components[0]);
-    form.setValue(nestedPrefix, newValue);
+    append((ancestorPrefix === "price" ? emptyPrice : emptyItem).components[0]);
   };
 
   const handleOptionDelete =
     (i: number): (() => void) =>
     (): void => {
-      const newValue = get(form.getValues(), nestedPrefix);
-      newValue.splice(i, 1);
-      form.setValue(nestedPrefix, newValue);
+      remove(i);
     };
-
-  useEffect(() => {
-    if (!values) {
-      return;
-    }
-    values.forEach((value: IAssetComponent, i: number) => {
-      form.setValue(`${nestedPrefix}[${i}].decimals`, value.contract?.decimals);
-    });
-  }, [values]);
 
   return useMemo(
     () => (
@@ -60,15 +59,8 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
           <FormattedMessage id={`form.labels.${ancestorPrefix}`} />
         </Typography>
 
-        {values?.map((o: IAssetComponent, i: number) => (
-          <Box
-            key={`${o.contractId}_${o.templateId}_${i}`}
-            mt={1}
-            mb={1}
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
+        {values?.map((o: TAssetComponentParams, i: number) => (
+          <Box key={o.id} mt={1} mb={1} display="flex" justifyContent="space-between" alignItems="center">
             <Box flex={1}>
               <Paper sx={{ p: 2 }}>
                 <TokenTypeInput
