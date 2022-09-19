@@ -28,6 +28,7 @@
   "dialogs": {
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
+    "claim": "Claim",
     "create": "Create",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
@@ -635,6 +636,7 @@
   },
   "snackbar": {
     "active": "Successfully activated",
+    "accountNotFound": "Account not found",
     "approved": "Successfully approved",
     "blockchainError": "Blockchain error",
     "contractNotFound": "Contract not found",
@@ -651,6 +653,7 @@
     "internalServerError": "Internal Server Error",
     "invite": "Successfully invited",
     "loaded": "Successfully loaded",
+    "listNotFound": "Waitlist not found",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
     "recaptchaBadRequest": "The request is invalid or malformed.",

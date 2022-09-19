@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, NotFoundException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { utils } from "ethers";
@@ -7,6 +7,7 @@ import { MerkleTree } from "merkletreejs";
 import { IWaitlistItemCreateDto } from "./interfaces";
 import { WaitlistEntity } from "./waitlist.entity";
 import { UserEntity } from "../../../user/user.entity";
+import { WaitlistClaimDto } from "./dto";
 
 @Injectable()
 export class WaitlistService {
@@ -14,6 +15,22 @@ export class WaitlistService {
     @InjectRepository(WaitlistEntity)
     private readonly waitlistEntityRepository: Repository<WaitlistEntity>,
   ) {}
+
+  public async search(userEntity: UserEntity): Promise<[Array<WaitlistEntity>, number]> {
+    const { wallet } = userEntity;
+
+    const queryBuilder = this.waitlistEntityRepository.createQueryBuilder("waitlist");
+
+    queryBuilder.select(["waitlist.account", "waitlist.listId"]);
+
+    if (wallet) {
+      queryBuilder.andWhere("waitlist.account = :account", { account: wallet });
+    }
+
+    queryBuilder.groupBy("waitlist.id, waitlist.listId");
+
+    return queryBuilder.getManyAndCount();
+  }
 
   public findOne(
     where: FindOptionsWhere<WaitlistEntity>,
@@ -32,13 +49,33 @@ export class WaitlistService {
     return this.waitlistEntityRepository.create(dto).save();
   }
 
-  public async proof(userEntity: UserEntity): Promise<{ proof: Array<string> }> {
-    const waitlistEntities = await this.waitlistEntityRepository.find({});
+  public async proof(dto: WaitlistClaimDto, userEntity: UserEntity): Promise<{ proof: Array<string> }> {
+    const waitlistEntities = await this.waitlistEntityRepository.find({
+      where: { listId: dto.listId },
+    });
+
+    if (waitlistEntities.length === 0) {
+      throw new NotFoundException("listNotFound");
+    }
+
     const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).sort();
 
+    if (!Object.values(leaves).includes(userEntity.wallet)) {
+      throw new NotFoundException("accountNotFound");
+    }
     const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
-
     const proofHex = merkleTree.getHexProof(utils.keccak256(userEntity.wallet));
+
     return { proof: proofHex };
   }
+
+  // public async proof1(userEntity: UserEntity): Promise<{ proof: Array<string> }> {
+  //   const waitlistEntities = await this.waitlistEntityRepository.find({});
+  //   const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).sort();
+  //
+  //   const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+  //
+  //   const proofHex = merkleTree.getHexProof(utils.keccak256(userEntity.wallet));
+  //   return { proof: proofHex };
+  // }
 }

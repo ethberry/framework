@@ -246,7 +246,8 @@
       "release": "Release",
       "reward": "Reward",
       "transfer": "Transfer ownership",
-      "view": "View"
+      "view": "View",
+      "waitlist": "Waitlist"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -552,6 +553,7 @@
       "title": "Vesting"
     },
     "waitlist": {
+      "defaultItemTitle": "{account}",
       "title": "Waitlist"
     },
     "wrapper": {

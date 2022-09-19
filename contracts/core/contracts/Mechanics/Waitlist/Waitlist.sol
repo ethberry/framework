@@ -34,6 +34,21 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
   }
 
   function setReward(bytes32 root, Asset[] memory items, uint256 externalId) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(_roots[externalId] == "", "Waitlist: Reward already set");
+    // TODO add sol function for addReward or changeReward
+    _roots[externalId] = root;
+
+    uint256 length = items.length;
+    for (uint256 i = 0; i < length; i++) {
+      _items[externalId].push(items[i]);
+    }
+
+    emit RewardSet(externalId, _items[externalId]);
+  }
+
+  function updateReward(bytes32 root, Asset[] memory items, uint256 externalId) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(_roots[externalId] != "", "Waitlist: Reward not yet set");
+    delete _items[externalId];
     _roots[externalId] = root;
 
     uint256 length = items.length;
@@ -45,10 +60,10 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
   }
 
   function claim(bytes32[] memory proof, uint256 externalId) public whenNotPaused {
-    require(_roots[externalId] != "", "Not yet started");
+    require(_roots[externalId] != "", "Waitlist: Not yet started");
 
     address account = _msgSender();
-    require(proof.verify(_roots[externalId], keccak256(abi.encodePacked(account))), "You are not in the wait list");
+    require(proof.verify(_roots[externalId], keccak256(abi.encodePacked(account))), "Waitlist: You are not in the wait list");
 
     acquire(_items[externalId], account);
 

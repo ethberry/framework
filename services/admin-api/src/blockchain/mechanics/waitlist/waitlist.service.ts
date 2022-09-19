@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, NotFoundException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { MerkleTree } from "merkletreejs";
@@ -8,7 +8,7 @@ import { IWaitlistSearchDto } from "@framework/types";
 
 import { IWaitlistItemCreateDto } from "./interfaces";
 import { WaitlistEntity } from "./waitlist.entity";
-import { WaitlistGenerateDto } from "./dto";
+import { WaitlistClaimDto, WaitlistGenerateDto } from "./dto";
 
 @Injectable()
 export class WaitlistService {
@@ -62,20 +62,34 @@ export class WaitlistService {
   public async generate(dto: WaitlistGenerateDto): Promise<{ root: string }> {
     const waitlistEntities = await this.waitlistEntityRepository.find({ where: { listId: dto.listId } });
 
-    const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).sort();
+    if (!waitlistEntities) {
+      throw new NotFoundException("listNotFound");
+    }
 
+    const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).sort();
     const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
 
     return { root: merkleTree.getHexRoot() };
   }
 
-  public async proof(dto: WaitlistGenerateDto): Promise<{ proof: Array<string> }> {
-    const waitlistEntities = await this.waitlistEntityRepository.find({ where: { listId: dto.listId } });
+  public async proof(dto: WaitlistClaimDto): Promise<{ proof: Array<string> }> {
+    const waitlistEntities = await this.waitlistEntityRepository.find({
+      where: { listId: dto.listId },
+    });
+
+    if (waitlistEntities.length === 0) {
+      throw new NotFoundException("listNotFound");
+    }
+
     const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).sort();
 
-    const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+    if (!Object.values(leaves).includes(dto.account)) {
+      throw new NotFoundException("accountNotFound");
+    }
 
-    const proofHex = merkleTree.getHexProof(utils.keccak256(waitlistEntities[0].account));
+    const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+    const proofHex = merkleTree.getHexProof(utils.keccak256(dto.account));
+
     return { proof: proofHex };
   }
 }

@@ -3,25 +3,31 @@ import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { MerkleTree } from "merkletreejs";
 
-import { Waitlist } from "../../../typechain-types";
+import { Waitlist, ERC721Simple } from "../../../typechain-types";
+import { baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../../constants";
 
-describe("Waitlist", function () {
-  const span = 2500;
+describe.only("Waitlist", function () {
   let waitlistInstance: Waitlist;
+  let erc721Instance: ERC721Simple;
 
   beforeEach(async function () {
     [this.owner, this.receiver] = await ethers.getSigners();
 
     const waitlistFactory = await ethers.getContractFactory("Waitlist");
     waitlistInstance = await waitlistFactory.deploy();
+
+    const erc721Factory = await ethers.getContractFactory("ERC721Simple");
+    erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
+
+    await erc721Instance.grantRole(MINTER_ROLE, waitlistInstance.address);
   });
 
   it("should set & claim reward", async function () {
     const items = [
       {
         tokenType: 2,
-        token: "0x5c41079f959127be3b74e4e5cdbc4b5114f2df91",
-        tokenId: 301002,
+        token: erc721Instance.address,
+        tokenId: 101001,
         amount: "0",
       },
     ];

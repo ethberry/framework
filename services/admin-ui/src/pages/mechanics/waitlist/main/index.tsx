@@ -17,12 +17,14 @@ import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics
 
 import { WaitlistSearchForm } from "./form";
 import { IWaitlistGenerateDto, WaitlistGenerateDialog } from "./edit";
+import { IWaitlistClaimDto, WaitlistClaimDialog } from "./claim";
 import { emptyItem } from "../../../../components/inputs/price/empty-price";
 import { WaitlistDialog } from "../../../../components/dialogs/waitlist";
 
 export interface IProof {
   proof: Array<string>;
 }
+
 export interface IRoot {
   root: string;
 }
@@ -55,6 +57,7 @@ export const Waitlist: FC = () => {
   });
 
   const [isGenerateDialogOpen, setIsGenerateDialogOpen] = useState(false);
+  const [isClaimDialogOpen, setIsClaimDialogOpen] = useState(false);
 
   const { formatMessage } = useIntl();
 
@@ -77,7 +80,8 @@ export const Waitlist: FC = () => {
         url: `/waitlist/proof`,
         method: "POST",
         data: {
-          listId: values,
+          listId: values.listId,
+          account: values.account,
         },
       });
     },
@@ -96,29 +100,47 @@ export const Waitlist: FC = () => {
     return contract.setReward(utils.arrayify(root.root), asset, values.listId) as Promise<void>;
   });
 
-  const metaFnClaim = useMetamask((proof: IProof, web3Context: Web3ContextType) => {
+  const metaFnClaim = useMetamask((values: IWaitlistClaimDto, proof: IProof, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSol.abi, web3Context.provider?.getSigner());
-    console.log("proof", proof.proof);
-    return contract.claim(proof.proof, 222) as Promise<void>;
+    return contract.claim(proof.proof, values.listId) as Promise<void>;
   });
 
   const handleUpload = () => {
     setIsGenerateDialogOpen(true);
   };
 
+  const handleClaim = () => {
+    setIsClaimDialogOpen(true);
+  };
+
   const handleGenerateCancel = () => {
     setIsGenerateDialogOpen(false);
   };
 
-  const handleGenerateConfirm = async (values: Record<string, any>) => {
-    const proof = await fn1(null as unknown as any, values.listId);
-    return metaFn(values, proof);
+  const handleClaimCancel = () => {
+    setIsClaimDialogOpen(false);
   };
 
-  const handleClaimConfirm = async (values: Record<string, any>) => {
-    console.log("values", values);
-    const proof = await fn2(null as unknown as any, values.listId);
-    return metaFnClaim(proof);
+  const handleGenerateConfirm = async (values: Record<string, any>) => {
+    const proof = await fn1(null as unknown as any, values.listId);
+    return metaFn(values, proof)
+      .then(() => {
+        setIsGenerateDialogOpen(false);
+      })
+      .catch(e => {
+        console.error(e);
+      });
+  };
+
+  const handleClaimConfirm = async (values: Partial<IWaitlistClaimDto>) => {
+    const proof = await fn2(null as unknown as any, values);
+    return metaFnClaim(values, proof)
+      .then(() => {
+        setIsClaimDialogOpen(false);
+      })
+      .catch(e => {
+        console.error(e);
+      });
   };
 
   return (
@@ -129,7 +151,7 @@ export const Waitlist: FC = () => {
         <Button
           variant="outlined"
           startIcon={<AccessibleForwardIcon />}
-          onClick={handleClaimConfirm}
+          onClick={handleClaim}
           data-testid="WaitlistClaimButton"
         >
           <FormattedMessage id={`form.buttons.claim`} />
@@ -197,6 +219,13 @@ export const Waitlist: FC = () => {
         onConfirm={handleGenerateConfirm}
         open={isGenerateDialogOpen}
         initialValues={{ item: emptyItem, listId: 1 }}
+      />
+
+      <WaitlistClaimDialog
+        onCancel={handleClaimCancel}
+        onConfirm={handleClaimConfirm}
+        open={isClaimDialogOpen}
+        initialValues={{ account: process.env.ACCOUNT, listId: 1 }}
       />
     </Fragment>
   );
