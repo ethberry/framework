@@ -8,6 +8,8 @@ import { VestingModule } from "./vesting/vesting.module";
 import { ReferralModule } from "./referral/referral.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { PyramidModule } from "./pyramid/pyramid.module";
+import { WaitlistModule } from "./waitlist/waitlist.module";
+import { WrapperModule } from "./wrapper/wrapper.module";
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { PyramidModule } from "./pyramid/pyramid.module";
     ReferralModule,
     LotteryModule,
     PyramidModule,
+    WaitlistModule,
+    WrapperModule,
   ],
 })
 export class MechanicsModule {}

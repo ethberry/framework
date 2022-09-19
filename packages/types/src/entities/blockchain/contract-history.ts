@@ -24,31 +24,37 @@ export enum ContractEventType {
   UnWhitelistedChild = "UnWhitelistedChild",
   UnpackClaim = "UnpackClaim",
   UnpackMysterybox = "UnpackMysterybox",
+  UnpackWrapper = "UnpackWrapper",
   Unpaused = "Unpaused",
   WhitelistedChild = "WhitelistedChild",
 }
 
-export interface IPaused {
+// ERC721TokenWrapper
+export interface IUnpackWrapper {
+  tokenId: string;
+}
+
+export interface IPausedEvent {
   account: string;
 }
 
-export interface IErc20TokenTransfer {
+export interface IErc20TokenTransferEvent {
   from: string;
   to: string;
   value: string;
 }
 
-export interface IErc20TokenApprove {
+export interface IErc20TokenApproveEvent {
   owner: string;
   spender: string;
   value: string;
 }
 
-export interface IErc20TokenSnapshot {
+export interface IErc20TokenSnapshotEvent {
   id: string;
 }
 
-export interface IMysteryboxUnpack {
+export interface IMysteryUnpackEvent {
   collection: string;
   tokenId: string;
   templateId: string;
@@ -70,21 +76,21 @@ export interface IClaimRedeem {
 }
 
 // 998
-export interface IErc998TokenWhitelistedChild {
+export interface IErc998TokenWhitelistedChildEvent {
   addr: string;
   maxCount: string;
 }
 
-export interface IErc998TokenUnWhitelistedChild {
+export interface IErc998TokenUnWhitelistedChildEvent {
   addr: string;
 }
 
-export interface IErc998TokenSetMaxChild {
+export interface IErc998TokenSetMaxChildEvent {
   addr: string;
   maxCount: string;
 }
 
-export interface IErc998TokenReceivedChild {
+export interface IErc998TokenReceivedChildEvent {
   from: string;
   tokenId: string;
   childContract: string;
@@ -92,7 +98,7 @@ export interface IErc998TokenReceivedChild {
   amount: string;
 }
 
-export interface IErc998TokenTransferChild {
+export interface IErc998TokenTransferChildEvent {
   to: string;
   tokenId: string;
   childContract: string;
@@ -100,7 +106,7 @@ export interface IErc998TokenTransferChild {
   amount: string;
 }
 
-export interface IErc998BatchReceivedChild {
+export interface IErc998BatchReceivedChildEvent {
   from: string;
   tokenId: string;
   childContract: string;
@@ -108,7 +114,7 @@ export interface IErc998BatchReceivedChild {
   amounts: Array<string>;
 }
 
-export interface IErc998BatchTransferChild {
+export interface IErc998BatchTransferChildEvent {
   to: string;
   tokenId: string;
   childContract: string;
@@ -116,18 +122,18 @@ export interface IErc998BatchTransferChild {
   amounts: Array<string>;
 }
 
-export interface ITokenTransfer {
+export interface IERC721TokenTransferEvent {
   from: string;
   to: string;
   tokenId: string;
 }
 
 // dev random test
-export interface IRandomRequest {
+export interface IERC721RandomRequestEvent {
   requestId: string;
 }
 
-export interface ITokenMintRandom {
+export interface IERC721TokenMintRandomEvent {
   requestId: string;
   to: string;
   randomness: string;
@@ -135,30 +141,30 @@ export interface ITokenMintRandom {
   tokenId: string;
 }
 
-export interface ITokenApprove {
+export interface IERC721TokenApproveEvent {
   owner: string;
   approved: string;
   tokenId: string;
 }
 
-export interface ITokenApprovedForAll {
+export interface IERC721TokenApprovedForAllEvent {
   owner: string;
   operator: string;
   approved: boolean;
 }
 
-export interface IDefaultRoyaltyInfo {
+export interface IDefaultRoyaltyInfoEvent {
   royaltyReceiver: string;
   royaltyNumerator: string;
 }
 
-export interface ITokenRoyaltyInfo {
+export interface ITokenRoyaltyInfoEvent {
   tokenId: string;
   royaltyReceiver: string;
   royaltyNumerator: boolean;
 }
 
-export interface IErc1155TokenTransferSingle {
+export interface IErc1155TokenTransferSingleEvent {
   operator: string;
   from: string;
   to: string;
@@ -166,7 +172,7 @@ export interface IErc1155TokenTransferSingle {
   value: string;
 }
 
-export interface IErc1155TokenTransferBatch {
+export interface IErc1155TokenTransferBatchEvent {
   operator: string;
   from: string;
   to: string;
@@ -174,13 +180,13 @@ export interface IErc1155TokenTransferBatch {
   values: Array<string>;
 }
 
-export interface IErc1155TokenApprovalForAll {
+export interface IErc1155TokenApprovalForAllEvent {
   account: string;
   operator: string;
   approved: boolean;
 }
 
-export interface IErc1155TokenUri {
+export interface IErc1155TokenUriEvent {
   value: string;
   id: string;
 }
@@ -188,29 +194,30 @@ export interface IErc1155TokenUri {
 export type TContractEventData =
   | IClaimRedeem
   | IClaimUnpack
-  | IDefaultRoyaltyInfo
-  | IMysteryboxUnpack
-  | IErc1155TokenApprovalForAll
-  | IErc1155TokenTransferBatch
-  | IErc1155TokenTransferSingle
-  | IErc1155TokenUri
-  | IErc20TokenApprove
-  | IErc20TokenSnapshot
-  | IErc20TokenTransfer
-  | IRandomRequest
-  | ITokenApprove
-  | ITokenApprovedForAll
-  | ITokenMintRandom
-  | ITokenRoyaltyInfo
-  | ITokenTransfer
-  | IErc998TokenReceivedChild
-  | IErc998TokenTransferChild
-  | IErc998BatchReceivedChild
-  | IErc998BatchTransferChild
-  | IErc998TokenSetMaxChild
-  | IErc998TokenUnWhitelistedChild
-  | IErc998TokenWhitelistedChild
-  | IPaused;
+  | IDefaultRoyaltyInfoEvent
+  | IMysteryUnpackEvent
+  | IErc1155TokenApprovalForAllEvent
+  | IErc1155TokenTransferBatchEvent
+  | IErc1155TokenTransferSingleEvent
+  | IErc1155TokenUriEvent
+  | IErc20TokenApproveEvent
+  | IErc20TokenSnapshotEvent
+  | IErc20TokenTransferEvent
+  | IERC721RandomRequestEvent
+  | IERC721TokenApproveEvent
+  | IERC721TokenApprovedForAllEvent
+  | IERC721TokenMintRandomEvent
+  | ITokenRoyaltyInfoEvent
+  | IERC721TokenTransferEvent
+  | IErc998TokenReceivedChildEvent
+  | IErc998TokenTransferChildEvent
+  | IErc998BatchReceivedChildEvent
+  | IErc998BatchTransferChildEvent
+  | IErc998TokenSetMaxChildEvent
+  | IErc998TokenUnWhitelistedChildEvent
+  | IErc998TokenWhitelistedChildEvent
+  | IPausedEvent
+  | IUnpackWrapper;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;
