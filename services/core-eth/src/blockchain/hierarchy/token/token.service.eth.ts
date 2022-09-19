@@ -43,7 +43,7 @@ export class TokenServiceEth {
     await this.updateHistory(event, context);
   }
 
-  protected async updateHistory(
+  public async updateHistory(
     event: ILogEvent<TContractEventData>,
     context: Log,
     contractId?: number,

@@ -431,23 +431,30 @@ async function main() {
     const usdtFactory = await ethers.getContractFactory("TetherToken");
     contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
     await debug(contracts);
-  */
+
   const waitlistFactory = await ethers.getContractFactory("Waitlist");
   contracts.waitlist = await waitlistFactory.deploy();
-  // await blockAwait();
-  //
-  // const proof = "0x0d8c4b1f3b24d4558a4957f19aec0e635de5990da009d2850fb69af9d3debeb4";
-  // const items = [
-  //   {
-  //     tokenType: 2,
-  //     token: "0x5c41079f959127be3b74e4e5cdbc4b5114f2df91",
-  //     tokenId: 301002,
-  //     amount: "0",
-  //   },
-  // ];
-  //
-  // const tx = await contracts.waitlist.setReward(proof, items, 0);
-  // console.log("tx", tx.hash);
+
+  await blockAwait();
+
+  const proof = "0x0d8c4b1f3b24d4558a4957f19aec0e635de5990da009d2850fb69af9d3debeb4";
+  const items = [
+    {
+      tokenType: 2,
+      token: contracts.erc721Simple.address,
+      tokenId: 301002,
+      amount: "0",
+    },
+  ];
+
+  const tx = await contracts.waitlist.setReward(proof, items, 0);
+  console.log("tx", tx.hash);
+  
+   */
+
+  const erc721WrapFactory = await ethers.getContractFactory("ERC721TokenWrapper");
+  contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
+  await debug(contracts);
 }
 
 main()

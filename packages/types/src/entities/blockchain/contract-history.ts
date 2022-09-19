@@ -24,8 +24,14 @@ export enum ContractEventType {
   UnWhitelistedChild = "UnWhitelistedChild",
   UnpackClaim = "UnpackClaim",
   UnpackMysterybox = "UnpackMysterybox",
+  UnpackWrapper = "UnpackWrapper",
   Unpaused = "Unpaused",
   WhitelistedChild = "WhitelistedChild",
+}
+
+// ERC721TokenWrapper
+export interface IUnpackWrapper {
+  tokenId: string;
 }
 
 export interface IPausedEvent {
@@ -210,7 +216,8 @@ export type TContractEventData =
   | IErc998TokenSetMaxChildEvent
   | IErc998TokenUnWhitelistedChildEvent
   | IErc998TokenWhitelistedChildEvent
-  | IPausedEvent;
+  | IPausedEvent
+  | IUnpackWrapper;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;
