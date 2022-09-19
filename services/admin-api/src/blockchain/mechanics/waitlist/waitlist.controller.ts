@@ -17,7 +17,7 @@ import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { WaitlistService } from "./waitlist.service";
 import { WaitlistEntity } from "./waitlist.entity";
-import { WaitlistItemCreateDto, WaitlistSearchDto } from "./dto";
+import { WaitlistGenerateDto, WaitlistItemCreateDto, WaitlistSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/waitlist")
@@ -35,14 +35,14 @@ export class WaitlistController {
     return this.waitlistService.create(dto);
   }
 
-  @Get("/generate")
-  public generate(): Promise<{ proof: string }> {
-    return this.waitlistService.generate();
+  @Post("/generate")
+  public generate(@Body() dto: WaitlistGenerateDto): Promise<{ root: string }> {
+    return this.waitlistService.generate(dto);
   }
 
-  @Get("/proof")
-  public proof(): Promise<{ proof: string }> {
-    return this.waitlistService.proof();
+  @Post("/generate")
+  public proof(@Body() dto: WaitlistGenerateDto): Promise<{ proof: Array<string> }> {
+    return this.waitlistService.proof(dto);
   }
 
   @Delete("/:id")

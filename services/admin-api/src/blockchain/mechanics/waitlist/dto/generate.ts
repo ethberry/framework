@@ -1,11 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsInt, Min } from "class-validator";
 
-import { AccountDto } from "@gemunion/collection";
+import { IWaitlistGenerateDto } from "../interfaces";
 
-import { IWaitlistItemCreateDto } from "../interfaces";
-
-export class WaitlistItemCreateDto extends AccountDto implements IWaitlistItemCreateDto {
+export class WaitlistGenerateDto implements IWaitlistGenerateDto {
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })

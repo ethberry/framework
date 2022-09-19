@@ -11,7 +11,7 @@ import { vestingRoutes } from "./vesting/routes";
 import { wrapperRoutes } from "./wrapper/routes";
 import { breedRoutes } from "./breed/routes";
 import { pyramidRoutes } from "./pyramid/routes";
-import { whitelistRoutes } from "./whitelist/routes";
+import { waitlistRoutes } from "./waitlist/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
@@ -25,5 +25,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...wrapperRoutes,
   ...breedRoutes,
   ...pyramidRoutes,
-  ...whitelistRoutes,
+  ...waitlistRoutes,
 ];

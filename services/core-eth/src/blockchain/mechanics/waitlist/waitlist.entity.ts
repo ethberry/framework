@@ -8,4 +8,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 export class WaitlistEntity extends IdDateBaseEntity implements IWaitlist {
   @Column({ type: "varchar" })
   public account: string;
+
+  @Column({ type: "int" })
+  public listId: number;
 }

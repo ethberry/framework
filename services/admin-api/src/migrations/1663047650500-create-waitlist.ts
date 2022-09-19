@@ -17,6 +17,10 @@ export class CreateWaitlistTable1663047650500 implements MigrationInterface {
           type: "varchar",
         },
         {
+          name: "list_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },

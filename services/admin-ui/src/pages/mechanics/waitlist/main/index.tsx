@@ -17,11 +17,14 @@ import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics
 
 import { WaitlistSearchForm } from "./form";
 import { IWaitlistGenerateDto, WaitlistGenerateDialog } from "./edit";
-import { AccountDialog } from "../../../../components/dialogs/account";
 import { emptyItem } from "../../../../components/inputs/price/empty-price";
+import { WaitlistDialog } from "../../../../components/dialogs/waitlist";
 
 export interface IProof {
-  proof: string;
+  proof: Array<string>;
+}
+export interface IRoot {
+  root: string;
 }
 
 export const Waitlist: FC = () => {
@@ -55,16 +58,33 @@ export const Waitlist: FC = () => {
 
   const { formatMessage } = useIntl();
 
-  const { fn } = useApiCall(
-    async api => {
+  const { fn: fn1 } = useApiCall(
+    async (api, values) => {
       return api.fetchJson({
         url: `/waitlist/generate`,
+        method: "POST",
+        data: {
+          listId: values,
+        },
       });
     },
     { success: false },
   );
 
-  const metaFn = useMetamask((values: IWaitlistGenerateDto, proof: IProof, web3Context: Web3ContextType) => {
+  const { fn: fn2 } = useApiCall(
+    async (api, values) => {
+      return api.fetchJson({
+        url: `/waitlist/proof`,
+        method: "POST",
+        data: {
+          listId: values,
+        },
+      });
+    },
+    { success: false },
+  );
+
+  const metaFn = useMetamask((values: IWaitlistGenerateDto, root: IRoot, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSol.abi, web3Context.provider?.getSigner());
 
     const asset = values.item.components.map(component => ({
@@ -73,14 +93,13 @@ export const Waitlist: FC = () => {
       tokenId: component.templateId || 0,
       amount: component.amount,
     }));
-    return contract.setReward(utils.arrayify(proof.proof), asset, 321) as Promise<void>;
+    return contract.setReward(utils.arrayify(root.root), asset, values.listId) as Promise<void>;
   });
 
   const metaFnClaim = useMetamask((proof: IProof, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.WAITLIST_ADDR, WaitlistSol.abi, web3Context.provider?.getSigner());
     console.log("proof", proof.proof);
-    return contract.claim([utils.arrayify(proof.proof)], 321) as Promise<void>;
-    // return contract.pause() as Promise<void>;
+    return contract.claim(proof.proof, 222) as Promise<void>;
   });
 
   const handleUpload = () => {
@@ -92,12 +111,13 @@ export const Waitlist: FC = () => {
   };
 
   const handleGenerateConfirm = async (values: Record<string, any>) => {
-    const proof = await fn();
+    const proof = await fn1(null as unknown as any, values.listId);
     return metaFn(values, proof);
   };
 
-  const handleClaimConfirm = async () => {
-    const proof = await fn();
+  const handleClaimConfirm = async (values: Record<string, any>) => {
+    console.log("values", values);
+    const proof = await fn2(null as unknown as any, values.listId);
     return metaFnClaim(proof);
   };
 
@@ -134,6 +154,7 @@ export const Waitlist: FC = () => {
           {rows.map((waitlist, i) => (
             <ListItem key={i}>
               <ListItemText>{waitlist.account}</ListItemText>
+              <ListItemText>{waitlist.listId}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleDelete(waitlist)}>
                   <Delete />
@@ -162,7 +183,7 @@ export const Waitlist: FC = () => {
         }}
       />
 
-      <AccountDialog
+      <WaitlistDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}
@@ -175,7 +196,7 @@ export const Waitlist: FC = () => {
         onCancel={handleGenerateCancel}
         onConfirm={handleGenerateConfirm}
         open={isGenerateDialogOpen}
-        initialValues={{ item: emptyItem }}
+        initialValues={{ item: emptyItem, listId: 1 }}
       />
     </Fragment>
   );

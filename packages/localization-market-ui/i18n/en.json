@@ -116,6 +116,7 @@
       "back": "Back",
       "buy": "Buy now!",
       "cancel": "Cancel",
+      "claim": "Claim Reward",
       "copy": "Copy",
       "craft": "Craft",
       "create": "Create",
@@ -320,7 +321,7 @@
         "pyramid": "Pyramid",
         "staking": "Staking",
         "vesting": "Vesting",
-        "whitelist": "Whitelist",
+        "waitlist": "Waitlist",
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
@@ -550,8 +551,8 @@
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
     },
-    "whitelist": {
-      "title": "Whitelist"
+    "waitlist": {
+      "title": "Waitlist"
     },
     "wrapper": {
       "token": {

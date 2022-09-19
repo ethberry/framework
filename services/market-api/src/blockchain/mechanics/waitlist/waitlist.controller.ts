@@ -1,17 +1,25 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
+
+import { User } from "@gemunion/nest-js-utils";
 
 import { WaitlistService } from "./waitlist.service";
 import { WaitlistEntity } from "./waitlist.entity";
-import { WhitelistItemCreateDto } from "./dto";
+import { WaitlistItemCreateDto } from "./dto";
+import { UserEntity } from "../../../user/user.entity";
 
 @ApiBearerAuth()
-@Controller("/whitelist")
+@Controller("/waitlist")
 export class WaitlistController {
-  constructor(private readonly whitelistService: WaitlistService) {}
+  constructor(private readonly waitlistService: WaitlistService) {}
 
   @Post("/")
-  public create(@Body() dto: WhitelistItemCreateDto): Promise<WaitlistEntity> {
-    return this.whitelistService.create(dto);
+  public create(@Body() dto: WaitlistItemCreateDto): Promise<WaitlistEntity> {
+    return this.waitlistService.create(dto);
+  }
+
+  @Get("/proof")
+  public proof(@User() userEntity: UserEntity): Promise<{ proof: Array<string> }> {
+    return this.waitlistService.proof(userEntity);
   }
 }
