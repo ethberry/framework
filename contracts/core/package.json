@@ -5,7 +5,7 @@
     "url": "https://www.gemunion.io/"
   },
   "dependencies": {
-    "@chainlink/contracts": "0.4.2",
+    "@chainlink/contracts": "0.5.0",
     "@gemunion/constants": "0.8.5",
     "@gemunion/contracts": "0.7.7",
     "@framework/genes": "0.0.1",
@@ -36,8 +36,8 @@
     "@types/chai": "4.3.3",
     "@types/mocha": "9.1.1",
     "@types/node": "16.11.59",
-    "@typescript-eslint/eslint-plugin": "5.37.0",
-    "@typescript-eslint/parser": "5.37.0",
+    "@typescript-eslint/eslint-plugin": "5.38.0",
+    "@typescript-eslint/parser": "5.38.0",
     "chai": "4.3.6",
     "eslint": "8.22.0",
     "eslint-config-prettier": "8.5.0",
