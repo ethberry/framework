@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
+import { providers } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
@@ -20,6 +21,7 @@ export class TokenServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
+    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly contractHistoryService: ContractHistoryService,

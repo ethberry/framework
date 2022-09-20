@@ -31,7 +31,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly contractHistoryService: ContractHistoryService,
     protected readonly mysteryboxService: MysteryBoxService,
   ) {
-    super(loggerService, contractService, tokenService, contractHistoryService);
+    super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {

@@ -41,7 +41,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly assetService: AssetService,
     protected readonly contractHistoryService: ContractHistoryService,
   ) {
-    super(loggerService, contractService, tokenService, contractHistoryService);
+    super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
   }
 
   public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
