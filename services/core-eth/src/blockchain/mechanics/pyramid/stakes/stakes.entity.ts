@@ -1,13 +1,13 @@
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IPyramidStake, PyramidStakeStatus } from "@framework/types";
+import { IPyramidDeposit, PyramidDepositStatus, PyramidRuleStatus } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { PyramidRulesEntity } from "../rules/rules.entity";
 
 @Entity({ schema: ns, name: "pyramid_stakes" })
-export class PyramidStakesEntity extends IdDateBaseEntity implements IPyramidStake {
+export class PyramidStakesEntity extends IdDateBaseEntity implements IPyramidDeposit {
   @Column({ type: "varchar" })
   public account: string;
 
@@ -16,9 +16,9 @@ export class PyramidStakesEntity extends IdDateBaseEntity implements IPyramidSta
 
   @Column({
     type: "enum",
-    enum: PyramidStakeStatus,
+    enum: PyramidRuleStatus,
   })
-  public stakeStatus: PyramidStakeStatus;
+  public pyramidDepositStatus: PyramidDepositStatus;
 
   @Column({ type: "timestamptz" })
   public startTimestamp: string;

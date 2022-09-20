@@ -4,10 +4,10 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  ILotteryPrize,
-  ILotteryRelease,
-  IRoundEnded,
-  IRoundStarted,
+  ILotteryPrizeEvent,
+  ILotteryReleaseEvent,
+  IRoundEndedEvent,
+  IRoundStartedEvent,
   LotteryEventType,
   TLotteryEventData,
 } from "@framework/types";
@@ -26,7 +26,7 @@ export class LotteryRoundServiceEth {
     private readonly contractService: ContractService,
   ) {}
 
-  public async start(event: ILogEvent<IRoundStarted>, context: Log): Promise<void> {
+  public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     const {
@@ -43,7 +43,7 @@ export class LotteryRoundServiceEth {
     }
   }
 
-  public async end(event: ILogEvent<IRoundEnded>, context: Log): Promise<void> {
+  public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     const {
@@ -63,12 +63,12 @@ export class LotteryRoundServiceEth {
     await roundEntity.save();
   }
 
-  public async prize(event: ILogEvent<ILotteryPrize>, context: Log): Promise<void> {
+  public async prize(event: ILogEvent<ILotteryPrizeEvent>, context: Log): Promise<void> {
     // TODO use it, check ticketId?
     await this.updateHistory(event, context);
   }
 
-  public async release(event: ILogEvent<ILotteryRelease>, context: Log): Promise<void> {
+  public async release(event: ILogEvent<ILotteryReleaseEvent>, context: Log): Promise<void> {
     // TODO use it somehow?
     await this.updateHistory(event, context);
   }

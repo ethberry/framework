@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEventType, IErc1155TokenApprovalForAll, IContractHistorySearchDto } from "@framework/types";
+import { ContractEventType, IErc1155TokenApprovalForAllEvent, IContractHistorySearchDto } from "@framework/types";
 
 import { ContractHistoryEntity } from "./contract-history.entity";
 import { UserEntity } from "../../user/user.entity";
@@ -51,6 +51,6 @@ export class ContractHistoryService {
       return false;
     }
 
-    return (historyEntity.eventData as IErc1155TokenApprovalForAll).approved;
+    return (historyEntity.eventData as IErc1155TokenApprovalForAllEvent).approved;
   }
 }

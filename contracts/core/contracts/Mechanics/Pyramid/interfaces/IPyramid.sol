@@ -6,21 +6,9 @@
 
 pragma solidity ^0.8.9;
 
-  enum TokenType {
-    // 0: ETH on mainnet, MATIC on polygon, etc.
-    NATIVE,
-    // 1: ERC20 items (ERC777 and other ERC20 analogues could technically work)
-    ERC20
-  }
-
-  struct Asset {
-    TokenType tokenType;
-    address token;
-    uint256 amount;
-  }
+import "../../Exchange/interfaces/IAsset.sol";
 
 interface IPyramid {
-
   struct Rule {
     Asset deposit;
     Asset reward;

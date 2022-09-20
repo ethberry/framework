@@ -28,6 +28,7 @@
   "dialogs": {
     "blacklist": "Add to blacklist",
     "confirmation": "Please confirm",
+    "claim": "Claim",
     "create": "Create",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
@@ -81,6 +82,7 @@
       "ERC20OWNER": "ERC20OWNER",
       "EXTERNAL": "External",
       "GENES": "Genes",
+      "LINEAR_REFERRAL": "LINEAR REFERRAL",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
@@ -134,12 +136,17 @@
       "PREDICATE_ROLE": "PREDICATE_ROLE",
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
     },
-    "stakeStatus": {
+    "stakingDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
-    "stakingStatus": {
+    "pyramidDepositStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
+    },
+    "stakingRuleStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -187,6 +194,7 @@
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "create": "Create",
+      "claim": "Claim",
       "delete": "Delete",
       "deploy": "Deploy",
       "disconnect": "Disconnect",
@@ -271,6 +279,8 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "listId": "List ID",
+      "maxStakes": "Max Stakes",
       "mysteryboxStatus": "Status",
       "maxStakes": "Max Stakes",
       "name": "Name",
@@ -292,8 +302,10 @@
       "roundIds": "Round",
       "royalty": "Royalty",
       "slug": "Slug",
-      "stakeStatus": "Status",
-      "stakingStatus": "Status",
+      "pyramidDepositStatus": "Status",
+      "stakingDepositStatus": "Status",
+      "pyramidRuleStatus": "Status",
+      "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
       "templateId": "Template",
@@ -338,6 +350,7 @@
       "email": "me@google.com",
       "growthRate": "2",
       "item": "Bottle of water",
+      "listId": "1",
       "maxStakes": "0",
       "name": "Pink dust",
       "number": "100500",
@@ -355,7 +368,7 @@
       "royalty": "1",
       "search": "Search...",
       "slug": "terms-and-conditions",
-      "stakingStatus": "Status",
+      "stakingRuleStatus": "Status",
       "symbol": "XXX",
       "templateId": "Template",
       "templateIds": "Template",
@@ -464,7 +477,7 @@
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
-        "whitelist": "Whitelist"
+        "waitlist": "Waitlist"
       },
       "title": "Dashboard"
     },
@@ -574,6 +587,12 @@
       "title": "Profile"
     },
     "pyramid": {
+      "chart": {
+        "title": "Chart"
+      },
+      "report": {
+        "title": "Report"
+      },
       "contracts": {
         "title": "Pyramid Contracts"
       },
@@ -583,7 +602,7 @@
         "title": "Pyramid rules",
         "upload": "Upload rule"
       },
-      "title": "Pyramid Rules"
+      "title": "Pyramid"
     },
     "settings": {
       "title": "Settings"
@@ -612,13 +631,14 @@
     "vesting": {
       "title": "Vesting"
     },
-    "whitelist": {
-      "title": "Whitelist",
-      "defaultItemTitle": "{account}"
+    "waitlist": {
+      "defaultItemTitle": "{account}",
+      "title": "Waitlist"
     }
   },
   "snackbar": {
     "active": "Successfully activated",
+    "accountNotFound": "Account not found",
     "approved": "Successfully approved",
     "blockchainError": "Blockchain error",
     "contractNotFound": "Contract not found",
@@ -626,8 +646,8 @@
     "declined": "Declined!",
     "deleted": "Successfully deleted",
     "deployed": "Successfully deployed",
-    "duplicateEmail": "User with this email already registered",
     "duplicateAccount": "Duplicate account",
+    "duplicateEmail": "User with this email already registered",
     "email": "Email successfully sent.",
     "error": "Unknown Error",
     "inactive": "Successfully inactivated",
@@ -635,6 +655,7 @@
     "internalServerError": "Internal Server Error",
     "invite": "Successfully invited",
     "loaded": "Successfully loaded",
+    "listNotFound": "Waitlist not found",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
     "recaptchaBadRequest": "The request is invalid or malformed.",

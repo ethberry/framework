@@ -16,7 +16,7 @@ import { Transform, Type } from "class-transformer";
 import { SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import type { IPyramidReportItemSearchDto, IPyramidReportSearchDto } from "@framework/types";
-import { PyramidStakeStatus, TokenType } from "@framework/types";
+import { PyramidDepositStatus, TokenType } from "@framework/types";
 
 export class PyramidReportItemSearchDto implements IPyramidReportItemSearchDto {
   @ApiProperty({
@@ -37,16 +37,16 @@ export class PyramidReportItemSearchDto implements IPyramidReportItemSearchDto {
 
 export class PyramidReportSearchDto extends SearchDto implements IPyramidReportSearchDto {
   @ApiPropertyOptional({
-    enum: PyramidStakeStatus,
+    enum: PyramidDepositStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<PyramidStakeStatus>)
-  @IsEnum(PyramidStakeStatus, { each: true, message: "badInput" })
-  public stakeStatus: Array<PyramidStakeStatus>;
+  @Transform(({ value }) => value as Array<PyramidDepositStatus>)
+  @IsEnum(PyramidDepositStatus, { each: true, message: "badInput" })
+  public pyramidDepositStatus: Array<PyramidDepositStatus>;
 
   @ApiPropertyOptional()
   @IsOptional()

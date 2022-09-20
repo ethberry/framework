@@ -5,7 +5,7 @@ import { ConfigService } from "@nestjs/config";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ContractEntity } from "./contract.entity";
-import { ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
@@ -130,15 +130,19 @@ export class ContractService {
   }
 
   public async findAllTokensByType(contractType: TokenType): Promise<IContractListenerResult> {
-    const contractEntities = await this.findAll({
-      contractType,
-      contractModule: ModuleType.HIERARCHY,
-      chainId: this.chainId,
-    });
+    const contractEntities = await this.contractEntityRepository
+      .createQueryBuilder("contract")
+      .andWhere("contract.contractType = :contractType", { contractType })
+      .andWhere("contract.contractModule = :contractModule", { contractModule: ModuleType.HIERARCHY })
+      .andWhere("contract.chainId = :chainId", { chainId: this.chainId })
+      .andWhere("contract.contractFeatures NOT IN (:...features)", { features: [[ContractFeatures.EXTERNAL]] })
+      .getMany();
 
     if (contractEntities.length) {
+      const addresses = contractEntities.map(contractEntity => contractEntity.address);
+      const unique = [...new Set(addresses)];
       return {
-        address: contractEntities.map(contractEntity => contractEntity.address),
+        address: unique,
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }

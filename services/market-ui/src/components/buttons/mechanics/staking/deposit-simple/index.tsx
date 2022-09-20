@@ -5,7 +5,7 @@ import { Savings } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { IStakingRule, StakingStatus } from "@framework/types";
+import { IStakingRule, StakingRuleStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
@@ -38,7 +38,7 @@ export const StakingDepositSimpleButton: FC<IStakingDepositSimpleButtonProps> = 
     };
   };
 
-  if (rule.stakingStatus !== StakingStatus.ACTIVE) {
+  if (rule.stakingRuleStatus !== StakingRuleStatus.ACTIVE) {
     return null;
   }
 

@@ -8,35 +8,40 @@ export enum LotteryEventType {
   Prize = "Prize",
 }
 
-export interface ILotteryPurchase {
+export interface ILotteryPurchaseEvent {
   account: string;
   price: string;
   round: string;
   numbers: Array<boolean>;
 }
 
-export interface IRoundStarted {
+export interface IRoundStartedEvent {
   round: string;
   startTimestamp: string;
 }
 
-export interface IRoundEnded {
+export interface IRoundEndedEvent {
   round: string;
   endTimestamp: string;
 }
 
-export interface ILotteryPrize {
+export interface ILotteryPrizeEvent {
   account: string;
   ticketId: string;
   amount: string;
 }
 
-export interface ILotteryRelease {
+export interface ILotteryReleaseEvent {
   round: string;
   amount: string;
 }
 
-export type TLotteryEventData = IRoundStarted | IRoundEnded | ILotteryPurchase | ILotteryPrize | ILotteryRelease;
+export type TLotteryEventData =
+  | IRoundStartedEvent
+  | IRoundEndedEvent
+  | ILotteryPurchaseEvent
+  | ILotteryPrizeEvent
+  | ILotteryReleaseEvent;
 
 export interface ILotteryHistory extends IIdDateBase {
   address: string;

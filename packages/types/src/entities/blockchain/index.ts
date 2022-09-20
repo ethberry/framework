@@ -27,14 +27,14 @@ export * from "./mechanics/referral/reward";
 export * from "./mechanics/staking/history";
 export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/rule";
-export * from "./mechanics/staking/stake";
+export * from "./mechanics/staking/deposit";
 export * from "./mechanics/pyramid/history";
 export * from "./mechanics/pyramid/leaderboard";
 export * from "./mechanics/pyramid/rule";
-export * from "./mechanics/pyramid/stake";
+export * from "./mechanics/pyramid/deposit";
 export * from "./mechanics/vesting/vesting";
 export * from "./mechanics/vesting/history";
-export * from "./mechanics/whitelist/whitelist";
+export * from "./mechanics/waitlist/waitlist";
 
 export * from "./hierarchy/contract";
 export * from "./hierarchy/template";

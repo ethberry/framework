@@ -16,7 +16,7 @@ import { Mixin } from "ts-mixer";
 import { AccountOptionalDto, SearchDto } from "@gemunion/collection";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 import type { IStakingReportItemSearchDto, IStakingReportSearchDto } from "@framework/types";
-import { StakeStatus, TokenType } from "@framework/types";
+import { StakingDepositStatus, TokenType } from "@framework/types";
 
 export class StakingReportItemSearchDto implements IStakingReportItemSearchDto {
   @ApiProperty({
@@ -37,16 +37,16 @@ export class StakingReportItemSearchDto implements IStakingReportItemSearchDto {
 
 export class StakingReportSearchDto extends Mixin(AccountOptionalDto, SearchDto) implements IStakingReportSearchDto {
   @ApiPropertyOptional({
-    enum: StakeStatus,
+    enum: StakingDepositStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<StakeStatus>)
-  @IsEnum(StakeStatus, { each: true, message: "badInput" })
-  public stakeStatus: Array<StakeStatus>;
+  @Transform(({ value }) => value as Array<StakingDepositStatus>)
+  @IsEnum(StakingDepositStatus, { each: true, message: "badInput" })
+  public stakingDepositStatus: Array<StakingDepositStatus>;
 
   @ApiProperty({
     type: StakingReportItemSearchDto,

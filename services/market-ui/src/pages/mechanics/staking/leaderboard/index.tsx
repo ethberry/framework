@@ -11,6 +11,7 @@ import { StakingLeaderboardRank, TokenType } from "@framework/types";
 
 import { StakingLeaderboardSearchForm } from "./form";
 import { ScannerLink } from "../../../../components/common/scanner-link";
+import { formatEther } from "../../../../utils/money";
 
 export const StakingLeaderboard: FC = () => {
   const {
@@ -34,9 +35,6 @@ export const StakingLeaderboard: FC = () => {
         tokenType: TokenType.ERC721,
         contractId: 306,
       },
-    },
-    empty: {
-      wallet: "",
     },
   });
 
@@ -76,14 +74,15 @@ export const StakingLeaderboard: FC = () => {
       flex: 1
     },
     {
-      field: "score",
-      headerName: formatMessage({ id: "form.labels.score" }),
+      field: "amount",
+      headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: false,
+      valueFormatter: ({ value }: { value: string }) => formatEther(value),
       flex: 0.5
     },
     {
-      field: "rank",
-      headerName: formatMessage({ id: "form.labels.rank" }),
+      field: "name",
+      headerName: formatMessage({ id: "form.labels.title" }),
       sortable: false,
       flex: 0.5
     },

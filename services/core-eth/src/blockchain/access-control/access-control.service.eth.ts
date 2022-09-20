@@ -5,9 +5,9 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   AccessControlEventType,
   AccessControlRoleHash,
-  IAccessControlRoleAdminChanged,
-  IAccessControlRoleGranted,
-  IAccessControlRoleRevoked,
+  IAccessControlRoleAdminChangedEvent,
+  IAccessControlRoleGrantedEvent,
+  IAccessControlRoleRevokedEvent,
   TAccessControlEventData,
 } from "@framework/types";
 
@@ -25,7 +25,7 @@ export class AccessControlServiceEth {
     private readonly contractService: ContractService,
   ) {}
 
-  public async roleGranted(event: ILogEvent<IAccessControlRoleGranted>, context: Log): Promise<void> {
+  public async roleGranted(event: ILogEvent<IAccessControlRoleGrantedEvent>, context: Log): Promise<void> {
     const {
       args: { role, account },
     } = event;
@@ -41,7 +41,7 @@ export class AccessControlServiceEth {
     });
   }
 
-  public async roleRevoked(event: ILogEvent<IAccessControlRoleRevoked>, context: Log): Promise<void> {
+  public async roleRevoked(event: ILogEvent<IAccessControlRoleRevokedEvent>, context: Log): Promise<void> {
     const {
       args: { role, account },
     } = event;
@@ -57,7 +57,7 @@ export class AccessControlServiceEth {
     });
   }
 
-  public async roleAdminChanged(event: ILogEvent<IAccessControlRoleAdminChanged>, context: Log): Promise<void> {
+  public async roleAdminChanged(event: ILogEvent<IAccessControlRoleAdminChangedEvent>, context: Log): Promise<void> {
     const {
       args: { role, newAdminRole },
     } = event;

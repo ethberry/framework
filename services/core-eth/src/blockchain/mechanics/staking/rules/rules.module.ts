@@ -2,7 +2,7 @@ import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { StakingHistoryModule } from "../history/history.module";
-import { StakingStakesModule } from "../stakes/stakes.module";
+import { StakingDepositModule } from "../deposit/deposit.module";
 import { StakingRulesControllerEth } from "./rules.controller.eth";
 import { StakingLogModule } from "../log/log.module";
 import { StakingRulesServiceEth } from "./rules.service.eth";
@@ -13,7 +13,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
 @Module({
   imports: [
     ContractModule,
-    StakingStakesModule,
+    StakingDepositModule,
     StakingLogModule,
     StakingHistoryModule,
     TypeOrmModule.forFeature([StakingRulesEntity]),

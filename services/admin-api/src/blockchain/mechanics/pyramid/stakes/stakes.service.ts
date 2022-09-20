@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import type { IPyramidStakesSearchDto } from "@framework/types";
+import type { IPyramidDepositSearchDto } from "@framework/types";
 
 import { PyramidStakesEntity } from "./stakes.entity";
 
@@ -27,8 +27,8 @@ export class PyramidStakesService {
     return this.stakesEntityRepository.find({ where, ...options });
   }
 
-  public async search(dto: Partial<IPyramidStakesSearchDto>): Promise<[Array<PyramidStakesEntity>, number]> {
-    const { query, account, stakeStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
+  public async search(dto: Partial<IPyramidDepositSearchDto>): Promise<[Array<PyramidStakesEntity>, number]> {
+    const { query, account, pyramidDepositStatus, deposit, reward, startTimestamp, endTimestamp, skip, take } = dto;
 
     const queryBuilder = this.stakesEntityRepository.createQueryBuilder("stake");
     queryBuilder.leftJoinAndSelect("stake.pyramidRule", "rule");
@@ -63,11 +63,11 @@ export class PyramidStakesService {
       );
     }
 
-    if (stakeStatus) {
-      if (stakeStatus.length === 1) {
-        queryBuilder.andWhere("stake.stakeStatus = :stakeStatus", { stakeStatus: stakeStatus[0] });
+    if (pyramidDepositStatus) {
+      if (pyramidDepositStatus.length === 1) {
+        queryBuilder.andWhere("stake.depositStatus = :depositStatus", { depositStatus: pyramidDepositStatus[0] });
       } else {
-        queryBuilder.andWhere("stake.stakeStatus IN(:...stakeStatus)", { stakeStatus });
+        queryBuilder.andWhere("stake.depositStatus IN(:...depositStatus)", { pyramidDepositStatus });
       }
     }
 

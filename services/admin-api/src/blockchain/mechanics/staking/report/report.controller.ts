@@ -6,25 +6,18 @@ import archiver from "archiver";
 import { PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { StakingReportService } from "./report.service";
-import { StakingStakesEntity } from "../stakes/stakes.entity";
+import { StakingDepositEntity } from "../deposit/deposit.entity";
 import { StakingReportSearchDto } from "./dto";
-import { StakingChartSearchDto } from "./dto/chart";
 
 @ApiBearerAuth()
 @Controller("/staking/report")
-export class StakingStakesController {
+export class StakingDepositController {
   constructor(private readonly stakingReportService: StakingReportService) {}
 
-  @Get("/search")
+  @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: StakingReportSearchDto): Promise<[Array<StakingStakesEntity>, number]> {
+  public search(@Query() dto: StakingReportSearchDto): Promise<[Array<StakingDepositEntity>, number]> {
     return this.stakingReportService.search(dto);
-  }
-
-  @Get("/chart")
-  @UseInterceptors(PaginationInterceptor)
-  public chart(@Query() dto: StakingChartSearchDto): Promise<any> {
-    return this.stakingReportService.chart(dto);
   }
 
   @Get("/export")

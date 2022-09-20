@@ -116,7 +116,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
         deposit_id,
         reward_id,
         external_id,
-        staking_status,
+        staking_rule_status,
         created_at,
         updated_at
       ) VALUES (

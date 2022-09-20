@@ -2,7 +2,7 @@ import type { RouteObject } from "react-router-dom";
 
 import { StakingRules } from "./rules";
 import { StakingLeaderboard } from "./leaderboard";
-import { StakingStakes } from "./stakes";
+import { StakingDeposit } from "./deposit";
 import { IndexWrapper } from "../../index-wrapper";
 import { Staking } from "../../dashboard/mechanics/staking";
 
@@ -29,8 +29,8 @@ export const stakingRoutes: Array<RouteObject> = [
       {
         path: "/staking/stakes",
         children: [
-          { index: true, element: <StakingStakes /> },
-          { path: "/staking/stakes/:id", element: <StakingStakes /> },
+          { index: true, element: <StakingDeposit /> },
+          { path: "/staking/stakes/:id", element: <StakingDeposit /> },
         ],
       },
     ],

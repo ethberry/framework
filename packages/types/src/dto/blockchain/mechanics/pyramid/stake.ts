@@ -1,6 +1,6 @@
 import type { ISearchDto } from "@gemunion/types-collection";
 
-import { PyramidStakeStatus, TokenType } from "../../../../entities";
+import { PyramidRuleStatus, TokenType } from "../../../../entities";
 
 export interface IPyramidStakeItemSearchDto {
   tokenType: Array<TokenType>;
@@ -9,7 +9,7 @@ export interface IPyramidStakeItemSearchDto {
 
 export interface IPyramidStakesSearchDto extends ISearchDto {
   account: string;
-  stakeStatus: Array<PyramidStakeStatus>;
+  stakeStatus: Array<PyramidRuleStatus>;
   deposit: IPyramidStakeItemSearchDto;
   reward: IPyramidStakeItemSearchDto;
   startTimestamp: string;

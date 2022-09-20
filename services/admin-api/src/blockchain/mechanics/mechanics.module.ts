@@ -9,7 +9,7 @@ import { GradeModule } from "./grade/grade.module";
 import { DropModule } from "./drop/drop.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { PyramidModule } from "./pyramid/pyramid.module";
-import { WhitelistModule } from "./whitelist/whitelist.module";
+import { WaitlistModule } from "./waitlist/waitlist.module";
 
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { WhitelistModule } from "./whitelist/whitelist.module";
     DropModule,
     LotteryModule,
     PyramidModule,
-    WhitelistModule,
+    WaitlistModule,
   ],
 })
 export class MechanicsModule {}

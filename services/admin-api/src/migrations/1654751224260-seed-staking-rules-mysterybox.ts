@@ -116,7 +116,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         deposit_id,
         reward_id,
         external_id,
-        staking_status,
+        staking_rule_status,
         created_at,
         updated_at
       ) VALUES (

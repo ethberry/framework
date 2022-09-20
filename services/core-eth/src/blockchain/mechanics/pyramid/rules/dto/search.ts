@@ -3,8 +3,8 @@ import { IsArray, IsEnum, IsInt, IsOptional, Min, ValidateNested } from "class-v
 import { Transform, Type } from "class-transformer";
 
 import { SearchDto } from "@gemunion/collection";
-import type { IPyramidRuleItemSearchDto, IPyramidRuleSearchDto } from "@framework/types";
-import { PyramidStakingStatus, TokenType } from "@framework/types";
+import type { IPyramidRuleItemSearchDto, IPyramidRuleSearchDto, PyramidRuleStatus } from "@framework/types";
+import { PyramidDepositStatus, TokenType } from "@framework/types";
 
 export class PyramidRuleItemSearchDto implements IPyramidRuleItemSearchDto {
   @ApiPropertyOptional({
@@ -38,16 +38,16 @@ export class PyramidRuleItemSearchDto implements IPyramidRuleItemSearchDto {
 
 export class PyramidRuleSearchDto extends SearchDto implements IPyramidRuleSearchDto {
   @ApiPropertyOptional({
-    enum: PyramidStakingStatus,
+    enum: PyramidDepositStatus,
     isArray: true,
     // https://github.com/OAI/OpenAPI-Specification/issues/1706
     // format: "deepObject"
   })
   @IsOptional()
   @IsArray({ message: "typeMismatch" })
-  @Transform(({ value }) => value as Array<PyramidStakingStatus>)
-  @IsEnum(PyramidStakingStatus, { each: true, message: "badInput" })
-  public stakingStatus: Array<PyramidStakingStatus>;
+  @Transform(({ value }) => value as Array<PyramidDepositStatus>)
+  @IsEnum(PyramidDepositStatus, { each: true, message: "badInput" })
+  public pyramidRuleStatus: Array<PyramidRuleStatus>;
 
   @ApiPropertyOptional({
     type: PyramidRuleItemSearchDto,

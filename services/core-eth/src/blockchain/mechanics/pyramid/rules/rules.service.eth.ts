@@ -2,7 +2,13 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { IPyramidCreate, IPyramidUpdate, PyramidEventType, StakingStatus, TPyramidEventData } from "@framework/types";
+import {
+  IPyramidCreateEvent,
+  IPyramidUpdateEvent,
+  PyramidEventType,
+  StakingRuleStatus,
+  TPyramidEventData,
+} from "@framework/types";
 
 import { PyramidHistoryService } from "../history/history.service";
 import { PyramidRulesService } from "./rules.service";
@@ -18,7 +24,7 @@ export class PyramidRulesServiceEth {
     private readonly contractService: ContractService,
   ) {}
 
-  public async create(event: ILogEvent<IPyramidCreate>, context: Log): Promise<void> {
+  public async create(event: ILogEvent<IPyramidCreateEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { ruleId, externalId },
@@ -44,13 +50,13 @@ export class PyramidRulesServiceEth {
 
     Object.assign(pyramidRuleEntity, {
       externalId: ruleId,
-      stakingStatus: StakingStatus.ACTIVE,
+      stakingRuleStatus: StakingRuleStatus.ACTIVE,
     });
 
     await pyramidRuleEntity.save();
   }
 
-  public async update(event: ILogEvent<IPyramidUpdate>, context: Log): Promise<void> {
+  public async update(event: ILogEvent<IPyramidUpdateEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { ruleId, active },
@@ -75,7 +81,7 @@ export class PyramidRulesServiceEth {
     }
 
     Object.assign(pyramidRuleEntity, {
-      stakingStatus: active ? StakingStatus.ACTIVE : StakingStatus.INACTIVE,
+      stakingRuleStatus: active ? StakingRuleStatus.ACTIVE : StakingRuleStatus.INACTIVE,
     });
 
     await pyramidRuleEntity.save();

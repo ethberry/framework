@@ -2,7 +2,7 @@ import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IPyramidRule } from "./rule";
 
-export enum PyramidStakeStatus {
+export enum PyramidRuleStatus {
   ACTIVE = "ACTIVE",
   CANCELED = "CANCELED",
   COMPLETE = "COMPLETE",
@@ -11,7 +11,7 @@ export enum PyramidStakeStatus {
 export interface IPyramidStake extends IIdDateBase {
   account: string;
   externalId: string;
-  stakeStatus: PyramidStakeStatus;
+  stakeStatus: PyramidRuleStatus;
   startTimestamp: string;
   withdrawTimestamp: string;
   multiplier: number;

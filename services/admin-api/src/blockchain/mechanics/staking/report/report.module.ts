@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 
 import { StakingReportService } from "./report.service";
-import { StakingStakesController } from "./report.controller";
-import { StakingStakesModule } from "../stakes/stakes.module";
+import { StakingDepositController } from "./report.controller";
+import { StakingDepositModule } from "../deposit/deposit.module";
 
 @Module({
-  imports: [StakingStakesModule],
+  imports: [StakingDepositModule],
   providers: [StakingReportService],
-  controllers: [StakingStakesController],
+  controllers: [StakingDepositController],
   exports: [StakingReportService],
 })
 export class StakingReportModule {}

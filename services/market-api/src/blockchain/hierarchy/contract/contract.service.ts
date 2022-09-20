@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
@@ -6,8 +6,6 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { ContractStatus, IContractAutocompleteDto, ModuleType, TokenType } from "@framework/types";
 
 import { ContractEntity } from "./contract.entity";
-import { TemplateEntity } from "../template/template.entity";
-import { IContractUpdateDto } from "./interfaces";
 import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
@@ -117,24 +115,5 @@ export class ContractService {
     options?: FindOneOptions<ContractEntity>,
   ): Promise<ContractEntity | null> {
     return this.contractEntityRepository.findOne({ where, ...options });
-  }
-
-  public async update(
-    where: FindOptionsWhere<ContractEntity>,
-    dto: Partial<IContractUpdateDto>,
-  ): Promise<ContractEntity> {
-    const contractEntity = await this.findOne(where);
-
-    if (!contractEntity) {
-      throw new NotFoundException("contractNotFound");
-    }
-
-    Object.assign(contractEntity, dto);
-
-    return contractEntity.save();
-  }
-
-  public async delete(where: FindOptionsWhere<TemplateEntity>): Promise<ContractEntity> {
-    return this.update(where, { contractStatus: ContractStatus.INACTIVE });
   }
 }

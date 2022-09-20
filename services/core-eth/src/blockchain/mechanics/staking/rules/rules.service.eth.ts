@@ -3,19 +3,19 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  IStakingCreate,
-  IStakingDeposit,
-  IStakingFinish,
-  IStakingUpdate,
-  IStakingWithdraw,
+  IStakingCreateEvent,
+  IStakingDepositEvent,
+  IStakingFinishEvent,
+  IStakingUpdateEvent,
+  IStakingWithdrawEvent,
   StakingEventType,
-  StakingStatus,
+  StakingRuleStatus,
   TStakingEventData,
 } from "@framework/types";
 
 import { StakingHistoryService } from "../history/history.service";
 import { StakingRulesService } from "./rules.service";
-import { StakingStakesService } from "../stakes/stakes.service";
+import { StakingDepositService } from "../deposit/deposit.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
 @Injectable()
@@ -24,18 +24,19 @@ export class StakingRulesServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly stakingRulesService: StakingRulesService,
-    private readonly stakingStakesService: StakingStakesService,
+    private readonly stakingDepositService: StakingDepositService,
     private readonly historyService: StakingHistoryService,
     private readonly contractService: ContractService,
   ) {}
 
-  public async create(event: ILogEvent<IStakingCreate>, context: Log): Promise<void> {
+  public async create(event: ILogEvent<IStakingCreateEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { ruleId, externalId },
     } = event;
 
-    const stakingEntity = await this.stakingRulesService.findOne({ id: ~~externalId });
+    // const stakingEntity = await this.stakingRulesService.findOne({ id: ~~externalId });
+    const stakingEntity = await this.stakingRulesService.findOne({ externalId });
 
     if (!stakingEntity) {
       throw new NotFoundException("stakingRuleNotFound");
@@ -43,13 +44,13 @@ export class StakingRulesServiceEth {
 
     Object.assign(stakingEntity, {
       externalId: ruleId,
-      stakingStatus: StakingStatus.ACTIVE,
+      stakingRuleStatus: StakingRuleStatus.ACTIVE,
     });
 
     await stakingEntity.save();
   }
 
-  public async update(event: ILogEvent<IStakingUpdate>, context: Log): Promise<void> {
+  public async update(event: ILogEvent<IStakingUpdateEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { ruleId, active },
@@ -62,13 +63,13 @@ export class StakingRulesServiceEth {
     }
 
     Object.assign(stakingEntity, {
-      stakingStatus: active ? StakingStatus.ACTIVE : StakingStatus.INACTIVE,
+      stakingRuleStatus: active ? StakingRuleStatus.ACTIVE : StakingRuleStatus.INACTIVE,
     });
 
     await stakingEntity.save();
   }
 
-  public async start(event: ILogEvent<IStakingDeposit>, context: Log): Promise<void> {
+  public async start(event: ILogEvent<IStakingDepositEvent>, context: Log): Promise<void> {
     // TODO fix it!    emit StakingStart(stakeId, ruleId, _msgSender(), block.timestamp, tokenId);
     await this.updateHistory(event, context);
     const {
@@ -81,7 +82,7 @@ export class StakingRulesServiceEth {
       throw new NotFoundException("stakingRuleNotFound");
     }
 
-    await this.stakingStakesService.create({
+    await this.stakingDepositService.create({
       account: owner.toLowerCase(),
       externalId: stakingId,
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
@@ -89,11 +90,11 @@ export class StakingRulesServiceEth {
     });
   }
 
-  public async withdraw(event: ILogEvent<IStakingWithdraw>, context: Log): Promise<void> {
+  public async withdraw(event: ILogEvent<IStakingWithdrawEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
-  public async finish(event: ILogEvent<IStakingFinish>, context: Log): Promise<void> {
+  public async finish(event: ILogEvent<IStakingFinishEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

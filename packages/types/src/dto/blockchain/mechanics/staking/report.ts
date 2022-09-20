@@ -1,6 +1,6 @@
 import type { ISearchDto } from "@gemunion/types-collection";
 
-import { StakeStatus, TokenType } from "../../../../entities";
+import { StakingDepositStatus, TokenType } from "../../../../entities";
 
 export interface IStakingReportItemSearchDto {
   tokenType: TokenType;
@@ -11,7 +11,7 @@ export interface IStakingReportSearchDto extends ISearchDto {
   deposit: IStakingReportItemSearchDto;
   reward: IStakingReportItemSearchDto;
   account: string;
-  stakeStatus: Array<StakeStatus>;
+  stakingDepositStatus: Array<StakingDepositStatus>;
   startTimestamp: string;
   endTimestamp: string;
 }

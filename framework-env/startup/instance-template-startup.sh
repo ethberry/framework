@@ -13,7 +13,7 @@ image_time=$((($(date -d "now" +%s) - $(date --date=$(docker inspect --format='{
 
 if ((image_time > 15)); then
   echo 'awaiting docker Image to be pushed';
-  sudo sleep 75;
+  sudo sleep 180;
 fi
 
 sudo -H -u app docker pull gcr.io/halogen-framing-335807/framework-img:latest
@@ -25,3 +25,9 @@ sudo -H -u app docker run --rm \
     docker/compose:1.24.0 -f docker-compose-cloudbuild.yml up -d
 
 #select pg_terminate_backend(pid) from pg_stat_activity where datname='framework'; drop database framework; create database framework;
+# if db cleaned, run core-eth after migrations done
+#sudo -H -u app docker run --rm \
+#    -v /var/run/docker.sock:/var/run/docker.sock \
+#    -v "/home/app:/home/app" \
+#    -w="/home/app" \
+#    docker/compose:1.24.0 -f docker-compose-cloudbuild.yml up -d core-eth

@@ -3,12 +3,12 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
-  IFinalizedToken,
-  IPyramidDeposit,
-  IPyramidFinish,
-  IPyramidWithdraw,
+  IFinalizedTokenEvent,
+  IPyramidDepositEvent,
+  IPyramidFinishEvent,
+  IPyramidWithdrawEvent,
   PyramidEventType,
-  PyramidStakeStatus,
+  PyramidDepositStatus,
   TPyramidEventData,
 } from "@framework/types";
 
@@ -29,7 +29,7 @@ export class PyramidStakesServiceEth {
     private readonly contractService: ContractService,
   ) {}
 
-  public async start(event: ILogEvent<IPyramidDeposit>, context: Log): Promise<void> {
+  public async start(event: ILogEvent<IPyramidDepositEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { stakingId, ruleId, owner, startTimestamp },
@@ -77,7 +77,7 @@ export class PyramidStakesServiceEth {
     return stakeEntity;
   }
 
-  public async withdraw(event: ILogEvent<IPyramidWithdraw>, context: Log): Promise<void> {
+  public async withdraw(event: ILogEvent<IPyramidWithdrawEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { stakingId },
@@ -87,13 +87,13 @@ export class PyramidStakesServiceEth {
     const stakeEntity = await this.findStake(stakingId, address);
 
     Object.assign(stakeEntity, {
-      stakeStatus: PyramidStakeStatus.CANCELED, // TODO status FINISH instead ???
+      stakeStatus: PyramidDepositStatus.CANCELED, // TODO status FINISH instead ???
     });
 
     await stakeEntity.save();
   }
 
-  public async finish(event: ILogEvent<IPyramidFinish>, context: Log): Promise<void> {
+  public async finish(event: ILogEvent<IPyramidFinishEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     const {
       args: { stakingId },
@@ -103,13 +103,13 @@ export class PyramidStakesServiceEth {
     const stakeEntity = await this.findStake(stakingId, address);
 
     Object.assign(stakeEntity, {
-      stakeStatus: PyramidStakeStatus.COMPLETE,
+      stakeStatus: PyramidDepositStatus.COMPLETE,
     });
 
     await stakeEntity.save();
   }
 
-  public async finishToken(event: ILogEvent<IPyramidFinish | IFinalizedToken>, context: Log): Promise<void> {
+  public async finishToken(event: ILogEvent<IPyramidFinishEvent | IFinalizedTokenEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     // TODO cancel all stakes (or all TOKEN depost\reward stakes)
   }

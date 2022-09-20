@@ -75,12 +75,12 @@
       "createdAt": "Date",
       "price": "Price"
     },
-    "stakeStatus": {
+    "stakingDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
     },
-    "stakingStatus": {
+    "stakingRuleStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive",
       "NEW": "New"
@@ -116,6 +116,7 @@
       "back": "Back",
       "buy": "Buy now!",
       "cancel": "Cancel",
+      "claim": "Claim Reward",
       "copy": "Copy",
       "craft": "Craft",
       "create": "Create",
@@ -149,7 +150,6 @@
     },
     "labels": {
       "GRADE": "Grade",
-      "RARITY": "Rarity",
       "RARITY": "Rarity",
       "account": "Account",
       "address": "Address",
@@ -197,8 +197,8 @@
       "roundIds": "Round",
       "score": "Score",
       "sort": "Sort by",
-      "stakeStatus": "Status",
-      "stakingStatus": "Status",
+      "stakingDepositStatus": "Status",
+      "stakingRuleStatus": "Status",
       "startDate": "Start date",
       "startTimestamp": "Start date",
       "status": "Status",
@@ -246,7 +246,8 @@
       "release": "Release",
       "reward": "Reward",
       "transfer": "Transfer ownership",
-      "view": "View"
+      "view": "View",
+      "waitlist": "Waitlist"
     },
     "validations": {
       "badInput": "{label} is invalid",
@@ -321,7 +322,7 @@
         "pyramid": "Pyramid",
         "staking": "Staking",
         "vesting": "Vesting",
-        "whitelist": "Whitelist",
+        "waitlist": "Waitlist",
         "wrapper": "Token wrapper"
       },
       "title": "Dashboard"
@@ -474,16 +475,16 @@
     "mystery": {
       "box": {
         "price": "Price: {amount}",
-        "title": "Mysterybox Box: {title}"
+        "title": "Mystery Box: {title}"
       },
       "boxes": {
-        "title": "Mysterybox Boxes"
+        "title": "Mystery Boxes"
       },
       "contract": {
-        "title": "Mysterybox Contract: {title}"
+        "title": "Mystery Contract: {title}"
       },
       "contracts": {
-        "title": "Mysterybox Contracts"
+        "title": "Mystery Contracts"
       },
       "token": {
         "level": "Level: {GRADE}",
@@ -505,6 +506,17 @@
       "title": "Profile"
     },
     "pyramid": {
+      "leaderboard": {
+        "title": "Leaderboard"
+      },
+      "reward": "Reward",
+      "rules": {
+        "deposit": "Deposit",
+        "title": "Deposit rules"
+      },
+      "deposit": {
+        "title": "My Deposits"
+      },
       "title": "Pyramid"
     },
     "referral": {
@@ -523,17 +535,16 @@
       "title": "Referral program"
     },
     "staking": {
-      "deposit": "Deposit",
       "leaderboard": {
         "title": "Leaderboard"
       },
       "reward": "Reward",
       "rules": {
         "deposit": "Deposit",
-        "title": "Staking rules"
+        "title": "Deposit rules"
       },
-      "stakes": {
-        "title": "My Stakes"
+      "deposit": {
+        "title": "My Deposits"
       },
       "title": "Staking"
     },
@@ -541,8 +552,9 @@
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
     },
-    "whitelist": {
-      "title": "Whitelist"
+    "waitlist": {
+      "defaultItemTitle": "{account}",
+      "title": "Waitlist"
     },
     "wrapper": {
       "token": {

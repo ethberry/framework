@@ -1,13 +1,13 @@
 import { Module } from "@nestjs/common";
 
 import { PyramidReportService } from "./report.service";
-import { PyramidStakesController } from "./report.controller";
-import { PyramidStakesModule } from "../stakes/stakes.module";
+import { PyramidDepositController } from "./report.controller";
+import { PyramidDepositModule } from "../deposit/deposit.module";
 
 @Module({
-  imports: [PyramidStakesModule],
+  imports: [PyramidDepositModule],
   providers: [PyramidReportService],
-  controllers: [PyramidStakesController],
+  controllers: [PyramidDepositController],
   exports: [PyramidReportService],
 })
 export class PyramidReportModule {}

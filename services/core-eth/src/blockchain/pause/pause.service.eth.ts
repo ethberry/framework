@@ -2,7 +2,7 @@ import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@n
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractEventType, IPaused, TAccessListEventData } from "@framework/types";
+import { ContractEventType, IPausedEvent, TAccessListEventData } from "@framework/types";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { ContractHistoryService } from "../contract-history/contract-history.service";
 
@@ -15,7 +15,7 @@ export class PauseServiceEth {
     private readonly contractHistoryService: ContractHistoryService,
   ) {}
 
-  public async pause(event: ILogEvent<IPaused>, context: Log): Promise<void> {
+  public async pause(event: ILogEvent<IPausedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
 
     const { address } = context;

@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 
 import { PyramidRulesModule } from "./rules/rules.module";
-import { PyramidStakesModule } from "./stakes/stakes.module";
+import { PyramidDepositModule } from "./deposit/deposit.module";
 
 @Module({
-  imports: [PyramidRulesModule, PyramidStakesModule],
+  imports: [PyramidRulesModule, PyramidDepositModule],
 })
 export class PyramidModule {}

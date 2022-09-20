@@ -28,8 +28,14 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:LOTTERY
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'LOTTERY';`);
 
+    // MODULE:STAKING
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'STAKING';`);
+
     // MODULE:PYRAMID
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'PYRAMID';`);
+
+    // MODULE:WAITLIST
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'WAITLIST';`);
 
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (

@@ -10,7 +10,7 @@ import { AccessControlEntity } from "./blockchain/access-control/access-control.
 import { AccessControlHistoryEntity } from "./blockchain/access-control/history/history.entity";
 import { StakingHistoryEntity } from "./blockchain/mechanics/staking/history/history.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
-import { StakingStakesEntity } from "./blockchain/mechanics/staking/stakes/stakes.entity";
+import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
@@ -28,7 +28,7 @@ import { AssetComponentHistoryEntity } from "./blockchain/mechanics/asset/asset-
 import { AccessListHistoryEntity } from "./blockchain/access-list/history/history.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { PyramidHistoryEntity } from "./blockchain/mechanics/pyramid/history/history.entity";
-import { PyramidStakesEntity } from "./blockchain/mechanics/pyramid/stakes/stakes.entity";
+import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 
 // Check typeORM documentation for more information.
@@ -43,7 +43,7 @@ const config: PostgresConnectionOptions = {
     ContractHistoryEntity,
     VestingEntity,
     StakingRulesEntity,
-    StakingStakesEntity,
+    StakingDepositEntity,
     StakingHistoryEntity,
     ClaimEntity,
     GradeEntity,
@@ -63,7 +63,7 @@ const config: PostgresConnectionOptions = {
     LotteryTicketEntity,
     LotteryHistoryEntity,
     PyramidHistoryEntity,
-    PyramidStakesEntity,
+    PyramidDepositEntity,
     PyramidRulesEntity,
   ],
   synchronize: false,

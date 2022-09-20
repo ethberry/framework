@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateStakingRules1654751224200 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(`
-      CREATE TYPE ${ns}.staking_status_enum AS ENUM (
+      CREATE TYPE ${ns}.staking_rule_status_enum AS ENUM (
         'NEW',
         'ACTIVE',
         'INACTIVE'
@@ -54,8 +54,8 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           isNullable: true,
         },
         {
-          name: "staking_status",
-          type: `${ns}.staking_status_enum`,
+          name: "staking_rule_status",
+          type: `${ns}.staking_rule_status_enum`,
           default: "'NEW'",
         },
         {

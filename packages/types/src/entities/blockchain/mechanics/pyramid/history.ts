@@ -10,30 +10,30 @@ export enum PyramidEventType {
   FinalizedToken = "FinalizedToken",
 }
 
-export interface IWithdrawToken {
+export interface IWithdrawTokenEvent {
   token: string;
   amount: string;
 }
 
-export interface IFinalizedToken {
+export interface IFinalizedTokenEvent {
   token: string;
   amount: string;
 }
 
-export interface IPyramidCreate {
+export interface IPyramidCreateEvent {
   ruleId: string;
-  rule: IPyramidSol;
+  rule: IPyramidRule;
   externalId: string;
 }
 
-export interface IPyramidUpdate {
+export interface IPyramidUpdateEvent {
   ruleId: string;
   active: boolean;
 }
 
-export interface IPyramidSol {
-  deposit: IPyramidItemSol;
-  reward: IPyramidItemSol;
+interface IPyramidRule {
+  deposit: IPyramidRuleItem;
+  reward: IPyramidRuleItem;
   period: string;
   penalty: string;
   recurrent: boolean;
@@ -41,19 +41,19 @@ export interface IPyramidSol {
   externalId: string;
 }
 
-export interface IPyramidItemSol {
+interface IPyramidRuleItem {
   itemType: PyramidItemType;
   address: string;
   tokenId: string;
   amount: string;
 }
 
-export enum PyramidItemType {
+enum PyramidItemType {
   NATIVE = "0",
   ERC20 = "1",
 }
 
-export interface IPyramidDeposit {
+export interface IPyramidDepositEvent {
   stakingId: string;
   ruleId: string;
   owner: string;
@@ -61,20 +61,26 @@ export interface IPyramidDeposit {
   tokenId: string;
 }
 
-export interface IPyramidWithdraw {
+export interface IPyramidWithdrawEvent {
   stakingId: string;
   owner: string;
   withdrawTimestamp: string;
 }
 
-export interface IPyramidFinish {
+export interface IPyramidFinishEvent {
   stakingId: string;
   owner: string;
   withdrawTimestamp: string;
   multiplier: string;
 }
 
-export type TPyramidEventData = IPyramidCreate | IPyramidUpdate | IPyramidDeposit | IPyramidWithdraw | IFinalizedToken;
+export type TPyramidEventData =
+  | IPyramidCreateEvent
+  | IPyramidUpdateEvent
+  | IPyramidDepositEvent
+  | IPyramidWithdrawEvent
+  | IFinalizedTokenEvent
+  | IWithdrawTokenEvent;
 
 export interface IPyramidHistory extends IIdDateBase {
   address: string;

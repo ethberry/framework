@@ -9,7 +9,7 @@ import { mysteryRoutes } from "./mystery/routes";
 import { stakingRoutes } from "./staking/routes";
 import { vestingRoutes } from "./vesting/routes";
 import { pyramidRoutes } from "./pyramid/routes";
-import { whitelistRoutes } from "./whitelist/routes";
+import { waitlistRoutes } from "./waitlist/routes";
 
 export const mechanicsRoutes: Array<RouteObject> = [
   ...claimRoutes,
@@ -21,5 +21,5 @@ export const mechanicsRoutes: Array<RouteObject> = [
   ...stakingRoutes,
   ...vestingRoutes,
   ...pyramidRoutes,
-  ...whitelistRoutes,
+  ...waitlistRoutes,
 ];

@@ -39,7 +39,7 @@ export class SeedContractStakingAt1654751224100 implements MigrationInterface {
         '',
         'ACTIVE',
         '{ALLOWANCE}',
-        'SYSTEM',
+        'STAKING',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'

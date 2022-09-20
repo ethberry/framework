@@ -7,23 +7,23 @@ export enum AccessListEventType {
   UnWhitelisted = "UnWhitelisted",
 }
 
-export interface IBlacklisted {
+export interface IBlacklistedEvent {
   account: string;
 }
 
-export interface IUnBlacklisted {
+export interface IUnBlacklistedEvent {
   account: string;
 }
 
-export interface IWhitelisted {
+export interface IWhitelistedEvent {
   account: string;
 }
 
-export interface IUnWhitelisted {
+export interface IUnWhitelistedEvent {
   account: string;
 }
 
-export type TAccessListEventData = IBlacklisted | IUnBlacklisted | IWhitelisted | IUnWhitelisted;
+export type TAccessListEventData = IBlacklistedEvent | IUnBlacklistedEvent | IWhitelistedEvent | IUnWhitelistedEvent;
 
 export interface IAccessListHistory extends IIdDateBase {
   address: string;

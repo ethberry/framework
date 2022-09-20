@@ -20,8 +20,8 @@ export const ContractInput: FC<IContractInputProps> = props => {
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
     form.setValue(`${prefix}.${name}`, option?.id ?? 0);
-    form.setValue(`${prefix}.address`, option?.address ?? "0x");
-    form.setValue(`${prefix}.decimals`, option?.decimals ?? 0);
+    form.setValue(`${prefix}.contract.address`, option?.address ?? "0x");
+    form.setValue(`${prefix}.contract.decimals`, option?.decimals ?? 0);
   };
 
   useEffect(() => {

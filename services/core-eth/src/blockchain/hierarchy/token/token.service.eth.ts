@@ -1,9 +1,15 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
+import { providers } from "ethers";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
-import { ContractEventType, ITokenApprove, ITokenApprovedForAll, TContractEventData } from "@framework/types";
+import {
+  ContractEventType,
+  IERC721TokenApproveEvent,
+  IERC721TokenApprovedForAllEvent,
+  TContractEventData,
+} from "@framework/types";
 
 import { TokenService } from "./token.service";
 import { ContractHistoryService } from "../../contract-history/contract-history.service";
@@ -15,12 +21,13 @@ export class TokenServiceEth {
     @Inject(Logger)
     protected readonly loggerService: LoggerService,
     @Inject(ETHERS_RPC)
+    protected readonly jsonRpcProvider: providers.JsonRpcProvider,
     protected readonly contractService: ContractService,
     protected readonly tokenService: TokenService,
     protected readonly contractHistoryService: ContractHistoryService,
   ) {}
 
-  public async approval(event: ILogEvent<ITokenApprove>, context: Log): Promise<void> {
+  public async approval(event: ILogEvent<IERC721TokenApproveEvent>, context: Log): Promise<void> {
     const {
       args: { tokenId },
     } = event;
@@ -34,7 +41,7 @@ export class TokenServiceEth {
     await this.updateHistory(event, context, void 0, tokenEntity.id);
   }
 
-  public async approvalForAll(event: ILogEvent<ITokenApprovedForAll>, context: Log): Promise<void> {
+  public async approvalForAll(event: ILogEvent<IERC721TokenApprovedForAllEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 

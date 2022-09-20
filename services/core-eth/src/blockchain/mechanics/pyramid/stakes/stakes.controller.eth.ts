@@ -5,11 +5,11 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
-  IFinalizedToken,
-  IPyramidDeposit,
-  IPyramidFinish,
-  IPyramidWithdraw,
-  IWithdrawToken,
+  IFinalizedTokenEvent,
+  IPyramidDepositEvent,
+  IPyramidFinishEvent,
+  IPyramidWithdrawEvent,
+  IWithdrawTokenEvent,
   PyramidEventType,
 } from "@framework/types";
 
@@ -20,17 +20,17 @@ export class PyramidStakesControllerEth {
   constructor(private readonly pyramidServiceEth: PyramidStakesServiceEth) {}
 
   @EventPattern({ contractType: ContractType.PYRAMID, eventName: PyramidEventType.StakingStart })
-  public start(@Payload() event: ILogEvent<IPyramidDeposit>, @Ctx() context: Log): Promise<void> {
+  public start(@Payload() event: ILogEvent<IPyramidDepositEvent>, @Ctx() context: Log): Promise<void> {
     return this.pyramidServiceEth.start(event, context);
   }
 
   @EventPattern({ contractType: ContractType.PYRAMID, eventName: PyramidEventType.StakingWithdraw })
-  public withdraw(@Payload() event: ILogEvent<IPyramidWithdraw>, @Ctx() context: Log): Promise<void> {
+  public withdraw(@Payload() event: ILogEvent<IPyramidWithdrawEvent>, @Ctx() context: Log): Promise<void> {
     return this.pyramidServiceEth.withdraw(event, context);
   }
 
   @EventPattern({ contractType: ContractType.PYRAMID, eventName: PyramidEventType.StakingFinish })
-  public finish(@Payload() event: ILogEvent<IPyramidFinish>, @Ctx() context: Log): Promise<void> {
+  public finish(@Payload() event: ILogEvent<IPyramidFinishEvent>, @Ctx() context: Log): Promise<void> {
     return this.pyramidServiceEth.finish(event, context);
   }
 
@@ -45,7 +45,7 @@ export class PyramidStakesControllerEth {
     },
   ])
   public finishToken(
-    @Payload() event: ILogEvent<IWithdrawToken | IFinalizedToken>,
+    @Payload() event: ILogEvent<IWithdrawTokenEvent | IFinalizedTokenEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.pyramidServiceEth.finishToken(event, context);

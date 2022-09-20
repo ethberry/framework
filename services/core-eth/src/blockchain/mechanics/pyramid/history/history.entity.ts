@@ -4,7 +4,7 @@ import { IPyramidHistory, PyramidEventType, TPyramidEventData } from "@framework
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-@Entity({ schema: ns, name: "pyramid_history" })
+@Entity({ schema: ns, name: "pyramid_deposit_history" })
 export class PyramidHistoryEntity extends IdDateBaseEntity implements IPyramidHistory {
   @Column({ type: "varchar" })
   public address: string;

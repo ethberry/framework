@@ -6,11 +6,11 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
   ExchangeEventType,
-  IExchangeClaim,
-  IExchangeCraft,
-  IExchangeGrade,
-  IExchangeMysterybox,
-  IExchangePurchase,
+  IExchangeClaimEvent,
+  IExchangeCraftEvent,
+  IExchangeGradeEvent,
+  IExchangeMysteryEvent,
+  IExchangePurchaseEvent,
 } from "@framework/types";
 
 import { ExchangeServiceEth } from "./exchange.service.eth";
@@ -26,7 +26,7 @@ export class ExchangeControllerEth {
   ])
   public exchange(
     @Payload()
-    event: ILogEvent<IExchangeGrade | IExchangeMysterybox>,
+    event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.log(event, context);
@@ -35,7 +35,7 @@ export class ExchangeControllerEth {
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Craft }])
   public craft(
     @Payload()
-    event: ILogEvent<IExchangeCraft>,
+    event: ILogEvent<IExchangeCraftEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.craft(event, context);
@@ -44,7 +44,7 @@ export class ExchangeControllerEth {
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Claim }])
   public claim(
     @Payload()
-    event: ILogEvent<IExchangeClaim>,
+    event: ILogEvent<IExchangeClaimEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.claim(event, context);
@@ -53,7 +53,7 @@ export class ExchangeControllerEth {
   @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Purchase }])
   public purchase(
     @Payload()
-    event: ILogEvent<IExchangePurchase>,
+    event: ILogEvent<IExchangePurchaseEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.purchase(event, context);

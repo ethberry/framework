@@ -19,8 +19,6 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
 
   mapping(uint256 => Asset[]) internal _itemData;
 
-  Asset[] internal _items;
-
   event UnpackMysterybox(uint256 tokenId);
 
   constructor(

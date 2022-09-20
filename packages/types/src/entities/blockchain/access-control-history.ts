@@ -6,28 +6,28 @@ export enum AccessControlEventType {
   RoleAdminChanged = "RoleAdminChanged",
 }
 
-export interface IAccessControlRoleGranted {
+export interface IAccessControlRoleGrantedEvent {
   role: string;
   account: string;
   sender: string;
 }
 
-export interface IAccessControlRoleRevoked {
+export interface IAccessControlRoleRevokedEvent {
   role: string;
   account: string;
   sender: string;
 }
 
-export interface IAccessControlRoleAdminChanged {
+export interface IAccessControlRoleAdminChangedEvent {
   role: string;
   previousAdminRole: string;
   newAdminRole: string;
 }
 
 export type TAccessControlEventData =
-  | IAccessControlRoleGranted
-  | IAccessControlRoleRevoked
-  | IAccessControlRoleAdminChanged;
+  | IAccessControlRoleGrantedEvent
+  | IAccessControlRoleRevokedEvent
+  | IAccessControlRoleAdminChangedEvent;
 
 export interface IAccessControlHistory extends IIdDateBase {
   address: string;

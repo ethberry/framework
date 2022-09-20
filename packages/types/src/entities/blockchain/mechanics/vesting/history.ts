@@ -5,16 +5,16 @@ export enum VestingEventType {
   ERC20Released = "ERC20Released",
 }
 
-export interface IVestingEtherReleased {
+export interface IVestingEtherReleasedEvent {
   amount: string;
 }
 
-export interface IVestingERC20Released {
+export interface IVestingERC20ReleasedEvent {
   token: string;
   amount: string;
 }
 
-export type TVestingEventData = IVestingEtherReleased | IVestingERC20Released;
+export type TVestingEventData = IVestingEtherReleasedEvent | IVestingERC20ReleasedEvent;
 
 export interface IVestingHistory extends IIdDateBase {
   address: string;

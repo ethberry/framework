@@ -12,13 +12,13 @@ import {
   Erc20ContractFeatures,
   Erc721ContractFeatures,
   Erc998ContractFeatures,
-  IContractManagerERC1155TokenDeployed,
-  IContractManagerERC20TokenDeployed,
-  IContractManagerERC721TokenDeployed,
-  IContractManagerERC998TokenDeployed,
-  IContractManagerMysteryboxDeployed,
-  IContractManagerPyramidDeployed,
-  IContractManagerVestingDeployed,
+  IContractManagerERC1155TokenDeployedEvent,
+  IContractManagerERC20TokenDeployedEvent,
+  IContractManagerERC721TokenDeployedEvent,
+  IContractManagerERC998TokenDeployedEvent,
+  IContractManagerMysteryTokenDeployedEvent,
+  IContractManagerPyramidDeployedEvent,
+  IContractManagerVestingDeployedEvent,
   ModuleType,
   MysteryContractFeatures,
   PyramidContractFeatures,
@@ -64,7 +64,7 @@ export class ContractManagerServiceEth {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
 
-  public async vesting(event: ILogEvent<IContractManagerVestingDeployed>, ctx: Log): Promise<void> {
+  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, account, startTimestamp, duration, templateId },
     } = event;
@@ -86,7 +86,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployed>, ctx: Log): Promise<void> {
+  public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, name, symbol, cap, featureIds },
     } = event;
@@ -131,7 +131,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployed>, ctx: Log): Promise<void> {
+  public async erc721Token(event: ILogEvent<IContractManagerERC721TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, name, symbol, royalty, baseTokenURI, featureIds },
     } = event;
@@ -166,7 +166,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployed>, ctx: Log): Promise<void> {
+  public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, name, symbol, royalty, baseTokenURI, featureIds },
     } = event;
@@ -201,7 +201,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployed>, ctx: Log): Promise<void> {
+  public async erc1155Token(event: ILogEvent<IContractManagerERC1155TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, baseTokenURI, featureIds },
     } = event;
@@ -229,7 +229,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async mysterybox(event: ILogEvent<IContractManagerMysteryboxDeployed>, ctx: Log): Promise<void> {
+  public async mysterybox(event: ILogEvent<IContractManagerMysteryTokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, name, symbol, baseTokenURI, royalty, featureIds },
     } = event;
@@ -261,7 +261,7 @@ export class ContractManagerServiceEth {
     });
   }
 
-  public async pyramid(event: ILogEvent<IContractManagerPyramidDeployed>, ctx: Log): Promise<void> {
+  public async pyramid(event: ILogEvent<IContractManagerPyramidDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, featureIds },
     } = event;

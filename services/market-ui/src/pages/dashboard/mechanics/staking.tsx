@@ -28,7 +28,7 @@ export const Staking: FC = () => {
             <Savings />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.staking.stakes.title" />
+            <FormattedMessage id="pages.staking.deposit.title" />
           </ListItemText>
         </ListItem>
         <ListItem button component={RouterLink} to="/staking/leaderboard">

@@ -4,7 +4,7 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
-import { IMysteryboxUnpack, ITokenTransfer, TokenAttributes, TokenStatus } from "@framework/types";
+import { IMysteryUnpackEvent, IERC721TokenTransferEvent, TokenAttributes, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
 
@@ -31,10 +31,10 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     protected readonly contractHistoryService: ContractHistoryService,
     protected readonly mysteryboxService: MysteryBoxService,
   ) {
-    super(loggerService, contractService, tokenService, contractHistoryService);
+    super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
   }
 
-  public async transfer(event: ILogEvent<ITokenTransfer>, context: Log): Promise<void> {
+  public async transfer(event: ILogEvent<IERC721TokenTransferEvent>, context: Log): Promise<void> {
     const {
       args: { from, to, tokenId },
     } = event;
@@ -105,7 +105,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
     //   : await mysteryboxTokenEntity.mystery.template.save();
   }
 
-  public async unpack(event: ILogEvent<IMysteryboxUnpack>, context: Log): Promise<void> {
+  public async unpack(event: ILogEvent<IMysteryUnpackEvent>, context: Log): Promise<void> {
     const {
       args: { collection, tokenId },
     } = event;
