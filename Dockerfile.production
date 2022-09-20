@@ -1,11 +1,11 @@
-FROM node:16-alpine AS base
+FROM node:16 AS base
 ENV NODE_OPTIONS=--max-old-space-size=7168
 
 LABEL stage=base
-
-RUN apk add \
+RUN apt-get update
+RUN apt-get install -y \
   python3 \
-  build-base \
+  build-essential \
   git \
   bash \
   curl \
@@ -28,3 +28,4 @@ RUN npm i --only=production
 RUN rm /home/node/framework/lerna.json && echo '{"packages": ["packages/*", "services/*", "microservices/*", "contracts/*"], "version": "independent"}' >> /home/node/framework/lerna.json
 
 RUN npm run docker:bootstrap
+RUN npm run docker:build
