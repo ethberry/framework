@@ -2,12 +2,7 @@ import { Logger, Module, OnModuleDestroy } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
-import {
-  AccessControlEventType,
-  ContractEventType,
-  ContractType,
-  ExchangeEventType,
-} from "@framework/types";
+import { AccessControlEventType, ContractEventType, ContractType, ExchangeEventType } from "@framework/types";
 
 import { WaitlistLogService } from "./log.service";
 

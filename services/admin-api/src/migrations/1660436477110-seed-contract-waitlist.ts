@@ -39,7 +39,7 @@ export class SeedContractWaitlistAt1660436477110 implements MigrationInterface {
         '',
         'ACTIVE',
         '{}',
-        'PYRAMID',
+        'WAITLIST',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
