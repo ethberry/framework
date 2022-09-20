@@ -8,7 +8,6 @@
     "@chainlink/contracts": "0.5.0",
     "@gemunion/constants": "0.8.5",
     "@gemunion/contracts": "0.7.7",
-    "@framework/genes": "0.0.1",
     "@gemunion/utils-eth": "0.0.6",
     "@nomicfoundation/hardhat-network-helpers": "1.0.6",
     "@nomiclabs/hardhat-ethers": "2.1.1",
