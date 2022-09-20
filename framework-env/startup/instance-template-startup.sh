@@ -13,7 +13,7 @@ image_time=$((($(date -d "now" +%s) - $(date --date=$(docker inspect --format='{
 
 if ((image_time > 15)); then
   echo 'awaiting docker Image to be pushed';
-  sudo sleep 180;
+  sudo sleep 240;
 fi
 
 sudo -H -u app docker pull gcr.io/halogen-framing-335807/framework-img:latest
