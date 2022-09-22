@@ -37,7 +37,7 @@ export class WrapperControllerEth {
     return this.tokenServiceEth.approvalForAll(event, context);
   }
 
-  @EventPattern({ contractType: ContractType.ERC721_TOKEN, eventName: ContractEventType.Transfer })
+  @EventPattern({ contractType: ContractType.WRAPPER, eventName: ContractEventType.Transfer })
   public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
     return this.erc721TokenServiceEth.transfer(event, context);
   }

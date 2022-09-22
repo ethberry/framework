@@ -6,6 +6,7 @@
 
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
@@ -14,7 +15,12 @@ import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
 
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
 contract ExchangeUtils {
+  using Address for address;
+  using SafeERC20 for IERC20;
+
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
   function spend(
@@ -37,9 +43,20 @@ contract ExchangeUtils {
     for (uint256 i = 0; i < length; i++) {
       Asset memory ingredient = price[i];
       if (ingredient.tokenType == TokenType.NATIVE) {
-        require(totalAmount == msg.value, "Exchange: Wrong amount");
+        if (account == address(this)) {
+          if (totalAmount > 0) {
+            Address.sendValue(payable(receiver), totalAmount);
+            totalAmount = 0;
+          }
+        } else {
+          require(totalAmount == msg.value, "Exchange: Wrong amount");
+        }
       } else if (ingredient.tokenType == TokenType.ERC20) {
-        IERC20(ingredient.token).transferFrom(account, receiver, ingredient.amount);
+        if (account == address(this)) {
+          IERC20(ingredient.token).transfer(receiver, ingredient.amount);
+        } else {
+          SafeERC20.safeTransferFrom(IERC20(ingredient.token), account, receiver, ingredient.amount);
+        }
       } else if (ingredient.tokenType == TokenType.ERC721 || ingredient.tokenType == TokenType.ERC998) {
         IERC721(ingredient.token).safeTransferFrom(account, receiver, ingredient.tokenId);
       } else if (ingredient.tokenType == TokenType.ERC1155) {

@@ -37,3 +37,12 @@ export const emptyItem = {
     } as IAssetComponent,
   ],
 } as IAsset;
+
+export const emptyToken = [
+  {
+    tokenType: 2,
+    token: "",
+    tokenId: "100111",
+    amount: "1",
+  },
+];

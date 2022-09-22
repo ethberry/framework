@@ -7,7 +7,7 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractWrapperAt1563804000170 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_SIMPLE_ADDR || wallet;
+    const erc721ContractWrapperAddress = process.env.ERC721_WRAPPER_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

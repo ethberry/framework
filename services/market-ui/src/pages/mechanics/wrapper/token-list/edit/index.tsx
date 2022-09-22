@@ -1,19 +1,48 @@
 import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { IAsset, TokenType } from "@framework/types";
+import { IAssetComponent, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../../components/inputs/price";
 import { TemplateInput } from "./template-input";
 import { ContractInput } from "./contract-input";
 
+export interface ITokenAssetComponent extends IAssetComponent {
+  externalId?: string;
+}
+
+export interface ITokenAsset {
+  components: Array<ITokenAssetComponent>;
+}
+
 export interface ICreateWrappedToken {
   tokenType: TokenType;
-  address: string;
+  contract: {
+    address: string;
+  };
   contractId: number;
   templateId: number;
-  item: IAsset;
+  item: ITokenAsset;
 }
+
+export const emptyItems = {
+  components: [
+    {
+      tokenType: TokenType.NATIVE,
+      contractId: 0,
+      contract: {
+        decimals: 18,
+        contractType: TokenType.NATIVE,
+      },
+      templateId: 0,
+      template: {
+        title: "",
+      },
+      amount: "0",
+      externalId: "0",
+    } as ITokenAssetComponent,
+  ],
+} as ITokenAsset;
 
 export interface IWrapperEditDialogProps {
   open: boolean;
@@ -25,21 +54,21 @@ export interface IWrapperEditDialogProps {
 export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { item } = initialValues;
+  const { item, tokenType, contract, templateId } = initialValues;
 
-  const fixedValues = { item };
+  const fixedValues = { item, tokenType, contract, templateId };
 
   return (
     <FormDialog
       initialValues={fixedValues}
-      validationSchema={validationSchema}
+      // validationSchema={validationSchema}
       message="dialogs.create"
       testId="WrapperEditForm"
       {...rest}
     >
       <ContractInput />
       <TemplateInput />
-      <PriceInput prefix="item" />
+      <PriceInput prefix="item" multiple />
     </FormDialog>
   );
 };

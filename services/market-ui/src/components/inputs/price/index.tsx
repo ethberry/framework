@@ -4,13 +4,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Box, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 import { Add, Delete } from "@mui/icons-material";
 
-import { IAssetComponent, ModuleType, TokenType } from "@framework/types";
+import { ModuleType, TokenType } from "@framework/types";
 
-import { emptyItem, emptyPrice } from "./empty-price";
+import { emptyPrice } from "./empty-price";
 import { TokenTypeInput } from "./token-type-input";
 import { ContractInput } from "./contract-input";
 import { TokenInput } from "./token-input";
 import { AmountInput } from "./amount-input";
+import { emptyItems, ITokenAssetComponent } from "../../../pages/mechanics/wrapper/token-list/edit";
 
 export interface IPriceEditDialogProps {
   prefix: string;
@@ -32,7 +33,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
 
   const handleOptionAdd = (): (() => void) => (): void => {
     const newValue = get(form.getValues(), nestedPrefix);
-    newValue.push((ancestorPrefix === "price" ? emptyPrice : emptyItem).components[0]);
+    newValue.push((ancestorPrefix === "price" ? emptyPrice : emptyItems).components[0]);
     form.setValue(nestedPrefix, newValue);
   };
 
@@ -48,8 +49,9 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
     if (!values) {
       return;
     }
-    values.forEach((value: IAssetComponent, i: number) => {
+    values.forEach((value: ITokenAssetComponent, i: number) => {
       form.setValue(`${nestedPrefix}[${i}].decimals`, value.contract?.decimals);
+      form.setValue(`${nestedPrefix}[${i}].address`, value.contract?.address);
     });
   }, [values]);
 
@@ -59,7 +61,7 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
         <FormattedMessage id={`form.labels.${ancestorPrefix}`} />
       </Typography>
 
-      {values?.map((o: IAssetComponent, i: number) => (
+      {values?.map((o: ITokenAssetComponent, i: number) => (
         <Box
           key={`${o.contractId}_${o.templateId}_${i}`}
           mt={1}
