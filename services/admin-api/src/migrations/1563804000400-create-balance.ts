@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateBalanceTable1563804000400 implements MigrationInterface {
+export class CreateBalance1563804000400 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
       name: `${ns}.balance`,

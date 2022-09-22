@@ -30,6 +30,7 @@
     "deposit": "Deposit",
     "edit": "Edit",
     "fund": "Fund",
+    "join": "Join",
     "reward": "Reward",
     "sell": "Sell",
     "transfer": "Transfer",
@@ -181,6 +182,7 @@
       "item": "Item",
       "language": "Language",
       "level": "Level",
+      "listId": "List ID",
       "maxPrice": "Max. price",
       "minPrice": "Min. price",
       "mom": "Mom",
@@ -223,6 +225,7 @@
       "createdAt": "Registered",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
+      "listId": "1",
       "maxPrice": "1",
       "minAmount": "0.01",
       "minPrice": "1",
@@ -506,6 +509,9 @@
       "title": "Profile"
     },
     "pyramid": {
+      "deposit": {
+        "title": "My Deposits"
+      },
       "leaderboard": {
         "title": "Leaderboard"
       },
@@ -513,9 +519,6 @@
       "rules": {
         "deposit": "Deposit",
         "title": "Deposit rules"
-      },
-      "deposit": {
-        "title": "My Deposits"
       },
       "title": "Pyramid"
     },
@@ -535,6 +538,9 @@
       "title": "Referral program"
     },
     "staking": {
+      "deposit": {
+        "title": "My Deposits"
+      },
       "leaderboard": {
         "title": "Leaderboard"
       },
@@ -543,9 +549,6 @@
         "deposit": "Deposit",
         "title": "Deposit rules"
       },
-      "deposit": {
-        "title": "My Deposits"
-      },
       "title": "Staking"
     },
     "vesting": {
@@ -553,7 +556,9 @@
       "title": "Vesting"
     },
     "waitlist": {
-      "defaultItemTitle": "{account}",
+      "item": {
+        "title": "Waitlist"
+      },
       "title": "Waitlist"
     },
     "wrapper": {

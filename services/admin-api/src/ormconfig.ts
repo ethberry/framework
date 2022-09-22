@@ -36,7 +36,8 @@ import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
-import { WaitlistEntity } from "./blockchain/mechanics/waitlist/waitlist.entity";
+import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
+import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 
 import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
 import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
@@ -82,7 +83,7 @@ import { SeedTokenMysteryAt1563804000360 } from "./migrations/1563804000360-seed
 import { SeedTokenWrapperAt1563804000370 } from "./migrations/1563804000370-seed-token-wrapper";
 import { SeedTokenLotteryAt1563804000380 } from "./migrations/1563804000380-seed-token-lottery";
 
-import { CreateBalanceTable1563804000400 } from "./migrations/1563804000400-create-balance";
+import { CreateBalance1563804000400 } from "./migrations/1563804000400-create-balance";
 import { SeedBalanceErc20At1563804020420 } from "./migrations/1563804000420-seed-balance-erc20";
 import { SeedBalanceErc721At1563804020430 } from "./migrations/1563804000430-seed-balance-erc721";
 import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-seed-balance-erc998";
@@ -106,7 +107,7 @@ import { CreateVesting1653616433210 } from "./migrations/1653616433210-create-ve
 import { SeedVesting1653616433210 } from "./migrations/1653616433220-seed-vesting";
 import { CreateVestingHistory1563804010230 } from "./migrations/1653616433230-create-vesting-history";
 
-import { CreateClaimTable1653616447810 } from "./migrations/1653616447810-create-claim";
+import { CreateClaim1653616447810 } from "./migrations/1653616447810-create-claim";
 import { SeedClaimErc721At1653616447830 } from "./migrations/1653616447830-seed-claim-erc721";
 import { SeedClaimErc998At1653616447840 } from "./migrations/1653616447840-seed-claim-erc998";
 import { SeedClaimErc1155At1653616447850 } from "./migrations/1653616447850-seed-claim-erc1155";
@@ -185,11 +186,14 @@ import { SeedPyramidRulesErc20At1660436477220 } from "./migrations/1660436477220
 import { CreatePyramidDeposit1660436477300 } from "./migrations/1660436477300-create-pyramid-deposit";
 import { CreatePyramidDepositHistory1660436477400 } from "./migrations/1660436477400-create-pyramid-deposit-history";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
-
-import { CreateWaitlistTable1663047650500 } from "./migrations/1663047650500-create-waitlist";
 import { SeedPyramidDepositNativeAt1660436477310 } from "./migrations/1660436477310-seed-pyramid-deposit-native";
 import { SeedPyramidDepositErc20At1660436477320 } from "./migrations/1660436477320-seed-pyramid-deposit-erc20";
-import { SeedContractWaitlistAt1660436477110 } from "./migrations/1660436477110-seed-contract-waitlist";
+
+import { SeedContractWaitlistAt1663047650100 } from "./migrations/1663047650100-seed-contract-waitlist";
+import { CreateWaitlistList1663047650200 } from "./migrations/1663047650200-create-waitlist-list";
+import { SeedWaitlistListAt1663047650210 } from "./migrations/1663047650210-seed-waitlist-list";
+import { CreateWaitlistItem1663047650300 } from "./migrations/1663047650300-create-waitlist-item";
+import { SeedWaitlistItemAt1663047650310 } from "./migrations/1663047650310-seed-waitlist-item";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -226,7 +230,8 @@ const config: PostgresConnectionOptions = {
     ExchangeHistoryEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
-    WaitlistEntity,
+    WaitlistItemEntity,
+    WaitlistListEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,
@@ -293,7 +298,7 @@ const config: PostgresConnectionOptions = {
     SeedTokenWrapperAt1563804000370,
     SeedTokenLotteryAt1563804000380,
 
-    CreateBalanceTable1563804000400,
+    CreateBalance1563804000400,
     SeedBalanceErc20At1563804020420,
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
@@ -323,7 +328,7 @@ const config: PostgresConnectionOptions = {
     SeedAccessList1653616447340,
     CreateAccessListHistory1653616447350,
 
-    CreateClaimTable1653616447810,
+    CreateClaim1653616447810,
     SeedClaimErc721At1653616447830,
     SeedClaimErc998At1653616447840,
     SeedClaimErc1155At1653616447850,
@@ -385,8 +390,6 @@ const config: PostgresConnectionOptions = {
     SeedLotteryTicketsAt1660436477030,
     CreateLotteryHistoryAt1660436477040,
 
-    CreateWaitlistTable1663047650500,
-
     SeedContractPyramidAt1660436477100,
     CreatePyramidRules1660436477200,
     SeedPyramidRulesNativeAt1660436477210,
@@ -395,7 +398,12 @@ const config: PostgresConnectionOptions = {
     SeedPyramidDepositNativeAt1660436477310,
     SeedPyramidDepositErc20At1660436477320,
     CreatePyramidDepositHistory1660436477400,
-    SeedContractWaitlistAt1660436477110,
+
+    SeedContractWaitlistAt1663047650100,
+    CreateWaitlistList1663047650200,
+    SeedWaitlistListAt1663047650210,
+    CreateWaitlistItem1663047650300,
+    SeedWaitlistItemAt1663047650310,
   ],
 };
 

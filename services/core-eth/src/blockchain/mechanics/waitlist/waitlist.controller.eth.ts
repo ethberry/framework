@@ -3,7 +3,7 @@ import { Ctx, EventPattern, Payload } from "@nestjs/microservices";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import { ContractType, IClaimRewardEvent, IRewardSetEvent, ExchangeEventType } from "@framework/types";
+import { ContractType, ExchangeEventType, IClaimRewardEvent, IRewardSetEvent } from "@framework/types";
 
 import { WaitlistServiceEth } from "./waitlist.service.eth";
 

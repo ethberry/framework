@@ -15,11 +15,11 @@ import {
   Erc20ContractDeployDto,
   Erc721ContractDeployDto,
   Erc998ContractDeployDto,
-  MysteryContractDeployDto, PyramidContractDeployDto,
-  VestingDeployDto
+  MysteryContractDeployDto,
+  PyramidContractDeployDto,
+  VestingDeployDto,
 } from "./dto";
 import { UserEntity } from "../../user/user.entity";
-import { Pyramid } from "@framework/core-contracts";
 
 @ApiBearerAuth()
 @Controller("/contract-manager")

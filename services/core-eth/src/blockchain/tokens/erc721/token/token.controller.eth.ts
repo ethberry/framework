@@ -5,8 +5,8 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import type {
   IERC721RandomRequestEvent,
-  IERC721TokenApproveEvent,
   IERC721TokenApprovedForAllEvent,
+  IERC721TokenApproveEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
 } from "@framework/types";

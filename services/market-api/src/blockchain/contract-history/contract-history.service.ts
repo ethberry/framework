@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ContractEventType, IErc1155TokenApprovalForAllEvent, IContractHistorySearchDto } from "@framework/types";
+import { ContractEventType, IContractHistorySearchDto, IErc1155TokenApprovalForAllEvent } from "@framework/types";
 
 import { ContractHistoryEntity } from "./contract-history.entity";
 import { UserEntity } from "../../user/user.entity";

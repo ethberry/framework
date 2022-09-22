@@ -23,7 +23,7 @@ export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
 export * from "./mechanics/vesting/deploy";
 export * from "./mechanics/vesting/search";
-export * from "./mechanics/waitlist/waitlist";
+export * from "./mechanics/waitlist/search";
 export * from "./mechanics/pyramid/contract/deploy";
 export * from "./mechanics/pyramid/chart";
 export * from "./mechanics/pyramid/leaderboard";

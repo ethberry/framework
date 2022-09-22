@@ -1,12 +1,27 @@
 import type { RouteObject } from "react-router-dom";
 
+import { WaitlistItem } from "./item";
+import { IndexWrapper } from "../../index-wrapper";
+import { Waitlist } from "../../dashboard/mechanics/waitlist";
 import { WalletWrapper } from "../../wallet-wrapper";
-import { Waitlist } from "./main";
 
 export const waitlistRoutes: Array<RouteObject> = [
   {
     path: "/waitlist",
-    element: <WalletWrapper />,
-    children: [{ index: true, element: <Waitlist /> }],
+    children: [
+      {
+        index: true,
+        element: (
+          <IndexWrapper index="waitlist">
+            <Waitlist />
+          </IndexWrapper>
+        ),
+      },
+      {
+        path: "/waitlist/item",
+        element: <WalletWrapper />,
+        children: [{ index: true, element: <WaitlistItem /> }],
+      },
+    ],
   },
 ];

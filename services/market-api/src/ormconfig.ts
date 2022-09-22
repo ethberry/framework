@@ -25,7 +25,8 @@ import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticke
 import { MysteryBoxEntity } from "./blockchain/mechanics/mystery/box/box.entity";
 import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
-import { WaitlistEntity } from "./blockchain/mechanics/waitlist/waitlist.entity";
+import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
+import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/deposit.entity";
 
@@ -58,7 +59,8 @@ const config: PostgresConnectionOptions = {
     LotteryTicketEntity,
     MysteryBoxEntity,
     ExchangeHistoryEntity,
-    WaitlistEntity,
+    WaitlistListEntity,
+    WaitlistItemEntity,
     PyramidRulesEntity,
     PyramidDepositEntity,
   ],

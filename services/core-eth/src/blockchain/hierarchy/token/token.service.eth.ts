@@ -6,8 +6,8 @@ import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
   ContractEventType,
-  IERC721TokenApproveEvent,
   IERC721TokenApprovedForAllEvent,
+  IERC721TokenApproveEvent,
   TContractEventData,
 } from "@framework/types";
 

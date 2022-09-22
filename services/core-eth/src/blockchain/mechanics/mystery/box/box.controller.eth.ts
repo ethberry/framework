@@ -6,10 +6,10 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractEventType,
   ContractType,
-  IMysteryUnpackEvent,
-  IERC721TokenApproveEvent,
   IERC721TokenApprovedForAllEvent,
+  IERC721TokenApproveEvent,
   IERC721TokenTransferEvent,
+  IMysteryUnpackEvent,
 } from "@framework/types";
 
 import { MysteryBoxServiceEth } from "./box.service.eth";

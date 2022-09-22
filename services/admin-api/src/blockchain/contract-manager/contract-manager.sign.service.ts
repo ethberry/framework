@@ -14,11 +14,11 @@ import {
   IErc721ContractDeployDto,
   IErc998ContractDeployDto,
   IMysteryContractDeployDto,
+  IPyramidContractDeployDto,
   IVestingDeployDto,
   MysteryContractFeatures,
   PyramidContractFeatures,
   VestingContractTemplate,
-  IPyramidContractDeployDto,
 } from "@framework/types";
 
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";

@@ -4,7 +4,7 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import { ETHERS_RPC, ILogEvent } from "@gemunion/nestjs-ethers";
 
-import { IMysteryUnpackEvent, IERC721TokenTransferEvent, TokenAttributes, TokenStatus } from "@framework/types";
+import { IERC721TokenTransferEvent, IMysteryUnpackEvent, TokenAttributes, TokenStatus } from "@framework/types";
 
 import { getMetadata } from "../../../../common/utils";
 

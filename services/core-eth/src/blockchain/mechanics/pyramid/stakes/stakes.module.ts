@@ -1,4 +1,4 @@
-import { Module, Logger, forwardRef } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { PyramidStakesService } from "./stakes.service";

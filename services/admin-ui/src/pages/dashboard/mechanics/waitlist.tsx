@@ -15,12 +15,20 @@ export const Waitlist: FC = () => {
           </ListSubheader>
         }
       >
-        <ListItem button component={RouterLink} to="/waitlist">
+        <ListItem button component={RouterLink} to="/waitlist/list">
           <ListItemIcon>
             <TimerOutlined />
           </ListItemIcon>
           <ListItemText>
-            <FormattedMessage id="pages.waitlist.title" />
+            <FormattedMessage id="pages.waitlist.list.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/waitlist/item">
+          <ListItemIcon>
+            <TimerOutlined />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.waitlist.item.title" />
           </ListItemText>
         </ListItem>
       </List>

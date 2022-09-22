@@ -76,7 +76,7 @@ export class ContractManagerService {
       throw new NotFoundException("entityNotFound");
     }
 
-    Object.assign(contractManagerEntity, { dto });
+    Object.assign(contractManagerEntity, dto);
 
     return contractManagerEntity.save();
   }

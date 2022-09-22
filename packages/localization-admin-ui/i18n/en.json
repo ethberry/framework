@@ -27,8 +27,8 @@
   },
   "dialogs": {
     "blacklist": "Add to blacklist",
-    "confirmation": "Please confirm",
     "claim": "Claim",
+    "confirmation": "Please confirm",
     "create": "Create",
     "delete": "Delete `{title}`?",
     "deploy": "Deploy",
@@ -83,13 +83,13 @@
       "EXTERNAL": "External",
       "GENES": "Genes",
       "LINEAR_REFERRAL": "LINEAR REFERRAL",
+      "LINEAR_REFERRAL": "LINEAR REFERRAL",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
       "RANDOM": "Random",
       "SOULBOUND": "Soulbound",
-      "UPGRADEABLE": "Upgradeable",
-      "LINEAR_REFERRAL": "LINEAR REFERRAL"
+      "UPGRADEABLE": "Upgradeable"
     },
     "contractStatus": {
       "ACTIVE": "Active",
@@ -128,6 +128,11 @@
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
     },
+    "pyramidDepositStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
+    },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
       "DEPOSITOR_ROLE": "DEPOSITOR_ROLE",
@@ -137,11 +142,6 @@
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
     },
     "stakingDepositStatus": {
-      "ACTIVE": "Active",
-      "CANCELED": "Canceled",
-      "COMPLETE": "Complete"
-    },
-    "pyramidDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
@@ -193,8 +193,8 @@
       "add": "Add",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
-      "create": "Create",
       "claim": "Claim",
+      "create": "Create",
       "delete": "Delete",
       "deploy": "Deploy",
       "disconnect": "Disconnect",
@@ -282,7 +282,6 @@
       "listId": "List ID",
       "maxStakes": "Max Stakes",
       "mysteryboxStatus": "Status",
-      "maxStakes": "Max Stakes",
       "name": "Name",
       "numbers": "Numbers",
       "owner": "Owner",
@@ -293,6 +292,8 @@
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
+      "pyramidDepositStatus": "Status",
+      "pyramidRuleStatus": "Status",
       "random": "Random",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
@@ -302,9 +303,7 @@
       "roundIds": "Round",
       "royalty": "Royalty",
       "slug": "Slug",
-      "pyramidDepositStatus": "Status",
       "stakingDepositStatus": "Status",
-      "pyramidRuleStatus": "Status",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
@@ -590,11 +589,11 @@
       "chart": {
         "title": "Chart"
       },
-      "report": {
-        "title": "Report"
-      },
       "contracts": {
         "title": "Pyramid Contracts"
+      },
+      "report": {
+        "title": "Report"
       },
       "rules": {
         "activate": "Activate rule",
@@ -632,13 +631,19 @@
       "title": "Vesting"
     },
     "waitlist": {
-      "defaultItemTitle": "{account}",
+      "item": {
+        "defaultItemTitle": "{account}",
+        "title": "Accounts"
+      },
+      "list": {
+        "title": "Lists"
+      },
       "title": "Waitlist"
     }
   },
   "snackbar": {
-    "active": "Successfully activated",
     "accountNotFound": "Account not found",
+    "active": "Successfully activated",
     "approved": "Successfully approved",
     "blockchainError": "Blockchain error",
     "contractNotFound": "Contract not found",
@@ -654,8 +659,8 @@
     "insufficientPermissions": "Insufficient permissions",
     "internalServerError": "Internal Server Error",
     "invite": "Successfully invited",
-    "loaded": "Successfully loaded",
     "listNotFound": "Waitlist not found",
+    "loaded": "Successfully loaded",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
     "recaptchaBadRequest": "The request is invalid or malformed.",

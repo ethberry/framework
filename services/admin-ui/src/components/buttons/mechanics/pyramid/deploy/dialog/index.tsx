@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { SelectInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { SelectInput } from "@gemunion/mui-inputs-core";
 import { IContract, IPyramidContractDeployDto, PyramidContractFeatures } from "@framework/types";
 
 import { validationSchema } from "./validation";

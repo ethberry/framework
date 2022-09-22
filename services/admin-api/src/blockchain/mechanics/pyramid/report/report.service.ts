@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectEntityManager } from "@nestjs/typeorm";
 import { EntityManager } from "typeorm";
 import { parse } from "json2csv";
-import type { IPyramidReportSearchDto, IPyramidDepositItemSearchDto } from "@framework/types";
+import type { IPyramidDepositItemSearchDto, IPyramidReportSearchDto } from "@framework/types";
 
 import { PyramidDepositEntity } from "../deposit/deposit.entity";
 import { PyramidDepositService } from "../deposit/deposit.service";

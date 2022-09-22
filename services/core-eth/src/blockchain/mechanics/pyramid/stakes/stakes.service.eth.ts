@@ -7,8 +7,8 @@ import {
   IPyramidDepositEvent,
   IPyramidFinishEvent,
   IPyramidWithdrawEvent,
-  PyramidEventType,
   PyramidDepositStatus,
+  PyramidEventType,
   TPyramidEventData,
 } from "@framework/types";
 

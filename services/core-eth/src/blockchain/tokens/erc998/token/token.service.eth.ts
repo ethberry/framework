@@ -6,6 +6,9 @@ import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
 
 import {
+  IERC721RandomRequestEvent,
+  IERC721TokenMintRandomEvent,
+  IERC721TokenTransferEvent,
   IErc998BatchReceivedChildEvent,
   IErc998BatchTransferChildEvent,
   IErc998TokenReceivedChildEvent,
@@ -13,9 +16,6 @@ import {
   IErc998TokenTransferChildEvent,
   IErc998TokenUnWhitelistedChildEvent,
   IErc998TokenWhitelistedChildEvent,
-  IERC721RandomRequestEvent,
-  IERC721TokenMintRandomEvent,
-  IERC721TokenTransferEvent,
   TokenAttributes,
   TokenStatus,
 } from "@framework/types";

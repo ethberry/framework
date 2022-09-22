@@ -3,7 +3,7 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import type { IStakingLeaderboard, IStakingLeaderboardSearchDto, IStakingDepositSearchDto } from "@framework/types";
+import type { IStakingDepositSearchDto, IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framework/types";
 import { StakingDepositStatus } from "@framework/types";
 
 import { StakingDepositEntity } from "./deposit.entity";

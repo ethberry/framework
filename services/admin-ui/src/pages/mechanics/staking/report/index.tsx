@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import type { IStakingReportSearchDto, IStakingDeposit } from "@framework/types";
+import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
 import { StakingDepositStatus, TokenType } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";

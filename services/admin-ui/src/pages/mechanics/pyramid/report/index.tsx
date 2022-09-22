@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import type { IPyramidReportSearchDto, IPyramidDeposit } from "@framework/types";
+import type { IPyramidDeposit, IPyramidReportSearchDto } from "@framework/types";
 import { PyramidDepositStatus, TokenType } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";

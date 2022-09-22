@@ -3,7 +3,7 @@ import { InjectEntityManager, InjectRepository } from "@nestjs/typeorm";
 import { Brackets, EntityManager, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ns } from "@framework/constants";
-import type { IPyramidLeaderboard, IPyramidLeaderboardSearchDto, IPyramidDepositSearchDto } from "@framework/types";
+import type { IPyramidDepositSearchDto, IPyramidLeaderboard, IPyramidLeaderboardSearchDto } from "@framework/types";
 import { PyramidDepositStatus } from "@framework/types";
 
 import { PyramidDepositEntity } from "./deposit.entity";

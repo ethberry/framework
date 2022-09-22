@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { TextInput, NumberInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 
 import { validationSchema } from "./validation";
 
