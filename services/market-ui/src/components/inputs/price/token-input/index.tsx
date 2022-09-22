@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { useWatch } from "react-hook-form";
+import { ChangeEvent, FC } from "react";
+import { useFormContext, useWatch } from "react-hook-form";
 import { useIntl } from "react-intl";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
@@ -13,6 +13,7 @@ export interface ITokenInputProps {
 
 export const TokenInput: FC<ITokenInputProps> = props => {
   const { prefix, name = "tokenId", readOnly } = props;
+  const form = useFormContext<any>();
 
   const { formatMessage } = useIntl();
   const tokenType = useWatch({ name: `${prefix}.tokenType` });
@@ -21,6 +22,11 @@ export const TokenInput: FC<ITokenInputProps> = props => {
   if (!contractId) {
     return null;
   }
+
+  const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
+    form.setValue(`${prefix}.tokenId`, option?.id ?? 0); // actually id
+    form.setValue(`${prefix}.externalId`, option?.tokenId ?? 0);
+  };
 
   switch (tokenType) {
     case TokenType.ERC721:
@@ -37,6 +43,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
           }}
           getTitle={(token: IToken) => `${token.template!.title} #${token.tokenId}`}
           readOnly={readOnly}
+          onChange={handleChange}
         />
       );
     case TokenType.NATIVE:
