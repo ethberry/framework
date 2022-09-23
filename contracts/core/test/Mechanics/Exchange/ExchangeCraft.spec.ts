@@ -1,87 +1,41 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, utils } from "ethers";
-import { Network } from "@ethersproject/networks";
-
-import { ERC1155Simple, ERC20Simple, ERC721MysteryboxSimple, ERC721Simple, Exchange } from "../../../typechain-types";
-import {
-  amount,
-  baseTokenURI,
-  DEFAULT_ADMIN_ROLE,
-  MINTER_ROLE,
-  params,
-  PAUSER_ROLE,
-  royalty,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-} from "../../constants";
-import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
-import { wrapManyToManySignature } from "./shared/utils";
+import { amount, params, tokenId } from "../../constants";
+import { deployErc1155Fixture, deployErc20Fixture, deployErc721Fixture, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeCore", function () {
-  let exchangeInstance: Exchange;
-  let erc20Instance: ERC20Simple;
-  let erc721Instance: ERC721Simple;
-  let erc1155Instance: ERC1155Simple;
-  let mysteryboxInstance: ERC721MysteryboxSimple;
-  let network: Network;
-
-  let generateSignature: (values: Record<string, any>) => Promise<string>;
-
-  beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
-
-    const exchangeFactory = await ethers.getContractFactory("Exchange");
-    exchangeInstance = await exchangeFactory.deploy(tokenName);
-
-    const erc20Factory = await ethers.getContractFactory("ERC20Simple");
-    erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
-    // await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    const erc721Factory = await ethers.getContractFactory("ERC721Simple");
-    erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
-    await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    const mysteryboxFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
-    mysteryboxInstance = await mysteryboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await mysteryboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    network = await ethers.provider.getNetwork();
-
-    generateSignature = wrapManyToManySignature(network, exchangeInstance, this.owner);
-
-    this.contractInstance = exchangeInstance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("craft", function () {
     describe("NULL > NULL", function () {
       it("NULL > NULL", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [],
           price: [],
         });
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(params, [], [], this.owner.address, signature);
+        const tx1 = exchangeInstance.connect(receiver).craft(params, [], [], owner.address, signature);
 
         await expect(tx1).to.emit(exchangeInstance, "Craft");
         // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
     });
 
     describe("NULL > ERC721", function () {
       it("should purchase", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -94,7 +48,7 @@ describe("ExchangeCore", function () {
           price: [],
         });
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -105,20 +59,24 @@ describe("ExchangeCore", function () {
             },
           ],
           [],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
         await expect(tx1).to.emit(exchangeInstance, "Craft");
         // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
     });
 
     describe("NULL > ERC1155", function () {
       it("should purchase", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -131,7 +89,7 @@ describe("ExchangeCore", function () {
           price: [],
         });
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -142,20 +100,24 @@ describe("ExchangeCore", function () {
             },
           ],
           [],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
         await expect(tx1).to.emit(exchangeInstance, "Craft");
         // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
     });
 
     describe("NATIVE > ERC721", function () {
       it("should purchase", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -175,7 +137,7 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -193,7 +155,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
           {
             value: amount,
@@ -201,20 +163,24 @@ describe("ExchangeCore", function () {
         );
 
         await expect(tx1)
-          // .to.changeEtherBalance(this.receiver, -amount)
+          // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Craft")
           // .withArgs(
-          //   this.receiver.address,
+          //   receiver.address,
           //   [[2, erc721Instance.address, tokenId, 1]],
           //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(constants.AddressZero, this.receiver.address, tokenId);
+          .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
 
       it("should fail: Wrong amount", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -234,7 +200,7 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -252,7 +218,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
           {
             value: 0,
@@ -265,8 +231,13 @@ describe("ExchangeCore", function () {
 
     describe("ERC20 > ERC721", function () {
       it("should craft", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -286,10 +257,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc20Instance.mint(this.receiver.address, amount);
-        await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -307,26 +278,31 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Craft")
           // .withArgs(
-          //   this.receiver.address,
+          //   receiver.address,
           //   [[2, erc721Instance.address, tokenId, 1]],
           //   [[1, erc20Instance.address, tokenId, amount]],
           // )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(constants.AddressZero, this.receiver.address, tokenId)
+          .withArgs(constants.AddressZero, receiver.address, tokenId)
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(this.receiver.address, exchangeInstance.address, amount);
+          .withArgs(receiver.address, exchangeInstance.address, amount);
       });
 
       it("should fail: insufficient allowance", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -346,10 +322,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc20Instance.mint(this.receiver.address, amount);
-        // await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.mint(receiver.address, amount);
+        // await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -367,7 +343,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -375,8 +351,13 @@ describe("ExchangeCore", function () {
       });
 
       it("should fail: transfer amount exceeds balance", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -396,10 +377,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        // await erc20Instance.mint(this.receiver.address, amount);
-        await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+        // await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -417,7 +398,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -427,8 +408,13 @@ describe("ExchangeCore", function () {
 
     describe("ERC1155 > ERC721", function () {
       it("should craft", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -448,10 +434,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
-        await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
+        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -469,18 +455,23 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
         await expect(tx1).to.emit(exchangeInstance, "Craft");
         // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
 
       it("should fail: caller is not token owner nor approved", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -500,10 +491,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
-        // await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
+        // await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -521,7 +512,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -529,8 +520,13 @@ describe("ExchangeCore", function () {
       });
 
       it("should fail: insufficient balance for transfer", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -550,10 +546,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        // await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
-        await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
+        // await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
+        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -571,7 +567,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -581,8 +577,12 @@ describe("ExchangeCore", function () {
 
     describe("NATIVE > ERC1155", function () {
       it("should craft", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -602,7 +602,7 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -620,7 +620,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
           {
             value: amount,
@@ -628,20 +628,24 @@ describe("ExchangeCore", function () {
         );
 
         await expect(tx1)
-          // .to.changeEtherBalance(this.receiver, -amount)
+          // .to.changeEtherBalance(receiver, -amount)
           .to.emit(exchangeInstance, "Craft")
           // .withArgs(
-          //   this.receiver.address,
+          //   receiver.address,
           //   [[4, erc1155Instance.address, tokenId, amount]],
           //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, constants.AddressZero, this.receiver.address, tokenId, amount);
+          .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
       });
 
       it("should fail: Wrong amount", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -661,7 +665,7 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -679,7 +683,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
           {
             value: 0,
@@ -692,8 +696,13 @@ describe("ExchangeCore", function () {
 
     describe("ERC20 > ERC1155", function () {
       it("should craft", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -713,10 +722,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc20Instance.mint(this.receiver.address, amount);
-        await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -734,26 +743,31 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
         await expect(tx1)
           .to.emit(exchangeInstance, "Craft")
           // .withArgs(
-          //   this.receiver.address,
+          //   receiver.address,
           //   [[2, erc1155Instance.address, tokenId, amount]],
           //   [[1, erc20Instance.address, tokenId, amount]],
           // )
           .to.emit(erc1155Instance, "TransferSingle")
-          .withArgs(exchangeInstance.address, constants.AddressZero, this.receiver.address, tokenId, amount)
+          .withArgs(exchangeInstance.address, constants.AddressZero, receiver.address, tokenId, amount)
           .to.emit(erc20Instance, "Transfer")
-          .withArgs(this.receiver.address, exchangeInstance.address, amount);
+          .withArgs(receiver.address, exchangeInstance.address, amount);
       });
 
       it("should fail: insufficient allowance", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -773,10 +787,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc20Instance.mint(this.receiver.address, amount);
-        // await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+        await erc20Instance.mint(receiver.address, amount);
+        // await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -794,7 +808,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -802,8 +816,13 @@ describe("ExchangeCore", function () {
       });
 
       it("should fail: transfer amount exceeds balance", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -823,10 +842,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        // await erc20Instance.mint(this.receiver.address, amount);
-        await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+        // await erc20Instance.mint(receiver.address, amount);
+        await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -844,7 +863,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -854,8 +873,12 @@ describe("ExchangeCore", function () {
 
     describe("ERC1155 > ERC1155", function () {
       it("should craft", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -875,10 +898,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc1155Instance.mint(this.receiver.address, tokenId, amount, "0x");
-        await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
+        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -896,18 +919,22 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
         await expect(tx1).to.emit(exchangeInstance, "Craft");
         // https://github.com/TrueFiEng/Waffle/pull/751
-        // .withArgs(this.receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
+        // .withArgs(receiver.address, [[4, erc1155Instance.address, tokenId, amount]]);
       });
 
       it("should fail: caller is not token owner nor approved", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -927,10 +954,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        await erc1155Instance.mint(this.receiver.address, 2, amount, "0x");
-        // await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
+        await erc1155Instance.mint(receiver.address, 2, amount, "0x");
+        // await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -948,7 +975,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -956,8 +983,12 @@ describe("ExchangeCore", function () {
       });
 
       it("should fail: insufficient balance for transfer", async function () {
-        const signature = await generateSignature({
-          account: this.receiver.address,
+        const [owner, receiver] = await ethers.getSigners();
+        const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+        const { erc1155Instance } = await deployErc1155Fixture("ERC1155Simple", exchangeInstance);
+
+        const signature = await generateManyToManySignature({
+          account: receiver.address,
           params,
           items: [
             {
@@ -977,10 +1008,10 @@ describe("ExchangeCore", function () {
           ],
         });
 
-        // await erc1155Instance.mint(this.receiver.address, 2, amount, "0x");
-        await erc1155Instance.connect(this.receiver).setApprovalForAll(exchangeInstance.address, true);
+        // await erc1155Instance.mint(receiver.address, 2, amount, "0x");
+        await erc1155Instance.connect(receiver).setApprovalForAll(exchangeInstance.address, true);
 
-        const tx1 = exchangeInstance.connect(this.receiver).craft(
+        const tx1 = exchangeInstance.connect(receiver).craft(
           params,
           [
             {
@@ -998,7 +1029,7 @@ describe("ExchangeCore", function () {
               amount,
             },
           ],
-          this.owner.address,
+          owner.address,
           signature,
         );
 
@@ -1009,36 +1040,45 @@ describe("ExchangeCore", function () {
 
   describe("ERROR", function () {
     it("should fail: duplicate mint", async function () {
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const [owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+
+      const signature = await generateManyToManySignature({
+        account: receiver.address,
         params,
         items: [],
         price: [],
       });
 
-      const tx1 = exchangeInstance.connect(this.receiver).craft(params, [], [], this.owner.address, signature);
+      const tx1 = exchangeInstance.connect(receiver).craft(params, [], [], owner.address, signature);
 
       await expect(tx1).to.emit(exchangeInstance, "Craft");
 
-      const tx2 = exchangeInstance.connect(this.receiver).craft(params, [], [], this.owner.address, signature);
+      const tx2 = exchangeInstance.connect(receiver).craft(params, [], [], owner.address, signature);
       await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
     });
 
     it("should fail for wrong signer role", async function () {
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const [_owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
+
+      const signature = await generateManyToManySignature({
+        account: receiver.address,
         params,
         items: [],
         price: [],
       });
 
-      const tx1 = exchangeInstance.connect(this.receiver).craft(params, [], [], this.receiver.address, signature);
+      const tx1 = exchangeInstance.connect(receiver).craft(params, [], [], receiver.address, signature);
 
       await expect(tx1).to.be.revertedWith(`Exchange: Wrong signer`);
     });
 
     it("should fail for wrong signature", async function () {
-      const tx = exchangeInstance.craft(params, [], [], this.owner.address, utils.formatBytes32String("signature"));
+      const [owner] = await ethers.getSigners();
+      const { exchangeInstance } = await deployExchangeFixture();
+
+      const tx = exchangeInstance.craft(params, [], [], owner.address, utils.formatBytes32String("signature"));
 
       await expect(tx).to.be.revertedWith(`Exchange: Invalid signature`);
     });

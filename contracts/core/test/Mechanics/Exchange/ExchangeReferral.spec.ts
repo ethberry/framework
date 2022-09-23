@@ -1,71 +1,31 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, utils } from "ethers";
-import { Network } from "@ethersproject/networks";
-
-import { ERC20Simple, ERC721Simple, Exchange } from "../../../typechain-types";
-import {
-  amount,
-  baseTokenURI,
-  DEFAULT_ADMIN_ROLE,
-  expiresAt,
-  externalId,
-  MINTER_ROLE,
-  PAUSER_ROLE,
-  royalty,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-  tokenZero,
-} from "../../constants";
-import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
-import { wrapOneToManySignature } from "./shared/utils";
+import { amount, expiresAt, externalId, tokenId, tokenZero } from "../../constants";
+import { deployErc20Fixture, deployErc721Fixture, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeReferral", function () {
-  let exchangeInstance: Exchange;
-  let erc20Instance: ERC20Simple;
-  let erc721Instance: ERC721Simple;
-  let network: Network;
-
-  let generateSignature: (values: Record<string, any>) => Promise<string>;
-
   const refProgram = {
     maxRefs: 10,
     refReward: 10 * 100, // 10.00 %
     refDecrease: 10, // 10% - 1% - 0.1% - 0.01% etc.
   };
 
-  beforeEach(async function () {
-    [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
-
-    const exchangeFactory = await ethers.getContractFactory("Exchange");
-    exchangeInstance = await exchangeFactory.deploy(tokenName);
-
-    // SET REF PROGRAM
-    const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
-    await expect(tx)
-      .to.emit(exchangeInstance, "ReferralProgram")
-      .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
-
-    const erc20Factory = await ethers.getContractFactory("ERC20Simple");
-    erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount * 10);
-    await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    const erc721Factory = await ethers.getContractFactory("ERC721Simple");
-    erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    network = await ethers.provider.getNetwork();
-
-    generateSignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
-
-    this.contractInstance = exchangeInstance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("exchange purchase", function () {
     it("referrer rewards", async function () {
+      const [owner, receiver, stranger] = await ethers.getSigners();
+      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+      // SET REF PROGRAM
+      const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
+      await expect(tx)
+        .to.emit(exchangeInstance, "ReferralProgram")
+        .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
+
       const refParams1 = {
         nonce: utils.randomBytes(32),
         externalId,
@@ -73,8 +33,8 @@ describe("ExchangeReferral", function () {
         referrer: constants.AddressZero,
       };
 
-      const signature1 = await generateSignature({
-        account: this.owner.address,
+      const signature1 = await generateOneToManySignature({
+        account: owner.address,
         params: refParams1,
         item: {
           tokenType: 2,
@@ -92,10 +52,10 @@ describe("ExchangeReferral", function () {
         ],
       });
 
-      await erc20Instance.mint(this.owner.address, amount);
-      await erc20Instance.connect(this.owner).approve(exchangeInstance.address, amount);
+      await erc20Instance.mint(owner.address, amount);
+      await erc20Instance.connect(owner).approve(exchangeInstance.address, amount);
 
-      const tx1 = exchangeInstance.connect(this.owner).purchase(
+      const tx1 = exchangeInstance.connect(owner).purchase(
         refParams1,
         {
           tokenType: 2,
@@ -111,7 +71,7 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature1,
       );
 
@@ -121,11 +81,11 @@ describe("ExchangeReferral", function () {
         nonce: utils.randomBytes(32),
         externalId,
         expiresAt,
-        referrer: this.owner.address,
+        referrer: owner.address,
       };
 
-      const signature2 = await generateSignature({
-        account: this.receiver.address,
+      const signature2 = await generateOneToManySignature({
+        account: receiver.address,
         params: refParams2,
         item: {
           tokenType: 2,
@@ -143,10 +103,10 @@ describe("ExchangeReferral", function () {
         ],
       });
 
-      await erc20Instance.mint(this.receiver.address, amount);
-      await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-      const tx2 = exchangeInstance.connect(this.receiver).purchase(
+      const tx2 = exchangeInstance.connect(receiver).purchase(
         refParams2,
         {
           tokenType: 2,
@@ -162,7 +122,7 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature2,
       );
 
@@ -170,8 +130,8 @@ describe("ExchangeReferral", function () {
         .to.emit(exchangeInstance, "Purchase")
         .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(
-          this.receiver.address,
-          this.owner.address,
+          receiver.address,
+          owner.address,
           0,
           erc20Instance.address,
           ethers.BigNumber.from(amount)
@@ -184,11 +144,11 @@ describe("ExchangeReferral", function () {
         nonce: utils.randomBytes(32),
         externalId,
         expiresAt,
-        referrer: this.receiver.address,
+        referrer: receiver.address,
       };
 
-      const signature3 = await generateSignature({
-        account: this.stranger.address,
+      const signature3 = await generateOneToManySignature({
+        account: stranger.address,
         params: refParams3,
         item: {
           tokenType: 2,
@@ -206,10 +166,10 @@ describe("ExchangeReferral", function () {
         ],
       });
 
-      await erc20Instance.mint(this.stranger.address, amount);
-      await erc20Instance.connect(this.stranger).approve(exchangeInstance.address, amount);
+      await erc20Instance.mint(stranger.address, amount);
+      await erc20Instance.connect(stranger).approve(exchangeInstance.address, amount);
 
-      const tx3 = exchangeInstance.connect(this.stranger).purchase(
+      const tx3 = exchangeInstance.connect(stranger).purchase(
         refParams3,
         {
           tokenType: 2,
@@ -225,7 +185,7 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature3,
       );
 
@@ -233,8 +193,8 @@ describe("ExchangeReferral", function () {
         .to.emit(exchangeInstance, "Purchase")
         .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(
-          this.stranger.address,
-          this.owner.address,
+          stranger.address,
+          owner.address,
           1,
           erc20Instance.address,
           ethers.BigNumber.from(amount)
@@ -244,8 +204,8 @@ describe("ExchangeReferral", function () {
         )
         .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(
-          this.stranger.address,
-          this.receiver.address,
+          stranger.address,
+          receiver.address,
           0,
           erc20Instance.address,
           ethers.BigNumber.from(amount)
@@ -258,20 +218,34 @@ describe("ExchangeReferral", function () {
 
   describe("getBalance", function () {
     it("should get zero balance", async function () {
-      const balance = await exchangeInstance.getBalance(this.owner.address, tokenZero);
+      const [owner] = await ethers.getSigners();
+      const { exchangeInstance } = await deployExchangeFixture();
+
+      const balance = await exchangeInstance.getBalance(owner.address, tokenZero);
       expect(balance).to.equal(0);
     });
 
     it("should get non zero balance", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+      // SET REF PROGRAM
+      const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
+      await expect(tx)
+        .to.emit(exchangeInstance, "ReferralProgram")
+        .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
+
       const params = {
         nonce: utils.randomBytes(32),
         externalId,
         expiresAt,
-        referrer: this.owner.address,
+        referrer: owner.address,
       };
 
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
         params,
         item: {
           tokenType: 2,
@@ -289,10 +263,10 @@ describe("ExchangeReferral", function () {
         ],
       });
 
-      await erc20Instance.mint(this.receiver.address, amount);
-      await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+      const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -308,7 +282,7 @@ describe("ExchangeReferral", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature,
       );
 
@@ -316,8 +290,8 @@ describe("ExchangeReferral", function () {
         .to.emit(exchangeInstance, "Purchase")
         .to.emit(exchangeInstance, "ReferralReward")
         .withArgs(
-          this.receiver.address,
-          this.owner.address,
+          receiver.address,
+          owner.address,
           0,
           erc20Instance.address,
           ethers.BigNumber.from(amount)
@@ -325,9 +299,9 @@ describe("ExchangeReferral", function () {
             .mul((refProgram.refReward / 100) | 0)
             .div(refProgram.refDecrease ** 0),
         );
-      // .withArgs(this.receiver.address, this.owner.address, 0, constants.WeiPerEther);
+      // .withArgs(receiver.address, owner.address, 0, constants.WeiPerEther);
 
-      const balance = await exchangeInstance.getBalance(this.owner.address, erc20Instance.address);
+      const balance = await exchangeInstance.getBalance(owner.address, erc20Instance.address);
       expect(balance).to.equal(
         ethers.BigNumber.from(amount)
           .div(100)
