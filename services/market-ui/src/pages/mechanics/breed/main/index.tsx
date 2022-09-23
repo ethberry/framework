@@ -24,14 +24,18 @@ export interface IBreedDto {
     contractId: number;
     templateId: number;
     tokenId: number;
-    blockchainId: string;
+    token: {
+      tokenId: string;
+    };
   };
   dad: {
     address: string;
     contractId: number;
     templateId: number;
     tokenId: number;
-    blockchainId: string;
+    token: {
+      tokenId: string;
+    };
   };
 }
 
@@ -50,13 +54,13 @@ export const Breed: FC = () => {
         {
           tokenType: values.tokenType,
           token: values.mom.address,
-          tokenId: values.mom.blockchainId,
+          tokenId: values.mom.token.tokenId,
           amount: 1,
         },
         {
           tokenType: values.tokenType,
           token: values.dad.address,
-          tokenId: values.dad.blockchainId,
+          tokenId: values.dad.token.tokenId,
           amount: 1,
         },
         process.env.ACCOUNT,
@@ -96,12 +100,16 @@ export const Breed: FC = () => {
           mom: {
             address: constants.AddressZero,
             tokenId: 0,
-            blockchainId: 0,
+            token: {
+              tokenId: "0",
+            },
           },
           dad: {
             address: constants.AddressZero,
             tokenId: 0,
-            blockchainId: 0,
+            token: {
+              tokenId: "0",
+            },
           },
         }}
         validationSchema={validationSchema}

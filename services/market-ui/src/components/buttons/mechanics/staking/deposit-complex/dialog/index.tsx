@@ -7,9 +7,11 @@ import { TokenInput } from "./token-input";
 
 export interface IStakingDepositDto {
   tokenId: number;
+  token: {
+    tokenId: string;
+  };
   templateId: number;
   contractId: number;
-  blockchainId: string;
 }
 
 export interface IStakingDepositDialogProps {

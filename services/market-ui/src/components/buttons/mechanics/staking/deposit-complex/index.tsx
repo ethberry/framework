@@ -26,7 +26,7 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
 
   const metaFn = useMetamask((rule: IStakingRule, values: IStakingDepositDto, web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
-    return contract.deposit(rule.externalId, values.blockchainId, {
+    return contract.deposit(rule.externalId, values.token.tokenId, {
       value: getEthPrice(rule.deposit),
     }) as Promise<void>;
   });
@@ -60,7 +60,9 @@ export const StakingDepositComplexButton: FC<IStakingDepositComplexButtonProps> 
         open={isDepositDialogOpen}
         initialValues={{
           tokenId: 0,
-          blockchainId: "",
+          token: {
+            tokenId: "0",
+          },
           templateId: rule.deposit!.components[0].templateId,
           contractId: rule.deposit!.components[0].contractId,
         }}

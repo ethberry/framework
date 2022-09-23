@@ -12,7 +12,7 @@ export const TokenInput: FC = () => {
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
     form.setValue("tokenId", option?.id ?? 0);
-    form.setValue("blockchainId", option?.tokenId ?? 0);
+    form.setValue("token.tokenId", option?.tokenId ?? 0);
   };
 
   if (!contractId) {
