@@ -12,14 +12,15 @@ import {
   Query,
   UseInterceptors,
 } from "@nestjs/common";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
 import { Erc721RecipeSearchDto, Erc721RecipeUpdateDto, ExchangeCreateDto } from "./dto";
 
-@Public()
+@ApiBearerAuth()
 @Controller("/craft")
 export class CraftController {
   constructor(private readonly recipeService: CraftService) {}
