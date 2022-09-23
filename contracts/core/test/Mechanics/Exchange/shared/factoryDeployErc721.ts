@@ -12,11 +12,11 @@ import {
   tokenSymbol,
 } from "../../../constants";
 import { blockAwait } from "../../../../scripts/utils/blockAwait";
-import { ContractManager, ERC721Simple } from "../../../../typechain-types";
+import { ContractManager, Exchange, ERC721Simple } from "../../../../typechain-types";
 
 export async function factoryDeployErc721(
   factoryInstance: ContractManager,
-  exchangeInstanceAddr: string,
+  exchangeInstance: Exchange,
 ): Promise<ERC721Simple> {
   const network = await ethers.provider.getNetwork();
   const [owner] = await ethers.getSigners();
@@ -52,7 +52,11 @@ export async function factoryDeployErc721(
       featureIds,
     },
   );
-  if (network.chainId === 1337) await blockAwait();
+
+  if (network.chainId === 1337) {
+    await blockAwait();
+  }
+
   const tx = await factoryInstance.deployERC721Token(
     nonce,
     erc721.bytecode,
@@ -64,7 +68,10 @@ export async function factoryDeployErc721(
     owner.address,
     signature,
   );
-  if (network.chainId === 1337) await blockAwait();
+
+  if (network.chainId === 1337) {
+    await blockAwait();
+  }
 
   const [address] = await factoryInstance.allERC721Tokens();
 
@@ -80,7 +87,7 @@ export async function factoryDeployErc721(
   const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
   expect(hasRole2).to.equal(true);
 
-  const hasRole3 = await erc721Instance.hasRole(MINTER_ROLE, exchangeInstanceAddr);
+  const hasRole3 = await erc721Instance.hasRole(MINTER_ROLE, exchangeInstance.address);
   expect(hasRole3).to.equal(true);
 
   return erc721Instance;

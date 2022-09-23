@@ -6,10 +6,10 @@ import { Network } from "@ethersproject/networks";
 
 import { ContractManager, Exchange } from "../../../typechain-types";
 import { amountWei, amountWeiEth, nonce, templateId, tokenName, tokenZero } from "../../constants";
-import { wrapOneToManySignature } from "./shared/utils";
 import { blockAwait } from "../../../scripts/utils/blockAwait";
 import { factoryDeployErc721 } from "./shared/factoryDeployErc721";
-import { factoryDeployErc20 } from "./shared/FactoryDeployErc20";
+import { factoryDeployErc20 } from "./shared/factoryDeployErc20";
+import { wrapOneToManySignature } from "./shared/utils";
 
 use(solidity);
 
@@ -18,7 +18,7 @@ describe("Factory Exchange Referral", function () {
   let factoryInstance: ContractManager;
   let exchangeInstance: Exchange;
   let network: Network;
-  let generateSignature: (values: Record<string, any>) => Promise<string>;
+  let generateOneToManySignature: (values: Record<string, any>) => Promise<string>;
 
   const refProgram = {
     maxRefs: 10,
@@ -41,7 +41,7 @@ describe("Factory Exchange Referral", function () {
     const exchangeFactory = await ethers.getContractFactory("Exchange");
     exchangeInstance = await exchangeFactory.deploy(tokenName);
     if (network.chainId === 1337) await blockAwait();
-    generateSignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
+    generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
 
     const minters = [exchangeInstance.address];
     const metadata = [exchangeInstance.address];
@@ -87,9 +87,9 @@ describe("Factory Exchange Referral", function () {
   describe("Deploy, Purchase, Referral", function () {
     it("should Purchase without Reward (zero ref)", async function () {
       // FACTORY DEPLOY
-      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance.address);
+      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
 
-      const signature = await generateSignature({
+      const signature = await generateOneToManySignature({
         account: this.owner.address,
         params: {
           nonce,
@@ -156,8 +156,8 @@ describe("Factory Exchange Referral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       // FACTORY DEPLOY
-      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance.address);
-      const signature = await generateSignature({
+      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
+      const signature = await generateOneToManySignature({
         account: this.owner.address,
         params: {
           nonce,
@@ -235,9 +235,9 @@ describe("Factory Exchange Referral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       // FACTORY DEPLOY
-      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance.address);
+      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
 
-      const signature = await generateSignature({
+      const signature = await generateOneToManySignature({
         account: this.owner.address,
         params: {
           nonce,
@@ -307,7 +307,7 @@ describe("Factory Exchange Referral", function () {
       expect(balance).to.equal(1);
 
       const nonce1 = utils.randomBytes(32);
-      const signature1 = await generateSignature({
+      const signature1 = await generateOneToManySignature({
         account: this.stranger.address,
         params: {
           nonce: nonce1,
@@ -387,7 +387,7 @@ describe("Factory Exchange Referral", function () {
       expect(balance1).to.equal(1);
 
       const nonce2 = utils.randomBytes(32);
-      const signature2 = await generateSignature({
+      const signature2 = await generateOneToManySignature({
         account: this.receiver.address,
         params: {
           nonce: nonce2,
@@ -486,9 +486,9 @@ describe("Factory Exchange Referral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       // FACTORY DEPLOY
-      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance.address);
+      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
 
-      const signature = await generateSignature({
+      const signature = await generateOneToManySignature({
         account: this.owner.address,
         params: {
           nonce,
@@ -558,7 +558,7 @@ describe("Factory Exchange Referral", function () {
       expect(balance).to.equal(1);
 
       const nonce1 = utils.randomBytes(32);
-      const signature1 = await generateSignature({
+      const signature1 = await generateOneToManySignature({
         account: this.stranger.address,
         params: {
           nonce: nonce1,
@@ -638,7 +638,7 @@ describe("Factory Exchange Referral", function () {
       expect(balance1).to.equal(1);
 
       const nonce2 = utils.randomBytes(32);
-      const signature2 = await generateSignature({
+      const signature2 = await generateOneToManySignature({
         account: this.receiver.address,
         params: {
           nonce: nonce2,
@@ -759,9 +759,9 @@ describe("Factory Exchange Referral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       // FACTORY DEPLOY
-      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance.address);
+      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
 
-      const signature = await generateSignature({
+      const signature = await generateOneToManySignature({
         account: this.owner.address,
         params: {
           nonce,
@@ -858,8 +858,8 @@ describe("Factory Exchange Referral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       // FACTORY DEPLOY
-      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance.address);
-      const erc20Instance = await factoryDeployErc20(factoryInstance, exchangeInstance.address);
+      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
+      const erc20Instance = await factoryDeployErc20(factoryInstance, exchangeInstance);
       // MINT ERC20
       const tenEth = constants.WeiPerEther.mul(10);
       await erc20Instance.mint(this.owner.address, tenEth);
@@ -870,7 +870,7 @@ describe("Factory Exchange Referral", function () {
       const allowance = await erc20Instance.allowance(this.owner.address, exchangeInstance.address);
       expect(allowance).to.equal(constants.WeiPerEther);
 
-      const signature = await generateSignature({
+      const signature = await generateOneToManySignature({
         account: this.owner.address,
         params: {
           nonce,
@@ -969,8 +969,8 @@ describe("Factory Exchange Referral", function () {
         .withArgs([refProgram.refReward, refProgram.refDecrease, refProgram.maxRefs, true]);
 
       // FACTORY DEPLOY
-      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance.address);
-      const erc20Instance = await factoryDeployErc20(factoryInstance, exchangeInstance.address);
+      const erc721Instance = await factoryDeployErc721(factoryInstance, exchangeInstance);
+      const erc20Instance = await factoryDeployErc20(factoryInstance, exchangeInstance);
       // MINT ERC20
       const tenEth = constants.WeiPerEther.mul(10);
       await erc20Instance.mint(this.owner.address, tenEth);
@@ -981,7 +981,7 @@ describe("Factory Exchange Referral", function () {
       const allowance = await erc20Instance.allowance(this.owner.address, exchangeInstance.address);
       expect(allowance).to.equal(constants.WeiPerEther);
 
-      const signature = await generateSignature({
+      const signature = await generateOneToManySignature({
         account: this.owner.address,
         params: {
           nonce,

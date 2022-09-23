@@ -1,72 +1,23 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
-import { Network } from "@ethersproject/networks";
 import { time } from "@openzeppelin/test-helpers";
-
-import { ERC1155Simple, ERC20Simple, ERC721MysteryboxSimple, ERC721Simple, Exchange } from "../../../typechain-types";
-import {
-  amount,
-  baseTokenURI,
-  DEFAULT_ADMIN_ROLE,
-  externalId,
-  MINTER_ROLE,
-  nonce,
-  params,
-  PAUSER_ROLE,
-  royalty,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-} from "../../constants";
-import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
+import { amount, externalId, nonce, params, tokenId } from "../../constants";
 import { wrapOneToManySignature } from "./shared/utils";
+import { deployErc20Fixture, deployErc721Fixture, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeCore", function () {
-  let exchangeInstance: Exchange;
-  let erc20Instance: ERC20Simple;
-  let erc721Instance: ERC721Simple;
-  let erc1155Instance: ERC1155Simple;
-  let mysteryboxInstance: ERC721MysteryboxSimple;
-  let network: Network;
-
-  let generateSignature: (values: Record<string, any>) => Promise<string>;
-
-  beforeEach(async function () {
-    [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
-
-    const exchangeFactory = await ethers.getContractFactory("Exchange");
-    exchangeInstance = await exchangeFactory.deploy(tokenName);
-
-    const erc20Factory = await ethers.getContractFactory("ERC20Simple");
-    erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount);
-    await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    const erc721Factory = await ethers.getContractFactory("ERC721Simple");
-    erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    const erc1155Factory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
-    await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    const mysteryboxFactory = await ethers.getContractFactory("ERC721MysteryboxSimple");
-    mysteryboxInstance = await mysteryboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await mysteryboxInstance.grantRole(MINTER_ROLE, exchangeInstance.address);
-
-    network = await ethers.provider.getNetwork();
-
-    generateSignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
-
-    this.contractInstance = exchangeInstance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+  // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
   describe("purchase", function () {
     it("should purchase, spend ERC20", async function () {
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const [owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
         params,
         item: {
           tokenType: 2,
@@ -84,10 +35,10 @@ describe("ExchangeCore", function () {
         ],
       });
 
-      await erc20Instance.mint(this.receiver.address, amount);
-      await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+      const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -103,7 +54,7 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature,
       );
 
@@ -111,8 +62,12 @@ describe("ExchangeCore", function () {
     });
 
     it("should purchase, spend ETH", async function () {
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const [owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
         params,
         item: {
           tokenType: 2,
@@ -130,7 +85,7 @@ describe("ExchangeCore", function () {
         ],
       });
 
-      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+      const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -146,7 +101,7 @@ describe("ExchangeCore", function () {
             tokenType: 0,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature,
         { value: BigNumber.from("123000000000000000") },
       );
@@ -155,8 +110,13 @@ describe("ExchangeCore", function () {
     });
 
     it("should fail: duplicate mint", async function () {
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const [owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
         params,
         item: {
           tokenType: 2,
@@ -174,10 +134,10 @@ describe("ExchangeCore", function () {
         ],
       });
 
-      await erc20Instance.mint(this.receiver.address, amount);
-      await erc20Instance.connect(this.receiver).approve(exchangeInstance.address, amount);
+      await erc20Instance.mint(receiver.address, amount);
+      await erc20Instance.connect(receiver).approve(exchangeInstance.address, amount);
 
-      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+      const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -193,13 +153,13 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature,
       );
 
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
 
-      const tx2 = exchangeInstance.connect(this.receiver).purchase(
+      const tx2 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -215,16 +175,23 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature,
       );
       await expect(tx2).to.be.revertedWith("Exchange: Expired signature");
     });
 
     it("should fail: wrong signer", async function () {
-      generateSignature = wrapOneToManySignature(network, exchangeInstance, this.stranger);
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const [_owner, receiver, stranger] = await ethers.getSigners();
+      const { exchangeInstance } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+      const network = await ethers.provider.getNetwork();
+      const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, stranger);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
         params,
         item: {
           tokenType: 2,
@@ -242,7 +209,7 @@ describe("ExchangeCore", function () {
         ],
       });
 
-      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+      const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -258,7 +225,7 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        this.stranger.address,
+        stranger.address,
         signature,
       );
 
@@ -266,8 +233,13 @@ describe("ExchangeCore", function () {
     });
 
     it("should fail: wrong signer role", async function () {
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const [_owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
         params,
         item: {
           tokenType: 2,
@@ -285,7 +257,7 @@ describe("ExchangeCore", function () {
         ],
       });
 
-      const tx1 = exchangeInstance.connect(this.receiver).purchase(
+      const tx1 = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -301,7 +273,7 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        this.receiver.address,
+        receiver.address,
         signature,
       );
 
@@ -309,6 +281,11 @@ describe("ExchangeCore", function () {
     });
 
     it("should fail: wrong signature", async function () {
+      const [owner] = await ethers.getSigners();
+      const { exchangeInstance } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
       const tx = exchangeInstance.purchase(
         params,
         {
@@ -325,7 +302,7 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         utils.formatBytes32String("signature"),
       );
 
@@ -333,6 +310,11 @@ describe("ExchangeCore", function () {
     });
 
     it("should fail: expired signature", async function () {
+      const [owner, receiver] = await ethers.getSigners();
+      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+
       const expiresAt = (await time.latest()).toString();
       const params = {
         nonce,
@@ -340,8 +322,8 @@ describe("ExchangeCore", function () {
         expiresAt,
         referrer: constants.AddressZero,
       };
-      const signature = await generateSignature({
-        account: this.receiver.address,
+      const signature = await generateOneToManySignature({
+        account: receiver.address,
         params,
         item: {
           tokenType: 2,
@@ -359,7 +341,7 @@ describe("ExchangeCore", function () {
         ],
       });
 
-      const tx = exchangeInstance.connect(this.receiver).purchase(
+      const tx = exchangeInstance.connect(receiver).purchase(
         params,
         {
           tokenType: 2,
@@ -375,7 +357,7 @@ describe("ExchangeCore", function () {
             amount,
           },
         ],
-        this.owner.address,
+        owner.address,
         signature,
       );
 
