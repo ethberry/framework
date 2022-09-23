@@ -3,7 +3,7 @@ import { FormattedMessage } from "react-intl";
 import { Button, Grid, Pagination } from "@mui/material";
 import { Add, FilterList } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
-import { constants, Contract } from "ethers";
+import { constants, utils, Contract } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
@@ -13,8 +13,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import ERC721TokenWrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721TokenWrapper.sol/ERC721TokenWrapper.json";
 
 import { WrapperTokenListItem } from "./item";
-import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
-import { emptyPrice } from "../../../../components/inputs/price/empty-price";
+import { emptyItems, ICreateWrappedToken, WrapperEditDialog } from "./edit";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
 
 export interface IWrapperTokenListProps {
@@ -42,8 +41,27 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
   });
 
   const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
-    const contract = new Contract(values.address, ERC721TokenWrapperSol.abi, web3Context.provider?.getSigner());
-    return contract.mintBox(web3Context.account, values.templateId, values.item) as Promise<any>;
+    const items = values.item.components.map(component => ({
+      tokenType: Object.keys(TokenType).indexOf(component.tokenType),
+      token: component.contract!.address,
+      tokenId: component.token.tokenId || 0,
+      amount: component.amount,
+    }));
+    let totalValue = utils.parseEther("0");
+    values.item.components.map(token => {
+      if (token.tokenType === TokenType.NATIVE) {
+        totalValue = totalValue.add(utils.parseUnits(token.amount, "wei"));
+      }
+      return token;
+    });
+
+    const contract = new Contract(
+      values.contract.address,
+      ERC721TokenWrapperSol.abi,
+      web3Context.provider?.getSigner(),
+    );
+
+    return contract.mintBox(web3Context.account, values.templateId, items, { value: totalValue }) as Promise<any>;
   });
 
   const handleEditConfirm = async (values: ICreateWrappedToken, _form: any) => {
@@ -98,10 +116,10 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
         open={isEditDialogOpen}
         initialValues={{
           tokenType: TokenType.ERC721,
-          address: constants.AddressZero,
+          contract: { address: constants.AddressZero },
           contractId: 0,
           templateId: 0,
-          item: emptyPrice,
+          item: emptyItems,
         }}
       />
     </Fragment>

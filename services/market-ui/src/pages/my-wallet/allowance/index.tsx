@@ -26,14 +26,18 @@ export const AllowanceButton: FC = () => {
 
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.ERC20) {
-      const contractErc20 = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      return contractErc20.approve(values.addressCustom, values.amount) as Promise<any>;
+      const contractErc20 = new Contract(values.contract.main, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
+      return contractErc20.approve(values.contract.custom, values.amount) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC721 || values.tokenType === TokenType.ERC998) {
-      const contractErc721 = new Contract(values.address, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
-      return contractErc721.setApprovalForAll(values.addressCustom, true) as Promise<any>;
+      const contractErc721 = new Contract(values.contract.main, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
+      return contractErc721.setApprovalForAll(values.contract.custom, true) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC1155) {
-      const contractErc1155 = new Contract(values.address, ERC1155SimpleSol.abi, web3Context.provider?.getSigner());
-      return contractErc1155.setApprovalForAll(values.addressCustom, true) as Promise<any>;
+      const contractErc1155 = new Contract(
+        values.contract.main,
+        ERC1155SimpleSol.abi,
+        web3Context.provider?.getSigner(),
+      );
+      return contractErc1155.setApprovalForAll(values.contract.custom, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
@@ -60,8 +64,7 @@ export const AllowanceButton: FC = () => {
           decimals: 18,
           amount: "0",
           contractId: 0,
-          address: "",
-          addressCustom: "",
+          contract: { main: "", custom: "" },
         }}
       />
     </Fragment>

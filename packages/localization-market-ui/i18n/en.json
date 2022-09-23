@@ -143,6 +143,7 @@
       "submit": "Submit",
       "upgrade": "Upgrade",
       "upload": "Upload",
+      "unwrap": "Unwrap",
       "withdraw": "Withdraw"
     },
     "hints": {
@@ -160,8 +161,9 @@
       "claimStatus": "Status",
       "collectionId": "Collection",
       "confirm": "Confirm",
-      "contractCustomId": "Allowance Contract",
       "contractId": "Contract",
+      "mainContractId": "Contract",
+      "customContractId": "Allowance Contract",
       "contractIds": "Contracts",
       "contractTemplate": "Template",
       "count": "Count",
@@ -219,8 +221,9 @@
       "address": "0x...",
       "amount": "100",
       "confirm": "******",
-      "contractCustomId": "Allowance Contract",
+      "customContractId": "Allowance Contract",
       "contractId": "Contract",
+      "mainContractId": "Contract",
       "contractIds": "Contracts",
       "createdAt": "Registered",
       "displayName": "Gordon Freeman",
@@ -242,6 +245,7 @@
     "tips": {
       "add": "Add",
       "clear": "Clear",
+      "create": "Create",
       "delete": "Delete",
       "deposit": "Deposit",
       "edit": "Edit",

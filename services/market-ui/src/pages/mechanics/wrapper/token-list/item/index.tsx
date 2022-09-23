@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { TokenSellButton } from "../../../../../components/buttons";
+import { TokenSellButton, WrapperUnpackButton } from "../../../../../components/buttons";
 import { RarityBadge } from "../../../../../components/common/badge";
 
 interface IWrapperTokenListItemProps {
@@ -22,7 +22,7 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
     <Card>
       <CardActionArea component={RouterLink} to={`/wrapper-tokens/${token.id}`}>
         <RarityBadge token={token} />
-        <CardHeader title={token.template!.title} />
+        <CardHeader title={`${token.template!.title} #${token.tokenId}`} />
         <CardMedia className={classes.media} image={token.template!.imageUrl} />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
@@ -34,6 +34,7 @@ export const WrapperTokenListItem: FC<IWrapperTokenListItemProps> = props => {
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <TokenSellButton token={token} />
+            <WrapperUnpackButton token={token} />
           </Grid>
         </Grid>
       </CardActions>
