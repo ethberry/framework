@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import { Contract, constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
-import { blockAwait, blockAwait2 } from "../utils/blockAwait";
+import { blockAwait, blockAwaitMs } from "../utils/blockAwait";
 import { baseTokenURI, MINTER_ROLE, royalty, tokenName } from "../../test/constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
@@ -20,7 +20,7 @@ interface IObj {
 const debug = async (obj: IObj | Record<string, Contract>, name?: string) => {
   if (obj && obj.hash) {
     console.info(`${name} tx: ${obj.hash}`);
-    await blockAwait2(delayMs);
+    await blockAwaitMs(delayMs);
   } else {
     console.info(`${Object.keys(obj).pop()} deployed`);
     await blockAwait(delay);

@@ -53,7 +53,7 @@ contract ExchangeUtils {
         }
       } else if (ingredient.tokenType == TokenType.ERC20) {
         if (account == address(this)) {
-          IERC20(ingredient.token).transfer(receiver, ingredient.amount);
+          SafeERC20.safeTransfer(IERC20(ingredient.token), receiver, ingredient.amount);
         } else {
           SafeERC20.safeTransferFrom(IERC20(ingredient.token), account, receiver, ingredient.amount);
         }
