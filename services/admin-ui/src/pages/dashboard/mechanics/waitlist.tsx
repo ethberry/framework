@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { List, ListItem, ListItemIcon, ListItemText, ListSubheader, Paper } from "@mui/material";
-import { TimerOutlined } from "@mui/icons-material";
+import { HourglassBottom, Person } from "@mui/icons-material";
 import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
@@ -17,7 +17,7 @@ export const Waitlist: FC = () => {
       >
         <ListItem button component={RouterLink} to="/waitlist/list">
           <ListItemIcon>
-            <TimerOutlined />
+            <HourglassBottom />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.waitlist.list.title" />
@@ -25,7 +25,7 @@ export const Waitlist: FC = () => {
         </ListItem>
         <ListItem button component={RouterLink} to="/waitlist/item">
           <ListItemIcon>
-            <TimerOutlined />
+            <Person />
           </ListItemIcon>
           <ListItemText>
             <FormattedMessage id="pages.waitlist.item.title" />
