@@ -25,7 +25,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
 
   const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
     form.setValue(`${prefix}.tokenId`, option?.id ?? 0); // actually id
-    form.setValue(`${prefix}.externalId`, option?.tokenId ?? 0);
+    form.setValue(`${prefix}.token.tokenId`, option?.tokenId ?? 0);
   };
 
   switch (tokenType) {

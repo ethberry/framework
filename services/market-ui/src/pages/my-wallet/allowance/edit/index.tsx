@@ -1,11 +1,10 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { IAsset, TokenType } from "@framework/types";
+import { IAsset, TokenType, ContractFeatures } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { ContractInput } from "./contract-input";
-import { ContractCustomInput } from "./contract-custom-input";
+import { ContractInput } from "../../../../components/inputs/contract";
 import { TokenTypeInput } from "./token-type-input";
 import { AmountInput } from "./amount-input";
 
@@ -13,10 +12,9 @@ export interface IAllowanceDto {
   allowance: IAsset;
   tokenType: TokenType;
   contractId: number;
-  address: string;
+  contract: { main: string; custom: string };
   decimals: number;
   amount: string;
-  addressCustom: string;
 }
 
 export interface IAllowanceDialogProps {
@@ -38,9 +36,13 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       {...rest}
     >
       <TokenTypeInput />
-      <ContractInput />
+      <ContractInput name="contractId" related="main" />
       <AmountInput />
-      <ContractCustomInput />
+      <ContractInput
+        name="customContractId"
+        related="custom"
+        data={{ contractFeatures: [ContractFeatures.ALLOWANCE], contractType: [] }}
+      />
     </FormDialog>
   );
 };

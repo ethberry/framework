@@ -44,7 +44,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
     const items = values.item.components.map(component => ({
       tokenType: Object.keys(TokenType).indexOf(component.tokenType),
       token: component.contract!.address,
-      tokenId: component.externalId || 0,
+      tokenId: component.token.tokenId || 0,
       amount: component.amount,
     }));
     let totalValue = utils.parseEther("0");

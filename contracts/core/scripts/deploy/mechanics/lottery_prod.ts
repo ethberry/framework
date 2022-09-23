@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 import { Contract, constants } from "ethers";
 import { baseTokenURI, royalty, tokenName } from "../../../test/constants";
-import { blockAwait, blockAwait2 } from "../../utils/blockAwait";
+import { blockAwait, blockAwaitMs } from "../../utils/blockAwait";
 
 export async function deployLotteryProd(contracts: Record<string, Contract>) {
   const amount = constants.WeiPerEther.mul(1e6);
@@ -9,19 +9,19 @@ export async function deployLotteryProd(contracts: Record<string, Contract>) {
   const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
   const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);
   contracts.erc20Simple = erc20SimpleInstance;
-  await blockAwait2(30000);
+  await blockAwaitMs(30000);
   await blockAwait();
 
   await erc20SimpleInstance.mint(owner.address, amount);
-  await blockAwait2(30000);
+  await blockAwaitMs(30000);
   await blockAwait();
   await erc20SimpleInstance.approve(contracts.exchange.address, amount);
-  await blockAwait2(30000);
+  await blockAwaitMs(30000);
   await blockAwait();
 
   const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
-  await blockAwait2(30000);
+  await blockAwaitMs(30000);
   await blockAwait();
 
   const lotteryFactory = await ethers.getContractFactory("Lottery");
@@ -30,6 +30,6 @@ export async function deployLotteryProd(contracts: Record<string, Contract>) {
     contracts.erc721Lottery.address,
     contracts.erc20Simple.address,
   );
-  await blockAwait2(30000);
+  await blockAwaitMs(30000);
   await blockAwait();
 }

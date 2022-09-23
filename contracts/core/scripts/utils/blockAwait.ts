@@ -1,21 +1,21 @@
 import { ethers } from "hardhat";
 
-function delay(ms: number) {
+function delayMs(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const blockAwait = async function (blockDelay = 2, delayMs?: number): Promise<void> {
-  await delay(delayMs || 0);
+export const blockAwait = async function (blockDelay = 2, delay?: number): Promise<void> {
+  await delayMs(delay || 0);
   const initialBlock = await ethers.provider.getBlock("latest");
   let currentBlock;
   let delayB;
   do {
-    await delay(delayMs || 0);
+    await delayMs(delay || 0);
     currentBlock = await ethers.provider.getBlock("latest");
     delayB = currentBlock.number - initialBlock.number;
   } while (delayB < blockDelay);
 };
 
-export const blockAwait2 = async function (msecDelay = 5000): Promise<void> {
-  await delay(msecDelay);
+export const blockAwaitMs = async function (msecDelay = 5000): Promise<void> {
+  await delayMs(msecDelay);
 };

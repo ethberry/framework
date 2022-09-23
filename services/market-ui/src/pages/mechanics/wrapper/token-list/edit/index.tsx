@@ -8,7 +8,7 @@ import { TemplateInput } from "./template-input";
 import { ContractInput } from "./contract-input";
 
 export interface ITokenAssetComponent extends IAssetComponent {
-  externalId?: string;
+  token: { tokenId?: string };
 }
 
 export interface ITokenAsset {
@@ -39,7 +39,7 @@ export const emptyItems = {
         title: "",
       },
       amount: "0",
-      externalId: "0",
+      token: { tokenId: "0" },
     } as ITokenAssetComponent,
   ],
 } as ITokenAsset;
@@ -61,7 +61,7 @@ export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
   return (
     <FormDialog
       initialValues={fixedValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       message="dialogs.create"
       testId="WrapperEditForm"
       {...rest}
