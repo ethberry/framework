@@ -5,12 +5,12 @@
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "lerna": "5.5.1",
-    "nx": "14.7.6"
+    "lerna": "5.5.2",
+    "nx": "14.7.13"
   },
   "devDependencies": {
     "@gemunion/eslint-config": "2.0.5",
-    "@types/node": "16.11.59",
+    "@types/node": "16.11.60",
     "@types/react": "17.0.50",
     "@typescript-eslint/eslint-plugin": "5.38.0",
     "@typescript-eslint/parser": "5.38.0",
@@ -20,12 +20,12 @@
     "eslint-import-resolver-typescript": "3.5.1",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-jest": "27.0.4",
-    "eslint-plugin-n": "15.2.5",
+    "eslint-plugin-n": "15.3.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.0.1",
     "eslint-plugin-react": "7.31.8",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-testing-library": "5.6.4",
+    "eslint-plugin-testing-library": "5.7.0",
     "husky": "4.3.8",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
