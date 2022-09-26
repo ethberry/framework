@@ -31,9 +31,24 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   uint8 internal comm = 30; // commission 30%
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
+  event RoundFinalized(uint256 round, uint8[6] winValues);
   event Purchase(address account, uint256 price, uint256 round, bool[36] numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
+
+  // LOTTERY
+
+  struct Round {
+    uint256 roundId;
+    uint256 startTimestamp;
+    uint256 endTimestamp;
+    uint256 balance; // left after get prize
+    uint256 total; // max money before
+    bool[][] tickets; // all round tickets
+    uint8[6] values; // prize numbers
+    uint8[7] aggregation; // prize counts
+    bytes32 requestId;
+  }
 
   constructor(
     string memory name,
@@ -64,19 +79,6 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     _acceptedToken = acceptedToken;
   }
 
-  // LOTTERY
-
-  struct Round {
-    uint256 startTimestamp;
-    uint256 endTimestamp;
-    uint256 balance; // left after get prize
-    uint256 total; // max money before
-    bool[][] tickets; // all round tickets
-    uint8[6] values; // prize numbers
-    uint8[7] aggregation; // prize counts
-    bytes32 requestId;
-  }
-
   Round[] internal _rounds;
 
   function startRound() public onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -89,6 +91,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 roundNumber = _rounds.length - 1;
 
     Round storage currentRound = _rounds[roundNumber];
+    currentRound.roundId = roundNumber;
     currentRound.startTimestamp = block.timestamp;
 
     emit RoundStarted(roundNumber, block.timestamp);
@@ -107,6 +110,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   function endRound() external onlyRole(DEFAULT_ADMIN_ROLE) {
     uint256 roundNumber = _rounds.length - 1;
     Round storage currentRound = _rounds[roundNumber];
+    require(currentRound.roundId == roundNumber, "Lottery: wrong roundId");
     require(currentRound.endTimestamp == 0, "Lottery: previous round is already finished");
 
     currentRound.endTimestamp = block.timestamp;
@@ -115,7 +119,9 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 commission = (currentRound.total * comm) / 100;
     currentRound.total -= commission;
 
-    SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), commission);
+    if (commission != 0) {
+      SafeERC20.safeTransfer(IERC20(_acceptedToken), _msgSender(), commission);
+    }
 
     emit RoundEnded(roundNumber, block.timestamp);
   }
@@ -159,6 +165,8 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
       }
       currentRound.aggregation[tmp2]++;
     }
+
+    emit RoundFinalized(currentRound.roundId, currentRound.values);
   }
 
   // MARKETPLACE

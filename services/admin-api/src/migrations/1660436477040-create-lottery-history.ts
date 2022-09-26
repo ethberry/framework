@@ -6,11 +6,13 @@ export class CreateLotteryHistoryAt1660436477040 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
       `CREATE TYPE ${ns}.lottery_event_enum AS ENUM (
+        'RoundFinalized',
         'RoundStarted',
         'RoundEnded',
         'Purchase',
         'Released',
-        'Prize'
+        'Prize',
+        'RandomRequest'
       );`,
     );
 

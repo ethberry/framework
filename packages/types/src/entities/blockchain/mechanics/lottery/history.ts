@@ -1,11 +1,18 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
 
 export enum LotteryEventType {
+  RoundFinalized = "RoundFinalized",
   RoundStarted = "RoundStarted",
   RoundEnded = "RoundEnded",
   Purchase = "Purchase",
   Released = "Released",
   Prize = "Prize",
+  RandomRequest = "RandomRequest",
+}
+
+export interface IRoundFinalizedEvent {
+  round: string;
+  winValues: Array<number>;
 }
 
 export interface ILotteryPurchaseEvent {
@@ -18,6 +25,10 @@ export interface ILotteryPurchaseEvent {
 export interface IRoundStartedEvent {
   round: string;
   startTimestamp: string;
+}
+
+export interface ILotteryRandomRequestEvent {
+  requestId: string;
 }
 
 export interface IRoundEndedEvent {
@@ -41,7 +52,9 @@ export type TLotteryEventData =
   | IRoundEndedEvent
   | ILotteryPurchaseEvent
   | ILotteryPrizeEvent
-  | ILotteryReleaseEvent;
+  | ILotteryReleaseEvent
+  | ILotteryRandomRequestEvent
+  | IRoundFinalizedEvent;
 
 export interface ILotteryHistory extends IIdDateBase {
   address: string;

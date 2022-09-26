@@ -7,7 +7,8 @@ import { AccessControlEventType, ContractEventType, ContractType, LotteryEventTy
 import { LotteryLogService } from "./log.service";
 
 // system contract
-import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
+// import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
+import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/test/LotteryRandomHardhat.sol/LotteryRandomHardhat.json";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 
@@ -34,11 +35,14 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               LotteryEventType.Purchase,
               LotteryEventType.Released,
               LotteryEventType.RoundStarted,
+              LotteryEventType.RoundFinalized,
               ContractEventType.Paused,
               ContractEventType.Unpaused,
               AccessControlEventType.RoleAdminChanged,
               AccessControlEventType.RoleGranted,
-              AccessControlEventType.RoleRevoked
+              AccessControlEventType.RoleRevoked,
+              // DEV ONLY
+              ContractEventType.RandomRequest
             ],
           },
           block: {

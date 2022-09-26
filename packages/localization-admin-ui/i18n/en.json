@@ -537,7 +537,9 @@
     },
     "lottery": {
       "rounds": {
-        "title": "Rounds"
+        "title": "Rounds",
+        "start": "Start Round",
+        "end": "End Round"
       },
       "tickets": {
         "title": "Tickets"
