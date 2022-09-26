@@ -29,7 +29,7 @@
     "@gemunion/mui-inputs-core": "7.0.45",
     "@gemunion/mui-inputs-entity": "7.2.11",
     "@gemunion/mui-inputs-image-firebase": "8.0.47",
-    "@gemunion/mui-inputs-mask": "5.4.3",
+    "@gemunion/mui-inputs-mask": "5.4.4",
     "@gemunion/mui-inputs-picker": "5.2.28",
     "@gemunion/mui-page-layout": "2.0.4",
     "@gemunion/mui-rte": "3.0.0",
