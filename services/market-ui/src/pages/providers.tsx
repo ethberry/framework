@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { SnackbarProvider } from "notistack";
 
 import { FirebaseApiProvider } from "@gemunion/provider-api-firebase";
@@ -15,7 +15,7 @@ import { EnabledLanguages, ns } from "@framework/constants";
 
 import { themeProps } from "../components/theme";
 
-export const Providers: FC = props => {
+export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
   return (
     <FirebaseApiProvider baseUrl={process.env.BE_URL} storageName={ns}>
