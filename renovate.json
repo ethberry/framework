@@ -1,10 +1,6 @@
 {
-  "extends": [
-    "github>gemunion/renovate-config"
-  ],
-  "baseBranches": [
-    "dev"
-  ],
+  "extends": ["github>gemunion/renovate-config"],
+  "baseBranches": ["dev", "react18"],
   "packageRules": [
     {
       "matchPackagePrefixes": ["@gemunion/"],
