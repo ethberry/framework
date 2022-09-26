@@ -1,18 +1,4 @@
 {
   "extends": ["github>gemunion/renovate-config"],
-  "baseBranches": ["dev", "react18"],
-  "packageRules": [
-    {
-      "matchPackagePrefixes": ["@gemunion/"],
-      "commitMessageTopic": "Gemunion",
-      "groupName": "@Gemunion packages",
-      "groupSlug": "gemunion-packages"
-    },
-    {
-      "matchPackagePrefixes": ["@mui/"],
-      "commitMessageTopic": "MUI",
-      "groupName": "@Mui packages",
-      "groupSlug": "mui-packages"
-    }
-  ]
+  "baseBranches": ["dev", "react18"]
 }
