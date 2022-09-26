@@ -5,11 +5,11 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ContractType, ExchangeEventType, IClaimRewardEvent, IRewardSetEvent } from "@framework/types";
 
-import { WaitlistServiceEth } from "./waitlist.service.eth";
+import { WaitlistItemServiceEth } from "./item.service.eth";
 
 @Controller()
-export class WaitlistControllerEth {
-  constructor(private readonly waitlistServiceEth: WaitlistServiceEth) {}
+export class WaitlistItemControllerEth {
+  constructor(private readonly waitlistServiceEth: WaitlistItemServiceEth) {}
 
   @EventPattern([{ contractType: ContractType.WAITLIST, eventName: ExchangeEventType.RewardSet }])
   public rewardSet(

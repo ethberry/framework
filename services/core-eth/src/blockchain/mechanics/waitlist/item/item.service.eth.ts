@@ -5,11 +5,11 @@ import { Log } from "@ethersproject/abstract-provider";
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ExchangeEventType, IClaimRewardEvent, IRewardSetEvent, TExchangeEventData } from "@framework/types";
 
-import { ContractService } from "../../hierarchy/contract/contract.service";
-import { ExchangeHistoryService } from "../exchange/history/exchange-history.service";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ExchangeHistoryService } from "../../exchange/history/exchange-history.service";
 
 @Injectable()
-export class WaitlistServiceEth {
+export class WaitlistItemServiceEth {
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
@@ -26,7 +26,7 @@ export class WaitlistServiceEth {
   }
 
   private async updateHistory(event: ILogEvent<TExchangeEventData>, context: Log) {
-    this.loggerService.log(JSON.stringify(event, null, "\t"), WaitlistServiceEth.name);
+    this.loggerService.log(JSON.stringify(event, null, "\t"), WaitlistItemServiceEth.name);
 
     const { args, name } = event;
 

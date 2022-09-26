@@ -1,11 +1,11 @@
 import { Column, Entity } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IWaitlist } from "@framework/types";
+import { IWaitlistItem } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 @Entity({ schema: ns, name: "waitlist" })
-export class WaitlistEntity extends IdDateBaseEntity implements IWaitlist {
+export class WaitlistItemEntity extends IdDateBaseEntity implements IWaitlistItem {
   @Column({ type: "varchar" })
   public account: string;
 
