@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { IAsset, TokenType, ContractFeatures } from "@framework/types";
+import { ContractFeatures, IAsset, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../components/inputs/contract";
