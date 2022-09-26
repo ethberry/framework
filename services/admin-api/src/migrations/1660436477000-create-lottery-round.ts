@@ -19,6 +19,10 @@ export class CreateLotteryRoundAt1660436477000 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "round_id",
+          type: "uint256",
+        },
+        {
           name: "start_timestamp",
           type: "timestamptz",
         },

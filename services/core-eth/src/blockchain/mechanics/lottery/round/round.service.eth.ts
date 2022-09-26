@@ -1,12 +1,16 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Wallet } from "ethers";
 
 import { Log } from "@ethersproject/abstract-provider";
-
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
+import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import {
   ILotteryPrizeEvent,
+  ILotteryRandomRequestEvent,
   ILotteryReleaseEvent,
   IRoundEndedEvent,
+  IRoundFinalizedEvent,
   IRoundStartedEvent,
   LotteryEventType,
   TLotteryEventData,
@@ -15,6 +19,7 @@ import {
 import { LotteryHistoryService } from "../history/history.service";
 import { LotteryRoundService } from "./round.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { callRandom, getLotteryNumbers } from "../../../../common/utils";
 
 @Injectable()
 export class LotteryRoundServiceEth {
@@ -24,23 +29,37 @@ export class LotteryRoundServiceEth {
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryHistoryService: LotteryHistoryService,
     private readonly contractService: ContractService,
+    private readonly configService: ConfigService,
+    @Inject(ETHERS_SIGNER)
+    private readonly signer: Wallet,
   ) {}
 
   public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
-
     const {
       args: { round, startTimestamp },
     } = event;
 
-    const roundEntity = await this.lotteryRoundService.create({
+    await this.lotteryRoundService.create({
+      roundId: round,
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
     });
+  }
 
-    // TODO use round_id ???
-    if (roundEntity.id !== ~~round) {
-      throw new NotFoundException("roundIsWrong");
+  public async finalize(event: ILogEvent<IRoundFinalizedEvent>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+    const {
+      args: { round, winValues },
+    } = event;
+
+    const roundEntity = await this.lotteryRoundService.findOne({ roundId: round });
+
+    if (!roundEntity) {
+      throw new NotFoundException("roundNotFound");
     }
+
+    Object.assign(roundEntity, { numbers: getLotteryNumbers(winValues) });
+    await roundEntity.save();
   }
 
   public async end(event: ILogEvent<IRoundEndedEvent>, context: Log): Promise<void> {
@@ -50,7 +69,7 @@ export class LotteryRoundServiceEth {
       args: { round, endTimestamp },
     } = event;
 
-    const roundEntity = await this.lotteryRoundService.findOne({ id: ~~round });
+    const roundEntity = await this.lotteryRoundService.findOne({ roundId: round });
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
@@ -87,5 +106,19 @@ export class LotteryRoundServiceEth {
     });
 
     await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+  }
+
+  public async randomRequest(event: ILogEvent<ILotteryRandomRequestEvent>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+    // DEV ONLY
+    const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
+    if (nodeEnv === "development") {
+      const {
+        args: { requestId },
+      } = event;
+      const { address } = context;
+      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+      await callRandom(vrfAddr, address, requestId, this.signer);
+    }
   }
 }
