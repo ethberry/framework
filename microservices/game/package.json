@@ -31,7 +31,7 @@
     "@nestjs/passport": "9.0.0",
     "@nestjs/platform-express": "9.1.2",
     "@nestjs/swagger": "6.1.2",
-    "@nestjs/terminus": "9.1.1",
+    "@nestjs/terminus": "9.1.2",
     "@nestjs/typeorm": "9.0.1",
     "amqp-connection-manager": "4.1.6",
     "amqplib": "0.10.3",
