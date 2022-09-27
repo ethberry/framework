@@ -29,7 +29,14 @@ export const MysteryContract: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mystery.contracts", "mystery.contract"]} data={[{}, {}, selected]} />
+      <Breadcrumbs
+        path={{
+          dashboard: "dashboard",
+          "mystery.contracts": "mystery-contracts",
+          "mystery.contract": "mystery.contract",
+        }}
+        data={[{}, {}, selected]}
+      />
 
       <PageHeader message="pages.mystery.contract.title" data={selected} />
 

@@ -32,7 +32,11 @@ export const Erc1155Contract: FC = () => {
   return (
     <Fragment>
       <Breadcrumbs
-        path={["dashboard", "erc1155.contracts", "erc1155.contract"]}
+        path={{
+          dashboard: "dashboard",
+          "erc1155.contracts": "erc1155-contracts",
+          "erc1155.contract": "erc1155.contract",
+        }}
         data={[{}, {}, { title: selected.title }]}
       />
 

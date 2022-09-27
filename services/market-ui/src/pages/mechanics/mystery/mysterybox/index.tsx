@@ -28,7 +28,14 @@ export const MysteryBox: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mystery.boxes", "mystery.box"]} data={[{}, {}, selected]} />
+      <Breadcrumbs
+        path={{
+          dashboard: "dashboard",
+          "mystery.boxes": "mystery-boxes",
+          "mystery.box": "mystery.box",
+        }}
+        data={[{}, {}, selected]}
+      />
 
       <PageHeader message="pages.mystery.box.title" data={selected} />
 

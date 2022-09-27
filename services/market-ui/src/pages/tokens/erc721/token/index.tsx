@@ -33,7 +33,14 @@ export const Erc721Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721.tokens", "erc721.token"]} data={[{}, {}, selected.template]} />
+      <Breadcrumbs
+        path={{
+          dashboard: "dashboard",
+          "erc721.tokens": "erc721-tokens",
+          "erc721.token": "erc721.token",
+        }}
+        data={[{}, {}, selected.template]}
+      />
 
       <PageHeader message="pages.erc721.token.title" data={selected.template} />
 

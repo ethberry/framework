@@ -32,7 +32,14 @@ export const MysteryboxToken: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "mystery.tokens", "mystery.token"]} data={[{}, {}, selected.template]} />
+      <Breadcrumbs
+        path={{
+          dashboard: "dashboard",
+          "mystery.tokens": "mystery-tokens",
+          "mystery.token": "mystery.token",
+        }}
+        data={[{}, {}, selected.template]}
+      />
 
       <PageHeader message="pages.mystery.token.title" data={selected.template} />
 
