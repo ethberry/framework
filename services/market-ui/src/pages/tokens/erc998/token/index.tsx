@@ -34,7 +34,14 @@ export const Erc998Token: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc998.tokens", "erc998.token"]} data={[{}, {}, selected.template]} />
+      <Breadcrumbs
+        path={{
+          dashboard: "dashboard",
+          "erc998.tokens": "erc998-tokens",
+          "erc998.token": "erc998.token",
+        }}
+        data={[{}, {}, selected.template]}
+      />
 
       <PageHeader message="pages.erc998.token.title" data={selected.template} />
 

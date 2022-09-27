@@ -32,7 +32,14 @@ export const WrapperToken: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "wrapper.tokens", "wrapper.token"]} data={[{}, {}, selected.template]} />
+      <Breadcrumbs
+        path={{
+          dashboard: "dashboard",
+          "wrapper.tokens": "wrapper-tokens",
+          "wrapper.token": "wrapper.token",
+        }}
+        data={[{}, {}, selected.template]}
+      />
 
       <PageHeader message="pages.wrapper.token.title" data={selected.template} />
 

@@ -29,7 +29,14 @@ export const Erc721Template: FC = () => {
 
   return (
     <Fragment>
-      <Breadcrumbs path={["dashboard", "erc721.templates", "erc721.templates"]} data={[{}, {}, selected]} />
+      <Breadcrumbs
+        path={{
+          dashboard: "dashboard",
+          "erc721.templates": "erc721-templates",
+          "erc721.template": "erc721.template",
+        }}
+        data={[{}, {}, selected]}
+      />
 
       <PageHeader message="pages.erc721.template.title" data={selected} />
 
