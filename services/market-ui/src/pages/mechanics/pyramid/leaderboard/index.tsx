@@ -46,7 +46,7 @@ export const PyramidLeaderboard: FC = () => {
       field: "id",
       headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
-      flex: 1,
+      flex: 0.5,
       renderCell: (params: GridCellParams) => {
         const row = params.row as IPyramidLeaderboard;
         // @ts-ignore
@@ -71,7 +71,7 @@ export const PyramidLeaderboard: FC = () => {
           <ScannerLink address={params.value} />
         );
       },
-      flex: 1
+      flex: 2
     },
     {
       field: "amount",

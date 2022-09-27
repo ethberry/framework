@@ -33,7 +33,7 @@ export const ReferralLeaderboard: FC = () => {
       field: "account",
       headerName: formatMessage({id: "form.labels.account"}),
       sortable: false,
-      flex: 1
+      flex: 2
     },
     {
       field: "amount",

@@ -71,7 +71,7 @@ export const StakingLeaderboard: FC = () => {
           <ScannerLink address={params.value} />
         );
       },
-      flex: 1
+      flex: 2
     },
     {
       field: "amount",

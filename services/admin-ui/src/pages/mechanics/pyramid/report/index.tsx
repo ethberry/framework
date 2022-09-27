@@ -78,7 +78,7 @@ export const PyramidReport: FC = () => {
           <ScannerLink address={params.value} />
         );
       },
-      flex: 1
+      flex: 2
     },
     {
       field: "deposit",
