@@ -61,7 +61,7 @@ export const ReferralReport: FC = () => {
       field: "referrer",
       headerName: formatMessage({ id: "form.labels.referrer" }),
       sortable: false,
-      flex: 1
+      flex: 2
     },
     {
       field: "amount",

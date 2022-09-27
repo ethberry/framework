@@ -38,7 +38,7 @@ export const LotteryLeaderboard: FC = () => {
           <ScannerLink address={params.value} />
         );
       },
-      flex: 1
+      flex: 2
     },
     {
       field: "count",
