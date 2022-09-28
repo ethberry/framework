@@ -1,6 +1,8 @@
 import { ComponentClass, FunctionComponent } from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 
 export default (App: ComponentClass<any> | FunctionComponent<any>): void => {
-  render(<App />, document.getElementById("app"));
+  const container = document.getElementById("app");
+  const root = createRoot(container!);
+  root.render(<App />);
 };
