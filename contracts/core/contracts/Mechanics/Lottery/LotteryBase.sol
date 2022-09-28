@@ -26,8 +26,8 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   address private _ticketFactory;
   address private _acceptedToken;
 
-  uint8 private _maxTicket = 2; // TODO change for 5000 in production
-  uint256 private _timeLag = 2592; // TODO change in production: release after 2592000 seconds = 30 days
+  uint8 private _maxTicket = 2; // TODO change for 5000 in production or add to constructor
+  uint256 private _timeLag = 2592; // TODO change in production: release after 2592000 seconds = 30 days or add to constructor
   uint8 internal comm = 30; // commission 30%
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
@@ -198,6 +198,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     emit Purchase(account, price, roundNumber, numbers);
 
     SafeERC20.safeTransferFrom(IERC20(_acceptedToken), _msgSender(), address(this), price);
+
     IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
   }
 

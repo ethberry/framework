@@ -8,6 +8,7 @@ import { ILotteryPurchaseEvent, LotteryEventType, TLotteryEventData } from "@fra
 import { LotteryTicketService } from "./ticket.service";
 import { LotteryHistoryService } from "../history/history.service";
 import { LotteryRoundService } from "../round/round.service";
+import { TokenService } from "../../../hierarchy/token/token.service";
 
 @Injectable()
 export class LotteryTicketServiceEth {
@@ -17,6 +18,7 @@ export class LotteryTicketServiceEth {
     private readonly lotteryTicketService: LotteryTicketService,
     private readonly lotteryRoundService: LotteryRoundService,
     private readonly lotteryHistoryService: LotteryHistoryService,
+    private readonly tokenService: TokenService,
   ) {}
 
   public async purchase(event: ILogEvent<ILotteryPurchaseEvent>, context: Log): Promise<void> {
@@ -26,13 +28,19 @@ export class LotteryTicketServiceEth {
       args: { account, price, round, numbers },
     } = event;
 
-    const roundEntity = await this.lotteryRoundService.findOne({ id: ~~round });
+    const roundEntity = await this.lotteryRoundService.findOne({ roundId: round });
 
     if (!roundEntity) {
       throw new NotFoundException("roundNotFound");
     }
 
-    await this.lotteryTicketService.create({ account, numbers, amount: price, roundId: roundEntity.id });
+    await this.lotteryTicketService.create({
+      account,
+      numbers,
+      amount: price,
+      roundId: roundEntity.id,
+      tokenId: 801001,
+    });
   }
 
   private async updateHistory(event: ILogEvent<TLotteryEventData>, context: Log) {

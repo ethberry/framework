@@ -6,8 +6,8 @@ import { TokenType } from "@framework/types";
 
 export const AmountInput: FC = () => {
   const tokenType = useWatch({ name: "tokenType" });
-  const address = useWatch({ name: "address" });
-  const decimals = useWatch({ name: "decimals" });
+  const address = useWatch({ name: "contract.main" });
+  const decimals = useWatch({ name: "main.decimals" });
 
   if (!address) {
     return null;

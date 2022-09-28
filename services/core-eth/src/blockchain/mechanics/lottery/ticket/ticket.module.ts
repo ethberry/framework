@@ -7,9 +7,10 @@ import { LotteryTicketControllerEth } from "./ticket.controller.eth";
 import { LotteryTicketServiceEth } from "./ticket.service.eth";
 import { LotteryRoundModule } from "../round/round.module";
 import { LotteryHistoryModule } from "../history/history.module";
+import { TokenModule } from "../../../hierarchy/token/token.module";
 
 @Module({
-  imports: [LotteryRoundModule, LotteryHistoryModule, TypeOrmModule.forFeature([LotteryTicketEntity])],
+  imports: [TokenModule, LotteryRoundModule, LotteryHistoryModule, TypeOrmModule.forFeature([LotteryTicketEntity])],
   providers: [Logger, LotteryTicketService, LotteryTicketServiceEth],
   controllers: [LotteryTicketControllerEth],
   exports: [LotteryTicketService, LotteryTicketServiceEth],

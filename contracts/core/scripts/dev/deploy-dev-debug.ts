@@ -3,7 +3,7 @@ import { Contract, constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "../utils/blockAwait";
-import { baseTokenURI, MINTER_ROLE, royalty, tokenName } from "../../test/constants";
+import { baseTokenURI, MINTER_ROLE, royalty } from "../../test/constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
@@ -331,11 +331,13 @@ async function main() {
   );
 
   const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
+  // contracts.erc721Lottery = erc721LotteryFactory.attach("0x2f730b7fb875732c59f2fba22375b7f37047a93f");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
   // const lotteryFactory = await ethers.getContractFactory("Lottery");
   const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
-  // contracts.lottery = lotteryFactory.attach("0x3ad91294ecb69f1cbae523df175ec69fe191fd3a");
+  // contracts.lottery = lotteryFactory.attach("0xcf2dd86ad43d839205551530e53867ceea23f7a1");
+
   contracts.lottery = await lotteryFactory.deploy(
     "Lottery",
     contracts.erc721Lottery.address,
@@ -343,8 +345,7 @@ async function main() {
   );
   await debug(contracts);
 
-  await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
-
+  await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
   await debug(contracts);
@@ -387,6 +388,7 @@ async function main() {
       mysteryboxBlacklistInstance.address,
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,
+      contracts.erc721Lottery.address,
     ],
     [
       contracts.erc721Wrapper.address,
@@ -396,6 +398,7 @@ async function main() {
       mysteryboxBlacklistInstance.address,
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,
+      contracts.lottery.address,
     ],
     [MINTER_ROLE],
   );

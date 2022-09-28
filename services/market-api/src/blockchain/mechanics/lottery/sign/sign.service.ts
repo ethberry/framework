@@ -47,6 +47,7 @@ export class LotterySignService {
       // Types
       {
         EIP712: [
+          { name: "account", type: "address" },
           { name: "params", type: "Params" },
           { name: "numbers", type: "bool[36]" },
           { name: "price", type: "uint256" },
@@ -60,6 +61,7 @@ export class LotterySignService {
       },
       // Value
       {
+        account,
         params,
         numbers: ticketNumbers,
         price: constants.WeiPerEther,
