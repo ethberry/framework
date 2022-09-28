@@ -16,9 +16,9 @@ describe("ExchangeReferral", function () {
   describe("exchange purchase", function () {
     it("referrer rewards", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
-      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { contractInstance: erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { contractInstance: erc721Instance } = await deployErc721Base("ERC721Simple", exchangeInstance);
 
       // SET REF PROGRAM
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
@@ -219,7 +219,7 @@ describe("ExchangeReferral", function () {
   describe("getBalance", function () {
     it("should get zero balance", async function () {
       const [owner] = await ethers.getSigners();
-      const { exchangeInstance } = await deployExchangeFixture();
+      const { contractInstance: exchangeInstance } = await deployExchangeFixture();
 
       const balance = await exchangeInstance.getBalance(owner.address, tokenZero);
       expect(balance).to.equal(0);
@@ -227,9 +227,9 @@ describe("ExchangeReferral", function () {
 
     it("should get non zero balance", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Base("ERC721Simple", exchangeInstance);
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { contractInstance: erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { contractInstance: erc721Instance } = await deployErc721Base("ERC721Simple", exchangeInstance);
 
       // SET REF PROGRAM
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);

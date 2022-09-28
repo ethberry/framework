@@ -10,9 +10,9 @@ describe("ExchangeGrade", function () {
   describe("upgrade", function () {
     it("should update metadata", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { contractInstance: erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { contractInstance: erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -74,9 +74,9 @@ describe("ExchangeGrade", function () {
 
     it("should fail: insufficient allowance", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { contractInstance: erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { contractInstance: erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -129,9 +129,9 @@ describe("ExchangeGrade", function () {
 
     it("should fail: transfer amount exceeds balance", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
+      const { contractInstance: exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
+      const { contractInstance: erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { contractInstance: erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 

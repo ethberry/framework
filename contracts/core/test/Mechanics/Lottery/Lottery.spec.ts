@@ -27,12 +27,12 @@ import {
 import { deployLinkVrfFixture } from "../../shared/link";
 
 import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
-import { shouldRevokeRole } from "../../shared/accessControl/revokeRole";
+import { shouldRevokeRole } from "../../shared/accessible/revokeRole";
 import { shouldPause } from "../../shared/pausable";
-import { shouldRenounceRole } from "../../shared/accessControl/renounceRole";
-import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
-import { shouldGetRoleAdmin } from "../../shared/accessControl/getRoleAdmin";
-import { shouldGrantRole } from "../../shared/accessControl/grantRole";
+import { shouldRenounceRole } from "../../shared/accessible/renounceRole";
+import { shouldHaveRole } from "../../shared/accessible/hasRoles";
+import { shouldGetRoleAdmin } from "../../shared/accessible/getRoleAdmin";
+import { shouldGrantRole } from "../../shared/accessible/grantRole";
 import { randomRequest } from "../../shared/randomRequest";
 import { getContractName } from "../../utils";
 import { wrapSignature } from "./utils";

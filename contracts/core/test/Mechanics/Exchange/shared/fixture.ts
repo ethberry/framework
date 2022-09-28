@@ -16,7 +16,7 @@ export async function deployExchangeFixture() {
   const generateManyToManySignature = wrapManyToManySignature(network, exchangeInstance, owner);
 
   return {
-    exchangeInstance,
+    contractInstance: exchangeInstance,
     generateOneToManySignature,
     generateManyToManySignature,
   };
@@ -28,7 +28,7 @@ export async function deployErc20Base(name: string, exchangeInstance: Exchange) 
   await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
   return {
-    erc20Instance,
+    contractInstance: erc20Instance,
   };
 }
 
@@ -38,7 +38,7 @@ export async function deployErc721Base(name: string, exchangeInstance: Exchange)
   await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
   return {
-    erc721Instance,
+    contractInstance: erc721Instance,
   };
 }
 
@@ -48,7 +48,6 @@ export async function deployErc1155Base(name: string, exchangeInstance: Exchange
   await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
 
   return {
-    exchangeInstance,
-    erc1155Instance,
+    contractInstance: erc1155Instance,
   };
 }

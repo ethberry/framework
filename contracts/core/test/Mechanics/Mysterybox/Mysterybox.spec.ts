@@ -24,7 +24,7 @@ import {
   tokenSymbol,
   VRF_ADDR,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessible/hasRoles";
 // import { shouldGetTokenURI } from "../../ERC721/shared/common/tokenURI";
 // import { shouldSetBaseURI } from "../../ERC721/shared/common/setBaseURI";
 import { randomRequest } from "../../shared/randomRequest";

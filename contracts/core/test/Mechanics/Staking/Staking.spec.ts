@@ -28,7 +28,7 @@ import {
   tokenId,
   VRF_ADDR,
 } from "../../constants";
-import { shouldHaveRole } from "../../shared/accessControl/hasRoles";
+import { shouldHaveRole } from "../../shared/accessible/hasRoles";
 import { IAsset, IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
