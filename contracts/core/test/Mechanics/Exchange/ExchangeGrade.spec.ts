@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants } from "ethers";
 import { amount, params, templateId, tokenId } from "../../constants";
-import { deployErc20Fixture, deployErc721Fixture, deployExchangeFixture } from "./shared/fixture";
+import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeGrade", function () {
   // shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
@@ -11,8 +11,8 @@ describe("ExchangeGrade", function () {
     it("should update metadata", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Fixture("ERC721Upgradeable", exchangeInstance);
+      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -75,8 +75,8 @@ describe("ExchangeGrade", function () {
     it("should fail: insufficient allowance", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Fixture("ERC721Upgradeable", exchangeInstance);
+      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 
@@ -130,8 +130,8 @@ describe("ExchangeGrade", function () {
     it("should fail: transfer amount exceeds balance", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Fixture("ERC721Upgradeable", exchangeInstance);
+      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Base("ERC721Upgradeable", exchangeInstance);
 
       const tx1 = erc721Instance.mintCommon(receiver.address, templateId);
 

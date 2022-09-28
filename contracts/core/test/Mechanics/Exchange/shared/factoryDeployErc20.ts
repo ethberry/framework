@@ -4,7 +4,7 @@ import { expect } from "chai";
 
 import { cap, DEFAULT_ADMIN_ROLE, featureIds, MINTER_ROLE, tokenName, tokenSymbol } from "../../../constants";
 import { blockAwait } from "../../../../scripts/utils/blockAwait";
-import { ContractManager, Exchange, ERC20Simple } from "../../../../typechain-types";
+import { ContractManager, ERC20Simple, Exchange } from "../../../../typechain-types";
 
 export async function factoryDeployErc20(
   factoryInstance: ContractManager,

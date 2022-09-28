@@ -12,7 +12,7 @@ import {
   tokenSymbol,
 } from "../../../constants";
 import { blockAwait } from "../../../../scripts/utils/blockAwait";
-import { ContractManager, Exchange, ERC721Simple } from "../../../../typechain-types";
+import { ContractManager, ERC721Simple, Exchange } from "../../../../typechain-types";
 
 export async function factoryDeployErc721(
   factoryInstance: ContractManager,

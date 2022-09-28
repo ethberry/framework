@@ -3,7 +3,7 @@ import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { MerkleTree } from "merkletreejs";
 
-import { Waitlist, ERC721Simple } from "../../../typechain-types";
+import { ERC721Simple, Waitlist } from "../../../typechain-types";
 import { baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../../constants";
 
 describe("Waitlist", function () {

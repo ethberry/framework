@@ -2,13 +2,13 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { DEFAULT_ADMIN_ROLE, templateId } from "../../constants";
-import { deployErc721Fixture } from "./fixture";
+import { deployErc721Base } from "./fixtures";
 
 export function shouldBlacklist(name: string) {
   describe("Black list", function () {
     it("should fail: account is missing role", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       const tx = contractInstance.connect(receiver).blacklist(receiver.address);
       await expect(tx).to.be.revertedWith(
@@ -18,7 +18,7 @@ export function shouldBlacklist(name: string) {
 
     it("should check black list", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       const isBlackListed = await contractInstance.isBlacklisted(receiver.address);
       expect(isBlackListed).to.equal(false);
@@ -26,7 +26,7 @@ export function shouldBlacklist(name: string) {
 
     it("should add to black list", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       const tx = contractInstance.blacklist(receiver.address);
       await expect(tx).to.emit(contractInstance, "Blacklisted").withArgs(receiver.address);
@@ -36,7 +36,7 @@ export function shouldBlacklist(name: string) {
 
     it("should delete from black list", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.blacklist(receiver.address);
       const tx = contractInstance.unBlacklist(receiver.address);
@@ -47,7 +47,7 @@ export function shouldBlacklist(name: string) {
 
     it("should fail: blacklisted", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.blacklist(receiver.address);
       const tx = contractInstance.mintCommon(receiver.address, templateId);

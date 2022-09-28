@@ -22,7 +22,7 @@ export async function deployExchangeFixture() {
   };
 }
 
-export async function deployErc20Fixture(name: string, exchangeInstance: Exchange) {
+export async function deployErc20Base(name: string, exchangeInstance: Exchange) {
   const erc20Factory = await ethers.getContractFactory(name);
   const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount * 10);
   await erc20Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -32,7 +32,7 @@ export async function deployErc20Fixture(name: string, exchangeInstance: Exchang
   };
 }
 
-export async function deployErc721Fixture(name: string, exchangeInstance: Exchange) {
+export async function deployErc721Base(name: string, exchangeInstance: Exchange) {
   const erc721Factory = await ethers.getContractFactory(name);
   const erc721Instance = await erc721Factory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
   await erc721Instance.grantRole(MINTER_ROLE, exchangeInstance.address);
@@ -42,7 +42,7 @@ export async function deployErc721Fixture(name: string, exchangeInstance: Exchan
   };
 }
 
-export async function deployErc1155Fixture(name: string, exchangeInstance: Exchange) {
+export async function deployErc1155Base(name: string, exchangeInstance: Exchange) {
   const erc1155Factory = await ethers.getContractFactory(name);
   const erc1155Instance = await erc1155Factory.deploy(royalty, baseTokenURI);
   await erc1155Instance.grantRole(MINTER_ROLE, exchangeInstance.address);

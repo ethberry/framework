@@ -1,32 +1,13 @@
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
-import { shouldHaveRole } from "../ERC721/shared/accessControl/hasRoles";
-import { shouldGetTokenURI } from "../ERC721/shared/common/tokenURI";
-import { shouldSetBaseURI } from "../ERC721/shared/common/setBaseURI";
-import { shouldMintCommon } from "../ERC721/shared/common/mintCommon";
-import { shouldMint } from "../ERC721/shared/mint";
-import { shouldSafeMint } from "../ERC721/shared/safeMint";
-import { shouldApprove } from "../ERC721/shared/common/approve";
-import { shouldGetBalanceOf } from "../ERC721/shared/common/balanceOf";
-import { shouldBurn } from "../ERC721/shared/common/burn";
-import { shouldGetOwnerOf } from "../ERC721/shared/common/ownerOf";
-import { shouldSetApprovalForAll } from "../ERC721/shared/common/setApprovalForAll";
-import { shouldTransferFrom } from "../ERC721/shared/common/transferFrom";
-import { shouldSafeTransferFrom } from "../ERC721/shared/common/safeTransferFrom";
+import { shouldMintCommon } from "../ERC721/shared/mintCommon";
+import { shouldERC721Accessible } from "../ERC721/shared/accessible";
+import { shouldERC721Simple } from "../ERC721/shared/simple";
 
 describe("ERC998Upgradeable", function () {
   const name = "ERC998Upgradeable";
 
-  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldERC721Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldERC721Simple(name);
+
   shouldMintCommon(name);
-  shouldMint(name);
-  shouldSafeMint(name);
-  shouldApprove(name);
-  shouldGetBalanceOf(name);
-  shouldBurn(name);
-  shouldGetOwnerOf(name);
-  shouldSetApprovalForAll(name);
-  shouldTransferFrom(name);
-  shouldSafeTransferFrom(name);
-  shouldGetTokenURI(name);
-  shouldSetBaseURI(name);
 });

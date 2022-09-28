@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, utils } from "ethers";
 import { amount, expiresAt, externalId, tokenId, tokenZero } from "../../constants";
-import { deployErc20Fixture, deployErc721Fixture, deployExchangeFixture } from "./shared/fixture";
+import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeReferral", function () {
   const refProgram = {
@@ -17,8 +17,8 @@ describe("ExchangeReferral", function () {
     it("referrer rewards", async function () {
       const [owner, receiver, stranger] = await ethers.getSigners();
       const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Base("ERC721Simple", exchangeInstance);
 
       // SET REF PROGRAM
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);
@@ -228,8 +228,8 @@ describe("ExchangeReferral", function () {
     it("should get non zero balance", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const { exchangeInstance, generateOneToManySignature } = await deployExchangeFixture();
-      const { erc20Instance } = await deployErc20Fixture("ERC20Simple", exchangeInstance);
-      const { erc721Instance } = await deployErc721Fixture("ERC721Simple", exchangeInstance);
+      const { erc20Instance } = await deployErc20Base("ERC20Simple", exchangeInstance);
+      const { erc721Instance } = await deployErc721Base("ERC721Simple", exchangeInstance);
 
       // SET REF PROGRAM
       const tx = exchangeInstance.setRefProgram(refProgram.maxRefs, refProgram.refReward, refProgram.refDecrease);

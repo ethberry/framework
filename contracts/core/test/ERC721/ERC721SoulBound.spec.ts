@@ -3,48 +3,41 @@ import { ethers } from "hardhat";
 
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, templateId, tokenId } from "../constants";
 
-import { shouldHaveRole } from "./shared/accessControl/hasRoles";
-import { shouldGetRoleAdmin } from "./shared/accessControl/getRoleAdmin";
-import { shouldGrantRole } from "./shared/accessControl/grantRole";
-import { shouldRevokeRole } from "./shared/accessControl/revokeRole";
-import { shouldRenounceRole } from "./shared/accessControl/renounceRole";
-
-import { shouldGetTokenURI } from "./shared/common/tokenURI";
-import { shouldSetBaseURI } from "./shared/common/setBaseURI";
-import { shouldMint } from "./shared/mint";
-import { shouldMintCommon } from "./shared/common/mintCommon";
-import { shouldSafeMint } from "./shared/safeMint";
-import { shouldApprove } from "./shared/common/approve";
-import { shouldGetBalanceOf } from "./shared/common/balanceOf";
-import { shouldBurn } from "./shared/common/burn";
-import { shouldGetOwnerOf } from "./shared/common/ownerOf";
-import { shouldSetApprovalForAll } from "./shared/common/setApprovalForAll";
-import { deployErc721Fixture } from "./shared/fixture";
+import { shouldTokenURI } from "./shared/simple/baseUrl/tokenURI";
+import { shouldSetBaseURI } from "./shared/simple/baseUrl/setBaseURI";
+import { shouldMint } from "./shared/simple/base/mint";
+import { shouldSafeMint } from "./shared/simple/base/safeMint";
+import { shouldApprove } from "./shared/simple/base/approve";
+import { shouldBalanceOf } from "./shared/simple/base/balanceOf";
+import { shouldBurn } from "./shared/simple/burnable/burn";
+import { shouldOwnerOf } from "./shared/simple/base/ownerOf";
+import { shouldSetApprovalForAll } from "./shared/simple/base/setApprovalForAll";
+import { deployErc721Base } from "./shared/fixtures";
+import { shouldERC721Accessible } from "./shared/accessible";
 
 describe("ERC721Soulbound", function () {
   const name = "ERC721Soulbound";
 
-  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGetRoleAdmin(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGrantRole(name);
-  shouldRevokeRole(name);
-  shouldRenounceRole(name);
+  shouldERC721Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldMintCommon(name);
+  shouldApprove(name);
+  shouldBalanceOf(name);
+  shouldBurn(name);
+  shouldOwnerOf(name);
+  shouldSetApprovalForAll(name);
+  // shouldTransferFrom(name);
+  // shouldSafeTransferFrom(name);
+
   shouldMint(name);
   shouldSafeMint(name);
-  shouldApprove(name);
-  shouldGetBalanceOf(name);
-  shouldBurn(name);
-  shouldGetOwnerOf(name);
-  shouldSetApprovalForAll(name);
-  shouldGetTokenURI(name);
+
   shouldSetBaseURI(name);
+  shouldTokenURI(name);
 
   describe("transferFrom", function () {
     it("should fail: can't be transferred", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance.transferFrom(owner.address, receiver.address, tokenId);
@@ -56,7 +49,7 @@ describe("ERC721Soulbound", function () {
   describe("safeTransferFrom", function () {
     it("should fail: can't be transferred", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance["safeTransferFrom(address,address,uint256)"](

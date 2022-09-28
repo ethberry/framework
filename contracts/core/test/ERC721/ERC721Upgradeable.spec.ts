@@ -3,53 +3,23 @@ import { utils } from "ethers";
 import { expect } from "chai";
 
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, templateId, tokenId } from "../constants";
-
-import { shouldHaveRole } from "./shared/accessControl/hasRoles";
-import { shouldGetRoleAdmin } from "./shared/accessControl/getRoleAdmin";
-import { shouldGrantRole } from "./shared/accessControl/grantRole";
-import { shouldRevokeRole } from "./shared/accessControl/revokeRole";
-import { shouldRenounceRole } from "./shared/accessControl/renounceRole";
-
-import { shouldGetTokenURI } from "./shared/common/tokenURI";
-import { shouldSetBaseURI } from "./shared/common/setBaseURI";
-import { shouldMintCommon } from "./shared/common/mintCommon";
-import { shouldMint } from "./shared/mint";
-import { shouldSafeMint } from "./shared/safeMint";
-import { shouldApprove } from "./shared/common/approve";
-import { shouldGetBalanceOf } from "./shared/common/balanceOf";
-import { shouldBurn } from "./shared/common/burn";
-import { shouldGetOwnerOf } from "./shared/common/ownerOf";
-import { shouldSetApprovalForAll } from "./shared/common/setApprovalForAll";
-import { shouldTransferFrom } from "./shared/common/transferFrom";
-import { shouldSafeTransferFrom } from "./shared/common/safeTransferFrom";
-import { deployErc721Fixture } from "./shared/fixture";
+import { shouldMintCommon } from "./shared/mintCommon";
+import { deployErc721Base } from "./shared/fixtures";
+import { shouldERC721Accessible } from "./shared/accessible";
+import { shouldERC721Simple } from "./shared/simple";
 
 describe("ERC721Upgradeable", function () {
   const name = "ERC721Upgradeable";
 
-  shouldHaveRole(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGetRoleAdmin(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldGrantRole(name);
-  shouldRevokeRole(name);
-  shouldRenounceRole(name);
+  shouldERC721Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldERC721Simple(name);
 
   shouldMintCommon(name);
-  shouldMint(name);
-  shouldSafeMint(name);
-  shouldApprove(name);
-  shouldGetBalanceOf(name);
-  shouldBurn(name);
-  shouldGetOwnerOf(name);
-  shouldSetApprovalForAll(name);
-  shouldTransferFrom(name);
-  shouldSafeTransferFrom(name);
-  shouldGetTokenURI(name);
-  shouldSetBaseURI(name);
 
   describe("getRecordFieldValue", function () {
     it("should get record field value", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.mintCommon(receiver.address, templateId);
       const value = await contractInstance.getRecordFieldValue(
@@ -61,7 +31,7 @@ describe("ERC721Upgradeable", function () {
 
     it("should fail: field not found", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.mintCommon(receiver.address, templateId);
       const value = contractInstance.getRecordFieldValue(
@@ -75,7 +45,7 @@ describe("ERC721Upgradeable", function () {
   describe("upgrade", function () {
     it("should level up", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.mintCommon(receiver.address, templateId);
 
@@ -91,7 +61,7 @@ describe("ERC721Upgradeable", function () {
 
     it("should fail: insufficient permissions", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Fixture(name);
+      const { contractInstance } = await deployErc721Base(name);
 
       await contractInstance.mintCommon(receiver.address, templateId);
 
