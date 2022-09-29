@@ -1,5 +1,5 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";
 
@@ -30,6 +30,7 @@ export class ReferralReportController {
     return this.referralReportService.chart(dto, userEntity);
   }
 
+  @ApiProduces("application/pdf")
   @Get("/export")
   public async export(
     @Query() query: ReferralReportSearchDto,

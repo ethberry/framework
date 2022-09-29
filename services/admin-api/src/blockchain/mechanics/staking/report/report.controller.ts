@@ -1,5 +1,5 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";
 
@@ -20,6 +20,7 @@ export class StakingDepositController {
     return this.stakingReportService.search(dto);
   }
 
+  @ApiProduces("application/pdf")
   @Get("/export")
   public async export(@Query() query: StakingReportSearchDto, @Res() res: Response): Promise<void> {
     const csv = await this.stakingReportService.export(query);

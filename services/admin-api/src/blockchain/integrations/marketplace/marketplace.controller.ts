@@ -1,5 +1,5 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";
 
@@ -38,6 +38,7 @@ export class MarketplaceController {
     return this.marketplaceService.supply(dto, userEntity);
   }
 
+  @ApiProduces("application/pdf")
   @Get("/export")
   public async export(
     @Query() query: MarketplaceReportSearchDto,
