@@ -30,7 +30,7 @@ export class ReferralReportController {
     return this.referralReportService.chart(dto, userEntity);
   }
 
-  @ApiProduces("application/pdf")
+  @ApiProduces("application/zip")
   @Get("/export")
   public async export(
     @Query() query: ReferralReportSearchDto,

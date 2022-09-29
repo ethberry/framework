@@ -20,7 +20,7 @@ export class StakingDepositController {
     return this.stakingReportService.search(dto);
   }
 
-  @ApiProduces("application/pdf")
+  @ApiProduces("application/zip")
   @Get("/export")
   public async export(@Query() query: StakingReportSearchDto, @Res() res: Response): Promise<void> {
     const csv = await this.stakingReportService.export(query);

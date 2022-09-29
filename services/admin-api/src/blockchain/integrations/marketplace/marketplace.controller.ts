@@ -38,7 +38,7 @@ export class MarketplaceController {
     return this.marketplaceService.supply(dto, userEntity);
   }
 
-  @ApiProduces("application/pdf")
+  @ApiProduces("application/zip")
   @Get("/export")
   public async export(
     @Query() query: MarketplaceReportSearchDto,
