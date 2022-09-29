@@ -32,7 +32,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
   event RoundStarted(uint256 round, uint256 startTimestamp);
   event RoundEnded(uint256 round, uint256 endTimestamp);
   event RoundFinalized(uint256 round, uint8[6] winValues);
-  event Purchase(address account, uint256 price, uint256 round, bool[36] numbers);
+  event Purchase(uint256 tokenId, address account, uint256 price, uint256 round, bool[36] numbers);
   event Released(uint256 round, uint256 amount);
   event Prize(address account, uint256 ticketId, uint256 amount);
 
@@ -146,7 +146,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint8 i = 0;
     while (i < 6) {
       uint256 number = randomness % 36;
-      randomness = randomness / 36;
+      randomness = randomness / 37;
       if (!tmp1[number]) {
         currentRound.values[i] = uint8(number);
         tmp1[number] = true;
@@ -158,7 +158,7 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     uint256 len = currentRound.tickets.length;
     for (uint8 l = 0; l < len; l++) {
       uint8 tmp2 = 0;
-      for (uint8 j = 0; j <= 6; j++) {
+      for (uint8 j = 0; j < 6; j++) {
         if (currentRound.tickets[l][currentRound.values[j]]) {
           tmp2++;
         }
@@ -168,7 +168,6 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
 
     emit RoundFinalized(currentRound.roundId, currentRound.values);
   }
-
   // MARKETPLACE
 
   function purchase(
@@ -195,11 +194,12 @@ abstract contract LotteryBase is AccessControl, Pausable, SignatureValidator {
     currentRound.balance += price;
     currentRound.total += price;
 
-    emit Purchase(account, price, roundNumber, numbers);
-
     SafeERC20.safeTransferFrom(IERC20(_acceptedToken), _msgSender(), address(this), price);
 
-    IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
+    uint256 tokenId = IERC721Ticket(_ticketFactory).mintTicket(account, roundNumber, numbers);
+
+    emit Purchase(tokenId, account, price, roundNumber, numbers);
+
   }
 
   function getPrize(uint256 tokenId) external {

@@ -22,6 +22,7 @@ export class RoyaltyControllerEth {
     },
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.DefaultRoyaltyInfo },
     { contractType: ContractType.WRAPPER, eventName: ContractEventType.DefaultRoyaltyInfo },
+    { contractType: ContractType.LOTTERY, eventName: ContractEventType.DefaultRoyaltyInfo },
   ])
   public defaultRoyaltyInfo(@Payload() event: ILogEvent<IDefaultRoyaltyInfoEvent>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.defaultRoyaltyInfo(event, context);
@@ -38,6 +39,7 @@ export class RoyaltyControllerEth {
     },
     { contractType: ContractType.MYSTERY, eventName: ContractEventType.TokenRoyaltyInfo },
     { contractType: ContractType.WRAPPER, eventName: ContractEventType.TokenRoyaltyInfo },
+    { contractType: ContractType.LOTTERY, eventName: ContractEventType.TokenRoyaltyInfo },
   ])
   public tokenRoyaltyInfo(@Payload() event: ILogEvent<ITokenRoyaltyInfoEvent>, @Ctx() context: Log): Promise<void> {
     return this.royaltyServiceEth.tokenRoyaltyInfo(event, context);

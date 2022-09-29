@@ -15,7 +15,7 @@ export interface ILotteryTicketViewDialogProps {
 
 export const LotteryTicketViewDialog: FC<ILotteryTicketViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { roundId } = initialValues;
+  const { roundId, round } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -37,6 +37,14 @@ export const LotteryTicketViewDialog: FC<ILotteryTicketViewDialogProps> = props 
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
               <TableCell align="right">{getNumbers(initialValues)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.winNumbers" />
+              </TableCell>
+              <TableCell align="right">
+                {round ? (round.numbers ? getNumbers(round) : "round not yet finished") : ""}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

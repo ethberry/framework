@@ -199,7 +199,7 @@ describe("Lottery", function () {
     });
   });
 
-  describe.only("finalizeRound", function () {
+  describe("finalizeRound", function () {
     beforeEach(async function () {
       // await this.erc20Instance.mint(this.receiver.address, amount);
       // await this.erc20Instance.connect(this.receiver).approve(this.lotteryInstance.address, amount);
@@ -213,7 +213,7 @@ describe("Lottery", function () {
       await this.erc20Instance.mint(this.lotteryInstance.address, utils.parseEther("20000"));
     });
 
-    it("should finalize round with tickets", async function () {
+    it("should finalize round with 1 ticket", async function () {
       await this.lotteryInstance.startRound();
       const signature = await generateSignature({
         account: this.receiver.address,

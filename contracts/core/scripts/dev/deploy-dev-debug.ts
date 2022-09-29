@@ -334,9 +334,10 @@ async function main() {
   // contracts.erc721Lottery = erc721LotteryFactory.attach("0x2f730b7fb875732c59f2fba22375b7f37047a93f");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
+
   // const lotteryFactory = await ethers.getContractFactory("Lottery");
   const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
-  // contracts.lottery = lotteryFactory.attach("0xcf2dd86ad43d839205551530e53867ceea23f7a1");
+  contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
   contracts.lottery = await lotteryFactory.deploy(
     "Lottery",
@@ -344,6 +345,8 @@ async function main() {
     contracts.erc20Simple.address,
   );
   await debug(contracts);
+
+  await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
 
   await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
   const usdtFactory = await ethers.getContractFactory("TetherToken");

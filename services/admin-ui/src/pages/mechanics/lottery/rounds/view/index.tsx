@@ -16,7 +16,7 @@ export interface ILotteryRoundViewDialogProps {
 
 export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { id } = initialValues;
+  const { roundId } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -31,13 +31,13 @@ export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props =>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.roundId" />
               </TableCell>
-              <TableCell align="right">{id}</TableCell>
+              <TableCell align="right">{roundId}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
-              <TableCell align="right">{getNumbers(initialValues)}</TableCell>
+              <TableCell align="right">{getNumbers(initialValues) || "awaiting round end"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

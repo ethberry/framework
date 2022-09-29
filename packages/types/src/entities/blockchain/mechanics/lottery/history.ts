@@ -16,6 +16,7 @@ export interface IRoundFinalizedEvent {
 }
 
 export interface ILotteryPurchaseEvent {
+  tokenId: string;
   account: string;
   price: string;
   round: string;

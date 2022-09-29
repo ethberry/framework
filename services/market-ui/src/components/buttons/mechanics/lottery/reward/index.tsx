@@ -5,7 +5,7 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { ILotteryTicket } from "@framework/types";
+import { ILotteryTicket, TokenStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
@@ -34,7 +34,11 @@ export const LotteryRewardButton: FC<ILotteryRewardButtonProps> = props => {
 
   return (
     <Tooltip title={formatMessage({ id: "form.tips.redeem" })}>
-      <IconButton onClick={handleReward(ticket)} data-testid="LotteryRewardButton">
+      <IconButton
+        onClick={handleReward(ticket)}
+        disabled={ticket.token!.tokenStatus !== TokenStatus.MINTED}
+        data-testid="LotteryRewardButton"
+      >
         <Redeem />
       </IconButton>
     </Tooltip>
