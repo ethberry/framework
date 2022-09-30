@@ -15,7 +15,8 @@
       },
       "wallet": {
         "connect": "Connect wallet",
-        "menu": "Account"
+        "menu": "Account",
+        "notValid": "Invalid network. Please switch to correct network according to your profile"
       }
     }
   },
@@ -277,6 +278,85 @@
     "page-not-found": "Page Not Found"
   },
   "pages": {
+    "1inch": {
+      "title": "1inch",
+      "buttons": {
+        "download-metamask": "Download Metamask",
+        "connect-wallet": "Connect wallet",
+        "swap-tokens": "Swap Tokens",
+        "buy-crypto": "Buy Crypto",
+        "learn-more": "Learn more",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "swapAgain": "Swap Again"
+      },
+      "swap": {
+        "buyPrice": "buy price",
+        "txCost": "Tx cost",
+        "spread": "Spread across DEXes",
+        "selected": "Selected",
+        "maxPriceSlippage": "Max price slippage",
+        "title": "SWAP",
+        "balanceOf": "Balance of",
+        "preparing": "Preparing Swap",
+        "approve": "Approve",
+        "approving": "Approving...",
+        "swapping": "Swapping Tokens",
+        "complete": "Complete",
+        "confirm": "Confirm Swap",
+        "product": "Product",
+        "quantity": "Quantity",
+        "rate": "Rate",
+        "gasPrice": "Gas Price",
+        "gas": "Gas",
+        "cost": "Cost",
+        "fee": "Fee",
+        "ETH": "ETH",
+        "gwei": "GWEI",
+        "total": "Total"
+      },
+      "token-search": {
+        "title": "Search {amount} tokens"
+      },
+      "advanced-settings": {
+        "title": "Advanced settings",
+        "slippage": "Slippage tolerance",
+        "gas": "Gas"
+      },
+      "warning": {
+        "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}",
+        "insufficient": "Insufficient {symbol} balance",
+        "cannotBeSame": "Tokens cannot be the same"
+      },
+      "header": {
+        "network": "Network",
+        "bridge": "Bridge"
+      },
+      "snackbar": {
+        "approve-1inch": "Please approve 1inch to spend your {symbol}",
+        "web3-not-detected": "Web3 provider not detected"
+      },
+      "enums": {
+        "networks": {
+          "ARBITRUM": "Arbitrum",
+          "BINANCE": "Binance",
+          "POLYGON": "Polygon",
+          "OPTIMISM": "Optimism",
+          "ETHEREUM": "Ethereum"
+        },
+        "gasPrice": {
+          "LOW": "Low",
+          "MEDIUM": "MEDIUM",
+          "HIGH": "High"
+        },
+        "slippage": {
+          "LOW": "0.1%",
+          "MEDIUM": "0.5%",
+          "HIGH": "1%",
+          "VERY_HIGH": "3%"
+        }
+      }
+    },
     "breed": {
       "title": "Breed"
     },
@@ -308,6 +388,7 @@
         "erc998": "ERC998"
       },
       "integrations": {
+        "1inch": "1inch",
         "coin-gecko": "CoinGecko",
         "ipfs": "IPFS",
         "marketplace": "Marketplace",
