@@ -29,7 +29,7 @@
     "@nestjs/swagger": "6.1.2",
     "@nestjs/terminus": "9.1.2",
     "@nestjs/typeorm": "9.0.1",
-    "amqp-connection-manager": "4.1.6",
+    "amqp-connection-manager": "4.1.7",
     "amqplib": "0.10.3",
     "ethers": "5.7.1",
     "express": "4.18.1",
@@ -45,9 +45,9 @@
     "@gemunion/cross-env": "0.0.4",
     "@gemunion/eslint-config": "2.0.5",
     "@nestjs/testing": "9.1.2",
-    "@types/node": "16.11.60",
-    "@typescript-eslint/eslint-plugin": "5.38.0",
-    "@typescript-eslint/parser": "5.38.0",
+    "@types/node": "16.11.62",
+    "@typescript-eslint/eslint-plugin": "5.38.1",
+    "@typescript-eslint/parser": "5.38.1",
     "eslint": "8.22.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-standard": "17.0.0",
@@ -58,7 +58,7 @@
     "eslint-plugin-promise": "6.0.1",
     "rimraf": "3.0.2",
     "tsc-watch": "5.0.3",
-    "typescript": "4.8.3"
+    "typescript": "4.8.4"
   },
   "engines": {
     "node": ">=12.13"
