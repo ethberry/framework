@@ -8,8 +8,14 @@ import { ContractInput } from "../../../../../components/inputs/contract";
 import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 export interface IErc998CompositionCreateDto {
-  parent: string;
-  child: string;
+  contract: {
+    parent: {
+      contract: string;
+    };
+    child: {
+      contract: string;
+    };
+  };
   amount: string;
 }
 

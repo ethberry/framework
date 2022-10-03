@@ -6,7 +6,7 @@ import { deployErc721Base } from "../fixtures";
 
 export function shouldMintRandom(name: string) {
   describe("mintRandom", function () {
-    // TODO possitive case
+    // TODO positive case
 
     it("should fail: wrong role", async function () {
       const [_owner, receiver] = await ethers.getSigners();

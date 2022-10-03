@@ -72,8 +72,12 @@ export const Erc998Composition: FC = () => {
   };
 
   const metaFn2 = useMetamask((composition: IErc998CompositionCreateDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(composition.parent, ERC998SimpleSol.abi, web3Context.provider?.getSigner());
-    return contract.whiteListChild(composition.child, composition.amount) as Promise<void>;
+    const contract = new Contract(
+      composition.contract.parent.contract,
+      ERC998SimpleSol.abi,
+      web3Context.provider?.getSigner(),
+    );
+    return contract.whiteListChild(composition.contract.child.contract, composition.amount) as Promise<void>;
   });
 
   const handleCreateConfirm = (values: IErc998CompositionCreateDto) => {
