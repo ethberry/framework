@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository, Brackets } from "typeorm";
 
 import { ICompositionSearchDto } from "@framework/types";
 
@@ -14,14 +14,30 @@ export class Erc998CompositionService {
   ) {}
 
   public async search(dto: ICompositionSearchDto): Promise<[Array<CompositionEntity>, number]> {
-    const { parentIds, childIds, skip, take } = dto;
+    const { parentIds, childIds, query, skip, take } = dto;
 
     const queryBuilder = this.compositionEntityRepository.createQueryBuilder("composition");
 
     queryBuilder.select();
 
-    queryBuilder.leftJoinAndSelect("composition.parent", "parent");
     queryBuilder.leftJoinAndSelect("composition.child", "child");
+    queryBuilder.leftJoinAndSelect("composition.parent", "parent");
+
+    if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(child.description->'blocks') child_blocks ON TRUE LEFT JOIN LATERAL json_array_elements(parent.description->'blocks') parent_blocks ON TRUE",
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("child.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("child_blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+          qb.orWhere("parent.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("parent_blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
 
     if (parentIds) {
       if (parentIds.length === 1) {
