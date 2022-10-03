@@ -17,7 +17,7 @@ export class LotteryTicketService {
     const { roundIds, skip, take } = dto;
 
     const queryBuilder = this.ticketEntityRepository.createQueryBuilder("ticket");
-    // queryBuilder.leftJoinAndSelect("ticket.token", "token");
+    queryBuilder.leftJoinAndSelect("ticket.round", "round");
 
     queryBuilder.select();
 

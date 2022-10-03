@@ -17,7 +17,7 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { ILotteryTicket, ILotteryTicketSearchDto } from "@framework/types";
 
 import { LotteryTicketViewDialog } from "./view";
-import { getNumbers } from "../utils";
+import { getNumbers, getWinners } from "../utils";
 import { LotteryTicketSearchForm } from "./form";
 
 export const LotteryTickets: FC = () => {
@@ -62,13 +62,14 @@ export const LotteryTickets: FC = () => {
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
-          {rows.map((round, i) => (
+          {rows.map((ticket, i) => (
             <ListItem key={i}>
               <ListItemText>
-                {round.id} - {getNumbers(round)}
+                {ticket.id} - {getNumbers(ticket)}
               </ListItemText>
+              <ListItemText>{getWinners(ticket, ticket.round!)}</ListItemText>
               <ListItemSecondaryAction>
-                <IconButton onClick={handleView(round)}>
+                <IconButton onClick={handleView(ticket)}>
                   <Visibility />
                 </IconButton>
               </ListItemSecondaryAction>

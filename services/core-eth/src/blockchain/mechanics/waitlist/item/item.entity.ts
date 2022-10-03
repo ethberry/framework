@@ -1,22 +1,19 @@
-import { Column, Entity, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 
+import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { ns } from "@framework/constants";
 import { IWaitlistItem } from "@framework/types";
-import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
-import { AssetComponentHistoryEntity } from "../asset/asset-component-history.entity";
+import { WaitlistListEntity } from "../list/list.entity";
 
-@Entity({ schema: ns, name: "waitlist" })
-<<<<<<<< HEAD:services/core-eth/src/blockchain/mechanics/waitlist/item/item.entity.ts
+@Entity({ schema: ns, name: "waitlist_item" })
 export class WaitlistItemEntity extends IdDateBaseEntity implements IWaitlistItem {
-========
-export class WaitlistEntity extends IdDateBaseEntity implements IWaitlistItem {
->>>>>>>> feat: lottery end round dev:services/core-eth/src/blockchain/mechanics/waitlist/waitlist.entity.ts
   @Column({ type: "varchar" })
   public account: string;
 
   @Column({ type: "int" })
   public listId: number;
 
-  @OneToOne(_type => AssetComponentHistoryEntity, history => history.token)
-  public history: AssetComponentHistoryEntity;
+  @JoinColumn()
+  @ManyToOne(_type => WaitlistListEntity, list => list.items)
+  public list: WaitlistListEntity;
 }

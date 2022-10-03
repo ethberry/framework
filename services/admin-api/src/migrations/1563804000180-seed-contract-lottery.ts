@@ -44,7 +44,7 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
         '',
         'ACTIVE',
         null,
-        '{RANDOM}',
+        '{RANDOM, ALLOWANCE}',
         'LOTTERY',
         '${fromBlock}',
         '${currentDateTime}',
