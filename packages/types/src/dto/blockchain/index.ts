@@ -37,8 +37,8 @@ export * from "./tokens/erc721/contract/deploy";
 export * from "./tokens/erc721/token-history/search";
 export * from "./tokens/erc998/composition/search";
 export * from "./tokens/erc998/contract/deploy";
-export * from "./hierarchy/contract-history/search";
 export * from "./tokens/erc1155/contract/deploy";
+export * from "./hierarchy/contract-history/search";
 
 export * from "./integrations/marketplace/search";
 export * from "./integrations/marketplace/supply";

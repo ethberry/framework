@@ -22,7 +22,6 @@ export class ExchangeControllerEth {
   @EventPattern([
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade },
     { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Mysterybox },
-    { contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Upgrade },
   ])
   public exchange(
     @Payload()
