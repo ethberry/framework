@@ -48,13 +48,14 @@ export const Erc998CompositionCreateDialog: FC<IErc998CompositionCreateDialogPro
         data={{
           contractType: [TokenType.ERC998],
           contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+          contractModule: [ModuleType.HIERARCHY],
         }}
       />
       <ContractInput
         name="childId"
         related="child.contract"
         data={{
-          contractType: [TokenType.ERC721, TokenType.ERC998, TokenType.ERC20, TokenType.ERC1155],
+          contractType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
           contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
           contractModule: [ModuleType.HIERARCHY],
         }}
