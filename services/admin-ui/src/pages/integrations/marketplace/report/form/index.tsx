@@ -27,7 +27,7 @@ export const MarketplaceReportSearchForm: FC<IMarketplaceReportSearchFormProps> 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      testId="ClaimSearchForm"
+      testId="MarketplaceReportSearchForm"
     >
       <Grid container spacing={2}>
         <Grid item xs={12}>

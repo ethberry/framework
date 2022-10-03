@@ -3,7 +3,7 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 
 import { validationSchema } from "./validation";
-import { TokenInput } from "./token-input";
+import { TokenInput } from "../../../../../inputs/token-input";
 
 export interface IStakingDepositDto {
   tokenId: number;

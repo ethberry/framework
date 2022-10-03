@@ -14,7 +14,7 @@ interface IMarketplaceReportSearchFormProps {
   open: boolean;
 }
 
-export const MarketplaceReportSearchForm: FC<IMarketplaceReportSearchFormProps> = props => {
+export const MarketplaceChartSearchForm: FC<IMarketplaceReportSearchFormProps> = props => {
   const { onSubmit, initialValues, open } = props;
 
   const { startTimestamp, endTimestamp, contractIds, templateIds } = initialValues;
@@ -26,7 +26,7 @@ export const MarketplaceReportSearchForm: FC<IMarketplaceReportSearchFormProps> 
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      testId="ClaimSearchForm"
+      testId="MarketplaceChartSearchForm"
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">

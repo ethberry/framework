@@ -23,7 +23,7 @@ export const ReferralReportSearchForm: FC<IReferralReportSearchFormProps> = prop
       onSubmit={onSubmit}
       showButtons={false}
       showPrompt={false}
-      testId="ClaimSearchForm"
+      testId="ReferralReportSearchForm"
     >
       <Collapse in={open}>
         <Grid container spacing={2} alignItems="flex-end">
