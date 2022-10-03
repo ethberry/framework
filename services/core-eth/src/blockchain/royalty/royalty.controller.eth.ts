@@ -13,6 +13,10 @@ export class RoyaltyControllerEth {
 
   @EventPattern([
     {
+      contractType: ContractType.ERC1155_TOKEN,
+      eventName: ContractEventType.DefaultRoyaltyInfo,
+    },
+    {
       contractType: ContractType.ERC998_TOKEN,
       eventName: ContractEventType.DefaultRoyaltyInfo,
     },
@@ -29,6 +33,10 @@ export class RoyaltyControllerEth {
   }
 
   @EventPattern([
+    {
+      contractType: ContractType.ERC1155_TOKEN,
+      eventName: ContractEventType.TokenRoyaltyInfo,
+    },
     {
       contractType: ContractType.ERC998_TOKEN,
       eventName: ContractEventType.TokenRoyaltyInfo,
