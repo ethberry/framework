@@ -1,16 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Put,
-  Query,
-  UseInterceptors,
-} from "@nestjs/common";
+import { Body, Controller, Get, Param, ParseIntPipe, Put, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor, Roles } from "@gemunion/nest-js-utils";
@@ -46,11 +34,5 @@ export class UserController {
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<UserEntity | null> {
     return this.userService.findOne({ id });
-  }
-
-  @Delete("/:id")
-  @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param("id", ParseIntPipe) id: number): Promise<void> {
-    await this.userService.delete({ id });
   }
 }

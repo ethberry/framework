@@ -91,17 +91,6 @@ export class UserService {
     return this.userEntityRepository.create(dto).save();
   }
 
-  public async delete(where: FindOptionsWhere<UserEntity>): Promise<UserEntity> {
-    const userEntity = await this.findOne(where);
-
-    if (!userEntity) {
-      throw new NotFoundException("userNotFound");
-    }
-
-    await this.authService.delete(userEntity);
-    return userEntity.remove();
-  }
-
   public async count(where: FindOptionsWhere<UserEntity>): Promise<number> {
     return this.userEntityRepository.count({ where });
   }
