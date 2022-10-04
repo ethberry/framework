@@ -62,7 +62,7 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
         Asset memory ingredient = price[0];
         uint256 rewardAmount = _rewardBalances[referrer][ingredient.token];
 
-        if(rewardAmount >= _minTokenWithdrawalAmount[ingredient.token]) {
+        if(rewardAmount > 0 && rewardAmount >= _minTokenWithdrawalAmount[ingredient.token]) {
           withdrawAutoReward(ingredient.token, referrer);
         }
     }
