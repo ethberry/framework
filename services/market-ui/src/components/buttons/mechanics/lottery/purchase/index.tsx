@@ -13,27 +13,30 @@ import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 
 export interface ILotteryPurchaseButtonProps {
   ticketNumbers: Array<boolean>;
+  clearForm: () => void;
 }
 
 export const LotteryPurchaseButton: FC<ILotteryPurchaseButtonProps> = props => {
-  const { ticketNumbers } = props;
+  const { clearForm, ticketNumbers } = props;
 
   const settings = useSettings();
 
   const metaFnWithSign = useServerSignature((_values: null, web3Context: Web3ContextType, sign: IServerSignature) => {
     const contract = new Contract(process.env.LOTTERY_ADDR, LotterySol.abi, web3Context.provider?.getSigner());
-    return contract.purchase(
-      {
-        nonce: utils.arrayify(sign.nonce),
-        externalId: 0,
-        expiresAt: sign.expiresAt,
-        referrer: settings.getReferrer(),
-      },
-      ticketNumbers,
-      constants.WeiPerEther,
-      process.env.ACCOUNT,
-      sign.signature,
-    ) as Promise<void>;
+    return contract
+      .purchase(
+        {
+          nonce: utils.arrayify(sign.nonce),
+          externalId: 0,
+          expiresAt: sign.expiresAt,
+          referrer: settings.getReferrer(),
+        },
+        ticketNumbers,
+        constants.WeiPerEther,
+        process.env.ACCOUNT,
+        sign.signature,
+      )
+      .then(clearForm) as Promise<void>;
   });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {

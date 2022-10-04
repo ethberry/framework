@@ -4,17 +4,16 @@ import { FormattedMessage } from "react-intl";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
 import { LotteryPurchaseButton } from "../../../../components/buttons";
+import { getDefaultTickets, getSelectedNumbers } from "../ticket-list/utils";
+
 import { StyledIconButton, StyledPaper, StyledTypography, StyledWrapper } from "./styled";
 
 const maxTickets = 6;
 
 export const LotteryPurchase: FC = () => {
-  const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(new Array(36).fill(false));
+  const [ticketNumbers, setTicketNumbers] = useState<Array<boolean>>(getDefaultTickets());
 
-  const selectedNumbers = ticketNumbers.reduceRight((acc: number[], cell: boolean, i: number) => {
-    cell && acc.push(i + 1);
-    return acc;
-  }, []);
+  const selectedNumbers = getSelectedNumbers(ticketNumbers);
 
   const handleClick = (i: number) => {
     return () => {
@@ -27,12 +26,16 @@ export const LotteryPurchase: FC = () => {
     };
   };
 
+  const clearForm = () => {
+    setTicketNumbers(getDefaultTickets());
+  };
+
   return (
     <Fragment>
       <Breadcrumbs path={["dashboard", "lottery", "lottery.purchase"]} />
 
       <PageHeader message="pages.lottery.purchase.title">
-        <LotteryPurchaseButton ticketNumbers={ticketNumbers} />
+        <LotteryPurchaseButton clearForm={clearForm} ticketNumbers={ticketNumbers} />
       </PageHeader>
 
       <StyledPaper sx={{ maxWidth: "36em", flexDirection: "column" }}>
