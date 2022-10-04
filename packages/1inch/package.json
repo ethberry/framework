@@ -1,0 +1,67 @@
+{
+  "author": {
+    "email": "trejgun+gemunion@gmail.com",
+    "name": "TrejGun",
+    "url": "https://gemunion.io/"
+  },
+  "bugs": {
+    "url": "https://github.com/gemunion/mui-packages/issues"
+  },
+  "description": "react 1inch",
+  "dependencies": {
+    "@framework/constants": "0.0.1",
+    "@framework/core-contracts": "0.0.1",
+    "@framework/types": "0.0.1",
+    "@gemunion/provider-license": "2.0.0",
+    "@gemunion/provider-user": "5.0.3",
+    "@gemunion/provider-wallet": "3.0.7",
+    "@gemunion/react-hooks-eth": "1.0.40",
+    "@mui/material": "5.10.7",
+    "@mui/icons-material": "5.10.7",
+    "@web3-react/core": "8.0.35-beta.0",
+    "cross-fetch": "3.1.5",
+    "ethers": "5.7.1",
+    "mathjs": "11.2.1",
+    "notistack": "2.0.5",
+    "react": "18.2.0",
+    "react-intl": "6.1.2",
+    "react-window": "1.8.7",
+    "type-fest": "3.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.21",
+    "@types/react-window": "1.8.5",
+    "react": "18.2.0"
+  },
+  "engines": {
+    "node": ">=12.13"
+  },
+  "keywords": [],
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "name": "@gemunion/1inch",
+  "peerDependencies": {
+    "notistack": "^2.0.0",
+    "react": "^17.0.0",
+    "react-intl": "^5.0.0 || ^6.0.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gemunion/mui-packages"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "prebuild": "rimraf dist/",
+    "prepare": "npm run build",
+    "preversion": "npm run build && npm run test",
+    "test": "exit 0"
+  },
+  "sideEffects": false,
+  "title": "-=Gemun Ion Studio=-",
+  "types": "./dist/index.d.ts",
+  "version": "0.0.1"
+}

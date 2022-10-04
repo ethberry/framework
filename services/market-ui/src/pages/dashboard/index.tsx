@@ -7,6 +7,7 @@ import { useStyles } from "./styles";
 import { Erc721Section } from "./hierarchy/erc721";
 import { Erc998Section } from "./hierarchy/erc998";
 import { Erc1155Section } from "./hierarchy/erc1155";
+import { OneInch } from "./integrations/1inch";
 import { Personal } from "./integrations/personal";
 import { Marketplace } from "./integrations/marketplace";
 import { Mysterybox } from "./mechanics/mysterybox";
@@ -55,6 +56,7 @@ export const Dashboard: FC = () => {
           <Personal />
           <Marketplace />
           <Referral />
+          <OneInch />
           <CoinGecko />
           <Ipfs />
           <Pages />

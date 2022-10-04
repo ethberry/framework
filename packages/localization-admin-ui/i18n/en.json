@@ -21,7 +21,8 @@
       },
       "wallet": {
         "connect": "Connect wallet",
-        "menu": "Account"
+        "menu": "Account",
+        "notValid": "Invalid network. Please switch to correct network according to your profile"
       }
     }
   },
