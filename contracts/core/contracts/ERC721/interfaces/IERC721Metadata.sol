@@ -7,10 +7,8 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
-import "../../Mechanics/Exchange/interfaces/IAsset.sol";
 
 interface IERC721Metadata is IERC721 {
-
   struct Metadata {
     bytes32 key;
     uint256 value;

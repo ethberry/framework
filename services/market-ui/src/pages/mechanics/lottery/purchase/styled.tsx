@@ -23,7 +23,9 @@ export const StyledPaper = styled(Paper)`
   box-shadow: none;
 `;
 
-export const StyledIconButton = styled(IconButton)<IconButtonProps & { isSelected: boolean }>`
+export const StyledIconButton = styled(({ isSelected: _, ...props }: IconButtonProps & { isSelected: boolean }) => (
+  <IconButton {...props}>{props.children}</IconButton>
+))`
   border-radius: 0.35em;
   margin: 0.35em;
   padding: 1em 1.5em;

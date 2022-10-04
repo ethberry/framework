@@ -3,9 +3,9 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ICompositionSearchDto, TokenType } from "@framework/types";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { ContractStatus, ICompositionSearchDto, ModuleType, TokenType } from "@framework/types";
 
 interface IErc998CompositionSearchFormProps {
   onSubmit: (values: ICompositionSearchDto) => Promise<void>;
@@ -41,7 +41,11 @@ export const Erc998CompositionSearchForm: FC<IErc998CompositionSearchFormProps> 
               name="parentIds"
               controller="contracts"
               multiple
-              data={{ contractType: [TokenType.ERC998] }}
+              data={{
+                contractType: [TokenType.ERC998],
+                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+                contractModule: [ModuleType.HIERARCHY],
+              }}
               label={formatMessage({ id: "form.labels.parent" })}
             />
           </Grid>
@@ -50,7 +54,11 @@ export const Erc998CompositionSearchForm: FC<IErc998CompositionSearchFormProps> 
               name="childIds"
               controller="contracts"
               multiple
-              data={{ contractType: [TokenType.ERC998] }}
+              data={{
+                contractType: [TokenType.ERC20, TokenType.ERC721, TokenType.ERC998, TokenType.ERC1155],
+                contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
+                contractModule: [ModuleType.HIERARCHY],
+              }}
               label={formatMessage({ id: "form.labels.child" })}
             />
           </Grid>

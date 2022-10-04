@@ -19,24 +19,28 @@ export class SeedLotteryRoundAt1660436477010 implements MigrationInterface {
     await queryRunner.query(`
       INSERT INTO ${ns}.lottery_round (
         numbers,
+        round_id,
         start_timestamp,
         end_timestamp,
         created_at,
         updated_at
       ) VALUES (
         '${getNumbers()}',
+        '1',
         '${subDays(now, 3).toISOString()}',
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${getNumbers()}',
+        '2',
         '${subDays(now, 1).toISOString()}',
         '${addDays(now, 1).toISOString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${getNumbers()}',
+        '3',
         '${addDays(now, 1).toISOString()}',
         '${addDays(now, 3).toISOString()}',
         '${currentDateTime}',

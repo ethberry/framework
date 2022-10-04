@@ -21,6 +21,6 @@ export class LotteryTicketController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<LotteryTicketEntity | null> {
-    return this.lotteryTicketService.findOne({ id }, { relations: { token: true } });
+    return this.lotteryTicketService.findOne({ id }, { relations: { token: true, round: true } });
   }
 }

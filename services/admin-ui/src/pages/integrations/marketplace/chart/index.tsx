@@ -9,7 +9,7 @@ import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import type { IMarketplaceReportSearchDto, IToken } from "@framework/types";
 
-import { MarketplaceReportSearchForm } from "./form";
+import { MarketplaceChartSearchForm } from "./form";
 
 export const MarketplaceChart: FC = () => {
   const { rows, search, isLoading, isFiltersOpen, handleToggleFilters, handleSearch } = useCollection<
@@ -69,7 +69,7 @@ export const MarketplaceChart: FC = () => {
         </Button>
       </PageHeader>
 
-      <MarketplaceReportSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
+      <MarketplaceChartSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <Box mt={4} width="100%" ref={chartRef} />
     </Fragment>

@@ -11,3 +11,5 @@ export * from "./mechanics/mysterybox/deploy";
 
 export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/upload";
+export * from "./mechanics/lottery/round/end";
+export * from "./mechanics/lottery/round/start";

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import type { ILotteryRound } from "@framework/types";
@@ -16,7 +16,9 @@ export interface ILotteryRoundViewDialogProps {
 
 export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { id } = initialValues;
+  const { roundId } = initialValues;
+
+  const { formatMessage } = useIntl();
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -31,13 +33,15 @@ export const LotteryRoundViewDialog: FC<ILotteryRoundViewDialogProps> = props =>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.roundId" />
               </TableCell>
-              <TableCell align="right">{id}</TableCell>
+              <TableCell align="right">{roundId}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.numbers" />
               </TableCell>
-              <TableCell align="right">{getNumbers(initialValues)}</TableCell>
+              <TableCell align="right">
+                {getNumbers(initialValues) || formatMessage({ id: "pages.lottery.rounds.wait" })}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

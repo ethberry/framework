@@ -4,8 +4,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { PriceInput } from "../../../../../components/inputs/price";

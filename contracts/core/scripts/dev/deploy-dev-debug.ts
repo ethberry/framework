@@ -3,7 +3,7 @@ import { Contract, constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "../utils/blockAwait";
-import { baseTokenURI, MINTER_ROLE, royalty, tokenName } from "../../test/constants";
+import { baseTokenURI, MINTER_ROLE, royalty } from "../../test/constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
@@ -50,7 +50,7 @@ async function main() {
   const [owner] = await ethers.getSigners();
   // LINK & VRF
   const linkFactory = await ethers.getContractFactory("LinkErc20");
-  const linkInstance = linkFactory.attach("0x91483855a65211E3A3362ED1Fa42A388280805Be");
+  const linkInstance = linkFactory.attach("0x91483855a65211e3a3362ed1fa42a388280805be");
   // const linkInstance = await linkFactory.deploy("LINK", "LINK");
   // contracts.link = linkInstance;
   // console.info(`LINK_ADDR=${contracts.link.address}`);
@@ -83,6 +83,7 @@ async function main() {
 
   const erc20SimpleFactory = await ethers.getContractFactory("ERC20Simple");
   const erc20SimpleInstance = await erc20SimpleFactory.deploy("Space Credits", "GEM20", amount);
+  // const erc20SimpleInstance = erc20SimpleFactory.attach("0x7b3f38cd327c375d7baae448c1380397d304fcec");
   contracts.erc20Simple = erc20SimpleInstance;
   await debug(contracts);
 
@@ -242,7 +243,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 1, // NATIVE > NATIVE
+        externalId: 11, // NATIVE > NATIVE
         deposit: {
           tokenType: 0,
           token: constants.AddressZero,
@@ -268,7 +269,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 8, // ERC20 > ERC721
+        externalId: 23, // ERC20 > ERC721
         deposit: {
           tokenType: 1,
           token: contracts.erc20Simple.address,
@@ -294,7 +295,7 @@ async function main() {
   await debug(
     await stakingInstance.setRules([
       {
-        externalId: 19, // ERC998 > ERC1155
+        externalId: 45, // ERC998 > ERC1155
         deposit: {
           tokenType: 3,
           token: contracts.erc998Random.address,
@@ -330,17 +331,24 @@ async function main() {
   );
 
   const erc721LotteryFactory = await ethers.getContractFactory("ERC721Ticket");
+  // contracts.erc721Lottery = erc721LotteryFactory.attach("0x2f730b7fb875732c59f2fba22375b7f37047a93f");
   contracts.erc721Lottery = await erc721LotteryFactory.deploy("LOTTERY TICKET", "LOTT721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const lotteryFactory = await ethers.getContractFactory("Lottery");
+  // const lotteryFactory = await ethers.getContractFactory("Lottery");
+  const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
+  contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
+
   contracts.lottery = await lotteryFactory.deploy(
-    tokenName,
+    "Lottery",
     contracts.erc721Lottery.address,
     contracts.erc20Simple.address,
   );
   await debug(contracts);
 
+  await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
+
+  await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
   await debug(contracts);
@@ -383,6 +391,7 @@ async function main() {
       mysteryboxBlacklistInstance.address,
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,
+      contracts.erc721Lottery.address,
     ],
     [
       contracts.erc721Wrapper.address,
@@ -392,6 +401,7 @@ async function main() {
       mysteryboxBlacklistInstance.address,
       mysteryboxPausableInstance.address,
       mysteryboxSimpleInstance.address,
+      contracts.lottery.address,
     ],
     [MINTER_ROLE],
   );

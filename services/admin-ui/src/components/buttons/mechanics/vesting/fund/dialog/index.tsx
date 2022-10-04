@@ -11,9 +11,11 @@ import { ContractInput } from "./contract-input";
 export interface IVestingFundDto {
   tokenType: TokenType;
   amount: string;
-  address: string;
+  contract: {
+    address: string;
+    decimals: number;
+  };
   contractId: number;
-  decimals: number;
 }
 
 export interface IVestingFundDialogProps {

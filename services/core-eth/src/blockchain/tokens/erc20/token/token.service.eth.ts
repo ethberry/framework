@@ -45,8 +45,10 @@ export class Erc20TokenServiceEth {
     } else if (to === constants.AddressZero) {
       await this.balanceService.decrement(tokenEntity.id, to.toLowerCase(), value);
     } else {
-      await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), value);
-      await this.balanceService.decrement(tokenEntity.id, from.toLowerCase(), value);
+      if (value !== "0") {
+        await this.balanceService.increment(tokenEntity.id, to.toLowerCase(), value);
+        await this.balanceService.decrement(tokenEntity.id, from.toLowerCase(), value);
+      }
     }
   }
 

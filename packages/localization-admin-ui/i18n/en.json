@@ -84,7 +84,6 @@
       "EXTERNAL": "External",
       "GENES": "Genes",
       "LINEAR_REFERRAL": "LINEAR REFERRAL",
-      "LINEAR_REFERRAL": "LINEAR REFERRAL",
       "MYSTERYBOX": "MysteryBox",
       "NATIVE": "Native",
       "PAUSABLE": "Pausable",
@@ -133,6 +132,10 @@
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
       "COMPLETE": "Complete"
+    },
+    "pyramidRuleStatus": {
+      "ACTIVE": "ACTIVE",
+      "NEW": "NEW"
     },
     "role": {
       "DEFAULT_ADMIN_ROLE": "DEFAULT_ADMIN_ROLE",
@@ -324,7 +327,8 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "year": "Year"
+      "year": "Year",
+      "winNumbers": "Win numbers"
     },
     "placeholders": {
       "DUMMY": "Dummy",
@@ -538,7 +542,10 @@
     },
     "lottery": {
       "rounds": {
-        "title": "Rounds"
+        "title": "Rounds",
+        "start": "Start Round",
+        "end": "End Round",
+        "wait": "Awaiting round to end"
       },
       "tickets": {
         "title": "Tickets"

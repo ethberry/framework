@@ -12,6 +12,7 @@ export const callRandom = async function (
     requestId,
     utils.randomBytes(32),
     consumerContract,
+    { gasLimit: "0xE0000000" },
   );
   return trx.hash;
 };

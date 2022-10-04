@@ -7,7 +7,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { FormWrapper } from "@gemunion/mui-form";
 import { TokenType } from "@framework/types";
 
-import { TokenInput } from "../../../../components/buttons/mechanics/staking/deposit-complex/dialog/token-input";
+import { TokenInput } from "../../../../components/inputs/token-input";
 import { validationSchema } from "./validation";
 
 export const Pinata: FC = () => {

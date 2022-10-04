@@ -1,4 +1,5 @@
 import type { IIdDateBase } from "@gemunion/types-collection";
+
 import { IContract } from "./hierarchy/contract";
 import { IToken } from "./hierarchy/token";
 

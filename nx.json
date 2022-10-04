@@ -16,11 +16,6 @@
           "solhint",
           "test",
           "e2e",
-          "entity:create",
-          "migration:create",
-          "migration:generate",
-          "migration:revert",
-          "migration:run",
           "typeorm",
           "postversion"
         ]
@@ -29,14 +24,10 @@
   },
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
     "prepare": {
-      "dependsOn": [
-        "^prepare"
-      ]
+      "dependsOn": ["^prepare"]
     }
   },
   "affected": {

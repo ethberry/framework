@@ -199,6 +199,62 @@ describe("Lottery", function () {
     });
   });
 
+  describe("finalizeRound", function () {
+    beforeEach(async function () {
+      // await this.erc20Instance.mint(this.receiver.address, amount);
+      // await this.erc20Instance.connect(this.receiver).approve(this.lotteryInstance.address, amount);
+
+      await this.erc20Instance.mint(this.receiver.address, amount);
+      await this.erc20Instance.connect(this.receiver).approve(this.lotteryInstance.address, amount);
+
+      await this.erc20Instance.mint(this.stranger.address, amount);
+      await this.erc20Instance.connect(this.stranger).approve(this.lotteryInstance.address, amount);
+
+      await this.erc20Instance.mint(this.lotteryInstance.address, utils.parseEther("20000"));
+    });
+
+    it("should finalize round with 1 ticket", async function () {
+      await this.lotteryInstance.startRound();
+      const signature = await generateSignature({
+        account: this.receiver.address,
+        params,
+        numbers: defaultNumbers,
+        price: amount,
+      });
+
+      const tx0 = this.lotteryInstance
+        .connect(this.receiver)
+        .purchase(params, defaultNumbers, amount, this.owner.address, signature);
+
+      await expect(tx0)
+        .to.emit(this.lotteryInstance, "Purchase")
+        .withArgs(this.receiver.address, amount, 1, defaultNumbers);
+
+      if (network.name !== "hardhat") {
+        await delay(10000).then(() => console.info("delay 10000 done"));
+      }
+
+      const tx = await this.lotteryInstance.endRound();
+      await expect(tx).to.emit(this.lotteryInstance, "RandomRequest");
+      if (network.name !== "hardhat") {
+        await delay(10000).then(() => console.info("delay 10000 done"));
+      }
+
+      if (network.name === "hardhat") {
+        // RANDOM
+        await randomRequest(this.lotteryInstance, vrfInstance);
+      }
+
+      const current: number = (await time.latest()).toNumber();
+      await expect(tx).to.emit(this.lotteryInstance, "RoundEnded").withArgs(1, current);
+      const eventFilter = this.lotteryInstance.filters.RoundFinalized();
+      const events = await this.lotteryInstance.queryFilter(eventFilter);
+      expect(events.length).to.be.greaterThan(0);
+      console.info("winValues", events[0].args.winValues);
+      expect(events[0].args.round).to.equal(1);
+    });
+  });
+
   describe("purchase", function () {
     beforeEach(async function () {
       // await this.erc20Instance.mint(this.receiver.address, amount);

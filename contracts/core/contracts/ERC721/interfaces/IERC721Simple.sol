@@ -6,8 +6,6 @@
 
 pragma solidity ^0.8.9;
 
-import "../../Mechanics/Exchange/interfaces/IAsset.sol";
-
 error MethodNotSupported();
 
 interface IERC721Simple {

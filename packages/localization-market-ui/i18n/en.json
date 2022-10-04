@@ -215,7 +215,8 @@
       "tokenType": "Type",
       "type": "Type",
       "updatedAt": "Updated",
-      "withdrawDeposit": "Withdraw deposit"
+      "withdrawDeposit": "Withdraw deposit",
+      "winNumbers": "Win numbers"
     },
     "placeholders": {
       "account": "0x...",

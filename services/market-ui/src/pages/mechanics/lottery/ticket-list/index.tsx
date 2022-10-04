@@ -18,7 +18,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { LotteryTicketSearchForm } from "./form";
 import { LotteryTicketViewDialog } from "./view";
-import { getNumbers } from "./utils";
+import { getNumbers, getWinners } from "./utils";
 import { LotteryRewardButton } from "../../../../components/buttons";
 
 export const LotteryTicketList: FC = () => {
@@ -65,6 +65,7 @@ export const LotteryTicketList: FC = () => {
               <ListItemText>
                 {ticket.roundId} - {getNumbers(ticket)}
               </ListItemText>
+              <ListItemText>{getWinners(ticket, ticket.round!)}</ListItemText>
               <ListItemSecondaryAction>
                 <LotteryRewardButton ticket={ticket} />
                 <IconButton onClick={handleView(ticket)}>

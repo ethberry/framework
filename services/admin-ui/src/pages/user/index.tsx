@@ -14,9 +14,9 @@ import { Create, Delete, FilterList } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
+import { useCollection } from "@gemunion/react-hooks";
 import { IUser, IUserSearchDto, UserStatus } from "@framework/types";
 import { EnabledLanguages } from "@framework/constants";
-import { useCollection } from "@gemunion/react-hooks";
 
 import { UserEditDialog } from "./edit";
 import { UserSearchForm } from "./form";

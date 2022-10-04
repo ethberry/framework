@@ -14,8 +14,8 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IVesting, IVestingSearchDto } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
+import { IVesting, IVestingSearchDto } from "@framework/types";
 
 import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";

@@ -9,6 +9,7 @@ import type { ILotteryRound } from "@framework/types";
 
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
+import { LotteryRoundStartButton, LotteryRoundEndButton } from "../../../../components/buttons";
 
 export const LotteryRounds: FC = () => {
   const {
@@ -34,13 +35,14 @@ export const LotteryRounds: FC = () => {
       <Breadcrumbs path={["dashboard", "lottery", "lottery.rounds"]} />
 
       <PageHeader message="pages.lottery.rounds.title" />
-
+      <LotteryRoundEndButton />
+      <LotteryRoundStartButton />
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((round, i) => (
             <ListItem key={i}>
               <ListItemText>
-                {round.id} - {getNumbers(round)}
+                {round.roundId} - {round.numbers ? getNumbers(round) : "awaiting results"}
               </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(round)}>
