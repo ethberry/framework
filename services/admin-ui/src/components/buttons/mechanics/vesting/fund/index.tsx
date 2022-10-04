@@ -30,7 +30,7 @@ export const VestingFundButton: FC<IVestingButtonProps> = props => {
         value: values.amount,
       }) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC20) {
-      const contract = new Contract(values.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
+      const contract = new Contract(values.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
       return contract.transfer(vesting.address, values.amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
@@ -64,9 +64,11 @@ export const VestingFundButton: FC<IVestingButtonProps> = props => {
         initialValues={{
           tokenType: TokenType.NATIVE,
           amount: "0",
-          address: "",
+          contract: {
+            address: "",
+            decimals: 0,
+          },
           contractId: 0,
-          decimals: 0,
         }}
       />
     </Fragment>

@@ -6,8 +6,8 @@ import { TokenType } from "@framework/types";
 
 export const AmountInput: FC = () => {
   const tokenType = useWatch({ name: "tokenType" });
-  const address = useWatch({ name: "address" });
-  const decimals = useWatch({ name: "decimals" });
+  const address = useWatch({ name: "contract.address" });
+  const decimals = useWatch({ name: "contract.decimals" });
 
   if (!address) {
     return null;
@@ -15,6 +15,7 @@ export const AmountInput: FC = () => {
 
   switch (tokenType) {
     case TokenType.NATIVE:
+      return <EthInput name="amount" units={decimals} symbol="" />;
     case TokenType.ERC20:
       return <EthInput name="amount" units={decimals} symbol="" />;
     case TokenType.ERC721:
