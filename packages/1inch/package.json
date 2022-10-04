@@ -12,7 +12,7 @@
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
     "@framework/types": "0.0.1",
-    "@gemunion/provider-license": "2.0.0",
+    "@gemunion/provider-license": "3.0.0",
     "@gemunion/provider-user": "5.0.3",
     "@gemunion/provider-wallet": "3.0.7",
     "@gemunion/react-hooks-eth": "1.0.40",
@@ -23,7 +23,6 @@
     "ethers": "5.7.1",
     "mathjs": "11.2.1",
     "notistack": "2.0.5",
-    "react": "18.2.0",
     "react-intl": "6.1.2",
     "react-window": "1.8.7",
     "type-fest": "3.0.0"
@@ -42,8 +41,8 @@
   "name": "@gemunion/1inch",
   "peerDependencies": {
     "notistack": "^2.0.0",
-    "react": "^17.0.0",
-    "react-intl": "^5.0.0 || ^6.0.0"
+    "react": "^18.0.0",
+    "react-intl": "^6.0.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
