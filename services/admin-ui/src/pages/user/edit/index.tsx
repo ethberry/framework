@@ -5,9 +5,9 @@ import { useSnackbar } from "notistack";
 
 import { SelectInput, StaticInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EnabledLanguages } from "@framework/constants";
-import { IUser, UserRole, UserStatus } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { IUser, UserRole, UserStatus } from "@framework/types";
+import { EnabledLanguages } from "@framework/constants";
 
 import { validationSchema } from "./validation";
 

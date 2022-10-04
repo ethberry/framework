@@ -543,7 +543,8 @@
       "rounds": {
         "title": "Rounds",
         "start": "Start Round",
-        "end": "End Round"
+        "end": "End Round",
+        "wait": "Awaiting round to end"
       },
       "tickets": {
         "title": "Tickets"

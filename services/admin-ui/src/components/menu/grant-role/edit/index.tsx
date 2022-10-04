@@ -2,9 +2,9 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput, TextInput } from "@gemunion/mui-inputs-core";
+import { AccessControlRoleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { AccessControlRoleType } from "@framework/types";
 
 export interface IGrantRoleDto {
   role: AccessControlRoleType;

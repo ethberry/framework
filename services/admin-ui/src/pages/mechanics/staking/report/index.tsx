@@ -6,10 +6,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
-import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
-import { StakingDepositStatus, TokenType } from "@framework/types";
 import { useApiCall, useCollection } from "@gemunion/react-hooks";
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
+import type { IStakingDeposit, IStakingReportSearchDto } from "@framework/types";
+import { StakingDepositStatus, TokenType } from "@framework/types";
 
 import { StakingReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";

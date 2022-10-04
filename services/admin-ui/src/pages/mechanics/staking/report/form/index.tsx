@@ -3,11 +3,11 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import type { IStakingReportSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, StakingDepositStatus, TokenType } from "@framework/types";
 import { SearchInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import type { IStakingReportSearchDto } from "@framework/types";
 
 interface IStakingReportSearchFormProps {
   onSubmit: (values: IStakingReportSearchDto) => Promise<void>;

@@ -3,9 +3,9 @@ import { Collapse, Grid } from "@mui/material";
 import { useIntl } from "react-intl";
 
 import { AutoSave, FormWrapper } from "@gemunion/mui-form";
-import { ContractStatus, ICompositionSearchDto, ModuleType, TokenType } from "@framework/types";
 import { SearchInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { ContractStatus, ICompositionSearchDto, ModuleType, TokenType } from "@framework/types";
 
 interface IErc998CompositionSearchFormProps {
   onSubmit: (values: ICompositionSearchDto) => Promise<void>;

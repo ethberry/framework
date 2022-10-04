@@ -2,10 +2,10 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput } from "@gemunion/mui-inputs-core";
+import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../../components/inputs/contract";
-import { ContractStatus, ModuleType, TokenType } from "@framework/types";
 
 export interface IErc998CompositionCreateDto {
   contract: {
