@@ -179,13 +179,18 @@ export class TokenService {
       join: {
         alias: "token",
         leftJoinAndSelect: {
-          history: "token.history",
+          exchange_history: "token.history",
+          asset_component_history: "exchange_history.history",
+          asset_component_history_assets: "asset_component_history.assets",
+          assets_token: "asset_component_history_assets.token",
+          assets_contract: "asset_component_history_assets.contract",
           template: "token.template",
           contract: "template.contract",
           price: "template.price",
           price_components: "price.components",
           price_contract: "price_components.contract",
           price_template: "price_components.template",
+          contract_history: "token.contractHistory",
         },
       },
     });

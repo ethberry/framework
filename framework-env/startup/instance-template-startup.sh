@@ -32,3 +32,5 @@ sudo -H -u app docker run --rm \
     -v "/home/app:/home/app" \
     -w="/home/app" \
     docker/compose:1.24.0 -f docker-compose-cloudbuild.yml up -d core-eth
+
+    7708802 - 7708753

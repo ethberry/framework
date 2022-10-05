@@ -9,6 +9,7 @@ import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
 import { OwnershipEntity } from "../../tokens/erc998/ownership/ownership.entity";
 import { AssetComponentHistoryEntity } from "../../mechanics/asset/asset-component-history.entity";
+import { ContractHistoryEntity } from "../../contract-history/contract-history.entity";
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
@@ -46,6 +47,9 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   @OneToMany(_type => OwnershipEntity, ownership => ownership.parent)
   public children: Array<OwnershipEntity>;
 
-  @OneToOne(_type => AssetComponentHistoryEntity, history => history.token)
-  public history: AssetComponentHistoryEntity;
+  @OneToMany(_type => AssetComponentHistoryEntity, history => history.token)
+  public history: Array<AssetComponentHistoryEntity>;
+
+  @OneToMany(_type => ContractHistoryEntity, contractHistory => contractHistory.token)
+  public contractHistory: Array<ContractHistoryEntity>;
 }

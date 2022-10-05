@@ -46,6 +46,6 @@ export class TokenEntity extends IdDateBaseEntity implements IToken {
   @OneToMany(_type => OwnershipEntity, ownership => ownership.child)
   public children: Array<OwnershipEntity>;
 
-  @OneToOne(_type => AssetComponentHistoryEntity, history => history.token)
-  public history: AssetComponentHistoryEntity;
+  @OneToMany(_type => AssetComponentHistoryEntity, history => history.token)
+  public history: Array<AssetComponentHistoryEntity>;
 }
