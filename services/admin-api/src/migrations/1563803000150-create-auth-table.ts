@@ -2,32 +2,28 @@ import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 import { ns } from "@framework/constants";
 
-export class CreateOtp1563804000090 implements MigrationInterface {
+export class CreateAuth1563803000150 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`
-      CREATE TYPE ${ns}.otp_type_enum AS ENUM (
-        'EMAIL',
-        'PASSWORD'
-      );
-    `);
-
     const table = new Table({
-      name: `${ns}.otp`,
+      name: `${ns}.auth`,
       columns: [
         {
-          name: "uuid",
-          type: "uuid",
-          default: "uuid_generate_v4()",
+          name: "id",
+          type: "serial",
           isPrimary: true,
         },
         {
-          name: "otp_type",
-          type: `${ns}.otp_type_enum`,
+          name: "refresh_token",
+          type: "varchar",
         },
         {
-          name: "data",
-          type: `json`,
-          isNullable: true,
+          name: "refresh_token_expires_at",
+          type: "bigint",
+        },
+        {
+          name: "ip",
+          type: "varchar",
+          default: "'0.0.0.0'",
         },
         {
           name: "user_id",
@@ -55,26 +51,26 @@ export class CreateOtp1563804000090 implements MigrationInterface {
     await queryRunner.createTable(table, true);
 
     await queryRunner.query(`
-      CREATE OR REPLACE FUNCTION delete_expired_otps() RETURNS trigger
+      CREATE OR REPLACE FUNCTION delete_expired_auth() RETURNS trigger
       LANGUAGE plpgsql
       AS $$
         BEGIN
-          DELETE FROM ${ns}.otp WHERE created_at < NOW() - INTERVAL '1 hour';
+          DELETE FROM ${ns}.auth WHERE created_at < NOW() - INTERVAL '30 days';
           RETURN NEW;
         END;
       $$;
     `);
 
     await queryRunner.query(`
-      CREATE TRIGGER delete_expired_otps_trigger
-      AFTER INSERT ON ${ns}.otp
-      EXECUTE PROCEDURE delete_expired_otps()
+      DROP TRIGGER IF EXISTS delete_expired_auth_trigger ON ${ns}.auth;
+      CREATE TRIGGER delete_expired_auth_trigger
+      AFTER INSERT ON ${ns}.auth
+      EXECUTE PROCEDURE delete_expired_auth()
     `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.otp`);
-    await queryRunner.query(`DROP TYPE ${ns}.otp_type_enum;`);
-    await queryRunner.query("DROP FUNCTION delete_expired_otps();");
+    await queryRunner.dropTable(`${ns}.auth`);
+    await queryRunner.query("DROP FUNCTION delete_expired_auth();");
   }
 }

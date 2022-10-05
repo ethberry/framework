@@ -39,13 +39,13 @@ import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/e
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 
-import { CreateSettings1563804000010 } from "./migrations/1563804000010-create-settings";
-import { SeedSettings1563804000020 } from "./migrations/1563804000020-seed-settings";
-import { CreateUser1563804000050 } from "./migrations/1563804000050-create-user";
-import { SeedUser1563804000060 } from "./migrations/1563804000060-seed-user";
-import { CreatePage1563804000070 } from "./migrations/1563804000070-create-page";
-import { SeedPages1563804000080 } from "./migrations/1563804000080-seed-pages";
-import { CreateOtp1563804000090 } from "./migrations/1563804000090-create-otp";
+import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
+import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
+import { CreateUser1563803000130 } from "./migrations/1563803000130-create-user";
+import { SeedUser1563803000140 } from "./migrations/1563803000140-seed-user";
+import { CreatePage1563803000210 } from "./migrations/1563803000210-create-page";
+import { SeedPages1563803000220 } from "./migrations/1563803000220-seed-pages";
+import { CreateOtp1563803000160 } from "./migrations/1563803000160-create-otp";
 
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
@@ -252,13 +252,13 @@ const config: PostgresConnectionOptions = {
     createLanguageEnum(ns),
     createTokenTypes(ns),
 
-    CreateSettings1563804000010,
-    SeedSettings1563804000020,
-    CreateUser1563804000050,
-    SeedUser1563804000060,
-    CreatePage1563804000070,
-    SeedPages1563804000080,
-    CreateOtp1563804000090,
+    CreateSettings1563803000010,
+    SeedSettings1563803000020,
+    CreateUser1563803000130,
+    SeedUser1563803000140,
+    CreatePage1563803000210,
+    SeedPages1563803000220,
+    CreateOtp1563803000160,
 
     CreateAsset1563804000100,
 
