@@ -37,5 +37,5 @@ export interface IToken extends IIdDateBase {
   balance?: Array<IBalance>;
   parent?: Array<IOwnership>;
   children?: Array<IOwnership>;
-  history?: IAssetComponentHistory;
+  history?: Array<IAssetComponentHistory>;
 }

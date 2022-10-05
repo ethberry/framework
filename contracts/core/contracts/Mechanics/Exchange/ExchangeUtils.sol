@@ -14,6 +14,7 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "../../ERC1155/interfaces/IERC1155Simple.sol";
 import "../../ERC721/interfaces/IERC721Simple.sol";
 import "../../ERC721/interfaces/IERC721Random.sol";
+import "./interfaces/IAsset.sol";
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 

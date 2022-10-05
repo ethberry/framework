@@ -142,6 +142,7 @@
       "signup": "Sign up",
       "submit": "Submit",
       "upgrade": "Upgrade",
+      "transfer": "Transfer",
       "upload": "Upload",
       "unwrap": "Unwrap",
       "withdraw": "Withdraw"
@@ -215,7 +216,13 @@
       "type": "Type",
       "updatedAt": "Updated",
       "withdrawDeposit": "Withdraw deposit",
-      "winNumbers": "Win numbers"
+      "winNumbers": "Win numbers",
+      "event": "Event",
+      "quantity": "Quantity",
+      "from": "From",
+      "to": "To",
+      "date": "Date",
+      "tx": "Tx hash"
     },
     "placeholders": {
       "account": "0x...",
