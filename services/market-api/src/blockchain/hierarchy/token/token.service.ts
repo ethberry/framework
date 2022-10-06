@@ -179,7 +179,7 @@ export class TokenService {
       join: {
         alias: "token",
         leftJoinAndSelect: {
-          exchange_history: "token.history",
+          exchange_history: "token.exchangeHistory",
           asset_component_history: "exchange_history.history",
           asset_component_history_assets: "asset_component_history.assets",
           assets_token: "asset_component_history_assets.token",

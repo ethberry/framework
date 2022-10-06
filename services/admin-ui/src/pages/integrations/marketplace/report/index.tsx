@@ -109,7 +109,7 @@ export const MarketplaceReport: FC = () => {
         rows={rows.map((token: IToken) => ({
           id: token.id,
           title: token.template?.title,
-          price: token.history?.history?.assets,
+          price: token.exchangeHistory![0].history?.assets,
           createdAt: token.createdAt,
         }))}
         autoHeight

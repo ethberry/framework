@@ -1,5 +1,9 @@
 import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+
 import { TypeOrmModule } from "@nestjs/typeorm";
+
+import { ethersRpcProvider } from "@gemunion/nestjs-ethers";
 
 import { Erc1155TokenControllerEth } from "./token.controller.eth";
 import { Erc1155TokenServiceEth } from "./token.service.eth";
@@ -14,6 +18,7 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 
 @Module({
   imports: [
+    ConfigModule,
     ContractHistoryModule,
     Erc1155TokenLogModule,
     Erc1155TokenModule,
@@ -25,7 +30,7 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
     AccessControlModule,
     TypeOrmModule.forFeature([TemplateEntity]),
   ],
-  providers: [Logger, Erc1155TokenServiceEth],
+  providers: [Logger, ethersRpcProvider, Erc1155TokenServiceEth],
   controllers: [Erc1155TokenControllerEth],
   exports: [Erc1155TokenServiceEth],
 })

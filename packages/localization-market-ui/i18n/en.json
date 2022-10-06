@@ -222,7 +222,7 @@
       "from": "From",
       "to": "To",
       "date": "Date",
-      "tx": "Tx hash"
+      "tx": "txHash"
     },
     "placeholders": {
       "account": "0x...",
@@ -297,6 +297,11 @@
       "rates": "Rates",
       "title": "CoinGecko"
     },
+    "history": {
+      "token": {
+        "title": "Token History"
+      }
+    },
     "craft": {
       "price": "price",
       "tabs": {
@@ -344,6 +349,9 @@
     },
     "drop-list": {
       "title": "Drops"
+    },
+    "token": {
+      "priceTitle": "Base price:"
     },
     "erc1155": {
       "contract": {

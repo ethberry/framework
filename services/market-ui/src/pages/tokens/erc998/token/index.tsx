@@ -10,13 +10,14 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { useStyles } from "./styles";
-import { TokenSellButton, UpgradeButton } from "../../../../components/buttons";
+import { TokenSellButton, TokenTransferButton, UpgradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { Erc998Composition } from "./composition";
 import { TokenAttributesView } from "../../genes";
+import { TokenHistory } from "../../../../components/common/token-history";
 
 export const Erc998Token: FC = () => {
-  const { selected, isLoading } = useCollection<IToken>({
+  const { selected, isLoading, search, handleChangePage, handleChangeRowsPerPage } = useCollection<IToken>({
     baseUrl: "/erc998-tokens",
     empty: {
       template: {
@@ -57,13 +58,16 @@ export const Erc998Token: FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
-            <Typography>
-              <FormattedMessage
-                id="pages.erc998.token.price"
-                values={{ amount: formatPrice(selected.template?.price) }}
-              />
-            </Typography>
+            <FormattedMessage id="pages.token.priceTitle" />
+            <ul className={classes.price}>
+              {formatPrice(selected.template?.price)
+                .split(", ")
+                .map((item: string, index: number) => (
+                  <li key={index}>{item}</li>
+                ))}
+            </ul>
             <TokenSellButton token={selected} />
+            <TokenTransferButton token={selected} />
           </Paper>
 
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.UPGRADEABLE) ? (
@@ -84,6 +88,13 @@ export const Erc998Token: FC = () => {
             </Paper>
           ) : null}
         </Grid>
+        <TokenHistory
+          token={selected}
+          isLoading={isLoading}
+          search={search}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+        />
       </Grid>
     </Fragment>
   );
