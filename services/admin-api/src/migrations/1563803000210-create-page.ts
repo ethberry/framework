@@ -30,6 +30,7 @@ export class CreatePage1563803000210 implements MigrationInterface {
         {
           name: "page_status",
           type: `${ns}.page_status_enum`,
+          default: "'ACTIVE'",
         },
         {
           name: "slug",
