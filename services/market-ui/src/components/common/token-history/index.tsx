@@ -6,7 +6,7 @@ import { format, parseISO } from "date-fns";
 import { ExchangeType, IAsset, IToken } from "@framework/types";
 import { sorter } from "../../../utils/sorter";
 import { formatPrice } from "../../../utils/money";
-import { ScannerLink } from "../scanner-link";
+import { ScannerLink, TxLink } from "../scanner-link";
 
 import { useStyles } from "./styles";
 
@@ -149,7 +149,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} type={"tx"} />
+          <TxLink address={params.value} />
         );
       },
       flex: 1

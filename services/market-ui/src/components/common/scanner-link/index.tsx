@@ -9,6 +9,10 @@ export interface IScannerLinkProps {
   address: string;
 }
 
+export interface ITxLinkProps {
+  address: string;
+}
+
 export const ScannerLink: FC<IScannerLinkProps> = props => {
   const { address, type } = props;
 
@@ -21,7 +25,7 @@ export const ScannerLink: FC<IScannerLinkProps> = props => {
   );
 };
 
-export const TxLink: FC<IScannerLinkProps> = props => {
+export const TxLink: FC<ITxLinkProps> = props => {
   const { address } = props;
 
   const { chainId = 1 } = useWeb3React();
