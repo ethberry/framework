@@ -4,6 +4,7 @@ import { ITemplate } from "./template";
 import { IBalance } from "./balance";
 import { IOwnership } from "./ownership";
 import { IAssetComponentHistory } from "../mechanics/asset-component-history";
+import { IContractHistory } from "../contract-history";
 
 export enum TokenStatus {
   MINTED = "MINTED",
@@ -37,5 +38,6 @@ export interface IToken extends IIdDateBase {
   balance?: Array<IBalance>;
   parent?: Array<IOwnership>;
   children?: Array<IOwnership>;
-  history?: Array<IAssetComponentHistory>;
+  exchangeHistory?: Array<IAssetComponentHistory>;
+  contractHistory?: Array<IContractHistory>;
 }

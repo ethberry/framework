@@ -115,7 +115,7 @@ export class ExchangeServiceEth {
         };
 
         const templateEntity = await this.templateService.findOne(
-          { id: ~~itemTokenId },
+          { id: itemType === 4 ? ~~exchangeHistoryEntity.eventData.externalId : ~~itemTokenId },
           { relations: { tokens: true } },
         );
         if (!templateEntity) {
@@ -123,7 +123,7 @@ export class ExchangeServiceEth {
         }
 
         Object.assign(assetComponentHistoryItem, {
-          tokenId: itemType === 0 || itemType === 1 || itemType === 5 ? templateEntity.tokens[0].id : null,
+          tokenId: itemType === 0 || itemType === 1 || itemType === 4 ? templateEntity.tokens[0].id : null,
           contractId: templateEntity.contractId,
         });
 

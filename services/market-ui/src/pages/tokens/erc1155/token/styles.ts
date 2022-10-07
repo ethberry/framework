@@ -6,6 +6,10 @@ export const useStyles = makeStyles<Theme>(
     paper: {
       padding: theme.spacing(2),
     },
+    price: {
+      paddingLeft: 0,
+      listStylePosition: "inside",
+    },
   }),
   { name: "Erc1155Token" },
 );

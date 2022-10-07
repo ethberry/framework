@@ -39,7 +39,7 @@ export class Erc1155TokenControllerEth {
     @Payload() event: ILogEvent<IErc1155TokenApprovalForAllEvent>,
     @Ctx() context: Log,
   ): Promise<void> {
-    return this.erc1155ServiceEth.approvalForAll(event, context);
+    return this.erc1155ServiceEth.approvalForAllErc1155(event, context);
   }
 
   @EventPattern({ contractType: ContractType.ERC1155_TOKEN, eventName: ContractEventType.URI })

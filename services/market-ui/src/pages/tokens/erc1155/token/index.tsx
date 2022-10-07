@@ -11,9 +11,10 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useStyles } from "./styles";
 import { TokenSellButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
+import { TokenHistory } from "../../../../components/common/token-history";
 
 export const Erc1155Token: FC = () => {
-  const { selected, isLoading } = useCollection<IToken>({
+  const { selected, isLoading, search, handleChangePage, handleChangeRowsPerPage } = useCollection<IToken>({
     baseUrl: "/erc1155-tokens",
     empty: {
       template: {
@@ -51,13 +52,24 @@ export const Erc1155Token: FC = () => {
         </Grid>
         <Grid item xs={3}>
           <Paper className={classes.paper}>
-            <FormattedMessage
-              id="pages.erc1155.token.price"
-              values={{ amount: formatPrice(selected.template?.price) }}
-            />
+            <FormattedMessage id="pages.token.priceTitle" />
+            <ul className={classes.price}>
+              {formatPrice(selected.template?.price)
+                .split(", ")
+                .map((item: string, index: number) => (
+                  <li key={index}>{item}</li>
+                ))}
+            </ul>
             <TokenSellButton token={selected} />
           </Paper>
         </Grid>
+        <TokenHistory
+          token={selected}
+          isLoading={isLoading}
+          search={search}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+        />
       </Grid>
     </Fragment>
   );

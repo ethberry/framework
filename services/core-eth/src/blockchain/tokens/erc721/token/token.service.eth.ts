@@ -14,7 +14,7 @@ import {
 } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
-import { getMetadata } from "../../../../common/utils";
+import { getMetadata, callRandom } from "../../../../common/utils";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";
@@ -22,7 +22,6 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../mechanics/asset/asset.service";
-import { callRandom } from "../../../../common/utils/random";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {

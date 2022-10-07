@@ -38,7 +38,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.address" />
               </TableCell>
               <TableCell align="right">
-                <ScannerLink address={address} />
+                <ScannerLink address={address} type={"address"} />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -46,7 +46,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
-                <ScannerLink address={account} />
+                <ScannerLink address={account} type={"address"} />
               </TableCell>
             </TableRow>
             <TableRow>

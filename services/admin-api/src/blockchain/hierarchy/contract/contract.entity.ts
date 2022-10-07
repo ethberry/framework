@@ -7,6 +7,7 @@ import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "@framew
 import { ns } from "@framework/constants";
 
 import { TemplateEntity } from "../template/template.entity";
+import { ContractHistoryEntity } from "../../contract-history/contract-history.entity";
 
 @Entity({ schema: ns, name: "contract" })
 export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) implements IContract {
@@ -61,4 +62,7 @@ export class ContractEntity extends Mixin(DeployableEntity, SearchableEntity) im
 
   @OneToMany(_type => TemplateEntity, template => template.contract)
   public templates: Array<TemplateEntity>;
+
+  @OneToMany(_type => ContractHistoryEntity, history => history.contractId)
+  public history: Array<ContractHistoryEntity>;
 }

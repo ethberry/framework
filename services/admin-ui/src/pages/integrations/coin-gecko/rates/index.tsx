@@ -59,9 +59,9 @@ export const CoinGeckoRates: FC = () => {
           <Typography variant="h4" component="span" sx={{ mx: 1 }}>
             =
           </Typography>
-          <Typography variant="h4" component="span">
+`          <Typography variant="h4" component="span">
             {result.last.toFixed(2)}
-          </Typography>{" "}
+          </Typography>{" "}`
           <Select
             sx={{ mx: 1 }}
             value={targetCoinId}

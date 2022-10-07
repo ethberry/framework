@@ -4,6 +4,8 @@
 **/cache/
 **/dist/
 /code/
+/besu/
+/besu/**
 
 # IDE
 .idea

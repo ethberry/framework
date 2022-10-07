@@ -35,7 +35,7 @@ export const LotteryLeaderboard: FC = () => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} />
+          <ScannerLink address={params.value} type={"address"} />
         );
       },
       flex: 2

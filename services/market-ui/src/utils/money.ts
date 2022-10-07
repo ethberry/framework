@@ -13,6 +13,14 @@ export const formatPrice = (asset?: IAsset): string => {
   );
 };
 
+export const formatPriceMl = (asset?: IAsset): Array<string> => {
+  return (
+    asset?.components.map(component =>
+      formatEther(component.amount, component.contract!.decimals, component.contract!.symbol),
+    ) || [""]
+  );
+};
+
 export const getEthPrice = (asset?: IAsset) => {
   return asset?.components.reduce((memo, current) => {
     if (current.tokenType === TokenType.NATIVE) {
