@@ -76,12 +76,16 @@ export class MysteryBoxService {
       );
     }
 
-    if (maxPrice) {
-      queryBuilder.andWhere("price_components.amount <= :maxPrice", { maxPrice });
-    }
+    if (minPrice || maxPrice) {
+      queryBuilder.leftJoin("price.components", "price_filter");
 
-    if (minPrice) {
-      queryBuilder.andWhere("price_components.amount >= :minPrice", { minPrice });
+      if (maxPrice) {
+        queryBuilder.andWhere("price_filter.amount <= :maxPrice", { maxPrice });
+      }
+
+      if (minPrice) {
+        queryBuilder.andWhere("price_filter.amount >= :minPrice", { minPrice });
+      }
     }
 
     queryBuilder.andWhere(
