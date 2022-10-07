@@ -2,7 +2,7 @@ import { ConflictException, Injectable, NotFoundException } from "@nestjs/common
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 
-import { IPageSearchDto, PageStatus } from "@framework/types";
+import { IPageSearchDto } from "@framework/types";
 
 import { PageEntity } from "./page.entity";
 import { IPageCreateDto, IPageUpdateDto } from "./interfaces";
@@ -66,12 +66,7 @@ export class PageService {
       throw new ConflictException("duplicateSlug");
     }
 
-    return this.pageEntityRepository
-      .create({
-        ...dto,
-        pageStatus: PageStatus.ACTIVE,
-      })
-      .save();
+    return this.pageEntityRepository.create(dto).save();
   }
 
   public async update(where: FindOptionsWhere<PageEntity>, dto: IPageUpdateDto): Promise<PageEntity> {

@@ -19,3 +19,11 @@ export const getWinners = (ticket: ILotteryTicket, round: ILotteryRound) => {
   const count = rN.filter(i => tN.includes(i)).length;
   return count ? `winner ${count} of 6` : "";
 };
+
+export const getSelectedNumbers = (ticketNumbers: boolean[]): number[] =>
+  ticketNumbers.reduceRight((acc: number[], cell: boolean, i: number) => {
+    cell && acc.push(i + 1);
+    return acc;
+  }, []);
+
+export const getDefaultTickets = (): boolean[] => new Array(36).fill(false) as boolean[];

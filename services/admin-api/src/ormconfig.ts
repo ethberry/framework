@@ -39,9 +39,13 @@ import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/e
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 
-import { CreateUser1563804000030 } from "./migrations/1563804000030-create-user";
-import { SeedUser1563804000040 } from "./migrations/1563804000040-seed-user";
-import { CreateOtp1563804000060 } from "./migrations/1563804000060-create-otp";
+import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
+import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
+import { CreateUser1563803000130 } from "./migrations/1563803000130-create-user";
+import { SeedUser1563803000140 } from "./migrations/1563803000140-seed-user";
+import { CreatePage1563803000210 } from "./migrations/1563803000210-create-page";
+import { SeedPages1563803000220 } from "./migrations/1563803000220-seed-pages";
+import { CreateOtp1563803000160 } from "./migrations/1563803000160-create-otp";
 
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
@@ -129,8 +133,6 @@ import { CreateAccessControlHistory1653616447240 } from "./migrations/1653616447
 import { CreateAccessList1653616447330 } from "./migrations/1653616447330-create-access-list";
 import { SeedAccessList1653616447340 } from "./migrations/1653616447340-seed-access-list";
 import { CreateAccessListHistory1653616447350 } from "./migrations/1653616447350-create-access-list-history";
-import { CreateSettings1563804000010 } from "./migrations/1563804000010-create-settings";
-import { SeedSettings1563804000020 } from "./migrations/1563804000020-seed-settings";
 
 import { SeedContractStakingAt1654751224100 } from "./migrations/1654751224100-seed-contract-staking";
 import { CreateStakingRules1654751224200 } from "./migrations/1654751224200-create-staking-rules";
@@ -145,9 +147,6 @@ import { SeedStakingDepositNativeAt1654751224310 } from "./migrations/1654751224
 import { SeedStakingDepositErc20At1654751224320 } from "./migrations/1654751224320-seed-staking-deposit-erc20";
 import { SeedStakingDepositErc998At1654751224340 } from "./migrations/1654751224340-seed-staking-deposit-erc998";
 import { CreateStakingDepositHistory1654751224400 } from "./migrations/1654751224400-create-staking-deposit-history";
-
-import { CreatePage1655626535100 } from "./migrations/1655626535100-create-page";
-import { SeedPages1655626535110 } from "./migrations/1655626535110-seed-pages";
 
 import { CreateGrade1657846587000 } from "./migrations/1657846587000-create-grade";
 import { SeedGrade1657846587010 } from "./migrations/1657846587010-seed-grade";
@@ -254,11 +253,14 @@ const config: PostgresConnectionOptions = {
     installExtensionUUID(),
     createLanguageEnum(ns),
     createTokenTypes(ns),
-    CreateSettings1563804000010,
-    SeedSettings1563804000020,
-    CreateUser1563804000030,
-    SeedUser1563804000040,
-    CreateOtp1563804000060,
+
+    CreateSettings1563803000010,
+    SeedSettings1563803000020,
+    CreateUser1563803000130,
+    SeedUser1563803000140,
+    CreatePage1563803000210,
+    SeedPages1563803000220,
+    CreateOtp1563803000160,
 
     CreateAsset1563804000100,
 
@@ -360,9 +362,6 @@ const config: PostgresConnectionOptions = {
     SeedStakingDepositErc20At1654751224320,
     SeedStakingDepositErc998At1654751224340,
     CreateStakingDepositHistory1654751224400,
-
-    CreatePage1655626535100,
-    SeedPages1655626535110,
 
     CreateGrade1657846587000,
     SeedGrade1657846587010,
