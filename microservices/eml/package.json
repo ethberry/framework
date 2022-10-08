@@ -5,8 +5,8 @@
     "url": "https://gemunion.io/"
   },
   "dependencies": {
-    "@gemunion/nest-js-module-request-logger": "2.0.8",
-    "@gemunion/nest-js-module-winston-logdna": "2.0.11",
+    "@gemunion/nest-js-module-request-logger": "2.0.9",
+    "@gemunion/nest-js-module-winston-logdna": "2.0.12",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",
     "@nestjs/common": "9.1.4",
@@ -15,7 +15,7 @@
     "@nestjs/microservices": "9.1.4",
     "@nestjs/platform-express": "9.1.4",
     "@nestjs/terminus": "9.1.2",
-    "@gemunion/nest-js-module-mailjet": "2.1.7",
+    "@gemunion/nest-js-module-mailjet": "2.1.8",
     "amqp-connection-manager": "4.1.7",
     "amqplib": "0.10.3",
     "express": "4.18.1",
