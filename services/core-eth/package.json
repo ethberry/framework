@@ -22,7 +22,7 @@
     "@gemunion/nest-js-module-winston": "1.0.12",
     "@gemunion/nest-js-utils": "2.0.14",
     "@gemunion/nest-js-validators": "2.1.8",
-    "@gemunion/nestjs-ethers": "3.0.14",
+    "@gemunion/nestjs-ethers": "3.0.15",
     "@gemunion/types-collection": "1.5.4",
     "@nestjs/axios": "0.1.0",
     "@nestjs/common": "9.1.4",
