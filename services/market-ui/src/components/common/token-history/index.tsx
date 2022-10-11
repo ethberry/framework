@@ -3,7 +3,9 @@ import { Grid, Typography } from "@mui/material";
 import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { format, parseISO } from "date-fns";
+
 import { ExchangeType, IAsset, IToken } from "@framework/types";
+
 import { sorter } from "../../../utils/sorter";
 import { formatPrice } from "../../../utils/money";
 import { ScannerLink, TxLink } from "../scanner-link";
@@ -71,8 +73,8 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
   const fullTokenHistory = contractHistory
     ?.concat(exchangeHistory)
     .sort(sorter("date"))
-    .map((history, indx) => {
-      return Object.assign(history, { id: indx });
+    .map((history, i: number) => {
+      return Object.assign(history, { id: i });
     });
 
   // prettier-ignore

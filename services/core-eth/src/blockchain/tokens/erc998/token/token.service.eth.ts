@@ -148,7 +148,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     }
     await this.updateHistory(event, context, erc998TokenEntity.template.contractId, erc998TokenEntity.id);
 
-    childTokenIds.map(async (childTokenId, indx) => {
+    childTokenIds.map(async (childTokenId, i) => {
       const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
       if (!childTokenEntity) {
@@ -158,7 +158,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
       await this.ownershipService.create({
         parentId: erc998TokenEntity.id,
         childId: childTokenEntity.id,
-        amount: ~~amounts[indx],
+        amount: ~~amounts[i],
       });
     });
   }
@@ -191,7 +191,7 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
     } = event;
 
     await Promise.all(
-      childTokenIds.map(async (childTokenId, indx) => {
+      childTokenIds.map(async (childTokenId, i) => {
         const childTokenEntity = await this.tokenService.getToken(childTokenId, childContract.toLowerCase());
 
         if (!childTokenEntity) {
@@ -206,8 +206,8 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
           throw new NotFoundException("ownershipNotFound");
         }
 
-        if (ownershipEntity.amount > ~~amounts[indx]) {
-          Object.assign(ownershipEntity, { amount: ownershipEntity.amount - ~~amounts[indx] });
+        if (ownershipEntity.amount > ~~amounts[i]) {
+          Object.assign(ownershipEntity, { amount: ownershipEntity.amount - ~~amounts[i] });
           await ownershipEntity.save();
         } else {
           await this.ownershipService.delete({ id: ownershipEntity.id });
