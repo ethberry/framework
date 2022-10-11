@@ -31,7 +31,13 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
   Ref public _refProgram;
 
   event ReferralProgram(Ref refProgram);
-  event ReferralReward(address indexed account, address indexed referrer, uint8 level, address indexed token, uint256 amount);
+  event ReferralReward(
+    address indexed account,
+    address indexed referrer,
+    uint8 level,
+    address indexed token,
+    uint256 amount
+  );
   event ReferralWithdraw(address indexed account, address indexed token, uint256 amount);
   event ReferralBonus(address indexed referrer, address indexed token, uint256 amount);
 
@@ -39,19 +45,23 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
   mapping(address => address) private _chain;
   mapping(address => uint256) private _minTokenWithdrawalAmount;
   mapping(address => uint256) public _refCount;
-  mapping(address => mapping (address => uint256)) _rewardBalances;
+  mapping(address => mapping(address => uint256)) _rewardBalances;
   mapping(uint256 => Bonus) _referralBonuses;
 
   bool _autoWithdrawal = false;
 
-  function setRefProgram(uint8 maxRefs, uint256 refReward, uint256 refDecrease) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    require (!_refProgram.init, "Referral: program already set");
-    require (refReward >= 0 && refReward < 10000, "Referral: wrong refReward");
+  function setRefProgram(
+    uint8 maxRefs,
+    uint256 refReward,
+    uint256 refDecrease
+  ) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    require(!_refProgram.init, "Referral: program already set");
+    require(refReward >= 0 && refReward < 10000, "Referral: wrong refReward");
     _refProgram = Ref(refReward, refDecrease, maxRefs, true);
     emit ReferralProgram(_refProgram);
   }
 
-  function getRefProgram() public view returns(Ref memory) {
+  function getRefProgram() public view returns (Ref memory) {
     return _refProgram;
   }
 
@@ -59,12 +69,12 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
     updateReferrers(referrer, price);
 
     if (_autoWithdrawal) {
-        Asset memory ingredient = price[0];
-        uint256 rewardAmount = _rewardBalances[referrer][ingredient.token];
+      Asset memory ingredient = price[0];
+      uint256 rewardAmount = _rewardBalances[referrer][ingredient.token];
 
-        if(rewardAmount > 0 && rewardAmount >= _minTokenWithdrawalAmount[ingredient.token]) {
-          withdrawAutoReward(ingredient.token, referrer);
-        }
+      if (rewardAmount > 0 && rewardAmount >= _minTokenWithdrawalAmount[ingredient.token]) {
+        withdrawAutoReward(ingredient.token, referrer);
+      }
     }
   }
 
@@ -81,27 +91,27 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
 
     uint256 length = price.length;
     for (uint256 i = 0; i < length; i++) {
-          Asset memory ingredient = price[i];
-          if (ingredient.tokenType == TokenType.NATIVE || ingredient.tokenType == TokenType.ERC20) {
-            address referrer = initReferrer;
+      Asset memory ingredient = price[i];
+      if (ingredient.tokenType == TokenType.NATIVE || ingredient.tokenType == TokenType.ERC20) {
+        address referrer = initReferrer;
 
-            uint8 maxRefs = _maxAccountRefs[account] > 0 ? _maxAccountRefs[account] : program._maxRefs;
-            for (uint8 level = 0; level < maxRefs; level++) {
+        uint8 maxRefs = _maxAccountRefs[account] > 0 ? _maxAccountRefs[account] : program._maxRefs;
+        for (uint8 level = 0; level < maxRefs; level++) {
+          uint256 rewardAmount = ((ingredient.amount / 100) * (program._refReward / 100)) /
+            program._refDecrease**(level);
+          _rewardBalances[referrer][ingredient.token] += rewardAmount;
+          getBonus(referrer);
+          emit ReferralReward(account, referrer, level, ingredient.token, rewardAmount);
 
-              uint256 rewardAmount = ((ingredient.amount / 100) * (program._refReward / 100)) / program._refDecrease**(level);
-              _rewardBalances[referrer][ingredient.token] += rewardAmount;
-              getBonus(referrer);
-              emit ReferralReward(account, referrer, level, ingredient.token, rewardAmount);
+          address nxt = _chain[referrer];
 
-              address nxt = _chain[referrer];
-
-              if (_chain[referrer] == address(0) || _chain[referrer] == account) {
-                level = maxRefs;
-              }
-              referrer = nxt;
-            }
+          if (_chain[referrer] == address(0) || _chain[referrer] == account) {
+            level = maxRefs;
           }
+          referrer = nxt;
         }
+      }
+    }
   }
 
   function withdrawReward(address token) public returns (bool success) {
@@ -151,13 +161,17 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
     return _rewardBalances[referral][token];
   }
 
-  function setRefBonus(uint256[] memory tokenCounts, uint256[] memory bonusAmounts, address[] memory tokens) internal {
+  function setRefBonus(
+    uint256[] memory tokenCounts,
+    uint256[] memory bonusAmounts,
+    address[] memory tokens
+  ) internal {
     uint256 tokensLength = tokenCounts.length;
     uint256 bonusLength = bonusAmounts.length;
     uint256 tokenLength = tokens.length;
     require(tokensLength == bonusLength && bonusLength == tokenLength, "Referral: wrong arrays");
-    for (uint256 indx = 0; indx < tokensLength; indx++) {
-      _referralBonuses[tokenCounts[indx]] = Bonus(tokens[indx], bonusAmounts[indx]);
+    for (uint256 i = 0; i < tokensLength; i++) {
+      _referralBonuses[tokenCounts[i]] = Bonus(tokens[i], bonusAmounts[i]);
     }
   }
 
@@ -165,7 +179,7 @@ abstract contract LinearReferralPyramid is Context, AccessControl {
     uint256 refcount = _refCount[referrer] += 1;
     Bonus memory _bonus = _referralBonuses[refcount];
 
-    if(_bonus.amount > 0 ) {
+    if (_bonus.amount > 0) {
       _rewardBalances[referrer][_bonus.token] += _bonus.amount;
       emit ReferralBonus(referrer, _bonus.token, _bonus.amount);
     }
