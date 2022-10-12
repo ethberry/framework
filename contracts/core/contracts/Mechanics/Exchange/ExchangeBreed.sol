@@ -17,19 +17,18 @@ import "../../ERC721/interfaces/IERC721Upgradeable.sol";
 
 abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
 
-  uint64 public _pregnancyTimeLimitMother = 0;
-  uint64 public _pregnancyTimeLimitFather = 0;
-  uint64 public _pregnancyCountLimitMother = 0;
-  uint64 public _pregnancyCountLimitFather = 0;
+  uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time
+  uint64 public _pregnancyCountLimit = 0;
+  uint64 public _pregnancyMaxTime = 0;
 
   struct Pregnancy {
-    uint256 timestamp;
-    uint64 count;
+    uint64 time; // last breeding timestamp
+    uint64 count; // breeds count
   }
 
-  mapping(address /* parent's contract */ => mapping(uint256 /* parent's tokenId */ => Pregnancy)) private _breeds;
+  mapping(uint256 /* matron's tokenId */ => Pregnancy) private _breeds;
 
-  event Breed(address from, uint256 externalId, Asset mother, Asset father);
+  event Breed(address from, uint256 externalId, Asset matron, Asset sire);
 
   function breed(
     Params memory params,
@@ -57,37 +56,38 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     IERC721Random(item.token).mintRandom(account, params.externalId);
   }
 
-  function pregnancyCheckup(Asset memory mother, Asset memory father) internal {
-    Pregnancy storage _pregnancyMother = _breeds[mother.token][mother.tokenId];
-    Pregnancy storage _pregnancyFather = _breeds[father.token][father.tokenId];
+  function pregnancyCheckup(Asset memory matron, Asset memory sire) internal {
+    Pregnancy storage pregnancyM = _breeds[matron.tokenId];
+    Pregnancy storage pregnancyS = _breeds[sire.tokenId];
 
     // Check pregnancy count
-    if (_pregnancyCountLimitMother > 0) {
-      require(_pregnancyMother.count < _pregnancyCountLimitMother, "Exchange: pregnancy count exceeded mother");
-    }
-    if (_pregnancyCountLimitFather > 0) {
-      require(_pregnancyFather.count < _pregnancyCountLimitFather, "Exchange: pregnancy count exceeded father");
+    if (_pregnancyCountLimit > 0) {
+      require(pregnancyM.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
+      require(pregnancyS.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
     }
 
     // Check pregnancy time
-    uint64 breedTime = uint64(block.timestamp);
+    uint64 timeNow = uint64(block.timestamp);
 
-    require(breedTime - _pregnancyMother.timestamp > _pregnancyTimeLimitMother, "Exchange: pregnancy time limit mother");
-    require(breedTime - _pregnancyFather.timestamp > _pregnancyTimeLimitFather, "Exchange: pregnancy time limit father");
+    require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
 
+    uint64 timeLimitM = pregnancyM.count > 13 ? _pregnancyMaxTime : uint64(_pregnancyTimeLimit * (2 ** pregnancyM.count));
+    uint64 timeLimitS = pregnancyS.count > 13 ? _pregnancyMaxTime : uint64(_pregnancyTimeLimit * (2 ** pregnancyS.count));
+
+    if (pregnancyM.count > 0 || pregnancyS.count > 0) {
+      require(timeNow - pregnancyM.time > timeLimitM, "Exchange: pregnancy time limit");
+      require(timeNow - pregnancyS.time > timeLimitS, "Exchange: pregnancy time limit");
+    }
     // Update Pregnancy
-    _pregnancyMother.count += 1;
-    _pregnancyFather.count += 1;
-
-    _pregnancyMother.timestamp = breedTime;
-    _pregnancyFather.timestamp = breedTime;
+    pregnancyM.count += 1;
+    pregnancyM.time = timeNow;
+    pregnancyS.count += 1;
+    pregnancyS.time = timeNow;
   }
 
-  function setPregnancyLimits(uint64 countMother, uint64 countFather, uint64 timeMother, uint64 timeFather) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _pregnancyCountLimitMother = countMother;
-    _pregnancyCountLimitFather = countFather;
-
-    _pregnancyTimeLimitMother = timeMother;
-    _pregnancyTimeLimitFather = timeFather;
+  function setPregnancyLimits(uint64 count, uint64 time, uint64 maxTime) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    _pregnancyCountLimit = count;
+    _pregnancyTimeLimit = time;
+    _pregnancyMaxTime = maxTime;
   }
 }

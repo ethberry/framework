@@ -10,6 +10,7 @@ import { AssetModule } from "../asset/asset.module";
 import { TokenModule } from "../../hierarchy/token/token.module";
 import { TemplateModule } from "../../hierarchy/template/template.module";
 import { GradeModule } from "../grade/grade.module";
+import { BreedModule } from "../breed/breed.module";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { GradeModule } from "../grade/grade.module";
     TemplateModule,
     TokenModule,
     AssetModule,
+    BreedModule,
   ],
   providers: [Logger, ExchangeServiceEth],
   controllers: [ExchangeControllerEth],

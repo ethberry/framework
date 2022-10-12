@@ -1,4 +1,4 @@
-import { Logger, Module } from "@nestjs/common";
+import { Logger, Module, forwardRef } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";
@@ -15,6 +15,7 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { AssetModule } from "../../../mechanics/asset/asset.module";
+import { BreedModule } from "../../../mechanics/breed/breed.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AssetModule } from "../../../mechanics/asset/asset.module";
     ContractModule,
     TokenModule,
     AssetModule,
+    forwardRef(() => BreedModule),
     TypeOrmModule.forFeature([TokenEntity]),
   ],
   providers: [Logger, ethersRpcProvider, ethersSignerProvider, Erc721TokenServiceEth],

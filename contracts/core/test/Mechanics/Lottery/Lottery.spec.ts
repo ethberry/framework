@@ -228,8 +228,8 @@ describe("Lottery", function () {
 
       await expect(tx0)
         .to.emit(this.lotteryInstance, "Purchase")
-        .withArgs(this.receiver.address, amount, 1, defaultNumbers);
-
+        .withArgs(1, this.receiver.address, amount, 1, defaultNumbers);
+      // emit Purchase(tokenId, account, price, roundNumber, numbers);
       if (network.name !== "hardhat") {
         await delay(10000).then(() => console.info("delay 10000 done"));
       }
@@ -284,7 +284,7 @@ describe("Lottery", function () {
 
       await expect(tx)
         .to.emit(this.lotteryInstance, "Purchase")
-        .withArgs(this.receiver.address, amount, 1, defaultNumbers);
+        .withArgs(1, this.receiver.address, amount, 1, defaultNumbers);
     });
 
     it("should release", async function () {
@@ -301,7 +301,7 @@ describe("Lottery", function () {
         .purchase(params, defaultNumbers, amount, this.owner.address, signature);
       await expect(tx)
         .to.emit(this.lotteryInstance, "Purchase")
-        .withArgs(this.receiver.address, amount, 1, defaultNumbers);
+        .withArgs(1, this.receiver.address, amount, 1, defaultNumbers);
 
       await this.lotteryInstance.endRound();
       // TIME
@@ -326,7 +326,7 @@ describe("Lottery", function () {
         .purchase(params, defaultNumbers, amount, this.owner.address, signature);
       await expect(tx)
         .to.emit(this.lotteryInstance, "Purchase")
-        .withArgs(this.receiver.address, amount, 1, defaultNumbers);
+        .withArgs(1, this.receiver.address, amount, 1, defaultNumbers);
       await this.lotteryInstance.endRound();
 
       // TIME
@@ -377,7 +377,7 @@ describe("Lottery", function () {
         .purchase(params, defaultNumbers, amount, this.owner.address, signature);
       await expect(tx1)
         .to.emit(this.lotteryInstance, "Purchase")
-        .withArgs(this.receiver.address, amount, 1, defaultNumbers);
+        .withArgs(1, this.receiver.address, amount, 1, defaultNumbers);
 
       const tx2 = this.lotteryInstance
         .connect(this.receiver)
@@ -439,7 +439,7 @@ describe("Lottery", function () {
         .purchase(params1, defaultNumbers, amount, this.owner.address, signature1);
       await expect(tx1)
         .to.emit(this.lotteryInstance, "Purchase")
-        .withArgs(this.receiver.address, amount, 1, defaultNumbers);
+        .withArgs(1, this.receiver.address, amount, 1, defaultNumbers);
 
       const params2 = {
         nonce: utils.randomBytes(32),
@@ -459,7 +459,7 @@ describe("Lottery", function () {
         .purchase(params2, defaultNumbers, amount, this.owner.address, signature2);
       await expect(tx2)
         .to.emit(this.lotteryInstance, "Purchase")
-        .withArgs(this.stranger.address, amount, 1, defaultNumbers);
+        .withArgs(2, this.stranger.address, amount, 1, defaultNumbers);
 
       const params3 = {
         nonce: utils.randomBytes(32),

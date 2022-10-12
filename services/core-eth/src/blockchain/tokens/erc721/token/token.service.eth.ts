@@ -22,6 +22,7 @@ import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../mechanics/asset/asset.service";
+import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -38,6 +39,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     protected readonly templateService: TemplateService,
     protected readonly balanceService: BalanceService,
     protected readonly assetService: AssetService,
+    protected readonly breedServiceEth: BreedServiceEth,
     protected readonly contractHistoryService: ContractHistoryService,
   ) {
     super(loggerService, jsonRpcProvider, contractService, tokenService, contractHistoryService);
@@ -78,6 +80,12 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
         }
         const eventData = historyEntity.eventData as IERC721TokenMintRandomEvent;
         await this.assetService.updateAssetHistoryRandom(eventData.requestId, tokenEntity.id);
+      }
+
+      // MODULE:BREEDING
+      if (attributes[TokenAttributes.GENES]) {
+        // const { matron, sire, templateId } = await this.geneService.decodeTemplate(attributes[TokenAttributes.TEMPLATE_ID]);
+        await this.breedServiceEth.newborn(tokenEntity.id, attributes[TokenAttributes.GENES]);
       }
     }
 

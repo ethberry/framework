@@ -11,6 +11,8 @@ export enum ExchangeEventType {
   // MODULE:WAITLIST
   RewardSet = "RewardSet",
   ClaimReward = "ClaimReward",
+  // MODULE:BREEDING
+  Breed = "Breed",
 }
 
 export type IExchangeItem = [number, string, string, string];
@@ -66,6 +68,14 @@ export interface IClaimRewardEvent {
   items: Array<IRewardItem>;
 }
 
+// MODULE:BREEDING
+export interface IExchangeBreedEvent {
+  from: string;
+  externalId: string;
+  matron: IExchangeItem;
+  sire: IExchangeItem;
+}
+
 export type TExchangeEventData =
   | IExchangePurchaseEvent
   | IExchangeClaimEvent
@@ -73,7 +83,8 @@ export type TExchangeEventData =
   | IExchangeGradeEvent
   | IExchangeMysteryEvent
   | IRewardSetEvent
-  | IClaimRewardEvent;
+  | IClaimRewardEvent
+  | IExchangeBreedEvent;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;

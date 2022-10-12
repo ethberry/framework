@@ -36,6 +36,8 @@ export * from "./mechanics/vesting/vesting";
 export * from "./mechanics/vesting/history";
 export * from "./mechanics/waitlist/list";
 export * from "./mechanics/waitlist/item";
+export * from "./mechanics/breed/history";
+export * from "./mechanics/breed/breed";
 
 export * from "./hierarchy/contract";
 export * from "./hierarchy/template";

@@ -6,6 +6,7 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
   ExchangeEventType,
+  IExchangeBreedEvent,
   IExchangeClaimEvent,
   IExchangeCraftEvent,
   IExchangeGradeEvent,
@@ -56,5 +57,15 @@ export class ExchangeControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.exchangeServiceEth.purchase(event, context);
+  }
+
+  // MODULE:BREEDING
+  @EventPattern([{ contractType: ContractType.EXCHANGE, eventName: ExchangeEventType.Breed }])
+  public breed(
+    @Payload()
+    event: ILogEvent<IExchangeBreedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.exchangeServiceEth.breed(event, context);
   }
 }
