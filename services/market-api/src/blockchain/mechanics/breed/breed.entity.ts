@@ -4,7 +4,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IBreed } from "@framework/types";
 import { ns } from "@framework/constants";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { BreedHistoryEntity } from "./history/history.entity";
+import { BreedHistoryEntity } from "./history.entity";
 
 @Entity({ schema: ns, name: "breed" })
 export class BreedEntity extends IdDateBaseEntity implements IBreed {

@@ -3,12 +3,15 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository, IsNull } from "typeorm";
 
 import { BreedHistoryEntity } from "./history.entity";
+import { ContractHistoryService } from "../../../contract-history/contract-history.service";
+import { ContractEventType, IERC721TokenMintRandomEvent } from "@framework/types";
 
 @Injectable()
 export class BreedHistoryService {
   constructor(
     @InjectRepository(BreedHistoryEntity)
     private readonly breedHistoryEntityRepository: Repository<BreedHistoryEntity>,
+    protected readonly contractHistoryService: ContractHistoryService,
   ) {}
 
   public findOne(
@@ -26,7 +29,7 @@ export class BreedHistoryService {
     where: FindOptionsWhere<BreedHistoryEntity>,
     dto: DeepPartial<BreedHistoryEntity>,
   ): Promise<BreedHistoryEntity> {
-    const historyEntity = await this.findOne(where);
+    const historyEntity = await this.findOne(where, { relations: { history: true } });
 
     if (!historyEntity) {
       throw new NotFoundException("historyNotFound");
@@ -37,7 +40,39 @@ export class BreedHistoryService {
     return historyEntity.save();
   }
 
-  public async updateHistory(matronId: number, sireId: number, childId: number): Promise<BreedHistoryEntity> {
-    return await this.update({ matronId, sireId, childId: IsNull() }, { childId });
+  public async updateHistory(
+    matronId: number,
+    sireId: number,
+    childId: number,
+    transactionHash: string,
+  ): Promise<void> {
+    const randomHistory = await this.contractHistoryService.findOne({
+      transactionHash,
+      eventType: ContractEventType.MintRandom,
+    });
+    if (!randomHistory) {
+      throw new NotFoundException("historyNotFound");
+    }
+    const eventData = randomHistory.eventData as IERC721TokenMintRandomEvent;
+
+    const requestHistory = await this.contractHistoryService.findByRandomRequest(eventData.requestId);
+    if (requestHistory) {
+      const transactionHash = requestHistory.transactionHash;
+
+      const queryBuilder = this.breedHistoryEntityRepository.createQueryBuilder("breeds");
+      queryBuilder.select();
+      queryBuilder.leftJoinAndSelect("breeds.history", "history");
+      queryBuilder.where({ matronId, sireId, childId: IsNull() });
+      queryBuilder.andWhere("history.transactionHash = :transactionHash", {
+        transactionHash,
+      });
+
+      const breedHistoryEntity = await queryBuilder.getOne();
+
+      if (breedHistoryEntity) {
+        Object.assign(breedHistoryEntity, { childId });
+        await breedHistoryEntity.save();
+      }
+    }
   }
 }

@@ -20,6 +20,7 @@ export const TokenInput: FC<ITokenInputProps> = props => {
   const handleChange = (_event: ChangeEvent<unknown>, option: any | null): void => {
     form.setValue(`${prefix}.tokenId`, option?.id ?? 0);
     form.setValue(`${prefix}.token.tokenId`, option?.tokenId ?? 0);
+    form.setValue(`${prefix}.address`, option?.template.contract.address ?? 0);
   };
 
   if (!templateId) {

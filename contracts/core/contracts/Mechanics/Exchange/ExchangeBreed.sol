@@ -26,7 +26,7 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     uint64 count; // breeds count
   }
 
-  mapping(uint256 /* matron's tokenId */ => Pregnancy) private _breeds;
+  mapping(address /* item's contract */ => mapping(uint256 /* item's tokenId */ => Pregnancy)) private _breeds;
 
   event Breed(address from, uint256 externalId, Asset matron, Asset sire);
 
@@ -57,8 +57,8 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
   }
 
   function pregnancyCheckup(Asset memory matron, Asset memory sire) internal {
-    Pregnancy storage pregnancyM = _breeds[matron.tokenId];
-    Pregnancy storage pregnancyS = _breeds[sire.tokenId];
+    Pregnancy storage pregnancyM = _breeds[matron.token][matron.tokenId];
+    Pregnancy storage pregnancyS = _breeds[sire.token][sire.tokenId];
 
     // Check pregnancy count
     if (_pregnancyCountLimit > 0) {

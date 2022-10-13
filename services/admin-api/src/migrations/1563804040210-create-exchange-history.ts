@@ -8,6 +8,7 @@ export class CreateExchangeHistory1563804040210 implements MigrationInterface {
       `CREATE TYPE ${ns}.exchange_event_enum AS ENUM (
         'Claim',
         'Craft',
+        'Breed',
         'Mysterybox',
         'Purchase',
         'Paused',

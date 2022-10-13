@@ -70,7 +70,7 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
       await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
 
       // if RANDOM token - update tokenId in exchange asset history
-      if (attributes[TokenAttributes.RARITY]) {
+      if (attributes[TokenAttributes.RARITY] || attributes[TokenAttributes.GENES]) {
         const historyEntity = await this.contractHistoryService.findOne({
           transactionHash,
           eventType: ContractEventType.MintRandom,
@@ -84,8 +84,11 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
 
       // MODULE:BREEDING
       if (attributes[TokenAttributes.GENES]) {
-        // const { matron, sire, templateId } = await this.geneService.decodeTemplate(attributes[TokenAttributes.TEMPLATE_ID]);
-        await this.breedServiceEth.newborn(tokenEntity.id, attributes[TokenAttributes.GENES]);
+        await this.breedServiceEth.newborn(
+          tokenEntity.id,
+          attributes[TokenAttributes.GENES],
+          context.transactionHash.toLowerCase(),
+        );
       }
     }
 

@@ -8,19 +8,16 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 
-import type { IContractHistory, ITemplate, IToken } from "@framework/types";
+import type { ITemplate } from "@framework/types";
 import { ContractFeatures } from "@framework/types";
 
 import { TokenSellButton, TokenTransferButton, UpgradeButton } from "../../../../components/buttons";
 import { formatPrice } from "../../../../utils/money";
 import { TokenAttributesView } from "../../genes";
+import { TokenGenesisView } from "../../genesis";
 
 import { useStyles } from "./styles";
-import { TokenHistory } from "../../../../components/common/token-history";
-
-export interface ITokenWithHistory extends IToken {
-  contractHistory: Array<IContractHistory>;
-}
+import { ITokenWithHistory, TokenHistory } from "../../../../components/common/token-history";
 
 export const Erc721Token: FC = () => {
   const { selected, isLoading, search, handleChangeRowsPerPage, handleChangePage } = useCollection<ITokenWithHistory>({
@@ -38,6 +35,7 @@ export const Erc721Token: FC = () => {
   if (isLoading) {
     return <Spinner />;
   }
+  // TODO better genes view;
 
   return (
     <Fragment>
@@ -81,7 +79,14 @@ export const Erc721Token: FC = () => {
               <UpgradeButton token={selected} />
             </Paper>
           ) : null}
-
+          {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
+            <Paper className={classes.paper}>
+              <Typography>
+                <FormattedMessage id="pages.erc721.token.genesis" />
+              </Typography>
+              <TokenGenesisView attributes={selected.attributes} />
+            </Paper>
+          ) : null}
           {selected.template?.contract?.contractFeatures.includes(ContractFeatures.GENES) ? (
             <Paper className={classes.paper}>
               <Typography>

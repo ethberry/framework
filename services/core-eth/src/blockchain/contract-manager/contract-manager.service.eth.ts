@@ -22,9 +22,9 @@ import {
   ModuleType,
   MysteryContractFeatures,
   PyramidContractFeatures,
-  TContractManagerEventData,
+  TContractManagerEventData, TemplateStatus,
   TokenType,
-  VestingContractTemplate,
+  VestingContractTemplate
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./history/history.service";
@@ -158,6 +158,17 @@ export class ContractManagerServiceEth {
 
     if (contractFeatures.includes(Erc721ContractFeatures.UPGRADEABLE)) {
       await this.gradeService.create({ contract: contractEntity });
+    }
+
+    if (contractFeatures.includes(Erc721ContractFeatures.GENES)) {
+      await this.templateService.create({
+        title: name,
+        description: emptyStateString,
+        imageUrl,
+        cap: (1024 * 1024 * 1024 * 4).toString(),
+        contractId: contractEntity.id,
+        templateStatus: TemplateStatus.HIDDEN,
+      });
     }
 
     this.erc721LogService.addListener({

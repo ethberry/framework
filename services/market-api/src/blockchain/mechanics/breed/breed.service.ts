@@ -1,8 +1,11 @@
 import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
-import { constants, utils } from "ethers";
+import { InjectRepository } from "@nestjs/typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+
+import { constants, utils, BigNumber } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-collection";
-import { ContractFeatures, TokenType } from "@framework/types";
+import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignBreedDto } from "./interfaces";
@@ -10,10 +13,13 @@ import { UserEntity } from "../../../user/user.entity";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
+import { BreedEntity } from "./breed.entity";
 
 @Injectable()
 export class BreedService {
   constructor(
+    @InjectRepository(BreedEntity)
+    private readonly breedEntityRepository: Repository<BreedEntity>,
     private readonly tokenService: TokenService,
     private readonly templateService: TemplateService,
     private readonly signerService: SignerService,
@@ -34,18 +40,53 @@ export class BreedService {
     return tokenEntity;
   }
 
+  public findOneWithRelations(where: FindOptionsWhere<BreedEntity>): Promise<BreedEntity | null> {
+    return this.findOne(where, {
+      join: {
+        alias: "breed",
+        leftJoinAndSelect: {
+          token: "breed.token",
+          template: "token.template",
+          contract: "template.contract",
+        },
+      },
+    });
+  }
+
   public async sign(dto: ISignBreedDto, userEntity: UserEntity): Promise<IServerSignature> {
     const { momId, dadId } = dto;
+    const momTokenEntity = await this.findOneWithRelations({ tokenId: momId });
+    const dadTokenEntity = await this.findOneWithRelations({ tokenId: dadId });
 
-    const momTokenEntity = await this.getToken(momId);
-    const dadTokenEntity = await this.getToken(dadId);
+    if (!momTokenEntity || !dadTokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
 
-    // TODO mix genes;
+    const genesisTemplate = await this.templateService.findOne({
+      contractId: momTokenEntity.token?.template.contractId,
+      title: momTokenEntity.token?.template.contract.title,
+      templateStatus: TemplateStatus.HIDDEN,
+    });
 
-    const templateEntity = await this.templateService.findOne({ id: 307001 });
-    if (!templateEntity) {
+    if (!genesisTemplate) {
       throw new NotFoundException("templateNotFound");
     }
+
+    const genesis = {
+      templateId: genesisTemplate.id,
+      matronId: momTokenEntity.id,
+      sireId: dadTokenEntity.id,
+    };
+
+    const encodedExternalId = BigNumber.from(
+      utils.hexlify(
+        utils.concat([
+          utils.zeroPad(utils.hexlify(genesis.sireId), 3),
+          utils.zeroPad(utils.hexlify(genesis.matronId), 4),
+          utils.zeroPad(utils.hexlify(genesis.templateId), 4),
+        ]),
+      ),
+    );
 
     const nonce = utils.randomBytes(32);
     const expiresAt = 0;
@@ -53,15 +94,15 @@ export class BreedService {
       userEntity.wallet,
       {
         nonce,
-        externalId: templateEntity.id,
+        externalId: encodedExternalId.toString(),
         expiresAt,
         referrer: constants.AddressZero,
       },
-      momTokenEntity,
-      dadTokenEntity,
+      momTokenEntity.token!,
+      dadTokenEntity.token!,
     );
 
-    return { nonce: utils.hexlify(nonce), signature, expiresAt };
+    return { nonce: utils.hexlify(nonce), signature, expiresAt, bytecode: encodedExternalId.toString() };
   }
 
   public async getSignature(
@@ -86,5 +127,19 @@ export class BreedService {
         amount: "1",
       },
     );
+  }
+
+  public findOne(
+    where: FindOptionsWhere<BreedEntity>,
+    options?: FindOneOptions<BreedEntity>,
+  ): Promise<BreedEntity | null> {
+    return this.breedEntityRepository.findOne({ where, ...options });
+  }
+
+  public findAll(
+    where: FindOptionsWhere<BreedEntity>,
+    options?: FindOneOptions<BreedEntity>,
+  ): Promise<Array<BreedEntity>> {
+    return this.breedEntityRepository.find({ where, ...options });
   }
 }

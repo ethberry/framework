@@ -85,7 +85,7 @@ export class ExchangeServiceEth {
 
     await this.saveAssetHistory(history, [matron], [sire]);
 
-    await this.breedServiceEth.breed(event);
+    await this.breedServiceEth.breed(event, history.id);
   }
 
   public async log(event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>, context: Log): Promise<void> {

@@ -48,11 +48,3 @@ export const decodeGenes = (encoded: BigNumber, genes = metadataKeysArray) => {
     .slice(-genes.length)
     .reduceRight((memo, value, i) => ({ [genes[i]]: value, ...memo }), {} as Record<string, number>);
 };
-
-export const decodeGenesRandom = (encoded: BigNumber, genes = metadataKeysArray) => {
-  // const genLen = genes.length;
-  // genes.push("RANDOM");
-  return decodeNumber(encoded)
-    .slice(-genes.length)
-    .reduceRight((memo, value, i) => ({ [genes[i]]: value, ...memo }), {} as Record<string, number>);
-};
