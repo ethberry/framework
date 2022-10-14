@@ -3,18 +3,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { BreedService } from "./breed.service";
 import { BreedController } from "./breed.controller";
-import { TokenModule } from "../../hierarchy/token/token.module";
-import { TemplateModule } from "../../hierarchy/template/template.module";
 import { BreedEntity } from "./breed.entity";
-import { BreedHistoryEntity } from "./history.entity";
+import { BreedHistoryModule } from "./history/breed-history.module";
 
 @Module({
-  imports: [
-    TokenModule,
-    TemplateModule,
-    TypeOrmModule.forFeature([BreedEntity]),
-    TypeOrmModule.forFeature([BreedHistoryEntity]),
-  ],
+  imports: [BreedHistoryModule, TypeOrmModule.forFeature([BreedEntity])],
   providers: [Logger, BreedService],
   controllers: [BreedController],
   exports: [BreedService],

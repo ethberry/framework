@@ -15,7 +15,7 @@ export class BreedHistoryEntity extends IdDateBaseEntity implements IBreedHistor
   public childId: number | null;
 
   @JoinColumn()
-  @ManyToOne(_type => BreedEntity, breed => breed.childs)
+  @ManyToOne(_type => BreedEntity, breed => breed.parents)
   public child?: BreedEntity;
 
   @Column({ type: "int" })

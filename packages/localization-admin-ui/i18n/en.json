@@ -281,6 +281,7 @@
       "email": "Email",
       "endTimestamp": "End date",
       "genes": "Genes",
+      "parents": "Parents",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",

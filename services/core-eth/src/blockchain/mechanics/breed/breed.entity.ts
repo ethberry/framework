@@ -21,8 +21,9 @@ export class BreedEntity extends IdDateBaseEntity implements IBreed {
   @OneToOne(_type => TokenEntity)
   public token: TokenEntity;
 
-  @OneToMany(_type => BreedHistoryEntity, breeds => breeds.child)
-  public childs?: Array<BreedHistoryEntity>;
+  @JoinColumn()
+  @OneToOne(_type => BreedHistoryEntity)
+  public parents: BreedHistoryEntity;
 
   @OneToMany(_type => BreedHistoryEntity, breeds => breeds.child)
   public matrons?: Array<BreedHistoryEntity>;

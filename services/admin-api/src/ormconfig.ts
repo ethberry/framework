@@ -197,7 +197,7 @@ import { ContractHistoryEntity } from "./blockchain/contract-history/contract-hi
 import { CreateBreed1663047650400 } from "./migrations/1663047650400-create-breed";
 import { CreateBreedHistory1663047650410 } from "./migrations/1663047650410-create-breed-history";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
-import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history.entity";
+import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/breed-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

@@ -3,8 +3,8 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { ns } from "@framework/constants";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IBreedHistory } from "@framework/types";
-import { ExchangeHistoryEntity } from "../exchange/history/exchange-history.entity";
-import { BreedEntity } from "./breed.entity";
+import { ExchangeHistoryEntity } from "../../exchange/history/exchange-history.entity";
+import { BreedEntity } from "../breed.entity";
 
 @Entity({ schema: ns, name: "breed_history" })
 export class BreedHistoryEntity extends IdDateBaseEntity implements IBreedHistory {

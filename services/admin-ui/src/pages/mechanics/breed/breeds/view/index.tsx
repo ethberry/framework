@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Paper, Grid, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Paper, Grid, Link, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { BigNumber } from "ethers";
 
@@ -17,7 +17,7 @@ export interface IBreedItemViewDialogProps {
 
 export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { tokenId, genes } = initialValues;
+  const { tokenId, genes, childs } = initialValues;
 
   const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
 
@@ -30,6 +30,8 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
   const handleConfirm = (): void => {
     onConfirm();
   };
+  const domain = window.location.host;
+  const proto = window.location.protocol;
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
@@ -40,7 +42,32 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.tokenId" />
               </TableCell>
-              <TableCell align="right">{tokenId}</TableCell>
+              <TableCell align="right">
+                <Link target={"_blank"} href={`${proto}//${domain}/erc721-tokens/${tokenId || 0}`}>
+                  {tokenId}
+                </Link>
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.parents" />
+              </TableCell>
+              <TableCell align="center">
+                <Link
+                  target={"_blank"}
+                  href={`${proto}//${domain}/erc721-tokens/${childs ? childs[0]?.matron.tokenId : 0}`}
+                >
+                  {childs ? childs[0]?.matron.tokenId : 0}
+                </Link>
+              </TableCell>
+              <TableCell align="right">
+                <Link
+                  target={"_blank"}
+                  href={`${proto}//${domain}/erc721-tokens/${childs ? childs[0]?.sire.tokenId : 0}`}
+                >
+                  {childs ? childs[0]?.sire.tokenId : 0}
+                </Link>
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
