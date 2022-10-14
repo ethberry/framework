@@ -4,7 +4,7 @@ import { IBreed } from "./breed";
 
 export interface IBreedHistory extends IIdDateBase {
   account: string;
-  childId?: number | null;
+  childId: number | null;
   child?: IBreed;
   matronId: number;
   matron: IBreed;

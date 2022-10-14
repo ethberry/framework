@@ -13,6 +13,8 @@ export * from "./mechanics/claim/search";
 export * from "./mechanics/craft/search";
 export * from "./mechanics/lottery/search";
 export * from "./mechanics/lottery/leaderboard";
+export * from "./mechanics/breed/search";
+export * from "./mechanics/breed/leaderboard";
 export * from "./mechanics/mysterybox/search";
 export * from "./mechanics/mysterybox/deploy";
 export * from "./mechanics/referral/search";
