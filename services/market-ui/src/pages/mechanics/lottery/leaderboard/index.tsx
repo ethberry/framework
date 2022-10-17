@@ -8,7 +8,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import type { ILotteryLeaderboard } from "@framework/types";
 
 import { formatEther } from "../../../../utils/money";
-import { ScannerLink } from "../../../../components/common/scanner-link";
+import { AddressLink } from "../../../../components/common/address-link";
 
 export const LotteryLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
@@ -35,7 +35,7 @@ export const LotteryLeaderboard: FC = () => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} type={"address"} />
+          <AddressLink address={params.value} />
         );
       },
       flex: 2

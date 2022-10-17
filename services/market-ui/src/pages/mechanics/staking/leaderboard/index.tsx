@@ -10,7 +10,7 @@ import type { IStakingLeaderboard, IStakingLeaderboardSearchDto } from "@framewo
 import { StakingLeaderboardRank, TokenType } from "@framework/types";
 
 import { StakingLeaderboardSearchForm } from "./form";
-import { ScannerLink } from "../../../../components/common/scanner-link";
+import { AddressLink } from "../../../../components/common/address-link";
 import { formatEther } from "../../../../utils/money";
 
 export const StakingLeaderboard: FC = () => {
@@ -68,7 +68,7 @@ export const StakingLeaderboard: FC = () => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} type={"address"} />
+          <AddressLink address={params.value} />
         );
       },
       flex: 2

@@ -40,8 +40,12 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
     <Grid container>
       {Object.entries(result).map(([key, value], i) => (
         <Grid key={i} container>
-          <Grid xs={6}>{key}</Grid>
-          <Grid xs={6}>{value}</Grid>
+          <Grid xs={6} item>
+            {key}
+          </Grid>
+          <Grid xs={6} item>
+            {value}
+          </Grid>
         </Grid>
       ))}
     </Grid>

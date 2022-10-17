@@ -19,14 +19,7 @@ interface ITokenSearchFormProps {
 export const TokenSearchForm: FC<ITokenSearchFormProps> = props => {
   const { onSubmit, initialValues, open, contractType, contractModule } = props;
 
-  const {
-    query = "",
-    tokenStatus = [TokenStatus.MINTED],
-    contractIds = [],
-    templateIds = [],
-    tokenId = "",
-    attributes,
-  } = initialValues;
+  const { query, tokenStatus, contractIds, templateIds, tokenId, attributes } = initialValues;
   const fixedValues = {
     query,
     tokenStatus,

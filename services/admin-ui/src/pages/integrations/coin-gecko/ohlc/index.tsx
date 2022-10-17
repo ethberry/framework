@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 
@@ -12,7 +12,6 @@ export const CoinGeckoOhlc: FC = () => {
 
       <PageHeader message="pages.coin-gecko.ohlc" />
 
-      <Typography>Here be dragons</Typography>
       <OhlcChart />
     </Grid>
   );

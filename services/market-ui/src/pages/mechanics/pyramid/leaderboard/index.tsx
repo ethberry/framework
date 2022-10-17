@@ -10,7 +10,7 @@ import type { IPyramidLeaderboard, IPyramidLeaderboardSearchDto } from "@framewo
 import { PyramidLeaderboardRank, TokenType } from "@framework/types";
 
 import { PyramidLeaderboardSearchForm } from "./form";
-import { ScannerLink } from "../../../../components/common/scanner-link";
+import { AddressLink } from "../../../../components/common/address-link";
 import { formatEther } from "../../../../utils/money";
 
 export const PyramidLeaderboard: FC = () => {
@@ -68,7 +68,7 @@ export const PyramidLeaderboard: FC = () => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} type={"address"} />
+          <AddressLink address={params.value} />
         );
       },
       flex: 2

@@ -7,6 +7,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { IToken } from "@framework/types";
 
 import { TokenAttributesView } from "../../../attributes";
+import { AddressLink } from "../../../../../components/common/address-link";
 
 export interface IErc998ViewDialogProps {
   open: boolean;
@@ -61,7 +62,9 @@ export const Erc998TokenViewDialog: FC<IErc998ViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
-              <TableCell align="right">{balance?.slice(-1)[0]?.account}</TableCell>
+              <TableCell align="right">
+                <AddressLink address={balance?.slice(-1)[0]?.account} />
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

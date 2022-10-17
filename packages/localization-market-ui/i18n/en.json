@@ -445,7 +445,7 @@
       },
       "template": {
         "price": "Price: {amount}",
-        "title": "ERC721 Template: {title}"
+        "title": "ERC1155 Template: {title}"
       },
       "templates": {
         "title": "ERC1155 Templates"

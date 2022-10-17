@@ -14,7 +14,7 @@ import { FilterList, Visibility } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
-import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
+import { ITemplate, IToken, ITokenSearchDto, ModuleType, TokenStatus, TokenType } from "@framework/types";
 
 import { Erc998TokenViewDialog } from "./view";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
@@ -39,6 +39,13 @@ export const Erc998Token: FC = () => {
     empty: {
       template: {} as ITemplate,
       attributes: "{}",
+    },
+    search: {
+      tokenStatus: [TokenStatus.MINTED],
+      contractIds: [],
+      templateIds: [],
+      tokenId: "",
+      attributes: {},
     },
   });
 

@@ -8,7 +8,8 @@ import { ExchangeType, IAsset, IContractHistory, IToken, IBreed } from "@framewo
 
 import { sorter } from "../../../utils/sorter";
 import { formatPrice } from "../../../utils/money";
-import { ScannerLink, TxLink } from "../scanner-link";
+import { AddressLink } from "../address-link";
+import { TxHashLink } from "../tx-hash-link";
 
 import { useStyles } from "./styles";
 
@@ -150,7 +151,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} type={"address"} />
+          <AddressLink address={params.value} />
         );
       },
       flex: 2
@@ -161,7 +162,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} type={"address"} />
+          <AddressLink address={params.value} />
         );
       },
       flex: 2
@@ -179,7 +180,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <TxLink address={params.value} />
+          <TxHashLink hash={params.value} />
         );
       },
       flex: 1

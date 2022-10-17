@@ -13,7 +13,7 @@ import { StakingDepositStatus, TokenType } from "@framework/types";
 
 import { StakingReportSearchForm } from "./form";
 import { formatPrice } from "../../../../utils/money";
-import { ScannerLink } from "../../../../components/common/scanner-link";
+import { AddressLink } from "../../../../components/common/address-link";
 
 export const StakingReport: FC = () => {
   const {
@@ -75,7 +75,7 @@ export const StakingReport: FC = () => {
       sortable: true,
       renderCell: (params: GridCellParams) => {
         return (
-          <ScannerLink address={params.value} />
+          <AddressLink address={params.value} />
         );
       },
       flex: 2

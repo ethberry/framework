@@ -7,7 +7,7 @@ import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import type { IVesting } from "@framework/types";
 
-import { ScannerLink } from "../../../../../components/common/scanner-link";
+import { AddressLink } from "../../../../../components/common/address-link";
 
 export interface IVestingViewDialogProps {
   open: boolean;
@@ -38,7 +38,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.address" />
               </TableCell>
               <TableCell align="right">
-                <ScannerLink address={address} />
+                <AddressLink address={address} />
               </TableCell>
             </TableRow>
             <TableRow>
@@ -46,7 +46,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.account" />
               </TableCell>
               <TableCell align="right">
-                <ScannerLink address={account} />
+                <AddressLink address={account} />
               </TableCell>
             </TableRow>
             <TableRow>
