@@ -10,6 +10,7 @@ import { DropModule } from "./drop/drop.module";
 import { LotteryModule } from "./lottery/lottery.module";
 import { PyramidModule } from "./pyramid/pyramid.module";
 import { WaitlistModule } from "./waitlist/waitlist.module";
+import { BreedModule } from "./breed/breed.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { WaitlistModule } from "./waitlist/waitlist.module";
     LotteryModule,
     PyramidModule,
     WaitlistModule,
+    BreedModule,
   ],
 })
 export class MechanicsModule {}

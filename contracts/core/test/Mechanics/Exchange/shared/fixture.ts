@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 
 import { Exchange } from "../../../../typechain-types";
 import { amount, baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../../../constants";
-import { wrapManyToManySignature, wrapOneToManySignature } from "./utils";
+import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./utils";
 
 export async function deployExchangeFixture() {
   const [owner] = await ethers.getSigners();
@@ -12,11 +12,13 @@ export async function deployExchangeFixture() {
 
   const network = await ethers.provider.getNetwork();
 
+  const generateOneToOneSignature = wrapOneToOneSignature(network, exchangeInstance, owner);
   const generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, owner);
   const generateManyToManySignature = wrapManyToManySignature(network, exchangeInstance, owner);
 
   return {
     contractInstance: exchangeInstance,
+    generateOneToOneSignature,
     generateOneToManySignature,
     generateManyToManySignature,
   };

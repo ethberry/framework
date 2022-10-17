@@ -10,6 +10,7 @@
     "@ethersproject/contracts": "5.7.0",
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
+    "@framework/genes": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "2.2.2",
     "@gemunion/constants": "0.8.7",

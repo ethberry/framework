@@ -32,6 +32,8 @@ import { PyramidDepositEntity } from "./blockchain/mechanics/pyramid/deposit/dep
 import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -69,6 +71,8 @@ const config: PostgresConnectionOptions = {
     PyramidRulesEntity,
     WaitlistListEntity,
     WaitlistItemEntity,
+    BreedEntity,
+    BreedHistoryEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

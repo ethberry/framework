@@ -17,17 +17,18 @@ import "../../ERC721/interfaces/IERC721Upgradeable.sol";
 
 abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessControl, Pausable {
 
-  uint64 public _pregnancyTimeLimit = 0;
+  uint64 public _pregnancyTimeLimit = 0; // first pregnancy(cooldown) time
   uint64 public _pregnancyCountLimit = 0;
+  uint64 public _pregnancyMaxTime = 0;
 
   struct Pregnancy {
-    uint256 timestamp;
-    uint64 count;
+    uint64 time; // last breeding timestamp
+    uint64 count; // breeds count
   }
 
-  mapping(address => mapping(uint256 => Pregnancy)) private _breeds;
+  mapping(address /* item's contract */ => mapping(uint256 /* item's tokenId */ => Pregnancy)) private _breeds;
 
-  event Breed(address from, uint256 externalId, Asset item, Asset price);
+  event Breed(address from, uint256 externalId, Asset matron, Asset sire);
 
   function breed(
     Params memory params,
@@ -43,10 +44,10 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
 
     // TODO approved
     address ownerOf1 = IERC721(item.token).ownerOf(item.tokenId);
-    require(ownerOf1 == account, "Exchange: Wrong signer");
+    require(ownerOf1 == account, "Exchange: Not an owner");
 
-    address ownerOf2 = IERC721(price.token).ownerOf(item.tokenId);
-    require(ownerOf2 == account, "Exchange: Wrong signer");
+    address ownerOf2 = IERC721(price.token).ownerOf(price.tokenId);
+    require(ownerOf2 == account, "Exchange: Not an owner");
 
     pregnancyCheckup(item, price);
 
@@ -55,33 +56,38 @@ abstract contract ExchangeBreed is SignatureValidator, ExchangeUtils, AccessCont
     IERC721Random(item.token).mintRandom(account, params.externalId);
   }
 
-  function pregnancyCheckup(Asset memory item, Asset memory price) internal {
-    // Check pregnancy count
-    uint64 breedCountItem = _breeds[item.token][item.tokenId].count;
-    uint64 breedCountPrice = _breeds[price.token][price.tokenId].count;
+  function pregnancyCheckup(Asset memory matron, Asset memory sire) internal {
+    Pregnancy storage pregnancyM = _breeds[matron.token][matron.tokenId];
+    Pregnancy storage pregnancyS = _breeds[sire.token][sire.tokenId];
 
-    require(breedCountItem >= _pregnancyCountLimit, "Exchange: pregnancy count exceeded item");
-    require(breedCountPrice >= _pregnancyCountLimit, "Exchange: pregnancy count exceeded price");
+    // Check pregnancy count
+    if (_pregnancyCountLimit > 0) {
+      require(pregnancyM.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
+      require(pregnancyS.count < _pregnancyCountLimit, "Exchange: pregnancy count exceeded");
+    }
 
     // Check pregnancy time
-    uint64 breedTime = uint64(block.timestamp);
+    uint64 timeNow = uint64(block.timestamp);
 
-    uint256 breedTimeItem = _breeds[item.token][item.tokenId].timestamp;
-    uint256 breedTimePrice = _breeds[price.token][price.tokenId].timestamp;
+    require(pregnancyM.count <= 4294967295 && pregnancyS.count <= 4294967295); // just in case
 
-    require(breedTime - breedTimeItem > _pregnancyTimeLimit, "Exchange: pregnancy time limit item");
-    require(breedTime - breedTimePrice > _pregnancyTimeLimit, "Exchange: pregnancy time limit price");
+    uint64 timeLimitM = pregnancyM.count > 13 ? _pregnancyMaxTime : uint64(_pregnancyTimeLimit * (2 ** pregnancyM.count));
+    uint64 timeLimitS = pregnancyS.count > 13 ? _pregnancyMaxTime : uint64(_pregnancyTimeLimit * (2 ** pregnancyS.count));
 
+    if (pregnancyM.count > 0 || pregnancyS.count > 0) {
+      require(timeNow - pregnancyM.time > timeLimitM, "Exchange: pregnancy time limit");
+      require(timeNow - pregnancyS.time > timeLimitS, "Exchange: pregnancy time limit");
+    }
     // Update Pregnancy
-    _breeds[item.token][item.tokenId].count += 1;
-    _breeds[price.token][price.tokenId].count += 1;
-
-    _breeds[item.token][item.tokenId].timestamp = breedTime;
-    _breeds[price.token][price.tokenId].timestamp = breedTime;
+    pregnancyM.count += 1;
+    pregnancyM.time = timeNow;
+    pregnancyS.count += 1;
+    pregnancyS.time = timeNow;
   }
 
-  function setPregnancyLimits(uint64 timeLimit, uint64 countLimit) public onlyRole(DEFAULT_ADMIN_ROLE) {
-    _pregnancyTimeLimit = timeLimit;
-    _pregnancyCountLimit = countLimit;
+  function setPregnancyLimits(uint64 count, uint64 time, uint64 maxTime) public onlyRole(DEFAULT_ADMIN_ROLE) {
+    _pregnancyCountLimit = count;
+    _pregnancyTimeLimit = time;
+    _pregnancyMaxTime = maxTime;
   }
 }

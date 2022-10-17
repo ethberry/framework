@@ -366,7 +366,9 @@
       }
     },
     "breed": {
-      "title": "Breed"
+      "title": "Breed",
+      "matron": "Matron",
+      "sire": "Sire"
     },
     "claim": {
       "connect": "Please connect your wallet first",
@@ -472,6 +474,7 @@
       },
       "token": {
         "genes": "Genes",
+        "genesis": "Genesis",
         "level": "Level: {GRADE}",
         "price": "Base price: {amount}",
         "title": "ERC721 Token: {title}"

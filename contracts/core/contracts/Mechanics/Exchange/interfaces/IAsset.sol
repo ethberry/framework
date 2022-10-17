@@ -28,7 +28,7 @@ struct Asset {
 
 struct Params {
   bytes32 nonce;
+  address referrer;
   uint256 externalId;
   uint256 expiresAt;
-  address referrer;
 }

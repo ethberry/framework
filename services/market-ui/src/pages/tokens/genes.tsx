@@ -12,19 +12,23 @@ export interface ITokenAttributesView {
 export const TokenAttributesView: FC<ITokenAttributesView> = props => {
   const { attributes } = props;
 
-  const result = Object.entries(decodeGenes(BigNumber.from(attributes[TokenAttributes.GENES]))).reduce(
+  const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma", "sire", "matron"];
+
+  const result = Object.entries(decodeGenes(BigNumber.from(attributes[TokenAttributes.GENES]), DND)).reduce(
     (memo, [key, value]) => Object.assign(memo, { [key]: value }),
     {} as Record<string, any>,
   );
 
   return (
     <Grid container>
-      {Object.entries(result).map(([key, value], i) => (
-        <Grid key={i} container>
-          <Grid xs={6}>{key}</Grid>
-          <Grid xs={6}>{value}</Grid>
-        </Grid>
-      ))}
+      {Object.entries(result)
+        .slice(0, 6)
+        .map(([key, value], i) => (
+          <Grid key={i} container>
+            <Grid xs={6}>{key}</Grid>
+            <Grid xs={6}>{value}</Grid>
+          </Grid>
+        ))}
     </Grid>
   );
 };

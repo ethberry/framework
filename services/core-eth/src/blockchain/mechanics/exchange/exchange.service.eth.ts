@@ -13,6 +13,7 @@ import {
   IExchangeMysteryEvent,
   IExchangePurchaseEvent,
   TExchangeEventData,
+  IExchangeBreedEvent,
 } from "@framework/types";
 
 import { ExchangeHistoryService } from "./history/exchange-history.service";
@@ -23,6 +24,7 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { ExchangeHistoryEntity } from "./history/exchange-history.entity";
 import { GradeService } from "../grade/grade.service";
+import { BreedServiceEth } from "../breed/breed.service.eth";
 
 @Injectable()
 export class ExchangeServiceEth {
@@ -36,6 +38,7 @@ export class ExchangeServiceEth {
     private readonly templateService: TemplateService,
     private readonly exchangeHistoryService: ExchangeHistoryService,
     private readonly assetService: AssetService,
+    private readonly breedServiceEth: BreedServiceEth,
   ) {}
 
   public async purchase(event: ILogEvent<IExchangePurchaseEvent>, context: Log): Promise<void> {
@@ -72,6 +75,17 @@ export class ExchangeServiceEth {
     } = event;
     const history = await this.updateHistory(event, context);
     await this.saveAssetHistory(history, items, price);
+  }
+
+  public async breed(event: ILogEvent<IExchangeBreedEvent>, context: Log): Promise<void> {
+    const {
+      args: { matron, sire },
+    } = event;
+    const history = await this.updateHistory(event, context);
+
+    await this.saveAssetHistory(history, [matron], [sire]);
+
+    await this.breedServiceEth.breed(event, history.id);
   }
 
   public async log(event: ILogEvent<IExchangeGradeEvent | IExchangeMysteryEvent>, context: Log): Promise<void> {

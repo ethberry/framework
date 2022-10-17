@@ -10,10 +10,10 @@ import { UserEntity } from "../../../user/user.entity";
 @Public()
 @Controller("/breed")
 export class BreedController {
-  constructor(private readonly gradeService: BreedService) {}
+  constructor(private readonly breedService: BreedService) {}
 
   @Post("/sign")
   public sign(@Body() dto: SignBreedDto, @User() userEntity: UserEntity): Promise<IServerSignature> {
-    return this.gradeService.sign(dto, userEntity);
+    return this.breedService.sign(dto, userEntity);
   }
 }

@@ -1,7 +1,10 @@
 import { FC, Fragment } from "react";
+import { FormattedMessage } from "react-intl";
+
 import { Web3ContextType } from "@web3-react/core";
-import { Grid } from "@mui/material";
-import { constants, Contract, utils } from "ethers";
+import { Grid, Typography } from "@mui/material";
+
+import { constants, Contract, utils, BigNumber } from "ethers";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
@@ -16,6 +19,7 @@ import { validationSchema } from "./validation";
 import { TokenInput } from "./token-input";
 import { ContractInput } from "./contract-input";
 import { TemplateInput } from "./template-input";
+import { useStyles } from "./styles";
 
 export interface IBreedDto {
   tokenType: TokenType;
@@ -40,6 +44,8 @@ export interface IBreedDto {
 }
 
 export const Breed: FC = () => {
+  const classes = useStyles();
+
   const metaFnWithSign = useServerSignature(
     (values: IBreedDto, web3Context: Web3ContextType, sign: IServerSignature) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
@@ -47,18 +53,18 @@ export const Breed: FC = () => {
       return contract.breed(
         {
           nonce: utils.arrayify(sign.nonce),
-          externalId: 0,
+          externalId: BigNumber.from(sign.bytecode),
           expiresAt: sign.expiresAt,
           referrer: constants.AddressZero,
         },
         {
-          tokenType: values.tokenType,
+          tokenType: Object.keys(TokenType).indexOf(values.tokenType),
           token: values.mom.address,
           tokenId: values.mom.token.tokenId,
           amount: 1,
         },
         {
-          tokenType: values.tokenType,
+          tokenType: Object.keys(TokenType).indexOf(values.tokenType),
           token: values.dad.address,
           tokenId: values.dad.token.tokenId,
           amount: 1,
@@ -118,6 +124,16 @@ export const Breed: FC = () => {
         testId="BreedForm"
       >
         <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <Typography variant="h6" className={classes.select}>
+              <FormattedMessage id="pages.breed.matron" />
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h6" className={classes.select}>
+              <FormattedMessage id="pages.breed.sire" />
+            </Typography>
+          </Grid>
           <Grid item xs={12}>
             <SelectInput
               name="tokenType"

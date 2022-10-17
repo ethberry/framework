@@ -36,6 +36,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               ReferralProgramEventType.ReferralReward,
               ContractEventType.Paused,
               ContractEventType.Unpaused,
+              // MODULE:BREEDING
+              ExchangeEventType.Breed,
             ],
           },
           block: {

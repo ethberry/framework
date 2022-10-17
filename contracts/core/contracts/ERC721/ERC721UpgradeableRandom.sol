@@ -13,9 +13,10 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC721Upgradeable.sol";
 import "./interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
-import "./test/ERC721ChainLinkGoerli.sol";
+import "./test/ERC721ChainLinkGoerli.sol"; // TODO should import from @gemunion/contracts
 
 contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkGoerli, ERC721Upgradeable, Rarity {
+  event RandomRequest(bytes32 requestId);
   using Counters for Counters.Counter;
 
   struct Request {

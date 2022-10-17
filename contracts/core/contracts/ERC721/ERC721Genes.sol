@@ -9,18 +9,20 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 //import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
+import "./test/ERC721ChainLinkGoerli.sol"; // TODO should import from @gemunion/contracts
 
 import "./ERC721Simple.sol";
 import "./interfaces/IERC721Random.sol";
 import "../Mechanics/Breed/Breed.sol";
-import "./test/ERC721ChainLinkGoerli.sol";
 
 contract ERC721Genes is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Breed {
   using Counters for Counters.Counter;
 
   struct Request {
     address account;
-    uint256 templateId;
+    uint32 templateId;
+    uint32 matronId;
+    uint32 sireId;
   }
 
   mapping(bytes32 => Request) internal _queue;
@@ -38,7 +40,10 @@ contract ERC721Genes is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Bree
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721: wrong type");
-    _queue[getRandomNumber()] = Request(account, templateId);
+
+    (uint256 childId, uint256 matronId, uint256 sireId) = decodeData(templateId);
+
+    _queue[getRandomNumber()] = Request(account, uint32(childId), uint32(matronId), uint32(sireId));
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
@@ -49,9 +54,27 @@ contract ERC721Genes is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Bree
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
     upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    upsertRecordField(tokenId, GENES, randomness);
+    uint256 genes = encodeData(request, randomness);
+    upsertRecordField(tokenId, GENES, genes);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);
+  }
+
+
+  function decodeData(uint256 externalId)
+  internal pure
+  returns(uint256 childId, uint256 matronId, uint256 sireId) {
+    childId = uint256(uint32(externalId));
+    matronId = uint256(uint32(externalId>>32));
+    sireId = uint256(uint32(externalId>>64));
+  }
+
+  function encodeData(Request memory req, uint256 randomness)
+  internal pure
+  returns(uint256 genes) {
+    genes |= uint32(req.matronId);
+    genes |= uint32(req.sireId)<<32;
+    genes |= uint192(randomness)<<64;
   }
 }

@@ -23,6 +23,7 @@ import { CoinGecko } from "./integrations/coin-gecko";
 import { CoinMarketCap } from "./integrations/coin-market-cap";
 import { Marketplace } from "./integrations/marketplace";
 import { Pyramid } from "./mechanics/pyramid";
+import { Breed } from "./mechanics/breed";
 import { Waitlist } from "./mechanics/waitlist";
 
 export const Dashboard: FC = () => {
@@ -51,6 +52,7 @@ export const Dashboard: FC = () => {
           <Lottery />
           <Staking />
           <Pyramid />
+          <Breed />
         </Grid>
         <Grid item xs={4}>
           <ChainLink />

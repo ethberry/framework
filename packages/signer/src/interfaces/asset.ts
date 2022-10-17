@@ -7,7 +7,7 @@ export interface IAsset {
 
 export interface IParams {
   nonce: Uint8Array;
-  externalId: number;
+  externalId: number | string;
   expiresAt: number;
   referrer: string;
 }

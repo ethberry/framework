@@ -27,6 +27,7 @@
     }
   },
   "dialogs": {
+    "breedLimit": "Set breed limits",
     "blacklist": "Add to blacklist",
     "claim": "Claim",
     "confirmation": "Please confirm",
@@ -249,6 +250,9 @@
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
       "cap": "Cap",
+      "count": "Max breeds count",
+      "time": "Cooldown time",
+      "maxTime": "Max Cooldown",
       "chainId": "Chain",
       "child": "Child",
       "childId": "Child",
@@ -276,6 +280,8 @@
       "duration": "Duration",
       "email": "Email",
       "endTimestamp": "End date",
+      "genes": "Genes",
+      "parents": "Parents",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -285,6 +291,8 @@
       "language": "Language",
       "listId": "List ID",
       "maxStakes": "Max Stakes",
+      "matron": "Matron",
+      "sire": "Sire",
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
@@ -338,6 +346,9 @@
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
+      "count": "0",
+      "time": "0",
+      "maxTime": "0",
       "childId": "Contract",
       "childIds": "Contract",
       "comment": "Fraud",
@@ -419,6 +430,19 @@
   "pages": {
     "blockchain": {
       "title": "Blockchain Settings"
+    },
+    "breed": {
+      "breeds": {
+        "title": "Breeds",
+        "start": "Set limits",
+        "end": "End Round",
+        "wait": "Awaiting round to end"
+      },
+      "history": {
+        "title": "Breed history"
+      },
+      "title": "Breed",
+      "limit": "Set limits"
     },
     "chain-link": {
       "fund": "Fund",
