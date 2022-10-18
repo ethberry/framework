@@ -2,7 +2,9 @@ import { FC, Fragment, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import * as Plot from "@observablehq/plot";
 
+import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useApiCall } from "@gemunion/react-hooks";
+
 import { BaseCoins, TargetCoins } from "../../rates/enums";
 
 interface IOhlcResult {
@@ -58,66 +60,66 @@ export const OhlcChart: FC = () => {
       void fn();
     }
 
-    if (isLoading) {
-      if (chartRef.current) {
-        const width = chartRef.current.clientWidth;
-        const height = 400;
+    if (rows.length && chartRef.current) {
+      const width = chartRef.current.clientWidth;
+      const height = 400;
 
-        const chart = Plot.plot({
-          grid: true,
-          height,
-          width,
-          y: {
-            label: "↑ Stock price ($)",
-            line: true,
-            nice: true,
-          },
-          x: {
-            type: "utc",
-            line: true,
-            nice: true,
-          },
-          color: {
-            domain: [-1, 0, 1],
-            range: ["#e41a1c", "#000000", "#4daf4a"],
-          },
-          marks: [
-            Plot.ruleY(
-              rows,
-              Plot.selectFirst({
-                y: (d: IOhlcResult) => d.open,
-                stroke: "grey",
-                strokeDasharray: "3,2",
-              }),
-            ),
-            Plot.ruleX(rows, {
-              x: "date",
-              y1: "low",
-              y2: "high",
+      const chart = Plot.plot({
+        grid: true,
+        height,
+        width,
+        y: {
+          label: "↑ Stock price ($)",
+          line: true,
+          nice: true,
+        },
+        x: {
+          type: "utc",
+          line: true,
+          nice: true,
+        },
+        color: {
+          domain: [-1, 0, 1],
+          range: ["#e41a1c", "#000000", "#4daf4a"],
+        },
+        marks: [
+          Plot.ruleY(
+            rows,
+            Plot.selectFirst({
+              y: (d: IOhlcResult) => d.open,
+              stroke: "grey",
+              strokeDasharray: "3,2",
             }),
-            Plot.ruleX(rows, {
-              x: "date",
-              y1: "open",
-              y2: "close",
-              stroke: (d: IOhlcResult) => Math.sign(d.close - d.open),
-              strokeWidth: 4,
-              strokeLinecap: "round",
-            }),
-          ],
-        });
+          ),
+          Plot.ruleX(rows, {
+            x: "date",
+            y1: "low",
+            y2: "high",
+          }),
+          Plot.ruleX(rows, {
+            x: "date",
+            y1: "open",
+            y2: "close",
+            stroke: (d: IOhlcResult) => Math.sign(d.close - d.open),
+            strokeWidth: 4,
+            strokeLinecap: "round",
+          }),
+        ],
+      });
 
-        while (chartRef.current.lastChild) {
-          chartRef.current.removeChild(chartRef.current.lastChild);
-        }
-
-        chartRef.current.append(chart);
+      while (chartRef.current.lastChild) {
+        chartRef.current.removeChild(chartRef.current.lastChild);
       }
+
+      chartRef.current.append(chart);
     }
   }, [chartRef.current, rows]);
 
   return (
     <Fragment>
-      <Box mt={4} width="100%" ref={chartRef} overflow="visible" />
+      <ProgressOverlay isLoading={isLoading}>
+        <Box mt={4} width="100%" ref={chartRef} overflow="visible" />
+      </ProgressOverlay>
     </Fragment>
   );
 };
