@@ -23,8 +23,8 @@ export const useStyles = makeStyles<Theme>(
         position: "absolute",
         "& .react-multi-carousel-dot": {
           "& button": {
-            pointerEvents: "none",
-            cursor: "none",
+            pointerEvents: "all",
+            cursor: "pointer",
             width: "100px",
             height: "6px",
             borderRadius: "3px",
@@ -44,7 +44,7 @@ export const useStyles = makeStyles<Theme>(
             "& button": {
               "&:before": {
                 width: "100%",
-                transition: "width 3s linear",
+                transition: "width 5s linear",
               },
             },
           },
