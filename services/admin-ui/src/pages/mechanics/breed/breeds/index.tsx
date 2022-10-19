@@ -31,8 +31,10 @@ export const BreedBreeds: FC = () => {
     <Grid>
       <Breadcrumbs path={["dashboard", "breed", "breed.breeds"]} />
 
-      <PageHeader message="pages.breed.breeds.title" />
-      <BreedLimitButton />
+      <PageHeader message="pages.breed.breeds.title">
+        <BreedLimitButton />
+      </PageHeader>
+
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((breed, i) => (
