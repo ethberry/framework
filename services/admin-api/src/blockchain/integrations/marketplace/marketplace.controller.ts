@@ -1,16 +1,16 @@
 import { Controller, Get, Query, Res, UseInterceptors } from "@nestjs/common";
-import { ApiProduces } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiProduces } from "@nestjs/swagger";
 import { Response } from "express";
 import archiver from "archiver";
 
-import { PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
+import { PaginationInterceptor, User } from "@gemunion/nest-js-utils";
 
 import { MarketplaceService } from "./marketplace.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { MarketplaceReportSearchDto, MarketplaceSupplySearchDto } from "./dto";
 import { UserEntity } from "../../../user/user.entity";
 
-@Public()
+@ApiBearerAuth()
 @Controller("/marketplace/report")
 export class MarketplaceController {
   constructor(private readonly marketplaceService: MarketplaceService) {}

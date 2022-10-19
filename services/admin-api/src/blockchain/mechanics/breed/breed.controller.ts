@@ -1,12 +1,13 @@
 import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@nestjs/common";
-import { NotFoundInterceptor, PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
+import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 import { PaginationDto } from "@gemunion/collection";
 
 import { BreedService } from "./breed.service";
 import { BreedEntity } from "./breed.entity";
 
-@Public()
+@ApiBearerAuth()
 @Controller("/breed/breeds")
 export class BreedController {
   constructor(private readonly breedService: BreedService) {}
