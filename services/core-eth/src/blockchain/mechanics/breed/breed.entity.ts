@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IBreed } from "@framework/types";

@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository, IsNull } from "typeorm";
+import { DeepPartial, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
 import { BreedHistoryEntity } from "./history.entity";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import type { IPaginationDto } from "@gemunion/types-collection";
-import { BreedHistoryEntity } from "./breed-history.entity";
+import { BreedHistoryEntity } from "./history.entity";
 
 @Injectable()
 export class BreedHistoryService {

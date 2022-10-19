@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { ConfigService } from "@nestjs/config";
-import { Contract, Wallet, providers } from "ethers";
+import { Contract, providers, Wallet } from "ethers";
 
-import { ETHERS_SIGNER, ETHERS_RPC } from "@gemunion/nestjs-ethers";
+import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
 import { blockAwait } from "../../../../common/utils";
 

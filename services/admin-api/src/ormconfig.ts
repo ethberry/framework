@@ -38,6 +38,8 @@ import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.e
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
+import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
+import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
 
 import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
 import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
@@ -196,8 +198,6 @@ import { SeedWaitlistItemAt1663047650310 } from "./migrations/1663047650310-seed
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { CreateBreed1663047650400 } from "./migrations/1663047650400-create-breed";
 import { CreateBreedHistory1663047650410 } from "./migrations/1663047650410-create-breed-history";
-import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
-import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/breed-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

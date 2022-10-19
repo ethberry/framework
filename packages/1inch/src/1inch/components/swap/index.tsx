@@ -9,7 +9,7 @@ import { formatUnits } from "ethers/lib/utils";
 
 import { useWallet } from "@gemunion/provider-wallet";
 
-import { GovernanceTokenAddress, stableCoinSymbol, useOneInch, IToken, SwapStatus } from "../../provider";
+import { GovernanceTokenAddress, IToken, stableCoinSymbol, SwapStatus, useOneInch } from "../../provider";
 import { useAllTokens } from "../../hooks/useAllTokens";
 import { useGasPrice } from "../../hooks/useGasPrice";
 import { useQuote } from "../../hooks/useQuote";

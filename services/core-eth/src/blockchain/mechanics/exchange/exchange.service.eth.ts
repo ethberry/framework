@@ -6,6 +6,7 @@ import {
   ClaimStatus,
   ExchangeEventType,
   ExchangeType,
+  IExchangeBreedEvent,
   IExchangeClaimEvent,
   IExchangeCraftEvent,
   IExchangeGradeEvent,
@@ -13,7 +14,6 @@ import {
   IExchangeMysteryEvent,
   IExchangePurchaseEvent,
   TExchangeEventData,
-  IExchangeBreedEvent,
 } from "@framework/types";
 
 import { ExchangeHistoryService } from "./history/exchange-history.service";

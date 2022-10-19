@@ -1,9 +1,9 @@
 import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { BreedHistoryService } from "./breed-history.service";
-import { BreedHistoryController } from "./breed-history.controller";
-import { BreedHistoryEntity } from "./breed-history.entity";
+import { BreedHistoryService } from "./history.service";
+import { BreedHistoryController } from "./history.controller";
+import { BreedHistoryEntity } from "./history.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([BreedHistoryEntity])],

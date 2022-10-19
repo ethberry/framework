@@ -1,4 +1,4 @@
-import { ContractStatus, ContractFeatures, ModuleType, TokenType } from "../../../../entities";
+import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "../../../../entities";
 
 export interface IContractAutocompleteDto {
   contractStatus: Array<ContractStatus>;

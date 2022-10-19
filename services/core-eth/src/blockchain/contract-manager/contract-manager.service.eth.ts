@@ -22,9 +22,10 @@ import {
   ModuleType,
   MysteryContractFeatures,
   PyramidContractFeatures,
-  TContractManagerEventData, TemplateStatus,
+  TContractManagerEventData,
+  TemplateStatus,
   TokenType,
-  VestingContractTemplate
+  VestingContractTemplate,
 } from "@framework/types";
 
 import { ContractManagerHistoryService } from "./history/history.service";

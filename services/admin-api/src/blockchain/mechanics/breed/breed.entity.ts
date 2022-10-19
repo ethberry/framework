@@ -1,10 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne, OneToMany, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { IBreed } from "@framework/types";
 import { ns } from "@framework/constants";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { BreedHistoryEntity } from "./history/breed-history.entity";
+import { BreedHistoryEntity } from "./history/history.entity";
 
 @Entity({ schema: ns, name: "breed" })
 export class BreedEntity extends IdDateBaseEntity implements IBreed {

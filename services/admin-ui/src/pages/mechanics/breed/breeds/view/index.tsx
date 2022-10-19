@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Paper, Grid, Link, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Grid, Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { BigNumber } from "ethers";
 

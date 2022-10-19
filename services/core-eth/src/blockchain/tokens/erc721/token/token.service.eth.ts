@@ -14,7 +14,7 @@ import {
 } from "@framework/types";
 
 import { ABI } from "./log/interfaces";
-import { getMetadata, callRandom } from "../../../../common/utils";
+import { callRandom, getMetadata } from "../../../../common/utils";
 import { ContractHistoryService } from "../../../contract-history/contract-history.service";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
 import { TemplateService } from "../../../hierarchy/template/template.service";

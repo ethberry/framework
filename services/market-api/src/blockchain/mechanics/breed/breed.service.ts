@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from "@nestjs/comm
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { constants, utils, BigNumber } from "ethers";
+import { BigNumber, constants, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-collection";
 import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
@@ -98,8 +98,8 @@ export class BreedService {
         expiresAt,
         referrer: constants.AddressZero,
       },
-      momTokenEntity.token!,
-      dadTokenEntity.token!,
+      momTokenEntity.token,
+      dadTokenEntity.token,
     );
 
     return { nonce: utils.hexlify(nonce), signature, expiresAt, bytecode: encodedExternalId.toString() };

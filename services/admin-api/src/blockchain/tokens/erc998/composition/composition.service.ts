@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { FindOneOptions, FindOptionsWhere, Repository, Brackets } from "typeorm";
+import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { ICompositionSearchDto } from "@framework/types";
 

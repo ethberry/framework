@@ -4,11 +4,11 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 import { PaginationDto } from "@gemunion/collection";
 
-import { BreedHistoryService } from "./breed-history.service";
-import { BreedHistoryEntity } from "./breed-history.entity";
+import { BreedHistoryService } from "./history.service";
+import { BreedHistoryEntity } from "./history.entity";
 
 @ApiBearerAuth()
-@Controller("/breeds/history")
+@Controller("/breed/history")
 export class BreedHistoryController {
   constructor(private readonly breedService: BreedHistoryService) {}
 

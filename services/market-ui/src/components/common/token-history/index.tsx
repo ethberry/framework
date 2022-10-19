@@ -4,7 +4,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { format, parseISO } from "date-fns";
 
-import { ExchangeType, IAsset, IContractHistory, IToken, IBreed } from "@framework/types";
+import { ExchangeType, IAsset, IBreed, IContractHistory, IToken } from "@framework/types";
 
 import { sorter } from "../../../utils/sorter";
 import { formatPrice } from "../../../utils/money";

@@ -1,4 +1,4 @@
-import { Logger, Module, forwardRef } from "@nestjs/common";
+import { forwardRef, Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ethersRpcProvider, ethersSignerProvider } from "@gemunion/nestjs-ethers";

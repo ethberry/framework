@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Web3ContextType } from "@web3-react/core";
 import { Grid, Typography } from "@mui/material";
 
-import { constants, Contract, utils, BigNumber } from "ethers";
+import { BigNumber, constants, Contract, utils } from "ethers";
 
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
