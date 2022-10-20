@@ -20,53 +20,53 @@ export class SeedTokenMysteryAt1563804000360 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        601001,
+        16010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "601001",
+          [TokenAttributes.TEMPLATE_ID]: "160101",
         })}',
         100,
         '1',
         'MINTED',
-        601001,
+        160101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        604001,
+        16040101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "604001",
+          [TokenAttributes.TEMPLATE_ID]: "160401",
         })}',
         100,
         '1',
         'MINTED',
-        604001,
+        160401,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        605001,
+        16050101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "605001",
+          [TokenAttributes.TEMPLATE_ID]: "160501",
         })}',
         100,
         '1',
         'MINTED',
-        605001,
+        160501,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        606001,
+        16060101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "606001",
+          [TokenAttributes.TEMPLATE_ID]: "160601",
         })}',
         100,
         '1',
         'MINTED',
-        606001,
+        160601,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 606001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 1606001001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -11,7 +11,7 @@ export class SeedTemplateLotteryAt1563804000280 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1801001
+        180101
       );
     `);
 
@@ -31,21 +31,21 @@ export class SeedTemplateLotteryAt1563804000280 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        801001,
+        180101,
         'Lottery ticket',
         '${simpleFormatting}',
         '${imageUrl}',
-        1801001,
+        180101,
         0,
         1,
         'ACTIVE',
-        801,
+        1801,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 801001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 180101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -20,90 +20,90 @@ export class SeedTokenErc1155At1563804000350 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        501001,
+        15010101,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        501001,
+        150101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        501002,
+        15010201,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        501002,
+        150102,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        501003,
+        15010301,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        501003,
+        150103,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        501004,
+        15010401,
         '${defaultJSON}',
         100,
         '4',
         'MINTED',
-        501004,
+        150104,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        501005,
+        15010501,
         '${defaultJSON}',
         100,
         '5',
         'MINTED',
-        501005,
+        150105,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        504001,
+        15040101,
         '${defaultJSON}',
         100,
         '1',
         'MINTED',
-        504001,
+        150401,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        504002,
+        15040201,
         '${defaultJSON}',
         100,
         '2',
         'MINTED',
-        504002,
+        150402,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        504003,
+        15040301,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        504003,
+        150403,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        511001,
+        25010101,
         '${defaultJSON}',
         100,
         '3',
         'MINTED',
-        511001,
+        250101,
         '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 511001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 25010101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

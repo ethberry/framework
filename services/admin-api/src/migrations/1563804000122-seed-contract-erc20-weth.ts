@@ -6,14 +6,7 @@ import { imageUrl, ns } from "@framework/constants";
 
 export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const addr: Record<string, string> = {
-      "1": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-      "56": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
-      "137": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
-      "1337": process.env.WETH_ADDR || wallet,
-    };
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
@@ -36,9 +29,63 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        206,
-        '${addr[chainId]}',
-        '${chainId}',
+        1206,
+        '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+        1,
+        'WETH',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Wrapped ETH',
+        'WETH',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        2206,
+        '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+        56,
+        'WETH',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Wrapped ETH',
+        'WETH',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        3206,
+        '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
+        137,
+        'WETH',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Wrapped ETH',
+        'WETH',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        4206,
+        '${process.env.USDT_ADDR || wallet}',
+        1337,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -55,6 +102,8 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 4206, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

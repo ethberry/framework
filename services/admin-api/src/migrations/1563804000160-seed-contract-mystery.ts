@@ -13,8 +13,6 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
     const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
-    // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'MYSTERY';`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -35,7 +33,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        601,
+        1601,
         '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (weapon)',
@@ -53,7 +51,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        602,
+        1602,
         '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (inactive)',
@@ -71,7 +69,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        603,
+        1603,
         '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (new)',
@@ -89,7 +87,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        604,
+        1604,
         '${erc721ContractMysteryboxPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (hero)',
@@ -107,7 +105,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        605,
+        1605,
         '${erc721ContractMysteryboxBlacklistAddress}',
         '${chainId}',
         'MYSTERY BOX (blacklist)',
@@ -125,7 +123,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        606,
+        1606,
         '${erc721ContractMysteryboxSimpleAddress}',
         '${chainId}',
         'MYSTERY BOX (mixed)',
@@ -145,7 +143,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 605, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 1606, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

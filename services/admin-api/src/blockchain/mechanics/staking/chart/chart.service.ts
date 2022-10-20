@@ -21,12 +21,12 @@ export class StakingChartService {
     // prettier-ignore
     const queryString = `
         SELECT
-            COUNT(staking_stakes.id)::INTEGER AS count,
-            date_trunc('day', staking_stakes.created_at) as date
+            COUNT(staking_deposit.id)::INTEGER AS count,
+            date_trunc('day', staking_deposit.created_at) as date
         FROM
-            ${ns}.staking_stakes
+            ${ns}.staking_deposit
                 LEFT JOIN
-            ${ns}.staking_rules ON staking_rules.id = staking_stakes.staking_rule_id
+            ${ns}.staking_rules ON staking_rules.id = staking_deposit.staking_rule_id
                 LEFT JOIN
             ${ns}.asset as asset_deposit ON staking_rules.deposit_id = asset_deposit.id
                 LEFT JOIN
@@ -48,7 +48,7 @@ export class StakingChartService {
           AND
             reward_contract.id = $4
           AND
-            (staking_stakes.created_at >= $5 AND staking_stakes.created_at < $6)
+            (staking_deposit.created_at >= $5 AND staking_deposit.created_at < $6)
         GROUP BY
             date
         ORDER BY

@@ -15,38 +15,38 @@ export class SeedOwnershipAt1658980520110 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        406001, -- hero
-        405001, -- Scroll
+        14060101, -- hero
+        14050101, -- Scroll
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406001, -- hero
-        305001, -- Chain mail
+        14060101, -- hero
+        13050101, -- Chain mail
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406001, -- hero
-        305002, -- Helmet
+        14060101, -- hero
+        13050201, -- Helmet
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406001, -- hero
-        305003, -- Gloves
+        14060101, -- hero
+        13050301, -- Gloves
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406001, -- hero
-        201001, -- space credit
+        14060101, -- hero
+        12010101, -- space credit
         '${constants.WeiPerEther.toString()}',
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406001, -- hero
-        501001, -- gold
+        14060101, -- hero
+        15010101, -- gold
         '1000',
         '${currentDateTime}',
         '${currentDateTime}'

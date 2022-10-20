@@ -45,62 +45,62 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
         asset_id
       ) VALUES (
         'ERC721',
-        601,
-        601001, -- sword mysterybox
+        1601,
+        160101, -- sword mysterybox
         1,
         80611
       ), (
         'NATIVE',
-        101,
-        101001, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80612
       ), (
         'ERC721',
-        601,
-        601001, -- sword mysterybox
+        1601,
+        160101, -- sword mysterybox
         1,
         80621
       ), (
         'ERC20',
-        201,
-        201001, -- space credit
+        1201,
+        120101, -- space credit
         '${constants.WeiPerEther.toString()}',
         80622
       ), (
         'ERC721',
-        601,
-        601001, -- sword mysterybox
+        1601,
+        160101, -- sword mysterybox
         1,
         80631
       ), (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         80632
       ), (
         'ERC721',
-        601,
-        601001, -- sword mysterybox
+        1601,
+        160101, -- sword mysterybox
         1,
         80641
       ), (
         'ERC998',
-        406,
-        406001, -- warrior
+        1406,
+        140601, -- warrior
         1,
         80642
       ), (
         'ERC721',
-        601,
-        601001, -- sword mysterybox
+        1601,
+        160101, -- sword mysterybox
         1,
         80651
       ), (
         'ERC1155',
-        501,
-        501001, -- gold
+        1501,
+        150101, -- gold
         1,
         80652
       );

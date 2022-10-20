@@ -3,19 +3,9 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
 import { imageUrl, ns } from "@framework/constants";
 
-export class SeedTemplateWrapperAt1563804000270 implements MigrationInterface {
+export class SeedTemplateErc20BUSDAt1563804000223 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-
-    await queryRunner.query(`
-      INSERT INTO ${ns}.asset (
-        id
-      ) VALUES (
-        170101
-      );
-    `);
-
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 1701001, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -31,21 +21,21 @@ export class SeedTemplateWrapperAt1563804000270 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        170101,
-        'Wrapper',
+        220701,
+        'BUSD',
         '${simpleFormatting}',
         '${imageUrl}',
-        170101,
+        null,
         0,
-        4,
+        '31000000000000000000000000',
         'ACTIVE',
-        1701,
+        2207,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 1701001, true);`);
+    // await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 2207001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

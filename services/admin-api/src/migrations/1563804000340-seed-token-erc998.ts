@@ -20,85 +20,85 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        405001,
+        14050101, -- Scroll
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "405001",
+          [TokenAttributes.TEMPLATE_ID]: "140501",
           [TokenAttributes.GRADE]: "1",
         })}',
         100,
         '1',
         'MINTED',
-        405001,
+        140501,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        405002,
+        14050201,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "405002",
+          [TokenAttributes.TEMPLATE_ID]: "140502",
           [TokenAttributes.GRADE]: "10",
         })}',
         100,
         '2',
         'MINTED',
-        405002,
+        140502,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        406001,
+        14060101, -- hero
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "406001",
+          [TokenAttributes.TEMPLATE_ID]: "140601",
           [TokenAttributes.GRADE]: "1",
           [TokenAttributes.RARITY]: "0", // TokenRarity.COMMON
         })}',
         100,
         '1',
         'MINTED',
-        406001,
+        140601,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        406002,
+         14060102,
+         '${JSON.stringify({
+           [TokenAttributes.TEMPLATE_ID]: "40601",
+           [TokenAttributes.GRADE]: "10",
+           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
+         })}',
+         100,
+         '3',
+         'BURNED',
+         140601,
+         '${subDays(now, 1).toISOString()}',
+         '${currentDateTime}'
+     ), (
+        14060201,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "406002",
+          [TokenAttributes.TEMPLATE_ID]: "140602",
           [TokenAttributes.GRADE]: "5",
           [TokenAttributes.RARITY]: "1", // TokenRarity.UNCOMMON
         })}',
         100,
         '2',
         'MINTED',
-        406002,
+        140602,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        406003,
+        14060301,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "406003",
+          [TokenAttributes.TEMPLATE_ID]: "140603",
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '3',
         'MINTED',
-        406003,
+        140603,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        406004,
+        14070101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "406001",
-          [TokenAttributes.GRADE]: "10",
-          [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
-        })}',
-        100,
-        '3',
-        'BURNED',
-        406001,
-        '${subDays(now, 1).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        407001,
-        '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "407001",
+          [TokenAttributes.TEMPLATE_ID]: "140701",
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
           [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
@@ -106,26 +106,26 @@ export class SeedTokenErc998At1563804000340 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        407001,
+        140701,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        411001,
+        24010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "411001",
+          [TokenAttributes.TEMPLATE_ID]: "240101",
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
         100,
         '3',
         'MINTED',
-        411001,
+        240101,
         '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 411001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 24010101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

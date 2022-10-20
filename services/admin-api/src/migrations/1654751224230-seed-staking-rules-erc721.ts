@@ -45,63 +45,63 @@ export class SeedStakingRulesErc721At1654751224230 implements MigrationInterface
         asset_id
       ) VALUES (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         80311
       ), (
         'NATIVE',
-        101,
-        101001, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         80312
       ), (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         80321
       ), (
         'ERC20',
-        201,
-        201001, -- space credit
+        1201,
+        120101, -- space credit
         '${constants.WeiPerEther.toString()}',
         80322
       ), (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         80331
       ), (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         80332
       ), (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         80341
       ), (
         'ERC998',
-        406,
-        406001, -- warrior
+        1406,
+        140601, -- warrior
         1,
         80342
       ), (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         80351
       ), (
         'ERC1155',
-        501,
-        501001, -- gold
-        1,
+        1501,
+        150101, -- gold
+        1000,
         80352
       );
     `);

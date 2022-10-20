@@ -18,37 +18,37 @@ export class SeedBalanceErc998At1563804020440 implements MigrationInterface {
       ) VALUES (
         '${erc998ContractRandomAddress}',
         1,
-        405001,
+        14050101, -- Scroll
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        406001,
+        14060101, -- hero
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        406002,
+        14060201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        406003,
+        14060301,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        407001,
+        14070101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        411001,
+        24010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

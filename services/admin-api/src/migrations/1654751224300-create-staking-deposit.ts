@@ -13,7 +13,7 @@ export class CreateStakingDeposit1654751224300 implements MigrationInterface {
     `);
 
     const table = new Table({
-      name: `${ns}.staking_stakes`,
+      name: `${ns}.staking_deposit`,
       columns: [
         {
           name: "id",
@@ -73,7 +73,7 @@ export class CreateStakingDeposit1654751224300 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_stakes`);
+    await queryRunner.dropTable(`${ns}.staking_deposit`);
     await queryRunner.query(`DROP TYPE ${ns}.staking_deposit_status_enum;`);
   }
 }

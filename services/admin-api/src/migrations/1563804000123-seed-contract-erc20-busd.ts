@@ -1,14 +1,11 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI, imageUrl, ns } from "@framework/constants";
+import { imageUrl, ns } from "@framework/constants";
 
-export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
+export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
@@ -21,37 +18,37 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
         image_url,
         name,
         symbol,
+        decimals,
         royalty,
         base_token_uri,
         contract_status,
         contract_type,
         contract_features,
-        contract_module,
         from_block,
         created_at,
         updated_at
       ) VALUES (
-        1801,
-        '${erc721ContractLotteryAddress}',
-        '${chainId}',
-        'LOTTERY TICKET',
+        2207,
+        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        56,
+        'BUSD',
         '${simpleFormatting}',
         '${imageUrl}',
-        'LOTT',
-        'LOTT721',
-        100,
-        '${baseTokenURI}',
+        'Biance USD',
+        'BUSD',
+        18,
+        0,
+        '',
         'ACTIVE',
-        'ERC721',
-        '{}',
-        'LOTTERY',
+        'ERC20',
+        '{EXTERNAL}',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
-      )
+      );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 1801, true);`);
+    // await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 2207, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -1,14 +1,13 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
-import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { baseTokenURI, imageUrl, ns } from "@framework/constants";
+import { ns } from "@framework/constants";
 
-export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
+export class SeedContractLotteryAt1563804000103 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 1337;
+    const exchangeAddress = process.env.EXCHANGE_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
@@ -21,7 +20,6 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
         image_url,
         name,
         symbol,
-        royalty,
         base_token_uri,
         contract_status,
         contract_type,
@@ -31,27 +29,26 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        1801,
-        '${erc721ContractLotteryAddress}',
+        8,
+        '${exchangeAddress}',
         '${chainId}',
-        'LOTTERY TICKET',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'LOTT',
-        'LOTT721',
-        100,
-        '${baseTokenURI}',
+        'EXCHANGE',
+        '${JSON.stringify({})}',
+        '',
+        'Exchange',
+        '',
+        '',
         'ACTIVE',
-        'ERC721',
-        '{}',
-        'LOTTERY',
+        null,
+        '{ALLOWANCE}',
+        'SYSTEM',
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
-      )
+      );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 1801, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 8, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

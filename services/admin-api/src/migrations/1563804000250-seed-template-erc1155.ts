@@ -12,27 +12,27 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1501001
+        150101
       ), (
-        1501002
+        150102
       ), (
-        1501003
+        150103
       ), (
-        1501004
+        150104
       ), (
-        1501005
+        150105
       ), (
-        1504001
+        150401
       ), (
-        1504002
+        150402
       ), (
-        1504003
+        150403
       ), (
-        1511001
+        250101
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 15203, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 2501001, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -48,117 +48,117 @@ export class SeedTemplateErc1155At1563804000250 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        501001,
+        150101,
         'Gold',
         '${simpleFormatting}',
         '${imageUrl}',
-        1501001,
+        150101,
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
-        501,
+        1501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501002,
+        150102,
         'Wood',
         '${simpleFormatting}',
         '${imageUrl}',
-        1501002,
+        150102,
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
-        501,
+        1501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501003,
+        150103,
         'Iron',
         '${simpleFormatting}',
         '${imageUrl}',
-        1501003,
+        150103,
         0,
         '${constants.WeiPerEther.toString()}',
         'ACTIVE',
-        501,
+        1501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501004,
+        150104,
         'Wood log',
         '${simpleFormatting}',
         '${imageUrl}',
-        1501004,
+        150104,
         0,
        '0',
         'ACTIVE',
-        501,
+        1501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        501005,
+        150105,
         'Iron ingot',
         '${simpleFormatting}',
         '${imageUrl}',
-        1501004,
+        150104,
         0,
         '0',
         'ACTIVE',
-        501,
+        1501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        504001,
+        150401,
         'Healing potion',
         '${simpleFormatting}',
         '${imageUrl}',
-        1504001,
+        150401,
         0,
         '0',
         'ACTIVE',
-        504,
+        1504,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        504002,
+        150402,
         'Mana potion',
         '${simpleFormatting}',
         '${imageUrl}',
-        1504002,
+        150402,
         0,
         '0',
         'ACTIVE',
-        504,
+        1504,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        504003,
+        150403,
         'Antidote',
         '${simpleFormatting}',
         '${imageUrl}',
-        1504003,
+        150403,
         0,
         '0',
         'ACTIVE',
-        504,
+        1504,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        511001,
+        250101,
         'BEP',
         '${simpleFormatting}',
         '${imageUrl}',
-        1511001,
+        250101,
         0,
         '0',
         'ACTIVE',
-        511,
+        2501,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 511001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 2501001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

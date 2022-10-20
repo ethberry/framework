@@ -20,20 +20,20 @@ export class SeedTokenWrapperAt1563804000370 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        701001,
+        17010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "701001",
+          [TokenAttributes.TEMPLATE_ID]: "170101",
         })}',
         100,
         '1',
         'MINTED',
-        701001,
+        170101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 701001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 17010101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -18,12 +18,39 @@ export class SeedTokenErc20USDTAt1563804000321 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        205001,
+        12050101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        205001,
+        120501,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        22050101,
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        220501,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        32050101,
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        320501,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        42050101,
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        420501,
         '${currentDateTime}',
         '${currentDateTime}'
       );

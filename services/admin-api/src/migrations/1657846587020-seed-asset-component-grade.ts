@@ -14,26 +14,26 @@ export class SeedAssetComponentGrade1657846587020 implements MigrationInterface 
         asset_id
       ) VALUES (
         'NATIVE',
-        101,
-        101001, -- ETH
+        1101,
+        110101, -- ETH
         '${constants.WeiPerEther.toString()}',
         50101
       ), (
         'ERC20',
-        201,
-        201001, -- space credit
+        1201,
+        120101, -- space credit
         '${constants.WeiPerEther.toString()}',
         50102
       ), (
         'ERC1155',
-        501,
-        501001, -- gold
+        1501,
+        150101, -- gold
         '1000',
         50201
       ), (
         'ERC1155',
-        501,
-        501001, -- gold
+        1501,
+        150101, -- gold
         '1000',
         50202
       );

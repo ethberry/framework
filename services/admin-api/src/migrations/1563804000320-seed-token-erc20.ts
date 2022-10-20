@@ -18,54 +18,45 @@ export class SeedTokenErc20At1563804000320 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        201001,
+        12010101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        201001,
+        120101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        202001,
+        12020101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        202001,
+        120201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        203001,
+        12030101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        203001,
+        120301,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        204001,
+        12040101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        204001,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        211001,
-        '${defaultJSON}',
-        0,
-        '0',
-        'MINTED',
-        211001,
+        120401,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 211001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 12040101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

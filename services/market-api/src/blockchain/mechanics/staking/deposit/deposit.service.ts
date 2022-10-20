@@ -119,9 +119,9 @@ export class StakingDepositService {
                SUM(deposit_component.amount)::NUMERIC AS amount,
                deposit_contract.name as name,
                account
-        FROM ${ns}.staking_stakes
+        FROM ${ns}.staking_deposit
                  LEFT JOIN
-             ${ns}.staking_rules ON staking_rules.id = staking_stakes.staking_rule_id
+             ${ns}.staking_rules ON staking_rules.id = staking_deposit.staking_rule_id
                  LEFT JOIN
              ${ns}.asset as asset_deposit ON staking_rules.deposit_id = asset_deposit.id
                  LEFT JOIN
@@ -134,8 +134,8 @@ export class StakingDepositService {
              ${ns}.asset_component as reward_component ON reward_component.asset_id = asset_reward.id
                  LEFT JOIN
              ${ns}.contract as reward_contract ON reward_component.contract_id = reward_contract.id
-        WHERE (staking_stakes.staking_deposit_status = '${StakingDepositStatus.ACTIVE}' OR
-               staking_stakes.staking_deposit_status = '${StakingDepositStatus.COMPLETE}')
+        WHERE (staking_deposit.staking_deposit_status = '${StakingDepositStatus.ACTIVE}' OR
+               staking_deposit.staking_deposit_status = '${StakingDepositStatus.COMPLETE}')
           AND deposit_contract.contract_type = $1
           AND deposit_contract.id = $2
           AND reward_contract.contract_type = $3

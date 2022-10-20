@@ -6,7 +6,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { StakingRulesEntity } from "../rules/rules.entity";
 
-@Entity({ schema: ns, name: "staking_stakes" })
+@Entity({ schema: ns, name: "staking_deposit" })
 export class StakingDepositEntity extends IdDateBaseEntity implements IStakingDeposit {
   @Column({ type: "varchar" })
   public account: string;

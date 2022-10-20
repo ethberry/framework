@@ -1,23 +1,29 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { wallet } from "@gemunion/constants";
 
-export class SeedBalanceErc721LotteryAt1563804020480 implements MigrationInterface {
+export class SeedTokenErc20BUSDAt1563804000323 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const defaultJSON = JSON.stringify({});
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.balance (
-        account,
-        amount,
+      INSERT INTO ${ns}.token (
+        id,
+        attributes,
+        royalty,
         token_id,
+        token_status,
+        template_id,
         created_at,
         updated_at
       ) VALUES (
-        '${wallet}',
-        1,
-        18010101,
+        22070101,
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        220701,
         '${currentDateTime}',
         '${currentDateTime}'
       );
@@ -25,6 +31,6 @@ export class SeedBalanceErc721LotteryAt1563804020480 implements MigrationInterfa
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.query(`TRUNCATE TABLE ${ns}.balance RESTART IDENTITY CASCADE;`);
+    await queryRunner.query(`TRUNCATE TABLE ${ns}.token RESTART IDENTITY CASCADE;`);
   }
 }

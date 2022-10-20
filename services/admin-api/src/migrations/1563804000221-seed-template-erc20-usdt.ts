@@ -21,7 +21,7 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         created_at,
         updated_at
       ) VALUES (
-        205001,
+        120501,
         'USDT',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -29,11 +29,49 @@ export class SeedTemplateErc20USDTAt1563804000221 implements MigrationInterface 
         0,
         '100000000000',
         'ACTIVE',
-        205,
+        1205,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        220501,
+        'USDT',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '100000000000',
+        'ACTIVE',
+        2205,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ),(
+        320501,
+        'USDT',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '100000000000',
+        'ACTIVE',
+        3205,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        420501,
+        'USDT',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        0,
+        '100000000000',
+        'ACTIVE',
+        4205,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
+
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 4205001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

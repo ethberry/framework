@@ -11,15 +11,15 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1601001
+        160101
       ), (
-        1601002
+        160102
       ), (
-        1604001
+        160401
       ), (
-        1605001
+        160501
       ), (
-        1606001
+        160601
       );
     `);
 
@@ -39,69 +39,69 @@ export class SeedTemplateMysteryAt1563804000260 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        601001,
+        160101,
         'Sword Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        1601001,
+        160101,
         0,
         4,
         'ACTIVE',
-        601,
+        1601,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        601002,
+        160102,
         'Sword Mysterybox Inactive',
         '${simpleFormatting}',
         '${imageUrl}',
-        1601002,
+        160102,
         0,
         1,
         'INACTIVE',
-        601,
+        1601,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        604001,
+        160401,
         'Warrior Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        1604001,
+        160401,
         0,
         1,
         'ACTIVE',
-        604,
+        1604,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        605001,
+        160501,
         'Gold Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        1605001,
+        160501,
         0,
         1,
         'ACTIVE',
-        605,
+        1605,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        606001,
+        160601,
         'Mixed Mysterybox',
         '${simpleFormatting}',
         '${imageUrl}',
-        1606001,
+        160601,
         0,
         1,
         'ACTIVE',
-        606,
+        1606,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 1605001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 1606001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

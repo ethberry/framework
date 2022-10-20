@@ -34,7 +34,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        201,
+        1201,
         '${erc20TokenSimpleAddress}',
         '${chainId}',
         'Space Credits',
@@ -52,7 +52,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        202,
+        1202,
         '${erc20TokenInactiveAddress}',
         '${chainId}',
         'ERC20 (inactive)',
@@ -70,7 +70,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        203,
+        1203,
         '${erc20TokenNewAddress}',
         '${chainId}',
         'ERC20 (new)',
@@ -88,7 +88,7 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        204,
+        1204,
         '${erc20TokenBlackListAddress}',
         '${chainId}',
         'ERC20 (blacklist)',
@@ -105,28 +105,10 @@ export class SeedContractErc20At1563804000120 implements MigrationInterface {
         '${fromBlock}',
         '${currentDateTime}',
         '${currentDateTime}'
-      ), (
-        211,
-        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-        '56',
-        'BUSD',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        'Biance USD',
-        'BUSD',
-        18,
-        0,
-        '',
-        'ACTIVE',
-        'ERC20',
-        '{EXTERNAL}',
-        '${fromBlock}',
-        '${currentDateTime}',
-        '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 211, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 1204, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

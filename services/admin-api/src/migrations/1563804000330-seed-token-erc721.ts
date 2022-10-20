@@ -21,149 +21,149 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        301001,
+        13010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "301001",
+          [TokenAttributes.TEMPLATE_ID]: "130101",
         })}',
         null,
         100,
         '1',
         'MINTED',
-        301001,
+        130101,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        301002,
+        13010201,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "301002",
+          [TokenAttributes.TEMPLATE_ID]: "130102",
         })}',
         null,
         100,
         '1',
         'MINTED',
-        301002,
+        130102,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        301003,
+        13010301,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "301003",
+          [TokenAttributes.TEMPLATE_ID]: "130103",
         })}',
         null,
         100,
         '1',
         'MINTED',
-        301003,
+        130103,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        305001,
+        13050101, -- Chain mail
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305001",
+          [TokenAttributes.TEMPLATE_ID]: "130501",
           [TokenAttributes.GRADE]: "1",
         })}',
         null,
         100,
         '1',
         'MINTED',
-        305001,
+        130501,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        305002,
+        13050201, -- Helmet
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305002",
+          [TokenAttributes.TEMPLATE_ID]: "130502",
           [TokenAttributes.GRADE]: "5",
         })}',
         null,
         100,
         '2',
         'MINTED',
-        305002,
+        130502,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        305003,
+        13050301,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.TEMPLATE_ID]: "130503",
           [TokenAttributes.GRADE]: "10",
         })}',
         null,
         100,
         '3',
         'MINTED',
-        305003,
+        130503,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        305004,
+        13050401,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.TEMPLATE_ID]: "130504",
           [TokenAttributes.GRADE]: "10",
         })}',
         null,
         100,
         '4',
         'MINTED',
-        305004,
+        130504,
         '${subDays(now, 4).toISOString()}',
         '${currentDateTime}'
       ), (
-        305005,
+        13050501,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.TEMPLATE_ID]: "130505",
           [TokenAttributes.GRADE]: "10",
         })}',
         null,
         100,
         '5',
         'MINTED',
-        305005,
+        130505,
         '${subDays(now, 5).toISOString()}',
         '${currentDateTime}'
       ), (
-        305006,
+        13050601,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.TEMPLATE_ID]: "130506",
           [TokenAttributes.GRADE]: "10",
         })}',
         null,
         100,
         '6',
         'MINTED',
-        305006,
+        130506,
         '${subDays(now, 6).toISOString()}',
         '${currentDateTime}'
       ), (
-        305007,
+        13050701,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.TEMPLATE_ID]: "130507",
           [TokenAttributes.GRADE]: "10",
         })}',
         null,
         100,
         '7',
         'MINTED',
-        305007,
+        130507,
         '${subDays(now, 7).toISOString()}',
         '${currentDateTime}'
       ), (
-        305008,
+        13050801,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "305003",
+          [TokenAttributes.TEMPLATE_ID]: "130508",
           [TokenAttributes.GRADE]: "10",
         })}',
         null,
         100,
         '8',
         'MINTED',
-        305008,
+        130508,
         '${subDays(now, 8).toISOString()}',
         '${currentDateTime}'
       ), (
-        306001,
+        13060101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "306001",
+          [TokenAttributes.TEMPLATE_ID]: "130601",
           [TokenAttributes.GRADE]: "1",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
@@ -171,13 +171,27 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        306001,
+        130601,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        306002,
+         13060102,
+         '${JSON.stringify({
+           [TokenAttributes.TEMPLATE_ID]: "130601",
+           [TokenAttributes.GRADE]: "10",
+           [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
+         })}',
+         null,
+         100,
+         '3',
+         'BURNED',
+         130601,
+         '${subDays(now, 4).toISOString()}',
+         '${currentDateTime}'
+     ), (
+        13060201,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "306002",
+          [TokenAttributes.TEMPLATE_ID]: "130602",
           [TokenAttributes.GRADE]: "5",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
@@ -185,13 +199,13 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '2',
         'MINTED',
-        306002,
+        130602,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        306003,
+        13060301,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "306003",
+          [TokenAttributes.TEMPLATE_ID]: "130603",
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
@@ -199,78 +213,64 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '3',
         'MINTED',
-        306003,
+        130603,
         '${subDays(now, 3).toISOString()}',
         '${currentDateTime}'
       ), (
-        306004,
+        13070101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "306001",
-          [TokenAttributes.GRADE]: "10",
-          [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
-        })}',
-        null,
-        100,
-        '3',
-        'BURNED',
-        306001,
-        '${subDays(now, 4).toISOString()}',
-        '${currentDateTime}'
-      ), (
-        307001,
-        '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "307001",
+          [TokenAttributes.TEMPLATE_ID]: "130701",
           [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
         '1',
         'MINTED',
-        307001,
+        130701,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        307002,
+        13070102,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "307001",
+          [TokenAttributes.TEMPLATE_ID]: "130701",
           [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
         '1',
         'MINTED',
-        307001,
+        130701,
         '${subDays(now, 1).toISOString()}',
         '${currentDateTime}'
       ), (
-        307003,
+        13070103,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "307001",
+          [TokenAttributes.TEMPLATE_ID]: "130701",
           [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
         '${imageUrl}',
         100,
         '1',
         'MINTED',
-        307001,
+        130701,
         '${subDays(now, 2).toISOString()}',
         '${currentDateTime}'
       ), (
-        308001,
+        13080101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "308001",
+          [TokenAttributes.TEMPLATE_ID]: "130801",
         })}',
         null,
         100,
         '1',
         'MINTED',
-        308001,
+        130801,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        309001,
+        13090101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "309001",
+          [TokenAttributes.TEMPLATE_ID]: "130901",
           CLOTHES: "1",
           EYES: "1",
           MOUTH: "1",
@@ -279,13 +279,13 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        309001,
+        130901,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        309002,
+        13090102,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "309001",
+          [TokenAttributes.TEMPLATE_ID]: "130901",
           CLOTHES: "1",
           EYES: "2",
           MOUTH: "1",
@@ -294,13 +294,13 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        309001,
+        130901,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        309003,
+        13090103,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "309001",
+          [TokenAttributes.TEMPLATE_ID]: "130901",
           CLOTHES: "1",
           EYES: "1",
           MOUTH: "2",
@@ -309,13 +309,13 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        309001,
+        130901,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        309004,
+        13090104,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "309001",
+          [TokenAttributes.TEMPLATE_ID]: "130901",
           CLOTHES: "1",
           EYES: "3",
           MOUTH: "3",
@@ -324,13 +324,13 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        309001,
+        130901,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        309005,
+        13090105,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "309001",
+          [TokenAttributes.TEMPLATE_ID]: "130901",
           CLOTHES: "2",
           EYES: "2",
           MOUTH: "2",
@@ -339,25 +339,25 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         100,
         '1',
         'MINTED',
-        309001,
+        130901,
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
-        311001,
+        23010101,
         '${JSON.stringify({
-          [TokenAttributes.TEMPLATE_ID]: "311001",
+          [TokenAttributes.TEMPLATE_ID]: "230101",
         })}',
         null,
         100,
         '1',
         'MINTED',
-        311001,
+        230101,
         '${subDays(now, 30).toISOString()}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 13603, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 23010101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

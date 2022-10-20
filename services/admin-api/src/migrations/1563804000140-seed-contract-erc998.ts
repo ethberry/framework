@@ -36,7 +36,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        401,
+        1401,
         '${erc998ContractSimpleAddress}',
         '${chainId}',
         'ERC998 (simple)',
@@ -53,7 +53,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        402,
+        1402,
         '${erc998ContractInactiveAddress}',
         '${chainId}',
         'ERC998 (inactive)',
@@ -70,7 +70,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        403,
+        1403,
         '${erc998ContractNewAddress}',
         '${chainId}',
         'ERC998 (new)',
@@ -87,7 +87,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        404,
+        1404,
         '${erc998ContractBlacklistAddress}',
         '${chainId}',
         'ERC998 (blacklist)',
@@ -104,7 +104,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        405,
+        1405,
         '${erc998ContractUpgradeableAddress}',
         '${chainId}',
         'Spell book (upgradeable)',
@@ -121,7 +121,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406,
+        1406,
         '${erc998ContractRandomAddress}',
         '${chainId}',
         'HERO (random)',
@@ -138,7 +138,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        407,
+        1407,
         '${erc998ContractGenesAddress}',
         '${chainId}',
         'AXIE (genes)',
@@ -155,9 +155,9 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        411,
+        2401,
         '${wallet}',
-        '56',
+        56,
         'BEP (binance)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -174,7 +174,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 411, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 2401, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

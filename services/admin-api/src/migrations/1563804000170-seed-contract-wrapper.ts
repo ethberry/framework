@@ -11,8 +11,6 @@ export class SeedContractWrapperAt1563804000170 implements MigrationInterface {
     const chainId = process.env.CHAIN_ID || 1337;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
-    // await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'WRAPPER';`);
-
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
         id,
@@ -33,7 +31,7 @@ export class SeedContractWrapperAt1563804000170 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        701,
+        1701,
         '${erc721ContractWrapperAddress}',
         '${chainId}',
         'WRAPPER',

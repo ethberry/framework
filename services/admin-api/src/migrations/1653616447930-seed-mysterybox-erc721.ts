@@ -17,7 +17,7 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 33211, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 33201, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -28,14 +28,14 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         '1',
         33101
       ), (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         '1',
         33201
       );
@@ -56,7 +56,7 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         33101,
-        601001,
+        160101,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -65,7 +65,7 @@ export class SeedMysteryboxErc721At1653616447930 implements MigrationInterface {
         '${simpleFormatting}',
         '${imageUrl}',
         33201,
-        601002,
+        160102,
         'INACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'

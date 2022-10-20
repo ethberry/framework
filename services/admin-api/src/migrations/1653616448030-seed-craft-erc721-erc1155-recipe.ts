@@ -16,7 +16,7 @@ export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 70202, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 40202, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.asset_component (
@@ -27,20 +27,20 @@ export class SeedCraftErc721Erc1155At1653616448030 implements MigrationInterface
         asset_id
       ) VALUES (
         'ERC721',
-        306,
-        306001, -- sword
+        1306,
+        130601, -- sword
         1,
         40201
       ), (
         'ERC1155',
-        501,
-        501002, -- wood
+        1501,
+        150102, -- wood
         10,
         40202
       ), (
         'ERC1155',
-        501,
-        501003, -- iron
+        1501,
+        150103, -- iron
         10,
         40202
       );

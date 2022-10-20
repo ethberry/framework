@@ -52,12 +52,14 @@ import { CreateOtp1563803000160 } from "./migrations/1563803000160-create-otp";
 import { CreateAsset1563804000100 } from "./migrations/1563804000100-create-asset";
 
 import { CreateContract1563804000100 } from "./migrations/1563804000100-create-contract";
-import { SeedContractManagerAt1563804000101 } from "./migrations/1563804000101-create-contract-manager";
+import { SeedContractManagerAt1563804000101 } from "./migrations/1563804000101-seed-contract-manager";
 import { SeedContractExchangeAt1563804000102 } from "./migrations/1563804000102-seed-contract-exchange";
+import { SeedContractLotteryAt1563804000103 } from "./migrations/1563804000103-seed-contract-lottery";
 import { SeedContractNativeAt1563804000110 } from "./migrations/1563804000110-seed-contract-native";
 import { SeedContractErc20At1563804000120 } from "./migrations/1563804000120-seed-contract-erc20";
 import { SeedContractErc20USDTAt1563804000121 } from "./migrations/1563804000121-seed-contract-erc20-usdt";
 import { SeedContractErc20WETHAt1563804000122 } from "./migrations/1563804000122-seed-contract-erc20-weth";
+import { SeedContractErc20BUSDAt1563804000123 } from "./migrations/1563804000123-seed-contract-erc20-busd";
 import { SeedContractErc721At1563804000130 } from "./migrations/1563804000130-seed-contract-erc721";
 import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-seed-contract-erc998";
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
@@ -70,6 +72,7 @@ import { SeedTemplateNativeAt1563804000210 } from "./migrations/1563804000210-se
 import { SeedTemplateErc20At1563804000220 } from "./migrations/1563804000220-seed-template-erc20";
 import { SeedTemplateErc20USDTAt1563804000221 } from "./migrations/1563804000221-seed-template-erc20-usdt";
 import { SeedTemplateErc20WETHAt1563804000222 } from "./migrations/1563804000222-seed-template-erc20-weth";
+import { SeedTemplateErc20BUSDAt1563804000223 } from "./migrations/1563804000223-seed-template-erc20-busd";
 import { SeedTemplateErc721At1563804000230 } from "./migrations/1563804000230-seed-template-erc721";
 import { SeedTemplateErc998At1563804000240 } from "./migrations/1563804000240-seed-template-erc998";
 import { SeedTemplateErc1155At1563804000250 } from "./migrations/1563804000250-seed-template-erc1155";
@@ -82,6 +85,7 @@ import { SeedTokenNativeAt1563804000310 } from "./migrations/1563804000310-seed-
 import { SeedTokenErc20At1563804000320 } from "./migrations/1563804000320-seed-token-erc20";
 import { SeedTokenErc20USDTAt1563804000321 } from "./migrations/1563804000321-seed-token-erc20-usdt";
 import { SeedTokenErc20WETHAt1563804000322 } from "./migrations/1563804000322-seed-token-erc20-weth";
+import { SeedTokenErc20BUSDAt1563804000323 } from "./migrations/1563804000323-seed-token-erc20-busd";
 import { SeedTokenErc721At1563804000330 } from "./migrations/1563804000330-seed-token-erc721";
 import { SeedTokenErc998At1563804000340 } from "./migrations/1563804000340-seed-token-erc998";
 import { SeedTokenErc1155At1563804000350 } from "./migrations/1563804000350-seed-token-erc1155";
@@ -94,9 +98,9 @@ import { SeedBalanceErc20At1563804020420 } from "./migrations/1563804000420-seed
 import { SeedBalanceErc721At1563804020430 } from "./migrations/1563804000430-seed-balance-erc721";
 import { SeedBalanceErc998At1563804020440 } from "./migrations/1563804000440-seed-balance-erc998";
 import { SeedBalanceErc1155At1563804020450 } from "./migrations/1563804000450-seed-balance-erc1155";
-import { SeedBalanceErcMysteryAt1563804020460 } from "./migrations/1563804000460-seed-balance-mysterybox";
-import { SeedBalanceErcWrapperAt1563804020470 } from "./migrations/1563804000470-seed-balance-wrapper";
-import { SeedBalanceLotteryAt1563804020480 } from "./migrations/1563804000480-seed-balance-lottery";
+import { SeedBalanceErc721MysteryAt1563804020460 } from "./migrations/1563804000460-seed-balance-mysterybox";
+import { SeedBalanceErc721WrapperAt1563804020470 } from "./migrations/1563804000470-seed-balance-wrapper";
+import { SeedBalanceErc721LotteryAt1563804020480 } from "./migrations/1563804000480-seed-balance-lottery";
 
 import { CreateAssetComponent1563804001220 } from "./migrations/1563804001220-create-asset-component";
 import { SeedAssetComponentsErc721At1563804001230 } from "./migrations/1563804001230-seed-asset-component-erc721";
@@ -273,10 +277,12 @@ const config: PostgresConnectionOptions = {
     CreateContract1563804000100,
     SeedContractManagerAt1563804000101,
     SeedContractExchangeAt1563804000102,
+    SeedContractLotteryAt1563804000103,
     SeedContractNativeAt1563804000110,
     SeedContractErc20At1563804000120,
     SeedContractErc20USDTAt1563804000121,
     SeedContractErc20WETHAt1563804000122,
+    SeedContractErc20BUSDAt1563804000123,
     SeedContractErc721At1563804000130,
     SeedContractErc998At1563804000140,
     SeedContractErc1155At1563804000150,
@@ -289,6 +295,7 @@ const config: PostgresConnectionOptions = {
     SeedTemplateErc20At1563804000220,
     SeedTemplateErc20USDTAt1563804000221,
     SeedTemplateErc20WETHAt1563804000222,
+    SeedTemplateErc20BUSDAt1563804000223,
     SeedTemplateErc721At1563804000230,
     SeedTemplateErc998At1563804000240,
     SeedTemplateErc1155At1563804000250,
@@ -301,6 +308,7 @@ const config: PostgresConnectionOptions = {
     SeedTokenErc20At1563804000320,
     SeedTokenErc20USDTAt1563804000321,
     SeedTokenErc20WETHAt1563804000322,
+    SeedTokenErc20BUSDAt1563804000323,
     SeedTokenErc721At1563804000330,
     SeedTokenErc998At1563804000340,
     SeedTokenErc1155At1563804000350,
@@ -313,9 +321,9 @@ const config: PostgresConnectionOptions = {
     SeedBalanceErc721At1563804020430,
     SeedBalanceErc998At1563804020440,
     SeedBalanceErc1155At1563804020450,
-    SeedBalanceErcMysteryAt1563804020460,
-    SeedBalanceErcWrapperAt1563804020470,
-    SeedBalanceLotteryAt1563804020480,
+    SeedBalanceErc721MysteryAt1563804020460,
+    SeedBalanceErc721WrapperAt1563804020470,
+    SeedBalanceErc721LotteryAt1563804020480,
 
     CreateAssetComponent1563804001220,
     SeedAssetComponentsErc721At1563804001230,

@@ -8,7 +8,7 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.staking_stakes (
+      INSERT INTO ${ns}.staking_deposit (
         account,
         staking_deposit_status,
         external_id,
@@ -73,6 +73,6 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
-    await queryRunner.dropTable(`${ns}.staking_stakes`);
+    await queryRunner.dropTable(`${ns}.staking_deposit`);
   }
 }

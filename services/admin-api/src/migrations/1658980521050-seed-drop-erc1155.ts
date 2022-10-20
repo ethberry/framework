@@ -30,14 +30,14 @@ export class SeedDropErc1155At1658980521050 implements MigrationInterface {
         asset_id
       ) VALUES (
         'ERC1155',
-        501,
-        501001, -- gold
+        1501,
+        150101, -- gold
         '1',
         65101
       ), (
         'ERC20',
-        201,
-        201001, -- space credit
+        1201,
+        120101, -- space credit
         '${constants.WeiPerEther.toString()}',
         65111
       );

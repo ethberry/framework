@@ -38,7 +38,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        301,
+        1301,
         '${erc721ContractSimpleAddress}',
         '${chainId}',
         'RUNE (simple)',
@@ -55,7 +55,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        302,
+        1302,
         '${erc721ContractInactiveAddress}',
         '${chainId}',
         'ERC721 (inactive)',
@@ -72,7 +72,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        303,
+        1303,
         '${erc721ContractNewAddress}',
         '${chainId}',
         'ERC721 (new)',
@@ -89,7 +89,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        304,
+        1304,
         '${erc721ContractBlacklistAddress}',
         '${chainId}',
         'ERC721 (blacklist)',
@@ -106,7 +106,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        305,
+        1305,
         '${erc721ContractUpgradeableAddress}',
         '${chainId}',
         'ARMOUR (lvl)',
@@ -123,7 +123,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        306,
+        1306,
         '${erc721ContractRandomAddress}',
         '${chainId}',
         'WEAPON (random)',
@@ -140,7 +140,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        307,
+        1307,
         '${erc721ContractGenesAddress}',
         '${chainId}',
         'AXIE (genes)',
@@ -157,7 +157,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        308,
+        1308,
         '${erc721ContractSoulboundAddress}',
         '${chainId}',
         'MEDAL (soulbound)',
@@ -174,7 +174,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        309,
+        1309,
         '${erc721ContractGenerativeAddress}',
         '${chainId}',
         'GENERATIVE',
@@ -191,7 +191,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        311,
+        2301,
         '${wallet}',
         '56',
         'BEP (binance)',
@@ -210,7 +210,7 @@ export class SeedContractErc721At1563804000130 implements MigrationInterface {
       )
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 311, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.contract_id_seq', 2301, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

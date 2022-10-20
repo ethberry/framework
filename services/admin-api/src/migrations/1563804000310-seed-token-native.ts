@@ -18,45 +18,45 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        101001,
+        11010101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        101001,
+        110101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        102001,
+        11020101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        102001,
+        110201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        111001,
+        21010101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        111001,
+        210101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        121001,
+        31010101,
         '${defaultJSON}',
         0,
         '0',
         'MINTED',
-        121001,
+        310101,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 121001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.token_id_seq', 31010101, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

@@ -11,23 +11,23 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
       INSERT INTO ${ns}.asset (
         id
       ) VALUES (
-        1405001
+        140501
       ), (
-        1405002
+        140502
       ), (
-        1406001
+        140601
       ), (
-        1406002
+        140602
       ), (
-        1406003
+        140603
       ), (
-        1407001
+        140701
       ), (
-        1411001
+        240101
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 411001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.asset_id_seq', 2401001, true);`);
 
     await queryRunner.query(`
       INSERT INTO ${ns}.template (
@@ -43,93 +43,93 @@ export class SeedTemplateErc998At1563804000240 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        405001,
+        140501,
         'Scroll',
         '${simpleFormatting}',
         '${imageUrl}',
-        1405001,
+        140501,
         0,
         1,
         'ACTIVE',
-        405,
+        1405,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        405002,
+        140502,
         'Grimoire',
         '${simpleFormatting}',
         '${imageUrl}',
-        1405002,
+        140502,
         0,
         1,
         'ACTIVE',
-        405,
+        1405,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406001,
+        140601,
         'Warrior',
         '${simpleFormatting}',
         '${imageUrl}',
-        1406001,
+        140601,
         0,
         1,
         'ACTIVE',
-        406,
+        1406,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406002,
+        140602,
         'Rouge',
         '${simpleFormatting}',
         '${imageUrl}',
-        1406002,
+        140602,
         0,
         1,
         'ACTIVE',
-        406,
+        1406,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406003,
+        140603,
         'Mage',
         '${simpleFormatting}',
         '${imageUrl}',
-        1406003,
+        140603,
         0,
         1,
         'ACTIVE',
-        406,
+        1406,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        407001,
+        140701,
         'Infinity',
         '${simpleFormatting}',
         '${imageUrl}',
-        1407001,
+        140701,
         0,
         1,
         'ACTIVE',
-        407,
+        1407,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        411001,
+        240101,
         'BEP',
         '${simpleFormatting}',
         '${imageUrl}',
-        1411001,
+        240101,
         0,
         1,
         'ACTIVE',
-        411,
+        2401,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 411003, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 2401001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {

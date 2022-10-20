@@ -14,32 +14,32 @@ export class SeedCompositionAt1658980520010 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        406, -- hero
-        405, -- spell book
+        1406, -- hero
+        1405, -- spell book
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406, -- hero
-        305, -- armour
+        1406, -- hero
+        1305, -- armour
         5,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406, -- hero
-        201, -- space credit
+        1406, -- hero
+        1201, -- space credit
         1,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        406, -- hero
-        501, -- resources
+        1406, -- hero
+        1501, -- resources
         3,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        401, -- simple
-        201, -- space credit
+        1401, -- simple
+        1201, -- space credit
         1,
         '${currentDateTime}',
         '${currentDateTime}'

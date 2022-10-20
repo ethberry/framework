@@ -34,28 +34,28 @@ export class SeedGrade1657846587010 implements MigrationInterface {
         'FLAT',
         0,
         50101,
-        305,
+        1305,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
         0,
         50102,
-        306,
+        1306,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'LINEAR',
         1,
         50201,
-        405,
+        1405,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         'EXPONENTIAL',
         1,
         50202,
-        406, -- hero
+        1406, -- hero
         '${currentDateTime}',
         '${currentDateTime}'
       );

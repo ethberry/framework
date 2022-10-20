@@ -15,182 +15,182 @@ export class SeedAssetComponentHistory1657846609010 implements MigrationInterfac
       ) VALUES (
         301001,
         'ITEM',
-        301,
-        301001,
+        1301,
+        13010101,
         1
       ), (
         301001,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         301002,
         'ITEM',
-        301,
-        301002,
+        1301,
+        13010201,
         1
       ), (
         301002,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         301003,
         'ITEM',
-        301,
-        301003,
+        1301,
+        13010301,
         1
       ), (
         301003,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305001,
         'ITEM',
-        305,
-        305001,
+        1305,
+        13050101, -- Chain mail
         1
       ), (
         305001,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305002,
         'ITEM',
-        305,
-        305002,
+        1305,
+        13050201, -- Helmet
         1
       ), (
         305002,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305003,
         'ITEM',
-        305,
-        305003,
+        1305,
+        13050301,
         1
       ), (
         305003,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305004,
         'ITEM',
-        305,
-        305004,
+        1305,
+        13050401,
         1
       ), (
         305004,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305005,
         'ITEM',
-        305,
-        305005,
+        1305,
+        13050501,
         1
       ), (
         305005,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305006,
         'ITEM',
-        305,
-        305006,
+        1305,
+        13050601,
         1
       ), (
         305006,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305007,
         'ITEM',
-        305,
-        305007,
+        1305,
+        13050701,
         1
       ), (
         305007,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         305008,
         'ITEM',
-        305,
-        305008,
+        1305,
+        13050801,
         1
       ), (
         305008,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         306001,
         'ITEM',
-        306,
-        306001,
+        1306,
+        13060101,
         1
       ), (
         306001,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         306002,
         'ITEM',
-        306,
-        306002,
+        1306,
+        13060201,
         1
       ), (
         306002,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         306003,
         'ITEM',
-        306,
-        306003,
+        1306,
+        13060301,
         1
       ), (
         306003,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         306004,
         'ITEM',
-        306,
-        306004,
+        1306,
+        13060102,
         1
       ), (
         306004,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       );
     `);
@@ -205,50 +205,38 @@ export class SeedAssetComponentHistory1657846609010 implements MigrationInterfac
       ) VALUES (
         406001,
         'ITEM',
-        406,
-        406001,
+        1406,
+        14060101, -- hero
         1
       ), (
         406001,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         406002,
         'ITEM',
-        406,
-        406002,
+        1406,
+        14060201,
         1
       ), (
         406002,
         'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       ), (
         406003,
         'ITEM',
-        406,
-        406003,
+        1406,
+        14060301,
         1
       ), (
         406003,
         'PRICE',
-        201,
-        201001,
-        '${constants.WeiPerEther.toString()}'
-      ), (
-        406004,
-        'ITEM',
-        406,
-        406004,
-        1
-      ), (
-        406004,
-        'PRICE',
-        201,
-        201001,
+        1201,
+        12010101,
         '${constants.WeiPerEther.toString()}'
       );
     `);

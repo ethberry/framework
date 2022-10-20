@@ -18,133 +18,139 @@ export class SeedBalanceErc721At1563804020430 implements MigrationInterface {
       ) VALUES (
         '${wallet}',
         1,
-        301001,
+        13010101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        301002,
+        13010201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        301003,
+        13010301,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
         1,
-        305001,
+        13050101, -- Chain mail
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
         1,
-        305002,
+        13050201, -- Helmet
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
         1,
-        305003,
+        13050301,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        305004,
+        13050401,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        305005,
+        13050501,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        305006,
+        13050601,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        305007,
+        13050701,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        305008,
+        13050801,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${erc998ContractRandomAddress}',
         1,
-        306001,
+        13060101,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        '${erc998ContractRandomAddress}',
+        1,
+        13060102,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        306002,
+        13060201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        306003,
+        13060301,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        307001,
+        13070101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        308001,
+        13080101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        309001,
+        13090101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        309002,
+        13090103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        309003,
+        13090103,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        309004,
+        13090104,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        309005,
+        13090105,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         '${wallet}',
         1,
-        311001,
+        23010101,
         '${currentDateTime}',
         '${currentDateTime}'
       );

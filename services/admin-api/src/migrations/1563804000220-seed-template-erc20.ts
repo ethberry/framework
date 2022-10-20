@@ -22,7 +22,7 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         created_at,
         updated_at
       ) VALUES (
-        201001,
+        120101,
         'Space Credits',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -30,11 +30,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        201,
+        1201,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        202001,
+        120201,
         'Inactive token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -42,11 +42,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'INACTIVE',
-        202,
+        1202,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        203001,
+        120301,
         'New token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -54,11 +54,11 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        203,
+        1203,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        204001,
+        120401,
         'Black list token',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -66,25 +66,13 @@ export class SeedTemplateErc20At1563804000220 implements MigrationInterface {
         0,
         '${constants.WeiPerEther.mul(1e6).toString()}',
         'ACTIVE',
-        204,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      ), (
-        211001,
-        'BUSD',
-        '${simpleFormatting}',
-        '${imageUrl}',
-        null,
-        0,
-        '31000000000000000000000000',
-        'ACTIVE',
-        211,
+        1204,
         '${currentDateTime}',
         '${currentDateTime}'
       );
     `);
 
-    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 211001, true);`);
+    await queryRunner.query(`SELECT setval('${ns}.template_id_seq', 1204001, true);`);
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {
