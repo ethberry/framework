@@ -17,14 +17,14 @@ export class SeedBreed1663047650401 implements MigrationInterface {
       ) VALUES (
         1,
         '141467099517471456737901150254882731526927941072931743880',
-        1,
+        2,
         13070101,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
         2,
         '141467099517471456737901150254882731526927941072931743880',
-        1,
+        2,
         13070102,
         '${currentDateTime}',
         '${currentDateTime}'

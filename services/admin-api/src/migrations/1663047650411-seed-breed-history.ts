@@ -9,25 +9,30 @@ export class SeedBreedHistory1663047650411 implements MigrationInterface {
     const currentDateTime = new Date().toISOString();
 
     await queryRunner.query(`
-      INSERT INTO ${ns}.breed_history (
-        id,
-        account,
-        child_id,
-        matron_id,
-        sire_id,
-        history_id,
-        created_at,
-        updated_at
-      ) VALUES (
-        1,
-        '${wallet}',
-        null,
-        1,
-        2,
-        406005,
-        '${currentDateTime}',
-        '${currentDateTime}'
-      );
+        INSERT INTO ${ns}.breed_history (id,
+                                         account,
+                                         child_id,
+                                         matron_id,
+                                         sire_id,
+                                         history_id,
+                                         created_at,
+                                         updated_at)
+        VALUES (1,
+                '${wallet}',
+                3,
+                1,
+                2,
+                406005,
+                '${currentDateTime}',
+                '${currentDateTime}'),
+               (1,
+                '${wallet}',
+                null,
+                2,
+                1,
+                406005,
+                '${currentDateTime}',
+                '${currentDateTime}');
     `);
   }
 
