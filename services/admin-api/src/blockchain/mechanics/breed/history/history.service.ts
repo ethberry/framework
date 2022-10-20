@@ -18,6 +18,20 @@ export class BreedHistoryService {
 
     queryBuilder.select();
 
+    queryBuilder.leftJoinAndSelect("history.child", "child");
+    queryBuilder.leftJoinAndSelect("child.token", "child_token");
+    queryBuilder.leftJoinAndSelect("child_token.template", "child_template");
+
+    queryBuilder.leftJoinAndSelect("history.matron", "matron");
+    queryBuilder.leftJoinAndSelect("matron.token", "matron_token");
+    queryBuilder.leftJoinAndSelect("matron_token.template", "matron_template");
+
+    queryBuilder.leftJoinAndSelect("history.sire", "sire");
+    queryBuilder.leftJoinAndSelect("sire.token", "sire_token");
+    queryBuilder.leftJoinAndSelect("sire_token.template", "sire_template");
+
+    queryBuilder.leftJoinAndSelect("history.history", "exchange_history");
+
     queryBuilder.skip(skip);
     queryBuilder.take(take);
 
@@ -44,8 +58,14 @@ export class BreedHistoryService {
         alias: "breeds",
         leftJoinAndSelect: {
           child: "breeds.child",
+          child_token: "child.token",
+          child_template: "child_token.template",
           matron: "breeds.matron",
+          matron_token: "matron.token",
+          matron_template: "matron_token.template",
           sire: "breeds.sire",
+          sire_token: "sire.token",
+          sire_template: "sire_token.template",
           exchange_history: "breeds.history",
         },
       },

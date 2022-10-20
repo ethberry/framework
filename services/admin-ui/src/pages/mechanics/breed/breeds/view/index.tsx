@@ -17,8 +17,9 @@ export interface IBreedItemViewDialogProps {
 
 export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { tokenId, genes, childs } = initialValues;
+  const { token, tokenId, genes, children } = initialValues;
 
+  // TODO import props[] from settings ???
   const DND = ["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
 
   const result = genes
@@ -43,9 +44,13 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.tokenId" />
               </TableCell>
               <TableCell align="right">
-                <Link target={"_blank"} href={`${proto}//${domain}/erc721-tokens/${tokenId || 0}`}>
-                  {tokenId}
-                </Link>
+                {token ? (
+                  <Link target={"_blank"} href={`${proto}//${domain}/erc721-tokens/${tokenId || 0}`}>
+                    {token.template ? `${token.template?.title} #${token.tokenId}` : tokenId}
+                  </Link>
+                ) : (
+                  ""
+                )}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -53,20 +58,28 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.parents" />
               </TableCell>
               <TableCell align="center">
-                <Link
-                  target={"_blank"}
-                  href={`${proto}//${domain}/erc721-tokens/${childs ? childs[0]?.matron.tokenId : 0}`}
-                >
-                  {childs ? childs[0]?.matron.tokenId : 0}
-                </Link>
+                {children && children.length ? (
+                  <Link
+                    target={"_blank"}
+                    href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.matron.tokenId : 0}`}
+                  >
+                    {children[0]?.matron.token?.template?.title} #${children[0]?.matron.token?.tokenId}
+                  </Link>
+                ) : (
+                  ""
+                )}
               </TableCell>
               <TableCell align="right">
-                <Link
-                  target={"_blank"}
-                  href={`${proto}//${domain}/erc721-tokens/${childs ? childs[0]?.sire.tokenId : 0}`}
-                >
-                  {childs ? childs[0]?.sire.tokenId : 0}
-                </Link>
+                {children && children.length ? (
+                  <Link
+                    target={"_blank"}
+                    href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.sire.tokenId : 0}`}
+                  >
+                    {children[0]?.sire.token?.template?.title} #${children[0]?.sire.token?.tokenId}
+                  </Link>
+                ) : (
+                  ""
+                )}
               </TableCell>
             </TableRow>
             <TableRow>

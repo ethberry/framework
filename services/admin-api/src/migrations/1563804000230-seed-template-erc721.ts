@@ -233,7 +233,19 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        130701,
+        130700,
+        'AXIE (genes)(hidden)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        null,
+        '${(1024 * 1024 * 1024 * 4).toString()}',
+        1,
+        'HIDDEN',
+        1307,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ),(
+        307001,
         'Axie',
         '${simpleFormatting}',
         '${imageUrl}',

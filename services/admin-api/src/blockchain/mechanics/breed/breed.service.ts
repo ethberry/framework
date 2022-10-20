@@ -17,6 +17,8 @@ export class BreedService {
     const queryBuilder = this.breedEntityRepository.createQueryBuilder("breed");
 
     queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("breed.token", "token");
+    queryBuilder.leftJoinAndSelect("token.template", "template");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);
@@ -34,9 +36,13 @@ export class BreedService {
           token: "breed.token",
           template: "token.template",
           contract: "template.contract",
-          childs: "breed.childs",
-          childs_matron: "childs.matron",
-          childs_sire: "childs.sire",
+          children: "breed.children",
+          children_matron: "children.matron",
+          children_matron_token: "children_matron.token",
+          children_matron_template: "children_matron_token.template",
+          children_sire: "children.sire",
+          children_sire_token: "children_sire.token",
+          children_sire_template: "children_sire_token.template",
           matrons: "breed.matrons",
           matrons_breed: "matrons.child",
           sires: "breed.sires",

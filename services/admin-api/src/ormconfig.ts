@@ -202,6 +202,8 @@ import { SeedWaitlistItemAt1663047650310 } from "./migrations/1663047650310-seed
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { CreateBreed1663047650400 } from "./migrations/1663047650400-create-breed";
 import { CreateBreedHistory1663047650410 } from "./migrations/1663047650410-create-breed-history";
+import { SeedBreed1663047650401 } from "./migrations/1663047650401-seed-breed";
+import { SeedBreedHistory1663047650411 } from "./migrations/1663047650411-seed-breed-history";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -422,6 +424,8 @@ const config: PostgresConnectionOptions = {
 
     CreateBreed1663047650400,
     CreateBreedHistory1663047650410,
+    SeedBreed1663047650401,
+    SeedBreedHistory1663047650411,
   ],
 };
 

@@ -11,6 +11,7 @@ export interface ITokenAttributesView {
 
 export const TokenAttributesView: FC<ITokenAttributesView> = props => {
   const { attributes } = props;
+  const DND = ["matron", "sire", "strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"];
 
   const result = Object.entries(attributes).reduce((memo, [key, value]) => {
     switch (key) {
@@ -24,9 +25,11 @@ export const TokenAttributesView: FC<ITokenAttributesView> = props => {
         break;
       // MODULE:BREEDING
       case TokenAttributes.GENES:
-        Object.entries(decodeGenes(BigNumber.from(value))).forEach(([key, value]) => {
-          Object.assign(memo, { [key]: value });
-        });
+        Object.entries(decodeGenes(BigNumber.from(value), DND))
+          .slice(2) // delete sire & matron info from genes
+          .forEach(([key, value]) => {
+            Object.assign(memo, { [key]: value });
+          });
         break;
       case TokenAttributes.TEMPLATE_ID:
       default:

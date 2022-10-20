@@ -181,6 +181,14 @@ export class SeedExchangeHistory1563804040220 implements MigrationInterface {
         '{}',
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        406005,
+        '${wallet}',
+        '${constants.HashZero}',
+        'Breed',
+        '{}',
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
   }

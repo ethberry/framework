@@ -39,9 +39,8 @@ export const BreedBreeds: FC = () => {
         <List>
           {rows.map((breed, i) => (
             <ListItem key={i}>
-              <ListItemText>
-                {breed.tokenId} - {breed.count}
-              </ListItemText>
+              {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
+              <ListItemText>{`${breed.token.template?.title} #${breed.token.tokenId} breeds count: ${breed.count}`}</ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(breed)}>
                   <Visibility />

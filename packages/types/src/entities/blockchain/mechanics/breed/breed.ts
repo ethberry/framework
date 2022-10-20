@@ -7,7 +7,7 @@ export interface IBreed extends IIdDateBase {
   count: number;
   tokenId: number;
   token: IToken;
-  childs?: Array<IBreedHistory>;
+  children?: Array<IBreedHistory>;
   matrons?: Array<IBreedHistory>;
   sires?: Array<IBreedHistory>;
 }

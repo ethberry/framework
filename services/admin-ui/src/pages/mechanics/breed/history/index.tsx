@@ -63,9 +63,21 @@ export const BreedHistory: FC = () => {
           {rows.map((history, i) => (
             <ListItem key={i}>
               <ListItemText>
-                {history.matronId} - {history.sireId} - {history.childId}
+                {history.matronId} - {history.sireId} - {history.childId || "not yet born"}
               </ListItemText>
-              {/* <ListItemText>{getWinners(ticket, ticket.round!)}</ListItemText> */}
+              <ListItemText>
+                {history.matron && history.matron.token && history.matron.token.template
+                  ? `${history.matron.token.template.title} #${history.matron.token.tokenId}`
+                  : ""}{" "}
+                X{" "}
+                {history.sire && history.sire.token && history.sire.token.template
+                  ? `${history.sire.token.template.title} #${history.sire.token.tokenId}`
+                  : ""}{" "}
+                ={" "}
+                {history.child && history.child.token && history.child.token.template
+                  ? `${history.child.token.template.title} #${history.child.token.tokenId}`
+                  : "not yet born"}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(history)}>
                   <Visibility />

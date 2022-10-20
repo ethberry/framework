@@ -124,14 +124,14 @@ describe("ExchangeBreed", function () {
 
         // TEST METADATA
         const decodedMeta = decodeMetadata(await erc721Instance.getTokenMetadata(3));
-        expect(decodedMeta.TEMPLATE_ID).to.equal("128");
+        expect(decodedMeta.TEMPLATE_ID).to.equal(genesis.templateId.toString());
 
         const genes = decodedMeta.GENES;
-        const decodedGenes = decodeGenes(BigNumber.from(genes), ["matronId", "sireId"].reverse());
-        expect(decodedGenes.matronId).to.equal(genesis.matronId);
-        expect(decodedGenes.sireId).to.equal(genesis.sireId);
+        const decodedParents = decodeGenes(BigNumber.from(genes), ["matronId", "sireId"].reverse());
+        expect(decodedParents.matronId).to.equal(genesis.matronId);
+        expect(decodedParents.sireId).to.equal(genesis.sireId);
         const random = decodeNumber(BigNumber.from(genes)).slice(0, 6);
-        expect(random.join("").length).to.be.greaterThan(50);
+        expect(random.join("").length).to.be.greaterThan(50); // todo better check ????
       });
 
       it("should fail: pregnancy count", async function () {

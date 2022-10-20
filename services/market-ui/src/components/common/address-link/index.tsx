@@ -17,5 +17,9 @@ export const AddressLink: FC<IAddressLinkProps> = props => {
     return null;
   }
 
-  return <Link href={`${networks[chainId].blockExplorerUrls[0]}/address/${address}`}>{address}</Link>;
+  return (
+    <Link target={"_blank"} href={`${networks[chainId].blockExplorerUrls[0]}/address/${address}`}>
+      {address}
+    </Link>
+  );
 };

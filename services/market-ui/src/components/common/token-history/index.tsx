@@ -79,7 +79,7 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
 
   const breedHistoryArr =
     token.breeds?.map(breed => {
-      return breed.childs!.map(child => {
+      return breed.children!.map(child => {
         return {
           price: {
             components: [] as Array<any>,

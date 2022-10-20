@@ -23,7 +23,7 @@ export class BreedEntity extends IdDateBaseEntity implements IBreed {
 
   // TODO get one breed history not an array
   @OneToMany(_type => BreedHistoryEntity, breeds => breeds.child)
-  public childs?: Array<BreedHistoryEntity>;
+  public children?: Array<BreedHistoryEntity>;
 
   @OneToMany(_type => BreedHistoryEntity, history => history.matron)
   public matrons?: Array<BreedHistoryEntity>;
