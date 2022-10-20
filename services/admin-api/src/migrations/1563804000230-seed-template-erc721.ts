@@ -245,7 +245,7 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         '${currentDateTime}',
         '${currentDateTime}'
       ),(
-        307001,
+        130701,
         'Axie',
         '${simpleFormatting}',
         '${imageUrl}',
