@@ -28,6 +28,7 @@ export enum TokenGenes {
 }
 
 export interface IToken extends IIdDateBase {
+  imageUrl: string | null;
   attributes: any;
   tokenId: string;
   royalty: number;

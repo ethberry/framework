@@ -12,6 +12,9 @@ import { ContractHistoryEntity } from "../../contract-history/contract-history.e
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
+  @Column({ type: "varchar", nullable: true })
+  public imageUrl: string | null;
+
   @JsonColumn()
   public attributes: any;
 

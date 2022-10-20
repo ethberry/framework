@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import { subDays } from "date-fns";
 
-import { ns } from "@framework/constants";
+import { imageUrl, ns } from "@framework/constants";
 import { TokenAttributes } from "@framework/types";
 
 export class SeedTokenErc721At1563804000330 implements MigrationInterface {
@@ -13,6 +13,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
       INSERT INTO ${ns}.token (
         id,
         attributes,
+        image_url,
         royalty,
         token_id,
         token_status,
@@ -24,6 +25,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "301001",
         })}',
+        null,
         100,
         '1',
         'MINTED',
@@ -35,6 +37,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "301002",
         })}',
+        null,
         100,
         '1',
         'MINTED',
@@ -46,6 +49,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "301003",
         })}',
+        null,
         100,
         '1',
         'MINTED',
@@ -58,6 +62,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305001",
           [TokenAttributes.GRADE]: "1",
         })}',
+        null,
         100,
         '1',
         'MINTED',
@@ -70,6 +75,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305002",
           [TokenAttributes.GRADE]: "5",
         })}',
+        null,
         100,
         '2',
         'MINTED',
@@ -82,6 +88,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
+        null,
         100,
         '3',
         'MINTED',
@@ -94,6 +101,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
+        null,
         100,
         '4',
         'MINTED',
@@ -106,6 +114,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
+        null,
         100,
         '5',
         'MINTED',
@@ -118,6 +127,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
+        null,
         100,
         '6',
         'MINTED',
@@ -130,6 +140,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
+        null,
         100,
         '7',
         'MINTED',
@@ -142,6 +153,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "305003",
           [TokenAttributes.GRADE]: "10",
         })}',
+        null,
         100,
         '8',
         'MINTED',
@@ -155,6 +167,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.GRADE]: "1",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
+        null,
         100,
         '1',
         'MINTED',
@@ -168,6 +181,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.GRADE]: "5",
           [TokenAttributes.RARITY]: "2", // TokenRarity.RARE
         })}',
+        null,
         100,
         '2',
         'MINTED',
@@ -181,6 +195,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
+        null,
         100,
         '3',
         'MINTED',
@@ -194,6 +209,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.GRADE]: "10",
           [TokenAttributes.RARITY]: "4", // TokenRarity.LEGENDARY
         })}',
+        null,
         100,
         '3',
         'BURNED',
@@ -206,6 +222,7 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
           [TokenAttributes.TEMPLATE_ID]: "307001",
           [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
         })}',
+        '${imageUrl}',
         100,
         '1',
         'MINTED',
@@ -213,10 +230,37 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
+        307002,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "307001",
+          [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+        })}',
+        '${imageUrl}',
+        100,
+        '1',
+        'MINTED',
+        307001,
+        '${subDays(now, 1).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        307003,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "307001",
+          [TokenAttributes.GENES]: "1461501638011467653471668687260973553737594307584", // 1,2,18,128,256,1024
+        })}',
+        '${imageUrl}',
+        100,
+        '1',
+        'MINTED',
+        307001,
+        '${subDays(now, 2).toISOString()}',
+        '${currentDateTime}'
+      ), (
         308001,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "308001",
         })}',
+        null,
         100,
         '1',
         'MINTED',
@@ -224,10 +268,86 @@ export class SeedTokenErc721At1563804000330 implements MigrationInterface {
         '${subDays(now, 0).toISOString()}',
         '${currentDateTime}'
       ), (
+        309001,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "309001",
+          CLOTHES: "1",
+          EYES: "1",
+          MOUTH: "1",
+        })}',
+        '${imageUrl}',
+        100,
+        '1',
+        'MINTED',
+        309001,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        309002,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "309001",
+          CLOTHES: "1",
+          EYES: "2",
+          MOUTH: "1",
+        })}',
+        '${imageUrl}',
+        100,
+        '1',
+        'MINTED',
+        309001,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        309003,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "309001",
+          CLOTHES: "1",
+          EYES: "1",
+          MOUTH: "2",
+        })}',
+        '${imageUrl}',
+        100,
+        '1',
+        'MINTED',
+        309001,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        309004,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "309001",
+          CLOTHES: "1",
+          EYES: "3",
+          MOUTH: "3",
+        })}',
+        '${imageUrl}',
+        100,
+        '1',
+        'MINTED',
+        309001,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
+        309005,
+        '${JSON.stringify({
+          [TokenAttributes.TEMPLATE_ID]: "309001",
+          CLOTHES: "2",
+          EYES: "2",
+          MOUTH: "2",
+        })}',
+        '${imageUrl}',
+        100,
+        '1',
+        'MINTED',
+        309001,
+        '${subDays(now, 0).toISOString()}',
+        '${currentDateTime}'
+      ), (
         311001,
         '${JSON.stringify({
           [TokenAttributes.TEMPLATE_ID]: "311001",
         })}',
+        null,
         100,
         '1',
         'MINTED',

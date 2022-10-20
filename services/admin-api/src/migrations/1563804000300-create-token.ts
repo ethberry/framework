@@ -24,6 +24,11 @@ export class CreateToken1563804000300 implements MigrationInterface {
           type: "json",
         },
         {
+          name: "image_url",
+          type: "varchar",
+          isNullable: true,
+        },
+        {
           name: "royalty",
           type: "int",
           default: 0,

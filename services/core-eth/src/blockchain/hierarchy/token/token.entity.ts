@@ -12,6 +12,9 @@ import { AssetComponentHistoryEntity } from "../../mechanics/asset/asset-compone
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
+  @Column({ type: "varchar", nullable: true })
+  public imageUrl: string | null;
+
   @JsonColumn()
   public attributes: any;
 

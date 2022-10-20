@@ -43,6 +43,8 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
       ), (
         1308001
       ), (
+        1309001
+      ), (
         1311001
       );
     `);
@@ -252,6 +254,18 @@ export class SeedTemplateErc721At1563804000230 implements MigrationInterface {
         1,
         'ACTIVE',
         308,
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        309001,
+        'Generative (traits)',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        1309001,
+        0,
+        1,
+        'ACTIVE',
+        309,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (

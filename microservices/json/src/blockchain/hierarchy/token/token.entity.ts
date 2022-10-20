@@ -9,6 +9,9 @@ import { TemplateEntity } from "../template/template.entity";
 
 @Entity({ schema: ns, name: "token" })
 export class TokenEntity extends IdDateBaseEntity implements IToken {
+  @Column({ type: "varchar", nullable: true })
+  public imageUrl: string | null;
+
   @Column({ type: "json" })
   public attributes: any;
 
