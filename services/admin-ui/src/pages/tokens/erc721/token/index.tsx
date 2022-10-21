@@ -74,7 +74,9 @@ export const Erc721Token: FC = () => {
         <List>
           {rows.map((token, i) => (
             <ListItem key={i}>
-              <ListItemText>{token.template?.title}</ListItemText>
+              <ListItemText>
+                {token.template?.title} #{token.tokenId}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(token)}>
                   <Visibility />
