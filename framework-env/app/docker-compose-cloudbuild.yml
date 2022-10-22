@@ -207,7 +207,7 @@ services:
   emailer:
     container_name: emailer
     image: gcr.io/halogen-framing-335807/framework-img:latest
-    command: "npm run --prefix ./services/eml start:${BASE_MODE}"
+    command: "npm run --prefix ./microservices/eml start:${BASE_MODE}"
     environment:
       # common
       NODE_OPTIONS: --max-old-space-size=8192
