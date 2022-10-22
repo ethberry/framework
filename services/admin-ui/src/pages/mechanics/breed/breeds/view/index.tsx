@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid, Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
+import { Grid, Link, Paper, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import { BigNumber } from "ethers";
 
@@ -45,9 +45,11 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
               </TableCell>
               <TableCell align="right">
                 {token ? (
-                  <Link target={"_blank"} href={`${proto}//${domain}/erc721-tokens/${tokenId || 0}`}>
-                    {token.template ? `${token.template?.title} #${token.tokenId}` : tokenId}
-                  </Link>
+                  <Typography variant="body1" color="textSecondary">
+                    <Link target={"_blank"} href={`${proto}//${domain}/erc721-tokens/${tokenId || 0}`}>
+                      {token.template ? `${token.template?.title} #${token.tokenId}` : tokenId}
+                    </Link>
+                  </Typography>
                 ) : (
                   ""
                 )}
@@ -57,28 +59,28 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.parents" />
               </TableCell>
-              <TableCell align="center">
-                {children && children.length ? (
-                  <Link
-                    target={"_blank"}
-                    href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.matron.tokenId : 0}`}
-                  >
-                    {children[0]?.matron.token?.template?.title} #${children[0]?.matron.token?.tokenId}
-                  </Link>
-                ) : (
-                  ""
-                )}
-              </TableCell>
               <TableCell align="right">
                 {children && children.length ? (
-                  <Link
-                    target={"_blank"}
-                    href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.sire.tokenId : 0}`}
-                  >
-                    {children[0]?.sire.token?.template?.title} #${children[0]?.sire.token?.tokenId}
-                  </Link>
+                  <>
+                    <Typography variant="body1" color="textSecondary">
+                      <Link
+                        target={"_blank"}
+                        href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.matron.tokenId : 0}`}
+                      >
+                        {children[0]?.matron.token?.template?.title} #{children[0]?.matron.token?.tokenId}
+                      </Link>
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      <Link
+                        target={"_blank"}
+                        href={`${proto}//${domain}/erc721-tokens/${children ? children[0]?.sire.tokenId : 0}`}
+                      >
+                        {children[0]?.sire.token?.template?.title} #{children[0]?.sire.token?.tokenId}
+                      </Link>
+                    </Typography>
+                  </>
                 ) : (
-                  ""
+                  "genesisZero"
                 )}
               </TableCell>
             </TableRow>

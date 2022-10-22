@@ -8,6 +8,7 @@ import {
   ListItemSecondaryAction,
   ListItemText,
   Pagination,
+  Typography,
 } from "@mui/material";
 import { FilterList, Visibility } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
@@ -17,7 +18,6 @@ import { useCollection } from "@gemunion/react-hooks";
 import type { IBreedHistory, IBreedHistorySearchDto } from "@framework/types";
 
 import { BreedHistoryViewDialog } from "./view";
-// import { getNumbers, getWinners } from "../utils";
 import { BreedHistorySearchForm } from "./form";
 
 export const BreedHistory: FC = () => {
@@ -63,20 +63,22 @@ export const BreedHistory: FC = () => {
           {rows.map((history, i) => (
             <ListItem key={i}>
               <ListItemText>
-                {history.matronId} - {history.sireId} - {history.childId || "not yet born"}
-              </ListItemText>
-              <ListItemText>
-                {history.matron && history.matron.token && history.matron.token.template
-                  ? `${history.matron.token.template.title} #${history.matron.token.tokenId}`
-                  : ""}{" "}
-                X{" "}
-                {history.sire && history.sire.token && history.sire.token.template
-                  ? `${history.sire.token.template.title} #${history.sire.token.tokenId}`
-                  : ""}{" "}
-                ={" "}
-                {history.child && history.child.token && history.child.token.template
-                  ? `${history.child.token.template.title} #${history.child.token.tokenId}`
-                  : "not yet born"}
+                <Typography variant="h6">
+                  {history.matron && history.matron.token && history.matron.token.template
+                    ? `${history.matron.token.template.title} #${history.matron.token.tokenId}`
+                    : ""}{" "}
+                  X{" "}
+                  {history.sire && history.sire.token && history.sire.token.template
+                    ? `${history.sire.token.template.title} #${history.sire.token.tokenId}`
+                    : ""}{" "}
+                  ={" "}
+                  {history.child && history.child.token && history.child.token.template
+                    ? `${history.child.token.template.title} #${history.child.token.tokenId}`
+                    : "not yet born"}
+                </Typography>
+                <Typography variant="body1" color="textSecondary">
+                  {history.matronId} - {history.sireId} - {history.childId || "?"}
+                </Typography>
               </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleView(history)}>
