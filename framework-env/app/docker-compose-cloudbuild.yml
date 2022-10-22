@@ -204,6 +204,28 @@ services:
       # game-api
       - "${PORT_GAME_API}:${PORT_GAME_API}"
 
+  emailer:
+    container_name: emailer
+    image: gcr.io/halogen-framing-335807/framework-img:latest
+    command: "npm run --prefix ./services/eml start:${BASE_MODE}"
+    environment:
+      # common
+      NODE_OPTIONS: --max-old-space-size=8192
+      HOST: 0.0.0.0
+      # RMQ
+      RMQ_URL: "${RMQ_URL}"
+      RMQ_QUEUE_EMAIL: email
+      # mailjet
+      MAILJET_PUBLIC_KEY: "${MAILJET_PUBLIC_KEY}"
+      MAILJET_PRIVATE_KEY: "${MAILJET_PRIVATE_KEY}"
+      MAILJET_FROM: "${MAILJET_FROM}"
+      # logDNA
+      LOGDNA_INGESTION_KEY: "${LOGDNA_INGESTION_KEY}"
+    ports:
+      # emailer
+      - "${PORT_EML_API}:${PORT_EML_API}"
+
+
   nginx:
     container_name: nginx
     image: nginx
