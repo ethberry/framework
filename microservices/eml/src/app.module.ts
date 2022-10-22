@@ -5,6 +5,7 @@ import { WinstonModule } from "nest-winston";
 import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { RequestLoggerModule } from "@gemunion/nest-js-module-request-logger";
 import { IMailjetOptions, MailjetModule } from "@gemunion/nest-js-module-mailjet";
+import { LicenseModule } from "@gemunion/nest-js-module-license";
 import { companyName } from "@framework/constants";
 
 import { EmailModule } from "./email/email.module";
@@ -29,6 +30,13 @@ import { HealthModule } from "./health/health.module";
           from: configService.get<string>("MAILJET_FROM", ""),
           name: companyName,
         };
+      },
+    }),
+    LicenseModule.forRootAsync(LicenseModule, {
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService): string => {
+        return configService.get<string>("GEMUNION_API_KEY", "");
       },
     }),
     RequestLoggerModule,
