@@ -25,7 +25,7 @@ export class SeedBreedHistory1663047650411 implements MigrationInterface {
                 406005,
                 '${currentDateTime}',
                 '${currentDateTime}'),
-               (1,
+               (2,
                 '${wallet}',
                 null,
                 2,

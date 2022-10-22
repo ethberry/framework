@@ -10,7 +10,7 @@ import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
 export class ContractService {
-  private chainId: number;
+  public chainId: number;
 
   constructor(
     @InjectRepository(ContractEntity)

@@ -36,7 +36,7 @@ export class TokenService {
     return tokenEntity.save();
   }
 
-  public getToken(tokenId: string, address: string): Promise<TokenEntity | null> {
+  public getToken(tokenId: string, address: string, chainId?: number): Promise<TokenEntity | null> {
     const queryBuilder = this.tokenEntityRepository.createQueryBuilder("token");
 
     queryBuilder.select();
@@ -52,6 +52,12 @@ export class TokenService {
     queryBuilder.andWhere("contract.address = :address", {
       address,
     });
+
+    if (chainId) {
+      queryBuilder.andWhere("contract.chainId = :chainId", {
+        chainId,
+      });
+    }
 
     return queryBuilder.getOne();
   }

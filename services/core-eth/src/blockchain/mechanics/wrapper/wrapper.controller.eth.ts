@@ -14,15 +14,27 @@ import {
 
 import { WrapperServiceEth } from "./wrapper.service.eth";
 import { TokenServiceEth } from "../../hierarchy/token/token.service.eth";
-import { Erc721TokenServiceEth } from "../../tokens/erc721/token/token.service.eth";
 
 @Controller()
 export class WrapperControllerEth {
   constructor(
     private readonly tokenServiceEth: TokenServiceEth,
-    private readonly erc721TokenServiceEth: Erc721TokenServiceEth,
-    private readonly waitlistServiceEth: WrapperServiceEth,
+    private readonly wrapperServiceEth: WrapperServiceEth,
   ) {}
+
+  @EventPattern({ contractType: ContractType.WRAPPER, eventName: ContractEventType.Transfer })
+  public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
+    return this.wrapperServiceEth.transfer(event, context);
+  }
+
+  @EventPattern([{ contractType: ContractType.WRAPPER, eventName: ContractEventType.UnpackWrapper }])
+  public unpack(
+    @Payload()
+    event: ILogEvent<IUnpackWrapper>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.wrapperServiceEth.unpack(event, context);
+  }
 
   @EventPattern({ contractType: ContractType.WRAPPER, eventName: ContractEventType.Approval })
   public approval(@Payload() event: ILogEvent<IERC721TokenApproveEvent>, @Ctx() context: Log): Promise<void> {
@@ -35,19 +47,5 @@ export class WrapperControllerEth {
     @Ctx() context: Log,
   ): Promise<void> {
     return this.tokenServiceEth.approvalForAll(event, context);
-  }
-
-  @EventPattern({ contractType: ContractType.WRAPPER, eventName: ContractEventType.Transfer })
-  public transfer(@Payload() event: ILogEvent<IERC721TokenTransferEvent>, @Ctx() context: Log): Promise<void> {
-    return this.erc721TokenServiceEth.transfer(event, context);
-  }
-
-  @EventPattern([{ contractType: ContractType.WRAPPER, eventName: ContractEventType.UnpackWrapper }])
-  public unpack(
-    @Payload()
-    event: ILogEvent<IUnpackWrapper>,
-    @Ctx() context: Log,
-  ): Promise<void> {
-    return this.waitlistServiceEth.unpack(event, context);
   }
 }

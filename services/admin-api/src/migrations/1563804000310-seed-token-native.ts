@@ -53,6 +53,15 @@ export class SeedTokenNativeAt1563804000310 implements MigrationInterface {
         310101,
         '${currentDateTime}',
         '${currentDateTime}'
+      ), (
+        41010101,
+        '${defaultJSON}',
+        0,
+        '0',
+        'MINTED',
+        410101,
+        '${currentDateTime}',
+        '${currentDateTime}'
       );
     `);
 

@@ -9,18 +9,18 @@ import { BalanceEntity } from "./balance.entity";
 export class BalanceService {
   constructor(
     @InjectRepository(BalanceEntity)
-    private readonly erc1155BalanceEntityRepository: Repository<BalanceEntity>,
+    private readonly balanceEntityRepository: Repository<BalanceEntity>,
   ) {}
 
   public findOne(
     where: FindOptionsWhere<BalanceEntity>,
     options?: FindOneOptions<BalanceEntity>,
   ): Promise<BalanceEntity | null> {
-    return this.erc1155BalanceEntityRepository.findOne({ where, ...options });
+    return this.balanceEntityRepository.findOne({ where, ...options });
   }
 
   public async create(dto: DeepPartial<BalanceEntity>): Promise<BalanceEntity> {
-    return this.erc1155BalanceEntityRepository.create(dto).save();
+    return this.balanceEntityRepository.create(dto).save();
   }
 
   public async increment(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
