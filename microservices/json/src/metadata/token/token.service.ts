@@ -50,7 +50,7 @@ export class MetadataTokenService {
 
     return {
       description: getPainText(tokenEntity.template.description),
-      external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.id}`,
+      external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
       image: tokenEntity.template.imageUrl,
       name: tokenEntity.template.title,
       attributes: this.formatMetadata(attributes),
