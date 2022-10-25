@@ -34,7 +34,6 @@ touch ./services/admin-api/.env.production
   echo RMQ_URL=$RMQ_URL >>./services/admin-api/.env.production
   echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/admin-api/.env.production
   echo RMQ_QUEUE_WAREHOUSE=$RMQ_QUEUE_WAREHOUSE >>./services/admin-api/.env.production
-  echo GOOGLE_RECAPTCHA_PRIVATE=$GOOGLE_RECAPTCHA_PRIVATE >>./services/admin-api/.env.production
   echo GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID >>./services/admin-api/.env.production
   echo GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET >>./services/admin-api/.env.production
   echo GOOGLE_CALLBACK_URL=$GOOGLE_CALLBACK_URL >>./services/admin-api/.env.production
@@ -48,7 +47,6 @@ touch ./services/admin-ui/.env.production
   echo HOST=$HOST >>./services/admin-ui/.env.production
   echo PORT=$PORT_ADMIN_UI >>./services/admin-ui/.env.production
   echo BE_URL=$ADMIN_BE_URL >>./services/admin-ui/.env.production
-  echo GOOGLE_RECAPTCHA_PUBLIC=$GOOGLE_RECAPTCHA_PUBLIC >>./services/admin-ui/.env.production
   echo GOOGLE_ANALYTICS=$GOOGLE_ANALYTICS >> ./services/admin-ui/.env.production
   echo FIREBASE_API_KEY=$FIREBASE_API_KEY >>./services/admin-ui/.env.production
   echo FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN >>./services/admin-ui/.env.production
@@ -71,7 +69,6 @@ touch ./services/public-api/.env.production
   echo RMQ_URL=$RMQ_URL >>./services/public-api/.env.production
   echo RMQ_QUEUE_EMAIL=$RMQ_QUEUE_EMAIL >>./services/public-api/.env.production
   echo RMQ_QUEUE_WAREHOUSE=$RMQ_QUEUE_WAREHOUSE >>./services/public-api/.env.production
-  echo GOOGLE_RECAPTCHA_PRIVATE=$GOOGLE_RECAPTCHA_PRIVATE >>./services/public-api/.env.production
   echo GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID >>./services/public-api/.env.production
   echo GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET >>./services/public-api/.env.production
   echo GOOGLE_CALLBACK_URL=$GOOGLE_CALLBACK_URL >>./services/public-api/.env.production
@@ -85,7 +82,6 @@ touch ./services/public-ui/.env.production
   echo HOST=$HOST >>./services/public-ui/.env.production
   echo PORT=$PORT_PUBLIC_UI >>./services/public-ui/.env.production
   echo BE_URL=$PUBLIC_BE_URL >>./services/public-ui/.env.production
-  echo GOOGLE_RECAPTCHA_PUBLIC=$GOOGLE_RECAPTCHA_PUBLIC >>./services/public-ui/.env.production
   echo GOOGLE_ANALYTICS=$GOOGLE_ANALYTICS >> ./services/public-ui/.env.production
   echo FIREBASE_API_KEY=$FIREBASE_API_KEY >>./services/public-ui/.env.production
   echo FIREBASE_AUTH_DOMAIN=$FIREBASE_AUTH_DOMAIN >>./services/public-ui/.env.production
