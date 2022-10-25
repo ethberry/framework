@@ -13,7 +13,13 @@ export class CreateExchangeHistory1563804040210 implements MigrationInterface {
         'Purchase',
         'Paused',
         'Unpaused',
-        'Reward'
+        'Reward',
+        'PayeeAdded',
+        'PaymentReleased',
+        'ERC20PaymentReleased',
+        'PaymentEthReceived',
+        'PaymentReceived',
+        'PaymentEthSent'
       );`,
     );
 

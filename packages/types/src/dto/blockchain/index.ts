@@ -6,6 +6,8 @@ export * from "./hierarchy/template/autocomplete";
 export * from "./hierarchy/template/search";
 export * from "./hierarchy/token/autocomplete";
 export * from "./hierarchy/token/search";
+export * from "./hierarchy/balance/autocomplete";
+export * from "./hierarchy/balance/search";
 
 export * from "./mechanics/asset/asset";
 export * from "./mechanics/asset/components";

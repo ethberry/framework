@@ -21,6 +21,9 @@ contract ExchangeUtils {
   using Address for address;
   using SafeERC20 for IERC20;
 
+  event PaymentEthReceived(address from, uint256 amount);
+  event PaymentEthSent(address to, uint256 amount);
+
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
   function spend(
@@ -47,9 +50,11 @@ contract ExchangeUtils {
           if (totalAmount > 0) {
             Address.sendValue(payable(receiver), totalAmount);
             totalAmount = 0;
+            emit PaymentEthSent(receiver, totalAmount);
           }
         } else {
           require(totalAmount == msg.value, "Exchange: Wrong amount");
+          emit PaymentEthReceived(_msgSender(), msg.value);
         }
       } else if (ingredient.tokenType == TokenType.ERC20) {
         if (account == address(this)) {
