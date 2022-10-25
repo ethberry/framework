@@ -7,6 +7,7 @@ import { RoyaltyModule } from "./royalty/royalty.module";
 import { TokensModule } from "./tokens/tokens.module";
 import { MechanicsModule } from "./mechanics/mechanics.module";
 import { PauseModule } from "./pause/pause.module";
+import { WalletModule } from "./wallet/wallet.module";
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PauseModule } from "./pause/pause.module";
     RoyaltyModule,
     TokensModule,
     MechanicsModule,
+    WalletModule,
   ],
 })
 export class BlockchainModule {}

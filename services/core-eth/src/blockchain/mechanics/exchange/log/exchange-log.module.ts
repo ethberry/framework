@@ -38,6 +38,11 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               ContractEventType.Unpaused,
               // MODULE:BREEDING
               ExchangeEventType.Breed,
+              // MODULE:WALLET
+              ExchangeEventType.PayeeAdded,
+              ExchangeEventType.PaymentReceived,
+              ExchangeEventType.PaymentEthReceived,
+              ExchangeEventType.PaymentEthSent,
             ],
           },
           block: {

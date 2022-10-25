@@ -291,6 +291,8 @@
       "items": "Items",
       "language": "Language",
       "listId": "List ID",
+      "minBalance": "Min Balance",
+      "maxBalance": "Max Balance",
       "maxStakes": "Max Stakes",
       "matron": "Matron",
       "sire": "Sire",
@@ -369,6 +371,8 @@
       "item": "Bottle of water",
       "listId": "1",
       "maxStakes": "0",
+      "minBalance": "0",
+      "maxBalance": "100",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
@@ -480,6 +484,8 @@
         "admin": {
           "emails": "Emails",
           "pages": "Pages",
+          "payees": "System Payees",
+          "balances": "System Balances",
           "settings": "Settings",
           "title": "Admin",
           "users": "Users"
@@ -663,6 +669,15 @@
     },
     "vesting": {
       "title": "Vesting"
+    },
+    "payees": {
+      "title": "System Payees",
+      "attach": "Attach",
+      "detach": "Detach",
+      "withdraw": "Withdraw",
+      "balances": {
+        "title": "System Balances"
+      }
     },
     "waitlist": {
       "item": {

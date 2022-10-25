@@ -13,6 +13,13 @@ export enum ExchangeEventType {
   ClaimReward = "ClaimReward",
   // MODULE:BREEDING
   Breed = "Breed",
+  // MODULE:WALLET
+  PayeeAdded = "PayeeAdded",
+  PaymentReleased = "PaymentReleased",
+  ERC20PaymentReleased = "ERC20PaymentReleased",
+  PaymentReceived = "PaymentReceived",
+  PaymentEthReceived = "PaymentEthReceived",
+  PaymentEthSent = "PaymentEthSent",
 }
 
 export type IExchangeItem = [number, string, string, string];
@@ -22,6 +29,19 @@ export interface IExchangePurchaseEvent {
   externalId: string;
   item: IExchangeItem;
   price: Array<IExchangeItem>;
+}
+
+// MODULE:WALLET
+export interface IExchangePayeeAddedEvent {
+  account: string;
+  shares: string;
+  externalId: 0;
+}
+
+export interface IExchangePaymentReceivedEvent {
+  from: string;
+  amount: string;
+  externalId: 0;
 }
 
 // MODULE:CLAIM
@@ -84,7 +104,9 @@ export type TExchangeEventData =
   | IExchangeMysteryEvent
   | IRewardSetEvent
   | IClaimRewardEvent
-  | IExchangeBreedEvent;
+  | IExchangeBreedEvent
+  | IExchangePayeeAddedEvent
+  | IExchangePaymentReceivedEvent;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;
