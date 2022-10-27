@@ -6,8 +6,10 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
   ExchangeEventType,
+  IExchangeErc20PaymentReleasedEvent,
   IExchangePayeeAddedEvent,
   IExchangePaymentReceivedEvent,
+  IExchangePaymentReleasedEvent,
 } from "@framework/types";
 
 import { WalletServiceEth } from "./wallet.service.eth";
@@ -44,4 +46,28 @@ export class WalletControllerEth {
   public sentEth(@Payload() event: ILogEvent<IExchangePaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {
     return this.walletServiceEth.sentEth(event, context);
   }
+
+  @EventPattern([
+    {
+      contractType: ContractType.EXCHANGE,
+      eventName: ExchangeEventType.PaymentReleased,
+    },
+  ])
+  public releaseEth(@Payload() event: ILogEvent<IExchangePaymentReleasedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.walletServiceEth.releaseEth(event, context);
+  }
+
+  @EventPattern([
+    {
+      contractType: ContractType.EXCHANGE,
+      eventName: ExchangeEventType.ERC20PaymentReleased,
+    },
+  ])
+  public releaseErc20(
+    @Payload() event: ILogEvent<IExchangeErc20PaymentReleasedEvent>,
+    @Ctx() context: Log,
+  ): Promise<void> {
+    return this.walletServiceEth.releaseErc20(event, context);
+  }
+  // TODO add dedicated release history table? {from, to, token, amount}
 }

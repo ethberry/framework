@@ -13,11 +13,10 @@ import { User } from "./user";
 import { Settings } from "./settings";
 import { Email } from "./email";
 import { Page } from "./page";
-import { SystemPayees } from "./payees";
 import { mechanicsRoutes } from "./mechanics/routes";
 import { integrationsRoutes } from "./integrations/routes";
 import { tokenRoutes } from "./tokens/routes";
-import { SystemBalances } from "./balances";
+import { walletRoutes } from "./wallet/routes";
 
 const routes: Array<RouteObject> = [
   {
@@ -65,19 +64,10 @@ const routes: Array<RouteObject> = [
         element: <Protected />,
         children: [{ index: true, element: <Email /> }],
       },
-      {
-        path: "/payees",
-        element: <Protected />,
-        children: [{ index: true, element: <SystemPayees /> }],
-      },
-      {
-        path: "/payees/balances",
-        element: <Protected />,
-        children: [{ index: true, element: <SystemBalances /> }],
-      },
       ...tokenRoutes,
       ...mechanicsRoutes,
       ...integrationsRoutes,
+      ...walletRoutes,
       {
         path: "/error/:error",
         element: <Error />,

@@ -3,31 +3,31 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { PaginationDto } from "@gemunion/collection";
 
-import { WalletPayeesEntity } from "./wallet-payees.entity";
+import { PayeesEntity } from "./payees.entity";
 import { BalanceEntity } from "../hierarchy/balance/balance.entity";
 
 @Injectable()
 export class PayeesService {
   constructor(
-    @InjectRepository(WalletPayeesEntity)
-    private readonly payeesEntityRepository: Repository<WalletPayeesEntity>,
+    @InjectRepository(PayeesEntity)
+    private readonly payeesEntityRepository: Repository<PayeesEntity>,
   ) {}
 
   public findOne(
-    where: FindOptionsWhere<WalletPayeesEntity>,
-    options?: FindOneOptions<WalletPayeesEntity>,
-  ): Promise<WalletPayeesEntity | null> {
+    where: FindOptionsWhere<PayeesEntity>,
+    options?: FindOneOptions<PayeesEntity>,
+  ): Promise<PayeesEntity | null> {
     return this.payeesEntityRepository.findOne({ where, ...options });
   }
 
   public findAll(
-    where: FindOptionsWhere<WalletPayeesEntity>,
-    options?: FindOneOptions<WalletPayeesEntity>,
-  ): Promise<Array<WalletPayeesEntity>> {
+    where: FindOptionsWhere<PayeesEntity>,
+    options?: FindOneOptions<PayeesEntity>,
+  ): Promise<Array<PayeesEntity>> {
     return this.payeesEntityRepository.find({ where, ...options });
   }
 
-  public search(dto: PaginationDto): Promise<[Array<WalletPayeesEntity>, number]> {
+  public search(dto: PaginationDto): Promise<[Array<PayeesEntity>, number]> {
     const { skip, take } = dto;
 
     const queryBuilder = this.payeesEntityRepository.createQueryBuilder("payee");
@@ -42,5 +42,15 @@ export class PayeesService {
     });
 
     return queryBuilder.getManyAndCount();
+  }
+
+  public async autocomplete(): Promise<Array<PayeesEntity>> {
+    return this.payeesEntityRepository.find({
+      select: {
+        id: true,
+        account: true,
+        shares: true,
+      },
+    });
   }
 }

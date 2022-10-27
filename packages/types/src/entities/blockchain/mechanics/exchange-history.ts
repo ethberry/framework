@@ -44,6 +44,19 @@ export interface IExchangePaymentReceivedEvent {
   externalId: 0;
 }
 
+export interface IExchangePaymentReleasedEvent {
+  to: string;
+  amount: string;
+  externalId: 0;
+}
+
+export interface IExchangeErc20PaymentReleasedEvent {
+  token: string;
+  to: string;
+  amount: string;
+  externalId: 0;
+}
+
 // MODULE:CLAIM
 export interface IExchangeClaimEvent {
   from: string;
@@ -106,7 +119,9 @@ export type TExchangeEventData =
   | IClaimRewardEvent
   | IExchangeBreedEvent
   | IExchangePayeeAddedEvent
-  | IExchangePaymentReceivedEvent;
+  | IExchangePaymentReceivedEvent
+  | IExchangePaymentReleasedEvent
+  | IExchangeErc20PaymentReleasedEvent;
 
 export interface IExchangeHistory extends IIdDateBase {
   address: string;
