@@ -12,7 +12,7 @@
     "@framework/nest-js-module-exchange-signer": "0.0.1",
     "@framework/types": "0.0.1",
     "@gemunion/collection": "2.2.2",
-    "@gemunion/constants": "0.8.7",
+    "@gemunion/constants": "0.9.0",
     "@gemunion/draft-js-utils": "0.3.25",
     "@gemunion/nest-js-guards": "2.0.10",
     "@gemunion/nest-js-module-firebase": "0.1.6",
