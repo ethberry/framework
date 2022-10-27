@@ -491,6 +491,7 @@
           "emails": "Emails",
           "pages": "Pages",
           "payees": "System Payees",
+          "balances": "System Balances",
           "settings": "Settings",
           "title": "Admin",
           "users": "Users"
