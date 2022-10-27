@@ -29,11 +29,11 @@ export const ipfsRoutes: Array<RouteObject> = [
         children: [{ index: true, element: <Pinata /> }],
       },
       {
-        path: "/ipfs/web3storage",
+        path: "/ipfs/web3-storage",
         children: [{ index: true, element: <Web3Storage /> }],
       },
       {
-        path: "/ipfs/nftstorage",
+        path: "/ipfs/nft-storage",
         children: [{ index: true, element: <NftStorage /> }],
       },
     ],
