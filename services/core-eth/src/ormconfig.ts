@@ -34,7 +34,7 @@ import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.en
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
-import { WalletPayeesEntity } from "./blockchain/wallet/wallet-payees.entity";
+import { PayeesEntity } from "./blockchain/wallet/payees.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -74,7 +74,7 @@ const config: PostgresConnectionOptions = {
     WaitlistItemEntity,
     BreedEntity,
     BreedHistoryEntity,
-    WalletPayeesEntity,
+    PayeesEntity,
   ],
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),

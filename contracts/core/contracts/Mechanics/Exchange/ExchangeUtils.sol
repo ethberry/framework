@@ -54,7 +54,7 @@ contract ExchangeUtils {
           }
         } else {
           require(totalAmount == msg.value, "Exchange: Wrong amount");
-          emit PaymentEthReceived(_msgSender(), msg.value);
+          emit PaymentEthReceived(receiver, msg.value);
         }
       } else if (ingredient.tokenType == TokenType.ERC20) {
         if (account == address(this)) {

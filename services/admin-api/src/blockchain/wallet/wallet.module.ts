@@ -3,13 +3,13 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { WalletController } from "./wallet.controller";
 import { WalletService } from "./wallet.service";
-import { WalletPayeesEntity } from "./wallet-payees.entity";
-import { PayeesService } from "./wallet-payees.service";
+import { PayeesEntity } from "./payees.entity";
+import { PayeesService } from "./payees.service";
 import { BalanceModule } from "../hierarchy/balance/balance.module";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [ContractModule, BalanceModule, TypeOrmModule.forFeature([WalletPayeesEntity])],
+  imports: [ContractModule, BalanceModule, TypeOrmModule.forFeature([PayeesEntity])],
   controllers: [WalletController],
   providers: [WalletService, PayeesService],
   exports: [WalletService, PayeesService],

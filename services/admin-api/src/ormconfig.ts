@@ -205,7 +205,7 @@ import { CreateBreedHistory1663047650410 } from "./migrations/1663047650410-crea
 import { SeedBreed1663047650401 } from "./migrations/1663047650401-seed-breed";
 import { SeedBreedHistory1663047650411 } from "./migrations/1663047650411-seed-breed-history";
 import { CreateWalletPayees1663047650510 } from "./migrations/1663047650510-create-wallet-payees";
-import { WalletPayeesEntity } from "./blockchain/wallet/wallet-payees.entity";
+import { PayeesEntity } from "./blockchain/wallet/payees.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -247,7 +247,7 @@ const config: PostgresConnectionOptions = {
     WaitlistListEntity,
     BreedEntity,
     BreedHistoryEntity,
-    WalletPayeesEntity,
+    PayeesEntity,
   ],
   // We are using migrations, synchronize should public-api set to false.
   synchronize: false,

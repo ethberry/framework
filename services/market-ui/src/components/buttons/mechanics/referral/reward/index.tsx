@@ -20,10 +20,11 @@ export const ReferralRewardButton: FC = () => {
     return metaFn();
   };
 
+  // TODO add token selector for balance and get balances on demand only
   const getBalance = useMetamaskValue(
     (web3Context: Web3ContextType) => {
       const contract = new Contract(process.env.EXCHANGE_ADDR, ExchangeSol.abi, web3Context.provider?.getSigner());
-      return contract.getBalance(account) as Promise<string>;
+      return contract.getBalance(account, constants.AddressZero) as Promise<string>;
     },
     { success: false },
   );
