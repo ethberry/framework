@@ -31,6 +31,22 @@ export const Ipfs: FC = () => {
             <FormattedMessage id="pages.ipfs.pinata.title" />
           </ListItemText>
         </ListItem>
+        <ListItem button component={RouterLink} to="/ipfs/web3storage">
+          <ListItemIcon>
+            <PushPin />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.ipfs.web3Storage.title" />
+          </ListItemText>
+        </ListItem>
+        <ListItem button component={RouterLink} to="/ipfs/nftStorage">
+          <ListItemIcon>
+            <PushPin />
+          </ListItemIcon>
+          <ListItemText>
+            <FormattedMessage id="pages.ipfs.nftStorage.title" />
+          </ListItemText>
+        </ListItem>
       </List>
     </Paper>
   );
