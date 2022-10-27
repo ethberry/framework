@@ -520,7 +520,8 @@
     },
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
-      "login": "Login"
+      "login": "Login",
+      "signInWithMetamask": "Sign in with Metamask"
     },
     "ipfs": {
       "infura": {
@@ -696,6 +697,7 @@
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
-    "walletIsNotConnected": "Wallet is not connected"
+    "walletIsNotConnected": "Wallet is not connected",
+    "web3NotDetected": "Web3 not detected"
   }
 }

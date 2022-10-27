@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 
-import { Protected } from "@gemunion/firebase-login";
+import { Protected } from "@gemunion/common-pages";
 import { StakingRules } from "./rules";
 import { StakingReport } from "./report";
 import { StakingChart } from "./chart";
