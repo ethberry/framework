@@ -2,24 +2,29 @@ import { forwardRef, Logger, Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import admin from "firebase-admin";
 
+import { MetamaskModule } from "@gemunion/nest-js-module-metamask";
 import { PassportInitialize } from "@gemunion/nest-js-module-passport";
 
 import { UserModule } from "../user/user.module";
-import { FirebaseStrategy } from "./strategies";
-import { AuthService } from "./auth.service";
 import { APP_PROVIDER } from "./auth.constants";
+import { AuthMetamaskController } from "./auth.metamask.controller";
+import { AuthMetamaskService } from "./auth.metamask.service";
+import { AuthService } from "./auth.service";
+import { FirebaseStrategy } from "./strategies";
 
 @Module({
-  imports: [ConfigModule, PassportInitialize.forRoot(), forwardRef(() => UserModule)],
+  imports: [ConfigModule, MetamaskModule, PassportInitialize.forRoot(), forwardRef(() => UserModule)],
   providers: [
     Logger,
     AuthService,
+    AuthMetamaskService,
     FirebaseStrategy,
     {
       provide: APP_PROVIDER,
       useValue: admin,
     },
   ],
+  controllers: [AuthMetamaskController],
   exports: [AuthService],
 })
 export class AuthModule {

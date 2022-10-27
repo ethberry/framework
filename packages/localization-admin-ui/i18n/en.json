@@ -710,6 +710,7 @@
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
     "userNotFound": "User not found",
-    "walletIsNotConnected": "Wallet is not connected"
+    "walletIsNotConnected": "Wallet is not connected",
+    "web3NotDetected": "Web3 not detected"
   }
 }

@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Navigate, useRoutes } from "react-router";
 import type { RouteObject } from "react-router-dom";
-import { Error, Message } from "@gemunion/common-pages";
-import { Protected, routes as loginRoutes } from "@gemunion/firebase-login";
+import { Error, Message, Protected } from "@gemunion/common-pages";
+import { FirebaseLogin } from "@gemunion/firebase-login";
 
 import { Layout } from "../components/common/layout";
 
@@ -24,7 +24,10 @@ const routes: Array<RouteObject> = [
     element: <Layout />,
     children: [
       { index: true, element: <Landing /> },
-      ...loginRoutes,
+      {
+        path: "/login",
+        element: <FirebaseLogin withMetamask />,
+      },
       {
         path: "/dashboard",
         element: <Protected />,
