@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { getPainText } from "@gemunion/draft-js-utils";
+import { getText } from "@gemunion/draft-js-utils";
 
 import { IOpenSeaMetadata } from "../../common/interfaces";
 import { ContractEntity } from "../../blockchain/hierarchy/contract/contract.entity";
@@ -32,7 +32,7 @@ export class MetadataContractService {
     const baseUrl = this.configService.get<string>("PUBLIC_FE_URL", "http://localhost:3011");
 
     return {
-      description: getPainText(contractEntity.description),
+      description: getText(contractEntity.description),
       external_url: `${baseUrl}/metadata/${contractEntity.address}`,
       image: contractEntity.imageUrl,
       name: contractEntity.title,

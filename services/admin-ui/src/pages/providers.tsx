@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from "react";
 import { SnackbarProvider } from "notistack";
 
-import { FirebaseApiProvider } from "@gemunion/provider-api-firebase";
+import { ApiProviderFirebase } from "@gemunion/provider-api-firebase";
 import { UserProviderFirebase } from "@gemunion/provider-user-firebase";
 import { SettingsProvider } from "@gemunion/provider-settings";
 import { ThemeProvider } from "@gemunion/provider-theme";
@@ -16,7 +16,7 @@ import { EnabledLanguages, ns } from "@framework/constants";
 export const Providers: FC<PropsWithChildren> = props => {
   const { children } = props;
   return (
-    <FirebaseApiProvider baseUrl={process.env.BE_URL} storageName={ns}>
+    <ApiProviderFirebase baseUrl={process.env.BE_URL} storageName={ns}>
       <LicenseProvider licenseKey={process.env.GEMUNION_API_KEY}>
         <UserProviderFirebase>
           <SettingsProvider defaultLanguage={EnabledLanguages.EN}>
@@ -34,6 +34,6 @@ export const Providers: FC<PropsWithChildren> = props => {
           </SettingsProvider>
         </UserProviderFirebase>
       </LicenseProvider>
-    </FirebaseApiProvider>
+    </ApiProviderFirebase>
   );
 };

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { getPainText } from "@gemunion/draft-js-utils";
+import { getText } from "@gemunion/draft-js-utils";
 
 import { InfuraFirebaseService } from "@gemunion/nest-js-module-infura-firebase";
 
@@ -39,7 +39,7 @@ export class InfuraService {
     const objectName = new URL(templateEntity.imageUrl).pathname.split("/").pop()!;
     const pin = await this.infuraFirebaseService.pinFileToIPFS(objectName);
 
-    Object.assign(templateEntity, { cid: pin.path });
+    Object.assign(templateEntity, { cid: pin });
     await templateEntity.save();
 
     return pin;
@@ -50,14 +50,14 @@ export class InfuraService {
     const pin = await this.infuraFirebaseService.pinJSONToIPFS(
       {
         title: tokenEntity.template.title,
-        description: getPainText(tokenEntity.template.description),
+        description: getText(tokenEntity.template.description),
         image: `${infuraBaseUrl}/${tokenEntity.template.cid!}`,
         attributes: tokenEntity.attributes,
       },
       objectName,
     );
 
-    Object.assign(tokenEntity, { cid: pin.path });
+    Object.assign(tokenEntity, { cid: pin });
     await tokenEntity.save();
 
     return pin;

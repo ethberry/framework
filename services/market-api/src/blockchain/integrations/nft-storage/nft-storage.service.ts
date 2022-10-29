@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { getPainText } from "@gemunion/draft-js-utils";
+import { getText } from "@gemunion/draft-js-utils";
 
 import { NftStorageFirebaseService } from "@gemunion/nest-js-module-nft-storage-firebase";
 
@@ -48,7 +48,7 @@ export class NftstorageService {
   public async pinToken(tokenEntity: TokenEntity) {
     const cid = await this.nftStorageFirebaseService.pinJSONToIPFS({
       title: tokenEntity.template.title,
-      description: getPainText(tokenEntity.template.description),
+      description: getText(tokenEntity.template.description),
       image: `${infuraBaseUrl}/${tokenEntity.template.cid!}`,
       attributes: tokenEntity.attributes,
     });

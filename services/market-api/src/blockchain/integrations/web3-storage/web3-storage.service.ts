@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { getPainText } from "@gemunion/draft-js-utils";
+import { getText } from "@gemunion/draft-js-utils";
 
 import { Web3StorageFirebaseService } from "@gemunion/nest-js-module-web3-storage-firebase";
 
@@ -49,7 +49,7 @@ export class Web3StorageService {
     const cid = await this.web3StorageFirebaseService.pinJSONToIPFS(
       {
         title: tokenEntity.template.title,
-        description: getPainText(tokenEntity.template.description),
+        description: getText(tokenEntity.template.description),
         image: `${infuraBaseUrl}/${tokenEntity.template.cid!}`,
         attributes: tokenEntity.attributes,
       },
