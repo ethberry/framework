@@ -26,5 +26,4 @@ yarn.lock
 .env.*
 !.env.sample
 
-service-account-file.json
 gemunion-firebase-key.json

@@ -2,9 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
-import { TemplateEntity } from "./template.entity";
 import type { ITemplateAutocompleteDto, ITemplateSearchDto } from "@framework/types";
 import { ContractStatus, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+
+import { TemplateEntity } from "./template.entity";
 
 @Injectable()
 export class TemplateService {
