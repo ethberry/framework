@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingRule } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
-import { formatPrice } from "../../../../../utils/money";
+import { formatPenalty, formatPrice } from "../../../../../utils/money";
 
 export interface IStakingViewDialogProps {
   open: boolean;
@@ -17,7 +17,7 @@ export interface IStakingViewDialogProps {
 export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { title, description, deposit, reward, duration, recurrent } = initialValues;
+  const { title, description, deposit, reward, duration, penalty, recurrent } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -61,6 +61,12 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.duration" />
               </TableCell>
               <TableCell align="right">{duration} days</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.penalty" />
+              </TableCell>
+              <TableCell align="right">{formatPenalty(penalty)}%</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

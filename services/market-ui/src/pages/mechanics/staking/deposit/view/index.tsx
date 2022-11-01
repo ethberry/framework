@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingDeposit } from "@framework/types";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatPenalty, formatPrice } from "../../../../../utils/money";
 
 export interface IStakesViewDialogProps {
   open: boolean;
@@ -59,6 +59,12 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.duration" />
               </TableCell>
               <TableCell align="right">{stakingRule?.duration} days</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.penalty" />
+              </TableCell>
+              <TableCell align="right">{formatPenalty(stakingRule?.penalty)}%</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
