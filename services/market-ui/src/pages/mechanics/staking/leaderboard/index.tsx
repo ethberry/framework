@@ -29,11 +29,11 @@ export const StakingLeaderboard: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 201,
+        contractId: 1201,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 306,
+        contractId: 1306,
       },
     },
   });
