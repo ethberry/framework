@@ -37,6 +37,9 @@ export const ReferralChart: FC = () => {
         marginLeft: 70,
         marginRight: 50,
         marginBottom: 40,
+        style: {
+          background: "inherit",
+        },
         y: {
           axis: "left",
           grid: true,
@@ -64,6 +67,9 @@ export const ReferralChart: FC = () => {
               marginLeft: 70,
               marginRight: 50,
               marginBottom: 40,
+              style: {
+                background: "inherit",
+              },
               x: {
                 type: "band",
                 axis: null,
