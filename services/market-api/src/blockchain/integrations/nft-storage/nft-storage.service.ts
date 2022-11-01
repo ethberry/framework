@@ -7,7 +7,7 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 
-const infuraBaseUrl = "https://nftstorage.link/ipfs";
+const nftStorageBaseUrl = "https://nftstorage.link/ipfs";
 
 @Injectable()
 export class NftstorageService {
@@ -23,7 +23,7 @@ export class NftstorageService {
     }
 
     if (tokenEntity.cid) {
-      return `${infuraBaseUrl}/${tokenEntity.cid}`;
+      return `${nftStorageBaseUrl}/${tokenEntity.cid}`;
     }
 
     if (!tokenEntity.template.cid) {
@@ -32,7 +32,7 @@ export class NftstorageService {
 
     await this.pinToken(tokenEntity);
 
-    return `${infuraBaseUrl}/${tokenEntity.cid!}`;
+    return `${nftStorageBaseUrl}/${tokenEntity.cid!}`;
   }
 
   public async pinTemplate(templateEntity: TemplateEntity) {
@@ -49,7 +49,7 @@ export class NftstorageService {
     const cid = await this.nftStorageFirebaseService.pinJSONToIPFS({
       title: tokenEntity.template.title,
       description: getText(tokenEntity.template.description),
-      image: `${infuraBaseUrl}/${tokenEntity.template.cid!}`,
+      image: `${nftStorageBaseUrl}/${tokenEntity.template.cid!}`,
       attributes: tokenEntity.attributes,
     });
 

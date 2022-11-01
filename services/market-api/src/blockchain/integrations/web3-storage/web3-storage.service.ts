@@ -7,7 +7,7 @@ import { TokenService } from "../../hierarchy/token/token.service";
 import { TokenEntity } from "../../hierarchy/token/token.entity";
 import { TemplateEntity } from "../../hierarchy/template/template.entity";
 
-const infuraBaseUrl = "https://w3s.link/ipfs";
+const web3StorageBaseUrl = "https://w3s.link/ipfs";
 
 @Injectable()
 export class Web3StorageService {
@@ -23,7 +23,7 @@ export class Web3StorageService {
     }
 
     if (tokenEntity.cid) {
-      return `${infuraBaseUrl}/${tokenEntity.cid}`;
+      return `${web3StorageBaseUrl}/${tokenEntity.cid}`;
     }
 
     if (!tokenEntity.template.cid) {
@@ -32,7 +32,7 @@ export class Web3StorageService {
 
     await this.pinToken(tokenEntity);
 
-    return `${infuraBaseUrl}/${tokenEntity.cid!}`;
+    return `${web3StorageBaseUrl}/${tokenEntity.cid!}`;
   }
 
   public async pinTemplate(templateEntity: TemplateEntity) {
@@ -50,7 +50,7 @@ export class Web3StorageService {
       {
         title: tokenEntity.template.title,
         description: getText(tokenEntity.template.description),
-        image: `${infuraBaseUrl}/${tokenEntity.template.cid!}`,
+        image: `${web3StorageBaseUrl}/${tokenEntity.template.cid!}`,
         attributes: tokenEntity.attributes,
       },
       objectName,
