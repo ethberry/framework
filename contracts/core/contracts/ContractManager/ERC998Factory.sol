@@ -8,15 +8,15 @@ pragma solidity ^0.8.9;
 
 import "./AbstractFactory.sol";
 
-contract MysteryboxFactory is AbstractFactory {
-  bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =
+contract ERC998Factory is AbstractFactory {
+  bytes32 private immutable ERC998_PERMIT_SIGNATURE =
     keccak256(
       "EIP712(bytes32 nonce,bytes bytecode,string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds)"
     );
 
-  address[] private _mysterybox_tokens;
+  address[] private _erc998_tokens;
 
-  event MysteryboxDeployed(
+  event ERC998TokenDeployed(
     address addr,
     string name,
     string symbol,
@@ -25,7 +25,7 @@ contract MysteryboxFactory is AbstractFactory {
     uint8[] featureIds
   );
 
-  function deployMysterybox(
+  function deployERC998Token(
     bytes32 nonce,
     bytes calldata bytecode,
     string memory name,
@@ -38,15 +38,15 @@ contract MysteryboxFactory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
-    bytes32 digest = _hashMysterybox(nonce, bytecode, name, symbol, royalty, baseTokenURI, featureIds);
+    bytes32 digest = _hashERC998(nonce, bytecode, name, symbol, royalty, baseTokenURI, featureIds);
 
     _checkSignature(signer, digest, signature);
     _checkNonce(nonce);
 
     addr = deploy(bytecode, abi.encode(name, symbol, royalty, baseTokenURI));
-    _mysterybox_tokens.push(addr);
+    _erc998_tokens.push(addr);
 
-    emit MysteryboxDeployed(addr, name, symbol, royalty, baseTokenURI, featureIds);
+    emit ERC998TokenDeployed(addr, name, symbol, royalty, baseTokenURI, featureIds);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
@@ -55,10 +55,9 @@ contract MysteryboxFactory is AbstractFactory {
     grantFactoryMintPermission(addr);
     grantFactoryMetadataPermission(addr);
     fixPermissions(addr, roles);
-    addFactory(addr, MINTER_ROLE);
   }
 
-  function _hashMysterybox(
+  function _hashERC998(
     bytes32 nonce,
     bytes calldata bytecode,
     string memory name,
@@ -71,7 +70,7 @@ contract MysteryboxFactory is AbstractFactory {
       _hashTypedDataV4(
         keccak256(
           abi.encode(
-            MYSTERYBOX_PERMIT_SIGNATURE,
+            ERC998_PERMIT_SIGNATURE,
             nonce,
             keccak256(abi.encodePacked(bytecode)),
             keccak256(abi.encodePacked(name)),
@@ -84,7 +83,7 @@ contract MysteryboxFactory is AbstractFactory {
       );
   }
 
-  function allMysteryboxes() external view returns (address[] memory) {
-    return _mysterybox_tokens;
+  function allERC998Tokens() external view returns (address[] memory) {
+    return _erc998_tokens;
   }
 }

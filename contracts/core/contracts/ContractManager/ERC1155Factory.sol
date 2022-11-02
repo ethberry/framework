@@ -8,28 +8,17 @@ pragma solidity ^0.8.9;
 
 import "./AbstractFactory.sol";
 
-contract MysteryboxFactory is AbstractFactory {
-  bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =
-    keccak256(
-      "EIP712(bytes32 nonce,bytes bytecode,string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds)"
-    );
+contract ERC1155Factory is AbstractFactory {
+  bytes32 private immutable ERC1155_PERMIT_SIGNATURE =
+    keccak256("EIP712(bytes32 nonce,bytes bytecode,uint96 royalty,string baseTokenURI,uint8[] featureIds)");
 
-  address[] private _mysterybox_tokens;
+  address[] private _erc1155_tokens;
 
-  event MysteryboxDeployed(
-    address addr,
-    string name,
-    string symbol,
-    uint96 royalty,
-    string baseTokenURI,
-    uint8[] featureIds
-  );
+  event ERC1155TokenDeployed(address addr, uint96 royalty, string baseTokenURI, uint8[] featureIds);
 
-  function deployMysterybox(
+  function deployERC1155Token(
     bytes32 nonce,
     bytes calldata bytecode,
-    string memory name,
-    string memory symbol,
     uint96 royalty,
     string memory baseTokenURI,
     uint8[] calldata featureIds,
@@ -38,31 +27,27 @@ contract MysteryboxFactory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
 
-    bytes32 digest = _hashMysterybox(nonce, bytecode, name, symbol, royalty, baseTokenURI, featureIds);
+    bytes32 digest = _hashERC1155(nonce, bytecode, royalty, baseTokenURI, featureIds);
 
     _checkSignature(signer, digest, signature);
     _checkNonce(nonce);
 
-    addr = deploy(bytecode, abi.encode(name, symbol, royalty, baseTokenURI));
-    _mysterybox_tokens.push(addr);
+    addr = deploy(bytecode, abi.encode(royalty, baseTokenURI));
+    _erc1155_tokens.push(addr);
 
-    emit MysteryboxDeployed(addr, name, symbol, royalty, baseTokenURI, featureIds);
+    emit ERC1155TokenDeployed(addr, royalty, baseTokenURI, featureIds);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
     roles[1] = DEFAULT_ADMIN_ROLE;
 
     grantFactoryMintPermission(addr);
-    grantFactoryMetadataPermission(addr);
     fixPermissions(addr, roles);
-    addFactory(addr, MINTER_ROLE);
   }
 
-  function _hashMysterybox(
+  function _hashERC1155(
     bytes32 nonce,
     bytes calldata bytecode,
-    string memory name,
-    string memory symbol,
     uint96 royalty,
     string memory baseTokenURI,
     uint8[] calldata featureIds
@@ -71,11 +56,9 @@ contract MysteryboxFactory is AbstractFactory {
       _hashTypedDataV4(
         keccak256(
           abi.encode(
-            MYSTERYBOX_PERMIT_SIGNATURE,
+            ERC1155_PERMIT_SIGNATURE,
             nonce,
             keccak256(abi.encodePacked(bytecode)),
-            keccak256(abi.encodePacked(name)),
-            keccak256(abi.encodePacked(symbol)),
             royalty,
             keccak256(abi.encodePacked(baseTokenURI)),
             keccak256(abi.encodePacked(featureIds))
@@ -84,7 +67,7 @@ contract MysteryboxFactory is AbstractFactory {
       );
   }
 
-  function allMysteryboxes() external view returns (address[] memory) {
-    return _mysterybox_tokens;
+  function allERC1155Tokens() external view returns (address[] memory) {
+    return _erc1155_tokens;
   }
 }
