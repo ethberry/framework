@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { NumberInput } from "@gemunion/mui-inputs-core";
+import { EntityInput } from "@gemunion/mui-inputs-entity";
 
 import { IAsset, TokenType } from "@framework/types";
 
@@ -38,7 +38,7 @@ export const WaitlistGenerateDialog: FC<IWaitlistEditDialogProps> = props => {
       {...rest}
     >
       <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} multiple />
-      <NumberInput name="listId" />
+      <EntityInput name="listId" controller="waitlist/list" />
     </FormDialog>
   );
 };

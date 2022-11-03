@@ -59,7 +59,7 @@ export const WaitlistList: FC = () => {
   const { fn } = useApiCall(
     async (api, values) => {
       return api.fetchJson({
-        url: `/waitlist/generate`,
+        url: `/waitlist/list/generate`,
         method: "POST",
         data: {
           listId: values,

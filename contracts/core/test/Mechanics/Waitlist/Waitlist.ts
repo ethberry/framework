@@ -7,7 +7,7 @@ import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 import { ERC721Simple, Waitlist } from "../../../typechain-types";
 import { baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../../constants";
 
-describe.only("Waitlist", function () {
+describe("Waitlist", function () {
   let waitlistInstance: Waitlist;
   let erc721Instance: ERC721Simple;
 
@@ -44,7 +44,6 @@ describe.only("Waitlist", function () {
     await expect(tx).to.emit(waitlistInstance, "RewardSet");
 
     const proof = merkleTree.getHexProof(utils.keccak256(this.owner.address));
-    console.log("proof1", proof);
     const tx1 = waitlistInstance.claim(proof, 123);
     await expect(tx1).to.emit(waitlistInstance, "ClaimReward");
   });
@@ -79,7 +78,6 @@ describe.only("Waitlist", function () {
         proof = merkleTree.getProof(i);
       }
     }
-    console.log("proof2", proof);
     const tx1 = waitlistInstance.claim(proof, 123);
     await expect(tx1).to.emit(waitlistInstance, "ClaimReward");
   });

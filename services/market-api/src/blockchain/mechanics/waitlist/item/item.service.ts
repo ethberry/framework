@@ -59,12 +59,13 @@ export class WaitlistItemService {
       throw new NotFoundException("listNotFound");
     }
 
-    const leaves = waitlistEntities.map(waitlistEntity => [waitlistEntity.account]);
+    const accounts = waitlistEntities.map(waitlistEntity => waitlistEntity.account);
 
-    if (!Object.values(leaves).includes([userEntity.wallet])) {
+    if (!Object.values(accounts).includes(userEntity.wallet)) {
       throw new NotFoundException("accountNotFound");
     }
     // const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+    const leaves = accounts.map(account => [account]);
     const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
     // const proofHex = merkleTree.getHexProof(utils.keccak256(userEntity.wallet));
 

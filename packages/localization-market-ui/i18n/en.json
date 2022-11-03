@@ -363,6 +363,36 @@
       "warning": {
         "cannotBeSame": "Tokens cannot be the same",
         "insufficient": "Insufficient {symbol} balance",
+        "cannotBeSame": "Tokens cannot be the same"
+      },
+      "header": {
+        "network": "Network",
+        "bridge": "Bridge"
+      },
+      "snackbar": {
+        "approve-1inch": "Please approve 1inch to spend your {symbol}",
+        "web3-not-detected": "Web3 provider not detected",
+        "accountNotFound": "Account not found in list"
+      },
+      "enums": {
+        "networks": {
+          "ARBITRUM": "Arbitrum",
+          "BINANCE": "Binance",
+          "POLYGON": "Polygon",
+          "OPTIMISM": "Optimism",
+          "ETHEREUM": "Ethereum"
+        },
+        "gasPrice": {
+          "LOW": "Low",
+          "MEDIUM": "MEDIUM",
+          "HIGH": "High"
+        },
+        "slippage": {
+          "LOW": "0.1%",
+          "MEDIUM": "0.5%",
+          "HIGH": "1%",
+          "VERY_HIGH": "3%"
+        }
         "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
       }
     },

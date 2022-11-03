@@ -22,7 +22,7 @@ export const ClaimWaitlistButton: FC<IClaimWaitlistButtonProps> = props => {
   const { fn } = useApiCall(
     async (api, listId) => {
       return api.fetchJson({
-        url: `/waitlist/proof`,
+        url: `/waitlist/item/proof`,
         method: "POST",
         data: {
           listId,
