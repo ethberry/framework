@@ -8,6 +8,7 @@
     "url": "https://github.com/gemunion/framework"
   },
   "dependencies": {
+    "@openzeppelin/merkle-tree": "1.0.0",
     "@framework/constants": "0.0.1",
     "@framework/nest-js-module-exchange-signer": "0.0.1",
     "@framework/types": "0.0.1",
@@ -60,7 +61,6 @@
     "firebase-admin": "11.2.0",
     "ioredis": "5.2.3",
     "json2csv": "5.0.7",
-    "merkletreejs": "0.3.0",
     "nest-winston": "1.8.0",
     "passport": "0.6.0",
     "passport-custom": "1.1.1",

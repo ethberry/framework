@@ -1,8 +1,8 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { utils } from "ethers";
-import { MerkleTree } from "merkletreejs";
+// import { MerkleTree } from "merkletreejs";
+import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { IWaitlistItemCreateDto } from "./interfaces";
 import { WaitlistItemEntity } from "./item.entity";
@@ -59,14 +59,21 @@ export class WaitlistItemService {
       throw new NotFoundException("listNotFound");
     }
 
-    const leaves = waitlistEntities.map(waitlistEntity => waitlistEntity.account).sort();
+    const leaves = waitlistEntities.map(waitlistEntity => [waitlistEntity.account]);
 
-    if (!Object.values(leaves).includes(userEntity.wallet)) {
+    if (!Object.values(leaves).includes([userEntity.wallet])) {
       throw new NotFoundException("accountNotFound");
     }
-    const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
-    const proofHex = merkleTree.getHexProof(utils.keccak256(userEntity.wallet));
+    // const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+    const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
+    // const proofHex = merkleTree.getHexProof(utils.keccak256(userEntity.wallet));
 
+    let proofHex: Array<string> = [];
+    for (const [i, v] of merkleTree.entries()) {
+      if (v[0] === userEntity.wallet) {
+        proofHex = merkleTree.getProof(i);
+      }
+    }
     return { proof: proofHex };
   }
 }

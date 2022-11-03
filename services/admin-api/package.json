@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ethersproject/abstract-signer": "5.7.0",
+    "@openzeppelin/merkle-tree": "1.0.0",
     "@framework/constants": "0.0.1",
     "@framework/core-contracts": "0.0.1",
     "@framework/types": "0.0.1",
@@ -59,7 +60,6 @@
     "firebase-admin": "11.2.0",
     "ioredis": "5.2.3",
     "json2csv": "5.0.7",
-    "merkletreejs": "0.3.0",
     "nest-winston": "1.8.0",
     "passport": "0.6.0",
     "passport-firebase-jwt": "1.2.1",
