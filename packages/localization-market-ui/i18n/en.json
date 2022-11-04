@@ -61,7 +61,8 @@
       "1": "ETHEREUM",
       "1337": "BESU",
       "137": "POLYGON",
-      "56": "BINANCE"
+      "56": "BINANCE",
+      "97": "BINANCE (testnet)"
     },
     "claimStatus": {
       "NEW": "New",
@@ -254,6 +255,7 @@
     },
     "tips": {
       "add": "Add",
+      "allowance": "Allowance",
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
@@ -321,15 +323,8 @@
           "LOW": "0.1%",
           "MEDIUM": "0.5%",
           "VERY_HIGH": "3%"
-        }
-      },
-      "header": {
-        "bridge": "Bridge",
-        "network": "Network"
-      },
-      "snackbar": {
-        "approve-1inch": "Please approve 1inch to spend your {symbol}",
-        "web3-not-detected": "Web3 provider not detected"
+        },
+        "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
       },
       "swap": {
         "ETH": "ETH",
@@ -361,7 +356,6 @@
         "title": "Search {amount} tokens"
       },
       "warning": {
-        "cannotBeSame": "Tokens cannot be the same",
         "insufficient": "Insufficient {symbol} balance",
         "cannotBeSame": "Tokens cannot be the same"
       },
@@ -373,27 +367,6 @@
         "approve-1inch": "Please approve 1inch to spend your {symbol}",
         "web3-not-detected": "Web3 provider not detected",
         "accountNotFound": "Account not found in list"
-      },
-      "enums": {
-        "networks": {
-          "ARBITRUM": "Arbitrum",
-          "BINANCE": "Binance",
-          "POLYGON": "Polygon",
-          "OPTIMISM": "Optimism",
-          "ETHEREUM": "Ethereum"
-        },
-        "gasPrice": {
-          "LOW": "Low",
-          "MEDIUM": "MEDIUM",
-          "HIGH": "High"
-        },
-        "slippage": {
-          "LOW": "0.1%",
-          "MEDIUM": "0.5%",
-          "HIGH": "1%",
-          "VERY_HIGH": "3%"
-        }
-        "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
       }
     },
     "breed": {

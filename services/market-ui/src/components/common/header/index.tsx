@@ -7,9 +7,9 @@ import { Wallet } from "@gemunion/provider-wallet";
 import { Localization } from "@gemunion/provider-localization";
 import { Theme } from "@gemunion/provider-theme";
 
+import { useStyles } from "./styles";
 import { Sections } from "./sections";
 import { Referrer } from "./referrer";
-import { useStyles } from "./styles";
 
 export const Header: FC = () => {
   const classes = useStyles();
