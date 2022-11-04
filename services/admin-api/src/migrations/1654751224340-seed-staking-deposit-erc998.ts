@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { addDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
@@ -6,6 +7,7 @@ import { wallets } from "@gemunion/constants";
 export class SeedStakingDepositErc998At1654751224340 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const endDateTime = addDays(new Date(), 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_deposit (
@@ -23,7 +25,7 @@ export class SeedStakingDepositErc998At1654751224340 implements MigrationInterfa
         'ACTIVE',
         301,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         20, -- ERC998 > ERC1155
         1,
         '${currentDateTime}',
@@ -33,7 +35,7 @@ export class SeedStakingDepositErc998At1654751224340 implements MigrationInterfa
         'CANCELED',
         302,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         20, -- ERC998 > ERC1155
         1,
         '${currentDateTime}',
@@ -43,7 +45,7 @@ export class SeedStakingDepositErc998At1654751224340 implements MigrationInterfa
         'COMPLETE',
         303,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         20, -- ERC998 > ERC1155
         1,
         '${currentDateTime}',
@@ -53,7 +55,7 @@ export class SeedStakingDepositErc998At1654751224340 implements MigrationInterfa
         'ACTIVE',
         311,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         20, -- ERC998 > ERC1155
         1,
         '${currentDateTime}',
@@ -63,7 +65,7 @@ export class SeedStakingDepositErc998At1654751224340 implements MigrationInterfa
         'ACTIVE',
         321,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${addDays(new Date(), 1).toISOString()}',
         20, -- ERC998 > ERC1155
         1,
         '${currentDateTime}',

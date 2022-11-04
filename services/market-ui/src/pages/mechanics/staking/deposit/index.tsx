@@ -17,9 +17,10 @@ import type { IStakingDeposit, IStakingDepositSearchDto } from "@framework/types
 import { StakingDepositStatus, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 
+import { StakingRewardButton } from "../../../../components/buttons";
+
 import { StakingDepositSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
-import { StakingRewardButton } from "../../../../components/buttons";
 
 export const StakingDeposit: FC = () => {
   const {
