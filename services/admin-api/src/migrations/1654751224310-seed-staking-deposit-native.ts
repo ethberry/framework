@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { addDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
@@ -6,6 +7,7 @@ import { wallets } from "@gemunion/constants";
 export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const endDateTime = addDays(new Date(), 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_deposit (
@@ -23,7 +25,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'ACTIVE',
         101,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -33,7 +35,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'ACTIVE',
         102,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -43,7 +45,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'ACTIVE',
         103,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -53,7 +55,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'CANCELED',
         104,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -63,7 +65,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         105,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -73,7 +75,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'ACTIVE',
         111,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -83,7 +85,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'ACTIVE',
         112,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -93,7 +95,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'CANCELED',
         113,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -103,7 +105,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         114,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -113,7 +115,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         115,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -123,7 +125,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         116,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -133,7 +135,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         117,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -143,7 +145,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'ACTIVE',
         121,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -153,7 +155,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'ACTIVE',
         122,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -163,7 +165,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         123,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -173,7 +175,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         124,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
@@ -183,7 +185,7 @@ export class SeedStakingDepositNativeAt1654751224310 implements MigrationInterfa
         'COMPLETE',
         125,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         1, -- NATIVE > NATIVE
         1,
         '${currentDateTime}',
