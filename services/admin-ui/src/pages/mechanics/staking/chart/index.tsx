@@ -35,10 +35,6 @@ export const StakingChart: FC = () => {
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.info("rows", rows);
-    console.info("rows.length", rows.length);
-    console.info("chartRef.current", chartRef.current);
-
     if (rows.length && chartRef.current) {
       const chart = Plot.plot({
         width: chartRef.current.clientWidth,
