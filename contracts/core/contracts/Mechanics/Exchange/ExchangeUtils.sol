@@ -26,11 +26,7 @@ contract ExchangeUtils {
 
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
-  function spend(
-    Asset[] memory price,
-    address account,
-    address receiver
-  ) internal {
+  function spend(Asset[] memory price, address account, address receiver) internal {
     uint256 length = price.length;
 
     // TODO calculate what is most efficient to pre-calculate here
@@ -54,7 +50,7 @@ contract ExchangeUtils {
           }
         } else {
           require(totalAmount == msg.value, "Exchange: Wrong amount");
-          emit PaymentEthReceived(_msgSender(), msg.value);
+          emit PaymentEthReceived(receiver, msg.value);
         }
       } else if (ingredient.tokenType == TokenType.ERC20) {
         if (account == address(this)) {
