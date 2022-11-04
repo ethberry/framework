@@ -56,7 +56,7 @@
     "@mui/lab": "5.0.0-alpha.106",
     "@mui/material": "5.10.12",
     "@mui/styles": "5.10.10",
-    "@mui/x-data-grid": "5.17.9",
+    "@mui/x-data-grid": "5.17.10",
     "@observablehq/plot": "0.6.0",
     "@web3-react/core": "8.0.35-beta.0",
     "clsx": "1.2.1",
