@@ -25,7 +25,7 @@
     "@gemunion/nest-js-validators": "2.1.11",
     "@gemunion/nestjs-ethers": "3.0.15",
     "@gemunion/types-collection": "1.5.4",
-    "@nestjs/axios": "0.1.0",
+    "@nestjs/axios": "1.0.0",
     "@nestjs/common": "9.1.6",
     "@nestjs/config": "2.2.0",
     "@nestjs/core": "9.1.6",
