@@ -58,18 +58,18 @@ export class VestingService {
 
   public async updateLastBlock(lastBlock: number): Promise<number> {
     // TODO make it nice
-    const entity = await this.findOne({
+    const vestingEntity = await this.findOne({
       id: 1,
     });
 
-    if (entity) {
+    if (vestingEntity) {
       await this.update(
         {
-          id: entity.id,
+          id: vestingEntity.id,
         },
         { fromBlock: lastBlock + 1 },
       );
-      return entity.fromBlock;
+      return vestingEntity.fromBlock;
     }
     return lastBlock;
   }
