@@ -27,8 +27,8 @@
     }
   },
   "dialogs": {
-    "breedLimit": "Set breed limits",
     "blacklist": "Add to blacklist",
+    "breedLimit": "Set breed limits",
     "claim": "Claim",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -72,7 +72,8 @@
       "1": "ETHEREUM",
       "1337": "BESU",
       "137": "POLYGON",
-      "56": "BINANCE"
+      "56": "BINANCE",
+      "97": "BINANCE (testnet)"
     },
     "claimStatus": {
       "NEW": "New",
@@ -250,12 +251,9 @@
       "address": "Address",
       "amount": "Amount",
       "attributes": "Attributes",
-      "breeder": "Breeder",
       "baseTokenURI": "Base token URI",
+      "breeder": "Breeder",
       "cap": "Cap",
-      "count": "Max breeds count",
-      "time": "Cooldown time",
-      "maxTime": "Max Cooldown",
       "chainId": "Chain",
       "child": "Child",
       "childId": "Child",
@@ -271,6 +269,7 @@
       "contractIds": "Contracts",
       "contractStatus": "Status",
       "contractTemplate": "Template",
+      "count": "Max breeds count",
       "craftStatus": "Status",
       "createdAt": "Created",
       "dateRangeEnd": "To",
@@ -284,7 +283,6 @@
       "email": "Email",
       "endTimestamp": "End date",
       "genes": "Genes",
-      "parents": "Parents",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -293,11 +291,11 @@
       "items": "Items",
       "language": "Language",
       "listId": "List ID",
-      "minBalance": "Min Balance",
+      "matron": "Matron",
       "maxBalance": "Max Balance",
       "maxStakes": "Max Stakes",
-      "matron": "Matron",
-      "sire": "Sire",
+      "maxTime": "Max Cooldown",
+      "minBalance": "Min Balance",
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
@@ -307,6 +305,7 @@
       "payee": "Payee",
       "parentId": "Parent",
       "parentIds": "Parent",
+      "parents": "Parents",
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
@@ -320,21 +319,23 @@
       "roundId": "Round",
       "roundIds": "Round",
       "royalty": "Royalty",
+      "sire": "Sire",
       "slug": "Slug",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
-      "txHash": "txHash",
       "templateId": "Template",
       "templateIds": "Templates",
       "templateStatus": "Status",
+      "time": "Cooldown time",
       "title": "Title",
       "token": "Token",
       "tokenId": "Token",
       "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
+      "txHash": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
       "url": "Url",
@@ -342,8 +343,8 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "year": "Year",
-      "winNumbers": "Win numbers"
+      "winNumbers": "Win numbers",
+      "year": "Year"
     },
     "placeholders": {
       "DUMMY": "Dummy",
@@ -353,9 +354,6 @@
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
-      "count": "0",
-      "time": "0",
-      "maxTime": "0",
       "childId": "Contract",
       "childIds": "Contract",
       "comment": "Fraud",
@@ -363,6 +361,7 @@
       "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "count": "0",
       "createdAt": "now",
       "decimals": "18",
       "definition": "10",
@@ -373,9 +372,10 @@
       "growthRate": "2",
       "item": "Bottle of water",
       "listId": "1",
-      "maxStakes": "0",
-      "minBalance": "0",
       "maxBalance": "100",
+      "maxStakes": "0",
+      "maxTime": "0",
+      "minBalance": "0",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
@@ -398,6 +398,7 @@
       "templateId": "Template",
       "templateIds": "Template",
       "text": "qwerty",
+      "time": "0",
       "title": "Title",
       "token": "Bottle of water",
       "tokenId": "Token",
@@ -443,16 +444,16 @@
     },
     "breed": {
       "breeds": {
-        "title": "Breeds",
-        "start": "Set limits",
         "end": "End Round",
+        "start": "Set limits",
+        "title": "Breeds",
         "wait": "Awaiting round to end"
       },
       "history": {
         "title": "Breed history"
       },
-      "title": "Breed",
-      "limit": "Set limits"
+      "limit": "Set limits",
+      "title": "Breed"
     },
     "chain-link": {
       "fund": "Fund",
@@ -486,8 +487,10 @@
       },
       "integrations": {
         "admin": {
+          "balances": "System Balances",
           "emails": "Emails",
           "pages": "Pages",
+          "payees": "System Payees",
           "settings": "Settings",
           "title": "Admin",
           "users": "Users"
@@ -581,9 +584,9 @@
     },
     "lottery": {
       "rounds": {
-        "title": "Rounds",
-        "start": "Start Round",
         "end": "End Round",
+        "start": "Start Round",
+        "title": "Rounds",
         "wait": "Awaiting round to end"
       },
       "tickets": {
@@ -628,6 +631,15 @@
     },
     "pages": {
       "title": "Pages"
+    },
+    "payees": {
+      "attach": "Attach",
+      "balances": {
+        "title": "System Balances"
+      },
+      "detach": "Detach",
+      "title": "System Payees",
+      "withdraw": "Withdraw"
     },
     "profile": {
       "title": "Profile"

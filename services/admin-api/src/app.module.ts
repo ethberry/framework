@@ -12,8 +12,6 @@ import { WinstonConfigService } from "@gemunion/nest-js-module-winston-logdna";
 import { GemunionThrottlerModule, THROTTLE_STORE, ThrottlerHttpGuard } from "@gemunion/nest-js-module-throttler";
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
 import { LicenseModule } from "@gemunion/nest-js-module-license";
-import { CoinMarketCapModule } from "@gemunion/nest-js-module-coin-market-cap";
-import { CoinGeckoModule } from "@gemunion/nest-js-module-coin-gecko";
 
 import ormconfig from "./ormconfig";
 import { AuthModule } from "./auth/auth.module";
@@ -90,8 +88,6 @@ import { BlockchainModule } from "./blockchain/blockchain.module";
     SettingsModule,
     PageModule,
     BlockchainModule,
-    CoinMarketCapModule,
-    CoinGeckoModule,
   ],
   controllers: [AppController],
 })

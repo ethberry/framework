@@ -27,3 +27,4 @@ yarn.lock
 !.env.sample
 
 gemunion-firebase-key.json
+/postgres/

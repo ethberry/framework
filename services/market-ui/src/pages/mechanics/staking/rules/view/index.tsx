@@ -5,6 +5,7 @@ import { FormattedMessage } from "react-intl";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingRule } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
+
 import { formatPenalty, formatPrice } from "../../../../../utils/money";
 
 export interface IStakingViewDialogProps {
