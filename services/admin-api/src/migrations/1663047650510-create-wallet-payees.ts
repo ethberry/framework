@@ -5,7 +5,7 @@ import { ns } from "@framework/constants";
 export class CreateWalletPayees1663047650510 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const table = new Table({
-      name: `${ns}.wallet_payees`,
+      name: `${ns}.payees`,
       columns: [
         {
           name: "id",

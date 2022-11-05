@@ -7,4 +7,5 @@ task("balance-eth", "Prints an ETH balance")
 
     const balance = await hre.web3.eth.getBalance(account);
     console.info("ETH Balance:", hre.web3.utils.fromWei(balance, "ether"), "ETH");
+    console.info("ETH Balance wei:", balance);
   });

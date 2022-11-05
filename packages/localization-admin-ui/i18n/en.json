@@ -45,7 +45,8 @@
     "unWhitelist": "Remove from whitelist",
     "upload": "Upload",
     "view": "View",
-    "whitelist": "Add to whitelist"
+    "whitelist": "Add to whitelist",
+    "withdraw": "Withdraw balance"
   },
   "enums": {
     "GRADE": {
@@ -233,7 +234,8 @@
       "submit": "Submit",
       "unblacklist": "Un blacklist",
       "unpause": "Unpause",
-      "upload": "Upload"
+      "upload": "Upload",
+      "withdraw": "Withdraw"
     },
     "hints": {
       "editNotAllowed": "Editing of this rule is not allowed",
@@ -300,6 +302,7 @@
       "owner": "Owner",
       "pageStatus": "Status",
       "parent": "Parent",
+      "payee": "Payee",
       "parentId": "Parent",
       "parentIds": "Parent",
       "parents": "Parents",
@@ -376,6 +379,7 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
+      "payee": "0x...",
       "parentId": "Contract",
       "parentIds": "Contract",
       "password": "******",
@@ -515,6 +519,11 @@
         "title": "Mechanics",
         "vesting": "Vesting",
         "waitlist": "Waitlist"
+      },
+      "wallet": {
+        "title": "System Wallet",
+        "payees": "Payees",
+        "balances": "Balances"
       },
       "title": "Dashboard"
     },
@@ -689,6 +698,23 @@
         "title": "Lists"
       },
       "title": "Waitlist"
+    },
+    "wallet": {
+      "title": "System Wallet",
+      "withdraw": {
+        "title": "Withdraw",
+        "dialog": "From address",
+        "token": "Token",
+        "total": "Total balance",
+        "payee": "Payee will receive"
+      },
+      "balances": {
+        "title": "Balances"
+      },
+      "payees": {
+        "title": "System Payees",
+        "withdraw": "Withdraw"
+      }
     }
   },
   "snackbar": {

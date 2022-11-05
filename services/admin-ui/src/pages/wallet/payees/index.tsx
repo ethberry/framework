@@ -7,7 +7,7 @@ import { IUserSearchDto, IWalletPayee } from "@framework/types";
 
 export const SystemPayees: FC = () => {
   const { rows, count, search, isLoading, handleChangePage } = useCollection<IWalletPayee, IUserSearchDto>({
-    baseUrl: "/payees",
+    baseUrl: "/wallet/payees",
     empty: {},
     search: {},
     filter: ({ id: _id, ...rest }) => rest,
@@ -15,9 +15,9 @@ export const SystemPayees: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "payees"]} />
+      <Breadcrumbs path={["dashboard", "wallet", "wallet.payees"]} />
 
-      <PageHeader message="pages.payees.title"></PageHeader>
+      <PageHeader message="pages.wallet.payees.title"></PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>
         <List>

@@ -43,6 +43,8 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
               ExchangeEventType.PaymentReceived,
               ExchangeEventType.PaymentEthReceived,
               ExchangeEventType.PaymentEthSent,
+              ExchangeEventType.PaymentReleased,
+              ExchangeEventType.ERC20PaymentReleased,
             ],
           },
           block: {

@@ -57,22 +57,22 @@ export const Admin: FC = () => {
             <FormattedMessage id="pages.dashboard.integrations.admin.emails" />
           </ListItemText>
         </ListItem>
-        <ListItem button component={RouterLink} to="/payees">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.admin.payees" />
-          </ListItemText>
-        </ListItem>
-        <ListItem button component={RouterLink} to="/payees/balances">
-          <ListItemIcon>
-            <Storefront />
-          </ListItemIcon>
-          <ListItemText>
-            <FormattedMessage id="pages.dashboard.integrations.admin.balances" />
-          </ListItemText>
-        </ListItem>
+        {/* <ListItem button component={RouterLink} to="/payees"> */}
+        {/*  <ListItemIcon> */}
+        {/*    <Storefront /> */}
+        {/*  </ListItemIcon> */}
+        {/*  <ListItemText> */}
+        {/*    <FormattedMessage id="pages.dashboard.integrations.admin.payees" /> */}
+        {/*  </ListItemText> */}
+        {/* </ListItem> */}
+        {/* <ListItem button component={RouterLink} to="/payees/balances"> */}
+        {/*  <ListItemIcon> */}
+        {/*    <Storefront /> */}
+        {/*  </ListItemIcon> */}
+        {/*  <ListItemText> */}
+        {/*    <FormattedMessage id="pages.dashboard.integrations.admin.balances" /> */}
+        {/*  </ListItemText> */}
+        {/* </ListItem> */}
       </List>
     </Paper>
   );

@@ -5,10 +5,15 @@ import { Log } from "@ethersproject/abstract-provider";
 import { constants } from "ethers";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import type { IExchangePayeeAddedEvent, IExchangePaymentReceivedEvent } from "@framework/types";
+import type {
+  IExchangePayeeAddedEvent,
+  IExchangePaymentReceivedEvent,
+  IExchangePaymentReleasedEvent,
+  IExchangeErc20PaymentReleasedEvent,
+} from "@framework/types";
 import { ExchangeEventType, TExchangeEventData } from "@framework/types";
 import { ExchangeHistoryService } from "../mechanics/exchange/history/exchange-history.service";
-import { PayeesService } from "./wallet-payees.service";
+import { PayeesService } from "./payees.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { TokenService } from "../hierarchy/token/token.service";
@@ -32,7 +37,7 @@ export class WalletServiceEth {
     } = event;
     await this.updateHistory(event, context);
 
-    await this.payeesService.create({ account, shares: ~~shares });
+    await this.payeesService.create({ account: account.toLowerCase(), shares: ~~shares });
   }
 
   public async addEth(event: ILogEvent<IExchangePaymentReceivedEvent>, context: Log): Promise<void> {
@@ -67,6 +72,32 @@ export class WalletServiceEth {
     const exchangeAddr = this.configService.get<string>("EXCHANGE_ADDR", "");
 
     await this.balanceService.decrement(tokenEntity.id, exchangeAddr.toLowerCase(), amount);
+  }
+
+  public async releaseEth(event: ILogEvent<IExchangePaymentReleasedEvent>, context: Log): Promise<void> {
+    const {
+      args: { amount },
+    } = event;
+    await this.updateHistory(event, context);
+
+    const tokenEntity = await this.tokenService.getToken(
+      "0",
+      constants.AddressZero.toLowerCase(),
+      this.contractService.chainId,
+    );
+
+    if (!tokenEntity) {
+      throw new NotFoundException("tokenNotFound");
+    }
+
+    const exchangeAddr = this.configService.get<string>("EXCHANGE_ADDR", "");
+
+    await this.balanceService.decrement(tokenEntity.id, exchangeAddr.toLowerCase(), amount);
+  }
+
+  public async releaseErc20(event: ILogEvent<IExchangeErc20PaymentReleasedEvent>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+    // Balance will decrement by Erc20 controller
   }
 
   private async updateHistory(event: ILogEvent<TExchangeEventData>, context: Log) {

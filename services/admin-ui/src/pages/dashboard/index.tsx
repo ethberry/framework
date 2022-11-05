@@ -25,6 +25,7 @@ import { Marketplace } from "./integrations/marketplace";
 import { Pyramid } from "./mechanics/pyramid";
 import { Breed } from "./mechanics/breed";
 import { Waitlist } from "./mechanics/waitlist";
+import { Wallet } from "./integrations/wallet";
 
 export const Dashboard: FC = () => {
   const classes = useStyles();
@@ -59,6 +60,7 @@ export const Dashboard: FC = () => {
           <CoinGecko />
           <CoinMarketCap />
           <Marketplace />
+          <Wallet />
           <Admin />
         </Grid>
       </Grid>
