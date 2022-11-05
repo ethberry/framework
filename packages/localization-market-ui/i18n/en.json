@@ -702,6 +702,7 @@
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "success": "Success",
+    "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
