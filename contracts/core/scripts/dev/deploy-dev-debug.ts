@@ -7,7 +7,7 @@ import { baseTokenURI, MINTER_ROLE, royalty } from "../../test/constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
-const delayMs = 1000; // block delay ms
+const delayMs = 30000; // block delay ms
 // const decimals = ethers.BigNumber.from(10).pow(18);
 // const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
 const linkAmountInEth = ethers.utils.parseEther("1");
@@ -49,24 +49,27 @@ const timestamp = Math.ceil(Date.now() / 1000);
 async function main() {
   const [owner] = await ethers.getSigners();
   // LINK & VRF
-  const linkFactory = await ethers.getContractFactory("LinkErc20");
-  const linkInstance = linkFactory.attach("0x91483855a65211e3a3362ed1fa42a388280805be");
+  // const linkFactory = await ethers.getContractFactory("LinkErc20");
+  // // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
   // const linkInstance = await linkFactory.deploy("LINK", "LINK");
   // contracts.link = linkInstance;
+  // await debug(contracts);
   // console.info(`LINK_ADDR=${contracts.link.address}`);
   // const vrfFactory = await ethers.getContractFactory("VRFCoordinatorMock");
   // contracts.vrf = await vrfFactory.deploy(contracts.link.address);
+  // await debug(contracts);
   // console.info(`VRF_ADDR=${contracts.vrf.address}`);
   // await debug(await linkInstance.mint(owner.address, linkAmountInWei.mul(100)), "LinkInstance.mint");
   //
-  // console.log("afterDebug");
+  // console.info("afterDebug");
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
-  // const link = await ethers.getContractFactory("LinkErc20");
+  const link = await ethers.getContractFactory("LinkErc20");
   // const linkInstance = link.attach("0x326C977E6efc84E512bB9C30f76E30c160eD06FB"); // GOERLI
+  const linkInstance = link.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F"); // GOERLI FW TEST
 
   const cmFactory = await ethers.getContractFactory("ContractManager");
-  contracts.contractManager = cmFactory.attach("0x690579e4b583dd87db51361e30e0b3493d5c5e6c");
+  // contracts.contractManager = cmFactory.attach("0x690579e4b583dd87db51361e30e0b3493d5c5e6c");
 
   contracts.contractManager = await cmFactory.deploy();
   await debug(contracts);
@@ -75,11 +78,11 @@ async function main() {
   const exchangeInstance = await exchangeFactory.deploy(
     "Exchange",
     [
-      "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
-      "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+      // "0xfe3b557e8fb62b89f4916b721be55ceb828dbd73",
+      // "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
       "0x61284003e50b2d7ca2b95f93857abb78a1b0f3ca",
     ],
-    [50, 45, 5],
+    [100],
   );
   contracts.exchange = exchangeInstance;
   await debug(contracts);
@@ -136,7 +139,8 @@ async function main() {
   contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
+  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGoerli");
+  // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721Random");
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await debug(contracts);

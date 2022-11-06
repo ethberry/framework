@@ -123,14 +123,13 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
   public async randomRequest(event: ILogEvent<IERC721RandomRequestEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     // DEV ONLY
-    const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    if (nodeEnv === "development") {
-      const {
-        args: { requestId },
-      } = event;
-      const { address } = context;
-      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-      await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
-    }
+    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
+    // if (nodeEnv === "development") {    }
+    const {
+      args: { requestId },
+    } = event;
+    const { address } = context;
+    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
   }
 }

@@ -223,15 +223,14 @@ export class Erc998TokenServiceEth extends TokenServiceEth {
   public async randomRequest(event: ILogEvent<IERC721RandomRequestEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     // TODO DEV ONLY!!!
-    const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    if (nodeEnv === "development") {
-      const {
-        args: { requestId },
-      } = event;
-      const { address } = context;
-      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-      await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
-    }
+    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
+    // if (nodeEnv === "development") {    }
+    const {
+      args: { requestId },
+    } = event;
+    const { address } = context;
+    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
   }
 
   public async whitelistChild(event: ILogEvent<IErc998TokenWhitelistedChildEvent>, context: Log): Promise<void> {

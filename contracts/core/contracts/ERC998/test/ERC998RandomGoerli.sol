@@ -8,12 +8,12 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "./ERC998Simple.sol";
-import "../ERC721/interfaces/IERC721Random.sol";
-import "../Mechanics/Rarity/Rarity.sol";
-import "../ERC721/test/ERC721ChainLinkGoerli.sol"; // TODO should import from @gemunion/contracts
+import "../ERC998Upgradeable.sol";
+import "../../ERC721/interfaces/IERC721Random.sol";
+import "../../MOCKS/ChainLink/ChainLinkGoerliTest.sol";
+import "../../Mechanics/Rarity/Rarity.sol";
 
-contract ERC998Random is IERC721Random, ERC721ChainLinkGoerli, ERC998Simple, Rarity {
+contract ERC998RandomGoerli is IERC721Random, ChainLinkGoerliTest, ERC998Upgradeable, Rarity {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -28,34 +28,35 @@ contract ERC998Random is IERC721Random, ERC721ChainLinkGoerli, ERC998Simple, Rar
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC998Simple(name, symbol, royalty, baseTokenURI) {}
+  ) ERC998Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address account, uint256 templateId) public override(ERC721Simple) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+  function mintCommon(address account, uint256 templateId) external override(ERC998Upgradeable) onlyRole(MINTER_ROLE) {
+    require(templateId != 0, "ERC998RandomHardhat: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
     upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, 1);
 
     _safeMint(account, tokenId);
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC998: wrong type");
+    require(templateId != 0, "ERC721Random: wrong type");
     _queue[getRandomNumber()] = Request(account, templateId);
   }
 
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
     upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    upsertRecordField(tokenId, GRADE, 1);
     upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
