@@ -65,28 +65,6 @@ export class ContractManagerServiceEth {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
   }
 
-  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
-    const {
-      args: { addr, account, startTimestamp, duration, templateId },
-    } = event;
-
-    await this.updateHistory(event, ctx);
-
-    await this.vestingService.create({
-      address: addr.toLowerCase(),
-      account: account.toLowerCase(),
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-      duration: ~~duration * 1000, // msec
-      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
-      chainId: this.chainId,
-    });
-
-    this.vestingLogService.addListener({
-      address: addr.toLowerCase(),
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
-    });
-  }
-
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
     const {
       args: { addr, name, symbol, cap, featureIds },
@@ -295,6 +273,28 @@ export class ContractManagerServiceEth {
     });
 
     this.mysteryboxLogService.addListener({
+      address: addr.toLowerCase(),
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, account, startTimestamp, duration, templateId },
+    } = event;
+
+    await this.updateHistory(event, ctx);
+
+    await this.vestingService.create({
+      address: addr.toLowerCase(),
+      account: account.toLowerCase(),
+      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      duration: ~~duration * 1000, // msec
+      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
+      chainId: this.chainId,
+    });
+
+    this.vestingLogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

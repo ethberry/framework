@@ -7,7 +7,7 @@ import type { IVestingERC20ReleasedEvent, IVestingEtherReleasedEvent, TVestingEv
 import { VestingEventType } from "@framework/types";
 
 import { VestingHistoryService } from "./history/vesting-history.service";
-import { ContractService } from "../../hierarchy/contract/contract.service";
+import { VestingService } from "./vesting.service";
 
 @Injectable()
 export class VestingServiceEth {
@@ -15,7 +15,7 @@ export class VestingServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly vestingHistoryService: VestingHistoryService,
-    private readonly contractService: ContractService,
+    private readonly vestingService: VestingService,
   ) {}
 
   public async erc20Released(event: ILogEvent<IVestingERC20ReleasedEvent>, context: Log): Promise<void> {
@@ -39,6 +39,6 @@ export class VestingServiceEth {
       eventData: args,
     });
 
-    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+    await this.vestingService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

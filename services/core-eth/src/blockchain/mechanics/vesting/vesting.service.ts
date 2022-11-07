@@ -1,4 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
@@ -7,10 +8,15 @@ import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
 export class VestingService {
+  public chainId: number;
+
   constructor(
     @InjectRepository(VestingEntity)
     private readonly vestingEntityRepository: Repository<VestingEntity>,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
+  }
 
   public findOne(
     where: FindOptionsWhere<VestingEntity>,
@@ -42,24 +48,25 @@ export class VestingService {
     return contractEntity.save();
   }
 
+  // TODO use ContractService instead
   public async findAllContracts(): Promise<IContractListenerResult> {
     const queryBuilder = this.vestingEntityRepository.createQueryBuilder("vesting");
-    queryBuilder.select(["vesting.account", "vesting.fromBlock"]);
+    queryBuilder.select(["vesting.address", "vesting.fromBlock"]);
 
     const contractEntities = await queryBuilder.getMany();
     if (contractEntities.length) {
       return {
-        address: contractEntities.map(contractEntity => contractEntity.account),
+        address: contractEntities.map(contractEntity => contractEntity.address),
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
     return { address: [], fromBlock: undefined };
   }
 
-  public async updateLastBlock(lastBlock: number): Promise<number> {
-    // TODO make it nice
+  public async updateLastBlockByAddr(address: string, lastBlock: number): Promise<number> {
     const vestingEntity = await this.findOne({
-      id: 1,
+      address,
+      chainId: this.chainId,
     });
 
     if (vestingEntity) {

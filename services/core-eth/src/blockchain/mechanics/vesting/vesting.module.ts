@@ -1,5 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { ConfigModule } from "@nestjs/config";
 
 import { VestingServiceEth } from "./vesting.service.eth";
 import { VestingEntity } from "./vesting.entity";
@@ -9,7 +10,7 @@ import { VestingService } from "./vesting.service";
 import { ContractModule } from "../../hierarchy/contract/contract.module";
 
 @Module({
-  imports: [VestingHistoryModule, TypeOrmModule.forFeature([VestingEntity]), ContractModule],
+  imports: [ConfigModule, VestingHistoryModule, TypeOrmModule.forFeature([VestingEntity]), ContractModule],
   providers: [Logger, VestingService, VestingServiceEth],
   controllers: [VestingControllerEth],
   exports: [VestingService, VestingServiceEth],
