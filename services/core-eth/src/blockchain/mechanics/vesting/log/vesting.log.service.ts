@@ -18,6 +18,6 @@ export class VestingLogService {
 
   public async updateBlock(): Promise<number> {
     const lastBlock = this.ethersContractService.getLastBlockOption();
-    return this.vestingService.updateLastBlock(lastBlock);
+    return this.vestingService.updateLastBlockByType(lastBlock);
   }
 }

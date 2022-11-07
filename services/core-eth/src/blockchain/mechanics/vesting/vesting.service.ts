@@ -82,4 +82,21 @@ export class VestingService {
     }
     return lastBlock;
   }
+
+  public async updateLastBlockByType(lastBlock: number): Promise<number> {
+    const entity = await this.findOne({
+      chainId: this.chainId,
+    });
+
+    if (entity) {
+      await this.update(
+        {
+          id: entity.id,
+        },
+        { fromBlock: lastBlock + 1 },
+      );
+      return entity.fromBlock;
+    }
+    return lastBlock;
+  }
 }
