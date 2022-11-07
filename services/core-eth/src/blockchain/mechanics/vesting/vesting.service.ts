@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-
+import { wallet } from "@gemunion/constants";
 import { VestingEntity } from "./vesting.entity";
 import { IContractListenerResult } from "../../../common/interfaces";
 
@@ -55,8 +55,10 @@ export class VestingService {
 
     const contractEntities = await queryBuilder.getMany();
     if (contractEntities.length) {
+      const addresses = contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet);
+      const unique = [...new Set(addresses)];
       return {
-        address: contractEntities.map(contractEntity => contractEntity.address),
+        address: unique,
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
