@@ -15,7 +15,6 @@ interface IPyramid {
     uint256 period;
     uint256 penalty;
     uint256 externalId;
-    bool recurrent;
     bool active;
   }
 
