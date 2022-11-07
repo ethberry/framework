@@ -97,9 +97,9 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     require(stake.owner == _msgSender(), "Pyramid: not an owner");
     require(stake.activeDeposit, "Pyramid: deposit withdrawn already");
 
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
     uint256 stakeAmount = depositItem.amount;
 

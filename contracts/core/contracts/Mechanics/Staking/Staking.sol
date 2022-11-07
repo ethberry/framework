@@ -119,11 +119,11 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     require(stake.owner == _msgSender(), "Staking: not an owner");
     require(stake.activeDeposit, "Staking: deposit withdrawn already");
 
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
-    uint256 stakeAmount = depositItem.amount;
+  uint256 stakeAmount = depositItem.amount;
     address payable receiver = payable(stake.owner);
 
     if (withdrawDeposit) {
