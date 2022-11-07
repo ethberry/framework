@@ -37,10 +37,6 @@ export class CreatePyramidRules1660436477200 implements MigrationInterface {
           type: "int",
         },
         {
-          name: "recurrent",
-          type: "boolean",
-        },
-        {
           name: "contract_id",
           type: "int",
           isNullable: true,

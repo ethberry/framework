@@ -18,7 +18,6 @@ export interface IPyramidRule extends ISearchable {
   reward?: IAsset;
   duration: number;
   penalty: number;
-  recurrent: boolean;
   pyramidRuleStatus: PyramidRuleStatus;
   externalId: string;
 }

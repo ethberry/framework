@@ -247,6 +247,7 @@
       "DUMMY": "Dummy",
       "GRADE": "Grade",
       "RARITY": "Rarity",
+      "active": "Active",
       "account": "Account",
       "address": "Address",
       "amount": "Amount",

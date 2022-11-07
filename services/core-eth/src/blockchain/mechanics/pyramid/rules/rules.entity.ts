@@ -40,9 +40,6 @@ export class PyramidRulesEntity extends SearchableEntity implements IPyramidRule
   @Column({ type: "int" })
   public penalty: number;
 
-  @Column({ type: "boolean" })
-  public recurrent: boolean;
-
   @Column({
     type: "enum",
     enum: PyramidRuleStatus,

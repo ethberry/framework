@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -23,7 +23,7 @@ export interface IPyramidStakingEditDialogProps {
 export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, recurrent, deposit, reward, duration, contractId } = initialValues;
+  const { id, title, description, penalty, deposit, reward, duration, contractId } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,7 +31,6 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
     deposit,
     reward,
     penalty,
-    recurrent,
     duration,
     contractId,
   };
@@ -92,7 +91,6 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
         }}
         readOnly={readOnly}
       />
-      <CheckboxInput name="recurrent" readOnly={readOnly} />
     </FormDialog>
   );
 };

@@ -60,12 +60,6 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               </TableCell>
               <TableCell align="right">{pyramidRule?.duration} days</TableCell>
             </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.recurrent" />
-              </TableCell>
-              <TableCell align="right">{pyramidRule?.recurrent ? "yes" : "no"}</TableCell>
-            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>

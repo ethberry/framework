@@ -17,7 +17,7 @@ export interface IPyramidViewDialogProps {
 export const PyramidViewDialog: FC<IPyramidViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { title, description, deposit, reward, duration, recurrent } = initialValues;
+  const { title, description, deposit, reward, duration } = initialValues;
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -61,12 +61,6 @@ export const PyramidViewDialog: FC<IPyramidViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.duration" />
               </TableCell>
               <TableCell align="right">{duration} days</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.recurrent" />
-              </TableCell>
-              <TableCell align="right">{recurrent ? "yes" : "no"}</TableCell>
             </TableRow>
           </TableBody>
         </Table>

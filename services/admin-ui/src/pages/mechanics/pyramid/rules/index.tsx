@@ -55,7 +55,6 @@ export const PyramidRules: FC = () => {
       reward: emptyPrice,
       duration: 30,
       penalty: 100,
-      recurrent: false,
       contractId: 1,
     },
     filter: ({ deposit, reward, contractId, ...rest }) => ({
