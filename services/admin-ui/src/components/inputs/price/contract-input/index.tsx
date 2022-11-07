@@ -1,9 +1,8 @@
-import { ChangeEvent, FC, useEffect } from "react";
+import { ChangeEvent, FC } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { ContractStatus, ModuleType } from "@framework/types";
-import { emptyItem, emptyPrice } from "../empty-price";
 
 export interface IContractInputProps {
   prefix: string;
@@ -24,13 +23,6 @@ export const ContractInput: FC<IContractInputProps> = props => {
     form.setValue(`${prefix}.contract.decimals`, option?.decimals ?? 0);
   };
 
-  useEffect(() => {
-    form.setValue(
-      `${prefix}.${name}`,
-      (prefix.split(".")[0] === "price" ? emptyPrice : emptyItem).components[0].contractId,
-    );
-  }, [tokenType]);
-
   return (
     <EntityInput
       name={`${prefix}.${name}`}
@@ -42,6 +34,7 @@ export const ContractInput: FC<IContractInputProps> = props => {
       }}
       onChange={handleChange}
       readOnly={readOnly}
+      isAutoselect
     />
   );
 };
