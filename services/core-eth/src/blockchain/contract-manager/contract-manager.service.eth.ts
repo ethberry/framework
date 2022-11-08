@@ -40,6 +40,7 @@ import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
 import { GradeService } from "../mechanics/grade/grade.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
+import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -58,6 +59,7 @@ export class ContractManagerServiceEth {
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
     private readonly mysteryboxLogService: MysteryLogService,
+    private readonly pyramidLogService: PyramidLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
@@ -272,7 +274,7 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    this.mysteryboxLogService.addListener({
+    this.pyramidLogService.addListener({
       address: addr.toLowerCase(),
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

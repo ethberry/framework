@@ -17,6 +17,7 @@ import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
 import { GradeModule } from "../mechanics/grade/grade.module";
 import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
+import { PyramidLogModule } from "../mechanics/pyramid/log/log.module";
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
     Erc1155TokenLogModule,
     MysteryLogModule,
     VestingLogModule,
+    PyramidLogModule,
     ContractManagerLogModule,
     ContractManagerHistoryModule,
     VestingModule,
