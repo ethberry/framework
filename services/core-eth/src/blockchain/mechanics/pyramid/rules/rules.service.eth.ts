@@ -6,7 +6,7 @@ import {
   IPyramidCreateEvent,
   IPyramidUpdateEvent,
   PyramidEventType,
-  StakingRuleStatus,
+  PyramidRuleStatus,
   TPyramidEventData,
 } from "@framework/types";
 
@@ -50,7 +50,7 @@ export class PyramidRulesServiceEth {
 
     Object.assign(pyramidRuleEntity, {
       externalId: ruleId,
-      stakingRuleStatus: StakingRuleStatus.ACTIVE,
+      pyramidRuleStatus: PyramidRuleStatus.ACTIVE,
     });
 
     await pyramidRuleEntity.save();
@@ -81,7 +81,7 @@ export class PyramidRulesServiceEth {
     }
 
     Object.assign(pyramidRuleEntity, {
-      stakingRuleStatus: active ? StakingRuleStatus.ACTIVE : StakingRuleStatus.INACTIVE,
+      pyramidRuleStatus: active ? PyramidRuleStatus.ACTIVE : PyramidRuleStatus.INACTIVE,
     });
 
     await pyramidRuleEntity.save();
