@@ -43,7 +43,8 @@ export const MintMenuItem: FC<IMintMenuItemProps> = props => {
       return contractErc721.mintCommon(values.account, values.templateId) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(values.address, ERC1155SimpleSol.abi, web3Context.provider?.getSigner());
-      return contractErc1155.mint(values.account, values.templateId, values.amount, "0x") as Promise<any>;
+      // TODO workaround to get erc1155 tokenId instead of templateId
+      return contractErc1155.mint(values.account, `${values.templateId}01`, values.amount, "0x") as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
