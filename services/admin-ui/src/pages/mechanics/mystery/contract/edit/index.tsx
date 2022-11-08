@@ -45,7 +45,7 @@ export const MysteryContractEditDialog: FC<IMysteryContractEditDialogProps> = pr
           symbol={symbol}
           address={address}
           baseTokenURI={baseTokenURI}
-          royalty={`%${royalty / 100}`}
+          royalty={`${royalty / 100}%`}
         />
       }
       {...rest}

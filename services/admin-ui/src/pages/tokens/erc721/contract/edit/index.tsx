@@ -45,7 +45,7 @@ export const Erc721ContractEditDialog: FC<IErc721ContractEditDialogProps> = prop
           symbol={symbol}
           address={address}
           baseTokenURI={baseTokenURI}
-          royalty={`%${royalty / 100}`}
+          royalty={`${royalty / 100}%`}
           chainId={chainId}
         />
       }
