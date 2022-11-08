@@ -18,7 +18,7 @@ import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IPyramidRule, IPyramidRuleSearchDto } from "@framework/types";
-import { IPyramidRuleItemSearchDto, PyramidRuleStatus, TokenType } from "@framework/types";
+import { DurationUnit, IPyramidRuleItemSearchDto, PyramidRuleStatus, TokenType } from "@framework/types";
 
 import { PyramidUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
@@ -53,7 +53,8 @@ export const PyramidRules: FC = () => {
       description: emptyStateString,
       deposit: emptyPrice,
       reward: emptyPrice,
-      duration: 30,
+      durationAmount: 2592000,
+      durationUnit: DurationUnit.DAY,
       penalty: 100,
       contractId: 1,
     },

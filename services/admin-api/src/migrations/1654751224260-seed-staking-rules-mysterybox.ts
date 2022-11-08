@@ -110,7 +110,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       INSERT INTO ${ns}.staking_rules (
         title,
         description,
-        duration,
+        duration_amount,
         penalty,
         recurrent,
         deposit_id,
@@ -122,7 +122,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       ) VALUES (
         'MYSTERYBOX > NATIVE',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80611,
@@ -134,7 +134,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       ), (
         'MYSTERYBOX > ERC20',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80621,
@@ -146,7 +146,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       ), (
         'MYSTERYBOX > ERC721',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80631,
@@ -158,7 +158,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       ), (
         'MYSTERYBOX > ERC998',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80641,
@@ -170,7 +170,7 @@ export class SeedStakingRulesMysteryboxAt1654751224260 implements MigrationInter
       ), (
         'MYSTERYBOX > ERC1155',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80651,

@@ -62,9 +62,8 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
       INSERT INTO ${ns}.pyramid_rules (
         title,
         description,
-        duration,
+        duration_amount,
         penalty,
-        recurrent,
         deposit_id,
         reward_id,
         external_id,
@@ -74,9 +73,8 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
       ) VALUES (
         'ERC20 > NATIVE',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
-        false,
         90211,
         90212,
         21,
@@ -86,9 +84,8 @@ export class SeedPyramidRulesErc20At1660436477220 implements MigrationInterface 
       ), (
         'ERC20 > ERC20',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
-        false,
         90221,
         90222,
         22,

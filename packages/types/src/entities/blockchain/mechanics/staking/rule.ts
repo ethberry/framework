@@ -1,5 +1,6 @@
 import type { ISearchable } from "@gemunion/types-collection";
 
+import { DurationUnit } from "../../common";
 import { IAsset } from "../asset";
 
 export enum StakingRuleStatus {
@@ -13,7 +14,8 @@ export interface IStakingRule extends ISearchable {
   deposit?: IAsset;
   rewardId: number;
   reward?: IAsset;
-  duration: number;
+  durationAmount: number;
+  durationUnit: DurationUnit;
   penalty: number;
   recurrent: boolean;
   stakingRuleStatus: StakingRuleStatus;

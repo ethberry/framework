@@ -69,10 +69,20 @@
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
+    "durationUnit": {
+      "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
+      "HOUR": "{count} {count, plural, =0 {hours} one {hour} other {hours}}",
+      "MINUTE": "{count} {count, plural, =0 {minutes} one {minute} other {minutes}}"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "pyramidDepositStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
     },
     "sort": {
       "createdAt": "Date",
@@ -178,6 +188,8 @@
       "description": "Description",
       "displayName": "Display name",
       "duration": "Duration",
+      "durationAmount": "Duration",
+      "durationUnit": "Duration unit",
       "email": "Email",
       "endDate": "End date",
       "endTimestamp": "End date",
@@ -209,6 +221,8 @@
       "roundIds": "Round",
       "score": "Score",
       "sort": "Sort by",
+      "pyramidDepositStatus": "Status",
+      "pyramidRuleStatus": "Status",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startDate": "Start date",

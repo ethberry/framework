@@ -12,6 +12,14 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.staking_rule_duration_unit_enum AS ENUM (
+        'DAY',
+        'HOUR',
+        'MINUTE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.staking_rules`,
       columns: [
@@ -29,8 +37,13 @@ export class CreateStakingRules1654751224200 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "duration",
+          name: "duration_amount",
           type: "int",
+        },
+        {
+          name: "duration_unit",
+          type: `${ns}.staking_rule_duration_unit_enum`,
+          default: "'DAY'",
         },
         {
           name: "penalty",

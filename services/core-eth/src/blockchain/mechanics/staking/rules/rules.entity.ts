@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IStakingRule, StakingRuleStatus } from "@framework/types";
+import { DurationUnit, IStakingRule, StakingRuleStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { StakingDepositEntity } from "../deposit/deposit.entity";
@@ -27,7 +27,13 @@ export class StakingRulesEntity extends SearchableEntity implements IStakingRule
   public reward: AssetEntity;
 
   @Column({ type: "int" })
-  public duration: number;
+  public durationAmount: number;
+
+  @Column({
+    type: "enum",
+    enum: DurationUnit,
+  })
+  public durationUnit: DurationUnit;
 
   @Column({ type: "int" })
   public penalty: number;
