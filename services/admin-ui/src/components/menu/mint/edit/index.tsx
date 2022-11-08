@@ -14,6 +14,7 @@ export interface IMintTokenDto {
   address: string;
   contractId: number;
   templateId: number;
+  tokenId?: number;
   amount: string;
   account: string;
   decimals: number;

@@ -137,6 +137,7 @@ export class TemplateService {
         alias: "template",
         leftJoinAndSelect: {
           contract: "template.contract",
+          tokens: "template.tokens",
         },
       },
     });
