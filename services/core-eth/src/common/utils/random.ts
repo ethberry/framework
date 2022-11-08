@@ -1,4 +1,4 @@
-import { ContractTransaction, ethers, utils, Wallet } from "ethers";
+import { ContractTransaction, ethers, utils, Wallet, BigNumber } from "ethers";
 import VrfSol from "@framework/core-contracts/artifacts/contracts/MOCKS/ChainLink/VrfCoordinator.test.sol/VRFCoordinatorMock.json";
 
 export const callRandom = async function (
@@ -8,11 +8,12 @@ export const callRandom = async function (
   provider: Wallet,
 ): Promise<string> {
   const contract = new ethers.Contract(vrfAddr, VrfSol.abi, provider);
+
   const trx: ContractTransaction = await contract.callBackWithRandomness(
     requestId,
     utils.randomBytes(32),
     consumerContract,
-    // { gasLimit: "30000000" },
+    { gasLimit: BigNumber.from("600000") },
   );
   return trx.hash;
 };
