@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 
 import { ns } from "@framework/constants";
-import { IPyramidRule, PyramidRuleStatus } from "@framework/types";
+import { DurationUnit, IPyramidRule, PyramidRuleStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { PyramidDepositEntity } from "../deposit/deposit.entity";
@@ -35,7 +35,13 @@ export class PyramidRulesEntity extends SearchableEntity implements IPyramidRule
   public reward: AssetEntity;
 
   @Column({ type: "int" })
-  public duration: number;
+  public durationAmount: number;
+
+  @Column({
+    type: "enum",
+    enum: DurationUnit,
+  })
+  public durationUnit: DurationUnit;
 
   @Column({ type: "int" })
   public penalty: number;

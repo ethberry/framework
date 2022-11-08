@@ -16,7 +16,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
-import { TokenType } from "@framework/types";
+import { DurationUnit, TokenType } from "@framework/types";
 
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { StakingDepositButton } from "../../../../components/buttons";
@@ -45,7 +45,8 @@ export const StakingRules: FC = () => {
       description: emptyStateString,
       deposit: emptyPrice,
       reward: emptyPrice,
-      duration: 30,
+      durationAmount: 2592000,
+      durationUnit: DurationUnit.DAY,
       penalty: 100,
       recurrent: false,
     },

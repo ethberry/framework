@@ -109,6 +109,11 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
+    "durationUnit": {
+      "DAY": "Day",
+      "HOUR": "Hour",
+      "MINUTE": "Minute"
+    },
     "emailType": {
       "DUMMY": "Test email",
       "LINK_TOKEN": "LINK notification"
@@ -281,6 +286,8 @@
       "description": "Description",
       "displayName": "Display name",
       "duration": "Duration",
+      "durationAmount": "Duration",
+      "durationUnit": "Duration unit",
       "email": "Email",
       "endTimestamp": "End date",
       "genes": "Genes",
@@ -369,6 +376,8 @@
       "description": "Description",
       "displayName": "Gordon Freeman",
       "duration": "30",
+      "durationAmount": "30",
+      "durationUnit": "Day",
       "email": "me@google.com",
       "growthRate": "2",
       "item": "Bottle of water",
@@ -492,7 +501,6 @@
           "emails": "Emails",
           "pages": "Pages",
           "payees": "System Payees",
-          "balances": "System Balances",
           "settings": "Settings",
           "title": "Admin",
           "users": "Users"

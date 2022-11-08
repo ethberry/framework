@@ -110,7 +110,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       INSERT INTO ${ns}.staking_rules (
         title,
         description,
-        duration,
+        duration_amount,
         penalty,
         recurrent,
         deposit_id,
@@ -122,7 +122,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ) VALUES (
         'ERC1155 > NATIVE',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80511,
@@ -134,7 +134,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ), (
         'ERC1155 > ERC20',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80521,
@@ -146,7 +146,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ), (
         'ERC1155 > ERC721',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80531,
@@ -158,7 +158,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ), (
         'ERC1155 > ERC998',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80541,
@@ -170,7 +170,7 @@ export class SeedStakingRulesErc1155At1654751224250 implements MigrationInterfac
       ), (
         'ERC1155 > ERC1155',
         '${simpleFormatting}',
-        30,
+        2592000,
         1,
         false,
         80551,

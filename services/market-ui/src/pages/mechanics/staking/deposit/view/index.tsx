@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { format } from "date-fns";
 
 import { humanReadableDateTimeFormat } from "@gemunion/constants";
@@ -9,6 +9,7 @@ import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingDeposit } from "@framework/types";
 
 import { formatPenalty, formatPrice } from "../../../../../utils/money";
+import { formatDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
   open: boolean;
@@ -20,6 +21,8 @@ export interface IStakesViewDialogProps {
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
   const { stakingRule, startTimestamp, withdrawTimestamp } = initialValues;
+
+  const { formatMessage } = useIntl();
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -58,9 +61,21 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.duration" />
+                <FormattedMessage id="form.labels.durationAmount" />
               </TableCell>
-              <TableCell align="right">{stakingRule?.duration} days</TableCell>
+              <TableCell align="right">
+                {stakingRule?.durationAmount && stakingRule?.durationUnit
+                  ? formatMessage(
+                      { id: `enum.durationUnit.${stakingRule.durationUnit}` },
+                      {
+                        count: formatDuration({
+                          durationAmount: stakingRule.durationAmount,
+                          durationUnit: stakingRule.durationUnit,
+                        }),
+                      },
+                    )
+                  : null}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

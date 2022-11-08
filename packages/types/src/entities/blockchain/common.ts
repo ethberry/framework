@@ -29,3 +29,9 @@ export enum ModuleType {
   LOTTERY = "LOTTERY",
   PYRAMID = "PYRAMID",
 }
+
+export enum DurationUnit {
+  DAY = "DAY",
+  HOUR = "HOUR",
+  MINUTE = "MINUTE",
+}

@@ -1,4 +1,4 @@
-import { IAssetDto, TokenType } from "@framework/types";
+import { DurationUnit, IAssetDto, TokenType } from "@framework/types";
 
 export interface IStakingItemCreateDto {
   tokenType: TokenType;
@@ -13,7 +13,8 @@ export interface IStakingCreateDto {
   // ruleId?: string;
   deposit: IAssetDto;
   reward: IAssetDto;
-  duration: number;
+  durationAmount: number;
+  durationUnit: DurationUnit;
   penalty: number;
   recurrent: boolean;
 }

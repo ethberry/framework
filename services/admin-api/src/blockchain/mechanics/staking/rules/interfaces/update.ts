@@ -1,11 +1,12 @@
-import { IAssetDto } from "@framework/types";
+import { DurationUnit, IAssetDto } from "@framework/types";
 
 export interface IStakingUpdateDto {
   title: string;
   description: string;
   deposit: IAssetDto;
   reward: IAssetDto;
-  duration: number;
+  durationAmount: number;
+  durationUnit: DurationUnit;
   penalty: number;
   recurrent: boolean;
 }

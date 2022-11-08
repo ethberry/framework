@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IPyramidDeposit } from "@framework/types";
 
 import { formatPrice } from "../../../../../utils/money";
+import { formatDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
   open: boolean;
@@ -18,6 +19,8 @@ export interface IStakesViewDialogProps {
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
   const { pyramidRule } = initialValues;
+
+  const { formatMessage } = useIntl();
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -56,9 +59,21 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.duration" />
+                <FormattedMessage id="form.labels.durationAmount" />
               </TableCell>
-              <TableCell align="right">{pyramidRule?.duration} days</TableCell>
+              <TableCell align="right">
+                {pyramidRule?.durationAmount && pyramidRule?.durationUnit
+                  ? formatMessage(
+                      { id: `enum.durationUnit.${pyramidRule.durationUnit}` },
+                      {
+                        count: formatDuration({
+                          durationAmount: pyramidRule.durationAmount,
+                          durationUnit: pyramidRule.durationUnit,
+                        }),
+                      },
+                    )
+                  : null}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

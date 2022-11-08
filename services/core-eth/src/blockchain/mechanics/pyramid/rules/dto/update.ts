@@ -1,10 +1,11 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsBoolean, IsInt, IsJSON, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
+import { IsBoolean, IsEnum, IsInt, IsJSON, IsNumber, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
 import { IPyramidUpdateDto } from "../interfaces";
 import { DepositDto } from "./deposit";
 import { RewardDto } from "./reward";
+import { DurationUnit } from "@framework/types";
 
 export class PyramidUpdateDto implements IPyramidUpdateDto {
   @ApiPropertyOptional()
@@ -43,7 +44,15 @@ export class PyramidUpdateDto implements IPyramidUpdateDto {
   @IsOptional()
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
-  public duration: number;
+  public durationAmount: number;
+
+  @ApiPropertyOptional({
+    enum: DurationUnit,
+  })
+  @IsOptional()
+  @Transform(({ value }) => value as DurationUnit)
+  @IsEnum(DurationUnit, { message: "badInput" })
+  public durationUnit: DurationUnit;
 
   @ApiPropertyOptional()
   @IsOptional()

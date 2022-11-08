@@ -2,15 +2,16 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { IPyramidRule, ModuleType } from "@framework/types";
 
-import { validationSchema } from "./validation";
+import { DurationInput } from "../../../../../components/inputs/duration";
 import { PriceInput } from "../../../../../components/inputs/price";
+import { validationSchema } from "./validation";
 
 export interface IPyramidStakingEditDialogProps {
   open: boolean;
@@ -23,7 +24,7 @@ export interface IPyramidStakingEditDialogProps {
 export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, deposit, reward, duration, contractId } = initialValues;
+  const { id, title, description, penalty, deposit, reward, durationAmount, durationUnit, contractId } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,7 +32,8 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
     deposit,
     reward,
     penalty,
-    duration,
+    durationAmount,
+    durationUnit,
     contractId,
   };
 
@@ -72,17 +74,7 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
           <PriceInput prefix="reward" readOnly={readOnly} />
         </Grid>
       </Grid>
-      <NumberInput
-        name="duration"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="start">
-              <FormattedMessage id="form.adornment.days" />
-            </InputAdornment>
-          ),
-        }}
-        readOnly={readOnly}
-      />
+      <DurationInput readOnly={readOnly} />
       <CurrencyInput
         name="penalty"
         symbol=""

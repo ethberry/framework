@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IPyramidRule } from "@framework/types";
+import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
+
 import { formatPrice } from "../../../../../utils/money";
+import { formatDuration } from "../../../../../utils/time";
 
 export interface IPyramidViewDialogProps {
   open: boolean;
@@ -16,14 +18,13 @@ export interface IPyramidViewDialogProps {
 
 export const PyramidViewDialog: FC<IPyramidViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
+  const { title, description, deposit, reward, durationAmount, durationUnit } = initialValues;
 
-  const { title, description, deposit, reward, duration } = initialValues;
+  const { formatMessage } = useIntl();
 
   const handleConfirm = (): void => {
     onConfirm();
   };
-
-  // TODO i18n
 
   return (
     <ConfirmationDialog message="dialogs.view" onConfirm={handleConfirm} {...rest}>
@@ -58,9 +59,14 @@ export const PyramidViewDialog: FC<IPyramidViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.duration" />
+                <FormattedMessage id="form.labels.durationAmount" />
               </TableCell>
-              <TableCell align="right">{duration} days</TableCell>
+              <TableCell align="right">
+                {formatMessage(
+                  { id: `enum.durationUnit.${durationUnit}` },
+                  { count: formatDuration({ durationAmount, durationUnit }) },
+                )}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
