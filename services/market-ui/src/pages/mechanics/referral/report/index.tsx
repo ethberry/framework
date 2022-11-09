@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Button, Grid } from "@mui/material";
 import { CloudDownload, FilterList } from "@mui/icons-material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { FormattedMessage, useIntl } from "react-intl";
 import { addMonths, endOfMonth, format, parseISO, startOfMonth, subMonths } from "date-fns";
 
@@ -12,6 +12,7 @@ import { humanReadableDateTimeFormat } from "@gemunion/constants";
 
 import { formatEther } from "../../../../utils/money";
 import { ReferralReportSearchForm } from "./form";
+import { AddressLink } from "../../../../components/common/address-link";
 
 export const ReferralReport: FC = () => {
   const {
@@ -61,6 +62,11 @@ export const ReferralReport: FC = () => {
       field: "referrer",
       headerName: formatMessage({ id: "form.labels.referrer" }),
       sortable: false,
+      renderCell: (params: GridCellParams) => {
+        return (
+          <AddressLink address={params.value} />
+        );
+      },
       flex: 2
     },
     {
