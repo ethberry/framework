@@ -107,7 +107,7 @@ export class ContractManagerServiceEth {
     });
 
     this.erc20LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -153,7 +153,7 @@ export class ContractManagerServiceEth {
     }
 
     this.erc721LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -188,7 +188,7 @@ export class ContractManagerServiceEth {
     }
 
     this.erc998LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -216,7 +216,7 @@ export class ContractManagerServiceEth {
     });
 
     this.erc1155LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -248,7 +248,7 @@ export class ContractManagerServiceEth {
     });
 
     this.mysteryboxLogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -275,7 +275,7 @@ export class ContractManagerServiceEth {
     });
 
     this.pyramidLogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -297,7 +297,7 @@ export class ContractManagerServiceEth {
     });
 
     this.vestingLogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }

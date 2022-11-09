@@ -38,6 +38,8 @@
     "fund": "Fund",
     "grantRole": "Grant role",
     "mintToken": "Mint tokens",
+    "listenerAdd": "Add ETH Listener",
+    "listenerRemove": "Remove ETH Listener",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
     "top-up": "Top up",
@@ -183,6 +185,16 @@
       "ERC998": "ERC998",
       "NATIVE": "Native"
     },
+    "listenerType": {
+      "NATIVE": "Native",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "ERC1155": "ERC1155",
+      "MYSTERYBOX": "MYSTERYBOX",
+      "PYRAMID": "PYRAMID",
+      "VESTING": "VESTING"
+    },
     "userRoles": {
       "ADMIN": "Admin",
       "CUSTOMER": "Customer"
@@ -203,6 +215,8 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
+      "addListener": "Add ETH Listener",
+      "removeListener": "Remove ETH Listener",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",
@@ -290,6 +304,7 @@
       "durationUnit": "Duration unit",
       "email": "Email",
       "endTimestamp": "End date",
+      "fromBlock": "Listen log from block №",
       "genes": "Genes",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
@@ -298,6 +313,7 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
+      "listenerType": "Listener type",
       "listId": "List ID",
       "matron": "Matron",
       "maxBalance": "Max Balance",
@@ -379,6 +395,7 @@
       "durationAmount": "30",
       "durationUnit": "Day",
       "email": "me@google.com",
+      "fromBlock": "1",
       "growthRate": "2",
       "item": "Bottle of water",
       "listId": "1",

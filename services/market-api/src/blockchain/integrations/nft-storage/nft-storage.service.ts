@@ -38,7 +38,6 @@ export class NftstorageService {
   public async pinTemplate(templateEntity: TemplateEntity) {
     const objectName = new URL(templateEntity.imageUrl).pathname.split("/").pop()!;
     const cid = await this.nftStorageFirebaseService.pinFileToIPFS(objectName);
-    // console.log(this.nftStorageFirebaseService);
 
     Object.assign(templateEntity, { cid });
     await templateEntity.save();

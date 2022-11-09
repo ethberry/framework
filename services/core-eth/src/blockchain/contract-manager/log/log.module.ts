@@ -22,7 +22,7 @@ import { ContractService } from "../../hierarchy/contract/contract.service";
         const contractManagerAddr = configService.get<string>("CONTRACT_MANAGER_ADDR", "");
         const fromBlock =
           (await contractService.getLastBlock(contractManagerAddr)) ||
-          ~~configService.get<string>("STARTING_BLOCK", "0");
+          ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.CONTRACT_MANAGER,

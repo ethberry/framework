@@ -21,6 +21,7 @@ import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingFundButton } from "../../../../components/buttons/mechanics/vesting/fund";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/eth-listener/remove";
 
 export const Vesting: FC = () => {
   const {
@@ -78,6 +79,12 @@ export const Vesting: FC = () => {
                     <Visibility />
                   </IconButton>
                 </Tooltip>
+                <EthListenerRemoveMenuItem
+                  itemType={{
+                    address: vesting.address,
+                    isVesting: true,
+                  }}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

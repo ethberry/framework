@@ -14,7 +14,7 @@ export class MysteryLogService {
   ) {}
 
   public addListener(dto: ICreateListenerPayload): void {
-    this.ethersContractService.updateListener([dto.address], dto.fromBlock);
+    this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
   public async getLastBlock(address: string): Promise<number | null> {

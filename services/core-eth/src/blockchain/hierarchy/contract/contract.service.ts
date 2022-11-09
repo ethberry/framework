@@ -6,7 +6,7 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeo
 import { wallet } from "@gemunion/constants";
 
 import { ContractEntity } from "./contract.entity";
-import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractType, ModuleType, TokenType } from "@framework/types";
 import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()

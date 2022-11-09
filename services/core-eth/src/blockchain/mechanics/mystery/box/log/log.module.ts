@@ -41,7 +41,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             ],
           },
           block: {
-            fromBlock: mysteryContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            fromBlock: mysteryContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
             debug: true,
           },
         };

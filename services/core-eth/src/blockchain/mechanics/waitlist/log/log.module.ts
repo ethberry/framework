@@ -21,7 +21,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const waitlistAddr = configService.get<string>("WAITLIST_ADDR", "");
         const fromBlock =
-          (await contractService.getLastBlock(waitlistAddr)) || ~~configService.get<string>("STARTING_BLOCK", "0");
+          (await contractService.getLastBlock(waitlistAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.WAITLIST,

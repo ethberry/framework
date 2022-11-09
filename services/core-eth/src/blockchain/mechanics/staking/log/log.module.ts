@@ -22,7 +22,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const stakingAddr = configService.get<string>("STAKING_ADDR", "");
         const fromBlock =
-          (await contractService.getLastBlock(stakingAddr)) || ~~configService.get<string>("STARTING_BLOCK", "0");
+          (await contractService.getLastBlock(stakingAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.STAKING,

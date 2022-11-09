@@ -22,7 +22,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
       useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
         const wrapperAddr = configService.get<string>("ERC721_WRAPPER_ADDR", "");
         const fromBlock =
-          (await contractService.getLastBlock(wrapperAddr)) || ~~configService.get<string>("STARTING_BLOCK", "0");
+          (await contractService.getLastBlock(wrapperAddr)) || ~~configService.get<string>("STARTING_BLOCK", "1");
         return {
           contract: {
             contractType: ContractType.WRAPPER,

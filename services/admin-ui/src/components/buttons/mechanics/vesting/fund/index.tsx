@@ -1,9 +1,10 @@
 import { FC, Fragment, useState } from "react";
+import { useIntl } from "react-intl";
+
 import { IconButton, Tooltip } from "@mui/material";
 import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
-import { useIntl } from "react-intl";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import { IVesting, TokenType } from "@framework/types";
