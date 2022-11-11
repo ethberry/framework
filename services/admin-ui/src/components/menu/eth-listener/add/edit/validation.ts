@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { addressValidationSchema } from "@gemunion/yup-rules-eth";
-import { ListenerType } from "./index";
+import { ListenerType } from "@framework/types";
 
 export const validationSchema = Yup.object().shape({
   address: addressValidationSchema,
