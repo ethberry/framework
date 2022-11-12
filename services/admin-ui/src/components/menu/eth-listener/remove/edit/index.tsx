@@ -4,10 +4,9 @@ import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput, SelectInput } from "@gemunion/mui-inputs-core";
-
-// import { validationSchema } from "./validation";
-
 import { ListenerType } from "@framework/types";
+
+import { validationSchema } from "./validation";
 
 export interface IEthListenerRemoveDto {
   address: string;
@@ -26,7 +25,7 @@ export const EthListenerRemoveDialog: FC<IEthListenerRemoveDialogProps> = props 
   return (
     <FormDialog
       initialValues={initialValues}
-      // validationSchema={validationSchema}
+      validationSchema={validationSchema}
       message="dialogs.listenerRemove"
       testId="EthListenerRemoveForm"
       {...rest}

@@ -2,11 +2,12 @@ import { FC, Fragment, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IconButton, ListItemIcon, MenuItem, Tooltip, Typography } from "@mui/material";
 import { DoNotDisturbOff } from "@mui/icons-material";
-import { useApiCall } from "@gemunion/react-hooks";
 
-import { EthListenerRemoveDialog, IEthListenerRemoveDto, ListenerType } from "./edit";
+import { useApiCall } from "@gemunion/react-hooks";
+import { ListenerType, ModuleType, TokenType } from "@framework/types";
+
+import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./edit";
 import { getListenerType } from "../../../../utils/listener-type";
-import { ModuleType, TokenType } from "@framework/types";
 
 export interface IListenerTypeProps {
   address: string;
@@ -41,7 +42,7 @@ export const EthListenerRemoveMenuItem: FC<IEthListenerRemoveMenuItemProps> = pr
 
   const { fn } = useApiCall(async (api, values) => {
     return api.fetchJson({
-      url: "/eth-logger/Remove",
+      url: "/eth-logger/remove",
       method: "POST",
       data: values,
     });
