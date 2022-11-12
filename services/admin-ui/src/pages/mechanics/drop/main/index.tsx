@@ -13,7 +13,7 @@ import { Add, Create, Delete } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { addMonths } from "date-fns";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
@@ -22,15 +22,18 @@ import type { IDrop } from "@framework/types";
 import { DropEditDialog } from "./edit";
 import { emptyItem, emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
+import { DropSearchForm } from "./form";
 
 export const Drop: FC = () => {
   const now = new Date();
+
   const {
     rows,
     count,
     search,
     selected,
     isLoading,
+    isFiltersOpen,
     isEditDialogOpen,
     isDeleteDialogOpen,
     handleCreate,
@@ -39,9 +42,10 @@ export const Drop: FC = () => {
     handleEditConfirm,
     handleDelete,
     handleDeleteCancel,
-    handleDeleteConfirm,
+    handleSearch,
     handleChangePage,
-  } = useCollection<IDrop, IPaginationDto>({
+    handleDeleteConfirm,
+  } = useCollection<IDrop, ISearchDto>({
     baseUrl: "/drops",
     empty: {
       item: emptyItem,
@@ -66,6 +70,8 @@ export const Drop: FC = () => {
           <FormattedMessage id="form.buttons.create" />
         </Button>
       </PageHeader>
+
+      <DropSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
