@@ -17,20 +17,25 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
-  const { fn } = useApiCall((api, { files }: IClaimUploadDto) => {
-    return api.fetchJson({
-      url: "/claims/upload",
-      data: getFormData({ file: files[0] }),
-      method: "POST",
-    });
-  });
+  const { fn } = useApiCall(
+    (api, { files }: IClaimUploadDto) => {
+      return api.fetchJson({
+        url: "/claims/upload",
+        data: getFormData({ file: files[0] }),
+        method: "POST",
+      });
+    },
+    { error: false },
+  );
 
   const handleUpload = () => {
     setIsUploadDialogOpen(true);
   };
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
-    await fn(form, values);
+    await fn(form, values).catch(e => {
+      console.error(e); // should be ApiError but it is [Object object]
+    });
     setIsUploadDialogOpen(false);
   };
 

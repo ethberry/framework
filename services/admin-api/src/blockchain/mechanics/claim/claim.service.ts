@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
 import csv2json from "csvtojson";
+import { validateSync } from "class-validator";
 
 import { ClaimStatus, IClaimSearchDto, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
@@ -10,6 +11,7 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 import { AssetService } from "../asset/asset.service";
+import { ClaimItemCreateDto } from "./dto";
 
 @Injectable()
 export class ClaimService {
@@ -170,40 +172,50 @@ export class ClaimService {
       noheader: true,
       headers: ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"],
     }).fromString(file.buffer.toString());
-    return Promise.allSettled(
-      parsed.map(
-        ({
+
+    const rows = parsed.map(
+      ({
+        account,
+        endTimestamp,
+        tokenType,
+        contractId,
+        templateId,
+        amount,
+      }: {
+        account: string;
+        endTimestamp: string;
+        tokenType: TokenType;
+        contractId: number;
+        templateId: number;
+        amount: string;
+      }) => {
+        const schema = new ClaimItemCreateDto();
+        Object.assign(schema, {
           account,
           endTimestamp,
-          tokenType,
-          contractId,
-          templateId,
-          amount,
-        }: {
-          account: string;
-          endTimestamp: string;
-          tokenType: TokenType;
-          contractId: number;
-          templateId: number;
-          amount: string;
-        }) => {
-          return this.create({
-            account,
-            endTimestamp,
-            item: {
-              components: [
-                {
-                  tokenType,
-                  contractId,
-                  templateId,
-                  amount,
-                },
-              ],
-            },
-          });
-        },
-      ),
-    ).then(values =>
+          item: {
+            components: [
+              {
+                tokenType,
+                contractId,
+                templateId,
+                amount,
+              },
+            ],
+          },
+        });
+        const result = validateSync(schema);
+
+        if (result.length) {
+          this.loggerService.log(result, ClaimService.name);
+          throw result;
+        }
+
+        return schema;
+      },
+    );
+
+    return Promise.allSettled(rows.map(row => this.create(row))).then(values =>
       values
         .filter(c => c.status === "fulfilled")
         .map(c => <PromiseFulfilledResult<ClaimEntity>>c)
