@@ -37,9 +37,9 @@
     "edit": "Edit",
     "fund": "Fund",
     "grantRole": "Grant role",
-    "mintToken": "Mint tokens",
     "listenerAdd": "Add ETH Listener",
     "listenerRemove": "Remove ETH Listener",
+    "mintToken": "Mint tokens",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
     "top-up": "Top up",
@@ -130,6 +130,16 @@
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
     },
+    "listenerType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "MYSTERYBOX": "MYSTERYBOX",
+      "NATIVE": "Native",
+      "PYRAMID": "PYRAMID",
+      "VESTING": "VESTING"
+    },
     "mysteryboxStatus": {
       "ACTIVE": "Active",
       "INACTIVE": "Inactive"
@@ -185,16 +195,6 @@
       "ERC998": "ERC998",
       "NATIVE": "Native"
     },
-    "listenerType": {
-      "NATIVE": "Native",
-      "ERC20": "ERC20",
-      "ERC721": "ERC721",
-      "ERC998": "ERC998",
-      "ERC1155": "ERC1155",
-      "MYSTERYBOX": "MYSTERYBOX",
-      "PYRAMID": "PYRAMID",
-      "VESTING": "VESTING"
-    },
     "userRoles": {
       "ADMIN": "Admin",
       "CUSTOMER": "Customer"
@@ -216,7 +216,6 @@
       "accept": "Accept",
       "add": "Add",
       "addListener": "Add ETH Listener",
-      "removeListener": "Remove ETH Listener",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",
@@ -241,6 +240,7 @@
       "ok": "Ok",
       "pause": "Pause",
       "reject": "Reject",
+      "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
@@ -266,8 +266,8 @@
       "DUMMY": "Dummy",
       "GRADE": "Grade",
       "RARITY": "Rarity",
-      "active": "Active",
       "account": "Account",
+      "active": "Active",
       "address": "Address",
       "amount": "Amount",
       "attributes": "Attributes",
@@ -314,8 +314,8 @@
       "item": "Item",
       "items": "Items",
       "language": "Language",
-      "listenerType": "Listener type",
       "listId": "List ID",
+      "listenerType": "Listener type",
       "matron": "Matron",
       "maxBalance": "Max Balance",
       "maxStakes": "Max Stakes",
@@ -327,11 +327,11 @@
       "owner": "Owner",
       "pageStatus": "Status",
       "parent": "Parent",
-      "payee": "Payee",
       "parentId": "Parent",
       "parentIds": "Parent",
       "parents": "Parents",
       "password": "Password",
+      "payee": "Payee",
       "penalty": "Penalty",
       "price": "Price",
       "pyramidDepositStatus": "Status",
@@ -407,10 +407,10 @@
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
-      "payee": "0x...",
       "parentId": "Contract",
       "parentIds": "Contract",
       "password": "******",
+      "payee": "0x...",
       "penalty": "1",
       "price": "1000",
       "priceCorrection": "0",
@@ -548,12 +548,12 @@
         "vesting": "Vesting",
         "waitlist": "Waitlist"
       },
+      "title": "Dashboard",
       "wallet": {
-        "title": "System Wallet",
+        "balances": "Balances",
         "payees": "Payees",
-        "balances": "Balances"
-      },
-      "title": "Dashboard"
+        "title": "System Wallet"
+      }
     },
     "drop": {
       "title": "Drops"
@@ -728,20 +728,20 @@
       "title": "Waitlist"
     },
     "wallet": {
-      "title": "System Wallet",
-      "withdraw": {
-        "title": "Withdraw",
-        "dialog": "From address",
-        "token": "Token",
-        "total": "Total balance",
-        "payee": "Payee will receive"
-      },
       "balances": {
         "title": "Balances"
       },
       "payees": {
         "title": "System Payees",
         "withdraw": "Withdraw"
+      },
+      "title": "System Wallet",
+      "withdraw": {
+        "dialog": "From address",
+        "payee": "Payee will receive",
+        "title": "Withdraw",
+        "token": "Token",
+        "total": "Total balance"
       }
     }
   },

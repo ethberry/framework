@@ -1,7 +1,8 @@
-import { APP_FILTER, APP_GUARD, APP_PIPE } from "@nestjs/core";
-import { Logger, Module } from "@nestjs/common";
+import { APP_FILTER, APP_GUARD, APP_PIPE, BaseExceptionFilter } from "@nestjs/core";
+import { ArgumentsHost, BadRequestException, Catch, Inject, Logger, LoggerService, Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { WinstonModule } from "nest-winston";
+import { ValidationError } from "class-validator";
 import { RedisModule, RedisModuleOptions } from "@liaoliaots/nestjs-redis";
 
 import { HttpExceptionFilter, HttpValidationPipe } from "@gemunion/nest-js-utils";
@@ -24,12 +25,30 @@ import { SettingsModule } from "./settings/settings.module";
 import { PageModule } from "./page/page.module";
 import { BlockchainModule } from "./blockchain/blockchain.module";
 
+@Catch(Array<ValidationError>)
+export class ValidationExceptionFilter extends BaseExceptionFilter {
+  constructor(
+    @Inject(Logger)
+    private readonly loggerService: LoggerService,
+  ) {
+    super();
+  }
+
+  catch(exception: Array<ValidationError>, host: ArgumentsHost): any {
+    return super.catch(new BadRequestException(exception), host);
+  }
+}
+
 @Module({
   providers: [
     Logger,
     {
       provide: APP_PIPE,
       useClass: HttpValidationPipe,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: ValidationExceptionFilter,
     },
     {
       provide: APP_GUARD,
