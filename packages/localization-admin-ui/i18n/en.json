@@ -304,6 +304,7 @@
       "durationUnit": "Duration unit",
       "email": "Email",
       "endTimestamp": "End date",
+      "files": "Files",
       "fromBlock": "Listen log from block №",
       "genes": "Genes",
       "gradeStrategy": "Grade strategy",

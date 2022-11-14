@@ -66,7 +66,7 @@ export class ExchangeServiceEth {
     Object.assign(claimEntity, { claimStatus: ClaimStatus.REDEEMED });
     await claimEntity.save();
 
-    await this.saveAssetHistory(history, [items], []);
+    await this.saveAssetHistory(history, items, []);
   }
 
   public async craft(event: ILogEvent<IExchangeCraftEvent>, context: Log): Promise<void> {
