@@ -34,7 +34,7 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
     await fn(form, values).catch(e => {
-      console.error(e); // should be ApiError but it is [Object object]
+      console.error(e.getLocalizedValidationErrors());
     });
     setIsUploadDialogOpen(false);
   };

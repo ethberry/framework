@@ -11,7 +11,8 @@ import { IParams, SignerService } from "@framework/nest-js-module-exchange-signe
 import { IClaimItemCreateDto, IClaimItemUpdateDto } from "./interfaces";
 import { ClaimEntity } from "./claim.entity";
 import { AssetService } from "../asset/asset.service";
-import { ClaimItemCreateDto } from "./dto";
+import { ClaimItemCreateDto, ClaimUploadDto } from "./dto";
+import { ItemComponentDto, ItemDto } from "../asset/dto";
 
 @Injectable()
 export class ClaimService {
@@ -173,7 +174,7 @@ export class ClaimService {
       headers: ["account", "endTimestamp", "tokenType", "contractId", "templateId", "amount"],
     }).fromString(file.buffer.toString());
 
-    const rows = parsed.map(
+    const files = parsed.map(
       ({
         account,
         endTimestamp,
@@ -185,41 +186,36 @@ export class ClaimService {
         account: string;
         endTimestamp: string;
         tokenType: TokenType;
-        contractId: number;
-        templateId: number;
+        contractId: string;
+        templateId: string;
         amount: string;
       }) => {
-        const schema = new ClaimItemCreateDto();
-        Object.assign(schema, {
+        return Object.assign(new ClaimItemCreateDto(), {
           account,
           endTimestamp,
-          item: {
+          item: Object.assign(new ItemDto(), {
             components: [
-              {
+              Object.assign(new ItemComponentDto(), {
                 tokenType,
-                contractId,
-                templateId,
+                contractId: ~~contractId,
+                templateId: ~~templateId,
                 amount,
-              },
+              }),
             ],
-          },
+          }),
         });
-        const result = validateSync(schema);
-
-        if (result.length) {
-          this.loggerService.log(result, ClaimService.name);
-          throw result;
-        }
-
-        return schema;
       },
     );
 
-    return Promise.allSettled(rows.map(row => this.create(row))).then(values =>
-      values
-        .filter(c => c.status === "fulfilled")
-        .map(c => <PromiseFulfilledResult<ClaimEntity>>c)
-        .map(c => c.value),
-    );
+    const schema = new ClaimUploadDto();
+    schema.files = files;
+    const result = validateSync(schema);
+
+    if (result.length) {
+      this.loggerService.log(result, ClaimService.name);
+      throw result;
+    }
+
+    return Promise.all(files.map(row => this.create(row)));
   }
 }
