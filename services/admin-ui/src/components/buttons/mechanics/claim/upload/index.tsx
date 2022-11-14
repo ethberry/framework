@@ -1,12 +1,14 @@
 import { FC, Fragment, useState } from "react";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { useSnackbar } from "notistack";
 
 import { useApiCall } from "@gemunion/react-hooks";
 
 import { ClaimUploadDialog, IClaimUploadDto } from "./dialog";
 import { getFormData } from "./utils";
+import { ApiError } from "@gemunion/provider-api-firebase";
 
 export interface IClaimUploadButtonProps {
   className?: string;
@@ -14,6 +16,9 @@ export interface IClaimUploadButtonProps {
 
 export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
   const { className } = props;
+
+  const { formatMessage } = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
 
@@ -33,10 +38,33 @@ export const ClaimUploadButton: FC<IClaimUploadButtonProps> = props => {
   };
 
   const handleUploadConfirm = async (values: IClaimUploadDto, form: any) => {
-    await fn(form, values).catch(e => {
-      console.error(e.getLocalizedValidationErrors());
-    });
-    setIsUploadDialogOpen(false);
+    const name = "files";
+
+    form.resetField(name);
+
+    await fn(form, values)
+      .then(result => {
+        if (!result) {
+          return;
+        }
+        setIsUploadDialogOpen(false);
+      })
+      .catch((e: ApiError) => {
+        if (e.status === 400) {
+          const errors = e.getLocalizedValidationErrors();
+
+          enqueueSnackbar(formatMessage({ id: "form.validations.badInput" }, { label: name }), { variant: "error" });
+
+          Object.keys(errors).forEach(key => {
+            form?.setError(name, { type: "custom", message: errors[key] });
+          });
+        } else if (e.status) {
+          enqueueSnackbar(formatMessage({ id: `snackbar.${e.message}` }), { variant: "error" });
+        } else {
+          console.error(e);
+          enqueueSnackbar(formatMessage({ id: "snackbar.error" }), { variant: "error" });
+        }
+      });
   };
 
   const handleUploadCancel = () => {
