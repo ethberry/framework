@@ -20,7 +20,7 @@ import { ContractStatus, IContract, IContractSearchDto, NativeContractFeatures }
 
 import { NativeTokenEditDialog } from "./edit";
 import { NativeContractCreateButton } from "../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../components/menu";
+import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
 export const NativeContract: FC = () => {

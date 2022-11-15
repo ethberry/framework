@@ -21,7 +21,7 @@ import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingFundButton } from "../../../../components/buttons/mechanics/vesting/fund";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/eth-listener/remove";
+import { EthListenerRemoveMenuItem } from "../../../../components/menu/contract/eth-listener/remove";
 
 export const Vesting: FC = () => {
   const {

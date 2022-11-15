@@ -22,6 +22,7 @@ import { Erc998TemplateEditDialog } from "./edit";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../utils/money";
+import { TemplateActionsMenu } from "../../../../components/menu/template";
 
 export const Erc998Template: FC = () => {
   const {
@@ -116,6 +117,10 @@ export const Erc998Template: FC = () => {
                 >
                   <Delete />
                 </IconButton>
+                <TemplateActionsMenu
+                  template={template}
+                  disabled={template.templateStatus === TemplateStatus.INACTIVE}
+                />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

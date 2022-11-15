@@ -7,7 +7,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import type { IContract } from "@framework/types";
 
 import { EthListenerAddDialog, IEthListenerAddDto } from "./edit";
-import { getListenerType } from "../../../../utils/listener-type";
+import { getListenerType } from "../../../../../utils/listener-type";
 
 export interface IEthListenerAddMenuItemProps {
   contract: IContract;

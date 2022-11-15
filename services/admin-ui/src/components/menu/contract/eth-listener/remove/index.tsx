@@ -7,7 +7,7 @@ import { useApiCall } from "@gemunion/react-hooks";
 import { ListenerType, ModuleType, TokenType } from "@framework/types";
 
 import { EthListenerRemoveDialog, IEthListenerRemoveDto } from "./edit";
-import { getListenerType } from "../../../../utils/listener-type";
+import { getListenerType } from "../../../../../utils/listener-type";
 
 export interface IListenerTypeProps {
   address: string;
