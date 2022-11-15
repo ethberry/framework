@@ -8,7 +8,7 @@ export async function deployExchangeFixture() {
   const [owner] = await ethers.getSigners();
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");
-  const exchangeInstance = await exchangeFactory.deploy(tokenName);
+  const exchangeInstance = await exchangeFactory.deploy(tokenName, [owner.address], [100]);
 
   const network = await ethers.provider.getNetwork();
 
