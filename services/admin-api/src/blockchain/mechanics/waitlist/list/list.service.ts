@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-// import { MerkleTree } from "merkletreejs";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import type { ISearchableDto, ISearchDto } from "@gemunion/types-collection";

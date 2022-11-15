@@ -1,7 +1,6 @@
 import { ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-// import { MerkleTree } from "merkletreejs";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { IWaitlistItemCreateDto } from "./interfaces";
