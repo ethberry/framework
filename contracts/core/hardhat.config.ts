@@ -70,7 +70,7 @@ export default {
         settings: {
           optimizer: {
             enabled: true,
-            runs: 2,
+            runs: 1000, // DO NOT CHANGE
           },
         },
       },
