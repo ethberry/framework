@@ -14,7 +14,7 @@ export class Erc998TokenLogService {
   ) {}
 
   public addListener(dto: ICreateListenerPayload): void {
-    this.ethersContractService.updateListener([dto.address], dto.fromBlock);
+    this.ethersContractService.updateListener(dto.address, dto.fromBlock);
   }
 
   public async updateBlock(): Promise<number> {

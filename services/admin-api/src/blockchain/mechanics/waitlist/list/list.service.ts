@@ -1,8 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { MerkleTree } from "merkletreejs";
-import { utils } from "ethers";
+import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import type { ISearchableDto, ISearchDto } from "@gemunion/types-collection";
 
@@ -97,9 +96,11 @@ export class WaitlistListService {
       throw new NotFoundException("listNotFound");
     }
 
-    const leaves = waitlistListEntity.items.map(waitlistItemEntity => waitlistItemEntity.account);
-    const merkleTree = new MerkleTree(leaves.sort(), utils.keccak256, { hashLeaves: true, sortPairs: true });
+    const leaves = waitlistListEntity.items.map(waitlistItemEntity => [waitlistItemEntity.account]);
+    // const merkleTree = new MerkleTree(leaves.sort(), utils.keccak256, { hashLeaves: true, sortPairs: true });
+    const merkleTree = StandardMerkleTree.of(leaves, ["address"]);
 
-    return { root: merkleTree.getHexRoot() };
+    // return { root: merkleTree.getHexRoot() };
+    return { root: merkleTree.root };
   }
 }

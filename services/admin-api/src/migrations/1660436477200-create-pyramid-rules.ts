@@ -12,6 +12,14 @@ export class CreatePyramidRules1660436477200 implements MigrationInterface {
       );
     `);
 
+    await queryRunner.query(`
+      CREATE TYPE ${ns}.pyramid_rule_duration_unit_enum AS ENUM (
+        'DAY',
+        'HOUR',
+        'MINUTE'
+      );
+    `);
+
     const table = new Table({
       name: `${ns}.pyramid_rules`,
       columns: [
@@ -29,16 +37,17 @@ export class CreatePyramidRules1660436477200 implements MigrationInterface {
           type: "json",
         },
         {
-          name: "duration",
+          name: "duration_amount",
           type: "int",
+        },
+        {
+          name: "duration_unit",
+          type: `${ns}.pyramid_rule_duration_unit_enum`,
+          default: "'DAY'",
         },
         {
           name: "penalty",
           type: "int",
-        },
-        {
-          name: "recurrent",
-          type: "boolean",
         },
         {
           name: "contract_id",

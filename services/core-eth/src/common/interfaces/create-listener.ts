@@ -1,5 +1,5 @@
 export interface ICreateListenerPayload {
-  address: string;
+  address: Array<string>;
   fromBlock: number;
 }
 

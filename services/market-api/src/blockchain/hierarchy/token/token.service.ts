@@ -203,7 +203,7 @@ export class TokenService {
           price_template: "price_components.template",
           contract_history: "token.contractHistory",
           breeds: "token.breeds",
-          breed_childs: "breeds.childs",
+          breed_childs: "breeds.children",
           breed_history: "breed_childs.history",
         },
       },

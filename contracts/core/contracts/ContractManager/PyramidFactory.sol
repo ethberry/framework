@@ -6,22 +6,17 @@
 
 pragma solidity ^0.8.9;
 
-import "@gemunion/contracts/contracts/ContractManager/AbstractFactory.sol";
+import "./AbstractFactory.sol";
 
 contract PyramidFactory is AbstractFactory {
   bytes32 private immutable PYRAMID_PERMIT_SIGNATURE =
-    keccak256(
-      "EIP712(bytes32 nonce,bytes bytecode,uint8[] featureIds)"
-    );
+    keccak256("EIP712(bytes32 nonce,bytes bytecode,uint8[] featureIds)");
 
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   address[] private _pyramid_tokens;
 
-  event PyramidDeployed(
-    address addr,
-    uint8[] featureIds
-  );
+  event PyramidDeployed(address addr, uint8[] featureIds);
 
   function deployPyramid(
     bytes32 nonce,
@@ -49,11 +44,11 @@ contract PyramidFactory is AbstractFactory {
     fixPermissions(addr, roles);
   }
 
-  function _hashPyramid(
-    bytes32 nonce,
-    bytes calldata bytecode,
-    uint8[] calldata featureIds
-  ) internal view returns (bytes32) {
+  function _hashPyramid(bytes32 nonce, bytes calldata bytecode, uint8[] calldata featureIds)
+    internal
+    view
+    returns (bytes32)
+  {
     return
       _hashTypedDataV4(
         keccak256(

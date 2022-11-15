@@ -46,7 +46,7 @@ export const NativeContractCreateButton: FC<INativeContractCreateButtonProps> = 
         variant="outlined"
         startIcon={<Add />}
         onClick={handleCreate}
-        data-testid="Erc20TokenCreateButton"
+        data-testid="NativeTokenCreateButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.create" />

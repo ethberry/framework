@@ -1,5 +1,4 @@
 import { task } from "hardhat/config";
-import "@nomiclabs/hardhat-web3";
 
 task("fund-link", "Funds a contract with LINK")
   .addParam("contract", "The address of the contract that requires LINK")

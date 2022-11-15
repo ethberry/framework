@@ -52,7 +52,7 @@ export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
         '${currentDateTime}'
       ), (
         1602,
-        '${erc721ContractMysteryboxSimpleAddress}',
+        '${erc721ContractMysteryboxPausableAddress}',
         '${chainId}',
         'MYSTERY BOX (inactive)',
         '${simpleFormatting}',

@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { utils } from "ethers";
-import { MerkleTree } from "merkletreejs";
+import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
 import { ERC721Simple, Waitlist } from "../../../typechain-types";
 import { baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../../constants";
@@ -32,18 +31,26 @@ describe("Waitlist", function () {
       },
     ];
 
-    const leavesEntities = [this.owner.address, this.receiver.address, "0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73"];
+    const leavesEntities = [
+      [this.owner.address],
+      [this.receiver.address],
+      ["0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73"],
+    ];
 
-    const leaves = leavesEntities.sort();
-    const merkleTree = new MerkleTree(leaves, utils.keccak256, { hashLeaves: true, sortPairs: true });
+    const merkleTree = StandardMerkleTree.of(leavesEntities, ["address"]);
 
-    const root = merkleTree.getHexRoot();
+    const root = merkleTree.root;
 
     const tx = waitlistInstance.setReward(root, items, 123);
     await expect(tx).to.emit(waitlistInstance, "RewardSet");
 
-    const proof = merkleTree.getHexProof(utils.keccak256(this.owner.address));
-
+    let proof: Array<string> = [];
+    for (const [i, v] of merkleTree.entries()) {
+      if (v[0] === this.owner.address) {
+        // (3)
+        proof = merkleTree.getProof(i);
+      }
+    }
     const tx1 = waitlistInstance.claim(proof, 123);
     await expect(tx1).to.emit(waitlistInstance, "ClaimReward");
   });

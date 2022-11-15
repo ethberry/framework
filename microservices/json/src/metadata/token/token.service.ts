@@ -4,7 +4,7 @@ import { ConfigService } from "@nestjs/config";
 import { Repository } from "typeorm";
 import { BigNumber } from "ethers";
 
-import { getPainText } from "@gemunion/draft-js-utils";
+import { getText } from "@gemunion/draft-js-utils";
 import { TokenAttributes, TokenRarity } from "@framework/types";
 import { decodeGenes } from "@framework/genes";
 
@@ -49,7 +49,7 @@ export class MetadataTokenService {
     const { attributes } = tokenEntity;
 
     return {
-      description: getPainText(tokenEntity.template.description),
+      description: getText(tokenEntity.template.description),
       external_url: `${baseUrl}/metadata/${tokenEntity.template.contract.address}/${tokenEntity.tokenId}`,
       image: tokenEntity.template.imageUrl,
       name: tokenEntity.template.title,

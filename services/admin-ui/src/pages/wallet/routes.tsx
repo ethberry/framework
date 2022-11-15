@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 
-import { Protected } from "@gemunion/firebase-login";
+import { Protected } from "@gemunion/common-pages";
 import { IndexWrapper } from "../index-wrapper";
 import { Wallet } from "../dashboard/integrations/wallet";
 import { SystemBalances } from "./balances";

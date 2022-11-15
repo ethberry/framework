@@ -61,17 +61,28 @@
       "1": "ETHEREUM",
       "1337": "BESU",
       "137": "POLYGON",
-      "56": "BINANCE"
+      "56": "BINANCE",
+      "97": "BINANCE (testnet)"
     },
     "claimStatus": {
       "NEW": "New",
       "REDEEMED": "Redeemed",
       "UNPACKED": "Unpacked"
     },
+    "durationUnit": {
+      "DAY": "{count} {count, plural, =0 {days} one {day} other {days}}",
+      "HOUR": "{count} {count, plural, =0 {hours} one {hour} other {hours}}",
+      "MINUTE": "{count} {count, plural, =0 {minutes} one {minute} other {minutes}}"
+    },
     "language": {
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "pyramidDepositStatus": {
+      "ACTIVE": "Active",
+      "CANCELED": "Canceled",
+      "COMPLETE": "Complete"
     },
     "sort": {
       "createdAt": "Date",
@@ -142,10 +153,10 @@
       "showFilters": "Show filters",
       "signup": "Sign up",
       "submit": "Submit",
-      "upgrade": "Upgrade",
       "transfer": "Transfer",
-      "upload": "Upload",
       "unwrap": "Unwrap",
+      "upgrade": "Upgrade",
+      "upload": "Upload",
       "withdraw": "Withdraw"
     },
     "hints": {
@@ -164,35 +175,42 @@
       "collectionId": "Collection",
       "confirm": "Confirm",
       "contractId": "Contract",
-      "mainContractId": "Contract",
-      "customContractId": "Allowance Contract",
       "contractIds": "Contracts",
       "contractTemplate": "Template",
       "count": "Count",
       "createdAt": "Created",
+      "customContractId": "Allowance Contract",
       "dad": "Dad",
+      "date": "Date",
       "dateRangeEnd": "To",
       "dateRangeStart": "From",
       "deposit": "Deposit",
       "description": "Description",
       "displayName": "Display name",
       "duration": "Duration",
+      "durationAmount": "Duration",
+      "durationUnit": "Duration unit",
       "email": "Email",
       "endDate": "End date",
       "endTimestamp": "End date",
+      "event": "Event",
       "externalId": "External ID",
+      "from": "From",
       "id": "ID",
       "imageUrl": "Avatar",
       "item": "Item",
       "language": "Language",
       "level": "Level",
       "listId": "List ID",
+      "mainContractId": "Contract",
       "maxPrice": "Max. price",
       "minPrice": "Min. price",
       "mom": "Mom",
       "numbers": "Numbers",
       "password": "Password",
+      "penalty": "Penalty",
       "price": "Price",
+      "quantity": "Quantity",
       "rank": "Rank",
       "rarity": "Rarity",
       "recurrent": "Is recurrent?",
@@ -203,6 +221,8 @@
       "roundIds": "Round",
       "score": "Score",
       "sort": "Sort by",
+      "pyramidDepositStatus": "Status",
+      "pyramidRuleStatus": "Status",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startDate": "Start date",
@@ -211,33 +231,29 @@
       "templateId": "Template",
       "templateIds": "Templates",
       "title": "Title",
+      "to": "To",
       "tokenId": "Token",
       "tokenIds": "Tokens",
       "tokenType": "Type",
+      "tx": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
-      "withdrawDeposit": "Withdraw deposit",
       "winNumbers": "Win numbers",
-      "event": "Event",
-      "quantity": "Quantity",
-      "from": "From",
-      "to": "To",
-      "date": "Date",
-      "tx": "txHash"
+      "withdrawDeposit": "Withdraw deposit"
     },
     "placeholders": {
       "account": "0x...",
       "address": "0x...",
       "amount": "100",
       "confirm": "******",
-      "customContractId": "Allowance Contract",
       "contractId": "Contract",
-      "mainContractId": "Contract",
       "contractIds": "Contracts",
       "createdAt": "Registered",
+      "customContractId": "Allowance Contract",
       "displayName": "Gordon Freeman",
       "email": "me@google.com",
       "listId": "1",
+      "mainContractId": "Contract",
       "maxPrice": "1",
       "minAmount": "0.01",
       "minPrice": "1",
@@ -253,6 +269,7 @@
     },
     "tips": {
       "add": "Add",
+      "allowance": "Allowance",
       "clear": "Clear",
       "create": "Create",
       "delete": "Delete",
@@ -287,52 +304,72 @@
   },
   "pages": {
     "1inch": {
-      "title": "1inch",
+      "advanced-settings": {
+        "gas": "Gas",
+        "slippage": "Slippage tolerance",
+        "title": "Advanced settings"
+      },
       "buttons": {
-        "download-metamask": "Download Metamask",
-        "connect-wallet": "Connect wallet",
-        "swap-tokens": "Swap Tokens",
         "buy-crypto": "Buy Crypto",
-        "learn-more": "Learn more",
         "cancel": "Cancel",
         "confirm": "Confirm",
+        "connect-wallet": "Connect wallet",
+        "download-metamask": "Download Metamask",
+        "learn-more": "Learn more",
+        "swap-tokens": "Swap Tokens",
         "swapAgain": "Swap Again"
       },
+      "enums": {
+        "gasPrice": {
+          "HIGH": "High",
+          "LOW": "Low",
+          "MEDIUM": "MEDIUM"
+        },
+        "networks": {
+          "ARBITRUM": "Arbitrum",
+          "BINANCE": "Binance",
+          "ETHEREUM": "Ethereum",
+          "OPTIMISM": "Optimism",
+          "POLYGON": "Polygon"
+        },
+        "slippage": {
+          "HIGH": "1%",
+          "LOW": "0.1%",
+          "MEDIUM": "0.5%",
+          "VERY_HIGH": "3%"
+        },
+        "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
+      },
       "swap": {
-        "buyPrice": "buy price",
-        "txCost": "Tx cost",
-        "spread": "Spread across DEXes",
-        "selected": "Selected",
-        "maxPriceSlippage": "Max price slippage",
-        "title": "SWAP",
-        "balanceOf": "Balance of",
-        "preparing": "Preparing Swap",
+        "ETH": "ETH",
         "approve": "Approve",
         "approving": "Approving...",
-        "swapping": "Swapping Tokens",
+        "balanceOf": "Balance of",
+        "buyPrice": "buy price",
         "complete": "Complete",
         "confirm": "Confirm Swap",
+        "cost": "Cost",
+        "fee": "Fee",
+        "gas": "Gas",
+        "gasPrice": "Gas Price",
+        "gwei": "GWEI",
+        "maxPriceSlippage": "Max price slippage",
+        "preparing": "Preparing Swap",
         "product": "Product",
         "quantity": "Quantity",
         "rate": "Rate",
-        "gasPrice": "Gas Price",
-        "gas": "Gas",
-        "cost": "Cost",
-        "fee": "Fee",
-        "ETH": "ETH",
-        "gwei": "GWEI",
-        "total": "Total"
+        "selected": "Selected",
+        "spread": "Spread across DEXes",
+        "swapping": "Swapping Tokens",
+        "title": "SWAP",
+        "total": "Total",
+        "txCost": "Tx cost"
       },
+      "title": "1inch",
       "token-search": {
         "title": "Search {amount} tokens"
       },
-      "advanced-settings": {
-        "title": "Advanced settings",
-        "slippage": "Slippage tolerance",
-        "gas": "Gas"
-      },
       "warning": {
-        "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}",
         "insufficient": "Insufficient {symbol} balance",
         "cannotBeSame": "Tokens cannot be the same"
       },
@@ -342,33 +379,14 @@
       },
       "snackbar": {
         "approve-1inch": "Please approve 1inch to spend your {symbol}",
-        "web3-not-detected": "Web3 provider not detected"
-      },
-      "enums": {
-        "networks": {
-          "ARBITRUM": "Arbitrum",
-          "BINANCE": "Binance",
-          "POLYGON": "Polygon",
-          "OPTIMISM": "Optimism",
-          "ETHEREUM": "Ethereum"
-        },
-        "gasPrice": {
-          "LOW": "Low",
-          "MEDIUM": "MEDIUM",
-          "HIGH": "High"
-        },
-        "slippage": {
-          "LOW": "0.1%",
-          "MEDIUM": "0.5%",
-          "HIGH": "1%",
-          "VERY_HIGH": "3%"
-        }
+        "web3-not-detected": "Web3 provider not detected",
+        "accountNotFound": "Account not found in list"
       }
     },
     "breed": {
-      "title": "Breed",
       "matron": "Matron",
-      "sire": "Sire"
+      "sire": "Sire",
+      "title": "Breed"
     },
     "claim": {
       "connect": "Please connect your wallet first",
@@ -378,11 +396,6 @@
     "coin-gecko": {
       "rates": "Rates",
       "title": "CoinGecko"
-    },
-    "history": {
-      "token": {
-        "title": "Token History"
-      }
     },
     "craft": {
       "price": "price",
@@ -432,9 +445,6 @@
     },
     "drop-list": {
       "title": "Drops"
-    },
-    "token": {
-      "priceTitle": "Base price:"
     },
     "erc1155": {
       "contract": {
@@ -520,16 +530,28 @@
     },
     "guest": {
       "confirmation": "Please check your inbox to verify your email.",
-      "login": "Login"
+      "login": "Login",
+      "signInWithMetamask": "Sign in with Metamask"
+    },
+    "history": {
+      "token": {
+        "title": "Token History"
+      }
     },
     "ipfs": {
       "infura": {
         "title": "Infura"
       },
+      "nftStorage": {
+        "title": "NFT Storage"
+      },
       "pinata": {
         "title": "Pinata"
       },
-      "title": "IPFS"
+      "title": "IPFS",
+      "web3Storage": {
+        "title": "Web3 Storage"
+      }
     },
     "landing": {
       "erc1155-new": "New 1155 Templates",
@@ -655,6 +677,9 @@
       },
       "title": "Staking"
     },
+    "token": {
+      "priceTitle": "Base price:"
+    },
     "vesting": {
       "sorry": "Sorry, there is no vesting associated with this wallet.",
       "title": "Vesting"
@@ -691,11 +716,13 @@
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "success": "Success",
+    "templateNotFound": "Template not found",
     "tokenNotFound": "Token not found",
     "tooManyRequests": "Too Many Requests.",
     "unauthorized": "Incorrect login or password",
     "updated": "Successfully updated",
     "userHasWrongRole": "Insufficient permissions",
-    "walletIsNotConnected": "Wallet is not connected"
+    "walletIsNotConnected": "Wallet is not connected",
+    "web3NotDetected": "Web3 not detected"
   }
 }

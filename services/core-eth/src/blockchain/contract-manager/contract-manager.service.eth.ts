@@ -40,6 +40,7 @@ import { TemplateService } from "../hierarchy/template/template.service";
 import { TokenService } from "../hierarchy/token/token.service";
 import { GradeService } from "../mechanics/grade/grade.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
+import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -58,33 +59,12 @@ export class ContractManagerServiceEth {
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
     private readonly mysteryboxLogService: MysteryLogService,
+    private readonly pyramidLogService: PyramidLogService,
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
   ) {
     this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
-  }
-
-  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
-    const {
-      args: { addr, account, startTimestamp, duration, templateId },
-    } = event;
-
-    await this.updateHistory(event, ctx);
-
-    await this.vestingService.create({
-      address: addr.toLowerCase(),
-      account: account.toLowerCase(),
-      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
-      duration: ~~duration * 1000, // msec
-      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
-      chainId: this.chainId,
-    });
-
-    this.vestingLogService.addListener({
-      address: addr.toLowerCase(),
-      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
-    });
   }
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {
@@ -127,7 +107,7 @@ export class ContractManagerServiceEth {
     });
 
     this.erc20LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -173,7 +153,7 @@ export class ContractManagerServiceEth {
     }
 
     this.erc721LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -208,7 +188,7 @@ export class ContractManagerServiceEth {
     }
 
     this.erc998LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -236,7 +216,7 @@ export class ContractManagerServiceEth {
     });
 
     this.erc1155LogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -268,7 +248,7 @@ export class ContractManagerServiceEth {
     });
 
     this.mysteryboxLogService.addListener({
-      address: addr.toLowerCase(),
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }
@@ -294,8 +274,40 @@ export class ContractManagerServiceEth {
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
 
-    this.mysteryboxLogService.addListener({
+    this.pyramidLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async vesting(event: ILogEvent<IContractManagerVestingDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, account, startTimestamp, duration, templateId },
+    } = event;
+
+    await this.updateHistory(event, ctx);
+
+    const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
+      title: Object.values(VestingContractTemplate)[~~templateId].toString(),
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: [],
+      contractModule: ModuleType.VESTING,
+      chainId: this.chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    await this.vestingService.create({
+      account: account.toLowerCase(),
+      startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
+      duration: ~~duration * 1000, // msec
+      contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
+      contractId: contractEntity.id,
+    });
+
+    this.vestingLogService.addListener({
+      address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
   }

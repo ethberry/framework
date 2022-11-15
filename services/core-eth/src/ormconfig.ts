@@ -35,6 +35,7 @@ import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.en
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
 import { PayeesEntity } from "./blockchain/wallet/payees.entity";
+import { VestingHistoryEntity } from "./blockchain/mechanics/vesting/history/vesting-history.entity";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -47,6 +48,7 @@ const config: PostgresConnectionOptions = {
     AccessControlHistoryEntity,
     ContractHistoryEntity,
     VestingEntity,
+    VestingHistoryEntity,
     StakingRulesEntity,
     StakingDepositEntity,
     StakingHistoryEntity,

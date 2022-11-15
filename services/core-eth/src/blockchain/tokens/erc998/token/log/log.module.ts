@@ -52,7 +52,7 @@ import { ContractService } from "../../../../hierarchy/contract/contract.service
             ],
           },
           block: {
-            fromBlock: erc998Contracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            fromBlock: erc998Contracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
             debug: true,
           },
         };

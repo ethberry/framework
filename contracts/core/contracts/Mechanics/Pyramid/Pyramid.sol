@@ -97,19 +97,9 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     require(stake.owner == _msgSender(), "Pyramid: not an owner");
     require(stake.activeDeposit, "Pyramid: deposit withdrawn already");
 
-    uint256 multiplier;
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
-
-    if (withdrawDeposit || breakLastPeriod) {
-      multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
-    } else {
-      multiplier = _calculateRewardMultiplier(
-        startTimestamp,
-        startTimestamp + (((block.timestamp - startTimestamp) % stakePeriod) * stakePeriod),
-        stakePeriod
-      );
-    }
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
     uint256 stakeAmount = depositItem.amount;
 
@@ -119,16 +109,14 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
       stake.activeDeposit = false;
 
-      // PENALTY
-      uint256 penalty = rule.penalty;
-      if (penalty > 0) {
-        stakeAmount -= stakeAmount / 100 * penalty;
-      }
+      // PENALTY // TODO penalty types?
+      // uint256 withdrawAmount = multiplier == 0 ? (stakeAmount - stakeAmount / 100 * (rule.penalty / 100)) : stakeAmount;
+      uint256 withdrawAmount = stakeAmount - stakeAmount / 100 * (rule.penalty / 100);
 
       if (depositItem.tokenType == TokenType.NATIVE) {
-        Address.sendValue(payable(receiver), stakeAmount);
+        Address.sendValue(payable(receiver), withdrawAmount);
       } else if (depositItem.tokenType == TokenType.ERC20) {
-        SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, stakeAmount);
+        SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
       }
     } else {
       stake.startTimestamp = block.timestamp;
@@ -148,6 +136,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
         SafeERC20.safeTransfer(IERC20(rewardItem.token), receiver, rewardAmount);
       }
     }
+    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Pyramid: first period not yet finished");
   }
 
   function _calculateRewardMultiplier(

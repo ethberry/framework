@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-
 import { VestingEntity } from "./vesting.entity";
-import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
 export class VestingService {
+  public chainId: number;
+
   constructor(
     @InjectRepository(VestingEntity)
     private readonly vestingEntityRepository: Repository<VestingEntity>,
@@ -42,35 +42,54 @@ export class VestingService {
     return contractEntity.save();
   }
 
-  public async findAllContracts(): Promise<IContractListenerResult> {
-    const queryBuilder = this.vestingEntityRepository.createQueryBuilder("vesting");
-    queryBuilder.select(["vesting.account", "vesting.fromBlock"]);
-
-    const contractEntities = await queryBuilder.getMany();
-    if (contractEntities.length) {
-      return {
-        address: contractEntities.map(contractEntity => contractEntity.account),
-        fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
-      };
-    }
-    return { address: [], fromBlock: undefined };
-  }
-
-  public async updateLastBlock(lastBlock: number): Promise<number> {
-    // TODO make it nice
-    const entity = await this.findOne({
-      id: 1,
-    });
-
-    if (entity) {
-      await this.update(
-        {
-          id: entity.id,
-        },
-        { fromBlock: lastBlock + 1 },
-      );
-      return entity.fromBlock;
-    }
-    return lastBlock;
-  }
+  // TODO use ContractService instead
+  // public async findAllContracts(): Promise<IContractListenerResult> {
+  //   const queryBuilder = this.vestingEntityRepository.createQueryBuilder("vesting");
+  //   queryBuilder.select(["vesting.address", "vesting.fromBlock"]);
+  //
+  //   const contractEntities = await queryBuilder.getMany();
+  //   if (contractEntities.length) {
+  //     const addresses = contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet);
+  //     const unique = [...new Set(addresses)];
+  //     return {
+  //       address: unique,
+  //       fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
+  //     };
+  //   }
+  //   return { address: [], fromBlock: undefined };
+  // }
+  // public async updateLastBlockByAddr(address: string, lastBlock: number): Promise<number> {
+  //   const vestingEntity = await this.findOne({
+  //     address,
+  //     chainId: this.chainId,
+  //   });
+  //
+  //   if (vestingEntity) {
+  //     await this.update(
+  //       {
+  //         id: vestingEntity.id,
+  //       },
+  //       { fromBlock: lastBlock + 1 },
+  //     );
+  //     return vestingEntity.fromBlock;
+  //   }
+  //   return lastBlock;
+  // }
+  //
+  // public async updateLastBlockByType(lastBlock: number): Promise<number> {
+  //   const entity = await this.findOne({
+  //     chainId: this.chainId,
+  //   });
+  //
+  //   if (entity) {
+  //     await this.update(
+  //       {
+  //         id: entity.id,
+  //       },
+  //       { fromBlock: lastBlock + 1 },
+  //     );
+  //     return entity.fromBlock;
+  //   }
+  //   return lastBlock;
+  // }
 }

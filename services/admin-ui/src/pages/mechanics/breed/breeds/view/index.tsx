@@ -50,9 +50,7 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
                       {token.template ? `${token.template?.title} #${token.tokenId}` : tokenId}
                     </Link>
                   </Typography>
-                ) : (
-                  ""
-                )}
+                ) : null}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -102,9 +100,7 @@ export const BreedItemViewDialog: FC<IBreedItemViewDialogProps> = props => {
                       </Grid>
                     ))}
                   </Grid>
-                ) : (
-                  ""
-                )}
+                ) : null}
               </TableCell>
             </TableRow>
           </TableBody>

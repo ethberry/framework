@@ -1,6 +1,7 @@
-import type { IDeployable } from "@gemunion/types-collection";
+import type { IIdDateBase } from "@gemunion/types-collection";
 
 import { IVestingHistory } from "./history";
+import { IContract } from "../../hierarchy/contract";
 
 export enum VestingContractTemplate {
   "LINEAR" = "LINEAR", // 0 -> 25 -> 50 -> 75 -> 100
@@ -8,11 +9,12 @@ export enum VestingContractTemplate {
   "CLIFF" = "CLIFF", // 0 -> 100
 }
 
-export interface IVesting extends IDeployable {
+export interface IVesting extends IIdDateBase {
   account: string;
   duration: number;
   startTimestamp: string;
-  fromBlock: number;
   contractTemplate: VestingContractTemplate;
   history?: Array<IVestingHistory>;
+  contractId: number;
+  contract?: IContract;
 }

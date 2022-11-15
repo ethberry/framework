@@ -26,6 +26,7 @@ export class VestingService {
     const queryBuilder = this.vestingEntityRepository.createQueryBuilder("vesting");
 
     queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("vesting.contract", "contract");
 
     if (contractTemplate) {
       if (contractTemplate.length === 1) {

@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository, Brackets } from "typeorm";
 
-import type { IPaginationDto } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
 
 import { DropEntity } from "./drop.entity";
 import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
@@ -17,8 +17,8 @@ export class DropService {
     protected readonly assetService: AssetService,
   ) {}
 
-  public async search(dto: IPaginationDto): Promise<[Array<DropEntity>, number]> {
-    const { skip, take } = dto;
+  public async search(dto: ISearchDto): Promise<[Array<DropEntity>, number]> {
+    const { query, skip, take } = dto;
 
     const queryBuilder = this.dropEntityRepository.createQueryBuilder("drop");
 
@@ -28,6 +28,20 @@ export class DropService {
     queryBuilder.leftJoinAndSelect("item_components.contract", "item_contract");
 
     queryBuilder.select();
+
+    if (query) {
+      queryBuilder.leftJoin(
+        "(SELECT 1)",
+        "dummy",
+        "TRUE LEFT JOIN LATERAL json_array_elements(item_template.description->'blocks') blocks ON TRUE",
+      );
+      queryBuilder.andWhere(
+        new Brackets(qb => {
+          qb.where("item_template.title ILIKE '%' || :title || '%'", { title: query });
+          qb.orWhere("blocks->>'text' ILIKE '%' || :description || '%'", { description: query });
+        }),
+      );
+    }
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

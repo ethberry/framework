@@ -250,7 +250,6 @@ describe("Lottery", function () {
       const eventFilter = this.lotteryInstance.filters.RoundFinalized();
       const events = await this.lotteryInstance.queryFilter(eventFilter);
       expect(events.length).to.be.greaterThan(0);
-      console.info("winValues", events[0].args.winValues);
       expect(events[0].args.round).to.equal(1);
     });
   });

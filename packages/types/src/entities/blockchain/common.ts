@@ -28,4 +28,22 @@ export enum ModuleType {
   WRAPPER = "WRAPPER",
   LOTTERY = "LOTTERY",
   PYRAMID = "PYRAMID",
+  VESTING = "VESTING",
+}
+
+export enum DurationUnit {
+  DAY = "DAY",
+  HOUR = "HOUR",
+  MINUTE = "MINUTE",
+}
+
+export enum ListenerType {
+  NATIVE = "NATIVE",
+  ERC20 = "ERC20",
+  ERC721 = "ERC721",
+  ERC998 = "ERC998",
+  ERC1155 = "ERC1155",
+  MYSTERYBOX = "MYSTERYBOX",
+  PYRAMID = "PYRAMID",
+  VESTING = "VESTING",
 }

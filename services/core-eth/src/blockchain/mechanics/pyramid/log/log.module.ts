@@ -49,7 +49,7 @@ import { ContractService } from "../../../hierarchy/contract/contract.service";
             ],
           },
           block: {
-            fromBlock: pyramidContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            fromBlock: pyramidContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
             debug: true,
           },
         };

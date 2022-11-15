@@ -31,6 +31,9 @@ export const MarketplaceChart: FC = () => {
     if (rows.length && chartRef.current) {
       const chart = Plot.plot({
         width: chartRef.current.clientWidth,
+        style: {
+          background: "inherit",
+        },
         y: {
           grid: true,
           label: "Sold items",

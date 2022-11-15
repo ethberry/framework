@@ -23,7 +23,7 @@ export const Mystery: FC<ITabPanelProps> = props => {
 
   return (
     <Grid>
-      <PageHeader message="pages.marketplace.mystery.title" />
+      <PageHeader message="pages.marketplace.mysterybox.title" />
 
       <ProgressOverlay isLoading={isLoading}>
         <Grid container spacing={2}>

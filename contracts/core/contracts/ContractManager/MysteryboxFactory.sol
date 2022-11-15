@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.9;
 
-import "@gemunion/contracts/contracts/ContractManager/AbstractFactory.sol";
+import "./AbstractFactory.sol";
 
 contract MysteryboxFactory is AbstractFactory {
   bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =

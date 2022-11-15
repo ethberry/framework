@@ -6,51 +6,38 @@ import { ns } from "@framework/constants";
 export class SeedVesting1653616433210 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const vestingLinearAddress = process.env.VESTING_LINEAR_ADDR || wallet;
-    const vestingGradedAddress = process.env.VESTING_GRADED_ADDR || wallet;
-    const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || 1337;
-    const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.vesting (
-        address,
         account,
         duration,
         start_timestamp,
         contract_template,
-        chain_id,
-        from_block,
+        contract_id,
         created_at,
         updated_at
       ) VALUES (
-        '${vestingLinearAddress}',
         '${wallet}',
         31536000000,
         '${currentDateTime}',
         'LINEAR',
-        '${chainId}',
-        '${fromBlock}',
+        1901,
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${vestingGradedAddress}',
         '${wallet}',
         31536000,
         '${currentDateTime}',
         'GRADED',
-        '${chainId}',
-        '${fromBlock}',
+        1902,          
         '${currentDateTime}',
         '${currentDateTime}'
       ), (
-        '${vestingCliffAddress}',
         '${wallet}',
         31536000,
         '${currentDateTime}',
         'CLIFF',
-        '${chainId}',
-        '${fromBlock}',
+        1903,
         '${currentDateTime}',
         '${currentDateTime}'
       );

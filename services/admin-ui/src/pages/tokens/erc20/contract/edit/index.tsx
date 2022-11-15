@@ -19,7 +19,19 @@ export interface IErc20TokenEditDialogProps {
 export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, contractStatus, name, symbol, decimals, address, templates, chainId } = initialValues;
+  const {
+    id,
+    title,
+    description,
+    contractStatus,
+    name,
+    symbol,
+    decimals,
+    address,
+    templates,
+    chainId,
+    contractFeatures,
+  } = initialValues;
 
   const [template] = templates;
 
@@ -47,6 +59,7 @@ export const Erc20TokenEditDialog: FC<IErc20TokenEditDialogProps> = props => {
           decimals={decimals}
           cap={formatEther(template.amount, decimals, "")}
           chainId={chainId}
+          contractFeatures={contractFeatures}
         />
       }
       {...rest}

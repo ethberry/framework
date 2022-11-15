@@ -17,6 +17,9 @@ import { TemplateModule } from "../hierarchy/template/template.module";
 import { TokenModule } from "../hierarchy/token/token.module";
 import { GradeModule } from "../mechanics/grade/grade.module";
 import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
+import { PyramidLogModule } from "../mechanics/pyramid/log/log.module";
+import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
+import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
 
 @Module({
   imports: [
@@ -27,6 +30,7 @@ import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
     Erc1155TokenLogModule,
     MysteryLogModule,
     VestingLogModule,
+    PyramidLogModule,
     ContractManagerLogModule,
     ContractManagerHistoryModule,
     VestingModule,
@@ -35,8 +39,8 @@ import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
     TokenModule,
     GradeModule,
   ],
-  providers: [Logger, ContractManagerServiceEth],
-  controllers: [ContractManagerControllerEth],
-  exports: [ContractManagerServiceEth],
+  providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq],
+  controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],
+  exports: [ContractManagerServiceEth, ContractManagerServiceRmq],
 })
 export class ContractManagerModuleEth {}

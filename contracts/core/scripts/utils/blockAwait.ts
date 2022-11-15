@@ -1,6 +1,6 @@
 import { ethers } from "hardhat";
 
-function delayMs(ms: number) {
+export function delayMs(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 

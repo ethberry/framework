@@ -19,8 +19,20 @@ export interface IErc998ContractEditDialogProps {
 export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, baseTokenURI, imageUrl, contractStatus, address, symbol, name, royalty, chainId } =
-    initialValues;
+  const {
+    id,
+    title,
+    description,
+    baseTokenURI,
+    imageUrl,
+    contractStatus,
+    address,
+    symbol,
+    name,
+    royalty,
+    chainId,
+    contractFeatures,
+  } = initialValues;
 
   const fixedValues = {
     id,
@@ -45,8 +57,9 @@ export const Erc998ContractEditDialog: FC<IErc998ContractEditDialogProps> = prop
           symbol={symbol}
           address={address}
           baseTokenURI={baseTokenURI}
-          royalty={royalty}
+          royalty={`${royalty / 100}%`}
           chainId={chainId}
+          contractFeatures={contractFeatures}
         />
       }
       {...rest}

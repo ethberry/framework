@@ -4,7 +4,7 @@ import { Box, IconButton, Popover, Table, TableBody, TableCell, TableRow } from 
 import { Help } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 
-export const BlockchainInfoPopover: FC<Record<string, string | number>> = props => {
+export const BlockchainInfoPopover: FC<Record<string, any>> = props => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -44,7 +44,7 @@ export const BlockchainInfoPopover: FC<Record<string, string | number>> = props 
                 <TableCell>
                   <FormattedMessage id={`form.labels.${key}`} />
                 </TableCell>
-                <TableCell>{props[key]}</TableCell>
+                <TableCell>{Array.isArray(props[key]) ? props[key].join(", ") || "—" : props[key]}</TableCell>
               </TableRow>
             ))}
           </TableBody>

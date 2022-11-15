@@ -31,7 +31,7 @@ export class LotteryRoundServiceEth {
     private readonly contractService: ContractService,
     private readonly configService: ConfigService,
     @Inject(ETHERS_SIGNER)
-    private readonly signer: Wallet,
+    private readonly ethersSignerProvider: Wallet,
   ) {}
 
   public async start(event: ILogEvent<IRoundStartedEvent>, context: Log): Promise<void> {
@@ -111,14 +111,13 @@ export class LotteryRoundServiceEth {
   public async randomRequest(event: ILogEvent<ILotteryRandomRequestEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
     // DEV ONLY
-    const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
-    if (nodeEnv === "development") {
-      const {
-        args: { requestId },
-      } = event;
-      const { address } = context;
-      const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
-      await callRandom(vrfAddr, address, requestId, this.signer);
-    }
+    // const nodeEnv = this.configService.get<string>("NODE_ENV", "development");
+    // if (nodeEnv === "development") {    }
+    const {
+      args: { requestId },
+    } = event;
+    const { address } = context;
+    const vrfAddr = this.configService.get<string>("VRF_ADDR", "");
+    await callRandom(vrfAddr, address, requestId, this.ethersSignerProvider);
   }
 }

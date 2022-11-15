@@ -119,35 +119,27 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     require(stake.owner == _msgSender(), "Staking: not an owner");
     require(stake.activeDeposit, "Staking: deposit withdrawn already");
 
-    uint256 multiplier;
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
-    if (withdrawDeposit || breakLastPeriod) {
-      multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
-    } else {
-      multiplier = _calculateRewardMultiplier(
-        startTimestamp,
-        startTimestamp + (((block.timestamp - startTimestamp) % stakePeriod) * stakePeriod),
-        stakePeriod
-      );
-    }
-
-    uint256 stakeAmount = depositItem.amount;
+  uint256 stakeAmount = depositItem.amount;
     address payable receiver = payable(stake.owner);
 
     if (withdrawDeposit) {
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
       stake.activeDeposit = false;
 
+      uint256 withdrawAmount = multiplier == 0 ? (stakeAmount - stakeAmount / 100 * (rule.penalty / 100)) : stakeAmount;
+
       if (depositItem.tokenType == TokenType.NATIVE) {
-        Address.sendValue(payable(receiver), stakeAmount);
+        Address.sendValue(payable(receiver), withdrawAmount);
       } else if (depositItem.tokenType == TokenType.ERC20) {
-        SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, stakeAmount);
+        SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
       } else if (depositItem.tokenType == TokenType.ERC721 || depositItem.tokenType == TokenType.ERC998) {
         IERC721Metadata(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId);
       } else if (depositItem.tokenType == TokenType.ERC1155) {
-        IERC1155(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId, stakeAmount, "0x");
+        IERC1155(depositItem.token).safeTransferFrom(address(this), receiver, depositItem.tokenId, withdrawAmount, "0x");
       }
     } else {
       stake.startTimestamp = block.timestamp;
@@ -184,6 +176,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
         // todo batch mint reward
       }
     }
+    if (multiplier == 0 && !withdrawDeposit && !breakLastPeriod) revert("Staking: first period not yet finished");
   }
 
   function _calculateRewardMultiplier(

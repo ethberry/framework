@@ -1,7 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsInt, IsNumber, Min, ValidateNested } from "class-validator";
-import { Type } from "class-transformer";
+import { IsBoolean, IsEnum, IsInt, IsNumber, Min, ValidateNested } from "class-validator";
+import { Transform, Type } from "class-transformer";
 
+import { DurationUnit } from "@framework/types";
 import { SearchableDto } from "@gemunion/collection";
 
 import { IStakingCreateDto } from "../interfaces";
@@ -26,7 +27,14 @@ export class StakingCreateDto extends SearchableDto implements IStakingCreateDto
   @ApiProperty()
   @IsInt({ message: "typeMismatch" })
   @Min(0, { message: "rangeUnderflow" })
-  public duration: number;
+  public durationAmount: number;
+
+  @ApiProperty({
+    enum: DurationUnit,
+  })
+  @Transform(({ value }) => value as DurationUnit)
+  @IsEnum(DurationUnit, { message: "badInput" })
+  public durationUnit: DurationUnit;
 
   @ApiProperty()
   @IsNumber({ maxDecimalPlaces: 2 }, { message: "typeMismatch" })

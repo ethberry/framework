@@ -37,11 +37,11 @@ export const StakingReport: FC = () => {
       stakingDepositStatus: [StakingDepositStatus.ACTIVE],
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 201,
+        contractId: 1201,
       },
       reward: {
         tokenType: TokenType.ERC721,
-        contractId: 306,
+        contractId: 1306,
       },
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),

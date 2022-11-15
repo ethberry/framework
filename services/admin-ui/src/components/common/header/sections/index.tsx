@@ -1,25 +1,21 @@
 import { FC, Fragment, MouseEvent, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { matchPath, useLocation, useNavigate } from "react-router";
+import { matchPath, useLocation } from "react-router";
 import { Avatar, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import { Link as RouterLink, NavLink as RouterNavLink } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
 
 import { useUser } from "@gemunion/provider-user";
-import { useApi } from "@gemunion/provider-api-firebase";
 import type { IUser } from "@framework/types";
 
 import { useStyles } from "./styles";
 
 export const Sections: FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
 
   const classes = useStyles();
   const [anchor, setAnchor] = useState<Element | null>(null);
 
   const user = useUser<IUser>();
-  const api = useApi();
 
   const handleMenuOpen = (event: MouseEvent): void => {
     setAnchor(event.currentTarget);
@@ -32,10 +28,7 @@ export const Sections: FC = () => {
   const logout = async (e: MouseEvent): Promise<void> => {
     e.preventDefault();
     handleMenuClose();
-    const auth = getAuth();
-    await signOut(auth);
-    api.setToken(null);
-    navigate("/login");
+    await user.logOut("/login");
   };
 
   if (!user.isAuthenticated()) {

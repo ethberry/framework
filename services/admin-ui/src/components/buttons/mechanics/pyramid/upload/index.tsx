@@ -37,10 +37,9 @@ export const PyramidUploadButton: FC<IPyramidUploadButtonProps> = props => {
         tokenId: component.templateId,
         amount: component.amount,
       }))[0],
-      period: rule.duration * 86400 || 0, // todo fix same name // seconds in days
+      period: rule.durationAmount, // todo fix same name // seconds in days
       penalty: rule.penalty || 0,
-      recurrent: rule.recurrent,
-      active: true, // todo add var in interface
+      active: true, // TODO new rules always ACTIVE ?
     };
 
     const contract = new Contract(rule.contract.address, PyramidSol.abi, web3Context.provider?.getSigner());

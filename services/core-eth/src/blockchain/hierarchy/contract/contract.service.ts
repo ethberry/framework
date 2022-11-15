@@ -3,9 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ConfigService } from "@nestjs/config";
 
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { wallet } from "@gemunion/constants";
 
 import { ContractEntity } from "./contract.entity";
-import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ContractType, ModuleType, TokenType } from "@framework/types";
 import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
@@ -122,7 +123,7 @@ export class ContractService {
 
     if (contractEntities.length) {
       return {
-        address: contractEntities.map(contractEntity => contractEntity.address),
+        address: contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet),
         fromBlock: Math.max(...contractEntities.map(contractEntity => contractEntity.fromBlock)),
       };
     }
@@ -139,7 +140,7 @@ export class ContractService {
       .getMany();
 
     if (contractEntities.length) {
-      const addresses = contractEntities.map(contractEntity => contractEntity.address);
+      const addresses = contractEntities.map(contractEntity => contractEntity.address).filter(c => c !== wallet);
       const unique = [...new Set(addresses)];
       return {
         address: unique,

@@ -78,7 +78,7 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, mysteryboxTokenEntity.id);
+    await this.updateHistory(event, context, void 0, mysteryboxTokenEntity.id);
 
     if (from === constants.AddressZero) {
       mysteryboxTokenEntity.template.amount += 1;
@@ -122,6 +122,6 @@ export class MysteryBoxServiceEth extends TokenServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    await this.updateHistory(event, context, TokenEntity.id);
+    await this.updateHistory(event, context, void 0, TokenEntity.id);
   }
 }

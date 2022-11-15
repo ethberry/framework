@@ -27,8 +27,8 @@
     }
   },
   "dialogs": {
-    "breedLimit": "Set breed limits",
     "blacklist": "Add to blacklist",
+    "breedLimit": "Set breed limits",
     "claim": "Claim",
     "confirmation": "Please confirm",
     "create": "Create",
@@ -37,6 +37,8 @@
     "edit": "Edit",
     "fund": "Fund",
     "grantRole": "Grant role",
+    "listenerAdd": "Add ETH Listener",
+    "listenerRemove": "Remove ETH Listener",
     "mintToken": "Mint tokens",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
@@ -72,7 +74,8 @@
       "1": "ETHEREUM",
       "1337": "BESU",
       "137": "POLYGON",
-      "56": "BINANCE"
+      "56": "BINANCE",
+      "97": "BINANCE (testnet)"
     },
     "claimStatus": {
       "NEW": "New",
@@ -108,6 +111,11 @@
       "INACTIVE": "Inactive",
       "NEW": "New"
     },
+    "durationUnit": {
+      "DAY": "Day",
+      "HOUR": "Hour",
+      "MINUTE": "Minute"
+    },
     "emailType": {
       "DUMMY": "Test email",
       "LINK_TOKEN": "LINK notification"
@@ -121,6 +129,16 @@
       "EN": "\uD83C\uDDFA\uD83C\uDDF8 English",
       "RU": "\uD83C\uDDF7\uD83C\uDDFA Русский",
       "UA": "\uD83C\uDDFA\uD83C\uDDE6 Українська"
+    },
+    "listenerType": {
+      "ERC1155": "ERC1155",
+      "ERC20": "ERC20",
+      "ERC721": "ERC721",
+      "ERC998": "ERC998",
+      "MYSTERYBOX": "MYSTERYBOX",
+      "NATIVE": "Native",
+      "PYRAMID": "PYRAMID",
+      "VESTING": "VESTING"
     },
     "mysteryboxStatus": {
       "ACTIVE": "Active",
@@ -197,6 +215,7 @@
     "buttons": {
       "accept": "Accept",
       "add": "Add",
+      "addListener": "Add ETH Listener",
       "blacklist": "Blacklist",
       "cancel": "Cancel",
       "claim": "Claim",
@@ -221,6 +240,7 @@
       "ok": "Ok",
       "pause": "Pause",
       "reject": "Reject",
+      "removeListener": "Remove ETH Listener",
       "renounceRole": "Renounce Role",
       "revokeRole": "Revoke Role",
       "royalty": "Royalty",
@@ -247,15 +267,13 @@
       "GRADE": "Grade",
       "RARITY": "Rarity",
       "account": "Account",
+      "active": "Active",
       "address": "Address",
       "amount": "Amount",
       "attributes": "Attributes",
-      "breeder": "Breeder",
       "baseTokenURI": "Base token URI",
+      "breeder": "Breeder",
       "cap": "Cap",
-      "count": "Max breeds count",
-      "time": "Cooldown time",
-      "maxTime": "Max Cooldown",
       "chainId": "Chain",
       "child": "Child",
       "childId": "Child",
@@ -271,6 +289,7 @@
       "contractIds": "Contracts",
       "contractStatus": "Status",
       "contractTemplate": "Template",
+      "count": "Max breeds count",
       "craftStatus": "Status",
       "createdAt": "Created",
       "dateRangeEnd": "To",
@@ -281,10 +300,13 @@
       "description": "Description",
       "displayName": "Display name",
       "duration": "Duration",
+      "durationAmount": "Duration",
+      "durationUnit": "Duration unit",
       "email": "Email",
       "endTimestamp": "End date",
+      "files": "Files",
+      "fromBlock": "Listen log from block №",
       "genes": "Genes",
-      "parents": "Parents",
       "gradeStrategy": "Grade strategy",
       "growthRate": "Growth rate",
       "id": "ID",
@@ -293,21 +315,23 @@
       "items": "Items",
       "language": "Language",
       "listId": "List ID",
-      "minBalance": "Min Balance",
+      "listenerType": "Listener type",
+      "matron": "Matron",
       "maxBalance": "Max Balance",
       "maxStakes": "Max Stakes",
-      "matron": "Matron",
-      "sire": "Sire",
+      "maxTime": "Max Cooldown",
+      "minBalance": "Min Balance",
       "mysteryboxStatus": "Status",
       "name": "Name",
       "numbers": "Numbers",
       "owner": "Owner",
       "pageStatus": "Status",
       "parent": "Parent",
-      "payee": "Payee",
       "parentId": "Parent",
       "parentIds": "Parent",
+      "parents": "Parents",
       "password": "Password",
+      "payee": "Payee",
       "penalty": "Penalty",
       "price": "Price",
       "pyramidDepositStatus": "Status",
@@ -320,21 +344,23 @@
       "roundId": "Round",
       "roundIds": "Round",
       "royalty": "Royalty",
+      "sire": "Sire",
       "slug": "Slug",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startTimestamp": "Start date",
       "symbol": "Symbol",
-      "txHash": "txHash",
       "templateId": "Template",
       "templateIds": "Templates",
       "templateStatus": "Status",
+      "time": "Cooldown time",
       "title": "Title",
       "token": "Token",
       "tokenId": "Token",
       "tokenIds": "Tokens",
       "tokenStatus": "Status",
       "tokenType": "Type",
+      "txHash": "txHash",
       "type": "Type",
       "updatedAt": "Updated",
       "url": "Url",
@@ -342,8 +368,8 @@
       "userIds": "Users",
       "userRoles": "Roles",
       "userStatus": "Status",
-      "year": "Year",
-      "winNumbers": "Win numbers"
+      "winNumbers": "Win numbers",
+      "year": "Year"
     },
     "placeholders": {
       "DUMMY": "Dummy",
@@ -353,9 +379,6 @@
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
       "cap": "10",
-      "count": "0",
-      "time": "0",
-      "maxTime": "0",
       "childId": "Contract",
       "childIds": "Contract",
       "comment": "Fraud",
@@ -363,26 +386,31 @@
       "contract": "Contract",
       "contractId": "Contract",
       "contractIds": "Contracts",
+      "count": "0",
       "createdAt": "now",
       "decimals": "18",
       "definition": "10",
       "description": "Description",
       "displayName": "Gordon Freeman",
       "duration": "30",
+      "durationAmount": "30",
+      "durationUnit": "Day",
       "email": "me@google.com",
+      "fromBlock": "1",
       "growthRate": "2",
       "item": "Bottle of water",
       "listId": "1",
-      "maxStakes": "0",
-      "minBalance": "0",
       "maxBalance": "100",
+      "maxStakes": "0",
+      "maxTime": "0",
+      "minBalance": "0",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
-      "payee": "0x...",
       "parentId": "Contract",
       "parentIds": "Contract",
       "password": "******",
+      "payee": "0x...",
       "penalty": "1",
       "price": "1000",
       "priceCorrection": "0",
@@ -392,12 +420,13 @@
       "roundIds": "Round",
       "royalty": "1",
       "search": "Search...",
-      "slug": "terms-and-conditions",
+      "slug": "terms-of-services",
       "stakingRuleStatus": "Status",
       "symbol": "XXX",
       "templateId": "Template",
       "templateIds": "Template",
       "text": "qwerty",
+      "time": "0",
       "title": "Title",
       "token": "Bottle of water",
       "tokenId": "Token",
@@ -443,16 +472,16 @@
     },
     "breed": {
       "breeds": {
-        "title": "Breeds",
-        "start": "Set limits",
         "end": "End Round",
+        "start": "Set limits",
+        "title": "Breeds",
         "wait": "Awaiting round to end"
       },
       "history": {
         "title": "Breed history"
       },
-      "title": "Breed",
-      "limit": "Set limits"
+      "limit": "Set limits",
+      "title": "Breed"
     },
     "chain-link": {
       "fund": "Fund",
@@ -486,8 +515,10 @@
       },
       "integrations": {
         "admin": {
+          "balances": "System Balances",
           "emails": "Emails",
           "pages": "Pages",
+          "payees": "System Payees",
           "settings": "Settings",
           "title": "Admin",
           "users": "Users"
@@ -517,12 +548,12 @@
         "vesting": "Vesting",
         "waitlist": "Waitlist"
       },
+      "title": "Dashboard",
       "wallet": {
-        "title": "System Wallet",
+        "balances": "Balances",
         "payees": "Payees",
-        "balances": "Balances"
-      },
-      "title": "Dashboard"
+        "title": "System Wallet"
+      }
     },
     "drop": {
       "title": "Drops"
@@ -581,9 +612,9 @@
     },
     "lottery": {
       "rounds": {
-        "title": "Rounds",
-        "start": "Start Round",
         "end": "End Round",
+        "start": "Start Round",
+        "title": "Rounds",
         "wait": "Awaiting round to end"
       },
       "tickets": {
@@ -628,6 +659,15 @@
     },
     "pages": {
       "title": "Pages"
+    },
+    "payees": {
+      "attach": "Attach",
+      "balances": {
+        "title": "System Balances"
+      },
+      "detach": "Detach",
+      "title": "System Payees",
+      "withdraw": "Withdraw"
     },
     "profile": {
       "title": "Profile"
@@ -688,20 +728,20 @@
       "title": "Waitlist"
     },
     "wallet": {
-      "title": "System Wallet",
-      "withdraw": {
-        "title": "Withdraw",
-        "dialog": "From address",
-        "token": "Token",
-        "total": "Total balance",
-        "payee": "Payee will receive"
-      },
       "balances": {
         "title": "Balances"
       },
       "payees": {
         "title": "System Payees",
         "withdraw": "Withdraw"
+      },
+      "title": "System Wallet",
+      "withdraw": {
+        "dialog": "From address",
+        "payee": "Payee will receive",
+        "title": "Withdraw",
+        "token": "Token",
+        "total": "Total balance"
       }
     }
   },
@@ -727,12 +767,6 @@
     "loaded": "Successfully loaded",
     "pageNotFound": "API error",
     "passwordChanged": "Password was successfully changed. Now you can log in using your new password.",
-    "recaptchaBadRequest": "The request is invalid or malformed.",
-    "recaptchaInvalidInputResponse": "The response parameter is invalid or malformed.",
-    "recaptchaInvalidInputSecret": "The secret parameter is invalid or malformed.",
-    "recaptchaMissingInputResponse": "The response parameter is missing.",
-    "recaptchaMissingInputSecret": "The secret parameter is missing.",
-    "recaptchaTimeoutOrDuplicate": "The response is no longer valid: either is too old or has been used previously.",
     "registered": "Registration successful, please verify your email to proceed",
     "rejectedByUser": "Rejected by user",
     "saved": "Successfully saved",
@@ -746,6 +780,7 @@
     "userHasWrongRole": "Insufficient permissions",
     "userIsNotActive": "User is not active",
     "userNotFound": "User not found",
-    "walletIsNotConnected": "Wallet is not connected"
+    "walletIsNotConnected": "Wallet is not connected",
+    "web3NotDetected": "Web3 not detected"
   }
 }

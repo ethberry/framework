@@ -28,7 +28,7 @@ import {
 
 import { Erc20TokenEditDialog } from "./edit";
 import { Erc20ContractCreateButton, Erc20ContractDeployButton } from "../../../../components/buttons";
-import { ContractActions, ContractActionsMenu } from "../../../../components/menu";
+import { ContractActions, ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
 export const Erc20Contract: FC = () => {

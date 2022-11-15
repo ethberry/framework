@@ -68,6 +68,9 @@ export const OhlcChart: FC = () => {
         grid: true,
         height,
         width,
+        style: {
+          background: "inherit",
+        },
         y: {
           label: "↑ Stock price ($)",
           line: true,

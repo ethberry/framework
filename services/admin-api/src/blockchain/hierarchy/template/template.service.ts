@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ArrayOverlap, Brackets, DeepPartial, FindOneOptions, FindOptionsWhere, In, Repository } from "typeorm";
 
 import { ITemplateAutocompleteDto, ITemplateSearchDto, ModuleType, TemplateStatus, TokenType } from "@framework/types";
+
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
 import { AssetService } from "../../mechanics/asset/asset.service";
@@ -136,6 +137,7 @@ export class TemplateService {
         alias: "template",
         leftJoinAndSelect: {
           contract: "template.contract",
+          tokens: "template.tokens",
         },
       },
     });

@@ -21,6 +21,10 @@ export const formatPriceMl = (asset?: IAsset): Array<string> => {
   );
 };
 
+export const formatPenalty = (penalty?: number): number => {
+  return penalty ? +(penalty / 100).toFixed(2) : 0;
+};
+
 export const getEthPrice = (asset?: IAsset) => {
   return asset?.components.reduce((memo, current) => {
     if (current.tokenType === TokenType.NATIVE) {

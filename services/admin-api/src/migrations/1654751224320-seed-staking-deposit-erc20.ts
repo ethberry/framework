@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
+import { addDays } from "date-fns";
 
 import { ns } from "@framework/constants";
 import { wallets } from "@gemunion/constants";
@@ -6,6 +7,7 @@ import { wallets } from "@gemunion/constants";
 export class SeedStakingDepositErc20At1654751224320 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
+    const endDateTime = addDays(new Date(), 30).toISOString();
 
     await queryRunner.query(`
       INSERT INTO ${ns}.staking_deposit (
@@ -23,7 +25,7 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
         'ACTIVE',
         201,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         8, -- ERC20 > ERC721
         1,
         '${currentDateTime}',
@@ -33,7 +35,7 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
         'CANCELED',
         202,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         8, -- ERC20 > ERC721
         1,
         '${currentDateTime}',
@@ -43,7 +45,7 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
         'COMPLETE',
         203,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         8, -- ERC20 > ERC721
         1,
         '${currentDateTime}',
@@ -53,7 +55,7 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
         'ACTIVE',
         211,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         8, -- ERC20 > ERC721
         1,
         '${currentDateTime}',
@@ -63,7 +65,7 @@ export class SeedStakingDepositErc20At1654751224320 implements MigrationInterfac
         'ACTIVE',
         221,
         '${currentDateTime}',
-        '${currentDateTime}',
+        '${endDateTime}',
         8, -- ERC20 > ERC721
         1,
         '${currentDateTime}',

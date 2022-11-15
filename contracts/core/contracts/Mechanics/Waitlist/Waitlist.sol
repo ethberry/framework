@@ -63,7 +63,12 @@ contract Waitlist is ExchangeUtils, AccessControl, Pausable {
     require(_roots[externalId] != "", "Waitlist: Not yet started");
 
     address account = _msgSender();
-    require(proof.verify(_roots[externalId], keccak256(abi.encodePacked(account))), "Waitlist: You are not in the wait list");
+
+
+//    bool verified = proof.verify(_roots[externalId], keccak256(abi.encodePacked(account)));
+    bool verified = proof.verify(_roots[externalId], keccak256(bytes.concat(keccak256(abi.encode(account)))));
+
+    require(verified, "Waitlist: You are not in the wait list");
 
     acquire(_items[externalId], account);
 

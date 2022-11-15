@@ -32,7 +32,7 @@ export const ClaimUploadDialog: FC<IClaimUploadDialogProps> = props => {
       {...rest}
     >
       <FileInput />
-      <AutoSave onSubmit={values => onConfirm(values, null)} />
+      <AutoSave onSubmit={onConfirm} />
     </FormDialog>
   );
 };

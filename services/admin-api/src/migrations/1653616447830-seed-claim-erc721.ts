@@ -72,7 +72,7 @@ export class SeedClaimErc721At1653616447830 implements MigrationInterface {
       ), (
         '${wallet}',
         13002,
-        'NEW',
+        'REDEEMED',
         '0x53aead30f3b57f52c6ea7d23a71f47d3d03811dae35a71fdcee396b70ba8169b073a7c566c978c327db9ded895edd761173708e9ab1e567554b1acdadf11a7df1b',
         '0xc4784e41b015c3476ab061982cd1ac4407b2123b50a5b6dd5b2ce09c81468fed',
         '${zeroDateTime}',

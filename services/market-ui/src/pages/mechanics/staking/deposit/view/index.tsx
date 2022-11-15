@@ -1,12 +1,15 @@
 import { FC } from "react";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableRow } from "@mui/material";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
+import { format } from "date-fns";
 
+import { humanReadableDateTimeFormat } from "@gemunion/constants";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingDeposit } from "@framework/types";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatPenalty, formatPrice } from "../../../../../utils/money";
+import { formatDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
   open: boolean;
@@ -17,7 +20,9 @@ export interface IStakesViewDialogProps {
 
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { stakingRule } = initialValues;
+  const { stakingRule, startTimestamp, withdrawTimestamp } = initialValues;
+
+  const { formatMessage } = useIntl();
 
   const handleConfirm = (): void => {
     onConfirm();
@@ -56,9 +61,43 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
-                <FormattedMessage id="form.labels.duration" />
+                <FormattedMessage id="form.labels.durationAmount" />
               </TableCell>
-              <TableCell align="right">{stakingRule?.duration} days</TableCell>
+              <TableCell align="right">
+                {stakingRule?.durationAmount && stakingRule?.durationUnit
+                  ? formatMessage(
+                      { id: `enum.durationUnit.${stakingRule.durationUnit}` },
+                      {
+                        count: formatDuration({
+                          durationAmount: stakingRule.durationAmount,
+                          durationUnit: stakingRule.durationUnit,
+                        }),
+                      },
+                    )
+                  : null}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.startTimestamp" />
+              </TableCell>
+              <TableCell align="right">
+                {startTimestamp ? format(new Date(startTimestamp), humanReadableDateTimeFormat) : null}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.endTimestamp" />
+              </TableCell>
+              <TableCell align="right">
+                {withdrawTimestamp ? format(new Date(withdrawTimestamp), humanReadableDateTimeFormat) : null}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.penalty" />
+              </TableCell>
+              <TableCell align="right">{formatPenalty(stakingRule?.penalty)}%</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">

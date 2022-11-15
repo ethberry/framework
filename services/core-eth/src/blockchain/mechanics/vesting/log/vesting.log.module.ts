@@ -3,24 +3,26 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 
-import { ContractType, VestingEventType } from "@framework/types";
+import { ContractType, ModuleType, VestingEventType } from "@framework/types";
 
 import { VestingModule } from "../vesting.module";
-import { VestingService } from "../vesting.service";
 import { VestingLogService } from "./vesting.log.service";
 // custom contracts
 import { VestingAbi } from "./interfaces";
+import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
 @Module({
   imports: [
     ConfigModule,
+    ContractModule,
     VestingModule,
     // Erc721 user contracts
     EthersContractModule.forRootAsync(EthersContractModule, {
-      imports: [ConfigModule, VestingModule],
-      inject: [ConfigService, VestingService],
-      useFactory: async (configService: ConfigService, contractService: VestingService): Promise<IModuleOptions> => {
-        const vestingContracts = await contractService.findAllContracts();
+      imports: [ConfigModule, ContractModule],
+      inject: [ConfigService, ContractService],
+      useFactory: async (configService: ConfigService, contractService: ContractService): Promise<IModuleOptions> => {
+        const vestingContracts = await contractService.findAllByType(ModuleType.VESTING);
         return {
           contract: {
             contractType: ContractType.VESTING,
@@ -29,11 +31,12 @@ import { VestingAbi } from "./interfaces";
             // prettier-ignore
             eventNames: [
               VestingEventType.ERC20Released,
-              VestingEventType.EtherReleased
+              VestingEventType.EtherReleased,
+              VestingEventType.EtherReceived,
             ],
           },
           block: {
-            fromBlock: vestingContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "0"),
+            fromBlock: vestingContracts.fromBlock || ~~configService.get<string>("STARTING_BLOCK", "1"),
             debug: true,
           },
         };

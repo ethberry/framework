@@ -61,7 +61,7 @@ export interface IExchangeErc20PaymentReleasedEvent {
 export interface IExchangeClaimEvent {
   from: string;
   externalId: string;
-  items: IExchangeItem; // TODO array
+  items: Array<IExchangeItem>;
 }
 
 // MODULE:CRAFT
@@ -86,6 +86,32 @@ export interface IExchangeMysteryEvent {
   externalId: string;
   items: IExchangeItem; // TODO array
   price: Array<IExchangeItem>;
+}
+
+// MODULE:WALLET
+export interface IExchangePayeeAddedEvent {
+  account: string;
+  shares: string;
+  externalId: 0;
+}
+
+export interface IExchangePaymentReceivedEvent {
+  from: string;
+  amount: string;
+  externalId: 0;
+}
+
+export interface IExchangePaymentReleasedEvent {
+  to: string;
+  amount: string;
+  externalId: 0;
+}
+
+export interface IExchangeErc20PaymentReleasedEvent {
+  token: string;
+  to: string;
+  amount: string;
+  externalId: 0;
 }
 
 export type IRewardItem = [number, string, string, string];

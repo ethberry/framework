@@ -18,9 +18,9 @@ import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { ContractStatus, IContract, IContractSearchDto, NativeContractFeatures } from "@framework/types";
 
-import { Erc20TokenEditDialog } from "./edit";
+import { NativeTokenEditDialog } from "./edit";
 import { NativeContractCreateButton } from "../../../../components/buttons";
-import { ContractActionsMenu } from "../../../../components/menu";
+import { ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
 export const NativeContract: FC = () => {
@@ -116,7 +116,7 @@ export const NativeContract: FC = () => {
         initialValues={selected}
       />
 
-      <Erc20TokenEditDialog
+      <NativeTokenEditDialog
         onCancel={handleEditCancel}
         onConfirm={handleEditConfirm}
         open={isEditDialogOpen}

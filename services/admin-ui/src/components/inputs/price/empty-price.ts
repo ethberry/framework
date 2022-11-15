@@ -24,7 +24,7 @@ export const emptyItem = {
         address: "0x",
       },
       templateId: 0,
-      amount: "0",
+      amount: "1", // default amount for ERC721-998-1155
     } as IAssetComponent,
   ],
 } as IAsset;

@@ -15,7 +15,7 @@ import {
 import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
-import { PaginationDto } from "@gemunion/collection";
+import { SearchDto } from "@gemunion/collection";
 
 import { DropService } from "./drop.service";
 import { DropEntity } from "./drop.entity";
@@ -28,7 +28,7 @@ export class DropController {
 
   @Get("/")
   @UseInterceptors(PaginationInterceptor)
-  public search(@Query() dto: PaginationDto): Promise<[Array<DropEntity>, number]> {
+  public search(@Query() dto: SearchDto): Promise<[Array<DropEntity>, number]> {
     return this.dropService.search(dto);
   }
 

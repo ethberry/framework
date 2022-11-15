@@ -21,11 +21,11 @@ export const PyramidChart: FC = () => {
     search: {
       deposit: {
         tokenType: TokenType.ERC20,
-        contractId: 201,
+        contractId: 1201,
       },
       reward: {
         tokenType: TokenType.ERC20,
-        contractId: 201,
+        contractId: 1201,
       },
       startTimestamp: startOfMonth(subMonths(new Date(), 1)).toISOString(),
       endTimestamp: endOfMonth(addMonths(new Date(), 1)).toISOString(),
@@ -38,6 +38,9 @@ export const PyramidChart: FC = () => {
     if (rows.length && chartRef.current) {
       const chart = Plot.plot({
         width: chartRef.current.clientWidth,
+        style: {
+          background: "inherit",
+        },
         y: {
           grid: true,
           label: "Sold items",

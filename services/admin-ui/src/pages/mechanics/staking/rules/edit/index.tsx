@@ -3,13 +3,14 @@ import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
 import { IStakingRule } from "@framework/types";
 
-import { validationSchema } from "./validation";
+import { DurationInput } from "../../../../../components/inputs/duration";
 import { PriceInput } from "../../../../../components/inputs/price";
+import { validationSchema } from "./validation";
 
 export interface IStakingEditDialogProps {
   open: boolean;
@@ -22,7 +23,7 @@ export interface IStakingEditDialogProps {
 export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, recurrent, deposit, reward, duration } = initialValues;
+  const { id, title, description, penalty, recurrent, deposit, reward, durationAmount, durationUnit } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -31,7 +32,8 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
     reward,
     penalty,
     recurrent,
-    duration,
+    durationAmount,
+    durationUnit,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
@@ -63,17 +65,7 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
           <PriceInput prefix="reward" readOnly={readOnly} />
         </Grid>
       </Grid>
-      <NumberInput
-        name="duration"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="start">
-              <FormattedMessage id="form.adornment.days" />
-            </InputAdornment>
-          ),
-        }}
-        readOnly={readOnly}
-      />
+      <DurationInput readOnly={readOnly} />
       <CurrencyInput
         name="penalty"
         symbol=""

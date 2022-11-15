@@ -1,6 +1,6 @@
 import type { RouteObject } from "react-router-dom";
 
-import { Protected } from "@gemunion/firebase-login";
+import { Protected } from "@gemunion/common-pages";
 
 import { BreedBreeds } from "./breeds";
 import { BreedHistory } from "./history";

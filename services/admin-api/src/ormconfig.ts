@@ -40,6 +40,7 @@ import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.en
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
+import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 
 import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
 import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
@@ -199,13 +200,13 @@ import { CreateWaitlistList1663047650200 } from "./migrations/1663047650200-crea
 import { SeedWaitlistListAt1663047650210 } from "./migrations/1663047650210-seed-waitlist-list";
 import { CreateWaitlistItem1663047650300 } from "./migrations/1663047650300-create-waitlist-item";
 import { SeedWaitlistItemAt1663047650310 } from "./migrations/1663047650310-seed-waitlist-item";
-import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
 import { CreateBreed1663047650400 } from "./migrations/1663047650400-create-breed";
 import { CreateBreedHistory1663047650410 } from "./migrations/1663047650410-create-breed-history";
 import { SeedBreed1663047650401 } from "./migrations/1663047650401-seed-breed";
 import { SeedBreedHistory1663047650411 } from "./migrations/1663047650411-seed-breed-history";
 import { CreateWalletPayees1663047650510 } from "./migrations/1663047650510-create-wallet-payees";
 import { PayeesEntity } from "./blockchain/wallet/payees.entity";
+import { SeedContractVestingAt1563804000190 } from "./migrations/1563804000190-seed-contract-vesting";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -294,6 +295,7 @@ const config: PostgresConnectionOptions = {
     SeedContractMysteryAt1563804000160,
     SeedContractWrapperAt1563804000170,
     SeedContractLotteryAt1563804000180,
+    SeedContractVestingAt1563804000190,
 
     CreateTemplate1563804000200,
     SeedTemplateNativeAt1563804000210,

@@ -5,11 +5,11 @@ import { constants, ContractFactory, utils } from "ethers";
 import { Network } from "@ethersproject/networks";
 
 import { ContractManager, Exchange } from "../../../typechain-types";
-import { amountWei, amountWeiEth, nonce, templateId, tokenName, tokenZero } from "../../constants";
+import { amountWei, amountWeiEth, nonce, templateId, tokenZero } from "../../constants";
 import { blockAwait } from "../../../scripts/utils/blockAwait";
 import { factoryDeployErc721 } from "./shared/factoryDeployErc721";
 import { factoryDeployErc20 } from "./shared/factoryDeployErc20";
-import { wrapOneToManySignature } from "./shared/utils";
+import { deployExchangeFixture } from "./shared/fixture";
 
 use(solidity);
 
@@ -38,10 +38,13 @@ describe("Factory Exchange Referral", function () {
     factoryInstance = (await factory.deploy()) as ContractManager;
     await factoryInstance.deployed();
 
-    const exchangeFactory = await ethers.getContractFactory("Exchange");
-    exchangeInstance = await exchangeFactory.deploy(tokenName);
-    if (network.chainId === 1337) await blockAwait();
-    generateOneToManySignature = wrapOneToManySignature(network, exchangeInstance, this.owner);
+    const res = await deployExchangeFixture();
+    exchangeInstance = res.contractInstance;
+    generateOneToManySignature = res.generateOneToManySignature;
+
+    if (network.chainId === 1337) {
+      await blockAwait();
+    }
 
     const minters = [exchangeInstance.address];
     const metadata = [exchangeInstance.address];
@@ -141,7 +144,9 @@ describe("Factory Exchange Referral", function () {
         { value: amountWeiEth },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "ReferralReward");
-      if (network.chainId === 1337) await blockAwait();
+      if (network.chainId === 1337) {
+        await blockAwait();
+      }
       await expect(tx1).to.emit(erc721Instance, "Transfer");
 
       const balance = await erc721Instance.balanceOf(this.owner.address);
@@ -208,7 +213,9 @@ describe("Factory Exchange Referral", function () {
         { value: constants.WeiPerEther },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
-      if (network.chainId === 1337) await blockAwait();
+      if (network.chainId === 1337) {
+        await blockAwait();
+      }
       await expect(tx1).to.emit(erc721Instance, "Transfer");
 
       await expect(tx1)
@@ -302,7 +309,9 @@ describe("Factory Exchange Referral", function () {
             .div(refProgram.refDecrease ** 0),
         );
 
-      if (network.chainId === 1337) await blockAwait();
+      if (network.chainId === 1337) {
+        await blockAwait();
+      }
       const balance = await erc721Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
 
@@ -553,7 +562,9 @@ describe("Factory Exchange Referral", function () {
             .div(refProgram.refDecrease ** 0),
         );
 
-      if (network.chainId === 1337) await blockAwait();
+      if (network.chainId === 1337) {
+        await blockAwait();
+      }
       const balance = await erc721Instance.balanceOf(this.owner.address);
       expect(balance).to.equal(1);
 
@@ -813,7 +824,9 @@ describe("Factory Exchange Referral", function () {
         { value: constants.WeiPerEther },
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
-      if (network.chainId === 1337) await blockAwait();
+      if (network.chainId === 1337) {
+        await blockAwait();
+      }
       await expect(tx).to.emit(erc721Instance, "Transfer");
       await expect(tx)
         .to.emit(exchangeInstance, "ReferralReward")
@@ -921,7 +934,9 @@ describe("Factory Exchange Referral", function () {
         signature,
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
-      if (network.chainId === 1337) await blockAwait();
+      if (network.chainId === 1337) {
+        await blockAwait();
+      }
       await expect(tx).to.emit(erc721Instance, "Transfer");
       await expect(tx).to.emit(erc20Instance, "Transfer");
       await expect(tx)
@@ -1044,7 +1059,9 @@ describe("Factory Exchange Referral", function () {
         { value: constants.WeiPerEther },
       );
       await expect(tx).to.emit(exchangeInstance, "Purchase");
-      if (network.chainId === 1337) await blockAwait();
+      if (network.chainId === 1337) {
+        await blockAwait();
+      }
       await expect(tx).to.emit(erc20Instance, "Transfer");
       await expect(tx).to.emit(erc721Instance, "Transfer");
 

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useIntl } from "react-intl";
 import { Grid } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
@@ -9,6 +9,7 @@ import { CommonSearchForm } from "@gemunion/mui-form-search";
 import { IReferralLeaderboard } from "@framework/types";
 
 import { formatEther } from "../../../../utils/money";
+import { AddressLink } from "../../../../components/common/address-link";
 
 export const ReferralLeaderboard: FC = () => {
   const { rows, search, count, isLoading, handleSearch, handleChangeRowsPerPage, handleChangePage } =
@@ -25,23 +26,28 @@ export const ReferralLeaderboard: FC = () => {
   const columns = [
     {
       field: "id",
-      headerName: formatMessage({id: "form.labels.id"}),
+      headerName: formatMessage({ id: "form.labels.id" }),
       sortable: true,
-      flex: 0,
+      flex: 0
     },
     {
       field: "account",
-      headerName: formatMessage({id: "form.labels.account"}),
+      headerName: formatMessage({ id: "form.labels.account" }),
       sortable: false,
+      renderCell: (params: GridCellParams) => {
+        return (
+          <AddressLink address={params.value} />
+        );
+      },
       flex: 2
     },
     {
       field: "amount",
-      headerName: formatMessage({id: "form.labels.amount"}),
+      headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: true,
-      valueFormatter: ({value}: { value: string }) => formatEther(value),
+      valueFormatter: ({ value }: { value: string }) => formatEther(value),
       flex: 1
-    },
+    }
   ];
 
   return (

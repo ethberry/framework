@@ -26,7 +26,7 @@ import {
 
 import { MysteryContractEditDialog } from "./edit";
 import { MysteryContractDeployButton } from "../../../../components/buttons";
-import { ContractActions, ContractActionsMenu } from "../../../../components/menu";
+import { ContractActions, ContractActionsMenu } from "../../../../components/menu/contract";
 import { ContractSearchForm } from "../../../../components/forms/contract-search";
 
 export const MysteryContract: FC = () => {

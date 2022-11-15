@@ -6,6 +6,7 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import {
   ContractType,
   IVestingERC20ReleasedEvent,
+  IVestingEtherReceivedEvent,
   IVestingEtherReleasedEvent,
   VestingEventType,
 } from "@framework/types";
@@ -24,5 +25,10 @@ export class VestingControllerEth {
   @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.EtherReleased })
   public ethReleased(@Payload() event: ILogEvent<IVestingEtherReleasedEvent>, @Ctx() context: Log): Promise<void> {
     return this.vestingServiceEth.ethReleased(event, context);
+  }
+
+  @EventPattern({ contractType: ContractType.VESTING, eventName: VestingEventType.EtherReceived })
+  public ethReceived(@Payload() event: ILogEvent<IVestingEtherReceivedEvent>, @Ctx() context: Log): Promise<void> {
+    return this.vestingServiceEth.ethReceived(event, context);
   }
 }

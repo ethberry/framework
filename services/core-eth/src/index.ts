@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ConfigService } from "@nestjs/config";
@@ -17,6 +18,17 @@ async function bootstrap(): Promise<void> {
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   const configService = app.get(ConfigService);
+
+  const rmqUrl = configService.get<string>("RMQ_URL", "amqp://127.0.0.1:5672");
+  const rmqQueueEthlogger = configService.get<string>("RMQ_QUEUE_ETHLOGGER", "ethlogger");
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [rmqUrl],
+      queue: rmqQueueEthlogger,
+    },
+  });
 
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
@@ -37,7 +49,9 @@ async function bootstrap(): Promise<void> {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup("swagger", app, document);
 
-  await app.startAllMicroservices();
+  await app
+    .startAllMicroservices()
+    .then(() => console.info(`Core-Eth service is subscribed to ${rmqUrl}/${rmqQueueEthlogger}`));
 
   const host = configService.get<string>("HOST", "localhost");
   const port = configService.get<number>("PORT", 3021);

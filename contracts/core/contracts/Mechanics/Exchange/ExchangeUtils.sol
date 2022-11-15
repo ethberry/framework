@@ -26,11 +26,7 @@ contract ExchangeUtils {
 
   bytes4 private constant IERC721_RANDOM = type(IERC721Random).interfaceId;
 
-  function spend(
-    Asset[] memory price,
-    address account,
-    address receiver
-  ) internal {
+  function spend(Asset[] memory price, address account, address receiver) internal {
     uint256 length = price.length;
 
     // TODO calculate what is most efficient to pre-calculate here
