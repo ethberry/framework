@@ -20,7 +20,7 @@ export const VestingReleaseButton: FC<IVestingReleaseButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaRelease = useMetamask((vesting: IVesting, web3Context: Web3ContextType) => {
-    const contract = new Contract(vesting.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(vesting.contract!.address, CliffVestingSol.abi, web3Context.provider?.getSigner());
     return contract["release()"]() as Promise<void>;
   });
 

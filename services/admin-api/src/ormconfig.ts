@@ -206,6 +206,7 @@ import { SeedBreed1663047650401 } from "./migrations/1663047650401-seed-breed";
 import { SeedBreedHistory1663047650411 } from "./migrations/1663047650411-seed-breed-history";
 import { CreateWalletPayees1663047650510 } from "./migrations/1663047650510-create-wallet-payees";
 import { PayeesEntity } from "./blockchain/wallet/payees.entity";
+import { SeedContractVestingAt1563804000190 } from "./migrations/1563804000190-seed-contract-vesting";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {
@@ -294,6 +295,7 @@ const config: PostgresConnectionOptions = {
     SeedContractMysteryAt1563804000160,
     SeedContractWrapperAt1563804000170,
     SeedContractLotteryAt1563804000180,
+    SeedContractVestingAt1563804000190,
 
     CreateTemplate1563804000200,
     SeedTemplateNativeAt1563804000210,

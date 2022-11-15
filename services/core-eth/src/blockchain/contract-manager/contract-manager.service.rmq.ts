@@ -10,7 +10,6 @@ import { Erc1155LogService } from "../tokens/erc1155/token/log/log.service";
 import { VestingLogService } from "../mechanics/vesting/log/vesting.log.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
 import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
-import { VestingService } from "../mechanics/vesting/vesting.service";
 
 @Injectable()
 export class ContractManagerServiceRmq {
@@ -24,7 +23,6 @@ export class ContractManagerServiceRmq {
     private readonly mysteryboxLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,
     private readonly vestingLogService: VestingLogService,
-    private readonly vestingService: VestingService,
   ) {}
 
   public async loggerIn(dto: IEthLoggerInOutDto): Promise<void> {
@@ -85,7 +83,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.VESTING) {
-      const contracts = await this.vestingService.findAllContracts();
+      const contracts = await this.contractService.findAllByType(ModuleType.VESTING);
       contracts.address = contracts.address ? contracts.address.concat([address]) : [address];
       const unique = [...new Set(contracts.address)];
       this.vestingLogService.addListener({
@@ -153,7 +151,7 @@ export class ContractManagerServiceRmq {
       });
     }
     if (listenerType === ListenerType.VESTING) {
-      const contracts = await this.vestingService.findAllContracts();
+      const contracts = await this.contractService.findAllByType(ModuleType.VESTING);
       contracts.address = contracts.address ? contracts.address.filter(c => c !== address) : [];
       const unique = [...new Set(contracts.address)];
       this.vestingLogService.addListener({

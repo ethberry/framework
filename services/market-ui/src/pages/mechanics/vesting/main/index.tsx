@@ -10,6 +10,7 @@ import type { IVesting, IVestingSearchDto } from "@framework/types";
 import { VestingViewDialog } from "./view";
 import { VestingTransferOwnershipButton } from "../../../../components/buttons/mechanics/vesting/transfer-ownership";
 import { VestingReleaseButton } from "../../../../components/buttons";
+import { emptyContract } from "../../../../components/inputs/price/empty-contract";
 
 export const Vesting: FC = () => {
   const { account } = useWeb3React();
@@ -34,6 +35,7 @@ export const Vesting: FC = () => {
       account: "",
       duration: 0,
       startTimestamp: new Date().toISOString(),
+      contract: emptyContract,
     },
   });
 

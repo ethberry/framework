@@ -21,6 +21,6 @@ export class VestingController {
   @Get("/:id")
   @UseInterceptors(NotFoundInterceptor)
   public findOne(@Param("id", ParseIntPipe) id: number): Promise<VestingEntity | null> {
-    return this.vestingService.findOne({ id });
+    return this.vestingService.findOne({ id }, { relations: { contract: true } });
   }
 }

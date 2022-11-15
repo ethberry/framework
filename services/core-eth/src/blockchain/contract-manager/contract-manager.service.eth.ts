@@ -287,13 +287,23 @@ export class ContractManagerServiceEth {
 
     await this.updateHistory(event, ctx);
 
-    await this.vestingService.create({
+    const contractEntity = await this.contractService.create({
       address: addr.toLowerCase(),
+      title: Object.values(VestingContractTemplate)[~~templateId].toString(),
+      description: emptyStateString,
+      imageUrl,
+      contractFeatures: [],
+      contractModule: ModuleType.VESTING,
+      chainId: this.chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    await this.vestingService.create({
       account: account.toLowerCase(),
       startTimestamp: new Date(~~startTimestamp * 1000).toISOString(),
       duration: ~~duration * 1000, // msec
       contractTemplate: Object.values(VestingContractTemplate)[~~templateId],
-      chainId: this.chainId,
+      contractId: contractEntity.id,
     });
 
     this.vestingLogService.addListener({

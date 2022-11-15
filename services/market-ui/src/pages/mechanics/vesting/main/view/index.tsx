@@ -19,7 +19,7 @@ export interface IVestingViewDialogProps {
 export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
 
-  const { account, address, duration, contractTemplate, startTimestamp } = initialValues;
+  const { account, contract, duration, contractTemplate, startTimestamp } = initialValues;
 
   const dateStart = new Date(startTimestamp);
   const dateFinish = new Date(new Date(dateStart.getTime() + +duration));
@@ -38,7 +38,7 @@ export const VestingViewDialog: FC<IVestingViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.address" />
               </TableCell>
               <TableCell align="right">
-                <AddressLink address={address} />
+                <AddressLink address={contract!.address} />
               </TableCell>
             </TableRow>
             <TableRow>

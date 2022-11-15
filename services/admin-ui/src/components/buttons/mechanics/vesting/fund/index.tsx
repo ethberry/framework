@@ -27,12 +27,12 @@ export const VestingFundButton: FC<IVestingButtonProps> = props => {
   const metaFn = useMetamask((values: IVestingFundDto, web3Context: Web3ContextType) => {
     if (values.tokenType === TokenType.NATIVE) {
       return web3Context.provider?.getSigner().sendTransaction({
-        to: vesting.address,
+        to: vesting.contract!.address,
         value: values.amount,
       }) as Promise<any>;
     } else if (values.tokenType === TokenType.ERC20) {
       const contract = new Contract(values.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      return contract.transfer(vesting.address, values.amount) as Promise<any>;
+      return contract.transfer(vesting.contract!.address, values.amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

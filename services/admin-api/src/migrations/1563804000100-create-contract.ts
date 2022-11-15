@@ -37,6 +37,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:WAITLIST
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'WAITLIST';`);
 
+    // MODULE:VESTING
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'VESTING';`);
+
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (
         'ALLOWANCE',

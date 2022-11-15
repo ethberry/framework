@@ -3,11 +3,16 @@ import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
-import type { IVestingERC20ReleasedEvent, IVestingEtherReleasedEvent, TVestingEventData } from "@framework/types";
+import type {
+  IVestingERC20ReleasedEvent,
+  IVestingEtherReceivedEvent,
+  IVestingEtherReleasedEvent,
+  TVestingEventData,
+} from "@framework/types";
 import { VestingEventType } from "@framework/types";
 
 import { VestingHistoryService } from "./history/vesting-history.service";
-import { VestingService } from "./vesting.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class VestingServiceEth {
@@ -15,7 +20,7 @@ export class VestingServiceEth {
     @Inject(Logger)
     private readonly loggerService: LoggerService,
     private readonly vestingHistoryService: VestingHistoryService,
-    private readonly vestingService: VestingService,
+    private readonly contractService: ContractService,
   ) {}
 
   public async erc20Released(event: ILogEvent<IVestingERC20ReleasedEvent>, context: Log): Promise<void> {
@@ -23,6 +28,10 @@ export class VestingServiceEth {
   }
 
   public async ethReleased(event: ILogEvent<IVestingEtherReleasedEvent>, context: Log): Promise<void> {
+    await this.updateHistory(event, context);
+  }
+
+  public async ethReceived(event: ILogEvent<IVestingEtherReceivedEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
   }
 
@@ -39,6 +48,6 @@ export class VestingServiceEth {
       eventData: args,
     });
 
-    await this.vestingService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
+    await this.contractService.updateLastBlockByAddr(address.toLowerCase(), parseInt(blockNumber.toString(), 16));
   }
 }

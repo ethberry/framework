@@ -12,12 +12,18 @@ import "@openzeppelin/contracts/governance/utils/IVotes.sol";
 import "@openzeppelin/contracts/utils/Multicall.sol";
 
 contract AbstractVesting is VestingWallet, Ownable, Multicall {
+  event EtherReceived(address from, uint256 amount);
+
   constructor(
     address beneficiaryAddress,
     uint64 startTimestamp,
     uint64 durationSeconds
   ) VestingWallet(address(1), startTimestamp, durationSeconds) {
     _transferOwnership(beneficiaryAddress);
+  }
+
+  receive() external payable override {
+    emit EtherReceived(_msgSender(), msg.value);
   }
 
   // Vesting beneficiary

@@ -28,6 +28,7 @@ export enum ModuleType {
   WRAPPER = "WRAPPER",
   LOTTERY = "LOTTERY",
   PYRAMID = "PYRAMID",
+  VESTING = "VESTING",
 }
 
 export enum DurationUnit {

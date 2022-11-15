@@ -7,7 +7,8 @@ export class CreateVestingHistory1563804010230 implements MigrationInterface {
     await queryRunner.query(`
       CREATE TYPE ${ns}.vesting_event_enum AS ENUM (
         'EtherReleased',
-        'ERC20Released'
+        'ERC20Released',
+        'EtherReceived'
       );
     `);
 

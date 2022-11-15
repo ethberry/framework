@@ -22,6 +22,7 @@ import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingFundButton } from "../../../../components/buttons/mechanics/vesting/fund";
 import { EthListenerRemoveMenuItem } from "../../../../components/menu/contract/eth-listener/remove";
+import { emptyContract } from "../../../../components/inputs/price/empty-contract";
 
 export const Vesting: FC = () => {
   const {
@@ -48,6 +49,7 @@ export const Vesting: FC = () => {
       account: "",
       duration: 0,
       startTimestamp: new Date().toISOString(),
+      contract: emptyContract,
     },
   });
 
@@ -81,7 +83,7 @@ export const Vesting: FC = () => {
                 </Tooltip>
                 <EthListenerRemoveMenuItem
                   itemType={{
-                    address: vesting.address,
+                    address: vesting.contract!.address,
                     isVesting: true,
                   }}
                 />

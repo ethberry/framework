@@ -21,10 +21,6 @@ export class CreateVesting1653616433210 implements MigrationInterface {
           isPrimary: true,
         },
         {
-          name: "address",
-          type: "varchar",
-        },
-        {
           name: "account",
           type: "varchar",
         },
@@ -42,13 +38,9 @@ export class CreateVesting1653616433210 implements MigrationInterface {
           default: "'LINEAR'",
         },
         {
-          name: "chain_id",
+          name: "contract_id",
           type: "int",
-        },
-        {
-          name: "from_block",
-          type: "int",
-          default: 0,
+          isNullable: true,
         },
         {
           name: "created_at",
@@ -57,6 +49,14 @@ export class CreateVesting1653616433210 implements MigrationInterface {
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
         },
       ],
     });
