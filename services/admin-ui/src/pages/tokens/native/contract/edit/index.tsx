@@ -25,6 +25,7 @@ export const NativeTokenEditDialog: FC<INativeTokenEditDialogProps> = props => {
     title,
     description,
     contractStatus,
+    symbol,
   };
 
   const message = id ? "dialogs.edit" : "dialogs.create";
