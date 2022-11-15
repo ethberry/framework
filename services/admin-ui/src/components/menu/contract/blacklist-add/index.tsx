@@ -9,7 +9,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 import ERC20BlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Blacklist.sol/ERC20Blacklist.json";
 
-import { AccountDialog, IAccountDto } from "../../dialogs/account";
+import { AccountDialog, IAccountDto } from "../../../dialogs/account";
 
 export interface IBlacklistMenuItemProps {
   contract: IContract;

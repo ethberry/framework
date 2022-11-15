@@ -17,7 +17,6 @@ import { EthListenerAddMenuItem } from "./eth-listener/add";
 import { EthListenerRemoveMenuItem } from "./eth-listener/remove";
 
 export enum ContractActions {
-  MINT = "MINT",
   SNAPSHOT = "SNAPSHOT",
   ROYALTY = "ROYALTY",
   BLACKLIST_ADD = "BLACKLIST_ADD",

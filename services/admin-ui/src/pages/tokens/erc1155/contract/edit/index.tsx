@@ -19,7 +19,8 @@ export interface IErc1155ContractEditDialogProps {
 export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
-  const { id, title, description, imageUrl, address, contractStatus, baseTokenURI, chainId } = initialValues;
+  const { id, title, description, imageUrl, address, contractStatus, baseTokenURI, chainId, contractFeatures } =
+    initialValues;
   const fixedValues = {
     id,
     title,
@@ -36,7 +37,14 @@ export const Erc1155ContractEditDialog: FC<IErc1155ContractEditDialogProps> = pr
       validationSchema={validationSchema}
       message={message}
       testId="Erc1155ContractEditForm"
-      action={<BlockchainInfoPopover address={address} baseTokenURI={baseTokenURI} chainId={chainId} />}
+      action={
+        <BlockchainInfoPopover
+          address={address}
+          baseTokenURI={baseTokenURI}
+          chainId={chainId}
+          contractFeatures={contractFeatures}
+        />
+      }
       {...rest}
     >
       <TextInput name="title" />
