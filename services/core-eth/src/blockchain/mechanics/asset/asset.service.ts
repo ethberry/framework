@@ -2,10 +2,11 @@ import { forwardRef, Inject, Injectable, NotFoundException } from "@nestjs/commo
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, IsNull, Repository } from "typeorm";
 
+import { ExchangeType, IAssetDto, TokenType } from "@framework/types";
+
 import { AssetEntity } from "./asset.entity";
 import { AssetComponentEntity } from "./asset-component.entity";
 import { TemplateService } from "../../hierarchy/template/template.service";
-import { ExchangeType, IAssetDto, TokenType } from "@framework/types";
 import { AssetComponentHistoryEntity } from "./asset-component-history.entity";
 import { ContractHistoryService } from "../../contract-history/contract-history.service";
 

@@ -3,7 +3,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput, SelectInput } from "@gemunion/mui-inputs-core";
 
 import { ListenerType } from "@framework/types";
-import { validationSchema } from "../../../breed-limits/edit/validation";
+
+import { validationSchema } from "./validation";
 
 export interface IEthListenerAddDto {
   address: string;

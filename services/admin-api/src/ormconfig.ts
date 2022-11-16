@@ -35,12 +35,14 @@ import { DropEntity } from "./blockchain/mechanics/drop/drop.entity";
 import { VestingEntity } from "./blockchain/mechanics/vesting/vesting.entity";
 import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticket.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
+import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
 import { WaitlistListEntity } from "./blockchain/mechanics/waitlist/list/list.entity";
 import { WaitlistItemEntity } from "./blockchain/mechanics/waitlist/item/item.entity";
 import { BreedEntity } from "./blockchain/mechanics/breed/breed.entity";
 import { BreedHistoryEntity } from "./blockchain/mechanics/breed/history/history.entity";
 import { ContractHistoryEntity } from "./blockchain/contract-history/contract-history.entity";
+import { PayeesEntity } from "./blockchain/wallet/payees.entity";
 
 import { CreateSettings1563803000010 } from "./migrations/1563803000010-create-settings";
 import { SeedSettings1563803000020 } from "./migrations/1563803000020-seed-settings";
@@ -67,6 +69,7 @@ import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-s
 import { SeedContractMysteryAt1563804000160 } from "./migrations/1563804000160-seed-contract-mystery";
 import { SeedContractWrapperAt1563804000170 } from "./migrations/1563804000170-seed-contract-wrapper";
 import { SeedContractLotteryAt1563804000180 } from "./migrations/1563804000180-seed-contract-lottery";
+import { SeedContractVestingAt1563804000190 } from "./migrations/1563804000190-seed-contract-vesting";
 
 import { CreateTemplate1563804000200 } from "./migrations/1563804000200-create-template";
 import { SeedTemplateNativeAt1563804000210 } from "./migrations/1563804000210-seed-template-native";
@@ -182,7 +185,6 @@ import { SeedLotteryRoundAt1660436477010 } from "./migrations/1660436477010-seed
 import { CreateLotteryTicketAt1660436477020 } from "./migrations/1660436477020-create-lottery-tickets";
 import { SeedLotteryTicketsAt1660436477030 } from "./migrations/1660436477030-seed-lottery-tickets";
 import { CreateLotteryHistoryAt1660436477040 } from "./migrations/1660436477040-create-lottery-history";
-import { PyramidRulesEntity } from "./blockchain/mechanics/pyramid/rules/rules.entity";
 
 import { SeedContractPyramidAt1660436477100 } from "./migrations/1660436477100-seed-contract-pyramid";
 import { CreatePyramidRules1660436477200 } from "./migrations/1660436477200-create-pyramid-rules";
@@ -200,13 +202,12 @@ import { CreateWaitlistList1663047650200 } from "./migrations/1663047650200-crea
 import { SeedWaitlistListAt1663047650210 } from "./migrations/1663047650210-seed-waitlist-list";
 import { CreateWaitlistItem1663047650300 } from "./migrations/1663047650300-create-waitlist-item";
 import { SeedWaitlistItemAt1663047650310 } from "./migrations/1663047650310-seed-waitlist-item";
+
 import { CreateBreed1663047650400 } from "./migrations/1663047650400-create-breed";
 import { CreateBreedHistory1663047650410 } from "./migrations/1663047650410-create-breed-history";
 import { SeedBreed1663047650401 } from "./migrations/1663047650401-seed-breed";
 import { SeedBreedHistory1663047650411 } from "./migrations/1663047650411-seed-breed-history";
 import { CreateWalletPayees1663047650510 } from "./migrations/1663047650510-create-wallet-payees";
-import { PayeesEntity } from "./blockchain/wallet/payees.entity";
-import { SeedContractVestingAt1563804000190 } from "./migrations/1563804000190-seed-contract-vesting";
 
 // Check typeORM documentation for more information.
 const config: PostgresConnectionOptions = {

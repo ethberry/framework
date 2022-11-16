@@ -8,6 +8,7 @@ export * from "./hierarchy/token/autocomplete";
 export * from "./hierarchy/token/search";
 export * from "./hierarchy/balance/autocomplete";
 export * from "./hierarchy/balance/search";
+export * from "./hierarchy/contract-history/search";
 
 export * from "./mechanics/asset/asset";
 export * from "./mechanics/asset/components";
@@ -34,6 +35,7 @@ export * from "./mechanics/pyramid/leaderboard";
 export * from "./mechanics/pyramid/report";
 export * from "./mechanics/pyramid/rule";
 export * from "./mechanics/pyramid/deposit";
+
 export * from "./tokens/native/contract/create";
 export * from "./tokens/erc20/contract/create";
 export * from "./tokens/erc20/contract/deploy";
@@ -42,7 +44,6 @@ export * from "./tokens/erc721/token-history/search";
 export * from "./tokens/erc998/composition/search";
 export * from "./tokens/erc998/contract/deploy";
 export * from "./tokens/erc1155/contract/deploy";
-export * from "./hierarchy/contract-history/search";
 
 export * from "./integrations/marketplace/search";
 export * from "./integrations/marketplace/supply";

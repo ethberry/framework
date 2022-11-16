@@ -20,8 +20,7 @@ import { IVesting, IVestingSearchDto } from "@framework/types";
 import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
-import { VestingFundButton } from "../../../../components/buttons/mechanics/vesting/fund";
-import { EthListenerRemoveMenuItem } from "../../../../components/menu/contract/eth-listener/remove";
+import { VestingActionsMenu } from "../../../../components/menu/vesting";
 import { emptyContract } from "../../../../components/inputs/price/empty-contract";
 
 export const Vesting: FC = () => {
@@ -75,18 +74,12 @@ export const Vesting: FC = () => {
               <ListItemText sx={{ width: 0.6 }}>{vesting.account}</ListItemText>
               <ListItemText>{vesting.contractTemplate}</ListItemText>
               <ListItemSecondaryAction>
-                <VestingFundButton vesting={vesting} />
                 <Tooltip title={formatMessage({ id: "form.tips.view" })}>
                   <IconButton onClick={handleView(vesting)}>
                     <Visibility />
                   </IconButton>
                 </Tooltip>
-                <EthListenerRemoveMenuItem
-                  itemType={{
-                    address: vesting.contract!.address,
-                    isVesting: true,
-                  }}
-                />
+                <VestingActionsMenu vesting={vesting} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}
