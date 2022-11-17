@@ -74,7 +74,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --fix --ext .ts,.tsx",
-    "prebuild": "rimraf dist/",
+    "prebuild": "rimraf dist",
     "prepublish": "npm run build",
     "start": "cross-env NODE_ENV=development tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
     "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",

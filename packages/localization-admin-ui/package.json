@@ -35,7 +35,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --fix",
-    "prebuild": "rimraf dist/",
+    "prebuild": "rimraf dist",
     "prepublish": "npm run build",
     "test": "exit 0"
   },

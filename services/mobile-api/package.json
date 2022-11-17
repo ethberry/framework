@@ -113,7 +113,7 @@
     "build": "tsc",
     "e2e": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config=test/jest.config.json",
     "lint": "eslint . --fix",
-    "prebuild": "rimraf dist/",
+    "prebuild": "rimraf dist",
     "prepublish": "npm run build",
     "start": "cross-env NODE_ENV=${NODE_ENV:=development} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
     "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
