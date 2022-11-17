@@ -10,7 +10,7 @@ import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
-import { BreedLimitDialog, IBreedLimitDto } from "./edit";
+import { BreedLimitDialog, IBreedLimitDto } from "./dialog";
 
 export const BreedLimitButton: FC = () => {
   const [isBreedLimitDialogOpen, setIsBreedLimitDialogOpen] = useState(false);

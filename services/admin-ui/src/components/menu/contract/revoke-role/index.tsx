@@ -5,7 +5,7 @@ import { NoAccounts } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
 
-import { AccessControlRevokeRoleDialog } from "./edit";
+import { AccessControlRevokeRoleDialog } from "./dialog";
 
 export interface IContractRevokeRoleMenuItemProps {
   contract: IContract;

@@ -1,13 +1,7 @@
-import { ModuleType, TokenType } from "@framework/types";
+import { IContract, ListenerType, ModuleType, TokenType } from "@framework/types";
 
-import { ListenerType } from "@framework/types";
-
-export const getListenerType = (props: {
-  contractType?: TokenType;
-  contractModule?: ModuleType;
-  isVesting?: boolean;
-}) => {
-  const { contractType, contractModule, isVesting } = props;
+export const getListenerType = (contract: IContract) => {
+  const { contractType, contractModule } = contract;
   switch (contractType) {
     case TokenType.ERC20:
       return ListenerType.ERC20;
@@ -29,12 +23,7 @@ export const getListenerType = (props: {
         case ModuleType.PYRAMID:
           return ListenerType.PYRAMID;
         default:
-          switch (isVesting) {
-            case true:
-              return ListenerType.VESTING;
-            default:
-              return ListenerType.ERC20;
-          }
+          return ListenerType.ERC20;
       }
   }
 };

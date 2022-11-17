@@ -11,7 +11,7 @@ import { AccessControlRoleHash, AccessControlRoleType } from "@framework/types";
 
 import IAccessControlSol from "@framework/core-contracts/artifacts/@openzeppelin/contracts/access/IAccessControl.sol/IAccessControl.json";
 
-import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./edit";
+import { AccessControlGrantRoleDialog, IGrantRoleDto } from "./dialog";
 
 export interface IOzContractGrantRoleMenuItemProps {
   contract: IContract;

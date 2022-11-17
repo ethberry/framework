@@ -13,7 +13,7 @@ import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
-import { IMintTokenDto, MintTokenDialog } from "./edit";
+import { IMintTokenDto, MintTokenDialog } from "./dialog";
 
 export interface IMintMenuItemProps {
   contract: IContract;

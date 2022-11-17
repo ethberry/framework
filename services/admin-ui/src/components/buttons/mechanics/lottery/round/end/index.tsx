@@ -18,6 +18,10 @@ export const LotteryRoundEndButton: FC = () => {
     return metaFn();
   };
 
+  if (process.env.NODE_ENV === "production") {
+    return null;
+  }
+
   return (
     <Button startIcon={<Casino />} onClick={handleRound} data-testid="LotteryRoundEndButton">
       <FormattedMessage id="pages.lottery.rounds.end" />

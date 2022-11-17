@@ -13,8 +13,8 @@ import { BlacklistAddMenuItem } from "./blacklist-add";
 import { UnBlacklistMenuItem } from "./blacklist-remove";
 import { MintMenuItem } from "./mint";
 import { PausableMenuItem } from "./pausable";
-import { EthListenerAddMenuItem } from "./eth-listener/add";
-import { EthListenerRemoveMenuItem } from "./eth-listener/remove";
+import { EthListenerAddMenuItem } from "./eth-add";
+import { EthListenerRemoveMenuItem } from "./eth-remove";
 
 export enum ContractActions {
   SNAPSHOT = "SNAPSHOT",
@@ -61,16 +61,7 @@ export const ContractActionsMenu: FC<IContractActionsMenu> = props => {
       <Menu id="contract-actions-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
         {contract.contractType !== TokenType.NATIVE ? <MintMenuItem contract={contract} /> : null}
         {contract.contractType !== TokenType.NATIVE ? <EthListenerAddMenuItem contract={contract} /> : null}
-        {contract.contractType !== TokenType.NATIVE ? (
-          <EthListenerRemoveMenuItem
-            // contract={contract}
-            itemType={{
-              address: contract.address,
-              contractType: contract.contractType,
-              contractModule: contract.contractModule,
-            }}
-          />
-        ) : null}
+        {contract.contractType !== TokenType.NATIVE ? <EthListenerRemoveMenuItem contract={contract} /> : null}
         {actions.includes(ContractActions.SNAPSHOT) ? <IErc20TokenSnapshotMenuItem contract={contract} /> : null}
         {actions.includes(ContractActions.ROYALTY) ? <RoyaltyMenuItem contract={contract} /> : null}
         <ContractGrantRoleMenuItem contract={contract} />

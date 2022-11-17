@@ -5,7 +5,7 @@ import { FormattedMessage } from "react-intl";
 
 import type { IContract } from "@framework/types";
 
-import { AccessListUnBlacklistDialog } from "./edit";
+import { AccessListUnBlacklistDialog } from "./dialog";
 
 export interface IUnBlacklistMenuItemProps {
   contract: IContract;

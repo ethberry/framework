@@ -6,18 +6,15 @@ import { useApiCall } from "@gemunion/react-hooks";
 
 import type { IContract } from "@framework/types";
 
-import { EthListenerAddDialog, IEthListenerAddDto } from "./edit";
-import { getListenerType } from "../../../../../utils/listener-type";
+import { EthListenerAddDialog, IEthListenerAddDto } from "./dialog";
+import { getListenerType } from "../../../../utils/listener-type";
 
 export interface IEthListenerAddMenuItemProps {
   contract: IContract;
 }
 
 export const EthListenerAddMenuItem: FC<IEthListenerAddMenuItemProps> = props => {
-  const {
-    contract,
-    contract: { address },
-  } = props;
+  const { contract } = props;
 
   const [isEthListenerDialogOpen, setIsEthListenerDialogOpen] = useState(false);
 
@@ -43,6 +40,10 @@ export const EthListenerAddMenuItem: FC<IEthListenerAddMenuItemProps> = props =>
     });
   };
 
+  if (process.env.NODE_ENV === "production") {
+    return null;
+  }
+
   return (
     <Fragment>
       <MenuItem onClick={handleEthListenerAdd}>
@@ -58,7 +59,7 @@ export const EthListenerAddMenuItem: FC<IEthListenerAddMenuItemProps> = props =>
         onConfirm={handleEthListenerAddConfirm}
         open={isEthListenerDialogOpen}
         initialValues={{
-          address,
+          address: contract.address,
           listenerType: getListenerType(contract),
           fromBlock: contract.fromBlock,
         }}
