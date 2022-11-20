@@ -41,9 +41,15 @@ describe("ERC721Soulbound", function () {
       const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
-      const tx = contractInstance.transferFrom(owner.address, receiver.address, tokenId);
+      const tx1 = contractInstance.transferFrom(owner.address, receiver.address, tokenId);
+      await expect(tx1).to.be.revertedWith("ERC721Soulbound: can't be transferred");
 
-      await expect(tx).to.be.revertedWith("ERC721Soulbound: can't be transferred");
+      const tx2 = contractInstance["safeTransferFrom(address,address,uint256)"](
+        owner.address,
+        receiver.address,
+        tokenId,
+      );
+      await expect(tx2).to.be.revertedWith("ERC721Soulbound: can't be transferred");
     });
   });
 
@@ -53,12 +59,15 @@ describe("ERC721Soulbound", function () {
       const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
-      const tx = contractInstance["safeTransferFrom(address,address,uint256)"](
-        owner.address,
-        receiver.address,
-        tokenId,
-      );
-      await expect(tx).to.be.revertedWith("ERC721Soulbound: can't be transferred");
+      await contractInstance.approve(receiver.address, tokenId);
+
+      const tx1 = contractInstance.connect(receiver).transferFrom(owner.address, receiver.address, tokenId);
+      await expect(tx1).to.be.revertedWith("ERC721Soulbound: can't be transferred");
+
+      const tx2 = contractInstance
+        .connect(receiver)
+        ["safeTransferFrom(address,address,uint256)"](owner.address, receiver.address, tokenId);
+      await expect(tx2).to.be.revertedWith("ERC721Soulbound: can't be transferred");
     });
   });
 });
