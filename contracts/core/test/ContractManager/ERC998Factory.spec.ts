@@ -1,64 +1,33 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
+import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
-import { Network } from "@ethersproject/networks";
 
-import { ERC998Factory } from "../../typechain-types";
-import {
-  baseTokenURI,
-  DEFAULT_ADMIN_ROLE,
-  featureIds,
-  nonce,
-  PAUSER_ROLE,
-  royalty,
-  templateId,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-} from "../constants";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
-import { shouldHaveRole } from "../shared/accessible/hasRoles";
-import { shouldGetRoleAdmin } from "../shared/accessible/getRoleAdmin";
-import { shouldGrantRole } from "../shared/accessible/grantRole";
-import { shouldRevokeRole } from "../shared/accessible/revokeRole";
-import { shouldRenounceRole } from "../shared/accessible/renounceRole";
+import { baseTokenURI, featureIds, royalty, templateId, tokenId } from "../constants";
 
-use(solidity);
+import { deployContractManager } from "./fixture";
 
 describe("ERC998Factory", function () {
-  let erc998: ContractFactory;
-  let factory: ContractFactory;
-  let factoryInstance: ERC998Factory;
-  let network: Network;
+  const factory = () => deployContractManager(this.title);
 
-  beforeEach(async function () {
-    erc998 = await ethers.getContractFactory("ERC998Simple");
-    factory = await ethers.getContractFactory("ERC998Factory");
-    [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
-
-    factoryInstance = (await factory.deploy()) as ERC998Factory;
-
-    network = await ethers.provider.getNetwork();
-
-    this.contractInstance = factoryInstance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE);
-  shouldGetRoleAdmin(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-  shouldGrantRole();
-  shouldRevokeRole();
-  shouldRenounceRole();
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE);
 
   describe("deployERC998Token", function () {
     it("should deploy contract", async function () {
-      const signature = await this.owner._signTypedData(
+      const [owner, receiver] = await ethers.getSigners();
+      const network = await ethers.provider.getNetwork();
+      const erc998 = await ethers.getContractFactory("ERC998Simple");
+
+      const contractInstance = await factory();
+
+      const signature = await owner._signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: factoryInstance.address,
+          verifyingContract: contractInstance.address,
         },
         // Types
         {
@@ -84,7 +53,7 @@ describe("ERC998Factory", function () {
         },
       );
 
-      const tx = await factoryInstance.deployERC998Token(
+      const tx = await contractInstance.deployERC998Token(
         nonce,
         erc998.bytecode,
         tokenName,
@@ -92,30 +61,30 @@ describe("ERC998Factory", function () {
         royalty,
         baseTokenURI,
         featureIds,
-        this.owner.address,
+        owner.address,
         signature,
       );
 
-      const [address] = await factoryInstance.allERC998Tokens();
+      const [address] = await contractInstance.allERC998Tokens();
 
       await expect(tx)
-        .to.emit(factoryInstance, "ERC998TokenDeployed")
+        .to.emit(contractInstance, "ERC998TokenDeployed")
         .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
 
       const erc998Instance = erc998.attach(address);
 
-      const hasRole1 = await erc998Instance.hasRole(DEFAULT_ADMIN_ROLE, factoryInstance.address);
+      const hasRole1 = await erc998Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
       expect(hasRole1).to.equal(false);
 
-      const hasRole2 = await erc998Instance.hasRole(DEFAULT_ADMIN_ROLE, this.owner.address);
+      const hasRole2 = await erc998Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
       expect(hasRole2).to.equal(true);
 
-      const tx2 = erc998Instance.mintCommon(this.receiver.address, templateId);
+      const tx2 = erc998Instance.mintCommon(receiver.address, templateId);
       await expect(tx2)
         .to.emit(erc998Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(ethers.constants.AddressZero, receiver.address, tokenId);
 
-      const balance = await erc998Instance.balanceOf(this.receiver.address);
+      const balance = await erc998Instance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
 
       const uri = await erc998Instance.tokenURI(tokenId);

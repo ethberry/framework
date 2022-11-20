@@ -1,57 +1,35 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
+import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
-import { Network } from "@ethersproject/networks";
 
-import { VestingFactory } from "../../typechain-types";
-import { DEFAULT_ADMIN_ROLE, nonce, PAUSER_ROLE, templateId } from "../constants";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 
-import { shouldHaveRole } from "../shared/accessible/hasRoles";
-import { shouldGetRoleAdmin } from "../shared/accessible/getRoleAdmin";
-import { shouldGrantRole } from "../shared/accessible/grantRole";
-import { shouldRevokeRole } from "../shared/accessible/revokeRole";
-import { shouldRenounceRole } from "../shared/accessible/renounceRole";
-
-use(solidity);
+import { templateId, span } from "../constants";
+import { deployContractManager } from "./fixture";
 
 describe("VestingFactory", function () {
-  let vesting: ContractFactory;
-  let factory: ContractFactory;
-  let factoryInstance: VestingFactory;
-  let network: Network;
+  const factory = () => deployContractManager(this.title);
 
-  beforeEach(async function () {
-    vesting = await ethers.getContractFactory("CliffVesting");
-    factory = await ethers.getContractFactory("VestingFactory");
-    [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
-
-    factoryInstance = (await factory.deploy()) as VestingFactory;
-
-    network = await ethers.provider.getNetwork();
-
-    this.contractInstance = factoryInstance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE);
-  shouldGetRoleAdmin(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-  shouldGrantRole();
-  shouldRevokeRole();
-  shouldRenounceRole();
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE);
 
   describe("deployVesting", function () {
     it("should deploy contract", async function () {
-      const span = 300;
+      const [owner, receiver] = await ethers.getSigners();
+      const network = await ethers.provider.getNetwork();
+      const vesting = await ethers.getContractFactory("CliffVesting");
+
+      const contractInstance = await factory();
+
       const timestamp: number = (await time.latest()).toNumber();
 
-      const signature = await this.owner._signTypedData(
+      const signature = await owner._signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: factoryInstance.address,
+          verifyingContract: contractInstance.address,
         },
         // Types
         {
@@ -68,29 +46,29 @@ describe("VestingFactory", function () {
         {
           nonce,
           bytecode: vesting.bytecode,
-          account: this.receiver.address,
+          account: receiver.address,
           startTimestamp: timestamp,
           duration: span,
           templateId,
         },
       );
 
-      const tx = await factoryInstance.deployVesting(
+      const tx = await contractInstance.deployVesting(
         nonce,
         vesting.bytecode,
-        this.receiver.address,
+        receiver.address,
         timestamp,
         span,
         templateId,
-        this.owner.address,
+        owner.address,
         signature,
       );
 
-      const [address] = await factoryInstance.allVesting();
+      const [address] = await contractInstance.allVesting();
 
       await expect(tx)
-        .to.emit(factoryInstance, "VestingDeployed")
-        .withArgs(address, this.receiver.address, timestamp, span, templateId);
+        .to.emit(contractInstance, "VestingDeployed")
+        .withArgs(address, receiver.address, timestamp, span, templateId);
     });
   });
 });

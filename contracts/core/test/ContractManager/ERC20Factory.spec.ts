@@ -1,5 +1,4 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
+import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { shouldBeAccessible } from "@gemunion/contracts-mocha";
@@ -7,8 +6,6 @@ import { amount, DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemu
 
 import { featureIds } from "../constants";
 import { deployContractManager } from "./fixture";
-
-use(solidity);
 
 describe("ERC20Factory", function () {
   const factory = () => deployContractManager(this.title);

@@ -25,6 +25,7 @@ export const _stakePeriod = 300; // 5 minutes in seconds
 
 export const nonce = utils.formatBytes32String("nonce");
 export const defaultNumbers = getNumbers();
+export const span = 300;
 
 // INTERFACES
 export const accessControlInterfaceId = "0x7965db0b";

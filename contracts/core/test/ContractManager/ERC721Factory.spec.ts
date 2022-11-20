@@ -1,64 +1,33 @@
-import { expect, use } from "chai";
-import { solidity } from "ethereum-waffle";
+import { expect } from "chai";
 import { ethers } from "hardhat";
-import { ContractFactory } from "ethers";
-import { Network } from "@ethersproject/networks";
 
-import { ERC721Factory } from "../../typechain-types";
-import {
-  baseTokenURI,
-  DEFAULT_ADMIN_ROLE,
-  featureIds,
-  nonce,
-  PAUSER_ROLE,
-  royalty,
-  templateId,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-} from "../constants";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
-import { shouldHaveRole } from "../shared/accessible/hasRoles";
-import { shouldGetRoleAdmin } from "../shared/accessible/getRoleAdmin";
-import { shouldGrantRole } from "../shared/accessible/grantRole";
-import { shouldRevokeRole } from "../shared/accessible/revokeRole";
-import { shouldRenounceRole } from "../shared/accessible/renounceRole";
+import { baseTokenURI, featureIds, royalty, templateId, tokenId } from "../constants";
 
-use(solidity);
+import { deployContractManager } from "./fixture";
 
 describe("ERC721Factory", function () {
-  let erc721: ContractFactory;
-  let factory: ContractFactory;
-  let factoryInstance: ERC721Factory;
-  let network: Network;
+  const factory = () => deployContractManager(this.title);
 
-  beforeEach(async function () {
-    erc721 = await ethers.getContractFactory("ERC721Simple");
-    factory = await ethers.getContractFactory("ERC721Factory");
-    [this.owner, this.receiver, this.stranger] = await ethers.getSigners();
-
-    factoryInstance = (await factory.deploy()) as ERC721Factory;
-
-    network = await ethers.provider.getNetwork();
-
-    this.contractInstance = factoryInstance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE);
-  shouldGetRoleAdmin(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
-  shouldGrantRole();
-  shouldRevokeRole();
-  shouldRenounceRole();
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE);
 
   describe("deployERC721Token", function () {
     it("should deploy contract", async function () {
-      const signature = await this.owner._signTypedData(
+      const [owner, receiver] = await ethers.getSigners();
+      const network = await ethers.provider.getNetwork();
+      const erc721 = await ethers.getContractFactory("ERC721Simple");
+
+      const contractInstance = await factory();
+
+      const signature = await owner._signTypedData(
         // Domain
         {
           name: "ContractManager",
           version: "1.0.0",
           chainId: network.chainId,
-          verifyingContract: factoryInstance.address,
+          verifyingContract: contractInstance.address,
         },
         // Types
         {
@@ -84,7 +53,7 @@ describe("ERC721Factory", function () {
         },
       );
 
-      const tx = await factoryInstance.deployERC721Token(
+      const tx = await contractInstance.deployERC721Token(
         nonce,
         erc721.bytecode,
         tokenName,
@@ -92,30 +61,30 @@ describe("ERC721Factory", function () {
         royalty,
         baseTokenURI,
         featureIds,
-        this.owner.address,
+        owner.address,
         signature,
       );
 
-      const [address] = await factoryInstance.allERC721Tokens();
+      const [address] = await contractInstance.allERC721Tokens();
 
       await expect(tx)
-        .to.emit(factoryInstance, "ERC721TokenDeployed")
+        .to.emit(contractInstance, "ERC721TokenDeployed")
         .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds);
 
       const erc721Instance = erc721.attach(address);
 
-      const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, factoryInstance.address);
+      const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, contractInstance.address);
       expect(hasRole1).to.equal(false);
 
-      const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, this.owner.address);
+      const hasRole2 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, owner.address);
       expect(hasRole2).to.equal(true);
 
-      const tx2 = erc721Instance.mintCommon(this.receiver.address, templateId);
+      const tx2 = erc721Instance.mintCommon(receiver.address, templateId);
       await expect(tx2)
         .to.emit(erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(ethers.constants.AddressZero, receiver.address, tokenId);
 
-      const balance = await erc721Instance.balanceOf(this.receiver.address);
+      const balance = await erc721Instance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
 
       const uri = await erc721Instance.tokenURI(tokenId);
