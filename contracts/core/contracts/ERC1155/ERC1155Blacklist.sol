@@ -6,20 +6,16 @@
 
 pragma solidity ^0.8.9;
 
-import "@gemunion/contracts/contracts/AccessList/BlackList.sol";
+import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 
 import "./ERC1155Simple.sol";
 
 contract ERC1155Blacklist is ERC1155Simple, BlackList {
   constructor(uint96 royaltyNumerator, string memory baseTokenURI) ERC1155Simple(royaltyNumerator, baseTokenURI) {}
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(AccessControl, ERC1155ACBSR)
-    returns (bool)
-  {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, ERC1155ACBSR) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 

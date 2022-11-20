@@ -1,21 +1,22 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE } from "../constants";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
+
 import { deployErc20Base } from "./shared/fixtures";
-import { shouldERC20Accessible } from "./shared/accessible";
 import { shouldERC20Simple } from "./shared/simple";
 
 describe("ERC20Blacklist", function () {
-  const name = "ERC20Blacklist";
+  const factory = () => deployErc20Base(this.title);
 
-  shouldERC20Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
-  shouldERC20Simple(name);
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
+  shouldERC20Simple(factory);
 
   describe("Black list", function () {
     it("should fail to transfer to blacklisted", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc20Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.blacklist(receiver.address);
       const tx = contractInstance.transfer(receiver.address, amount);

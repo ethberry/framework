@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.9;
 
-import "@gemunion/contracts/contracts/AccessList/BlackList.sol";
+import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 
 import "./ERC721Random.sol";
 
@@ -18,23 +18,15 @@ contract ERC721RandomBlacklist is ERC721Random, BlackList {
     string memory baseTokenURI
   ) ERC721Random(name, symbol, royalty, baseTokenURI) {}
 
-  function _beforeTokenTransfer(
-    address from,
-    address to,
-    uint256 amount
-  ) internal override {
+  function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
     require(!this.isBlacklisted(from), "Blacklist: sender is blacklisted");
     require(!this.isBlacklisted(to), "Blacklist: receiver is blacklisted");
     super._beforeTokenTransfer(from, to, amount);
   }
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(AccessControl, ERC721Random)
-    returns (bool)
-  {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, ERC721Random) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 }

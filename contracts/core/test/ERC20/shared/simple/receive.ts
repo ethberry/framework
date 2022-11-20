@@ -1,14 +1,12 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { constants, Contract } from "ethers";
 
-import { deployErc20Base } from "../fixtures";
-
-export function shouldReceive(name: string) {
+export function shouldReceive(factory: () => Promise<Contract>) {
   describe("cap", function () {
     it("should fail: no reason", async function () {
       const [owner] = await ethers.getSigners();
-      const { contractInstance } = await deployErc20Base(name);
+      const contractInstance = await factory();
 
       const tx = owner.sendTransaction({
         to: contractInstance.address,

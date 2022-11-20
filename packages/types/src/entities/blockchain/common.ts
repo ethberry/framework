@@ -29,6 +29,7 @@ export enum ModuleType {
   LOTTERY = "LOTTERY",
   PYRAMID = "PYRAMID",
   VESTING = "VESTING",
+  POLYGON = "POLYGON",
 }
 
 export enum DurationUnit {

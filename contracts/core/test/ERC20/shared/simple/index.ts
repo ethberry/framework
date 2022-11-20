@@ -1,17 +1,12 @@
-import { shouldCapped } from "./capped";
+import { Contract } from "ethers";
+
+import { shouldERC20Capped, shouldSnapshot, shouldERC20Base, shouldERC20Burnable } from "@gemunion/contracts-erc20";
 import { shouldReceive } from "./receive";
-import { shouldSnapshot } from "./snapshot";
-import { shouldERC20Base } from "./base";
-import { shouldERC20Burnable } from "./burnable";
 
-export function shouldERC20Simple(name: string) {
-  shouldERC20Base(name);
-
-  shouldERC20Burnable(name);
-
-  shouldCapped(name);
-
-  shouldReceive(name);
-
-  shouldSnapshot(name);
+export function shouldERC20Simple(factory: () => Promise<Contract>) {
+  shouldERC20Base(factory);
+  shouldERC20Burnable(factory);
+  shouldERC20Capped(factory);
+  shouldReceive(factory);
+  shouldSnapshot(factory);
 }

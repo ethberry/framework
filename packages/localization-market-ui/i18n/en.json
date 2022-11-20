@@ -61,7 +61,9 @@
       "1": "ETHEREUM",
       "1337": "BESU",
       "137": "POLYGON",
+      "5": "GOERLI",
       "56": "BINANCE",
+      "80001": "MUMBAI",
       "97": "BINANCE (testnet)"
     },
     "claimStatus": {
