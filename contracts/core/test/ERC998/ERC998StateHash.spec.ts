@@ -1,13 +1,13 @@
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
-import { shouldMintCommon } from "../ERC721/shared/mintCommon";
-import { shouldERC721Accessible } from "../ERC721/shared/accessible";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+
 import { shouldERC721Simple } from "../ERC721/shared/simple";
+import { deployErc721Base } from "../ERC721/shared/fixtures";
 
 describe("ERC998StateHash", function () {
-  const name = "ERC998StateHash";
+  const factory = () => deployErc721Base(this.title);
 
-  shouldERC721Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldERC721Simple(name);
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldMintCommon(name);
+  shouldERC721Simple(factory);
 });

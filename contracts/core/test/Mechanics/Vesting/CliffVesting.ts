@@ -17,7 +17,7 @@ describe("CliffVesting", function () {
 
   it("should release", async function () {
     const [_owner, receiver] = await ethers.getSigners();
-    const { contractInstance: vestingInstance } = await deployVestingFixture("CliffVesting");
+    const vestingInstance = await deployVestingFixture("CliffVesting");
 
     const expectedAmounts = [0, 0, 0, 0, amount * 100, 0];
 
@@ -35,8 +35,8 @@ describe("CliffVesting", function () {
 
   it("should release ERC20", async function () {
     const [_owner, receiver] = await ethers.getSigners();
-    const { contractInstance: vestingInstance } = await deployVestingFixture("CliffVesting");
-    const { contractInstance: erc20Instance } = await deployERC20Fixture(vestingInstance);
+    const vestingInstance = await deployVestingFixture("CliffVesting");
+    const erc20Instance = await deployERC20Fixture(vestingInstance);
 
     const expectedAmounts = [0, 0, 0, 0, amount * 100, 0];
 

@@ -1,24 +1,24 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
 import { templateId, tokenId } from "../../../../constants";
-import { deployErc721Base } from "../../fixtures";
 
-export function shouldBurn(name: string) {
+export function shouldBurn(factory: () => Promise<Contract>) {
   describe("burn", function () {
     it("should fail: not an owner", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance.connect(receiver).burn(tokenId);
 
-      await expect(tx).to.be.revertedWith(`ERC721: caller is not token owner nor approved`);
+      await expect(tx).to.be.revertedWith(`ERC721: caller is not token owner or approved`);
     });
 
     it("should burn own token", async function () {
       const [owner] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = await contractInstance.burn(tokenId);
@@ -33,7 +33,7 @@ export function shouldBurn(name: string) {
 
     it("should burn approved token", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       await contractInstance.approve(receiver.address, tokenId);

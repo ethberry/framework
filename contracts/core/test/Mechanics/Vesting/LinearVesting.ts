@@ -17,7 +17,7 @@ describe("LinearVesting", function () {
 
   it("should release", async function () {
     const [_owner, receiver] = await ethers.getSigners();
-    const { contractInstance: vestingInstance } = await deployVestingFixture("LinearVesting");
+    const vestingInstance = await deployVestingFixture("LinearVesting");
     const expectedAmounts = [0, amount * 25, amount * 25, amount * 25, amount * 25, 0];
 
     for (const expectedAmount of expectedAmounts) {
@@ -34,8 +34,8 @@ describe("LinearVesting", function () {
 
   it("should release ERC20", async function () {
     const [_owner, receiver] = await ethers.getSigners();
-    const { contractInstance: vestingInstance } = await deployVestingFixture("LinearVesting");
-    const { contractInstance: erc20Instance } = await deployERC20Fixture(vestingInstance);
+    const vestingInstance = await deployVestingFixture("LinearVesting");
+    const erc20Instance = await deployERC20Fixture(vestingInstance);
     const expectedAmounts = [0, amount * 25, amount * 25, amount * 25, amount * 25, 0];
 
     for (const expectedAmount of expectedAmounts) {

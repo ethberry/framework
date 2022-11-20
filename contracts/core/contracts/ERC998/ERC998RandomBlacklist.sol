@@ -18,10 +18,10 @@ contract ERC998RandomBlacklist is ERC998Random, BlackList {
     string memory baseTokenURI
   ) ERC998Random(name, symbol, royalty, baseTokenURI) {}
 
-  function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
+  function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal override {
     require(!this.isBlacklisted(from), "Blacklist: sender is blacklisted");
     require(!this.isBlacklisted(to), "Blacklist: receiver is blacklisted");
-    super._beforeTokenTransfer(from, to, amount);
+    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
   function supportsInterface(

@@ -1,16 +1,16 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
 import { MINTER_ROLE, templateId } from "../../../constants";
-import { deployErc721Base } from "../fixtures";
 
-export function shouldMintRandom(name: string) {
+export function shouldMintRandom(factory: () => Promise<Contract>) {
   describe("mintRandom", function () {
     // TODO positive case
 
     it("should fail: wrong role", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mintRandom(receiver.address, templateId);
       await expect(tx).to.be.revertedWith(

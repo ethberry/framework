@@ -1,14 +1,14 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
 import { templateId, tokenId } from "../../../../constants";
-import { deployErc721Base } from "../../fixtures";
 
-export function shouldOwnerOf(name: string) {
+export function shouldGetOwnerOf(factory: () => Promise<Contract>) {
   describe("ownerOf", function () {
     it("should get owner of token", async function () {
       const [owner] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       const ownerOfToken = await contractInstance.ownerOf(tokenId);
@@ -17,7 +17,7 @@ export function shouldOwnerOf(name: string) {
 
     it("should get owner of burned token", async function () {
       const [owner] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance.burn(tokenId);

@@ -1,20 +1,22 @@
-import { shouldBalanceOf } from "./balanceOf";
+import { Contract } from "ethers";
+
+import { shouldGetBalanceOf } from "./balanceOf";
 import { shouldTransferFrom } from "./transferFrom";
 import { shouldApprove } from "./approve";
-import { shouldOwnerOf } from "./ownerOf";
+import { shouldGetOwnerOf } from "./ownerOf";
 import { shouldSafeTransferFrom } from "./safeTransferFrom";
 import { shouldSetApprovalForAll } from "./setApprovalForAll";
 import { shouldMint } from "./mint";
 import { shouldSafeMint } from "./safeMint";
 
-export function shouldERC721Base(name: string) {
-  shouldApprove(name);
-  shouldBalanceOf(name);
-  shouldOwnerOf(name);
-  shouldSetApprovalForAll(name);
-  shouldTransferFrom(name);
-  shouldSafeTransferFrom(name);
+export function shouldERC721Base(factory: () => Promise<Contract>) {
+  shouldApprove(factory);
+  shouldGetBalanceOf(factory);
+  shouldGetOwnerOf(factory);
+  shouldSetApprovalForAll(factory);
+  shouldTransferFrom(factory);
+  shouldSafeTransferFrom(factory);
 
-  shouldMint(name);
-  shouldSafeMint(name);
+  shouldMint(factory);
+  shouldSafeMint(factory);
 }

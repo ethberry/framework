@@ -17,7 +17,7 @@ describe("GradedVesting", function () {
 
   it("should release", async function () {
     const [_owner, receiver] = await ethers.getSigners();
-    const { contractInstance: vestingInstance } = await deployVestingFixture("GradedVesting");
+    const vestingInstance = await deployVestingFixture("GradedVesting");
     const expectedAmounts = [0, amount * 10, amount * 20, amount * 30, amount * 40, 0];
 
     for (const expectedAmount of expectedAmounts) {
@@ -34,8 +34,8 @@ describe("GradedVesting", function () {
 
   it("should release ERC20", async function () {
     const [_owner, receiver] = await ethers.getSigners();
-    const { contractInstance: vestingInstance } = await deployVestingFixture("GradedVesting");
-    const { contractInstance: erc20Instance } = await deployERC20Fixture(vestingInstance);
+    const vestingInstance = await deployVestingFixture("GradedVesting");
+    const erc20Instance = await deployERC20Fixture(vestingInstance);
 
     const expectedAmounts = [0, amount * 10, amount * 20, amount * 30, amount * 40, 0];
 

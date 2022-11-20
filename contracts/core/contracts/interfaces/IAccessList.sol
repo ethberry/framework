@@ -6,7 +6,7 @@
 
 pragma solidity ^0.8.9;
 
-import "@gemunion/contracts/contracts/AccessList/interfaces/IBlackList.sol";
-import "@gemunion/contracts/contracts/AccessList/interfaces/IWhiteList.sol";
+import "@gemunion/contracts-access-list/contracts/extension/interfaces/IBlackList.sol";
+import "@gemunion/contracts-access-list/contracts/extension/interfaces/IWhiteList.sol";
 
 interface IAccessList is IBlackList, IWhiteList {}

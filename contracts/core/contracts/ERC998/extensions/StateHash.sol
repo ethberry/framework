@@ -16,24 +16,15 @@ abstract contract StateHash is IStateHash {
 
   function _localRootId(uint256 tokenId) internal view virtual returns (uint256);
 
-  function _beforeTokenTransfer(
-    address from,
-    address,
-    uint256 tokenId
-  ) internal virtual {
+  function _beforeTokenTransfer(address from, address, uint256 firstTokenId, uint256) internal virtual {
     if (from == address(0)) {
-      tokenIdToStateHash[tokenId] = keccak256(abi.encodePacked(address(this), tokenId));
+      tokenIdToStateHash[firstTokenId] = keccak256(abi.encodePacked(address(this), firstTokenId));
     }
   }
 
   function balanceOfERC20(uint256 tokenId, address erc20Contract) external view virtual returns (uint256);
 
-  function _afterReceivedERC20(
-    address,
-    uint256 tokenId,
-    address erc20Contract,
-    uint256
-  ) internal virtual {
+  function _afterReceivedERC20(address, uint256 tokenId, address erc20Contract, uint256) internal virtual {
     uint256 balance = this.balanceOfERC20(tokenId, erc20Contract);
     uint256 rootId = _localRootId(tokenId);
     tokenIdToStateHash[rootId] = keccak256(
@@ -41,12 +32,7 @@ abstract contract StateHash is IStateHash {
     );
   }
 
-  function _afterRemoveERC20(
-    uint256 _tokenId,
-    address,
-    address _erc20Contract,
-    uint256
-  ) internal virtual {
+  function _afterRemoveERC20(uint256 _tokenId, address, address _erc20Contract, uint256) internal virtual {
     uint256 balance = this.balanceOfERC20(_tokenId, _erc20Contract);
     uint256 rootId = _localRootId(_tokenId);
     tokenIdToStateHash[rootId] = keccak256(
@@ -72,11 +58,7 @@ abstract contract StateHash is IStateHash {
     }
   }
 
-  function _afterRemoveERC721(
-    uint256 _tokenId,
-    address _childContract,
-    uint256 _childTokenId
-  ) internal virtual {
+  function _afterRemoveERC721(uint256 _tokenId, address _childContract, uint256 _childTokenId) internal virtual {
     uint256 rootId = _localRootId(_tokenId);
     if (_childContract == address(this)) {
       bytes32 rootStateHash = tokenIdToStateHash[rootId];

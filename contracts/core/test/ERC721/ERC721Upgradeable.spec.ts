@@ -2,24 +2,26 @@ import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { expect } from "chai";
 
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, templateId, tokenId } from "../constants";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+
+import { templateId, tokenId } from "../constants";
 import { shouldMintCommon } from "./shared/mintCommon";
 import { deployErc721Base } from "./shared/fixtures";
-import { shouldERC721Accessible } from "./shared/accessible";
 import { shouldERC721Simple } from "./shared/simple";
 
 describe("ERC721Upgradeable", function () {
-  const name = "ERC721Upgradeable";
+  const factory = () => deployErc721Base(this.title);
 
-  shouldERC721Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldERC721Simple(name);
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldMintCommon(name);
+  shouldERC721Simple(factory);
+  shouldMintCommon(factory);
 
   describe("getRecordFieldValue", function () {
     it("should get record field value", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(receiver.address, templateId);
       const value = await contractInstance.getRecordFieldValue(
@@ -31,7 +33,7 @@ describe("ERC721Upgradeable", function () {
 
     it("should fail: field not found", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(receiver.address, templateId);
       const value = contractInstance.getRecordFieldValue(
@@ -45,7 +47,7 @@ describe("ERC721Upgradeable", function () {
   describe("upgrade", function () {
     it("should level up", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(receiver.address, templateId);
 
@@ -61,7 +63,7 @@ describe("ERC721Upgradeable", function () {
 
     it("should fail: insufficient permissions", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(receiver.address, templateId);
 

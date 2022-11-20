@@ -3,7 +3,7 @@ import { time } from "@openzeppelin/test-helpers";
 import { AbstractVesting, ERC20Simple } from "../../../../typechain-types";
 import { amount, tokenName, tokenSymbol } from "../../../constants";
 
-export async function deployVestingFixture(name: string): Promise<{ contractInstance: AbstractVesting }> {
+export async function deployVestingFixture(name: string): Promise<AbstractVesting> {
   const [owner, receiver] = await ethers.getSigners();
   const current = await time.latest();
   const vestingFactory = await ethers.getContractFactory(name);
@@ -14,16 +14,14 @@ export async function deployVestingFixture(name: string): Promise<{ contractInst
     value: amount * 100,
   });
 
-  return { contractInstance: vestingInstance };
+  return vestingInstance;
 }
 
-export async function deployERC20Fixture(
-  contractInstance: AbstractVesting,
-): Promise<{ contractInstance: ERC20Simple }> {
+export async function deployERC20Fixture(contractInstance: AbstractVesting): Promise<ERC20Simple> {
   const erc20Factory = await ethers.getContractFactory("ERC20Simple");
   const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount * 100);
 
   await erc20Instance.functions.mint(contractInstance.address, amount * 100);
 
-  return { contractInstance: erc20Instance };
+  return erc20Instance;
 }

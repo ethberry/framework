@@ -12,7 +12,7 @@ describe("ExchangeClaim", function () {
       it("should claim ", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721Simple", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -56,7 +56,7 @@ describe("ExchangeClaim", function () {
       it.skip("should claim random", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721Random", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721Random", exchangeInstance);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,
@@ -101,7 +101,7 @@ describe("ExchangeClaim", function () {
       it("should claim", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const { contractInstance: erc1155Instance } = await deployErc1155Base("ERC1155Simple", exchangeInstance);
+        const erc1155Instance = await deployErc1155Base("ERC1155Simple", exchangeInstance);
 
         const signature = await generateManyToManySignature({
           account: receiver.address,

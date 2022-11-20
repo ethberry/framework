@@ -1,15 +1,17 @@
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+
 import { shouldMintCommon } from "../ERC721/shared/mintCommon";
 import { shouldMintRandom } from "../ERC721/shared/random/mintRandom";
-import { shouldERC721Accessible } from "../ERC721/shared/accessible";
 import { shouldERC721Simple } from "../ERC721/shared/simple";
+import { deployErc721Base } from "../ERC721/shared/fixtures";
 
 describe("ERC998UpgradeableRandom", function () {
-  const name = "ERC998UpgradeableRandom";
+  const factory = () => deployErc721Base(this.title);
 
-  shouldERC721Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  shouldERC721Simple(name);
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldMintCommon(name);
-  shouldMintRandom(name);
+  shouldERC721Simple(factory);
+  shouldMintCommon(factory);
+  shouldMintRandom(factory);
 });

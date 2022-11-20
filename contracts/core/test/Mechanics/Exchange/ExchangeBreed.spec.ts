@@ -35,7 +35,7 @@ describe("ExchangeBreed", function () {
       it("should breed", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721GenesHardhat", exchangeInstance);
         // Fund LINK to erc721Random contract
         await linkInstance.transfer(erc721Instance.address, BigNumber.from("100").mul(decimals));
 
@@ -137,7 +137,7 @@ describe("ExchangeBreed", function () {
       it("should fail: pregnancy count", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Fund LINK to erc721Random contract
         await linkInstance.transfer(erc721Instance.address, BigNumber.from("100").mul(decimals));
 
@@ -288,7 +288,7 @@ describe("ExchangeBreed", function () {
       it("should fail: pregnancy time", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Fund LINK to erc721Random contract
         await linkInstance.transfer(erc721Instance.address, BigNumber.from("100").mul(decimals));
 
@@ -438,7 +438,7 @@ describe("ExchangeBreed", function () {
       it("should fail: Not an owner", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
         // Fund LINK to erc721Random contract
         await linkInstance.transfer(erc721Instance.address, BigNumber.from("100").mul(decimals));
 
@@ -486,7 +486,7 @@ describe("ExchangeBreed", function () {
       it("should fail: Invalid signature", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
         const signature = await generateOneToOneSignature({
           account: owner.address, // should be receiver.address
@@ -529,7 +529,7 @@ describe("ExchangeBreed", function () {
       it("should fail: Wrong signer", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateOneToOneSignature } = await deployExchangeFixture();
-        const { contractInstance: erc721Instance } = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
 
         const signature = await generateOneToOneSignature({
           account: owner.address,

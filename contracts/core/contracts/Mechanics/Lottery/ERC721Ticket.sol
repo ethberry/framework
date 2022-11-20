@@ -8,12 +8,12 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts/contracts/ERC721/ERC721ACBaseUrl.sol";
-import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
+import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
+import "@gemunion/contracts-erc721/contracts/preset/ERC721ABER.sol";
 
 import "./interfaces/IERC721Ticket.sol";
 
-contract ERC721Ticket is IERC721Ticket, ERC721ACBER, ERC721ACBaseUrl {
+contract ERC721Ticket is IERC721Ticket, ERC721ABER, ERC721ABaseUrl {
   using Counters for Counters.Counter;
 
   mapping(uint256 => Ticket) private _data;
@@ -23,7 +23,7 @@ contract ERC721Ticket is IERC721Ticket, ERC721ACBER, ERC721ACBaseUrl {
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721ACBER(name, symbol, royalty) ERC721ACBaseUrl(baseTokenURI) {
+  ) ERC721ABER(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
     _tokenIdTracker.increment();
   }
 
@@ -47,25 +47,21 @@ contract ERC721Ticket is IERC721Ticket, ERC721ACBER, ERC721ACBaseUrl {
     return _data[tokenId];
   }
 
-  function burn(uint256 tokenId) public override (ERC721Burnable, IERC721Ticket) {
+  function burn(uint256 tokenId) public override(ERC721Burnable, IERC721Ticket) {
     super.burn(tokenId);
   }
 
   // BASE URL
 
-  function _baseURI() internal view virtual override(ERC721, ERC721ACBaseUrl) returns (string memory) {
+  function _baseURI() internal view virtual override(ERC721, ERC721ABaseUrl) returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 
   // COMMON
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(AccessControl, ERC721ACBER)
-    returns (bool)
-  {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 }

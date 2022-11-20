@@ -8,13 +8,13 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-import "@gemunion/contracts/contracts/ERC721/preset/ERC721ACBER.sol";
-import "@gemunion/contracts/contracts/ERC721/ERC721ACBaseUrl.sol";
+import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
+import "@gemunion/contracts-erc721/contracts/preset/ERC721ABER.sol";
 
 import "./interfaces/IERC721Simple.sol";
 import "../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721ACBaseUrl, MetaDataGetter {
+contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, MetaDataGetter {
   using Counters for Counters.Counter;
 
   constructor(
@@ -22,7 +22,7 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721ACBaseUrl, MetaDataGe
     string memory symbol,
     uint96 royalty,
     string memory baseTokenURI
-  ) ERC721ACBER(name, symbol, royalty) ERC721ACBaseUrl(baseTokenURI) {
+  ) ERC721ABER(name, symbol, royalty) ERC721ABaseUrl(baseTokenURI) {
     // should start from 1
     _tokenIdTracker.increment();
   }
@@ -50,17 +50,13 @@ contract ERC721Simple is IERC721Simple, ERC721ACBER, ERC721ACBaseUrl, MetaDataGe
     _setTokenMetadata(tokenId, metadata);
   }
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(AccessControl, ERC721ACBER)
-    returns (bool)
-  {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, ERC721ABER) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 
-  function _baseURI() internal view virtual override(ERC721, ERC721ACBaseUrl) returns (string memory) {
+  function _baseURI() internal view virtual override(ERC721, ERC721ABaseUrl) returns (string memory) {
     return _baseURI(_baseTokenURI);
   }
 

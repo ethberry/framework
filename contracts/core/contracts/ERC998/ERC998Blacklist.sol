@@ -28,9 +28,9 @@ contract ERC998Blacklist is ERC998Simple, BlackList {
     return super.supportsInterface(interfaceId);
   }
 
-  function _beforeTokenTransfer(address from, address to, uint256 amount) internal override {
+  function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize) internal override {
     require(!this.isBlacklisted(from), "Blacklist: sender is blacklisted");
     require(!this.isBlacklisted(to), "Blacklist: receiver is blacklisted");
-    super._beforeTokenTransfer(from, to, amount);
+    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 }

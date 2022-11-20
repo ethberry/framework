@@ -1,15 +1,16 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { constants, Contract } from "ethers";
+
+import { deployErc721NonReceiver, deployErc721Receiver } from "@gemunion/contracts-mocks";
 
 import { MINTER_ROLE, templateId, tokenId } from "../../constants";
-import { deployErc721Base, deployErc721NonReceiver, deployErc721Receiver } from "./fixtures";
 
-export function shouldMintCommon(name: string) {
+export function shouldMintCommon(factory: () => Promise<Contract>) {
   describe("mintCommon", function () {
     it("should mint to wallet", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       const tx = contractInstance.mintCommon(receiver.address, templateId);
       await expect(tx).to.emit(contractInstance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
@@ -19,8 +20,8 @@ export function shouldMintCommon(name: string) {
     });
 
     it("should mint to receiver", async function () {
-      const { contractInstance } = await deployErc721Base(name);
-      const { contractInstance: erc721ReceiverInstance } = await deployErc721Receiver();
+      const contractInstance = await factory();
+      const erc721ReceiverInstance = await deployErc721Receiver();
 
       const tx = contractInstance.mintCommon(erc721ReceiverInstance.address, templateId);
       await expect(tx)
@@ -33,7 +34,7 @@ export function shouldMintCommon(name: string) {
 
     it("should fail: wrong role", async function () {
       const [_owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       const tx = contractInstance.connect(receiver).mintCommon(receiver.address, templateId);
       await expect(tx).to.be.revertedWith(
@@ -42,8 +43,8 @@ export function shouldMintCommon(name: string) {
     });
 
     it("should fail: to mint to non receiver", async function () {
-      const { contractInstance } = await deployErc721Base(name);
-      const { contractInstance: erc721NonReceiverInstance } = await deployErc721NonReceiver();
+      const contractInstance = await factory();
+      const erc721NonReceiverInstance = await deployErc721NonReceiver();
 
       const tx = contractInstance.mintCommon(erc721NonReceiverInstance.address, templateId);
       await expect(tx).to.be.revertedWith(`ERC721: transfer to non ERC721Receiver implementer`);

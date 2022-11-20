@@ -22,13 +22,10 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
     return super.ownerOf(tokenId);
   }
 
-  function isApprovedForAll(address owner, address operator)
-    public
-    view
-    virtual
-    override(ERC721, ERC998ERC721)
-    returns (bool)
-  {
+  function isApprovedForAll(
+    address owner,
+    address operator
+  ) public view virtual override(ERC721, ERC998ERC721) returns (bool) {
     return super.isApprovedForAll(owner, operator);
   }
 
@@ -43,19 +40,16 @@ contract ERC998Simple is ERC721Simple, ERC998ERC721, WhiteListChild {
   function _beforeTokenTransfer(
     address from,
     address to,
-    uint256 tokenId
-  ) internal virtual override(ERC721ACBER, ERC998ERC721) {
-    ERC998ERC721._beforeTokenTransfer(from, to, tokenId);
-    super._beforeTokenTransfer(from, to, tokenId);
+    uint256 firstTokenId,
+    uint256 batchSize
+  ) internal virtual override(ERC721ABER, ERC998ERC721) {
+    ERC998ERC721._beforeTokenTransfer(from, to, firstTokenId, batchSize);
+    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(AccessControl, ERC721Simple, ERC998ERC721)
-    returns (bool)
-  {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(AccessControl, ERC721Simple, ERC998ERC721) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 

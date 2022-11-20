@@ -4,7 +4,7 @@
 // Email: trejgun+gemunion@gmail.com
 // Website: https://gemunion.io/
 
-import "@gemunion/contracts/contracts/utils/GeneralizedCollection.sol";
+import "@gemunion/contracts-misc/contracts/GeneralizedCollection.sol";
 
 pragma solidity ^0.8.9;
 

@@ -41,9 +41,10 @@ contract ERC998StateHash is ERC998Simple, StateHash {
   function _beforeTokenTransfer(
     address from,
     address to,
-    uint256 tokenId
+    uint256 firstTokenId,
+    uint256 batchSize
   ) internal override(ERC998Simple, StateHash) {
-    super._beforeTokenTransfer(from, to, tokenId);
+    super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
   }
 
   function _localRootId(uint256 tokenId) internal view override(ERC998ERC721, StateHash) returns (uint256) {
@@ -54,11 +55,7 @@ contract ERC998StateHash is ERC998Simple, StateHash {
     revert("CTD: NS");
   }
 
-  function balanceOfERC1155(
-    uint256,
-    address,
-    uint256
-  ) external pure override(StateHash) returns (uint256) {
+  function balanceOfERC1155(uint256, address, uint256) external pure override(StateHash) returns (uint256) {
     revert("CTD: NS");
   }
 }

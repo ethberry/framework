@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { templateId } from "../../constants";
+import { amount, tokenId } from "../../../constants";
 
 export function shouldBlacklist(factory: () => Promise<Contract>) {
   describe("Black list", function () {
@@ -11,7 +11,7 @@ export function shouldBlacklist(factory: () => Promise<Contract>) {
       const contractInstance = await factory();
 
       await contractInstance.blacklist(receiver.address);
-      const tx = contractInstance.mintCommon(receiver.address, templateId);
+      const tx = contractInstance.mint(receiver.address, tokenId, amount, "0x");
       await expect(tx).to.be.revertedWith(`Blacklist: receiver is blacklisted`);
     });
   });

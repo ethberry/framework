@@ -8,12 +8,12 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-//import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
+// import "@gemunion/contracts-chain-link/contracts/extensions/ERC721ChainLinkBinance.sol";
+import "@gemunion/contracts-chain-link/contracts/extensions/ERC721ChainLinkGoerli.sol";
 
 import "./ERC721Upgradeable.sol";
 import "./interfaces/IERC721Random.sol";
 import "../Mechanics/Rarity/Rarity.sol";
-import "./test/ERC721ChainLinkGoerli.sol"; // TODO should import from @gemunion/contracts
 
 contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkGoerli, ERC721Upgradeable, Rarity {
   event RandomRequest(bytes32 requestId);

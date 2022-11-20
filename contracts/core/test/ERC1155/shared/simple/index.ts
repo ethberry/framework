@@ -1,11 +1,34 @@
-import { shouldERC1155Base } from "./base";
-import { shouldERC1155Burnable } from "./burnable";
-import { shouldERC1155Royalty } from "./royalty";
-import { shouldERC1155Supply } from "./supply";
+import { Contract } from "ethers";
 
-export function shouldERC1155Simple(name: string) {
-  shouldERC1155Base(name);
-  shouldERC1155Burnable(name);
-  shouldERC1155Royalty(name);
-  shouldERC1155Supply(name);
+import {
+  shouldBalanceOf,
+  shouldBalanceOfBatch,
+  shouldBurnable,
+  shouldMint,
+  shouldMintBatch,
+  shouldSetApprovalForAll,
+  shouldSafeTransferFrom,
+  shouldSafeBatchTransferFrom,
+  shouldCustomURI,
+  shouldRoyalty,
+  shouldSupply,
+} from "@gemunion/contracts-erc1155";
+
+export function shouldBase(factory: () => Promise<Contract>) {
+  shouldMint(factory);
+  shouldMintBatch(factory);
+  shouldBalanceOf(factory);
+  shouldBalanceOfBatch(factory);
+  shouldSetApprovalForAll(factory);
+  shouldSafeTransferFrom(factory);
+  shouldSafeBatchTransferFrom(factory);
+
+  shouldCustomURI(factory);
+}
+
+export function shouldSimple(factory: () => Promise<Contract>) {
+  shouldBase(factory);
+  shouldBurnable(factory);
+  shouldRoyalty(factory);
+  shouldSupply(factory);
 }

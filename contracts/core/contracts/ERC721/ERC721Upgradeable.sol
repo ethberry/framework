@@ -23,12 +23,10 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address account, uint256 templateId)
-    public
-    virtual
-    override(IERC721Simple, ERC721Simple)
-    onlyRole(MINTER_ROLE)
-  {
+  function mintCommon(
+    address account,
+    uint256 templateId
+  ) public virtual override(IERC721Simple, ERC721Simple) onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC721Upgradeable: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();

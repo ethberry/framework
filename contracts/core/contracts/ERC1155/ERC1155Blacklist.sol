@@ -15,7 +15,7 @@ contract ERC1155Blacklist is ERC1155Simple, BlackList {
 
   function supportsInterface(
     bytes4 interfaceId
-  ) public view virtual override(AccessControl, ERC1155ACBSR) returns (bool) {
+  ) public view virtual override(AccessControl, ERC1155ABSR) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 

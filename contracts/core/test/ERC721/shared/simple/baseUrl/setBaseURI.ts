@@ -1,15 +1,15 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
 import { templateId, tokenId } from "../../../../constants";
-import { deployErc721Base } from "../../fixtures";
 
-export function shouldSetBaseURI(name: string) {
+export function shouldSetBaseURI(factory: () => Promise<Contract>) {
   describe("setBaseURI", function () {
     it("should set token uri", async function () {
       const newURI = "http://example.com/";
       const [owner] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       await contractInstance.setBaseURI(newURI);

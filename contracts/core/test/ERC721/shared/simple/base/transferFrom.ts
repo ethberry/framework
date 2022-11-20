@@ -1,24 +1,24 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
 import { templateId, tokenId } from "../../../../constants";
-import { deployErc721Base } from "../../fixtures";
 
-export function shouldTransferFrom(name: string) {
+export function shouldTransferFrom(factory: () => Promise<Contract>) {
   describe("transferFrom", function () {
     it("should fail: not an owner", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance.connect(receiver).transferFrom(owner.address, receiver.address, tokenId);
 
-      await expect(tx).to.be.revertedWith(`ERC721: caller is not token owner nor approved`);
+      await expect(tx).to.be.revertedWith(`ERC721: caller is not token owner or approved`);
     });
 
     it("should fail: zero addr", async function () {
       const [owner] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance.transferFrom(owner.address, ethers.constants.AddressZero, tokenId);
@@ -28,7 +28,7 @@ export function shouldTransferFrom(name: string) {
 
     it("should transfer own tokens to wallet", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = contractInstance.transferFrom(owner.address, receiver.address, tokenId);
@@ -44,7 +44,7 @@ export function shouldTransferFrom(name: string) {
 
     it("should transfer approved tokens to wallet", async function () {
       const [owner, receiver] = await ethers.getSigners();
-      const { contractInstance } = await deployErc721Base(name);
+      const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
       await contractInstance.approve(receiver.address, tokenId);

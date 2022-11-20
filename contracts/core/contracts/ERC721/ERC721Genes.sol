@@ -8,8 +8,8 @@ pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-//import "@gemunion/contracts/contracts/ERC721/ChainLink/ERC721ChainLinkBinance.sol";
-import "./test/ERC721ChainLinkGoerli.sol"; // TODO should import from @gemunion/contracts
+// import "@gemunion/contracts-chain-link/contracts/extensions/ERC721ChainLinkBinance.sol";
+import "@gemunion/contracts-chain-link/contracts/extensions/ERC721ChainLinkGoerli.sol";
 
 import "./ERC721Simple.sol";
 import "./interfaces/IERC721Random.sol";
@@ -61,20 +61,15 @@ contract ERC721Genes is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Bree
     _safeMint(request.account, tokenId);
   }
 
-
-  function decodeData(uint256 externalId)
-  internal pure
-  returns(uint256 childId, uint256 matronId, uint256 sireId) {
+  function decodeData(uint256 externalId) internal pure returns (uint256 childId, uint256 matronId, uint256 sireId) {
     childId = uint256(uint32(externalId));
-    matronId = uint256(uint32(externalId>>32));
-    sireId = uint256(uint32(externalId>>64));
+    matronId = uint256(uint32(externalId >> 32));
+    sireId = uint256(uint32(externalId >> 64));
   }
 
-  function encodeData(Request memory req, uint256 randomness)
-  internal pure
-  returns(uint256 genes) {
+  function encodeData(Request memory req, uint256 randomness) internal pure returns (uint256 genes) {
     genes |= uint32(req.matronId);
-    genes |= uint32(req.sireId)<<32;
-    genes |= uint192(randomness)<<64;
+    genes |= uint32(req.sireId) << 32;
+    genes |= uint192(randomness) << 64;
   }
 }

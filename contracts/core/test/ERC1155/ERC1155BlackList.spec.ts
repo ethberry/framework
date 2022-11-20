@@ -1,11 +1,15 @@
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "../constants";
-import { shouldERC1155Accessible } from "./shared/accessible";
-import { shouldBlacklist } from "./shared/blacklist";
+import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+
+import { shouldBlacklist } from "./shared/blacklist/blacklist";
+import { deployErc1155Base } from "./shared/fixtures";
+import { shouldSimple } from "./shared/simple";
 
 describe("ERC1155Blacklist", function () {
-  const name = "ERC1155Blacklist";
+  const factory = () => deployErc1155Base(this.title);
 
-  shouldERC1155Accessible(name)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldBlacklist(name);
+  shouldSimple(factory);
+  shouldBlacklist(factory);
 });
