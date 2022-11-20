@@ -6,6 +6,9 @@ export const useStyles = makeStyles<Theme>(
     paper: {
       padding: theme.spacing(2),
       marginBottom: theme.spacing(2),
+      [theme.breakpoints.down("sm")]: {
+        marginTop: theme.spacing(2),
+      },
     },
     price: {
       paddingLeft: 0,

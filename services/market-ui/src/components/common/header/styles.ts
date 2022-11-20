@@ -18,6 +18,9 @@ export const useStyles = makeStyles<Theme>(
         "&:hover": {
           textDecoration: "none",
         },
+        [theme.breakpoints.down("md")]: {
+          fontSize: 22,
+        },
       },
       logo: {
         display: "inline-block",

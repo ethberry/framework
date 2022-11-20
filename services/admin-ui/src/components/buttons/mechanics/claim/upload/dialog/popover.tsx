@@ -36,7 +36,7 @@ export const ClaimInfoPopover: FC<Record<string, string | number>> = () => {
           horizontal: "right",
         }}
       >
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 2, overflowX: "scroll" }}>
           <Typography>Format: </Typography>
           <pre>account,endTimestamp,tokenType,contractId,templateId,amount</pre>
           <Typography>Example: </Typography>

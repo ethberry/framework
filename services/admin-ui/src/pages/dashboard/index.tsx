@@ -35,7 +35,7 @@ export const Dashboard: FC = () => {
       <PageHeader message="pages.dashboard.title" />
 
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <NativeSections />
           <Erc20Sections />
           <Erc721Section />
@@ -43,7 +43,7 @@ export const Dashboard: FC = () => {
           <Erc1155Section />
           <Mystery />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Vesting />
           <Waitlist />
           <Claim />
@@ -55,7 +55,7 @@ export const Dashboard: FC = () => {
           <Pyramid />
           <Breed />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <ChainLink />
           <CoinGecko />
           <CoinMarketCap />

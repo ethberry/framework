@@ -28,7 +28,7 @@ export const ReferralLeaderboard: FC = () => {
       field: "id",
       headerName: formatMessage({ id: "form.labels.id" }),
       sortable: true,
-      flex: 0
+      flex: 0.3
     },
     {
       field: "account",
@@ -39,14 +39,16 @@ export const ReferralLeaderboard: FC = () => {
           <AddressLink address={params.value} />
         );
       },
-      flex: 2
+      flex: 3,
+      minWidth: 360
     },
     {
       field: "amount",
       headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => formatEther(value),
-      flex: 1
+      flex: 1,
+      minWidth: 100
     }
   ];
 

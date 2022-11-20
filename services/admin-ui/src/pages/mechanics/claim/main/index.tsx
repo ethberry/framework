@@ -69,14 +69,19 @@ export const Claim: FC = () => {
       <ClaimSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <List sx={{ overflowX: "scroll" }}>
           {rows.map((claim, i) => (
-            <ListItem key={i}>
-              <ListItemText>{claim.account}</ListItemText>
-              <ListItemText>
+            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+              <ListItemText sx={{ width: 0.6 }}>{claim.account}</ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
                 {claim.item.components.map(component => component.template?.title).join(", ")}
               </ListItemText>
-              <ListItemSecondaryAction>
+              <ListItemSecondaryAction
+                sx={{
+                  top: { xs: "80%", sm: "50%" },
+                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
+                }}
+              >
                 <IconButton onClick={handleEdit(claim)} disabled={claim.claimStatus !== ClaimStatus.NEW}>
                   <Create />
                 </IconButton>

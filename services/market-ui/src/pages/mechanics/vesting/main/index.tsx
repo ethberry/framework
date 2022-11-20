@@ -48,12 +48,17 @@ export const Vesting: FC = () => {
       <PageHeader message="pages.vesting.title" />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <List sx={{ overflowX: "scroll" }}>
           {rows.map((vesting, i) => (
-            <ListItem key={i}>
+            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{vesting.account}</ListItemText>
-              <ListItemText>{vesting.contractTemplate}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{vesting.contractTemplate}</ListItemText>
+              <ListItemSecondaryAction
+                sx={{
+                  top: { xs: "80%", sm: "50%" },
+                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
+                }}
+              >
                 <VestingTransferOwnershipButton vesting={vesting} />
                 <VestingReleaseButton vesting={vesting} />
                 <Tooltip title={formatMessage({ id: "form.tips.view" })}>

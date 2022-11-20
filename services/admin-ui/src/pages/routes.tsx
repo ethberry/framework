@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Navigate, useRoutes } from "react-router";
 import type { RouteObject } from "react-router-dom";
+
 import { Error, Landing, Message, Protected } from "@gemunion/common-pages";
 import { routes as loginRoutes } from "@gemunion/firebase-login";
 
