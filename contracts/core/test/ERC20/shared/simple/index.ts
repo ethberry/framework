@@ -7,6 +7,6 @@ export function shouldSimple(factory: () => Promise<Contract>) {
   shouldBase(factory);
   shouldBurnable(factory);
   shouldCapped(factory);
-  shouldReceive(factory);
   shouldSnapshot(factory);
+  shouldReceive(factory);
 }
