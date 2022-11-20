@@ -6,6 +6,7 @@ import { shouldMintCommon } from "./shared/mintCommon";
 
 import { shouldERC721Simple } from "./shared/simple";
 import { deployErc721Base } from "./shared/fixtures";
+import { shouldCustomBlacklist } from "./shared/blacklist";
 
 describe("ERC721Blacklist", function () {
   const factory = () => deployErc721Base(this.title);
@@ -15,4 +16,5 @@ describe("ERC721Blacklist", function () {
 
   shouldERC721Simple(factory);
   shouldMintCommon(factory);
+  shouldCustomBlacklist(factory);
 });

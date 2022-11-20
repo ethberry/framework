@@ -17,24 +17,16 @@ export function shouldCustomBlackList(factory: () => Promise<Contract>) {
     });
 
     it("should fail: transfer to", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
+      const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
+      await contractInstance.mint(owner.address, amount);
       await contractInstance.blacklist(receiver.address);
       const tx = contractInstance.transfer(receiver.address, amount);
       await expect(tx).to.be.revertedWith("Blacklist: receiver is blacklisted");
     });
 
-    it("should fail: mint", async function () {
-      const [_owner, receiver] = await ethers.getSigners();
-      const contractInstance = await factory();
-
-      await contractInstance.blacklist(receiver.address);
-      const tx = contractInstance.mint(receiver.address, amount);
-      await expect(tx).to.be.revertedWith("Blacklist: receiver is blacklisted");
-    });
-
-    it("should fail: transferFrom", async function () {
+    it("should fail: transfer approved", async function () {
       const [owner, receiver] = await ethers.getSigners();
       const contractInstance = await factory();
 
@@ -44,6 +36,15 @@ export function shouldCustomBlackList(factory: () => Promise<Contract>) {
 
       const tx = contractInstance.transferFrom(receiver.address, owner.address, amount);
       await expect(tx).to.be.revertedWith("Blacklist: sender is blacklisted");
+    });
+
+    it("should fail: mint", async function () {
+      const [_owner, receiver] = await ethers.getSigners();
+      const contractInstance = await factory();
+
+      await contractInstance.blacklist(receiver.address);
+      const tx = contractInstance.mint(receiver.address, amount);
+      await expect(tx).to.be.revertedWith("Blacklist: receiver is blacklisted");
     });
 
     it("should fail: burn", async function () {
