@@ -3,18 +3,18 @@ import { Contract } from "ethers";
 import {
   shouldBalanceOf,
   shouldBalanceOfBatch,
-  shouldBurnable,
+  shouldBehaveLikeERC1155Burnable,
   shouldMint,
   shouldMintBatch,
   shouldSetApprovalForAll,
   shouldSafeTransferFrom,
   shouldSafeBatchTransferFrom,
   shouldCustomURI,
-  shouldRoyalty,
-  shouldSupply,
+  shouldBehaveLikeERC1155Royalty,
+  shouldBehaveLikeERC1155Supply,
 } from "@gemunion/contracts-erc1155";
 
-export function shouldBase(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeERC1155(factory: () => Promise<Contract>) {
   shouldMint(factory);
   shouldMintBatch(factory);
   shouldBalanceOf(factory);
@@ -26,9 +26,9 @@ export function shouldBase(factory: () => Promise<Contract>) {
   shouldCustomURI(factory);
 }
 
-export function shouldSimple(factory: () => Promise<Contract>) {
-  shouldBase(factory);
-  shouldBurnable(factory);
-  shouldRoyalty(factory);
-  shouldSupply(factory);
+export function shouldBehaveLikeERC1155Simple(factory: () => Promise<Contract>) {
+  shouldBehaveLikeERC1155(factory);
+  shouldBehaveLikeERC1155Burnable(factory);
+  shouldBehaveLikeERC1155Royalty(factory);
+  shouldBehaveLikeERC1155Supply(factory);
 }

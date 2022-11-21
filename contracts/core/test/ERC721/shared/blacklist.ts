@@ -4,7 +4,7 @@ import { Contract } from "ethers";
 
 import { templateId, tokenId } from "../../constants";
 
-export function shouldCustomBlacklist(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeERC721Blacklist(factory: () => Promise<Contract>) {
   describe("Black list", function () {
     it("should fail: transferFrom from", async function () {
       const [owner, receiver] = await ethers.getSigners();

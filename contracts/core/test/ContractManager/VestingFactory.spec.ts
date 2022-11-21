@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { time } from "@openzeppelin/test-helpers";
 
-import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
 
 import { templateId, span } from "../constants";
@@ -11,7 +11,7 @@ import { deployContractManager } from "./fixture";
 describe("VestingFactory", function () {
   const factory = () => deployContractManager(this.title);
 
-  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE);
 
   describe("deployVesting", function () {
     it("should deploy contract", async function () {

@@ -1,17 +1,17 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { deployErc721Base } from "./shared/fixtures";
+import { deployERC721 } from "./shared/fixtures";
 import { shouldMint } from "./shared/simple/base/mint";
 import { shouldSafeMint } from "./shared/simple/base/safeMint";
 
 describe("ERC721Genes", function () {
-  const factory = () => deployErc721Base(this.title);
+  const factory = () => deployERC721(this.title);
 
-  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
   shouldMint(factory);
   shouldSafeMint(factory);

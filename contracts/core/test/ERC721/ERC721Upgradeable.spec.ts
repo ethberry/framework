@@ -2,20 +2,20 @@ import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { expect } from "chai";
 
-import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
 import { templateId, tokenId } from "../constants";
 import { shouldMintCommon } from "./shared/mintCommon";
-import { deployErc721Base } from "./shared/fixtures";
-import { shouldERC721Simple } from "./shared/simple";
+import { deployERC721 } from "./shared/fixtures";
+import { shouldBehaveLikeERC721Simple } from "./shared/simple";
 
 describe("ERC721Upgradeable", function () {
-  const factory = () => deployErc721Base(this.title);
+  const factory = () => deployERC721(this.title);
 
-  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
-  shouldERC721Simple(factory);
+  shouldBehaveLikeERC721Simple(factory);
   shouldMintCommon(factory);
 
   describe("getRecordFieldValue", function () {

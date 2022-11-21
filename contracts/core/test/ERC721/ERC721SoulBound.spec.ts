@@ -1,26 +1,26 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, templateId, tokenId } from "../constants";
 
 import { shouldTokenURI } from "./shared/simple/baseUrl/tokenURI";
 import { shouldSetBaseURI } from "./shared/simple/baseUrl/setBaseURI";
 
-import { deployErc721Base } from "./shared/fixtures";
+import { deployERC721 } from "./shared/fixtures";
 import { shouldSetApprovalForAll } from "./shared/simple/base/setApprovalForAll";
 import { shouldMint } from "./shared/simple/base/mint";
 import { shouldApprove } from "./shared/simple/base/approve";
 import { shouldSafeMint } from "./shared/simple/base/safeMint";
 import { shouldGetBalanceOf } from "./shared/simple/base/balanceOf";
 import { shouldGetOwnerOf } from "./shared/simple/base/ownerOf";
-import { shouldERC721Burnable } from "./shared/simple/burnable";
+import { shouldBehaveLikeERC721Burnable } from "./shared/simple/burnable";
 
 describe("ERC721Soulbound", function () {
-  const factory = () => deployErc721Base(this.title);
+  const factory = () => deployERC721(this.title);
 
-  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
 
   shouldMint(factory);
   shouldSafeMint(factory);
@@ -30,7 +30,7 @@ describe("ERC721Soulbound", function () {
   shouldSetApprovalForAll(factory);
   // shouldTransferFrom(name);
   // shouldSafeTransferFrom(name);
-  shouldERC721Burnable(factory);
+  shouldBehaveLikeERC721Burnable(factory);
 
   shouldSetBaseURI(factory);
   shouldTokenURI(factory);

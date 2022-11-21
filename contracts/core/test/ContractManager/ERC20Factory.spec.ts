@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { amount, DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
 import { featureIds } from "../constants";
@@ -10,7 +10,7 @@ import { deployContractManager } from "./fixture";
 describe("ERC20Factory", function () {
   const factory = () => deployContractManager(this.title);
 
-  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE);
 
   describe("deployERC20Token", function () {
     it("should deploy contract", async function () {

@@ -1,13 +1,13 @@
-import { shouldBeAccessible } from "@gemunion/contracts-mocha";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE } from "@gemunion/contracts-constants";
 
-import { shouldSimple } from "./shared/simple";
-import { deployErc20Base } from "./shared/fixtures";
+import { shouldBehaveLikeERC20Simple } from "./shared/simple";
+import { deployERC20 } from "./shared/fixtures";
 
 describe("ERC20Simple", function () {
-  const factory = () => deployErc20Base(this.title);
+  const factory = () => deployERC20(this.title);
 
-  shouldBeAccessible(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE, SNAPSHOT_ROLE);
 
-  shouldSimple(factory);
+  shouldBehaveLikeERC20Simple(factory);
 });

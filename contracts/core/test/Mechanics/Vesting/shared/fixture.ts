@@ -1,13 +1,14 @@
 import { ethers } from "hardhat";
+import { Contract } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
-import { AbstractVesting, ERC20Simple } from "../../../../typechain-types";
-import { amount, tokenName, tokenSymbol } from "../../../constants";
 
-export async function deployVestingFixture(name: string): Promise<AbstractVesting> {
-  const [owner, receiver] = await ethers.getSigners();
+import { amount, tokenName, tokenSymbol, span } from "@gemunion/contracts-constants";
+
+export async function deployVesting(name: string): Promise<Contract> {
+  const [owner] = await ethers.getSigners();
   const current = await time.latest();
   const vestingFactory = await ethers.getContractFactory(name);
-  const vestingInstance = (await vestingFactory.deploy(receiver.address, current.toNumber(), 10000)) as AbstractVesting;
+  const vestingInstance = await vestingFactory.deploy(owner.address, current.toNumber(), span * 4);
 
   await owner.sendTransaction({
     to: vestingInstance.address,
@@ -17,11 +18,9 @@ export async function deployVestingFixture(name: string): Promise<AbstractVestin
   return vestingInstance;
 }
 
-export async function deployERC20Fixture(contractInstance: AbstractVesting): Promise<ERC20Simple> {
-  const erc20Factory = await ethers.getContractFactory("ERC20Simple");
-  const erc20Instance = await erc20Factory.deploy(tokenName, tokenSymbol, amount * 100);
-
-  await erc20Instance.functions.mint(contractInstance.address, amount * 100);
-
-  return erc20Instance;
+export async function deployERC20(contractInstance: Contract): Promise<Contract> {
+  const factory = await ethers.getContractFactory("ERC20Simple");
+  const instance = await factory.deploy(tokenName, tokenSymbol, amount * 100);
+  await instance.mint(contractInstance.address, amount * 100);
+  return instance;
 }

@@ -9,7 +9,7 @@ import { shouldSetApprovalForAll } from "./setApprovalForAll";
 import { shouldMint } from "./mint";
 import { shouldSafeMint } from "./safeMint";
 
-export function shouldERC721Base(factory: () => Promise<Contract>) {
+export function shouldBehaveLikeERC721(factory: () => Promise<Contract>) {
   shouldApprove(factory);
   shouldGetBalanceOf(factory);
   shouldGetOwnerOf(factory);
