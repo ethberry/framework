@@ -59,7 +59,7 @@ export const CoinMarketCap: FC = () => {
             =
           </Typography>
           <Typography variant="h4" component="span">
-            {result.price.toFixed(2)}
+            {result?.price.toFixed(2)}
           </Typography>{" "}
           <Select
             sx={{ mx: 1 }}

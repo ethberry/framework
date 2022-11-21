@@ -81,9 +81,11 @@ export const Craft: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((craft, i) => (
-            <ListItem key={i}>
+            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{craft.item?.components[0].template?.title}</ListItemText>
-              <ListItemText>{craft.item?.components[0].contract?.title}</ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>
+                {craft.item?.components[0].contract?.title}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(craft)}>
                   <Create />

@@ -44,7 +44,9 @@ export const NewMysterybox: FC = () => {
       <Typography variant="h4" className={classes.title}>
         <FormattedMessage id="pages.landing.mysterybox-new" />
       </Typography>
-      <MultiCarouselMysterybox mysteryboxes={mysteryboxes} component={MysteryboxListItem} />
+      {mysteryboxes.length ? (
+        <MultiCarouselMysterybox mysteryboxes={mysteryboxes} component={MysteryboxListItem} />
+      ) : null}
     </ProgressOverlay>
   );
 };

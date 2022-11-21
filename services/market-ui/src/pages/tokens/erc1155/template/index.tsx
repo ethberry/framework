@@ -41,13 +41,13 @@ export const Erc1155Template: FC = () => {
       <PageHeader message="pages.erc1155.template.title" data={selected} />
 
       <Grid container>
-        <Grid item xs={9}>
-          <img src={selected.imageUrl} />
+        <Grid item xs={12} sm={9}>
+          <img src={selected.imageUrl} alt="Gemunion template image" />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.description} />
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <Paper className={classes.paper}>
             <Typography variant="body2" color="textSecondary" component="p">
               <FormattedMessage id="pages.erc1155.template.price" values={{ amount: formatPrice(selected.price) }} />

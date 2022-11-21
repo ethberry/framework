@@ -58,10 +58,10 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
             </Box>
           </Grid>
         ) : null}
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <PriceInput prefix="deposit" readOnly={readOnly} />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6}>
           <PriceInput prefix="reward" readOnly={readOnly} />
         </Grid>
       </Grid>

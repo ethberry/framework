@@ -43,7 +43,7 @@ export const MultiCarouselMysterybox: FC<IMultiCarouselMysteryboxProps> = props 
     [IResolutions.MOBILE]: {
       breakpoint: {
         max: there.breakpoints.values.sm,
-        min: there.breakpoints.values.xs,
+        min: 0,
       },
       items: 1,
     },

@@ -67,7 +67,7 @@ export const PyramidReport: FC = () => {
       field: "id",
       headerName: formatMessage({ id: "form.labels.id" }),
       sortable: true,
-      flex: 0
+      flex: 0.3
     },
     {
       field: "account",
@@ -78,20 +78,23 @@ export const PyramidReport: FC = () => {
           <AddressLink address={params.value} />
         );
       },
-      flex: 2
+      flex: 3,
+      minWidth: 360
     },
     {
       field: "deposit",
       headerName: formatMessage({ id: "form.labels.deposit" }),
       sortable: true,
-      flex: 1
+      flex: 1,
+      minWidth: 100
     },
     {
       field: "createdAt",
       headerName: formatMessage({ id: "form.labels.createdAt" }),
       sortable: true,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), humanReadableDateTimeFormat),
-      flex: 1
+      flex: 1,
+      minWidth: 160
     }
   ];
 

@@ -53,12 +53,17 @@ export const WaitlistItem: FC = () => {
       <WaitlistSearchForm onSubmit={handleSearch} initialValues={search} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <List sx={{ overflowX: "scroll" }}>
           {rows.map((waitlistItem, i) => (
-            <ListItem key={i}>
+            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{waitlistItem.account}</ListItemText>
-              <ListItemText>{waitlistItem.list?.title}</ListItemText>
-              <ListItemSecondaryAction>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{waitlistItem.list?.title}</ListItemText>
+              <ListItemSecondaryAction
+                sx={{
+                  top: { xs: "80%", sm: "50%" },
+                  transform: { xs: "translateY(-80%)", sm: "translateY(-50%)" },
+                }}
+              >
                 <IconButton onClick={handleDelete(waitlistItem)}>
                   <Delete />
                 </IconButton>

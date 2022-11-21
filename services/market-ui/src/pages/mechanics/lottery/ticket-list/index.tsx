@@ -59,13 +59,13 @@ export const LotteryTicketList: FC = () => {
       <LotteryTicketSearchForm onSubmit={handleSearch} initialValues={search} open={isFiltersOpen} />
 
       <ProgressOverlay isLoading={isLoading}>
-        <List>
+        <List sx={{ overflowX: "scroll" }}>
           {rows.map((ticket, i) => (
-            <ListItem key={i}>
-              <ListItemText>
+            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
+              <ListItemText sx={{ width: 0.6 }}>
                 {ticket.roundId} - {getNumbers(ticket)}
               </ListItemText>
-              <ListItemText>{getWinners(ticket, ticket.round!)}</ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{getWinners(ticket, ticket.round!)}</ListItemText>
               <ListItemSecondaryAction>
                 <LotteryRewardButton ticket={ticket} />
                 <IconButton onClick={handleView(ticket)}>

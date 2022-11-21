@@ -46,7 +46,6 @@ export const PyramidLeaderboard: FC = () => {
       field: "id",
       headerName: formatMessage({ id: "form.labels.rank" }),
       sortable: false,
-      flex: 0.5,
       renderCell: (params: GridCellParams) => {
         const row = params.row as IPyramidLeaderboard;
         // @ts-ignore
@@ -60,7 +59,8 @@ export const PyramidLeaderboard: FC = () => {
             <Typography ml={1}>{index + search.skip + 1}</Typography>
           </Grid>
         );
-      }
+      },
+      flex: 0.5,
     },
     {
       field: "account",
@@ -71,20 +71,23 @@ export const PyramidLeaderboard: FC = () => {
           <AddressLink address={params.value} />
         );
       },
-      flex: 2
+      flex: 3,
+      minWidth: 360
     },
     {
       field: "amount",
       headerName: formatMessage({ id: "form.labels.amount" }),
       sortable: false,
       valueFormatter: ({ value }: { value: string }) => formatEther(value),
-      flex: 1
+      flex: 1,
+      minWidth: 100
     },
     {
       field: "name",
       headerName: formatMessage({ id: "form.labels.title" }),
       sortable: false,
-      flex: 1
+      flex: 1,
+      minWidth: 170
     }
   ];
 

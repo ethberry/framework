@@ -2,7 +2,7 @@ import { Theme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles<Theme>(
-  () => {
+  theme => {
     return {
       container: {
         height: "100%",
@@ -11,6 +11,9 @@ export const useStyles = makeStyles<Theme>(
         maxWidth: "1150px",
         padding: "0 20px",
         margin: "0 auto",
+        [theme.breakpoints.down("sm")]: {
+          maxHeight: "650px",
+        },
       },
       item: {
         display: "flex",
@@ -18,6 +21,9 @@ export const useStyles = makeStyles<Theme>(
         height: "100%",
         maxHeight: "450px",
         paddingRight: 20,
+        [theme.breakpoints.down("sm")]: {
+          maxHeight: "650px",
+        },
       },
       dotList: {
         position: "absolute",

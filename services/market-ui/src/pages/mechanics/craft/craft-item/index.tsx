@@ -34,13 +34,13 @@ export const CraftItem: FC = () => {
       <PageHeader message="pages.craft.title" data={selected.item?.components[0].template} />
 
       <Grid container>
-        <Grid item xs={9}>
-          <img src={selected.item?.components[0].template!.imageUrl} />
+        <Grid item xs={12} sm={9}>
+          <img src={selected.item?.components[0].template!.imageUrl} alt="Gemunion template image" />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.item?.components[0].template!.description} />
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <List
             component="nav"
             subheader={

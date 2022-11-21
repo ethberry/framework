@@ -112,7 +112,8 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
       field: "type",
       headerName: formatMessage({ id: "form.labels.event" }),
       sortable: false,
-      flex: 1
+      flex: 1,
+      minWidth: 120
     },
     {
       field: "price",
@@ -137,7 +138,8 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
             </ul> : null
         );
       },
-      flex: 1.3
+      flex: 1.3,
+      minWidth: 100
     },
     // {
     //   field: "quantity",
@@ -154,7 +156,8 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
           <AddressLink address={params.value} />
         );
       },
-      flex: 2
+      flex: 2,
+      minWidth: 360
     },
     {
       field: "to",
@@ -165,14 +168,16 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
           <AddressLink address={params.value} />
         );
       },
-      flex: 2
+      flex: 2,
+      minWidth: 360
     },
     {
       field: "date",
       headerName: formatMessage({ id: "form.labels.date" }),
       sortable: false,
       valueFormatter: ({ value }: { value: string }) => format(parseISO(value), "MM/dd/yy hh:mm"),
-      flex: 1.2
+      flex: 1.2,
+      minWidth: 160
     },
     {
       field: "tx",
@@ -183,7 +188,8 @@ export const TokenHistory: FC<ITokenHistoryProps> = props => {
           <TxHashLink hash={params.value} />
         );
       },
-      flex: 1
+      flex: 1,
+      minWidth: 360
     }
   ];
 

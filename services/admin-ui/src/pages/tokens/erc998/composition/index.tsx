@@ -117,7 +117,7 @@ export const Erc998Composition: FC = () => {
         <List>
           {rows.map((composition, i) => (
             <ListItem key={i}>
-              <ListItemText>
+              <ListItemText sx={{ flex: "0 1 80%" }}>
                 {composition.parent?.title} + {composition.child?.title}
               </ListItemText>
               <ListItemSecondaryAction>

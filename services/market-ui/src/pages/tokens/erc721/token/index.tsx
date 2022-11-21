@@ -51,13 +51,13 @@ export const Erc721Token: FC = () => {
       <PageHeader message="pages.erc721.token.title" data={selected.template} />
 
       <Grid container>
-        <Grid item xs={9}>
-          <img src={selected.template!.imageUrl} />
+        <Grid item xs={12} sm={9}>
+          <img src={selected.template!.imageUrl} alt="Gemunion token image" />
           <Typography variant="body2" color="textSecondary" component="div" className={classes.preview}>
             <RichTextDisplay data={selected.template!.description} />
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={3}>
           <Paper className={classes.paper}>
             <FormattedMessage id="pages.token.priceTitle" />
             <ul className={classes.price}>

@@ -34,14 +34,14 @@ export const Dashboard: FC = () => {
       <PageHeader message="pages.dashboard.title" />
 
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
           <Mysterybox />
           <Wrapper />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <Vesting />
           <Waitlist />
           <Claim />
@@ -52,7 +52,7 @@ export const Dashboard: FC = () => {
           <Staking />
           <Pyramid />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4}>
           <Personal />
           <Marketplace />
           <Referral />

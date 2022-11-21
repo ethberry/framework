@@ -42,9 +42,9 @@ export const Claim: FC = () => {
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((claim, i) => (
-            <ListItem key={i}>
+            <ListItem key={i} sx={{ flexWrap: "wrap" }}>
               <ListItemText sx={{ width: 0.6 }}>{claim.item.components[0]?.template?.title}</ListItemText>
-              <ListItemText>{claim.claimStatus}</ListItemText>
+              <ListItemText sx={{ width: { xs: 0.6, md: 0.2 } }}>{claim.claimStatus}</ListItemText>
               <ListItemSecondaryAction>
                 <ClaimRedeemButton claim={claim} />
               </ListItemSecondaryAction>
