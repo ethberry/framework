@@ -45,7 +45,7 @@ export async function factoryDeployErc20(
     },
   );
 
-  if (network.chainId === 1337) {
+  if (network.chainId === 13378) {
     await blockAwait();
   }
 
@@ -60,7 +60,7 @@ export async function factoryDeployErc20(
     signature,
   );
 
-  if (network.chainId === 1337) {
+  if (network.chainId === 13378) {
     await blockAwait();
   }
 

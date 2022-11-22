@@ -8,8 +8,6 @@ import { baseTokenURI, MINTER_ROLE, royalty } from "../../test/constants";
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
 const delayMs = 1000; // block delay ms
-// const decimals = ethers.BigNumber.from(10).pow(18);
-// const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
 const linkAmountInEth = ethers.utils.parseEther("1");
 
 interface IObj {
@@ -49,6 +47,8 @@ const timestamp = Math.ceil(Date.now() / 1000);
 async function main() {
   const [owner] = await ethers.getSigners();
   // LINK & VRF
+  // const decimals = ethers.BigNumber.from(10).pow(18);
+  // const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
   // const linkFactory = await ethers.getContractFactory("LinkErc20");
   // // // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
   // const linkInstance = await linkFactory.deploy("LINK", "LINK");
@@ -139,9 +139,9 @@ async function main() {
   contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGemunion");
+  // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGemunion");
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGoerli");
-  // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
+  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721Random");
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await debug(contracts);
@@ -172,8 +172,8 @@ async function main() {
   contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
   await debug(contracts);
 
-  const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomGemunion");
-  // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
+  // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomGemunion");
+  const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
   // const erc998RandomFactory = await ethers.getContractFactory("ERC998Random");
   const erc998RandomInstance = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
   contracts.erc998Random = erc998RandomInstance;
@@ -350,8 +350,8 @@ async function main() {
   await debug(contracts);
 
   // const lotteryFactory = await ethers.getContractFactory("Lottery");
-  // const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
-  const lotteryFactory = await ethers.getContractFactory("LotteryRandomGemunion");
+  const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
+  // const lotteryFactory = await ethers.getContractFactory("LotteryRandomGemunion");
   // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
   contracts.lottery = await lotteryFactory.deploy(
@@ -364,6 +364,7 @@ async function main() {
   await debug(await linkInstance.transfer(contracts.lottery.address, linkAmountInEth), "linkInstance.transfer");
 
   await debug(await contracts.erc721Lottery.grantRole(MINTER_ROLE, contracts.lottery.address), "grantRole");
+
   const usdtFactory = await ethers.getContractFactory("TetherToken");
   contracts.usdt = await usdtFactory.deploy(100000000000, "Tether USD", "USDT", 6);
   await debug(contracts);
@@ -372,7 +373,7 @@ async function main() {
   contracts.waitlist = await waitlistFactory.deploy();
   await debug(contracts);
 
-  const proof = "0x0d8c4b1f3b24d4558a4957f19aec0e635de5990da009d2850fb69af9d3debeb4";
+  const root = "0xb026b326e62eb342a39b9d932ef7e2f7e40f917cee1994e2412ea6f65902a13a";
   const items = [
     {
       tokenType: 2,
@@ -382,11 +383,13 @@ async function main() {
     },
   ];
 
-  await debug(await contracts.waitlist.setReward(proof, items, 0), "waitlist.setReward");
+  await debug(await contracts.waitlist.setReward(root, items, 2), "waitlist.setReward");
 
   const erc721WrapFactory = await ethers.getContractFactory("ERC721TokenWrapper");
   contracts.erc721Wrapper = await erc721WrapFactory.deploy("WRAPPER", "WRAP", royalty, baseTokenURI);
   await debug(contracts);
+
+  // TODO add pyramid deploy
 
   // GRANT ROLES
   await grantRoles(

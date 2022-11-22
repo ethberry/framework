@@ -42,7 +42,7 @@ describe("Factory Exchange Referral", function () {
     exchangeInstance = res.contractInstance;
     generateOneToManySignature = res.generateOneToManySignature;
 
-    if (network.chainId === 1337) {
+    if (network.chainId === 13378) {
       await blockAwait();
     }
 
@@ -144,7 +144,7 @@ describe("Factory Exchange Referral", function () {
         { value: amountWeiEth },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase").to.not.emit(exchangeInstance, "ReferralReward");
-      if (network.chainId === 1337) {
+      if (network.chainId === 13378) {
         await blockAwait();
       }
       await expect(tx1).to.emit(erc721Instance, "Transfer");
@@ -213,7 +213,7 @@ describe("Factory Exchange Referral", function () {
         { value: constants.WeiPerEther },
       );
       await expect(tx1).to.emit(exchangeInstance, "Purchase");
-      if (network.chainId === 1337) {
+      if (network.chainId === 13378) {
         await blockAwait();
       }
       await expect(tx1).to.emit(erc721Instance, "Transfer");
@@ -309,7 +309,7 @@ describe("Factory Exchange Referral", function () {
             .div(refProgram.refDecrease ** 0),
         );
 
-      if (network.chainId === 1337) {
+      if (network.chainId === 13378) {
         await blockAwait();
       }
       const balance = await erc721Instance.balanceOf(this.owner.address);

@@ -39,18 +39,18 @@ export default {
         "0xae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f", // 0xf17f52151EbEF6C7334FAD080c5704D77216b732
       ],
     },
+    binancetest: {
+      url: process.env.BINANCE_RPC_URL,
+      chainId: 97,
+      gasPrice: 20000000000,
+      accounts: {
+        mnemonic: process.env.MM_MNEMONIC,
+      },
+    },
     goerli: {
       url: process.env.GOERLI_RPC_URL,
       accounts: [`0x${PRIVATE_KEY}`],
       timeout: 142000,
-    },
-    rinkeby: {
-      url: process.env.RINKEBY_RPC_URL,
-      gas: 2100000,
-      gasPrice: 8000000000,
-      timeout: 142000,
-      accounts: [PRIVATE_KEY],
-      saveDeployments: true,
     },
   },
   solidity: {
