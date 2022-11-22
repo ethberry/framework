@@ -6,7 +6,6 @@ import { Box, FormHelperText } from "@mui/material";
 import { EthInput } from "@gemunion/mui-inputs-mask";
 
 export interface ITokenInputProps {
-  prefix?: string;
   name?: string;
   readOnly?: boolean;
   symbol?: string;
@@ -14,7 +13,7 @@ export interface ITokenInputProps {
 }
 
 export const AmountInput: FC<ITokenInputProps> = props => {
-  const { prefix = "", name = "amount", getMaxBalance, symbol, readOnly } = props;
+  const { name = "amount", getMaxBalance, symbol, readOnly } = props;
 
   const { formatMessage } = useIntl();
 
@@ -46,7 +45,7 @@ export const AmountInput: FC<ITokenInputProps> = props => {
       <Box sx={{ display: "flex", justifyContent: "flex-end", position: "absolute", top: 4, right: 0 }}>
         {maxValue ? <FormHelperText>{helperAmountText}</FormHelperText> : null}
       </Box>
-      <EthInput name={prefix ? `${prefix}.${name}` : name} units={decimals} symbol={symbol} readOnly={readOnly} />
+      <EthInput name={name} units={decimals} symbol={symbol} readOnly={readOnly} />
     </Box>
   );
 };

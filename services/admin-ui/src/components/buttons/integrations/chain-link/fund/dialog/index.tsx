@@ -6,8 +6,8 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
 import LinkSol from "@framework/core-contracts/artifacts/contracts/ThirdParty/LinkToken.sol/LinkToken.json";
 
-import { AmountInput } from "../../../../../inputs/amount";
 import { ContractInput } from "../../../../../inputs/contract";
+import { AmountInput } from "../inputs/amount";
 import { validationSchema } from "./validation";
 
 export interface IChainLinkFundDto {
@@ -30,9 +30,8 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
     async (_decimals: number, web3Context: Web3ContextType) => {
       // https://docs.chain.link/docs/link-token-contracts/
       const contract = new Contract(process.env.LINK_ADDR, LinkSol.abi, web3Context.provider?.getSigner());
-      return contract.balanceOf(web3Context.account).then((balance: any) => {
-        return utils.formatEther(balance.value);
-      }) as Promise<string>;
+      const { value } = await contract.balanceOf(web3Context.account);
+      return utils.formatEther(value);
     },
     { success: false },
   );
