@@ -74,15 +74,17 @@ export const PriceInput: FC<IPriceEditDialogProps> = props => {
               </Paper>
             </Box>
 
-            <Box ml={2}>
-              {multiple && (
+            {multiple && (
+              <Box ml={2}>
                 <Tooltip title={formatMessage({ id: "form.tips.delete" })}>
-                  <IconButton aria-label="delete" onClick={handleOptionDelete(i)} disabled={!i}>
-                    <Delete />
-                  </IconButton>
+                  <span>
+                    <IconButton aria-label="delete" onClick={handleOptionDelete(i)} disabled={!i}>
+                      <Delete />
+                    </IconButton>
+                  </span>
                 </Tooltip>
-              )}
-            </Box>
+              </Box>
+            )}
           </Box>
         ))}
 

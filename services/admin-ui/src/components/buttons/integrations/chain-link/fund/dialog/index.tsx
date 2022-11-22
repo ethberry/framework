@@ -1,10 +1,14 @@
 import { FC } from "react";
+import { Web3ContextType } from "@web3-react/core";
+import { Contract, utils } from "ethers";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { EthInput } from "@gemunion/mui-inputs-mask";
+import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+import LinkSol from "@framework/core-contracts/artifacts/contracts/ThirdParty/LinkToken.sol/LinkToken.json";
 
-import { validationSchema } from "./validation";
+import { AmountInput } from "../../../../../inputs/amount";
 import { ContractInput } from "../../../../../inputs/contract";
+import { validationSchema } from "./validation";
 
 export interface IChainLinkFundDto {
   contractId: number;
@@ -22,6 +26,17 @@ export interface IChainLinkFundDialogProps {
 export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
   const { initialValues, ...rest } = props;
 
+  const getMaxBalance = useMetamaskValue(
+    async (_decimals: number, web3Context: Web3ContextType) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      const contract = new Contract(process.env.LINK_ADDR, LinkSol.abi, web3Context.provider?.getSigner());
+      return contract.balanceOf(web3Context.account).then((balance: any) => {
+        return utils.formatEther(balance.value);
+      }) as Promise<string>;
+    },
+    { success: false },
+  );
+
   return (
     <FormDialog
       initialValues={initialValues}
@@ -31,7 +46,7 @@ export const ChainLinkFundDialog: FC<IChainLinkFundDialogProps> = props => {
       {...rest}
     >
       <ContractInput name="contractId" controller="chain-link" />
-      <EthInput name="amount" units={18} symbol="" />
+      <AmountInput symbol="" getMaxBalance={getMaxBalance} />
     </FormDialog>
   );
 };
