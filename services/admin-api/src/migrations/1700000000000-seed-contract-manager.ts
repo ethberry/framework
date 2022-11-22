@@ -17,7 +17,7 @@ export class SeedContractManager1700000000000 implements MigrationInterface {
                created_at,
                updated_at
         from ${ns}.contract
-        where chain_id = 1337
+        where chain_id = 13378
           and contract_type != 'NATIVE'
           and contract_status = 'ACTIVE'
           and contract_module = 'HIERARCHY'
@@ -28,7 +28,7 @@ export class SeedContractManager1700000000000 implements MigrationInterface {
                         created_at,
                         updated_at
         from ${ns}.contract
-        where chain_id = 1337
+        where chain_id = 13378
           and contract_type != 'NATIVE'
           and contract_status = 'ACTIVE'
           and contract_module = 'MYSTERY'
@@ -39,7 +39,7 @@ export class SeedContractManager1700000000000 implements MigrationInterface {
                created_at,
                updated_at
         from ${ns}.contract
-        where chain_id = 1337
+        where chain_id = 13378
           and contract_type != 'NATIVE'
           and contract_status = 'ACTIVE'
           and contract_module = 'LOTTERY';

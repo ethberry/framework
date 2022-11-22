@@ -6,7 +6,7 @@ import { IPyramidRule } from "@framework/types";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatPenalty, formatPrice } from "../../../../../utils/money";
 import { formatDuration } from "../../../../../utils/time";
 
 export interface IPyramidViewDialogProps {
@@ -18,7 +18,7 @@ export interface IPyramidViewDialogProps {
 
 export const PyramidViewDialog: FC<IPyramidViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
-  const { title, description, deposit, reward, durationAmount, durationUnit } = initialValues;
+  const { title, description, deposit, reward, durationAmount, durationUnit, penalty } = initialValues;
 
   const { formatMessage } = useIntl();
 
@@ -63,10 +63,16 @@ export const PyramidViewDialog: FC<IPyramidViewDialogProps> = props => {
               </TableCell>
               <TableCell align="right">
                 {formatMessage(
-                  { id: `enum.durationUnit.${durationUnit}` },
+                  { id: `enums.durationUnit.${durationUnit}` },
                   { count: formatDuration({ durationAmount, durationUnit }) },
                 )}
               </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.penalty" />
+              </TableCell>
+              <TableCell align="right">{formatPenalty(penalty)}%</TableCell>
             </TableRow>
           </TableBody>
         </Table>

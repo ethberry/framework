@@ -139,6 +139,13 @@ export class ContractService {
     return this.contractEntityRepository.findOne({ where, ...options });
   }
 
+  public findAll(
+    where: FindOptionsWhere<ContractEntity>,
+    options?: FindOneOptions<ContractEntity>,
+  ): Promise<Array<ContractEntity>> {
+    return this.contractEntityRepository.find({ where, ...options });
+  }
+
   public async update(
     where: FindOptionsWhere<ContractEntity>,
     dto: Partial<IContractUpdateDto>,

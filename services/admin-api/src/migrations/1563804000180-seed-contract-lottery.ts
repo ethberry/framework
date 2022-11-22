@@ -8,7 +8,7 @@ export class SeedContractLotteryAt1563804000180 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const erc721ContractLotteryAddress = process.env.ERC721_LOTTERY_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || 1337;
+    const chainId = process.env.CHAIN_ID || 13378;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

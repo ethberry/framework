@@ -47,7 +47,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
           this.loggerService.error(error);
         });
 
-      const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+      const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
 
       userEntity = await this.userService.import({
         displayName: firebaseUser?.displayName,

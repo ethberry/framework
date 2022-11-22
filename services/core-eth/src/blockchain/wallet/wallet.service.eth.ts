@@ -37,7 +37,17 @@ export class WalletServiceEth {
     } = event;
     await this.updateHistory(event, context);
 
-    await this.payeesService.create({ account: account.toLowerCase(), shares: ~~shares });
+    const contractEntity = await this.contractService.findOne({ address: context.address.toLowerCase() });
+
+    if (!contractEntity) {
+      throw new NotFoundException("contractNotFound");
+    }
+
+    await this.payeesService.create({
+      account: account.toLowerCase(),
+      shares: ~~shares,
+      contractId: contractEntity.id,
+    });
   }
 
   public async addEth(event: ILogEvent<IExchangePaymentReceivedEvent>, context: Log): Promise<void> {
@@ -46,15 +56,14 @@ export class WalletServiceEth {
     } = event;
     await this.updateHistory(event, context);
 
+    // get NATIVE token
     const tokenEntity = await this.tokenService.getToken("0", constants.AddressZero, this.contractService.chainId);
 
     if (!tokenEntity) {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const exchangeAddr = this.configService.get<string>("EXCHANGE_ADDR", "");
-
-    await this.balanceService.increment(tokenEntity.id, exchangeAddr.toLowerCase(), amount);
+    await this.balanceService.increment(tokenEntity.id, context.address.toLowerCase(), amount);
   }
 
   public async sentEth(event: ILogEvent<IExchangePaymentReceivedEvent>, context: Log): Promise<void> {
@@ -69,9 +78,7 @@ export class WalletServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const exchangeAddr = this.configService.get<string>("EXCHANGE_ADDR", "");
-
-    await this.balanceService.decrement(tokenEntity.id, exchangeAddr.toLowerCase(), amount);
+    await this.balanceService.decrement(tokenEntity.id, context.address.toLowerCase(), amount);
   }
 
   public async releaseEth(event: ILogEvent<IExchangePaymentReleasedEvent>, context: Log): Promise<void> {
@@ -90,9 +97,7 @@ export class WalletServiceEth {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const exchangeAddr = this.configService.get<string>("EXCHANGE_ADDR", "");
-
-    await this.balanceService.decrement(tokenEntity.id, exchangeAddr.toLowerCase(), amount);
+    await this.balanceService.decrement(tokenEntity.id, context.address.toLowerCase(), amount);
   }
 
   public async releaseErc20(event: ILogEvent<IExchangeErc20PaymentReleasedEvent>, context: Log): Promise<void> {

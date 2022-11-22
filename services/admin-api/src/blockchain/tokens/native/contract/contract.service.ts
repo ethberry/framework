@@ -39,7 +39,7 @@ export class NativeContractService extends ContractService {
 
   public async create(dto: INativeContractCreateDto): Promise<ContractEntity> {
     const { symbol, title, description } = dto;
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
 
     const contractEntity = await this.contractEntityRepository
       .create({

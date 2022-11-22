@@ -19,7 +19,11 @@ export const PyramidRewardButton: FC<IPyramidRewardButtonProps> = props => {
   const { formatMessage } = useIntl();
 
   const metaFn = useMetamask((stake: IPyramidDeposit, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.PYRAMID_ADDR, PyramidSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(
+      stake.pyramidRule!.contract.address,
+      PyramidSol.abi,
+      web3Context.provider?.getSigner(),
+    );
     return contract.receiveReward(stake.externalId, false, false) as Promise<void>;
   });
 

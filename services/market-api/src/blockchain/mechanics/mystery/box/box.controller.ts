@@ -20,7 +20,7 @@ export class MysteryBoxController {
     @Query() dto: MysteryboxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
     return this.mysteryBoxService.search(dto, userEntity?.chainId || chainId);
   }
 
@@ -35,7 +35,7 @@ export class MysteryBoxController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
     return this.mysteryBoxService.search({ take: 10 }, userEntity?.chainId || chainId);
   }
 

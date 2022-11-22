@@ -59,7 +59,7 @@ jobs:
           NODE_OPTIONS: "--max_old_space_size=4096"
           NODE_ENV: test
           POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
-          CHAIN_ID: 1337
+          CHAIN_ID: 13378
           GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}

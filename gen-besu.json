@@ -1,6 +1,6 @@
 {
   "config": {
-    "chainId": 1337,
+    "chainId": 13378,
     "muirglacierblock": 0,
     "ibft2": {
       "blockperiodseconds": 10,

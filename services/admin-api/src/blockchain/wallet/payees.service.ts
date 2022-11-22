@@ -33,6 +33,7 @@ export class PayeesService {
     const queryBuilder = this.payeesEntityRepository.createQueryBuilder("payee");
 
     queryBuilder.select();
+    queryBuilder.leftJoinAndSelect("payee.contract", "contract");
 
     queryBuilder.skip(skip);
     queryBuilder.take(take);

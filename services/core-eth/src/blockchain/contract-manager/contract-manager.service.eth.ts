@@ -64,7 +64,7 @@ export class ContractManagerServiceEth {
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
   ) {
-    this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
+    this.chainId = ~~configService.get<string>("CHAIN_ID", "13378");
   }
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {

@@ -41,7 +41,7 @@ export class LotterySignService {
       {
         name: "Lottery",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "1337"),
+        chainId: ~~this.configService.get<string>("CHAIN_ID", "13378"),
         verifyingContract: this.configService.get<string>("LOTTERY_ADDR", ""),
       },
       // Types

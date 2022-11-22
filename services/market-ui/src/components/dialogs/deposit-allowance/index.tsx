@@ -4,19 +4,19 @@ import { EthInput } from "@gemunion/mui-inputs-mask";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { validationSchema } from "./validation";
 
-export interface IStakingAllowanceDto {
+export interface IAllowanceDto {
   amount: string;
   decimals: number;
 }
 
-export interface IStakingDepositAllowanceDialogProps {
+export interface IDepositAllowanceDialogProps {
   open: boolean;
   onCancel: () => void;
-  onConfirm: (values: IStakingAllowanceDto, form: any) => Promise<void>;
-  initialValues: IStakingAllowanceDto;
+  onConfirm: (values: IAllowanceDto, form: any) => Promise<void>;
+  initialValues: IAllowanceDto;
 }
 
-export const StakingDepositAllowanceDialog: FC<IStakingDepositAllowanceDialogProps> = props => {
+export const DepositAllowanceDialog: FC<IDepositAllowanceDialogProps> = props => {
   const { initialValues, ...rest } = props;
   const { decimals } = initialValues;
 
@@ -24,7 +24,7 @@ export const StakingDepositAllowanceDialog: FC<IStakingDepositAllowanceDialogPro
     <FormDialog
       initialValues={initialValues}
       validationSchema={validationSchema}
-      message="dialogs.staking-allowance"
+      message="dialogs.deposit-allowance"
       testId="AllowanceForm"
       {...rest}
     >

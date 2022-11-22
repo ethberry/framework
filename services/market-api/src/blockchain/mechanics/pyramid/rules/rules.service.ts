@@ -18,6 +18,7 @@ export class PyramidRulesService {
 
     const queryBuilder = this.pyramidRuleEntityRepository.createQueryBuilder("rule");
 
+    queryBuilder.leftJoinAndSelect("rule.contract", "contract");
     queryBuilder.leftJoinAndSelect("rule.deposit", "deposit");
     queryBuilder.leftJoinAndSelect("deposit.components", "deposit_components");
     // queryBuilder.leftJoinAndSelect("deposit_components.template", "deposit_template");
@@ -94,6 +95,7 @@ export class PyramidRulesService {
       join: {
         alias: "rule",
         leftJoinAndSelect: {
+          contract: "rule.contract",
           deposit: "rule.deposit",
           deposit_components: "deposit.components",
           deposit_contract: "deposit_components.contract",

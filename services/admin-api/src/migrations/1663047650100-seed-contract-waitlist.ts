@@ -6,7 +6,7 @@ import { ns } from "@framework/constants";
 export class SeedContractWaitlistAt1663047650100 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || 1337;
+    const chainId = process.env.CHAIN_ID || 13378;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const waitlistAddr = process.env.WAITLIST_ADDR || wallet;
 

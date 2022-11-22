@@ -65,7 +65,7 @@ export const StakingViewDialog: FC<IStakingViewDialogProps> = props => {
               </TableCell>
               <TableCell align="right">
                 {formatMessage(
-                  { id: `enum.durationUnit.${durationUnit}` },
+                  { id: `enums.durationUnit.${durationUnit}` },
                   { count: formatDuration({ durationAmount, durationUnit }) },
                 )}
               </TableCell>

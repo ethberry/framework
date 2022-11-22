@@ -27,7 +27,7 @@ export class ReferralServiceEth {
     private readonly referralHistoryService: ReferralHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
+    this.chainId = ~~configService.get<string>("CHAIN_ID", "13378");
   }
 
   public async reward(event: ILogEvent<IReferralRewardEvent>, context: Log): Promise<void> {

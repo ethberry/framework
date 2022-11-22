@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
@@ -68,10 +68,10 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <PriceInput prefix="deposit" readOnly={readOnly} />
+          <PriceInput prefix="deposit" readOnly={readOnly} contractModule={[ModuleType.HIERARCHY]} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PriceInput prefix="reward" readOnly={readOnly} />
+          <PriceInput prefix="reward" readOnly={readOnly} contractModule={[ModuleType.HIERARCHY]} />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />
@@ -83,6 +83,7 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
         }}
         readOnly={readOnly}
       />
+      <CheckboxInput name="recurrent" readOnly={readOnly} />
     </FormDialog>
   );
 };

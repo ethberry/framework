@@ -5,26 +5,30 @@ import { Redeem } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { IStakingDeposit, StakingDepositStatus } from "@framework/types";
+import { IPyramidDeposit, PyramidDepositStatus } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
+import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 
 import { DepositRewardDialog, IDepositRewardDto } from "../../../../dialogs/reward-dialog";
 
-export interface IStakingRewardComplexButtonProps {
-  stake: IStakingDeposit;
+export interface IPyramidRewardComplexButtonProps {
+  stake: IPyramidDeposit;
 }
 
-export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = props => {
+export const PyramidRewardComplexButton: FC<IPyramidRewardComplexButtonProps> = props => {
   const { stake } = props;
 
   const [isRewardDialogOpen, setIsRewardDialogOpen] = useState(false);
 
   const { formatMessage } = useIntl();
 
-  const metaFn = useMetamask((stake: IStakingDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
-    const contract = new Contract(process.env.STAKING_ADDR, StakingSol.abi, web3Context.provider?.getSigner());
-    return contract.receiveReward(stake.externalId, values.withdrawDeposit, values.breakLastPeriod) as Promise<void>;
+  const metaFn = useMetamask((stake: IPyramidDeposit, values: IDepositRewardDto, web3Context: Web3ContextType) => {
+    const contract = new Contract(
+      stake.pyramidRule!.contract.address,
+      PyramidSol.abi,
+      web3Context.provider?.getSigner(),
+    );
+    return contract.receiveReward(stake.externalId, values.withdrawDeposit, false) as Promise<void>;
   });
 
   const handleReward = () => {
@@ -39,7 +43,7 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
     setIsRewardDialogOpen(false);
   };
 
-  if (stake.stakingDepositStatus !== StakingDepositStatus.ACTIVE) {
+  if (stake.pyramidDepositStatus !== PyramidDepositStatus.ACTIVE) {
     return null;
   }
 
@@ -55,9 +59,8 @@ export const StakingRewardComplexButton: FC<IStakingRewardComplexButtonProps> = 
         onCancel={handleDeployCancel}
         open={isRewardDialogOpen}
         initialValues={{
-          rule: stake.stakingRule!,
+          rule: stake.pyramidRule!,
           withdrawDeposit: false,
-          breakLastPeriod: false,
         }}
       />
     </Fragment>

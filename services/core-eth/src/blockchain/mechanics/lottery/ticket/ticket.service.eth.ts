@@ -1,4 +1,5 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { Log } from "@ethersproject/abstract-provider";
 import { constants } from "ethers";
@@ -24,6 +25,8 @@ import { TokenEntity } from "../../../hierarchy/token/token.entity";
 
 @Injectable()
 export class LotteryTicketServiceEth {
+  public lotteryAddr: string;
+
   constructor(
     @Inject(Logger)
     private readonly loggerService: LoggerService,
@@ -35,7 +38,10 @@ export class LotteryTicketServiceEth {
     private readonly tokenService: TokenService,
     private readonly tokenServiceEth: TokenServiceEth,
     protected readonly balanceService: BalanceService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.lotteryAddr = configService.get<string>("ERC721_LOTTERY_ADDR", "0x");
+  }
 
   public async purchase(event: ILogEvent<ILotteryPurchaseEvent>, context: Log): Promise<void> {
     await this.updateHistory(event, context);
@@ -63,8 +69,13 @@ export class LotteryTicketServiceEth {
 
   public async createTicketToken(tokenId: string, account: string): Promise<TokenEntity> {
     // LOTTERY Ticket Template 801001
-    const templateEntity = await this.templateService.findOne({ id: 801001 }, { relations: { contract: true } });
-
+    // const templateEntity = await this.templateService.findOne({ id: 801001 }, { relations: { contract: true } });
+    const templateEntity = await this.templateService.findOne(
+      {
+        contract: { address: this.lotteryAddr.toLowerCase() },
+      },
+      { relations: { contract: true } },
+    );
     if (!templateEntity) {
       throw new NotFoundException("templateNotFound");
     }

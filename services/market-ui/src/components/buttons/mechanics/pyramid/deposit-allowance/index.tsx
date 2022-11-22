@@ -8,17 +8,17 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
-import { IPyramidRule, IStakingRule, TokenType } from "@framework/types";
+import { IPyramidRule, TokenType } from "@framework/types";
 // import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 
-import Allowance from "../../dialogs/deposit-allowance/allowance.json";
-import { IAllowanceDto, DepositAllowanceDialog } from "../../dialogs/deposit-allowance";
+import Allowance from "../../../../dialogs/deposit-allowance/allowance.json";
+import { IAllowanceDto, DepositAllowanceDialog } from "../../../../dialogs/deposit-allowance";
 
-export interface IStakingDepositAllowanceButtonProps {
-  rule: IStakingRule | IPyramidRule;
+export interface IDepositAllowanceButtonProps {
+  rule: IPyramidRule;
 }
 
-export const StakingDepositAllowanceButton: FC<IStakingDepositAllowanceButtonProps> = props => {
+export const DepositAllowanceButton: FC<IDepositAllowanceButtonProps> = props => {
   const { rule } = props;
   const { formatMessage } = useIntl();
 
@@ -39,7 +39,7 @@ export const StakingDepositAllowanceButton: FC<IStakingDepositAllowanceButtonPro
         Allowance.abi,
         web3Context.provider?.getSigner(),
       );
-      return contractErc20.approve(process.env.STAKING_ADDR, values.amount) as Promise<any>;
+      return contractErc20.approve(rule.contract.address, values.amount) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }

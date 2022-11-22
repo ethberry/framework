@@ -6,7 +6,7 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeo
 import { wallet } from "@gemunion/constants";
 
 import { ContractEntity } from "./contract.entity";
-import { ContractFeatures, ContractType, ModuleType, TokenType } from "@framework/types";
+import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
 import { IContractListenerResult } from "../../../common/interfaces";
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ContractService {
     private readonly contractEntityRepository: Repository<ContractEntity>,
     private readonly configService: ConfigService,
   ) {
-    this.chainId = ~~configService.get<string>("CHAIN_ID", "1337");
+    this.chainId = ~~configService.get<string>("CHAIN_ID", "13378");
   }
 
   public findOne(

@@ -14,7 +14,7 @@ export class SeedContractErc998At1563804000140 implements MigrationInterface {
     const erc998ContractUpgradeableAddress = process.env.ERC998_UPGRADEABLE_ADDR || wallet;
     const erc998ContractRandomAddress = process.env.ERC998_RANDOM_ADDR || wallet;
     const erc998ContractGenesAddress = process.env.ERC998_GENES_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || 1337;
+    const chainId = process.env.CHAIN_ID || 13378;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

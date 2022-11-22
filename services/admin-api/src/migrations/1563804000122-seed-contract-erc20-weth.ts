@@ -85,7 +85,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
       ), (
         4206,
         '${process.env.USDT_ADDR || wallet}',
-        1337,
+        13378,
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',

@@ -1,4 +1,6 @@
 import { Logger, Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
@@ -15,6 +17,7 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
 
 @Module({
   imports: [
+    ConfigModule,
     LotteryTicketLogModule,
     ContractModule,
     TokenModule,

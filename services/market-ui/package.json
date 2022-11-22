@@ -45,7 +45,7 @@
     "@gemunion/provider-theme": "6.0.17",
     "@gemunion/provider-user": "6.0.3",
     "@gemunion/provider-user-firebase": "1.0.5",
-    "@gemunion/provider-wallet": "3.0.17",
+    "@gemunion/provider-wallet": "3.1.0",
     "@gemunion/react-hooks": "1.0.43",
     "@gemunion/react-hooks-eth": "1.0.52",
     "@gemunion/types-collection": "1.5.4",

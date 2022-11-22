@@ -19,7 +19,7 @@ import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } f
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
-import { StakingDepositButton } from "../../../../components/buttons";
+import { StakingDepositAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
 
@@ -83,6 +83,7 @@ export const StakingRules: FC = () => {
             <ListItem key={i}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
+                <StakingDepositAllowanceButton rule={rule} />
                 <StakingDepositButton rule={rule} />
                 <IconButton onClick={handleView(rule)}>
                   <Visibility />

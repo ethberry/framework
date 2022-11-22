@@ -23,6 +23,7 @@ export const SystemPayees: FC = () => {
         <List>
           {rows.map((payee, i) => (
             <ListItem key={i}>
+              <ListItemText>{payee.contract!.title}</ListItemText>
               <ListItemText>{payee.account}</ListItemText>
               <ListItemText>{payee.shares}%</ListItemText>
             </ListItem>

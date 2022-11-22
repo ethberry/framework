@@ -19,7 +19,8 @@ import type { IPyramidRule, IPyramidRuleItemSearchDto, IPyramidRuleSearchDto } f
 import { DurationUnit, TokenType } from "@framework/types";
 
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
-import { PyramidDepositButton } from "../../../../components/buttons";
+import { DepositAllowanceButton, PyramidDepositButton } from "../../../../components/buttons";
+
 import { PyramidRuleSearchForm } from "./form";
 import { PyramidViewDialog } from "./view";
 
@@ -82,6 +83,7 @@ export const PyramidRules: FC = () => {
             <ListItem key={i}>
               <ListItemText>{rule.title}</ListItemText>
               <ListItemSecondaryAction>
+                <DepositAllowanceButton rule={rule} />
                 <PyramidDepositButton rule={rule} />
                 <IconButton onClick={handleView(rule)}>
                   <Visibility />

@@ -18,15 +18,15 @@ export class WalletController {
   @Get("/balances")
   @UseInterceptors(PaginationInterceptor)
   @UseInterceptors(NotFoundInterceptor)
-  public getExchangeBalance(@Query() dto: BalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
-    return this.walletService.getExchangeBalance(dto);
+  public getWalletBalance(@Query() dto: BalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
+    return this.walletService.getWalletBalance(dto);
   }
 
   @Get("/history")
   @UseInterceptors(PaginationInterceptor)
   @UseInterceptors(NotFoundInterceptor)
   public getExchangeBalanceHistory(@Query() dto: BalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
-    return this.walletService.getExchangeBalance(dto);
+    return this.walletService.getWalletBalance(dto);
   }
 
   @Get("/payees/")

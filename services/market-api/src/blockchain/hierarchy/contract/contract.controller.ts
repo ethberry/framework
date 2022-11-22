@@ -18,7 +18,7 @@ export class ContractController {
     @Query() dto: ContractAutocompleteDto,
     @User() userEntity: UserEntity,
   ): Promise<Array<ContractEntity>> {
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
     return this.contractService.autocomplete(dto, userEntity?.chainId || chainId);
   }
 }

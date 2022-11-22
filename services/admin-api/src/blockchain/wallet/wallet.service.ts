@@ -1,24 +1,39 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
+import { wallet } from "@gemunion/constants";
+
 import { BalanceService } from "../hierarchy/balance/balance.service";
 import { BalanceEntity } from "../hierarchy/balance/balance.entity";
 import { IBalanceSearchDto, ModuleType } from "@framework/types";
 import { ContractService } from "../hierarchy/contract/contract.service";
-import { TemplateEntity } from "../hierarchy/template/template.entity";
 
 @Injectable()
 export class WalletService {
   constructor(protected readonly balanceService: BalanceService, protected readonly contractService: ContractService) {}
 
-  public async getExchangeBalance(dto: IBalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
-    const exchangeContractEntity = await this.contractService.findOne({
+  public async getWalletBalance(dto: IBalanceSearchDto): Promise<[Array<BalanceEntity>, number]> {
+    const contractExchangeEntity = await this.contractService.findOne({
       contractModule: ModuleType.SYSTEM,
       title: "EXCHANGE",
     });
 
-    if (!exchangeContractEntity) {
-      throw new NotFoundException("entityNotFound");
+    if (!contractExchangeEntity) {
+      throw new NotFoundException("contractExchangeNotFound");
     }
 
-    return this.balanceService.search(dto, exchangeContractEntity.address);
+    // MODULE:PYRAMID
+    const contractPyramidEntities = await this.contractService.findAll({
+      contractModule: ModuleType.PYRAMID,
+    });
+
+    if (!contractPyramidEntities) {
+      throw new NotFoundException("contractsPyramidNotFound");
+    }
+
+    const accounts = contractPyramidEntities.map(contract => contract.address).filter(c => c !== wallet);
+    accounts.push(contractExchangeEntity.address);
+    Object.assign(dto, { accounts }); // todo add to dto.accounts
+    // return this.balanceService.search(dto, contractExchangeEntity.address);
+    const balances = await this.balanceService.search(dto);
+    return balances;
   }
 }

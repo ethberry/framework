@@ -19,7 +19,7 @@ import { useCollection } from "@gemunion/react-hooks";
 
 import { PyramidDepositSearchForm } from "./form";
 import { StakesViewDialog } from "./view";
-import { PyramidRewardButton } from "../../../../components/buttons";
+import { PyramidRewardComplexButton } from "../../../../components/buttons";
 
 export const PyramidDeposit: FC = () => {
   const {
@@ -70,7 +70,7 @@ export const PyramidDeposit: FC = () => {
             <ListItem key={i}>
               <ListItemText>{stake.pyramidRule?.title}</ListItemText>
               <ListItemSecondaryAction>
-                <PyramidRewardButton stake={stake} />
+                <PyramidRewardComplexButton stake={stake} />
                 <IconButton onClick={handleView(stake)}>
                   <Visibility />
                 </IconButton>

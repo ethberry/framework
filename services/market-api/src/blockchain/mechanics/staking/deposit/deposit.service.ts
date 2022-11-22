@@ -48,8 +48,9 @@ export class StakingDepositService {
 
     queryBuilder.leftJoinAndSelect("rule.reward", "reward");
     queryBuilder.leftJoinAndSelect("reward.components", "reward_components");
-    // queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
     queryBuilder.leftJoinAndSelect("reward_components.contract", "reward_contract");
+
+    queryBuilder.leftJoinAndSelect("reward_components.template", "reward_template");
 
     queryBuilder.select();
 

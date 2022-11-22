@@ -7,7 +7,7 @@ import { imageUrl, ns } from "@framework/constants";
 export class SeedContractNativeAt1563804000110 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || 1337;
+    const chainId = process.env.CHAIN_ID || 13378;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -30,7 +30,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ) VALUES (
         1101,
         '${constants.AddressZero}',
-        '${~~chainId === 1337 ? 1 : chainId}',
+        '${~~chainId === 13378 ? 1 : chainId}',
         'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -47,7 +47,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ), (
         1102,
         '${constants.AddressZero}',
-        '${~~chainId === 1337 ? 1 : chainId}',
+        '${~~chainId === 13378 ? 1 : chainId}',
         'Inactive token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -98,7 +98,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ), (
         4101,
         '${constants.AddressZero}',
-        '1337',
+        '13378',
         'Native token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',

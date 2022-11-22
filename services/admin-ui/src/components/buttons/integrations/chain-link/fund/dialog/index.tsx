@@ -12,7 +12,9 @@ import { validationSchema } from "./validation";
 
 export interface IChainLinkFundDto {
   contractId: number;
-  address: string;
+  contract: {
+    address: string;
+  };
   amount: string;
 }
 

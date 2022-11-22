@@ -8,7 +8,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IStakingDeposit } from "@framework/types";
 
-import { formatPenalty, formatPrice } from "../../../../../utils/money";
+import { formatPenalty, formatComplexPrice } from "../../../../../utils/money";
 import { formatDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
@@ -21,6 +21,7 @@ export interface IStakesViewDialogProps {
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
   const { stakingRule, startTimestamp, withdrawTimestamp } = initialValues;
+  const { penalty } = stakingRule || { penalty: 0 };
 
   const { formatMessage } = useIntl();
 
@@ -51,13 +52,13 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.deposit" />
               </TableCell>
-              <TableCell align="right">{formatPrice(stakingRule?.deposit)}</TableCell>
+              <TableCell align="right">{formatComplexPrice(stakingRule?.deposit)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
                 <FormattedMessage id="form.labels.reward" />
               </TableCell>
-              <TableCell align="right">{formatPrice(stakingRule?.reward)}</TableCell>
+              <TableCell align="right">{formatComplexPrice(stakingRule?.reward)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell component="th" scope="row">
@@ -66,7 +67,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell align="right">
                 {stakingRule?.durationAmount && stakingRule?.durationUnit
                   ? formatMessage(
-                      { id: `enum.durationUnit.${stakingRule.durationUnit}` },
+                      { id: `enums.durationUnit.${stakingRule.durationUnit}` },
                       {
                         count: formatDuration({
                           durationAmount: stakingRule.durationAmount,
@@ -104,6 +105,12 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
                 <FormattedMessage id="form.labels.recurrent" />
               </TableCell>
               <TableCell align="right">{stakingRule?.recurrent ? "yes" : "no"}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.penalty" />
+              </TableCell>
+              <TableCell align="right">{formatPenalty(penalty)}%</TableCell>
             </TableRow>
           </TableBody>
         </Table>

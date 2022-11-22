@@ -1,10 +1,10 @@
-import { Controller, Get, Query, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, Query, UseInterceptors } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import { PaginationInterceptor } from "@gemunion/nest-js-utils";
+import { AddressPipe, NotFoundInterceptor, PaginationInterceptor } from "@gemunion/nest-js-utils";
 
 import { BalanceService } from "./balance.service";
 import { BalanceEntity } from "./balance.entity";
-import { BalanceSearchDto } from "./dto";
+import { BalanceAutocompleteDto, BalanceSearchDto } from "./dto";
 
 @ApiBearerAuth()
 @Controller("/balances")
@@ -17,8 +17,14 @@ export class BalanceController {
     return this.balanceService.search(dto);
   }
 
-  // @Get("/autocomplete")
-  // public autocomplete(@Query() dto: BalanceAutocompleteDto): Promise<Array<BalanceEntity>> {
-  //   return this.balanceService.autocomplete(dto);
-  // }
+  @Get("/autocomplete")
+  public autocomplete(@Query() dto: BalanceAutocompleteDto): Promise<Array<BalanceEntity>> {
+    return this.balanceService.autocomplete(dto);
+  }
+
+  @Get("/:address")
+  @UseInterceptors(NotFoundInterceptor)
+  public findAccountBalances(@Param("address", AddressPipe) address: string): Promise<Array<BalanceEntity>> {
+    return this.balanceService.searchByAddress(address);
+  }
 }

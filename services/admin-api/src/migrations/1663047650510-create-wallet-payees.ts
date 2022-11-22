@@ -22,12 +22,24 @@ export class CreateWalletPayees1663047650510 implements MigrationInterface {
           isNullable: true,
         },
         {
+          name: "contract_id",
+          type: "int",
+        },
+        {
           name: "created_at",
           type: "timestamptz",
         },
         {
           name: "updated_at",
           type: "timestamptz",
+        },
+      ],
+      foreignKeys: [
+        {
+          columnNames: ["contract_id"],
+          referencedColumnNames: ["id"],
+          referencedTableName: `${ns}.contract`,
+          onDelete: "CASCADE",
         },
       ],
     });

@@ -57,7 +57,7 @@ jobs:
         env:
           NODE_ENV: test
           POSTGRES_URL: 'postgres://postgres:postgres@0.0.0.0:5432/framework-test'
-          CHAIN_ID: 1337
+          CHAIN_ID: 13378
           GEMUNION_API_KEY: ${{ secrets.GEMUNION_API_KEY }}
           GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 

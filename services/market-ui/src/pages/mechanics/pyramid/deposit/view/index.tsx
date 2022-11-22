@@ -6,7 +6,7 @@ import { RichTextDisplay } from "@gemunion/mui-rte";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { IPyramidDeposit } from "@framework/types";
 
-import { formatPrice } from "../../../../../utils/money";
+import { formatPenalty, formatPrice } from "../../../../../utils/money";
 import { formatDuration } from "../../../../../utils/time";
 
 export interface IStakesViewDialogProps {
@@ -19,6 +19,8 @@ export interface IStakesViewDialogProps {
 export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
   const { initialValues, onConfirm, ...rest } = props;
   const { pyramidRule } = initialValues;
+  const { penalty } = pyramidRule || { penalty: 0 };
+
 
   const { formatMessage } = useIntl();
 
@@ -64,7 +66,7 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
               <TableCell align="right">
                 {pyramidRule?.durationAmount && pyramidRule?.durationUnit
                   ? formatMessage(
-                      { id: `enum.durationUnit.${pyramidRule.durationUnit}` },
+                      { id: `enums.durationUnit.${pyramidRule.durationUnit}` },
                       {
                         count: formatDuration({
                           durationAmount: pyramidRule.durationAmount,
@@ -74,6 +76,12 @@ export const StakesViewDialog: FC<IStakesViewDialogProps> = props => {
                     )
                   : null}
               </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell component="th" scope="row">
+                <FormattedMessage id="form.labels.penalty" />
+              </TableCell>
+              <TableCell align="right">{formatPenalty(penalty)}%</TableCell>
             </TableRow>
           </TableBody>
         </Table>
