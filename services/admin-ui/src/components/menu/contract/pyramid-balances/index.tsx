@@ -5,7 +5,7 @@ import { MonetizationOn } from "@mui/icons-material";
 
 import type { IContract } from "@framework/types";
 
-import { PyramidBalanceDialog } from "./dialog";
+import { PyramidBalanceDialog } from "./view";
 
 export interface IPyramidBalanceMenuItemProps {
   contract: IContract;

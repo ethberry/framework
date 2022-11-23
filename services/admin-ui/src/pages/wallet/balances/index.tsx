@@ -22,7 +22,7 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { useCollection } from "@gemunion/react-hooks";
 import { IBalance, IBalanceSearchDto, TokenType } from "@framework/types";
 import { formatEther } from "../../../utils/money";
-import { emptyToken } from "../../../components/inputs/price/empty-token";
+import { emptyToken } from "../../../components/common/interfaces";
 import { BalanceSearchForm } from "./form";
 import { BalanceWithdrawDialog, IBalanceWithdrawDto } from "./withdraw-dialog";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";

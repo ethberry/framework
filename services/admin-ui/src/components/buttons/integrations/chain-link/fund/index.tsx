@@ -36,7 +36,6 @@ export const ChainLinkFundButton: FC = () => {
   );
 
   useEffect(() => {
-
     if (currentValue) {
       return;
     }

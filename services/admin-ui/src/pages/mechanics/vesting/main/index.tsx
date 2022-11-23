@@ -21,7 +21,7 @@ import { VestingSearchForm } from "./form";
 import { VestingViewDialog } from "./view";
 import { VestingDeployButton } from "../../../../components/buttons";
 import { VestingActionsMenu } from "../../../../components/menu/vesting";
-import { emptyContract } from "../../../../components/inputs/price/empty-contract";
+import { emptyContract } from "../../../../components/common/interfaces";
 
 export const Vesting: FC = () => {
   const {

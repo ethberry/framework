@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { Contract, BigNumber } from "ethers";
+
+import { BigNumber, Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 import { FormattedMessage } from "react-intl";
 import { IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Typography } from "@mui/material";
-import { TransferWithinAStation } from "@mui/icons-material";
-
+import { CurrencyExchange } from "@mui/icons-material";
 import { ProgressOverlay } from "@gemunion/mui-page-layout";
 import { ConfirmationDialog } from "@gemunion/mui-dialog-confirmation";
 import { useMetamask } from "@gemunion/react-hooks-eth";
@@ -13,6 +13,8 @@ import type { IBalance } from "@framework/types";
 
 import IPyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 import { formatEther } from "../../../../../utils/money";
+import { AmountDialog, IAmountDialogDto } from "../amount-dialog";
+import { emptyBalance } from "../../../../common/interfaces";
 
 export interface IPyramidBalanceDialogProps {
   open: boolean;
@@ -25,6 +27,8 @@ export const PyramidBalanceDialog: FC<IPyramidBalanceDialogProps> = props => {
   const { data, ...rest } = props;
 
   const [rows, setRows] = useState<Array<IBalance>>([]);
+  const [isAmountDialogOpen, setIsAmountDialogOpen] = useState(false);
+  const [withdrawBalance, setWithdrawBalance] = useState<IBalance>(emptyBalance);
 
   const { fn, isLoading } = useApiCall(
     async api => {
@@ -35,26 +39,40 @@ export const PyramidBalanceDialog: FC<IPyramidBalanceDialogProps> = props => {
     { success: false },
   );
 
-  const metaWithdraw = useMetamask((values: IBalance, web3Context: Web3ContextType) => {
+  const metaWithdraw = useMetamask((values: IBalance, withdrawAmount: string, web3Context: Web3ContextType) => {
     const contract = new Contract(data.address, IPyramidSol.abi, web3Context.provider?.getSigner());
     // return contract.withdrawToken(values.token!.template!.contract!.address, values.amount) as Promise<void>;
     return contract.withdrawToken(
       values.token!.template!.contract!.address,
-      BigNumber.from(values.amount).sub(1),
+      BigNumber.from(withdrawAmount),
     ) as Promise<void>;
   });
-
-  const handleWithdraw = (values: IBalance): (() => Promise<void>) => {
-    return async () => {
-      return metaWithdraw(values);
-    };
-  };
 
   useEffect(() => {
     void fn().then((rows: Array<IBalance>) => {
       setRows(rows);
     });
   }, []);
+
+  const handleSetAmount = (values: IBalance): (() => void) => {
+    return () => {
+      setWithdrawBalance(values);
+      return setIsAmountDialogOpen(true);
+    };
+  };
+
+  const handleWithdraw = async (values: IBalance, withdrawAmount: string): Promise<void> => {
+    return await metaWithdraw(values, withdrawAmount);
+  };
+
+  const handleSetAmountCancel = () => {
+    setIsAmountDialogOpen(false);
+  };
+
+  const handleAmountConfirm = async (values: IAmountDialogDto): Promise<void> => {
+    await handleWithdraw(values.balance, values.amount);
+    setIsAmountDialogOpen(false);
+  };
 
   return (
     <ConfirmationDialog message="dialogs.pyramidBalance" data-testid="PyramidBalanceDialog" {...rest}>
@@ -72,8 +90,8 @@ export const PyramidBalanceDialog: FC<IPyramidBalanceDialogProps> = props => {
                   )}
                 </ListItemText>
                 <ListItemSecondaryAction>
-                  <IconButton onClick={handleWithdraw(balance)}>
-                    <TransferWithinAStation />
+                  <IconButton onClick={handleSetAmount(balance)}>
+                    <CurrencyExchange />
                   </IconButton>
                 </ListItemSecondaryAction>
               </ListItem>
@@ -85,6 +103,17 @@ export const PyramidBalanceDialog: FC<IPyramidBalanceDialogProps> = props => {
           </Typography>
         )}
       </ProgressOverlay>
+      <AmountDialog
+        onCancel={handleSetAmountCancel}
+        onConfirm={handleAmountConfirm}
+        open={isAmountDialogOpen}
+        message="dialogs.setAmount"
+        testId="AmountDialogForm"
+        initialValues={{
+          balance: withdrawBalance,
+          amount: withdrawBalance.amount,
+        }}
+      />
     </ConfirmationDialog>
   );
 };

@@ -44,6 +44,7 @@
     "pyramidBalance": "Pyramid Balances Withdraw",
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
+    "setAmount": "Set Amount",
     "top-up": "Top up",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
