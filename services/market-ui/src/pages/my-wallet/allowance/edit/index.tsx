@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ContractFeatures, IAsset, TokenType } from "@framework/types";
+import { ContractFeatures, IAsset, TokenType, ModuleType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { ContractInput } from "../../../../components/inputs/contract";
@@ -36,7 +36,7 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       {...rest}
     >
       <TokenTypeInput />
-      <ContractInput name="contractId" related="main" />
+      <ContractInput name="contractId" related="main" data={{ contractModule: [ModuleType.HIERARCHY] }} />
       <AmountInput />
       <ContractInput
         name="customContractId"
