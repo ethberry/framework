@@ -67,6 +67,7 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
         deposit_id,
         reward_id,
         external_id,
+        contract_id,
         pyramid_rule_status,
         created_at,
         updated_at
@@ -78,6 +79,7 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
         90111,
         90112,
         11,
+        4,
         'ACTIVE',
         '${currentDateTime}',
         '${currentDateTime}'
@@ -89,6 +91,7 @@ export class SeedPyramidRulesNativeAt1660436477210 implements MigrationInterface
         90121,
         90122,
         12,
+        4,
         'NEW',
         '${currentDateTime}',
         '${currentDateTime}'

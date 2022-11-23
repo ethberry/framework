@@ -7,9 +7,9 @@ import { baseTokenURI, imageUrl, ns } from "@framework/constants";
 export class SeedContractMysteryAt1563804000160 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const erc721ContractMysteryboxSimpleAddress = process.env.ERC721_MYSTERY_SIMPLE_ADDR || wallet;
-    const erc721ContractMysteryboxPausableAddress = process.env.ERC721_MYSTERY_PAUSABLE_ADDR || wallet;
-    const erc721ContractMysteryboxBlacklistAddress = process.env.ERC721_MYSTERY_BLACKLIST_ADDR || wallet;
+    const erc721ContractMysteryboxSimpleAddress = process.env.ERC721_MYSTERYBOX_SIMPLE_ADDR || wallet;
+    const erc721ContractMysteryboxPausableAddress = process.env.ERC721_MYSTERYBOX_PAUSABLE_ADDR || wallet;
+    const erc721ContractMysteryboxBlacklistAddress = process.env.ERC721_MYSTERYBOX_BLACKLIST_ADDR || wallet;
     const chainId = process.env.CHAIN_ID || 13378;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
