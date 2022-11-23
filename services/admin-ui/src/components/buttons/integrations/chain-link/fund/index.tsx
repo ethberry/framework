@@ -1,67 +1,57 @@
-import { FC, Fragment, useState } from "react";
-import { Button } from "@mui/material";
+import { FC, Fragment, useState, useEffect } from "react";
+import { Button, Typography } from "@mui/material";
+
 import { Savings } from "@mui/icons-material";
 import { Web3ContextType } from "@web3-react/core";
 import { Contract } from "ethers";
 
 import { FormattedMessage } from "react-intl";
 
-import { useMetamask } from "@gemunion/react-hooks-eth";
+import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
+
 import LinkSol from "@framework/core-contracts/artifacts/contracts/ThirdParty/LinkToken.sol/LinkToken.json";
 
 import { ChainLinkFundDialog, IChainLinkFundDto } from "./dialog";
+import { formatEther } from "../../../../../utils/money";
 
 export const ChainLinkFundButton: FC = () => {
   const [isFundDialogOpen, setIsFundDialogOpen] = useState(false);
-  // const [output, setOutput] = useState<string>("");
 
-  const metaFn = useMetamask(async (values: IChainLinkFundDto, web3Context: Web3ContextType) => {
+  const metaFnTransfer = useMetamask(async (values: IChainLinkFundDto, web3Context: Web3ContextType) => {
     // https://docs.chain.link/docs/link-token-contracts/
     const contract = new Contract(process.env.LINK_ADDR, LinkSol.abi, web3Context.provider?.getSigner());
     return contract.transfer(values.contract.address, values.amount) as Promise<void>;
   });
 
-  // const ref = useRef({} as Record<string, string>);
+  const [currentValue, setCurrentValue] = useState<string | null>(null);
 
-  // const loadTokenBalance = useMetamaskValue(
-  //   async (token: string, web3Context: Web3ContextType) => {
-  //     if (token && web3Context.account) {
-  //       let balance: BigNumber;
-  //
-  //       // if (ref.current[token.address]) {
-  //       //   return ref.current[token.address];
-  //       // }
-  //       console.log("token", token);
-  //       console.log("web3Context.account", web3Context.account);
-  //
-  //       if (token === constants.AddressZero) {
-  //         balance = await web3Context.provider!.getBalance(web3Context.account!);
-  //       } else {
-  //         const erc20Contract = new Contract(token, ERC20SimpleSol.abi, web3Context.provider!.getSigner());
-  //         balance = await erc20Contract.balanceOf(web3Context.account);
-  //         console.log("balance", balance);
-  //       }
-  //
-  //       const rtnBalance = formatUnits(balance, BigNumber.from(18));
-  //       ref.current[token] = rtnBalance;
-  //
-  //       return rtnBalance;
-  //     }
-  //   },
-  //   { success: false },
-  // );
+  const getAccountBalance = useMetamaskValue(
+    async (_decimals: number, _symbol: string, web3Context: Web3ContextType) => {
+      // https://docs.chain.link/docs/link-token-contracts/
+      const contract = new Contract(process.env.LINK_ADDR, LinkSol.abi, web3Context.provider?.getSigner());
+      const value = await contract.callStatic.balanceOf(web3Context.account);
+      return formatEther(value.sub(value.mod(1e14)), _decimals, _symbol);
+    },
+    { success: false },
+  );
 
-  // useEffect(() => {
-  //   loadTokenBalance(process.env.LINK_ADDR).catch(console.error);
-  // });
-  // console.log("ref", ref);
+  useEffect(() => {
+
+    if (currentValue) {
+      return;
+    }
+
+    void getAccountBalance(18, "LINK").then((balance: string) => {
+      setCurrentValue(balance);
+    });
+  });
 
   const handleFund = (): void => {
     setIsFundDialogOpen(true);
   };
 
   const handleFundConfirm = async (values: IChainLinkFundDto): Promise<void> => {
-    await metaFn(values).finally(() => {
+    await metaFnTransfer(values).finally(() => {
       setIsFundDialogOpen(false);
     });
   };
@@ -72,6 +62,9 @@ export const ChainLinkFundButton: FC = () => {
 
   return (
     <Fragment>
+      <Typography variant="body1">
+        <FormattedMessage id="dialogs.currentBalance" values={{ value: currentValue }} />
+      </Typography>
       <Button variant="outlined" startIcon={<Savings />} onClick={handleFund} data-testid="ChainLinkFundButton">
         <FormattedMessage id="form.buttons.fund" />
       </Button>
