@@ -36,6 +36,9 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
   event WithdrawToken(address token, uint256 amount);
   event FinalizedToken(address token, uint256 amount);
 
+  event PaymentEthReceived(address from, uint256 amount);
+  event PaymentEthSent(address to, uint256 amount);
+
   constructor() {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
     _setupRole(PAUSER_ROLE, _msgSender());
@@ -68,6 +71,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
 
     if (depositItem.tokenType == TokenType.NATIVE) {
       require(msg.value == depositItem.amount, "Pyramid: wrong amount");
+      emit PaymentEthReceived(_msgSender(), msg.value);
     } else if (depositItem.tokenType == TokenType.ERC20) {
       IERC20(depositItem.token).safeTransferFrom(_msgSender(), address(this), depositItem.amount);
     } else {
@@ -115,6 +119,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
 
       if (depositItem.tokenType == TokenType.NATIVE) {
         Address.sendValue(payable(receiver), withdrawAmount);
+        emit PaymentEthSent(receiver, withdrawAmount);
       } else if (depositItem.tokenType == TokenType.ERC20) {
         SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
       }
@@ -175,11 +180,11 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     uint256 totalBalance;
     if (token == address(0)) {
       totalBalance = address(this).balance;
-      require(totalBalance > amount, "Pyramid: balance exceeded");
+      require(totalBalance >= amount, "Pyramid: balance exceeded");
       Address.sendValue(payable(account), amount);
     } else {
       totalBalance = IERC20(token).balanceOf(address(this));
-      require(totalBalance > amount, "Pyramid: balance exceeded");
+      require(totalBalance >= amount, "Pyramid: balance exceeded");
       SafeERC20.safeTransfer(IERC20(token), account, amount);
     }
     emit WithdrawToken(token, amount);
@@ -220,6 +225,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     emit FinalizedToken(token, finalBalance);
   }
 
+  // USE WITH CAUTION
   function finalize() public onlyRole(DEFAULT_ADMIN_ROLE) {
     selfdestruct(payable(_msgSender()));
   }

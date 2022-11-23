@@ -695,7 +695,9 @@
         "activate": "Activate rule",
         "deactivate": "Deactivate rule",
         "title": "Pyramid rules",
-        "upload": "Upload rule"
+        "upload": "Upload rule",
+        "finalizeByToken": "Finalize deposit token",
+        "finalizeByRule": "Finalize rule"
       },
       "title": "Pyramid"
     },

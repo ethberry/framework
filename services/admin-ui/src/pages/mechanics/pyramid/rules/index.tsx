@@ -25,6 +25,8 @@ import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 import { PyramidEditDialog } from "./edit";
 import { PyramidRuleSearchForm } from "./form";
+import { PyramidFinalizeTokenButton } from "../../../../components/buttons/mechanics/pyramid/finalize/finalize-token";
+import { PyramidFinalizeRuleButton } from "../../../../components/buttons/mechanics/pyramid/finalize/finalize-rule";
 
 export const PyramidRules: FC = () => {
   const {
@@ -109,6 +111,8 @@ export const PyramidRules: FC = () => {
                 <IconButton onClick={handleDelete(rule)} disabled={rule.pyramidRuleStatus !== PyramidRuleStatus.NEW}>
                   <Delete />
                 </IconButton>
+                <PyramidFinalizeRuleButton rule={rule} />
+                <PyramidFinalizeTokenButton rule={rule} />
               </ListItemSecondaryAction>
             </ListItem>
           ))}

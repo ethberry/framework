@@ -32,6 +32,14 @@ export class WalletControllerEth {
       contractType: ContractType.EXCHANGE,
       eventName: ExchangeEventType.PaymentEthReceived,
     },
+    {
+      contractType: ContractType.PYRAMID,
+      eventName: ExchangeEventType.PaymentReceived,
+    },
+    {
+      contractType: ContractType.PYRAMID,
+      eventName: ExchangeEventType.PaymentEthReceived,
+    },
   ])
   public addEth(@Payload() event: ILogEvent<IExchangePaymentReceivedEvent>, @Ctx() context: Log): Promise<void> {
     return this.walletServiceEth.addEth(event, context);
@@ -40,6 +48,10 @@ export class WalletControllerEth {
   @EventPattern([
     {
       contractType: ContractType.EXCHANGE,
+      eventName: ExchangeEventType.PaymentEthSent,
+    },
+    {
+      contractType: ContractType.PYRAMID,
       eventName: ExchangeEventType.PaymentEthSent,
     },
   ])
