@@ -20,7 +20,7 @@ import { emptyStateString } from "@gemunion/draft-js-utils";
 import type { IStakingRule, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, IStakingRuleItemSearchDto, StakingRuleStatus, TokenType } from "@framework/types";
 
-import { StakingUploadButton } from "../../../../components/buttons";
+import { PauseToggleButton, StakingUploadButton } from "../../../../components/buttons";
 import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 import { StakingEditDialog } from "./edit";
@@ -81,6 +81,7 @@ export const StakingRules: FC = () => {
       <Breadcrumbs path={["dashboard", "staking", "staking.rules"]} />
 
       <PageHeader message="pages.staking.rules.title">
+        <PauseToggleButton />
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">
           <FormattedMessage
             id={`form.buttons.${isFiltersOpen ? "hideFilters" : "showFilters"}`}

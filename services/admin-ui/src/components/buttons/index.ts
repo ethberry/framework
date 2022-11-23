@@ -15,3 +15,4 @@ export * from "./mechanics/lottery/round/end";
 export * from "./mechanics/lottery/round/start";
 
 export * from "./mechanics/breed/breed-limits";
+export * from "./mechanics/staking/pause-toggle";

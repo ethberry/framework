@@ -18,10 +18,6 @@ export const LotteryRoundStartButton: FC = () => {
     return metaFn();
   };
 
-  if (process.env.NODE_ENV === "production") {
-    return null;
-  }
-
   return (
     <Button startIcon={<Casino />} onClick={handleRound} data-testid="LotteryRoundStartButton">
       <FormattedMessage id="pages.lottery.rounds.start" />

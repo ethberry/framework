@@ -8,7 +8,7 @@ import { Contract } from "ethers";
 import { useMetamask } from "@gemunion/react-hooks-eth";
 import type { IContract } from "@framework/types";
 
-import MysteryboxSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Mysterybox/ERC721MysteryboxFull.sol/ERC721MysteryboxFull.json";
+import PauseSol from "./pause.abi.json";
 
 export interface IPausableMenuItemProps {
   contract: IContract;
@@ -20,12 +20,12 @@ export const PausableMenuItem: FC<IPausableMenuItemProps> = props => {
   } = props;
 
   const metaPause = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, MysteryboxSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, PauseSol.abi, web3Context.provider?.getSigner());
     return contract.pause() as Promise<void>;
   });
 
   const metaUnPause = useMetamask((web3Context: Web3ContextType) => {
-    const contract = new Contract(address, MysteryboxSol.abi, web3Context.provider?.getSigner());
+    const contract = new Contract(address, PauseSol.abi, web3Context.provider?.getSigner());
     return contract.unpause() as Promise<void>;
   });
 
