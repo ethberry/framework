@@ -6,9 +6,11 @@ task("balance-erc20", "Prints an ERC20 balance")
   .setAction(async (args, hre) => {
     const { account, contract } = args;
 
-    const coinFactory = await hre.ethers.getContractFactory("ERC20ACBCS");
+    const coinFactory = await hre.ethers.getContractFactory("LinkErc20");
     const coinInstance = coinFactory.attach(contract);
     const accBalance = await coinInstance.balanceOf(account);
-
     console.info("ERC20 Balance:", hre.ethers.utils.formatEther(accBalance.toString()));
   });
+
+// hardhat balance-erc20 --account 0xFE3B557E8Fb62b89F4916B721be55cEb828dBd73 --contract 0x8BCaF30fed623A721aB6A2E9A9ed4f0b2F141Bfd --network besu
+// hardhat balance-erc20 --account 0xb470f7347c822acd02333de25144abf2cd26c284 --contract 0x8BCaF30fed623A721aB6A2E9A9ed4f0b2F141Bfd --network besu
