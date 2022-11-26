@@ -221,8 +221,6 @@ const config: PostgresConnectionOptions = {
     AccessControlEntity,
     AccessListEntity,
     VestingEntity,
-    ContractEntity,
-    TemplateEntity,
     StakingRulesEntity,
     StakingDepositEntity,
     PageEntity,
