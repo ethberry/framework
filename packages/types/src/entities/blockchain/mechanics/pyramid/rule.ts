@@ -20,6 +20,7 @@ export interface IPyramidRule extends ISearchable {
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
+  maxCycles: number;
   pyramidRuleStatus: PyramidRuleStatus;
   externalId: string;
 }

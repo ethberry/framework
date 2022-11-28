@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Alert, Box, Grid, InputAdornment } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 
-import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
+import { CheckboxInput, NumberInput, TextInput } from "@gemunion/mui-inputs-core";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
-import { IPyramidRule, ModuleType } from "@framework/types";
+import { ContractStatus, IPyramidRule, ModuleType } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
 import { PriceInput } from "../../../../../components/inputs/price";
@@ -24,7 +24,7 @@ export interface IPyramidStakingEditDialogProps {
 export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, deposit, reward, durationAmount, durationUnit, contractId } = initialValues;
+  const { id, title, description, penalty, maxCycles, deposit, reward, durationAmount, durationUnit, contractId } = initialValues;
   const fixedValues = {
     id,
     title,
@@ -32,6 +32,7 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
     deposit,
     reward,
     penalty,
+    maxCycles,
     durationAmount,
     durationUnit,
     contractId,
@@ -52,6 +53,7 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
         controller="contracts"
         data={{
           contractModule: [ModuleType.PYRAMID],
+          contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
         }}
         // readOnly={!!id}
       />
@@ -83,6 +85,7 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
         }}
         readOnly={readOnly}
       />
+      <NumberInput name="maxCycles" />
       <CheckboxInput name="recurrent" readOnly={readOnly} />
     </FormDialog>
   );

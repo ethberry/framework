@@ -77,7 +77,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
   }
 
   function deposit(uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
-    Rule storage rule = _rules[ruleId];
+    Rule memory rule = _rules[ruleId];
     require(rule.externalId != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
     require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
@@ -112,8 +112,8 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     bool breakLastPeriod
   ) public virtual whenNotPaused {
     Stake storage stake = _stakes[stakeId];
-    Rule storage rule = _rules[stake.ruleId];
-    Asset storage depositItem = _stakes[stakeId].deposit;
+    Rule memory rule = _rules[stake.ruleId];
+    Asset memory depositItem = _stakes[stakeId].deposit;
 
     require(stake.owner != address(0), "Staking: wrong staking id");
     require(stake.owner == _msgSender(), "Staking: not an owner");
@@ -123,7 +123,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     uint256 stakePeriod = rule.period;
     uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
-  uint256 stakeAmount = depositItem.amount;
+    uint256 stakeAmount = depositItem.amount;
     address payable receiver = payable(stake.owner);
 
     if (withdrawDeposit) {
@@ -148,7 +148,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     if (multiplier != 0) {
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
-      Asset storage rewardItem = rule.reward;
+      Asset memory rewardItem = rule.reward;
       uint256 rewardAmount;
 
       if (rewardItem.tokenType == TokenType.NATIVE) {

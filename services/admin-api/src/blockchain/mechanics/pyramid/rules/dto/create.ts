@@ -49,6 +49,11 @@ export class PyramidCreateDto implements IPyramidCreateDto {
   public penalty: number;
 
   @ApiProperty()
+  @IsInt({ message: "typeMismatch" })
+  @Min(0, { message: "rangeUnderflow" })
+  public maxCycles: number;
+
+  @ApiProperty()
   @IsBoolean({ message: "typeMismatch" })
   public recurrent: boolean;
 

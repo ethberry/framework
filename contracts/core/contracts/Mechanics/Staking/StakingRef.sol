@@ -79,7 +79,7 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
   }
 
   function deposit(address referrer, uint256 ruleId, uint256 tokenId) public payable whenNotPaused {
-    Rule storage rule = _rules[ruleId];
+    Rule memory rule = _rules[ruleId];
     require(rule.externalId != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
     require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
@@ -123,8 +123,8 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     bool breakLastPeriod
   ) public virtual whenNotPaused {
     Stake storage stake = _stakes[stakeId];
-    Rule storage rule = _rules[stake.ruleId];
-    Asset storage depositItem = _stakes[stakeId].deposit;
+    Rule memory rule = _rules[stake.ruleId];
+    Asset memory depositItem = _stakes[stakeId].deposit;
 
     require(stake.owner != address(0), "Staking: wrong staking id");
     require(stake.owner == _msgSender(), "Staking: not an owner");
@@ -159,7 +159,7 @@ contract StakingReferral is IStaking, AccessControl, Pausable, ERC1155Holder, ER
     if (multiplier != 0) {
       emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
 
-      Asset storage rewardItem = rule.reward;
+      Asset memory rewardItem = rule.reward;
       uint256 rewardAmount;
 
       if (rewardItem.tokenType == TokenType.NATIVE) {

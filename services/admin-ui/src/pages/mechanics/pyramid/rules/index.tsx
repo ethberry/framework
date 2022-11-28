@@ -101,7 +101,8 @@ export const PyramidRules: FC = () => {
         <List>
           {rows.map((rule, i) => (
             <ListItem key={i} disableGutters>
-              <ListItemText>{rule.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{rule.title}</ListItemText>
+              <div></div>
               <ListItemText>{rule.contract ? (rule.contract.title ? rule.contract.title : "") : ""}</ListItemText>
               <ListItemSecondaryAction>
                 <PyramidUploadButton rule={rule} />

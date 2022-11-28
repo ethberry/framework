@@ -57,7 +57,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     uint256 ruleId,
     uint256 tokenId
   ) public payable whenNotPaused {
-    Rule storage rule = _rules[ruleId];
+    Rule memory rule = _rules[ruleId];
     require(rule.externalId != 0, "Pyramid: rule doesn't exist");
     require(rule.active, "Pyramid: rule doesn't active");
 
@@ -94,8 +94,8 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
     bool breakLastPeriod
   ) public virtual whenNotPaused {
     Stake storage stake = _stakes[stakeId];
-    Rule storage rule = _rules[stake.ruleId];
-    Asset storage depositItem = _stakes[stakeId].deposit;
+    Rule memory rule = _rules[stake.ruleId];
+    Asset memory depositItem = _stakes[stakeId].deposit;
 
     require(stake.owner != address(0), "Pyramid: wrong staking id");
     require(stake.owner == _msgSender(), "Pyramid: not an owner");
@@ -103,8 +103,6 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
 
     uint256 startTimestamp = stake.startTimestamp;
     uint256 stakePeriod = rule.period;
-    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
-
     uint256 stakeAmount = depositItem.amount;
 
     address payable receiver = payable(stake.owner);
@@ -113,8 +111,7 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
       emit StakingWithdraw(stakeId, receiver, block.timestamp);
       stake.activeDeposit = false;
 
-      // PENALTY // TODO penalty types?
-      // uint256 withdrawAmount = multiplier == 0 ? (stakeAmount - stakeAmount / 100 * (rule.penalty / 100)) : stakeAmount;
+      // PENALTY
       uint256 withdrawAmount = stakeAmount - stakeAmount / 100 * (rule.penalty / 100);
 
       if (depositItem.tokenType == TokenType.NATIVE) {
@@ -123,14 +120,29 @@ contract Pyramid is IPyramid, AccessControl, Pausable, LinearReferralPyramid {
       } else if (depositItem.tokenType == TokenType.ERC20) {
         SafeERC20.safeTransfer(IERC20(depositItem.token), receiver, withdrawAmount);
       }
-    } else {
+    } else  {
       stake.startTimestamp = block.timestamp;
     }
 
-    if (multiplier != 0) {
-      emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
+    uint256 multiplier = _calculateRewardMultiplier(startTimestamp, block.timestamp, stakePeriod);
 
-      Asset storage rewardItem = rule.reward;
+
+    // Check cycle count
+    uint256 maxCycles = rule.maxCycles;
+    // multiplier = (maxCycles > 0) ? (multiplier + cycleCount >= maxCycles) ? (maxCycles - cycleCount): multiplier : multiplier;
+    if (maxCycles > 0) {
+      uint256 cycleCount = stake.cycles;
+
+      if (multiplier + cycleCount >= maxCycles) {
+        multiplier = maxCycles - cycleCount;
+      }
+    }
+
+    if (multiplier > 0) {
+      emit StakingFinish(stakeId, receiver, block.timestamp, multiplier);
+      stake.cycles += multiplier;
+
+      Asset memory rewardItem = rule.reward;
       uint256 rewardAmount;
 
       if (rewardItem.tokenType == TokenType.NATIVE) {

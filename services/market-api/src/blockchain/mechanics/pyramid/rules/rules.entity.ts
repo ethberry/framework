@@ -46,6 +46,9 @@ export class PyramidRulesEntity extends SearchableEntity implements IPyramidRule
   @Column({ type: "int" })
   public penalty: number;
 
+  @Column({ type: "int" })
+  public maxCycles: number;
+
   @Column({
     type: "enum",
     enum: PyramidRuleStatus,

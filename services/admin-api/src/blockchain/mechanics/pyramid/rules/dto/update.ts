@@ -63,6 +63,12 @@ export class PyramidUpdateDto implements IPyramidUpdateDto {
 
   @ApiPropertyOptional()
   @IsOptional()
+  @IsInt({ message: "typeMismatch" })
+  @Min(0, { message: "rangeUnderflow" })
+  public maxCycles: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
   @IsBoolean({ message: "typeMismatch" })
   public recurrent: boolean;
 

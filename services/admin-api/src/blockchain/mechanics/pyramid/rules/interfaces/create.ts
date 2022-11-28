@@ -16,5 +16,6 @@ export interface IPyramidCreateDto {
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
+  maxCycles: number;
   recurrent: boolean;
 }

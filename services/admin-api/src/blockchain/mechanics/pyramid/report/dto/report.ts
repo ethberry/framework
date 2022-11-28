@@ -19,16 +19,24 @@ import type { IPyramidReportItemSearchDto, IPyramidReportSearchDto } from "@fram
 import { PyramidDepositStatus, TokenType } from "@framework/types";
 
 export class PyramidReportItemSearchDto implements IPyramidReportItemSearchDto {
-  @ApiProperty({
+  // @ApiProperty({
+  //   enum: TokenType,
+  // })
+  @ApiPropertyOptional({
     enum: TokenType,
   })
+  @IsOptional()
   @Transform(({ value }) => value as TokenType)
   @IsEnum(TokenType, { message: "badInput" })
   public tokenType: TokenType;
 
-  @ApiProperty({
+  // @ApiProperty({
+  //   minimum: 1
+  // })
+  @ApiPropertyOptional({
     minimum: 1,
   })
+  @IsOptional()
   @IsInt({ message: "typeMismatch" })
   @Min(1, { message: "rangeUnderflow" })
   @Type(() => Number)
@@ -55,16 +63,24 @@ export class PyramidReportSearchDto extends SearchDto implements IPyramidReportS
   @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 
-  @ApiProperty({
+  // @ApiProperty({
+  //   type: PyramidReportItemSearchDto,
+  // })
+  @ApiPropertyOptional({
     type: PyramidReportItemSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => PyramidReportItemSearchDto)
   public deposit: PyramidReportItemSearchDto;
 
-  @ApiProperty({
+  // @ApiProperty({
+  //   type: PyramidReportItemSearchDto,
+  // })
+  @ApiPropertyOptional({
     type: PyramidReportItemSearchDto,
   })
+  @IsOptional()
   @ValidateNested()
   @Type(() => PyramidReportItemSearchDto)
   public reward: PyramidReportItemSearchDto;

@@ -50,6 +50,11 @@ export class CreatePyramidRules1660436477200 implements MigrationInterface {
           type: "int",
         },
         {
+          name: "max_cycles",
+          type: "int",
+          default: 0,
+        },
+        {
           name: "contract_id",
           type: "int",
           isNullable: true,

@@ -13,6 +13,7 @@ interface IPyramid {
     Asset deposit;
     Asset reward;
     uint256 period;
+    uint256 maxCycles;
     uint256 penalty;
     uint256 externalId;
     bool active;

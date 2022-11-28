@@ -69,7 +69,7 @@ export const PyramidContract: FC = () => {
 
   return (
     <Grid>
-      <Breadcrumbs path={["dashboard", "pyramid.contracts"]} />
+      <Breadcrumbs path={["dashboard", "pyramid", "pyramid.contracts"]} />
 
       <PageHeader message="pages.pyramid.contracts.title">
         <Button startIcon={<FilterList />} onClick={handleToggleFilters} data-testid="ToggleFilterButton">

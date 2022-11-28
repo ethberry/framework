@@ -8,5 +8,6 @@ export interface IPyramidUpdateDto {
   durationAmount: number;
   durationUnit: DurationUnit;
   penalty: number;
+  maxCycles: number;
   recurrent: boolean;
 }
