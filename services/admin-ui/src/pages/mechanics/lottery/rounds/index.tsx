@@ -9,7 +9,7 @@ import type { ILotteryRound } from "@framework/types";
 
 import { LotteryRoundViewDialog } from "./view";
 import { getNumbers } from "../utils";
-import { LotteryRoundEndButton, LotteryRoundStartButton } from "../../../../components/buttons";
+import { LotteryRoundEndButton, LotteryRoundStartButton, LotteryScheduleButton } from "../../../../components/buttons";
 
 export const LotteryRounds: FC = () => {
   const {
@@ -37,6 +37,7 @@ export const LotteryRounds: FC = () => {
       <PageHeader message="pages.lottery.rounds.title">
         <LotteryRoundEndButton />
         <LotteryRoundStartButton />
+        <LotteryScheduleButton />
       </PageHeader>
 
       <ProgressOverlay isLoading={isLoading}>

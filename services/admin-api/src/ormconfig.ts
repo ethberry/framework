@@ -68,7 +68,7 @@ import { SeedContractErc998At1563804000140 } from "./migrations/1563804000140-se
 import { SeedContractErc1155At1563804000150 } from "./migrations/1563804000150-seed-contract-erc1155";
 import { SeedContractMysteryAt1563804000160 } from "./migrations/1563804000160-seed-contract-mystery";
 import { SeedContractWrapperAt1563804000170 } from "./migrations/1563804000170-seed-contract-wrapper";
-import { SeedContractLotteryAt1563804000180 } from "./migrations/1563804000180-seed-contract-lottery";
+import { SeedContractLotteryAt1563804000180 } from "./migrations/1563804000180-seed-contract-lottery-ticket";
 import { SeedContractVestingAt1563804000190 } from "./migrations/1563804000190-seed-contract-vesting";
 
 import { CreateTemplate1563804000200 } from "./migrations/1563804000200-create-template";

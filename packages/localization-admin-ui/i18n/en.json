@@ -45,6 +45,7 @@
     "renounceRole": "Renounce role",
     "revokeRole": "Revoke role",
     "setAmount": "Set Amount",
+    "schedule": "Set Lottery Round schedule",
     "top-up": "Top up",
     "unBlacklist": "Remove from blacklist",
     "unWhitelist": "Remove from whitelist",
@@ -172,6 +173,9 @@
       "PREDICATE_ROLE": "PREDICATE_ROLE",
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
     },
+    "roundSchedule": {
+      "0 0 * * *": "EVERY_DAY_AT_MIDNIGHT"
+    },
     "stakingDepositStatus": {
       "ACTIVE": "Active",
       "CANCELED": "Canceled",
@@ -257,6 +261,7 @@
       "showFilters": "Show filters",
       "signup": "Sign up",
       "snapshot": "Snapshot",
+      "schedule": "Schedule",
       "startRound": "Start round",
       "submit": "Submit",
       "unblacklist": "Un blacklist",
@@ -347,6 +352,7 @@
       "pyramidDepositStatus": "Status",
       "pyramidRuleStatus": "Status",
       "random": "Random",
+      "roundSchedule": "Round Schedule",
       "recipient": "Recipient",
       "recurrent": "Is recurrent?",
       "reward": "Reward",

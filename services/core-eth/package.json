@@ -48,6 +48,7 @@
     "typedi": "0.10.0",
     "typeorm": "0.3.10",
     "typeorm-naming-strategies": "4.1.0",
+    "@types/cron": "2.0.0",
     "web3-core": "1.8.1",
     "web3-utils": "1.8.1"
   },

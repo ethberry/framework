@@ -13,6 +13,7 @@ export * from "./mechanics/pyramid/deploy";
 export * from "./mechanics/pyramid/upload";
 export * from "./mechanics/lottery/round/end";
 export * from "./mechanics/lottery/round/start";
+export * from "./mechanics/lottery/round/schedule";
 
 export * from "./mechanics/breed/breed-limits";
 export * from "./mechanics/staking/pause-toggle";
