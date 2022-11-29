@@ -7,12 +7,7 @@ import { SelectInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 
 import { validationSchema } from "./validation";
-import { CronExpression } from "../../../../../../common/interfaces";
-
-export interface ILotteryOption {
-  roundSchedule: CronExpression;
-  description?: string;
-}
+import { CronExpression, ILotteryOption } from "@framework/types";
 
 export interface ILotteryScheduleDialogProps {
   open: boolean;
@@ -35,7 +30,7 @@ export const LotteryScheduleDialog: FC<ILotteryScheduleDialogProps> = props => {
       <Alert severity="warning">
         <FormattedMessage id="form.hints.risk" />
       </Alert>
-      <SelectInput name="roundSchedule" options={CronExpression} />
+      <SelectInput name="schedule" options={CronExpression} />
       <RichTextEditor name="description" />
     </FormDialog>
   );

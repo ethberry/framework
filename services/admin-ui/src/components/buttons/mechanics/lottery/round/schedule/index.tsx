@@ -6,8 +6,9 @@ import { FormattedMessage } from "react-intl";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useApiCall } from "@gemunion/react-hooks";
 
+import { CronExpression } from "@framework/types";
+
 import { LotteryScheduleDialog } from "./dialog";
-import { CronExpression } from "../../../../../common/interfaces";
 
 export const LotteryScheduleButton: FC = () => {
   const [isScheduleDialogOpen, setIsScheduleDialogOpen] = useState(false);
@@ -50,7 +51,7 @@ export const LotteryScheduleButton: FC = () => {
         onCancel={handleScheduleCancel}
         open={isScheduleDialogOpen}
         initialValues={{
-          roundSchedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+          schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
           description: emptyStateString,
         }}
       />

@@ -5,10 +5,9 @@ import { ClientProxy } from "@nestjs/microservices";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import type { IPaginationDto } from "@gemunion/types-collection";
-
+import { RmqProviderType } from "@framework/types";
 import { LotteryRoundEntity } from "./round.entity";
 import { ScheduleUpdateDto } from "./dto";
-import { RmqProviderType } from "@framework/types";
 
 @Injectable()
 export class LotteryRoundService {

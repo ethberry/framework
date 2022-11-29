@@ -12,7 +12,7 @@ export class SeedContractLotteryAt1563804000103 implements MigrationInterface {
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     const lotteryOptions = JSON.stringify({
-      roundSchedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
+      schedule: CronExpression.EVERY_DAY_AT_MIDNIGHT,
       description: "Midnight Lottery",
     });
 

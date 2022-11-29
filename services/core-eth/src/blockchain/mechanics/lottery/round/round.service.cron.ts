@@ -8,8 +8,7 @@ import { ETHERS_RPC, ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";
 import { blockAwait } from "../../../../common/utils";
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ModuleType } from "@framework/types";
-import { ILotteryOption } from "./interfaces";
+import { ModuleType, ILotteryOption } from "@framework/types";
 
 @Injectable()
 export class LotteryRoundServiceCron {
@@ -67,10 +66,10 @@ export class LotteryRoundServiceCron {
       throw new NotFoundException("contractNotFound");
     }
 
-    const { roundSchedule }: ILotteryOption = JSON.parse(lotteryEntity.description);
+    const { schedule }: ILotteryOption = JSON.parse(lotteryEntity.description);
 
     this.schedulerRegistry.deleteCronJob("lotteryRound");
-    const job = new CronJob(roundSchedule, async () => {
+    const job = new CronJob(schedule, async () => {
       await this.lotteryRound();
     });
     this.schedulerRegistry.addCronJob("lotteryRound", job);
