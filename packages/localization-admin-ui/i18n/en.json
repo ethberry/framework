@@ -174,7 +174,31 @@
       "SNAPSHOT_ROLE": "SNAPSHOT_ROLE"
     },
     "roundSchedule": {
-      "0 0 * * *": "EVERY_DAY_AT_MIDNIGHT"
+      "0 0 01 * * 1-5": "MONDAY_TO_FRIDAY_AT_1AM",
+      "0 0 02 * * 1-5": "MONDAY_TO_FRIDAY_AT_2AM",
+      "0 0 03 * * 1-5": "MONDAY_TO_FRIDAY_AT_3AM",
+      "0 0 04 * * 1-5": "MONDAY_TO_FRIDAY_AT_4AM",
+      "0 0 05 * * 1-5": "MONDAY_TO_FRIDAY_AT_5AM",
+      "0 0 06 * * 1-5": "MONDAY_TO_FRIDAY_AT_6AM",
+      "0 0 07 * * 1-5": "MONDAY_TO_FRIDAY_AT_7AM",
+      "0 0 08 * * 1-5": "MONDAY_TO_FRIDAY_AT_8AM",
+      "0 0 09 * * 1-5": "MONDAY_TO_FRIDAY_AT_9AM",
+      "0 30 09 * * 1-5": "MONDAY_TO_FRIDAY_AT_09_30AM",
+      "0 0 10 * * 1-5": "MONDAY_TO_FRIDAY_AT_10AM",
+      "0 0 11 * * 1-5": "MONDAY_TO_FRIDAY_AT_11AM",
+      "0 30 11 * * 1-5": "MONDAY_TO_FRIDAY_AT_11_30AM",
+      "0 0 12 * * 1-5": "MONDAY_TO_FRIDAY_AT_12PM",
+      "0 0 13 * * 1-5": "MONDAY_TO_FRIDAY_AT_1PM",
+      "0 0 14 * * 1-5": "MONDAY_TO_FRIDAY_AT_2PM",
+      "0 0 15 * * 1-5": "MONDAY_TO_FRIDAY_AT_3PM",
+      "0 0 16 * * 1-5": "MONDAY_TO_FRIDAY_AT_4PM",
+      "0 0 17 * * 1-5": "MONDAY_TO_FRIDAY_AT_5PM",
+      "0 0 18 * * 1-5": "MONDAY_TO_FRIDAY_AT_6PM",
+      "0 0 19 * * 1-5": "MONDAY_TO_FRIDAY_AT_7PM",
+      "0 0 20 * * 1-5": "MONDAY_TO_FRIDAY_AT_8PM",
+      "0 0 21 * * 1-5": "MONDAY_TO_FRIDAY_AT_9PM",
+      "0 0 22 * * 1-5": "MONDAY_TO_FRIDAY_AT_10PM",
+      "0 0 23 * * 1-5": "MONDAY_TO_FRIDAY_AT_11PM"
     },
     "stakingDepositStatus": {
       "ACTIVE": "Active",
