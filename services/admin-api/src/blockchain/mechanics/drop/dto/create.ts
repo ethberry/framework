@@ -24,12 +24,12 @@ export class DropCreateDto implements IDropCreateDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
   public startTimestamp: string;
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
 }

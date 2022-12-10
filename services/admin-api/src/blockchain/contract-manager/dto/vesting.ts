@@ -13,7 +13,7 @@ export class VestingDeployDto extends AccountDto implements IVestingDeployDto {
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   public startTimestamp: string;
 
   @ApiProperty()

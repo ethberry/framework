@@ -23,6 +23,6 @@ export class ClaimItemUpdateDto implements IClaimItemUpdateDto {
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
 }

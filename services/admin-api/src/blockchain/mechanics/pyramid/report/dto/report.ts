@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { ApiPropertyOptional } from "@nestjs/swagger";
 import {
   IsArray,
   IsEnum,
@@ -19,9 +19,6 @@ import type { IPyramidReportItemSearchDto, IPyramidReportSearchDto } from "@fram
 import { PyramidDepositStatus, TokenType } from "@framework/types";
 
 export class PyramidReportItemSearchDto implements IPyramidReportItemSearchDto {
-  // @ApiProperty({
-  //   enum: TokenType,
-  // })
   @ApiPropertyOptional({
     enum: TokenType,
   })
@@ -30,9 +27,6 @@ export class PyramidReportItemSearchDto implements IPyramidReportItemSearchDto {
   @IsEnum(TokenType, { message: "badInput" })
   public tokenType: TokenType;
 
-  // @ApiProperty({
-  //   minimum: 1
-  // })
   @ApiPropertyOptional({
     minimum: 1,
   })
@@ -63,9 +57,6 @@ export class PyramidReportSearchDto extends SearchDto implements IPyramidReportS
   @Transform(({ value }: { value: string }) => (value === "" ? null : value.toLowerCase()))
   public account: string;
 
-  // @ApiProperty({
-  //   type: PyramidReportItemSearchDto,
-  // })
   @ApiPropertyOptional({
     type: PyramidReportItemSearchDto,
   })
@@ -74,9 +65,6 @@ export class PyramidReportSearchDto extends SearchDto implements IPyramidReportS
   @Type(() => PyramidReportItemSearchDto)
   public deposit: PyramidReportItemSearchDto;
 
-  // @ApiProperty({
-  //   type: PyramidReportItemSearchDto,
-  // })
   @ApiPropertyOptional({
     type: PyramidReportItemSearchDto,
   })
@@ -88,14 +76,14 @@ export class PyramidReportSearchDto extends SearchDto implements IPyramidReportS
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
   public startTimestamp: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   @ValidateIf(o => !!o.startTimestamp)
   public endTimestamp: string;
 }

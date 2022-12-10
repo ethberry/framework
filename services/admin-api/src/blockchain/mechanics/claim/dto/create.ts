@@ -17,6 +17,6 @@ export class ClaimItemCreateDto extends AccountDto implements IClaimItemCreateDt
 
   @ApiProperty()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   public endTimestamp: string;
 }

@@ -45,14 +45,14 @@ export class PyramidChartSearchDto extends SearchDto implements IPyramidChartSea
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   @IsBeforeDate({ relatedPropertyName: "endTimestamp" })
   public startTimestamp: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString({ message: "typeMismatch" })
-  @IsISO8601({ message: "patternMismatch" })
+  @IsISO8601({}, { message: "patternMismatch" })
   @ValidateIf(o => !!o.startTimestamp)
   public endTimestamp: string;
 }
