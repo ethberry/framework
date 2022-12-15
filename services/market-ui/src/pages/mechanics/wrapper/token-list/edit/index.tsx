@@ -1,19 +1,12 @@
 import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { IAssetComponent, TokenType } from "@framework/types";
+import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { PriceInput } from "../../../../../components/inputs/price";
 import { TemplateInput } from "./template-input";
 import { ContractInput } from "./contract-input";
-
-export interface ITokenAssetComponent extends IAssetComponent {
-  token: { tokenId?: string };
-}
-
-export interface ITokenAsset {
-  components: Array<ITokenAssetComponent>;
-}
+import { PriceInput } from "../../../../../components/inputs/price";
+import { ITokenAsset } from "../../../../../components/inputs/price/empty-price";
 
 export interface ICreateWrappedToken {
   tokenType: TokenType;
@@ -24,25 +17,6 @@ export interface ICreateWrappedToken {
   templateId: number;
   item: ITokenAsset;
 }
-
-export const emptyItems = {
-  components: [
-    {
-      tokenType: TokenType.NATIVE,
-      contractId: 0,
-      contract: {
-        decimals: 18,
-        contractType: TokenType.NATIVE,
-      },
-      templateId: 0,
-      template: {
-        title: "",
-      },
-      amount: "0",
-      token: { tokenId: "0" },
-    } as ITokenAssetComponent,
-  ],
-} as ITokenAsset;
 
 export interface IWrapperEditDialogProps {
   open: boolean;

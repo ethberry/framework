@@ -6,12 +6,11 @@ import { Add, Delete } from "@mui/icons-material";
 
 import { ModuleType, TokenType } from "@framework/types";
 
-import { emptyPrice } from "./empty-price";
+import { emptyItems, emptyPrice, ITokenAssetComponent } from "./empty-price";
 import { TokenTypeInput } from "./token-type-input";
 import { ContractInput } from "./contract-input";
 import { TokenInput } from "./token-input";
 import { AmountInput } from "./amount-input";
-import { emptyItems, ITokenAssetComponent } from "../../../pages/mechanics/wrapper/token-list/edit";
 
 export interface IPriceEditDialogProps {
   prefix: string;
