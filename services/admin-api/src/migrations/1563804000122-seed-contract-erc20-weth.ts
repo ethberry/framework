@@ -8,6 +8,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
+    const chainId = process.env.CHAIN_ID || 13378;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -85,7 +86,7 @@ export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface 
       ), (
         4206,
         '${process.env.USDT_ADDR || wallet}',
-        13378,
+        '${chainId}',
         'WETH',
         '${simpleFormatting}',
         '${imageUrl}',

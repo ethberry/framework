@@ -1,4 +1,6 @@
-import { ContractFeatures, ContractStatus, ModuleType, TokenType } from "../../../../entities";
+import type { TokenType } from "@gemunion/types-blockchain";
+
+import { ContractFeatures, ContractStatus, ModuleType } from "../../../../entities";
 
 export interface IContractAutocompleteDto {
   contractStatus: Array<ContractStatus>;

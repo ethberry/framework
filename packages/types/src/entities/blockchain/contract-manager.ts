@@ -18,12 +18,6 @@ export enum ContractType {
   WRAPPER = "WRAPPER",
 }
 
-export interface IContractManagerUpdateDto {
-  address: string;
-  contractType: ContractType;
-  lastBlock: number; // last log block
-}
-
 export interface IContractManager extends IIdDateBase {
   address: string;
   contractType: ContractType;

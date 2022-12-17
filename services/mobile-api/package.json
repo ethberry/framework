@@ -24,7 +24,7 @@
     "@gemunion/nest-js-utils": "2.1.2",
     "@gemunion/nest-js-utils-ws": "2.0.14",
     "@gemunion/nest-js-validators": "2.1.16",
-    "@gemunion/types-collection": "1.5.4",
+    "@gemunion/types-collection": "1.5.5",
     "@gemunion/types-jwt": "0.3.5",
     "@framework/constants": "0.0.1",
     "@framework/types": "0.0.1",

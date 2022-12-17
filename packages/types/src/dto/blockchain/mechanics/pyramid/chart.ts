@@ -1,6 +1,5 @@
 import type { ISearchDto } from "@gemunion/types-collection";
-
-import { TokenType } from "../../../../entities";
+import type { TokenType } from "@gemunion/types-blockchain";
 
 export interface IPyramidChartItemSearchDto {
   tokenType: TokenType;

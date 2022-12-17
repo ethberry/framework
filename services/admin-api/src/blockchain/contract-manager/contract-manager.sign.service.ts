@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 import {
   Erc1155ContractFeatures,
   Erc20ContractFeatures,

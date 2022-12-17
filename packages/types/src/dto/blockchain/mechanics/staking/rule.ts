@@ -1,6 +1,7 @@
 import type { ISearchDto } from "@gemunion/types-collection";
+import type { TokenType } from "@gemunion/types-blockchain";
 
-import { StakingRuleStatus, TokenType } from "../../../../entities";
+import { StakingRuleStatus } from "../../../../entities";
 
 export interface IStakingRuleItemSearchDto {
   tokenType: Array<TokenType>;

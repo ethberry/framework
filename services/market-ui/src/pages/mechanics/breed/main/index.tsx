@@ -11,7 +11,7 @@ import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { Breadcrumbs, PageHeader } from "@gemunion/mui-page-layout";
 import { FormWrapper } from "@gemunion/mui-form";
 import { TokenType } from "@framework/types";
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 

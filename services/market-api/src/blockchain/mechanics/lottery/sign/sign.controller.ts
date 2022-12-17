@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { LotterySignService } from "./sign.service";
 import { SignLotteryDto } from "./dto";

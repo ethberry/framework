@@ -21,7 +21,7 @@
     "@gemunion/nest-js-utils": "2.1.2",
     "@gemunion/nest-js-validators": "2.1.16",
     "@gemunion/nestjs-ethers": "3.0.20",
-    "@gemunion/types-collection": "1.5.4",
+    "@gemunion/types-collection": "1.5.5",
     "@liaoliaots/nestjs-redis": "9.0.4",
     "@liaoliaots/nestjs-redis-health": "9.0.3",
     "@nestjs/common": "9.2.1",

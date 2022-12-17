@@ -1,6 +1,7 @@
 import type { ISearchDto } from "@gemunion/types-collection";
+import type { TokenType } from "@gemunion/types-blockchain";
 
-import { StakingDepositStatus, TokenType } from "../../../../entities";
+import { StakingDepositStatus } from "../../../../entities";
 
 export interface IStakingReportItemSearchDto {
   tokenType: TokenType;

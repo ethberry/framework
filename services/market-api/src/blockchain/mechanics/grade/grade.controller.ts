@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UseInterceptors } from "@nestjs/common";
 
 import { NotFoundInterceptor, Public, User } from "@gemunion/nest-js-utils";
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { GradeService } from "./grade.service";
 import { SignGradeDto } from "./dto";

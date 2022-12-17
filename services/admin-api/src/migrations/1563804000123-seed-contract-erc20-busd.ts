@@ -7,6 +7,7 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
+    const chainId = process.env.CHAIN_ID || 13378;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (
@@ -31,6 +32,24 @@ export class SeedContractErc20BUSDAt1563804000123 implements MigrationInterface 
         2207,
         '0xe9e7cea3dedca5984780bafc599bd69add087d56',
         56,
+        'BUSD',
+        '${simpleFormatting}',
+        '${imageUrl}',
+        'Biance USD',
+        'BUSD',
+        18,
+        0,
+        '',
+        'ACTIVE',
+        'ERC20',
+        '{EXTERNAL}',
+        '${fromBlock}',
+        '${currentDateTime}',
+        '${currentDateTime}'
+      ), (
+        4207,
+        '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+        '${chainId}',
         'BUSD',
         '${simpleFormatting}',
         '${imageUrl}',

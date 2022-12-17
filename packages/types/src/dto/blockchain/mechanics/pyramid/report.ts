@@ -1,6 +1,7 @@
 import type { ISearchDto } from "@gemunion/types-collection";
+import type { TokenType } from "@gemunion/types-blockchain";
 
-import { PyramidDepositStatus, TokenType } from "../../../../entities";
+import { PyramidDepositStatus } from "../../../../entities";
 
 export interface IPyramidReportItemSearchDto {
   tokenType: TokenType;

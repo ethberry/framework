@@ -3,7 +3,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 
 import { PaginationInterceptor, Public } from "@gemunion/nest-js-utils";
 import { PaginationDto } from "@gemunion/collection";
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { DropService } from "./drop.service";
 import { DropEntity } from "./drop.entity";

@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from "@nestjs/common";
 
 import { Public, User } from "@gemunion/nest-js-utils";
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 
 import { BreedService } from "./breed.service";
 import { SignBreedDto } from "./dto";

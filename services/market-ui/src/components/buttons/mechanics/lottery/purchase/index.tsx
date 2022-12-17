@@ -5,7 +5,7 @@ import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { constants, Contract, utils } from "ethers";
 
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { useSettings } from "@gemunion/provider-settings";
 

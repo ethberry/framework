@@ -50,7 +50,7 @@
     "@gemunion/react-hooks": "1.0.47",
     "@gemunion/react-hooks-eth": "1.0.56",
     "@gemunion/types-coin-gecko": "0.3.2",
-    "@gemunion/types-collection": "1.5.4",
+    "@gemunion/types-collection": "1.5.5",
     "@gemunion/yup-rules": "3.0.13",
     "@gemunion/yup-rules-eth": "1.0.20",
     "@mui/icons-material": "5.11.0",

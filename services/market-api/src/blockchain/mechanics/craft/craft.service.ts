@@ -3,7 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { constants, utils } from "ethers";
 
-import type { ISearchDto, IServerSignature } from "@gemunion/types-collection";
+import type { ISearchDto } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 import { CraftStatus, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 

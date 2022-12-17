@@ -5,7 +5,7 @@
     "url": "https://gemunion.io/"
   },
   "bugs": {
-    "url": "https://github.com/gemunion/mui-packages/issues"
+    "url": "https://github.com/gemunion/framework/issues"
   },
   "description": "react 1inch",
   "dependencies": {
@@ -49,7 +49,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gemunion/mui-packages"
+    "url": "https://github.com/gemunion/framework"
   },
   "scripts": {
     "build": "tsc",

@@ -375,8 +375,6 @@
       "childId": "Child",
       "childIds": "Child",
       "claimStatus": "Status",
-      "collection": "Collection",
-      "collectionType": "Type",
       "comment": "Comment",
       "confirm": "Confirm",
       "contract": "Contract",

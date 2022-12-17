@@ -30,7 +30,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ) VALUES (
         1101,
         '${constants.AddressZero}',
-        '${~~chainId === 13378 ? 1 : chainId}',
+        '1',
         'Native token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -47,7 +47,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ), (
         1102,
         '${constants.AddressZero}',
-        '${~~chainId === 13378 ? 1 : chainId}',
+        '1',
         'Inactive token (ETH)',
         '${simpleFormatting}',
         '${imageUrl}',
@@ -98,7 +98,7 @@ export class SeedContractNativeAt1563804000110 implements MigrationInterface {
       ), (
         4101,
         '${constants.AddressZero}',
-        '13378',
+        '${chainId}',
         'Native token (BESU)',
         '${simpleFormatting}',
         '${imageUrl}',

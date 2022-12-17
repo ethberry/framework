@@ -1,4 +1,6 @@
-import { TokenAttributes, TokenStatus, TokenType } from "../../../../entities";
+import type { TokenType } from "@gemunion/types-blockchain";
+
+import { TokenAttributes, TokenStatus } from "../../../../entities";
 
 export interface IMarketplaceSupplySearchDto {
   attribute: TokenAttributes;

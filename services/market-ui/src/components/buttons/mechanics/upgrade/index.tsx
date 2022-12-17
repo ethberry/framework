@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { BigNumber, constants, Contract, utils } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import type { IServerSignature } from "@gemunion/types-collection";
+import type { IServerSignature } from "@gemunion/types-blockchain";
 import { useApi } from "@gemunion/provider-api-firebase";
 import { useMetamask, useServerSignature } from "@gemunion/react-hooks-eth";
 import { ContractFeatures, GradeStrategy, IGrade, IToken, TokenAttributes, TokenType } from "@framework/types";

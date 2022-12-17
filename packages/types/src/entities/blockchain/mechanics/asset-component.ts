@@ -1,6 +1,6 @@
 import type { IIdBase } from "@gemunion/types-collection";
+import type { TokenType } from "@gemunion/types-blockchain";
 
-import { TokenType } from "../common";
 import { IContract } from "../hierarchy/contract";
 import { ITemplate } from "../hierarchy/template";
 import { IAsset } from "./asset";

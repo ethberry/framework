@@ -1,4 +1,4 @@
-import { TokenType } from "../../../../entities";
+import type { TokenType } from "@gemunion/types-blockchain";
 
 export interface IAssetComponentDto {
   id?: number;

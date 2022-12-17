@@ -1,9 +1,10 @@
-import type { IDeployable, ISearchable } from "@gemunion/types-collection";
+import type { ISearchable } from "@gemunion/types-collection";
+import type { IDeployable, TokenType } from "@gemunion/types-blockchain";
 
 import { IContractHistory } from "../contract-history";
 
 import { ITemplate } from "./template";
-import { ModuleType, TokenType } from "../common";
+import { ModuleType } from "../common";
 import { IComposition } from "./composition";
 
 export enum ContractStatus {

@@ -1,6 +1,7 @@
 import type { ISearchDto } from "@gemunion/types-collection";
+import type { TokenType } from "@gemunion/types-blockchain";
 
-import { PyramidRuleStatus, TokenType } from "../../../../entities";
+import { PyramidRuleStatus } from "../../../../entities";
 
 export interface IPyramidStakeItemSearchDto {
   tokenType: Array<TokenType>;
