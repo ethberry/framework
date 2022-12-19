@@ -9,8 +9,14 @@ import { useMetamask, useMetamaskValue } from "@gemunion/react-hooks-eth";
 
 import PauseSol from "../../../../menu/contract/pausable/pause.abi.json";
 
-export const PauseToggleButton: FC = () => {
-  const [pauseStatus, setPauseStatus] = useState<boolean>(false);
+export interface IPauseToggleButton {
+  className?: string;
+}
+
+export const PauseToggleButton: FC<IPauseToggleButton> = props => {
+  const { className } = props;
+
+  const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const getPauseStatus = useMetamaskValue(
     async (web3Context: Web3ContextType) => {
@@ -22,18 +28,18 @@ export const PauseToggleButton: FC = () => {
   );
 
   useEffect(() => {
-    if (pauseStatus) {
+    if (isPaused) {
       return;
     }
 
     void getPauseStatus().then((value: boolean) => {
-      setPauseStatus(value);
+      setIsPaused(value);
     });
   });
 
   const metaFn = useMetamask((web3Context: Web3ContextType) => {
     const contract = new Contract(process.env.STAKING_ADDR, PauseSol.abi, web3Context.provider?.getSigner());
-    if (pauseStatus) {
+    if (isPaused) {
       return contract.unpause() as Promise<void>;
     } else {
       return contract.pause() as Promise<void>;
@@ -42,13 +48,18 @@ export const PauseToggleButton: FC = () => {
 
   const handleToggle = () => {
     return metaFn().finally(() => {
-      setPauseStatus(!pauseStatus);
+      setIsPaused(!isPaused);
     });
   };
 
   return (
-    <Button startIcon={<PauseCircleOutline />} onClick={handleToggle} data-testid="ContractPauseToggleButton">
-      <FormattedMessage id={pauseStatus ? "form.buttons.unpause" : "form.buttons.pause"} />
+    <Button
+      startIcon={<PauseCircleOutline />}
+      onClick={handleToggle}
+      data-testid="ContractPauseToggleButton"
+      className={className}
+    >
+      <FormattedMessage id={isPaused ? "form.buttons.unpause" : "form.buttons.pause"} />
     </Button>
   );
 };
