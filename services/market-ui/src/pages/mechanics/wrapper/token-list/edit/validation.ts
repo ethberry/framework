@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
-import { tokenValidationSchema } from "../../../../../components/inputs/price/token-schema";
+import { tokenAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 
 export const validationSchema = Yup.object().shape({
-  item: tokenValidationSchema,
+  item: tokenAssetValidationSchema,
 });

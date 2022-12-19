@@ -6,11 +6,11 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyItem } from "@gemunion/mui-inputs-asset";
 import { ClaimStatus, IClaim, IClaimSearchDto } from "@framework/types";
 
 import { ClaimEditDialog } from "./edit";
 import { ClaimSearchForm } from "./form";
-import { emptyItem } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 import { ClaimUploadButton } from "../../../../components/buttons/mechanics/claim/upload";
 
@@ -38,7 +38,7 @@ export const Claim: FC = () => {
     baseUrl: "/claims",
     empty: {
       account: "",
-      item: emptyItem,
+      item: emptyItem as any,
       endTimestamp: new Date(0).toISOString(),
     },
     search: {

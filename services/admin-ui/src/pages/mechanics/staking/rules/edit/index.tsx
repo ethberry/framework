@@ -6,10 +6,10 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { CheckboxInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { IStakingRule } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
-import { PriceInput } from "../../../../../components/inputs/price";
 import { validationSchema } from "./validation";
 
 export interface IStakingEditDialogProps {
@@ -59,10 +59,10 @@ export const StakingEditDialog: FC<IStakingEditDialogProps> = props => {
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <PriceInput prefix="deposit" readOnly={readOnly} />
+          <TemplateAssetInput prefix="deposit" readOnly={readOnly} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PriceInput prefix="reward" readOnly={readOnly} />
+          <TemplateAssetInput prefix="reward" readOnly={readOnly} />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

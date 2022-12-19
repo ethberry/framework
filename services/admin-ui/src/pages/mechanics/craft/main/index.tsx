@@ -16,11 +16,11 @@ import { Add, Create, Delete, FilterList } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { CraftStatus, ICraft, ICraftSearchDto } from "@framework/types";
 
 import { CraftEditDialog } from "./edit";
 import { ExchangeSearchForm } from "./form";
-import { emptyItem, emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 
 export const Craft: FC = () => {
@@ -46,8 +46,8 @@ export const Craft: FC = () => {
   } = useCollection<ICraft, ICraftSearchDto>({
     baseUrl: "/craft",
     empty: {
-      item: emptyItem,
-      price: emptyPrice,
+      item: emptyItem as any,
+      price: emptyPrice as any,
     },
     search: {
       query: "",

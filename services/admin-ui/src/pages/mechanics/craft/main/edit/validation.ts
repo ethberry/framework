@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 
-import { assetValidationSchema } from "../../../../../components/inputs/price/price-schema";
+import { templateAssetValidationSchema } from "@gemunion/mui-inputs-asset";
 
 export const validationSchema = Yup.object().shape({
-  item: assetValidationSchema,
-  price: assetValidationSchema,
+  item: templateAssetValidationSchema,
+  price: templateAssetValidationSchema,
 });

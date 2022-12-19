@@ -5,8 +5,8 @@ import { Check, Close, CloudUpload } from "@mui/icons-material";
 import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
-import { IPyramidRule, PyramidRuleStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { IPyramidRule, PyramidRuleStatus, TokenType } from "@framework/types";
 
 import PyramidSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Pyramid/Pyramid.sol/Pyramid.json";
 

@@ -7,10 +7,10 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { CurrencyInput } from "@gemunion/mui-inputs-mask";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ContractStatus, IPyramidRule, ModuleType } from "@framework/types";
 
 import { DurationInput } from "../../../../../components/inputs/duration";
-import { PriceInput } from "../../../../../components/inputs/price";
 import { validationSchema } from "./validation";
 
 export interface IPyramidStakingEditDialogProps {
@@ -24,7 +24,8 @@ export interface IPyramidStakingEditDialogProps {
 export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
   const { initialValues, readOnly, ...rest } = props;
 
-  const { id, title, description, penalty, maxCycles, deposit, reward, durationAmount, durationUnit, contractId } = initialValues;
+  const { id, title, description, penalty, maxCycles, deposit, reward, durationAmount, durationUnit, contractId } =
+    initialValues;
   const fixedValues = {
     id,
     title,
@@ -70,10 +71,18 @@ export const PyramidEditDialog: FC<IPyramidStakingEditDialogProps> = props => {
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <PriceInput prefix="deposit" readOnly={readOnly} contractModule={[ModuleType.HIERARCHY]} />
+          <TemplateAssetInput
+            prefix="deposit"
+            readOnly={readOnly}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <PriceInput prefix="reward" readOnly={readOnly} contractModule={[ModuleType.HIERARCHY]} />
+          <TemplateAssetInput
+            prefix="reward"
+            readOnly={readOnly}
+            contract={{ data: { contractModule: [ModuleType.HIERARCHY] } }}
+          />
         </Grid>
       </Grid>
       <DurationInput readOnly={readOnly} />

@@ -15,10 +15,10 @@ import { FilterList, Visibility } from "@mui/icons-material";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IStakingRule, IStakingRuleItemSearchDto, IStakingRuleSearchDto } from "@framework/types";
 import { DurationUnit, TokenType } from "@framework/types";
 
-import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { StakingDepositAllowanceButton, StakingDepositButton } from "../../../../components/buttons";
 import { StakingRuleSearchForm } from "./form";
 import { StakingViewDialog } from "./view";
@@ -43,8 +43,8 @@ export const StakingRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      deposit: emptyPrice,
-      reward: emptyPrice,
+      deposit: emptyPrice as any,
+      reward: emptyPrice as any,
       durationAmount: 2592000,
       durationUnit: DurationUnit.DAY,
       penalty: 100,

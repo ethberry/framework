@@ -4,12 +4,12 @@ import { Create } from "@mui/icons-material";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IPaginationDto } from "@gemunion/types-collection";
 import type { IContract, IGrade } from "@framework/types";
 
 import { GradeEditDialog } from "./edit";
 import { cleanUpAsset } from "../../../../utils/money";
-import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 
 export const Grade: FC = () => {
   const {
@@ -27,7 +27,7 @@ export const Grade: FC = () => {
     baseUrl: "/grades",
     empty: {
       growthRate: 0,
-      price: emptyPrice,
+      price: emptyPrice as any,
       contract: {
         title: "",
       } as IContract,

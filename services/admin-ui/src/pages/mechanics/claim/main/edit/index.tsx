@@ -3,10 +3,10 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { TextInput } from "@gemunion/mui-inputs-core";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { IClaim, ModuleType, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { PriceInput } from "../../../../../components/inputs/price";
 
 export interface IClaimEditDialogProps {
   open: boolean;
@@ -37,10 +37,10 @@ export const ClaimEditDialog: FC<IClaimEditDialogProps> = props => {
       {...rest}
     >
       <TextInput name="account" />
-      <PriceInput
+      <TemplateAssetInput
         prefix="item"
-        disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]}
-        contractModule={[ModuleType.HIERARCHY, ModuleType.MYSTERY]}
+        tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }}
+        contract={{ data: { contractModule: [ModuleType.HIERARCHY, ModuleType.MYSTERY] } }}
         multiple
       />
       <DateTimeInput name="endTimestamp" />

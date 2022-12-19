@@ -16,10 +16,10 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import { ITemplate, ITemplateSearchDto, TemplateStatus, TokenType } from "@framework/types";
 
 import { Erc721TemplateEditDialog } from "./edit";
-import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { TemplateSearchForm } from "../../../../components/forms/template-search";
 import { cleanUpAsset } from "../../../../utils/money";
 import { TemplateActionsMenu } from "../../../../components/menu/template";
@@ -49,7 +49,7 @@ export const Erc721Template: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      price: emptyPrice,
+      price: emptyPrice as any,
       amount: "0",
       contractId: 3,
     },

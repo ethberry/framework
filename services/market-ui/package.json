@@ -27,6 +27,7 @@
     "@gemunion/mui-dialog-form": "8.0.25",
     "@gemunion/mui-form": "7.0.24",
     "@gemunion/mui-form-search": "7.0.25",
+    "@gemunion/mui-inputs-asset": "1.0.5",
     "@gemunion/mui-inputs-core": "7.0.65",
     "@gemunion/mui-inputs-entity": "7.2.32",
     "@gemunion/mui-inputs-image-firebase": "8.0.68",

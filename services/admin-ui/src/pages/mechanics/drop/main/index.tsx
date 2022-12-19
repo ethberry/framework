@@ -17,10 +17,10 @@ import type { ISearchDto } from "@gemunion/types-collection";
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IDrop } from "@framework/types";
 
 import { DropEditDialog } from "./edit";
-import { emptyItem, emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 import { DropSearchForm } from "./form";
 
@@ -48,8 +48,8 @@ export const Drop: FC = () => {
   } = useCollection<IDrop, ISearchDto>({
     baseUrl: "/drops",
     empty: {
-      item: emptyItem,
-      price: emptyPrice,
+      item: emptyItem as any,
+      price: emptyPrice as any,
       startTimestamp: addMonths(now, 0).toISOString(),
       endTimestamp: addMonths(now, 1).toISOString(),
     },

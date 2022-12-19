@@ -4,11 +4,11 @@ import { FormDialog } from "@gemunion/mui-dialog-form";
 import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
-import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
+import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { PriceInput } from "../../../../../components/inputs/price";
 
 export interface IErc721TemplateEditDialogProps {
   open: boolean;
@@ -44,7 +44,11 @@ export const Erc721TemplateEditDialog: FC<IErc721TemplateEditDialogProps> = prop
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <PriceInput multiple prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
+      <TemplateAssetInput
+        multiple
+        prefix="price"
+        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+      />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput

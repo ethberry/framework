@@ -3,9 +3,11 @@ import { Web3ContextType } from "@web3-react/core";
 import { BigNumber, Contract } from "ethers";
 import { formatUnits } from "ethers/lib/utils";
 
-import { GovernanceTokenAddress, IToken } from "../provider";
 import { useMetamaskValue } from "@gemunion/react-hooks-eth";
+
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
+
+import { GovernanceTokenAddress, IToken } from "../provider";
 
 export const useTokenBalances = (tokens: Array<IToken>): Record<string, string> => {
   const ref = useRef({} as Record<string, string>);

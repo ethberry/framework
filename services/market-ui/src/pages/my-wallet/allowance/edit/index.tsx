@@ -1,20 +1,16 @@
 import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
-import { ContractFeatures, IAsset, TokenType, ModuleType } from "@framework/types";
+import { TokenType } from "@framework/types";
+import { TokenAssetInput } from "@gemunion/mui-inputs-asset";
+import type { ITokenAsset } from "@gemunion/mui-inputs-asset";
 
 import { validationSchema } from "./validation";
-import { ContractInput } from "../../../../components/inputs/contract";
-import { TokenTypeInput } from "./token-type-input";
-import { AmountInput } from "./amount-input";
+import { ContractInput } from "./contract-input";
 
 export interface IAllowanceDto {
-  allowance: IAsset;
-  tokenType: TokenType;
-  contractId: number;
-  contract: { main: string; custom: string };
-  decimals: number;
-  amount: string;
+  token: ITokenAsset;
+  address: string;
 }
 
 export interface IAllowanceDialogProps {
@@ -35,14 +31,8 @@ export const AllowanceDialog: FC<IAllowanceDialogProps> = props => {
       testId="AllowanceForm"
       {...rest}
     >
-      <TokenTypeInput />
-      <ContractInput name="contractId" related="main" data={{ contractModule: [ModuleType.HIERARCHY] }} />
-      <AmountInput />
-      <ContractInput
-        name="customContractId"
-        related="custom"
-        data={{ contractFeatures: [ContractFeatures.ALLOWANCE], contractType: [] }}
-      />
+      <TokenAssetInput prefix="token" tokenType={{ disabledOptions: [TokenType.NATIVE] }} />
+      <ContractInput />
     </FormDialog>
   );
 };

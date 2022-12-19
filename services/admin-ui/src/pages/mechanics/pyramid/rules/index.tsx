@@ -17,11 +17,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyPrice } from "@gemunion/mui-inputs-asset";
 import type { IPyramidRule, IPyramidRuleSearchDto } from "@framework/types";
 import { DurationUnit, IPyramidRuleItemSearchDto, PyramidRuleStatus, TokenType } from "@framework/types";
 
 import { PyramidUploadButton } from "../../../../components/buttons";
-import { emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 import { PyramidEditDialog } from "./edit";
 import { PyramidRuleSearchForm } from "./form";
@@ -53,8 +53,8 @@ export const PyramidRules: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      deposit: emptyPrice,
-      reward: emptyPrice,
+      deposit: emptyPrice as any,
+      reward: emptyPrice as any,
       durationAmount: 2592000,
       durationUnit: DurationUnit.DAY,
       penalty: 100,

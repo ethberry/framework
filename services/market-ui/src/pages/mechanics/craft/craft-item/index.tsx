@@ -4,20 +4,20 @@ import { Link as RouterLink } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 
 import { Breadcrumbs, PageHeader, Spinner } from "@gemunion/mui-page-layout";
-import { ICraft } from "@framework/types";
 import { RichTextDisplay } from "@gemunion/mui-rte";
 import { useCollection } from "@gemunion/react-hooks";
+import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
+import { ICraft } from "@framework/types";
 
 import { useStyles } from "./styles";
-import { emptyItem, emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { CraftButton } from "../../../../components/buttons";
 
 export const CraftItem: FC = () => {
   const { selected, isLoading } = useCollection<ICraft>({
     baseUrl: "/craft",
     empty: {
-      item: emptyItem,
-      price: emptyPrice,
+      item: emptyItem as any,
+      price: emptyPrice as any,
     },
   });
 

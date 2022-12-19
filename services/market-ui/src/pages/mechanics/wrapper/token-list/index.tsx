@@ -6,16 +6,16 @@ import { Web3ContextType } from "@web3-react/core";
 import { constants, Contract, utils } from "ethers";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
-import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 import { useCollection } from "@gemunion/react-hooks";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { emptyToken } from "@gemunion/mui-inputs-asset";
+import { IToken, ITokenSearchDto, ModuleType, TokenType } from "@framework/types";
 
 import ERC721TokenWrapperSol from "@framework/core-contracts/artifacts/contracts/Mechanics/TokenWrapper/ERC721TokenWrapper.sol/ERC721TokenWrapper.json";
 
 import { WrapperTokenListItem } from "./item";
 import { ICreateWrappedToken, WrapperEditDialog } from "./edit";
 import { TokenSearchForm } from "../../../../components/forms/token-search";
-import { emptyItems } from "../../../../components/inputs/price/empty-price";
 
 export interface IWrapperTokenListProps {
   embedded?: boolean;
@@ -44,7 +44,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
   const metaFn = useMetamask((values: ICreateWrappedToken, web3Context: Web3ContextType) => {
     const items = values.item.components.map(component => ({
       tokenType: Object.keys(TokenType).indexOf(component.tokenType),
-      token: component.contract!.address,
+      token: component.contract.address,
       tokenId: component.token.tokenId || 0,
       amount: component.amount,
     }));
@@ -120,7 +120,7 @@ export const WrapperTokenList: FC<IWrapperTokenListProps> = props => {
           contract: { address: constants.AddressZero },
           contractId: 0,
           templateId: 0,
-          item: emptyItems,
+          item: emptyToken,
         }}
       />
     </Fragment>

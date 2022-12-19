@@ -2,10 +2,10 @@ import { FC } from "react";
 
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { DateTimeInput } from "@gemunion/mui-inputs-picker";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { IDrop, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { PriceInput } from "../../../../../components/inputs/price";
 
 export interface IDropEditDialogProps {
   open: boolean;
@@ -36,8 +36,8 @@ export const DropEditDialog: FC<IDropEditDialogProps> = props => {
       testId="DropEditForm"
       {...rest}
     >
-      <PriceInput prefix="item" disabledTokenTypes={[TokenType.NATIVE, TokenType.ERC20]} />
-      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
+      <TemplateAssetInput prefix="item" tokenType={{ disabledOptions: [TokenType.NATIVE, TokenType.ERC20] }} />
+      <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }} />
       <DateTimeInput name="startTimestamp" />
       <DateTimeInput name="endTimestamp" />
     </FormDialog>

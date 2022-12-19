@@ -5,10 +5,10 @@ import { NumberInput, SelectInput, TextInput } from "@gemunion/mui-inputs-core";
 import { RichTextEditor } from "@gemunion/mui-inputs-draft";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
 import { AvatarInput } from "@gemunion/mui-inputs-image-firebase";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { ITemplate, ModuleType, TemplateStatus, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { PriceInput } from "../../../../../components/inputs/price";
 
 export interface ITemplateEditDialogProps {
   open: boolean;
@@ -44,7 +44,11 @@ export const Erc998TemplateEditDialog: FC<ITemplateEditDialogProps> = props => {
     >
       <TextInput name="title" />
       <RichTextEditor name="description" />
-      <PriceInput multiple prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
+      <TemplateAssetInput
+        multiple
+        prefix="price"
+        tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }}
+      />
       <NumberInput name="amount" />
       {id ? <SelectInput name="templateStatus" options={TemplateStatus} /> : null}
       <EntityInput

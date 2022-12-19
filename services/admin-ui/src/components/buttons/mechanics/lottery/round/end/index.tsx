@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { Casino } from "@mui/icons-material";
 import { FormattedMessage } from "react-intl";
 import { Contract } from "ethers";
+
 import { useMetamask } from "@gemunion/react-hooks-eth";
 
 import LotterySol from "@framework/core-contracts/artifacts/contracts/Mechanics/Lottery/Lottery.sol/Lottery.json";

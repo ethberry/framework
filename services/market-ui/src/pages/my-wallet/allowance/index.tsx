@@ -5,13 +5,13 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { emptyToken } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 import ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC20/ERC20Simple.sol/ERC20Simple.json";
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC1155/ERC1155Simple.sol/ERC1155Simple.json";
 
 import { AllowanceDialog, IAllowanceDto } from "./edit";
-import { emptyPrice } from "../../../components/inputs/price/empty-price";
 
 export const AllowanceButton: FC = () => {
   const [isAllowanceDialogOpen, setIsAllowanceDialogOpen] = useState(false);
@@ -25,19 +25,24 @@ export const AllowanceButton: FC = () => {
   };
 
   const metaFn = useMetamask((values: IAllowanceDto, web3Context: Web3ContextType) => {
-    if (values.tokenType === TokenType.ERC20) {
-      const contractErc20 = new Contract(values.contract.main, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
-      return contractErc20.approve(values.contract.custom, values.amount) as Promise<any>;
-    } else if (values.tokenType === TokenType.ERC721 || values.tokenType === TokenType.ERC998) {
-      const contractErc721 = new Contract(values.contract.main, ERC721SimpleSol.abi, web3Context.provider?.getSigner());
-      return contractErc721.setApprovalForAll(values.contract.custom, true) as Promise<any>;
-    } else if (values.tokenType === TokenType.ERC1155) {
+    const asset = values.token.components[0];
+    if (asset.tokenType === TokenType.ERC20) {
+      const contractErc20 = new Contract(asset.contract.address, ERC20SimpleSol.abi, web3Context.provider?.getSigner());
+      return contractErc20.approve(values.address, asset.amount) as Promise<any>;
+    } else if (asset.tokenType === TokenType.ERC721) {
+      const contractErc721 = new Contract(
+        asset.contract.address,
+        ERC721SimpleSol.abi,
+        web3Context.provider?.getSigner(),
+      );
+      return contractErc721.setApprovalForAll(values.address, true) as Promise<any>;
+    } else if (asset.tokenType === TokenType.ERC1155) {
       const contractErc1155 = new Contract(
-        values.contract.main,
+        asset.contract.address,
         ERC1155SimpleSol.abi,
         web3Context.provider?.getSigner(),
       );
-      return contractErc1155.setApprovalForAll(values.contract.custom, true) as Promise<any>;
+      return contractErc1155.setApprovalForAll(values.address, true) as Promise<any>;
     } else {
       throw new Error("unsupported token type");
     }
@@ -59,12 +64,8 @@ export const AllowanceButton: FC = () => {
         onConfirm={handleAllowanceConfirm}
         open={isAllowanceDialogOpen}
         initialValues={{
-          allowance: emptyPrice,
-          tokenType: TokenType.ERC20,
-          decimals: 18,
-          amount: "0",
-          contractId: 0,
-          contract: { main: "", custom: "" },
+          token: emptyToken as any,
+          address: "",
         }}
       />
     </Fragment>

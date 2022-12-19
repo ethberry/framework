@@ -3,10 +3,10 @@ import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
 import { SelectInput } from "@gemunion/mui-inputs-core";
 import { EntityInput } from "@gemunion/mui-inputs-entity";
+import { TemplateAssetInput } from "@gemunion/mui-inputs-asset";
 import { GradeStrategy, IGrade, TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
-import { PriceInput } from "../../../../../components/inputs/price";
 import { GrowthRateInput } from "./growth-rate-input";
 
 export interface IGradeEditDialogProps {
@@ -41,7 +41,7 @@ export const GradeEditDialog: FC<IGradeEditDialogProps> = props => {
       <EntityInput name="contractId" controller="contracts" readOnly data={{}} />
       <SelectInput name="gradeStrategy" options={GradeStrategy} />
       <GrowthRateInput />
-      <PriceInput prefix="price" disabledTokenTypes={[TokenType.ERC721, TokenType.ERC998]} />
+      <TemplateAssetInput prefix="price" tokenType={{ disabledOptions: [TokenType.ERC721, TokenType.ERC998] }} />
     </FormDialog>
   );
 };

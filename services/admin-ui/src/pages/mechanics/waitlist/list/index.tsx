@@ -13,13 +13,13 @@ import { IWaitlistList, TokenType } from "@framework/types";
 import type { ISearchDto } from "@gemunion/types-collection";
 import { emptyStateString } from "@gemunion/draft-js-utils";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { emptyItem } from "@gemunion/mui-inputs-asset";
 
 import WaitlistSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Waitlist/Waitlist.sol/Waitlist.json";
 
 import { WaitlistSearchForm } from "./form";
 import { WaitlistListEditDialog } from "./edit";
 import { IWaitlistGenerateDto, WaitlistGenerateDialog } from "./generate";
-import { emptyItem } from "../../../../components/inputs/price/empty-price";
 
 export interface IRoot {
   root: string;
@@ -166,7 +166,10 @@ export const WaitlistList: FC = () => {
         onCancel={handleGenerateCancel}
         onConfirm={handleGenerateConfirm}
         open={isGenerateDialogOpen}
-        initialValues={{ item: emptyItem, listId: 1 }}
+        initialValues={{
+          item: emptyItem as any,
+          listId: 1,
+        }}
       />
     </Fragment>
   );

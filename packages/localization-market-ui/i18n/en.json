@@ -32,10 +32,10 @@
     "deposit-allowance": "Set Deposit Allowance",
     "edit": "Edit",
     "fund": "Fund",
-    "join": "Join",
-    "reward": "Reward",
     "get-reward": "Receive reward",
+    "join": "Join",
     "penalty": "Penalty: {item}% of deposit {description}",
+    "reward": "Reward",
     "reward-item": "{item} for each {period} period",
     "sell": "Sell",
     "transfer": "Transfer",
@@ -218,6 +218,8 @@
       "password": "Password",
       "penalty": "Penalty",
       "price": "Price",
+      "pyramidDepositStatus": "Status",
+      "pyramidRuleStatus": "Status",
       "quantity": "Quantity",
       "rank": "Rank",
       "rarity": "Rarity",
@@ -229,8 +231,6 @@
       "roundIds": "Round",
       "score": "Score",
       "sort": "Sort by",
-      "pyramidDepositStatus": "Status",
-      "pyramidRuleStatus": "Status",
       "stakingDepositStatus": "Status",
       "stakingRuleStatus": "Status",
       "startDate": "Start date",
@@ -240,6 +240,7 @@
       "templateIds": "Templates",
       "title": "Title",
       "to": "To",
+      "token": "Token",
       "tokenId": "Token",
       "tokenIds": "Tokens",
       "tokenType": "Type",
@@ -348,6 +349,15 @@
         },
         "text": "App network {appNetwork} doesn't match to network selected in wallet {walletNetwork}"
       },
+      "header": {
+        "bridge": "Bridge",
+        "network": "Network"
+      },
+      "snackbar": {
+        "accountNotFound": "Account not found in list",
+        "approve-1inch": "Please approve 1inch to spend your {symbol}",
+        "web3-not-detected": "Web3 provider not detected"
+      },
       "swap": {
         "ETH": "ETH",
         "approve": "Approve",
@@ -378,17 +388,8 @@
         "title": "Search {amount} tokens"
       },
       "warning": {
-        "insufficient": "Insufficient {symbol} balance",
-        "cannotBeSame": "Tokens cannot be the same"
-      },
-      "header": {
-        "network": "Network",
-        "bridge": "Bridge"
-      },
-      "snackbar": {
-        "approve-1inch": "Please approve 1inch to spend your {symbol}",
-        "web3-not-detected": "Web3 provider not detected",
-        "accountNotFound": "Account not found in list"
+        "cannotBeSame": "Tokens cannot be the same",
+        "insufficient": "Insufficient {symbol} balance"
       }
     },
     "breed": {

@@ -1,12 +1,11 @@
 import { FC } from "react";
 import { FormDialog } from "@gemunion/mui-dialog-form";
+import { TokenAssetInput, ITokenAsset } from "@gemunion/mui-inputs-asset";
 import { TokenType } from "@framework/types";
 
 import { validationSchema } from "./validation";
 import { TemplateInput } from "./template-input";
 import { ContractInput } from "./contract-input";
-import { PriceInput } from "../../../../../components/inputs/price";
-import { ITokenAsset } from "../../../../../components/inputs/price/empty-price";
 
 export interface ICreateWrappedToken {
   tokenType: TokenType;
@@ -42,7 +41,7 @@ export const WrapperEditDialog: FC<IWrapperEditDialogProps> = props => {
     >
       <ContractInput />
       <TemplateInput />
-      <PriceInput prefix="item" multiple />
+      <TokenAssetInput prefix="item" multiple />
     </FormDialog>
   );
 };

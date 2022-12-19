@@ -6,8 +6,8 @@ import { Contract } from "ethers";
 import { Web3ContextType } from "@web3-react/core";
 
 import { useApiCall } from "@gemunion/react-hooks";
-import { IMysterybox, IStakingRule, StakingRuleStatus, TokenType } from "@framework/types";
 import { useMetamask } from "@gemunion/react-hooks-eth";
+import { IMysterybox, IStakingRule, StakingRuleStatus, TokenType } from "@framework/types";
 
 import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/Staking.sol/Staking.json";
 

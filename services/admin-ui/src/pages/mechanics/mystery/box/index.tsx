@@ -16,11 +16,11 @@ import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-lay
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
 import { emptyStateString } from "@gemunion/draft-js-utils";
+import { emptyItem, emptyPrice } from "@gemunion/mui-inputs-asset";
 import { IMysterybox, IMysteryBoxSearchDto, ITemplate, MysteryboxStatus } from "@framework/types";
 
 import { MysteryboxEditDialog } from "./edit";
 import { MysteryboxSearchForm } from "./form";
-import { emptyItem, emptyPrice } from "../../../../components/inputs/price/empty-price";
 import { cleanUpAsset } from "../../../../utils/money";
 
 export const MysteryBox: FC = () => {
@@ -48,9 +48,9 @@ export const MysteryBox: FC = () => {
     empty: {
       title: "",
       description: emptyStateString,
-      item: emptyItem,
+      item: emptyItem as any,
       template: {
-        price: emptyPrice,
+        price: emptyPrice as any,
       } as ITemplate,
     },
     search: {
