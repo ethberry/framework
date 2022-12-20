@@ -12,6 +12,7 @@ on:
         options:
           - on
           - off
+        default: 'on'
 #      mode:
 #        description: on || off
 #        default: 'on'
