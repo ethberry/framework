@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { SearchableDto } from "@gemunion/collection";
 
 import { IMysteryboxCreateDto } from "../interfaces";
-import { ItemDto, PriceDto } from "../../../asset/dto";
+import { ItemDto, PriceDto } from "../../../../exchange/asset/dto";
 
 export class MysteryboxCreateDto extends SearchableDto implements IMysteryboxCreateDto {
   @ApiProperty({

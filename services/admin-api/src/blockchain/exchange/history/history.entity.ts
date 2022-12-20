@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { ExchangeEventType, IExchangeHistory, TExchangeEventData } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { AssetComponentHistoryEntity } from "../../asset/asset-component-history.entity";
+import { AssetComponentHistoryEntity } from "../asset/asset-component-history.entity";
 
 @Entity({ schema: ns, name: "exchange_history" })
 export class ExchangeHistoryEntity extends IdDateBaseEntity implements IExchangeHistory {

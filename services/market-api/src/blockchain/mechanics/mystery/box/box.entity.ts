@@ -5,7 +5,7 @@ import { IMysterybox, MysteryboxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
-import { AssetEntity } from "../../asset/asset.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "mysterybox" })
 export class MysteryBoxEntity extends SearchableEntity implements IMysterybox {

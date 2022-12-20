@@ -16,7 +16,7 @@ import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
 import { OwnershipModule } from "../ownership/ownership.module";
 import { Erc998CompositionModule } from "../composition/composition.module";
-import { AssetModule } from "../../../mechanics/asset/asset.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
   imports: [

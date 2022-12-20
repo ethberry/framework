@@ -8,6 +8,7 @@ import { TokensModule } from "./tokens/tokens.module";
 import { MechanicsModule } from "./mechanics/mechanics.module";
 import { PauseModule } from "./pause/pause.module";
 import { WalletModule } from "./wallet/wallet.module";
+import { ExchangeModule } from "./exchange/exchange.module";
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { WalletModule } from "./wallet/wallet.module";
     RoyaltyModule,
     TokensModule,
     MechanicsModule,
+    ExchangeModule,
     WalletModule,
   ],
 })

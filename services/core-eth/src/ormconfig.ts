@@ -11,12 +11,12 @@ import { AccessControlHistoryEntity } from "./blockchain/access-control/history/
 import { StakingHistoryEntity } from "./blockchain/mechanics/staking/history/history.entity";
 import { StakingRulesEntity } from "./blockchain/mechanics/staking/rules/rules.entity";
 import { StakingDepositEntity } from "./blockchain/mechanics/staking/deposit/deposit.entity";
-import { ExchangeHistoryEntity } from "./blockchain/mechanics/exchange/history/exchange-history.entity";
+import { ExchangeHistoryEntity } from "./blockchain/exchange/history/history.entity";
 import { TokenEntity } from "./blockchain/hierarchy/token/token.entity";
 import { ContractEntity } from "./blockchain/hierarchy/contract/contract.entity";
 import { TemplateEntity } from "./blockchain/hierarchy/template/template.entity";
-import { AssetEntity } from "./blockchain/mechanics/asset/asset.entity";
-import { AssetComponentEntity } from "./blockchain/mechanics/asset/asset-component.entity";
+import { AssetEntity } from "./blockchain/exchange/asset/asset.entity";
+import { AssetComponentEntity } from "./blockchain/exchange/asset/asset-component.entity";
 import { BalanceEntity } from "./blockchain/hierarchy/balance/balance.entity";
 import { GradeEntity } from "./blockchain/mechanics/grade/grade.entity";
 import { LotteryRoundEntity } from "./blockchain/mechanics/lottery/round/round.entity";
@@ -24,7 +24,7 @@ import { LotteryTicketEntity } from "./blockchain/mechanics/lottery/ticket/ticke
 import { LotteryHistoryEntity } from "./blockchain/mechanics/lottery/history/history.entity";
 import { CompositionEntity } from "./blockchain/tokens/erc998/composition/composition.entity";
 import { OwnershipEntity } from "./blockchain/tokens/erc998/ownership/ownership.entity";
-import { AssetComponentHistoryEntity } from "./blockchain/mechanics/asset/asset-component-history.entity";
+import { AssetComponentHistoryEntity } from "./blockchain/exchange/asset/asset-component-history.entity";
 import { AccessListHistoryEntity } from "./blockchain/access-list/history/history.entity";
 import { AccessListEntity } from "./blockchain/access-list/access-list.entity";
 import { PyramidHistoryEntity } from "./blockchain/mechanics/pyramid/history/history.entity";

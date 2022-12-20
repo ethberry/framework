@@ -6,7 +6,7 @@ import { IPyramidRuleSearchDto, PyramidRuleStatus } from "@framework/types";
 
 import { PyramidRulesEntity } from "./rules.entity";
 import { IPyramidCreateDto, IPyramidUpdateDto } from "./interfaces";
-import { AssetService } from "../../asset/asset.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class PyramidRulesService {

@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { MysteryboxStatus } from "@framework/types";
 
 import { IMysteryboxUpdateDto } from "../interfaces";
-import { ItemDto, PriceDto } from "../../../asset/dto";
+import { ItemDto, PriceDto } from "../../../../exchange/asset/dto";
 
 export class MysteryboxUpdateDto implements IMysteryboxUpdateDto {
   @ApiPropertyOptional()

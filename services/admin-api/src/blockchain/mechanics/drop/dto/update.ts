@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { IsBeforeDate } from "@gemunion/nest-js-validators";
 
 import { IDropUpdateDto } from "../interfaces";
-import { ItemDto, PriceDto } from "../../asset/dto";
+import { ItemDto, PriceDto } from "../../../exchange/asset/dto";
 
 export class DropUpdateDto implements IDropUpdateDto {
   @ApiPropertyOptional({

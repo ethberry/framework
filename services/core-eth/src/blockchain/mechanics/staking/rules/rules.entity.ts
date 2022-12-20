@@ -5,7 +5,7 @@ import { DurationUnit, IStakingRule, StakingRuleStatus } from "@framework/types"
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { StakingDepositEntity } from "../deposit/deposit.entity";
-import { AssetEntity } from "../../asset/asset.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "staking_rules" })
 export class StakingRulesEntity extends SearchableEntity implements IStakingRule {

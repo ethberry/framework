@@ -5,7 +5,7 @@ import { ExchangeType, IAssetComponentHistory } from "@framework/types";
 import { ns } from "@framework/constants";
 
 import { TokenEntity } from "../../hierarchy/token/token.entity";
-import { ExchangeHistoryEntity } from "../exchange/history/exchange-history.entity";
+import { ExchangeHistoryEntity } from "../history/history.entity";
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
 
 @Entity({ schema: ns, name: "asset_component_history" })

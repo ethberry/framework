@@ -6,7 +6,7 @@ import { SignerModule } from "@framework/nest-js-module-exchange-signer";
 import { ClaimEntity } from "./claim.entity";
 import { ClaimService } from "./claim.service";
 import { ClaimController } from "./claim.controller";
-import { AssetModule } from "../asset/asset.module";
+import { AssetModule } from "../../exchange/asset/asset.module";
 
 @Module({
   imports: [SignerModule, AssetModule, TypeOrmModule.forFeature([ClaimEntity])],

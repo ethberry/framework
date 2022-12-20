@@ -6,7 +6,7 @@ import type { IPaginationDto } from "@gemunion/types-collection";
 
 import { GradeEntity } from "./grade.entity";
 import { IGradeUpdateDto } from "./interfaces";
-import { AssetService } from "../asset/asset.service";
+import { AssetService } from "../../exchange/asset/asset.service";
 
 @Injectable()
 export class GradeService {

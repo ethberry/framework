@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { WaitlistItemEntity } from "./item.entity";
 import { WaitlistItemServiceEth } from "./item.service.eth";
 import { WaitlistItemControllerEth } from "./item.controller.eth";
-import { ExchangeHistoryModule } from "../../exchange/history/exchange-history.module";
+import { ExchangeHistoryModule } from "../../../exchange/history/history.module";
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
 
 @Module({

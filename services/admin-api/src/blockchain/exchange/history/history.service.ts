@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { ExchangeHistoryEntity } from "./exchange-history.entity";
+import { ExchangeHistoryEntity } from "./history.entity";
 import { ExchangeType } from "@framework/types";
 
 @Injectable()

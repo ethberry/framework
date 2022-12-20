@@ -21,7 +21,7 @@ import { TemplateService } from "../../../hierarchy/template/template.service";
 import { TokenService } from "../../../hierarchy/token/token.service";
 import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
-import { AssetService } from "../../../mechanics/asset/asset.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
 
 @Injectable()

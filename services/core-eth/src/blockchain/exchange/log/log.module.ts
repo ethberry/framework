@@ -6,9 +6,9 @@ import { EthersContractModule, IModuleOptions } from "@gemunion/nestjs-ethers";
 import { ContractEventType, ContractType, ExchangeEventType, ReferralProgramEventType } from "@framework/types";
 import ExchangeSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Exchange/Exchange.sol/Exchange.json";
 
-import { ExchangeLogService } from "./exchange-log.service";
-import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ExchangeLogService } from "./log.service";
+import { ContractModule } from "../../hierarchy/contract/contract.module";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Module({
   imports: [

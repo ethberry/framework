@@ -4,7 +4,7 @@ import { ConfigModule } from "@nestjs/config";
 
 import { WalletControllerEth } from "./wallet.controller.eth";
 import { WalletServiceEth } from "./wallet.service.eth";
-import { ExchangeHistoryModule } from "../mechanics/exchange/history/exchange-history.module";
+import { ExchangeHistoryModule } from "../exchange/history/history.module";
 import { PayeesEntity } from "./payees.entity";
 import { ContractModule } from "../hierarchy/contract/contract.module";
 import { PayeesService } from "./payees.service";

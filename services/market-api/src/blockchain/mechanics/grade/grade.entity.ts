@@ -6,7 +6,7 @@ import { GradeStrategy, IGrade } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { ContractEntity } from "../../hierarchy/contract/contract.entity";
-import { AssetEntity } from "../asset/asset.entity";
+import { AssetEntity } from "../../exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "grade" })
 export class GradeEntity extends IdDateBaseEntity implements IGrade {

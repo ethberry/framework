@@ -4,7 +4,7 @@ import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeo
 import { constants } from "ethers";
 
 import { GradeEntity } from "./grade.entity";
-import { AssetService } from "../asset/asset.service";
+import { AssetService } from "../../exchange/asset/asset.service";
 import { GradeStrategy, TokenType } from "@framework/types";
 
 @Injectable()

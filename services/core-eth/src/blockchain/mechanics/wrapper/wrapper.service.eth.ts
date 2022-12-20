@@ -17,7 +17,7 @@ import { getMetadata } from "../../../common/utils";
 import { ABI } from "../../tokens/erc721/token/log/interfaces";
 import { TemplateService } from "../../hierarchy/template/template.service";
 import { BalanceService } from "../../hierarchy/balance/balance.service";
-import { AssetService } from "../asset/asset.service";
+import { AssetService } from "../../exchange/asset/asset.service";
 
 @Injectable()
 export class WrapperServiceEth {

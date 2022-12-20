@@ -6,7 +6,7 @@ import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { ExchangeEventType, IClaimRewardEvent, IRewardSetEvent, TExchangeEventData } from "@framework/types";
 
 import { ContractService } from "../../../hierarchy/contract/contract.service";
-import { ExchangeHistoryService } from "../../exchange/history/exchange-history.service";
+import { ExchangeHistoryService } from "../../../exchange/history/history.service";
 
 @Injectable()
 export class WaitlistItemServiceEth {

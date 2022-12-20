@@ -7,7 +7,7 @@ import { IdDateBaseEntity, JsonColumn } from "@gemunion/nest-js-module-typeorm-p
 
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
-import { AssetComponentHistoryEntity } from "../../mechanics/asset/asset-component-history.entity";
+import { AssetComponentHistoryEntity } from "../../exchange/asset/asset-component-history.entity";
 import { ContractHistoryEntity } from "../../contract-history/contract-history.entity";
 
 @Entity({ schema: ns, name: "token" })

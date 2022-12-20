@@ -12,7 +12,7 @@ import type {
   IExchangeErc20PaymentReleasedEvent,
 } from "@framework/types";
 import { ExchangeEventType, TExchangeEventData } from "@framework/types";
-import { ExchangeHistoryService } from "../mechanics/exchange/history/exchange-history.service";
+import { ExchangeHistoryService } from "../exchange/history/history.service";
 import { PayeesService } from "./payees.service";
 import { ContractService } from "../hierarchy/contract/contract.service";
 import { BalanceService } from "../hierarchy/balance/balance.service";

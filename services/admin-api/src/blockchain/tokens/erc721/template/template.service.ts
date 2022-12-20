@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 
 import { ITemplateSearchDto, ModuleType, TokenType } from "@framework/types";
 
-import { AssetService } from "../../../mechanics/asset/asset.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { UserEntity } from "../../../../user/user.entity";

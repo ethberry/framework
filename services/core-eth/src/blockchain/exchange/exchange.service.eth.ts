@@ -16,15 +16,15 @@ import {
   TExchangeEventData,
 } from "@framework/types";
 
-import { ExchangeHistoryService } from "./history/exchange-history.service";
-import { ClaimService } from "../claim/claim.service";
-import { ContractService } from "../../hierarchy/contract/contract.service";
-import { AssetService } from "../asset/asset.service";
-import { TokenService } from "../../hierarchy/token/token.service";
-import { TemplateService } from "../../hierarchy/template/template.service";
-import { ExchangeHistoryEntity } from "./history/exchange-history.entity";
-import { GradeService } from "../grade/grade.service";
-import { BreedServiceEth } from "../breed/breed.service.eth";
+import { ExchangeHistoryService } from "./history/history.service";
+import { ClaimService } from "../mechanics/claim/claim.service";
+import { ContractService } from "../hierarchy/contract/contract.service";
+import { AssetService } from "./asset/asset.service";
+import { TokenService } from "../hierarchy/token/token.service";
+import { TemplateService } from "../hierarchy/template/template.service";
+import { ExchangeHistoryEntity } from "./history/history.entity";
+import { GradeService } from "../mechanics/grade/grade.service";
+import { BreedServiceEth } from "../mechanics/breed/breed.service.eth";
 
 @Injectable()
 export class ExchangeServiceEth {

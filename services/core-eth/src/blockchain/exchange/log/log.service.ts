@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { EthersContractService } from "@gemunion/nestjs-ethers";
 
-import { ContractService } from "../../../hierarchy/contract/contract.service";
+import { ContractService } from "../../hierarchy/contract/contract.service";
 
 @Injectable()
 export class ExchangeLogService {

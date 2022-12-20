@@ -30,7 +30,7 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { OwnershipService } from "../ownership/ownership.service";
 import { Erc998CompositionService } from "../composition/composition.service";
-import { AssetService } from "../../../mechanics/asset/asset.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 import { callRandom } from "../../../../common/utils/random";
 
 @Injectable()

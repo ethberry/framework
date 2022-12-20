@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { ClaimStatus, IClaim } from "@framework/types";
 import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { AssetEntity } from "../asset/asset.entity";
+import { AssetEntity } from "../../exchange/asset/asset.entity";
 
 @Entity({ schema: ns, name: "claim" })
 export class ClaimEntity extends IdDateBaseEntity implements IClaim {

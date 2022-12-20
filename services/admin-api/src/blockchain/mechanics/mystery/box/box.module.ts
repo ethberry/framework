@@ -6,7 +6,7 @@ import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { MysteryBoxEntity } from "./box.entity";
 import { MysteryBoxService } from "./box.service";
 import { MysteryBoxController } from "./box.controller";
-import { AssetModule } from "../../asset/asset.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
   imports: [ContractModule, TemplateModule, AssetModule, TypeOrmModule.forFeature([MysteryBoxEntity])],

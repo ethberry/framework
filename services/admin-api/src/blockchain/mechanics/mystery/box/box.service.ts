@@ -5,7 +5,7 @@ import { Brackets, FindOneOptions, FindOptionsWhere, Repository } from "typeorm"
 import { IMysteryBoxSearchDto, MysteryboxStatus } from "@framework/types";
 
 import { TemplateService } from "../../../hierarchy/template/template.service";
-import { AssetService } from "../../asset/asset.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 import { MysteryBoxEntity } from "./box.entity";
 import { IMysteryboxCreateDto, IMysteryboxUpdateDto } from "./interfaces";

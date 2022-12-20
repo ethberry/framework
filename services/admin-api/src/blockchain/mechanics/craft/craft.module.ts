@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { CraftService } from "./craft.service";
 import { CraftEntity } from "./craft.entity";
 import { CraftController } from "./craft.controller";
-import { AssetModule } from "../asset/asset.module";
+import { AssetModule } from "../../exchange/asset/asset.module";
 
 @Module({
   imports: [AssetModule, TypeOrmModule.forFeature([CraftEntity])],

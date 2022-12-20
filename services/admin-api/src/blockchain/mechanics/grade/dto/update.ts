@@ -5,7 +5,7 @@ import { Type } from "class-transformer";
 import { GradeStrategy } from "@framework/types";
 
 import { IGradeUpdateDto } from "../interfaces";
-import { PriceDto } from "../../asset/dto";
+import { PriceDto } from "../../../exchange/asset/dto";
 
 export class GradeUpdateDto implements IGradeUpdateDto {
   @ApiPropertyOptional({

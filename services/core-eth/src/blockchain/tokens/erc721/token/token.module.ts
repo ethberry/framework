@@ -14,7 +14,7 @@ import { ContractModule } from "../../../hierarchy/contract/contract.module";
 import { TemplateModule } from "../../../hierarchy/template/template.module";
 import { TokenModule } from "../../../hierarchy/token/token.module";
 import { BalanceModule } from "../../../hierarchy/balance/balance.module";
-import { AssetModule } from "../../../mechanics/asset/asset.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 import { BreedModule } from "../../../mechanics/breed/breed.module";
 
 @Module({

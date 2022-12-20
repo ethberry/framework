@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
-import { ExchangeHistoryEntity } from "./exchange-history.entity";
+import { ExchangeHistoryEntity } from "./history.entity";
 
 @Injectable()
 export class ExchangeHistoryService {

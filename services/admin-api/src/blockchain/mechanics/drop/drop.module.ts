@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { DropEntity } from "./drop.entity";
 import { DropService } from "./drop.service";
 import { DropController } from "./drop.controller";
-import { AssetModule } from "../asset/asset.module";
+import { AssetModule } from "../../exchange/asset/asset.module";
 
 @Module({
   imports: [AssetModule, TypeOrmModule.forFeature([DropEntity])],

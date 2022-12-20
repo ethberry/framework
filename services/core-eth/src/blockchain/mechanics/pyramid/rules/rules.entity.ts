@@ -5,7 +5,7 @@ import { DurationUnit, IPyramidRule, PyramidRuleStatus } from "@framework/types"
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
 import { PyramidDepositEntity } from "../deposit/deposit.entity";
-import { AssetEntity } from "../../asset/asset.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
 
 @Entity({ schema: ns, name: "pyramid_rules" })

@@ -8,7 +8,7 @@ import { IdDateBaseEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 import { TemplateEntity } from "../template/template.entity";
 import { BalanceEntity } from "../balance/balance.entity";
 import { OwnershipEntity } from "../../tokens/erc998/ownership/ownership.entity";
-import { AssetComponentHistoryEntity } from "../../mechanics/asset/asset-component-history.entity";
+import { AssetComponentHistoryEntity } from "../../exchange/asset/asset-component-history.entity";
 import { ContractHistoryEntity } from "../../contract-history/contract-history.entity";
 import { BreedEntity } from "../../mechanics/breed/breed.entity";
 

@@ -9,7 +9,7 @@ import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { TemplateService } from "../../../hierarchy/template/template.service";
 import { ITemplateCreateDto } from "../../../hierarchy/template/interfaces";
 import { Erc1155TokenService } from "../token/token.service";
-import { AssetService } from "../../../mechanics/asset/asset.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 import { UserEntity } from "../../../../user/user.entity";
 
 @Injectable()

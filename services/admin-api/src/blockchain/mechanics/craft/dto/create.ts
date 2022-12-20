@@ -3,7 +3,7 @@ import { ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 
 import { ICraftCreateDto } from "../interfaces";
-import { ItemDto } from "../../asset/dto";
+import { ItemDto } from "../../../exchange/asset/dto";
 import { IngredientsDto } from "./ingredients";
 
 export class ExchangeCreateDto implements ICraftCreateDto {

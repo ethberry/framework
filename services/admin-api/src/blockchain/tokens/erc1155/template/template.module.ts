@@ -5,7 +5,7 @@ import { Erc1155TemplateService } from "./template.service";
 import { Erc1155TemplateController } from "./template.controller";
 import { Erc1155TokenModule } from "../token/token.module";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
-import { AssetModule } from "../../../mechanics/asset/asset.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
   imports: [AssetModule, Erc1155TokenModule, TypeOrmModule.forFeature([TemplateEntity])],

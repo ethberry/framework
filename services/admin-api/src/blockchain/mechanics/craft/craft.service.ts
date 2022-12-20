@@ -6,7 +6,7 @@ import { CraftStatus, ICraftSearchDto } from "@framework/types";
 
 import { CraftEntity } from "./craft.entity";
 import { ICraftCreateDto, ICraftUpdateDto } from "./interfaces";
-import { AssetService } from "../asset/asset.service";
+import { AssetService } from "../../exchange/asset/asset.service";
 
 @Injectable()
 export class CraftService {

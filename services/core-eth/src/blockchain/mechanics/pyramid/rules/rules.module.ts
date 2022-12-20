@@ -2,7 +2,7 @@ import { Logger, Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { ContractModule } from "../../../hierarchy/contract/contract.module";
-import { AssetModule } from "../../asset/asset.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 import { PyramidDepositModule } from "../deposit/deposit.module";
 import { PyramidRulesService } from "./rules.service";
 import { PyramidRulesEntity } from "./rules.entity";

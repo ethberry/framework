@@ -4,7 +4,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Erc998TemplateService } from "./template.service";
 import { Erc998TemplateController } from "./template.controller";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
-import { AssetModule } from "../../../mechanics/asset/asset.module";
+import { AssetModule } from "../../../exchange/asset/asset.module";
 
 @Module({
   imports: [AssetModule, TypeOrmModule.forFeature([TemplateEntity])],

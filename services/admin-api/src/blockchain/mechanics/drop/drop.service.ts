@@ -6,7 +6,7 @@ import type { ISearchDto } from "@gemunion/types-collection";
 
 import { DropEntity } from "./drop.entity";
 import { IDropCreateDto, IDropUpdateDto } from "./interfaces";
-import { AssetService } from "../asset/asset.service";
+import { AssetService } from "../../exchange/asset/asset.service";
 import { PageEntity } from "../../../page/page.entity";
 
 @Injectable()

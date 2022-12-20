@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 import { PyramidRulesEntity } from "./rules.entity";
-import { AssetService } from "../../asset/asset.service";
+import { AssetService } from "../../../exchange/asset/asset.service";
 
 @Injectable()
 export class PyramidRulesService {

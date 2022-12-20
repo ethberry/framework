@@ -4,7 +4,7 @@ import { ns } from "@framework/constants";
 import { IMysterybox, MysteryboxStatus } from "@framework/types";
 import { SearchableEntity } from "@gemunion/nest-js-module-typeorm-postgres";
 
-import { AssetEntity } from "../../asset/asset.entity";
+import { AssetEntity } from "../../../exchange/asset/asset.entity";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 
 @Entity({ schema: ns, name: "mysterybox" })

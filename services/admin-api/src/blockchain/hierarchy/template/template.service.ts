@@ -6,7 +6,7 @@ import { ITemplateAutocompleteDto, ITemplateSearchDto, ModuleType, TemplateStatu
 
 import { ITemplateCreateDto, ITemplateUpdateDto } from "./interfaces";
 import { TemplateEntity } from "./template.entity";
-import { AssetService } from "../../mechanics/asset/asset.service";
+import { AssetService } from "../../exchange/asset/asset.service";
 import { UserEntity } from "../../../user/user.entity";
 
 @Injectable()
