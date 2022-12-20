@@ -6,14 +6,13 @@ on:
       mode:
         description: on || off
         default: on
-        required: true
 
 jobs:
   modeOn:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.mode == 'on' }}
     steps:
-      - uses: actions/checkout@v3
+#      - uses: actions/checkout@v3
       - uses: actions/checkout@v3
         with:
           repository: trejgun/ssh-action # 3
