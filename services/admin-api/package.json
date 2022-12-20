@@ -133,7 +133,7 @@
     "start": "cross-env NODE_ENV=${NODE_ENV:=development} tsc-watch --onSuccess \"node .\" --onFailure \"echo Compilation Failed\"",
     "start:prod": "cross-env NODE_ENV=${NODE_ENV:=production} node .",
     "start:stage": "cross-env NODE_ENV=${NODE_ENV:=staging} node .",
-    "test": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles",
+    "test": "cross-env NODE_ENV=${NODE_ENV:=test} jest --config jest.config.json --detectOpenHandles --passWithNoTests",
     "typeorm": "cross-env NODE_ENV=${NODE_ENV:=development} ts-node ./node_modules/.bin/typeorm --config src/ormconfig.ts"
   },
   "title": "Gemunion Framework - Admin API",
