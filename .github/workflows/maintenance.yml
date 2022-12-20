@@ -9,6 +9,7 @@ on:
         options:
           - on
           - off
+          - do-nothing
 #        default: 'on'
 #      mode:
 #        description: on || off
