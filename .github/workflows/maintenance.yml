@@ -3,7 +3,7 @@ name: Maintenance Trigger (ON|OFF)
 on:
   workflow_dispatch:
     inputs:
-      dropdown:
+      choice:
         type: choice
         description: ON or OFF
         options:
@@ -16,9 +16,14 @@ on:
 #        default: 'on'
 
 jobs:
+  choice:
+    steps:
+      - name: greet
+        run: |
+          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
   modeOn:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.dropdown == true }}
+    if: ${{ github.event.inputs.choice == true }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/checkout@v3
@@ -37,7 +42,7 @@ jobs:
           tryKeyboard: true
   modeOff:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.dropdown == false }}
+    if: ${{ github.event.inputs.choice == false }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/checkout@v3
