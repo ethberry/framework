@@ -1,0 +1,43 @@
+
+name: Maintenance Trigger (ON|OFF)
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: on || off
+        default: on
+        required: true
+
+jobs:
+  ssh-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+        with:
+          repository: trejgun/ssh-action # 3
+          token: ${{ secrets.GITHUBTOKEN }}                # 4
+          path: ./ssh-action                               # 5
+      - name: user command via ssh
+        uses: ./ssh-action
+        with:
+          command: ${{github.event.inputs.command}}
+          host: ${{ secrets.MASTER_HOST }}
+          username: ${{ secrets.HOST_USER}}
+          passphrase:
+          privateKey: ${{ secrets.PRIVATE_KEY}}
+          tryKeyboard: true
+  maintenance:
+    steps:
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: 'test gcloud CLI'
+        run: 'gcloud info'
+
+      - name: 'set mode ON'
+        if: ${{ github.event.inputs.command == 'on' }}
+        run: 'gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-backend-bucket=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendBuckets/static-failover --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
+      - name: 'set mode OFF'
+        if: ${{ github.event.inputs.command == 'off' }}
+        run: 'gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-service=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendServices/framework-be --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
