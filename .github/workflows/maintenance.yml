@@ -17,6 +17,7 @@ on:
 
 jobs:
   choice:
+    runs-on: ubuntu-latest
     steps:
       - name: greet
         run: |
