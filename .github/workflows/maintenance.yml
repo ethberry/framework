@@ -18,7 +18,7 @@ on:
 jobs:
   modeOn:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.dropdown == 'on' }}
+    if: ${{ github.event.inputs.dropdown == true }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/checkout@v3
@@ -37,7 +37,7 @@ jobs:
           tryKeyboard: true
   modeOff:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.dropdown == 'off' }}
+    if: ${{ github.event.inputs.dropdown == false }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/checkout@v3
