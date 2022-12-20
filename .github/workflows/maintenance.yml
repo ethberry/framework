@@ -9,19 +9,14 @@ on:
         options:
           - on
           - off
-          - do-nothing
-#        default: 'on'
-#      mode:
-#        description: on || off
-#        default: 'on'
 
 jobs:
-  choice:
-    runs-on: ubuntu-latest
-    steps:
-      - name: choice
-        run: |
-          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
+#  choice:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: choice
+#        run: |
+#          echo "choice is ${{ github.event.inputs.choice }}" / ${{ inputs.choice }}
   modeOn:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.choice == 'true' }}
