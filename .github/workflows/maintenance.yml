@@ -5,7 +5,7 @@ on:
     inputs:
       mode:
         description: on || off
-        default: on
+        default: 'on'
 
 jobs:
   modeOn:
