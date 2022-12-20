@@ -2,6 +2,7 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { ConfigService } from "@nestjs/config";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
+import { testChainId } from "@framework/constants";
 
 import { Erc721TemplateService } from "./template.service";
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
@@ -22,7 +23,7 @@ export class Erc721TemplateController {
     @Query() dto: TemplateSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
     return this.erc721TemplateService.search(dto, userEntity?.chainId || chainId);
   }
 

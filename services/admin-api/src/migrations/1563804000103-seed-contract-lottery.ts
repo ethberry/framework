@@ -2,12 +2,12 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 import { CronExpression } from "@nestjs/schedule";
 
 import { wallet } from "@gemunion/constants";
-import { ns } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractLotteryAt1563804000103 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || 13378;
+    const chainId = process.env.CHAIN_ID || testChainId;
     const lotteryAddr = process.env.LOTTERY_ADDR || wallet;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 

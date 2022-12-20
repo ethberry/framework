@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { ns } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractManager1700000000000 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -17,7 +17,7 @@ export class SeedContractManager1700000000000 implements MigrationInterface {
                created_at,
                updated_at
         from ${ns}.contract
-        where chain_id = 13378
+        where chain_id = ${testChainId}
           and contract_type != 'NATIVE'
           and contract_status = 'ACTIVE'
           and contract_module = 'HIERARCHY'
@@ -28,7 +28,7 @@ export class SeedContractManager1700000000000 implements MigrationInterface {
                         created_at,
                         updated_at
         from ${ns}.contract
-        where chain_id = 13378
+        where chain_id = ${testChainId}
           and contract_type != 'NATIVE'
           and contract_status = 'ACTIVE'
           and contract_module = 'MYSTERY'
@@ -39,7 +39,7 @@ export class SeedContractManager1700000000000 implements MigrationInterface {
                created_at,
                updated_at
         from ${ns}.contract
-        where chain_id = 13378
+        where chain_id = ${testChainId}
           and contract_type != 'NATIVE'
           and contract_status = 'ACTIVE'
           and contract_module = 'LOTTERY';

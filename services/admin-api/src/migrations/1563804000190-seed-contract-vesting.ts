@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
-import { ns } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractVestingAt1563804000190 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -9,7 +9,7 @@ export class SeedContractVestingAt1563804000190 implements MigrationInterface {
     const vestingLinearAddress = process.env.VESTING_LINEAR_ADDR || wallet;
     const vestingGradedAddress = process.env.VESTING_GRADED_ADDR || wallet;
     const vestingCliffAddress = process.env.VESTING_CLIFF_ADDR || wallet;
-    const chainId = process.env.CHAIN_ID || 1337;
+    const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
 
     await queryRunner.query(`

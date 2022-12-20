@@ -5,7 +5,7 @@ import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { BigNumber, constants, utils } from "ethers";
 
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { ContractFeatures, TemplateStatus, TokenType } from "@framework/types";
+import { ContractFeatures, TokenType } from "@framework/types";
 import { IParams, SignerService } from "@framework/nest-js-module-exchange-signer";
 
 import { ISignBreedDto } from "./interfaces";
@@ -33,6 +33,7 @@ export class BreedService {
     }
 
     const { contractFeatures } = tokenEntity.template.contract;
+
     if (!contractFeatures.includes(ContractFeatures.GENES)) {
       throw new BadRequestException("featureIsNotSupported");
     }
@@ -62,18 +63,8 @@ export class BreedService {
       throw new NotFoundException("tokenNotFound");
     }
 
-    const genesisTemplate = await this.templateService.findOne({
-      contractId: momTokenEntity.token?.template.contractId,
-      title: momTokenEntity.token?.template.contract.title,
-      templateStatus: TemplateStatus.HIDDEN,
-    });
-
-    if (!genesisTemplate) {
-      throw new NotFoundException("templateNotFound");
-    }
-
     const genesis = {
-      templateId: genesisTemplate.id,
+      templateId: momTokenEntity.token?.template.id,
       matronId: momTokenEntity.id,
       sireId: dadTokenEntity.id,
     };

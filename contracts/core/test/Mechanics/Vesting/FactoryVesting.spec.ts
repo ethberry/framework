@@ -4,13 +4,15 @@ import { ethers } from "hardhat";
 import { ContractFactory } from "ethers";
 import { Network } from "@ethersproject/networks";
 
+import { testChainId } from "@framework/constants";
+
 import { ContractManager } from "../../../typechain-types";
 import { blockAwait } from "../../../scripts/utils/blockAwait";
 import { factoryDeployVesting } from "./shared/factoryDeployVesting";
 
 use(solidity);
 
-describe.only("Factory Vesting", function () {
+describe("Factory Vesting", function () {
   let factory: ContractFactory;
   let factoryInstance: ContractManager;
   let network: Network;
@@ -23,7 +25,7 @@ describe.only("Factory Vesting", function () {
     factoryInstance = (await factory.deploy()) as ContractManager;
     await factoryInstance.deployed();
 
-    if (network.chainId === 13378) {
+    if (network.chainId === testChainId) {
       await blockAwait();
     }
 

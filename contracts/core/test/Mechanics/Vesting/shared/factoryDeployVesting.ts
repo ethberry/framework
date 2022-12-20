@@ -1,11 +1,13 @@
 import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { expect } from "chai";
+import { time } from "@openzeppelin/test-helpers";
+
+import { testChainId } from "@framework/constants";
 
 import { span } from "../../../constants";
 import { blockAwait } from "../../../../scripts/utils/blockAwait";
 import { ContractManager, LinearVesting } from "../../../../typechain-types";
-import { time } from "@openzeppelin/test-helpers";
 
 export async function factoryDeployVesting(factoryInstance: ContractManager): Promise<LinearVesting> {
   const network = await ethers.provider.getNetwork();
@@ -47,7 +49,7 @@ export async function factoryDeployVesting(factoryInstance: ContractManager): Pr
     },
   );
 
-  if (network.chainId !== 13378) {
+  if (network.chainId !== testChainId) {
     await blockAwait();
   }
 
@@ -62,7 +64,7 @@ export async function factoryDeployVesting(factoryInstance: ContractManager): Pr
     signature,
   );
 
-  if (network.chainId === 13378) {
+  if (network.chainId === testChainId) {
     await blockAwait();
   }
 

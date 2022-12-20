@@ -4,7 +4,7 @@ import { Log } from "@ethersproject/abstract-provider";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { emptyStateString } from "@gemunion/draft-js-utils";
-import { imageUrl } from "@framework/constants";
+import { imageUrl, testChainId } from "@framework/constants";
 import {
   ContractFeatures,
   ContractManagerEventType,
@@ -64,7 +64,7 @@ export class ContractManagerServiceEth {
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
   ) {
-    this.chainId = ~~configService.get<string>("CHAIN_ID", "13378");
+    this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
   }
 
   public async erc20Token(event: ILogEvent<IContractManagerERC20TokenDeployedEvent>, ctx: Log): Promise<void> {

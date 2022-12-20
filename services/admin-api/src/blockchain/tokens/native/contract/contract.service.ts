@@ -12,6 +12,7 @@ import {
   ModuleType,
   TokenType,
 } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -39,7 +40,7 @@ export class NativeContractService extends ContractService {
 
   public async create(dto: INativeContractCreateDto): Promise<ContractEntity> {
     const { symbol, title, description } = dto;
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
     const contractEntity = await this.contractEntityRepository
       .create({

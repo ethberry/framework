@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
+import { testChainId } from "@framework/constants";
 
 import { IAsset, IParams } from "./interfaces";
 
@@ -20,7 +21,7 @@ export class SignerService {
       {
         name: "Exchange",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "13378"),
+        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
         verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
       },
       // Types
@@ -65,7 +66,7 @@ export class SignerService {
       {
         name: "Exchange",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "13378"),
+        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
         verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
       },
       // Types
@@ -110,7 +111,7 @@ export class SignerService {
       {
         name: "Exchange",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "13378"),
+        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
         verifyingContract: this.configService.get<string>("EXCHANGE_ADDR", ""),
       },
       // Types

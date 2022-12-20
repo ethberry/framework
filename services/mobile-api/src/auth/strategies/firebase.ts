@@ -5,7 +5,7 @@ import { ExtractJwt } from "passport-jwt";
 import { Strategy } from "passport-firebase-jwt";
 import { app } from "firebase-admin";
 
-import { EnabledLanguages } from "@framework/constants";
+import { EnabledLanguages, testChainId } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
 
 import { UserService } from "../../user/user.service";
@@ -47,7 +47,7 @@ export class FirebaseStrategy extends PassportStrategy(Strategy, "firebase-http"
           this.loggerService.error(error);
         });
 
-      const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
+      const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
       userEntity = await this.userService.import({
         displayName: firebaseUser?.displayName,

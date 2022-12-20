@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-import { imageUrl, ns } from "@framework/constants";
 import { wallet } from "@gemunion/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedUser1563803000140 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || 13378;
+    const chainId = process.env.CHAIN_ID || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.user (

@@ -4,7 +4,8 @@ import { constants, utils, Wallet } from "ethers";
 
 import { ETHERS_SIGNER } from "@gemunion/nestjs-ethers";
 import type { IServerSignature } from "@gemunion/types-blockchain";
-import { IParams } from "@framework/nest-js-module-exchange-signer";
+import type { IParams } from "@framework/nest-js-module-exchange-signer";
+import { testChainId } from "@framework/constants";
 
 import { ISignLotteryDto } from "./interfaces";
 
@@ -41,7 +42,7 @@ export class LotterySignService {
       {
         name: "Lottery",
         version: "1.0.0",
-        chainId: ~~this.configService.get<string>("CHAIN_ID", "13378"),
+        chainId: ~~this.configService.get<number>("CHAIN_ID", testChainId),
         verifyingContract: this.configService.get<string>("LOTTERY_ADDR", ""),
       },
       // Types

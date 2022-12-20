@@ -2,13 +2,13 @@ import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
 import { simpleFormatting } from "@gemunion/draft-js-utils";
-import { imageUrl, ns } from "@framework/constants";
+import { imageUrl, ns, testChainId } from "@framework/constants";
 
 export class SeedContractErc20WETHAt1563804000122 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
     const fromBlock = process.env.STARTING_BLOCK || 0;
-    const chainId = process.env.CHAIN_ID || 13378;
+    const chainId = process.env.CHAIN_ID || testChainId;
 
     await queryRunner.query(`
       INSERT INTO ${ns}.contract (

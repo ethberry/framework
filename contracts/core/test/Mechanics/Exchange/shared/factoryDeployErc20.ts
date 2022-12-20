@@ -2,6 +2,8 @@ import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { expect } from "chai";
 
+import { testChainId } from "@framework/constants";
+
 import { cap, DEFAULT_ADMIN_ROLE, featureIds, MINTER_ROLE, tokenName, tokenSymbol } from "../../../constants";
 import { blockAwait } from "../../../../scripts/utils/blockAwait";
 import { ContractManager, ERC20Simple, Exchange } from "../../../../typechain-types";
@@ -45,7 +47,7 @@ export async function factoryDeployErc20(
     },
   );
 
-  if (network.chainId === 13378) {
+  if (network.chainId === testChainId) {
     await blockAwait();
   }
 
@@ -60,7 +62,7 @@ export async function factoryDeployErc20(
     signature,
   );
 
-  if (network.chainId === 13378) {
+  if (network.chainId === testChainId) {
     await blockAwait();
   }
 

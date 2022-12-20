@@ -2,6 +2,7 @@ import { Controller, Get, Param, ParseIntPipe, Query, UseInterceptors } from "@n
 import { ConfigService } from "@nestjs/config";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
+import { testChainId } from "@framework/constants";
 
 import { MysteryboxSearchDto } from "./dto";
 import { MysteryBoxService } from "./box.service";
@@ -20,7 +21,7 @@ export class MysteryBoxController {
     @Query() dto: MysteryboxSearchDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
     return this.mysteryBoxService.search(dto, userEntity?.chainId || chainId);
   }
 
@@ -35,7 +36,7 @@ export class MysteryBoxController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<MysteryBoxEntity>, number]> {
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
     return this.mysteryBoxService.search({ take: 10 }, userEntity?.chainId || chainId);
   }
 

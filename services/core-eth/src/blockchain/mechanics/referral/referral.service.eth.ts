@@ -10,6 +10,7 @@ import {
   ReferralProgramEventType,
   TReferralEventData,
 } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { ReferralHistoryService } from "./history/history.service";
 import { ReferralService } from "./referral.service";
@@ -27,7 +28,7 @@ export class ReferralServiceEth {
     private readonly referralHistoryService: ReferralHistoryService,
     private readonly contractService: ContractService,
   ) {
-    this.chainId = ~~configService.get<string>("CHAIN_ID", "13378");
+    this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
   }
 
   public async reward(event: ILogEvent<IReferralRewardEvent>, context: Log): Promise<void> {

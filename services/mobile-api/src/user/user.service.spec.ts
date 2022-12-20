@@ -4,7 +4,7 @@ import { Logger } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 
 import { GemunionTypeormModule } from "@gemunion/nest-js-module-typeorm-debug";
-import { EnabledLanguages } from "@framework/constants";
+import { EnabledLanguages, testChainId } from "@framework/constants";
 import { UserRole, UserStatus } from "@framework/types";
 
 import ormconfig from "../ormconfig";
@@ -61,7 +61,7 @@ describe("UserService", () => {
         userRoles: [UserRole.USER],
         userStatus: UserStatus.ACTIVE,
         sub: "test_user_id",
-        chainId: 13378,
+        chainId: testChainId,
       });
       expect(userEntity).toMatchObject({
         displayName: "test_name",

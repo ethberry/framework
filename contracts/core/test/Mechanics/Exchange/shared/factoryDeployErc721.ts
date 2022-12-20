@@ -1,6 +1,8 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
 
+import { testChainId } from "@framework/constants";
+
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
@@ -53,7 +55,7 @@ export async function factoryDeployErc721(
     },
   );
 
-  if (network.chainId === 13378) {
+  if (network.chainId === testChainId) {
     await blockAwait();
   }
 
@@ -69,7 +71,7 @@ export async function factoryDeployErc721(
     signature,
   );
 
-  if (network.chainId === 13378) {
+  if (network.chainId === testChainId) {
     await blockAwait();
   }
 

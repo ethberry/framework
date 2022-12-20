@@ -4,6 +4,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { DeepPartial, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { wallet } from "@gemunion/constants";
+import { testChainId } from "@framework/constants";
 
 import { ContractEntity } from "./contract.entity";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
@@ -18,7 +19,7 @@ export class ContractService {
     private readonly contractEntityRepository: Repository<ContractEntity>,
     private readonly configService: ConfigService,
   ) {
-    this.chainId = ~~configService.get<string>("CHAIN_ID", "13378");
+    this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
   }
 
   public findOne(

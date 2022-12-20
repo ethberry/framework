@@ -3,6 +3,7 @@ import { ConfigService } from "@nestjs/config";
 
 import { NotFoundInterceptor, PaginationInterceptor, Public, User } from "@gemunion/nest-js-utils";
 import { ModuleType } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { TemplateService } from "./template.service";
 import { TemplateEntity } from "./template.entity";
@@ -21,7 +22,7 @@ export class TemplateController {
     @Query() dto: TemplateNewDto,
     @User() userEntity: UserEntity,
   ): Promise<[Array<TemplateEntity>, number]> {
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "13378");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
     return this.templateService.search(
       { take: 10 },
       userEntity?.chainId || chainId,

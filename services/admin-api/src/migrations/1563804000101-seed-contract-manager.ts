@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
 import { wallet } from "@gemunion/constants";
-import { ns } from "@framework/constants";
+import { ns, testChainId } from "@framework/constants";
 
 export class SeedContractManagerAt1563804000101 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const currentDateTime = new Date().toISOString();
-    const chainId = process.env.CHAIN_ID || 13378;
+    const chainId = process.env.CHAIN_ID || testChainId;
     const fromBlock = process.env.STARTING_BLOCK || 0;
     const contractManagerAddress = process.env.CONTRACT_MANAGER_ADDR || wallet;
 

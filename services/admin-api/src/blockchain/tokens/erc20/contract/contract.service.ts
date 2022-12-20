@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 
 import type { IContractSearchDto, IErc20ContractCreateDto } from "@framework/types";
 import { ContractFeatures, ModuleType, TokenType } from "@framework/types";
+import { testChainId } from "@framework/constants";
 
 import { TemplateEntity } from "../../../hierarchy/template/template.entity";
 import { ContractEntity } from "../../../hierarchy/contract/contract.entity";
@@ -33,7 +34,7 @@ export class Erc20ContractService extends ContractService {
 
   public async create(dto: IErc20ContractCreateDto): Promise<ContractEntity> {
     const { address, symbol, decimals, title, description } = dto;
-    const chainId = ~~this.configService.get<string>("CHAIN_ID", "1337");
+    const chainId = ~~this.configService.get<number>("CHAIN_ID", testChainId);
 
     const contractEntity = await this.contractEntityRepository
       .create({
