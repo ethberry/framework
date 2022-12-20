@@ -3,26 +3,13 @@ name: Maintenance Trigger (ON|OFF)
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        type: environment
-        description: Select the environment
-      boolean:
-        type: boolean
-        description: True or False
       dropdown:
-        type: choice
-        description: Make a choice
-        options:
-          - foo
-          - bar
-          - baz
-      choice:
         type: choice
         description: ON or OFF
         options:
           - on
           - off
-        default: 'on'
+#        default: 'on'
 #      mode:
 #        description: on || off
 #        default: 'on'
