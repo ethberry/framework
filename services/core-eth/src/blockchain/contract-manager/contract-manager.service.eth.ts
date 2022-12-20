@@ -187,6 +187,17 @@ export class ContractManagerServiceEth {
       await this.gradeService.create({ contract: contractEntity });
     }
 
+    if (contractFeatures.includes(Erc998ContractFeatures.GENES)) {
+      await this.templateService.create({
+        title: name,
+        description: emptyStateString,
+        imageUrl,
+        cap: (1024 * 1024 * 1024 * 4).toString(),
+        contractId: contractEntity.id,
+        templateStatus: TemplateStatus.HIDDEN,
+      });
+    }
+
     this.erc998LogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
