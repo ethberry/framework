@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.mode == 'on' }}
     steps:
-#      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - uses: actions/checkout@v3
         with:
           repository: trejgun/ssh-action # 3
@@ -25,13 +25,13 @@ jobs:
           host: ${{ secrets.PORTAL_HOST }}
           username: ${{ secrets.HOST_USER}}
           passphrase:
-          privateKey: ${{ secrets.PRIVATE_KEY}}
+          privateKey: ${{ secrets.SSH_KEY}}
           tryKeyboard: true
   modeOff:
     runs-on: ubuntu-latest
     if: ${{ github.event.inputs.mode == 'off' }}
     steps:
-#      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
       - uses: actions/checkout@v3
         with:
           repository: trejgun/ssh-action # 3
@@ -44,7 +44,7 @@ jobs:
           host: ${{ secrets.PORTAL_HOST }}
           username: ${{ secrets.HOST_USER}}
           passphrase:
-          privateKey: ${{ secrets.PRIVATE_KEY}}
+          privateKey: ${{ secrets.SSH_KEY}}
           tryKeyboard: true
 #  maintenance:
 #    steps:
@@ -60,3 +60,7 @@ jobs:
 #      - name: 'set mode OFF'
 #        if: ${{ github.event.inputs.command == 'off' }}
 #        run: 'gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-service=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendServices/framework-be --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
+
+#  docker run --rm -ti -v $HOME/.config/gcloud:/root/.config/gcloud gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud init
+#  docker run --rm -ti -v $HOME/.config/gcloud:/root/.config/gcloud gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-backend-bucket=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendBuckets/static-failover --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher
+#  docker run --rm -ti -v $HOME/.config/gcloud:/root/.config/gcloud gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-service=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendServices/framework-be --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher
