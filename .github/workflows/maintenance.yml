@@ -56,10 +56,10 @@ jobs:
 #
 #      - name: 'set mode ON'
 #        if: ${{ github.event.inputs.command == 'on' }}
-#        run: 'gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-backend-bucket=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendBuckets/static-failover --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
+#        run: 'docker run --rm -ti -v $HOME/.config/gcloud:/root/.config/gcloud gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-backend-bucket=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendBuckets/static-failover --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
 #      - name: 'set mode OFF'
 #        if: ${{ github.event.inputs.command == 'off' }}
-#        run: 'gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-service=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendServices/framework-be --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
+#        run: 'docker run --rm -ti -v $HOME/.config/gcloud:/root/.config/gcloud gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-service=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendServices/framework-be --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
 
 #  docker run --rm -ti -v $HOME/.config/gcloud:/root/.config/gcloud gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud init
 #  docker run --rm -ti -v $HOME/.config/gcloud:/root/.config/gcloud gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-backend-bucket=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendBuckets/static-failover --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher
