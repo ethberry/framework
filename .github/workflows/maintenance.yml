@@ -23,7 +23,7 @@ jobs:
         uses: ./ssh-action
         with:
           command: 'gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-backend-bucket=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendBuckets/static-failover --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
-          host: ${{ secrets.MASTER_HOST }}
+          host: ${{ secrets.PORTAL_HOST }}
           username: ${{ secrets.HOST_USER}}
           passphrase:
           privateKey: ${{ secrets.PRIVATE_KEY}}
@@ -42,7 +42,7 @@ jobs:
         uses: ./ssh-action
         with:
           command: 'gcloud compute url-maps add-path-matcher portal-https-lb --path-matcher-name=path-matcher-4 --default-service=https://www.googleapis.com/compute/v1/projects/halogen-framing-335807/global/backendServices/framework-be --existing-host=fw-admin.gemunion.io --delete-orphaned-path-matcher'
-          host: ${{ secrets.MASTER_HOST }}
+          host: ${{ secrets.PORTAL_HOST }}
           username: ${{ secrets.HOST_USER}}
           passphrase:
           privateKey: ${{ secrets.PRIVATE_KEY}}
