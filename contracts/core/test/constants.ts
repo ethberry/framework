@@ -44,3 +44,5 @@ export const params = {
 };
 
 export const featureIds = [1, 3];
+
+export const batchSize = 10_000;

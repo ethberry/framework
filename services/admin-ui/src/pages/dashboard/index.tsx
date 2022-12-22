@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Grid } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 
 import { PageHeader } from "@gemunion/mui-page-layout";
 
@@ -41,6 +41,7 @@ export const Dashboard: FC = () => {
           <Erc721Section />
           <Erc998Section />
           <Erc1155Section />
+          <Divider sx={{ m: 2 }} />
           <Mystery />
         </Grid>
         <Grid item xs={12} md={4}>

@@ -83,16 +83,7 @@ export async function factoryDeployErc721Collection(factoryInstance: ContractMan
       ],
     },
     {
-      _c: {
-        bytecode: erc721.bytecode,
-        name: tokenName,
-        symbol: tokenSymbol,
-        baseTokenURI,
-        featureIds,
-        royalty,
-        batchSize,
-        nonce,
-      },
+      _c,
     },
   );
   console.log("hash", hash);

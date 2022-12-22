@@ -32,7 +32,7 @@ describe.only("Factory Deploy Collection", function () {
     this.contractInstance = factoryInstance;
   });
 
-  describe("Deploy collection", function () {
+  describe.only("Deploy collection", function () {
     it("Deploy ERC721 collection with 1000 batch", async function () {
       // FACTORY DEPLOY
       await factoryDeployErc721Collection(factoryInstance);
