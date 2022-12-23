@@ -37,7 +37,7 @@
     "@gemunion/types-jwt": "0.3.5",
     "@liaoliaots/nestjs-redis": "9.0.4",
     "@liaoliaots/nestjs-redis-health": "9.0.3",
-    "@nestjs/axios": "1.0.0",
+    "@nestjs/axios": "1.0.1",
     "@nestjs/common": "9.2.1",
     "@nestjs/config": "2.2.0",
     "@nestjs/core": "9.2.1",
