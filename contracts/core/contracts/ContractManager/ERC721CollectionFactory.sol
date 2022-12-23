@@ -5,7 +5,6 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.9;
-import "hardhat/console.sol";
 import "./AbstractFactory.sol";
 
 contract ERC721CollectionFactory is AbstractFactory {
@@ -14,14 +13,9 @@ contract ERC721CollectionFactory is AbstractFactory {
   bytes32 private constant COLLECTION_PARAMS_TYPEHASH = keccak256(abi.encodePacked(COLLECTION_PARAMS));
 
   bytes32 private immutable ERC721_COLLECTION_PERMIT_SIGNATURE =
-    keccak256(bytes.concat("EIP712(Collection _c)", COLLECTION_PARAMS));
+    keccak256(bytes.concat("EIP712(Collection c)", COLLECTION_PARAMS));
 
   address[] private _erc721_collections;
-
-  struct Signature {
-    address signer;
-    bytes signature;
-  }
 
   struct Collection {
     bytes bytecode;
@@ -46,29 +40,31 @@ contract ERC721CollectionFactory is AbstractFactory {
   );
 
   function deployERC721Collection(
-    Signature calldata _sig,
-    Collection calldata _c
+    Signature calldata sig,
+    Collection calldata c
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
-    require(hasRole(DEFAULT_ADMIN_ROLE, _sig.signer), "ContractManager: Wrong signer");
+    require(hasRole(DEFAULT_ADMIN_ROLE, sig.signer), "ContractManager: Wrong signer");
 
-    bytes32 digest = _hashERC721Collection(_c);
-    console.logBytes32(digest);
-    _checkSignature(_sig.signer, digest, _sig.signature);
-    _checkNonce(_c.nonce);
+    bytes32 digest = _hashERC721Collection(c);
+
+    _checkSignature(sig.signer, digest, sig.signature);
+    _checkNonce(c.nonce);
 
     address owner = _msgSender();
 
-    addr = deploy(_c.bytecode, abi.encode(_c.name, _c.symbol, _c.royalty, _c.baseTokenURI, _c.batchSize, owner));
+    // addr = deploy(c.bytecode, abi.encode(c.name, c.symbol, c.royalty, c.baseTokenURI, c.batchSize, owner));
+    addr = deploy2(c.bytecode, abi.encode(c.name, c.symbol, c.royalty, c.baseTokenURI, c.batchSize, owner), c.nonce);
+
     _erc721_collections.push(addr);
 
     emit ERC721CollectionDeployed(
       addr,
-      _c.name,
-      _c.symbol,
-      _c.royalty,
-      _c.baseTokenURI,
-      _c.featureIds,
-      _c.batchSize,
+      c.name,
+      c.symbol,
+      c.royalty,
+      c.baseTokenURI,
+      c.featureIds,
+      c.batchSize,
       owner
     );
 
@@ -81,23 +77,23 @@ contract ERC721CollectionFactory is AbstractFactory {
     fixPermissions(addr, roles);
   }
 
-  function _hashERC721Collection(Collection calldata _c) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(ERC721_COLLECTION_PERMIT_SIGNATURE, _hashCollectionStruct(_c))));
+  function _hashERC721Collection(Collection calldata c) internal view returns (bytes32) {
+    return _hashTypedDataV4(keccak256(abi.encode(ERC721_COLLECTION_PERMIT_SIGNATURE, _hashCollectionStruct(c))));
   }
 
-  function _hashCollectionStruct(Collection calldata _c) private pure returns (bytes32) {
+  function _hashCollectionStruct(Collection calldata c) private pure returns (bytes32) {
     return
       keccak256(
         abi.encode(
           COLLECTION_PARAMS_TYPEHASH,
-          keccak256(abi.encodePacked(_c.bytecode)),
-          keccak256(abi.encodePacked(_c.name)),
-          keccak256(abi.encodePacked(_c.symbol)),
-          keccak256(abi.encodePacked(_c.baseTokenURI)),
-          keccak256(abi.encodePacked(_c.featureIds)),
-          _c.royalty,
-          _c.batchSize,
-          _c.nonce
+          keccak256(abi.encodePacked(c.bytecode)),
+          keccak256(abi.encodePacked(c.name)),
+          keccak256(abi.encodePacked(c.symbol)),
+          keccak256(abi.encodePacked(c.baseTokenURI)),
+          keccak256(abi.encodePacked(c.featureIds)),
+          c.royalty,
+          c.batchSize,
+          c.nonce
         )
       );
   }

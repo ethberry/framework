@@ -12,7 +12,7 @@ import { factoryDeployErc721Collection } from "./shared/factoryDeployErc721Colle
 
 use(solidity);
 
-describe.only("Factory Deploy Collection", function () {
+describe("Factory Deploy Collection", function () {
   let factory: ContractFactory;
   let factoryInstance: ContractManager;
   let network: Network;
@@ -32,7 +32,7 @@ describe.only("Factory Deploy Collection", function () {
     this.contractInstance = factoryInstance;
   });
 
-  describe.only("Deploy collection", function () {
+  describe("Deploy collection", function () {
     it("Deploy ERC721 collection with 1000 batch", async function () {
       // FACTORY DEPLOY
       await factoryDeployErc721Collection(factoryInstance);

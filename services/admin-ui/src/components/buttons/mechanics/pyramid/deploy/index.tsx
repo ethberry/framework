@@ -30,12 +30,23 @@ export const PyramidContractDeployButton: FC<IPyramidContractDeployButtonProps> 
         web3Context.provider?.getSigner(),
       );
 
+      // return contract.deployPyramid(
+      //   nonce,
+      //   sign.bytecode,
+      //   contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
+      //   process.env.ACCOUNT,
+      //   sign.signature,
+      // ) as Promise<void>;
       return contract.deployPyramid(
-        nonce,
-        sign.bytecode,
-        contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
-        process.env.ACCOUNT,
-        sign.signature,
+        {
+          signer: process.env.ACCOUNT,
+          signature: sign.signature,
+        },
+        {
+          bytecode: sign.bytecode,
+          featureIds: contractFeatures.map(feature => Object.keys(PyramidContractFeatures).indexOf(feature)),
+          nonce,
+        },
       ) as Promise<void>;
     },
   );

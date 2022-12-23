@@ -29,16 +29,31 @@ export const MysteryContractDeployButton: FC<IMysteryContractDeployButtonProps> 
         ContractManagerSol.abi,
         web3Context.provider?.getSigner(),
       );
+      // return contract.deployMysterybox(
+      //   nonce,
+      //   sign.bytecode,
+      //   name,
+      //   symbol,
+      //   royalty,
+      //   baseTokenURI,
+      //   contractFeatures.map(feature => Object.keys(MysteryContractFeatures).indexOf(feature)),
+      //   process.env.ACCOUNT,
+      //   sign.signature,
+      // ) as Promise<void>;
       return contract.deployMysterybox(
-        nonce,
-        sign.bytecode,
-        name,
-        symbol,
-        royalty,
-        baseTokenURI,
-        contractFeatures.map(feature => Object.keys(MysteryContractFeatures).indexOf(feature)),
-        process.env.ACCOUNT,
-        sign.signature,
+        {
+          signer: process.env.ACCOUNT,
+          signature: sign.signature,
+        },
+        {
+          bytecode: sign.bytecode,
+          name,
+          symbol,
+          royalty,
+          baseTokenURI,
+          featureIds: contractFeatures.map(feature => Object.keys(MysteryContractFeatures).indexOf(feature)),
+          nonce,
+        },
       ) as Promise<void>;
     },
   );

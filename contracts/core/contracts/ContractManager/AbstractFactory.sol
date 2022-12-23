@@ -9,6 +9,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+import "@openzeppelin/contracts/utils/Create2.sol";
 
 abstract contract AbstractFactory is EIP712, AccessControl {
   mapping(bytes32 => bool) private _expired;
@@ -19,6 +20,11 @@ abstract contract AbstractFactory is EIP712, AccessControl {
 
   address[] _minters;
   address[] _manipulators;
+
+  struct Signature {
+    address signer;
+    bytes signature;
+  }
 
   constructor() EIP712("ContractManager", "1.0.0") {
     _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
@@ -33,6 +39,12 @@ abstract contract AbstractFactory is EIP712, AccessControl {
         revert(0, 0)
       }
     }
+  }
+
+  function deploy2(bytes calldata bytecode, bytes memory arguments, bytes32 nonce) internal returns (address addr) {
+    bytes memory _bytecode = abi.encodePacked(bytecode, arguments);
+
+    return Create2.deploy(0, nonce, _bytecode);
   }
 
   function setFactories(address[] memory minters, address[] memory manipulators) public onlyRole(DEFAULT_ADMIN_ROLE) {

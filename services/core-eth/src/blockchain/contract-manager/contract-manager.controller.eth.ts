@@ -9,6 +9,7 @@ import {
   ContractType,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
+  IContractManagerErc721CollectionDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
@@ -50,6 +51,17 @@ export class ContractManagerControllerEth {
     @Ctx() ctx: Log,
   ): Promise<void> {
     return this.contractManagerServiceEth.erc721Token(event, ctx);
+  }
+
+  @EventPattern({
+    contractType: ContractType.CONTRACT_MANAGER,
+    eventName: ContractManagerEventType.ERC721CollectionDeployed,
+  })
+  public erc721Collection(
+    @Payload() event: ILogEvent<IContractManagerErc721CollectionDeployedEvent>,
+    @Ctx() ctx: Log,
+  ): Promise<void> {
+    return this.contractManagerServiceEth.erc721Collection(event, ctx);
   }
 
   @EventPattern({

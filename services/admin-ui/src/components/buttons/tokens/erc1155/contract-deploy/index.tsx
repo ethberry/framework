@@ -29,14 +29,27 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         web3Context.provider?.getSigner(),
       );
 
+      // return contract.deployERC1155Token(
+      //   nonce,
+      //   sign.bytecode,
+      //   royalty,
+      //   baseTokenURI,
+      //   contractFeatures.map(feature => Object.keys(Erc1155ContractFeatures).indexOf(feature)),
+      //   process.env.ACCOUNT,
+      //   sign.signature,
+      // ) as Promise<void>;
       return contract.deployERC1155Token(
-        nonce,
-        sign.bytecode,
-        royalty,
-        baseTokenURI,
-        contractFeatures.map(feature => Object.keys(Erc1155ContractFeatures).indexOf(feature)),
-        process.env.ACCOUNT,
-        sign.signature,
+        {
+          signer: process.env.ACCOUNT,
+          signature: sign.signature,
+        },
+        {
+          bytecode: sign.bytecode,
+          royalty,
+          baseTokenURI,
+          featureIds: contractFeatures.map(feature => Object.keys(Erc1155ContractFeatures).indexOf(feature)),
+          nonce,
+        },
       ) as Promise<void>;
     },
   );

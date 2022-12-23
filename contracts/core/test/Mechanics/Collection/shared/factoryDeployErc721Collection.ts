@@ -21,7 +21,7 @@ export async function factoryDeployErc721Collection(factoryInstance: ContractMan
   const [owner] = await ethers.getSigners();
   const erc721 = await ethers.getContractFactory("ERC721Collection");
 
-  const _c = {
+  const c = {
     bytecode: erc721.bytecode,
     name: tokenName,
     symbol: tokenSymbol,
@@ -42,7 +42,7 @@ export async function factoryDeployErc721Collection(factoryInstance: ContractMan
     },
     // Types
     {
-      EIP712: [{ name: "_c", type: "Collection" }],
+      EIP712: [{ name: "c", type: "Collection" }],
       Collection: [
         { name: "bytecode", type: "bytes" },
         { name: "name", type: "string" },
@@ -55,42 +55,14 @@ export async function factoryDeployErc721Collection(factoryInstance: ContractMan
       ],
     },
     // Values
-    { _c },
+    { c },
   );
 
   if (network.chainId === testChainId) {
     await blockAwait();
   }
 
-  const hash = ethers.utils._TypedDataEncoder.hash(
-    {
-      name: "ContractManager",
-      version: "1.0.0",
-      chainId: network.chainId,
-      verifyingContract: factoryInstance.address,
-    },
-    {
-      EIP712: [{ name: "_c", type: "Collection" }],
-      Collection: [
-        { name: "bytecode", type: "bytes" },
-        { name: "name", type: "string" },
-        { name: "symbol", type: "string" },
-        { name: "baseTokenURI", type: "string" },
-        { name: "featureIds", type: "uint8[]" },
-        { name: "royalty", type: "uint96" },
-        { name: "batchSize", type: "uint96" },
-        { name: "nonce", type: "bytes32" },
-      ],
-    },
-    {
-      _c,
-    },
-  );
-  console.log("hash", hash);
-  const recAd = ethers.utils.recoverAddress(hash, signature);
-  console.log("recAddress", recAd);
   const signer = owner.address;
-  console.log("signer", signer);
   const bytecode = erc721.bytecode;
   const tx = await factoryInstance.deployERC721Collection(
     {
@@ -120,6 +92,10 @@ export async function factoryDeployErc721Collection(factoryInstance: ContractMan
     .withArgs(address, tokenName, tokenSymbol, royalty, baseTokenURI, featureIds, batchSize, owner.address);
 
   const erc721Instance = erc721.attach(address);
+
+  await expect(tx)
+    .to.emit(erc721Instance, "ConsecutiveTransfer")
+    .withArgs(0, batchSize - 1, ethers.constants.AddressZero, owner.address);
 
   const hasRole1 = await erc721Instance.hasRole(DEFAULT_ADMIN_ROLE, factoryInstance.address);
   expect(hasRole1).to.equal(false);

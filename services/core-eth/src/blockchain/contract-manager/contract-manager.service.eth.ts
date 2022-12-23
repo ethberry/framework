@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger, LoggerService } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { Log } from "@ethersproject/abstract-provider";
+import { DeepPartial } from "typeorm";
 
 import type { ILogEvent } from "@gemunion/nestjs-ethers";
 import { emptyStateString } from "@gemunion/draft-js-utils";
@@ -14,6 +15,7 @@ import {
   Erc998ContractFeatures,
   IContractManagerERC1155TokenDeployedEvent,
   IContractManagerERC20TokenDeployedEvent,
+  IContractManagerErc721CollectionDeployedEvent,
   IContractManagerERC721TokenDeployedEvent,
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
@@ -41,6 +43,9 @@ import { TokenService } from "../hierarchy/token/token.service";
 import { GradeService } from "../mechanics/grade/grade.service";
 import { MysteryLogService } from "../mechanics/mystery/box/log/log.service";
 import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
+import { TokenEntity } from "../hierarchy/token/token.entity";
+import { BalanceEntity } from "../hierarchy/balance/balance.entity";
+import { BalanceService } from "../hierarchy/balance/balance.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -63,6 +68,7 @@ export class ContractManagerServiceEth {
     private readonly templateService: TemplateService,
     private readonly tokenService: TokenService,
     private readonly gradeService: GradeService,
+    private readonly balanceService: BalanceService,
   ) {
     this.chainId = ~~configService.get<number>("CHAIN_ID", testChainId);
   }
@@ -156,6 +162,70 @@ export class ContractManagerServiceEth {
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });
+  }
+
+  public async erc721Collection(
+    event: ILogEvent<IContractManagerErc721CollectionDeployedEvent>,
+    ctx: Log,
+  ): Promise<void> {
+    const {
+      args: { addr, name, symbol, royalty, baseTokenURI, featureIds, batchSize, owner },
+    } = event;
+
+    await this.updateHistory(event, ctx);
+
+    const availableFeatures = Object.values(Erc721ContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+
+    const contractEntity = await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: name,
+      name,
+      symbol,
+      description: JSON.stringify({ batchSize, owner }),
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractType: TokenType.ERC721,
+      contractModule: ModuleType.COLLECTION,
+      chainId: this.chainId,
+      royalty: ~~royalty,
+      baseTokenURI,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    const templateEntity = await this.templateService.create({
+      title: name,
+      description: emptyStateString,
+      imageUrl,
+      cap: batchSize.toString(), // todo or ZERO ?
+      contractId: contractEntity.id,
+    });
+
+    const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(batchSize)].map((_, i) => ({
+      attributes: "{}",
+      tokenId: i.toString(),
+      royalty: ~~royalty,
+      template: templateEntity,
+    }));
+
+    const entityArray = await this.tokenService.createBatch(tokenArray);
+
+    await this.createBalancesBatch(owner, entityArray);
+
+    this.erc721LogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
+    const balanceArray: Array<DeepPartial<BalanceEntity>> = [...Array(tokenArray.length)].map((_, i) => ({
+      account: owner.toLowerCase(),
+      amount: "1",
+      tokenId: tokenArray[i].id,
+    }));
+
+    await this.balanceService.createBatch(balanceArray);
   }
 
   public async erc998Token(event: ILogEvent<IContractManagerERC998TokenDeployedEvent>, ctx: Log): Promise<void> {

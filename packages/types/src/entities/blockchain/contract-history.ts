@@ -28,6 +28,14 @@ export enum ContractEventType {
   UnpackWrapper = "UnpackWrapper",
   Unpaused = "Unpaused",
   WhitelistedChild = "WhitelistedChild",
+  ConsecutiveTransfer = "ConsecutiveTransfer",
+}
+
+export interface IERC721ConsecutiveTransfer {
+  fromTokenId: string;
+  toTokenId: string;
+  fromAddress: string;
+  toAddress: string;
 }
 
 // ERC721TokenWrapper
@@ -218,7 +226,8 @@ export type TContractEventData =
   | IErc998TokenUnWhitelistedChildEvent
   | IErc998TokenWhitelistedChildEvent
   | IPausedEvent
-  | IUnpackWrapper;
+  | IUnpackWrapper
+  | IERC721ConsecutiveTransfer;
 
 export interface IContractHistory extends IIdDateBase {
   address: string;
