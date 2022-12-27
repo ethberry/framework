@@ -3,6 +3,17 @@ import { ethers, network } from "hardhat";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import {
+  amount,
+  baseTokenURI,
+  decimals,
+  DEFAULT_ADMIN_ROLE,
+  MINTER_ROLE,
+  royalty,
+  tokenName,
+  tokenSymbol,
+} from "@gemunion/contracts-constants";
+
+import {
   ERC1155Simple,
   ERC721MysteryboxTest,
   ERC721RandomHardhat,
@@ -10,20 +21,7 @@ import {
   LinkErc20,
   VRFCoordinatorMock,
 } from "../../../typechain-types";
-import {
-  amount,
-  baseTokenURI,
-  decimals,
-  DEFAULT_ADMIN_ROLE,
-  LINK_ADDR,
-  MINTER_ROLE,
-  royalty,
-  templateId,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-  VRF_ADDR,
-} from "../../constants";
+import { LINK_ADDR, templateId, tokenId, VRF_ADDR } from "../../constants";
 import { shouldHaveRole } from "../../shared/accessible/hasRoles";
 // import { shouldGetTokenURI } from "../../ERC721/shared/common/tokenURI";
 // import { shouldSetBaseURI } from "../../ERC721/shared/common/setBaseURI";

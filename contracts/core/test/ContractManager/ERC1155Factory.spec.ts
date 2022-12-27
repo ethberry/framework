@@ -2,9 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
+import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
-import { amount, baseTokenURI, featureIds, royalty, tokenId } from "../constants";
+import { featureIds, tokenId } from "../constants";
 
 import { deployContractManager } from "./fixture";
 

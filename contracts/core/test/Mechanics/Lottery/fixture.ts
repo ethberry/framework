@@ -3,8 +3,9 @@ import "@nomiclabs/hardhat-waffle";
 import { ethers, network } from "hardhat";
 import { Contract, utils } from "ethers";
 
+import { tokenName } from "@gemunion/contracts-constants";
+
 import { getContractName } from "../../utils";
-import { tokenName } from "../../constants";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { wrapSignature } from "./utils";

@@ -1,7 +1,7 @@
 import { expect } from "chai";
-
-import { DEFAULT_ADMIN_ROLE } from "../../constants";
 import { ethers } from "hardhat";
+
+import { DEFAULT_ADMIN_ROLE } from "@gemunion/contracts-constants";
 
 export function shouldRenounceRole() {
   describe("shouldRenounceRole", function () {

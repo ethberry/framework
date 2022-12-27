@@ -3,7 +3,9 @@ import { ethers, network } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { decimals, expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
+import { decimals } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
 import { deployLinkVrfFixture } from "../../shared/link";

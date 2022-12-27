@@ -2,10 +2,16 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
+import {
+  baseTokenURI,
+  DEFAULT_ADMIN_ROLE,
+  nonce,
+  royalty,
+  tokenName,
+  tokenSymbol,
+} from "@gemunion/contracts-constants";
 
-import { baseTokenURI, featureIds, royalty, templateId, tokenId } from "../constants";
-
+import { featureIds, templateId, tokenId } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("ERC721Factory", function () {

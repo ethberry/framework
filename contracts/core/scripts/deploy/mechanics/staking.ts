@@ -2,8 +2,7 @@ import { ethers } from "hardhat";
 import { Contract, constants } from "ethers";
 
 import { blockAwait } from "@gemunion/contracts-utils";
-
-import { MINTER_ROLE } from "../../../test/constants";
+import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
 export async function deployStaking(contracts: Record<string, Contract>) {
   const stakingFactory = await ethers.getContractFactory("Staking");

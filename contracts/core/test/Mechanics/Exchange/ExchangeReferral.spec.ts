@@ -1,7 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants, utils } from "ethers";
-import { amount, expiresAt, externalId, tokenId, tokenZero } from "../../constants";
+
+import { amount } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, tokenId, tokenZero } from "../../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeReferral", function () {

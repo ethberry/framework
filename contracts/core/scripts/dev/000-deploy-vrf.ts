@@ -1,9 +1,7 @@
 import { ethers } from "hardhat";
 import { BigNumber } from "ethers";
 
-import { blockAwait } from "@gemunion/utils-eth";
-
-import { tokenName, tokenSymbol } from "../../test/constants";
+import { tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
 async function main() {
   const [owner] = await ethers.getSigners();

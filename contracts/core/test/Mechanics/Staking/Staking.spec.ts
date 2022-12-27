@@ -6,10 +6,10 @@ import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
 import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
-import { amount, LINK_ADDR, templateId, VRF_ADDR } from "../../constants";
+import { LINK_ADDR, templateId, VRF_ADDR } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -32,7 +32,7 @@ describe("Staking", function () {
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployStaking("Staking");
-  const erc20Factory = () => deployERC20("ERC20Simple");
+  const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721Factory = (name: string) => deployERC721(name);
   const erc1155Factory = () => deployERC1155("ERC1155Simple");
 

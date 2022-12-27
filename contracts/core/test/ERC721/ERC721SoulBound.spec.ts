@@ -2,8 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, templateId, tokenId } from "../constants";
+import { templateId, tokenId } from "../constants";
 
 import { shouldTokenURI } from "./shared/simple/baseUrl/tokenURI";
 import { shouldSetBaseURI } from "./shared/simple/baseUrl/setBaseURI";

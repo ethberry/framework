@@ -1,6 +1,6 @@
 import { expect } from "chai";
 
-import { DEFAULT_ADMIN_ROLE } from "../../constants";
+import { DEFAULT_ADMIN_ROLE } from "@gemunion/contracts-constants";
 
 export function shouldGrantRole() {
   describe("grantRole", function () {

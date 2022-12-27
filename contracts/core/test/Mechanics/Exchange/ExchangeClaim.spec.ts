@@ -1,7 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { constants } from "ethers";
-import { amount, params, tokenId } from "../../constants";
+
+import { amount } from "@gemunion/contracts-constants";
+
+import { params, tokenId } from "../../constants";
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeClaim", function () {

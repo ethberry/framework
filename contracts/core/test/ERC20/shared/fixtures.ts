@@ -1,4 +1,5 @@
 import { ethers } from "hardhat";
+
 import { amount, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
 export async function deployERC20(name: string, options: any = {}) {

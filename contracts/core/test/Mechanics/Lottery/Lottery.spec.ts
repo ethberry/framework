@@ -5,24 +5,11 @@ import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import {
-  amount,
-  decimals,
-  DEFAULT_ADMIN_ROLE,
-  defaultNumbers,
-  expiresAt,
-  externalId,
-  LINK_ADDR,
-  MINTER_ROLE,
-  nonce,
-  params,
-  PAUSER_ROLE,
-  VRF_ADDR,
-} from "../../constants";
-import { deployLinkVrfFixture } from "../../shared/link";
-
+import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
+import { defaultNumbers, expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
+import { deployLinkVrfFixture } from "../../shared/link";
 import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";

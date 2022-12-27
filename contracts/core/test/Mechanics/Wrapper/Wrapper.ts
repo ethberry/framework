@@ -1,6 +1,8 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { amount } from "../../constants";
+
+import { amount } from "@gemunion/contracts-constants";
+
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
 
