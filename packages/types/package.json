@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@framework/constants": "0.0.1",
-    "@gemunion/types-blockchain": "1.0.1",
+    "@gemunion/types-blockchain": "1.1.0",
     "@gemunion/types-collection": "1.5.5",
     "ethers": "5.7.2"
   },
