@@ -48,8 +48,8 @@ contract ERC998Genes is IERC721Random, ERC721ChainLinkGoerli, ERC998Simple, Bree
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
-    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    upsertRecordField(tokenId, GENES, randomness);
+    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(tokenId, GENES, randomness);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);

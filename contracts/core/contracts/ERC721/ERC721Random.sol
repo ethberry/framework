@@ -38,8 +38,8 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Rar
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, RARITY, 1);
 
     _safeMint(to, tokenId);
   }
@@ -57,8 +57,8 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Rar
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
-    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    upsertRecordField(tokenId, RARITY, rarity);
+    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);

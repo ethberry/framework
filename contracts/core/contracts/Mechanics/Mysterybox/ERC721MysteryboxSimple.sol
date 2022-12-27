@@ -32,18 +32,14 @@ contract ERC721MysteryboxSimple is IERC721Mysterybox, ERC721Simple, ExchangeUtil
     revert MethodNotSupported();
   }
 
-  function mintBox(
-    address to,
-    uint256 templateId,
-    Asset[] memory items
-  ) external onlyRole(MINTER_ROLE) {
+  function mintBox(address to, uint256 templateId, Asset[] memory items) external onlyRole(MINTER_ROLE) {
     require(templateId != 0, "Mysterybox: wrong item");
     require(items.length > 0, "Mysterybox: no content");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _itemData[tokenId] = items;

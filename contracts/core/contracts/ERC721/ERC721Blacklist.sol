@@ -13,8 +13,6 @@ import "@gemunion/contracts-access-list/contracts/extension/BlackList.sol";
 import "./ERC721Simple.sol";
 
 contract ERC721Blacklist is ERC721Simple, BlackList {
-  using Counters for Counters.Counter;
-
   constructor(
     string memory name,
     string memory symbol,

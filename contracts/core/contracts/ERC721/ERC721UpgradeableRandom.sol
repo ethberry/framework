@@ -39,9 +39,9 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkGoerli, ERC721
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    upsertRecordField(tokenId, GRADE, 1);
-    upsertRecordField(tokenId, RARITY, 1);
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, RARITY, 1);
 
     _safeMint(account, tokenId);
   }
@@ -53,7 +53,7 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkGoerli, ERC721
 
   function upgrade(uint256 tokenId) public override onlyRole(MINTER_ROLE) returns (bool) {
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
-    upsertRecordField(tokenId, GRADE, grade + 1);
+    _upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
     return true;
   }
@@ -63,9 +63,9 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkGoerli, ERC721
     uint256 rarity = _getDispersion(randomness);
     Request memory request = _queue[requestId];
 
-    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
-    upsertRecordField(tokenId, GRADE, 1);
-    upsertRecordField(tokenId, RARITY, rarity);
+    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, RARITY, rarity);
 
     delete _queue[requestId];
     safeMint(request.account);

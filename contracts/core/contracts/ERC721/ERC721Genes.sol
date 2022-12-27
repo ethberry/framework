@@ -53,9 +53,9 @@ contract ERC721Genes is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Bree
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
-    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     uint256 genes = encodeData(request, randomness);
-    upsertRecordField(tokenId, GENES, genes);
+    _upsertRecordField(tokenId, GENES, genes);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);
