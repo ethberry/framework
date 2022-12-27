@@ -1,7 +1,9 @@
 import { ethers } from "hardhat";
 import { Contract, constants } from "ethers";
+
+import { blockAwait } from "@gemunion/contracts-utils";
+
 import { baseTokenURI, royalty, tokenName } from "../../../test/constants";
-import { blockAwait, blockAwaitMs } from "../../utils/blockAwait";
 
 export async function deployLotteryProd(contracts: Record<string, Contract>) {
   const amount = constants.WeiPerEther.mul(1e6);

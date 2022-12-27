@@ -1,6 +1,8 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
-import { blockAwait, blockAwaitMs } from "../../utils/blockAwait";
+
+import { blockAwait } from "@gemunion/contracts-utils";
+
 import { baseTokenURI, royalty } from "../../../test/constants";
 
 export async function deployWrapper(contracts: Record<string, Contract>) {

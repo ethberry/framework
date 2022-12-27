@@ -1,6 +1,7 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
 
+import { blockAwait } from "@gemunion/contracts-utils";
 import { testChainId } from "@framework/constants";
 
 import {
@@ -13,7 +14,6 @@ import {
   tokenName,
   tokenSymbol,
 } from "../../../constants";
-import { blockAwait } from "../../../../scripts/utils/blockAwait";
 import { ContractManager, ERC721Simple, Exchange } from "../../../../typechain-types";
 
 export async function factoryDeployErc721(

@@ -1,7 +1,9 @@
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
+
+import { blockAwait } from "@gemunion/contracts-utils";
+
 import { MINTER_ROLE } from "../../../test/constants";
-import { blockAwait } from "../../utils/blockAwait";
 
 function delay(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));

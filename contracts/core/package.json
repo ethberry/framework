@@ -18,6 +18,7 @@
     "@gemunion/contracts-misc": "1.1.6",
     "@gemunion/contracts-mocha": "1.1.8",
     "@gemunion/contracts-mocks": "1.1.10",
+    "@gemunion/contracts-utils": "1.1.4",
     "@gemunion/utils-eth": "0.0.7",
     "@nomicfoundation/hardhat-network-helpers": "1.0.7",
     "@nomiclabs/hardhat-ethers": "2.2.1",

@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
+import { blockAwait } from "@gemunion/contracts-utils";
 import { wallet } from "@gemunion/constants";
-import { blockAwait } from "../../utils/blockAwait";
 
 export async function deployVesting(contracts: Record<string, Contract>) {
   const timestamp = Math.ceil(Date.now() / 1000);

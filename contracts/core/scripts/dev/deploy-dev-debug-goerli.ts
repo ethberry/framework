@@ -1,7 +1,8 @@
 import { ethers } from "hardhat";
-import { constants, Contract } from "ethers";
+import { Contract } from "ethers";
 // import { wallet, wallets } from "@gemunion/constants";
-import { blockAwait, blockAwaitMs } from "../utils/blockAwait";
+import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
+
 import { MINTER_ROLE } from "../../test/constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
@@ -9,7 +10,7 @@ const delay = 2; // block delay
 const delayMsec = 30000; // block delay ms
 // const decimals = ethers.BigNumber.from(10).pow(18);
 // const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
-const linkAmountInEth = ethers.utils.parseEther("1");
+// const linkAmountInEth = ethers.utils.parseEther("1");
 
 interface IObj {
   address?: string;
@@ -42,12 +43,12 @@ const grantRoles = async (contracts: Array<string>, grantee: Array<string>, role
 };
 
 const contracts: Record<string, Contract> = {};
-const amount = constants.WeiPerEther.mul(1e6);
+// const amount = constants.WeiPerEther.mul(1e6);
 
 // const timestamp = Math.ceil(Date.now() / 1000);
 
 async function main() {
-  const [owner] = await ethers.getSigners();
+  // const [owner] = await ethers.getSigners();
   // LINK & VRF
   // const linkFactory = await ethers.getContractFactory("LinkErc20");
   // // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
@@ -65,9 +66,9 @@ async function main() {
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
   */
-  const link = await ethers.getContractFactory("LinkErc20");
+  // const link = await ethers.getContractFactory("LinkErc20");
   // const linkInstance = link.attach("0x326C977E6efc84E512bB9C30f76E30c160eD06FB"); // GOERLI
-  const linkInstance = link.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F"); // GOERLI FW TEST
+  // const linkInstance = link.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F"); // GOERLI FW TEST
 
   /*
   const cmFactory = await ethers.getContractFactory("ContractManager");
@@ -105,17 +106,17 @@ async function main() {
   // await debug(contracts);
   /*
     await debug(await erc20SimpleInstance.mint(owner.address, amount), "erc20SimpleInstance.mint");
-  
+
     await debug(await erc20SimpleInstance.approve(contracts.exchange.address, amount), "erc20SimpleInstance.approve");
-  
+
     // const erc20InactiveFactory = await ethers.getContractFactory("ERC20Simple");
     // contracts.erc20Inactive = await erc20InactiveFactory.deploy("ERC20 INACTIVE", "OFF20", amount);
     // // await debug(contracts);
-  
+
     // const erc20NewFactory = await ethers.getContractFactory("ERC20Simple");
     // contracts.erc20New = await erc20NewFactory.deploy("ERC20 NEW", "NEW20", amount);
     // // await debug(contracts);
-  
+
     // const erc20BlacklistFactory = await ethers.getContractFactory("ERC20Blacklist");
     // const erc20BlacklistInstance = await erc20BlacklistFactory.deploy("ERC20 BLACKLIST", "BL20", amount);
     // contracts.erc20Blacklist = erc20BlacklistInstance;
@@ -208,15 +209,15 @@ async function main() {
     // const erc1155InactiveFactory = await ethers.getContractFactory("ERC1155Simple");
     // contracts.erc1155Inactive = await erc1155InactiveFactory.deploy(royalty, baseTokenURI);
     // // await debug(contracts);
-  
+
     // const erc1155NewFactory = await ethers.getContractFactory("ERC1155Simple");
     // contracts.erc1155New = await erc1155NewFactory.deploy(royalty, baseTokenURI);
     // // await debug(contracts);
-  
+
     // const erc1155BlacklistFactory = await ethers.getContractFactory("ERC1155Blacklist");
     // contracts.erc1155Blacklist = await erc1155BlacklistFactory.deploy(royalty, baseTokenURI);
     // // await debug(contracts);
-  
+
     // const linearVestingFactory = await ethers.getContractFactory("LinearVesting");
     // contracts.vestingLinear = await linearVestingFactory.deploy(wallet, timestamp, 365 * 86400);
     // // await debug(contracts);
@@ -296,7 +297,7 @@ async function main() {
       ]),
       "StakingInstance.setRules",
     );
-  
+
     await debug(
       await stakingInstance.setRules([
         {
@@ -322,7 +323,7 @@ async function main() {
       ]),
       "StakingInstance.setRules",
     );
-  
+
     await debug(
       await stakingInstance.setRules([
         {
@@ -355,7 +356,7 @@ async function main() {
       ]),
       "StakingInstance.setRules",
     );
-  
+
     await debug(
       await contracts.contractManager.addFactory(stakingInstance.address, MINTER_ROLE),
       "contractManager.addFactory",

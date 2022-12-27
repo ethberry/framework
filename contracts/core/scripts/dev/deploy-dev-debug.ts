@@ -2,7 +2,8 @@ import { ethers } from "hardhat";
 import { Contract, constants } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
-import { blockAwait, blockAwaitMs } from "../utils/blockAwait";
+import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
+
 import { baseTokenURI, MINTER_ROLE, royalty } from "../../test/constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
