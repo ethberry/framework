@@ -34,7 +34,7 @@ describe("Staking", function () {
   const factory = () => deployStaking("Staking");
   const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721Factory = (name: string) => deployERC721(name);
-  const erc1155Factory = () => deployERC1155("ERC1155Simple");
+  const erc1155Factory = () => deployERC1155();
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 

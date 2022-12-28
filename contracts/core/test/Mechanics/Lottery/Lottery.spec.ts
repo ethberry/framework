@@ -77,7 +77,7 @@ describe("Lottery", function () {
   describe("setAcceptedToken", function () {
     it("should set factory", async function () {
       const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20("ERC20Simple");
+      const newCoinInstance = await deployERC20();
       const tx = await lotteryInstance.setAcceptedToken(newCoinInstance.address);
       await expect(tx).to.not.be.reverted;
     });
@@ -85,7 +85,7 @@ describe("Lottery", function () {
     it("should fail: account is missing role", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20("ERC20Simple");
+      const newCoinInstance = await deployERC20();
       const tx = lotteryInstance.connect(receiver).setAcceptedToken(newCoinInstance.address);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,

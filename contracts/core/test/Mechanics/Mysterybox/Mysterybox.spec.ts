@@ -20,9 +20,9 @@ describe("ERC721MysteryboxSimple", function () {
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployERC721("ERC721MysteryboxTest");
-  const erc721Factory = () => deployERC721("ERC721Simple");
+  const erc721Factory = () => deployERC721();
   const erc721RandomFactory = () => deployERC721("ERC721RandomHardhat");
-  const erc1155Factory = () => deployERC1155("ERC1155Simple");
+  const erc1155Factory = () => deployERC1155();
 
   before(async function () {
     if (network.name === "hardhat") {
