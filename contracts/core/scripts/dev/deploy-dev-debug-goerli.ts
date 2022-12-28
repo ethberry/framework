@@ -50,7 +50,7 @@ const contracts: Record<string, Contract> = {};
 async function main() {
   // const [owner] = await ethers.getSigners();
   // LINK & VRF
-  // const linkFactory = await ethers.getContractFactory("LinkErc20");
+  // const linkFactory = await ethers.getContractFactory("LinkToken");
   // // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
   // const linkInstance = await linkFactory.deploy("LINK", "LINK");
   // contracts.link = linkInstance;
@@ -66,7 +66,7 @@ async function main() {
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
   */
-  // const link = await ethers.getContractFactory("LinkErc20");
+  // const link = await ethers.getContractFactory("LinkToken");
   // const linkInstance = link.attach("0x326C977E6efc84E512bB9C30f76E30c160eD06FB"); // GOERLI
   // const linkInstance = link.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F"); // GOERLI FW TEST
 

@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
+import { utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import {
@@ -18,7 +19,7 @@ import {
   ERC721MysteryboxTest,
   ERC721RandomHardhat,
   ERC721Simple,
-  LinkErc20,
+  LinkToken,
   VRFCoordinatorMock,
 } from "../../../typechain-types";
 import { LINK_ADDR, templateId, tokenId, VRF_ADDR } from "../../constants";
@@ -34,7 +35,7 @@ describe("ERC721MysteryboxSimple", function () {
   let erc1155SimpleInstance: ERC1155Simple;
 
   let erc721RandomInstance: ERC721RandomHardhat;
-  let linkInstance: LinkErc20;
+  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
@@ -167,10 +168,12 @@ describe("ERC721MysteryboxSimple", function () {
       const tx2 = mysteryboxInstance.connect(this.receiver).unpack(tokenId);
       await expect(tx2)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId);
-      await expect(tx2).to.emit(mysteryboxInstance, "UnpackMysterybox");
-      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
-      await expect(tx2).to.emit(linkInstance, "Transfer");
+        .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId)
+        .to.emit(mysteryboxInstance, "UnpackMysterybox")
+        .to.emit(erc721RandomInstance, "RandomRequest")
+        .to.emit(linkInstance, "Transfer(address,address,uint256)")
+        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
+
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
       const balance = await erc721RandomInstance.balanceOf(this.receiver.address);

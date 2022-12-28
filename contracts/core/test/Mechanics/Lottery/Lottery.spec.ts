@@ -10,7 +10,7 @@ import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { defaultNumbers, expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
 import { deployLinkVrfFixture } from "../../shared/link";
-import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
+import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
@@ -24,7 +24,7 @@ const delay = (milliseconds: number) => {
 use(solidity);
 
 describe("Lottery", function () {
-  let linkInstance: LinkErc20;
+  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployLottery();

@@ -49,7 +49,7 @@ async function main() {
   // LINK & VRF
   // const decimals = ethers.BigNumber.from(10).pow(18);
   // const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
-  // const linkFactory = await ethers.getContractFactory("LinkErc20");
+  // const linkFactory = await ethers.getContractFactory("LinkToken");
   // // // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
   // const linkInstance = await linkFactory.deploy("LINK", "LINK");
   // contracts.link = linkInstance;
@@ -63,7 +63,7 @@ async function main() {
   // console.info("afterDebug");
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
-  const link = await ethers.getContractFactory("LinkErc20");
+  const link = await ethers.getContractFactory("LinkToken");
   const linkInstance = link.attach("0x8BCaF30fed623A721aB6A2E9A9ed4f0b2F141Bfd"); // localhost BESU
   // const linkInstance = link.attach("0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a"); // Gemunion BESU
   // const linkInstance = link.attach("0x326C977E6efc84E512bB9C30f76E30c160eD06FB"); // GOERLI

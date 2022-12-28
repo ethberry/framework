@@ -7,13 +7,13 @@ import { decimals } from "@gemunion/contracts-constants";
 
 import { expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
 import { deployErc721Base, deployExchangeFixture } from "./shared/fixture";
-import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
+import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { randomRequest } from "../../shared/randomRequest";
 import { decodeGenes, decodeMetadata, decodeNumber } from "../../shared/metadata";
 
 describe("ExchangeBreed", function () {
-  let linkInstance: LinkErc20;
+  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 
   before(async function () {
@@ -44,8 +44,8 @@ describe("ExchangeBreed", function () {
         await erc721Instance.mintCommon(receiver.address, 1);
         await erc721Instance.mintCommon(receiver.address, 2);
 
-        let balance = await erc721Instance.balanceOf(receiver.address);
-        expect(balance).to.equal(2);
+        const balance1 = await erc721Instance.balanceOf(receiver.address);
+        expect(balance1).to.equal(2);
 
         const genesis = {
           templateId: 128,
@@ -117,12 +117,13 @@ describe("ExchangeBreed", function () {
             [2, erc721Instance.address, 2, 1],
           )
           .to.emit(erc721Instance, "RandomRequest")
-          .to.emit(linkInstance, "Transfer");
+          .to.emit(linkInstance, "Transfer(address,address,uint256)")
+          .withArgs(erc721Instance.address, vrfInstance.address, utils.parseEther("0.1"));
 
         // RANDOM
         await randomRequest(erc721Instance, vrfInstance);
-        balance = await erc721Instance.balanceOf(receiver.address);
-        expect(balance).to.equal(3);
+        const balance2 = await erc721Instance.balanceOf(receiver.address);
+        expect(balance2).to.equal(3);
 
         // TEST METADATA
         const decodedMeta = decodeMetadata(await erc721Instance.getTokenMetadata(3));
@@ -187,7 +188,9 @@ describe("ExchangeBreed", function () {
           .to.emit(exchangeInstance, "Breed")
           .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1])
           .to.emit(erc721Instance, "RandomRequest")
-          .to.emit(linkInstance, "Transfer");
+          .to.emit(linkInstance, "Transfer(address,address,uint256)")
+          .withArgs(erc721Instance.address, vrfInstance.address, utils.parseEther("0.1"));
+
         // RANDOM
         await randomRequest(erc721Instance, vrfInstance);
         balance = await erc721Instance.balanceOf(receiver.address);
@@ -337,7 +340,9 @@ describe("ExchangeBreed", function () {
           .to.emit(exchangeInstance, "Breed")
           .withArgs(receiver.address, externalId, [2, erc721Instance.address, 1, 1], [2, erc721Instance.address, 2, 1])
           .to.emit(erc721Instance, "RandomRequest")
-          .to.emit(linkInstance, "Transfer");
+          .to.emit(linkInstance, "Transfer(address,address,uint256)")
+          .withArgs(erc721Instance.address, vrfInstance.address, utils.parseEther("0.1"));
+
         // RANDOM
         await randomRequest(erc721Instance, vrfInstance);
         balance = await erc721Instance.balanceOf(receiver.address);
