@@ -2,7 +2,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { Network } from "@ethersproject/networks";
 import { Contract } from "ethers";
 
-import { tokenName } from "../../constants";
+import { tokenName } from "@gemunion/contracts-constants";
 
 export const wrapSignature = (network: Network, contract: Contract, account: SignerWithAddress) => {
   return (values: Record<string, any>) => {

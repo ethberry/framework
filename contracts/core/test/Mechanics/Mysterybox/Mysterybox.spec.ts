@@ -1,93 +1,54 @@
 import { expect } from "chai";
 import { ethers, network } from "hardhat";
+import { BigNumber, constants, utils } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import {
-  ERC1155Simple,
-  ERC721MysteryboxTest,
-  ERC721RandomHardhat,
-  ERC721Simple,
-  LinkErc20,
-  VRFCoordinatorMock,
-} from "../../../typechain-types";
-import {
-  amount,
-  baseTokenURI,
-  decimals,
-  DEFAULT_ADMIN_ROLE,
-  LINK_ADDR,
-  MINTER_ROLE,
-  royalty,
-  templateId,
-  tokenId,
-  tokenName,
-  tokenSymbol,
-  VRF_ADDR,
-} from "../../constants";
-import { shouldHaveRole } from "../../shared/accessible/hasRoles";
-// import { shouldGetTokenURI } from "../../ERC721/shared/common/tokenURI";
-// import { shouldSetBaseURI } from "../../ERC721/shared/common/setBaseURI";
+import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
+
+import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
+import { LINK_ADDR, templateId, tokenId, VRF_ADDR } from "../../constants";
+
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
+import { deployERC1155 } from "../../ERC1155/shared/fixtures";
+import { deployERC721 } from "../../ERC721/shared/fixtures";
+import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 
 describe("ERC721MysteryboxSimple", function () {
-  let mysteryboxInstance: ERC721MysteryboxTest;
-  let erc721SimpleInstance: ERC721Simple;
-  let erc1155SimpleInstance: ERC1155Simple;
-
-  let erc721RandomInstance: ERC721RandomHardhat;
-  let linkInstance: LinkErc20;
+  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 
+  const factory = () => deployERC721("ERC721MysteryboxTest");
+  const erc721Factory = () => deployERC721();
+  const erc721RandomFactory = () => deployERC721("ERC721RandomHardhat");
+  const erc1155Factory = () => deployERC1155();
+
   before(async function () {
-    await network.provider.send("hardhat_reset");
+    if (network.name === "hardhat") {
+      await network.provider.send("hardhat_reset");
 
-    // https://github.com/NomicFoundation/hardhat/issues/2980
-    ({ linkInstance, vrfInstance } = await loadFixture(function mysterybox() {
-      return deployLinkVrfFixture();
-    }));
+      // https://github.com/NomicFoundation/hardhat/issues/2980
+      ({ linkInstance, vrfInstance } = await loadFixture(function mysterybox() {
+        return deployLinkVrfFixture();
+      }));
 
-    expect(linkInstance.address).equal(LINK_ADDR);
-    expect(vrfInstance.address).equal(VRF_ADDR);
+      expect(linkInstance.address).equal(LINK_ADDR);
+      expect(vrfInstance.address).equal(VRF_ADDR);
+    }
   });
 
-  after(async function () {
-    await network.provider.send("hardhat_reset");
-  });
-
-  beforeEach(async function () {
-    [this.owner, this.receiver] = await ethers.getSigners();
-
-    const mysteryboxFactory = await ethers.getContractFactory("ERC721MysteryboxTest");
-    mysteryboxInstance = await mysteryboxFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-
-    const erc721SimpleFactory = await ethers.getContractFactory("ERC721Simple");
-    erc721SimpleInstance = await erc721SimpleFactory.deploy(tokenName, tokenSymbol, royalty, baseTokenURI);
-    await erc721SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-
-    const erc1155SimpleFactory = await ethers.getContractFactory("ERC1155Simple");
-    erc1155SimpleInstance = await erc1155SimpleFactory.deploy(royalty, baseTokenURI);
-    await erc1155SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-
-    // ERC721 Random
-    const erc721randomFactory = await ethers.getContractFactory("ERC721RandomHardhat"); // for test only
-    erc721RandomInstance = await erc721randomFactory.deploy("ERC721Random", "RND", royalty, baseTokenURI);
-    // Grant roles
-    await erc721RandomInstance.grantRole(MINTER_ROLE, vrfInstance.address);
-    await erc721RandomInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
-    // Fund LINK to erc721Random contract
-    await linkInstance.transfer(erc721RandomInstance.address, ethers.BigNumber.from("1000").mul(decimals));
-
-    this.contractInstance = mysteryboxInstance;
-  });
-
-  shouldHaveRole(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
-  // shouldGetTokenURI();
-  // shouldSetBaseURI();
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldBehaveLikeERC721Simple(factory);
 
   describe("mint", function () {
     it("should mint (singular)", async function () {
-      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const mysteryboxInstance = await factory();
+      const erc721SimpleInstance = await erc721Factory();
+
+      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,
@@ -98,11 +59,17 @@ describe("ERC721MysteryboxSimple", function () {
 
       await expect(tx1)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, receiver.address, tokenId);
     });
 
     it("should mint (multiple)", async function () {
-      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const mysteryboxInstance = await factory();
+      const erc721SimpleInstance = await erc721Factory();
+      const erc1155SimpleInstance = await erc1155Factory();
+
+      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,
@@ -119,11 +86,15 @@ describe("ERC721MysteryboxSimple", function () {
 
       await expect(tx1)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, receiver.address, tokenId);
     });
 
     it("should fail: No content", async function () {
-      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, []);
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const mysteryboxInstance = await factory();
+
+      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, []);
 
       await expect(tx1).to.be.revertedWith("Mysterybox: no content");
     });
@@ -131,7 +102,14 @@ describe("ERC721MysteryboxSimple", function () {
 
   describe("unpack", function () {
     it("should mint (singular)", async function () {
-      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const mysteryboxInstance = await factory();
+      const erc721SimpleInstance = await erc721Factory();
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+
+      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,
@@ -142,18 +120,26 @@ describe("ERC721MysteryboxSimple", function () {
 
       await expect(tx1)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const tx2 = mysteryboxInstance.connect(this.receiver).unpack(tokenId);
+      const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
       await expect(tx2)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId)
+        .withArgs(receiver.address, constants.AddressZero, tokenId)
         .to.emit(erc721SimpleInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, receiver.address, tokenId);
     });
 
     it("should mint Random (singular)", async function () {
-      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const mysteryboxInstance = await factory();
+      const erc721RandomInstance = await erc721RandomFactory();
+
+      await erc721RandomInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+      await linkInstance.transfer(erc721RandomInstance.address, BigNumber.from("1000").mul(decimals));
+
+      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721RandomInstance.address,
@@ -164,23 +150,34 @@ describe("ERC721MysteryboxSimple", function () {
 
       await expect(tx1)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const tx2 = mysteryboxInstance.connect(this.receiver).unpack(tokenId);
+      const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
       await expect(tx2)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId);
-      await expect(tx2).to.emit(mysteryboxInstance, "UnpackMysterybox");
-      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
-      await expect(tx2).to.emit(linkInstance, "Transfer");
+        .withArgs(receiver.address, constants.AddressZero, tokenId)
+        .to.emit(mysteryboxInstance, "UnpackMysterybox")
+        .to.emit(erc721RandomInstance, "RandomRequest")
+        .to.emit(linkInstance, "Transfer(address,address,uint256)")
+        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
+
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
-      const balance = await erc721RandomInstance.balanceOf(this.receiver.address);
+      const balance = await erc721RandomInstance.balanceOf(receiver.address);
       expect(balance).to.equal(1);
     });
 
     it("should mint (multiple)", async function () {
-      const tx1 = mysteryboxInstance.mintBox(this.receiver.address, templateId, [
+      const [_owner, receiver] = await ethers.getSigners();
+
+      const mysteryboxInstance = await factory();
+      const erc721SimpleInstance = await erc721Factory();
+      const erc1155SimpleInstance = await erc1155Factory();
+
+      await erc721SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+      await erc1155SimpleInstance.grantRole(MINTER_ROLE, mysteryboxInstance.address);
+
+      const tx1 = mysteryboxInstance.mintBox(receiver.address, templateId, [
         {
           tokenType: 2,
           token: erc721SimpleInstance.address,
@@ -197,16 +194,16 @@ describe("ERC721MysteryboxSimple", function () {
 
       await expect(tx1)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId);
+        .withArgs(constants.AddressZero, receiver.address, tokenId);
 
-      const tx2 = mysteryboxInstance.connect(this.receiver).unpack(tokenId);
+      const tx2 = mysteryboxInstance.connect(receiver).unpack(tokenId);
       await expect(tx2)
         .to.emit(mysteryboxInstance, "Transfer")
-        .withArgs(this.receiver.address, ethers.constants.AddressZero, tokenId)
+        .withArgs(receiver.address, constants.AddressZero, tokenId)
         .to.emit(erc721SimpleInstance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, this.receiver.address, tokenId)
+        .withArgs(constants.AddressZero, receiver.address, tokenId)
         .to.emit(erc1155SimpleInstance, "TransferSingle")
-        .withArgs(mysteryboxInstance.address, ethers.constants.AddressZero, this.receiver.address, tokenId, amount);
+        .withArgs(mysteryboxInstance.address, constants.AddressZero, receiver.address, tokenId, amount);
     });
   });
 });

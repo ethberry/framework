@@ -5,25 +5,12 @@ import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import {
-  amount,
-  decimals,
-  DEFAULT_ADMIN_ROLE,
-  defaultNumbers,
-  expiresAt,
-  externalId,
-  LINK_ADDR,
-  MINTER_ROLE,
-  nonce,
-  params,
-  PAUSER_ROLE,
-  VRF_ADDR,
-} from "../../constants";
-import { deployLinkVrfFixture } from "../../shared/link";
-
+import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, nonce, PAUSER_ROLE } from "@gemunion/contracts-constants";
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
-import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
+import { defaultNumbers, expiresAt, externalId, LINK_ADDR, params, VRF_ADDR } from "../../constants";
+import { deployLinkVrfFixture } from "../../shared/link";
+import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
 import { randomRequest } from "../../shared/randomRequest";
 import { wrapSignature } from "./utils";
 import { deployLottery } from "./fixture";
@@ -37,7 +24,7 @@ const delay = (milliseconds: number) => {
 use(solidity);
 
 describe("Lottery", function () {
-  let linkInstance: LinkErc20;
+  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployLottery();
@@ -90,7 +77,7 @@ describe("Lottery", function () {
   describe("setAcceptedToken", function () {
     it("should set factory", async function () {
       const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20("ERC20Simple");
+      const newCoinInstance = await deployERC20();
       const tx = await lotteryInstance.setAcceptedToken(newCoinInstance.address);
       await expect(tx).to.not.be.reverted;
     });
@@ -98,7 +85,7 @@ describe("Lottery", function () {
     it("should fail: account is missing role", async function () {
       const [_owner, receiver] = await ethers.getSigners();
       const { lotteryInstance } = await factory();
-      const newCoinInstance = await deployERC20("ERC20Simple");
+      const newCoinInstance = await deployERC20();
       const tx = lotteryInstance.connect(receiver).setAcceptedToken(newCoinInstance.address);
       await expect(tx).to.be.revertedWith(
         `AccessControl: account ${receiver.address.toLowerCase()} is missing role ${DEFAULT_ADMIN_ROLE}`,

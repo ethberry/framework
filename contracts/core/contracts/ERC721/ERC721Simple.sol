@@ -9,12 +9,12 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
+import "@gemunion/contracts-erc721/contracts/extensions/ERC721AMetaDataGetter.sol";
 import "@gemunion/contracts-erc721-enumerable/contracts/preset/ERC721ABER.sol";
 
 import "./interfaces/IERC721Simple.sol";
-import "../Mechanics/MetaData/MetaDataGetter.sol";
 
-contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, MetaDataGetter {
+contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaDataGetter {
   using Counters for Counters.Counter;
 
   constructor(
@@ -28,14 +28,20 @@ contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, MetaDataGett
   }
 
   function mintCommon(address account, uint256 templateId) external virtual override onlyRole(MINTER_ROLE) {
+    _mintCommon(account, templateId);
+  }
+
+  function _mintCommon(address account, uint256 templateId) internal returns (uint256) {
     require(templateId != 0, "ERC721Simple: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
 
     _safeMint(account, tokenId);
+
+    return tokenId;
   }
 
   function mint(address) public pure override {
@@ -44,10 +50,6 @@ contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, MetaDataGett
 
   function safeMint(address) public pure override {
     revert MethodNotSupported();
-  }
-
-  function setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) public onlyRole(METADATA_ADMIN_ROLE) {
-    _setTokenMetadata(tokenId, metadata);
   }
 
   function supportsInterface(

@@ -4,8 +4,10 @@ import { ethers, waffle, web3 } from "hardhat";
 import { constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
 
+import { DEFAULT_ADMIN_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
+
 import { ERC20Simple, Pyramid } from "../../../typechain-types";
-import { _stakePeriod, DEFAULT_ADMIN_ROLE, PAUSER_ROLE, tokenZero } from "../../constants";
+import { _stakePeriod, tokenZero } from "../../constants";
 import { IAsset, IRule } from "./interface/staking";
 
 use(solidity);

@@ -27,20 +27,14 @@ contract ERC721Upgradeable is IERC721Upgradeable, ERC721Simple {
     address account,
     uint256 templateId
   ) public virtual override(IERC721Simple, ERC721Simple) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Upgradeable: wrong type");
+    uint256 tokenId = _mintCommon(account, templateId);
 
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    upsertRecordField(tokenId, GRADE, 1);
-
-    _safeMint(account, tokenId);
+    _upsertRecordField(tokenId, GRADE, 1);
   }
 
   function upgrade(uint256 tokenId) public virtual onlyRole(MINTER_ROLE) returns (bool) {
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
-    upsertRecordField(tokenId, GRADE, grade + 1);
+    _upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
     return true;
   }

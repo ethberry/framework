@@ -4,11 +4,12 @@ import { ethers } from "hardhat";
 import { constants, ContractFactory, utils } from "ethers";
 import { Network } from "@ethersproject/networks";
 
+import { blockAwait } from "@gemunion/contracts-utils";
+import { nonce } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
 import { ContractManager, Exchange } from "../../../typechain-types";
-import { amountWei, amountWeiEth, nonce, templateId, tokenZero } from "../../constants";
-import { blockAwait } from "../../../scripts/utils/blockAwait";
+import { amountWei, amountWeiEth, templateId, tokenZero } from "../../constants";
 import { factoryDeployErc721 } from "./shared/factoryDeployErc721";
 import { factoryDeployErc20 } from "./shared/factoryDeployErc20";
 import { deployExchangeFixture } from "./shared/fixture";

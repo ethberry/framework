@@ -6,10 +6,10 @@ import { time } from "@openzeppelin/test-helpers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
+import { amount, decimals, DEFAULT_ADMIN_ROLE, MINTER_ROLE, PAUSER_ROLE } from "@gemunion/contracts-constants";
 
-import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
-import { amount, LINK_ADDR, templateId, VRF_ADDR } from "../../constants";
+import { LinkToken, VRFCoordinatorMock } from "../../../typechain-types";
+import { LINK_ADDR, templateId, VRF_ADDR } from "../../constants";
 import { IRule } from "./interface/staking";
 import { randomRequest } from "../../shared/randomRequest";
 import { deployLinkVrfFixture } from "../../shared/link";
@@ -28,13 +28,13 @@ describe("Staking", function () {
   // TODO use @types
   const templateKey = "0xe2db241bb2fe321e8c078a17b0902f9429cee78d5f3486725d73d0356e97c842";
 
-  let linkInstance: LinkErc20;
+  let linkInstance: LinkToken;
   let vrfInstance: VRFCoordinatorMock;
 
   const factory = () => deployStaking("Staking");
-  const erc20Factory = () => deployERC20("ERC20Simple");
+  const erc20Factory = () => deployERC20("ERC20Simple", { amount: utils.parseEther("200000") });
   const erc721Factory = (name: string) => deployERC721(name);
-  const erc1155Factory = () => deployERC1155("ERC1155Simple");
+  const erc1155Factory = () => deployERC1155();
 
   shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
 
@@ -707,7 +707,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
         .to.emit(erc721RandomInstance, "RandomRequest")
-        .to.emit(linkInstance, "Transfer");
+        .to.emit(linkInstance, "Transfer(address,address,uint256)")
+        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
       const balance = await erc721RandomInstance.balanceOf(owner.address);
@@ -1034,7 +1035,9 @@ describe("Staking", function () {
       await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
       await expect(tx2).to.emit(stakingInstance, "StakingFinish");
       await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
-      await expect(tx2).to.emit(linkInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(linkInstance, "Transfer(address,address,uint256)")
+        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
@@ -1385,7 +1388,8 @@ describe("Staking", function () {
         .to.emit(stakingInstance, "StakingWithdraw")
         .to.emit(stakingInstance, "StakingFinish")
         .to.emit(erc721RandomInstance, "RandomRequest")
-        .to.emit(linkInstance, "Transfer");
+        .to.emit(linkInstance, "Transfer(address,address,uint256)")
+        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);
@@ -1724,10 +1728,13 @@ describe("Staking", function () {
       await time.advanceBlockTo(current.add(web3.utils.toBN(period * cycles)));
       // REWARD
       const tx2 = await stakingInstance.receiveReward(1, true, true);
-      await expect(tx2).to.emit(stakingInstance, "StakingWithdraw");
-      await expect(tx2).to.emit(stakingInstance, "StakingFinish");
-      await expect(tx2).to.emit(erc721RandomInstance, "RandomRequest");
-      await expect(tx2).to.emit(linkInstance, "Transfer");
+      await expect(tx2)
+        .to.emit(stakingInstance, "StakingWithdraw")
+        .to.emit(stakingInstance, "StakingFinish")
+        .to.emit(erc721RandomInstance, "RandomRequest")
+        .to.emit(linkInstance, "Transfer(address,address,uint256)")
+        .withArgs(erc721RandomInstance.address, vrfInstance.address, utils.parseEther("0.1"));
+
       // RANDOM
       await randomRequest(erc721RandomInstance, vrfInstance);
       balance = await erc721RandomInstance.balanceOf(owner.address);

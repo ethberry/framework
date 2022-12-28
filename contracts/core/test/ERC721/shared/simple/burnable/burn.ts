@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { constants, Contract } from "ethers";
 
 import { templateId, tokenId } from "../../../../constants";
 
@@ -23,9 +23,7 @@ export function shouldBurn(factory: () => Promise<Contract>) {
       await contractInstance.mintCommon(owner.address, templateId);
       const tx = await contractInstance.burn(tokenId);
 
-      await expect(tx)
-        .to.emit(contractInstance, "Transfer")
-        .withArgs(owner.address, ethers.constants.AddressZero, tokenId);
+      await expect(tx).to.emit(contractInstance, "Transfer").withArgs(owner.address, constants.AddressZero, tokenId);
 
       const balanceOfOwner = await contractInstance.balanceOf(owner.address);
       expect(balanceOfOwner).to.equal(0);
@@ -40,9 +38,7 @@ export function shouldBurn(factory: () => Promise<Contract>) {
 
       const tx = await contractInstance.burn(tokenId);
 
-      await expect(tx)
-        .to.emit(contractInstance, "Transfer")
-        .withArgs(owner.address, ethers.constants.AddressZero, tokenId);
+      await expect(tx).to.emit(contractInstance, "Transfer").withArgs(owner.address, constants.AddressZero, tokenId);
 
       const balanceOfOwner = await contractInstance.balanceOf(owner.address);
       expect(balanceOfOwner).to.equal(0);

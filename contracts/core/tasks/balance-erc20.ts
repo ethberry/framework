@@ -6,7 +6,7 @@ task("balance-erc20", "Prints an ERC20 balance")
   .setAction(async (args, hre) => {
     const { account, contract } = args;
 
-    const coinFactory = await hre.ethers.getContractFactory("LinkErc20");
+    const coinFactory = await hre.ethers.getContractFactory("LinkToken");
     const coinInstance = coinFactory.attach(contract);
     const accBalance = await coinInstance.balanceOf(account);
     console.info("ERC20 Balance:", hre.ethers.utils.formatEther(accBalance.toString()));

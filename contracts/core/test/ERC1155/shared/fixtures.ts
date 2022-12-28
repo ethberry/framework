@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 
-import { baseTokenURI, royalty } from "../../constants";
+import { baseTokenURI, royalty } from "@gemunion/contracts-constants";
 
-export async function deployERC1155(name: string) {
+export async function deployERC1155(name = "ERC1155Simple") {
   const factory = await ethers.getContractFactory(name);
   return factory.deploy(royalty, baseTokenURI);
 }

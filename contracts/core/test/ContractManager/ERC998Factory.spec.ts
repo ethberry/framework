@@ -1,11 +1,18 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants } from "ethers";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
+import {
+  baseTokenURI,
+  DEFAULT_ADMIN_ROLE,
+  nonce,
+  royalty,
+  tokenName,
+  tokenSymbol,
+} from "@gemunion/contracts-constants";
 
-import { baseTokenURI, featureIds, royalty, templateId, tokenId } from "../constants";
-
+import { featureIds, templateId, tokenId } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("ERC998Factory", function () {
@@ -88,9 +95,7 @@ describe("ERC998Factory", function () {
       expect(hasRole2).to.equal(true);
 
       const tx2 = erc998Instance.mintCommon(receiver.address, templateId);
-      await expect(tx2)
-        .to.emit(erc998Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, receiver.address, tokenId);
+      await expect(tx2).to.emit(erc998Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
       const balance = await erc998Instance.balanceOf(receiver.address);
       expect(balance).to.equal(1);

@@ -1,9 +1,9 @@
 import { ethers } from "hardhat";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
-import { blockAwait, blockAwaitMs } from "../utils/blockAwait";
-import { baseTokenURI, MINTER_ROLE, royalty } from "../../test/constants";
+import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
+import { baseTokenURI, MINTER_ROLE, royalty } from "@gemunion/contracts-constants";
 
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
@@ -47,9 +47,9 @@ const timestamp = Math.ceil(Date.now() / 1000);
 async function main() {
   const [owner] = await ethers.getSigners();
   // LINK & VRF
-  // const decimals = ethers.BigNumber.from(10).pow(18);
-  // const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
-  // const linkFactory = await ethers.getContractFactory("LinkErc20");
+  // const decimals = BigNumber.from(10).pow(18);
+  // const linkAmountInWei = BigNumber.from("1000").mul(decimals);
+  // const linkFactory = await ethers.getContractFactory("LinkToken");
   // // // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
   // const linkInstance = await linkFactory.deploy("LINK", "LINK");
   // contracts.link = linkInstance;
@@ -63,7 +63,7 @@ async function main() {
   // console.info("afterDebug");
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
-  const link = await ethers.getContractFactory("LinkErc20");
+  const link = await ethers.getContractFactory("LinkToken");
   const linkInstance = link.attach("0x8BCaF30fed623A721aB6A2E9A9ed4f0b2F141Bfd"); // localhost BESU
   // const linkInstance = link.attach("0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a"); // Gemunion BESU
   // const linkInstance = link.attach("0x326C977E6efc84E512bB9C30f76E30c160eD06FB"); // GOERLI

@@ -2,7 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { amount, tokenId } from "../../../constants";
+import { amount } from "@gemunion/contracts-constants";
+
+import { tokenId } from "../../../constants";
 
 export function shouldBehaveLikeERC1155BlackList(factory: () => Promise<Contract>) {
   describe("Black list", function () {
