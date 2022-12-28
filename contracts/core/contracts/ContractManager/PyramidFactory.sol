@@ -16,9 +16,6 @@ contract PyramidFactory is AbstractFactory {
   bytes32 private immutable PYRAMID_PERMIT_SIGNATURE =
   keccak256(bytes.concat("EIP712(Pyramid p)", PYRAMID_PARAMS));
 
-//  bytes32 private immutable PYRAMID_PERMIT_SIGNATURE =
-//    keccak256("EIP712(bytes32 nonce,bytes bytecode,uint8[] featureIds)");
-
   bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
 
   address[] private _pyramid_tokens;

@@ -23,6 +23,16 @@ export async function factoryDeployErc721(
   const network = await ethers.provider.getNetwork();
   const [owner] = await ethers.getSigners();
   const erc721 = await ethers.getContractFactory("ERC721Simple");
+  // "Erc721(bytes bytecode,string name,string symbol,string baseTokenURI,uint8[] featureIds,uint96 royalty,bytes32 nonce)";
+  const c = {
+    bytecode: erc721.bytecode,
+    name: tokenName,
+    symbol: tokenSymbol,
+    baseTokenURI,
+    featureIds,
+    royalty,
+    nonce,
+  };
   const signature = await owner._signTypedData(
     // Domain
     {
@@ -33,42 +43,40 @@ export async function factoryDeployErc721(
     },
     // Types
     {
-      EIP712: [
-        { name: "nonce", type: "bytes32" },
+      EIP712: [{ name: "c", type: "Erc721" }],
+      Erc721: [
         { name: "bytecode", type: "bytes" },
         { name: "name", type: "string" },
         { name: "symbol", type: "string" },
-        { name: "royalty", type: "uint96" },
         { name: "baseTokenURI", type: "string" },
         { name: "featureIds", type: "uint8[]" },
+        { name: "royalty", type: "uint96" },
+        { name: "nonce", type: "bytes32" },
       ],
     },
-    // Value
-    {
-      nonce,
-      bytecode: erc721.bytecode,
-      name: tokenName,
-      symbol: tokenSymbol,
-      royalty,
-      baseTokenURI,
-      featureIds,
-    },
+    // Values
+    { c },
   );
 
   if (network.chainId === testChainId) {
     await blockAwait();
   }
-
+  const signer = owner.address;
+  const bytecode = erc721.bytecode;
   const tx = await factoryInstance.deployERC721Token(
-    nonce,
-    erc721.bytecode,
-    tokenName,
-    tokenSymbol,
-    royalty,
-    baseTokenURI,
-    featureIds,
-    owner.address,
-    signature,
+    {
+      signer,
+      signature,
+    },
+    {
+      bytecode,
+      name: tokenName,
+      symbol: tokenSymbol,
+      baseTokenURI,
+      featureIds,
+      royalty,
+      nonce,
+    },
   );
 
   if (network.chainId === testChainId) {

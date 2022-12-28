@@ -21,6 +21,16 @@ describe("ERC998Factory", function () {
 
       const contractInstance = await factory();
 
+      const c = {
+        bytecode: erc998.bytecode,
+        name: tokenName,
+        symbol: tokenSymbol,
+        royalty,
+        baseTokenURI,
+        featureIds,
+        nonce,
+      };
+
       const signature = await owner._signTypedData(
         // Domain
         {
@@ -31,38 +41,36 @@ describe("ERC998Factory", function () {
         },
         // Types
         {
-          EIP712: [
-            { name: "nonce", type: "bytes32" },
+          EIP712: [{ name: "c", type: "Erc998" }],
+          Erc998: [
             { name: "bytecode", type: "bytes" },
             { name: "name", type: "string" },
             { name: "symbol", type: "string" },
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
             { name: "featureIds", type: "uint8[]" },
+            { name: "nonce", type: "bytes32" },
           ],
         },
-        // Value
+        // Values
+        { c },
+      );
+      const signer = owner.address;
+      const bytecode = erc998.bytecode;
+      const tx = await contractInstance.deployERC998Token(
         {
-          nonce,
-          bytecode: erc998.bytecode,
+          signer,
+          signature,
+        },
+        {
+          bytecode,
           name: tokenName,
           symbol: tokenSymbol,
           royalty,
           baseTokenURI,
           featureIds,
+          nonce,
         },
-      );
-
-      const tx = await contractInstance.deployERC998Token(
-        nonce,
-        erc998.bytecode,
-        tokenName,
-        tokenSymbol,
-        royalty,
-        baseTokenURI,
-        featureIds,
-        owner.address,
-        signature,
       );
 
       const [address] = await contractInstance.allERC998Tokens();

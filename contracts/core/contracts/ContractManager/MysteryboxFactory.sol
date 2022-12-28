@@ -16,11 +16,6 @@ contract MysteryboxFactory is AbstractFactory {
   bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =
   keccak256(bytes.concat("EIP712(Mystery m)", MYSTERYBOX_PARAMS));
 
-//  bytes32 private immutable MYSTERYBOX_PERMIT_SIGNATURE =
-//    keccak256(
-//      "EIP712(bytes32 nonce,bytes bytecode,string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds)"
-//    );
-
   address[] private _mysterybox_tokens;
 
   struct Mystery {

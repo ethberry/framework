@@ -51,11 +51,13 @@ export async function factoryDeployVesting(factoryInstance: ContractManager): Pr
     { v },
   );
 
-  if (network.chainId !== testChainId) {
+  if (network.chainId === testChainId) {
     await blockAwait();
   }
+
   const signer = owner.address;
   const bytecode = vesting.bytecode;
+
   const tx = await factoryInstance.deployVesting(
     {
       signer,

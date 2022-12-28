@@ -16,11 +16,6 @@ contract VestingFactory is AbstractFactory {
   bytes32 private immutable VESTING_PERMIT_SIGNATURE =
   keccak256(bytes.concat("EIP712(Vesting v)", VESTING_PARAMS));
 
-//  bytes32 private immutable VESTING_PERMIT_SIGNATURE =
-//    keccak256(
-//      "EIP712(bytes32 nonce,bytes bytecode,address account,uint64 startTimestamp,uint64 duration,uint256 templateId)"
-//    );
-
   address[] private _vesting;
 
   struct Vesting {
@@ -46,13 +41,11 @@ contract VestingFactory is AbstractFactory {
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
     require(hasRole(DEFAULT_ADMIN_ROLE, sig.signer), "ContractManager: Wrong signer");
 
-//    bytes32 digest = _hashVesting(nonce, bytecode, account, startTimestamp, duration, templateId);
     bytes32 digest = _hashVesting(v);
 
     _checkSignature(sig.signer, digest, sig.signature);
     _checkNonce(v.nonce);
 
-//    addr = deploy(bytecode, abi.encode(account, startTimestamp, duration));
     addr = deploy2(v.bytecode, abi.encode(v.account, v.startTimestamp, v.duration), v.nonce);
     _vesting.push(addr);
 

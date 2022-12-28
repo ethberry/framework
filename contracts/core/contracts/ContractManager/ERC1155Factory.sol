@@ -16,9 +16,6 @@ contract ERC1155Factory is AbstractFactory {
   bytes32 private immutable ERC1155_PERMIT_SIGNATURE =
   keccak256(bytes.concat("EIP712(Erc1155 c)", ERC1155_PARAMS));
 
-//  bytes32 private immutable ERC1155_PERMIT_SIGNATURE =
-//    keccak256("EIP712(bytes32 nonce,bytes bytecode,uint96 royalty,string baseTokenURI,uint8[] featureIds)");
-
   address[] private _erc1155_tokens;
 
   struct Erc1155 {
