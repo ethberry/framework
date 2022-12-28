@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants } from "ethers";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import {
@@ -86,9 +87,7 @@ describe("ERC721Factory", function () {
       expect(hasRole2).to.equal(true);
 
       const tx2 = erc721Instance.mintCommon(receiver.address, templateId);
-      await expect(tx2)
-        .to.emit(erc721Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, receiver.address, tokenId);
+      await expect(tx2).to.emit(erc721Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, tokenId);
 
       const balance = await erc721Instance.balanceOf(receiver.address);
       expect(balance).to.equal(1);

@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants } from "ethers";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { amount, DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
@@ -76,9 +77,7 @@ describe("ERC20Factory", function () {
       expect(hasRole2).to.equal(true);
 
       const tx2 = erc20Instance.mint(receiver.address, amount);
-      await expect(tx2)
-        .to.emit(erc20Instance, "Transfer")
-        .withArgs(ethers.constants.AddressZero, receiver.address, amount);
+      await expect(tx2).to.emit(erc20Instance, "Transfer").withArgs(constants.AddressZero, receiver.address, amount);
 
       const balance = await erc20Instance.balanceOf(receiver.address);
       expect(balance).to.equal(amount);

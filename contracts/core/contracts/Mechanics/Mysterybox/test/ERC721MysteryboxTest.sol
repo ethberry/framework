@@ -16,7 +16,7 @@ contract ERC721MysteryboxTest is ERC721MysteryboxSimple {
     string memory baseTokenURI
   ) ERC721MysteryboxSimple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
-    _safeMint(to, templateId);
+  function mintCommon(address account, uint256 templateId) external virtual override onlyRole(MINTER_ROLE) {
+    _mintCommon(account, templateId);
   }
 }

@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { Contract, constants } from "ethers";
+import { constants, Contract } from "ethers";
 import { wallet, wallets } from "@gemunion/constants";
 
 import { blockAwait, blockAwaitMs } from "@gemunion/contracts-utils";
@@ -47,8 +47,8 @@ const timestamp = Math.ceil(Date.now() / 1000);
 async function main() {
   const [owner] = await ethers.getSigners();
   // LINK & VRF
-  // const decimals = ethers.BigNumber.from(10).pow(18);
-  // const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
+  // const decimals = BigNumber.from(10).pow(18);
+  // const linkAmountInWei = BigNumber.from("1000").mul(decimals);
   // const linkFactory = await ethers.getContractFactory("LinkToken");
   // // // const linkInstance = linkFactory.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F");
   // const linkInstance = await linkFactory.deploy("LINK", "LINK");

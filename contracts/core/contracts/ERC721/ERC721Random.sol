@@ -32,16 +32,10 @@ contract ERC721Random is IERC721Random, ERC721ChainLinkGoerli, ERC721Simple, Rar
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 templateId) public override(ERC721Simple) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721: wrong type");
+  function mintCommon(address account, uint256 templateId) public override(ERC721Simple) onlyRole(MINTER_ROLE) {
+    uint256 tokenId = _mintCommon(account, templateId);
 
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     _upsertRecordField(tokenId, RARITY, 1);
-
-    _safeMint(to, tokenId);
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {

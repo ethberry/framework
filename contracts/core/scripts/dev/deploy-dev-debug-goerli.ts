@@ -8,9 +8,9 @@ import { MINTER_ROLE } from "@gemunion/contracts-constants";
 const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter}`);
 const delay = 2; // block delay
 const delayMsec = 30000; // block delay ms
-// const decimals = ethers.BigNumber.from(10).pow(18);
-// const linkAmountInWei = ethers.BigNumber.from("1000").mul(decimals);
-// const linkAmountInEth = ethers.utils.parseEther("1");
+// const decimals = BigNumber.from(10).pow(18);
+// const linkAmountInWei = BigNumber.from("1000").mul(decimals);
+// const linkAmountInEth = utils.parseEther("1");
 
 interface IObj {
   address?: string;

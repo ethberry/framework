@@ -160,7 +160,7 @@ export const useSwap = (
           from,
           to,
           data,
-          value: ethers.BigNumber.from(value),
+          value: BigNumber.from(value),
         });
         await waitForTx(tx.hash, web3Context.provider!);
         enqueueSnackbar("Swap complete!", { variant: "success" });

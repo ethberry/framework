@@ -28,6 +28,10 @@ contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaD
   }
 
   function mintCommon(address account, uint256 templateId) external virtual override onlyRole(MINTER_ROLE) {
+    _mintCommon(account, templateId);
+  }
+
+  function _mintCommon(address account, uint256 templateId) internal returns (uint256) {
     require(templateId != 0, "ERC721Simple: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
@@ -36,6 +40,8 @@ contract ERC721Simple is IERC721Simple, ERC721ABER, ERC721ABaseUrl, ERC721AMetaD
     _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
 
     _safeMint(account, tokenId);
+
+    return tokenId;
   }
 
   function mint(address) public pure override {

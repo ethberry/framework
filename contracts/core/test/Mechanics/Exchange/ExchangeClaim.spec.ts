@@ -53,7 +53,7 @@ describe("ExchangeClaim", function () {
           //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(ethers.constants.AddressZero, receiver.address, tokenId);
+          .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
 
       it.skip("should claim random", async function () {

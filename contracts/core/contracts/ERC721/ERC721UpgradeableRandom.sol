@@ -34,16 +34,10 @@ contract ERC721UpgradeableRandom is IERC721Random, ERC721ChainLinkGoerli, ERC721
   ) ERC721Upgradeable(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address account, uint256 templateId) public override(ERC721Upgradeable) onlyRole(MINTER_ROLE) {
-    require(templateId != 0, "ERC721Random: wrong type");
+    uint256 tokenId = _mintCommon(account, templateId);
 
-    uint256 tokenId = _tokenIdTracker.current();
-    _tokenIdTracker.increment();
-
-    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
     _upsertRecordField(tokenId, GRADE, 1);
     _upsertRecordField(tokenId, RARITY, 1);
-
-    _safeMint(account, tokenId);
   }
 
   function mintRandom(address to, uint256 templateId) external override onlyRole(MINTER_ROLE) {
