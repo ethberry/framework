@@ -52,30 +52,6 @@ contract VestingFactory is AbstractFactory {
     emit VestingDeployed(addr, v.account, v.startTimestamp, v.duration, v.templateId);
   }
 
-  function _hashVesting(
-    bytes32 nonce,
-    bytes calldata bytecode,
-    address account,
-    uint64 startTimestamp,
-    uint64 duration,
-    uint256 templateId
-  ) internal view returns (bytes32) {
-    return
-      _hashTypedDataV4(
-        keccak256(
-          abi.encode(
-            VESTING_PERMIT_SIGNATURE,
-            nonce,
-            keccak256(abi.encodePacked(bytecode)),
-            account,
-            startTimestamp,
-            duration,
-            templateId
-          )
-        )
-      );
-  }
-
   function _hashVesting(Vesting calldata v) internal view returns (bytes32) {
     return _hashTypedDataV4(keccak256(abi.encode(VESTING_PERMIT_SIGNATURE, _hashVestingStruct(v))));
   }

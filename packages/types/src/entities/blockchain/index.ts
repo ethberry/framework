@@ -28,6 +28,7 @@ export * from "./mechanics/staking/history";
 export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/rule";
 export * from "./mechanics/staking/deposit";
+export * from "./mechanics/staking/template";
 export * from "./mechanics/pyramid/history";
 export * from "./mechanics/pyramid/leaderboard";
 export * from "./mechanics/pyramid/rule";

@@ -412,6 +412,7 @@
       "listenerType": "Listener type",
       "matron": "Matron",
       "maxBalance": "Max Balance",
+      "maxStake": "Max Stakes",
       "maxStakes": "Max Stakes",
       "maxTime": "Max Cooldown",
       "minBalance": "Min Balance",
@@ -502,6 +503,7 @@
       "maxTime": "0",
       "minBalance": "0",
       "maxCycles": "0",
+      "maxStake": "10",
       "name": "Pink dust",
       "number": "100500",
       "owner": "0x...",
@@ -801,6 +803,9 @@
       "title": "Settings"
     },
     "staking": {
+      "contracts": {
+        "title": "Staking Contracts"
+      },
       "chart": {
         "title": "Chart"
       },

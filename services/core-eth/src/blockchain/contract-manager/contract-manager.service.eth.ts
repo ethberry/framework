@@ -20,10 +20,12 @@ import {
   IContractManagerERC998TokenDeployedEvent,
   IContractManagerMysteryTokenDeployedEvent,
   IContractManagerPyramidDeployedEvent,
+  IContractManagerStakingDeployedEvent,
   IContractManagerVestingDeployedEvent,
   ModuleType,
   MysteryContractFeatures,
   PyramidContractFeatures,
+  StakingContractFeatures,
   TContractManagerEventData,
   TemplateStatus,
   TokenType,
@@ -46,6 +48,7 @@ import { PyramidLogService } from "../mechanics/pyramid/log/log.service";
 import { TokenEntity } from "../hierarchy/token/token.entity";
 import { BalanceEntity } from "../hierarchy/balance/balance.entity";
 import { BalanceService } from "../hierarchy/balance/balance.service";
+import { StakingLogService } from "../mechanics/staking/log/log.service";
 
 @Injectable()
 export class ContractManagerServiceEth {
@@ -63,6 +66,7 @@ export class ContractManagerServiceEth {
     private readonly erc998LogService: Erc998TokenLogService,
     private readonly erc1155LogService: Erc1155LogService,
     private readonly vestingLogService: VestingLogService,
+    private readonly stakingLogService: StakingLogService,
     private readonly mysteryboxLogService: MysteryLogService,
     private readonly pyramidLogService: PyramidLogService,
     private readonly templateService: TemplateService,
@@ -388,6 +392,33 @@ export class ContractManagerServiceEth {
     });
 
     this.vestingLogService.addListener({
+      address: [addr.toLowerCase()],
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+  }
+
+  public async staking(event: ILogEvent<IContractManagerStakingDeployedEvent>, ctx: Log): Promise<void> {
+    const {
+      args: { addr, maxStake, featureIds },
+    } = event;
+
+    const availableFeatures = Object.values(StakingContractFeatures);
+    const contractFeatures = featureIds.map(featureId => availableFeatures[featureId]);
+
+    await this.updateHistory(event, ctx);
+
+    await this.contractService.create({
+      address: addr.toLowerCase(),
+      title: "new STAKING contract",
+      description: JSON.stringify({ maxStake }),
+      imageUrl,
+      contractFeatures: contractFeatures as unknown as Array<ContractFeatures>,
+      contractModule: ModuleType.STAKING,
+      chainId: this.chainId,
+      fromBlock: parseInt(ctx.blockNumber.toString(), 16),
+    });
+
+    this.stakingLogService.addListener({
       address: [addr.toLowerCase()],
       fromBlock: parseInt(ctx.blockNumber.toString(), 16),
     });

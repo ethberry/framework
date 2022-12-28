@@ -57,6 +57,10 @@ export enum PyramidContractFeatures {
   "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
 }
 
+export enum StakingContractFeatures {
+  "LINEAR_REFERRAL" = "LINEAR_REFERRAL",
+}
+
 // waiting for https://github.com/microsoft/TypeScript/issues/17592
 export enum ContractFeatures {
   "ALLOWANCE" = "ALLOWANCE",

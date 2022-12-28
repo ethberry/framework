@@ -21,6 +21,7 @@ export * from "./mechanics/breed/leaderboard";
 export * from "./mechanics/mysterybox/search";
 export * from "./mechanics/mysterybox/deploy";
 export * from "./mechanics/referral/search";
+export * from "./mechanics/staking/deploy";
 export * from "./mechanics/staking/chart";
 export * from "./mechanics/staking/leaderboard";
 export * from "./mechanics/staking/report";

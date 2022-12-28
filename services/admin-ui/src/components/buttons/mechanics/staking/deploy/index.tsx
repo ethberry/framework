@@ -5,22 +5,22 @@ import { FormattedMessage } from "react-intl";
 import { Contract, utils } from "ethers";
 
 import { useDeploy } from "@gemunion/react-hooks-eth";
-import { Erc1155ContractFeatures, IErc1155ContractDeployDto } from "@framework/types";
+import { IStakingDeployDto, StakingContractFeatures } from "@framework/types";
 
 import ContractManagerSol from "@framework/core-contracts/artifacts/contracts/ContractManager/ContractManager.sol/ContractManager.json";
 
-import { Erc1155ContractDeployDialog } from "./deploy-dialog";
+import { StakingDeployDialog } from "./dialog";
 
-export interface IErc1155TokenDeployButtonProps {
+export interface IStakingDeployButtonProps {
   className?: string;
 }
 
-export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = props => {
+export const StakingDeployButton: FC<IStakingDeployButtonProps> = props => {
   const { className } = props;
 
   const { isDeployDialogOpen, handleDeployCancel, handleDeployConfirm, handleDeploy } = useDeploy(
-    (values: IErc1155ContractDeployDto, web3Context, sign) => {
-      const { contractFeatures, royalty, baseTokenURI } = values;
+    (values: IStakingDeployDto, web3Context, sign) => {
+      const { contractFeatures, maxStake } = values;
 
       const nonce = utils.arrayify(sign.nonce);
       const contract = new Contract(
@@ -29,16 +29,15 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         web3Context.provider?.getSigner(),
       );
 
-      return contract.deployERC1155Token(
+      return contract.deployStaking(
         {
           signer: process.env.ACCOUNT,
           signature: sign.signature,
         },
         {
           bytecode: sign.bytecode,
-          royalty,
-          baseTokenURI,
-          featureIds: contractFeatures.map(feature => Object.keys(Erc1155ContractFeatures).indexOf(feature)),
+          maxStake,
+          featureIds: contractFeatures.map(feature => Object.keys(StakingContractFeatures).indexOf(feature)),
           nonce,
         },
       ) as Promise<void>;
@@ -48,7 +47,7 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
   const onDeployConfirm = (values: Record<string, any>, form: any) => {
     return handleDeployConfirm(
       {
-        url: "/contract-manager/erc1155",
+        url: "/contract-manager/staking",
         method: "POST",
         data: values,
       },
@@ -62,21 +61,12 @@ export const Erc1155ContractDeployButton: FC<IErc1155TokenDeployButtonProps> = p
         variant="outlined"
         startIcon={<Add />}
         onClick={handleDeploy}
-        data-testid="Erc1155ContractDeployButton"
+        data-testid="StakingDeployButton"
         className={className}
       >
         <FormattedMessage id="form.buttons.deploy" />
       </Button>
-      <Erc1155ContractDeployDialog
-        onConfirm={onDeployConfirm}
-        onCancel={handleDeployCancel}
-        open={isDeployDialogOpen}
-        initialValues={{
-          contractFeatures: [],
-          baseTokenURI: `${process.env.JSON_URL}/metadata`,
-          royalty: 0,
-        }}
-      />
+      <StakingDeployDialog onConfirm={onDeployConfirm} onCancel={handleDeployCancel} open={isDeployDialogOpen} />
     </Fragment>
   );
 };

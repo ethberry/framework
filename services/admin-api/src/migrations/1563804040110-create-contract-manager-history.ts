@@ -7,11 +7,13 @@ export class CreateContractManagerHistory1563804040110 implements MigrationInter
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_manager_event_enum AS ENUM (
         'VestingDeployed',
+        'StakingDeployed',
         'ERC20TokenDeployed',
         'ERC721TokenDeployed',
         'ERC998TokenDeployed',
         'ERC1155TokenDeployed',
         'MysteryboxDeployed',
+        'ERC721CollectionDeployed',
         'PyramidDeployed'
       );
     `);
