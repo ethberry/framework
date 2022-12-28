@@ -1,20 +1,25 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-import { amount } from "@gemunion/contracts-constants";
+import { amount, DEFAULT_ADMIN_ROLE, MINTER_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { deployERC20 } from "../../ERC20/shared/fixtures";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
+import { shouldBehaveLikeERC721Simple } from "../../ERC721/shared/simple";
 
 describe("Wrapper", function () {
+  const factory = () => deployERC721("ERC721TokenWrapperTest");
   const erc20Factory = () => deployERC20("ERC20Simple");
-  const erc721Factory = () => deployERC721("ERC721TokenWrapper");
+
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE, MINTER_ROLE);
+  shouldBehaveLikeERC721Simple(factory);
 
   it("should wrap ERC20 and unwrap ERC20", async function () {
     const [owner] = await ethers.getSigners();
 
     const erc20Instance = await erc20Factory();
-    const erc721Instance = await erc721Factory();
+    const erc721Instance = await factory();
 
     await erc20Instance.mint(owner.address, amount);
     await erc20Instance.approve(erc721Instance.address, amount);
