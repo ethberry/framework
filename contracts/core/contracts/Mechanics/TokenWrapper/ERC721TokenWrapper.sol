@@ -31,18 +31,14 @@ contract ERC721TokenWrapper is ERC721Simple, ExchangeUtils, ERC1155Holder, ERC72
     revert MethodNotSupported();
   }
 
-  function mintBox(
-    address to,
-    uint256 templateId,
-    Asset[] memory items
-  ) external payable onlyRole(MINTER_ROLE) {
+  function mintBox(address to, uint256 templateId, Asset[] memory items) external payable onlyRole(MINTER_ROLE) {
     require(templateId != 0, "Wrapper: wrong item");
     require(items.length > 0, "Wrapper: no content");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
 
     // UnimplementedFeatureError: Copying of type struct Asset memory[] memory to storage not yet supported.
     // _itemData[tokenId] = items;
@@ -70,13 +66,9 @@ contract ERC721TokenWrapper is ERC721Simple, ExchangeUtils, ERC1155Holder, ERC72
     _burn(tokenId);
   }
 
-  function supportsInterface(bytes4 interfaceId)
-  public
-  view
-  virtual
-  override(ERC721Simple, ERC1155Receiver)
-  returns (bool)
-  {
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override(ERC721Simple, ERC1155Receiver) returns (bool) {
     return super.supportsInterface(interfaceId);
   }
 }

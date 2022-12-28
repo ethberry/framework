@@ -2,7 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { MINTER_ROLE, templateId } from "../../../constants";
+import { MINTER_ROLE } from "@gemunion/contracts-constants";
+
+import { templateId } from "../../../constants";
 
 export function shouldMintRandom(factory: () => Promise<Contract>) {
   describe("mintRandom", function () {

@@ -2,7 +2,9 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
 
-import { baseTokenURI, templateId, tokenId } from "../../../../constants";
+import { baseTokenURI } from "@gemunion/contracts-constants";
+
+import { templateId, tokenId } from "../../../../constants";
 
 export function shouldTokenURI(factory: () => Promise<Contract>) {
   describe("tokenURI", function () {

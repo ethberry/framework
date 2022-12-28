@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { constants, Contract } from "ethers";
 
 import { templateId, tokenId } from "../../../../constants";
 
@@ -21,7 +21,7 @@ export function shouldTransferFrom(factory: () => Promise<Contract>) {
       const contractInstance = await factory();
 
       await contractInstance.mintCommon(owner.address, templateId);
-      const tx = contractInstance.transferFrom(owner.address, ethers.constants.AddressZero, tokenId);
+      const tx = contractInstance.transferFrom(owner.address, constants.AddressZero, tokenId);
 
       await expect(tx).to.be.revertedWith(`ERC721: transfer to the zero address`);
     });

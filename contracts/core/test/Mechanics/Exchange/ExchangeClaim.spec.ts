@@ -4,6 +4,7 @@ import { constants, BigNumber } from "ethers";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
 import { amount, decimals, LINK_ADDR, params, tokenId, VRF_ADDR } from "../../constants";
+
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 import { deployLinkVrfFixture } from "../../shared/link";
 import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
@@ -73,7 +74,7 @@ describe("ExchangeClaim", function () {
           //   [[0, constants.AddressZero, tokenId, amount]],
           // )
           .to.emit(erc721Instance, "Transfer")
-          .withArgs(ethers.constants.AddressZero, receiver.address, tokenId);
+          .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
 
       it("should claim random", async function () {

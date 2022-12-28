@@ -35,14 +35,14 @@ contract ERC721GenesBesu is IERC721Random, ChainLinkBesu, ERC721Simple, Breed {
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
   function mintCommon(address to, uint256 templateId) external virtual override onlyRole(MINTER_ROLE) {
-//    revert MethodNotSupported();
+    //    revert MethodNotSupported();
     require(templateId != 0, "ERC721GenesHardhat: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    upsertRecordField(tokenId, GENES, 0);
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, GENES, 0);
 
     _safeMint(to, tokenId);
   }
@@ -62,29 +62,25 @@ contract ERC721GenesBesu is IERC721Random, ChainLinkBesu, ERC721Simple, Breed {
 
     emit MintRandom(requestId, request.account, randomness, request.templateId, tokenId);
 
-    upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
+    _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     uint256 genes = encodeData(request, randomness);
 
-    upsertRecordField(tokenId, GENES, genes);
+    _upsertRecordField(tokenId, GENES, genes);
 
     delete _queue[requestId];
     _safeMint(request.account, tokenId);
   }
 
-  function decodeData(uint256 externalId)
-  internal pure
-  returns(uint256 childId, uint256 matronId, uint256 sireId) {
+  function decodeData(uint256 externalId) internal pure returns (uint256 childId, uint256 matronId, uint256 sireId) {
     childId = uint256(uint32(externalId));
-    matronId = uint256(uint32(externalId>>32));
-    sireId = uint256(uint32(externalId>>64));
+    matronId = uint256(uint32(externalId >> 32));
+    sireId = uint256(uint32(externalId >> 64));
   }
 
-  function encodeData(Request memory req, uint256 randomness)
-  internal pure
-  returns(uint256 genes) {
+  function encodeData(Request memory req, uint256 randomness) internal pure returns (uint256 genes) {
     genes = uint256(req.matronId);
-    genes |= uint256(req.sireId)<<32;
-    genes |= randomness<<64;
+    genes |= uint256(req.sireId) << 32;
+    genes |= randomness << 64;
   }
 
   function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {

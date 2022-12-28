@@ -23,26 +23,24 @@ contract ERC998Upgradeable is IERC721Upgradeable, ERC998Simple {
     string memory baseTokenURI
   ) ERC998Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address to, uint256 templateId)
-  external
-  virtual
-  override(IERC721Simple, ERC721Simple)
-  onlyRole(MINTER_ROLE)
-  {
+  function mintCommon(
+    address to,
+    uint256 templateId
+  ) external virtual override(IERC721Simple, ERC721Simple) onlyRole(MINTER_ROLE) {
     require(templateId != 0, "ERC998: wrong type");
 
     uint256 tokenId = _tokenIdTracker.current();
     _tokenIdTracker.increment();
 
-    upsertRecordField(tokenId, TEMPLATE_ID, templateId);
-    upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, GRADE, 1);
 
     _safeMint(to, tokenId);
   }
 
   function upgrade(uint256 tokenId) public onlyRole(MINTER_ROLE) returns (bool) {
     uint256 grade = getRecordFieldValue(tokenId, GRADE);
-    upsertRecordField(tokenId, GRADE, grade + 1);
+    _upsertRecordField(tokenId, GRADE, grade + 1);
     emit LevelUp(_msgSender(), tokenId, grade + 1);
     return true;
   }

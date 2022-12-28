@@ -1,7 +1,7 @@
 import { ethers } from "hardhat";
 
 // import { blockAwait } from "@gemunion/utils-eth";
-import { baseTokenURI } from "../../test/constants";
+import { baseTokenURI } from "@gemunion/contracts-constants";
 
 async function main() {
   const rlNum = 100; // royaltyNumerator

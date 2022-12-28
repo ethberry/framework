@@ -1,7 +1,8 @@
 import { ethers } from "hardhat";
 
+import { amount, baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
+
 import { Exchange } from "../../../../typechain-types";
-import { amount, baseTokenURI, MINTER_ROLE, royalty, tokenName, tokenSymbol } from "../../../constants";
 import { wrapManyToManySignature, wrapOneToManySignature, wrapOneToOneSignature } from "./utils";
 
 export async function deployExchangeFixture() {

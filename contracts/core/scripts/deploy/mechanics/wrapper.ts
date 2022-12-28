@@ -1,7 +1,8 @@
 import { ethers } from "hardhat";
 import { Contract } from "ethers";
-import { blockAwait, blockAwaitMs } from "../../utils/blockAwait";
-import { baseTokenURI, royalty } from "../../../test/constants";
+
+import { blockAwait } from "@gemunion/contracts-utils";
+import { baseTokenURI, royalty } from "@gemunion/contracts-constants";
 
 export async function deployWrapper(contracts: Record<string, Contract>) {
   const erc721WrapFactory = await ethers.getContractFactory("ERC721TokenWrapper");

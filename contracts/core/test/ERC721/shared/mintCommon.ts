@@ -3,8 +3,9 @@ import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
 import { deployErc721NonReceiver, deployErc721Receiver } from "@gemunion/contracts-mocks";
+import { MINTER_ROLE } from "@gemunion/contracts-constants";
 
-import { MINTER_ROLE, templateId, tokenId } from "../../constants";
+import { templateId, tokenId } from "../../constants";
 
 export function shouldMintCommon(factory: () => Promise<Contract>) {
   describe("mintCommon", function () {

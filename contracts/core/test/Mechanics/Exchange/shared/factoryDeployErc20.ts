@@ -2,10 +2,11 @@ import { ethers } from "hardhat";
 import { utils } from "ethers";
 import { expect } from "chai";
 
+import { blockAwait } from "@gemunion/contracts-utils";
+import { DEFAULT_ADMIN_ROLE, MINTER_ROLE, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 import { testChainId } from "@framework/constants";
 
-import { cap, DEFAULT_ADMIN_ROLE, featureIds, MINTER_ROLE, tokenName, tokenSymbol } from "../../../constants";
-import { blockAwait } from "../../../../scripts/utils/blockAwait";
+import { cap, featureIds } from "../../../constants";
 import { ContractManager, ERC20Simple, Exchange } from "../../../../typechain-types";
 
 export async function factoryDeployErc20(

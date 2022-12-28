@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { constants, Contract } from "ethers";
 
 import { templateId, tokenId } from "../../../../constants";
 
@@ -37,9 +37,7 @@ export function shouldApprove(factory: () => Promise<Contract>) {
       expect(approved).to.equal(receiver.address);
 
       const tx1 = contractInstance.connect(receiver).burn(tokenId);
-      await expect(tx1)
-        .to.emit(contractInstance, "Transfer")
-        .withArgs(owner.address, ethers.constants.AddressZero, tokenId);
+      await expect(tx1).to.emit(contractInstance, "Transfer").withArgs(owner.address, constants.AddressZero, tokenId);
 
       const balanceOfOwner = await contractInstance.balanceOf(owner.address);
       expect(balanceOfOwner).to.equal(0);

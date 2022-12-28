@@ -1,19 +1,19 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
 
-import { testChainId } from "@framework/constants";
-
+import { blockAwait } from "@gemunion/contracts-utils";
 import {
   baseTokenURI,
   DEFAULT_ADMIN_ROLE,
-  featureIds,
   MINTER_ROLE,
   nonce,
   royalty,
   tokenName,
   tokenSymbol,
-} from "../../../constants";
-import { blockAwait } from "../../../../scripts/utils/blockAwait";
+} from "@gemunion/contracts-constants";
+import { testChainId } from "@framework/constants";
+
+import { featureIds } from "../../../constants";
 import { ContractManager, ERC721Simple, Exchange } from "../../../../typechain-types";
 
 export async function factoryDeployErc721(

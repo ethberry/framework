@@ -1,10 +1,11 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { constants } from "ethers";
 
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
-import { DEFAULT_ADMIN_ROLE, nonce } from "@gemunion/contracts-constants";
+import { amount, baseTokenURI, DEFAULT_ADMIN_ROLE, nonce, royalty } from "@gemunion/contracts-constants";
 
-import { amount, baseTokenURI, featureIds, royalty, tokenId } from "../constants";
+import { featureIds, tokenId } from "../constants";
 
 import { deployContractManager } from "./fixture";
 
@@ -85,7 +86,7 @@ describe("ERC1155Factory", function () {
       const tx2 = erc1155Instance.mint(receiver.address, tokenId, amount, "0x");
       await expect(tx2)
         .to.emit(erc1155Instance, "TransferSingle")
-        .withArgs(owner.address, ethers.constants.AddressZero, receiver.address, tokenId, amount);
+        .withArgs(owner.address, constants.AddressZero, receiver.address, tokenId, amount);
 
       const balance = await erc1155Instance.balanceOf(receiver.address, tokenId);
       expect(balance).to.equal(amount);

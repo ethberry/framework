@@ -3,10 +3,10 @@ import { utils } from "ethers";
 import { expect } from "chai";
 import { time } from "@openzeppelin/test-helpers";
 
+import { blockAwait } from "@gemunion/contracts-utils";
 import { testChainId } from "@framework/constants";
 
 import { span } from "../../../constants";
-import { blockAwait } from "../../../../scripts/utils/blockAwait";
 import { ContractManager, LinearVesting } from "../../../../typechain-types";
 
 export async function factoryDeployVesting(factoryInstance: ContractManager): Promise<LinearVesting> {

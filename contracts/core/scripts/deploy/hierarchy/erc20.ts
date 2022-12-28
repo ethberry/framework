@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 import { constants, Contract } from "ethers";
 
+import { blockAwait } from "@gemunion/contracts-utils";
 import { wallets } from "@gemunion/constants";
-import { blockAwait } from "../../utils/blockAwait";
 
 export async function deployERC20(contracts: Record<string, Contract>) {
   const [owner] = await ethers.getSigners();

@@ -1,7 +1,10 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { constants, utils } from "ethers";
-import { amount, expiresAt, externalId, tokenId, tokenZero } from "../../constants";
+import { BigNumber, constants, utils } from "ethers";
+
+import { amount } from "@gemunion/contracts-constants";
+
+import { expiresAt, externalId, tokenId, tokenZero } from "../../constants";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 
 describe("ExchangeReferral", function () {
@@ -134,7 +137,7 @@ describe("ExchangeReferral", function () {
           owner.address,
           0,
           erc20Instance.address,
-          ethers.BigNumber.from(amount)
+          BigNumber.from(amount)
             .div(100)
             .mul((refProgram.refReward / 100) | 0)
             .div(refProgram.refDecrease ** 0),
@@ -197,7 +200,7 @@ describe("ExchangeReferral", function () {
           owner.address,
           1,
           erc20Instance.address,
-          ethers.BigNumber.from(amount)
+          BigNumber.from(amount)
             .div(100)
             .mul((refProgram.refReward / 100) | 0)
             .div(refProgram.refDecrease ** 1),
@@ -208,7 +211,7 @@ describe("ExchangeReferral", function () {
           receiver.address,
           0,
           erc20Instance.address,
-          ethers.BigNumber.from(amount)
+          BigNumber.from(amount)
             .div(100)
             .mul((refProgram.refReward / 100) | 0)
             .div(refProgram.refDecrease ** 0),
@@ -294,7 +297,7 @@ describe("ExchangeReferral", function () {
           owner.address,
           0,
           erc20Instance.address,
-          ethers.BigNumber.from(amount)
+          BigNumber.from(amount)
             .div(100)
             .mul((refProgram.refReward / 100) | 0)
             .div(refProgram.refDecrease ** 0),
@@ -303,7 +306,7 @@ describe("ExchangeReferral", function () {
 
       const balance = await exchangeInstance.getBalance(owner.address, erc20Instance.address);
       expect(balance).to.equal(
-        ethers.BigNumber.from(amount)
+        BigNumber.from(amount)
           .div(100)
           .mul((refProgram.refReward / 100) | 0)
           .div(refProgram.refDecrease ** 0),

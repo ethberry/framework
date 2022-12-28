@@ -1,5 +1,5 @@
 import { all, create } from "mathjs";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber } from "ethers";
 
 const createTemplateFunction = <T extends (arg?: string) => any>(cb: T) => {
   return (...templateLiteral: Parameters<typeof String.raw>): ReturnType<T> => {
@@ -27,7 +27,7 @@ const calcBFunc = createTemplateFunction(numStr =>
 );
 
 const calcBNFunc = createTemplateFunction(numStr =>
-  ethers.BigNumber.from(mathjs.format(mathjs.evaluate(numStr!), { notation: "fixed" })),
+  BigNumber.from(mathjs.format(mathjs.evaluate(numStr!), { notation: "fixed" })),
 );
 
 export const calc = calcFunc as typeof calcFunc & {

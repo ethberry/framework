@@ -2,7 +2,10 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { BigNumber, constants, utils } from "ethers";
 import { time } from "@openzeppelin/test-helpers";
-import { amount, externalId, nonce, params, tokenId } from "../../constants";
+
+import { amount, nonce } from "@gemunion/contracts-constants";
+
+import { externalId, params, tokenId } from "../../constants";
 import { wrapOneToManySignature } from "./shared/utils";
 import { deployErc20Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
 

@@ -2,14 +2,18 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { StandardMerkleTree } from "@openzeppelin/merkle-tree";
 
-import { MINTER_ROLE, tokenId } from "@gemunion/contracts-constants";
+import { MINTER_ROLE, DEFAULT_ADMIN_ROLE } from "@gemunion/contracts-constants";
+import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
 import { deployContract } from "../../shared/fixture";
 import { deployERC721 } from "../../ERC721/shared/fixtures";
+import { tokenId } from "../../constants";
 
 describe("Waitlist", function () {
   const factory = () => deployContract(this.title);
-  const erc721factory = () => deployERC721("ERC721Simple");
+  const erc721factory = () => deployERC721();
+
+  shouldBehaveLikeAccessControl(factory)(DEFAULT_ADMIN_ROLE);
 
   it("should set & claim reward", async function () {
     const [owner, receiver] = await ethers.getSigners();

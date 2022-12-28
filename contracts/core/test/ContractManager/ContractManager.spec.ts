@@ -1,6 +1,7 @@
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 
-import { DEFAULT_ADMIN_ROLE } from "../constants";
+import { DEFAULT_ADMIN_ROLE } from "@gemunion/contracts-constants";
+
 import { deployContractManager } from "./fixture";
 
 describe("ContractManager", function () {
