@@ -5,17 +5,16 @@
 // Website: https://gemunion.io/
 
 pragma solidity ^0.8.9;
+//import "hardhat/console.sol";
 
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "../../MOCKS/ChainLink/ChainLinkGemunionTest.sol";
 
-// import "@gemunion/contracts-chain-link/contracts/extensions/ERC721ChainLinkBinance.sol";
-import "@gemunion/contracts-chain-link/contracts/extensions/ChainLinkGoerli.sol";
+import "../ERC721Simple.sol";
+import "../interfaces/IERC721Random.sol";
+import "../../Mechanics/Breed/Breed.sol";
 
-import "./ERC721Simple.sol";
-import "./interfaces/IERC721Random.sol";
-import "../Mechanics/Breed/Breed.sol";
-
-contract ERC721Genes is IERC721Random, ChainLinkGoerli, ERC721Simple, Breed {
+contract ERC721GenesGemunion is IERC721Random, ChainLinkGemunionTest, ERC721Simple, Breed {
   using Counters for Counters.Counter;
 
   struct Request {
@@ -34,8 +33,18 @@ contract ERC721Genes is IERC721Random, ChainLinkGoerli, ERC721Simple, Breed {
     string memory baseTokenURI
   ) ERC721Simple(name, symbol, royalty, baseTokenURI) {}
 
-  function mintCommon(address, uint256) external virtual override onlyRole(MINTER_ROLE) {
-    revert MethodNotSupported();
+  function mintCommon(address to, uint256 templateId) external virtual override onlyRole(MINTER_ROLE) {
+    //    revert MethodNotSupported();
+    require(templateId != 0, "ERC721GenesHardhat: wrong type");
+
+    uint256 tokenId = _tokenIdTracker.current();
+    _tokenIdTracker.increment();
+
+    _upsertRecordField(tokenId, TEMPLATE_ID, templateId);
+    _upsertRecordField(tokenId, GRADE, 1);
+    _upsertRecordField(tokenId, RARITY, 1);
+
+    _safeMint(to, tokenId);
   }
 
   function mintRandom(address account, uint256 templateId) external override onlyRole(MINTER_ROLE) {
@@ -55,6 +64,7 @@ contract ERC721Genes is IERC721Random, ChainLinkGoerli, ERC721Simple, Breed {
 
     _upsertRecordField(tokenId, TEMPLATE_ID, request.templateId);
     uint256 genes = encodeData(request, randomness);
+
     _upsertRecordField(tokenId, GENES, genes);
 
     delete _queue[requestId];
@@ -68,8 +78,8 @@ contract ERC721Genes is IERC721Random, ChainLinkGoerli, ERC721Simple, Breed {
   }
 
   function encodeData(Request memory req, uint256 randomness) internal pure returns (uint256 genes) {
-    genes |= uint32(req.matronId);
-    genes |= uint32(req.sireId) << 32;
-    genes |= uint192(randomness) << 64;
+    genes = uint256(req.matronId);
+    genes |= uint256(req.sireId) << 32;
+    genes |= randomness << 64;
   }
 }

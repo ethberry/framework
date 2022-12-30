@@ -34,27 +34,39 @@ import StakingSol from "@framework/core-contracts/artifacts/contracts/Mechanics/
 import StakingReferralSol from "@framework/core-contracts/artifacts/contracts/Mechanics/Staking/StakingRef.sol/StakingReferral.json";
 
 import ERC721BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Blacklist.sol/ERC721Blacklist.json";
-import ERC721FullSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Full.sol/ERC721Full.json";
-import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
-import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721RandomBlacklist.sol/ERC721RandomBlacklist.json";
 
-import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721GenesBesu.sol/ERC721GenesBesu.json";
 // TODO dev:only
+import ERC721FullSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721FullGemunion.sol/ERC721FullGemunion.json";
+import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomGemunion.sol/ERC721RandomGemunion.json";
+import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721RandomBlacklistGemunion.sol/ERC721RandomBlacklistGemunion.json";
+import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721GenesGemunion.sol/ERC721GenesGemunion.json";
+import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721UpgradeableRandomGemunion.sol/ERC721UpgradeableRandomGemunion.json";
+// import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/test/ERC721GenesBesu.sol/ERC721GenesBesu.json";
+
+// import ERC721FullSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Full.sol/ERC721Full.json";
+// import ERC721RandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Random.sol/ERC721Random.json";
+// import ERC721RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721RandomBlacklist.sol/ERC721RandomBlacklist.json";
 // import ERC721GenesSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Genes.sol/ERC721Genes.json";
+// import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableRandom.sol/ERC721UpgradeableRandom.json";
+
 import ERC721SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Simple.sol/ERC721Simple.json";
 import ERC721SoulboundSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Soulbound.sol/ERC721Soulbound.json";
 import ERC721UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Upgradeable.sol/ERC721Upgradeable.json";
 import ERC721UpgradeableBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableBlacklist.sol/ERC721UpgradeableBlacklist.json";
-import ERC721UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721UpgradeableRandom.sol/ERC721UpgradeableRandom.json";
 import ERC721CollectionSol from "@framework/core-contracts/artifacts/contracts/ERC721/ERC721Collection.sol/ERC721Collection.json";
+
+// TODO dev:only
+import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/test/ERC998RandomGemunion.sol/ERC998RandomGemunion.json";
+import ERC998RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/test/ERC998RandomBlacklistGemunion.sol/ERC998RandomBlacklistGemunion.json";
+import ERC998UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/test/ERC998UpgradeableRandomGemunion.sol/ERC998UpgradeableRandomGemunion.json";
 
 import ERC998SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Simple.sol/ERC998Simple.json";
 import ERC998BlackListSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Blacklist.sol/ERC998Blacklist.json";
-import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
-import ERC998RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998RandomBlacklist.sol/ERC998RandomBlacklist.json";
+// import ERC998RandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Random.sol/ERC998Random.json";
+// import ERC998RandomBlacklistSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998RandomBlacklist.sol/ERC998RandomBlacklist.json";
 import ERC998GenesSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Genes.sol/ERC998Genes.json";
 import ERC998UpgradeableSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Upgradeable.sol/ERC998Upgradeable.json";
-import ERC998UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998UpgradeableRandom.sol/ERC998UpgradeableRandom.json";
+// import ERC998UpgradeableRandomSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998UpgradeableRandom.sol/ERC998UpgradeableRandom.json";
 import ERC998FullSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998Full.sol/ERC998Full.json";
 import ERC998ERC1155ERC20SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155ERC20Simple.sol/ERC998ERC1155ERC20Simple.json";
 import ERC998ERC1155SimpleSol from "@framework/core-contracts/artifacts/contracts/ERC998/ERC998ERC1155Simple.sol/ERC998ERC1155Simple.json";
