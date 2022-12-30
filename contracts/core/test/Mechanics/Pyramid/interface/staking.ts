@@ -5,6 +5,7 @@ export interface IRule {
   period: number;
   penalty: number;
   recurrent: boolean;
+  maxCycles: number;
   active: boolean;
   externalId: number;
 }

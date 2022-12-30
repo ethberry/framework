@@ -17,7 +17,15 @@ export async function factoryDeployVesting(factoryInstance: ContractManager): Pr
 
   const vesting = await ethers.getContractFactory("LinearVesting");
   const nonce = utils.formatBytes32String("nonce1");
-  // "EIP712(bytes32 nonce,bytes bytecode,address account,uint64 startTimestamp,uint64 duration,uint256 templateId)"
+
+  const v = {
+    bytecode: vesting.bytecode,
+    account: owner.address,
+    startTimestamp: currentTime,
+    duration: span * 4,
+    templateId: 1,
+    nonce,
+  };
 
   const signature = await owner._signTypedData(
     // Domain
@@ -29,39 +37,40 @@ export async function factoryDeployVesting(factoryInstance: ContractManager): Pr
     },
     // Types
     {
-      EIP712: [
-        { name: "nonce", type: "bytes32" },
+      EIP712: [{ name: "v", type: "Vesting" }],
+      Vesting: [
         { name: "bytecode", type: "bytes" },
         { name: "account", type: "address" },
         { name: "startTimestamp", type: "uint64" },
         { name: "duration", type: "uint64" },
         { name: "templateId", type: "uint256" },
+        { name: "nonce", type: "bytes32" },
       ],
     },
-    // Value
+    // Values
+    { v },
+  );
+
+  if (network.chainId === testChainId) {
+    await blockAwait();
+  }
+
+  const signer = owner.address;
+  const bytecode = vesting.bytecode;
+
+  const tx = await factoryInstance.deployVesting(
     {
-      nonce,
-      bytecode: vesting.bytecode,
+      signer,
+      signature,
+    },
+    {
+      bytecode,
       account: owner.address,
       startTimestamp: currentTime,
       duration: span * 4,
       templateId: 1,
+      nonce,
     },
-  );
-
-  if (network.chainId !== testChainId) {
-    await blockAwait();
-  }
-
-  const tx = await factoryInstance.deployVesting(
-    nonce,
-    vesting.bytecode,
-    owner.address,
-    currentTime,
-    span * 4,
-    1,
-    owner.address,
-    signature,
   );
 
   if (network.chainId === testChainId) {
@@ -69,13 +78,10 @@ export async function factoryDeployVesting(factoryInstance: ContractManager): Pr
   }
 
   const [address] = await factoryInstance.allVesting();
-  // emit VestingDeployed(addr, account, startTimestamp, duration, templateId);
 
   await expect(tx)
     .to.emit(factoryInstance, "VestingDeployed")
     .withArgs(address, owner.address, currentTime, span * 4, 1);
 
-  const vestingInstance = vesting.attach(address);
-
-  return vestingInstance;
+  return vesting.attach(address);
 }

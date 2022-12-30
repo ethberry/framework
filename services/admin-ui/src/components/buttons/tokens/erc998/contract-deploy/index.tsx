@@ -29,16 +29,31 @@ export const Erc998ContractDeployButton: FC<IErc998ContractDeployButtonProps> = 
         web3Context.provider?.getSigner(),
       );
 
+      // return contract.deployERC998Token(
+      //   nonce,
+      //   sign.bytecode,
+      //   name,
+      //   symbol,
+      //   royalty,
+      //   baseTokenURI,
+      //   contractFeatures.map(feature => Object.keys(Erc998ContractFeatures).indexOf(feature)),
+      //   process.env.ACCOUNT,
+      //   sign.signature,
+      // ) as Promise<void>;
       return contract.deployERC998Token(
-        nonce,
-        sign.bytecode,
-        name,
-        symbol,
-        royalty,
-        baseTokenURI,
-        contractFeatures.map(feature => Object.keys(Erc998ContractFeatures).indexOf(feature)),
-        process.env.ACCOUNT,
-        sign.signature,
+        {
+          signer: process.env.ACCOUNT,
+          signature: sign.signature,
+        },
+        {
+          bytecode: sign.bytecode,
+          name,
+          symbol,
+          royalty,
+          baseTokenURI,
+          featureIds: contractFeatures.map(feature => Object.keys(Erc998ContractFeatures).indexOf(feature)),
+          nonce,
+        },
       ) as Promise<void>;
     },
   );

@@ -35,6 +35,7 @@ export * from "./mechanics/pyramid/leaderboard";
 export * from "./mechanics/pyramid/report";
 export * from "./mechanics/pyramid/rule";
 export * from "./mechanics/pyramid/deposit";
+export * from "./mechanics/collection/deploy";
 
 export * from "./tokens/native/contract/create";
 export * from "./tokens/erc20/contract/create";

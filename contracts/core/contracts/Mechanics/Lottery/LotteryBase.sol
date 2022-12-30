@@ -6,8 +6,6 @@
 
 pragma solidity ^0.8.9;
 
-import "hardhat/console.sol";
-
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/utils/Address.sol";

@@ -97,6 +97,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -116,6 +117,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -132,6 +134,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -143,6 +146,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -159,6 +163,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -176,15 +181,26 @@ describe("Pyramid", function () {
   describe("Staking", function () {
     it("should fail for not existing rule", async function () {
       const stakeRule: IRule = {
-        externalId: 1,
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
+        externalId: 1,
         recurrent: false,
         active: true,
       };
+
+      // struct Rule {
+      //   Asset deposit;
+      //   Asset reward;
+      //   uint256 period;
+      //   uint256 maxCycles;
+      //   uint256 penalty;
+      //   uint256 externalId;
+      //   bool active;
+      // }
 
       const tx = pyramidInstance.setRules([stakeRule]);
       await expect(tx).to.emit(pyramidInstance, "RuleCreated");
@@ -199,6 +215,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -218,6 +235,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -237,6 +255,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -258,6 +277,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -289,6 +309,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -321,6 +342,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -352,6 +374,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -389,6 +412,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -423,6 +447,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -463,6 +488,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -501,6 +527,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -562,6 +589,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -573,6 +601,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -617,6 +646,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -628,6 +658,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -672,6 +703,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -683,6 +715,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -708,6 +741,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -719,6 +753,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -746,6 +781,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -757,6 +793,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -801,6 +838,7 @@ describe("Pyramid", function () {
         deposit: nativeDeposit,
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -812,6 +850,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -863,6 +902,7 @@ describe("Pyramid", function () {
         },
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -874,6 +914,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,
@@ -1026,6 +1067,7 @@ describe("Pyramid", function () {
         },
         reward: nativeReward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod, // 60 sec
         penalty: stakePenalty,
         recurrent: false,
@@ -1036,6 +1078,7 @@ describe("Pyramid", function () {
         deposit: erc20Deposit,
         reward: erc20Reward,
         content: [],
+        maxCycles: 2,
         period: stakePeriod,
         penalty: stakePenalty,
         recurrent: false,

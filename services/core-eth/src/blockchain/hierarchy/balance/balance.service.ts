@@ -23,6 +23,10 @@ export class BalanceService {
     return this.balanceEntityRepository.create(dto).save();
   }
 
+  public async createBatch(dto: Array<DeepPartial<BalanceEntity>>): Promise<Array<BalanceEntity>> {
+    return this.balanceEntityRepository.save(dto, { chunk: 1000 });
+  }
+
   public async increment(tokenId: number, account: string, amount: string): Promise<BalanceEntity> {
     const balanceEntity = await this.findOne({ tokenId, account });
 

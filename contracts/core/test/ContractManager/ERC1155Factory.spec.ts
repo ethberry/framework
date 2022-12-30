@@ -21,6 +21,15 @@ describe("ERC1155Factory", function () {
       const erc1155 = await ethers.getContractFactory("ERC1155Simple");
 
       const contractInstance = await factory();
+      // "Erc1155(bytes bytecode,uint96 royalty,string baseTokenURI,uint8[] featureIds,bytes32 nonce)";
+
+      const c = {
+        bytecode: erc1155.bytecode,
+        royalty,
+        baseTokenURI,
+        featureIds,
+        nonce,
+      };
 
       const signature = await owner._signTypedData(
         // Domain
@@ -32,32 +41,32 @@ describe("ERC1155Factory", function () {
         },
         // Types
         {
-          EIP712: [
-            { name: "nonce", type: "bytes32" },
+          EIP712: [{ name: "c", type: "Erc1155" }],
+          Erc1155: [
             { name: "bytecode", type: "bytes" },
             { name: "royalty", type: "uint96" },
             { name: "baseTokenURI", type: "string" },
             { name: "featureIds", type: "uint8[]" },
+            { name: "nonce", type: "bytes32" },
           ],
         },
-        // Value
+        // Values
+        { c },
+      );
+      const signer = owner.address;
+      const bytecode = erc1155.bytecode;
+      const tx = await contractInstance.deployERC1155Token(
         {
-          nonce,
-          bytecode: erc1155.bytecode,
+          signer,
+          signature,
+        },
+        {
+          bytecode,
           royalty,
           baseTokenURI,
           featureIds,
+          nonce,
         },
-      );
-
-      const tx = await contractInstance.deployERC1155Token(
-        nonce,
-        erc1155.bytecode,
-        royalty,
-        baseTokenURI,
-        featureIds,
-        owner.address,
-        signature,
       );
 
       const [address] = await contractInstance.allERC1155Tokens();

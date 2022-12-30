@@ -20,6 +20,7 @@ import { MysteryLogModule } from "../mechanics/mystery/box/log/log.module";
 import { PyramidLogModule } from "../mechanics/pyramid/log/log.module";
 import { ContractManagerControllerRmq } from "./contract-manager.controller.rmq";
 import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
+import { BalanceModule } from "../hierarchy/balance/balance.module";
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ContractManagerServiceRmq } from "./contract-manager.service.rmq";
     TemplateModule,
     TokenModule,
     GradeModule,
+    BalanceModule,
   ],
   providers: [Logger, ContractManagerServiceEth, ContractManagerServiceRmq],
   controllers: [ContractManagerControllerEth, ContractManagerControllerRmq],

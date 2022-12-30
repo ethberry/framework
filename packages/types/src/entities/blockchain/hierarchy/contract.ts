@@ -30,6 +30,11 @@ export enum Erc721ContractFeatures {
   "SOULBOUND" = "SOULBOUND",
 }
 
+// todo do we need it?
+export enum Erc721CollectionFeatures {
+  "BLACKLIST" = "BLACKLIST",
+}
+
 export enum Erc998ContractFeatures {
   "BLACKLIST" = "BLACKLIST",
   "UPGRADEABLE" = "UPGRADEABLE",

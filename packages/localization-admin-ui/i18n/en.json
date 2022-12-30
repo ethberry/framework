@@ -367,6 +367,7 @@
       "amount": "Amount",
       "attributes": "Attributes",
       "baseTokenURI": "Base token URI",
+      "batchSize": "Collection size",
       "breeder": "Breeder",
       "cap": "Cap",
       "chainId": "Chain",
@@ -473,6 +474,7 @@
       "amount": "10",
       "attributes": "{}",
       "baseTokenURI": "https://gemunion.io/",
+      "batchSize": "1000",
       "cap": "10",
       "childId": "Contract",
       "childIds": "Contract",
@@ -642,7 +644,8 @@
         "staking": "Staking",
         "title": "Mechanics",
         "vesting": "Vesting",
-        "waitlist": "Waitlist"
+        "waitlist": "Waitlist",
+        "erc721Collection": "ERC721 Collections"
       },
       "title": "Dashboard",
       "wallet": {
@@ -671,7 +674,13 @@
         "title": "ERC20 Contracts"
       }
     },
-    "erc721": {
+    "collections": {
+      "title": "ERC721 Collections",
+      "contracts": {
+        "title": "Collection Contracts"
+      }
+    },
+   "erc721": {
       "contracts": {
         "royalty": "Royalty",
         "title": "ERC721 Contracts"

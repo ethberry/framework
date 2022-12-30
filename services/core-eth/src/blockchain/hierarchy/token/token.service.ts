@@ -22,6 +22,10 @@ export class TokenService {
     return this.tokenEntityRepository.create(dto).save();
   }
 
+  public async createBatch(dto: Array<DeepPartial<TokenEntity>>): Promise<Array<TokenEntity>> {
+    return await this.tokenEntityRepository.save(dto, { chunk: 1000 });
+  }
+
   public async update(where: FindOptionsWhere<TokenEntity>, dto: DeepPartial<TokenEntity>): Promise<TokenEntity> {
     const { ...rest } = dto;
 

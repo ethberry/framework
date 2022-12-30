@@ -1,11 +1,13 @@
 import { Inject, Injectable, Logger, LoggerService, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { constants, providers, Wallet } from "ethers";
+import { constants, providers, Wallet, BigNumber } from "ethers";
 import { Log } from "@ethersproject/abstract-provider";
 import { ETHERS_RPC, ETHERS_SIGNER, ILogEvent } from "@gemunion/nestjs-ethers";
+import { DeepPartial } from "typeorm";
 
 import {
   ContractEventType,
+  IERC721ConsecutiveTransfer,
   IERC721RandomRequestEvent,
   IERC721TokenMintRandomEvent,
   IERC721TokenTransferEvent,
@@ -23,6 +25,8 @@ import { BalanceService } from "../../../hierarchy/balance/balance.service";
 import { TokenServiceEth } from "../../../hierarchy/token/token.service.eth";
 import { AssetService } from "../../../exchange/asset/asset.service";
 import { BreedServiceEth } from "../../../mechanics/breed/breed.service.eth";
+import { TokenEntity } from "../../../hierarchy/token/token.entity";
+import { BalanceEntity } from "../../../hierarchy/balance/balance.entity";
 
 @Injectable()
 export class Erc721TokenServiceEth extends TokenServiceEth {
@@ -114,6 +118,63 @@ export class Erc721TokenServiceEth extends TokenServiceEth {
     // need to save updates in nested entities too
     await erc721TokenEntity.template.save();
     await erc721TokenEntity.balance[0].save();
+  }
+
+  public async consecutiveTransfer(event: ILogEvent<IERC721ConsecutiveTransfer>, context: Log): Promise<void> {
+    const {
+      args: { fromAddress, toAddress, fromTokenId, toTokenId },
+    } = event;
+    const { address } = context;
+
+    // Mint token create batch
+    if (fromAddress === constants.AddressZero) {
+      const templateEntity = await this.templateService.findOne(
+        { contract: { address } },
+        { relations: { contract: true } },
+      );
+
+      if (!templateEntity) {
+        throw new NotFoundException("templateNotFound");
+      }
+      await this.updateHistory(event, context, templateEntity.contract.id, void 0);
+
+      const batchSize = JSON.parse(templateEntity.contract.description).batchSize
+        ? JSON.parse(templateEntity.contract.description).batchSize
+        : 0;
+
+      const batchLen = BigNumber.from(toTokenId).sub(fromTokenId).toNumber();
+
+      if (batchLen !== batchSize) {
+        // todo just in case =)
+        throw new NotFoundException("batchLengthError");
+      }
+
+      templateEntity.amount += batchSize;
+      await templateEntity.save();
+
+      const tokenArray: Array<DeepPartial<TokenEntity>> = [...Array(batchSize)].map((_, i) => ({
+        attributes: "{}",
+        tokenId: i.toString(),
+        royalty: templateEntity.contract.royalty,
+        templateId: templateEntity.id,
+        tokenStatus: TokenStatus.MINTED,
+      }));
+
+      const entityArray = await this.tokenService.createBatch(tokenArray);
+
+      await this.createBalancesBatch(toAddress, entityArray);
+      // await this.assetService.updateAssetHistory(transactionHash, tokenEntity.id);
+    }
+  }
+
+  private async createBalancesBatch(owner: string, tokenArray: Array<TokenEntity>) {
+    const balanceArray: Array<DeepPartial<BalanceEntity>> = [...Array(tokenArray.length)].map((_, i) => ({
+      account: owner.toLowerCase(),
+      amount: "1",
+      tokenId: tokenArray[i].id,
+    }));
+
+    await this.balanceService.createBatch(balanceArray);
   }
 
   public async mintRandom(event: ILogEvent<IERC721TokenMintRandomEvent>, context: Log): Promise<void> {

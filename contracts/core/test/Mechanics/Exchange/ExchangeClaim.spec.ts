@@ -1,14 +1,35 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
-import { constants } from "ethers";
+import { ethers, network } from "hardhat";
+import { constants, BigNumber } from "ethers";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 
-import { amount } from "@gemunion/contracts-constants";
+import { amount, decimals, LINK_ADDR, params, tokenId, VRF_ADDR } from "../../constants";
 
-import { params, tokenId } from "../../constants";
 import { deployErc1155Base, deployErc721Base, deployExchangeFixture } from "./shared/fixture";
+import { deployLinkVrfFixture } from "../../shared/link";
+import { LinkErc20, VRFCoordinatorMock } from "../../../typechain-types";
 
 describe("ExchangeClaim", function () {
   // shouldHaveRole(DEFAULT_ADMIN_ROLE, PAUSER_ROLE);
+
+  let linkInstance: LinkErc20;
+  let vrfInstance: VRFCoordinatorMock;
+
+  before(async function () {
+    await network.provider.send("hardhat_reset");
+
+    // https://github.com/NomicFoundation/hardhat/issues/2980
+    ({ linkInstance, vrfInstance } = await loadFixture(function staking() {
+      return deployLinkVrfFixture();
+    }));
+
+    expect(linkInstance.address).equal(LINK_ADDR);
+    expect(vrfInstance.address).equal(VRF_ADDR);
+  });
+
+  after(async function () {
+    await network.provider.send("hardhat_reset");
+  });
 
   describe("claim", function () {
     describe("ERC721", function () {
@@ -56,10 +77,12 @@ describe("ExchangeClaim", function () {
           .withArgs(constants.AddressZero, receiver.address, tokenId);
       });
 
-      it.skip("should claim random", async function () {
+      it("should claim random", async function () {
         const [owner, receiver] = await ethers.getSigners();
         const { contractInstance: exchangeInstance, generateManyToManySignature } = await deployExchangeFixture();
-        const erc721Instance = await deployErc721Base("ERC721Random", exchangeInstance);
+        const erc721Instance = await deployErc721Base("ERC721RandomHardhat", exchangeInstance);
+
+        await linkInstance.transfer(erc721Instance.address, BigNumber.from("1000").mul(decimals));
 
         const signature = await generateManyToManySignature({
           account: receiver.address,

@@ -17,3 +17,4 @@ export * from "./mechanics/lottery/round/schedule";
 
 export * from "./mechanics/breed/breed-limits";
 export * from "./mechanics/staking/pause-toggle";
+export * from "./mechanics/collection/contract-deploy";

@@ -9,12 +9,24 @@ pragma solidity ^0.8.9;
 import "./AbstractFactory.sol";
 
 contract ERC998Factory is AbstractFactory {
+  bytes private constant ERC998_PARAMS =
+  "Erc998(bytes bytecode,string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds,bytes32 nonce)";
+  bytes32 private constant ERC998_PARAMS_TYPEHASH = keccak256(abi.encodePacked(ERC998_PARAMS));
+
   bytes32 private immutable ERC998_PERMIT_SIGNATURE =
-    keccak256(
-      "EIP712(bytes32 nonce,bytes bytecode,string name,string symbol,uint96 royalty,string baseTokenURI,uint8[] featureIds)"
-    );
+  keccak256(bytes.concat("EIP712(Erc998 c)", ERC998_PARAMS));
 
   address[] private _erc998_tokens;
+
+  struct Erc998 {
+    bytes bytecode;
+    string name;
+    string symbol;
+    uint96 royalty;
+    string baseTokenURI;
+    uint8[] featureIds;
+    bytes32 nonce;
+  }
 
   event ERC998TokenDeployed(
     address addr,
@@ -26,27 +38,21 @@ contract ERC998Factory is AbstractFactory {
   );
 
   function deployERC998Token(
-    bytes32 nonce,
-    bytes calldata bytecode,
-    string memory name,
-    string memory symbol,
-    uint96 royalty,
-    string memory baseTokenURI,
-    uint8[] calldata featureIds,
-    address signer,
-    bytes calldata signature
+    Signature calldata sig,
+    Erc998 calldata c
   ) external onlyRole(DEFAULT_ADMIN_ROLE) returns (address addr) {
-    require(hasRole(DEFAULT_ADMIN_ROLE, signer), "ContractManager: Wrong signer");
+    require(hasRole(DEFAULT_ADMIN_ROLE, sig.signer), "ContractManager: Wrong signer");
 
-    bytes32 digest = _hashERC998(nonce, bytecode, name, symbol, royalty, baseTokenURI, featureIds);
+    bytes32 digest = _hashERC998(c);
 
-    _checkSignature(signer, digest, signature);
-    _checkNonce(nonce);
+    _checkSignature(sig.signer, digest, sig.signature);
+    _checkNonce(c.nonce);
 
-    addr = deploy(bytecode, abi.encode(name, symbol, royalty, baseTokenURI));
+//    addr = deploy(bytecode, abi.encode(name, symbol, royalty, baseTokenURI));
+    addr = deploy2(c.bytecode, abi.encode(c.name, c.symbol, c.royalty, c.baseTokenURI), c.nonce);
     _erc998_tokens.push(addr);
 
-    emit ERC998TokenDeployed(addr, name, symbol, royalty, baseTokenURI, featureIds);
+    emit ERC998TokenDeployed(addr, c.name, c.symbol, c.royalty, c.baseTokenURI, c.featureIds);
 
     bytes32[] memory roles = new bytes32[](2);
     roles[0] = MINTER_ROLE;
@@ -57,30 +63,24 @@ contract ERC998Factory is AbstractFactory {
     fixPermissions(addr, roles);
   }
 
-  function _hashERC998(
-    bytes32 nonce,
-    bytes calldata bytecode,
-    string memory name,
-    string memory symbol,
-    uint96 royalty,
-    string memory baseTokenURI,
-    uint8[] calldata featureIds
-  ) internal view returns (bytes32) {
+  function _hashERC998(Erc998 calldata c) internal view returns (bytes32) {
+    return _hashTypedDataV4(keccak256(abi.encode(ERC998_PERMIT_SIGNATURE, _hashErc998Struct(c))));
+  }
+
+  function _hashErc998Struct(Erc998 calldata c) private pure returns (bytes32) {
     return
-      _hashTypedDataV4(
-        keccak256(
-          abi.encode(
-            ERC998_PERMIT_SIGNATURE,
-            nonce,
-            keccak256(abi.encodePacked(bytecode)),
-            keccak256(abi.encodePacked(name)),
-            keccak256(abi.encodePacked(symbol)),
-            royalty,
-            keccak256(abi.encodePacked(baseTokenURI)),
-            keccak256(abi.encodePacked(featureIds))
-          )
-        )
-      );
+    keccak256(
+      abi.encode(
+        ERC998_PARAMS_TYPEHASH,
+        keccak256(abi.encodePacked(c.bytecode)),
+        keccak256(abi.encodePacked(c.name)),
+        keccak256(abi.encodePacked(c.symbol)),
+        c.royalty,
+        keccak256(abi.encodePacked(c.baseTokenURI)),
+        keccak256(abi.encodePacked(c.featureIds)),
+        c.nonce
+      )
+    );
   }
 
   function allERC998Tokens() external view returns (address[] memory) {

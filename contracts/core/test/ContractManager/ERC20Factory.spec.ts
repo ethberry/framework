@@ -5,7 +5,7 @@ import { constants } from "ethers";
 import { shouldBehaveLikeAccessControl } from "@gemunion/contracts-mocha";
 import { amount, DEFAULT_ADMIN_ROLE, nonce, tokenName, tokenSymbol } from "@gemunion/contracts-constants";
 
-import { featureIds } from "../constants";
+import { cap, featureIds } from "../constants";
 import { deployContractManager } from "./fixture";
 
 describe("ERC20Factory", function () {
@@ -20,6 +20,16 @@ describe("ERC20Factory", function () {
       const erc20 = await ethers.getContractFactory("ERC20Simple");
 
       const contractInstance = await factory();
+      // "Erc20(bytes bytecode,string name,string symbol,uint256 cap,uint8[] featureIds,bytes32 nonce)";
+
+      const c = {
+        bytecode: erc20.bytecode,
+        name: tokenName,
+        symbol: tokenSymbol,
+        cap,
+        featureIds,
+        nonce,
+      };
 
       const signature = await owner._signTypedData(
         // Domain
@@ -31,42 +41,41 @@ describe("ERC20Factory", function () {
         },
         // Types
         {
-          EIP712: [
-            { name: "nonce", type: "bytes32" },
+          EIP712: [{ name: "c", type: "Erc20" }],
+          Erc20: [
             { name: "bytecode", type: "bytes" },
             { name: "name", type: "string" },
             { name: "symbol", type: "string" },
             { name: "cap", type: "uint256" },
             { name: "featureIds", type: "uint8[]" },
+            { name: "nonce", type: "bytes32" },
           ],
         },
-        // Value
+        // Values
+        { c },
+      );
+      const signer = owner.address;
+      const bytecode = erc20.bytecode;
+      const tx = await contractInstance.deployERC20Token(
         {
-          nonce,
-          bytecode: erc20.bytecode,
+          signer,
+          signature,
+        },
+        {
+          bytecode,
           name: tokenName,
           symbol: tokenSymbol,
-          cap: amount,
+          cap,
           featureIds,
+          nonce,
         },
-      );
-
-      const tx = await contractInstance.deployERC20Token(
-        nonce,
-        erc20.bytecode,
-        tokenName,
-        tokenSymbol,
-        amount,
-        featureIds,
-        owner.address,
-        signature,
       );
 
       const [address] = await contractInstance.allERC20Tokens();
 
       await expect(tx)
         .to.emit(contractInstance, "ERC20TokenDeployed")
-        .withArgs(address, tokenName, tokenSymbol, amount, featureIds);
+        .withArgs(address, tokenName, tokenSymbol, cap, featureIds);
 
       const erc20Instance = erc20.attach(address);
 

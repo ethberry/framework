@@ -43,6 +43,9 @@ export class CreateContract1563804000100 implements MigrationInterface {
     // MODULE:POLYGON
     await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'POLYGON';`);
 
+    // MODULE:COLLECTION
+    await queryRunner.query(`ALTER TYPE ${ns}.contract_module_enum ADD VALUE 'COLLECTION';`);
+
     await queryRunner.query(`
       CREATE TYPE ${ns}.contract_features_enum AS ENUM (
         'ALLOWANCE',
