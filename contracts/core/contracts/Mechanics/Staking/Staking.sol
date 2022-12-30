@@ -72,6 +72,7 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
 
   function fundEth() public payable whenNotPaused onlyRole(DEFAULT_ADMIN_ROLE) {}
 
+  // todo add change event?
   function setMaxStake(uint256 maxStake) public onlyRole(DEFAULT_ADMIN_ROLE) {
     _maxStake = maxStake;
   }
@@ -80,7 +81,10 @@ contract Staking is IStaking, AccessControl, Pausable, ERC1155Holder, ERC721Hold
     Rule memory rule = _rules[ruleId];
     require(rule.externalId != 0, "Staking: rule doesn't exist");
     require(rule.active, "Staking: rule doesn't active");
-    require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
+
+    if(_maxStake > 0) {
+      require(_stakeCounter[_msgSender()] < _maxStake, "Staking: stake limit exceeded");
+    }
 
     _stakeIdCounter.increment();
     uint256 stakeId = _stakeIdCounter.current();

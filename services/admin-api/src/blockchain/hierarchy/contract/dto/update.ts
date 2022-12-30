@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsEnum, IsOptional, IsString, IsUrl, Validate } from "class-validator";
+import { IsEnum, IsJSON, IsOptional, IsString, IsUrl, Validate } from "class-validator";
 import { Transform } from "class-transformer";
 
 import { SearchableDto } from "@gemunion/collection";
@@ -23,4 +23,9 @@ export class ContractUpdateDto extends SearchableDto implements IContractUpdateD
   @IsEnum(ContractStatus, { message: "badInput" })
   @Validate(ForbidEnumValues, [ContractStatus.NEW])
   public contractStatus: ContractStatus;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsJSON({ message: "patternMismatch" })
+  public description: string;
 }

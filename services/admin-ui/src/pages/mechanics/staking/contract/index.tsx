@@ -11,18 +11,12 @@ import {
   Pagination,
 } from "@mui/material";
 import { Create, Delete, FilterList } from "@mui/icons-material";
+// import { emptyStateString } from "@gemunion/draft-js-utils";
 
 import { Breadcrumbs, PageHeader, ProgressOverlay } from "@gemunion/mui-page-layout";
 import { DeleteDialog } from "@gemunion/mui-dialog-delete";
 import { useCollection } from "@gemunion/react-hooks";
-import { emptyStateString } from "@gemunion/draft-js-utils";
-import {
-  ContractFeatures,
-  ContractStatus,
-  Erc721ContractFeatures,
-  IContract,
-  IContractSearchDto,
-} from "@framework/types";
+import { ContractStatus, IContract, IContractSearchDto, StakingContractFeatures } from "@framework/types";
 
 import { StakingEditDialog } from "./edit";
 import { ContractActionsMenu } from "../../../../components/menu/contract";
@@ -52,7 +46,6 @@ export const StakingContracts: FC = () => {
     baseUrl: "/staking/contracts",
     empty: {
       title: "",
-      description: emptyStateString,
       contractStatus: ContractStatus.NEW,
     },
     search: {
@@ -60,14 +53,14 @@ export const StakingContracts: FC = () => {
       contractStatus: [ContractStatus.ACTIVE, ContractStatus.NEW],
       contractFeatures: [],
     },
-    filter: ({ title, description, imageUrl, contractStatus }) => ({
+    filter: ({ title, imageUrl, description, contractStatus }) => ({
       title,
       description,
       imageUrl,
       contractStatus,
     }),
   });
-
+  console.log("rows", rows);
   return (
     <Grid>
       <Breadcrumbs path={["dashboard", "staking", "staking.contracts"]} />
@@ -86,14 +79,19 @@ export const StakingContracts: FC = () => {
         onSubmit={handleSearch}
         initialValues={search}
         open={isFiltersOpen}
-        contractFeaturesOptions={Erc721ContractFeatures}
+        contractFeaturesOptions={StakingContractFeatures}
       />
 
       <ProgressOverlay isLoading={isLoading}>
         <List>
           {rows.map((contract, i) => (
             <ListItem key={i}>
-              <ListItemText>{contract.title}</ListItemText>
+              <ListItemText sx={{ width: 0.6 }}>{contract.title}</ListItemText>
+              <ListItemText>
+                {contract.description && JSON.parse(contract.description).maxStake
+                  ? `Max stakes: ${JSON.parse(contract.description).maxStake}`
+                  : "Max stakes: ∞"}
+              </ListItemText>
               <ListItemSecondaryAction>
                 <IconButton onClick={handleEdit(contract)}>
                   <Create />
