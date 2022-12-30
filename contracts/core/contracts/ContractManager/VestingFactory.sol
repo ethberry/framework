@@ -71,25 +71,6 @@ contract VestingFactory is AbstractFactory {
     );
   }
 
-  function _hashVesting(Vesting calldata v) internal view returns (bytes32) {
-    return _hashTypedDataV4(keccak256(abi.encode(VESTING_PERMIT_SIGNATURE, _hashVestingStruct(v))));
-  }
-
-  function _hashVestingStruct(Vesting calldata v) private pure returns (bytes32) {
-    return
-    keccak256(
-      abi.encode(
-        VESTING_PARAMS_TYPEHASH,
-        keccak256(abi.encodePacked(v.bytecode)),
-        v.account,
-        v.startTimestamp,
-        v.duration,
-        v.templateId,
-        v.nonce
-      )
-    );
-  }
-
   function allVesting() external view returns (address[] memory) {
     return _vesting;
   }

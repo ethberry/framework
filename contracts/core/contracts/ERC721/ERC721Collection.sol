@@ -11,11 +11,9 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 import "@gemunion/contracts-erc721/contracts/extensions/ERC721ABaseUrl.sol";
 import "@gemunion/contracts-erc721/contracts/preset/ERC721ABRK.sol";
 
-import "../Mechanics/MetaData/MetaDataGetter.sol";
-
 error MethodNotSupported();
 
-contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl, MetaDataGetter {
+contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl {
 
   constructor(
     string memory name,
@@ -38,10 +36,6 @@ contract ERC721Collection is ERC721ABRK, ERC721ABaseUrl, MetaDataGetter {
 
   function safeMint(address) public pure {
     revert MethodNotSupported();
-  }
-
-  function setTokenMetadata(uint256 tokenId, Metadata[] memory metadata) public onlyRole(METADATA_ADMIN_ROLE) {
-    _setTokenMetadata(tokenId, metadata);
   }
 
   function supportsInterface(

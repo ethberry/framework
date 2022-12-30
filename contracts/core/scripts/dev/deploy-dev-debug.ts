@@ -64,8 +64,8 @@ async function main() {
   // process.exit(0);
   // HAVE TO PASS VRF AND LINK ADDRESSES TO CHAINLINK-BESU CONCTRACT
   const link = await ethers.getContractFactory("LinkToken");
-  const linkInstance = link.attach("0x8BCaF30fed623A721aB6A2E9A9ed4f0b2F141Bfd"); // localhost BESU
-  // const linkInstance = link.attach("0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a"); // Gemunion BESU
+  // const linkInstance = link.attach("0x8BCaF30fed623A721aB6A2E9A9ed4f0b2F141Bfd"); // localhost BESU
+  const linkInstance = link.attach("0x1fa66727cDD4e3e4a6debE4adF84985873F6cd8a"); // Gemunion BESU
   // const linkInstance = link.attach("0x326C977E6efc84E512bB9C30f76E30c160eD06FB"); // GOERLI
   // const linkInstance = link.attach("0x18C8044BEaf97a626E2130Fe324245b96F81A31F"); // GOERLI FW TEST
 
@@ -74,8 +74,8 @@ async function main() {
 
   contracts.contractManager = await cmFactory.deploy();
   await debug(contracts);
-  console.log("contracts.contractManager.address", contracts.contractManager.address);
-  process.exit(0);
+  // console.log("contracts.contractManager.address", contracts.contractManager.address);
+  // process.exit(0);
 
   const exchangeFactory = await ethers.getContractFactory("Exchange");
   const exchangeInstance = await exchangeFactory.deploy(
@@ -142,9 +142,9 @@ async function main() {
   contracts.erc721Upgradeable = await ERC721UpgradeableFactory.deploy("ERC721 ARMOUR", "LVL721", royalty, baseTokenURI);
   await debug(contracts);
 
-  // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGemunion");
+  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGemunion");
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomGoerli");
-  const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
+  // const erc721RandomFactory = await ethers.getContractFactory("ERC721RandomBesu");
   // const erc721RandomFactory = await ethers.getContractFactory("ERC721Random");
   contracts.erc721Random = await erc721RandomFactory.deploy("ERC721 WEAPON", "RNG721", royalty, baseTokenURI);
   await debug(contracts);
@@ -175,8 +175,8 @@ async function main() {
   contracts.erc998Upgradeable = await ERC998UpgradeableFactory.deploy("ERC998 LVL", "LVL998", royalty, baseTokenURI);
   await debug(contracts);
 
-  // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomGemunion");
-  const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
+  const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomGemunion");
+  // const erc998RandomFactory = await ethers.getContractFactory("ERC998RandomBesu");
   // const erc998RandomFactory = await ethers.getContractFactory("ERC998Random");
   const erc998RandomInstance = await erc998RandomFactory.deploy("ERC998 HERO", "RNG998", royalty, baseTokenURI);
   contracts.erc998Random = erc998RandomInstance;
@@ -353,8 +353,8 @@ async function main() {
   await debug(contracts);
 
   // const lotteryFactory = await ethers.getContractFactory("Lottery");
-  const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
-  // const lotteryFactory = await ethers.getContractFactory("LotteryRandomGemunion");
+  // const lotteryFactory = await ethers.getContractFactory("LotteryRandomBesu");
+  const lotteryFactory = await ethers.getContractFactory("LotteryRandomGemunion");
   // contracts.lottery = lotteryFactory.attach("0xb1e61fd987912106301e5743c74408b73841d334");
 
   contracts.lottery = await lotteryFactory.deploy(
